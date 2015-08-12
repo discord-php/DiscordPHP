@@ -3,7 +3,7 @@
     "description": "An API to interface with Discord",
     "require": {
         "php": "^5.5.9",
-        "guzzlehttp/guzzle": "^6.0"
+        "guzzlehttp/guzzle": "^5.0"
     },
     "authors": [
         {
