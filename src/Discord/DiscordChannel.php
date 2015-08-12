@@ -3,6 +3,7 @@
 namespace Discord;
 
 use Discord\Guzzle;
+use Discord\Exceptions\MessageFailException;
 
 class DiscordChannel extends DiscordEntity
 {
@@ -38,7 +39,7 @@ class DiscordChannel extends DiscordEntity
 				]
 			]);
 		} catch (Exception $e) {
-			// todo catch and throw
+			throw new MessageFailException($e);
 		}
 
 		return $response;

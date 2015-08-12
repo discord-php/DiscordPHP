@@ -5,7 +5,7 @@ namespace Discord;
 use Discord\Guzzle;
 use Discord\DiscordChannel;
 
-class DiscordGuild
+class DiscordGuild extends DiscordEntity
 {
 	protected $guild_id;
 	protected $name;
@@ -39,5 +39,21 @@ class DiscordGuild
 		}
 
 		return $channel_instances;
+	}
+
+	/**
+	 * Finds a channel by name
+	 * @param string Name
+	 */
+	public function findChannelByName($name)
+	{
+		$channels = $this->getChannels();
+
+		foreach($channels as $channel)
+		{
+			if($channel->channel_name == $name) return $channel;
+		}
+
+		return null;
 	}
 }

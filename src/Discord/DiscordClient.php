@@ -2,11 +2,10 @@
 
 namespace Discord;
 
-use Discord\DiscordEntity as Entity;
 use Discord\Exceptions\DiscordLogoutFailedException;
 use GuzzleHttp\Exception\ClientException;
 
-class DiscordClient extends Entity
+class DiscordClient extends DiscordEntity
 {
 	public $token;
 	protected $logged_in;

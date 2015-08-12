@@ -101,23 +101,6 @@ class Discord
 	}
 
 	/**
-	 * Creates a new Guild (Server)
-	 * @param string Name
-	 */
-	public function createGuild($name)
-	{
-		$request = Guzzle::post('guilds', [
-			'headers' => [
-				'authorization' => $this->client->token
-			],
-			'json' => [
-
-			]
-		]);
-
-	}
-
-	/**
 	 * Returns an instance of a client
 	 * @return Discord\DiscordClient
 	 */
