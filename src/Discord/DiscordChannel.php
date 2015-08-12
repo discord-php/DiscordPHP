@@ -21,6 +21,10 @@ class DiscordChannel
 		$this->client = $client;
 	}
 
+	/**
+	 * Sends a message to the channel
+	 * @param string
+	 */
 	public function sendMessage($message)
 	{
 		try {
