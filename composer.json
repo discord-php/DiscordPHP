@@ -2,7 +2,6 @@
     "name": "team-reflex/discord-php",
     "description": "An API to interface with Discord",
     "require": {
-        "php": "^5.6",
         "guzzlehttp/guzzle": "^6.0"
     },
     "authors": [
