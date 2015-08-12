@@ -27,3 +27,6 @@ $discord = new Discord($email_address, $password);
 ```
 
 This is just basic setup, more information can be found in the wiki!
+
+## Todo
+- Possibly add a cache for the authentication or make it a singleton?
