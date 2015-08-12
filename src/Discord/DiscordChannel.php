@@ -4,7 +4,7 @@ namespace Discord;
 
 use Discord\Guzzle;
 
-class DiscordChannel
+class DiscordChannel extends DiscordEntity
 {
 	protected $guild;
 	protected $channel_id;
@@ -24,8 +24,9 @@ class DiscordChannel
 	/**
 	 * Sends a message to the channel
 	 * @param string
+	 * @param User ID
 	 */
-	public function sendMessage($message)
+	public function sendMessage($message, $mention = null)
 	{
 		try {
 			$response = Guzzle::post('channels/' . $this->channel_id . '/messages', [
@@ -33,7 +34,7 @@ class DiscordChannel
 					'authorization' => $this->client->token
 				],
 				'json' => [
-					'content' => $message
+					'content' => (!is_null($mention)) ? '<@' . $mention . '> ' . $message : $message
 				]
 			]);
 		} catch (Exception $e) {
