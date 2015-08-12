@@ -21,11 +21,9 @@ class Discord
 	 */
 	public function attemptLogin($email, $password)
 	{
-		$guzzleclient = new \GuzzleHttp\Client(['base_uri' => 'https://discordapp.com/api/']);
-
 		try {
-			$response = $guzzleclient->post('auth/login', [
-				'form_params' => [
+			$response = Guzzle::post('auth/login', [
+				'body' => [
 					'email' => $email,
 					'password' => $password
 				]
