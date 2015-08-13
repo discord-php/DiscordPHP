@@ -5,7 +5,7 @@ namespace Discord;
 use Discord\Guzzle;
 use Discord\DiscordChannel;
 
-class DiscordGuild extends DiscordEntity
+class DiscordGuild
 {
 	protected $guild_id;
 	protected $name;
@@ -20,13 +20,13 @@ class DiscordGuild extends DiscordEntity
 
 	/**
 	 * Returns an array of all the channels
-	 * @return array [Discord\DiscordChannel]
+	 * @return DiscordChannel [array]
 	 */
 	public function getChannels()
 	{
 		$request = Guzzle::get('guilds/'.$this->guild_id.'/channels', [
 			'headers' => [
-				'authorization' => $this->client->token
+				'authorization' => $this->client->getToken()
 			]
 		]);
 
@@ -43,7 +43,8 @@ class DiscordGuild extends DiscordEntity
 
 	/**
 	 * Finds a channel by name
-	 * @param string Name
+	 * @param Channel Name [string]
+	 * @return DiscordChannel || null
 	 */
 	public function findChannelByName($name)
 	{
@@ -51,9 +52,27 @@ class DiscordGuild extends DiscordEntity
 
 		foreach($channels as $channel)
 		{
-			if($channel->channel_name == $name) return $channel;
+			if($channel->getChannelName() == $name) return $channel;
 		}
 
 		return null;
+	}
+
+	/**
+	 * Returns the guild ID
+	 * @return integer
+	 */
+	public function getGuildId()
+	{
+		return $this->guild_id;
+	}
+
+	/**
+	 * Returns the guild name
+	 * @return string
+	 */
+	public function getGuildName()
+	{
+		return $this->name;
 	}
 }

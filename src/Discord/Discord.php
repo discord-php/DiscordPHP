@@ -17,6 +17,8 @@ class Discord
 
 	/**
 	 * Attempts to log in to the Discord servers
+	 * @param Email Address
+	 * @param Password
 	 * @return boolean
 	 */
 	public function attemptLogin($email, $password)
@@ -35,7 +37,19 @@ class Discord
 		$decoded = json_decode($response->getBody()->getContents());
 		if(!@$decoded->token) throw new DiscordLoginFailedException('The login attempt failed.');
 
-		return new DiscordClient($decoded->token);
+		try {
+			$response = Guzzle::get('users/@me', [
+				'headers' => [
+					'authorization' => $decoded->token
+				]
+			]);
+		} catch (Exception $e) {
+			throw new DiscordLoginFailedException($e->getMessage());
+		} 
+
+		$user = json_decode($response->getBody()->getContents());
+
+		return new DiscordClient($decoded->token, $user->id);
 	}
 
 	/**
@@ -43,11 +57,11 @@ class Discord
 	 * @param Discord User ID
 	 * @return array [DiscordGuild]
 	 */
-	public function getGuilds($id)
+	public function getGuilds()
 	{
-		$request = Guzzle::get('users/'.$id.'/guilds', [
+		$request = Guzzle::get('users/'.$this->client->getClientId().'/guilds', [
 			'headers' => [
-				'authorization' => $this->client->token
+				'authorization' => $this->client->getToken()
 			]
 		]);
 		
@@ -65,12 +79,13 @@ class Discord
 	/**
 	 * Finds a channel by ID
 	 * @param Channel ID
+	 * @return DiscordChannel
 	 */
 	public function findChannel($id)
 	{
 		$request = Guzzle::get('channels/'.$id, [
 			'headers' => [
-				'authorization' => $this->client->token
+				'authorization' => $this->client->getToken()
 			]
 		]);
 
@@ -83,12 +98,13 @@ class Discord
 	/**
 	 * Finds a guild by ID
 	 * @param Guild ID
+	 * @return DiscordGuild
 	 */
 	public function findGuild($id)
 	{
 		$request = Guzzle::get('guilds/'.$id, [
 			'headers' => [
-				'authorization' => $this->client->token
+				'authorization' => $this->client->getToken()
 			]
 		]);
 
@@ -96,14 +112,5 @@ class Discord
 		$guild = new DiscordGuild($decoded->id, $decoded->name, $this->client);
 		
 		return $guild;
-	}
-
-	/**
-	 * Returns an instance of a client
-	 * @return Discord\DiscordClient
-	 */
-	public function getClient()
-	{
-		return $this->client;
 	}
 }

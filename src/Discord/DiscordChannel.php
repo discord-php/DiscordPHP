@@ -5,7 +5,7 @@ namespace Discord;
 use Discord\Guzzle;
 use Discord\Exceptions\MessageFailException;
 
-class DiscordChannel extends DiscordEntity
+class DiscordChannel
 {
 	protected $guild;
 	protected $channel_id;
@@ -24,15 +24,16 @@ class DiscordChannel extends DiscordEntity
 
 	/**
 	 * Sends a message to the channel
-	 * @param string
-	 * @param User ID
+	 * @param Message [string]
+	 * @param Mention User ID [string]
+	 * @return GuzzleResponse
 	 */
 	public function sendMessage($message, $mention = null)
 	{
 		try {
 			$response = Guzzle::post('channels/' . $this->channel_id . '/messages', [
 				'headers' => [
-					'authorization' => $this->client->token
+					'authorization' => $this->client->getToken()
 				],
 				'json' => [
 					'content' => (!is_null($mention)) ? '<@' . $mention . '> ' . $message : $message
@@ -43,5 +44,41 @@ class DiscordChannel extends DiscordEntity
 		}
 
 		return $response;
+	}
+
+	/**
+	 * Returns the channel guild
+	 * @return DiscordGuild
+	 */
+	public function getGuild()
+	{
+		return $this->guild;
+	}
+
+	/**
+	 * Gets the channel ID
+	 * @return integer
+	 */
+	public function getChannelId()
+	{
+		return $this->channel_id;
+	}
+
+	/**
+	 * Gets the channel name
+	 * @return string
+	 */
+	public function getChannelName()
+	{
+		return $this->channel_name;
+	}
+
+	/**
+	 * Checks if the channel is private
+	 * @return boolean
+	 */
+	public function isPrivate()
+	{
+		return $this->channel_private;
 	}
 }
