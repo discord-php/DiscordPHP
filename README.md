@@ -2,6 +2,8 @@
 
 An API to interact with the popular messaging and voice app [Discord!](http://discordapp.com)
 
+This is currently outdated. If you need another API for Discord I suggest you check out [this](https://github.com/Cleanse/discord-php/) one.
+
 ## Installation
 
 To install, you will need [Composer](http://getcomposer.org). There is a basic setup guide [here.](https://getcomposer.org/doc/00-intro.md)
