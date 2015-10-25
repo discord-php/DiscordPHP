@@ -1,19 +1,16 @@
 {
     "name": "team-reflex/discord-php",
-    "description": "An API to interface with Discord",
-    "require": {
-        "php": "^5.5.9",
-        "guzzlehttp/guzzle": "^5.0"
-    },
+    "description": "An unofficial API to interact with the voice and text service Discord.",
     "authors": [
         {
             "name": "David Cole",
-            "email": "david.cole@doesplay.com"
+            "email": "david@team-reflex.com"
         }
     ],
+    "require": {},
     "autoload": {
-        "psr-4": {
-            "Discord\\": "src/Discord"
-        }
+    	"psr-4": {
+    		"Discord\\": "src/Discord"
+    	}
     }
 }
