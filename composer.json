@@ -1,6 +1,7 @@
 {
     "name": "team-reflex/discord-php",
     "description": "An unofficial API to interact with the voice and text service Discord.",
+    "license": "MIT",
     "authors": [
         {
             "name": "David Cole",
