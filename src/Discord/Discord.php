@@ -53,4 +53,24 @@ class Discord
 	{
 		return $this->client;
 	}
+
+	/**
+	 * Handles dynamic calls to the class.
+	 *
+	 * @return mixed 
+	 */
+	public function __call($name, $args)
+	{
+		return call_user_func_array([$this->client, $name], $args);
+	}
+
+	/**
+	 * Handles dynamic variable calls to the class.
+	 *
+	 * @return mixed 
+	 */
+	public function __get($name)
+	{
+		return $this->client->{$name};
+	}
 }

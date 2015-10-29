@@ -11,7 +11,6 @@ class Client
 	public $email;
 	public $verified;
 	public $avatar;
-	public $client;
 	public $user;
 	protected $guzzle;
 
@@ -33,5 +32,25 @@ class Client
 			$request->avatar,
 			$this->guzzle
 		);
+	}
+
+	/**
+	 * Handles dynamic calls to the class.
+	 *
+	 * @return mixed 
+	 */
+	public function __call($name, $args)
+	{
+		return call_user_func_array([$this->user, $name], $args);
+	}
+
+	/**
+	 * Handles dynamic variable calls to the class.
+	 *
+	 * @return mixed 
+	 */
+	public function __get($name)
+	{
+		return $this->user->{$name};
 	}
 }
