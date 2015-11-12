@@ -2,10 +2,26 @@
 
 namespace Discord\Parts;
 
+use Discord\Exceptions\PartRequestFailedException;
+use Discord\Helpers\Guzzle;
 use Illuminate\Support\Str;
 
 abstract class Part implements \ArrayAccess, \Serializable
 {
+	/**
+	 * The parts fillable attributes.
+	 *
+	 * @var array 
+	 */
+	protected $fillable = [];
+
+	/**
+	 * Extra fillable defined by the base part.
+	 *
+	 * @var array 
+	 */
+	protected $extra_fillable = [];
+
 	/**
 	 * The parts attributes.
 	 * 
@@ -14,11 +30,39 @@ abstract class Part implements \ArrayAccess, \Serializable
 	protected $attributes = [];
 
 	/**
+	 * The parts attributes cache.
+	 *
+	 * @var array 
+	 */
+	protected $attributes_cache = [];
+
+	/**
 	 * Attributes that are hidden from debug info.
 	 *
 	 * @var array 
 	 */
-	protected $hidden = ['guzzle'];
+	protected $hidden = [];
+
+	/**
+	 * Is the part already created in the Discord servers?
+	 *
+	 * @var boolean 
+	 */
+	protected $created = false;
+
+	/**
+	 * Is the part deleted in the Discord servers?
+	 *
+	 * @var boolean 
+	 */
+	protected $deleted = false;
+
+	/**
+	 * The regex pattern to replace variables with.
+	 *
+	 * @var string 
+	 */
+	protected $regex = '/:([a-z_]+)/';
 
 	/**
 	 * Create a new part instance.
@@ -26,8 +70,9 @@ abstract class Part implements \ArrayAccess, \Serializable
 	 * @param array $attributes
 	 * @return void 
 	 */
-	public function __construct(array $attributes = [])
+	public function __construct(array $attributes = [], $created = false)
 	{
+		$this->created = $created;
 		$this->fill($attributes);
 
 		if (is_callable([$this, 'afterConstruct'])) {
@@ -41,11 +86,87 @@ abstract class Part implements \ArrayAccess, \Serializable
 	 * @param array $attributes
 	 * @return void 
 	 */
-	public function fill(array $attributes)
+	public function fill($attributes)
 	{
 		foreach ($attributes as $key => $value) {
-			$this->setAttribute($key, $value);
+			if (in_array($key, $this->fillable + $this->extra_fillable)) {
+				$this->setAttribute($key, $value);
+			}
 		}
+	}
+
+	/**
+	 * Gets a fresh copy of the part.
+	 *
+	 * @return boolean 
+	 */
+	public function fresh()
+	{
+		if ($this->deleted || !$this->created) return false;
+
+		$request = Guzzle::get($this->get);
+
+		$this->fill($request);
+
+		return true;
+	}
+
+	/**
+	 * Saves the part to the Discord servers.
+	 *
+	 * @return boolean 
+	 */
+	public function save()
+	{
+		$attributes = $this->created ? $this->getUpdatableAttributes() : $this->getCreatableAttributes();
+
+		try {
+			if ($this->created) {
+				$request = Guzzle::patch($this->replaceWithVariables($this->uris['update']), $attributes);
+			} else {
+				$request = Guzzle::post($this->uris['create'], $attributes);
+				$this->created = true;
+				$this->deleted = false;
+			}
+		} catch (\Exception $e) {
+			throw new PartRequestFailedException($e->getMessage());
+		} 
+
+		$this->fill($request);
+
+		return true;
+	}
+
+	/**
+	 * Deletes the part on the Discord servers.
+	 *
+	 * @return boolean 
+	 */
+	public function delete()
+	{
+		try {
+			$request = Guzzle::delete($this->replaceWithVariables($this->uris['delete']));
+			$this->created = false;
+			$this->deleted = true;
+		} catch (\Exception $e) {
+			throw new PartRequestFailedException($e->getMessage());
+		} 
+
+		$this->fill($request);
+
+		return true;
+	}
+
+	/**
+	 * Clears the attribute cache.
+	 *
+	 * @return boolean 
+	 */
+	public function clearCache()
+	{
+		$this->attributes_cache = [];
+
+		return true;
 	}
 
 	/**
@@ -64,6 +185,27 @@ abstract class Part implements \ArrayAccess, \Serializable
 		}
 
 		return false;
+	}
+
+	/**
+	 * Replaces variables in string with syntax :{varname}
+	 *
+	 * @param string $string 
+	 * @return string 
+	 */
+	public function replaceWithVariables($string)
+	{
+		$matcher = preg_match_all('/:([a-z_]+)/', $string);
+		$original = $matcher[0];
+		$vars = $matcher[1];
+
+		foreach ($vars as $key => $variable) {
+			if (isset($this->{$variable})) {
+				$string = str_replace($original[$key], $this->{$variable}, $string);
+			}
+		}
+
+		return $string;
 	}
 
 	/**
@@ -184,8 +326,9 @@ abstract class Part implements \ArrayAccess, \Serializable
 		$data = [];
 
 		foreach ($this->attributes as $key => $value) {
-			if (in_array($this->hidden, $key)) continue;
-			$data[$key] = $value;
+			if (in_array($key, $this->hidden)) continue;
+
+			$data[$key] = $this->getAttribute($key);
 		}
 
 		return $data;

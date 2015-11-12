@@ -4,115 +4,71 @@ namespace Discord\Helpers;
 
 use Discord\Exceptions\DiscordRequestFailedException;
 use GuzzleHttp\Client as GuzzleClient;
+use GuzzleHttp\Exception\RequestException;
 
 class Guzzle
 {
-	protected $base_url;
-	protected $guzzle;
-	protected $token;
-
-	public function __construct($base_url = 'https://discordapp.com/api')
-	{
-		$this->base_url = $base_url;	
-		$this->guzzle = new GuzzleClient();
-	}
+	static protected $base_url = 'https://discordapp.com/api';
 
 	/**
-	 * Sends a GET request to the specified URL
+	 * Handles dynamic calls to the class.
 	 *
 	 * @param string $url
 	 * @param array $params 
 	 * @param boolean $noauth
 	 */
-	public function get($url, $params = [], $noauth = false)
+	public static function __callStatic($name, $params)
 	{
+		$url = $params[0];
+		$content = @$params[1];
+		$auth = @$params[2];
+
+		$guzzle = new GuzzleClient();
 		$headers = [];
 
-		if (!$noauth) {
-			$headers['authorization'] = $this->token;
+		if (is_null($content)) {
+			$content = [];
+		}
+
+		if (!$auth) {
+			$headers['authorization'] = DISCORD_TOKEN;
 		}
 
 		try {
-			$request = $this->guzzle->request('GET', "{$this->base_url}/{$url}", [
-				'form_params' => $params,
-				'headers' => $headers
+			$request = $guzzle->request($name, self::$base_url.'/'.$url, [
+				'headers' => $headers,
+				'json' => $content
 			]);
 
-			if ($request->getStatusCode() != 200) {
-				$this->handleError($request->getStatusCode());
+			if ($request->getStatusCode() < 200 || $request->getStatusCode() > 226) {
+				self::handleError($request->getStatusCode(), 'A status code outside of 200 to 226 was returned.');
 			}
 		} catch (\RuntimeException $e) {
-			$this->handleError($e->getCode());
-		}
-
-		return $request;
-	}
-
-	/**
-	 * Sends a POST request to the specified URL
-	 *
-	 * @param string $url
-	 * @param array $params 
-	 * @param boolean $noauth
-	 */
-	public function post($url, $params = [], $noauth = false)
-	{
-		$headers = [];
-
-		if (!$noauth) {
-			$headers['authorization'] = $this->token;
-		}
-
-		try {
-			$request = $this->guzzle->request('POST', "{$this->base_url}/{$url}", [
-				'form_params' => $params,
-				'headers' => $headers
-			]);
-
-			if ($request->getStatusCode() != 200) {
-				$this->handleError($request->getStatusCode());
+			if ($e->hasResponse()) {
+				self::handleError($e->getCode(), $e->getResponse());
+			} else {
+				self::handleError($e->getCode(), $e->getMessage());
 			}
-		} catch (\RuntimeException $e) {
-			$this->handleError($e->getCode());
 		}
 
-		return $request;
+		return json_decode($request->getBody());
 	}
 
 	/**
 	 * Handles an error code.
 	 *
 	 * @param integer $error_code 
+	 * @param string $message
 	 */
-	public function handleError($error_code)
+	public static function handleError($error_code, $message)
 	{
 		switch ($error_code) {
 			case 400:
 				throw new DiscordRequestFailedException("Error code {$error_code}: This usually means you have entered an incorrect Email or Password.");
 				break;
 			default:
-				throw new DiscordRequestFailedException("Erorr code {$error_code}: There was an error processing the request.");
+				throw new DiscordRequestFailedException("Erorr code {$error_code}: There was an error processing the request. {$message->getReasonPhrase()}");
 				break;
 		}
-	}
-
-	/**
-	 * Returns the token for the currently logged in user.
-	 *
-	 * @return string
-	 */
-	public function getToken()
-	{
-		return $this->token;	
-	}
-
-	/**
-	 * Sets the token for the currently logged in user.
-	 * 
-	 * @param string $token 
-	 */
-	public function setToken($token)
-	{
-		$this->token = $token;
 	}
 }

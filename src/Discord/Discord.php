@@ -4,34 +4,36 @@ namespace Discord;
 
 use Discord\Exceptions\LoginFailedException;
 use Discord\Helpers\Guzzle;
-use Discord\Parts\Client;
+use Discord\Parts\User\Client;
 
 class Discord
 {
 	protected $guzzle;
 	protected $client;
 
-	public function __construct($email, $password)
+	public function __construct($email = null, $password = null, $token = null)
 	{
-		$this->guzzle = new Guzzle;
+		if (is_null($token)) {
+			$request = Guzzle::post('auth/login', [
+				'email' => $email,
+				'password' => $password
+			], true);
 
-		$request = $this->guzzle->post('auth/login', [
-			'email' => $email,
-			'password' => $password
-		]);
+			$token = $request->token;
+		}
 
-		$token = json_decode($request->getBody())->token;
-		$this->guzzle->setToken($token);
+		define("DISCORD_TOKEN", $token);
 
-		$request = json_decode($this->guzzle->get('users/@me')->getBody());
-		$this->client = new Client(
-			$request->id,
-			$request->username,
-			$request->email,
-			$request->verified,
-			$request->avatar, 
-			$this->guzzle
-		);
+		$request = Guzzle::get('users/@me');
+
+		$this->client = new Client([
+			'id'			=> $request->id,
+			'username'		=> $request->username,
+			'email'			=> $request->email,
+			'verified'		=> $request->verified,
+			'avatar'		=> $request->avatar,
+			'discriminator'	=> $request->discriminator
+		], true);
 	}
 
 	/**
