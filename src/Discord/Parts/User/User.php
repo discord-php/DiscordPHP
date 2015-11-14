@@ -84,4 +84,14 @@ class User extends Part
 	{
 		return $this->avatar;
 	}
+
+	/**
+	 * Returns a formatted mention.
+	 *
+	 * @return string 
+	 */
+	public function __toString()
+	{
+		return "<@{$this->id}>";
+	}
 }

@@ -31,6 +31,39 @@ class Channel extends Part
 	];
 
 	/**
+	 * Returns the messages attribute.
+	 *
+	 * @return array 
+	 */
+	public function getMessagesAttribute()
+	{
+		if (isset($this->attributes_cache['messages'])) return $this->attributes_cache['messages'];
+
+		$request = Guzzle::get("channels/{$this->id}/messages");
+		$messages = [];
+
+		foreach ($request as $index => $message) {
+			$messages[$index] = new Message([
+				'id'				=> $message->id,
+				'channel_id'		=> $message->channel_id,
+				'content'			=> $message->content,
+				'mentions'			=> $message->mentions,
+				'author'			=> $message->author,
+				'mention_everyone'	=> $message->mention_everyone,
+				'timestamp'			=> $message->timestamp,
+				'edited_timestamp'	=> $message->edited_timestamp,
+				'tts'				=> $message->tts,
+				'attachments'		=> $message->attachments,
+				'embeds'			=> $message->embeds
+			], true);
+		}	
+
+		$this->attributes_cache['messages'] = $messages;
+
+		return $messages;
+	}
+
+	/**
 	 * Sends a message to the channel if it is a text channel.
 	 *
 	 * @param string $text 
@@ -60,9 +93,9 @@ class Channel extends Part
 			'tts'				=> $request->tts,
 			'attachments'		=> $request->attachments,
 			'embeds'			=> $request->embeds
-		]);
+		], true);
 
-		$this->attributes['messages'][] = $message;
+		$this->attributes_cache['messages'][] = $message;
 
 		return $message;
 	}

@@ -152,8 +152,6 @@ abstract class Part implements \ArrayAccess, \Serializable
 			throw new PartRequestFailedException($e->getMessage());
 		} 
 
-		$this->fill($request);
-
 		return true;
 	}
 
@@ -195,13 +193,15 @@ abstract class Part implements \ArrayAccess, \Serializable
 	 */
 	public function replaceWithVariables($string)
 	{
-		$matcher = preg_match_all('/:([a-z_]+)/', $string);
-		$original = $matcher[0];
-		$vars = $matcher[1];
+		$matches = null;
+		$matcher = preg_match_all('/:([a-z_]+)/', $string, $matches);
+
+		$original = $matches[0];
+		$vars = $matches[1];
 
 		foreach ($vars as $key => $variable) {
-			if (isset($this->{$variable})) {
-				$string = str_replace($original[$key], $this->{$variable}, $string);
+			if ($attribute = $this->getAttribute($variable)) {
+				$string = str_replace($original[$key], $attribute, $string);
 			}
 		}
 
