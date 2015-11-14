@@ -65,6 +65,27 @@ abstract class Part implements \ArrayAccess, \Serializable
 	protected $regex = '/:([a-z_]+)/';
 
 	/**
+	 * Is the part creatable?
+	 *
+	 * @var boolean 
+	 */
+	public $creatable = true;
+
+	/**
+	 * Is the part deletable?
+	 *
+	 * @var boolean 
+	 */
+	public $deletable = true;
+
+	/**
+	 * Is the part editable?
+	 *
+	 * @var boolean 
+	 */
+	public $editable = true;
+
+	/**
 	 * Create a new part instance.
 	 * 
 	 * @param array $attributes
@@ -122,9 +143,13 @@ abstract class Part implements \ArrayAccess, \Serializable
 
 		try {
 			if ($this->created) {
+				if (!$this->editable) return false;
+
 				$request = Guzzle::patch($this->replaceWithVariables($this->uris['update']), $attributes);
 			} else {
-				$request = Guzzle::post($this->uris['create'], $attributes);
+				if (!$this->creatable) return false;
+				
+				$request = Guzzle::post($this->replaceWithVariables($this->uris['create']), $attributes);
 				$this->created = true;
 				$this->deleted = false;
 			}
@@ -144,6 +169,8 @@ abstract class Part implements \ArrayAccess, \Serializable
 	 */
 	public function delete()
 	{
+		if (!$this->deletable) return false;
+
 		try {
 			$request = Guzzle::delete($this->replaceWithVariables($this->uris['delete']));
 			$this->created = false;
@@ -194,7 +221,7 @@ abstract class Part implements \ArrayAccess, \Serializable
 	public function replaceWithVariables($string)
 	{
 		$matches = null;
-		$matcher = preg_match_all('/:([a-z_]+)/', $string, $matches);
+		$matcher = preg_match_all($this->regex, $string, $matches);
 
 		$original = $matches[0];
 		$vars = $matches[1];

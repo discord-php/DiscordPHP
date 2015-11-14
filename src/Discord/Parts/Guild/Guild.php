@@ -10,7 +10,7 @@ use Discord\Parts\User\User;
 
 class Guild extends Part
 {
-	const REGION_DEFAULT = 'us-west';
+	const REGION_DEFAULT = self::REGION_US_WEST;
 	const REGION_US_WEST = 'us-west';
 	const REGION_US_EAST = 'us-east';
 	const REGION_SINGAPORE = 'singapore';
@@ -71,7 +71,7 @@ class Guild extends Part
 				'hoist'			=> $role->hoist,
 				'position'		=> $role->position,
 				'permissions'	=> $role->permissions
-			]);
+			], true);
 		}
 
 		$this->attributes_cache['roles'] = $roles;
@@ -88,14 +88,14 @@ class Guild extends Part
 	{
 		if (isset($this->attributes_cache['owner'])) return $this->attributes_cache['owner'];
 
-		$request = Guzzle::get("users/{$this->owner_id}");
+		$request = Guzzle::get($this->replaceWithVariables('users/:owner_id'));
 
 		$owner = new User([
 			'id'			=> $request->id,
 			'username'		=> $request->username,
 			'avatar'		=> $request->avatar,
 			'discriminator'	=> $request->discriminator
-		]);
+		], true);
 
 		$this->attributes_cache['owner'] = $owner;
 
@@ -112,7 +112,7 @@ class Guild extends Part
 		if (isset($this->attributes_cache['channels'])) return $this->attributes_cache['channels'];
 	
 		$channels = [];
-		$request = Guzzle::get("guilds/{$this->id}/channels");
+		$request = Guzzle::get($this->replaceWithVariables('guilds/:id/channels'));
 
 		foreach ($request as $index => $channel) {
 			$channels[$index] = new Channel([
@@ -125,12 +125,36 @@ class Guild extends Part
 				'is_private'			=> $channel->is_private,
 				'last_message_id'		=> $channel->last_message_id,
 				'permission_overwrites'	=> $channel->permission_overwrites
-			]);
+			], true);
 		}
 
 		$this->attributes_cache['channels'] = $channels;
 
 		return $channels;
+	}
+
+	/**
+	 * Returns the guilds bans.
+	 *
+	 * @return array 
+	 */
+	public function getBansAttribute()
+	{
+		if (isset($this->attributes_cache['bans'])) return $this->attributes_cache['bans'];
+
+		$bans = [];
+		$request = Guzzle::get($this->replaceWithVariables('guilds/:id/bans'));;
+
+		foreach ($request as $index => $ban) {
+			$bans[$index] = new Ban([
+				'user'		=> $ban->user,
+				'guild'		=> $this
+			], true);
+		}
+
+		$this->attributes_cache['bans'] = $bans;
+
+		return $bans;
 	}
 
 	/**

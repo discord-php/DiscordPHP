@@ -4,11 +4,11 @@ namespace Discord;
 
 use Discord\Exceptions\LoginFailedException;
 use Discord\Helpers\Guzzle;
+use Discord\Parts\Guild\Invite;
 use Discord\Parts\User\Client;
 
 class Discord
 {
-	protected $guzzle;
 	protected $client;
 
 	public function __construct($email = null, $password = null, $token = null)
@@ -37,13 +37,21 @@ class Discord
 	}
 
 	/**
-	 * Returns the bare guzzle interface.
+	 * Accepts a Discord channel invite.
 	 *
-	 * @return Guzzle
+	 * @param string $code 
+	 * @return Invite 
 	 */
-	public function getGuzzle()
+	public function acceptInvite($code)
 	{
-		return $this->guzzle;
+		$request = Guzzle::post("invite/{$code}");
+
+		return new Invite([
+			'code'		=> $request->code,
+			'guild'		=> $request->guild,
+			'xkcdpass'	=> $request->xkcdpass,
+			'channel'	=> $request->channel
+		], true);
 	}
 
 	/**
