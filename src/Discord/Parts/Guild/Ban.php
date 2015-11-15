@@ -61,9 +61,9 @@ class Ban extends Part
     {
         return new User([
             'id'            => $value->id,
-            'username'        => $value->username,
+            'username'      => $value->username,
             'avatar'        => $value->avatar,
-            'discriminator'    => $value->discriminator
+            'discriminator' => $value->discriminator
         ]);
     }
 

@@ -36,8 +36,8 @@ class Guzzle
 
         try {
             $request = $guzzle->request($name, self::$base_url.'/'.$url, [
-                'headers' => $headers,
-                'json' => $content
+                'headers'   => $headers,
+                'json'      => $content
             ]);
 
             if ($request->getStatusCode() < 200 || $request->getStatusCode() > 226) {

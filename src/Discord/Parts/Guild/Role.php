@@ -19,7 +19,7 @@ class Role extends Part
      * @var array 
      */
     protected $uris = [
-        'get'        => '',
+        'get'       => '',
         'create'    => 'guilds/:guild_id/roles',
         'update'    => 'guilds/:id',
         'delete'    => 'guilds/:guild_id/roles/:id'
@@ -52,10 +52,10 @@ class Role extends Part
     public function getUpdatableAttributes()
     {
         return [
-            'name'            => $this->name,
-            'hoist'            => $this->hoist,
-            'color'            => $this->color,
-            'permissions'    => $this->permissions
+            'name'          => $this->name,
+            'hoist'         => $this->hoist,
+            'color'         => $this->color,
+            'permissions'   => $this->permissions
         ];
     }
 }

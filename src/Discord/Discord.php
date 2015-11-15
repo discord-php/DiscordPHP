@@ -24,8 +24,8 @@ class Discord
     {
         if (is_null($token)) {
             $request = Guzzle::post('auth/login', [
-                'email' => $email,
-                'password' => $password
+                'email'     => $email,
+                'password'  => $password
             ], true);
 
             $token = $request->token;
@@ -37,11 +37,11 @@ class Discord
 
         $this->client = new Client([
             'id'            => $request->id,
-            'username'        => $request->username,
-            'email'            => $request->email,
-            'verified'        => $request->verified,
+            'username'      => $request->username,
+            'email'         => $request->email,
+            'verified'      => $request->verified,
             'avatar'        => $request->avatar,
-            'discriminator'    => $request->discriminator
+            'discriminator' => $request->discriminator
         ], true);
     }
 
@@ -60,10 +60,10 @@ class Discord
         }
 
         return new Invite([
-            'code'        => $request->code,
-            'guild'        => $request->guild,
-            'xkcdpass'    => $request->xkcdpass,
-            'channel'    => $request->channel
+            'code'      => $request->code,
+            'guild'     => $request->guild,
+            'xkcdpass'  => $request->xkcdpass,
+            'channel'   => $request->channel
         ], true);
     }
 

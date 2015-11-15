@@ -27,7 +27,7 @@ class User extends Part
             $channel_id = $this->attributes_cache['channel_id'];
         } else {
             $channel = Guzzle::post('users/@me/channels', [
-                'recipient_id'    => $this->id
+                'recipient_id' => $this->id
             ]);
 
             $channel_id = $channel->id;
@@ -53,7 +53,7 @@ class User extends Part
             $channel_id = $this->attributes_cache['channel_id'];
         } else {
             $channel = Guzzle::post('users/@me/channels', [
-                'recipient_id'    => $this->id
+                'recipient_id' => $this->id
             ]);
 
             $channel_id = $channel->id;

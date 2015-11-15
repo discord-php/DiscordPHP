@@ -31,7 +31,7 @@ class Guild extends Part
      * @var array 
      */
     protected $uris = [
-        'get'        => 'guilds/:id',
+        'get'       => 'guilds/:id',
         'create'    => 'guilds',
         'update'    => 'guilds/:id',
         'delete'    => 'guilds/:id'
@@ -67,12 +67,12 @@ class Guild extends Part
         foreach ($this->attributes['roles'] as $index => $role) {
             $roles[$index] = new Role([
                 'id'            => $role->id,
-                'name'            => $role->name,
-                'color'            => $role->color,
-                'managed'        => $role->managed,
-                'hoist'            => $role->hoist,
-                'position'        => $role->position,
-                'permissions'    => $role->permissions
+                'name'          => $role->name,
+                'color'         => $role->color,
+                'managed'       => $role->managed,
+                'hoist'         => $role->hoist,
+                'position'      => $role->position,
+                'permissions'   => $role->permissions
             ], true);
         }
 
@@ -96,9 +96,9 @@ class Guild extends Part
 
         $owner = new User([
             'id'            => $request->id,
-            'username'        => $request->username,
+            'username'      => $request->username,
             'avatar'        => $request->avatar,
-            'discriminator'    => $request->discriminator
+            'discriminator' => $request->discriminator
         ], true);
 
         $this->attributes_cache['owner'] = $owner;
@@ -123,14 +123,14 @@ class Guild extends Part
         foreach ($request as $index => $channel) {
             $channels[$index] = new Channel([
                 'id'                    => $channel->id,
-                'name'                    => $channel->name,
-                'type'                    => $channel->type,
-                'topic'                    => $channel->topic,
-                'guild_id'                => $channel->guild_id,
-                'position'                => $channel->position,
+                'name'                  => $channel->name,
+                'type'                  => $channel->type,
+                'topic'                 => $channel->topic,
+                'guild_id'              => $channel->guild_id,
+                'position'              => $channel->position,
                 'is_private'            => $channel->is_private,
-                'last_message_id'        => $channel->last_message_id,
-                'permission_overwrites'    => $channel->permission_overwrites
+                'last_message_id'       => $channel->last_message_id,
+                'permission_overwrites' => $channel->permission_overwrites
             ], true);
         }
 
@@ -156,8 +156,8 @@ class Guild extends Part
 
         foreach ($request as $index => $ban) {
             $bans[$index] = new Ban([
-                'user'        => $ban->user,
-                'guild'        => $this
+                'user'  => $ban->user,
+                'guild' => $this
             ], true);
         }
 
@@ -188,7 +188,7 @@ class Guild extends Part
     public function getCreatableAttributes()
     {
         return [
-            'name'        => $this->name,
+            'name'      => $this->name,
             'region'    => $this->validateRegion()
         ];
     }
@@ -201,7 +201,7 @@ class Guild extends Part
     public function getUpdatableAttributes()
     {
         return [
-            'name'    => $this->name
+            'name' => $this->name
         ];
     }
 }

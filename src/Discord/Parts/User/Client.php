@@ -25,9 +25,9 @@ class Client extends Part
     {
         $this->user = new User([
             'id'            => $this->id,
-            'username'        => $this->username,
+            'username'      => $this->username,
             'avatar'        => $this->avatar,
-            'discriminator'    => $this->discriminator
+            'discriminator' => $this->discriminator
         ], true);
     }
 
@@ -48,16 +48,16 @@ class Client extends Part
         foreach ($request as $index => $guild) {
             $guilds[$index] = new Guild([
                 'id'                => $guild->id,
-                'name'                => $guild->name,
-                'icon'                => $guild->icon,
+                'name'              => $guild->name,
+                'icon'              => $guild->icon,
                 'region'            => $guild->region,
-                'owner_id'            => $guild->owner_id,
-                'roles'                => $guild->roles,
-                'joined_at'            => $guild->joined_at,
+                'owner_id'          => $guild->owner_id,
+                'roles'             => $guild->roles,
+                'joined_at'         => $guild->joined_at,
                 'afk_channel_id'    => $guild->afk_channel_id,
-                'afk_timeout'        => $guild->afk_timeout,
-                'embed_enabled'        => $guild->embed_enabled,
-                'embed_channel_id'    => $guild->embed_channel_id
+                'afk_timeout'       => $guild->afk_timeout,
+                'embed_enabled'     => $guild->embed_enabled,
+                'embed_channel_id'  => $guild->embed_channel_id
             ], true);
         }
 

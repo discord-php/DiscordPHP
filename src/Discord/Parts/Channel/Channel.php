@@ -24,7 +24,7 @@ class Channel extends Part
      * @var array 
      */
     protected $uris = [
-        'get'        => 'channels/:id',
+        'get'       => 'channels/:id',
         'create'    => 'guilds/:guild_id/channels',
         'update'    => 'channels/:id',
         'delete'    => 'channels/:id'
@@ -48,14 +48,14 @@ class Channel extends Part
             $messages[$index] = new Message([
                 'id'                => $message->id,
                 'channel_id'        => $message->channel_id,
-                'content'            => $message->content,
-                'mentions'            => $message->mentions,
+                'content'           => $message->content,
+                'mentions'          => $message->mentions,
                 'author'            => $message->author,
-                'mention_everyone'    => $message->mention_everyone,
-                'timestamp'            => $message->timestamp,
-                'edited_timestamp'    => $message->edited_timestamp,
-                'tts'                => $message->tts,
-                'attachments'        => $message->attachments,
+                'mention_everyone'  => $message->mention_everyone,
+                'timestamp'         => $message->timestamp,
+                'edited_timestamp'  => $message->edited_timestamp,
+                'tts'               => $message->tts,
+                'attachments'       => $message->attachments,
                 'embeds'            => $message->embeds
             ], true);
         }
@@ -88,14 +88,14 @@ class Channel extends Part
         $message = new Message([
             'id'                => $request->id,
             'channel_id'        => $request->channel_id,
-            'content'            => $request->content,
-            'mentions'            => $request->mentions,
+            'content'           => $request->content,
+            'mentions'          => $request->mentions,
             'author'            => $request->author,
-            'mention_everyone'    => $request->mention_everyone,
-            'timestamp'            => $request->timestamp,
-            'edited_timestamp'    => $request->edited_timestamp,
-            'tts'                => $request->tts,
-            'attachments'        => $request->attachments,
+            'mention_everyone'  => $request->mention_everyone,
+            'timestamp'         => $request->timestamp,
+            'edited_timestamp'  => $request->edited_timestamp,
+            'tts'               => $request->tts,
+            'attachments'       => $request->attachments,
             'embeds'            => $request->embeds
         ], true);
 
@@ -146,8 +146,8 @@ class Channel extends Part
     public function getCreatableAttributes()
     {
         return [
-            'name'    => $this->name,
-            'type'    => $this->getChannelType()
+            'name'  => $this->name,
+            'type'  => $this->getChannelType()
         ];
     }
 
@@ -159,7 +159,7 @@ class Channel extends Part
     public function getUpdatableAttributes()
     {
         return [
-            'name'    => $this->name,
+            'name'  => $this->name,
             'topic' => $this->topic
         ];
     }

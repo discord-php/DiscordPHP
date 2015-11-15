@@ -20,7 +20,7 @@ class Message extends Part
      * @var array 
      */
     protected $uris = [
-        'get'        => 'channels/:channel_id/messages',
+        'get'       => 'channels/:channel_id/messages',
         'create'    => 'channels/:channel_id/messages',
         'update'    => 'channels/:channel_id/messages/:id',
         'delete'    => 'channels/:channel_id/messages/:id'
@@ -57,9 +57,9 @@ class Message extends Part
     {
         return new User([
             'id'            => $this->attributes['author']->id,
-            'username'        => $this->attributes['author']->username,
+            'username'      => $this->attributes['author']->username,
             'avatar'        => $this->attributes['author']->avatar,
-            'discriminator'    => $this->attributes['author']->discriminator
+            'discriminator' => $this->attributes['author']->discriminator
         ]);
     }
 
@@ -81,9 +81,9 @@ class Message extends Part
     public function getCreatableAttributes()
     {
         return [
-            'content'    => $this->content,
-            'mentions'    => $this->mentions,
-            'tts'        => $this->tts
+            'content'   => $this->content,
+            'mentions'  => $this->mentions,
+            'tts'       => $this->tts
         ];
     }
 
@@ -95,8 +95,8 @@ class Message extends Part
     public function getUpdatableAttributes()
     {
         return [
-            'content'    => $this->content,
-            'mentions'    => $this->mentions
+            'content'   => $this->content,
+            'mentions'  => $this->mentions
         ];
     }
 }
