@@ -2,6 +2,7 @@
 
 namespace Discord;
 
+use Discord\Exceptions\InviteInvalidException;
 use Discord\Exceptions\LoginFailedException;
 use Discord\Helpers\Guzzle;
 use Discord\Parts\Guild\Invite;
@@ -44,7 +45,11 @@ class Discord
 	 */
 	public function acceptInvite($code)
 	{
-		$request = Guzzle::post("invite/{$code}");
+		try {
+			$request = Guzzle::post("invite/{$code}");
+		} catch (\Exception $e) {
+			throw new InviteInvalidException('The invite is invalid or has expired.');
+		}
 
 		return new Invite([
 			'code'		=> $request->code,
