@@ -72,6 +72,7 @@ class User extends Part
      */
     public function getAvatarAttribute()
     {
+        if (empty($this->attributes['avatar'])) return null;
         return "https://discordapp.com/api/users/{$this->id}/avatars/{$this->attributes['avatar']}.jpg";
     }
 

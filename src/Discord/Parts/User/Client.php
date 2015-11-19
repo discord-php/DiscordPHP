@@ -26,7 +26,7 @@ class Client extends Part
         $this->user = new User([
             'id'            => $this->id,
             'username'      => $this->username,
-            'avatar'        => $this->avatar,
+            'avatar'        => $this->attributes['avatar'],
             'discriminator' => $this->discriminator
         ], true);
     }
@@ -73,6 +73,7 @@ class Client extends Part
      */
     public function getAvatarAttribute()
     {
+        if (empty($this->attributes['avatar'])) return null;
         return "https://discordapp.com/api/users/{$this->id}/avatars/{$this->attributes['avatar']}.jpg";
     }
 
