@@ -46,6 +46,22 @@ class Discord
     }
 
     /**
+     * Logs out of Discord.
+     *
+     * @return boolean
+     */
+    public function logout()
+    {
+        $request = Guzzle::post('auth/logout', [
+            'token' => DISCORD_TOKEN
+        ]);
+
+        $this->client = null;
+
+        return true;
+    }
+
+    /**
      * Accepts a Discord channel invite.
      *
      * @param string $code 
@@ -68,22 +84,13 @@ class Discord
     }
 
     /**
-     * Returns the currently logged in client.
-     *
-     * @return Client 
-     */
-    public function getClient()
-    {
-        return $this->client;
-    }
-
-    /**
      * Handles dynamic calls to the class.
      *
      * @return mixed 
      */
     public function __call($name, $args)
     {
+        if (is_null($this->client)) return false;
         return call_user_func_array([$this->client, $name], $args);
     }
 
@@ -94,6 +101,7 @@ class Discord
      */
     public function __get($name)
     {
+        if (is_null($this->client)) return false;
         return $this->client->{$name};
     }
 }
