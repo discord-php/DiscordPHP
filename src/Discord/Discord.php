@@ -90,7 +90,9 @@ class Discord
      */
     public function __call($name, $args)
     {
-        if (is_null($this->client)) return false;
+        if (is_null($this->client)) {
+            return false;
+        }
         return call_user_func_array([$this->client, $name], $args);
     }
 
@@ -101,7 +103,9 @@ class Discord
      */
     public function __get($name)
     {
-        if (is_null($this->client)) return false;
+        if (is_null($this->client)) {
+            return false;
+        }
         return $this->client->{$name};
     }
 }

@@ -46,30 +46,30 @@ class Permission extends Part
      * @var array 
      */
     protected $bitoffset = [
-   		'create_instant_invite' => 0,
-   		'kick_members'			=> 1,
-   		'ban_members'			=> 2,
-   		'manage_roles'			=> 3,
-   		'manage_permissions'	=> 3,
-   		'manage_channels'		=> 4,
-   		'manage_channel'		=> 4,
-   		'manage_server'			=> 5,
+        'create_instant_invite' => 0,
+        'kick_members'            => 1,
+        'ban_members'            => 2,
+        'manage_roles'            => 3,
+        'manage_permissions'    => 3,
+        'manage_channels'        => 4,
+        'manage_channel'        => 4,
+        'manage_server'            => 5,
 
-   		'read_messages'			=> 10,
-   		'send_messages'			=> 11,
-   		'send_tts_messages'		=> 12,
-   		'manage_messages'		=> 13,
-   		'embed_links'			=> 14,
-   		'attach_files'			=> 15,
-   		'read_message_history'	=> 16,
-   		'mention_everyone'		=> 17,
+        'read_messages'            => 10,
+        'send_messages'            => 11,
+        'send_tts_messages'        => 12,
+        'manage_messages'        => 13,
+        'embed_links'            => 14,
+        'attach_files'            => 15,
+        'read_message_history'    => 16,
+        'mention_everyone'        => 17,
 
-   		'voice_connect'			=> 20,
-   		'voice_speak'			=> 21,
-   		'voice_mute_members'	=> 22,
-   		'voice_deafen_members'	=> 23,
-   		'voice_move_members'	=> 24,
-   		'voice_use_vad'			=> 25
+        'voice_connect'            => 20,
+        'voice_speak'            => 21,
+        'voice_mute_members'    => 22,
+        'voice_deafen_members'    => 23,
+        'voice_move_members'    => 24,
+        'voice_use_vad'            => 25
     ];
 
     /**
@@ -86,10 +86,14 @@ class Permission extends Part
             return;
         }
 
-    	if (!in_array($key, $this->bitoffset)) return;
-    	if (!is_bool($value)) return;
+        if (!in_array($key, $this->bitoffset)) {
+            return;
+        }
+        if (!is_bool($value)) {
+            return;
+        }
 
-    	$this->setBitwise($this->bitoffset[$key], $value);
+        $this->setBitwise($this->bitoffset[$key], $value);
     }
 
     /**
@@ -104,7 +108,9 @@ class Permission extends Part
             return $this->attributes['perms'];
         }
 
-        if (!in_array($key, $this->bitoffset)) return;
+        if (!in_array($key, $this->bitoffset)) {
+            return;
+        }
 
         if ((($this->perms >> $this->bitoffset[$key]) & 1) == 1) {
             return true;
@@ -121,13 +127,13 @@ class Permission extends Part
      */
     public function setBitwise($key, $value)
     {
-    	if ($value) {
-    		$this->attributes['perms'] |= (1 << $key);
-    	} else {
-    		$this->attributes['perms'] &= ~(1 << $key);
-    	}
+        if ($value) {
+            $this->attributes['perms'] |= (1 << $key);
+        } else {
+            $this->attributes['perms'] &= ~(1 << $key);
+        }
 
-    	return $value;
+        return $value;
     }
 
     /**
