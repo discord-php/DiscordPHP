@@ -89,6 +89,7 @@ abstract class Part implements \ArrayAccess, \Serializable
      * Create a new part instance.
      * 
      * @param array $attributes
+     * @param boolean $created 
      * @return void 
      */
     public function __construct(array $attributes = [], $created = false)

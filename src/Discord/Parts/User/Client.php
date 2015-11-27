@@ -17,7 +17,7 @@ class Client extends Part
     protected $fillable = ['id', 'username', 'email', 'verified', 'avatar', 'discriminator'];
 
     /**
-     * Runs any extra construction tasks
+     * Runs any extra construction tasks.
      *
      * @return void 
      */

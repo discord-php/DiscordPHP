@@ -2,6 +2,7 @@
 
 namespace Discord\Parts\Guild;
 
+use Discord\Parts\Guild\Permission;
 use Discord\Parts\Part;
 
 class Role extends Part
@@ -11,7 +12,7 @@ class Role extends Part
      *
      * @var array 
      */
-    protected $fillable = ['id', 'name', 'color', 'managed', 'hoist', 'position', 'permissions'];
+    protected $fillable = ['id', 'name', 'color', 'managed', 'hoist', 'position', 'permissions', 'guild_id'];
 
     /**
      * URIs used to get/create/update/delete the part.
@@ -21,18 +22,47 @@ class Role extends Part
     protected $uris = [
         'get'       => '',
         'create'    => 'guilds/:guild_id/roles',
-        'update'    => 'guilds/:id',
+        'update'    => 'guilds/:guild_id/roles/:id',
         'delete'    => 'guilds/:guild_id/roles/:id'
     ];
 
     /**
-     * Colors available to be applied to a role.
+     * Sets the permissions attribute.
      *
-     * @var array 
+     * @param Permission|integer $permission 
+     * @return boolean 
      */
-    public $colors = [
-        
-    ];
+    public function setPermissionsAttribute($permission)
+    {
+        if (!$permission instanceof Permission) {
+            return false;
+        }
+
+        $this->attributes['permissions'] = $permission;
+
+        return true;
+    }
+
+    /**
+     * Sets the color for a role. RGB.
+     *
+     * @param integer $red 
+     * @param integer $green 
+     * @param integer $blue 
+     * @return boolean
+     */
+    public function setColor($red = null, $green = null, $blue = null)
+    {
+        if (is_null($red)) {
+            $this->setAttribute('color', 0);
+
+            return true;
+        }
+
+        $this->setAttribute('color', "{$red}{$green}{$blue}");
+
+        return true;
+    }
 
     /**
      * Returns the attributes needed to create.
@@ -55,7 +85,7 @@ class Role extends Part
             'name'          => $this->name,
             'hoist'         => $this->hoist,
             'color'         => $this->color,
-            'permissions'   => $this->permissions
+            'permissions'   => $this->permissions->perms
         ];
     }
 }

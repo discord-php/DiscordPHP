@@ -4,6 +4,7 @@ namespace Discord\Parts\Guild;
 
 use Discord\Helpers\Guzzle;
 use Discord\Parts\Channel\Channel;
+use Discord\Parts\Guild\Permission;
 use Discord\Parts\Guild\Role;
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
@@ -72,7 +73,10 @@ class Guild extends Part
                 'managed'       => $role->managed,
                 'hoist'         => $role->hoist,
                 'position'      => $role->position,
-                'permissions'   => $role->permissions
+                'permissions'   => new Permission([
+                    'perms' => $role->permissions
+                ]),
+                'guild_id'      => $this->id
             ], true);
         }
 
