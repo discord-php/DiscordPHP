@@ -7,6 +7,7 @@ use Discord\Parts\Channel\Channel;
 use Discord\Parts\Guild\Permission;
 use Discord\Parts\Guild\Role;
 use Discord\Parts\Part;
+use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
 
 class Guild extends Part
@@ -144,6 +145,36 @@ class Guild extends Part
     }
 
     /**
+     * Returns the guilds members.
+     *
+     * @return array 
+     */
+    public function getMembersAttribute()
+    {
+        if (isset($this->attributes_cache['members'])) {
+            return $this->attributes_cache['members'];
+        }
+
+        $members = [];
+        $request = Guzzle::get($this->replaceWithVariables('guilds/:id/members'));
+
+        foreach ($request as $index => $member) {
+            $members[$index] = new Member([
+                'user'      => $member->user,
+                'roles'     => $member->roles,
+                'deaf'      => $member->deaf,
+                'mute'      => $member->mute,
+                'joined_at' => $member->joined_at,
+                'guild_id'  => $this->id
+            ], true);
+        }
+
+        $this->attributes_cache['members'] = $members;
+
+        return $members;
+    }
+
+    /**
      * Returns the guilds bans.
      *
      * @return array 
@@ -156,7 +187,6 @@ class Guild extends Part
 
         $bans = [];
         $request = Guzzle::get($this->replaceWithVariables('guilds/:id/bans'));
-        ;
 
         foreach ($request as $index => $ban) {
             $bans[$index] = new Ban([

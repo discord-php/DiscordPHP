@@ -86,6 +86,13 @@ abstract class Part implements \ArrayAccess, \Serializable
     public $editable = true;
 
     /**
+     * Should we fill the part after saving?
+     *
+     * @var boolean 
+     */
+    protected $fillAfterSave = true;
+
+    /**
      * Create a new part instance.
      * 
      * @param array $attributes
@@ -164,7 +171,9 @@ abstract class Part implements \ArrayAccess, \Serializable
             throw new PartRequestFailedException($e->getMessage());
         }
 
-        $this->fill($request);
+        if ($this->fillAfterSave) {
+            $this->fill($request);
+        }
 
         return true;
     }
