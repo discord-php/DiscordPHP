@@ -18,7 +18,7 @@ class Guild extends Part
     const REGION_SINGAPORE = 'singapore';
     const REGION_LONDON = 'london';
     const REGION_SYDNEY = 'sydney';
-    const REGION_AMSTERDAN = 'amsterdan';
+    const REGION_AMSTERDAM = 'amsterdam';
 
     /**
      * The parts fillable attributes.
