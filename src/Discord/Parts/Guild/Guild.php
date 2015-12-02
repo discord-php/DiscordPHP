@@ -50,7 +50,7 @@ class Guild extends Part
         self::REGION_LONDON,
         self::REGION_SINGAPORE,
         self::REGION_SYDNEY,
-        self::REGION_AMSTERDAN
+        self::REGION_AMSTERDAM
     ];
 
     /**
