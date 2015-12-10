@@ -2,6 +2,7 @@
 
 namespace Discord\Parts\Guild;
 
+use Carbon\Carbon;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Part;
@@ -88,11 +89,11 @@ class Invite extends Part
     /**
      * Returns the created at attribute.
      *
-     * @return DateTime
+     * @return Carbon
      */
     public function getCreatedAtAttribute()
     {
-        return new \DateTime($this->attributes['created_at']);
+        return new Carbon($this->attributes['created_at']);
     }
 
     /**

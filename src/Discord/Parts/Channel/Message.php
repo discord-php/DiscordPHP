@@ -2,6 +2,7 @@
 
 namespace Discord\Parts\Channel;
 
+use Carbon\Carbon;
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
 
@@ -66,11 +67,11 @@ class Message extends Part
     /**
      * Returns the timestamp attribute.
      *
-     * @return \DateTime 
+     * @return Carbon 
      */
     public function getTimestampAttribute()
     {
-        return new \DateTime($this->attributes['timestamp']);
+        return new Carbon($this->attributes['timestamp']);
     }
 
     /**

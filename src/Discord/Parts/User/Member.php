@@ -2,6 +2,7 @@
 
 namespace Discord\Parts\User;
 
+use Carbon\Carbon;
 use Discord\Helpers\Collection;
 use Discord\Helpers\Guzzle;
 use Discord\Parts\Guild\Guild;
@@ -121,11 +122,11 @@ class Member extends Part
     /**
      * Returns the joined at attribute.
      *
-     * @return DateTime 
+     * @return Carbon 
      */
     public function getJoinedAtAttribute()
     {
-        return new \DateTime($this->attributes['joined_at']);
+        return new Carbon($this->attributes['joined_at']);
     }
 
     /**
