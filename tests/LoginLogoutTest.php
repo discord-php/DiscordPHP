@@ -2,7 +2,7 @@
 
 use Discord\Discord;
 
-class TestLoginLogout extends PHPUnit_Framework_TestCase
+class LoginLogoutTest extends PHPUnit_Framework_TestCase
 {
 	/**
 	 * Tests logging into Discord.
