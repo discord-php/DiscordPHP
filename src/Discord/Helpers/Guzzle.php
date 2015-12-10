@@ -24,7 +24,9 @@ class Guzzle
         $auth = @$params[2];
 
         $guzzle = new GuzzleClient();
-        $headers = [];
+        $headers = [
+            'User-Agent' => 'DiscordPHP (https://github.com/teamreflex/DiscordPHP)'
+        ];
 
         if (is_null($content)) {
             $content = [];
