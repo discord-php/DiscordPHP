@@ -1,4 +1,4 @@
-## DiscordPHP
+## DiscordPHP [![Build Status](https://travis-ci.org/teamreflex/DiscordPHP.svg?branch=master)](https://travis-ci.org/teamreflex/DiscordPHP)
 
 An API to interact with the popular text and voice service Discord.
 
