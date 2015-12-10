@@ -7,3 +7,6 @@ php:
 
 install: 
     - composer install
+
+script:
+	- phpunit --colors --debug  --coverage-text
