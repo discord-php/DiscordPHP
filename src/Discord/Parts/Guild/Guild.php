@@ -178,6 +178,28 @@ class Guild extends Part
     }
 
     /**
+     * Returns the guilds icon.
+     *
+     * @return string|null
+     */
+    public function getIconAttribute()
+    {
+        if (is_null($this->attributes['icon'])) return null;   
+
+        return "https://discordapp.com/{$this->attributes['id']}/icons/{$this->attributes['icon']}.jpg";
+    }
+
+    /**
+     * Returns the guild icon hash.
+     *
+     * @return string|null
+     */
+    public function getIconHashAttribute()
+    {
+        return $this->attributes['icon'];   
+    }
+
+    /**
      * Validates the specified region.
      *
      * @return string 
