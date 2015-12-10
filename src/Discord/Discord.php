@@ -31,7 +31,7 @@ class Discord
             $token = $request->token;
         }
 
-        define("DISCORD_TOKEN", $token);
+        @define("DISCORD_TOKEN", $token);
 
         $request = Guzzle::get('users/@me');
 
