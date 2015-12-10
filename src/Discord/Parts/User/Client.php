@@ -44,7 +44,7 @@ class Client extends Part
         }
 
         $guilds = [];
-        $request = Guzzle::get("users/{$this->id}/guilds");
+        $request = Guzzle::get("users/@me/guilds");
 
         foreach ($request as $index => $guild) {
             $guilds[$index] = new Guild([
