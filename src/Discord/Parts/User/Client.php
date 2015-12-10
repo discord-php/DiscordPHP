@@ -2,6 +2,7 @@
 
 namespace Discord\Parts\User;
 
+use Discord\Helpers\Collection;
 use Discord\Helpers\Guzzle;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Part;
@@ -60,6 +61,8 @@ class Client extends Part
                 'embed_channel_id'  => $guild->embed_channel_id
             ], true);
         }
+
+        $guilds = new Collection($guilds);
 
         $this->attributes_cache['guilds'] = $guilds;
 

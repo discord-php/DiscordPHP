@@ -2,6 +2,7 @@
 
 namespace Discord\Parts\Channel;
 
+use Discord\Helpers\Collection;
 use Discord\Helpers\Guzzle;
 use Discord\Parts\Channel\Message;
 use Discord\Parts\Part;
@@ -60,6 +61,8 @@ class Channel extends Part
             ], true);
         }
 
+        $messages = new Collection($messages);
+
         $this->attributes_cache['messages'] = $messages;
 
         return $messages;
@@ -99,7 +102,7 @@ class Channel extends Part
             'embeds'            => $request->embeds
         ], true);
 
-        $this->attributes_cache['messages'][] = $message;
+        $this->attributes_cache['messages']->push($message);
 
         return $message;
     }

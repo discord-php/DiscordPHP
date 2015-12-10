@@ -2,6 +2,7 @@
 
 namespace Discord\Parts\Guild;
 
+use Discord\Helpers\Collection;
 use Discord\Helpers\Guzzle;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Guild\Permission;
@@ -81,6 +82,8 @@ class Guild extends Part
             ], true);
         }
 
+        $roles = new Collection($roles);
+
         $this->attributes_cache['roles'] = $roles;
 
         return $roles;
@@ -139,6 +142,8 @@ class Guild extends Part
             ], true);
         }
 
+        $channels = new Collection($channels);
+
         $this->attributes_cache['channels'] = $channels;
 
         return $channels;
@@ -164,6 +169,8 @@ class Guild extends Part
                 'guild' => $this
             ], true);
         }
+
+        $bans = new Collection($bans);
 
         $this->attributes_cache['bans'] = $bans;
 

@@ -2,6 +2,7 @@
 
 namespace Discord\Parts\User;
 
+use Discord\Helpers\Collection;
 use Discord\Helpers\Guzzle;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Guild\Permission;
@@ -109,6 +110,8 @@ class Member extends Part
                 ], true);
             }
         }
+
+        $roles = new Collection($roles);
 
         $this->attributes_cache['roles'] = $roles;
 
