@@ -10,6 +10,8 @@ use Discord\Parts\User\Client;
 
 class Discord
 {
+    const VERSION = 'v2-alpha';
+    
     protected $client;
 
     /**
