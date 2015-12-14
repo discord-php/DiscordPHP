@@ -2,6 +2,7 @@
 
 namespace Discord\Helpers;
 
+use Discord\Discord;
 use Discord\Exceptions\DiscordRequestFailedException;
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\Exception\RequestException;
@@ -25,7 +26,7 @@ class Guzzle
 
         $guzzle = new GuzzleClient();
         $headers = [
-            'User-Agent' => 'DiscordPHP (https://github.com/teamreflex/DiscordPHP)'
+            'User-Agent' => 'DiscordPHP/' . Discord::VERSION . ' DiscordBot (https://github.com/teamreflex/DiscordPHP, ' . Discord::VERSION . ')'
         ];
 
         if (is_null($content)) {
