@@ -102,6 +102,10 @@ class Channel extends Part
             'embeds'            => $request->embeds
         ], true);
 
+        if (!isset($this->attributes_cache['messages'])) {
+            $this->attributes_cache['messages'] = new Collection();
+        }
+
         $this->attributes_cache['messages']->push($message);
 
         return $message;
