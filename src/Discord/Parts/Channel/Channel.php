@@ -17,7 +17,7 @@ class Channel extends Part
      *
      * @var array 
      */
-    protected $fillable = ['id', 'name', 'type', 'topic', 'guild_id', 'position', 'is_private', 'last_message_id', 'permission_override', 'messages'];
+    protected $fillable = ['id', 'name', 'type', 'topic', 'guild_id', 'position', 'is_private', 'last_message_id', 'permission_override', 'messages', 'message_count'];
 
     /**
      * URIs used to get/create/update/delete the part.
@@ -32,6 +32,16 @@ class Channel extends Part
     ];
 
     /**
+     * Runs any extra construction tasks.
+     *
+     * @return void 
+     */
+    public function afterConstruct()
+    {
+        $this->message_count = 50;
+    }
+
+    /**
      * Returns the messages attribute.
      *
      * @return array 
@@ -42,7 +52,11 @@ class Channel extends Part
             return $this->attributes_cache['messages'];
         }
 
-        $request = Guzzle::get("channels/{$this->id}/messages");
+        if ($this->message_count >= 100) {
+            trigger_error('Requesting more messages than 100 will only return 100.');
+        }
+
+        $request = Guzzle::get("channels/{$this->id}/messages?limit={$this->message_count}");
         $messages = [];
 
         foreach ($request as $index => $message) {
