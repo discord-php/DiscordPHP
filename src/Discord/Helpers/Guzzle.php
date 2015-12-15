@@ -37,24 +37,39 @@ class Guzzle
             $headers['authorization'] = DISCORD_TOKEN;
         }
 
-        try {
-            $request = $guzzle->request($name, self::$base_url.'/'.$url, [
-                'headers'   => $headers,
-                'json'      => $content
-            ]);
+        $finalRequest = null;
+        $done = false;
 
-            if ($request->getStatusCode() < 200 || $request->getStatusCode() > 226) {
-                self::handleError($request->getStatusCode(), 'A status code outside of 200 to 226 was returned.');
-            }
-        } catch (\RuntimeException $e) {
-            if ($e->hasResponse()) {
-                self::handleError($e->getCode(), $e->getResponse());
-            } else {
-                self::handleError($e->getCode(), $e->getMessage());
+        while (!$done) {
+            try {
+                $request = $guzzle->request($name, self::$base_url.'/'.$url, [
+                    'headers'   => $headers,
+                    'json'      => $content
+                ]);
+
+                if ($request->getStatusCode() < 200 || $request->getStatusCode() > 226 && $request->getStatusCode() != 429) {
+                    return self::handleError($request->getStatusCode(), 'A status code outside of 200 to 226 was returned.');
+                }
+
+                if ($request->getStatusCode() == 429) {
+                    $sleeptime = $request->header('Retry-After') / 1000;
+                    sleep($sleeptime);
+                }
+
+                $done = true;
+                $finalRequest = $request;
+            } catch (\RuntimeException $e) {
+                if ($e->hasResponse()) {
+                    if ($e->getCode() != 429) {
+                        self::handleError($e->getCode(), $e->getResponse());
+                    }
+                } else {
+                    self::handleError($e->getCode(), $e->getMessage());
+                }
             }
         }
 
-        return json_decode($request->getBody());
+        return json_decode($finalRequest->getBody());
     }
 
     /**
