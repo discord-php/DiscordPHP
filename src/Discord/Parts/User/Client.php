@@ -2,6 +2,7 @@
 
 namespace Discord\Parts\User;
 
+use Discord\Exceptions\PasswordEmptyException;
 use Discord\Helpers\Collection;
 use Discord\Helpers\Guzzle;
 use Discord\Parts\Guild\Guild;
@@ -11,11 +12,34 @@ use Discord\Parts\User\User;
 class Client extends Part
 {
     /**
+     * Is the part creatable?
+     *
+     * @var boolean 
+     */
+    public $creatable = false;
+
+    /**
+     * Is the part deletable?
+     *
+     * @var boolean 
+     */
+    public $deletable = false;
+
+    /**
      * The parts fillable attributes.
      *
      * @var array 
      */
-    protected $fillable = ['id', 'username', 'email', 'verified', 'avatar', 'discriminator'];
+    protected $fillable = ['id', 'username', 'password', 'email', 'verified', 'avatar', 'discriminator'];
+
+    /**
+     * URIs used to get/create/update/delete the part.
+     *
+     * @var array 
+     */
+    protected $uris = [
+        'update'    => 'users/@me'
+    ];
 
     /**
      * Runs any extra construction tasks.
@@ -30,6 +54,23 @@ class Client extends Part
             'avatar'        => $this->attributes['avatar'],
             'discriminator' => $this->discriminator
         ], true);
+    }
+
+    /**
+     * Sets the users avatar.
+     *
+     * @param string $filepath
+     * @return boolean
+     */
+    public function setAvatar($filepath)
+    {
+        $extension = pathinfo($filepath, PATHINFO_EXTENSION);
+        $file = file_get_contents($filepath);
+        $base64 = base64_encode($file);
+
+        $this->attributes['avatarhash'] = "data:image/{$extension};base64,{$base64}";
+
+        return true;
     }
 
     /**
@@ -90,5 +131,30 @@ class Client extends Part
     public function getAvatarIDAttribute()
     {
         return $this->avatar;
+    }
+
+    /**
+     * Returns the attributes needed to edit.
+     *
+     * @return array 
+     */
+    public function getUpdatableAttributes()
+    {
+        if (empty($this->attributes['password'])) {
+            throw new PasswordEmptyException('You must enter your password to update your profile.');
+        }
+
+        $attributes =  [
+            'username'      => $this->attributes['username'],
+            'email'         => $this->email,
+            'password'      => $this->attributes['password'],
+            'avatar'        => $this->attributes['avatarhash']
+        ];
+
+        if (!empty($this->attributes['new_password'])) {
+            $attributes['new_password'] = $this->attributes['new_password'];
+        }
+
+        return $attributes; 
     }
 }

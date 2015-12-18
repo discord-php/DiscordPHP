@@ -40,6 +40,7 @@ class Discord
         $this->client = new Client([
             'id'            => $request->id,
             'username'      => $request->username,
+            'password'      => $password,
             'email'         => $request->email,
             'verified'      => $request->verified,
             'avatar'        => $request->avatar,
@@ -123,6 +124,7 @@ class Discord
     /**
      * Handles dynamic variable calls to the class.
      *
+     * @param string $name 
      * @return mixed 
      */
     public function __get($name)
@@ -131,5 +133,17 @@ class Discord
             return false;
         }
         return $this->client->{$name};
+    }
+
+    /**
+     * Handles dynamic variable set calls to the class.
+     *
+     * @param string $name 
+     * @param mixed $value 
+     * @return void 
+     */
+    public function __set($name, $value)
+    {
+        $this->client->setAttribute($name, $value);
     }
 }
