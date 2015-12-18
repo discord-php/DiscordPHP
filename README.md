@@ -4,6 +4,10 @@ An API to interact with the popular text and voice service Discord.
 
 The API is currently being reworked.
 
+### Help
+
+If you need any help feel free to join the [DiscordAPI Server](https://discord.gg/0SBTUU1wZTX3afOb) and ask in the `#php_discordphp` channel. Tag `@Uniquoooo` if you need any help specific to the API.
+
 ### Documentation
 
 Work will be started on documentation after the API has been finished. 
