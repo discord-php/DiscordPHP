@@ -5,6 +5,7 @@ namespace Discord\Parts\Channel;
 use Discord\Helpers\Collection;
 use Discord\Helpers\Guzzle;
 use Discord\Parts\Channel\Message;
+use Discord\Parts\Guild\Invite;
 use Discord\Parts\Part;
 
 class Channel extends Part
@@ -39,6 +40,30 @@ class Channel extends Part
     public function afterConstruct()
     {
         $this->message_count = 50;
+    }
+
+    /**
+     * Creates an invite for the channel.
+     *
+     * @return Invite 
+     */
+    public function createInvite()
+    {
+        $request = Guzzle::post($this->replaceWithVariables('channels/:id/invites'));
+
+        return new Invite([
+            'code'          => $request->code,
+            'max_age'       => $request->max_age,
+            'guild'         => $request->guild,
+            'revoked'       => $request->revoked,
+            'created_at'    => $request->created_at,
+            'temporary'     => $request->temporary,
+            'uses'          => $request->uses,
+            'max_uses'      => $request->max_uses,
+            'inviter'       => $request->inviter,
+            'xkcdpass'      => $request->xkcdpass,
+            'channel'       => $request->channel
+        ], true);
     }
 
     /**
