@@ -15,6 +15,22 @@ class Role extends Part
     protected $fillable = ['id', 'name', 'color', 'managed', 'hoist', 'position', 'permissions', 'guild_id'];
 
     /**
+     * Runs extra construction tasks.
+     *
+     * @return void 
+     */
+    public function afterConstruct()
+    {
+        if (!$this->created) {
+            $this->permissions = new Permission();
+            
+            if (isset($this->guild_id)) {
+                $this->save();
+            }
+        }
+    }
+
+    /**
      * URIs used to get/create/update/delete the part.
      *
      * @var array 
