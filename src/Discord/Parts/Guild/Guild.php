@@ -55,6 +55,16 @@ class Guild extends Part
     ];
 
     /**
+     * Alias for delete().
+     *
+     * @return boolean 
+     */
+    public function leave()
+    {
+        return $this->delete();
+    }
+
+    /**
      * Returns the guilds roles.
      *
      * @return Collection
