@@ -69,7 +69,7 @@ class Channel extends Part
     /**
      * Returns the messages attribute.
      *
-     * @return array 
+     * @return Collection 
      */
     public function getMessagesAttribute()
     {

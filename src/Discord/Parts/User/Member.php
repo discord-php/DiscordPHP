@@ -84,7 +84,7 @@ class Member extends Part
     /**
      * Returns the roles attribute.
      *
-     * @return array 
+     * @return Collection 
      */
     public function getRolesAttribute()
     {

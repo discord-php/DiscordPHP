@@ -57,7 +57,7 @@ class Guild extends Part
     /**
      * Returns the guilds roles.
      *
-     * @return array
+     * @return Collection
      */
     public function getRolesAttribute()
     {
@@ -117,7 +117,7 @@ class Guild extends Part
     /**
      * Returns the guilds channels.
      *
-     * @return array 
+     * @return Collection 
      */
     public function getChannelsAttribute()
     {
@@ -152,7 +152,7 @@ class Guild extends Part
     /**
      * Returns the guilds bans.
      *
-     * @return array 
+     * @return Collection 
      */
     public function getBansAttribute()
     {

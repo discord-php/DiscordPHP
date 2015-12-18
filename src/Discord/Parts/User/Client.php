@@ -35,7 +35,7 @@ class Client extends Part
     /**
      * Returns an array of Guilds.
      *
-     * @return array 
+     * @return Collection 
      */
     public function getGuildsAttribute()
     {
