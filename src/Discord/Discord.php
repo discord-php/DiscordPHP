@@ -64,6 +64,28 @@ class Discord
     }
 
     /**
+     * Gets a Discord channel invite.
+     *
+     * @param string $code 
+     * @return Invite
+     */
+    public function getInvite($code)
+    {
+        try {
+            $request = Guzzle::get("invite/{$code}");
+        } catch (\Exception $e) {
+            throw new InviteInvalidException('The invite is invalid or has expired.');
+        }
+
+        return new Invite([
+            'code'      => $request->code,
+            'guild'     => $request->guild,
+            'xkcdpass'  => $request->xkcdpass,
+            'channel'   => $request->channel
+        ], true);
+    }
+
+    /**
      * Accepts a Discord channel invite.
      *
      * @param string $code 
