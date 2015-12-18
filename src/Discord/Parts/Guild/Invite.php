@@ -35,6 +35,16 @@ class Invite extends Part
     ];
 
     /**
+     * Returns the invite URL attribute.
+     *
+     * @return string 
+     */
+    public function getInviteUrlAttribute()
+    {
+        return "https://discord.gg/{$this->code}"; 
+    }  
+
+    /**
      * Returns the guild attribute.
      *
      * @return Guild 
