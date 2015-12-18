@@ -52,8 +52,8 @@ class Guzzle
                 }
 
                 if ($request->getStatusCode() == 429) {
-                    $sleeptime = $request->header('Retry-After') / 1000;
-                    sleep($sleeptime);
+                    $sleeptime = $request->header('Retry-After') * 1000;
+                    usleep($sleeptime);
                 }
 
                 $done = true;
