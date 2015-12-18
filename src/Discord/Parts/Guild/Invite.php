@@ -31,7 +31,7 @@ class Invite extends Part
      */
     protected $uris = [
         'create'    => 'channels/:channel_id/invites',
-        'delete'    => 'invite/:id'
+        'delete'    => 'invite/:code'
     ];
 
     /**
