@@ -12,10 +12,9 @@ class Collection extends BaseCollection
 	 *
 	 * @param mixed $key 
 	 * @param mixed $name 
-	 * @param mixed $default
 	 * @return mixed 
 	 */
-	public function get($key, $value, $default = null)
+	public function get($key, $value = null)
 	{
 		foreach ($this->items as $item) {
 			if (isset($item[$key])) {
@@ -25,6 +24,6 @@ class Collection extends BaseCollection
 			}
 		}	
 
-		return $default;
+		return null;
 	}
 }
