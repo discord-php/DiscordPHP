@@ -10,8 +10,18 @@ use Discord\Parts\User\Client;
 
 class Discord
 {
-    const VERSION = 'v2-alpha';
+    /**
+     * The current version of the API. 
+     *
+     * @var string 
+     */
+    const VERSION = 'v2.0.1';
     
+    /**
+     * The Client instance.
+     * 
+     * @var Client
+     */
     protected $client;
 
     /**

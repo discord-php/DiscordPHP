@@ -9,6 +9,11 @@ use GuzzleHttp\Exception\RequestException;
 
 class Guzzle
 {
+    /**
+     * The Base URL of the API.
+     * 
+     * @var string
+     */
     protected static $base_url = 'https://discordapp.com/api';
 
     /**
