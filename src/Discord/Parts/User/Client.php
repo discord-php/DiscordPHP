@@ -155,6 +155,6 @@ class Client extends Part
             $attributes['new_password'] = $this->attributes['new_password'];
         }
 
-        return $attributes; 
+        return $attributes;
     }
 }

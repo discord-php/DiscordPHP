@@ -194,7 +194,9 @@ class Guild extends Part
      */
     public function getIconAttribute()
     {
-        if (is_null($this->attributes['icon'])) return null;   
+        if (is_null($this->attributes['icon'])) {
+            return null;
+        }
 
         return "https://discordapp.com/{$this->attributes['id']}/icons/{$this->attributes['icon']}.jpg";
     }
@@ -206,7 +208,7 @@ class Guild extends Part
      */
     public function getIconHashAttribute()
     {
-        return $this->attributes['icon'];   
+        return $this->attributes['icon'];
     }
 
     /**

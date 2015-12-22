@@ -12,6 +12,14 @@ If you need any help feel free to join the [DiscordAPI Server](https://discord.g
 
 Work will be started on documentation after the API has been finished. 
 
+### Other Libraries
+
+Here is a list of the other libraries that are being worked on!
+
+#### .NET
+
+- [Discord-Net]
+
 ### Contributing
 
 We are open to anyone contributing as long as you follow our code standards. We use PSR-4 for our autoloading standard and PSR-2 for our code formatting standard. Please, if you send in pull requests follow these standards.
