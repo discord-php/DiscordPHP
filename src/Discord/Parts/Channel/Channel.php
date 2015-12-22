@@ -111,20 +111,18 @@ class Channel extends Part
      * Sends a message to the channel if it is a text channel.
      *
      * @param string $text 
-     * @param array $mentions
      * @param boolean $tts 
      * @return Message|boolean
      */
-    public function sendMessage($text, array $mentions = [], $tts = false)
+    public function sendMessage($text, $tts = false)
     {
         if ($this->type != self::TYPE_TEXT) {
             return false;
         }
 
         $request = Guzzle::post("channels/{$this->id}/messages", [
-            'content'    => $text,
-            'mentions'    => $mentions,
-            'tts'        => $tts
+            'content'   => $text,
+            'tts'       => $tts
         ]);
 
         $message = new Message([

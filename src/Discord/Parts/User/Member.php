@@ -146,4 +146,14 @@ class Member extends Part
             'roles' => $roles
         ];
     }
+
+    /**
+     * Returns a formatted mention.
+     *
+     * @return string 
+     */
+    public function __toString()
+    {
+        return "<@{$this->user->id}>";
+    }
 }
