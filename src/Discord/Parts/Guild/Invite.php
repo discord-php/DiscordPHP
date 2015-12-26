@@ -31,8 +31,18 @@ class Invite extends Part
      */
     protected $uris = [
         'create'    => 'channels/:channel_id/invites',
-        'delete'    => 'invite/:id'
+        'delete'    => 'invite/:code'
     ];
+
+    /**
+     * Returns the invite URL attribute.
+     *
+     * @return string 
+     */
+    public function getInviteUrlAttribute()
+    {
+        return "https://discord.gg/{$this->code}";
+    }
 
     /**
      * Returns the guild attribute.

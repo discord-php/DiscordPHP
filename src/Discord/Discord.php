@@ -82,7 +82,8 @@ class Discord
 
         try {
             file_put_contents($_SERVER['PWD'] . '/' . md5($email), $request->token);
-        } catch (\Exception $e) {}
+        } catch (\Exception $e) {
+        }
 
         @define('DISCORD_TOKEN', $request->token);
         return;

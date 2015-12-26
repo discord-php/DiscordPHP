@@ -55,9 +55,19 @@ class Guild extends Part
     ];
 
     /**
+     * Alias for delete().
+     *
+     * @return boolean 
+     */
+    public function leave()
+    {
+        return $this->delete();
+    }
+
+    /**
      * Returns the guilds roles.
      *
-     * @return array
+     * @return Collection
      */
     public function getRolesAttribute()
     {
@@ -117,7 +127,7 @@ class Guild extends Part
     /**
      * Returns the guilds channels.
      *
-     * @return array 
+     * @return Collection 
      */
     public function getChannelsAttribute()
     {
@@ -152,7 +162,7 @@ class Guild extends Part
     /**
      * Returns the guilds bans.
      *
-     * @return array 
+     * @return Collection 
      */
     public function getBansAttribute()
     {
@@ -184,7 +194,9 @@ class Guild extends Part
      */
     public function getIconAttribute()
     {
-        if (is_null($this->attributes['icon'])) return null;   
+        if (is_null($this->attributes['icon'])) {
+            return null;
+        }
 
         return "https://discordapp.com/{$this->attributes['id']}/icons/{$this->attributes['icon']}.jpg";
     }
@@ -196,7 +208,7 @@ class Guild extends Part
      */
     public function getIconHashAttribute()
     {
-        return $this->attributes['icon'];   
+        return $this->attributes['icon'];
     }
 
     /**

@@ -84,7 +84,7 @@ class Member extends Part
     /**
      * Returns the roles attribute.
      *
-     * @return array 
+     * @return Collection 
      */
     public function getRolesAttribute()
     {
@@ -145,5 +145,15 @@ class Member extends Part
         return [
             'roles' => $roles
         ];
+    }
+
+    /**
+     * Returns a formatted mention.
+     *
+     * @return string 
+     */
+    public function __toString()
+    {
+        return "<@{$this->user->id}>";
     }
 }

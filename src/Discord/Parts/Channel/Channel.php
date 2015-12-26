@@ -5,6 +5,7 @@ namespace Discord\Parts\Channel;
 use Discord\Helpers\Collection;
 use Discord\Helpers\Guzzle;
 use Discord\Parts\Channel\Message;
+use Discord\Parts\Guild\Invite;
 use Discord\Parts\Part;
 
 class Channel extends Part
@@ -17,7 +18,7 @@ class Channel extends Part
      *
      * @var array 
      */
-    protected $fillable = ['id', 'name', 'type', 'topic', 'guild_id', 'position', 'is_private', 'last_message_id', 'permission_override', 'messages'];
+    protected $fillable = ['id', 'name', 'type', 'topic', 'guild_id', 'position', 'is_private', 'last_message_id', 'permission_override', 'messages', 'message_count'];
 
     /**
      * URIs used to get/create/update/delete the part.
@@ -32,9 +33,43 @@ class Channel extends Part
     ];
 
     /**
+     * Runs any extra construction tasks.
+     *
+     * @return void 
+     */
+    public function afterConstruct()
+    {
+        $this->message_count = 50;
+    }
+
+    /**
+     * Creates an invite for the channel.
+     *
+     * @return Invite 
+     */
+    public function createInvite()
+    {
+        $request = Guzzle::post($this->replaceWithVariables('channels/:id/invites'));
+
+        return new Invite([
+            'code'          => $request->code,
+            'max_age'       => $request->max_age,
+            'guild'         => $request->guild,
+            'revoked'       => $request->revoked,
+            'created_at'    => $request->created_at,
+            'temporary'     => $request->temporary,
+            'uses'          => $request->uses,
+            'max_uses'      => $request->max_uses,
+            'inviter'       => $request->inviter,
+            'xkcdpass'      => $request->xkcdpass,
+            'channel'       => $request->channel
+        ], true);
+    }
+
+    /**
      * Returns the messages attribute.
      *
-     * @return array 
+     * @return Collection 
      */
     public function getMessagesAttribute()
     {
@@ -42,7 +77,11 @@ class Channel extends Part
             return $this->attributes_cache['messages'];
         }
 
-        $request = Guzzle::get("channels/{$this->id}/messages");
+        if ($this->message_count >= 100) {
+            trigger_error('Requesting more messages than 100 will only return 100.');
+        }
+
+        $request = Guzzle::get("channels/{$this->id}/messages?limit={$this->message_count}");
         $messages = [];
 
         foreach ($request as $index => $message) {
@@ -72,20 +111,18 @@ class Channel extends Part
      * Sends a message to the channel if it is a text channel.
      *
      * @param string $text 
-     * @param array $mentions
      * @param boolean $tts 
      * @return Message|boolean
      */
-    public function sendMessage($text, array $mentions = [], $tts = false)
+    public function sendMessage($text, $tts = false)
     {
         if ($this->type != self::TYPE_TEXT) {
             return false;
         }
 
         $request = Guzzle::post("channels/{$this->id}/messages", [
-            'content'    => $text,
-            'mentions'    => $mentions,
-            'tts'        => $tts
+            'content'   => $text,
+            'tts'       => $tts
         ]);
 
         $message = new Message([
