@@ -11,29 +11,20 @@ use Discord\Parts\User\Client;
 class Discord
 {
     const VERSION = 'v2-alpha';
-    
+
     protected $client;
 
     /**
      * Logs into the Discord servers.
-     * 
-     * @param string $email    
-     * @param string $password 
-     * @param string $token   
-     * @return void 
+     *
+     * @param string $email
+     * @param string $password
+     * @param string $token
+     * @return void
      */
     public function __construct($email = null, $password = null, $token = null)
     {
-        if (is_null($token)) {
-            $request = Guzzle::post('auth/login', [
-                'email'     => $email,
-                'password'  => $password
-            ], true);
-
-            $token = $request->token;
-        }
-
-        @define("DISCORD_TOKEN", $token);
+        $this->setToken($email, $password, $token);
 
         $request = Guzzle::get('users/@me');
 
@@ -45,6 +36,56 @@ class Discord
             'avatar'        => $request->avatar,
             'discriminator' => $request->discriminator
         ], true);
+    }
+
+    /**
+     * Check the filesystem for the token.
+     *
+     * @param string $email
+     * @return string|null
+     */
+    public function checkForCaching($email)
+    {
+        if (file_exists($_SERVER['PWD'] . '/' . md5($email))) {
+            $file = file_get_contents($_SERVER['PWD'] . '/' . md5($email));
+
+            return $file;
+        }
+
+        return null;
+    }
+
+    /**
+     * Sets the token for the API.
+     *
+     * @param string $email
+     * @param string $password
+     * @param string $token
+     * @return void
+     */
+    public function setToken($email, $password, $token)
+    {
+        if (!is_null($token)) {
+            @define('DISCORD_TOKEN', $token);
+            return;
+        }
+
+        if (!is_null($token = $this->checkForCaching($email))) {
+            @define('DISCORD_TOKEN', $token);
+            return;
+        }
+
+        $request = Guzzle::post('auth/login', [
+            'email'     => $email,
+            'password'  => $password
+        ], true);
+
+        try {
+            file_put_contents($_SERVER['PWD'] . '/' . md5($email), $request->token);
+        } catch (\Exception $e) {}
+
+        @define('DISCORD_TOKEN', $request->token);
+        return;
     }
 
     /**
@@ -66,8 +107,8 @@ class Discord
     /**
      * Accepts a Discord channel invite.
      *
-     * @param string $code 
-     * @return Invite 
+     * @param string $code
+     * @return Invite
      */
     public function acceptInvite($code)
     {
@@ -88,7 +129,7 @@ class Discord
     /**
      * Handles dynamic calls to the class.
      *
-     * @return mixed 
+     * @return mixed
      */
     public function __call($name, $args)
     {
@@ -101,7 +142,7 @@ class Discord
     /**
      * Handles dynamic variable calls to the class.
      *
-     * @return mixed 
+     * @return mixed
      */
     public function __get($name)
     {
