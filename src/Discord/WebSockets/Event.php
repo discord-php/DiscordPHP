@@ -4,26 +4,10 @@ namespace Discord\WebSockets;
 
 class Event
 {
-	// Constants
-
-	const MESSAGE_CREATE 	= 'MESSAGE_CREATE';
 	const READY 			= 'READY';
+	const MESSAGE_CREATE 	= 'MESSAGE_CREATE';
 
-	/**
-	 * The data in array format.
-	 *
-	 * @var array 
-	 */
-	protected $data;
-
-	/**
-	 * Handles construction of the event.
-	 *
-	 * @param mixed $data 
-	 * @return void 
-	 */
-	public function __construct($data)
-	{
-		$this->data = $data;
-	}
+	const CHANNEL_CREATE	= 'CHANNEL_CREATE';
+	const CHANNEL_DELETE	= 'CHANNEL_DELETE';
+	const CHANNEL_UPDATE	= 'CHANNEL_UPDATE';
 }

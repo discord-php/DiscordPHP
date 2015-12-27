@@ -88,8 +88,12 @@ class WebSocket extends EventEmitter
 				$data = json_decode($data);
 
 				if (!is_null($handler = $this->handlers->getHandler($data->t))) {
-					$handler = new $handler($data->d);
+					$handler = new $handler();
 					$this->emit($data->t, [$handler->getData($data->d), $ws, $this->discord]);
+
+					if (is_callable([$handler, 'updateDiscordInstance'])) {
+						$this->discord = $handler->updateDiscordInstance($handler->getData($data->d), $this->discord);
+					}
 				}
 
 				if ($data->t == Event::READY) {
@@ -123,6 +127,10 @@ class WebSocket extends EventEmitter
 			                'afk_channel_id'    => $guild->afk_channel_id,
 			                'afk_timeout'       => $guild->afk_timeout
 						], true);
+
+						// preload
+						$guildPart->getChannelsAttribute(); 
+						$guildPart->getBansAttribute();
 
 						// guild members
 						$members = new Collection();
@@ -159,7 +167,7 @@ class WebSocket extends EventEmitter
 					$this->discord->setCache('guilds', $guilds);
 
 					// after we do everything, emit ready
-					$this->emit('ready', [$ws, $this->discord]);
+					$this->emit('ready', [$this->discord]);
 				}
 			});
 
