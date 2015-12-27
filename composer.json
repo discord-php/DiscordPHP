@@ -11,7 +11,8 @@
     "require": {
     	"guzzlehttp/guzzle": "~5.3|~6.0",
         "illuminate/support": "^5.1",
-        "nesbot/carbon": "^1.21"
+        "nesbot/carbon": "^1.21",
+        "ratchet/pawl": "^0.1.2"
     },
     "require-dev": {
         "symfony/var-dumper": "^2.7",
