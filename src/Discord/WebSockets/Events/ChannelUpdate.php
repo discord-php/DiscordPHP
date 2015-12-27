@@ -38,10 +38,18 @@ class ChannelUpdate extends Event
 	 */
 	public function updateDiscordInstance($data, $discord)
 	{
-		$guild = $discord->guilds->get('id', $data->guild_id);
-		$channel = $guild->channels->get('id', $discord->id);
-		$guild->channels->pull($channel);
-		$guild->channels->push($data);
+		foreach ($discord->guilds as $index => $guild) {
+			if ($guild->id == $data->guild_id) {
+				foreach ($guild->channels as $cindex => $channel) {
+					if ($channel->id == $data->id) {
+						$guild->channels->pull($channel);
+						$guild->channels->push($data);
+
+						break;
+					}
+				}
+			}
+		}
 
 		return $discord;
 	}

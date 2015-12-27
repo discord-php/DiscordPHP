@@ -41,6 +41,22 @@ class GuildBanRemove extends Event
 			}
 		}
 
+		foreach ($discord->guilds as $index => $guild) {
+			if ($guild->id == $data->guild_id) {
+				foreach ($guild->bans as $bindex => $ban) {
+					if ($ban->user_id == $data->user_id) {
+						$guild->bans->pull($bindex);
+						break;
+					}
+				}
+
+				$discord->guilds->pull($index);
+				$discord->guilds->push($guild);
+
+				break;
+			}
+		}
+
 		return $discord;
 	}
 }

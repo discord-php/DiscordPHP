@@ -33,7 +33,16 @@ class GuildMemberAdd extends Event
 	 */
 	public function updateDiscordInstance($data, $discord)
 	{
-		$discord->guilds->get('id', $data->guild_id)->members->push($data);
+		foreach ($discord->guilds as $index => $guild) {
+			if ($guild->id == $data->guild_id) {
+				$guild->members->push($data);
+
+				$discord->guilds->pull($index);
+				$discord->guilds->push($guild);
+
+				break;
+			}
+		}
 
 		return $discord;
 	}

@@ -38,9 +38,19 @@ class ChannelDelete extends Event
 	 */
 	public function updateDiscordInstance($data, $discord)
 	{
-		$guild = $discord->guilds->get('id', $data->guild_id);
-		$channel = $guild->channels->get('id', $discord->id);
-		$guild->channels->pull($channel);
+		foreach ($discord->guilds as $index => $guild) {
+			if ($guild->id == $data->guild_id) {
+				$discord->guilds->pull($index);
+
+				foreach ($guild->channels as $cindex => $channel) {
+					if ($channel->id == $data->id) {
+						$guild->channels->pull($index);
+
+						return $discord;
+					}
+				}
+			}
+		}
 
 		return $discord;
 	}

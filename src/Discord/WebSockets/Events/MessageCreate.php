@@ -41,9 +41,19 @@ class MessageCreate extends Event
 	 */
 	public function updateDiscordInstance($data, $discord)
 	{
-		foreach ($discord->guilds as $guild) {
-			if ($guild->channels->get('id', $data->channel_id) != null) {
-				$discord->guilds->get('id', $guild->id)->channels->get('id', $data->channel_id)->messages->push($data);
+		foreach ($discord->guilds as $index => $guild) {
+			foreach ($guild->channels as $cindex => $channel) {
+				if ($channel->id == $data->channel_id) {
+					$channel->messages->push($data);
+
+					$guild->channels->pull($cindex);
+					$guild->channels->push($channel);
+
+					$discord->guilds->pull($index);
+					$discord->guilds->push($guild);
+
+					return $discord;
+				}
 			}
 		}
 

@@ -38,7 +38,15 @@ class ChannelCreate extends Event
 	 */
 	public function updateDiscordInstance($data, $discord)
 	{
-		$discord->guilds->get('id', $data->guild_id)->channels->push($data);
+		foreach ($discord->guilds as $index => $guild) {
+			if ($guild->id == $data->guild_id) {
+				$discord->guilds->pull($index);
+				$guild->channels->push($data);
+				$discord->guilds->push();
+
+				break;
+			}
+		}
 
 		return $discord;
 	}

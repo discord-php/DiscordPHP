@@ -32,7 +32,23 @@ class GuildMemberUpdate extends Event
 	 */
 	public function updateDiscordInstance($data, $discord)
 	{
-		
+		foreach ($discord->guilds as $index => $guild) {
+			if ($guild->id == $data->guild_id) {
+				foreach ($guild->members as $mindex => $member) {
+					if ($member->id == $data->id) {
+						$guild->members->pull($mindex);
+						$guild->members->push($data);
+
+						break;
+					}
+				}
+
+				$discord->guilds->pull($index);
+				$discord->guilds->push($guild);
+
+				break;
+			}
+		}
 
 		return $discord;
 	}
