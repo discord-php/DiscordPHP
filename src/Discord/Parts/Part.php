@@ -290,6 +290,18 @@ abstract class Part implements \ArrayAccess, \Serializable
     }
 
     /**
+     * Sets a cache attribute on the part.
+     *
+     * @param string $key 
+     * @param mixed $value 
+     * @return void 
+     */
+    public function setCache($key, $value)
+    {
+        $this->attributes_cache[$key] = $value;
+    }
+
+    /**
      * Gets an attribute via key. Used for ArrayAccess.
      *
      * @param string $key

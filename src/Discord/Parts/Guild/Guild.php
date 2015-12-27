@@ -26,7 +26,7 @@ class Guild extends Part
      *
      * @var array 
      */
-    protected $fillable = ['id', 'name', 'icon', 'region', 'owner_id', 'roles', 'joined_at', 'afk_channel_id', 'afk_timeout', 'embed_enabled', 'embed_channel_id'];
+    protected $fillable = ['id', 'name', 'icon', 'region', 'owner_id', 'roles', 'joined_at', 'afk_channel_id', 'afk_timeout', 'embed_enabled', 'embed_channel_id', 'members'];
 
     /**
      * URIs used to get/create/update/delete the part.
@@ -62,6 +62,23 @@ class Guild extends Part
     public function leave()
     {
         return $this->delete();
+    }
+
+    /**
+     * Returns the guilds members.
+     *
+     * @return Collection
+     */
+    public function getMembersAttribute()
+    {
+        if (isset($this->attributes_cache['members'])) {
+            return $this->attributes_cache['members'];
+        }
+
+        // Members aren't retrievable via REST anymore,
+        // they will be set if the websocket is used.
+
+        return null;
     }
 
     /**

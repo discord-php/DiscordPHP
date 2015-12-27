@@ -30,7 +30,7 @@ class Client extends Part
      *
      * @var array 
      */
-    protected $fillable = ['id', 'username', 'password', 'email', 'verified', 'avatar', 'discriminator'];
+    protected $fillable = ['id', 'username', 'password', 'email', 'verified', 'avatar', 'discriminator', 'user_settings'];
 
     /**
      * URIs used to get/create/update/delete the part.

@@ -154,6 +154,18 @@ class Discord
         if (is_null($this->client)) {
             return false;
         }
-        return $this->client->{$name};
+        return $this->client->getAttribute($name);
+    }
+
+    /**
+     * Handles dynamic set calls to the class.
+     *
+     * @param string $variable 
+     * @param mixed $value 
+     * @return void 
+     */
+    public function __set($variable, $value)
+    {
+        $this->client->setAttribute($variable, $value);
     }
 }

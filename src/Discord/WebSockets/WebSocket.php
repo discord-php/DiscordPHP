@@ -3,7 +3,10 @@
 namespace Discord\WebSockets;
 
 use Discord\Discord;
+use Discord\Helpers\Collection;
 use Discord\Helpers\Guzzle;
+use Discord\Parts\Guild\Guild;
+use Discord\Parts\User\Member;
 use Discord\WebSockets\Handlers;
 use Evenement\EventEmitter;
 use Ratchet\Client\Factory as WsFactory;
@@ -63,6 +66,7 @@ class WebSocket extends EventEmitter
 	 */
 	public function __construct(Discord $discord)
 	{
+		$this->discord = $discord;
 		$this->gateway = $this->getGateway();
 
 		$this->loop = LoopFactory::create();
@@ -96,6 +100,66 @@ class WebSocket extends EventEmitter
 							'd' => microtime(true) * 1000
 						]);
 					});
+
+					$content = $data->d;
+
+					// set user settings obtain guild data etc.
+
+					// user client settings
+					$this->discord->user_settings = $content->user_settings;
+
+					// guilds
+					$guilds = new Collection();
+
+					foreach ($content->guilds as $guild) {
+						$guildPart = new Guild([
+							'id'                => $guild->id,
+			                'name'              => $guild->name,
+			                'icon'              => $guild->icon,
+			                'region'            => $guild->region,
+			                'owner_id'          => $guild->owner_id,
+			                'roles'             => $guild->roles,
+			                'joined_at'         => $guild->joined_at,
+			                'afk_channel_id'    => $guild->afk_channel_id,
+			                'afk_timeout'       => $guild->afk_timeout
+						], true);
+
+						// guild members
+						$members = new Collection();
+
+						foreach ($guild->members as $member) {
+							$memberPart = new Member([
+								'user'		=> $member->user,
+								'roles' 	=> $member->roles,
+								'mute'		=> $member->mute,
+								'deaf'		=> $member->deaf,
+								'joined_at'	=> $member->joined_at,
+								'guild_id'	=> $guild->id,
+								'status'	=> 'offline',
+								'game'		=> null
+							], true);
+
+							// check for presences
+							
+							foreach ($guild->presences as $presence) {
+								if ($presence->user->id == $member->user->id) {
+									$memberPart->status = $presence->status;
+									$memberPart->game = $presence->game;
+								}
+							}
+
+							$members->push($memberPart);
+						}
+
+						$guildPart->setCache('members', $members);
+
+						$guilds->push($guildPart);
+					}
+
+					$this->discord->setCache('guilds', $guilds);
+
+					// after we do everything, emit ready
+					$this->emit('ready', [$ws, $this->discord]);
 				}
 			});
 
