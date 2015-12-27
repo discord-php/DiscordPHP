@@ -99,7 +99,10 @@ class Client extends Part
                 'afk_channel_id'    => $guild->afk_channel_id,
                 'afk_timeout'       => $guild->afk_timeout,
                 'embed_enabled'     => $guild->embed_enabled,
-                'embed_channel_id'  => $guild->embed_channel_id
+                'embed_channel_id'  => $guild->embed_channel_id,
+                'features'          => $guild->features,
+                'splash'            => $guild->splash,
+                'emjojis'           => $guild->emojis
             ], true);
         }
 
