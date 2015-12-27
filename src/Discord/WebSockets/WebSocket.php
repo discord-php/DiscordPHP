@@ -126,7 +126,11 @@ class WebSocket extends EventEmitter
 			                'roles'             => $guild->roles,
 			                'joined_at'         => $guild->joined_at,
 			                'afk_channel_id'    => $guild->afk_channel_id,
-			                'afk_timeout'       => $guild->afk_timeout
+			                'afk_timeout'       => $guild->afk_timeout,
+				            'large'				=> $guild->large,
+				            'features'			=> $guild->features,
+				            'splash'			=> $guild->splash,
+				            'emojis'			=> $guild->emojis
 						], true);
 
 						$channels = new Collection();
