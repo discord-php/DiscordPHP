@@ -5,6 +5,7 @@ namespace Discord\WebSockets;
 use Discord\Discord;
 use Discord\Helpers\Collection;
 use Discord\Helpers\Guzzle;
+use Discord\Parts\Channel\Channel;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\User\Member;
 use Discord\WebSockets\Handlers;
@@ -128,8 +129,26 @@ class WebSocket extends EventEmitter
 			                'afk_timeout'       => $guild->afk_timeout
 						], true);
 
+						$channels = new Collection();
+
+						foreach ($guild->channels as $channel) {
+							$channelPart = new Channel([
+								'id'                    => $channel->id,
+				                'name'                  => $channel->name,
+				                'type'                  => $channel->type,
+				                'topic'                 => $channel->topic,
+				                'guild_id'              => $guild->id,
+				                'position'              => $channel->position,
+				                'last_message_id'       => $channel->last_message_id,
+				                'permission_overwrites' => $channel->permission_overwrites
+							], true);
+
+							$channels->push($channelPart);
+						}
+
+						$guildPart->setCache('channels', $channels);
+
 						// preload
-						$guildPart->getChannelsAttribute(); 
 						$guildPart->getBansAttribute();
 
 						// guild members

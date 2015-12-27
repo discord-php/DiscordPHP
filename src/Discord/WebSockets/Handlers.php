@@ -22,10 +22,21 @@ class Handlers
 	{
 		$this->addHandler(Event::MESSAGE_CREATE, \Discord\WebSockets\Events\MessageCreate::class);	
 
+		// Guild Event handlers
+		$this->addHandler(Event::GUILD_CREATE, \Discord\WebSockets\Events\GuildCreate::class);
+		$this->addHandler(Event::GUILD_DELETE, \Discord\WebSockets\Events\GuildDelete::class);
+
 		// Channel Event handlers
 		$this->addHandler(Event::CHANNEL_CREATE, \Discord\WebSockets\Events\ChannelCreate::class);
 		$this->addHandler(Event::CHANNEL_UPDATE, \Discord\WebSockets\Events\ChannelUpdate::class);
 		$this->addHandler(Event::CHANNEL_DELETE, \Discord\WebSockets\Events\ChannelDelete::class);
+
+		// Ban Event handlers
+		$this->addHandler(Event::GUILD_BAN_ADD, \Discord\WebSockets\Events\GuildBanAdd::class);
+		$this->addHandler(Event::GUILD_BAN_REMOVE, \Discord\WebSockets\Events\GuildBanRemove::class);
+
+		// New Member Event handlers
+		$this->addHandler(Event::GUILD_MEMBER_ADD, \Discord\WebSockets\Events\GuildMemberAdd::class);
 	}
 
 	/**

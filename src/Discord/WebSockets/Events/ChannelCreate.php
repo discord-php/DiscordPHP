@@ -11,9 +11,10 @@ class ChannelCreate extends Event
 	 * Returns the formatted data.
 	 *
 	 * @param array $data 
+	 * @param Discord $discord 
 	 * @return Message 
 	 */
-	public function getData($data)
+	public function getData($data, $discord)
 	{
 		return new Channel([
 	        'id'                    => $data->id,
