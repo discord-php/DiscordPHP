@@ -52,18 +52,17 @@ class Ban extends Part
     }
 
     /**
-     * Sets the user attribute.
+     * Gets the user attribute.
      *
-     * @param mixed $value 
      * @return User
      */
-    public function setUserAttribute($value)
+    public function getUserAttribute()
     {
         return new User([
-            'id'            => $value->id,
-            'username'      => $value->username,
-            'avatar'        => $value->avatar,
-            'discriminator' => $value->discriminator
+            'id'            => $this->attributes['user']->id,
+            'username'      => $this->attributes['user']->username,
+            'avatar'        => $this->attributes['user']->avatar,
+            'discriminator' => $this->attributes['user']->discriminator
         ]);
     }
 

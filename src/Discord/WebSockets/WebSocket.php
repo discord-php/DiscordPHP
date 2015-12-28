@@ -90,10 +90,11 @@ class WebSocket extends EventEmitter
 
 				if (!is_null($handler = $this->handlers->getHandler($data->t))) {
 					$handler = new $handler();
-					$this->emit($data->t, [$handler->getData($data->d), $ws, $this->discord]);
+					$handlerData = $handler->getData($data->d, $this->discord);
+					$this->emit($data->t, [$handlerData, $ws, $this->discord]);
 
 					if (is_callable([$handler, 'updateDiscordInstance'])) {
-						$this->discord = $handler->updateDiscordInstance($handler->getData($data->d), $this->discord);
+						$this->discord = $handler->updateDiscordInstance($handlerData, $this->discord);
 					}
 				}
 
