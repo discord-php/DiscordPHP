@@ -6,7 +6,7 @@ The API is currently being reworked.
 
 ### Help
 
-If you need any help feel free to join the [DiscordAPI Server](https://discord.gg/0SBTUU1wZTX3afOb) and ask in the `#php_discordphp` channel. Tag `@Uniquoooo` if you need any help specific to the API.
+If you need any help feel free to join the [DiscordAPI Server](https://discord.gg/0SBTUU1wZTY56U7l) and ask in the `#php_discordphp` channel. Tag `@Uniquoooo` if you need any help specific to the API.
 
 ### Documentation
 
