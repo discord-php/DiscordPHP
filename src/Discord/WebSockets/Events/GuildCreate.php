@@ -68,7 +68,7 @@ class GuildCreate extends Event
             ], true);
 
             // check for presences
-            
+
             foreach ($data->presences as $presence) {
                 if ($presence->user->id == $member->user->id) {
                     $memberPart->status = $presence->status;

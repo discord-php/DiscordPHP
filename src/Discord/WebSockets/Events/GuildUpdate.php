@@ -7,17 +7,17 @@ use Discord\WebSockets\Event;
 
 class GuildUpdate extends Event
 {
-	/**
-	 * Returns the formatted data.
-	 *
-	 * @param array $data 
-	 * @param Discord $discord 
-	 * @return Message 
-	 */
-	public function getData($data, $discord)
-	{
-		return new Guild([
-			'id'                => $data->id,
+    /**
+     * Returns the formatted data.
+     *
+     * @param array $data 
+     * @param Discord $discord 
+     * @return Message 
+     */
+    public function getData($data, $discord)
+    {
+        return new Guild([
+            'id'                => $data->id,
             'name'              => $data->name,
             'icon'              => $data->icon,
             'region'            => $data->region,
@@ -31,27 +31,27 @@ class GuildUpdate extends Event
             'features'          => $data->features,
             'splash'            => $data->splash,
             'emjojis'           => $data->emojis
-		]);
-	}
+        ]);
+    }
 
-	/**
-	 * Updates the Discord instance with the new data.
-	 *
-	 * @param mixed $data 
-	 * @param Discord $discord 
-	 * @return Discord 
-	 */
-	public function updateDiscordInstance($data, $discord)
-	{
-		foreach ($discord->guilds as $index => $guild) {
-			if ($guild->id == $data->id) {
-				$discord->guilds->pull($index);
-				$discord->guilds->push($guild);
+    /**
+     * Updates the Discord instance with the new data.
+     *
+     * @param mixed $data 
+     * @param Discord $discord 
+     * @return Discord 
+     */
+    public function updateDiscordInstance($data, $discord)
+    {
+        foreach ($discord->guilds as $index => $guild) {
+            if ($guild->id == $data->id) {
+                $discord->guilds->pull($index);
+                $discord->guilds->push($guild);
 
-				break;
-			}
-		}
+                break;
+            }
+        }
 
-		return $discord;
-	}
+        return $discord;
+    }
 }
