@@ -20,7 +20,10 @@ class Handlers
 	 */
 	public function __construct()
 	{
-		$this->addHandler(Event::MESSAGE_CREATE, \Discord\WebSockets\Events\MessageCreate::class);	
+		// General
+		$this->addHandler(Event::PRESENCE_UPDATE, \Discord\WebSockets\Events\PresenceUpdate::class);
+		$this->addHandler(Event::TYPING_START, \Discord\WebSockets\Events\TypingStart::class);
+		$this->addHandler(Event::USER_SETTINGS_UPDATE, \Discord\WebSockets\Events\UserSettingsUpdate::class);
 
 		// Guild Event handlers
 		$this->addHandler(Event::GUILD_CREATE, \Discord\WebSockets\Events\GuildCreate::class);
@@ -35,6 +38,11 @@ class Handlers
 		// Ban Event handlers
 		$this->addHandler(Event::GUILD_BAN_ADD, \Discord\WebSockets\Events\GuildBanAdd::class);
 		$this->addHandler(Event::GUILD_BAN_REMOVE, \Discord\WebSockets\Events\GuildBanRemove::class);
+
+		// Message handlers
+		$this->addHandler(Event::MESSAGE_CREATE, \Discord\WebSockets\Events\MessageCreate::class);	
+		$this->addHandler(Event::MESSAGE_DELETE, \Discord\WebSockets\Events\MessageDelete::class);
+		$this->addHandler(Event::MESSAGE_UPDATE, \Discord\WebSockets\Events\MessageUpdate::class);
 
 		// New Member Event handlers
 		$this->addHandler(Event::GUILD_MEMBER_ADD, \Discord\WebSockets\Events\GuildMemberAdd::class);

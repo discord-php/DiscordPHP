@@ -6,6 +6,9 @@ class Event
 {
 	// General
 	const READY 				= 'READY';
+	const PRESENCE_UPDATE		= 'PRESENCE_UPDATE';
+	const TYPING_START			= 'TYPING_START';
+	const USER_SETTINGS_UPDATE	= 'USER_SETTINGS_UPDATE';
 
 	// Guild
 	const GUILD_CREATE			= 'GUILD_CREATE';
@@ -28,4 +31,6 @@ class Event
 
 	// Messages
 	const MESSAGE_CREATE 		= 'MESSAGE_CREATE';
+	const MESSAGE_DELETE		= 'MESSAGE_DELETE';
+	const MESSAGE_UPDATE		= 'MESSAGE_UPDATE';
 }
