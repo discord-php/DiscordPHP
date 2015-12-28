@@ -25,6 +25,7 @@ class Handlers
 		// Guild Event handlers
 		$this->addHandler(Event::GUILD_CREATE, \Discord\WebSockets\Events\GuildCreate::class);
 		$this->addHandler(Event::GUILD_DELETE, \Discord\WebSockets\Events\GuildDelete::class);
+		$this->addHandler(Event::GUILD_UPDATE, \Discord\WebSockets\Events\GuildUpdate::class);
 
 		// Channel Event handlers
 		$this->addHandler(Event::CHANNEL_CREATE, \Discord\WebSockets\Events\ChannelCreate::class);
