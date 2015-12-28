@@ -2,10 +2,10 @@
 
 namespace Discord\WebSockets\Events;
 
-use Discord\Parts\User\Member;
+use Discord\Parts\Guild\Role;
 use Discord\WebSockets\Event;
 
-class GuildMemberUpdate extends Event
+class GuildRoleCreate extends Event
 {
 	/**
 	 * Returns the formatted data.
@@ -15,12 +15,16 @@ class GuildMemberUpdate extends Event
 	 * @return Message 
 	 */
 	public function getData($data, $discord)
-	{
-		return new Member([
-			'user'		=> $data->user,
-			'roles'		=> $data->roles,
-			'guild_id'	=> $data->guild_id,
-			'joined_at'	=> $data->joined_at
+	{	
+		return new Role([
+			'id'			=> $data->role->id,
+			'name'			=> $data->role->name,
+			'color'			=> $data->role->color,
+			'managed'		=> $data->role->managed,
+			'hoist'			=> $data->role->hoist,
+			'position'		=> $data->role->position,
+			'permissions'	=> $data->role->permissions,
+			'guild_id'		=> $data->guild_id
 		], true);
 	}
 
@@ -35,14 +39,7 @@ class GuildMemberUpdate extends Event
 	{
 		foreach ($discord->guilds as $index => $guild) {
 			if ($guild->id == $data->guild_id) {
-				foreach ($guild->members as $mindex => $member) {
-					if ($member->id == $data->id) {
-						$guild->members->pull($mindex);
-						$guild->members->push($data);
-
-						break;
-					}
-				}
+				$guild->roles->push($data);
 
 				$discord->guilds->pull($index);
 				$discord->guilds->push($guild);
