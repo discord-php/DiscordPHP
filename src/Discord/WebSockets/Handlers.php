@@ -24,6 +24,7 @@ class Handlers
 		$this->addHandler(Event::PRESENCE_UPDATE, \Discord\WebSockets\Events\PresenceUpdate::class);
 		$this->addHandler(Event::TYPING_START, \Discord\WebSockets\Events\TypingStart::class);
 		$this->addHandler(Event::USER_SETTINGS_UPDATE, \Discord\WebSockets\Events\UserSettingsUpdate::class);
+		$this->addHandler(Event::VOICE_STATE_UPDATE, \Discord\WebSockets\Events\VoiceStateUpdate::class);
 
 		// Guild Event handlers
 		$this->addHandler(Event::GUILD_CREATE, \Discord\WebSockets\Events\GuildCreate::class);
