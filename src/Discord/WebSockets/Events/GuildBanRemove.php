@@ -19,8 +19,8 @@ class GuildBanRemove extends Event
         $guild = $discord->guilds->get('id', $data->guild_id);
 
         return new Ban([
-            'guild'    => $guild,
-            'user'    => $data->user
+            'guild' => $guild,
+            'user'  => $data->user
         ], true);
     }
 

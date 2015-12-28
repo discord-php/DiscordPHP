@@ -128,8 +128,8 @@ class WebSocket extends EventEmitter
                             'joined_at'         => $guild->joined_at,
                             'afk_channel_id'    => $guild->afk_channel_id,
                             'afk_timeout'       => $guild->afk_timeout,
-                            'large'                => $guild->large,
-                            'features'            => $guild->features,
+                            'large'             => $guild->large,
+                            'features'          => $guild->features,
                             'splash'            => $guild->splash,
                             'emojis'            => $guild->emojis
                         ], true);
@@ -161,14 +161,14 @@ class WebSocket extends EventEmitter
 
                         foreach ($guild->members as $member) {
                             $memberPart = new Member([
-                                'user'        => $member->user,
-                                'roles'    => $member->roles,
-                                'mute'        => $member->mute,
-                                'deaf'        => $member->deaf,
-                                'joined_at'    => $member->joined_at,
-                                'guild_id'    => $guild->id,
+                                'user'      => $member->user,
+                                'roles'     => $member->roles,
+                                'mute'      => $member->mute,
+                                'deaf'      => $member->deaf,
+                                'joined_at' => $member->joined_at,
+                                'guild_id'  => $guild->id,
                                 'status'    => 'offline',
-                                'game'        => null
+                                'game'      => null
                             ], true);
 
                             // check for presences

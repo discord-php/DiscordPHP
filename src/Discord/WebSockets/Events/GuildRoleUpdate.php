@@ -18,13 +18,13 @@ class GuildRoleUpdate extends Event
     {
         return new Role([
             'id'            => $data->role->id,
-            'name'            => $data->role->name,
-            'color'            => $data->role->color,
-            'managed'        => $data->role->managed,
-            'hoist'            => $data->role->hoist,
-            'position'        => $data->role->position,
-            'permissions'    => $data->role->permissions,
-            'guild_id'        => $data->guild_id
+            'name'          => $data->role->name,
+            'color'         => $data->role->color,
+            'managed'       => $data->role->managed,
+            'hoist'         => $data->role->hoist,
+            'position'      => $data->role->position,
+            'permissions'   => $data->role->permissions,
+            'guild_id'      => $data->guild_id
         ], true);
     }
 

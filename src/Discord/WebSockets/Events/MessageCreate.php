@@ -28,7 +28,7 @@ class MessageCreate extends Event
             'tts'               => $data->tts,
             'attachments'       => $data->attachments,
             'embeds'            => $data->embeds,
-            'nonce'                => $data->nonce
+            'nonce'             => $data->nonce
         ], true);
     }
 

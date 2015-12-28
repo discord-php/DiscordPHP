@@ -27,8 +27,8 @@ class GuildDelete extends Event
             'joined_at'         => $data->joined_at,
             'afk_channel_id'    => $data->afk_channel_id,
             'afk_timeout'       => $data->afk_timeout,
-            'embed_enabled'        => $data->embed_enabled,
-            'embed_channel_id'    => $data->embed_channel_id
+            'embed_enabled'     => $data->embed_enabled,
+            'embed_channel_id'  => $data->embed_channel_id
         ], true);
 
         return $guildPart;
