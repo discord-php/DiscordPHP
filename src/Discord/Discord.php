@@ -2,6 +2,7 @@
 
 namespace Discord;
 
+use Discord\Exceptions\DiscordRequestFailedException;
 use Discord\Exceptions\InviteInvalidException;
 use Discord\Exceptions\LoginFailedException;
 use Discord\Helpers\Guzzle;
@@ -82,6 +83,15 @@ class Discord
 
         if (!is_null($token = $this->checkForCaching($email))) {
             @define('DISCORD_TOKEN', $token);
+
+            // Test the token
+            try {
+                Guzzle::get('gateway');
+            } catch (DiscordRequestFailedException $e) {
+                // TODO Delete file
+                $this->setToken($email, $password, $token);
+            }
+
             return;
         }
 
