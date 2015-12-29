@@ -2,8 +2,10 @@
 
 namespace Discord\WebSockets\Events;
 
+use Discord\Helpers\Collection;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Guild\Guild;
+use Discord\Parts\User\Member;
 use Discord\WebSockets\Event;
 
 class GuildCreate extends Event

@@ -19,8 +19,7 @@ class GuildMemberUpdate extends Event
         return new Member([
             'user'      => $data->user,
             'roles'     => $data->roles,
-            'guild_id'  => $data->guild_id,
-            'joined_at' => $data->joined_at
+            'guild_id'  => $data->guild_id
         ], true);
     }
 
