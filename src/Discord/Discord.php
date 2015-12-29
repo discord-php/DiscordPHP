@@ -16,7 +16,7 @@ class Discord
      *
      * @var string 
      */
-    const VERSION = 'v2.1.0-alpha';
+    const VERSION = 'v3-alpha';
     
     /**
      * The Client instance.
