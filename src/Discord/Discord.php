@@ -2,6 +2,7 @@
 
 namespace Discord;
 
+use Discord\Exceptions\DiscordRequestFailedException;
 use Discord\Exceptions\InviteInvalidException;
 use Discord\Exceptions\LoginFailedException;
 use Discord\Helpers\Guzzle;
@@ -10,8 +11,18 @@ use Discord\Parts\User\Client;
 
 class Discord
 {
-    const VERSION = 'v2-alpha';
-
+    /**
+     * The current version of the API. 
+     *
+     * @var string 
+     */
+    const VERSION = 'v2.1.0-alpha';
+    
+    /**
+     * The Client instance.
+     * 
+     * @var Client
+     */
     protected $client;
 
     /**
@@ -72,6 +83,15 @@ class Discord
 
         if (!is_null($token = $this->checkForCaching($email))) {
             @define('DISCORD_TOKEN', $token);
+
+            // Test the token
+            try {
+                Guzzle::get('gateway');
+            } catch (DiscordRequestFailedException $e) {
+                // TODO Delete file
+                $this->setToken($email, $password, $token);
+            }
+
             return;
         }
 
