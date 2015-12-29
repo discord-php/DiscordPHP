@@ -82,4 +82,14 @@ class Handlers
 
         return null;
     }
+
+    /**
+     * Returns the handlers array.
+     *
+     * @return array
+     */
+    public function getHandlers()
+    {
+        return $this->handlers;
+    }
 }
