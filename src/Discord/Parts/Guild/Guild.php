@@ -2,6 +2,7 @@
 
 namespace Discord\Parts\Guild;
 
+use Discord\Exceptions\DiscordRequestFailedException;
 use Discord\Helpers\Collection;
 use Discord\Helpers\Guzzle;
 use Discord\Parts\Channel\Channel;
@@ -188,7 +189,12 @@ class Guild extends Part
         }
 
         $bans = [];
-        $request = Guzzle::get($this->replaceWithVariables('guilds/:id/bans'));
+        
+        try {
+            $request = Guzzle::get($this->replaceWithVariables('guilds/:id/bans'));
+        } catch (DiscordRequestFailedException $e) {
+            return false;
+        }
 
         foreach ($request as $index => $ban) {
             $bans[$index] = new Ban([
