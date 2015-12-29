@@ -54,7 +54,12 @@ class MessageUpdate extends Event
                     foreach ($channel->messages as $mindex => $message) {
                         if ($message->id == $data->id) {
                             $channel->messages->pull($mindex);
-                            $channel->messages->push($data);
+                            
+                            if (!isset($data->content)) {
+                                $channel->messages->push(new Message(array_merge((array) $message, (array) $data), true));
+                            } else {
+                                $channel->messages->push($data);
+                            }
                         
                             break;
                         }
