@@ -85,17 +85,15 @@ class WebSocket extends EventEmitter
     {
         $this->wsfactory->__invoke($this->gateway)->then(function (WebSocketInstance $ws) {
             $ws->on('message', function ($data, $ws) {
-                $this->emit('raw', [$data, $ws, $this->discord]);
+                $this->emit('raw', [$data, $this->discord]);
                 $data = json_decode($data);
 
                 if (!is_null($handler = $this->handlers->getHandler($data->t))) {
                     $handler = new $handler();
                     $handlerData = $handler->getData($data->d, $this->discord);
-                    $this->emit($data->t, [$handlerData, $ws, $this->discord]);
-
-                    if (is_callable([$handler, 'updateDiscordInstance'])) {
-                        $this->discord = $handler->updateDiscordInstance($handlerData, $this->discord);
-                    }
+                    $newDiscord = $handler->updateDiscordInstance($handlerData, $this->discord);
+                    $this->emit($data->t, [$handlerData, $this->discord, $newDiscord]);
+                    $this->discord = $newDiscord;
                 }
 
                 if ($data->t == Event::READY) {
