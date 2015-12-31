@@ -3,6 +3,7 @@
 namespace Discord\WebSockets\Events;
 
 use Discord\WebSockets\Event;
+use Discord\Parts\WebSockets\PresenceUpdate as PresenceUpdatePart;
 
 class PresenceUpdate extends Event
 {
@@ -15,7 +16,7 @@ class PresenceUpdate extends Event
      */
     public function getData($data, $discord)
     {
-        return $data;
+        return new PresenceUpdatePart((array) $data, true);
     }
 
     /**

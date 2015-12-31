@@ -3,6 +3,7 @@
 namespace Discord\WebSockets\Events;
 
 use Discord\WebSockets\Event;
+use Discord\Parts\WebSockets\TypingStart as TypingStartPart;
 
 class TypingStart extends Event
 {
@@ -15,7 +16,7 @@ class TypingStart extends Event
      */
     public function getData($data, $discord)
     {
-        return $data;
+        return new TypingStartPart((array) $data, true);
     }
 
     /**
