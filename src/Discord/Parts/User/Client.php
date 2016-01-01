@@ -74,6 +74,31 @@ class Client extends Part
     }
 
     /**
+     * Updates the clients presence.
+     *
+     * @param WebSocket $ws 
+     * @param string|null $gamename 
+     * @param boolean $idle
+     * @return boolean 
+     */
+    public function updatePresence($ws, $gamename, $idle)
+    {
+        $idle = ($idle == false) ? null : true;
+        
+        $ws->send([
+            'op' => 3,
+            'd' => [
+                'game' => (!is_null($gamename) ? [
+                    'name' => $gamename
+                ] : null),
+                'idle_since' => $idle
+            ]
+        ]);
+
+        return true;
+    }
+
+    /**
      * Returns an array of Guilds.
      *
      * @return Collection 

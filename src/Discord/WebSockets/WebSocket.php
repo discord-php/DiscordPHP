@@ -32,6 +32,13 @@ class WebSocket extends EventEmitter
     protected $wsfactory;
 
     /**
+     * The WebSocket instance.
+     *
+     * @var WebSocketInstance 
+     */
+    protected $ws;
+
+    /**
      * The Discord instance.
      *
      * @var Discord\Discord 
@@ -84,6 +91,8 @@ class WebSocket extends EventEmitter
     public function run()
     {
         $this->wsfactory->__invoke($this->gateway)->then(function (WebSocketInstance $ws) {
+            $this->ws = $ws;
+
             $ws->on('message', function ($data, $ws) {
                 $this->emit('raw', [$data, $this->discord]);
                 $data = json_decode($data);
@@ -99,7 +108,7 @@ class WebSocket extends EventEmitter
                 if ($data->t == Event::READY) {
                     $tts = $data->d->heartbeat_interval / 1000;
                     $this->loop->addPeriodicTimer($tts, function () use ($ws) {
-                        $this->send($ws, [
+                        $this->send([
                             'op' => 1,
                             'd' => microtime(true) * 1000
                         ]);
@@ -202,7 +211,7 @@ class WebSocket extends EventEmitter
             });
 
             if (!$this->sentLoginFrame) {
-                $this->sendLoginFrame($ws);
+                $this->sendLoginFrame();
                 $this->sentLoginFrame = true;
                 $this->emit('sent-login-frame', [$ws, $this->discord]);
             }
@@ -217,12 +226,11 @@ class WebSocket extends EventEmitter
     /**
      * Sends the login frame to the WebSocket.
      *
-     * @param WebSocketInstance $ws 
      * @return void 
      */
-    public function sendLoginFrame($ws)
+    public function sendLoginFrame()
     {
-        $this->send($ws, [
+        $this->send([
             'op' => 2,
             'd' => [
                 'token' => DISCORD_TOKEN,
@@ -242,14 +250,13 @@ class WebSocket extends EventEmitter
     /**
      * Sends data over the WebSocket.
      *
-     * @param WebSocketInstance $ws 
      * @param array $data 
      * @return void 
      */
-    public function send($ws, $data)
+    public function send($data)
     {
         $frame = new Frame(json_encode($data), true);
-        $ws->send($frame);
+        $this->ws->send($frame);
     }
 
     /**
