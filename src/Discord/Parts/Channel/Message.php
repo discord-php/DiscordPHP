@@ -69,7 +69,8 @@ class Message extends Part
     public function getChannelAttribute()
     {
         return new Channel([
-            'id' => $this->channel_id
+            'id'    => $this->channel_id,
+            'type'  => 'text'
         ], true);
     }
 
