@@ -34,7 +34,7 @@ class GuildBanAdd extends Event
     public function updateDiscordInstance($data, $discord)
     {
         foreach ($discord->guilds as $index => $guild) {
-            if ($guild->id == $data->guild_id) {
+            if ($guild->id == $data->guild_id && !is_bool($guild->bans)) {
                 $guild->bans->push($data);
 
                 foreach ($guild->members as $mindex => $member) {
