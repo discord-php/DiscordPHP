@@ -78,8 +78,8 @@ class Guild extends Part
 
         // Members aren't retrievable via REST anymore,
         // they will be set if the websocket is used.
-
-        return null;
+        $this->attributes_cache = new Collection();
+        return $this->attributes_cache['members'];
     }
 
     /**
