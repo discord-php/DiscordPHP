@@ -14,7 +14,7 @@ An API to interact with the popular text and voice service Discord.
 include 'vendor/autoload.php';
 
 use Discord\Discord;
-use Discord\WebSocekts\Event;
+use Discord\WebSockets\Event;
 use Discord\WebSockets\WebSocket;
 
 $discord = new Discord(':email', ':password');
