@@ -10,8 +10,8 @@ use Discord\Parts\Guild\Guild;
 use Discord\Parts\User\Member;
 use Discord\WebSockets\Handlers;
 use Evenement\EventEmitter;
-use Ratchet\Client\Factory as WsFactory;
-use Ratchet\Client\WebSocket as WebSocketInstance;
+use Discord\WSClient\Factory as WsFactory;
+use Discord\WSClient\WebSocket as WebSocketInstance;
 use Ratchet\WebSocket\Version\RFC6455\Frame;
 use React\EventLoop\Factory as LoopFactory;
 
@@ -27,7 +27,7 @@ class WebSocket extends EventEmitter
     /**
      * The WebSocket factory.
      *
-     * @var Ratchet\Client\Factory 
+     * @var WsFactory
      */
     protected $wsfactory;
 
@@ -242,7 +242,8 @@ class WebSocket extends EventEmitter
                     '$referrer' => 'https://github.com/teamreflex/DiscordPHP',
                     '$referring_domain' => 'https://github.com/teamreflex/DiscordPHP/'
                 ],
-                'large_threshold' => 100
+                'large_threshold' => 100,
+                'compress' => true
             ]
         ]);
     }

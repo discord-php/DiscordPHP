@@ -23,9 +23,9 @@ class TypingStart extends Part
      */
     public function getUserAttribute()
     {
-    	return new User([
-    		'id'	=> $this->user_id
-    	], true);
+        return new User([
+            'id'    => $this->user_id
+        ], true);
     }
 
     /**
@@ -35,7 +35,7 @@ class TypingStart extends Part
      */
     public function getTimestampAttribute()
     {
-    	return new Carbon(gmdate('r', $this->attributes['timestamp']));
+        return new Carbon(gmdate('r', $this->attributes['timestamp']));
     }
 
     /**
@@ -45,8 +45,8 @@ class TypingStart extends Part
      */
     public function getChannelAttribute()
     {
-    	return new Channel([
-    		'id'	=> $this->channel_id
-    	], true);
+        return new Channel([
+            'id'    => $this->channel_id
+        ], true);
     }
 }

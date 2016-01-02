@@ -2,7 +2,9 @@
 
 An API to interact with the popular text and voice service Discord.
 
-The API is currently being reworked.
+### Special Thanks
+
+- [Chris Boden](https://github.com/cboden) for the WebSocket client that is based off [RatchetPHP/Pawl](https://github.com/ratchetphp/Pawl)
 
 ### Help
 
