@@ -40,28 +40,6 @@ class Message extends Part
     }
 
     /**
-     * Acknowledges the message on Discord servers.
-     *
-     * @return boolean 
-     */
-    public function acknowledgeMessage()
-    {
-        Guzzle::post($this->replaceWithVars('channels/:channel_id/messages/:id/ack'));
-
-        return true;
-    }
-
-    /**
-     * Shortcut for acknowledgeMessage();
-     *
-     * @return boolean 
-     */
-    public function ackMessage()
-    {
-        return $this->acknowledgeMessage();
-    }
-
-    /**
      * Returns the channel attribute.
      *
      * @return Channel 
