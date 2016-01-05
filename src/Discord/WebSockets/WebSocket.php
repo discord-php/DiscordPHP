@@ -22,7 +22,7 @@ class WebSocket extends EventEmitter
      *
      * @var React\EventLoop\Factory 
      */
-    protected $loop;
+    public $loop;
 
     /**
      * The WebSocket factory.
