@@ -66,6 +66,23 @@ class Guild extends Part
     }
 
     /**
+     * Returns the guilds members.
+     *
+     * @return Collection
+     */
+    public function getMembersAttribute()
+    {
+        if (isset($this->attributes_cache['members'])) {
+            return $this->attributes_cache['members'];
+        }
+
+        // Members aren't retrievable via REST anymore,
+        // they will be set if the websocket is used.
+        $this->attributes_cache = new Collection();
+        return $this->attributes_cache['members'];
+    }
+
+    /**
      * Returns the guilds roles.
      *
      * @return Collection

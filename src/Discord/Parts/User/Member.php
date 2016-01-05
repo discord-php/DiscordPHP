@@ -18,7 +18,7 @@ class Member extends Part
      *
      * @var array 
      */
-    protected $fillable = ['user', 'roles', 'deaf', 'mute', 'joined_at', 'guild_id'];
+    protected $fillable = ['user', 'roles', 'deaf', 'mute', 'joined_at', 'guild_id', 'status', 'game'];
 
     /**
      * Is the part creatable?

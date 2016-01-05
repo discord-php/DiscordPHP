@@ -3,6 +3,7 @@
 namespace Discord\Parts\Channel;
 
 use Carbon\Carbon;
+use Discord\Parts\Channel\Channel;
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
 
@@ -28,6 +29,17 @@ class Message extends Part
     ];
 
     /**
+     * Replies to the message.
+     *
+     * @param string $text 
+     * @return Message 
+     */
+    public function reply($text)
+    {
+        return $this->channel->sendMessage("{$this->author}, {$text}");
+    }
+
+    /**
      * Acknowledges the message on Discord servers.
      *
      * @return boolean 
@@ -47,6 +59,19 @@ class Message extends Part
     public function ackMessage()
     {
         return $this->acknowledgeMessage();
+    }
+
+    /**
+     * Returns the channel attribute.
+     *
+     * @return Channel 
+     */
+    public function getChannelAttribute()
+    {
+        return new Channel([
+            'id'    => $this->channel_id,
+            'type'  => 'text'
+        ], true);
     }
 
     /**

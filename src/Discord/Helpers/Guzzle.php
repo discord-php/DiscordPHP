@@ -31,7 +31,7 @@ class Guzzle
 
         $guzzle = new GuzzleClient();
         $headers = [
-            'User-Agent' => 'DiscordPHP/' . Discord::VERSION . ' DiscordBot (https://github.com/teamreflex/DiscordPHP, ' . Discord::VERSION . ')'
+            'User-Agent' => self::getUserAgent()
         ];
 
         if (is_null($content)) {
@@ -93,5 +93,15 @@ class Guzzle
                 throw new DiscordRequestFailedException("Erorr code {$error_code}: There was an error processing the request. {$message->getReasonPhrase()}");
                 break;
         }
+    }
+
+    /**
+     * Returns the User-Agent of the API.
+     *
+     * @return string 
+     */
+    public static function getUserAgent()
+    {
+        return 'DiscordPHP/' . Discord::VERSION . ' DiscordBot (https://github.com/teamreflex/DiscordPHP, ' . Discord::VERSION . ')';
     }
 }

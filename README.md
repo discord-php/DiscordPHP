@@ -2,7 +2,30 @@
 
 An API to interact with the popular text and voice service Discord.
 
-The API is currently being reworked.
+### Special Thanks
+
+- [Chris Boden](https://github.com/cboden) for the WebSocket client that is based off [RatchetPHP/Pawl](https://github.com/ratchetphp/Pawl)
+
+### Basic WebSocket client
+
+```php
+<?php
+
+include 'vendor/autoload.php';
+
+use Discord\Discord;
+use Discord\WebSockets\Event;
+use Discord\WebSockets\WebSocket;
+
+$discord = new Discord(':email', ':password');
+$websocket = new WebSocket($discord);
+
+$websocket->on(Event::MESSAGE_CREATE, function ($message, $discord, $new) {
+	echo "New message from {$message->author->username}: {$message->content}".PHP_EOL;
+});
+
+$websocket->run();
+```
 
 ### Help
 
