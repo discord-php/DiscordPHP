@@ -6,7 +6,10 @@ use Discord\Helpers\Collection;
 use Discord\Helpers\Guzzle;
 use Discord\Parts\Channel\Message;
 use Discord\Parts\Guild\Invite;
+use Discord\Parts\Guild\Role;
 use Discord\Parts\Part;
+use Discord\Parts\User\Member;
+use Discord\Parts\User\User;
 
 class Channel extends Part
 {
@@ -40,6 +43,36 @@ class Channel extends Part
     public function afterConstruct()
     {
         $this->message_count = 50;
+    }
+
+    /**
+     * sets a permission value to the channel.
+     *
+     * @param User|Role $part 
+     * @param Permission $allow 
+     * @param Permission $disallow 
+     * @return boolean 
+     */
+    public function setPermissions($part, $allow, $deny)
+    {
+        if ($part instanceof Member) {
+            $type = 'member';
+        } elseif ($part instanceof Role) {
+            $type = 'role';
+        } else {
+            return false;
+        }
+
+        $payload = [
+            'id' => $part->id,
+            'type' => $type,
+            'allow' => $allow->perms,
+            'deny' => $deny->perms
+        ];
+
+        Guzzle::put("channels/{$this->id}/permissions/{$part->id}", $payload);
+
+        return true;
     }
 
     /**

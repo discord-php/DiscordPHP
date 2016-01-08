@@ -6,7 +6,7 @@ use Discord\Exceptions\DiscordRequestFailedException;
 use Discord\Helpers\Collection;
 use Discord\Helpers\Guzzle;
 use Discord\Parts\Channel\Channel;
-use Discord\Parts\Guild\Permission;
+use Discord\Parts\Permissions\RolePermission as Permission;
 use Discord\Parts\Guild\Role;
 use Discord\Parts\Part;
 use Discord\Parts\User\Member;
