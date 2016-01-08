@@ -92,6 +92,15 @@ class Discord
             'password'  => $password
         ], true);
 
+        try {
+            if (!file_exists($_SERVER['PWD'] . '/discord')) {
+                mkdir($_SERVER['PWD'] . '/discord');
+            }
+            
+            file_put_contents($_SERVER['PWD'] . '/discord/' . md5($email), $request->token);
+        } catch (\Exception $e) {
+        }
+
         @define('DISCORD_TOKEN', $request->token);
         
         return;
