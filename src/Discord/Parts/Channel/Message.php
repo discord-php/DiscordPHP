@@ -3,6 +3,7 @@
 namespace Discord\Parts\Channel;
 
 use Carbon\Carbon;
+use Discord\Parts\Channel\Channel;
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
 
@@ -26,6 +27,30 @@ class Message extends Part
         'update'    => 'channels/:channel_id/messages/:id',
         'delete'    => 'channels/:channel_id/messages/:id'
     ];
+
+    /**
+     * Replies to the message.
+     *
+     * @param string $text 
+     * @return Message 
+     */
+    public function reply($text)
+    {
+        return $this->channel->sendMessage("{$this->author}, {$text}");
+    }
+
+    /**
+     * Returns the channel attribute.
+     *
+     * @return Channel 
+     */
+    public function getChannelAttribute()
+    {
+        return new Channel([
+            'id'    => $this->channel_id,
+            'type'  => 'text'
+        ], true);
+    }
 
     /**
      * Returns the author attribute.

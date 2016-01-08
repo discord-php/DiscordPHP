@@ -15,12 +15,20 @@ class Collection extends BaseCollection
      * @param mixed $default
      * @return mixed 
      */
-    public function get($key, $value, $default = null)
+    public function get($key, $value = null, $default = null)
     {
         foreach ($this->items as $item) {
-            if (isset($item[$key])) {
-                if ($item[$key] == $value) {
-                    return $item;
+            if (is_callable([$item, 'getAttribute'])) {
+                if (!empty($item->getAttribute($key))) {
+                    if ($item[$key] == $value) {
+                        return $item;
+                    }
+                }
+            } else {
+                if (isset($item[$key])) {
+                    if ($item[$key] == $value) {
+                        return $item;
+                    }
                 }
             }
         }

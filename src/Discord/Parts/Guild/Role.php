@@ -2,7 +2,7 @@
 
 namespace Discord\Parts\Guild;
 
-use Discord\Parts\Guild\Permission;
+use Discord\Parts\Permissions\RolePermission as Permission;
 use Discord\Parts\Part;
 
 class Role extends Part

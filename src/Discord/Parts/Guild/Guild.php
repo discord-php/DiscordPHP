@@ -2,10 +2,11 @@
 
 namespace Discord\Parts\Guild;
 
+use Discord\Exceptions\DiscordRequestFailedException;
 use Discord\Helpers\Collection;
 use Discord\Helpers\Guzzle;
 use Discord\Parts\Channel\Channel;
-use Discord\Parts\Guild\Permission;
+use Discord\Parts\Permissions\RolePermission as Permission;
 use Discord\Parts\Guild\Role;
 use Discord\Parts\Part;
 use Discord\Parts\User\Member;
@@ -62,6 +63,23 @@ class Guild extends Part
     public function leave()
     {
         return $this->delete();
+    }
+
+    /**
+     * Returns the guilds members.
+     *
+     * @return Collection
+     */
+    public function getMembersAttribute()
+    {
+        if (isset($this->attributes_cache['members'])) {
+            return $this->attributes_cache['members'];
+        }
+
+        // Members aren't retrievable via REST anymore,
+        // they will be set if the websocket is used.
+        $this->attributes_cache = new Collection();
+        return $this->attributes_cache['members'];
     }
 
     /**
@@ -171,7 +189,12 @@ class Guild extends Part
         }
 
         $bans = [];
-        $request = Guzzle::get($this->replaceWithVariables('guilds/:id/bans'));
+        
+        try {
+            $request = Guzzle::get($this->replaceWithVariables('guilds/:id/bans'));
+        } catch (DiscordRequestFailedException $e) {
+            return false;
+        }
 
         foreach ($request as $index => $ban) {
             $bans[$index] = new Ban([
