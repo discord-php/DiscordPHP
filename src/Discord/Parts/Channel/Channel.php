@@ -48,7 +48,7 @@ class Channel extends Part
     /**
      * sets a permission value to the channel.
      *
-     * @param User|Role $part 
+     * @param Member|Role $part 
      * @param Permission $allow 
      * @param Permission $disallow 
      * @return boolean 
