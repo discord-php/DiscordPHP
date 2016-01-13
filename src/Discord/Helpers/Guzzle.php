@@ -29,7 +29,7 @@ class Guzzle
     {
         $url = $params[0];
         $content = (isset($params[1])) ? $params[1] : null;
-        $auth = (isset($params[1])) ? true : false;
+        $auth = (isset($params[2])) ? true : false;
 
         return self::runRequest($name, $url, $content, $auth);
     }
