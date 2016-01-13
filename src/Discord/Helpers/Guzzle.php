@@ -103,7 +103,7 @@ class Guzzle
                 throw new DiscordRequestFailedException("Error code {$error_code}: This usually means you have entered an incorrect Email or Password. {$message}");
                 break;
             default:
-                throw new DiscordRequestFailedException("Erorr code {$error_code}: There was an error processing the request. {$message}");
+                throw new DiscordRequestFailedException("Error code {$error_code}: There was an error processing the request. {$message}");
                 break;
         }
     }
