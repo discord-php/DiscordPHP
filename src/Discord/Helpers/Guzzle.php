@@ -37,8 +37,7 @@ class Guzzle
     {
         $guzzle = new GuzzleClient(['http_errors' => false, 'allow_redirects' => true]);
         $url = self::$base_url."/{$url}";
-        dump($url);
-
+        
         $headers = [
             'User-Agent' => 'DiscordPHP/' . Discord::VERSION . ' DiscordBot (https://github.com/teamreflex/DiscordPHP, ' . Discord::VERSION . ')',
             'Content-Type' => 'application/json'
@@ -55,8 +54,6 @@ class Guzzle
             $content = (is_null($content)) ? null : json_encode($content);
             $request = new Request($method, $url, $headers, $content);
             $response = $guzzle->send($request);
-
-            dump($response->getBody()->getContents());
             
             // Rate limiting
             if ($response->getStatusCode() == 429) {
