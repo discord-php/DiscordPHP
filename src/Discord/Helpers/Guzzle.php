@@ -73,7 +73,7 @@ class Guzzle
             }
 
             // Not good!
-            if ($response->getStatusCode() < 200 && $response->getStatusCode() > 226) {
+            if ($response->getStatusCode() < 200 || $response->getStatusCode() > 226) {
                 self::handleError($response->getStatusCode(), $response->getReasonPhrase());
                 continue;
             }
