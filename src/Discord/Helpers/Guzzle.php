@@ -6,6 +6,7 @@ use Discord\Discord;
 use Discord\Exceptions\DiscordRequestFailedException;
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Psr7\Request;
 
 class Guzzle
 {
@@ -26,55 +27,55 @@ class Guzzle
     public static function __callStatic($name, $params)
     {
         $url = $params[0];
-        $content = @$params[1];
-        $auth = @$params[2];
+        $content = (isset($params[1])) ? $params[1] : null;
+        $auth = (isset($params[1])) ? true : false;
 
-        $guzzle = new GuzzleClient();
+        return self::runRequest($name, $url, $content, $auth);
+    }
+
+    public static function runRequest($method, $url, $content, $auth)
+    {
+        $guzzle = new GuzzleClient(['http_errors' => false, 'allow_redirects' => true]);
+        $url = self::$base_url."/{$url}";
+        dump($url);
+
         $headers = [
-            'User-Agent' => 'DiscordPHP/' . Discord::VERSION . ' DiscordBot (https://github.com/teamreflex/DiscordPHP, ' . Discord::VERSION . ')'
+            'User-Agent' => 'DiscordPHP/' . Discord::VERSION . ' DiscordBot (https://github.com/teamreflex/DiscordPHP, ' . Discord::VERSION . ')',
+            'Content-Type' => 'application/json'
         ];
-
-        if (is_null($content)) {
-            $content = [];
-        }
 
         if (!$auth) {
             $headers['authorization'] = DISCORD_TOKEN;
         }
 
-        $finalRequest = null;
         $done = false;
+        $finalRes = null;
 
         while (!$done) {
-            try {
-                $request = $guzzle->request($name, self::$base_url.'/'.$url, [
-                    'headers'   => $headers,
-                    'json'      => $content
-                ]);
+            $content = (is_null($content)) ? null : json_encode($content);
+            $request = new Request($method, $url, $headers, $content);
+            $response = $guzzle->send($request);
 
-                if ($request->getStatusCode() < 200 || $request->getStatusCode() > 226 && $request->getStatusCode() != 429) {
-                    return self::handleError($request->getStatusCode(), 'A status code outside of 200 to 226 was returned.');
-                }
-
-                if ($request->getStatusCode() == 429) {
-                    $sleeptime = $request->header('Retry-After') * 1000;
-                    usleep($sleeptime);
-                }
-
-                $done = true;
-                $finalRequest = $request;
-            } catch (\RuntimeException $e) {
-                if ($e->hasResponse()) {
-                    if ($e->getCode() != 429) {
-                        self::handleError($e->getCode(), $e->getResponse());
-                    }
-                } else {
-                    self::handleError($e->getCode(), $e->getMessage());
-                }
+            dump($response->getBody()->getContents());
+            
+            // Rate limiting
+            if ($response->getStatusCode() == 429) {
+                $tts = $response->getHeader('Retry-After') * 1000;
+                usleep($tts);
+                continue;
             }
+
+            // Not good!
+            if ($response->getStatusCode() < 200 && $response->getStatusCode() > 226) {
+                self::handleError($response->getStatusCode(), $response->getReasonPhrase());
+                continue;
+            }
+
+            $done = true;
+            $finalRes = $response;
         }
 
-        return json_decode($finalRequest->getBody());
+        return json_decode($finalRes->getBody());
     }
 
     /**
@@ -85,12 +86,16 @@ class Guzzle
      */
     public static function handleError($error_code, $message)
     {
+        if (!is_string($message)) {
+            $message = $message->getReasonPhrase();
+        }
+
         switch ($error_code) {
             case 400:
-                throw new DiscordRequestFailedException("Error code {$error_code}: This usually means you have entered an incorrect Email or Password.");
+                throw new DiscordRequestFailedException("Error code {$error_code}: This usually means you have entered an incorrect Email or Password. {$message}");
                 break;
             default:
-                throw new DiscordRequestFailedException("Erorr code {$error_code}: There was an error processing the request. {$message->getReasonPhrase()}");
+                throw new DiscordRequestFailedException("Erorr code {$error_code}: There was an error processing the request. {$message}");
                 break;
         }
     }
