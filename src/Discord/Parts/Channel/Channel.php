@@ -2,6 +2,7 @@
 
 namespace Discord\Parts\Channel;
 
+use Discord\Exceptions\FileNotFoundException;
 use Discord\Helpers\Collection;
 use Discord\Helpers\Guzzle;
 use Discord\Parts\Channel\Message;
@@ -10,6 +11,8 @@ use Discord\Parts\Guild\Role;
 use Discord\Parts\Part;
 use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
+use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\Client as GuzzleClient;
 
 class Channel extends Part
 {
@@ -157,6 +160,86 @@ class Channel extends Part
             'content'   => $text,
             'tts'       => $tts
         ]);
+
+        $message = new Message([
+            'id'                => $request->id,
+            'channel_id'        => $request->channel_id,
+            'content'           => $request->content,
+            'mentions'          => $request->mentions,
+            'author'            => $request->author,
+            'mention_everyone'  => $request->mention_everyone,
+            'timestamp'         => $request->timestamp,
+            'edited_timestamp'  => $request->edited_timestamp,
+            'tts'               => $request->tts,
+            'attachments'       => $request->attachments,
+            'embeds'            => $request->embeds
+        ], true);
+
+        if (!isset($this->attributes_cache['messages'])) {
+            $this->attributes_cache['messages'] = new Collection();
+        }
+
+        $this->attributes_cache['messages']->push($message);
+
+        return $message;
+    }
+
+    /**
+     * Sends a file to the channel if it is a text channel.
+     *
+     * @param string $filepath
+     * @param string $filename 
+     * @return Message|boolean 
+     */
+    public function sendFile($filepath, $filename)
+    {
+        if ($this->type != self::TYPE_TEXT) {
+            return false;
+        }
+
+        if (!file_exists($filepath)) {
+            throw new FileNotFoundException("File does not exist at path {$filepath}.");
+        }
+
+        $guzzle = new GuzzleClient(['http_errors' => false, 'allow_redirects' => true]);
+        $url = Guzzle::$base_url . "/channels/{$this->id}/messages";
+
+        $headers = [
+            'User-Agent' => Guzzle::getUserAgent(),
+            'authorization' => DISCORD_TOKEN
+        ];
+
+        $done = false;
+        $finalRes = null;
+
+        while (!$done) {
+            $response = $guzzle->request('post', $url, [
+                'headers' => $headers,
+                'multipart' => [[
+                    'name' => 'file',
+                    'contents' => fopen($filepath, 'r'),
+                    'filename' => $filename
+                ]]
+            ]);
+            
+            // Rate limiting
+            if ($response->getStatusCode() == 429) {
+                $tts = $response->getHeader('Retry-After') * 1000;
+                usleep($tts);
+                continue;
+            }
+
+            // Not good!
+            if ($response->getStatusCode() < 200 || $response->getStatusCode() > 226) {
+                Guzzle::handleError($response->getStatusCode(), $response->getReasonPhrase());
+                continue;
+            }
+
+            $done = true;
+            $finalRes = $response;
+        }
+
+        $request = json_decode($finalRes->getBody());
 
         $message = new Message([
             'id'                => $request->id,

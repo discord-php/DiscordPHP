@@ -235,6 +235,30 @@ class Guild extends Part
     }
 
     /**
+     * Returns the guild splash.
+     *
+     * @return string|null 
+     */
+    public function getSplashAttribute()
+    {
+        if (is_null($this->attributes['splash'])) {
+            return null;
+        }
+
+        return "https://discordapp.com/api/guilds/{$this->id}/splashes/{$this->attributes['splash']}.jpg";
+    }
+
+    /**
+     * Returns the guild splash hash.
+     *
+     * @return string|null 
+     */
+    public function getSplashHashAttribute()
+    {
+        return $this->attributes['splash'];
+    }
+
+    /**
      * Validates the specified region.
      *
      * @return string 
