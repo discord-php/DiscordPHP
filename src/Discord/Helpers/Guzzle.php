@@ -15,7 +15,7 @@ class Guzzle
      * 
      * @var string
      */
-    protected static $base_url = 'https://discordapp.com/api';
+    public static $base_url = 'https://discordapp.com/api';
 
     /**
      * Handles dynamic calls to the class.
