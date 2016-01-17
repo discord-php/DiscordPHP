@@ -15,6 +15,13 @@ class Ban extends Part
     public $editable = false;
 
     /**
+     * Is the part findable?
+     *
+     * @var boolean 
+     */
+    public $findable = false;
+
+    /**
      * The parts fillable attributes.
      *
      * @var array 

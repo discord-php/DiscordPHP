@@ -2,6 +2,7 @@
 
 namespace Discord\Parts;
 
+use Discord\Exceptions\DiscordRequestFailedException;
 use Discord\Exceptions\PartRequestFailedException;
 use Discord\Helpers\Guzzle;
 use Illuminate\Support\Str;
@@ -65,6 +66,13 @@ abstract class Part implements \ArrayAccess, \Serializable
     protected $regex = '/:([a-z_]+)/';
 
     /**
+     * Is the part findable?
+     *
+     * @var boolean 
+     */
+    public $findable = true;
+
+    /**
      * Is the part creatable?
      *
      * @var boolean 
@@ -107,6 +115,32 @@ abstract class Part implements \ArrayAccess, \Serializable
         if (is_callable([$this, 'afterConstruct'])) {
             $this->afterConstruct();
         }
+    }
+
+    /**
+     * Attempts to get the part from the servers and
+     * return it.
+     *
+     * @param string $id 
+     * @return Part|null 
+     */
+    public static function find($id)
+    {
+        $part = new static([], true);
+
+        if (!$part->findable) {
+            return null;
+        }
+
+        try {
+            $request = Guzzle::get($part->uriReplace('get', ['id' => $id]));
+        } catch (DiscordRequestFailedException $e) {
+            return null;
+        }
+
+        $part->fill($request);
+
+        return $part;
     }
 
     /**
@@ -246,6 +280,32 @@ abstract class Part implements \ArrayAccess, \Serializable
 
         foreach ($vars as $key => $variable) {
             if ($attribute = $this->getAttribute($variable)) {
+                $string = str_replace($original[$key], $attribute, $string);
+            }
+        }
+
+        return $string;
+    }
+
+    /**
+     * Replaces variables in one of the URIs.
+     *
+     * @param string $key 
+     * @param array $params 
+     * @return string 
+     */
+    public function uriReplace($key, $params)
+    {
+        $string = $this->uris[$key];
+
+        $matches = null;
+        $matcher = preg_match_all($this->regex, $string, $matches);
+
+        $original = $matches[0];
+        $vars = $matches[1];
+
+        foreach ($vars as $key => $variable) {
+            if ($attribute = $params[$variable]) {
                 $string = str_replace($original[$key], $attribute, $string);
             }
         }

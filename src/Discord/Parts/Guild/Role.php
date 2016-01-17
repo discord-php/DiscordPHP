@@ -8,6 +8,13 @@ use Discord\Parts\Part;
 class Role extends Part
 {
     /**
+     * Is the part findable?
+     *
+     * @var boolean 
+     */
+    public $findable = false;
+    
+    /**
      * The parts fillable attributes.
      *
      * @var array 

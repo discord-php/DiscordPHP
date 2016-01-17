@@ -10,6 +10,13 @@ use Discord\Parts\User\User;
 class Message extends Part
 {
     /**
+     * Is the part findable?
+     *
+     * @var boolean 
+     */
+    public $findable = false;
+    
+    /**
      * The parts fillable attributes.
      *
      * @var array 
@@ -22,7 +29,7 @@ class Message extends Part
      * @var array 
      */
     protected $uris = [
-        'get'       => 'channels/:channel_id/messages',
+        'get'       => 'channels/:channel_id/messages/:id',
         'create'    => 'channels/:channel_id/messages',
         'update'    => 'channels/:channel_id/messages/:id',
         'delete'    => 'channels/:channel_id/messages/:id'

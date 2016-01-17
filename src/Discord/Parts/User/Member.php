@@ -29,6 +29,13 @@ class Member extends Part
     public $creatable = false;
 
     /**
+     * Is the part findable?
+     *
+     * @var boolean 
+     */
+    public $findable = false;
+
+    /**
      * Should we fill the part after saving?
      *
      * @var boolean 

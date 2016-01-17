@@ -8,11 +8,41 @@ use Discord\Parts\Part;
 class User extends Part
 {
     /**
+     * Is the part creatable?
+     *
+     * @var boolean 
+     */
+    public $creatable = false;
+
+    /**
+     * Is the part deletable?
+     *
+     * @var boolean 
+     */
+    public $deletable = false;
+
+    /**
+     * Is the part editable?
+     *
+     * @var boolean 
+     */
+    public $editable = false;
+
+    /**
      * The parts fillable attributes.
      *
      * @var array 
      */
     protected $fillable = ['id', 'username', 'avatar', 'discriminator'];
+
+    /**
+     * URIs used to get/create/update/delete the part.
+     *
+     * @var array 
+     */
+    protected $uris = [
+        'get' => 'users/:id'
+    ];
 
     /**
      * Sends a message to the user.
