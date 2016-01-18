@@ -8,12 +8,13 @@ use Discord\Helpers\Guzzle;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\User\Member;
-use Discord\WebSockets\Handlers;
-use Evenement\EventEmitter;
 use Discord\WSClient\Factory as WsFactory;
 use Discord\WSClient\WebSocket as WebSocketInstance;
+use Discord\WebSockets\Handlers;
+use Evenement\EventEmitter;
 use Ratchet\WebSocket\Version\RFC6455\Frame;
 use React\EventLoop\Factory as LoopFactory;
+use React\EventLoop\LoopInterface;
 
 class WebSocket extends EventEmitter
 {
@@ -70,14 +71,15 @@ class WebSocket extends EventEmitter
      * Constructs the WebSocket instance.
      *
      * @param Discord $discord 
+     * @param LoopInterface $loop 
      * @return void 
      */
-    public function __construct(Discord $discord)
+    public function __construct(Discord $discord, LoopInterface &$loop = null)
     {
         $this->discord = $discord;
         $this->gateway = $this->getGateway();
 
-        $this->loop = LoopFactory::create();
+        $this->loop = (is_null($loop)) ? LoopFactory::create() : $loop;
         $this->wsfactory = new WsFactory($this->loop);
 
         $this->handlers = new Handlers();
