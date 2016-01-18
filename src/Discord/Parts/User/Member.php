@@ -5,10 +5,11 @@ namespace Discord\Parts\User;
 use Carbon\Carbon;
 use Discord\Helpers\Collection;
 use Discord\Helpers\Guzzle;
+use Discord\Parts\Channel\Channel;
 use Discord\Parts\Guild\Guild;
-use Discord\Parts\Permissions\RolePermission as Permission;
 use Discord\Parts\Guild\Role;
 use Discord\Parts\Part;
+use Discord\Parts\Permissions\RolePermission as Permission;
 use Discord\Parts\User\User;
 
 class Member extends Part
@@ -26,6 +27,13 @@ class Member extends Part
      * @var boolean 
      */
     public $creatable = false;
+
+    /**
+     * Is the part findable?
+     *
+     * @var boolean 
+     */
+    public $findable = false;
 
     /**
      * Should we fill the part after saving?
@@ -54,6 +62,28 @@ class Member extends Part
     public function kick()
     {
         return $this->delete();
+    }
+
+    /**
+     * Moves the member to another voice channel.
+     *
+     * @param Channel|int $channel 
+     * @return boolean 
+     */
+    public function moveMember($channel)
+    {
+        if ($channel instanceof Channel) {
+            $channel = $channel->id;
+        }
+
+        Guzzle::patch("guilds/{$this->guild_id}/members/{$this->id}", [
+            'channel_id' => $channel
+        ]);
+
+        // At the moment we are unable to check if the member
+        // was moved successfully.
+
+        return true;
     }
 
     /**

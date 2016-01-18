@@ -79,6 +79,32 @@ class Channel extends Part
     }
 
     /**
+     * Moves a member to another voice channel.
+     *
+     * @param Member|int
+     * @return boolean 
+     */
+    public function moveMember($member)
+    {
+        if ($this->type != self::TYPE_VOICE) {
+            return false;
+        }
+
+        if ($member instanceof Member) {
+            $member = $member->id;
+        }
+
+        Guzzle::patch("guilds/{$this->guild_id}/members/{$member}", [
+            'channel_id' => $this->id
+        ]);
+
+        // At the moment we are unable to check if the member
+        // was moved successfully.
+
+        return true;
+    }
+
+    /**
      * Creates an invite for the channel.
      *
      * @return Invite 

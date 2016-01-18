@@ -26,6 +26,13 @@ class Client extends Part
     public $deletable = false;
 
     /**
+     * Is the part findable?
+     *
+     * @var boolean 
+     */
+    public $findable = false;
+
+    /**
      * The parts fillable attributes.
      *
      * @var array 
