@@ -53,10 +53,33 @@ class Message extends Part
      */
     public function getChannelAttribute()
     {
+        if (isset($this->attributes_cache['channel'])) {
+            return $this->attributes_cache['channel'];
+        }
+        
         return new Channel([
             'id'    => $this->channel_id,
             'type'  => 'text'
         ], true);
+    }
+
+    /**
+     * Returns the full channel attribute.
+     *
+     * @return Channel 
+     */
+    public function getFullChannelAttribute()
+    {
+        if (isset($this->attributes_cache['channel'])) {
+            return $this->attributes_cache['channel'];
+        }
+
+        $request = Guzzle::get($this->replaceWithVariables('channels/:channel_id'));
+        $channel = new Channel((array) $request, true);
+
+        $this->attributes_cache['channel'] = $channel;
+
+        return $channel;   
     }
 
     /**
