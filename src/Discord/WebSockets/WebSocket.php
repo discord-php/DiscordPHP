@@ -99,6 +99,25 @@ class WebSocket extends EventEmitter
                 $this->emit('raw', [$data, $this->discord]);
                 $data = json_decode($data);
 
+                if (isset($data->d->unavailable)) {
+                    $this->emit('unavailable', [$data->t, $data->d]);
+
+                    if ($data->t == Event::GUILD_DELETE) {
+                        $discord = $this->discord;
+
+                        foreach ($discord->guilds as $index => $guild) {
+                            if ($guild->id == $data->d->id) {
+                                $discord->guilds->pull($index);
+                                break;
+                            }
+                        }
+
+                        $this->discord = $discord;
+                    }
+
+                    return;
+                }
+
                 if (!is_null($handler = $this->handlers->getHandler($data->t))) {
                     $handler = new $handler();
                     $handlerData = $handler->getData($data->d, $this->discord);
