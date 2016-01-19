@@ -2,12 +2,15 @@
 
 namespace Discord\Parts;
 
+use ArrayAccess;
+use Serializable;
+use JsonSerializable;
 use Discord\Exceptions\DiscordRequestFailedException;
 use Discord\Exceptions\PartRequestFailedException;
 use Discord\Helpers\Guzzle;
 use Illuminate\Support\Str;
 
-abstract class Part implements \ArrayAccess, \Serializable
+abstract class Part implements ArrayAccess, Serializable, JsonSerializable
 {
     /**
      * The parts fillable attributes.
@@ -409,7 +412,7 @@ abstract class Part implements \ArrayAccess, \Serializable
     }
 
     /**
-     * Serializes the data. Used for \Serializable.
+     * Serializes the data. Used for Serializable.
      *
      * @return mixed 
      */
@@ -419,7 +422,7 @@ abstract class Part implements \ArrayAccess, \Serializable
     }
 
     /**
-     * Unserializes some data. Used for \Serializable.
+     * Unserializes some data. Used for Serializable.
      *
      * @param mixed $data 
      * @return mixed 
@@ -431,6 +434,17 @@ abstract class Part implements \ArrayAccess, \Serializable
         foreach ($data as $key => $value) {
             $this->setAttribute($key, $value);
         }
+    }
+
+    /**
+     * Provides data when the part is encoded into
+     * JSON. Used for JsonSerializable.
+     *
+     * @return array 
+     */
+    public function jsonSerialize()
+    {
+        return $this->getPublicAttributes();
     }
 
     /**
