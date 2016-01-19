@@ -79,20 +79,24 @@ class WebSocket extends EventEmitter
         $this->discord = $discord;
         $this->gateway = $this->getGateway();
 
-        $this->loop = (is_null($loop)) ? LoopFactory::create() : $loop;
-        $this->wsfactory = new WsFactory($this->loop);
+        $loop = (is_null($loop)) ? LoopFactory::create() : $loop;
 
         $this->handlers = new Handlers();
+
+        $this->loop = $this->setupWs($loop);
     }
 
     /**
-     * Runs the WebSocket client.
+     * Sets up the WebSocket.
      *
-     * @return void 
+     * @param LoopInterface $loop 
+     * @return LoopInterface
      */
-    public function run()
+    public function setupWs(LoopInterface $loop)
     {
-        $this->wsfactory->__invoke($this->gateway)->then(function (WebSocketInstance $ws) {
+        $wsfactory = new WsFactory($loop);
+
+        $wsfactory($this->gateway)->then(function (WebSocketInstance $ws) {
             $this->ws = $ws;
 
             $ws->on('message', function ($data, $ws) {
@@ -241,6 +245,16 @@ class WebSocket extends EventEmitter
             $this->loop->stop();
         });
 
+        return $loop;
+    }
+
+    /**
+     * Runs the Event Loop.
+     *
+     * @return void 
+     */
+    public function run()
+    {
         $this->loop->run();
     }
 
