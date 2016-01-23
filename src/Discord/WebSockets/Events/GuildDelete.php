@@ -28,7 +28,8 @@ class GuildDelete extends Event
             'afk_channel_id'    => $data->afk_channel_id,
             'afk_timeout'       => $data->afk_timeout,
             'embed_enabled'     => $data->embed_enabled,
-            'embed_channel_id'  => $data->embed_channel_id
+            'embed_channel_id'  => $data->embed_channel_id,
+            'verification_level'=> $data->verification_level
         ], true);
 
         return $guildPart;

@@ -22,12 +22,17 @@ class Guild extends Part
     const REGION_SYDNEY = 'sydney';
     const REGION_AMSTERDAM = 'amsterdam';
 
+    const LEVEL_OFF = 0;
+    const LEVEL_LOW = 1;
+    const LEVEL_MEDIUM = 2;
+    const LEVEL_TABLEFLIP = 3;
+
     /**
      * The parts fillable attributes.
      *
      * @var array 
      */
-    protected $fillable = ['id', 'name', 'icon', 'region', 'owner_id', 'roles', 'joined_at', 'afk_channel_id', 'afk_timeout', 'embed_enabled', 'embed_channel_id', 'features', 'splash', 'emojis', 'large'];
+    protected $fillable = ['id', 'name', 'icon', 'region', 'owner_id', 'roles', 'joined_at', 'afk_channel_id', 'afk_timeout', 'embed_enabled', 'embed_channel_id', 'features', 'splash', 'emojis', 'large', 'verification_level'];
 
     /**
      * URIs used to get/create/update/delete the part.
@@ -63,6 +68,36 @@ class Guild extends Part
     public function leave()
     {
         return $this->delete();
+    }
+
+    /**
+     * Transfers ownership of the guild to
+     * another member.
+     *
+     * @param Member|integer $member
+     * @return boolean 
+     */
+    public function transferOwnership($member)
+    {
+        if ($member instanceof Member) {
+            $member = $member->id;
+        }
+
+        try {
+            $request = Guzzle::patch($this->replaceWithVariables('guilds/:id'), [
+                'owner_id' => $member
+            ]);
+
+            if ($request->owner_id != $member) {
+                return false;
+            }
+
+            $this->fill((array) $request);
+        } catch (DiscordRequestFailedException $e) {
+            return false;
+        }
+
+        return true;
     }
 
     /**
@@ -293,7 +328,13 @@ class Guild extends Part
     public function getUpdatableAttributes()
     {
         return [
-            'name' => $this->name
+            'name'              => $this->name,
+            'region'            => $this->region,
+            'logo'              => $this->logo,
+            'splash'            => $this->splash,
+            'verification_level'=> $this->verification_level,
+            'afk_channel_id'    => $this->afk_channel_id,
+            'afk_timeout'       => $this->afk_timeout
         ];
     }
 }

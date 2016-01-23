@@ -32,7 +32,8 @@ class GuildCreate extends Event
             'large'             => $data->large,
             'features'          => $data->features,
             'splash'            => $data->splash,
-            'emojis'            => $data->emojis
+            'emojis'            => $data->emojis,
+            'verification_level'=> $data->verification_level
         ], true);
 
         $channels = new Collection();

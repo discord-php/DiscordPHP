@@ -163,7 +163,8 @@ class WebSocket extends EventEmitter
                             'large'             => $guild->large,
                             'features'          => $guild->features,
                             'splash'            => $guild->splash,
-                            'emojis'            => $guild->emojis
+                            'emojis'            => $guild->emojis,
+                            'verification_level'=> $guild->verification_level
                         ], true);
 
                         $channels = new Collection();

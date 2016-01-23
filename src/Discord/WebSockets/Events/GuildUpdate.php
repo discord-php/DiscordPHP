@@ -30,7 +30,8 @@ class GuildUpdate extends Event
             'embed_channel_id'  => $data->embed_channel_id,
             'features'          => $data->features,
             'splash'            => $data->splash,
-            'emjojis'           => $data->emojis
+            'emjojis'           => $data->emojis,
+            'verification_level'=> $data->verification_level
         ]);
     }
 

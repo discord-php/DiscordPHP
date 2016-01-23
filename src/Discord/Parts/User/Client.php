@@ -134,7 +134,8 @@ class Client extends Part
                 'embed_channel_id'  => $guild->embed_channel_id,
                 'features'          => $guild->features,
                 'splash'            => $guild->splash,
-                'emjojis'           => $guild->emojis
+                'emjojis'           => $guild->emojis,
+                'verification_level'=> $guild->verification_level
             ], true);
         }
 
