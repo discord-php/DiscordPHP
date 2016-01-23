@@ -52,10 +52,7 @@ class Invite extends Part
      */
     public function getGuildAttribute()
     {
-        return new Guild([
-            'id'    => $this->attributes['guild']->id,
-            'name'  => $this->attributes['guild']->name
-        ], true);
+        return new Guild((array) $this->attributes['guild'], true);
     }
 
     /**
@@ -65,11 +62,7 @@ class Invite extends Part
      */
     public function getChannelAttribute()
     {
-        return new Channel([
-            'id'    => $this->attributes['channel']->id,
-            'name'  => $this->attributes['channel']->name,
-            'type'  => $this->attributes['channel']->type
-        ], true);
+        return new Channel((array) $this->attributes['channel'], true);
     }
 
     /**
@@ -89,12 +82,7 @@ class Invite extends Part
      */
     public function getInviterAttribute()
     {
-        return new User([
-            'id'            => $this->attributes['inviter']->id,
-            'username'      => $this->attributes['inviter']->username,
-            'avatar'        => $this->attributes['inviter']->avatar,
-            'discriminator' => $this->attributes['inviter']->discriminator
-        ], true);
+        return new User((array) $this->attributes['inviter'], true);
     }
 
     /**

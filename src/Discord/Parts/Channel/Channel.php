@@ -113,19 +113,7 @@ class Channel extends Part
     {
         $request = Guzzle::post($this->replaceWithVariables('channels/:id/invites'));
 
-        return new Invite([
-            'code'          => $request->code,
-            'max_age'       => $request->max_age,
-            'guild'         => $request->guild,
-            'revoked'       => $request->revoked,
-            'created_at'    => $request->created_at,
-            'temporary'     => $request->temporary,
-            'uses'          => $request->uses,
-            'max_uses'      => $request->max_uses,
-            'inviter'       => $request->inviter,
-            'xkcdpass'      => $request->xkcdpass,
-            'channel'       => $request->channel
-        ], true);
+        return new Invite((array) $request, true);
     }
 
     /**
@@ -147,19 +135,7 @@ class Channel extends Part
         $messages = [];
 
         foreach ($request as $index => $message) {
-            $messages[$index] = new Message([
-                'id'                => $message->id,
-                'channel_id'        => $message->channel_id,
-                'content'           => $message->content,
-                'mentions'          => $message->mentions,
-                'author'            => $message->author,
-                'mention_everyone'  => $message->mention_everyone,
-                'timestamp'         => $message->timestamp,
-                'edited_timestamp'  => $message->edited_timestamp,
-                'tts'               => $message->tts,
-                'attachments'       => $message->attachments,
-                'embeds'            => $message->embeds
-            ], true);
+            $messages[$index] = new Message((array) $message, true);
         }
 
         $messages = new Collection($messages);
@@ -187,19 +163,7 @@ class Channel extends Part
             'tts'       => $tts
         ]);
 
-        $message = new Message([
-            'id'                => $request->id,
-            'channel_id'        => $request->channel_id,
-            'content'           => $request->content,
-            'mentions'          => $request->mentions,
-            'author'            => $request->author,
-            'mention_everyone'  => $request->mention_everyone,
-            'timestamp'         => $request->timestamp,
-            'edited_timestamp'  => $request->edited_timestamp,
-            'tts'               => $request->tts,
-            'attachments'       => $request->attachments,
-            'embeds'            => $request->embeds
-        ], true);
+        $message = new Message((array) $request, true);
 
         if (!isset($this->attributes_cache['messages'])) {
             $this->attributes_cache['messages'] = new Collection();
@@ -267,19 +231,7 @@ class Channel extends Part
 
         $request = json_decode($finalRes->getBody());
 
-        $message = new Message([
-            'id'                => $request->id,
-            'channel_id'        => $request->channel_id,
-            'content'           => $request->content,
-            'mentions'          => $request->mentions,
-            'author'            => $request->author,
-            'mention_everyone'  => $request->mention_everyone,
-            'timestamp'         => $request->timestamp,
-            'edited_timestamp'  => $request->edited_timestamp,
-            'tts'               => $request->tts,
-            'attachments'       => $request->attachments,
-            'embeds'            => $request->embeds
-        ], true);
+        $message = new Message((array) $request, true);
 
         if (!isset($this->attributes_cache['messages'])) {
             $this->attributes_cache['messages'] = new Collection();

@@ -39,14 +39,7 @@ class Discord
 
         $request = Guzzle::get('users/@me');
 
-        $this->client = new Client([
-            'id'            => $request->id,
-            'username'      => $request->username,
-            'email'         => $request->email,
-            'verified'      => $request->verified,
-            'avatar'        => $request->avatar,
-            'discriminator' => $request->discriminator
-        ], true);
+        $this->client = new Client((array) $request, true);
     }
 
     /**
@@ -136,12 +129,7 @@ class Discord
             throw new InviteInvalidException('The invite is invalid or has expired.');
         }
 
-        return new Invite([
-            'code'      => $request->code,
-            'guild'     => $request->guild,
-            'xkcdpass'  => $request->xkcdpass,
-            'channel'   => $request->channel
-        ], true);
+        return new Invite((array) $request, true);
     }
 
     /**

@@ -150,36 +150,14 @@ class WebSocket extends EventEmitter
                     $guilds = new Collection();
 
                     foreach ($content->guilds as $guild) {
-                        $guildPart = new Guild([
-                            'id'                => $guild->id,
-                            'name'              => $guild->name,
-                            'icon'              => $guild->icon,
-                            'region'            => $guild->region,
-                            'owner_id'          => $guild->owner_id,
-                            'roles'             => $guild->roles,
-                            'joined_at'         => $guild->joined_at,
-                            'afk_channel_id'    => $guild->afk_channel_id,
-                            'afk_timeout'       => $guild->afk_timeout,
-                            'large'             => $guild->large,
-                            'features'          => $guild->features,
-                            'splash'            => $guild->splash,
-                            'emojis'            => $guild->emojis,
-                            'verification_level'=> $guild->verification_level
-                        ], true);
+                        $guildPart = new Guild((array) $guild, true);
 
                         $channels = new Collection();
 
                         foreach ($guild->channels as $channel) {
-                            $channelPart = new Channel([
-                                'id'                    => $channel->id,
-                                'name'                  => $channel->name,
-                                'type'                  => $channel->type,
-                                'topic'                 => $channel->topic,
-                                'guild_id'              => $guild->id,
-                                'position'              => $channel->position,
-                                'last_message_id'       => $channel->last_message_id,
-                                'permission_overwrites' => $channel->permission_overwrites
-                            ], true);
+                            $channel = (array) $channel;
+                            $channel['guild_id'] = $guild->id;
+                            $channelPart = new Channel($channel, true);
 
                             $channels->push($channelPart);
                         }
@@ -193,16 +171,11 @@ class WebSocket extends EventEmitter
                         $members = new Collection();
 
                         foreach ($guild->members as $member) {
-                            $memberPart = new Member([
-                                'user'      => $member->user,
-                                'roles'     => $member->roles,
-                                'mute'      => $member->mute,
-                                'deaf'      => $member->deaf,
-                                'joined_at' => $member->joined_at,
-                                'guild_id'  => $guild->id,
-                                'status'    => 'offline',
-                                'game'      => null
-                            ], true);
+                            $member = (array) $member;
+                            $member['guild_id'] = $guild->id;
+                            $member['status'] = 'offline';
+                            $member['game'] = null;
+                            $memberPart = new Member($member, true);
 
                             // check for presences
 

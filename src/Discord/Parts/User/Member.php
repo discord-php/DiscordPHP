@@ -103,12 +103,7 @@ class Member extends Part
      */
     public function getUserAttribute()
     {
-        return new User([
-            'id'            => $this->attributes['user']->id,
-            'username'      => $this->attributes['user']->username,
-            'avatar'        => $this->attributes['user']->avatar,
-            'discriminator' => $this->attributes['user']->discriminator
-        ], true);
+        return new User((array) $this->attributes['user'], true);
     }
 
     /**
@@ -127,18 +122,12 @@ class Member extends Part
 
         foreach ($request as $key => $role) {
             if (in_array($role->id, $this->attributes['roles'])) {
-                $roles[] = new Role([
-                    'id'            => $role->id,
-                    'name'          => $role->name,
-                    'color'         => $role->color,
-                    'managed'       => $role->managed,
-                    'hoist'         => $role->hoist,
-                    'position'      => $role->position,
-                    'permissions'   => new Permission([
-                        'perms' => $role->permissions
-                    ]),
-                    'guild_id'      => $this->guild_id
-                ], true);
+                $perm = new Permission([
+                    'perms' => $role->permissions
+                ]);
+                $role = (array) $role;
+                $role['permissions'] = $perm;
+                $roles[] = new Role($role, true);
             }
         }
 

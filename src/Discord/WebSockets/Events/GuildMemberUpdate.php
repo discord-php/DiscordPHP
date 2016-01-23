@@ -16,11 +16,7 @@ class GuildMemberUpdate extends Event
      */
     public function getData($data, $discord)
     {
-        return new Member([
-            'user'      => $data->user,
-            'roles'     => $data->roles,
-            'guild_id'  => $data->guild_id
-        ], true);
+        return new Member((array) $data, true);
     }
 
     /**

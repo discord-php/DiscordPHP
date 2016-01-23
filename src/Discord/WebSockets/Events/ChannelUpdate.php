@@ -16,17 +16,7 @@ class ChannelUpdate extends Event
      */
     public function getData($data, $discord)
     {
-        return new Channel([
-            'id'                    => $data->id,
-            'name'                  => $data->name,
-            'type'                  => $data->type,
-            'topic'                 => $data->topic,
-            'guild_id'              => $data->guild_id,
-            'position'              => $data->position,
-            'is_private'            => $data->is_private,
-            'last_message_id'       => $data->last_message_id,
-            'permission_overwrites' => $data->permission_overwrites
-        ], true);
+        return new Channel((array) $data, true);
     }
 
     /**

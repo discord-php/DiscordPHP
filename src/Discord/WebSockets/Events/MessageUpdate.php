@@ -16,27 +16,7 @@ class MessageUpdate extends Event
      */
     public function getData($data, $discord)
     {
-        if (!isset($data->content)) {
-            return new Message([
-                'id'            => $data->id,
-                'channel_id'    => $data->channel_id,
-                'embeds'        => $data->embeds
-            ], true);
-        }
-
-        return new Message([
-            'id'                => $data->id,
-            'channel_id'        => $data->channel_id,
-            'content'           => $data->content,
-            'mentions'          => $data->mentions,
-            'author'            => $data->author,
-            'mention_everyone'  => $data->mention_everyone,
-            'timestamp'         => $data->timestamp,
-            'edited_timestamp'  => $data->edited_timestamp,
-            'tts'               => $data->tts,
-            'attachments'       => $data->attachments,
-            'embeds'            => $data->embeds
-        ], true);
+        return new Message((array) $data, true);
     }
 
     /**

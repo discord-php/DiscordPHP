@@ -16,16 +16,9 @@ class GuildRoleCreate extends Event
      */
     public function getData($data, $discord)
     {
-        return new Role([
-            'id'            => $data->role->id,
-            'name'          => $data->role->name,
-            'color'         => $data->role->color,
-            'managed'       => $data->role->managed,
-            'hoist'         => $data->role->hoist,
-            'position'      => $data->role->position,
-            'permissions'   => $data->role->permissions,
-            'guild_id'      => $data->guild_id
-        ], true);
+        $adata = (array) $data->role;
+        $adata['guild_id'] = $data->guild_id;
+        return new Role($adata, true);
     }
 
     /**

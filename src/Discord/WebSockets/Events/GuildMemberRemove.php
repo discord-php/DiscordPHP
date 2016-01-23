@@ -16,10 +16,7 @@ class GuildMemberRemove extends Event
      */
     public function getData($data, $discord)
     {
-        return new Member([
-            'user'      => $data->user,
-            'guild_id'  => $data->guild_id,
-        ]);
+        return new Member((array) $data, true);
     }
 
     /**

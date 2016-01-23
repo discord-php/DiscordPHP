@@ -19,36 +19,14 @@ class GuildCreate extends Event
      */
     public function getData($data, $discord)
     {
-        $guildPart = new Guild([
-            'id'                => $data->id,
-            'name'              => $data->name,
-            'icon'              => $data->icon,
-            'region'            => $data->region,
-            'owner_id'          => $data->owner_id,
-            'roles'             => $data->roles,
-            'joined_at'         => $data->joined_at,
-            'afk_channel_id'    => $data->afk_channel_id,
-            'afk_timeout'       => $data->afk_timeout,
-            'large'             => $data->large,
-            'features'          => $data->features,
-            'splash'            => $data->splash,
-            'emojis'            => $data->emojis,
-            'verification_level'=> $data->verification_level
-        ], true);
+        $guildPart = new Guild((array) $data, true);
 
         $channels = new Collection();
 
         foreach ($data->channels as $channel) {
-            $channelPart = new Channel([
-                'id'                    => $channel->id,
-                'name'                  => $channel->name,
-                'type'                  => $channel->type,
-                'topic'                 => $channel->topic,
-                'guild_id'              => $data->id,
-                'position'              => $channel->position,
-                'last_message_id'       => $channel->last_message_id,
-                'permission_overwrites' => $channel->permission_overwrites
-            ], true);
+            $channel = (array) $channel;
+            $channel['guild_id'] = $data->id;
+            $channelPart = new Channel($channel, true);
 
             $channels->push($channelPart);
         }

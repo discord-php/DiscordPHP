@@ -131,18 +131,12 @@ class Guild extends Part
         $roles = [];
 
         foreach ($this->attributes['roles'] as $index => $role) {
-            $roles[$index] = new Role([
-                'id'            => $role->id,
-                'name'          => $role->name,
-                'color'         => $role->color,
-                'managed'       => $role->managed,
-                'hoist'         => $role->hoist,
-                'position'      => $role->position,
-                'permissions'   => new Permission([
-                    'perms' => $role->permissions
-                ]),
-                'guild_id'      => $this->id
-            ], true);
+            $perm = new Permission([
+                'perms' => $role->permissions
+            ]);
+            $role = (array) $role;
+            $role['permissions'] = $perm;
+            $roles[$index] = new Role($role, true);
         }
 
         $roles = new Collection($roles);
@@ -165,12 +159,7 @@ class Guild extends Part
 
         $request = Guzzle::get($this->replaceWithVariables('users/:owner_id'));
 
-        $owner = new User([
-            'id'            => $request->id,
-            'username'      => $request->username,
-            'avatar'        => $request->avatar,
-            'discriminator' => $request->discriminator
-        ], true);
+        $owner = new User((array) $request, true);
 
         $this->attributes_cache['owner'] = $owner;
 
@@ -192,17 +181,7 @@ class Guild extends Part
         $request = Guzzle::get($this->replaceWithVariables('guilds/:id/channels'));
 
         foreach ($request as $index => $channel) {
-            $channels[$index] = new Channel([
-                'id'                    => $channel->id,
-                'name'                  => $channel->name,
-                'type'                  => $channel->type,
-                'topic'                 => $channel->topic,
-                'guild_id'              => $channel->guild_id,
-                'position'              => $channel->position,
-                'is_private'            => $channel->is_private,
-                'last_message_id'       => $channel->last_message_id,
-                'permission_overwrites' => $channel->permission_overwrites
-            ], true);
+            $channels[$index] = new Channel((array) $channel, true);
         }
 
         $channels = new Collection($channels);
@@ -232,10 +211,9 @@ class Guild extends Part
         }
 
         foreach ($request as $index => $ban) {
-            $bans[$index] = new Ban([
-                'user'  => $ban->user,
-                'guild' => $this
-            ], true);
+            $ban = (array) $ban;
+            $ban['guild'] = $this;
+            $bans[$index] = new Ban($ban, true);
         }
 
         $bans = new Collection($bans);

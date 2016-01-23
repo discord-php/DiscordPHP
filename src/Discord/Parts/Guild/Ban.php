@@ -65,12 +65,7 @@ class Ban extends Part
      */
     public function getUserAttribute()
     {
-        return new User([
-            'id'            => $this->attributes['user']->id,
-            'username'      => $this->attributes['user']->username,
-            'avatar'        => $this->attributes['user']->avatar,
-            'discriminator' => $this->attributes['user']->discriminator
-        ]);
+        return new User((array) $this->attributes['user']);
     }
 
     /**

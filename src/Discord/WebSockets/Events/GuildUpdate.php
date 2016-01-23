@@ -16,23 +16,7 @@ class GuildUpdate extends Event
      */
     public function getData($data, $discord)
     {
-        return new Guild([
-            'id'                => $data->id,
-            'name'              => $data->name,
-            'icon'              => $data->icon,
-            'region'            => $data->region,
-            'owner_id'          => $data->owner_id,
-            'roles'             => $data->roles,
-            'joined_at'         => $data->joined_at,
-            'afk_channel_id'    => $data->afk_channel_id,
-            'afk_timeout'       => $data->afk_timeout,
-            'embed_enabled'     => $data->embed_enabled,
-            'embed_channel_id'  => $data->embed_channel_id,
-            'features'          => $data->features,
-            'splash'            => $data->splash,
-            'emjojis'           => $data->emojis,
-            'verification_level'=> $data->verification_level
-        ]);
+        return new Guild((array) $data);
     }
 
     /**
