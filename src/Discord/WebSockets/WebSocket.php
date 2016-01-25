@@ -180,7 +180,7 @@ class WebSocket extends EventEmitter
                             // check for presences
 
                             foreach ($guild->presences as $presence) {
-                                if ($presence->user->id == $member->user->id) {
+                                if ($presence->user->id == $member['user']->id) {
                                     $memberPart->status = $presence->status;
                                     $memberPart->game = $presence->game;
                                 }
