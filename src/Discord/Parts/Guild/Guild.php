@@ -131,9 +131,8 @@ class Guild extends Part
         $roles = [];
 
         foreach ($this->attributes['roles'] as $index => $role) {
-            $perm = new Permission([
-                'perms' => $role->permissions
-            ]);
+            $perm = new Permission;
+            $perm->perms = $role->permissions;
             $role = (array) $role;
             $role['permissions'] = $perm;
             $roles[$index] = new Role($role, true);
