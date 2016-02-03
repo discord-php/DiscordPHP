@@ -33,7 +33,7 @@ $websocket->run();
 
 ### Documentation
 
-Documentation can be found [here](https://teamreflex.github.io/DiscordPHP/), however it is very basic at the moment. If you need more help please ask as it says below.
+There is currently no documentation but it will be coming soon (when I get some time). If you don't know how to do something look through the code or message me on Discord (information below).
 
 ### Help
 
@@ -41,44 +41,7 @@ If you need any help feel free to join the [DiscordAPI Server](https://discord.g
 
 ### Other Libraries
 
-Here is a list of the other libraries that are being worked on and their Discord usernames!
-
-#### .NET
-
-- [Discord.Net](https://github.com/RogueException/Discord.Net) - @Voltana
-- [DiscordSharp](https://github.com/Luigifan/DiscordSharp) - @Axiom
-
-#### Go
-
-- [go-discord](https://github.com/gdraynz/go-discord) - @steelou
-- [discordgo](https://github.com/bwmarrin/discordgo) - @Skippy (siacn)
-
-#### Java
-
-- [Discord4J](https://github.com/nerd/Discord4J) - Dead
-- [JDiscord](https://github.com/NotGGhost/jDiscord) - @Ghost
-
-#### Node.js
-
-- [discord.io](https://github.com/izy521/discord.io) - @izy521
-- [discord.js](https://github.com/discord-js/discord.js) - @hydrabolt
-- [discordie](https://github.com/qeled/discordie) - @#q
-
-#### PHP
-
-- [discord-hypertext](https://github.com/Cleanse/discord-php) - @Cleanse
-
-#### Python
-
-- [discord.py](https://github.com/Rapptz/discord.py) - @Danny
-
-#### Ruby
-
-- [discordrb](https://github.com/meew0/discordrb) - @meew0
-
-#### Scala
-
-- [discord-akka](https://github.com/eaceaser/discord-akka) - @ceezy
+You can find a comparison and list of all other Discord libraries over at the [DiscordAPI Comparison Page](https://discordapi.com/unofficial/comparison.html) (thanks @abalabahaha!)
 
 ### Contributing
 
