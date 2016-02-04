@@ -13,7 +13,10 @@
         "illuminate/support": "^5.1",
         "nesbot/carbon": "^1.21",
         "cboden/ratchet": "0.3.*",
-        "react/socket-client": "0.4.*"
+        "react/socket-client": "0.4.*",
+        "react/datagram": "dev-master",
+        "TrafficCophp/ByteBuffer": "dev-master",
+        "react/child-process": "^0.4.0"
     },
     "require-dev": {
         "symfony/var-dumper": "^2.7",

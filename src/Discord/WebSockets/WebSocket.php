@@ -8,6 +8,7 @@ use Discord\Helpers\Guzzle;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\User\Member;
+use Discord\Voice\VoiceClient;
 use Discord\WSClient\Factory as WsFactory;
 use Discord\WSClient\WebSocket as WebSocketInstance;
 use Discord\WebSockets\Handlers;
@@ -15,6 +16,7 @@ use Evenement\EventEmitter;
 use Ratchet\WebSocket\Version\RFC6455\Frame;
 use React\EventLoop\Factory as LoopFactory;
 use React\EventLoop\LoopInterface;
+use React\Promise\Deferred;
 
 class WebSocket extends EventEmitter
 {
@@ -66,6 +68,13 @@ class WebSocket extends EventEmitter
      * @var Handlers 
      */
     protected $handlers;
+
+    /**
+     * The Voice Client instance
+     *
+     * @var VoiceClient 
+     */
+    protected $voice;
 
     /**
      * Constructs the WebSocket instance.
@@ -220,6 +229,58 @@ class WebSocket extends EventEmitter
         });
 
         return $loop;
+    }
+
+    /**
+     * Joins a voice channel.
+     *
+     * @param Channel $channel 
+     * @return VoiceClient
+     */
+    public function joinVoiceChannel(Channel $channel)
+    {
+        if (!is_null($this->voice)) {
+            return; //temp
+        }
+
+        $deferred = new Deferred();
+        $arr = ['user_id' => $this->discord->id];
+
+        $closure = function ($message) use (&$closure, &$arr, $deferred, $channel) {
+            $data = json_decode($message);
+
+            if ($data->t == 'VOICE_STATE_UPDATE') {
+                $arr['session'] = $data->d->session_id;
+            } elseif ($data->t == 'VOICE_SERVER_UPDATE') {
+                $arr['token'] = $data->d->token;
+                $arr['endpoint'] = $data->d->endpoint;
+
+                $vc = new VoiceClient($this, $this->loop, $channel, $arr);
+                $vc->once('ready', function () use ($vc, $deferred) {
+                    $deferred->resolve($vc);
+                });
+                $vc->once('error', function ($e) use ($deferred) {
+                    $deferred->reject($e);
+                });
+                $this->voice = $vc;
+
+                $this->ws->removeListener('message', $closure);
+            }
+        };
+
+        $this->ws->on('message', $closure);
+
+        $this->send([
+            'op' => 4,
+            'd' => [
+                'guild_id' => $channel->guild_id,
+                'channel_id' => $channel->id,
+                'self_mute' => false,
+                'self_deaf' => false
+            ]
+        ]);
+
+        return $deferred->promise();
     }
 
     /**

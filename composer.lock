@@ -4,9 +4,53 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "81cee1329e1132c891eb04fb04f184e8",
-    "content-hash": "9f6a95794d7d98ef9b89a58434ac6385",
+    "hash": "5cb38f1ba1c5cde4038b82da4169c446",
+    "content-hash": "e5d0a7cfdbfb82538a51c9c24768ceac",
     "packages": [
+        {
+            "name": "TrafficCophp/ByteBuffer",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nesQuick/ByteBuffer.git",
+                "reference": "e94e5c87c41bc79c0f738b0fa89bad11d27ae0b4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/nesQuick/ByteBuffer/zipball/e94e5c87c41bc79c0f738b0fa89bad11d27ae0b4",
+                "reference": "e94e5c87c41bc79c0f738b0fa89bad11d27ae0b4",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "TrafficCophp": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ole 'nesQuick' Michaelis",
+                    "email": "ole.michaelis@googlemail.com",
+                    "homepage": "http://www.codestars.eu"
+                }
+            ],
+            "description": "Node.js inspired byte stream buffer for PHP.",
+            "keywords": [
+                "Buffer",
+                "Bytehandling",
+                "Socket",
+                "binary data",
+                "library",
+                "pack",
+                "stream",
+                "wrapper"
+            ],
+            "time": "2016-01-13 22:50:58"
+        },
         {
             "name": "cboden/ratchet",
             "version": "v0.3.4",
@@ -827,6 +871,98 @@
                 "cache"
             ],
             "time": "2014-02-02 01:11:26"
+        },
+        {
+            "name": "react/child-process",
+            "version": "v0.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/reactphp/child-process.git",
+                "reference": "8bf211533bcbb2034e00528a47400367570dc3d7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/reactphp/child-process/zipball/8bf211533bcbb2034e00528a47400367570dc3d7",
+                "reference": "8bf211533bcbb2034e00528a47400367570dc3d7",
+                "shasum": ""
+            },
+            "require": {
+                "evenement/evenement": "~2.0",
+                "php": ">=5.4.0",
+                "react/event-loop": "0.4.*",
+                "react/stream": "0.4.*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.4-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "React\\ChildProcess\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Library for executing child processes.",
+            "keywords": [
+                "process"
+            ],
+            "time": "2014-02-02 01:11:26"
+        },
+        {
+            "name": "react/datagram",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/reactphp/datagram.git",
+                "reference": "188e6034a1c362f0c874e8f29db9ec33339c84ad"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/reactphp/datagram/zipball/188e6034a1c362f0c874e8f29db9ec33339c84ad",
+                "reference": "188e6034a1c362f0c874e8f29db9ec33339c84ad",
+                "shasum": ""
+            },
+            "require": {
+                "evenement/evenement": "~1.0|~2.0",
+                "php": ">=5.3",
+                "react/dns": ">=0.2, <0.5",
+                "react/event-loop": ">=0.2, <0.5",
+                "react/promise": "~2.0|~1.1"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "React\\Datagram\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Christian Lück",
+                    "email": "christian@lueck.tv"
+                }
+            ],
+            "description": "UDP datagram socket client and server for reactphp",
+            "homepage": "https://github.com/reactphp/datagram",
+            "keywords": [
+                "Socket",
+                "async",
+                "client",
+                "datagram",
+                "dgram",
+                "react",
+                "server",
+                "udp"
+            ],
+            "time": "2015-11-15 18:22:19"
         },
         {
             "name": "react/dns",
@@ -2495,7 +2631,10 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "react/datagram": 20,
+        "trafficcophp/bytebuffer": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],
