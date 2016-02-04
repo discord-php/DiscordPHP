@@ -32,6 +32,18 @@ class Buffer extends BaseBuffer
 	}
 
 	/**
+	 * Writes a signed short.
+	 *
+	 * @param short $value 
+	 * @param int $offset 
+	 * @return void 
+	 */
+	public function writeShort($value, $offset)
+	{
+		$this->insert('s', $value, $offset, 2);
+	}
+
+	/**
 	 * Reads a unsigned integer with little endian.
 	 *
 	 * @param int $offset 

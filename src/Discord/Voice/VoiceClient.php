@@ -465,8 +465,9 @@ class VoiceClient extends EventEmitter
 	 */
 	public function sendBuffer($data)
 	{
-		dump($this->ssrc, $this->seq, $this->timestamp);
+		dump("ssrc: {$this->ssrc}, seq: {$this->seq}, timestamp: {$this->timestamp}");
 		$packet = new VoicePacket($data, $this->ssrc, $this->seq, $this->timestamp);
+		dump(strlen((string) $packet));
 		$this->client->send((string) $packet);
 	}
 
@@ -485,7 +486,7 @@ class VoiceClient extends EventEmitter
 		$this->send([
 			'op' => 5,
 			'd' => [
-				'speaking' => false,
+				'speaking' => $speaking,
 				'delay' => 0
 			]
 		]);
