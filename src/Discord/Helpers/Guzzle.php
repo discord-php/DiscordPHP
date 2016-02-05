@@ -3,6 +3,7 @@
 namespace Discord\Helpers;
 
 use Discord\Discord;
+use Discord\Exceptions\ContentTooLongException;
 use Discord\Exceptions\DiscordRequestFailedException;
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\Exception\RequestException;
@@ -100,6 +101,15 @@ class Guzzle
         }
 
         $message .= " - {$content}";
+
+        if (false !== strpos($content, 'longer than 2000 characters') && $error_code == 500) {
+            // Discord has set a restriction with content sent over REST,
+            // if it is more than 2000 characters long it will not be
+            // sent and will return a 500 error.
+            // 
+            // There is no way around this, you must use WebSockets.
+            throw new ContentTooLongException('The expected content was more than 2000 characters. Use websockets if you need this content.');
+        }
 
         switch ($error_code) {
             case 400:
