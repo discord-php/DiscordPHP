@@ -50,8 +50,8 @@ class Discord
      */
     public function checkForCaching($email)
     {
-        if (file_exists($_SERVER['PWD'] . '/discord/' . md5($email))) {
-            $file = file_get_contents($_SERVER['PWD'] . '/discord/' . md5($email));
+        if (file_exists(getcwd() . '/discord/' . md5($email))) {
+            $file = file_get_contents(getcwd() . '/discord/' . md5($email));
 
             return $file;
         }
@@ -86,11 +86,11 @@ class Discord
         ], true);
 
         try {
-            if (!file_exists($_SERVER['PWD'] . '/discord')) {
-                mkdir($_SERVER['PWD'] . '/discord');
+            if (!file_exists(getcwd() . '/discord')) {
+                mkdir(getcwd() . '/discord');
             }
             
-            file_put_contents($_SERVER['PWD'] . '/discord/' . md5($email), $request->token);
+            file_put_contents(getcwd() . '/discord/' . md5($email), $request->token);
         } catch (\Exception $e) {
         }
 
