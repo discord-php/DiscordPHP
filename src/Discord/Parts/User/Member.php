@@ -87,6 +87,57 @@ class Member extends Part
     }
 
     /**
+     * Adds a role to the member.
+     *
+     * @param Role|int $role 
+     * @return boolean 
+     */
+    public function addRole($role)
+    {
+        if (is_int($role)) {
+            $role = new Role(['id' => $role], true);
+        }
+
+        // We don't want a double up on roles
+        if (false !== array_search($role->id, (array) $this->attributes['roles'])) {
+            return false;
+        }
+
+        // Preload the roles if there is no collection
+        $this->getRolesAttribute();
+
+        $this->attributes['roles'][] = $role->id;
+        $this->attributes_cache['roles']->push($role);
+
+        return true;
+    }
+
+    /**
+     * Removes a role from the user.
+     *
+     * @param Role|int $role 
+     * @return boolean 
+     */
+    public function removeRole($role)
+    {
+        if ($role instanceof Role) {
+            $role = $role->id;
+        }
+
+        if (false !== $index = array_search($role, $this->attributes['roles'])) {
+            unset($this->attributes['roles'][$index]);
+        }
+
+        $rolePart = $this->roles->get('id', $role);
+
+        if (false !== $index = array_search($rolePart, $this->roles->all())) {
+            $this->roles->pull($index);
+        }
+
+        return true;
+    }
+
+    /**
      * Returns the id attribute.
      *
      * @return integer 
@@ -94,6 +145,16 @@ class Member extends Part
     public function getIdAttribute()
     {
         return $this->user->id;
+    }
+
+    /**
+     * Returns the username attribute.
+     *
+     * @return string 
+     */
+    public function getUserameAttribute()
+    {
+        return $this->user->username;
     }
 
     /**
@@ -121,7 +182,7 @@ class Member extends Part
         $request = Guzzle::get($this->replaceWithVariables('guilds/:guild_id/roles'));
 
         foreach ($request as $key => $role) {
-            if (in_array($role->id, $this->attributes['roles'])) {
+            if (!(false === array_search($role->id, (array) $this->attributes['roles']))) {
                 $perm = new Permission([
                     'perms' => $role->permissions
                 ]);
@@ -155,14 +216,8 @@ class Member extends Part
      */
     public function getUpdatableAttributes()
     {
-        $roles = [];
-
-        foreach ($this->roles as $role) {
-            $roles[] = $role->id;
-        }
-
         return [
-            'roles' => $roles
+            'roles' => $this->attributes['roles']
         ];
     }
 
