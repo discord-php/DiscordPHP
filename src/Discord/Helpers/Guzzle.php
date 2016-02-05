@@ -59,15 +59,15 @@ class Guzzle
 
         $done = false;
         $finalRes = null;
+        $content = (is_null($content)) ? null : json_encode($content);
 
         while (!$done) {
-            $content = (is_null($content)) ? null : json_encode($content);
             $request = new Request($method, $url, $headers, $content);
             $response = $guzzle->send($request);
             
             // Rate limiting
             if ($response->getStatusCode() == 429) {
-                $tts = $response->getHeader('Retry-After') * 1000;
+                $tts = (int) $response->getHeader('Retry-After')[0] * 1000;
                 usleep($tts);
                 continue;
             }
