@@ -74,7 +74,7 @@ class Guzzle
 
             // Not good!
             if ($response->getStatusCode() < 200 || $response->getStatusCode() > 226) {
-                self::handleError($response->getStatusCode(), $response->getReasonPhrase());
+                self::handleError($response->getStatusCode(), $response->getReasonPhrase(), $response->getBody(true));
                 continue;
             }
 
@@ -90,22 +90,33 @@ class Guzzle
      *
      * @param integer $error_code 
      * @param string $message
+     * @param string $content 
      * @throws DiscordRequestFailedException 
      */
-    public static function handleError($error_code, $message)
+    public static function handleError($error_code, $message, $content)
     {
         if (!is_string($message)) {
             $message = $message->getReasonPhrase();
         }
 
+        $message .= " - {$content}";
+
         switch ($error_code) {
             case 400:
-                throw new DiscordRequestFailedException("Error code {$error_code}: This usually means you have entered an incorrect Email or Password. {$message}");
+                $response = "Error code 400: This usually means you have entered an incorrect Email or Password. {$message}";
+                break;
+            case 500:
+                $response = "Error code 500: This usually means something went wrong with Discord. {$message}";
+                break;
+            case 403:
+                $response = "Erorr code 403: You do not have permission to do this. {$message}";
                 break;
             default:
-                throw new DiscordRequestFailedException("Erorr code {$error_code}: There was an error processing the request. {$message}");
+                $response = "Erorr code {$error_code}: There was an error processing the request. {$message}";
                 break;
         }
+
+        throw new DiscordRequestFailedException($response);
     }
 
     /**
