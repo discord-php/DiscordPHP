@@ -23,7 +23,7 @@ class Discord
      *
      * @var string
      */
-    const VERSION = 'v3.0.3';
+    const VERSION = 'v3.0.4-beta';
 
     /**
      * The Client instance.
