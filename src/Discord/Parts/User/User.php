@@ -14,40 +14,33 @@ namespace Discord\Parts\User;
 use Discord\Helpers\Guzzle;
 use Discord\Parts\Part;
 
+/**
+ * A user is a general user that is not attached to a guild.
+ */
 class User extends Part
 {
     /**
-     * Is the part creatable?
-     *
-     * @var bool
+     * {@inheritdoc}
      */
     public $creatable = false;
 
     /**
-     * Is the part deletable?
-     *
-     * @var bool
+     * {@inheritdoc}
      */
     public $deletable = false;
 
     /**
-     * Is the part editable?
-     *
-     * @var bool
+     * {@inheritdoc}
      */
     public $editable = false;
 
     /**
-     * The parts fillable attributes.
-     *
-     * @var array
+     * {@inheritdoc}
      */
     protected $fillable = ['id', 'username', 'avatar', 'discriminator'];
 
     /**
-     * URIs used to get/create/update/delete the part.
-     *
-     * @var array
+     * {@inheritdoc}
      */
     protected $uris = [
         'get' => 'users/:id',
@@ -56,10 +49,10 @@ class User extends Part
     /**
      * Sends a message to the user.
      *
-     * @param string $message
-     * @param bool   $tts
+     * @param string $text The text to send in the message.
+     * @param bool   $tts Whether the message should be sent with text to speech enabled.
      *
-     * @return array
+     * @return Message The Message that was sent.
      */
     public function sendMessage($message, $tts = false)
     {
@@ -85,7 +78,7 @@ class User extends Part
     /**
      * Broadcasts that you are typing to the channel. Lasts for 5 seconds.
      *
-     * @return bool
+     * @return bool Whether the request succeeded or failed.
      */
     public function broadcastTyping()
     {
@@ -108,7 +101,7 @@ class User extends Part
     /**
      * Returns the avatar URL for the client.
      *
-     * @return string
+     * @return string The URL to the clients avatar.
      */
     public function getAvatarAttribute()
     {
@@ -122,7 +115,7 @@ class User extends Part
     /**
      * Returns the avatar ID for the client.
      *
-     * @return string
+     * @return string The client avatar's hash.
      */
     public function getAvatarIdAttribute()
     {
@@ -132,7 +125,7 @@ class User extends Part
     /**
      * Returns a formatted mention.
      *
-     * @return string
+     * @return string A formatted mention.
      */
     public function __toString()
     {

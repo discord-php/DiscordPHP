@@ -18,9 +18,7 @@ use Discord\Parts\User\User;
 class PresenceUpdate extends Part
 {
     /**
-     * The parts fillable attributes.
-     *
-     * @var array
+     * {@inheritdoc}
      */
     protected $fillable = ['user', 'roles', 'guild_id', 'status', 'game'];
 

@@ -11,46 +11,40 @@
 
 namespace Discord\Parts\User;
 
+use Discord\Exceptions\FileNotFoundException;
 use Discord\Exceptions\PasswordEmptyException;
 use Discord\Helpers\Collection;
 use Discord\Helpers\Guzzle;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Part;
 
+/**
+ * The client is the main interface for the client. Most calls on the main class are forwarded here.
+ */
 class Client extends Part
 {
     /**
-     * Is the part creatable?
-     *
-     * @var bool
+     * {@inheritdoc}
      */
     public $creatable = false;
 
     /**
-     * Is the part deletable?
-     *
-     * @var bool
+     * {@inheritdoc}
      */
     public $deletable = false;
 
-    /**
-     * Is the part findable?
-     *
-     * @var bool
+    /** 
+     * {@inheritdoc}
      */
     public $findable = false;
 
     /**
-     * The parts fillable attributes.
-     *
-     * @var array
+     * {@inheritdoc}
      */
     protected $fillable = ['id', 'username', 'password', 'email', 'verified', 'avatar', 'discriminator', 'user_settings'];
 
     /**
-     * URIs used to get/create/update/delete the part.
-     *
-     * @var array
+     * {@inheritdoc}
      */
     protected $uris = [
         'update' => 'users/@me',
@@ -74,12 +68,17 @@ class Client extends Part
     /**
      * Sets the users avatar.
      *
-     * @param string $filepath
+     * @param string $filepath The path to the file.
      *
-     * @return bool
+     * @return bool Whether the setting succeeded or failed.
+     * @throws \Discord\Exceptions\FileNotFoundException Thrown when the file does not exist.
      */
     public function setAvatar($filepath)
     {
+        if (!file_exists($filepath)) {
+            throw new FileNotFoundException("File does not exist at path {$filepath}.");
+        }
+
         $extension = pathinfo($filepath, PATHINFO_EXTENSION);
         $file = file_get_contents($filepath);
         $base64 = base64_encode($file);
@@ -92,11 +91,11 @@ class Client extends Part
     /**
      * Updates the clients presence.
      *
-     * @param WebSocket   $ws
-     * @param string|null $gamename
-     * @param bool        $idle
+     * @param WebSocket   $ws The WebSocket client.
+     * @param string|null $gamename The game that you are playing or null.
+     * @param bool        $idle Whether you are set to idle.
      *
-     * @return bool
+     * @return bool Whether the setting succeeded or failed.
      */
     public function updatePresence($ws, $gamename, $idle)
     {
@@ -118,7 +117,7 @@ class Client extends Part
     /**
      * Returns an array of Guilds.
      *
-     * @return Collection
+     * @return Collection A collection of guilds.
      */
     public function getGuildsAttribute()
     {
@@ -130,23 +129,7 @@ class Client extends Part
         $request = Guzzle::get('users/@me/guilds');
 
         foreach ($request as $index => $guild) {
-            $guilds[$index] = new Guild([
-                'id' => $guild->id,
-                'name' => $guild->name,
-                'icon' => $guild->icon,
-                'region' => $guild->region,
-                'owner_id' => $guild->owner_id,
-                'roles' => $guild->roles,
-                'joined_at' => $guild->joined_at,
-                'afk_channel_id' => $guild->afk_channel_id,
-                'afk_timeout' => $guild->afk_timeout,
-                'embed_enabled' => $guild->embed_enabled,
-                'embed_channel_id' => $guild->embed_channel_id,
-                'features' => $guild->features,
-                'splash' => $guild->splash,
-                'emjojis' => $guild->emojis,
-                'verification_level' => $guild->verification_level,
-            ], true);
+            $guilds[$index] = new Guild((array) $guild, true);
         }
 
         $guilds = new Collection($guilds);
@@ -159,7 +142,7 @@ class Client extends Part
     /**
      * Returns the avatar URL for the client.
      *
-     * @return string
+     * @return string The URL to the client's avatar.
      */
     public function getAvatarAttribute()
     {
@@ -173,7 +156,7 @@ class Client extends Part
     /**
      * Returns the avatar ID for the client.
      *
-     * @return string
+     * @return string The avatar ID for the client.
      */
     public function getAvatarIDAttribute()
     {
@@ -181,9 +164,7 @@ class Client extends Part
     }
 
     /**
-     * Returns the attributes needed to edit.
-     *
-     * @return array
+     * {@inheritdoc}
      */
     public function getUpdatableAttributes()
     {

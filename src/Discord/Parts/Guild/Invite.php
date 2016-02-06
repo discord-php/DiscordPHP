@@ -16,26 +16,23 @@ use Discord\Parts\Channel\Channel;
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
 
+/**
+ * An invite to a Channel and Guild.
+ */
 class Invite extends Part
 {
     /**
-     * Is the part editable?
-     *
-     * @var bool
+     * {@inheritdoc}
      */
     public $editable = false;
 
     /**
-     * The parts fillable attributes.
-     *
-     * @var array
+     * {@inheritdoc}
      */
     protected $fillable = ['code', 'max_age', 'guild', 'revoked', 'created_at', 'temporary', 'uses', 'max_uses', 'inviter', 'xkcdpass', 'channel'];
 
     /**
-     * URIs used to get/create/update/delete the part.
-     *
-     * @var array
+     * {@inheritdoc}
      */
     protected $uris = [
         'get' => 'invites/:id',
@@ -46,7 +43,7 @@ class Invite extends Part
     /**
      * Returns the invite URL attribute.
      *
-     * @return string
+     * @return string The URL to the invite.
      */
     public function getInviteUrlAttribute()
     {
@@ -56,7 +53,7 @@ class Invite extends Part
     /**
      * Returns the guild attribute.
      *
-     * @return Guild
+     * @return Guild The Guild that you have been invited to.
      */
     public function getGuildAttribute()
     {
@@ -66,7 +63,7 @@ class Invite extends Part
     /**
      * Returns the channel attribute.
      *
-     * @return Channel
+     * @return Channel The Channel that you have been invited to.
      */
     public function getChannelAttribute()
     {
@@ -76,7 +73,7 @@ class Invite extends Part
     /**
      * Returns the channel id attribute.
      *
-     * @return int
+     * @return int The Channel ID that you have been invited to.
      */
     public function getChannelIdAttribute()
     {
@@ -86,7 +83,7 @@ class Invite extends Part
     /**
      * Returns the inviter attribute.
      *
-     * @return User
+     * @return User The User that invited you.
      */
     public function getInviterAttribute()
     {
@@ -96,7 +93,7 @@ class Invite extends Part
     /**
      * Returns the created at attribute.
      *
-     * @return Carbon
+     * @return Carbon The time that the invite was created.
      */
     public function getCreatedAtAttribute()
     {
@@ -104,9 +101,7 @@ class Invite extends Part
     }
 
     /**
-     * Returns the attributes needed to create.
-     *
-     * @return array
+     * {@inheritdoc}
      */
     public function getCreatableAttributes()
     {

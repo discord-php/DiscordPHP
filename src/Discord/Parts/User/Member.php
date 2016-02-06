@@ -19,40 +19,33 @@ use Discord\Parts\Guild\Role;
 use Discord\Parts\Part;
 use Discord\Parts\Permissions\RolePermission as Permission;
 
+/**
+ * A member is a relationship between a user and a guild. It contains user-to-guild specific data like roles.
+ */
 class Member extends Part
 {
     /**
-     * The parts fillable attributes.
-     *
-     * @var array
+     * {@inheritdoc}
      */
     protected $fillable = ['user', 'roles', 'deaf', 'mute', 'joined_at', 'guild_id', 'status', 'game'];
 
     /**
-     * Is the part creatable?
-     *
-     * @var bool
+     * {@inheritdoc}
      */
     public $creatable = false;
 
-    /**
-     * Is the part findable?
-     *
-     * @var bool
+    /** 
+     * {@inheritdoc}
      */
     public $findable = false;
 
     /**
-     * Should we fill the part after saving?
-     *
-     * @var bool
+     * {@inheritdoc}
      */
     protected $fillAfterSave = false;
 
     /**
-     * URIs used to get/create/update/delete the part.
-     *
-     * @var array
+     * {@inheritdoc}
      */
     protected $uris = [
         'get' => '',
@@ -64,7 +57,8 @@ class Member extends Part
     /**
      * Alias for delete.
      *
-     * @return bool
+     * @return bool Whether the attempt to kick the member succeeded or failed.
+     * @see \Discord\Parts\Part::delete() This function is an alias for delete.
      */
     public function kick()
     {
@@ -74,9 +68,9 @@ class Member extends Part
     /**
      * Moves the member to another voice channel.
      *
-     * @param Channel|int $channel
+     * @param Channel|int $channel The channel to move the member to.
      *
-     * @return bool
+     * @return bool Whether the moving succeeded or failed.
      */
     public function moveMember($channel)
     {
@@ -97,9 +91,9 @@ class Member extends Part
     /**
      * Adds a role to the member.
      *
-     * @param Role|int $role
+     * @param Role|int $role The role to add to the member.
      *
-     * @return bool
+     * @return bool Whether adding the role succeeded or failed.
      */
     public function addRole($role)
     {
@@ -124,9 +118,9 @@ class Member extends Part
     /**
      * Removes a role from the user.
      *
-     * @param Role|int $role
+     * @param Role|int $role The role to remove from the member.
      *
-     * @return bool
+     * @return bool Whether removing the role succeeded or failed.
      */
     public function removeRole($role)
     {
@@ -150,7 +144,7 @@ class Member extends Part
     /**
      * Returns the id attribute.
      *
-     * @return int
+     * @return int The user ID of the member.
      */
     public function getIdAttribute()
     {
@@ -160,7 +154,7 @@ class Member extends Part
     /**
      * Returns the username attribute.
      *
-     * @return string
+     * @return string The username of the member.
      */
     public function getUserameAttribute()
     {
@@ -170,7 +164,7 @@ class Member extends Part
     /**
      * Returns the user attribute.
      *
-     * @return User
+     * @return User The user that owns the member.
      */
     public function getUserAttribute()
     {
@@ -180,7 +174,7 @@ class Member extends Part
     /**
      * Returns the roles attribute.
      *
-     * @return Collection
+     * @return Collection A collection of roles the member is in.
      */
     public function getRolesAttribute()
     {
@@ -212,7 +206,7 @@ class Member extends Part
     /**
      * Returns the joined at attribute.
      *
-     * @return Carbon
+     * @return Carbon The timestamp from when the member joined.
      */
     public function getJoinedAtAttribute()
     {
@@ -220,9 +214,7 @@ class Member extends Part
     }
 
     /**
-     * Returns the attributes needed to edit.
-     *
-     * @return array
+     * {@inheritdoc}
      */
     public function getUpdatableAttributes()
     {

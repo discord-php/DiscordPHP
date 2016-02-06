@@ -14,33 +14,28 @@ namespace Discord\Parts\Guild;
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
 
+/**
+ * A Ban is a ban on a user specific to a guild. It is also IP based.
+ */
 class Ban extends Part
 {
     /**
-     * Is the part editable?
-     *
-     * @var bool
+     * {@inheritdoc}
      */
     public $editable = false;
 
-    /**
-     * Is the part findable?
-     *
-     * @var bool
+    /** 
+     * {@inheritdoc}
      */
     public $findable = false;
 
     /**
-     * The parts fillable attributes.
-     *
-     * @var array
+     * {@inheritdoc}
      */
     protected $fillable = ['user', 'guild'];
 
     /**
-     * URIs used to get/create/update/delete the part.
-     *
-     * @var array
+     * {@inheritdoc}
      */
     protected $uris = [
         'create' => 'guilds/:guild_id/bans/:user_id',
@@ -50,7 +45,7 @@ class Ban extends Part
     /**
      * Returns the guild id attribute.
      *
-     * @return int
+     * @return int The Guild ID attribute.
      */
     public function getGuildIdAttribute()
     {
@@ -60,7 +55,7 @@ class Ban extends Part
     /**
      * Returns the user id attribute.
      *
-     * @return int
+     * @return int The User ID attribute.
      */
     public function getUserIdAttribute()
     {
@@ -70,7 +65,7 @@ class Ban extends Part
     /**
      * Gets the user attribute.
      *
-     * @return User
+     * @return User The User that is banned.
      */
     public function getUserAttribute()
     {
@@ -78,9 +73,7 @@ class Ban extends Part
     }
 
     /**
-     * Returns the attributes needed to create.
-     *
-     * @return array
+     * {@inheritdoc}
      */
     public function getCreatableAttributes()
     {
@@ -88,9 +81,7 @@ class Ban extends Part
     }
 
     /**
-     * Returns the attributes needed to edit.
-     *
-     * @return array
+     * {@inheritdoc}
      */
     public function getUpdatableAttributes()
     {

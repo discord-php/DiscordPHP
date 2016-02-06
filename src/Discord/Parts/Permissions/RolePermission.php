@@ -11,19 +11,18 @@
 
 namespace Discord\Parts\Permissions;
 
+/**
+ * {@inheritdoc}
+ */
 class RolePermission extends Permission
 {
     /**
-     * The default permissions.
-     *
-     * @var int
+     * {@inheritdoc}
      */
     protected $default = 36953089;
 
     /**
-     * The Bit Offset map.
-     *
-     * @var array
+     * {@inheritdoc}
      */
     protected $bitoffset = [
         'create_instant_invite' => 0,

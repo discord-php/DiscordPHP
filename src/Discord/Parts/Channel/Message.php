@@ -16,26 +16,23 @@ use Discord\Helpers\Guzzle;
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
 
+/**
+ * A message which is posted to a Discord text channel.
+ */
 class Message extends Part
 {
     /**
-     * Is the part findable?
-     *
-     * @var bool
+     * {@inheritdoc}
      */
     public $findable = false;
 
     /**
-     * The parts fillable attributes.
-     *
-     * @var array
+     * {@inheritdoc}
      */
     protected $fillable = ['id', 'channel_id', 'content', 'mentions', 'author', 'mention_everyone', 'timestamp', 'edited_timestamp', 'tts', 'attachments', 'embeds', 'nonce'];
 
     /**
-     * URIs used to get/create/update/delete the part.
-     *
-     * @var array
+     * {@inheritdoc}
      */
     protected $uris = [
         'get' => 'channels/:channel_id/messages/:id',
@@ -47,9 +44,9 @@ class Message extends Part
     /**
      * Replies to the message.
      *
-     * @param string $text
+     * @param string $text The text to reply with.
      *
-     * @return Message
+     * @return Message A Message part that contains information about the message sent.
      */
     public function reply($text)
     {
@@ -59,7 +56,7 @@ class Message extends Part
     /**
      * Returns the channel attribute.
      *
-     * @return Channel
+     * @return Channel The channel the message was sent in.
      */
     public function getChannelAttribute()
     {
@@ -76,7 +73,7 @@ class Message extends Part
     /**
      * Returns the full channel attribute.
      *
-     * @return Channel
+     * @return Channel The channel the message was sent in with extra information.
      */
     public function getFullChannelAttribute()
     {
@@ -95,7 +92,7 @@ class Message extends Part
     /**
      * Returns the author attribute.
      *
-     * @return User
+     * @return User The User that sent the message.
      */
     public function getAuthorAttribute()
     {
@@ -110,7 +107,7 @@ class Message extends Part
     /**
      * Returns the timestamp attribute.
      *
-     * @return Carbon
+     * @return Carbon The time that the message was sent.
      */
     public function getTimestampAttribute()
     {
@@ -118,9 +115,7 @@ class Message extends Part
     }
 
     /**
-     * Returns the attributes needed to create.
-     *
-     * @return array
+     * {@inheritdoc}
      */
     public function getCreatableAttributes()
     {
@@ -132,9 +127,7 @@ class Message extends Part
     }
 
     /**
-     * Returns the attributes needed to edit.
-     *
-     * @return array
+     * {@inheritdoc}
      */
     public function getUpdatableAttributes()
     {

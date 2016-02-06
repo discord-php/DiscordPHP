@@ -14,19 +14,18 @@ namespace Discord\Parts\Guild;
 use Discord\Parts\Permissions\RolePermission as Permission;
 use Discord\Parts\Part;
 
+/**
+ * A role defines permissions for the guild. Members can be added to the role. The role belongs to a guild.
+ */
 class Role extends Part
 {
-    /**
-     * Is the part findable?
-     *
-     * @var bool
+    /** 
+     * {@inheritdoc}
      */
     public $findable = false;
 
     /**
-     * The parts fillable attributes.
-     *
-     * @var array
+     * {@inheritdoc}
      */
     protected $fillable = ['id', 'name', 'color', 'managed', 'hoist', 'position', 'permissions', 'guild_id'];
 
@@ -47,9 +46,7 @@ class Role extends Part
     }
 
     /**
-     * URIs used to get/create/update/delete the part.
-     *
-     * @var array
+     * {@inheritdoc}
      */
     protected $uris = [
         'get' => '',
@@ -61,9 +58,9 @@ class Role extends Part
     /**
      * Sets the permissions attribute.
      *
-     * @param Permission|int $permission
+     * @param Permission|int $permission The Permissions that you want to set.
      *
-     * @return bool
+     * @return bool Whether the setting succeeded or failed.
      */
     public function setPermissionsAttribute($permission)
     {
@@ -79,11 +76,11 @@ class Role extends Part
     /**
      * Sets the color for a role. RGB.
      *
-     * @param int $red
-     * @param int $green
-     * @param int $blue
+     * @param int $red The red value in RGB.
+     * @param int $green The green value in RGB.
+     * @param int $blue The blue value in RGB.
      *
-     * @return bool
+     * @return bool Whether the setting succeeded or failed.
      */
     public function setColor($red = null, $green = null, $blue = null)
     {
@@ -99,9 +96,7 @@ class Role extends Part
     }
 
     /**
-     * Returns the attributes needed to create.
-     *
-     * @return array
+     * {@inheritdoc}
      */
     public function getCreatableAttributes()
     {
@@ -109,9 +104,7 @@ class Role extends Part
     }
 
     /**
-     * Returns the attributes needed to edit.
-     *
-     * @return array
+     * {@inheritdoc}
      */
     public function getUpdatableAttributes()
     {

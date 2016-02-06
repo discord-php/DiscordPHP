@@ -20,6 +20,9 @@ use Discord\Parts\Part;
 use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
 
+/**
+ * A Guild is Discord's equivalent of a server. It contains all the Members, Channels, Roles, Bans etc.
+ */
 class Guild extends Part
 {
     const REGION_DEFAULT = self::REGION_US_WEST;
@@ -36,16 +39,12 @@ class Guild extends Part
     const LEVEL_TABLEFLIP = 3;
 
     /**
-     * The parts fillable attributes.
-     *
-     * @var array
+     * {@inheritdoc}
      */
     protected $fillable = ['id', 'name', 'icon', 'region', 'owner_id', 'roles', 'joined_at', 'afk_channel_id', 'afk_timeout', 'embed_enabled', 'embed_channel_id', 'features', 'splash', 'emojis', 'large', 'verification_level'];
 
     /**
-     * URIs used to get/create/update/delete the part.
-     *
-     * @var array
+     * {@inheritdoc}
      */
     protected $uris = [
         'get' => 'guilds/:id',
@@ -57,7 +56,7 @@ class Guild extends Part
     /**
      * An array of valid regions.
      *
-     * @var array
+     * @var array Array of valid regions.
      */
     protected $regions = [
         self::REGION_US_WEST,
@@ -71,7 +70,8 @@ class Guild extends Part
     /**
      * Alias for delete().
      *
-     * @return bool
+     * @return bool Whether the attempt to leave succeeded or failed.
+     * @see \Discord\Parts\Part::delete() This function is an alias for delete.
      */
     public function leave()
     {
@@ -82,9 +82,9 @@ class Guild extends Part
      * Transfers ownership of the guild to
      * another member.
      *
-     * @param Member|int $member
+     * @param Member|int $member The member to transfer ownership to.
      *
-     * @return bool
+     * @return bool Whether the attempt succeeded or failed.
      */
     public function transferOwnership($member)
     {
@@ -112,7 +112,7 @@ class Guild extends Part
     /**
      * Returns the guilds members.
      *
-     * @return Collection
+     * @return Collection A collection of members.
      */
     public function getMembersAttribute()
     {
@@ -130,7 +130,7 @@ class Guild extends Part
     /**
      * Returns the guilds roles.
      *
-     * @return Collection
+     * @return Collection A collection of roles.
      */
     public function getRolesAttribute()
     {
@@ -158,7 +158,7 @@ class Guild extends Part
     /**
      * Returns the owner.
      *
-     * @return User
+     * @return User An User part.
      */
     public function getOwnerAttribute()
     {
@@ -178,7 +178,7 @@ class Guild extends Part
     /**
      * Returns the guilds channels.
      *
-     * @return Collection
+     * @return Collection A collection of channels.
      */
     public function getChannelsAttribute()
     {
@@ -203,7 +203,7 @@ class Guild extends Part
     /**
      * Returns the guilds bans.
      *
-     * @return Collection
+     * @return Collection A collection of bans.
      */
     public function getBansAttribute()
     {
@@ -235,7 +235,7 @@ class Guild extends Part
     /**
      * Returns the guilds icon.
      *
-     * @return string|null
+     * @return string|null The URL to the guild icon or null.
      */
     public function getIconAttribute()
     {
@@ -249,7 +249,7 @@ class Guild extends Part
     /**
      * Returns the guild icon hash.
      *
-     * @return string|null
+     * @return string|null The guild icon hash or null.
      */
     public function getIconHashAttribute()
     {
@@ -259,7 +259,7 @@ class Guild extends Part
     /**
      * Returns the guild splash.
      *
-     * @return string|null
+     * @return string|null The URL to the guild splash or null.
      */
     public function getSplashAttribute()
     {
@@ -273,7 +273,7 @@ class Guild extends Part
     /**
      * Returns the guild splash hash.
      *
-     * @return string|null
+     * @return string|null The guild splash hash or null.
      */
     public function getSplashHashAttribute()
     {
@@ -283,7 +283,8 @@ class Guild extends Part
     /**
      * Validates the specified region.
      *
-     * @return string
+     * @return string Returns the region if it is valid or default.
+     * @see self::REGION_DEFAULT The default region.
      */
     public function validateRegion()
     {
@@ -295,9 +296,7 @@ class Guild extends Part
     }
 
     /**
-     * Returns the attributes needed to create.
-     *
-     * @return array
+     * {@inheritdoc}
      */
     public function getCreatableAttributes()
     {
@@ -308,9 +307,7 @@ class Guild extends Part
     }
 
     /**
-     * Returns the attributes needed to edit.
-     *
-     * @return array
+     * {@inheritdoc}
      */
     public function getUpdatableAttributes()
     {

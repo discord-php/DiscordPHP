@@ -19,9 +19,7 @@ use Discord\Parts\User\User;
 class TypingStart extends Part
 {
     /**
-     * The parts fillable attributes.
-     *
-     * @var array
+     * {@inheritdoc}
      */
     protected $fillable = ['user_id', 'timestamp', 'channel_id'];
 

@@ -17,6 +17,9 @@ use Discord\Exceptions\DiscordRequestFailedException;
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\Psr7\Request;
 
+/**
+ * Provides an easy wrapper for the Guzzle HTTP client.
+ */
 class Guzzle
 {
     /**
@@ -29,11 +32,12 @@ class Guzzle
     /**
      * Handles dynamic calls to the class.
      *
-     * @param string $url
-     * @param array  $params
-     * @param bool   $noauth
+     * @param string $url The endpoint that will be queried.
+     * @param array  $params Parameters that will be encoded into JSON and sent with the request.
+     * @param bool   $noauth Whether the authentication token will be sent with the request.
      *
-     * @return object
+     * @return object An object that was returned from the Discord servers.
+     * @see \Discord\Helpers\Guzzle::runRequest() This function will be forwareded onto runRequest.
      */
     public static function __callStatic($name, $params)
     {
@@ -47,12 +51,12 @@ class Guzzle
     /**
      * Runs http calls.
      *
-     * @param string $method
-     * @param string $url
-     * @param array  $content
-     * @param bool   $auth
+     * @param string $method The request method.
+     * @param string $url The endpoint that will be queried.
+     * @param array  $content Parameters that will be encoded into JSON and sent with the request.
+     * @param bool   $auth Whether the authentication token will be sent with the request.
      *
-     * @return object
+     * @return object An object that was returned from the Discord servers.
      */
     public static function runRequest($method, $url, $content, $auth)
     {
@@ -99,11 +103,12 @@ class Guzzle
     /**
      * Handles an error code.
      *
-     * @param int    $error_code
-     * @param string $message
-     * @param string $content
+     * @param int    $error_code The HTTP status code.
+     * @param string $message The HTTP reason phrase.
+     * @param string $content The HTTP response content.
      *
-     * @throws DiscordRequestFailedException
+     * @throws \Discord\Exceptions\DiscordRequestFailedException Thrown when the request fails.
+     * @throws \Discord\Exceptions\ContentTooLongException Thrown when the content is longer than 2000 characters.
      */
     public static function handleError($error_code, $message, $content)
     {

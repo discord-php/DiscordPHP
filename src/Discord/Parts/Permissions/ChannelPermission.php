@@ -11,19 +11,18 @@
 
 namespace Discord\Parts\Permissions;
 
+/**
+ * {@inheritdoc}
+ */
 class ChannelPermission extends Permission
 {
     /**
-     * The default permissions.
-     *
-     * @var int
+     * {@inheritdoc}
      */
     protected $default = 0;
 
     /**
-     * The Bit Offset map.
-     *
-     * @var array
+     * {@inheritdoc}
      */
     protected $bitoffset = [
         'create_instant_invite' => 0,
