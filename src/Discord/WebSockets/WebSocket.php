@@ -24,62 +24,65 @@ use Ratchet\WebSocket\Version\RFC6455\Frame;
 use React\EventLoop\Factory as LoopFactory;
 use React\EventLoop\LoopInterface;
 
+/**
+ * This class is the base for the Discord WebSocket.
+ */
 class WebSocket extends EventEmitter
 {
     /**
      * The WebSocket event loop.
      *
-     * @var \React\EventLoop\Factory
+     * @var \React\EventLoop\Factory The Event Loop.
      */
     public $loop;
 
     /**
      * The WebSocket factory.
      *
-     * @var WsFactory
+     * @var WsFactory The WebSocket factory.
      */
     protected $wsfactory;
 
     /**
      * The WebSocket instance.
      *
-     * @var WebSocketInstance
+     * @var WebSocketInstance The WebSocket client instance.
      */
     protected $ws;
 
     /**
      * The Discord instance.
      *
-     * @var \Discord\Discord
+     * @var \Discord\Discord The Discord REST client instance.
      */
     protected $discord;
 
     /**
      * The Discord WebSocket gateway.
      *
-     * @var string
+     * @var string The Discord WebSocket gateway.
      */
     protected $gateway;
 
     /**
      * Have we sent the login frame yet?
      *
-     * @var bool
+     * @var bool Whether we have sent the login frame.
      */
     protected $sentLoginFrame = false;
 
     /**
      * The event handlers.
      *
-     * @var Handlers
+     * @var Handlers The Handlers class.
      */
     protected $handlers;
 
     /**
      * Constructs the WebSocket instance.
      *
-     * @param Discord       $discord
-     * @param LoopInterface $loop
+     * @param Discord       $discord The Discord REST client instance.
+     * @param LoopInterface|null $loop The ReactPHP Event Loop.
      *
      * @return void
      */
@@ -98,11 +101,11 @@ class WebSocket extends EventEmitter
     /**
      * Sets up the WebSocket.
      *
-     * @param LoopInterface $loop
+     * @param LoopInterface $loop The ReactPHP Event Loop.
      *
-     * @return LoopInterface
+     * @return LoopInterface The ReactPHP Event Loop.
      */
-    public function setupWs(LoopInterface $loop)
+    protected function setupWs(LoopInterface $loop)
     {
         $wsfactory = new WsFactory($loop);
 
@@ -270,7 +273,7 @@ class WebSocket extends EventEmitter
     /**
      * Sends data over the WebSocket.
      *
-     * @param array $data
+     * @param array $data Data to send to the WebSocket.
      *
      * @return void
      */
@@ -283,7 +286,7 @@ class WebSocket extends EventEmitter
     /**
      * Gets the WebSocket gateway.
      *
-     * @return string
+     * @return string The Discord WebSocket gateway.
      */
     public function getGateway()
     {

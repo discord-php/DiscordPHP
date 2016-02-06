@@ -19,6 +19,8 @@ use Discord\Parts\User\Client;
 /**
  * The Discord class is the base of the client. This is the class that you
  * will start off with when you do anything with the client.
+ *
+ * @see \Discord\Parts\User\Client Most functions are forwarded onto the Client class.
  */
 class Discord
 {
