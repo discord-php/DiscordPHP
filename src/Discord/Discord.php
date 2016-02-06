@@ -157,7 +157,7 @@ class Discord
      * @param array $name The function arguments.
      * @return mixed The result of the function.
      */
-    public function __call($name, $args)
+    public function __call($name, array $args = [])
     {
         if (is_null($this->client)) {
             return false;
