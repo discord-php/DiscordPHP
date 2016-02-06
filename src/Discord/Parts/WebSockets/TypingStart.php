@@ -16,6 +16,10 @@ use Discord\Parts\Channel\Channel;
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
 
+/**
+ * A TypingStart part is used when the `TYPING_START` event is fired on the WebSocket. It contains
+ * information such as when the event was fired and then channel it was fired in.
+ */
 class TypingStart extends Part
 {
     /**
@@ -26,7 +30,7 @@ class TypingStart extends Part
     /**
      * Gets the user attribute.
      *
-     * @return User
+     * @return User The user that started typing.
      */
     public function getUserAttribute()
     {
@@ -38,7 +42,7 @@ class TypingStart extends Part
     /**
      * Gets the timestamp attribute.
      *
-     * @return Carbon
+     * @return Carbon The time that the user started typing.
      */
     public function getTimestampAttribute()
     {
@@ -48,7 +52,7 @@ class TypingStart extends Part
     /**
      * Gets the channel attribute.
      *
-     * @return Channel
+     * @return Channel The channel that the user started typing in.
      */
     public function getChannelAttribute()
     {

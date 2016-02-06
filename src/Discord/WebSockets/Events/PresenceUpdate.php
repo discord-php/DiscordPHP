@@ -14,15 +14,15 @@ namespace Discord\WebSockets\Events;
 use Discord\WebSockets\Event;
 use Discord\Parts\WebSockets\PresenceUpdate as PresenceUpdatePart;
 
+/**
+ * Event that is emitted wheh `PRESENCE_UPDATE` is fired.
+ */
 class PresenceUpdate extends Event
 {
     /**
-     * Returns the formatted data.
+     * {@inheritdoc}
      *
-     * @param array   $data
-     * @param Discord $discord
-     *
-     * @return Message
+     * @return PresenceUpdatePart The parsed data.
      */
     public function getData($data, $discord)
     {
@@ -30,12 +30,7 @@ class PresenceUpdate extends Event
     }
 
     /**
-     * Updates the Discord instance with the new data.
-     *
-     * @param mixed   $data
-     * @param Discord $discord
-     *
-     * @return Discord
+     * {@inheritdoc}
      */
     public function updateDiscordInstance($data, $discord)
     {

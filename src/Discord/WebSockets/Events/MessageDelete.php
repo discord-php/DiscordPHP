@@ -13,15 +13,15 @@ namespace Discord\WebSockets\Events;
 
 use Discord\WebSockets\Event;
 
+/**
+ * Event that is emitted wheh `MESSAGE_DELETE` is fired.
+ */
 class MessageDelete extends Event
 {
     /**
-     * Returns the formatted data.
+     * {@inheritdoc}
      *
-     * @param array   $data
-     * @param Discord $discord
-     *
-     * @return Message
+     * @return Message The parsed data.
      */
     public function getData($data, $discord)
     {
@@ -29,12 +29,7 @@ class MessageDelete extends Event
     }
 
     /**
-     * Updates the Discord instance with the new data.
-     *
-     * @param mixed   $data
-     * @param Discord $discord
-     *
-     * @return Discord
+     * {@inheritdoc}
      */
     public function updateDiscordInstance($data, $discord)
     {

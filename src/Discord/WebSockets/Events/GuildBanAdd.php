@@ -14,15 +14,15 @@ namespace Discord\WebSockets\Events;
 use Discord\Parts\Guild\Ban;
 use Discord\WebSockets\Event;
 
+/**
+ * Event that is emitted wheh `GUILD_BAN_ADD` is fired.
+ */
 class GuildBanAdd extends Event
 {
     /**
-     * Returns the formatted data.
+     * {@inheritdoc}
      *
-     * @param array   $data
-     * @param Discord $discord
-     *
-     * @return Message
+     * @return Ban The parsed data.
      */
     public function getData($data, $discord)
     {
@@ -35,12 +35,7 @@ class GuildBanAdd extends Event
     }
 
     /**
-     * Updates the Discord instance with the new data.
-     *
-     * @param mixed   $data
-     * @param Discord $discord
-     *
-     * @return Discord
+     * {@inheritdoc}
      */
     public function updateDiscordInstance($data, $discord)
     {

@@ -14,15 +14,15 @@ namespace Discord\WebSockets\Events;
 use Discord\Parts\Channel\Channel;
 use Discord\WebSockets\Event;
 
+/**
+ * Event that is emitted wheh `CHANNEL_DELETE` is fired.
+ */
 class ChannelDelete extends Event
 {
     /**
-     * Returns the formatted data.
+     * {@inheritdoc}
      *
-     * @param array   $data
-     * @param Discord $discord
-     *
-     * @return Message
+     * @return Channel The parsed data.
      */
     public function getData($data, $discord)
     {
@@ -30,12 +30,7 @@ class ChannelDelete extends Event
     }
 
     /**
-     * Updates the Discord instance with the new data.
-     *
-     * @param mixed   $data
-     * @param Discord $discord
-     *
-     * @return Discord
+     * {@inheritdoc}
      */
     public function updateDiscordInstance($data, $discord)
     {

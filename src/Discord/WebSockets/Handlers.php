@@ -11,12 +11,15 @@
 
 namespace Discord\WebSockets;
 
+/**
+ * This class contains all the handlers for the individual WebSocket events.
+ */
 class Handlers
 {
     /**
      * An array of handlers.
      *
-     * @var array
+     * @var array Array of handlers.
      */
     protected $handlers = [];
 
@@ -66,8 +69,8 @@ class Handlers
     /**
      * Adds a handler to the list.
      *
-     * @param string $event
-     * @param string $classname
+     * @param string $event The WebSocket event name.
+     * @param string $classname The Event class name.
      *
      * @return void
      */
@@ -79,9 +82,9 @@ class Handlers
     /**
      * Returns a handler.
      *
-     * @param string $event
+     * @param string $event The WebSocket event name.
      *
-     * @return string|null
+     * @return string|null The Event class name or null;
      */
     public function getHandler($event)
     {
@@ -95,7 +98,7 @@ class Handlers
     /**
      * Returns the handlers array.
      *
-     * @return array
+     * @return array Array of handlers.
      */
     public function getHandlers()
     {

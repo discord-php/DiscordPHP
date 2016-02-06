@@ -11,6 +11,10 @@
 
 namespace Discord\WebSockets;
 
+/**
+ * Contains constants for WebSocket events as well as handlers
+ * for the events.
+ */
 class Event
 {
     // General
@@ -43,4 +47,24 @@ class Event
     const MESSAGE_CREATE = 'MESSAGE_CREATE';
     const MESSAGE_DELETE = 'MESSAGE_DELETE';
     const MESSAGE_UPDATE = 'MESSAGE_UPDATE';
+
+    /**
+     * Returns the formatted data.
+     *
+     * @param array   $data The data that was sent with the WebSocket.
+     * @param Discord $discord The Discord instance.
+     */
+    public function getData($data, $discord)
+    {}
+
+    /**
+     * Updates the Discord instance with the new data.
+     *
+     * @param mixed   $data
+     * @param Discord $discord
+     *
+     * @return Discord
+     */
+    public function updateDiscordInstance($data, $discord)
+    {}
 }

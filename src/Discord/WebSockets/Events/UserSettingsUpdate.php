@@ -13,15 +13,15 @@ namespace Discord\WebSockets\Events;
 
 use Discord\WebSockets\Event;
 
+/**
+ * Event that is emitted wheh `USER_SETTINGS_UPDATE` is fired.
+ */
 class UserSettingsUpdate extends Event
 {
     /**
-     * Returns the formatted data.
+     * {@inheritdoc}
      *
-     * @param array   $data
-     * @param Discord $discord
-     *
-     * @return Message
+     * @return array The data.
      */
     public function getData($data, $discord)
     {
@@ -29,12 +29,7 @@ class UserSettingsUpdate extends Event
     }
 
     /**
-     * Updates the Discord instance with the new data.
-     *
-     * @param mixed   $data
-     * @param Discord $discord
-     *
-     * @return Discord
+     * {@inheritdoc}
      */
     public function updateDiscordInstance($data, $discord)
     {

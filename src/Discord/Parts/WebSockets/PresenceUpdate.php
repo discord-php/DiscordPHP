@@ -15,6 +15,10 @@ use Discord\Parts\Guild\Guild;
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
 
+/**
+ * A PresenceUpdate part is used when the `PRESENCE_UPDATE` event is fired on the WebSocket. It contains
+ * information about the users presence suck as their status (online/away) and their current game.
+ */
 class PresenceUpdate extends Part
 {
     /**
@@ -25,7 +29,7 @@ class PresenceUpdate extends Part
     /**
      * Gets the user attribute.
      *
-     * @return User
+     * @return User The user that had their presence updated.
      */
     public function getUserAttribute()
     {
@@ -35,7 +39,7 @@ class PresenceUpdate extends Part
     /**
      * Gets the guild attribute.
      *
-     * @return Guild
+     * @return Guild The guild that the user was in.
      */
     public function getGuildAttribute()
     {
