@@ -33,7 +33,9 @@ $websocket->run();
 
 ### Documentation
 
-There is currently no documentation but it will be coming soon (when I get some time). If you don't know how to do something look through the code or message me on Discord (information below).
+I have generated documentation which can be viewed [here](https://teamreflex.github.io/DiscordPHP). The code is well documentated so feel free to read through it if you want.
+
+If you have any questions feel free to message me on Discord which can be viewed below.
 
 ### Help
 
