@@ -1,19 +1,27 @@
 <?php
 
+/*
+ * This file is apart of the DiscordPHP project.
+ *
+ * Copyright (c) 2016 David Cole <david@team-reflex.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the LICENSE.md file.
+ */
+
 namespace Discord\Helpers;
 
 use Discord\Discord;
 use Discord\Exceptions\ContentTooLongException;
 use Discord\Exceptions\DiscordRequestFailedException;
 use GuzzleHttp\Client as GuzzleClient;
-use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7\Request;
 
 class Guzzle
 {
     /**
      * The Base URL of the API.
-     * 
+     *
      * @var string
      */
     public static $base_url = 'https://discordapp.com/api';
@@ -22,9 +30,10 @@ class Guzzle
      * Handles dynamic calls to the class.
      *
      * @param string $url
-     * @param array $params 
-     * @param boolean $noauth
-     * @return object 
+     * @param array  $params
+     * @param bool   $noauth
+     *
+     * @return object
      */
     public static function __callStatic($name, $params)
     {
@@ -37,11 +46,12 @@ class Guzzle
 
     /**
      * Runs http calls.
-     * 
-     * @param  string $method  
-     * @param  string $url     
-     * @param  array $content 
-     * @param  boolean $auth    
+     *
+     * @param string $method
+     * @param string $url
+     * @param array  $content
+     * @param bool   $auth
+     *
      * @return object
      */
     public static function runRequest($method, $url, $content, $auth)
@@ -51,10 +61,10 @@ class Guzzle
 
         $headers = [
             'User-Agent' => self::getUserAgent(),
-            'Content-Type' => 'application/json'
+            'Content-Type' => 'application/json',
         ];
 
-        if (!$auth) {
+        if (! $auth) {
             $headers['authorization'] = DISCORD_TOKEN;
         }
 
@@ -62,10 +72,10 @@ class Guzzle
         $finalRes = null;
         $content = (is_null($content)) ? null : json_encode($content);
 
-        while (!$done) {
+        while (! $done) {
             $request = new Request($method, $url, $headers, $content);
             $response = $guzzle->send($request);
-            
+
             // Rate limiting
             if ($response->getStatusCode() == 429) {
                 $tts = (int) $response->getHeader('Retry-After')[0] * 1000;
@@ -89,14 +99,15 @@ class Guzzle
     /**
      * Handles an error code.
      *
-     * @param integer $error_code 
+     * @param int    $error_code
      * @param string $message
-     * @param string $content 
-     * @throws DiscordRequestFailedException 
+     * @param string $content
+     *
+     * @throws DiscordRequestFailedException
      */
     public static function handleError($error_code, $message, $content)
     {
-        if (!is_string($message)) {
+        if (! is_string($message)) {
             $message = $message->getReasonPhrase();
         }
 
@@ -106,7 +117,7 @@ class Guzzle
             // Discord has set a restriction with content sent over REST,
             // if it is more than 2000 characters long it will not be
             // sent and will return a 500 error.
-            // 
+            //
             // There is no way around this, you must use WebSockets.
             throw new ContentTooLongException('The expected content was more than 2000 characters. Use websockets if you need this content.');
         }
@@ -132,10 +143,10 @@ class Guzzle
     /**
      * Returns the User-Agent of the API.
      *
-     * @return string 
+     * @return string
      */
     public static function getUserAgent()
     {
-        return 'DiscordPHP/' . Discord::VERSION . ' DiscordBot (https://github.com/teamreflex/DiscordPHP, ' . Discord::VERSION . ')';
+        return 'DiscordPHP/'.Discord::VERSION.' DiscordBot (https://github.com/teamreflex/DiscordPHP, '.Discord::VERSION.')';
     }
 }

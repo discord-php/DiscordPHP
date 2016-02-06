@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is apart of the DiscordPHP project.
+ *
+ * Copyright (c) 2016 David Cole <david@team-reflex.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the LICENSE.md file.
+ */
+
 namespace Discord\Parts\Guild;
 
 use Discord\Exceptions\DiscordRequestFailedException;
@@ -7,7 +16,6 @@ use Discord\Helpers\Collection;
 use Discord\Helpers\Guzzle;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Permissions\RolePermission as Permission;
-use Discord\Parts\Guild\Role;
 use Discord\Parts\Part;
 use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
@@ -30,26 +38,26 @@ class Guild extends Part
     /**
      * The parts fillable attributes.
      *
-     * @var array 
+     * @var array
      */
     protected $fillable = ['id', 'name', 'icon', 'region', 'owner_id', 'roles', 'joined_at', 'afk_channel_id', 'afk_timeout', 'embed_enabled', 'embed_channel_id', 'features', 'splash', 'emojis', 'large', 'verification_level'];
 
     /**
      * URIs used to get/create/update/delete the part.
      *
-     * @var array 
+     * @var array
      */
     protected $uris = [
-        'get'       => 'guilds/:id',
-        'create'    => 'guilds',
-        'update'    => 'guilds/:id',
-        'delete'    => 'guilds/:id'
+        'get' => 'guilds/:id',
+        'create' => 'guilds',
+        'update' => 'guilds/:id',
+        'delete' => 'guilds/:id',
     ];
 
     /**
      * An array of valid regions.
      *
-     * @var array 
+     * @var array
      */
     protected $regions = [
         self::REGION_US_WEST,
@@ -57,13 +65,13 @@ class Guild extends Part
         self::REGION_LONDON,
         self::REGION_SINGAPORE,
         self::REGION_SYDNEY,
-        self::REGION_AMSTERDAM
+        self::REGION_AMSTERDAM,
     ];
 
     /**
      * Alias for delete().
      *
-     * @return boolean 
+     * @return bool
      */
     public function leave()
     {
@@ -74,8 +82,9 @@ class Guild extends Part
      * Transfers ownership of the guild to
      * another member.
      *
-     * @param Member|integer $member
-     * @return boolean 
+     * @param Member|int $member
+     *
+     * @return bool
      */
     public function transferOwnership($member)
     {
@@ -85,7 +94,7 @@ class Guild extends Part
 
         try {
             $request = Guzzle::patch($this->replaceWithVariables('guilds/:id'), [
-                'owner_id' => $member
+                'owner_id' => $member,
             ]);
 
             if ($request->owner_id != $member) {
@@ -114,6 +123,7 @@ class Guild extends Part
         // Members aren't retrievable via REST anymore,
         // they will be set if the websocket is used.
         $this->attributes_cache = new Collection();
+
         return $this->attributes_cache['members'];
     }
 
@@ -131,7 +141,7 @@ class Guild extends Part
         $roles = [];
 
         foreach ($this->attributes['roles'] as $index => $role) {
-            $perm = new Permission;
+            $perm = new Permission();
             $perm->perms = $role->permissions;
             $role = (array) $role;
             $role['permissions'] = $perm;
@@ -148,7 +158,7 @@ class Guild extends Part
     /**
      * Returns the owner.
      *
-     * @return User 
+     * @return User
      */
     public function getOwnerAttribute()
     {
@@ -168,14 +178,14 @@ class Guild extends Part
     /**
      * Returns the guilds channels.
      *
-     * @return Collection 
+     * @return Collection
      */
     public function getChannelsAttribute()
     {
         if (isset($this->attributes_cache['channels'])) {
             return $this->attributes_cache['channels'];
         }
-    
+
         $channels = [];
         $request = Guzzle::get($this->replaceWithVariables('guilds/:id/channels'));
 
@@ -193,7 +203,7 @@ class Guild extends Part
     /**
      * Returns the guilds bans.
      *
-     * @return Collection 
+     * @return Collection
      */
     public function getBansAttribute()
     {
@@ -202,7 +212,7 @@ class Guild extends Part
         }
 
         $bans = [];
-        
+
         try {
             $request = Guzzle::get($this->replaceWithVariables('guilds/:id/bans'));
         } catch (DiscordRequestFailedException $e) {
@@ -230,7 +240,7 @@ class Guild extends Part
     public function getIconAttribute()
     {
         if (is_null($this->attributes['icon'])) {
-            return null;
+            return;
         }
 
         return "https://discordapp.com/{$this->attributes['id']}/icons/{$this->attributes['icon']}.jpg";
@@ -249,12 +259,12 @@ class Guild extends Part
     /**
      * Returns the guild splash.
      *
-     * @return string|null 
+     * @return string|null
      */
     public function getSplashAttribute()
     {
         if (is_null($this->attributes['splash'])) {
-            return null;
+            return;
         }
 
         return "https://discordapp.com/api/guilds/{$this->id}/splashes/{$this->attributes['splash']}.jpg";
@@ -263,7 +273,7 @@ class Guild extends Part
     /**
      * Returns the guild splash hash.
      *
-     * @return string|null 
+     * @return string|null
      */
     public function getSplashHashAttribute()
     {
@@ -273,11 +283,11 @@ class Guild extends Part
     /**
      * Validates the specified region.
      *
-     * @return string 
+     * @return string
      */
     public function validateRegion()
     {
-        if (!in_array($this->region, $this->regions)) {
+        if (! in_array($this->region, $this->regions)) {
             return self::REGION_DEFUALT;
         }
 
@@ -287,31 +297,31 @@ class Guild extends Part
     /**
      * Returns the attributes needed to create.
      *
-     * @return array 
+     * @return array
      */
     public function getCreatableAttributes()
     {
         return [
-            'name'      => $this->name,
-            'region'    => $this->validateRegion()
+            'name' => $this->name,
+            'region' => $this->validateRegion(),
         ];
     }
 
     /**
      * Returns the attributes needed to edit.
      *
-     * @return array 
+     * @return array
      */
     public function getUpdatableAttributes()
     {
         return [
-            'name'              => $this->name,
-            'region'            => $this->region,
-            'logo'              => $this->logo,
-            'splash'            => $this->splash,
-            'verification_level'=> $this->verification_level,
-            'afk_channel_id'    => $this->afk_channel_id,
-            'afk_timeout'       => $this->afk_timeout
+            'name' => $this->name,
+            'region' => $this->region,
+            'logo' => $this->logo,
+            'splash' => $this->splash,
+            'verification_level' => $this->verification_level,
+            'afk_channel_id' => $this->afk_channel_id,
+            'afk_timeout' => $this->afk_timeout,
         ];
     }
 }

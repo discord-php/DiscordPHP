@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is apart of the DiscordPHP project.
+ *
+ * Copyright (c) 2016 David Cole <david@team-reflex.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the LICENSE.md file.
+ */
+
 namespace Discord\WebSockets;
 
 use Discord\Discord;
@@ -10,7 +19,6 @@ use Discord\Parts\Guild\Guild;
 use Discord\Parts\User\Member;
 use Discord\WSClient\Factory as WsFactory;
 use Discord\WSClient\WebSocket as WebSocketInstance;
-use Discord\WebSockets\Handlers;
 use Evenement\EventEmitter;
 use Ratchet\WebSocket\Version\RFC6455\Frame;
 use React\EventLoop\Factory as LoopFactory;
@@ -21,7 +29,7 @@ class WebSocket extends EventEmitter
     /**
      * The WebSocket event loop.
      *
-     * @var \React\EventLoop\Factory 
+     * @var \React\EventLoop\Factory
      */
     public $loop;
 
@@ -35,14 +43,14 @@ class WebSocket extends EventEmitter
     /**
      * The WebSocket instance.
      *
-     * @var WebSocketInstance 
+     * @var WebSocketInstance
      */
     protected $ws;
 
     /**
      * The Discord instance.
      *
-     * @var \Discord\Discord 
+     * @var \Discord\Discord
      */
     protected $discord;
 
@@ -56,23 +64,24 @@ class WebSocket extends EventEmitter
     /**
      * Have we sent the login frame yet?
      *
-     * @var boolean 
+     * @var bool
      */
     protected $sentLoginFrame = false;
 
     /**
      * The event handlers.
      *
-     * @var Handlers 
+     * @var Handlers
      */
     protected $handlers;
 
     /**
      * Constructs the WebSocket instance.
      *
-     * @param Discord $discord 
-     * @param LoopInterface $loop 
-     * @return void 
+     * @param Discord       $discord
+     * @param LoopInterface $loop
+     *
+     * @return void
      */
     public function __construct(Discord $discord, LoopInterface &$loop = null)
     {
@@ -89,7 +98,8 @@ class WebSocket extends EventEmitter
     /**
      * Sets up the WebSocket.
      *
-     * @param LoopInterface $loop 
+     * @param LoopInterface $loop
+     *
      * @return LoopInterface
      */
     public function setupWs(LoopInterface $loop)
@@ -122,7 +132,7 @@ class WebSocket extends EventEmitter
                     return;
                 }
 
-                if (!is_null($handler = $this->handlers->getHandler($data->t))) {
+                if (! is_null($handler = $this->handlers->getHandler($data->t))) {
                     $handler = new $handler();
                     $handlerData = $handler->getData($data->d, $this->discord);
                     $newDiscord = $handler->updateDiscordInstance($handlerData, $this->discord);
@@ -135,7 +145,7 @@ class WebSocket extends EventEmitter
                     $this->loop->addPeriodicTimer($tts, function () use ($ws) {
                         $this->send([
                             'op' => 1,
-                            'd' => microtime(true) * 1000
+                            'd' => microtime(true) * 1000,
                         ]);
                     });
 
@@ -209,7 +219,7 @@ class WebSocket extends EventEmitter
                 $this->emit('error', [$error, $ws, $this->discord]);
             });
 
-            if (!$this->sentLoginFrame) {
+            if (! $this->sentLoginFrame) {
                 $this->sendLoginFrame();
                 $this->sentLoginFrame = true;
                 $this->emit('sent-login-frame', [$ws, $this->discord]);
@@ -225,7 +235,7 @@ class WebSocket extends EventEmitter
     /**
      * Runs the Event Loop.
      *
-     * @return void 
+     * @return void
      */
     public function run()
     {
@@ -235,7 +245,7 @@ class WebSocket extends EventEmitter
     /**
      * Sends the login frame to the WebSocket.
      *
-     * @return void 
+     * @return void
      */
     public function sendLoginFrame()
     {
@@ -249,19 +259,20 @@ class WebSocket extends EventEmitter
                     '$browser' => Guzzle::getUserAgent(),
                     '$device' => '',
                     '$referrer' => 'https://github.com/teamreflex/DiscordPHP',
-                    '$referring_domain' => 'https://github.com/teamreflex/DiscordPHP/'
+                    '$referring_domain' => 'https://github.com/teamreflex/DiscordPHP/',
                 ],
                 'large_threshold' => 100,
-                'compress' => true
-            ]
+                'compress' => true,
+            ],
         ]);
     }
 
     /**
      * Sends data over the WebSocket.
      *
-     * @param array $data 
-     * @return void 
+     * @param array $data
+     *
+     * @return void
      */
     public function send($data)
     {

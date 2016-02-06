@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is apart of the DiscordPHP project.
+ *
+ * Copyright (c) 2016 David Cole <david@team-reflex.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the LICENSE.md file.
+ */
+
 namespace Discord\Parts\Permissions;
 
 use Discord\Parts\Part;
@@ -9,30 +18,31 @@ abstract class Permission extends Part
     /**
      * Is the part editable?
      *
-     * @var boolean 
+     * @var bool
      */
     public $editable = false;
 
     /**
      * Is the part creatable?
      *
-     * @var boolean 
+     * @var bool
      */
     public $creatable = false;
 
     /**
      * Is the part deletable?
      *
-     * @var boolean 
+     * @var bool
      */
     public $deletable = false;
 
     /**
      * Create a new part instance.
-     * 
+     *
      * @param array $attributes
-     * @param boolean $created 
-     * @return void 
+     * @param bool  $created
+     *
+     * @return void
      */
     public function __construct(array $attributes = [], $created = false)
     {
@@ -42,22 +52,24 @@ abstract class Permission extends Part
     /**
      * Sets an attribute on the part.
      *
-     * @param string $key 
-     * @param mixed $value 
-     * @return void 
+     * @param string $key
+     * @param mixed  $value
+     *
+     * @return void
      */
     public function setAttribute($key, $value)
     {
         if ($key == 'perms') {
             $this->attributes['perms'] = $value;
+
             return;
         }
 
-        if (!in_array($key, $this->bitoffset)) {
+        if (! in_array($key, $this->bitoffset)) {
             return;
         }
-        
-        if (!is_bool($value)) {
+
+        if (! is_bool($value)) {
             return;
         }
 
@@ -67,8 +79,9 @@ abstract class Permission extends Part
     /**
      * Gets an attribute on the part.
      *
-     * @param string $key 
-     * @return mixed 
+     * @param string $key
+     *
+     * @return mixed
      */
     public function getAttribute($key)
     {
@@ -76,7 +89,7 @@ abstract class Permission extends Part
             return $this->attributes['perms'];
         }
 
-        if (!in_array($key, $this->bitoffset)) {
+        if (! in_array($key, $this->bitoffset)) {
             return;
         }
 
@@ -90,8 +103,9 @@ abstract class Permission extends Part
     /**
      * Sets a bitwise attribute.
      *
-     * @param boolean $value 
-     * @return boolean 
+     * @param bool $value
+     *
+     * @return bool
      */
     public function setBitwise($key, $value)
     {
@@ -105,9 +119,9 @@ abstract class Permission extends Part
     }
 
     /**
-     * Returns an array of public attributes
+     * Returns an array of public attributes.
      *
-     * @return array 
+     * @return array
      */
     public function getPublicAttributes()
     {

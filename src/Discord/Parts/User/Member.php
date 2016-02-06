@@ -1,63 +1,70 @@
 <?php
 
+/*
+ * This file is apart of the DiscordPHP project.
+ *
+ * Copyright (c) 2016 David Cole <david@team-reflex.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the LICENSE.md file.
+ */
+
 namespace Discord\Parts\User;
 
 use Carbon\Carbon;
 use Discord\Helpers\Collection;
 use Discord\Helpers\Guzzle;
 use Discord\Parts\Channel\Channel;
-use Discord\Parts\Guild\Guild;
 use Discord\Parts\Guild\Role;
 use Discord\Parts\Part;
 use Discord\Parts\Permissions\RolePermission as Permission;
-use Discord\Parts\User\User;
 
 class Member extends Part
 {
     /**
      * The parts fillable attributes.
      *
-     * @var array 
+     * @var array
      */
     protected $fillable = ['user', 'roles', 'deaf', 'mute', 'joined_at', 'guild_id', 'status', 'game'];
 
     /**
      * Is the part creatable?
      *
-     * @var boolean 
+     * @var bool
      */
     public $creatable = false;
 
     /**
      * Is the part findable?
      *
-     * @var boolean 
+     * @var bool
      */
     public $findable = false;
 
     /**
      * Should we fill the part after saving?
      *
-     * @var boolean 
+     * @var bool
      */
     protected $fillAfterSave = false;
 
     /**
      * URIs used to get/create/update/delete the part.
      *
-     * @var array 
+     * @var array
      */
     protected $uris = [
-        'get'       => '',
-        'create'    => '',
-        'update'    => 'guilds/:guild_id/members/:id',
-        'delete'    => 'guilds/:guild_id/members/:id'
+        'get' => '',
+        'create' => '',
+        'update' => 'guilds/:guild_id/members/:id',
+        'delete' => 'guilds/:guild_id/members/:id',
     ];
 
     /**
      * Alias for delete.
      *
-     * @return boolean 
+     * @return bool
      */
     public function kick()
     {
@@ -67,8 +74,9 @@ class Member extends Part
     /**
      * Moves the member to another voice channel.
      *
-     * @param Channel|int $channel 
-     * @return boolean 
+     * @param Channel|int $channel
+     *
+     * @return bool
      */
     public function moveMember($channel)
     {
@@ -77,7 +85,7 @@ class Member extends Part
         }
 
         Guzzle::patch("guilds/{$this->guild_id}/members/{$this->id}", [
-            'channel_id' => $channel
+            'channel_id' => $channel,
         ]);
 
         // At the moment we are unable to check if the member
@@ -89,8 +97,9 @@ class Member extends Part
     /**
      * Adds a role to the member.
      *
-     * @param Role|int $role 
-     * @return boolean 
+     * @param Role|int $role
+     *
+     * @return bool
      */
     public function addRole($role)
     {
@@ -115,8 +124,9 @@ class Member extends Part
     /**
      * Removes a role from the user.
      *
-     * @param Role|int $role 
-     * @return boolean 
+     * @param Role|int $role
+     *
+     * @return bool
      */
     public function removeRole($role)
     {
@@ -140,7 +150,7 @@ class Member extends Part
     /**
      * Returns the id attribute.
      *
-     * @return integer 
+     * @return int
      */
     public function getIdAttribute()
     {
@@ -150,7 +160,7 @@ class Member extends Part
     /**
      * Returns the username attribute.
      *
-     * @return string 
+     * @return string
      */
     public function getUserameAttribute()
     {
@@ -170,7 +180,7 @@ class Member extends Part
     /**
      * Returns the roles attribute.
      *
-     * @return Collection 
+     * @return Collection
      */
     public function getRolesAttribute()
     {
@@ -182,9 +192,9 @@ class Member extends Part
         $request = Guzzle::get($this->replaceWithVariables('guilds/:guild_id/roles'));
 
         foreach ($request as $key => $role) {
-            if (!(false === array_search($role->id, (array) $this->attributes['roles']))) {
+            if (! (false === array_search($role->id, (array) $this->attributes['roles']))) {
                 $perm = new Permission([
-                    'perms' => $role->permissions
+                    'perms' => $role->permissions,
                 ]);
                 $role = (array) $role;
                 $role['permissions'] = $perm;
@@ -202,7 +212,7 @@ class Member extends Part
     /**
      * Returns the joined at attribute.
      *
-     * @return Carbon 
+     * @return Carbon
      */
     public function getJoinedAtAttribute()
     {
@@ -212,19 +222,19 @@ class Member extends Part
     /**
      * Returns the attributes needed to edit.
      *
-     * @return array 
+     * @return array
      */
     public function getUpdatableAttributes()
     {
         return [
-            'roles' => $this->attributes['roles']
+            'roles' => $this->attributes['roles'],
         ];
     }
 
     /**
      * Returns a formatted mention.
      *
-     * @return string 
+     * @return string
      */
     public function __toString()
     {

@@ -1,10 +1,17 @@
 <?php
 
+/*
+ * This file is apart of the DiscordPHP project.
+ *
+ * Copyright (c) 2016 David Cole <david@team-reflex.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the LICENSE.md file.
+ */
+
 namespace Discord;
 
-use Discord\Exceptions\DiscordRequestFailedException;
 use Discord\Exceptions\InviteInvalidException;
-use Discord\Exceptions\LoginFailedException;
 use Discord\Helpers\Guzzle;
 use Discord\Parts\Guild\Invite;
 use Discord\Parts\User\Client;
@@ -12,15 +19,15 @@ use Discord\Parts\User\Client;
 class Discord
 {
     /**
-     * The current version of the API. 
+     * The current version of the API.
      *
-     * @var string 
+     * @var string
      */
     const VERSION = 'v3.0.3';
-    
+
     /**
      * The Client instance.
-     * 
+     *
      * @var Client
      */
     protected $client;
@@ -31,6 +38,7 @@ class Discord
      * @param string $email
      * @param string $password
      * @param string $token
+     *
      * @return void
      */
     public function __construct($email = null, $password = null, $token = null)
@@ -46,17 +54,18 @@ class Discord
      * Check the filesystem for the token.
      *
      * @param string $email
+     *
      * @return string|null
      */
     public function checkForCaching($email)
     {
-        if (file_exists(getcwd() . '/discord/' . md5($email))) {
-            $file = file_get_contents(getcwd() . '/discord/' . md5($email));
+        if (file_exists(getcwd().'/discord/'.md5($email))) {
+            $file = file_get_contents(getcwd().'/discord/'.md5($email));
 
             return $file;
         }
 
-        return null;
+        return;
     }
 
     /**
@@ -65,49 +74,51 @@ class Discord
      * @param string $email
      * @param string $password
      * @param string $token
+     *
      * @return void
      */
     public function setToken($email, $password, $token)
     {
-        if (!is_null($token)) {
+        if (! is_null($token)) {
             @define('DISCORD_TOKEN', $token);
+
             return;
         }
 
-        if (!is_null($token = $this->checkForCaching($email))) {
+        if (! is_null($token = $this->checkForCaching($email))) {
             @define('DISCORD_TOKEN', $token);
 
             return;
         }
 
         $request = Guzzle::post('auth/login', [
-            'email'     => $email,
-            'password'  => $password
+            'email' => $email,
+            'password' => $password,
         ], true);
 
         try {
-            if (!file_exists(getcwd() . '/discord')) {
-                mkdir(getcwd() . '/discord');
+            if (! file_exists(getcwd().'/discord')) {
+                mkdir(getcwd().'/discord');
             }
-            
-            file_put_contents(getcwd() . '/discord/' . md5($email), $request->token);
+
+            file_put_contents(getcwd().'/discord/'.md5($email), $request->token);
         } catch (\Exception $e) {
         }
 
         @define('DISCORD_TOKEN', $request->token);
-        
+
         return;
     }
 
     /**
      * Logs out of Discord.
      *
-     * @return boolean
+     * @return bool
      */
     public function logout()
     {
         $request = Guzzle::post('auth/logout', [
-            'token' => DISCORD_TOKEN
+            'token' => DISCORD_TOKEN,
         ]);
 
         $this->client = null;
@@ -119,6 +130,7 @@ class Discord
      * Accepts a Discord channel invite.
      *
      * @param string $code
+     *
      * @return Invite
      */
     public function acceptInvite($code)
@@ -142,6 +154,7 @@ class Discord
         if (is_null($this->client)) {
             return false;
         }
+
         return call_user_func_array([$this->client, $name], $args);
     }
 
@@ -155,15 +168,17 @@ class Discord
         if (is_null($this->client)) {
             return false;
         }
+
         return $this->client->getAttribute($name);
     }
 
     /**
      * Handles dynamic set calls to the class.
      *
-     * @param string $variable 
-     * @param mixed $value 
-     * @return void 
+     * @param string $variable
+     * @param mixed  $value
+     *
+     * @return void
      */
     public function __set($variable, $value)
     {

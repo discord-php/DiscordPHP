@@ -1,10 +1,18 @@
 <?php
 
+/*
+ * This file is apart of the DiscordPHP project.
+ *
+ * Copyright (c) 2016 David Cole <david@team-reflex.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the LICENSE.md file.
+ */
+
 namespace Discord\Parts\Guild;
 
 use Carbon\Carbon;
 use Discord\Parts\Channel\Channel;
-use Discord\Parts\Guild\Guild;
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
 
@@ -13,32 +21,32 @@ class Invite extends Part
     /**
      * Is the part editable?
      *
-     * @var boolean 
+     * @var bool
      */
     public $editable = false;
 
     /**
      * The parts fillable attributes.
      *
-     * @var array 
+     * @var array
      */
     protected $fillable = ['code', 'max_age', 'guild', 'revoked', 'created_at', 'temporary', 'uses', 'max_uses', 'inviter', 'xkcdpass', 'channel'];
 
     /**
      * URIs used to get/create/update/delete the part.
      *
-     * @var array 
+     * @var array
      */
     protected $uris = [
-        'get'       => 'invites/:id',
-        'create'    => 'channels/:channel_id/invites',
-        'delete'    => 'invite/:code'
+        'get' => 'invites/:id',
+        'create' => 'channels/:channel_id/invites',
+        'delete' => 'invite/:code',
     ];
 
     /**
      * Returns the invite URL attribute.
      *
-     * @return string 
+     * @return string
      */
     public function getInviteUrlAttribute()
     {
@@ -48,7 +56,7 @@ class Invite extends Part
     /**
      * Returns the guild attribute.
      *
-     * @return Guild 
+     * @return Guild
      */
     public function getGuildAttribute()
     {
@@ -58,7 +66,7 @@ class Invite extends Part
     /**
      * Returns the channel attribute.
      *
-     * @return Channel 
+     * @return Channel
      */
     public function getChannelAttribute()
     {
@@ -68,7 +76,7 @@ class Invite extends Part
     /**
      * Returns the channel id attribute.
      *
-     * @return integer 
+     * @return int
      */
     public function getChannelIdAttribute()
     {
@@ -78,7 +86,7 @@ class Invite extends Part
     /**
      * Returns the inviter attribute.
      *
-     * @return User 
+     * @return User
      */
     public function getInviterAttribute()
     {
@@ -98,7 +106,7 @@ class Invite extends Part
     /**
      * Returns the attributes needed to create.
      *
-     * @return array 
+     * @return array
      */
     public function getCreatableAttributes()
     {

@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is apart of the DiscordPHP project.
+ *
+ * Copyright (c) 2016 David Cole <david@team-reflex.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the LICENSE.md file.
+ */
+
 namespace Discord\WSClient;
 
 use Discord\Helpers\Guzzle;
@@ -25,11 +34,11 @@ class Factory
     protected $_secureConnector;
 
     public $defaultHeaders = [
-        'Connection'            => 'Upgrade',
-        'Cache-Control'         => 'no-cache',
-        'Pragma'                => 'no-cache',
-        'Upgrade'               => 'websocket',
-        'Sec-WebSocket-Version' => 13
+        'Connection' => 'Upgrade',
+        'Cache-Control' => 'no-cache',
+        'Pragma' => 'no-cache',
+        'Upgrade' => 'websocket',
+        'Sec-WebSocket-Version' => 13,
     ];
 
     public function __construct(LoopInterface $loop, Resolver $resolver = null)
@@ -37,26 +46,26 @@ class Factory
         $this->defaultHeaders['User-Agent'] = Guzzle::getUserAgent();
 
         if (null === $resolver) {
-            $factory  = new DnsFactory();
+            $factory = new DnsFactory();
             $resolver = $factory->create('8.8.8.8', $loop);
         }
 
-        $this->_loop            = $loop;
-        $this->_connector       = new Connector($loop, $resolver);
+        $this->_loop = $loop;
+        $this->_connector = new Connector($loop, $resolver);
         $this->_secureConnector = new SecureConnector($this->_connector, $loop);
     }
 
     public function __invoke($url, array $subProtocols = [], array $headers = [])
     {
         try {
-            $request   = $this->generateRequest($url, $subProtocols, $headers);
+            $request = $this->generateRequest($url, $subProtocols, $headers);
         } catch (\Exception $e) {
             return new RejectedPromise($e);
         }
         $connector = 'wss' === substr($url, 0, 3) ? $this->_secureConnector : $this->_connector;
 
         return $connector->create($request->getHost(), $request->getPort())->then(function (DuplexStreamInterface $stream) use ($request, $subProtocols) {
-            $futureWsConn = new Deferred;
+            $futureWsConn = new Deferred();
 
             $buffer = '';
             $headerParser = function ($data, DuplexStreamInterface $stream) use (&$headerParser, &$buffer, $futureWsConn, $request, $subProtocols) {
@@ -76,19 +85,19 @@ class Factory
                     return;
                 }
 
-                $acceptCheck = base64_encode(pack('H*', sha1($request->getHeader('Sec-WebSocket-Key') . RFC6455::GUID)));
-                if ((string)$response->getHeader('Sec-WebSocket-Accept') !== $acceptCheck) {
-                    $futureWsConn->reject(new \DomainException("Could not verify Accept Key during WebSocket handshake"));
+                $acceptCheck = base64_encode(pack('H*', sha1($request->getHeader('Sec-WebSocket-Key').RFC6455::GUID)));
+                if ((string) $response->getHeader('Sec-WebSocket-Accept') !== $acceptCheck) {
+                    $futureWsConn->reject(new \DomainException('Could not verify Accept Key during WebSocket handshake'));
                     $stream->close();
 
                     return;
                 }
 
                 $acceptedProtocol = $response->getHeader('Sec-WebSocket-Protocol');
-                if ((count($subProtocols) > 0 || null !== $acceptedProtocol) && !in_array((string)$acceptedProtocol, $subProtocols)) {
+                if ((count($subProtocols) > 0 || null !== $acceptedProtocol) && ! in_array((string) $acceptedProtocol, $subProtocols)) {
                     $futureWsConn->reject(new \DomainException('Server did not respond with an expected Sec-WebSocket-Protocol'));
                     $stream->close();
-                    
+
                     return;
                 }
 
@@ -114,26 +123,26 @@ class Factory
         $request = new Request('GET', $url, $headers);
 
         $scheme = strtolower($request->getScheme());
-        if (!in_array($scheme, ['ws', 'wss'])) {
+        if (! in_array($scheme, ['ws', 'wss'])) {
             throw new \InvalidArgumentException(sprintf('Cannot connect to invalid URL (%s)', $url));
         }
 
         $request->setScheme('HTTP');
 
-        if (!$request->getPort()) {
+        if (! $request->getPort()) {
             $request->setPort('wss' === $scheme ? 443 : 80);
         } else {
-            $request->setHeader('Host', $request->getHeader('Host') . ":{$request->getPort()}");
+            $request->setHeader('Host', $request->getHeader('Host').":{$request->getPort()}");
         }
 
-        if (!$request->getHeader('Origin')) {
-            $request->setHeader('Origin', str_replace('ws', 'http', $scheme) . '://' . $request->getHost());
+        if (! $request->getHeader('Origin')) {
+            $request->setHeader('Origin', str_replace('ws', 'http', $scheme).'://'.$request->getHost());
         }
 
         // do protocol headers
         if (count($subProtocols) > 0) {
             $protocols = implode(',', $subProtocols);
-            if ($protocols != "") {
+            if ($protocols != '') {
                 $request->setHeader('Sec-WebSocket-Protocol', $protocols);
             }
         }
@@ -143,11 +152,11 @@ class Factory
 
     protected function generateKey()
     {
-        $chars     = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwzyz1234567890+/=';
+        $chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwzyz1234567890+/=';
         $charRange = strlen($chars) - 1;
-        $key       = '';
+        $key = '';
 
-        for ($i = 0;$i < 16;$i++) {
+        for ($i = 0; $i < 16; ++$i) {
             $key .= $chars[mt_rand(0, $charRange)];
         }
 

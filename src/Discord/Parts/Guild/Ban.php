@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is apart of the DiscordPHP project.
+ *
+ * Copyright (c) 2016 David Cole <david@team-reflex.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the LICENSE.md file.
+ */
+
 namespace Discord\Parts\Guild;
 
 use Discord\Parts\Part;
@@ -10,38 +19,38 @@ class Ban extends Part
     /**
      * Is the part editable?
      *
-     * @var boolean 
+     * @var bool
      */
     public $editable = false;
 
     /**
      * Is the part findable?
      *
-     * @var boolean 
+     * @var bool
      */
     public $findable = false;
 
     /**
      * The parts fillable attributes.
      *
-     * @var array 
+     * @var array
      */
     protected $fillable = ['user', 'guild'];
 
     /**
      * URIs used to get/create/update/delete the part.
      *
-     * @var array 
+     * @var array
      */
     protected $uris = [
-        'create'    => 'guilds/:guild_id/bans/:user_id',
-        'delete'    => 'guilds/:guild_id/bans/:user_id'
+        'create' => 'guilds/:guild_id/bans/:user_id',
+        'delete' => 'guilds/:guild_id/bans/:user_id',
     ];
 
     /**
      * Returns the guild id attribute.
      *
-     * @return integer 
+     * @return int
      */
     public function getGuildIdAttribute()
     {
@@ -51,7 +60,7 @@ class Ban extends Part
     /**
      * Returns the user id attribute.
      *
-     * @return integer 
+     * @return int
      */
     public function getUserIdAttribute()
     {
@@ -71,7 +80,7 @@ class Ban extends Part
     /**
      * Returns the attributes needed to create.
      *
-     * @return array 
+     * @return array
      */
     public function getCreatableAttributes()
     {
@@ -81,7 +90,7 @@ class Ban extends Part
     /**
      * Returns the attributes needed to edit.
      *
-     * @return array 
+     * @return array
      */
     public function getUpdatableAttributes()
     {
