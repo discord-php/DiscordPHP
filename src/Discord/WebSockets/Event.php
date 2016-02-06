@@ -51,11 +51,12 @@ class Event
     /**
      * Returns the formatted data.
      *
-     * @param array   $data The data that was sent with the WebSocket.
+     * @param array   $data    The data that was sent with the WebSocket.
      * @param Discord $discord The Discord instance.
      */
     public function getData($data, $discord)
-    {}
+    {
+    }
 
     /**
      * Updates the Discord instance with the new data.
@@ -66,5 +67,6 @@ class Event
      * @return Discord
      */
     public function updateDiscordInstance($data, $discord)
-    {}
+    {
+    }
 }

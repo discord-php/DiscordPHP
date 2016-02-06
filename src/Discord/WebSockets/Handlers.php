@@ -69,7 +69,7 @@ class Handlers
     /**
      * Adds a handler to the list.
      *
-     * @param string $event The WebSocket event name.
+     * @param string $event     The WebSocket event name.
      * @param string $classname The Event class name.
      *
      * @return void

@@ -19,7 +19,7 @@ use Discord\Parts\Part;
  */
 class Role extends Part
 {
-    /** 
+    /**
      * {@inheritdoc}
      */
     public $findable = false;
@@ -76,9 +76,9 @@ class Role extends Part
     /**
      * Sets the color for a role. RGB.
      *
-     * @param int $red The red value in RGB.
+     * @param int $red   The red value in RGB.
      * @param int $green The green value in RGB.
-     * @param int $blue The blue value in RGB.
+     * @param int $blue  The blue value in RGB.
      *
      * @return bool Whether the setting succeeded or failed.
      */

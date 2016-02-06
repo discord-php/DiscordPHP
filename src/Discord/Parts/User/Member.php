@@ -34,7 +34,7 @@ class Member extends Part
      */
     public $creatable = false;
 
-    /** 
+    /**
      * {@inheritdoc}
      */
     public $findable = false;
@@ -58,6 +58,7 @@ class Member extends Part
      * Alias for delete.
      *
      * @return bool Whether the attempt to kick the member succeeded or failed.
+     *
      * @see \Discord\Parts\Part::delete() This function is an alias for delete.
      */
     public function kick()

@@ -33,7 +33,7 @@ class Client extends Part
      */
     public $deletable = false;
 
-    /** 
+    /**
      * {@inheritdoc}
      */
     public $findable = false;
@@ -71,11 +71,12 @@ class Client extends Part
      * @param string $filepath The path to the file.
      *
      * @return bool Whether the setting succeeded or failed.
+     *
      * @throws \Discord\Exceptions\FileNotFoundException Thrown when the file does not exist.
      */
     public function setAvatar($filepath)
     {
-        if (!file_exists($filepath)) {
+        if (! file_exists($filepath)) {
             throw new FileNotFoundException("File does not exist at path {$filepath}.");
         }
 
@@ -91,9 +92,9 @@ class Client extends Part
     /**
      * Updates the clients presence.
      *
-     * @param WebSocket   $ws The WebSocket client.
+     * @param WebSocket   $ws       The WebSocket client.
      * @param string|null $gamename The game that you are playing or null.
-     * @param bool        $idle Whether you are set to idle.
+     * @param bool        $idle     Whether you are set to idle.
      *
      * @return bool Whether the setting succeeded or failed.
      */

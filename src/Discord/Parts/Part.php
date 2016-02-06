@@ -127,7 +127,7 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
      * Create a new part instance.
      *
      * @param array $attributes An array of attributes to build the part.
-     * @param bool  $created Whether the part has already been created.
+     * @param bool  $created    Whether the part has already been created.
      *
      * @return void
      */
@@ -275,7 +275,7 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
     /**
      * Checks if there is a mutator present.
      *
-     * @param string $key The attribute name to check.
+     * @param string $key  The attribute name to check.
      * @param string $type Either get or set.
      *
      * @return mixed Either a string if it is callable or false.
@@ -318,10 +318,11 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
     /**
      * Replaces variables in one of the URIs.
      *
-     * @param string $key A key from URIs.
+     * @param string $key    A key from URIs.
      * @param array  $params Parameters to replace placeholders with.
      *
      * @return string A string with placeholders replaced.
+     *
      * @see self::$uris The URIs that can be replaced.
      */
     public function uriReplace($key, $params)
@@ -366,7 +367,7 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
     /**
      * Sets an attribute on the part.
      *
-     * @param string $key The key to the attribute.
+     * @param string $key   The key to the attribute.
      * @param mixed  $value The value of the attribute.
      *
      * @return void
@@ -385,7 +386,7 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
     /**
      * Sets a cache attribute on the part.
      *
-     * @param string $key The cache key.
+     * @param string $key   The cache key.
      * @param mixed  $value The cache value.
      *
      * @return void
@@ -401,6 +402,7 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
      * @param string $key The attribute key.
      *
      * @return mixed
+     *
      * @see self::getAttribute() This function forwards onto getAttribute.
      */
     public function offsetGet($key)
@@ -413,7 +415,7 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
      *
      * @param string $key The attribute key.
      *
-     * @return boolean Whether the offset exists.
+     * @return bool Whether the offset exists.
      */
     public function offsetExists($key)
     {
@@ -423,10 +425,11 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
     /**
      * Sets an attribute via key. Used for ArrayAccess.
      *
-     * @param string $key The attribute key.
+     * @param string $key   The attribute key.
      * @param mixed  $value The attribute value.
      *
      * @return void
+     *
      * @see self::setAttribute() This function forwards onto setAttribute.
      */
     public function offsetSet($key, $value)
@@ -464,6 +467,7 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
      * @param mixed $data Some serialized data.
      *
      * @return mixed Unserialized data.
+     *
      * @see self::setAttribute() The unserialized data is stored with setAttribute.
      */
     public function unserialize($data)
@@ -480,6 +484,7 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
      * JSON. Used for JsonSerializable.
      *
      * @return array An array of public attributes.
+     *
      * @see self::getPublicAttributes() This function forwards onto getPublicAttributes.
      */
     public function jsonSerialize()
@@ -511,6 +516,7 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
      * Converts the part to a string.
      *
      * @return string A JSON string of attributes.
+     *
      * @see self::getPublicAttributes() This function encodes getPublicAttributes into JSON.
      */
     public function __toString()
@@ -522,6 +528,7 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
      * Handles debug calls from var_dump and similar functions.
      *
      * @return array An array of public attributes.
+     *
      * @see self::getPublicAttributes() This function forwards onto getPublicAttributes.
      */
     public function __debugInfo()
@@ -535,6 +542,7 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
      * @param string $key The attributes key.
      *
      * @return mixed The value of the attribute.
+     *
      * @see self::getAttribute() This function forwards onto getAttribute.
      */
     public function __get($key)
@@ -545,10 +553,11 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
     /**
      * Handles dynamic set calls onto the part.
      *
-     * @param string $key The attributes key.
+     * @param string $key   The attributes key.
      * @param mixed  $value The attributes value.
      *
      * @return void
+     *
      * @see self::setAttribute() This function forwards onto setAttribute.
      */
     public function __set($key, $value)

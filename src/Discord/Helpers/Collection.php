@@ -25,8 +25,8 @@ class Collection extends BaseCollection
      * Get an item from the collection with a
      * key and index.
      *
-     * @param mixed $key The key that we will match with the name.
-     * @param mixed $name The name that we will match with the key.
+     * @param mixed $key     The key that we will match with the name.
+     * @param mixed $name    The name that we will match with the key.
      * @param mixed $default Returned if we can't find the part.
      *
      * @return mixed An object in the collection or $default.

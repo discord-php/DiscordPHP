@@ -81,8 +81,8 @@ class WebSocket extends EventEmitter
     /**
      * Constructs the WebSocket instance.
      *
-     * @param Discord       $discord The Discord REST client instance.
-     * @param LoopInterface|null $loop The ReactPHP Event Loop.
+     * @param Discord            $discord The Discord REST client instance.
+     * @param LoopInterface|null $loop    The ReactPHP Event Loop.
      *
      * @return void
      */

@@ -58,8 +58,8 @@ class Channel extends Part
     /**
      * Sets a permission value to the channel.
      *
-     * @param Member|Role $part Either a Member or Role, permissions will be set on it.
-     * @param Permission  $allow The permissions that define what the Member/Role can do.
+     * @param Member|Role $part     Either a Member or Role, permissions will be set on it.
+     * @param Permission  $allow    The permissions that define what the Member/Role can do.
      * @param Permission  $disallow The permissions that define what the Member/Role can't do.
      *
      * @return bool Whether the function succeeded or failed.
@@ -158,7 +158,7 @@ class Channel extends Part
      * Sends a message to the channel if it is a text channel.
      *
      * @param string $text The text to send in the message.
-     * @param bool   $tts Whether the message should be sent with text to speech enabled.
+     * @param bool   $tts  Whether the message should be sent with text to speech enabled.
      *
      * @return Message|bool Either a Message if the request passed or false if it failed.
      */
@@ -191,6 +191,7 @@ class Channel extends Part
      * @param string $filename The name to send the file as.
      *
      * @return Message|bool Either a Message if the request passed or false if it failed.
+     *
      * @throws \Discord\Exceptions\FileNotFoundException Thrown when the file does not exist.
      */
     public function sendFile($filepath, $filename)

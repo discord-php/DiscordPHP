@@ -71,6 +71,7 @@ class Guild extends Part
      * Alias for delete().
      *
      * @return bool Whether the attempt to leave succeeded or failed.
+     *
      * @see \Discord\Parts\Part::delete() This function is an alias for delete.
      */
     public function leave()
@@ -284,6 +285,7 @@ class Guild extends Part
      * Validates the specified region.
      *
      * @return string Returns the region if it is valid or default.
+     *
      * @see self::REGION_DEFAULT The default region.
      */
     public function validateRegion()

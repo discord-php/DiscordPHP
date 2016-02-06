@@ -41,9 +41,9 @@ class Discord
     /**
      * Logs into the Discord servers.
      *
-     * @param string $email The Email for the account you are logging into.
+     * @param string $email    The Email for the account you are logging into.
      * @param string $password The password for the account you are logging into.
-     * @param string $token The account's token (optional)
+     * @param string $token    The account's token (optional)
      *
      * @return void
      */
@@ -75,9 +75,9 @@ class Discord
     /**
      * Sets the token for the API.
      *
-     * @param string $email The Email for the account you are logging into.
+     * @param string $email    The Email for the account you are logging into.
      * @param string $password The password for the account you are logging into.
-     * @param string $token The account's token (optional)
+     * @param string $token    The account's token (optional)
      *
      * @return void
      */
@@ -136,7 +136,9 @@ class Discord
      * @param string $code The invite code. (not including the URL)
      *
      * @return Invite The invite that was accepted, in \Discord\Parts\Guild\Invite format.
+     *
      * @throws InviteInvalidException Thrown when the invite is invalid or not found.
+     *
      * @see \Discord\Parts\Guild\Invite The type that the invite is returned in.
      */
     public function acceptInvite($code)
@@ -154,7 +156,8 @@ class Discord
      * Handles dynamic calls to the class.
      *
      * @param string $name The function name.
-     * @param array $name The function arguments.
+     * @param array  $name The function arguments.
+     *
      * @return mixed The result of the function.
      */
     public function __call($name, array $args = [])
@@ -170,6 +173,7 @@ class Discord
      * Handles dynamic variable calls to the class.
      *
      * @param string $name The variable name.
+     *
      * @return mixed The variable or false if it does not exist.
      */
     public function __get($name)

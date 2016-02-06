@@ -50,7 +50,7 @@ class User extends Part
      * Sends a message to the user.
      *
      * @param string $text The text to send in the message.
-     * @param bool   $tts Whether the message should be sent with text to speech enabled.
+     * @param bool   $tts  Whether the message should be sent with text to speech enabled.
      *
      * @return Message The Message that was sent.
      */

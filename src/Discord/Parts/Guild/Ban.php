@@ -24,7 +24,7 @@ class Ban extends Part
      */
     public $editable = false;
 
-    /** 
+    /**
      * {@inheritdoc}
      */
     public $findable = false;

@@ -100,7 +100,7 @@ abstract class Permission extends Part
     /**
      * Sets a bitwise attribute.
      *
-     * @param int $key The bitwise key.
+     * @param int  $key   The bitwise key.
      * @param bool $value The value that is being set.
      *
      * @return bool The value that is being set.
