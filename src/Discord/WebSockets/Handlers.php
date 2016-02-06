@@ -1,22 +1,32 @@
 <?php
 
+/*
+ * This file is apart of the DiscordPHP project.
+ *
+ * Copyright (c) 2016 David Cole <david@team-reflex.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the LICENSE.md file.
+ */
+
 namespace Discord\WebSockets;
 
-use Discord\WebSockets\Event;
-
+/**
+ * This class contains all the handlers for the individual WebSocket events.
+ */
 class Handlers
 {
     /**
      * An array of handlers.
      *
-     * @var array 
+     * @var array Array of handlers.
      */
     protected $handlers = [];
 
     /**
      * Constructs the list of handlers.
      *
-     * @return void 
+     * @return void
      */
     public function __construct()
     {
@@ -59,9 +69,10 @@ class Handlers
     /**
      * Adds a handler to the list.
      *
-     * @param string $event 
-     * @param string $classname
-     * @return void 
+     * @param string $event     The WebSocket event name.
+     * @param string $classname The Event class name.
+     *
+     * @return void
      */
     public function addHandler($event, $classname)
     {
@@ -71,8 +82,9 @@ class Handlers
     /**
      * Returns a handler.
      *
-     * @param string $event 
-     * @return string|null 
+     * @param string $event The WebSocket event name.
+     *
+     * @return string|null The Event class name or null;
      */
     public function getHandler($event)
     {
@@ -80,13 +92,13 @@ class Handlers
             return $this->handlers[$event];
         }
 
-        return null;
+        return;
     }
 
     /**
      * Returns the handlers array.
      *
-     * @return array
+     * @return array Array of handlers.
      */
     public function getHandlers()
     {

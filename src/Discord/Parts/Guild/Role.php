@@ -1,36 +1,44 @@
 <?php
 
+/*
+ * This file is apart of the DiscordPHP project.
+ *
+ * Copyright (c) 2016 David Cole <david@team-reflex.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the LICENSE.md file.
+ */
+
 namespace Discord\Parts\Guild;
 
 use Discord\Parts\Permissions\RolePermission as Permission;
 use Discord\Parts\Part;
 
+/**
+ * A role defines permissions for the guild. Members can be added to the role. The role belongs to a guild.
+ */
 class Role extends Part
 {
     /**
-     * Is the part findable?
-     *
-     * @var boolean 
+     * {@inheritdoc}
      */
     public $findable = false;
-    
+
     /**
-     * The parts fillable attributes.
-     *
-     * @var array 
+     * {@inheritdoc}
      */
     protected $fillable = ['id', 'name', 'color', 'managed', 'hoist', 'position', 'permissions', 'guild_id'];
 
     /**
      * Runs extra construction tasks.
      *
-     * @return void 
+     * @return void
      */
     public function afterConstruct()
     {
-        if (!$this->created) {
+        if (! $this->created) {
             $this->permissions = new Permission();
-            
+
             if (isset($this->guild_id)) {
                 $this->save();
             }
@@ -38,26 +46,25 @@ class Role extends Part
     }
 
     /**
-     * URIs used to get/create/update/delete the part.
-     *
-     * @var array 
+     * {@inheritdoc}
      */
     protected $uris = [
-        'get'       => '',
-        'create'    => 'guilds/:guild_id/roles',
-        'update'    => 'guilds/:guild_id/roles/:id',
-        'delete'    => 'guilds/:guild_id/roles/:id'
+        'get' => '',
+        'create' => 'guilds/:guild_id/roles',
+        'update' => 'guilds/:guild_id/roles/:id',
+        'delete' => 'guilds/:guild_id/roles/:id',
     ];
 
     /**
      * Sets the permissions attribute.
      *
-     * @param Permission|integer $permission 
-     * @return boolean 
+     * @param Permission|int $permission The Permissions that you want to set.
+     *
+     * @return bool Whether the setting succeeded or failed.
      */
     public function setPermissionsAttribute($permission)
     {
-        if (!$permission instanceof Permission) {
+        if (! $permission instanceof Permission) {
             return false;
         }
 
@@ -69,10 +76,11 @@ class Role extends Part
     /**
      * Sets the color for a role. RGB.
      *
-     * @param integer $red 
-     * @param integer $green 
-     * @param integer $blue 
-     * @return boolean
+     * @param int $red   The red value in RGB.
+     * @param int $green The green value in RGB.
+     * @param int $blue  The blue value in RGB.
+     *
+     * @return bool Whether the setting succeeded or failed.
      */
     public function setColor($red = null, $green = null, $blue = null)
     {
@@ -88,9 +96,7 @@ class Role extends Part
     }
 
     /**
-     * Returns the attributes needed to create.
-     *
-     * @return array 
+     * {@inheritdoc}
      */
     public function getCreatableAttributes()
     {
@@ -98,17 +104,15 @@ class Role extends Part
     }
 
     /**
-     * Returns the attributes needed to edit.
-     *
-     * @return array 
+     * {@inheritdoc}
      */
     public function getUpdatableAttributes()
     {
         return [
-            'name'          => $this->name,
-            'hoist'         => $this->hoist,
-            'color'         => $this->color,
-            'permissions'   => $this->permissions->perms
+            'name' => $this->name,
+            'hoist' => $this->hoist,
+            'color' => $this->color,
+            'permissions' => $this->permissions->perms,
         ];
     }
 }

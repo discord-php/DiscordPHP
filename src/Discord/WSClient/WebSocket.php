@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is apart of the DiscordPHP project.
+ *
+ * Copyright (c) 2016 David Cole <david@team-reflex.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the LICENSE.md file.
+ */
+
 namespace Discord\WSClient;
 
 use Evenement\EventEmitterTrait;
@@ -19,13 +28,15 @@ class WebSocket implements EventEmitterInterface, ConnectionInterface
     use EventEmitterTrait;
 
     /**
-     * The request headers sent to establish the connection
+     * The request headers sent to establish the connection.
+     *
      * @var \Guzzle\Http\Message\Request
      */
     public $request;
 
     /**
-     * The response headers received from the server to establish the connection
+     * The response headers received from the server to establish the connection.
+     *
      * @var \Guzzle\Http\Message\Response
      */
     public $response;
@@ -47,9 +58,9 @@ class WebSocket implements EventEmitterInterface, ConnectionInterface
 
     public function __construct(DuplexStreamInterface $stream, Response $response, Request $request)
     {
-        $this->_stream  = $stream;
+        $this->_stream = $stream;
         $this->response = $response;
-        $this->request  = $request;
+        $this->request = $request;
 
         $stream->on('data', function ($data) {
             $this->handleData($data);
@@ -97,10 +108,10 @@ class WebSocket implements EventEmitterInterface, ConnectionInterface
             return;
         }
 
-        if (!$this->_message) {
-            $this->_message = new Message;
+        if (! $this->_message) {
+            $this->_message = new Message();
         }
-        if (!$this->_frame) {
+        if (! $this->_frame) {
             $frame = new Frame();
         } else {
             $frame = $this->_frame;
@@ -112,8 +123,9 @@ class WebSocket implements EventEmitterInterface, ConnectionInterface
             $opcode = $frame->getOpcode();
 
             if ($opcode > 2) {
-                if ($frame->getPayloadLength() > 125 || !$frame->isFinal()) {
+                if ($frame->getPayloadLength() > 125 || ! $frame->isFinal()) {
                     $this->close(Frame::CLOSE_PROTOCOL);
+
                     return;
                 }
 
@@ -130,6 +142,7 @@ class WebSocket implements EventEmitterInterface, ConnectionInterface
                         break;
                     default:
                         $this->close($frame->getPayload());
+
                         return;
                 }
             }
@@ -142,6 +155,7 @@ class WebSocket implements EventEmitterInterface, ConnectionInterface
             // any message, just handle overflowing stuff now and return
             if ($opcode > 2) {
                 $this->handleData($overflow);
+
                 return;
             } else {
                 $this->_message->addFrame($frame);
@@ -150,7 +164,7 @@ class WebSocket implements EventEmitterInterface, ConnectionInterface
             $this->_frame = $frame;
         }
 
-        if (!$this->_message->isCoalesced()) {
+        if (! $this->_message->isCoalesced()) {
             if (isset($overflow)) {
                 $this->handleData($overflow);
             }
@@ -158,7 +172,7 @@ class WebSocket implements EventEmitterInterface, ConnectionInterface
             return;
         }
 
-        $message  = $this->_message->getPayload();
+        $message = $this->_message->getPayload();
 
         if ($this->_message->getOpcode() == Frame::OP_BINARY) {
             $message = zlib_decode($message);

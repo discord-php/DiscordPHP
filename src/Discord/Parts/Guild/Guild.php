@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is apart of the DiscordPHP project.
+ *
+ * Copyright (c) 2016 David Cole <david@team-reflex.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the LICENSE.md file.
+ */
+
 namespace Discord\Parts\Guild;
 
 use Discord\Exceptions\DiscordRequestFailedException;
@@ -7,11 +16,13 @@ use Discord\Helpers\Collection;
 use Discord\Helpers\Guzzle;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Permissions\RolePermission as Permission;
-use Discord\Parts\Guild\Role;
 use Discord\Parts\Part;
 use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
 
+/**
+ * A Guild is Discord's equivalent of a server. It contains all the Members, Channels, Roles, Bans etc.
+ */
 class Guild extends Part
 {
     const REGION_DEFAULT = self::REGION_US_WEST;
@@ -28,28 +39,24 @@ class Guild extends Part
     const LEVEL_TABLEFLIP = 3;
 
     /**
-     * The parts fillable attributes.
-     *
-     * @var array 
+     * {@inheritdoc}
      */
     protected $fillable = ['id', 'name', 'icon', 'region', 'owner_id', 'roles', 'joined_at', 'afk_channel_id', 'afk_timeout', 'embed_enabled', 'embed_channel_id', 'features', 'splash', 'emojis', 'large', 'verification_level'];
 
     /**
-     * URIs used to get/create/update/delete the part.
-     *
-     * @var array 
+     * {@inheritdoc}
      */
     protected $uris = [
-        'get'       => 'guilds/:id',
-        'create'    => 'guilds',
-        'update'    => 'guilds/:id',
-        'delete'    => 'guilds/:id'
+        'get' => 'guilds/:id',
+        'create' => 'guilds',
+        'update' => 'guilds/:id',
+        'delete' => 'guilds/:id',
     ];
 
     /**
      * An array of valid regions.
      *
-     * @var array 
+     * @var array Array of valid regions.
      */
     protected $regions = [
         self::REGION_US_WEST,
@@ -57,13 +64,15 @@ class Guild extends Part
         self::REGION_LONDON,
         self::REGION_SINGAPORE,
         self::REGION_SYDNEY,
-        self::REGION_AMSTERDAM
+        self::REGION_AMSTERDAM,
     ];
 
     /**
      * Alias for delete().
      *
-     * @return boolean 
+     * @return bool Whether the attempt to leave succeeded or failed.
+     *
+     * @see \Discord\Parts\Part::delete() This function is an alias for delete.
      */
     public function leave()
     {
@@ -74,8 +83,9 @@ class Guild extends Part
      * Transfers ownership of the guild to
      * another member.
      *
-     * @param Member|integer $member
-     * @return boolean 
+     * @param Member|int $member The member to transfer ownership to.
+     *
+     * @return bool Whether the attempt succeeded or failed.
      */
     public function transferOwnership($member)
     {
@@ -85,7 +95,7 @@ class Guild extends Part
 
         try {
             $request = Guzzle::patch($this->replaceWithVariables('guilds/:id'), [
-                'owner_id' => $member
+                'owner_id' => $member,
             ]);
 
             if ($request->owner_id != $member) {
@@ -103,7 +113,7 @@ class Guild extends Part
     /**
      * Returns the guilds members.
      *
-     * @return Collection
+     * @return Collection A collection of members.
      */
     public function getMembersAttribute()
     {
@@ -114,13 +124,14 @@ class Guild extends Part
         // Members aren't retrievable via REST anymore,
         // they will be set if the websocket is used.
         $this->attributes_cache = new Collection();
+
         return $this->attributes_cache['members'];
     }
 
     /**
      * Returns the guilds roles.
      *
-     * @return Collection
+     * @return Collection A collection of roles.
      */
     public function getRolesAttribute()
     {
@@ -131,9 +142,8 @@ class Guild extends Part
         $roles = [];
 
         foreach ($this->attributes['roles'] as $index => $role) {
-            $perm = new Permission([
-                'perms' => $role->permissions
-            ]);
+            $perm = new Permission();
+            $perm->perms = $role->permissions;
             $role = (array) $role;
             $role['permissions'] = $perm;
             $roles[$index] = new Role($role, true);
@@ -149,7 +159,7 @@ class Guild extends Part
     /**
      * Returns the owner.
      *
-     * @return User 
+     * @return User An User part.
      */
     public function getOwnerAttribute()
     {
@@ -169,14 +179,14 @@ class Guild extends Part
     /**
      * Returns the guilds channels.
      *
-     * @return Collection 
+     * @return Collection A collection of channels.
      */
     public function getChannelsAttribute()
     {
         if (isset($this->attributes_cache['channels'])) {
             return $this->attributes_cache['channels'];
         }
-    
+
         $channels = [];
         $request = Guzzle::get($this->replaceWithVariables('guilds/:id/channels'));
 
@@ -194,7 +204,7 @@ class Guild extends Part
     /**
      * Returns the guilds bans.
      *
-     * @return Collection 
+     * @return Collection A collection of bans.
      */
     public function getBansAttribute()
     {
@@ -203,7 +213,7 @@ class Guild extends Part
         }
 
         $bans = [];
-        
+
         try {
             $request = Guzzle::get($this->replaceWithVariables('guilds/:id/bans'));
         } catch (DiscordRequestFailedException $e) {
@@ -226,12 +236,12 @@ class Guild extends Part
     /**
      * Returns the guilds icon.
      *
-     * @return string|null
+     * @return string|null The URL to the guild icon or null.
      */
     public function getIconAttribute()
     {
         if (is_null($this->attributes['icon'])) {
-            return null;
+            return;
         }
 
         return "https://discordapp.com/{$this->attributes['id']}/icons/{$this->attributes['icon']}.jpg";
@@ -240,7 +250,7 @@ class Guild extends Part
     /**
      * Returns the guild icon hash.
      *
-     * @return string|null
+     * @return string|null The guild icon hash or null.
      */
     public function getIconHashAttribute()
     {
@@ -250,12 +260,12 @@ class Guild extends Part
     /**
      * Returns the guild splash.
      *
-     * @return string|null 
+     * @return string|null The URL to the guild splash or null.
      */
     public function getSplashAttribute()
     {
         if (is_null($this->attributes['splash'])) {
-            return null;
+            return;
         }
 
         return "https://discordapp.com/api/guilds/{$this->id}/splashes/{$this->attributes['splash']}.jpg";
@@ -264,7 +274,7 @@ class Guild extends Part
     /**
      * Returns the guild splash hash.
      *
-     * @return string|null 
+     * @return string|null The guild splash hash or null.
      */
     public function getSplashHashAttribute()
     {
@@ -274,11 +284,13 @@ class Guild extends Part
     /**
      * Validates the specified region.
      *
-     * @return string 
+     * @return string Returns the region if it is valid or default.
+     *
+     * @see self::REGION_DEFAULT The default region.
      */
     public function validateRegion()
     {
-        if (!in_array($this->region, $this->regions)) {
+        if (! in_array($this->region, $this->regions)) {
             return self::REGION_DEFUALT;
         }
 
@@ -286,33 +298,29 @@ class Guild extends Part
     }
 
     /**
-     * Returns the attributes needed to create.
-     *
-     * @return array 
+     * {@inheritdoc}
      */
     public function getCreatableAttributes()
     {
         return [
-            'name'      => $this->name,
-            'region'    => $this->validateRegion()
+            'name' => $this->name,
+            'region' => $this->validateRegion(),
         ];
     }
 
     /**
-     * Returns the attributes needed to edit.
-     *
-     * @return array 
+     * {@inheritdoc}
      */
     public function getUpdatableAttributes()
     {
         return [
-            'name'              => $this->name,
-            'region'            => $this->region,
-            'logo'              => $this->logo,
-            'splash'            => $this->splash,
-            'verification_level'=> $this->verification_level,
-            'afk_channel_id'    => $this->afk_channel_id,
-            'afk_timeout'       => $this->afk_timeout
+            'name' => $this->name,
+            'region' => $this->region,
+            'logo' => $this->logo,
+            'splash' => $this->splash,
+            'verification_level' => $this->verification_level,
+            'afk_channel_id' => $this->afk_channel_id,
+            'afk_timeout' => $this->afk_timeout,
         ];
     }
 }

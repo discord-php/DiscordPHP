@@ -1,11 +1,19 @@
 <?php
 
+/*
+ * This file is apart of the DiscordPHP project.
+ *
+ * Copyright (c) 2016 David Cole <david@team-reflex.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the LICENSE.md file.
+ */
+
 namespace Discord\Parts\Channel;
 
 use Discord\Exceptions\FileNotFoundException;
 use Discord\Helpers\Collection;
 use Discord\Helpers\Guzzle;
-use Discord\Parts\Channel\Message;
 use Discord\Parts\Guild\Invite;
 use Discord\Parts\Guild\Role;
 use Discord\Parts\Part;
@@ -14,36 +22,35 @@ use Discord\Parts\User\User;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Client as GuzzleClient;
 
+/**
+ * A Channel can be either a text or voice channel on a Discord guild.
+ */
 class Channel extends Part
 {
     const TYPE_TEXT = 'text';
     const TYPE_VOICE = 'voice';
 
     /**
-     * The parts fillable attributes.
-     *
-     * @var array 
+     * {@inheritdoc}
      */
     protected $fillable = ['id', 'name', 'type', 'topic', 'guild_id', 'position', 'is_private', 'last_message_id', 'permission_override', 'messages', 'message_count'];
 
     /**
-     * URIs used to get/create/update/delete the part.
-     *
-     * @var array 
+     * {@inheritdoc}
      */
     protected $uris = [
-        'get'       => 'channels/:id',
-        'create'    => 'guilds/:guild_id/channels',
-        'update'    => 'channels/:id',
-        'delete'    => 'channels/:id'
+        'get' => 'channels/:id',
+        'create' => 'guilds/:guild_id/channels',
+        'update' => 'channels/:id',
+        'delete' => 'channels/:id',
     ];
 
     /**
      * Runs any extra construction tasks.
      *
-     * @return void 
+     * @return void
      */
-    public function afterConstruct()
+    protected function afterConstruct()
     {
         $this->message_count = 50;
     }
@@ -51,10 +58,11 @@ class Channel extends Part
     /**
      * Sets a permission value to the channel.
      *
-     * @param Member|Role $part 
-     * @param Permission $allow 
-     * @param Permission $disallow 
-     * @return boolean 
+     * @param Member|Role $part     Either a Member or Role, permissions will be set on it.
+     * @param Permission  $allow    The permissions that define what the Member/Role can do.
+     * @param Permission  $disallow The permissions that define what the Member/Role can't do.
+     *
+     * @return bool Whether the function succeeded or failed.
      */
     public function setPermissions($part, $allow, $deny)
     {
@@ -70,7 +78,7 @@ class Channel extends Part
             'id' => $part->id,
             'type' => $type,
             'allow' => $allow->perms,
-            'deny' => $deny->perms
+            'deny' => $deny->perms,
         ];
 
         Guzzle::put("channels/{$this->id}/permissions/{$part->id}", $payload);
@@ -81,8 +89,9 @@ class Channel extends Part
     /**
      * Moves a member to another voice channel.
      *
-     * @param Member|int
-     * @return boolean 
+     * @param Member|int The member to move. (either a Member part or the member ID)
+     *
+     * @return bool Whether the move succeeded or failed.
      */
     public function moveMember($member)
     {
@@ -95,7 +104,7 @@ class Channel extends Part
         }
 
         Guzzle::patch("guilds/{$this->guild_id}/members/{$member}", [
-            'channel_id' => $this->id
+            'channel_id' => $this->id,
         ]);
 
         // At the moment we are unable to check if the member
@@ -107,7 +116,7 @@ class Channel extends Part
     /**
      * Creates an invite for the channel.
      *
-     * @return Invite 
+     * @return Invite The new invite that was created.
      */
     public function createInvite()
     {
@@ -119,7 +128,7 @@ class Channel extends Part
     /**
      * Returns the messages attribute.
      *
-     * @return Collection 
+     * @return Collection A collection of messages.
      */
     public function getMessagesAttribute()
     {
@@ -148,9 +157,10 @@ class Channel extends Part
     /**
      * Sends a message to the channel if it is a text channel.
      *
-     * @param string $text 
-     * @param boolean $tts 
-     * @return Message|boolean
+     * @param string $text The text to send in the message.
+     * @param bool   $tts  Whether the message should be sent with text to speech enabled.
+     *
+     * @return Message|bool Either a Message if the request passed or false if it failed.
      */
     public function sendMessage($text, $tts = false)
     {
@@ -159,13 +169,13 @@ class Channel extends Part
         }
 
         $request = Guzzle::post("channels/{$this->id}/messages", [
-            'content'   => $text,
-            'tts'       => $tts
+            'content' => $text,
+            'tts' => $tts,
         ]);
 
         $message = new Message((array) $request, true);
 
-        if (!isset($this->attributes_cache['messages'])) {
+        if (! isset($this->attributes_cache['messages'])) {
             $this->attributes_cache['messages'] = new Collection();
         }
 
@@ -177,9 +187,12 @@ class Channel extends Part
     /**
      * Sends a file to the channel if it is a text channel.
      *
-     * @param string $filepath
-     * @param string $filename 
-     * @return Message|boolean 
+     * @param string $filepath The path to the file to be sent.
+     * @param string $filename The name to send the file as.
+     *
+     * @return Message|bool Either a Message if the request passed or false if it failed.
+     *
+     * @throws \Discord\Exceptions\FileNotFoundException Thrown when the file does not exist.
      */
     public function sendFile($filepath, $filename)
     {
@@ -187,31 +200,31 @@ class Channel extends Part
             return false;
         }
 
-        if (!file_exists($filepath)) {
+        if (! file_exists($filepath)) {
             throw new FileNotFoundException("File does not exist at path {$filepath}.");
         }
 
         $guzzle = new GuzzleClient(['http_errors' => false, 'allow_redirects' => true]);
-        $url = Guzzle::$base_url . "/channels/{$this->id}/messages";
+        $url = Guzzle::$base_url."/channels/{$this->id}/messages";
 
         $headers = [
             'User-Agent' => Guzzle::getUserAgent(),
-            'authorization' => DISCORD_TOKEN
+            'authorization' => DISCORD_TOKEN,
         ];
 
         $done = false;
         $finalRes = null;
 
-        while (!$done) {
+        while (! $done) {
             $response = $guzzle->request('post', $url, [
                 'headers' => $headers,
                 'multipart' => [[
                     'name' => 'file',
                     'contents' => fopen($filepath, 'r'),
-                    'filename' => $filename
-                ]]
+                    'filename' => $filename,
+                ]],
             ]);
-            
+
             // Rate limiting
             if ($response->getStatusCode() == 429) {
                 $tts = $response->getHeader('Retry-After') * 1000;
@@ -233,7 +246,7 @@ class Channel extends Part
 
         $message = new Message((array) $request, true);
 
-        if (!isset($this->attributes_cache['messages'])) {
+        if (! isset($this->attributes_cache['messages'])) {
             $this->attributes_cache['messages'] = new Collection();
         }
 
@@ -245,7 +258,7 @@ class Channel extends Part
     /**
      * Broadcasts that you are typing to the channel. Lasts for 5 seconds.
      *
-     * @return boolean 
+     * @return bool Whether the request succeeded or failed.
      */
     public function broadcastTyping()
     {
@@ -261,7 +274,7 @@ class Channel extends Part
     /**
      * Returns the channel type.
      *
-     * @return string 
+     * @return string Either 'text' or 'voice'.
      */
     public function getChannelType()
     {
@@ -279,26 +292,26 @@ class Channel extends Part
     /**
      * Returns the attributes needed to create.
      *
-     * @return array 
+     * @return array The attributes that will be sent when this part is created.
      */
     public function getCreatableAttributes()
     {
         return [
-            'name'  => $this->name,
-            'type'  => $this->getChannelType()
+            'name' => $this->name,
+            'type' => $this->getChannelType(),
         ];
     }
 
     /**
      * Returns the attributes needed to edit.
      *
-     * @return array 
+     * @return array The attributes that will be sent when this part is updated.
      */
     public function getUpdatableAttributes()
     {
         return [
-            'name'  => $this->name,
-            'topic' => $this->topic
+            'name' => $this->name,
+            'topic' => $this->topic,
         ];
     }
 }

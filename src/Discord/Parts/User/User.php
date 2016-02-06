@@ -1,55 +1,58 @@
 <?php
 
+/*
+ * This file is apart of the DiscordPHP project.
+ *
+ * Copyright (c) 2016 David Cole <david@team-reflex.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the LICENSE.md file.
+ */
+
 namespace Discord\Parts\User;
 
 use Discord\Helpers\Guzzle;
 use Discord\Parts\Part;
 
+/**
+ * A user is a general user that is not attached to a guild.
+ */
 class User extends Part
 {
     /**
-     * Is the part creatable?
-     *
-     * @var boolean 
+     * {@inheritdoc}
      */
     public $creatable = false;
 
     /**
-     * Is the part deletable?
-     *
-     * @var boolean 
+     * {@inheritdoc}
      */
     public $deletable = false;
 
     /**
-     * Is the part editable?
-     *
-     * @var boolean 
+     * {@inheritdoc}
      */
     public $editable = false;
 
     /**
-     * The parts fillable attributes.
-     *
-     * @var array 
+     * {@inheritdoc}
      */
     protected $fillable = ['id', 'username', 'avatar', 'discriminator'];
 
     /**
-     * URIs used to get/create/update/delete the part.
-     *
-     * @var array 
+     * {@inheritdoc}
      */
     protected $uris = [
-        'get' => 'users/:id'
+        'get' => 'users/:id',
     ];
 
     /**
      * Sends a message to the user.
      *
-     * @param string $message
-     * @param boolean $tts 
-     * @return array
+     * @param string $text The text to send in the message.
+     * @param bool   $tts  Whether the message should be sent with text to speech enabled.
+     *
+     * @return Message The Message that was sent.
      */
     public function sendMessage($message, $tts = false)
     {
@@ -57,7 +60,7 @@ class User extends Part
             $channel_id = $this->attributes_cache['channel_id'];
         } else {
             $channel = Guzzle::post('users/@me/channels', [
-                'recipient_id' => $this->id
+                'recipient_id' => $this->id,
             ]);
 
             $channel_id = $channel->id;
@@ -65,8 +68,8 @@ class User extends Part
         }
 
         $request = Guzzle::post("channels/{$channel_id}/messages", [
-            'content'    => $message,
-            'tts'        => $tts
+            'content' => $message,
+            'tts' => $tts,
         ]);
 
         return $request;
@@ -75,7 +78,7 @@ class User extends Part
     /**
      * Broadcasts that you are typing to the channel. Lasts for 5 seconds.
      *
-     * @return boolean 
+     * @return bool Whether the request succeeded or failed.
      */
     public function broadcastTyping()
     {
@@ -83,7 +86,7 @@ class User extends Part
             $channel_id = $this->attributes_cache['channel_id'];
         } else {
             $channel = Guzzle::post('users/@me/channels', [
-                'recipient_id' => $this->id
+                'recipient_id' => $this->id,
             ]);
 
             $channel_id = $channel->id;
@@ -97,21 +100,22 @@ class User extends Part
 
     /**
      * Returns the avatar URL for the client.
-     * 
-     * @return string 
+     *
+     * @return string The URL to the clients avatar.
      */
     public function getAvatarAttribute()
     {
         if (empty($this->attributes['avatar'])) {
-            return null;
+            return;
         }
+
         return "https://discordapp.com/api/users/{$this->id}/avatars/{$this->attributes['avatar']}.jpg";
     }
 
     /**
      * Returns the avatar ID for the client.
      *
-     * @return string 
+     * @return string The client avatar's hash.
      */
     public function getAvatarIdAttribute()
     {
@@ -121,7 +125,7 @@ class User extends Part
     /**
      * Returns a formatted mention.
      *
-     * @return string 
+     * @return string A formatted mention.
      */
     public function __toString()
     {

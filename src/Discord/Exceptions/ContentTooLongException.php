@@ -12,8 +12,9 @@
 namespace Discord\Exceptions;
 
 /**
- * Thrown when the request to the Discord servers failed.
+ * Thrown when the Discord servers return `content longer than 2000 characters` after
+ * a REST request. The user must use WebSockets to obtain this data if they need it.
  */
-class DiscordRequestFailedException extends \Exception
+class ContentTooLongException extends \Exception
 {
 }
