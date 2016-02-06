@@ -21,7 +21,7 @@ class WebSocket extends EventEmitter
     /**
      * The WebSocket event loop.
      *
-     * @var React\EventLoop\Factory 
+     * @var \React\EventLoop\Factory 
      */
     public $loop;
 
@@ -42,7 +42,7 @@ class WebSocket extends EventEmitter
     /**
      * The Discord instance.
      *
-     * @var Discord\Discord 
+     * @var \Discord\Discord 
      */
     protected $discord;
 
