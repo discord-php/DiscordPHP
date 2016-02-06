@@ -81,9 +81,9 @@ class WebSocket extends EventEmitter
     protected $handlers;
 
     /**
-     * The Voice Client instance
+     * The Voice Client instance.
      *
-     * @var VoiceClient 
+     * @var VoiceClient
      */
     protected $voice;
 
@@ -247,12 +247,13 @@ class WebSocket extends EventEmitter
     /**
      * Joins a voice channel.
      *
-     * @param Channel $channel 
+     * @param Channel $channel
+     *
      * @return VoiceClient
      */
     public function joinVoiceChannel(Channel $channel)
     {
-        if (!is_null($this->voice)) {
+        if (! is_null($this->voice)) {
             return; //temp
         }
 
@@ -289,8 +290,8 @@ class WebSocket extends EventEmitter
                 'guild_id' => $channel->guild_id,
                 'channel_id' => $channel->id,
                 'self_mute' => false,
-                'self_deaf' => false
-            ]
+                'self_deaf' => false,
+            ],
         ]);
 
         return $deferred->promise();
