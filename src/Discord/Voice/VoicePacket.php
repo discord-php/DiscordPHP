@@ -69,16 +69,15 @@ class VoicePacket
         $data = (binary) $opusdata;
 
         $buffer = new Buffer(strlen($opusdata) + self::RTP_HEADER_BYTE_LENGTH);
-        $buffer->write(self::RTP_VERSION_PAD_EXTEND, self::RTP_VERSION_PAD_EXTEND_INDEX);
-        $buffer->write(self::RTP_PAYLOAD_TYPE, self::RTP_PAYLOAD_INDEX);
+        $buffer[self::RTP_VERSION_PAD_EXTEND_INDEX] = pack('c', self::RTP_VERSION_PAD_EXTEND);
+        $buffer[self::RTP_PAYLOAD_INDEX] = pack('c', self::RTP_PAYLOAD_TYPE);
         $buffer->writeShort($seq, self::SEQ_INDEX);
         $buffer->writeInt($timestamp, self::TIMESTAMP_INDEX);
         $buffer->writeInt($ssrc, self::SSRC_INDEX);
-        $buffer->write($opusdata, self::RTP_HEADER_BYTE_LENGTH);
 
-        // for ($i = 0; $i < strlen($data); $i++) {
-        // 	$buffer->write($data[$i], $i + 12);
-        // }
+        for ($i = 0; $i < strlen($data); ++$i) {
+            $buffer[self::RTP_HEADER_BYTE_LENGTH + $i] = $data[$i];
+        }
 
         $this->buffer = $buffer;
     }

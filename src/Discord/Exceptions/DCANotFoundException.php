@@ -12,8 +12,8 @@
 namespace Discord\Exceptions;
 
 /**
- * Thrown when the file format that is inputted is not supported in FFmpeg.
+ * Thrown when DCA could not be found.
  */
-class FormatNotSupportedException extends \Exception
+class DCANotFoundException extends \Exception
 {
 }

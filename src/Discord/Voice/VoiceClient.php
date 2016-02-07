@@ -11,10 +11,9 @@
 
 namespace Discord\Voice;
 
+use Discord\Exceptions\DCANotFoundException;
 use Discord\Exceptions\FFmpegNotFoundException;
 use Discord\Exceptions\FileNotFoundException;
-use Discord\Exceptions\FormatNotSupportedException;
-use Discord\Exceptions\OpusNotFoundException;
 use Discord\Parts\Channel\Channel;
 use Discord\WSClient\Factory as WsFactory;
 use Discord\WSClient\WebSocket as WS;
@@ -35,11 +34,11 @@ use React\Stream\Stream;
 class VoiceClient extends EventEmitter
 {
     /**
-     * The FFmpeg binary name that we will use.
+     * The DCA binary name that we will use.
      *
-     * @var string The FFmpeg binary name that will be run.
+     * @var string The DCA binary name that will be run.
      */
-    protected $binary;
+    protected $dca;
 
     /**
      * The ReactPHP event loop.
@@ -185,7 +184,7 @@ class VoiceClient extends EventEmitter
         $this->endpoint = str_replace([':80', ':443'], '', $data['endpoint']);
 
         $this->checkForFFmpeg();
-        $this->checkForOpus();
+        $this->checkForDCA();
 
         $this->loop = $this->initSockets($loop);
     }
@@ -239,7 +238,6 @@ class VoiceClient extends EventEmitter
                         });
 
                         $client->on('message', function ($message) use (&$ws, &$firstPack, &$ip, &$port) {
-                            dump($message);
                             if ($firstPack) {
                                 $message = (string) $message;
                                 // let's get our IP
@@ -251,9 +249,6 @@ class VoiceClient extends EventEmitter
                                 // now the port!
                                 $port = substr($message, strlen($message) - 2);
                                 $port = unpack('v', $port)[1];
-
-                                dump($ip);
-                                dump($port);
 
                                 $payload = [
                                     'op' => 1,
@@ -281,8 +276,6 @@ class VoiceClient extends EventEmitter
             $ws->on('message', $discoverUdp);
             $ws->on('message', function ($message) {
                 $data = json_decode($message);
-
-                dump($data);
 
                 switch ($data->op) {
                     case 4: // ready
@@ -320,8 +313,7 @@ class VoiceClient extends EventEmitter
      *
      * @return \React\Promise\Promise
      *
-     * @throws FileNotFoundException       Thrown when the file specified could not be found.
-     * @throws FormatNotSupportedException Thrown when the file format is not supported.
+     * @throws FileNotFoundException Thrown when the file specified could not be found.
      */
     public function playFile($file, $channels = 2)
     {
@@ -333,24 +325,96 @@ class VoiceClient extends EventEmitter
             return $deferred->promise();
         }
 
-        $format = explode('.', $file);
+        $process = $this->dcaConvert($file);
+        $buffer = '';
 
-        if (isset($format[1])) {
-            // Checks the file format
-            unset($format[0]);
-            $format = implode('.', $format);
-            if (false === strpos($this->ffExec('-formats', false), $format[1])) {
-                $deferred->reject(new FormatNotSupportedException('The format '.$format[1].' is not supported.'));
-
-                return $deferred->promise();
+        $process->start($this->loop);
+        $process->stdout->pause();
+        $process->on('exit', function ($code, $term) use ($deferred) {
+            if ($code === 0) {
+                $deferred->resolve(true);
+            } else {
+                $deferred->reject();
             }
-        }
-
-        $this->playRawStream(fopen($file, 'r'))->then(function ($result) use ($deferred) {
-            $deferred->resolve($result);
-        }, function ($e) use ($deferred) {
-            $deferred->reject($e);
         });
+
+        $count = 0;
+        $length = 20;
+        $noData = false;
+        $noDataHeader = false;
+
+        $this->setSpeaking(true);
+
+        $processff2opus = function () use (&$processff2opus, $length, $process, &$noData, &$noDataHeader, $deferred, $count) {
+            $header = @fread($process->stdout->stream, 2);
+
+            if (! $header) {
+                if ($noDataHeader) {
+                    $this->setSpeaking(false);
+                    $deferred->resolve(true);
+                } else {
+                    $noDataHeader = true;
+                    $this->loop->addTimer($length / 100, function () use (&$processff2opus) {
+                        $processff2opus();
+                    });
+                }
+
+                return;
+            }
+
+            $opusLength = unpack('v', $header);
+            $opusLength = reset($opusLength);
+            $buffer = fread($process->stdout->stream, $opusLength);
+
+            if (! $buffer) {
+                if ($noData) {
+                    $this->setSpeaking(false);
+                    $deferred->resolve();
+                } else {
+                    $noData = true;
+                    $this->loop->addTimer($length / 100, function () use (&$processff2opus) {
+                        $processff2opus();
+                    });
+                }
+
+                return;
+            }
+
+            if (! $this->speaking) {
+                $this->setSpeaking(true);
+            }
+
+            if (strlen($buffer) !== $opusLength) {
+                $newbuff = new Buffer($opusLength);
+                $newbuff->write($buffer, 0);
+                $buffer = (string) $newbuff;
+            }
+
+            ++$count;
+
+            $this->sendBuffer($buffer);
+
+            if (($this->seq + 1) < 65535) {
+                ++$this->seq;
+            } else {
+                $this->seq = 0;
+            }
+
+            if (($this->timestamp + 960) < 4294967295) {
+                $this->timestamp += 960;
+            } else {
+                $this->timestamp = 0;
+            }
+
+            $next = $this->startTime + ($count * $length);
+            $this->streamTime = $count * $length;
+
+            $this->loop->addTimer($length / 1000, function () use (&$processff2opus) {
+                $processff2opus();
+            });
+        };
+
+        $processff2opus();
 
         return $deferred->promise();
     }
@@ -375,101 +439,9 @@ class VoiceClient extends EventEmitter
             return $deferred->promise();
         }
 
-        $count = 0;
-        $length = 20;
-        $noData = false;
-
-        $input = new Stream($stream, $this->loop);
-        $memallowance = 20 * 1024 * 1024; // 20mb
-        $output = fopen("php://temp/maxmemory:{$memallowance}", 'r+');
-
-        $convert = function () use (&$input, &$output, $channels) {
-            $deferred = new Deferred();
-
-            $process = $this->ffExec([
-                '-i', '-', // The input file (pipe in our instance)
-                '-f', 'opus', // Output codec
-                '-ar', 48000, // 48kb bitrate
-                '-ac', $channels, // 2 Channels
-                '-af', 'volume='.($this->volume / 100), // Volume
-                'pipe:1', // Pipe to stdout
-            ]);
-
-            $process->start($this->loop);
-            $input->pipe($process->stdin);
-            $process->stdout->on('data', function ($data) use ($output) {
-                fwrite($output, $data);
-            });
-
-            $process->on('exit', function () use ($deferred, &$input, &$output) {
-                $input->close();
-
-                rewind($output);
-                $deferred->resolve($output);
-            });
-
-            return $deferred->promise();
-        };
-
-        $handleData = function ($stream) use ($channels, &$handleData, &$count, &$noData,  $length, $deferred) {
-            $buffer = fread($stream, 1920 * $channels);
-
-            if (! $buffer) {
-                if ($noData) {
-                    $this->setSpeaking(false);
-                    $deferred->resolve();
-                } else {
-                    $noData = true;
-                    $this->loop->addTimer($length / 100, function () use (&$handleData, &$stream) {
-                        $handleData($stream);
-                    });
-                }
-
-                return;
-            }
-
-            if (! $this->speaking) {
-                $this->setSpeaking(true);
-            }
-
-            if (strlen($buffer) !== 1920 * $channels) {
-                dump(strlen($buffer));
-                $newbuff = new Buffer(1920 * $channels);
-                $newbuff->write($buffer, 0);
-                $buffer = (string) $newbuff;
-            }
-
-            ++$count;
-
-            if (($this->seq + 1) < 65535) {
-                ++$this->seq;
-            } else {
-                $this->seq = 0;
-            }
-
-            if (($this->timestamp + 960) < 4294967295) {
-                $this->timestamp += 960;
-            } else {
-                $this->timestamp = 0;
-            }
-
-            $this->sendBuffer($buffer);
-
-            $next = $this->startTime + ($count * $length);
-            $this->streamTime = $count * $length;
-            dump($this->streamTime);
-
-            $this->loop->addTimer(($length + ($next - microtime(true))) / 1000, function () use (&$handleData, &$stream) {
-                $handleData($stream);
-            });
-        };
-
-        $convert()->then(function ($stream) use ($handleData) {
-            $this->setSpeaking(true);
-            $this->startTime = microtime(true);
-
-            $handleData($stream);
-        });
+        // At the moment DCA does not support piping so we can't pipe
+        // a raw stream in at the moment.
+        $deferred->reject(new \RuntimeException('DCA does not support piping audio at the moment.'));
 
         return $deferred->promise();
     }
@@ -477,16 +449,17 @@ class VoiceClient extends EventEmitter
     /**
      * Sends a buffer to the UDP socket.
      *
-     * @param string $data The data to send to the UDP server.
+     * @param string $data     The data to send to the UDP server.
+     * @param int    $channels How many audio channels to encode with.
      *
      * @return void
      */
     public function sendBuffer($data)
     {
-        dump("ssrc: {$this->ssrc}, seq: {$this->seq}, timestamp: {$this->timestamp}");
         $packet = new VoicePacket($data, $this->ssrc, $this->seq, $this->timestamp);
-        dump(strlen((string) $packet));
         $this->client->send((string) $packet);
+
+        $this->emit('packet-sent', [$packet]);
     }
 
     /**
@@ -545,8 +518,6 @@ class VoiceClient extends EventEmitter
             $output = shell_exec("which {$binary}");
 
             if (! empty($output)) {
-                $this->binary = $binary;
-
                 return;
             }
         }
@@ -555,41 +526,47 @@ class VoiceClient extends EventEmitter
     }
 
     /**
-     * Checks if FFmpeg was compiled with libopus enabled.
+     * Checks if DCA is installed.
      *
-     * @return void
+     * @return bool Whether DCA is installed or not.
      *
-     * @throws \Discord\Exceptions\OpusNotFoundException Thrown when FFmpeg is not compiled with libopus enabled.
+     * @throws \Discord\Exceptions\DCANotFoundException Thrown when DCA is not found.
      */
-    public function checkForOpus()
+    public function checkForDCA()
     {
-        $output = $this->ffExec('-encoders', false);
+        $binaries = [
+            'dca',
+            'ff2opus',
+        ];
 
-        if (false === strpos($output, 'libopus')) {
-            throw new OpusNotFoundException('FFmpeg was not compiled with Opus.');
+        foreach ($binaries as $binary) {
+            $output = shell_exec("which {$binary}");
+
+            if (! empty($output)) {
+                $this->dca = $binary;
+
+                return;
+            }
         }
+
+        throw new DCANotFoundException('No DCA binary was found.');
     }
 
     /**
-     * Executes parameters on the FFmpeg binary.
+     * Converts a file with DCA.
      *
-     * @param string|array $parameters The parameters to pass onto the FFmpeg binary.
-     * @param bool         $advanced   Whether we should return a process or string.
+     * @param string $filename The file name that will be converted
      *
-     * @return Process|string Either a ReactPHP Child Process or a string return.
+     * @return Process A ReactPHP Child Process
      */
-    public function ffExec($parameters, $advanced = true)
+    public function dcaConvert($filename)
     {
-        $command = "{$this->binary} -loglevel 0 ";
-
-        foreach ((array) $parameters as $param) {
-            $command .= "{$param} ";
+        if (! file_exists($filename)) {
+            return;
         }
 
-        if (! $advanced) {
-            return shell_exec(trim($command));
-        }
+        $filename = str_replace([' '], '\\ ', $filename);
 
-        return new Process(trim($command));
+        return new Process("{$this->dca} {$filename}");
     }
 }
