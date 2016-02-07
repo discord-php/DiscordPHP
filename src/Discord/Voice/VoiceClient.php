@@ -104,6 +104,13 @@ class VoiceClient extends EventEmitter
     protected $heartbeat_interval;
 
     /**
+     * The UDP heartbeat timer.
+     *
+     * @var TimerInterface The heartbeat periodic timer.
+     */
+    protected $heartbeat;
+
+    /**
      * The SSRC value.
      *
      * @var int The SSRC value used for RTP.
@@ -158,6 +165,13 @@ class VoiceClient extends EventEmitter
      * @var int The time we sent the last packet.
      */
     protected $streamTime = 0;
+
+    /**
+     * Array of the status of people speaking.
+     *
+     * @var array Status of people speaking.
+     */
+    protected $speakingStatus = [];
 
     /**
      * The volume percentage the audio will be encoded with.
@@ -216,7 +230,7 @@ class VoiceClient extends EventEmitter
                     $this->heartbeat_interval = $data->d->heartbeat_interval;
                     $this->ssrc = $data->d->ssrc;
 
-                    $loop->addPeriodicTimer($this->heartbeat_interval / 1000, function () {
+                    $this->heartbeat = $loop->addPeriodicTimer($this->heartbeat_interval / 1000, function () {
                         $this->send([
                             'op' => 3,
                             'd' => null,
@@ -265,7 +279,10 @@ class VoiceClient extends EventEmitter
                                 $this->send($payload);
 
                                 $firstPack = false;
+                                return;
                             }
+
+                            $this->emit('raw', [$message, $this]);
                         });
                     }, function ($e) {
                         $this->emit('error', [$e]);
@@ -283,6 +300,10 @@ class VoiceClient extends EventEmitter
                         $this->mode = $data->d->mode;
                         $this->emit('ready', [$this]);
                         break;
+                    case 5: // user started speaking
+                    	$this->emit('speaking', [$data->d->speaking, $data->d->user_id, $this]);
+                    	$this->speakingStatus[$data->d->user_id] = $data->d;
+                    	break;
                 }
             });
 
@@ -343,11 +364,14 @@ class VoiceClient extends EventEmitter
 
             if (! $header) {
                 if ($noDataHeader && $this->streamTime != 0) {
-                	// Audio will be cut off without a timer.
-                    $this->loop->addTimer($count * (20 - $length), function () use ($deferred) {
-                    	$this->setSpeaking(false);
-                    	$deferred->resolve(true);
-                    });
+                	$this->setSpeaking(false);
+                	$deferred->resolve(true);
+                	$process->terminate();
+
+                	$this->seq = 0;
+                	$this->timestamp = 0;
+                	$this->streamTime = 0;
+                	$this->startTime = null;
                 } else {
                     $noDataHeader = true;
                     $this->loop->addTimer($length / 100, function () use (&$processff2opus) {
@@ -364,11 +388,14 @@ class VoiceClient extends EventEmitter
 
             if (! $buffer) {
                 if ($noData && $this->streamTime != 0) {
-                	// Audio will be cut off without a timer.
-                    $this->loop->addTimer($count * (20 - $length), function () use ($deferred) {
-                    	$this->setSpeaking(false);
-                    	$deferred->resolve(true);
-                    });
+                	$this->setSpeaking(false);
+                	$deferred->resolve(true);
+                	$process->terminate();
+
+                	$this->seq = 0;
+                	$this->timestamp = 0;
+                	$this->streamTime = 0;
+                	$this->startTime = null;
                 } else {
                     $noData = true;
                     $this->loop->addTimer($length / 100, function () use (&$processff2opus) {
@@ -501,6 +528,60 @@ class VoiceClient extends EventEmitter
     {
         $frame = new Frame(json_encode($data), true);
         $this->voiceWebsocket->send($frame);
+    }
+
+    /**
+     * Changes your mute and deaf value.
+     *
+     * @param boolean $mute Whether you should be muted.
+     * @param boolean $deaf Whether you should be deaf.
+     * 
+     * @return void 
+     */
+    public function setMuteDeaf($mute, $deaf)
+    {
+    	$this->mainWebsocket->send([
+    		'op' => 4,
+    		'd' => [
+    			'guild_id' => $this->channel->guild_id,
+    			'channel_id' => $this->channel->id,
+    			'self_mute' => $mute,
+    			'self_deaf' => $deaf
+    		]
+    	]);
+    }
+
+    /**
+     * Leaves the voice channel.
+     *
+     * @return void
+     */
+    public function leave()
+    {
+    	$this->setSpeaking(false);
+
+    	$this->mainWebsocket->send([
+    		'op' => 4,
+    		'd' => [
+    			'guild_id' => null,
+    			'channel_id' => null,
+    			'self_mute' => false,
+    			'self_deaf' => false
+    		]
+    	]);
+
+    	$this->voiceWebsocket->close();
+    	$this->client->close();
+
+    	$this->heartbeat_interval = null;
+    	$this->loop->cancelTimer($this->heartbeat);
+    	$this->heartbeat = null;
+    	$this->seq = 0;
+    	$this->timestamp = 0;
+    	$this->sentLoginFrame = false;
+    	$this->startTime = null;
+    	$this->streamTime = 0;
+    	$this->speakingStatus = [];
     }
 
     /**

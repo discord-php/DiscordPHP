@@ -83,7 +83,7 @@ class WebSocket extends EventEmitter
     /**
      * The Voice Client instance.
      *
-     * @var VoiceClient
+     * @var VoiceClient The Voice Client.
      */
     protected $voice;
 
@@ -247,11 +247,13 @@ class WebSocket extends EventEmitter
     /**
      * Joins a voice channel.
      *
-     * @param Channel $channel
+     * @param Channel $channel The channel to join.
+     * @param boolean $mute Whether you should be mute when you join the channel.
+     * @param boolean $deaf Whether you should be deaf when you join the channel.
      *
-     * @return VoiceClient
+     * @return \React\Promise\Promise
      */
-    public function joinVoiceChannel(Channel $channel)
+    public function joinVoiceChannel(Channel $channel, $mute = false, $deaf = false)
     {
         if (! is_null($this->voice)) {
             return; //temp
@@ -259,6 +261,10 @@ class WebSocket extends EventEmitter
 
         $deferred = new Deferred();
         $arr = ['user_id' => $this->discord->id];
+
+        if (!isset($channel->guild_id)) {
+            $channel->fresh();
+        }
 
         $closure = function ($message) use (&$closure, &$arr, $deferred, $channel) {
             $data = json_decode($message);
@@ -289,8 +295,8 @@ class WebSocket extends EventEmitter
             'd' => [
                 'guild_id' => $channel->guild_id,
                 'channel_id' => $channel->id,
-                'self_mute' => false,
-                'self_deaf' => false,
+                'self_mute' => $mute,
+                'self_deaf' => $deaf,
             ],
         ]);
 
