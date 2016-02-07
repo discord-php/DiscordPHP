@@ -262,10 +262,6 @@ class WebSocket extends EventEmitter
         $deferred = new Deferred();
         $arr = ['user_id' => $this->discord->id];
 
-        if (!isset($channel->guild_id)) {
-            $channel->fresh();
-        }
-
         $closure = function ($message) use (&$closure, &$arr, $deferred, $channel) {
             $data = json_decode($message);
 

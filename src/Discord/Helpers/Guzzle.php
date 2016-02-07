@@ -129,6 +129,9 @@ class Guzzle
         }
 
         switch ($error_code) {
+            case 404:
+                $response = "Error code 404: This resource does not exist. {$message}";
+                break;
             case 400:
                 $response = "Error code 400: This usually means you have entered an incorrect Email or Password. {$message}";
                 break;

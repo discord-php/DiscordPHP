@@ -66,7 +66,7 @@ class VoiceClient extends EventEmitter
      *
      * @var Socket The voiceUDP client.
      */
-    protected $client;
+    public $client;
 
     /**
      * The Channel that we are connecting to.
@@ -115,7 +115,7 @@ class VoiceClient extends EventEmitter
      *
      * @var int The SSRC value used for RTP.
      */
-    protected $ssrc;
+    public $ssrc;
 
     /**
      * The sequence of audio packets being sent.
