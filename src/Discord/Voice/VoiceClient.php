@@ -343,7 +343,8 @@ class VoiceClient extends EventEmitter
 
             if (! $header) {
                 if ($noDataHeader && $this->streamTime != 0) {
-                    $this->loop->addTimer($count * ($length - 20), function () use ($deferred) {
+                	// Audio will be cut off without a timer.
+                    $this->loop->addTimer($count * (20 - $length), function () use ($deferred) {
                     	$this->setSpeaking(false);
                     	$deferred->resolve(true);
                     });
@@ -363,7 +364,8 @@ class VoiceClient extends EventEmitter
 
             if (! $buffer) {
                 if ($noData && $this->streamTime != 0) {
-                    $this->loop->addTimer($count * ($length - 20), function () use ($deferred) {
+                	// Audio will be cut off without a timer.
+                    $this->loop->addTimer($count * (20 - $length), function () use ($deferred) {
                     	$this->setSpeaking(false);
                     	$deferred->resolve(true);
                     });
