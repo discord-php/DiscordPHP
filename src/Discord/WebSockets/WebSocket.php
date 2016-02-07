@@ -255,10 +255,6 @@ class WebSocket extends EventEmitter
      */
     public function joinVoiceChannel(Channel $channel, $mute = false, $deaf = false)
     {
-        if (! is_null($this->voice)) {
-            return; //temp
-        }
-
         $deferred = new Deferred();
         $arr = ['user_id' => $this->discord->id];
 
