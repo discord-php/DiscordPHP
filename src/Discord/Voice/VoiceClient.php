@@ -330,28 +330,23 @@ class VoiceClient extends EventEmitter
 
         $process->start($this->loop);
         $process->stdout->pause();
-        $process->on('exit', function ($code, $term) use ($deferred) {
-            if ($code === 0) {
-                $deferred->resolve(true);
-            } else {
-                $deferred->reject();
-            }
-        });
 
         $count = 0;
-        $length = 20;
+        $length = 17.47;
         $noData = false;
         $noDataHeader = false;
 
         $this->setSpeaking(true);
 
-        $processff2opus = function () use (&$processff2opus, $length, $process, &$noData, &$noDataHeader, $deferred, $count) {
+        $processff2opus = function () use (&$processff2opus, $length, $process, &$noData, &$noDataHeader, $deferred, &$count) {
             $header = @fread($process->stdout->stream, 2);
 
             if (! $header) {
-                if ($noDataHeader) {
-                    $this->setSpeaking(false);
-                    $deferred->resolve(true);
+                if ($noDataHeader && $this->streamTime != 0) {
+                    $this->loop->addTimer($count * ($length - 20), function () use ($deferred) {
+                    	$this->setSpeaking(false);
+                    	$deferred->resolve(true);
+                    });
                 } else {
                     $noDataHeader = true;
                     $this->loop->addTimer($length / 100, function () use (&$processff2opus) {
@@ -367,9 +362,11 @@ class VoiceClient extends EventEmitter
             $buffer = fread($process->stdout->stream, $opusLength);
 
             if (! $buffer) {
-                if ($noData) {
-                    $this->setSpeaking(false);
-                    $deferred->resolve();
+                if ($noData && $this->streamTime != 0) {
+                    $this->loop->addTimer($count * ($length - 20), function () use ($deferred) {
+                    	$this->setSpeaking(false);
+                    	$deferred->resolve(true);
+                    });
                 } else {
                     $noData = true;
                     $this->loop->addTimer($length / 100, function () use (&$processff2opus) {
@@ -459,6 +456,8 @@ class VoiceClient extends EventEmitter
     {
         $packet = new VoicePacket($data, $this->ssrc, $this->seq, $this->timestamp);
         $this->client->send((string) $packet);
+
+        $this->streamTime = microtime(true);
 
         $this->emit('packet-sent', [$packet]);
     }
