@@ -279,6 +279,7 @@ class VoiceClient extends EventEmitter
                                 $this->send($payload);
 
                                 $firstPack = false;
+
                                 return;
                             }
 
@@ -301,9 +302,9 @@ class VoiceClient extends EventEmitter
                         $this->emit('ready', [$this]);
                         break;
                     case 5: // user started speaking
-                    	$this->emit('speaking', [$data->d->speaking, $data->d->user_id, $this]);
-                    	$this->speakingStatus[$data->d->user_id] = $data->d;
-                    	break;
+                        $this->emit('speaking', [$data->d->speaking, $data->d->user_id, $this]);
+                        $this->speakingStatus[$data->d->user_id] = $data->d;
+                        break;
                 }
             });
 
@@ -364,14 +365,14 @@ class VoiceClient extends EventEmitter
 
             if (! $header) {
                 if ($noDataHeader && $this->streamTime != 0) {
-                	$this->setSpeaking(false);
-                	$deferred->resolve(true);
-                	$process->terminate();
+                    $this->setSpeaking(false);
+                    $deferred->resolve(true);
+                    $process->terminate();
 
-                	$this->seq = 0;
-                	$this->timestamp = 0;
-                	$this->streamTime = 0;
-                	$this->startTime = null;
+                    $this->seq = 0;
+                    $this->timestamp = 0;
+                    $this->streamTime = 0;
+                    $this->startTime = null;
                 } else {
                     $noDataHeader = true;
                     $this->loop->addTimer($length / 100, function () use (&$processff2opus) {
@@ -388,14 +389,14 @@ class VoiceClient extends EventEmitter
 
             if (! $buffer) {
                 if ($noData && $this->streamTime != 0) {
-                	$this->setSpeaking(false);
-                	$deferred->resolve(true);
-                	$process->terminate();
+                    $this->setSpeaking(false);
+                    $deferred->resolve(true);
+                    $process->terminate();
 
-                	$this->seq = 0;
-                	$this->timestamp = 0;
-                	$this->streamTime = 0;
-                	$this->startTime = null;
+                    $this->seq = 0;
+                    $this->timestamp = 0;
+                    $this->streamTime = 0;
+                    $this->startTime = null;
                 } else {
                     $noData = true;
                     $this->loop->addTimer($length / 100, function () use (&$processff2opus) {
@@ -533,22 +534,22 @@ class VoiceClient extends EventEmitter
     /**
      * Changes your mute and deaf value.
      *
-     * @param boolean $mute Whether you should be muted.
-     * @param boolean $deaf Whether you should be deaf.
-     * 
-     * @return void 
+     * @param bool $mute Whether you should be muted.
+     * @param bool $deaf Whether you should be deaf.
+     *
+     * @return void
      */
     public function setMuteDeaf($mute, $deaf)
     {
-    	$this->mainWebsocket->send([
-    		'op' => 4,
-    		'd' => [
-    			'guild_id' => $this->channel->guild_id,
-    			'channel_id' => $this->channel->id,
-    			'self_mute' => $mute,
-    			'self_deaf' => $deaf
-    		]
-    	]);
+        $this->mainWebsocket->send([
+            'op' => 4,
+            'd' => [
+                'guild_id' => $this->channel->guild_id,
+                'channel_id' => $this->channel->id,
+                'self_mute' => $mute,
+                'self_deaf' => $deaf,
+            ],
+        ]);
     }
 
     /**
@@ -558,30 +559,30 @@ class VoiceClient extends EventEmitter
      */
     public function leave()
     {
-    	$this->setSpeaking(false);
+        $this->setSpeaking(false);
 
-    	$this->mainWebsocket->send([
-    		'op' => 4,
-    		'd' => [
-    			'guild_id' => null,
-    			'channel_id' => null,
-    			'self_mute' => false,
-    			'self_deaf' => false
-    		]
-    	]);
+        $this->mainWebsocket->send([
+            'op' => 4,
+            'd' => [
+                'guild_id' => null,
+                'channel_id' => null,
+                'self_mute' => false,
+                'self_deaf' => false,
+            ],
+        ]);
 
-    	$this->voiceWebsocket->close();
-    	$this->client->close();
+        $this->voiceWebsocket->close();
+        $this->client->close();
 
-    	$this->heartbeat_interval = null;
-    	$this->loop->cancelTimer($this->heartbeat);
-    	$this->heartbeat = null;
-    	$this->seq = 0;
-    	$this->timestamp = 0;
-    	$this->sentLoginFrame = false;
-    	$this->startTime = null;
-    	$this->streamTime = 0;
-    	$this->speakingStatus = [];
+        $this->heartbeat_interval = null;
+        $this->loop->cancelTimer($this->heartbeat);
+        $this->heartbeat = null;
+        $this->seq = 0;
+        $this->timestamp = 0;
+        $this->sentLoginFrame = false;
+        $this->startTime = null;
+        $this->streamTime = 0;
+        $this->speakingStatus = [];
     }
 
     /**

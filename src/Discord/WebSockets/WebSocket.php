@@ -248,8 +248,8 @@ class WebSocket extends EventEmitter
      * Joins a voice channel.
      *
      * @param Channel $channel The channel to join.
-     * @param boolean $mute Whether you should be mute when you join the channel.
-     * @param boolean $deaf Whether you should be deaf when you join the channel.
+     * @param bool    $mute    Whether you should be mute when you join the channel.
+     * @param bool    $deaf    Whether you should be deaf when you join the channel.
      *
      * @return \React\Promise\Promise
      */
