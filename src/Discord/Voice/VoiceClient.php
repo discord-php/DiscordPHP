@@ -409,7 +409,8 @@ class VoiceClient extends EventEmitter
             $next = $this->startTime + ($count * $length);
             $this->streamTime = $count * $length;
 
-            $this->loop->addTimer($length / 1000, function () use (&$processff2opus) {
+            // There is a delay so it isn't exactly 20ms after the last packet, it is about 17.47ms (i think)
+            $this->loop->addTimer(0.01747, function () use (&$processff2opus) {
                 $processff2opus();
             });
         };
