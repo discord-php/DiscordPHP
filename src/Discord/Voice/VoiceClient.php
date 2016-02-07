@@ -352,6 +352,9 @@ class VoiceClient extends EventEmitter
 
         $process->start($this->loop);
         $process->stdout->pause();
+        $process->stderr->on('data', function ($data) {
+            $this->emit('stderr', [$data]);
+        });
 
         $count = 0;
         $length = 17.47;
@@ -649,8 +652,6 @@ class VoiceClient extends EventEmitter
             return;
         }
 
-        $filename = str_replace([' '], '\\ ', $filename);
-
-        return new Process("{$this->dca} {$filename}");
+        return new Process("{$this->dca} \"{$filename}\"");
     }
 }
