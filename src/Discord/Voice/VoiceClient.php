@@ -370,7 +370,10 @@ class VoiceClient extends EventEmitter
                 if ($noDataHeader && $this->streamTime != 0) {
                     $this->setSpeaking(false);
                     $deferred->resolve(true);
-                    $process->terminate();
+
+                    if (!$process->isRunning()) {
+                        $process->terminate();
+                    }
 
                     $this->seq = 0;
                     $this->timestamp = 0;
@@ -394,7 +397,10 @@ class VoiceClient extends EventEmitter
                 if ($noData && $this->streamTime != 0) {
                     $this->setSpeaking(false);
                     $deferred->resolve(true);
-                    $process->terminate();
+
+                    if (!$process->isRunning()) {
+                        $process->terminate();
+                    }
 
                     $this->seq = 0;
                     $this->timestamp = 0;
@@ -652,6 +658,6 @@ class VoiceClient extends EventEmitter
             return;
         }
 
-        return new Process("{$this->dca} \"{$filename}\"");
+        return new Process("{$this->dca} -i \"{$filename}\"");
     }
 }
