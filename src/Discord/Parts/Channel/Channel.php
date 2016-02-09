@@ -14,13 +14,14 @@ namespace Discord\Parts\Channel;
 use Discord\Exceptions\FileNotFoundException;
 use Discord\Helpers\Collection;
 use Discord\Helpers\Guzzle;
+use Discord\Parts\Guild\Guild;
 use Discord\Parts\Guild\Invite;
 use Discord\Parts\Guild\Role;
 use Discord\Parts\Part;
 use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
-use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Client as GuzzleClient;
+use GuzzleHttp\Psr7\Request;
 
 /**
  * A Channel can be either a text or voice channel on a Discord guild.
@@ -111,6 +112,29 @@ class Channel extends Part
         // was moved successfully.
 
         return true;
+    }
+
+    /**
+     * Returns the guild attribute.
+     *
+     * @return Guild|null The guild that the Channel belongs to or null if we don't have the guild ID.
+     */
+    public function getGuildAttribute()
+    {
+        if (isset($this->attributes_cache['messages'])) {
+            return $this->attributes_cache['messages'];
+        }
+
+        if (is_null($this->guild_id)) {
+            return null;
+        }
+
+        $request = Guzzle::get("guilds/{$this->guild_id}");
+        $guild = new Guild((array) $request, true);
+
+        $this->attributes_cache['messages'] = $guild;
+
+        return $guild;
     }
 
     /**

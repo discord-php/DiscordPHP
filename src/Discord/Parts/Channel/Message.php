@@ -56,6 +56,8 @@ class Message extends Part
     /**
      * Returns the channel attribute.
      *
+     * Note: This channel object does not have a guild_id attribute, therfore you cannot get the guild from this object. If you neeed the guild, use the `full_channel` attribute on the channel.
+     *
      * @return Channel The channel the message was sent in.
      */
     public function getChannelAttribute()
