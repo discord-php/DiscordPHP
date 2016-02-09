@@ -12,6 +12,7 @@
 namespace Discord\Parts\User;
 
 use Discord\Helpers\Guzzle;
+use Discord\Parts\Channel\Message;
 use Discord\Parts\Part;
 
 /**
@@ -72,7 +73,7 @@ class User extends Part
             'tts' => $tts,
         ]);
 
-        return $request;
+        return new Message((array) $request, true);
     }
 
     /**
