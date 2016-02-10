@@ -250,6 +250,7 @@ class VoiceClient extends EventEmitter
                             'op' => 3,
                             'd' => microtime(true),
                         ]);
+                        $this->emit('ws-heartbeat', []);
                     });
 
                     $buffer = new Buffer(70);
@@ -273,7 +274,7 @@ class VoiceClient extends EventEmitter
                         });
 
                         $client->on('error', function ($e) {
-                            $this->emit('error', [$e]);
+                            $this->emit('udp-error', [$e]);
                         });
 
                         $client->on('message', function ($message) use (&$ws, &$firstPack, &$ip, &$port) {
@@ -331,6 +332,10 @@ class VoiceClient extends EventEmitter
                         $this->speakingStatus[$data->d->user_id] = $data->d;
                         break;
                 }
+            });
+
+            $ws->on('error', function ($e) {
+                $this->emit('ws-error', [$e]);
             });
 
             if (! $this->sentLoginFrame) {
