@@ -15,6 +15,7 @@ use Discord\Exceptions\DCANotFoundException;
 use Discord\Exceptions\FFmpegNotFoundException;
 use Discord\Exceptions\FileNotFoundException;
 use Discord\Parts\Channel\Channel;
+use Discord\Voice\Buffer;
 use Discord\WSClient\Factory as WsFactory;
 use Discord\WSClient\WebSocket as WS;
 use Discord\WebSockets\WebSocket;
@@ -104,11 +105,25 @@ class VoiceClient extends EventEmitter
     protected $heartbeat_interval;
 
     /**
-     * The UDP heartbeat timer.
+     * The Voice WebSocket heartbeat timer.
      *
      * @var TimerInterface The heartbeat periodic timer.
      */
     protected $heartbeat;
+
+    /**
+     * The UDP heartbeat timer.
+     *
+     * @var TimerInterface The heartbeat periodic timer.
+     */
+    protected $udpHeartbeat;
+
+    /**
+     * The UDP heartbeat sequence.
+     *
+     * @var integer The heartbeat sequence.
+     */
+    protected $heartbeatSeq = 0;
 
     /**
      * The SSRC value.
@@ -233,7 +248,7 @@ class VoiceClient extends EventEmitter
                     $this->heartbeat = $loop->addPeriodicTimer($this->heartbeat_interval / 1000, function () {
                         $this->send([
                             'op' => 3,
-                            'd' => null,
+                            'd' => microtime(true),
                         ]);
                     });
 
@@ -245,6 +260,16 @@ class VoiceClient extends EventEmitter
 
                         $loop->addTimer(0.1, function () use (&$client, $buffer) {
                             $client->send((string) $buffer);
+                        });
+
+                        $this->udpHeartbeat = $loop->addPeriodicTimer(5, function () use ($client) {
+                            $buffer = new Buffer(5);
+                            $buffer[0] = pack('c', 0xC9);
+                            $buffer->writeUInt64LE(1, $this->heartbeatSeq);
+                            $this->heartbeatSeq++;
+
+                            $client->send((string) $buffer);
+                            $this->emit('udp-heartbeat', []);
                         });
 
                         $client->on('error', function ($e) {
@@ -585,7 +610,9 @@ class VoiceClient extends EventEmitter
 
         $this->heartbeat_interval = null;
         $this->loop->cancelTimer($this->heartbeat);
+        $this->loop->cancelTimer($this->udpHeartbeat);
         $this->heartbeat = null;
+        $this->udpHeartbeat = null;
         $this->seq = 0;
         $this->timestamp = 0;
         $this->sentLoginFrame = false;

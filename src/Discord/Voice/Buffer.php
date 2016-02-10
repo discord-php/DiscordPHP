@@ -20,7 +20,7 @@ use TrafficCophp\ByteBuffer\Buffer as BaseBuffer;
 class Buffer extends BaseBuffer implements ArrayAccess
 {
     /**
-     * Writes a 32-bit unsigned integer with big endian;.
+     * Writes a 32-bit unsigned integer with big endian.
      *
      * @param int $value  The value that will be written.
      * @param int $offset The offset that the value will be written.
@@ -29,8 +29,20 @@ class Buffer extends BaseBuffer implements ArrayAccess
      */
     public function writeUInt32BE($value, $offset)
     {
-        $this->checkForOverSize(0xffffffff, $value);
         $this->insert('I', $value, $offset, 3);
+    }
+
+    /**
+     * Writes a 64-bit unsigned integer with little endian.
+     *
+     * @param int $value  The value that will be written.
+     * @param int $offset The offset that the value will be written.
+     *
+     * @return void
+     */
+    public function writeUInt64LE($value, $offset)
+    {
+        $this->insert('P', $value, $offset, 8);   
     }
 
     /**
@@ -85,7 +97,7 @@ class Buffer extends BaseBuffer implements ArrayAccess
     }
 
     /**
-     * Writes raw binary to the uffer.
+     * Writes raw binary to the buffer.
      *
      * @param binary $value  The value that will be written.
      * @param int    $offset The offset that the value will be written at.
