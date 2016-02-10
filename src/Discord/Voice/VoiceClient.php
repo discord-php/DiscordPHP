@@ -266,7 +266,7 @@ class VoiceClient extends EventEmitter
                         $this->udpHeartbeat = $loop->addPeriodicTimer(5, function () use ($client) {
                             $buffer = new Buffer(5);
                             $buffer[0] = pack('c', 0xC9);
-                            $buffer->writeUInt64LE(1, $this->heartbeatSeq);
+                            $buffer->writeUInt64LE($this->heartbeatSeq, 1);
                             $this->heartbeatSeq++;
 
                             $client->send((string) $buffer);
