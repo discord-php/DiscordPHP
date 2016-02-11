@@ -44,7 +44,7 @@ There is caching built into the API. By default, the time to live for an item in
 ```php
 use Discord\Helpers\Guzzle;
 
-Guzzle::getCacheTtl(:time);
+Guzzle::setCacheTtl(:time);
 ```
 
 If you would like to disable the cache, set the TTL to `0`.
