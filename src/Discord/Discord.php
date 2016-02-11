@@ -27,14 +27,14 @@ class Discord
     /**
      * The current version of the API.
      *
-     * @var string
+     * @var string The current version of the API.
      */
     const VERSION = 'v3.1.0-beta';
 
     /**
      * The Client instance.
      *
-     * @var Client
+     * @var Client The Discord Client instance.
      */
     protected $client;
 
@@ -61,7 +61,7 @@ class Discord
      *
      * @param string $email The Email that will be checked for token caching
      *
-     * @return string|null
+     * @return string|null The Discord token or null.
      */
     protected function checkForCaching($email)
     {
@@ -188,8 +188,8 @@ class Discord
     /**
      * Handles dynamic set calls to the class.
      *
-     * @param string $variable
-     * @param mixed  $value
+     * @param string $variable The variable name.
+     * @param mixed  $value    The value to set.
      *
      * @return void
      */
