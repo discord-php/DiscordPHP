@@ -11,6 +11,7 @@
 
 namespace Discord\Helpers;
 
+use Discord\Cache\Cache;
 use Discord\Discord;
 use Discord\Exceptions\ContentTooLongException;
 use Discord\Exceptions\DiscordRequestFailedException;
@@ -28,6 +29,13 @@ class Guzzle
      * @var string
      */
     public static $base_url = 'https://discordapp.com/api';
+
+    /**
+     * The length of time requests will be cached for.
+     *
+     * @var integer Length of time to cache requests.
+     */
+    public static $cacheTtl = 300;
 
     /**
      * Handles dynamic calls to the class.
@@ -62,7 +70,11 @@ class Guzzle
     public static function runRequest($method, $url, $content, $auth)
     {
         $guzzle = new GuzzleClient(['http_errors' => false, 'allow_redirects' => true]);
-        $url = self::$base_url."/{$url}";
+        $query_url = self::$base_url."/{$url}";
+
+        if (Cache::has("guzzle:{$query_url}") && (strtolower($method) == 'get')) {
+            return Cache::get("guzzle:{$query_url}");
+        }
 
         $headers = [
             'User-Agent' => self::getUserAgent(),
@@ -78,7 +90,7 @@ class Guzzle
         $content = (is_null($content)) ? null : json_encode($content);
 
         while (! $done) {
-            $request = new Request($method, $url, $headers, $content);
+            $request = new Request($method, $query_url, $headers, $content);
             $response = $guzzle->send($request);
 
             // Rate limiting
@@ -98,7 +110,25 @@ class Guzzle
             $finalRes = $response;
         }
 
-        return json_decode($finalRes->getBody());
+        $json = json_decode($finalRes->getBody());
+
+        if (strtolower($method) == 'get') {
+            Cache::set("guzzle:{$query_url}", $json, self::$cacheTtl);
+        }
+
+        return $json;
+    }
+
+    /**
+     * Sets the cache TTL.
+     *
+     * @param integer $ttl The TTL to set.
+     *
+     * @return void 
+     */
+    public static function setCacheTtl($ttl)
+    {
+        self::$cacheTtl = $ttl;
     }
 
     /**
