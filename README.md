@@ -37,6 +37,18 @@ I have generated documentation which can be viewed [here](https://teamreflex.git
 
 If you have any questions feel free to message me on Discord which can be viewed below.
 
+### Cache
+
+There is caching built into the API. By default, the time to live for an item in the cache is 300 seconds (5 minutes). If you would like to change that, do the following:
+
+```php
+use Discord\Helpers\Guzzle;
+
+Guzzle::setCacheTtl(:time);
+```
+
+If you would like to disable the cache, set the TTL to `0`.
+
 ### Help
 
 If you need any help feel free to join the [DiscordAPI Server](https://discord.gg/0SBTUU1wZTY56U7l) and ask in the `#php_discordphp` channel. Tag `@Uniquoooo` if you need any help specific to the API.
