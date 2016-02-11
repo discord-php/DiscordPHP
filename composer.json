@@ -26,5 +26,8 @@
     	"psr-4": {
     		"Discord\\": "src/Discord"
     	}
+    },
+    "suggest": {
+        "predis/predis": "Required to use the Redis cache driver."
     }
 }
