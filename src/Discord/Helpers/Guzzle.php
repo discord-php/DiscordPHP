@@ -151,7 +151,8 @@ class Guzzle
 
         if (false !== strpos($content, 'longer than 2000 characters') &&
             false !== strpos($content, 'String value is too long') &&
-            $error_code == 500) {
+            $error_code == 500
+        ) {
             // Discord has set a restriction with content sent over REST,
             // if it is more than 2000 characters long it will not be
             // sent and will return a 500 error.
