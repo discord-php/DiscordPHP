@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is apart of the DiscordPHP project.
+ *
+ * Copyright (c) 2016 David Cole <david@team-reflex.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the LICENSE.md file.
+ */
+
 namespace Discord\Cache\Drivers;
 
 use Discord\Cache\CacheInterface;
@@ -9,99 +18,101 @@ use Discord\Cache\CacheInterface;
  */
 class ArrayCacheDriver implements CacheInterface
 {
-	/**
-	 * The Cache array.
-	 *
-	 * @var array The array that contains all Cache values.
-	 */
-	protected $cache = [];
+    /**
+     * The Cache array.
+     *
+     * @var array The array that contains all Cache values.
+     */
+    protected $cache = [];
 
-	/**
+    /**
      * The Cache name.
      *
      * @var string The Cache name.
      */
     public $name = 'array';
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function get($key)
-	{
-		if ($this->has($key)) {
-			$this->checkForExpiry($key);
-			return $this->cache[$key]['data'];
-		}
+    /**
+     * {@inheritdoc}
+     */
+    public function get($key)
+    {
+        if ($this->has($key)) {
+            $this->checkForExpiry($key);
 
-		return null;
-	}
+            return $this->cache[$key]['data'];
+        }
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function set($key, $value, $ttl = 300)
-	{
-		$this->cache[$key] = [
-			'data' => $value,
-			'ttl' => $ttl,
-			'store_time' => microtime(true)
-		];
+        return;
+    }
 
-		return true;
-	}
+    /**
+     * {@inheritdoc}
+     */
+    public function set($key, $value, $ttl = 300)
+    {
+        $this->cache[$key] = [
+            'data' => $value,
+            'ttl' => $ttl,
+            'store_time' => microtime(true),
+        ];
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function has($key)
-	{
-		$this->checkForExpiry($key);
-		return isset($this->cache[$key]);
-	}
+        return true;
+    }
 
-	/**
-	 * @{inheritdoc}
-	 */
-	public function remove($key)
-	{
-		if ($this->has($key)) {
-			$this->checkForExpiry($key);
-			unset($this->cache[$key]);
+    /**
+     * {@inheritdoc}
+     */
+    public function has($key)
+    {
+        $this->checkForExpiry($key);
 
-			return true;
-		}
+        return isset($this->cache[$key]);
+    }
 
-		return false;
-	}
+    /**
+     * {@inheritdoc}
+     */
+    public function remove($key)
+    {
+        if ($this->has($key)) {
+            $this->checkForExpiry($key);
+            unset($this->cache[$key]);
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function clear()
-	{
-		$this->cache = [];
-	}
+            return true;
+        }
 
-	/**
-	 * Checks if the object has expired.
-	 *
-	 * @param mixed $key The object key.
-	 *
-	 * @return void 
-	 */
-	protected function checkForExpiry($key)
-	{
-		if (!isset($this->cache[$key])) {
-			return;
-		}
+        return false;
+    }
 
-		$ttl = $this->cache[$key]['ttl'];
-		$store_time = $this->cache[$key]['store_time'];
+    /**
+     * {@inheritdoc}
+     */
+    public function clear()
+    {
+        $this->cache = [];
+    }
 
-		if (microtime(true) >= $store_time + $ttl) {
-			unset($this->cache[$key]);
+    /**
+     * Checks if the object has expired.
+     *
+     * @param mixed $key The object key.
+     *
+     * @return void
+     */
+    protected function checkForExpiry($key)
+    {
+        if (! isset($this->cache[$key])) {
+            return;
+        }
 
-			return;
-		}
-	}
+        $ttl = $this->cache[$key]['ttl'];
+        $store_time = $this->cache[$key]['store_time'];
+
+        if (microtime(true) >= $store_time + $ttl) {
+            unset($this->cache[$key]);
+
+            return;
+        }
+    }
 }

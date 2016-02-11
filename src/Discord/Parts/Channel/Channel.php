@@ -126,7 +126,7 @@ class Channel extends Part
         }
 
         if (is_null($this->guild_id)) {
-            return null;
+            return;
         }
 
         $request = Guzzle::get("guilds/{$this->guild_id}");

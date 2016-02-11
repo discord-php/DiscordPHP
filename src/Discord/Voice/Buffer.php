@@ -42,7 +42,7 @@ class Buffer extends BaseBuffer implements ArrayAccess
      */
     public function writeUInt64LE($value, $offset)
     {
-        $this->insert('P', $value, $offset, 8);   
+        $this->insert('P', $value, $offset, 8);
     }
 
     /**

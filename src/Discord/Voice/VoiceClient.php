@@ -15,7 +15,6 @@ use Discord\Exceptions\DCANotFoundException;
 use Discord\Exceptions\FFmpegNotFoundException;
 use Discord\Exceptions\FileNotFoundException;
 use Discord\Parts\Channel\Channel;
-use Discord\Voice\Buffer;
 use Discord\WSClient\Factory as WsFactory;
 use Discord\WSClient\WebSocket as WS;
 use Discord\WebSockets\WebSocket;
@@ -121,7 +120,7 @@ class VoiceClient extends EventEmitter
     /**
      * The UDP heartbeat sequence.
      *
-     * @var integer The heartbeat sequence.
+     * @var int The heartbeat sequence.
      */
     protected $heartbeatSeq = 0;
 
@@ -267,7 +266,7 @@ class VoiceClient extends EventEmitter
                             $buffer = new Buffer(5);
                             $buffer[0] = pack('c', 0xC9);
                             $buffer->writeUInt64LE($this->heartbeatSeq, 1);
-                            $this->heartbeatSeq++;
+                            ++$this->heartbeatSeq;
 
                             $client->send((string) $buffer);
                             $this->emit('udp-heartbeat', []);
@@ -378,13 +377,82 @@ class VoiceClient extends EventEmitter
         }
 
         $process = $this->dcaConvert($file);
-        $buffer = '';
-
         $process->start($this->loop);
-        $process->stdout->pause();
         $process->stderr->on('data', function ($data) {
             $this->emit('stderr', [$data]);
         });
+
+        $this->playDCAStream($process)->then(function ($result) use ($deferred) {
+            $deferred->resolve($result);
+        });
+
+        return $deferred->promise();
+    }
+
+    /**
+     * Plays a PHP resource stream.
+     *
+     * @param resource|Stream $stream   The stream to be encoded and sent.
+     * @param int             $channels How many audio channels to encode with.
+     *
+     * @return \React\Promise\Promise
+     *
+     * @throws \RuntimeException Thrown when the stream passed to playRawStream is not a valid resource.
+     */
+    public function playRawStream($stream, $channels = 2)
+    {
+        $deferred = new Deferred();
+
+        if ($stream instanceof Stream) {
+            $stream->pause();
+            $stream = $stream->stdout;
+        }
+
+        if (! is_resource($stream)) {
+            $deferred->reject(new \RuntimeException('The stream passed to playRawStream was not an instance of resource.'));
+
+            return $deferred->promise();
+        }
+
+        $process = $this->dcaConvert();
+        $process->start($this->loop);
+        $process->stderr->on('data', function ($data) {
+            $this->emit('stderr', [$data]);
+        });
+
+        $this->playDCAStream($process)->then(function ($result) use ($deferred) {
+            $deferred->resolve($result);
+        });
+
+        return $deferred->promise();
+    }
+
+    /**
+     * Plays a DCA stream.
+     *
+     * @param resource|Process|Stream $stream The DCA stream to be sent.
+     *
+     * @return \React\Promise\Promise
+     */
+    public function playDCAStream($stream)
+    {
+        $deferred = new Deferred();
+
+        if ($stream instanceof Process) {
+            $stream->stdout->pause();
+            $stream = $stream->stdout;
+        }
+
+        if ($stream instanceof Stream) {
+            $stream->pause();
+            $stream = $stream->stream;
+        }
+
+        if (! is_resource($stream)) {
+            $deferred->reject(new \RuntimeException('The stream passed to playDCAStream was not an instance of resource, ReactPHP Process or ReactPHP Stream.'));
+
+            return $deferred->promise();
+        }
 
         $count = 0;
         $length = 17.47;
@@ -393,17 +461,13 @@ class VoiceClient extends EventEmitter
 
         $this->setSpeaking(true);
 
-        $processff2opus = function () use (&$processff2opus, $length, $process, &$noData, &$noDataHeader, $deferred, &$count) {
-            $header = @fread($process->stdout->stream, 2);
+        $processff2opus = function () use (&$processff2opus, $length, $stream, &$noData, &$noDataHeader, $deferred, &$count) {
+            $header = @fread($stream, 2);
 
             if (! $header) {
                 if ($noDataHeader && $this->streamTime != 0) {
                     $this->setSpeaking(false);
                     $deferred->resolve(true);
-
-                    if (!$process->isRunning()) {
-                        $process->terminate();
-                    }
 
                     $this->seq = 0;
                     $this->timestamp = 0;
@@ -421,16 +485,12 @@ class VoiceClient extends EventEmitter
 
             $opusLength = unpack('v', $header);
             $opusLength = reset($opusLength);
-            $buffer = fread($process->stdout->stream, $opusLength);
+            $buffer = fread($stream, $opusLength);
 
             if (! $buffer) {
                 if ($noData && $this->streamTime != 0) {
                     $this->setSpeaking(false);
                     $deferred->resolve(true);
-
-                    if (!$process->isRunning()) {
-                        $process->terminate();
-                    }
 
                     $this->seq = 0;
                     $this->timestamp = 0;
@@ -482,33 +542,6 @@ class VoiceClient extends EventEmitter
         };
 
         $processff2opus();
-
-        return $deferred->promise();
-    }
-
-    /**
-     * Plays a PHP resource stream.
-     *
-     * @param resource $stream   The stream to be encoded and sent.
-     * @param int      $channels How many audio channels to encode with.
-     *
-     * @return \React\Promise\Promise
-     *
-     * @throws \RuntimeException Thrown when the stream passed to playRawStream is not a valid resource.
-     */
-    public function playRawStream($stream, $channels = 2)
-    {
-        $deferred = new Deferred();
-
-        if (! is_resource($stream)) {
-            $deferred->reject(new \RuntimeException('The stream passed to playRawStream was not an instance of resource.'));
-
-            return $deferred->promise();
-        }
-
-        // At the moment DCA does not support piping so we can't pipe
-        // a raw stream in at the moment.
-        $deferred->reject(new \RuntimeException('DCA does not support piping audio at the moment.'));
 
         return $deferred->promise();
     }
@@ -681,15 +714,31 @@ class VoiceClient extends EventEmitter
      * Converts a file with DCA.
      *
      * @param string $filename The file name that will be converted
+     * @param int    $channels How many audio channels to encode with.
      *
      * @return Process A ReactPHP Child Process
      */
-    public function dcaConvert($filename)
+    public function dcaConvert($filename = '', $channels = 2)
     {
         if (! file_exists($filename)) {
             return;
         }
 
-        return new Process("{$this->dca} -i \"{$filename}\"");
+        $flags = [];
+
+        // Volume
+        $flags[] = '-ac '.$channels;
+
+        if (! empty($filename)) {
+            $flags[] = '-i';
+
+            if (! file_exists($filename)) {
+                return;
+            }
+        }
+
+        $flags = implode(' ', $flags);
+
+        return new Process("{$this->dca} {$flags} \"{$filename}\"");
     }
 }
