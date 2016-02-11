@@ -43,7 +43,7 @@ interface CacheInterface
      *
      * @return boolean Whether the key was unset.
      */
-    public function unset($key);
+    public function remove($key);
 
     /**
      * Clears all items from the Cache.

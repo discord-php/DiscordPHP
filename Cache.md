@@ -15,7 +15,7 @@ Cache::get('dank'); // Returns 'memes'
 
 Cache::has('dank'); // Returns true
 
-Cache::unset('dank'); // Returns true if it succeeded
+Cache::remove('dank'); // Returns true if it succeeded
 
 Cache::clear(); // Deletes all cache objects
 ```

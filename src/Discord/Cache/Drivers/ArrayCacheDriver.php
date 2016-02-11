@@ -62,7 +62,7 @@ class ArrayCacheDriver implements CacheInterface
 	/**
 	 * @{inheritdoc}
 	 */
-	public function unset($key)
+	public function remove($key)
 	{
 		if ($this->has($key)) {
 			$this->checkForExpiry($key);
