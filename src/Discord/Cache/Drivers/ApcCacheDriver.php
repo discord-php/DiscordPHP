@@ -21,7 +21,7 @@ class ApcCacheDriver implements CacheInterface
 	 */
 	public function get($key)
 	{
-		if ($this->isset($key)) {
+		if ($this->has($key)) {
 			return apc_fetch($key);
 		}
 
@@ -39,7 +39,7 @@ class ApcCacheDriver implements CacheInterface
 	/**
 	 * {@inheritdoc}
 	 */
-	public function isset($key)
+	public function has($key)
 	{
 		return apc_exists($key);
 	}
@@ -49,7 +49,7 @@ class ApcCacheDriver implements CacheInterface
 	 */
 	public function unset($key)
 	{
-		if ($this->isset($key)) {
+		if ($this->has($key)) {
 			return apc_delete($key);
 		}
 

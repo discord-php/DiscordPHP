@@ -72,7 +72,7 @@ class Guzzle
         $guzzle = new GuzzleClient(['http_errors' => false, 'allow_redirects' => true]);
         $query_url = self::$base_url."/{$url}";
 
-        if (Cache::isset("guzzle:{$query_url}") && (strtolower($method) == 'get')) {
+        if (Cache::has("guzzle:{$query_url}") && (strtolower($method) == 'get')) {
             return Cache::get("guzzle:{$query_url}");
         }
 

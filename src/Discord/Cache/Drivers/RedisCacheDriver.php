@@ -51,7 +51,7 @@ class RedisCacheDriver implements CacheInterface
 	 */
 	public function get($key)
 	{
-		if ($this->isset($key)) {
+		if ($this->has($key)) {
 			return $this->redis->get($key);
 		}
 
@@ -72,7 +72,7 @@ class RedisCacheDriver implements CacheInterface
 	/**
 	 * {@inheritdoc}
 	 */
-	public function isset($key)
+	public function has($key)
 	{
 		return $this->redis->exists($key);
 	}
@@ -82,7 +82,7 @@ class RedisCacheDriver implements CacheInterface
 	 */
 	public function unset($key)
 	{
-		if ($this->isset($key)) {
+		if ($this->has($key)) {
 			$this->redis->del($key);
 
 			return true;

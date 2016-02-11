@@ -28,7 +28,7 @@ class ArrayCacheDriver implements CacheInterface
 	 */
 	public function get($key)
 	{
-		if ($this->isset($key)) {
+		if ($this->has($key)) {
 			$this->checkForExpiry($key);
 			return $this->cache[$key]['data'];
 		}
@@ -53,7 +53,7 @@ class ArrayCacheDriver implements CacheInterface
 	/**
 	 * {@inheritdoc}
 	 */
-	public function isset($key)
+	public function has($key)
 	{
 		$this->checkForExpiry($key);
 		return isset($this->cache[$key]);
@@ -64,7 +64,7 @@ class ArrayCacheDriver implements CacheInterface
 	 */
 	public function unset($key)
 	{
-		if ($this->isset($key)) {
+		if ($this->has($key)) {
 			$this->checkForExpiry($key);
 			unset($this->cache[$key]);
 

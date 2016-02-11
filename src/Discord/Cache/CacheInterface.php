@@ -34,7 +34,7 @@ interface CacheInterface
      *
      * @return boolean Whether the key exists.
      */
-    public function isset($key);
+    public function has($key);
 
     /**
      * Unsets a key from the Cache.

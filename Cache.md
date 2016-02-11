@@ -13,7 +13,7 @@ Cache::set('dank', 'memes', 120); // dank => memes for 120 seconds
 
 Cache::get('dank'); // Returns 'memes'
 
-Cache::isset('dank'); // Returns true
+Cache::has('dank'); // Returns true
 
 Cache::unset('dank'); // Returns true if it succeeded
 
