@@ -153,7 +153,9 @@ class Channel extends Part
      */
     public function createInvite()
     {
-        $request = Guzzle::post($this->replaceWithVariables('channels/:id/invites'));
+        $request = Guzzle::post($this->replaceWithVariables('channels/:id/invites'), [
+            'validate' => null
+        ]);
 
         return new Invite((array) $request, true);
     }
