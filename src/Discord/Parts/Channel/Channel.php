@@ -188,6 +188,31 @@ class Channel extends Part
     }
 
     /**
+     * Returns the channels invites.
+     *
+     * @return Collection A collection of invites.
+     */
+    public function getInvitesAttribute()
+    {
+        if (isset($this->attributes_cache['invites'])) {
+            return $this->attributes_cache['invites'];
+        }
+
+        $request = Guzzle::get($this->replaceWithVariables('channels/:id/invites'));
+        $invites = [];
+
+        foreach ($request as $index => $invite) {
+            $invites[$index] = new Invite((array) $invite, true);
+        }
+
+        $invites = new Collection($invites);
+
+        $this->attributes_cache['invites'] = $invites;
+
+        return $invites;
+    }
+
+    /**
      * Sends a message to the channel if it is a text channel.
      *
      * @param string $text The text to send in the message.

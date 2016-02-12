@@ -15,8 +15,9 @@ use Discord\Exceptions\DiscordRequestFailedException;
 use Discord\Helpers\Collection;
 use Discord\Helpers\Guzzle;
 use Discord\Parts\Channel\Channel;
-use Discord\Parts\Permissions\RolePermission as Permission;
+use Discord\Parts\Guild\Invite;
 use Discord\Parts\Part;
+use Discord\Parts\Permissions\RolePermission as Permission;
 use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
 
@@ -232,6 +233,31 @@ class Guild extends Part
         $this->attributes_cache['bans'] = $bans;
 
         return $bans;
+    }
+
+    /**
+     * Returns the guilds invites.
+     *
+     * @return Collection A collection of invites.
+     */
+    public function getInvitesAttribute()
+    {
+        if (isset($this->attributes_cache['invites'])) {
+            return $this->attributes_cache['invites'];
+        }
+
+        $request = Guzzle::get($this->replaceWithVariables('guilds/:id/invites'));
+        $invites = [];
+
+        foreach ($request as $index => $invite) {
+            $invites[$index] = new Invite((array) $invite, true);
+        }
+
+        $invites = new Collection($invites);
+
+        $this->attributes_cache['invites'] = $invites;
+
+        return $invites;
     }
 
     /**
