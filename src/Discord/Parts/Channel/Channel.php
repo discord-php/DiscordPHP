@@ -18,6 +18,7 @@ use Discord\Parts\Guild\Guild;
 use Discord\Parts\Guild\Invite;
 use Discord\Parts\Guild\Role;
 use Discord\Parts\Part;
+use Discord\Parts\Permissions\ChannelPermission;
 use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
 use GuzzleHttp\Client as GuzzleClient;
@@ -59,13 +60,13 @@ class Channel extends Part
     /**
      * Sets a permission value to the channel.
      *
-     * @param Member|Role $part     Either a Member or Role, permissions will be set on it.
-     * @param Permission  $allow    The permissions that define what the Member/Role can do.
-     * @param Permission  $disallow The permissions that define what the Member/Role can't do.
+     * @param Member|Role     $part     Either a Member or Role, permissions will be set on it.
+     * @param Permission|null $allow    The permissions that define what the Member/Role can do.
+     * @param Permission|null $disallow The permissions that define what the Member/Role can't do.
      *
      * @return bool Whether the function succeeded or failed.
      */
-    public function setPermissions($part, $allow, $deny)
+    public function setPermissions($part, $allow = null, $deny = null)
     {
         if ($part instanceof Member) {
             $type = 'member';
@@ -73,6 +74,14 @@ class Channel extends Part
             $type = 'role';
         } else {
             return false;
+        }
+
+        if (is_null($allow)) {
+            $allow = new ChannelPermission();
+        }
+
+        if (is_null($deny)) {
+            $deny = new ChannelPermission();
         }
 
         $payload = [
