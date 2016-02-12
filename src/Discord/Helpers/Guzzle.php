@@ -33,7 +33,7 @@ class Guzzle
     /**
      * The length of time requests will be cached for.
      *
-     * @var integer Length of time to cache requests.
+     * @var int Length of time to cache requests.
      */
     public static $cacheTtl = 300;
 
@@ -122,9 +122,9 @@ class Guzzle
     /**
      * Sets the cache TTL.
      *
-     * @param integer $ttl The TTL to set.
+     * @param int $ttl The TTL to set.
      *
-     * @return void 
+     * @return void
      */
     public static function setCacheTtl($ttl)
     {
