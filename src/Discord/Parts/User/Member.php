@@ -157,7 +157,7 @@ class Member extends Part
      *
      * @return string The username of the member.
      */
-    public function getUserameAttribute()
+    public function getUsernameAttribute()
     {
         return $this->user->username;
     }

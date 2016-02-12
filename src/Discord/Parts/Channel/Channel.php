@@ -14,13 +14,15 @@ namespace Discord\Parts\Channel;
 use Discord\Exceptions\FileNotFoundException;
 use Discord\Helpers\Collection;
 use Discord\Helpers\Guzzle;
+use Discord\Parts\Guild\Guild;
 use Discord\Parts\Guild\Invite;
 use Discord\Parts\Guild\Role;
 use Discord\Parts\Part;
+use Discord\Parts\Permissions\ChannelPermission;
 use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
-use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Client as GuzzleClient;
+use GuzzleHttp\Psr7\Request;
 
 /**
  * A Channel can be either a text or voice channel on a Discord guild.
@@ -58,13 +60,13 @@ class Channel extends Part
     /**
      * Sets a permission value to the channel.
      *
-     * @param Member|Role $part     Either a Member or Role, permissions will be set on it.
-     * @param Permission  $allow    The permissions that define what the Member/Role can do.
-     * @param Permission  $disallow The permissions that define what the Member/Role can't do.
+     * @param Member|Role     $part     Either a Member or Role, permissions will be set on it.
+     * @param Permission|null $allow    The permissions that define what the Member/Role can do.
+     * @param Permission|null $disallow The permissions that define what the Member/Role can't do.
      *
      * @return bool Whether the function succeeded or failed.
      */
-    public function setPermissions($part, $allow, $deny)
+    public function setPermissions($part, $allow = null, $deny = null)
     {
         if ($part instanceof Member) {
             $type = 'member';
@@ -72,6 +74,14 @@ class Channel extends Part
             $type = 'role';
         } else {
             return false;
+        }
+
+        if (is_null($allow)) {
+            $allow = new ChannelPermission();
+        }
+
+        if (is_null($deny)) {
+            $deny = new ChannelPermission();
         }
 
         $payload = [
@@ -111,6 +121,29 @@ class Channel extends Part
         // was moved successfully.
 
         return true;
+    }
+
+    /**
+     * Returns the guild attribute.
+     *
+     * @return Guild|null The guild that the Channel belongs to or null if we don't have the guild ID.
+     */
+    public function getGuildAttribute()
+    {
+        if (isset($this->attributes_cache['messages'])) {
+            return $this->attributes_cache['messages'];
+        }
+
+        if (is_null($this->guild_id)) {
+            return null;
+        }
+
+        $request = Guzzle::get("guilds/{$this->guild_id}");
+        $guild = new Guild((array) $request, true);
+
+        $this->attributes_cache['messages'] = $guild;
+
+        return $guild;
     }
 
     /**
