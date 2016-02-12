@@ -146,6 +146,7 @@ class Guild extends Part
             $perm->perms = $role->permissions;
             $role = (array) $role;
             $role['permissions'] = $perm;
+            $role['guild_id'] = $this->id;
             $roles[$index] = new Role($role, true);
         }
 
