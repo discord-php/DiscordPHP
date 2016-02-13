@@ -337,11 +337,16 @@ class VoiceClient extends EventEmitter
                     case 3: // keepalive response
                         $end = microtime(true);
                         $start = $data->d;
-                        $diff = (($end - $start) * 1000) / 2;
+                        $diff = (($end - $start) * 1000);
+                        $timer = $diff / 2;
 
-                        if (empty($this->betweenPackets)) {
-                            $this->betweenPackets = $diff;
+                        if ($timer > 20) {
+                            $timer = 20;
+                        } elseif ($timer < 16) {
+                            $timer = 16;
                         }
+
+                        $this->betweenPackets = $timer;
 
                         $this->emit('ws-ping', [$diff]);
                         break;
@@ -439,17 +444,19 @@ class VoiceClient extends EventEmitter
             return $deferred->promise();
         }
 
-        $process = $this->dcaConvert();
-        $process->start($this->loop);
-        $process->stderr->on('data', function ($data) {
-            $this->emit('stderr', [$data]);
-        });
+        $deferred->reject(new \Exception('Currently, DCA does not support encoding of streams.'));
 
-        $this->playDCAStream($process)->then(function ($result) use ($deferred) {
-            $deferred->resolve($result);
-        }, function ($e) use ($deferred) {
-            $deferred->reject($e);
-        });
+        // $process = $this->dcaConvert();
+        // $process->start($this->loop);
+        // $process->stderr->on('data', function ($data) {
+        //     $this->emit('stderr', [$data]);
+        // });
+
+        // $this->playDCAStream($process)->then(function ($result) use ($deferred) {
+        //     $deferred->resolve($result);
+        // }, function ($e) use ($deferred) {
+        //     $deferred->reject($e);
+        // });
 
         return $deferred->promise();
     }
