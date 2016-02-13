@@ -181,6 +181,13 @@ class VoiceClient extends EventEmitter
     protected $streamTime = 0;
 
     /**
+     * The current time between voice packets.
+     *
+     * @var int The time between voice packets.
+     */
+    protected $betweenPackets = 20;
+
+    /**
      * Array of the status of people speaking.
      *
      * @var array Status of people speaking.
@@ -321,6 +328,15 @@ class VoiceClient extends EventEmitter
                 $data = json_decode($message);
 
                 switch ($data->op) {
+                    case 3: // keepalive response
+                        $end = microtime(true);
+                        $start = $data->d;
+                        $diff = ($end - $start) * 1000;
+
+                        $this->betweenPackets = $diff / 2;
+
+                        $this->emit('ws-ping', [$diff]);
+                        break;
                     case 4: // ready
                         $this->ready = true;
                         $this->mode = $data->d->mode;
@@ -458,13 +474,20 @@ class VoiceClient extends EventEmitter
         }
 
         $count = 0;
-        $length = 17.47;
         $noData = false;
         $noDataHeader = false;
 
         $this->setSpeaking(true);
 
-        $processff2opus = function () use (&$processff2opus, $length, $stream, &$noData, &$noDataHeader, $deferred, &$count) {
+        $processff2opus = function () use (&$processff2opus, $stream, &$noData, &$noDataHeader, $deferred, &$count) {
+            $length = $this->betweenPackets;
+
+            if ($length >= 30) {
+                $length = 25;
+            } elseif ($length <= 15) {
+                $length = 17;
+            }
+
             $header = @fread($stream, 2);
 
             if (! $header) {
