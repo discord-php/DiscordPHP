@@ -185,7 +185,7 @@ class VoiceClient extends EventEmitter
      *
      * @var int The time between voice packets.
      */
-    protected $betweenPackets = 20;
+    protected $betweenPackets;
 
     /**
      * Array of the status of people speaking.
@@ -250,6 +250,12 @@ class VoiceClient extends EventEmitter
                     $this->udpPort = $data->d->port;
                     $this->heartbeat_interval = $data->d->heartbeat_interval;
                     $this->ssrc = $data->d->ssrc;
+
+                    $this->send([
+                        'op' => 3,
+                        'd' => microtime(true),
+                    ]);
+                    $this->emit('ws-heartbeat', []);
 
                     $this->heartbeat = $loop->addPeriodicTimer($this->heartbeat_interval / 1000, function () {
                         $this->send([
@@ -331,9 +337,11 @@ class VoiceClient extends EventEmitter
                     case 3: // keepalive response
                         $end = microtime(true);
                         $start = $data->d;
-                        $diff = ($end - $start) * 1000;
+                        $diff = (($end - $start) * 1000) / 2;
 
-                        $this->betweenPackets = $diff / 2;
+                        if (empty($this->betweenPackets)) {
+                            $this->betweenPackets = $diff;
+                        }
 
                         $this->emit('ws-ping', [$diff]);
                         break;
@@ -481,6 +489,10 @@ class VoiceClient extends EventEmitter
 
         $processff2opus = function () use (&$processff2opus, $stream, &$noData, &$noDataHeader, $deferred, &$count) {
             $length = $this->betweenPackets;
+
+            if (empty($length)) {
+                $length = 20;
+            }
 
             if ($length >= 30) {
                 $length = 25;
