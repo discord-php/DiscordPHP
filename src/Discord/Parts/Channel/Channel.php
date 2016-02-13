@@ -14,6 +14,7 @@ namespace Discord\Parts\Channel;
 use Discord\Exceptions\FileNotFoundException;
 use Discord\Helpers\Collection;
 use Discord\Helpers\Guzzle;
+use Discord\Parts\Channel\Overwrite;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Guild\Invite;
 use Discord\Parts\Guild\Role;
@@ -222,6 +223,36 @@ class Channel extends Part
         $this->attributes_cache['invites'] = $invites;
 
         return $invites;
+    }
+
+    /**
+     * Sets the permission_overwrites attribute.
+     *
+     * @param array $array Array of overwrites.
+     *
+     * @return void 
+     */
+    public function setPermissionOverwritesAttribute($array)
+    {
+        $overwrites = [];
+
+        foreach ($array as $index => $data) {
+            $overwrites[$index] = new Overwrite((array) $data, true);
+        }
+
+        $overwrites = new Collection($overwrites);
+
+        $this->attributes_cache['overwrites'] = $overwrites;
+    }
+
+    /**
+     * Gets the overwrites attribute.
+     *
+     * @return Collection The overwrites attribute.
+     */
+    public function getOverwritesAttribute()
+    {
+        return $this->attributes_cache['overwrites'];
     }
 
     /**
