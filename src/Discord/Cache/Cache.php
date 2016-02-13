@@ -11,6 +11,7 @@
 
 namespace Discord\Cache;
 
+use Discord\Cache\Drivers\ApcCacheDriver;
 use Discord\Cache\Drivers\ArrayCacheDriver;
 
 /**
@@ -47,9 +48,10 @@ class Cache
         if (! self::$cache) {
             // No cache driver, we will check for APC or use array.
             if (function_exists('apc_cache_info')) {
+                self::setCache(new ApcCacheDriver());
+            } else {
+                self::setCache(new ArrayCacheDriver());
             }
-
-            self::setCache(new ArrayCacheDriver());
         }
 
         return self::$cache->name;
@@ -70,9 +72,10 @@ class Cache
         if (! self::$cache) {
             // No cache driver, we will check for APC or use array.
             if (function_exists('apc_cache_info')) {
+                self::setCache(new ApcCacheDriver());
+            } else {
+                self::setCache(new ArrayCacheDriver());
             }
-
-            self::setCache(new ArrayCacheDriver());
         }
 
         if (! is_callable([self::$cache, $function])) {
