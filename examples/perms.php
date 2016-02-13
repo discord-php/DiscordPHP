@@ -71,7 +71,7 @@ $ws->on('ready', function ($discord) use ($ws) {
     // Let's enable:
     // - Manage Permissions
     // - Manage Messages
-    // 
+    //
     // Let's disable:
     // - Read Message History
     // - Embed Links
@@ -82,7 +82,7 @@ $ws->on('ready', function ($discord) use ($ws) {
     $deny->embed_links = true;
 
     // Now let's set it on our channel.
-    // 
+    //
     // We will set it for the role that we obtained above.
     $channel->setPermissions($role, $allow, $deny);
 
