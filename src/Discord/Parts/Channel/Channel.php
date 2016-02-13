@@ -130,8 +130,8 @@ class Channel extends Part
      */
     public function getGuildAttribute()
     {
-        if (isset($this->attributes_cache['messages'])) {
-            return $this->attributes_cache['messages'];
+        if (isset($this->attributes_cache['guild'])) {
+            return $this->attributes_cache['guild'];
         }
 
         if (is_null($this->guild_id)) {
@@ -141,7 +141,7 @@ class Channel extends Part
         $request = Guzzle::get("guilds/{$this->guild_id}");
         $guild = new Guild((array) $request, true);
 
-        $this->attributes_cache['messages'] = $guild;
+        $this->attributes_cache['guild'] = $guild;
 
         return $guild;
     }
