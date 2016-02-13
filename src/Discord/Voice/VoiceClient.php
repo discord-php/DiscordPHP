@@ -263,7 +263,7 @@ class VoiceClient extends EventEmitter
                         });
 
                         $this->udpHeartbeat = $loop->addPeriodicTimer(5, function () use ($client) {
-                            $buffer = new Buffer(5);
+                            $buffer = new Buffer(9);
                             $buffer[0] = pack('c', 0xC9);
                             $buffer->writeUInt64LE($this->heartbeatSeq, 1);
                             ++$this->heartbeatSeq;
@@ -378,6 +378,7 @@ class VoiceClient extends EventEmitter
 
         $process = $this->dcaConvert($file);
         $process->start($this->loop);
+        $process->stdout->pause();
         $process->stderr->on('data', function ($data) {
             $this->emit('stderr', [$data]);
         });
@@ -422,6 +423,8 @@ class VoiceClient extends EventEmitter
 
         $this->playDCAStream($process)->then(function ($result) use ($deferred) {
             $deferred->resolve($result);
+        }, function ($e) use ($deferred) {
+            $deferred->reject($e);
         });
 
         return $deferred->promise();
@@ -724,21 +727,21 @@ class VoiceClient extends EventEmitter
             return;
         }
 
-        $flags = [];
+        // $flags = [];
 
-        // Volume
-        $flags[] = '-ac '.$channels;
+        // // Volume
+        // $flags[] = '-ac '.$channels;
 
-        if (! empty($filename)) {
-            $flags[] = '-i';
+        // if (! empty($filename)) {
+        //     $flags[] = '-i';
 
-            if (! file_exists($filename)) {
-                return;
-            }
-        }
+        //     if (! file_exists($filename)) {
+        //         return;
+        //     }
+        // }
 
-        $flags = implode(' ', $flags);
+        // $flags = implode(' ', $flags);
 
-        return new Process("{$this->dca} {$flags} \"{$filename}\"");
+        return new Process("{$this->dca} \"{$filename}\"");
     }
 }
