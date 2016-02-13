@@ -478,7 +478,7 @@ class VoiceClient extends EventEmitter
                     $this->startTime = null;
                 } else {
                     $noDataHeader = true;
-                    $this->loop->addTimer($length / 100, function () use (&$processff2opus) {
+                    $this->loop->addTimer($length / 1000, function () use (&$processff2opus) {
                         $processff2opus();
                     });
                 }
@@ -501,7 +501,7 @@ class VoiceClient extends EventEmitter
                     $this->startTime = null;
                 } else {
                     $noData = true;
-                    $this->loop->addTimer($length / 100, function () use (&$processff2opus) {
+                    $this->loop->addTimer($length / 1000, function () use (&$processff2opus) {
                         $processff2opus();
                     });
                 }
@@ -539,7 +539,7 @@ class VoiceClient extends EventEmitter
             $this->streamTime = $count * $length;
 
             // There is a delay so it isn't exactly 20ms after the last packet, it is about 17.47ms (i think)
-            $this->loop->addTimer(0.01747, function () use (&$processff2opus) {
+            $this->loop->addTimer($length / 1000, function () use (&$processff2opus) {
                 $processff2opus();
             });
         };
