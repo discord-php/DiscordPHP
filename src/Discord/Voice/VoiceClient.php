@@ -678,10 +678,6 @@ class VoiceClient extends EventEmitter
      */
     public function send(array $data)
     {
-        if (! $this->ready) {
-            return;
-        }
-
         $frame = new Frame(json_encode($data), true);
         $this->voiceWebsocket->send($frame);
     }
