@@ -143,6 +143,14 @@ class Discord
      */
     public function acceptInvite($code)
     {
+        if ($code instanceof Invite) {
+            $code = $invite->code;
+        }
+
+        if (preg_match('/https:\/\/discord.gg\/(.+)/', $code, $matches)) {
+            $code = $matches[1];
+        }
+
         try {
             $request = Guzzle::post("invite/{$code}");
         } catch (\Exception $e) {
