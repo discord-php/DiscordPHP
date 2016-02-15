@@ -527,9 +527,9 @@ class VoiceClient extends EventEmitter
                 $length = 20;
             }
 
-            if ($length >= 30) {
-                $length = 25;
-            } elseif ($length <= 15) {
+            if ($length >= 22) {
+                $length = 20;
+            } elseif ($length <= 16) {
                 $length = 17;
             }
 
