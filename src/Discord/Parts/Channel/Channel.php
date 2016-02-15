@@ -14,7 +14,6 @@ namespace Discord\Parts\Channel;
 use Discord\Exceptions\FileNotFoundException;
 use Discord\Helpers\Collection;
 use Discord\Helpers\Guzzle;
-use Discord\Parts\Channel\Overwrite;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Guild\Invite;
 use Discord\Parts\Guild\Role;
@@ -230,7 +229,7 @@ class Channel extends Part
      *
      * @param array $array Array of overwrites.
      *
-     * @return void 
+     * @return void
      */
     public function setPermissionOverwritesAttribute($array)
     {
