@@ -39,19 +39,12 @@ class GuildBanRemove extends Event
      */
     public function updateDiscordInstance($data, $discord)
     {
-        $discord->guilds->get('id', $data->guild_id)->bans->push($data);
-
-        foreach ($discord->guilds->get('id', $data->guild_id)->bans as $index => $ban) {
-            if ($ban->user_id == $data->user_id) {
-                $discord->guilds->get('id', $data->guild_id)->bans->pull($index);
-            }
-        }
-
         foreach ($discord->guilds as $index => $guild) {
             if ($guild->id == $data->guild_id) {
                 foreach ($guild->bans as $bindex => $ban) {
                     if ($ban->user_id == $data->user_id) {
                         $guild->bans->pull($bindex);
+
                         break;
                     }
                 }
