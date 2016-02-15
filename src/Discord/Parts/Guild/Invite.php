@@ -36,7 +36,7 @@ class Invite extends Part
      * {@inheritdoc}
      */
     protected $uris = [
-        'get' => 'invites/:id',
+        'get' => 'invites/:code',
         'create' => 'channels/:channel_id/invites',
         'delete' => 'invite/:code',
     ];
