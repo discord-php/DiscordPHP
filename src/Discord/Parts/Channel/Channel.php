@@ -14,6 +14,7 @@ namespace Discord\Parts\Channel;
 use Discord\Exceptions\FileNotFoundException;
 use Discord\Helpers\Collection;
 use Discord\Helpers\Guzzle;
+use Discord\Parts\Channel\Overwrite;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Guild\Invite;
 use Discord\Parts\Guild\Role;
@@ -35,7 +36,7 @@ class Channel extends Part
     /**
      * {@inheritdoc}
      */
-    protected $fillable = ['id', 'name', 'type', 'topic', 'guild_id', 'position', 'is_private', 'last_message_id', 'permission_override', 'messages', 'message_count'];
+    protected $fillable = ['id', 'name', 'type', 'topic', 'guild_id', 'position', 'is_private', 'last_message_id', 'permission_overwrites', 'messages', 'message_count'];
 
     /**
      * {@inheritdoc}
@@ -130,8 +131,8 @@ class Channel extends Part
      */
     public function getGuildAttribute()
     {
-        if (isset($this->attributes_cache['messages'])) {
-            return $this->attributes_cache['messages'];
+        if (isset($this->attributes_cache['guild'])) {
+            return $this->attributes_cache['guild'];
         }
 
         if (is_null($this->guild_id)) {
@@ -141,7 +142,7 @@ class Channel extends Part
         $request = Guzzle::get("guilds/{$this->guild_id}");
         $guild = new Guild((array) $request, true);
 
-        $this->attributes_cache['messages'] = $guild;
+        $this->attributes_cache['guild'] = $guild;
 
         return $guild;
     }
@@ -222,6 +223,36 @@ class Channel extends Part
         $this->attributes_cache['invites'] = $invites;
 
         return $invites;
+    }
+
+    /**
+     * Sets the permission_overwrites attribute.
+     *
+     * @param array $array Array of overwrites.
+     *
+     * @return void 
+     */
+    public function setPermissionOverwritesAttribute($array)
+    {
+        $overwrites = [];
+
+        foreach ($array as $index => $data) {
+            $overwrites[$index] = new Overwrite((array) $data, true);
+        }
+
+        $overwrites = new Collection($overwrites);
+
+        $this->attributes_cache['overwrites'] = $overwrites;
+    }
+
+    /**
+     * Gets the overwrites attribute.
+     *
+     * @return Collection The overwrites attribute.
+     */
+    public function getOverwritesAttribute()
+    {
+        return $this->attributes_cache['overwrites'];
     }
 
     /**
