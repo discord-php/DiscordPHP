@@ -35,7 +35,7 @@ class Channel extends Part
     /**
      * {@inheritdoc}
      */
-    protected $fillable = ['id', 'name', 'type', 'topic', 'guild_id', 'position', 'is_private', 'last_message_id', 'permission_override', 'messages', 'message_count'];
+    protected $fillable = ['id', 'name', 'type', 'topic', 'guild_id', 'position', 'is_private', 'last_message_id', 'permission_overwrites', 'messages', 'message_count'];
 
     /**
      * {@inheritdoc}
@@ -130,18 +130,18 @@ class Channel extends Part
      */
     public function getGuildAttribute()
     {
-        if (isset($this->attributes_cache['messages'])) {
-            return $this->attributes_cache['messages'];
+        if (isset($this->attributes_cache['guild'])) {
+            return $this->attributes_cache['guild'];
         }
 
         if (is_null($this->guild_id)) {
-            return null;
+            return;
         }
 
         $request = Guzzle::get("guilds/{$this->guild_id}");
         $guild = new Guild((array) $request, true);
 
-        $this->attributes_cache['messages'] = $guild;
+        $this->attributes_cache['guild'] = $guild;
 
         return $guild;
     }
@@ -149,11 +149,23 @@ class Channel extends Part
     /**
      * Creates an invite for the channel.
      *
+     * @param int  $max_age   The time that the invite will be valid in seconds.
+     * @param int  $max_uses  The amount of times the invite can be used.
+     * @param bool $temporary Whether the invite is for temporary membership.
+     * @param bool $xkcd      Whether to generate an XKCD invite.
+     *
      * @return Invite The new invite that was created.
      */
-    public function createInvite()
+    public function createInvite($max_age = 3600, $max_uses = 0, $temporary = false, $xkcd = false)
     {
-        $request = Guzzle::post($this->replaceWithVariables('channels/:id/invites'));
+        $request = Guzzle::post($this->replaceWithVariables('channels/:id/invites'), [
+            'validate' => null,
+
+            'max_age' => $max_age,
+            'max_uses' => $max_uses,
+            'temporary' => $temporary,
+            'xkcdpass' => $xkcd,
+        ]);
 
         return new Invite((array) $request, true);
     }
@@ -185,6 +197,61 @@ class Channel extends Part
         $this->attributes_cache['messages'] = $messages;
 
         return $messages;
+    }
+
+    /**
+     * Returns the channels invites.
+     *
+     * @return Collection A collection of invites.
+     */
+    public function getInvitesAttribute()
+    {
+        if (isset($this->attributes_cache['invites'])) {
+            return $this->attributes_cache['invites'];
+        }
+
+        $request = Guzzle::get($this->replaceWithVariables('channels/:id/invites'));
+        $invites = [];
+
+        foreach ($request as $index => $invite) {
+            $invites[$index] = new Invite((array) $invite, true);
+        }
+
+        $invites = new Collection($invites);
+
+        $this->attributes_cache['invites'] = $invites;
+
+        return $invites;
+    }
+
+    /**
+     * Sets the permission_overwrites attribute.
+     *
+     * @param array $array Array of overwrites.
+     *
+     * @return void
+     */
+    public function setPermissionOverwritesAttribute($array)
+    {
+        $overwrites = [];
+
+        foreach ($array as $index => $data) {
+            $overwrites[$index] = new Overwrite((array) $data, true);
+        }
+
+        $overwrites = new Collection($overwrites);
+
+        $this->attributes_cache['overwrites'] = $overwrites;
+    }
+
+    /**
+     * Gets the overwrites attribute.
+     *
+     * @return Collection The overwrites attribute.
+     */
+    public function getOverwritesAttribute()
+    {
+        return $this->attributes_cache['overwrites'];
     }
 
     /**

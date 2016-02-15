@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is apart of the DiscordPHP project.
+ *
+ * Copyright (c) 2016 David Cole <david@team-reflex.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the LICENSE.md file.
+ */
+
 namespace Discord\Cache;
 
 /**
@@ -19,11 +28,11 @@ interface CacheInterface
     /**
      * Sets an item in the Cache.
      *
-     * @param mixed $key The key to place the value at.
+     * @param mixed $key   The key to place the value at.
      * @param mixed $value The value to set.
-     * @param int $ttl The time the Cache item has to live.
+     * @param int   $ttl   The time the Cache item has to live.
      *
-     * @return boolean Whether setting the item succeeded or failed.
+     * @return bool Whether setting the item succeeded or failed.
      */
     public function set($key, $value, $ttl = 300);
 
@@ -32,7 +41,7 @@ interface CacheInterface
      *
      * @param mixed $key The key to check.
      *
-     * @return boolean Whether the key exists.
+     * @return bool Whether the key exists.
      */
     public function has($key);
 
@@ -41,7 +50,7 @@ interface CacheInterface
      *
      * @param mixed $key The key to unset.
      *
-     * @return boolean Whether the key was unset.
+     * @return bool Whether the key was unset.
      */
     public function remove($key);
 
