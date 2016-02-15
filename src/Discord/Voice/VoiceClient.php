@@ -34,6 +34,13 @@ use React\Stream\Stream;
 class VoiceClient extends EventEmitter
 {
     /**
+     * Is the voice client ready?
+     *
+     * @var bool Whether the voice client is ready.
+     */
+    protected $ready = false;
+
+    /**
      * The DCA binary name that we will use.
      *
      * @var string The DCA binary name that will be run.
@@ -289,38 +296,37 @@ class VoiceClient extends EventEmitter
                             $this->emit('udp-error', [$e]);
                         });
 
-                        $client->on('message', function ($message) use (&$ws, &$firstPack, &$ip, &$port) {
-                            if ($firstPack) {
-                                $message = (string) $message;
-                                // let's get our IP
-                                $ip_start = 4;
-                                $ip = substr($message, $ip_start);
-                                $ip_end = strpos($ip, "\x00");
-                                $ip = substr($ip, 0, $ip_end);
+                        $decodeUDP = function ($message) use (&$decodeUDP, $client, &$ip, &$port) {
+                            $message = (string) $message;
+                            // let's get our IP
+                            $ip_start = 4;
+                            $ip = substr($message, $ip_start);
+                            $ip_end = strpos($ip, "\x00");
+                            $ip = substr($ip, 0, $ip_end);
 
-                                // now the port!
-                                $port = substr($message, strlen($message) - 2);
-                                $port = unpack('v', $port)[1];
+                            // now the port!
+                            $port = substr($message, strlen($message) - 2);
+                            $port = unpack('v', $port)[1];
 
-                                $payload = [
-                                    'op' => 1,
-                                    'd' => [
-                                        'protocol' => 'udp',
-                                        'data' => [
-                                            'address' => $ip,
-                                            'port' => (int) $port,
-                                            'mode' => $this->mode,
-                                        ],
+                            $payload = [
+                                'op' => 1,
+                                'd' => [
+                                    'protocol' => 'udp',
+                                    'data' => [
+                                        'address' => $ip,
+                                        'port' => (int) $port,
+                                        'mode' => $this->mode,
                                     ],
-                                ];
+                                ],
+                            ];
 
-                                $this->send($payload);
+                            $this->send($payload);
 
-                                $firstPack = false;
+                            $client->removeListener('message', $decodeUDP);
+                        };
 
-                                return;
-                            }
-
+                        $client->on('message', $decodeUDP);
+                        $client->on('message', function ($message) {
                             $this->emit('raw', [$message, $this]);
                         });
                     }, function ($e) {
@@ -332,6 +338,8 @@ class VoiceClient extends EventEmitter
             $ws->on('message', $discoverUdp);
             $ws->on('message', function ($message) {
                 $data = json_decode($message);
+
+                $this->emit('ws-message', [$message, $this]);
 
                 switch ($data->op) {
                     case 3: // keepalive response
@@ -405,6 +413,12 @@ class VoiceClient extends EventEmitter
             return $deferred->promise();
         }
 
+        if (! $this->ready) {
+            $deferred->reject(new \Exception('Voice Client is not ready.'));
+
+            return $deferred->promise();
+        }
+
         $process = $this->dcaConvert($file);
         $process->start($this->loop);
         $process->stdout->pause();
@@ -432,6 +446,12 @@ class VoiceClient extends EventEmitter
     public function playRawStream($stream, $channels = 2)
     {
         $deferred = new Deferred();
+
+        if (! $this->ready) {
+            $deferred->reject(new \Exception('Voice Client is not ready.'));
+
+            return $deferred->promise();
+        }
 
         if ($stream instanceof Stream) {
             $stream->pause();
@@ -471,6 +491,12 @@ class VoiceClient extends EventEmitter
     public function playDCAStream($stream)
     {
         $deferred = new Deferred();
+
+        if (! $this->ready) {
+            $deferred->reject(new \Exception('Voice Client is not ready.'));
+
+            return $deferred->promise();
+        }
 
         if ($stream instanceof Process) {
             $stream->stdout->pause();
@@ -601,6 +627,10 @@ class VoiceClient extends EventEmitter
      */
     public function sendBuffer($data)
     {
+        if (! $this->ready) {
+            return;
+        }
+
         $packet = new VoicePacket($data, $this->ssrc, $this->seq, $this->timestamp);
         $this->client->send((string) $packet);
 
@@ -620,6 +650,10 @@ class VoiceClient extends EventEmitter
     {
         if ($this->speaking == $speaking) {
             return $speaking;
+        }
+
+        if (! $this->ready) {
+            return;
         }
 
         $this->send([
@@ -644,6 +678,10 @@ class VoiceClient extends EventEmitter
      */
     public function send(array $data)
     {
+        if (! $this->ready) {
+            return;
+        }
+
         $frame = new Frame(json_encode($data), true);
         $this->voiceWebsocket->send($frame);
     }
@@ -658,6 +696,10 @@ class VoiceClient extends EventEmitter
      */
     public function setMuteDeaf($mute, $deaf)
     {
+        if (! $this->ready) {
+            return;
+        }
+
         $this->mainWebsocket->send([
             'op' => 4,
             'd' => [
@@ -677,6 +719,7 @@ class VoiceClient extends EventEmitter
     public function leave()
     {
         $this->setSpeaking(false);
+        $this->ready = false;
 
         $this->mainWebsocket->send([
             'op' => 4,
@@ -702,6 +745,16 @@ class VoiceClient extends EventEmitter
         $this->startTime = null;
         $this->streamTime = 0;
         $this->speakingStatus = [];
+    }
+
+    /**
+     * Returns whether the voice client is ready.
+     *
+     * @return bool Whether the voice client is ready.
+     */
+    public function isReady()
+    {
+        return $this->ready;
     }
 
     /**

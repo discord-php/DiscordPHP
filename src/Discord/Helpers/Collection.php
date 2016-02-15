@@ -56,14 +56,14 @@ class Collection extends BaseCollection
      * Gets all items from the collection with a
      * key and index.
      *
-     * @param mixed $key The key that we will match with the name.
+     * @param mixed $key  The key that we will match with the name.
      * @param mixed $name The name that we will match with the key.
      *
      * @return Collection A collection of items.
      */
     public function getAll($key, $value)
     {
-        $items = new self;
+        $items = new self();
 
         foreach ($this->items as $item) {
             if (is_callable([$item, 'getAttribute'])) {

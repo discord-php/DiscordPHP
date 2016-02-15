@@ -258,6 +258,12 @@ class WebSocket extends EventEmitter
         $deferred = new Deferred();
         $arr = ['user_id' => $this->discord->id];
 
+        if ($channel->type != Channel::TYPE_VOICE) {
+            $deferred->reject(new \Exception('You cannot join a Text channel.'));
+
+            return $deferred->promise();
+        }
+
         $closure = function ($message) use (&$closure, &$arr, $deferred, $channel) {
             $data = json_decode($message);
 
