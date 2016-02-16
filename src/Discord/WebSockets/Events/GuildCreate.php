@@ -11,6 +11,7 @@
 
 namespace Discord\WebSockets\Events;
 
+use Discord\Cache\Cache;
 use Discord\Helpers\Collection;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Guild\Guild;
@@ -37,6 +38,8 @@ class GuildCreate extends Event
             $channel = (array) $channel;
             $channel['guild_id'] = $data->id;
             $channelPart = new Channel($channel, true);
+
+            Cache::set("channel.{$channel->id}", $channel);
 
             $channels->push($channelPart);
         }
@@ -67,6 +70,8 @@ class GuildCreate extends Event
                 }
             }
 
+            Cache::set("guild.{$guildPart->id}.members.{$memberPart->id}", $memberPart);
+
             $members->push($memberPart);
         }
 
@@ -80,6 +85,8 @@ class GuildCreate extends Event
      */
     public function updateDiscordInstance($data, $discord)
     {
+        Cache::set("guild.{$guildPart->id}", $guildPart);
+        
         $discord->guilds->push($data);
 
         return $discord;

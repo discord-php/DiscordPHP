@@ -12,6 +12,7 @@
 namespace Discord\Parts\Channel;
 
 use Carbon\Carbon;
+use Discord\Cache\Cache;
 use Discord\Helpers\Guzzle;
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
@@ -79,12 +80,18 @@ class Message extends Part
      */
     public function getFullChannelAttribute()
     {
+        if ($channel = Cache::get("channel.{$this->channel_id}")) {
+            return $channel;
+        }
+        
         if (isset($this->attributes_cache['channel'])) {
             return $this->attributes_cache['channel'];
         }
 
         $request = Guzzle::get($this->replaceWithVariables('channels/:channel_id'));
         $channel = new Channel((array) $request, true);
+
+        Cache::set("channel.{$channel->id}", $channel);
 
         $this->attributes_cache['channel'] = $channel;
 

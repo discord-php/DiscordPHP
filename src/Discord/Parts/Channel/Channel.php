@@ -11,6 +11,7 @@
 
 namespace Discord\Parts\Channel;
 
+use Discord\Cache\Cache;
 use Discord\Exceptions\FileNotFoundException;
 use Discord\Helpers\Collection;
 use Discord\Helpers\Guzzle;
@@ -130,6 +131,10 @@ class Channel extends Part
      */
     public function getGuildAttribute()
     {
+        if ($guild = Cache::get("guild.{$this->guild_id}")) {
+            return $guild;
+        }
+
         if (isset($this->attributes_cache['guild'])) {
             return $this->attributes_cache['guild'];
         }
@@ -140,6 +145,8 @@ class Channel extends Part
 
         $request = Guzzle::get("guilds/{$this->guild_id}");
         $guild = new Guild((array) $request, true);
+
+        Cache::set("guild.{$guild->id}", $guild);
 
         $this->attributes_cache['guild'] = $guild;
 
@@ -167,7 +174,11 @@ class Channel extends Part
             'xkcdpass' => $xkcd,
         ]);
 
-        return new Invite((array) $request, true);
+        $invite = new Invite((array) $request, true);
+
+        Cache::set("invite.{$invite->code}", $invite);
+
+        return $invite;
     }
 
     /**
@@ -189,7 +200,9 @@ class Channel extends Part
         $messages = [];
 
         foreach ($request as $index => $message) {
-            $messages[$index] = new Message((array) $message, true);
+            $message = new Message((array) $message, true);
+            Cache::set("message.{$message->id}", $message);
+            $messages[$index] = $message;
         }
 
         $messages = new Collection($messages);
@@ -214,7 +227,9 @@ class Channel extends Part
         $invites = [];
 
         foreach ($request as $index => $invite) {
-            $invites[$index] = new Invite((array) $invite, true);
+            $invite = new Invite((array) $invite, true);
+            Cache::set("invites.{$invite->code}", $invite);
+            $invites[$index] = $invite;
         }
 
         $invites = new Collection($invites);
@@ -274,6 +289,8 @@ class Channel extends Part
         ]);
 
         $message = new Message((array) $request, true);
+
+        Cache::set("message.{$message->id}", $message);
 
         if (! isset($this->attributes_cache['messages'])) {
             $this->attributes_cache['messages'] = new Collection();
@@ -345,6 +362,8 @@ class Channel extends Part
         $request = json_decode($finalRes->getBody());
 
         $message = new Message((array) $request, true);
+
+        Cache::set("message.{$message->id}", $message);
 
         if (! isset($this->attributes_cache['messages'])) {
             $this->attributes_cache['messages'] = new Collection();

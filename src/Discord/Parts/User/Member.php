@@ -12,6 +12,7 @@
 namespace Discord\Parts\User;
 
 use Carbon\Carbon;
+use Discord\Cache\Cache;
 use Discord\Helpers\Collection;
 use Discord\Helpers\Guzzle;
 use Discord\Parts\Channel\Channel;
@@ -193,7 +194,9 @@ class Member extends Part
                 ]);
                 $role = (array) $role;
                 $role['permissions'] = $perm;
-                $roles[] = new Role($role, true);
+                $role = new Role($role, true);
+                Cache::set("role.{$role->id}", $role);
+                $roles[] = $role;
             }
         }
 

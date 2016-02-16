@@ -11,6 +11,7 @@
 
 namespace Discord\WebSockets\Events;
 
+use Discord\Cache\Cache;
 use Discord\Parts\User\Member;
 use Discord\WebSockets\Event;
 
@@ -34,6 +35,8 @@ class GuildMemberUpdate extends Event
      */
     public function updateDiscordInstance($data, $discord)
     {
+        Cache::set("guild.{$data->guild_id}.members.{$data->id}");
+        
         foreach ($discord->guilds as $index => $guild) {
             if ($guild->id == $data->guild_id) {
                 foreach ($guild->members as $mindex => $member) {

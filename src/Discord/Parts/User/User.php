@@ -11,6 +11,7 @@
 
 namespace Discord\Parts\User;
 
+use Discord\Cache\Cache;
 use Discord\Helpers\Guzzle;
 use Discord\Parts\Channel\Message;
 use Discord\Parts\Part;
@@ -73,7 +74,11 @@ class User extends Part
             'tts' => $tts,
         ]);
 
-        return new Message((array) $request, true);
+        $message = new Message((array) $request, true);
+
+        Cache::set("message.{$message->id}", $message);
+        
+        return $message;
     }
 
     /**

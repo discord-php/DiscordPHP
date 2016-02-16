@@ -11,6 +11,7 @@
 
 namespace Discord\WebSockets\Events;
 
+use Discord\Cache\Cache;
 use Discord\Parts\Guild\Role;
 use Discord\WebSockets\Event;
 
@@ -37,6 +38,8 @@ class GuildRoleUpdate extends Event
      */
     public function updateDiscordInstance($data, $discord)
     {
+        Cache::set("guild.{$data->guild_id}.roles.{$data->id}");
+
         foreach ($discord->guilds as $index => $guild) {
             if ($guild->id == $data->guild_id) {
                 foreach ($guild->roles as $rindex => $role) {

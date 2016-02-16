@@ -11,6 +11,7 @@
 
 namespace Discord\WebSockets;
 
+use Discord\Cache\Cache;
 use Discord\Discord;
 use Discord\Helpers\Collection;
 use Discord\Helpers\Guzzle;
@@ -173,6 +174,8 @@ class WebSocket extends EventEmitter
                             $channelPart = new Channel($channel, true);
 
                             $channels->push($channelPart);
+
+                            Cache::set("channels.{$channel->id}", $channel);
                         }
 
                         $guildPart->setCache('channels', $channels);
@@ -200,11 +203,15 @@ class WebSocket extends EventEmitter
                             }
 
                             $members->push($memberPart);
+
+                            Cache::set("guild.{$member->guild_id}.members.{$member->id}", $member);
                         }
 
                         $guildPart->setCache('members', $members);
 
                         $guilds->push($guildPart);
+
+                        Cache::set("guild.{$guild->id}", $guild);
                     }
 
                     $this->discord->setCache('guilds', $guilds);

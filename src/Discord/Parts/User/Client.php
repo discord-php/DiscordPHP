@@ -11,6 +11,7 @@
 
 namespace Discord\Parts\User;
 
+use Discord\Cache\Cache;
 use Discord\Exceptions\FileNotFoundException;
 use Discord\Exceptions\PasswordEmptyException;
 use Discord\Helpers\Collection;
@@ -130,7 +131,9 @@ class Client extends Part
         $request = Guzzle::get('users/@me/guilds');
 
         foreach ($request as $index => $guild) {
-            $guilds[$index] = new Guild((array) $guild, true);
+            $guild = new Guild((array) $guild, true);
+            Cache::set("guild.{$guild->id}", $guild);
+            $guilds[$index] = $guild;
         }
 
         $guilds = new Collection($guilds);
