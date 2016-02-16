@@ -28,11 +28,13 @@ class Guild extends Part
 {
     const REGION_DEFAULT = self::REGION_US_WEST;
     const REGION_US_WEST = 'us-west';
+    const REGION_US_SOUTH = 'us-south';
     const REGION_US_EAST = 'us-east';
     const REGION_US_CENTRAL = 'us-central';
     const REGION_SINGAPORE = 'singapore';
     const REGION_LONDON = 'london';
     const REGION_SYDNEY = 'sydney';
+    const REGION_FRANKFURT = 'frankfurt';
     const REGION_AMSTERDAM = 'amsterdam';
 
     const LEVEL_OFF = 0;
@@ -63,11 +65,13 @@ class Guild extends Part
      */
     protected $regions = [
         self::REGION_US_WEST,
+        self::REGION_US_SOUTH,
         self::REGION_US_EAST,
         self::REGION_US_CENTRAL,
         self::REGION_LONDON,
         self::REGION_SINGAPORE,
         self::REGION_SYDNEY,
+        self::REGION_FRANKFURT,
         self::REGION_AMSTERDAM,
     ];
 
