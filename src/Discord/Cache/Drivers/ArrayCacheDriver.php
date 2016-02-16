@@ -115,7 +115,7 @@ class ArrayCacheDriver implements CacheInterface
             return;
         }
 
-        if ($this->cache[$key]['disable_ttl']) {
+        if (isset($this->cache[$key]['disable_ttl']) && $this->cache[$key]['disable_ttl']) {
             return;
         }
 
