@@ -50,7 +50,8 @@ class Guild extends Part
         'get' => 'guilds/:id',
         'create' => 'guilds',
         'update' => 'guilds/:id',
-        'delete' => 'users/@me/guilds/:id',
+        'delete' => 'guilds/:id',
+        'leave' => 'users/@me/guilds/:id',
     ];
 
     /**
@@ -68,15 +69,26 @@ class Guild extends Part
     ];
 
     /**
-     * Alias for delete().
+     * Leaves the guild.
+     *
+     * Does not leave the guild if you are the owner however, please use
+     * delete() for that.
      *
      * @return bool Whether the attempt to leave succeeded or failed.
      *
-     * @see \Discord\Parts\Part::delete() This function is an alias for delete.
+     * @see \Discord\Parts\Part::delete() Used for leaving/deleting the guild if you are owner.
      */
     public function leave()
     {
-        return $this->delete();
+        try {
+            $request = Guzzle::delete($this->replaceWithVariables($this->uris['leave']));
+            $this->created = false;
+            $this->deleted = true;
+        } catch (\Exception $e) {
+            throw new PartRequestFailedException($e->getMessage());
+        }
+
+        return true;
     }
 
     /**
