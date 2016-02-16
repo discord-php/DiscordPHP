@@ -51,6 +51,7 @@ class Guild extends Part
         'create' => 'guilds',
         'update' => 'guilds/:id',
         'delete' => 'guilds/:id',
+        'delete' => 'users/@me/guilds/:id',
     ];
 
     /**
