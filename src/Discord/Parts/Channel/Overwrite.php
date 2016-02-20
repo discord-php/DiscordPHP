@@ -29,22 +29,19 @@ class Overwrite extends Part
     /**
      * {@inheritdoc}
      */
-    public $deletable = false;
-
-    /**
-     * {@inheritdoc}
-     */
     public $editable = false;
 
     /**
      * {@inheritdoc}
      */
-    protected $fillable = ['id', 'type', 'allow', 'deny'];
+    protected $fillable = ['id', 'channel_id', 'type', 'allow', 'deny'];
 
     /**
      * {@inheritdoc}
      */
-    protected $uris = [];
+    protected $uris = [
+        'delete' => 'channels/:channel_id/permissions/:id'
+    ];
 
     /**
      * Returns the allow attribute.
