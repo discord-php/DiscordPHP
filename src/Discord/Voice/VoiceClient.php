@@ -566,7 +566,7 @@ class VoiceClient extends EventEmitter
             $length = $this->betweenPackets;
 
             if (empty($length)) {
-                $length = 17;
+                $length = 17.47;
             }
 
             if ($this->isPaused) {
@@ -576,9 +576,9 @@ class VoiceClient extends EventEmitter
             }
 
             if ($length >= 20) {
-                $length = 17;
-            } elseif ($length <= 16) {
-                $length = 17;
+                $length = 17.47;
+            } elseif ($length <= 17) {
+                $length = 17.47;
             }
 
             $header = @fread($stream, 2);
