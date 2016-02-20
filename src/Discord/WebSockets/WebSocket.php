@@ -175,7 +175,7 @@ class WebSocket extends EventEmitter
 
                             $channels->push($channelPart);
 
-                            Cache::set("channels.{$channel->id}", $channel);
+                            Cache::set("channels.{$channelPart->id}", $channelPart);
                         }
 
                         $guildPart->setCache('channels', $channels);
@@ -204,14 +204,14 @@ class WebSocket extends EventEmitter
 
                             $members->push($memberPart);
 
-                            Cache::set("guild.{$member->guild_id}.members.{$member->id}", $member);
+                            Cache::set("guild.{$memberPart->guild_id}.members.{$memberPart->id}", $memberPart);
                         }
 
                         $guildPart->setCache('members', $members);
 
                         $guilds->push($guildPart);
 
-                        Cache::set("guild.{$guild->id}", $guild);
+                        Cache::set("guild.{$guildPart->id}", $guildPart);
                     }
 
                     $this->discord->setCache('guilds', $guilds);
