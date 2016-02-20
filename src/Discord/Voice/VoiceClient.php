@@ -209,6 +209,22 @@ class VoiceClient extends EventEmitter
     public $volume = 70;
 
     /**
+     * The audio application to encode with.
+     *
+     * Available: voip, audio (default), lowdelay
+     *
+     * @var string The audio application.
+     */
+    public $audioApplication = 'audio';
+
+    /**
+     * The bitrate to encode with.
+     *
+     * @var int Encoding bitrate.
+     */
+    public $bitrate = 64000;
+
+    /**
      * Constructs the Voice Client instance.
      *
      * @param WebSocket     $websocket The main WebSocket client.
@@ -453,30 +469,28 @@ class VoiceClient extends EventEmitter
             return $deferred->promise();
         }
 
-        if ($stream instanceof Stream) {
-            $stream->pause();
-            $stream = $stream->stdout;
-        }
-
-        if (! is_resource($stream)) {
-            $deferred->reject(new \RuntimeException('The stream passed to playRawStream was not an instance of resource.'));
+        if (! is_resource($stream) && !$stream instanceof Stream) {
+            $deferred->reject(new \RuntimeException('The stream passed to playRawStream was not an instance of resource or ReactPHP Stream.'));
 
             return $deferred->promise();
         }
 
-        $deferred->reject(new \Exception('Currently, DCA does not support encoding of streams.'));
+        if (is_resource($stream)) {
+            $stream = new Stream($stream, $this->loop);
+        }
 
-        // $process = $this->dcaConvert();
-        // $process->start($this->loop);
-        // $process->stderr->on('data', function ($data) {
-        //     $this->emit('stderr', [$data]);
-        // });
+        $process = $this->dcaConvert();
+        $process->start($this->loop);
 
-        // $this->playDCAStream($process)->then(function ($result) use ($deferred) {
-        //     $deferred->resolve($result);
-        // }, function ($e) use ($deferred) {
-        //     $deferred->reject($e);
-        // });
+        $stream->pipe($process->stdin);
+
+        $this->playDCAStream($process)->then(function ($result) use ($deferred, $stream) {
+            $stream->close();
+            $deferred->resolve($result);
+        }, function ($e) use ($deferred, $stream) {
+            $stream->close();
+            $deferred->reject($e);
+        });
 
         return $deferred->promise();
     }
@@ -499,7 +513,6 @@ class VoiceClient extends EventEmitter
         }
 
         if ($stream instanceof Process) {
-            $stream->stdout->pause();
             $stream = $stream->stdout;
         }
 
@@ -524,11 +537,11 @@ class VoiceClient extends EventEmitter
             $length = $this->betweenPackets;
 
             if (empty($length)) {
-                $length = 20;
+                $length = 17;
             }
 
-            if ($length >= 22) {
-                $length = 20;
+            if ($length >= 20) {
+                $length = 17;
             } elseif ($length <= 16) {
                 $length = 17;
             }
@@ -557,25 +570,6 @@ class VoiceClient extends EventEmitter
             $opusLength = unpack('v', $header);
             $opusLength = reset($opusLength);
             $buffer = fread($stream, $opusLength);
-
-            if (! $buffer) {
-                if ($noData && $this->streamTime != 0) {
-                    $this->setSpeaking(false);
-                    $deferred->resolve(true);
-
-                    $this->seq = 0;
-                    $this->timestamp = 0;
-                    $this->streamTime = 0;
-                    $this->startTime = null;
-                } else {
-                    $noData = true;
-                    $this->loop->addTimer($length / 1000, function () use (&$processff2opus) {
-                        $processff2opus();
-                    });
-                }
-
-                return;
-            }
 
             if (! $this->speaking) {
                 $this->setSpeaking(true);
@@ -814,25 +808,19 @@ class VoiceClient extends EventEmitter
      */
     public function dcaConvert($filename = '', $channels = 2)
     {
-        if (! file_exists($filename)) {
+        if (! empty($filename) && ! file_exists($filename)) {
             return;
         }
 
-        // $flags = [];
+        $flags = [
+            '-ac', $channels, // Channels
+            '-aa', $this->audioApplication, // Audio application
+            '-ab', $this->bitrate / 1000, // Bitrate
+            '-i', (empty($filename)) ? 'pipe:0' : "\"{$filename}\"", // Input file
+        ];
 
-        // // Volume
-        // $flags[] = '-ac '.$channels;
+        $flags = implode(' ', $flags);
 
-        // if (! empty($filename)) {
-        //     $flags[] = '-i';
-
-        //     if (! file_exists($filename)) {
-        //         return;
-        //     }
-        // }
-
-        // $flags = implode(' ', $flags);
-
-        return new Process("{$this->dca} \"{$filename}\"");
+        return new Process("{$this->dca} {$flags}");
     }
 }
