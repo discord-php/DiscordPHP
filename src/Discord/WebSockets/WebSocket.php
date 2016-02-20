@@ -256,7 +256,7 @@ class WebSocket extends EventEmitter
     public function joinVoiceChannel(Channel $channel, $mute = false, $deaf = false)
     {
         $deferred = new Deferred();
-        $arr = ['user_id' => $this->discord->id];
+        $arr = ['user_id' => $this->discord->id, 'deaf' => $deaf, 'mute' => $mute];
 
         if ($channel->type != Channel::TYPE_VOICE) {
             $deferred->reject(new \Exception('You cannot join a Text channel.'));

@@ -20,7 +20,7 @@ use Discord\WSClient\WebSocket as WS;
 use Discord\WebSockets\WebSocket;
 use Evenement\EventEmitter;
 use Ratchet\WebSocket\Version\RFC6455\Frame;
-use React\ChildProcess\Process;
+use Discord\Helpers\Process;
 use React\Datagram\Factory as DatagramFactory;
 use React\Datagram\Socket;
 use React\Dns\Resolver\Factory as DNSFactory;
@@ -167,6 +167,20 @@ class VoiceClient extends EventEmitter
     protected $speaking = false;
 
     /**
+     * Whether we are set as mute.
+     *
+     * @var bool Whether we are set as mute.
+     */
+    protected $mute = false;
+
+    /**
+     * Whether we are set as deaf.
+     *
+     * @var bool Whether we are set as deaf.
+     */
+    protected $deaf = false;
+
+    /**
      * Have we sent the login frame yet?
      *
      * @var bool Whether we have sent the login frame.
@@ -239,6 +253,8 @@ class VoiceClient extends EventEmitter
         $this->mainWebsocket = $websocket;
         $this->channel = $channel;
         $this->data = $data;
+        $this->deaf = $data['deaf'];
+        $this->mute = $data['mute'];
         $this->endpoint = str_replace([':80', ':443'], '', $data['endpoint']);
 
         $this->checkForFFmpeg();
@@ -437,10 +453,6 @@ class VoiceClient extends EventEmitter
 
         $process = $this->dcaConvert($file);
         $process->start($this->loop);
-        $process->stdout->pause();
-        $process->stderr->on('data', function ($data) {
-            $this->emit('stderr', [$data]);
-        });
 
         $this->playDCAStream($process)->then(function ($result) use ($deferred) {
             $deferred->resolve($result);
@@ -505,6 +517,7 @@ class VoiceClient extends EventEmitter
     public function playDCAStream($stream)
     {
         $deferred = new Deferred();
+        $process;
 
         if (! $this->ready) {
             $deferred->reject(new \Exception('Voice Client is not ready.'));
@@ -513,6 +526,15 @@ class VoiceClient extends EventEmitter
         }
 
         if ($stream instanceof Process) {
+            $process = $stream;
+            $process->stderr->on('data', function ($d) {
+                if (empty($d)) {
+                    return;
+                }
+
+                $this->emit('stderr', [$d, $this]);
+            });
+
             $stream = $stream->stdout;
         }
 
@@ -533,7 +555,7 @@ class VoiceClient extends EventEmitter
 
         $this->setSpeaking(true);
 
-        $processff2opus = function () use (&$processff2opus, $stream, &$noData, &$noDataHeader, $deferred, &$count) {
+        $processff2opus = function () use (&$processff2opus, $stream, &$noData, &$noDataHeader, $deferred, &$count, $process) {
             $length = $this->betweenPackets;
 
             if (empty($length)) {
@@ -551,12 +573,17 @@ class VoiceClient extends EventEmitter
             if (! $header) {
                 if ($noDataHeader && $this->streamTime != 0) {
                     $this->setSpeaking(false);
-                    $deferred->resolve(true);
 
                     $this->seq = 0;
                     $this->timestamp = 0;
                     $this->streamTime = 0;
                     $this->startTime = null;
+
+                    if (isset($process)) {
+                        $process->close();
+                    }
+
+                    $deferred->resolve(true);
                 } else {
                     $noDataHeader = true;
                     $this->loop->addTimer($length / 1000, function () use (&$processff2opus) {
@@ -664,6 +691,40 @@ class VoiceClient extends EventEmitter
     }
 
     /**
+     * Switches voice channels.
+     *
+     * @param Channel $channel The channel to switch to.
+     *
+     * @return \React\Promise\Promise
+     */
+    public function switchChannel(Channel $channel)
+    {
+        $deferred = new Deferred();
+
+        if ($channel->type != Channel::TYPE_VOICE) {
+            $deferred->reject(new \InvalidArgumentException('Channel must be a voice chnanel to be able to switch'));
+
+            return $deferred->promise();   
+        }
+
+        $this->mainWebsocket->send([
+            'op' => 4,
+            'd' => [
+                'guild_id' => $channel->guild_id,
+                'channel_id' => $channel->id,
+                'self_mute' => $this->mute,
+                'self_deaf' => $this->deaf
+            ]
+        ]);
+
+        $this->channel = $channel;
+
+        $deferred->resolve();
+
+        return $deferred->promise();
+    }
+
+    /**
      * Sends a message to the voice websocket.
      *
      * @param array $data The data to send to the voice WebSocket.
@@ -689,6 +750,9 @@ class VoiceClient extends EventEmitter
         if (! $this->ready) {
             return;
         }
+
+        $this->mute = $mute;
+        $this->deaf = $deaf;
 
         $this->mainWebsocket->send([
             'op' => 4,

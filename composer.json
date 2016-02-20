@@ -15,8 +15,7 @@
         "cboden/ratchet": "0.3.*",
         "react/socket-client": "0.4.*",
         "react/datagram": "dev-master",
-        "TrafficCophp/ByteBuffer": "dev-master",
-        "react/child-process": "^0.4.0"
+        "TrafficCophp/ByteBuffer": "dev-master"
     },
     "require-dev": {
         "symfony/var-dumper": "^2.7",

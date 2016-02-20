@@ -5,6 +5,7 @@ An API to interact with the popular text and voice service Discord.
 ### Special Thanks
 
 - [Chris Boden](https://github.com/cboden) for the WebSocket client that is based off [RatchetPHP/Pawl](https://github.com/ratchetphp/Pawl)
+- ReactPHP for the Process class which is based off [ReactPHP/Child-Process](https://github.com/reactphp/child-process)
 
 ### Todo
 
