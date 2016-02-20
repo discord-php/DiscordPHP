@@ -181,6 +181,13 @@ class VoiceClient extends EventEmitter
     protected $deaf = false;
 
     /**
+     * Whether the voice client is currently paused.
+     *
+     * @var bool Whether the voice client is currently paused.
+     */
+    protected $isPaused = false;
+
+    /**
      * Have we sent the login frame yet?
      *
      * @var bool Whether we have sent the login frame.
@@ -562,6 +569,12 @@ class VoiceClient extends EventEmitter
                 $length = 17;
             }
 
+            if ($this->isPaused) {
+                $this->loop->addTimer($length / 1000, $processff2opus);
+
+                return;
+            }
+
             if ($length >= 20) {
                 $length = 17;
             } elseif ($length <= 16) {
@@ -586,9 +599,7 @@ class VoiceClient extends EventEmitter
                     $deferred->resolve(true);
                 } else {
                     $noDataHeader = true;
-                    $this->loop->addTimer($length / 1000, function () use (&$processff2opus) {
-                        $processff2opus();
-                    });
+                    $this->loop->addTimer($length / 1000, $processff2opus);
                 }
 
                 return;
@@ -628,9 +639,7 @@ class VoiceClient extends EventEmitter
             $this->streamTime = $count * $length;
 
             // There is a delay so it isn't exactly 20ms after the last packet, it is about 17.47ms (i think)
-            $this->loop->addTimer($length / 1000, function () use (&$processff2opus) {
-                $processff2opus();
-            });
+            $this->loop->addTimer($length / 1000, $processff2opus);
         };
 
         $processff2opus();
@@ -669,12 +678,18 @@ class VoiceClient extends EventEmitter
      */
     public function setSpeaking($speaking = true)
     {
+        $deferred = new Deferred();
+
         if ($this->speaking == $speaking) {
-            return $speaking;
+            $deferred->resolve();
+
+            return $deferred->promise();
         }
 
         if (! $this->ready) {
-            return;
+            $deferred->reject(new \Exception('Voice Client is not ready.'));
+
+            return $deferred->promise();
         }
 
         $this->send([
@@ -687,7 +702,9 @@ class VoiceClient extends EventEmitter
 
         $this->speaking = $speaking;
 
-        return $speaking;
+        $deferred->resolve();
+
+        return $deferred->promise();
     }
 
     /**
@@ -747,8 +764,12 @@ class VoiceClient extends EventEmitter
      */
     public function setMuteDeaf($mute, $deaf)
     {
+        $deferred = new Deferred();
+
         if (! $this->ready) {
-            return;
+            $deferred->reject(new \Exception('The voice client must be ready before you can set mute or deaf.'));
+
+            return $deferred->promise();
         }
 
         $this->mute = $mute;
@@ -763,15 +784,57 @@ class VoiceClient extends EventEmitter
                 'self_deaf' => $deaf,
             ],
         ]);
+
+        $deferred->resolve();
+
+        return $deferred->promise();
+    }
+
+    /**
+     * Pauses the current sound.
+     *
+     * @return \React\Promise\Promise 
+     */
+    public function pause()
+    {
+        $deferred = new Deferred();
+
+        $this->isPaused = true;
+        $deferred->resolve();
+
+        return $deferred->promise();
+    }
+
+    /**
+     * Unpauses the current sound.
+     *
+     * @return \React\Promise\Promise 
+     */
+    public function unpause()
+    {
+        $deferred = new Deferred();
+
+        $this->isPaused = false;
+        $deferred->resolve();
+
+        return $deferred->promise();
     }
 
     /**
      * Leaves the voice channel.
      *
-     * @return void
+     * @return \React\Promise\Promise
      */
     public function leave()
     {
+        $deferred = new Deferred();
+
+        if (!$this->ready) {
+            $deferred->reject(new \Exception('Voice Client is not connected.'));
+
+            return $deferred->promise();
+        }
+
         $this->setSpeaking(false);
         $this->ready = false;
 
@@ -799,6 +862,10 @@ class VoiceClient extends EventEmitter
         $this->startTime = null;
         $this->streamTime = 0;
         $this->speakingStatus = [];
+
+        $deferred->resolve();
+
+        return $deferred->promise();
     }
 
     /**
