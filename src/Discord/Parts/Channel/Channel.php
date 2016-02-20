@@ -225,33 +225,29 @@ class Channel extends Part
     }
 
     /**
-     * Sets the permission_overwrites attribute.
-     *
-     * @param array $array Array of overwrites.
-     *
-     * @return void
-     */
-    public function setPermissionOverwritesAttribute($array)
-    {
-        $overwrites = [];
-
-        foreach ($array as $index => $data) {
-            $overwrites[$index] = new Overwrite((array) $data, true);
-        }
-
-        $overwrites = new Collection($overwrites);
-
-        $this->attributes_cache['overwrites'] = $overwrites;
-    }
-
-    /**
      * Gets the overwrites attribute.
      *
      * @return Collection The overwrites attribute.
      */
     public function getOverwritesAttribute()
     {
-        return $this->attributes_cache['overwrites'];
+        if (isset($this->attributes_cache['overwrites'])) {
+            return $this->attributes_cache['overwrites'];
+        }
+
+        $overwrites = [];
+
+        foreach ($this->attributes['permission_overwrites'] as $index => $data) {
+            $data = (array) $data;
+            $data['channel_id'] = $this->attributes['id'];
+            $overwrites[$index] = new Overwrite($data, true);
+        }
+
+        $overwrites = new Collection($overwrites);
+
+        $this->attributes_cache['overwrites'] = $overwrites;
+
+        return $overwrites;
     }
 
     /**
