@@ -209,11 +209,11 @@ class VoiceClient extends EventEmitter
     protected $streamTime = 0;
 
     /**
-     * The current time between voice packets.
+     * The size of audio frames.
      *
-     * @var int The time between voice packets.
+     * @var int The size of audio frames.
      */
-    protected $betweenPackets = 20;
+    protected $frameSize = 20;
 
     /**
      * Array of the status of people speaking.
@@ -243,7 +243,7 @@ class VoiceClient extends EventEmitter
      *
      * @var int Encoding bitrate.
      */
-    public $bitrate = 64000;
+    protected $bitrate = 64000;
 
     /**
      * Constructs the Voice Client instance.
@@ -562,11 +562,11 @@ class VoiceClient extends EventEmitter
 
         $this->setSpeaking(true);
 
-        $processff2opus = function () use (&$processff2opus, $stream, &$noData, &$noDataHeader, $deferred, &$count, $process) {
-            $length = $this->betweenPackets;
+        // $this->frameSize = 20;
 
+        $processff2opus = function () use (&$processff2opus, $stream, &$noData, &$noDataHeader, $deferred, &$count, $process) {
             if ($this->isPaused) {
-                $this->loop->addTimer($length / 1000, $processff2opus);
+                $this->loop->addTimer($this->frameSize / 1000, $processff2opus);
 
                 return;
             }
@@ -589,7 +589,7 @@ class VoiceClient extends EventEmitter
                     $deferred->resolve(true);
                 } else {
                     $noDataHeader = true;
-                    $this->loop->addTimer($length / 1000, $processff2opus);
+                    $this->loop->addTimer($this->frameSize / 1000, $processff2opus);
                 }
 
                 return;
@@ -619,16 +619,15 @@ class VoiceClient extends EventEmitter
                 $this->seq = 0;
             }
 
-            if (($this->timestamp + 960) < 4294967295) {
-                $this->timestamp += 960;
+            if (($this->timestamp + ($this->frameSize * 48)) < 4294967295) {
+                $this->timestamp += $this->frameSize * 48;
             } else {
                 $this->timestamp = 0;
             }
 
-            $this->streamTime = $count * $length;
+            $this->streamTime = $count * $this->frameSize;
 
-            // There is a delay so it isn't exactly 20ms after the last packet, it is about 17.47ms (i think)
-            $this->loop->addTimer($length / 1000, $processff2opus);
+            $this->loop->addTimer($this->frameSize / 1000, $processff2opus);
         };
 
         $processff2opus();
@@ -724,6 +723,69 @@ class VoiceClient extends EventEmitter
         ]);
 
         $this->channel = $channel;
+
+        $deferred->resolve();
+
+        return $deferred->promise();
+    }
+
+    /**
+     * Sets the frame size.
+     *
+     * Options (in ms):
+     * - 20
+     * - 40
+     * - 60
+     *
+     * @return \React\Promise\Promise 
+     */
+    public function setFrameSize($fs)
+    {
+        $deferred = new Deferred();
+
+        $legal = [20, 40, 60];
+
+        if (false === array_search($fs, $legal)) {
+            $deferred->reject(new \InvalidArgumentException("{$fs} is not a valid option. Valid options are: ".trim(implode(', ', $legal), ', ')));
+
+            return $deferred->promise();
+        }
+
+        if ($this->speaking) {
+            $deferred->reject(new \Exception('Cannot change frame size while playing.'));
+
+            return $deferred->promise();
+        }
+
+        $this->frameSize = $fs;
+
+        $deferred->resolve();
+
+        return $deferred->promise();
+    }
+
+    /**
+     * Sets the bitrate.
+     *
+     * @return \React\Promise\Promise 
+     */
+    public function setBitrate($bitrate)
+    {
+        $deferred = new Deferred();
+
+        if ($bitrate > 128000 || $bitrate < 8000) {
+            $deferred->reject(new \InvalidArgumentException("{$bitrate} is not a valid option. The bitrate must be between 8,000bpm and 128,000bpm."));
+
+            return $deferred->promise();
+        }
+
+        if ($this->speaking) {
+            $deferred->reject(new \Exception('Cannot change bitrate while playing.'));
+
+            return $deferred->promise();
+        }
+
+        $this->bitrate = $bitrate;
 
         $deferred->resolve();
 
@@ -936,6 +998,7 @@ class VoiceClient extends EventEmitter
             '-ac', $channels, // Channels
             '-aa', $this->audioApplication, // Audio application
             '-ab', $this->bitrate / 1000, // Bitrate
+            '-as', $this->frameSize * 48, // Frame Size
             '-i', (empty($filename)) ? 'pipe:0' : "\"{$filename}\"", // Input file
         ];
 
