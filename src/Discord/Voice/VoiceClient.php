@@ -213,7 +213,7 @@ class VoiceClient extends EventEmitter
      *
      * @var int The time between voice packets.
      */
-    protected $betweenPackets;
+    protected $betweenPackets = 20;
 
     /**
      * Array of the status of people speaking.
@@ -393,7 +393,7 @@ class VoiceClient extends EventEmitter
                             $timer = 16;
                         }
 
-                        $this->betweenPackets = $timer;
+                        // $this->betweenPackets = $timer;
 
                         $this->emit('ws-ping', [$diff]);
                         break;
@@ -565,20 +565,10 @@ class VoiceClient extends EventEmitter
         $processff2opus = function () use (&$processff2opus, $stream, &$noData, &$noDataHeader, $deferred, &$count, $process) {
             $length = $this->betweenPackets;
 
-            if (empty($length)) {
-                $length = 17.47;
-            }
-
             if ($this->isPaused) {
                 $this->loop->addTimer($length / 1000, $processff2opus);
 
                 return;
-            }
-
-            if ($length >= 20) {
-                $length = 17.47;
-            } elseif ($length <= 17) {
-                $length = 17.47;
             }
 
             $header = @fread($stream, 2);
@@ -635,7 +625,6 @@ class VoiceClient extends EventEmitter
                 $this->timestamp = 0;
             }
 
-            $next = $this->startTime + ($count * $length);
             $this->streamTime = $count * $length;
 
             // There is a delay so it isn't exactly 20ms after the last packet, it is about 17.47ms (i think)
