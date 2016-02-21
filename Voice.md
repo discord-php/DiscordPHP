@@ -24,3 +24,7 @@ Voice in DiscordPHP has 2 main requirements:
 Instructions to install DCA can be found in the DCA repo's [readme](https://github.com/bwmarrin/dca).
 
 **Note:** DCA must be installed in your path with the name `dca` or `ff2opus`.
+
+### Usage
+
+Check out `examples/voice.php` to see usage.
