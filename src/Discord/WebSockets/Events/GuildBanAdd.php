@@ -40,7 +40,7 @@ class GuildBanAdd extends Event
      */
     public function updateDiscordInstance($data, $discord)
     {
-        Cache::set("guild.{$ban->guild_id}.bans.{$ban->user_id}");
+        Cache::set("guild.{$ban->guild_id}.bans.{$ban->user_id}", $data);
 
         foreach ($discord->guilds as $index => $guild) {
             if ($guild->id == $data->guild_id && ! is_bool($guild->bans)) {

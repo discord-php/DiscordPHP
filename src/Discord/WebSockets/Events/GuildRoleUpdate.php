@@ -38,7 +38,7 @@ class GuildRoleUpdate extends Event
      */
     public function updateDiscordInstance($data, $discord)
     {
-        Cache::set("guild.{$data->guild_id}.roles.{$data->id}");
+        Cache::set("guild.{$data->guild_id}.roles.{$data->id}", $data);
 
         foreach ($discord->guilds as $index => $guild) {
             if ($guild->id == $data->guild_id) {
