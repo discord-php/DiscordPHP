@@ -39,7 +39,7 @@ class GuildCreate extends Event
             $channel['guild_id'] = $data->id;
             $channelPart = new Channel($channel, true);
 
-            Cache::set("channel.{$channel->id}", $channel);
+            Cache::set("channel.{$channel->id}", $channelPart);
 
             $channels->push($channelPart);
         }
@@ -85,7 +85,7 @@ class GuildCreate extends Event
      */
     public function updateDiscordInstance($data, $discord)
     {
-        Cache::set("guild.{$guildPart->id}", $guildPart);
+        Cache::set("guild.{$data->id}", $data);
         
         $discord->guilds->push($data);
 

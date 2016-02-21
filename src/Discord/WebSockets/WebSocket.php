@@ -189,9 +189,6 @@ class WebSocket extends EventEmitter
 
                         $guildPart->setCache('channels', $channels);
 
-                        // preload
-                        $guildPart->getBansAttribute();
-
                         // guild members
                         $members = new Collection();
 
