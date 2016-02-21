@@ -495,7 +495,7 @@ class VoiceClient extends EventEmitter
             return $deferred->promise();
         }
 
-        if (! is_resource($stream) && !$stream instanceof Stream) {
+        if (! is_resource($stream) && ! $stream instanceof Stream) {
             $deferred->reject(new \RuntimeException('The stream passed to playRawStream was not an instance of resource or ReactPHP Stream.'));
 
             return $deferred->promise();
@@ -737,7 +737,7 @@ class VoiceClient extends EventEmitter
         if ($channel->type != Channel::TYPE_VOICE) {
             $deferred->reject(new \InvalidArgumentException('Channel must be a voice chnanel to be able to switch'));
 
-            return $deferred->promise();   
+            return $deferred->promise();
         }
 
         $this->mainWebsocket->send([
@@ -746,8 +746,8 @@ class VoiceClient extends EventEmitter
                 'guild_id' => $channel->guild_id,
                 'channel_id' => $channel->id,
                 'self_mute' => $this->mute,
-                'self_deaf' => $this->deaf
-            ]
+                'self_deaf' => $this->deaf,
+            ],
         ]);
 
         $this->channel = $channel;
@@ -765,7 +765,7 @@ class VoiceClient extends EventEmitter
      * - 40
      * - 60
      *
-     * @return \React\Promise\Promise 
+     * @return \React\Promise\Promise
      */
     public function setFrameSize($fs)
     {
@@ -795,7 +795,7 @@ class VoiceClient extends EventEmitter
     /**
      * Sets the bitrate.
      *
-     * @return \React\Promise\Promise 
+     * @return \React\Promise\Promise
      */
     public function setBitrate($bitrate)
     {
@@ -823,7 +823,7 @@ class VoiceClient extends EventEmitter
     /**
      * Sets the volume.
      *
-     * @return \React\Promise\Promise 
+     * @return \React\Promise\Promise
      */
     public function setVolume($volume)
     {
@@ -851,7 +851,7 @@ class VoiceClient extends EventEmitter
     /**
      * Sets the audio application.
      *
-     * @return \React\Promise\Promise 
+     * @return \React\Promise\Promise
      */
     public function setAudioApplication($app)
     {
@@ -930,13 +930,13 @@ class VoiceClient extends EventEmitter
     /**
      * Pauses the current sound.
      *
-     * @return \React\Promise\Promise 
+     * @return \React\Promise\Promise
      */
     public function pause()
     {
         $deferred = new Deferred();
 
-        if (!$this->speaking) {
+        if (! $this->speaking) {
             $deferred->reject(new \Exception('Audio must be playing to pause it.'));
 
             return $deferred->promise();
@@ -951,13 +951,13 @@ class VoiceClient extends EventEmitter
     /**
      * Unpauses the current sound.
      *
-     * @return \React\Promise\Promise 
+     * @return \React\Promise\Promise
      */
     public function unpause()
     {
         $deferred = new Deferred();
 
-        if (!$this->speaking) {
+        if (! $this->speaking) {
             $deferred->reject(new \Exception('Audio must be playing to unpause it.'));
 
             return $deferred->promise();
@@ -972,7 +972,7 @@ class VoiceClient extends EventEmitter
     /**
      * Stops the current sound.
      *
-     * @return \React\Promise\Promise 
+     * @return \React\Promise\Promise
      */
     public function stop()
     {
@@ -984,7 +984,7 @@ class VoiceClient extends EventEmitter
             return $deferred->promise();
         }
 
-        if (!$this->speaking) {
+        if (! $this->speaking) {
             $deferred->reject(new \Exception('Audio must be playing to stop it.'));
 
             return $deferred->promise();
@@ -1006,7 +1006,7 @@ class VoiceClient extends EventEmitter
     {
         $deferred = new Deferred();
 
-        if (!$this->ready) {
+        if (! $this->ready) {
             $deferred->reject(new \Exception('Voice Client is not connected.'));
 
             return $deferred->promise();

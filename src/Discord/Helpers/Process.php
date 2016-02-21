@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is apart of the DiscordPHP project.
+ *
+ * Copyright (c) 2016 David Cole <david@team-reflex.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the LICENSE.md file.
+ */
+
 namespace Discord\Helpers;
 
 use Evenement\EventEmitter;
@@ -14,7 +23,7 @@ use React\Stream\Stream;
  * compatibility when PHP is compiled with the --enable-sigchild option.
  *
  * Based off ReactPHP Child Process. Thanks to the crew over at ReactPHP!
- * 
+ *
  * @see https://github.com/reactphp/child-process
  */
 class Process extends EventEmitter
@@ -40,17 +49,18 @@ class Process extends EventEmitter
     private static $sigchild;
 
     /**
-    * Constructor.
-    *
-    * @param string $cmd     Command line to run
-    * @param string $cwd     Current working directory or null to inherit
-    * @param array  $env     Environment variables or null to inherit
-    * @param array  $options Options for proc_open()
-    * @throws RuntimeException When proc_open() is not installed
-    */
-    public function __construct($cmd, $cwd = null, array $env = null, array $options = array())
+     * Constructor.
+     *
+     * @param string $cmd     Command line to run
+     * @param string $cwd     Current working directory or null to inherit
+     * @param array  $env     Environment variables or null to inherit
+     * @param array  $options Options for proc_open()
+     *
+     * @throws RuntimeException When proc_open() is not installed
+     */
+    public function __construct($cmd, $cwd = null, array $env = null, array $options = [])
     {
-        if (!function_exists('proc_open')) {
+        if (! function_exists('proc_open')) {
             throw new \RuntimeException('The Process class relies on proc_open(), which is not available on your PHP installation.');
         }
 
@@ -58,7 +68,7 @@ class Process extends EventEmitter
         $this->cwd = $cwd;
 
         if (null !== $env) {
-            $this->env = array();
+            $this->env = [];
             foreach ($env as $key => $value) {
                 $this->env[(binary) $key] = (binary) $value;
             }
@@ -74,8 +84,9 @@ class Process extends EventEmitter
      * After the process is started, the standard IO streams will be constructed
      * and available via public properties. STDIN will be paused upon creation.
      *
-     * @param LoopInterface $loop        Loop interface for stream construction
-     * @param float         $interval    Interval to periodically monitor process state (seconds)
+     * @param LoopInterface $loop     Loop interface for stream construction
+     * @param float         $interval Interval to periodically monitor process state (seconds)
+     *
      * @throws RuntimeException If the process is already running or fails to start
      */
     public function start(LoopInterface $loop, $interval = 0.1)
@@ -85,25 +96,25 @@ class Process extends EventEmitter
         }
 
         $cmd = $this->cmd;
-        $fdSpec = array(
-            array('pipe', 'r'), // stdin
-            array('pipe', 'w'), // stdout
-            array('pipe', 'w'), // stderr
-        );
+        $fdSpec = [
+            ['pipe', 'r'], // stdin
+            ['pipe', 'w'], // stdout
+            ['pipe', 'w'], // stderr
+        ];
 
         // Read exit code through fourth pipe to work around --enable-sigchild
         if ($this->isSigchildEnabled() && $this->enhanceSigchildCompatibility) {
-            $fdSpec[] = array('pipe', 'w');
+            $fdSpec[] = ['pipe', 'w'];
             $cmd = sprintf('(%s) 3>/dev/null; code=$?; echo $code >&3; exit $code', $cmd);
         }
 
         $this->process = proc_open($cmd, $fdSpec, $this->pipes, $this->cwd, $this->env, $this->options);
 
-        if (!is_resource($this->process)) {
+        if (! is_resource($this->process)) {
             throw new \RuntimeException('Unable to launch a new process.');
         }
 
-        $this->stdin  = new Stream($this->pipes[0], $loop);
+        $this->stdin = new Stream($this->pipes[0], $loop);
         $this->stdin->pause();
         $this->stdout = new Stream($this->pipes[1], $loop);
         $this->stderr = new Stream($this->pipes[2], $loop);
@@ -113,10 +124,10 @@ class Process extends EventEmitter
         }
 
         $loop->addPeriodicTimer($interval, function (Timer $timer) {
-            if (!$this->isRunning()) {
+            if (! $this->isRunning()) {
                 // $this->close();
                 $timer->cancel();
-                $this->emit('exit', array($this->getExitCode(), $this->getTermSignal()));
+                $this->emit('exit', [$this->getExitCode(), $this->getTermSignal()]);
             }
         });
     }
@@ -163,7 +174,8 @@ class Process extends EventEmitter
      * Terminate the process with an optional signal.
      *
      * @param int $signal Optional signal (default: SIGTERM)
-     * @return boolean Whether the signal was sent successfully
+     *
+     * @return bool Whether the signal was sent successfully
      */
     public function terminate($signal = null)
     {
@@ -187,9 +199,9 @@ class Process extends EventEmitter
     /**
      * Return whether sigchild compatibility is enabled.
      *
-     * @return boolean
+     * @return bool
      */
-    public final function getEnhanceSigchildCompatibility()
+    final public function getEnhanceSigchildCompatibility()
     {
         return $this->enhanceSigchildCompatibility;
     }
@@ -201,11 +213,13 @@ class Process extends EventEmitter
      * determine the success of a process when PHP has been compiled with
      * the --enable-sigchild option.
      *
-     * @param boolean $enhance
+     * @param bool $enhance
+     *
      * @return self
+     *
      * @throws RuntimeException If the process is already running
      */
-    public final function setEnhanceSigchildCompatibility($enhance)
+    final public function setEnhanceSigchildCompatibility($enhance)
     {
         if ($this->isRunning()) {
             throw new \RuntimeException('Process is already running');
@@ -273,7 +287,7 @@ class Process extends EventEmitter
     /**
      * Return whether the process is still running.
      *
-     * @return boolean
+     * @return bool
      */
     public function isRunning()
     {
@@ -289,7 +303,7 @@ class Process extends EventEmitter
     /**
      * Return whether the process has been stopped by a signal.
      *
-     * @return boolean
+     * @return bool
      */
     public function isStopped()
     {
@@ -301,7 +315,7 @@ class Process extends EventEmitter
     /**
      * Return whether the process has been terminated by an uncaught signal.
      *
-     * @return boolean
+     * @return bool
      */
     public function isTerminated()
     {
@@ -314,9 +328,10 @@ class Process extends EventEmitter
      * Return whether PHP has been compiled with the '--enable-sigchild' option.
      *
      * @see \Symfony\Component\Process\Process::isSigchildEnabled()
+     *
      * @return bool
      */
-    public final static function isSigchildEnabled()
+    final public static function isSigchildEnabled()
     {
         if (null !== self::$sigchild) {
             return self::$sigchild;
@@ -335,11 +350,11 @@ class Process extends EventEmitter
      */
     private function pollExitCodePipe()
     {
-        if ( ! isset($this->pipes[3])) {
+        if (! isset($this->pipes[3])) {
             return;
         }
 
-        $r = array($this->pipes[3]);
+        $r = [$this->pipes[3]];
         $w = $e = null;
 
         $n = @stream_select($r, $w, $e, 0);
@@ -362,7 +377,7 @@ class Process extends EventEmitter
      */
     private function closeExitCodePipe()
     {
-        if ( ! isset($this->pipes[3])) {
+        if (! isset($this->pipes[3])) {
             return;
         }
 
@@ -423,7 +438,7 @@ class Process extends EventEmitter
             $this->termSignal = $this->status['termsig'];
         }
 
-        if (!$this->status['running'] && -1 !== $this->status['exitcode']) {
+        if (! $this->status['running'] && -1 !== $this->status['exitcode']) {
             $this->exitCode = $this->status['exitcode'];
         }
     }

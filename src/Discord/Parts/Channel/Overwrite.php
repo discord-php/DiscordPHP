@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is apart of the DiscordPHP project.
+ *
+ * Copyright (c) 2016 David Cole <david@team-reflex.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the LICENSE.md file.
+ */
+
 namespace Discord\Parts\Channel;
 
 use Discord\Parts\Part;
@@ -44,10 +53,10 @@ class Overwrite extends Part
      */
     public function getAllowAttribute()
     {
-    	$perm = new ChannelPermission();
-    	$perm->perms = $this->attributes['allow'];
+        $perm = new ChannelPermission();
+        $perm->perms = $this->attributes['allow'];
 
-    	return $perm;
+        return $perm;
     }
 
     /**
@@ -57,10 +66,10 @@ class Overwrite extends Part
      */
     public function getDenyAttribute()
     {
-    	$perm = new ChannelPermission();
-    	$perm->perms = $this->attributes['deny'];
+        $perm = new ChannelPermission();
+        $perm->perms = $this->attributes['deny'];
 
-    	return $perm;
+        return $perm;
     }
 
     /**
