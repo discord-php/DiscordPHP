@@ -35,7 +35,7 @@ class GuildMemberUpdate extends Event
      */
     public function updateDiscordInstance($data, $discord)
     {
-        Cache::set("guild.{$data->guild_id}.members.{$data->id}");
+        Cache::set("guild.{$data->guild_id}.members.{$data->id}", $data);
         
         foreach ($discord->guilds as $index => $guild) {
             if ($guild->id == $data->guild_id) {
