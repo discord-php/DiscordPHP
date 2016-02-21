@@ -167,6 +167,13 @@ class VoiceClient extends EventEmitter
     protected $speaking = false;
 
     /**
+     * Should we stop the current playing audio?
+     *
+     * @var bool Whether we should stop the current playing audio.
+     */
+    protected $stopAudio = false;
+
+    /**
      * Whether we are set as mute.
      *
      * @var bool Whether we are set as mute.
@@ -223,11 +230,11 @@ class VoiceClient extends EventEmitter
     protected $speakingStatus = [];
 
     /**
-     * The volume percentage the audio will be encoded with.
+     * The volume the audio will be encoded with.
      *
-     * @var int The volume percentage that the audio will be encoded in.
+     * @var int The volume that the audio will be encoded in.
      */
-    public $volume = 70;
+    protected $volume = 100;
 
     /**
      * The audio application to encode with.
@@ -236,7 +243,7 @@ class VoiceClient extends EventEmitter
      *
      * @var string The audio application.
      */
-    public $audioApplication = 'audio';
+    protected $audioApplication = 'audio';
 
     /**
      * The bitrate to encode with.
@@ -571,11 +578,32 @@ class VoiceClient extends EventEmitter
                 return;
             }
 
+            if ($this->stopAudio) {
+                $this->stopAudio = false;
+                fclose($stream);
+
+                $this->setSpeaking(false);
+
+                $this->seq = 0;
+                $this->timestamp = 0;
+                $this->streamTime = 0;
+                $this->startTime = null;
+
+                if (isset($process)) {
+                    $process->close();
+                }
+
+                $deferred->resolve();
+
+                return;
+            }
+
             $header = @fread($stream, 2);
 
             if (! $header) {
                 if ($noDataHeader && $this->streamTime != 0) {
                     $this->setSpeaking(false);
+                    fclose($stream);
 
                     $this->seq = 0;
                     $this->timestamp = 0;
@@ -586,7 +614,7 @@ class VoiceClient extends EventEmitter
                         $process->close();
                     }
 
-                    $deferred->resolve(true);
+                    $deferred->resolve();
                 } else {
                     $noDataHeader = true;
                     $this->loop->addTimer($this->frameSize / 1000, $processff2opus);
@@ -793,6 +821,64 @@ class VoiceClient extends EventEmitter
     }
 
     /**
+     * Sets the volume.
+     *
+     * @return \React\Promise\Promise 
+     */
+    public function setVolume($volume)
+    {
+        $deferred = new Deferred();
+
+        if ($volume > 100 || $volume < 0) {
+            $deferred->reject(new \InvalidArgumentException("{$volume}% is not a valid option. The bitrate must be between 0% and 100%."));
+
+            return $deferred->promise();
+        }
+
+        if ($this->speaking) {
+            $deferred->reject(new \Exception('Cannot change volume while playing.'));
+
+            return $deferred->promise();
+        }
+
+        $this->volume = $volume;
+
+        $deferred->resolve();
+
+        return $deferred->promise();
+    }
+
+    /**
+     * Sets the audio application.
+     *
+     * @return \React\Promise\Promise 
+     */
+    public function setAudioApplication($app)
+    {
+        $deferred = new Deferred();
+
+        $legal = ['voip', 'audio', 'lowdelay'];
+
+        if (false === array_search($app, $legal)) {
+            $deferred->reject(new \InvalidArgumentException("{$app} is not a valid option. Valid options are: ".trim(implode(', ', $legal), ', ')));
+
+            return $deferred->promise();
+        }
+
+        if ($this->speaking) {
+            $deferred->reject(new \Exception('Cannot change audio application while playing.'));
+
+            return $deferred->promise();
+        }
+
+        $this->audioApplication = $app;
+
+        $deferred->resolve();
+
+        return $deferred->promise();
+    }
+
+    /**
      * Sends a message to the voice websocket.
      *
      * @param array $data The data to send to the voice WebSocket.
@@ -850,6 +936,12 @@ class VoiceClient extends EventEmitter
     {
         $deferred = new Deferred();
 
+        if (!$this->speaking) {
+            $deferred->reject(new \Exception('Audio must be playing to pause it.'));
+
+            return $deferred->promise();
+        }
+
         $this->isPaused = true;
         $deferred->resolve();
 
@@ -865,7 +957,41 @@ class VoiceClient extends EventEmitter
     {
         $deferred = new Deferred();
 
+        if (!$this->speaking) {
+            $deferred->reject(new \Exception('Audio must be playing to unpause it.'));
+
+            return $deferred->promise();
+        }
+
         $this->isPaused = false;
+        $deferred->resolve();
+
+        return $deferred->promise();
+    }
+
+    /**
+     * Stops the current sound.
+     *
+     * @return \React\Promise\Promise 
+     */
+    public function stop()
+    {
+        $deferred = new Deferred();
+
+        if ($this->stopAudio) {
+            $deferred->reject(new \Exception('Audio is already being stopped.'));
+
+            return $deferred->promise();
+        }
+
+        if (!$this->speaking) {
+            $deferred->reject(new \Exception('Audio must be playing to stop it.'));
+
+            return $deferred->promise();
+        }
+
+        $this->stopAudio = true;
+
         $deferred->resolve();
 
         return $deferred->promise();
@@ -999,7 +1125,8 @@ class VoiceClient extends EventEmitter
             '-aa', $this->audioApplication, // Audio application
             '-ab', $this->bitrate / 1000, // Bitrate
             '-as', $this->frameSize * 48, // Frame Size
-            '-i', (empty($filename)) ? 'pipe:0' : "\"{$filename}\"", // Input file
+            // '-af', $this->volume, // Volume
+             '-i', (empty($filename)) ? 'pipe:0' : "\"{$filename}\"", // Input file
         ];
 
         $flags = implode(' ', $flags);
