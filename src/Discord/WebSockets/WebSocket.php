@@ -274,8 +274,10 @@ class WebSocket extends EventEmitter
                 $arr['endpoint'] = $data->d->endpoint;
 
                 $vc = new VoiceClient($this, $this->loop, $channel, $arr);
-                $vc->once('ready', function () use ($vc, $deferred) {
-                    $deferred->resolve($vc);
+                $vc->once('ready', function () use ($vc, $deferred, $channel) {
+                    $vc->setBitrate($channel->bitrate)->then(function () use ($vc, $deferred) {
+                        $deferred->resolve($vc);
+                    });
                 });
                 $vc->once('error', function ($e) use ($deferred) {
                     $deferred->reject($e);
