@@ -27,6 +27,13 @@ class Cache
     protected static $cache;
 
     /**
+     * The default cache TTL.
+     *
+     * @var int The default cache TTL.
+     */
+    protected static $defaultTtl;
+
+    /**
      * Changes the cache driver.
      *
      * @param CacheInterface $driver The cache driver to set.
@@ -55,6 +62,20 @@ class Cache
         }
 
         return self::$cache->name;
+    }
+
+    /**
+     * Returns the default cache TTL.
+     *
+     * @return int The default cache TTL.
+     */
+    public static function getDefaultTtl()
+    {
+        if (empty(self::$defaultTtl)) {
+            self::$defaultTtl = 300;
+        }
+
+        return self::$defaultTtl;
     }
 
     /**

@@ -12,6 +12,7 @@
 namespace Discord\Parts\Guild;
 
 use Carbon\Carbon;
+use Discord\Helpers\Guzzle;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
@@ -35,10 +36,34 @@ class Invite extends Part
      * {@inheritdoc}
      */
     protected $uris = [
-        'get' => 'invites/:id',
+        'get' => 'invites/:code',
         'create' => 'channels/:channel_id/invites',
         'delete' => 'invite/:code',
     ];
+
+    /**
+     * Uses the invite.
+     *
+     * @return boolean Whether the use succeeded.
+     */
+    public function use()
+    {
+        if ($this->revoked) {
+            return false;
+        }
+
+        if ($this->uses >= $this->max_uses) {
+            return false;
+        }
+
+        try {
+            Guzzle::post("invite/{$this->code}");
+        } catch (\Exception $e) {
+            return false;
+        }
+
+        return true;
+    }
 
     /**
      * Returns the invite URL attribute.

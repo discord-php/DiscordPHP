@@ -11,6 +11,7 @@
 
 namespace Discord\Parts\Guild;
 
+use Discord\Cache\Cache;
 use Discord\Exceptions\DiscordRequestFailedException;
 use Discord\Helpers\Collection;
 use Discord\Helpers\Guzzle;
@@ -27,10 +28,13 @@ class Guild extends Part
 {
     const REGION_DEFAULT = self::REGION_US_WEST;
     const REGION_US_WEST = 'us-west';
+    const REGION_US_SOUTH = 'us-south';
     const REGION_US_EAST = 'us-east';
+    const REGION_US_CENTRAL = 'us-central';
     const REGION_SINGAPORE = 'singapore';
     const REGION_LONDON = 'london';
     const REGION_SYDNEY = 'sydney';
+    const REGION_FRANKFURT = 'frankfurt';
     const REGION_AMSTERDAM = 'amsterdam';
 
     const LEVEL_OFF = 0;
@@ -51,6 +55,7 @@ class Guild extends Part
         'create' => 'guilds',
         'update' => 'guilds/:id',
         'delete' => 'guilds/:id',
+        'leave' => 'users/@me/guilds/:id',
     ];
 
     /**
@@ -60,23 +65,37 @@ class Guild extends Part
      */
     protected $regions = [
         self::REGION_US_WEST,
+        self::REGION_US_SOUTH,
         self::REGION_US_EAST,
+        self::REGION_US_CENTRAL,
         self::REGION_LONDON,
         self::REGION_SINGAPORE,
         self::REGION_SYDNEY,
+        self::REGION_FRANKFURT,
         self::REGION_AMSTERDAM,
     ];
 
     /**
-     * Alias for delete().
+     * Leaves the guild.
+     *
+     * Does not leave the guild if you are the owner however, please use
+     * delete() for that.
      *
      * @return bool Whether the attempt to leave succeeded or failed.
      *
-     * @see \Discord\Parts\Part::delete() This function is an alias for delete.
+     * @see \Discord\Parts\Part::delete() Used for leaving/deleting the guild if you are owner.
      */
     public function leave()
     {
-        return $this->delete();
+        try {
+            $request = Guzzle::delete($this->replaceWithVariables($this->uris['leave']));
+            $this->created = false;
+            $this->deleted = true;
+        } catch (\Exception $e) {
+            throw new PartRequestFailedException($e->getMessage());
+        }
+
+        return true;
     }
 
     /**
@@ -164,6 +183,10 @@ class Guild extends Part
      */
     public function getOwnerAttribute()
     {
+        if ($owner = Cache::get("user.{$this->owner_id}")) {
+            return $owner;
+        }
+
         if (isset($this->attributes_cache['owner'])) {
             return $this->attributes_cache['owner'];
         }
@@ -171,6 +194,8 @@ class Guild extends Part
         $request = Guzzle::get($this->replaceWithVariables('users/:owner_id'));
 
         $owner = new User((array) $request, true);
+
+        Cache::set("user.{$user->id}", $owner);
 
         $this->attributes_cache['owner'] = $owner;
 
@@ -192,7 +217,9 @@ class Guild extends Part
         $request = Guzzle::get($this->replaceWithVariables('guilds/:id/channels'));
 
         foreach ($request as $index => $channel) {
-            $channels[$index] = new Channel((array) $channel, true);
+            $channel = new Channel((array) $channel, true);
+            Cache::set("channel.{$channel->id}", $channel);
+            $channels[$index] = $channel;
         }
 
         $channels = new Collection($channels);
@@ -224,7 +251,9 @@ class Guild extends Part
         foreach ($request as $index => $ban) {
             $ban = (array) $ban;
             $ban['guild'] = $this;
-            $bans[$index] = new Ban($ban, true);
+            $ban = new Ban($ban, true);
+            Cache::set("guild.{$this->id}.bans.{$ban->user_id}", $ban);
+            $bans[$index] = $ban;
         }
 
         $bans = new Collection($bans);
@@ -249,7 +278,9 @@ class Guild extends Part
         $invites = [];
 
         foreach ($request as $index => $invite) {
-            $invites[$index] = new Invite((array) $invite, true);
+            $invite = new Invite((array) $invite, true);
+            Cache::set("invite.{$invite->id}", $invite);
+            $invites[$index] = $invite;
         }
 
         $invites = new Collection($invites);

@@ -17,6 +17,7 @@ use Discord\Exceptions\ContentTooLongException;
 use Discord\Exceptions\DiscordRequestFailedException;
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\Psr7\Request;
+use Illuminate\Support\Str;
 
 /**
  * Provides an easy wrapper for the Guzzle HTTP client.
@@ -149,8 +150,10 @@ class Guzzle
 
         $message .= " - {$content}";
 
-        if (false !== strpos($content, 'longer than 2000 characters') &&
-            false !== strpos($content, 'String value is too long') &&
+        if (Str::contains(strtolower($content), [
+                'longer than 2000 characters',
+                'string value is too long'
+            ]) &&
             $error_code == 500
         ) {
             // Discord has set a restriction with content sent over REST,

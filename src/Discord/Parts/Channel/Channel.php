@@ -11,6 +11,7 @@
 
 namespace Discord\Parts\Channel;
 
+use Discord\Cache\Cache;
 use Discord\Exceptions\FileNotFoundException;
 use Discord\Helpers\Collection;
 use Discord\Helpers\Guzzle;
@@ -130,6 +131,10 @@ class Channel extends Part
      */
     public function getGuildAttribute()
     {
+        if ($guild = Cache::get("guild.{$this->guild_id}")) {
+            return $guild;
+        }
+
         if (isset($this->attributes_cache['guild'])) {
             return $this->attributes_cache['guild'];
         }
@@ -140,6 +145,8 @@ class Channel extends Part
 
         $request = Guzzle::get("guilds/{$this->guild_id}");
         $guild = new Guild((array) $request, true);
+
+        Cache::set("guild.{$guild->id}", $guild);
 
         $this->attributes_cache['guild'] = $guild;
 
@@ -167,7 +174,11 @@ class Channel extends Part
             'xkcdpass' => $xkcd,
         ]);
 
-        return new Invite((array) $request, true);
+        $invite = new Invite((array) $request, true);
+
+        Cache::set("invite.{$invite->code}", $invite);
+
+        return $invite;
     }
 
     /**
@@ -189,7 +200,9 @@ class Channel extends Part
         $messages = [];
 
         foreach ($request as $index => $message) {
-            $messages[$index] = new Message((array) $message, true);
+            $message = new Message((array) $message, true);
+            Cache::set("message.{$message->id}", $message);
+            $messages[$index] = $message;
         }
 
         $messages = new Collection($messages);
@@ -214,7 +227,9 @@ class Channel extends Part
         $invites = [];
 
         foreach ($request as $index => $invite) {
-            $invites[$index] = new Invite((array) $invite, true);
+            $invite = new Invite((array) $invite, true);
+            Cache::set("invites.{$invite->code}", $invite);
+            $invites[$index] = $invite;
         }
 
         $invites = new Collection($invites);
@@ -225,33 +240,29 @@ class Channel extends Part
     }
 
     /**
-     * Sets the permission_overwrites attribute.
-     *
-     * @param array $array Array of overwrites.
-     *
-     * @return void
-     */
-    public function setPermissionOverwritesAttribute($array)
-    {
-        $overwrites = [];
-
-        foreach ($array as $index => $data) {
-            $overwrites[$index] = new Overwrite((array) $data, true);
-        }
-
-        $overwrites = new Collection($overwrites);
-
-        $this->attributes_cache['overwrites'] = $overwrites;
-    }
-
-    /**
      * Gets the overwrites attribute.
      *
      * @return Collection The overwrites attribute.
      */
     public function getOverwritesAttribute()
     {
-        return $this->attributes_cache['overwrites'];
+        if (isset($this->attributes_cache['overwrites'])) {
+            return $this->attributes_cache['overwrites'];
+        }
+
+        $overwrites = [];
+
+        foreach ($this->attributes['permission_overwrites'] as $index => $data) {
+            $data = (array) $data;
+            $data['channel_id'] = $this->attributes['id'];
+            $overwrites[$index] = new Overwrite($data, true);
+        }
+
+        $overwrites = new Collection($overwrites);
+
+        $this->attributes_cache['overwrites'] = $overwrites;
+
+        return $overwrites;
     }
 
     /**
@@ -274,6 +285,8 @@ class Channel extends Part
         ]);
 
         $message = new Message((array) $request, true);
+
+        Cache::set("message.{$message->id}", $message);
 
         if (! isset($this->attributes_cache['messages'])) {
             $this->attributes_cache['messages'] = new Collection();
@@ -345,6 +358,8 @@ class Channel extends Part
         $request = json_decode($finalRes->getBody());
 
         $message = new Message((array) $request, true);
+
+        Cache::set("message.{$message->id}", $message);
 
         if (! isset($this->attributes_cache['messages'])) {
             $this->attributes_cache['messages'] = new Collection();

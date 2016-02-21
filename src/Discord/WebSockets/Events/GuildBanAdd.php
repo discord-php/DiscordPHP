@@ -11,6 +11,7 @@
 
 namespace Discord\WebSockets\Events;
 
+use Discord\Cache\Cache;
 use Discord\Parts\Guild\Ban;
 use Discord\WebSockets\Event;
 
@@ -39,6 +40,8 @@ class GuildBanAdd extends Event
      */
     public function updateDiscordInstance($data, $discord)
     {
+        Cache::set("guild.{$ban->guild_id}.bans.{$ban->user_id}");
+
         foreach ($discord->guilds as $index => $guild) {
             if ($guild->id == $data->guild_id && ! is_bool($guild->bans)) {
                 $guild->bans->push($data);

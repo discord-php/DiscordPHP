@@ -29,7 +29,7 @@ class Discord
      *
      * @var string The current version of the API.
      */
-    const VERSION = 'v3.1.0-beta';
+    const VERSION = 'v3.2.0-beta';
 
     /**
      * The Client instance.
@@ -143,6 +143,14 @@ class Discord
      */
     public function acceptInvite($code)
     {
+        if ($code instanceof Invite) {
+            $code = $invite->code;
+        }
+
+        if (preg_match('/https:\/\/discord.gg\/(.+)/', $code, $matches)) {
+            $code = $matches[1];
+        }
+
         try {
             $request = Guzzle::post("invite/{$code}");
         } catch (\Exception $e) {
