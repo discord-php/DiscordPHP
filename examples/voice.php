@@ -63,7 +63,7 @@ $ws->on('ready', function ($discord) use ($ws, $argv) {
         // the frame size.
         // 
         // You do not have to set the frame size every time. It defaults to 20ms.
-        // Soon, it will auto adjust itself on startup based on your ping to the voice server.
+        // The Voice Client also sets the frame size itself based on ping.
         $vc->setFrameSize(40)->then(function () use ($vc, $ws, $argv) {
             // We can now play stuff!
             $vc->playFile($argv[3])->then(function () {

@@ -391,16 +391,15 @@ class VoiceClient extends EventEmitter
                     case 3: // keepalive response
                         $end = microtime(true);
                         $start = $data->d;
-                        $diff = (($end - $start) * 1000);
-                        $timer = $diff / 2;
+                        $diff = ($end - $start) * 1000;
 
-                        if ($timer > 20) {
-                            $timer = 20;
-                        } elseif ($timer < 16) {
-                            $timer = 16;
+                        if ($diff <= 10) { // set to 20ms
+                            $this->setFrameSize(20);
+                        } elseif ($diff <= 20) { // set to 40ms
+                            $this->setFrameSize(40);
+                        } else { // set to 60ms
+                            $this->setFrameSize(60);
                         }
-
-                        // $this->betweenPackets = $timer;
 
                         $this->emit('ws-ping', [$diff]);
                         break;
@@ -568,8 +567,6 @@ class VoiceClient extends EventEmitter
         $noDataHeader = false;
 
         $this->setSpeaking(true);
-
-        // $this->frameSize = 20;
 
         $processff2opus = function () use (&$processff2opus, $stream, &$noData, &$noDataHeader, $deferred, &$count, $process) {
             if ($this->isPaused) {
