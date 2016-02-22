@@ -245,7 +245,7 @@ class Guild extends Part
         try {
             $request = Guzzle::get($this->replaceWithVariables('guilds/:id/bans'));
         } catch (DiscordRequestFailedException $e) {
-            return false;
+            return new Collection();
         }
 
         foreach ($request as $index => $ban) {
