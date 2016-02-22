@@ -73,9 +73,9 @@ class WebSocket implements EventEmitterInterface, ConnectionInterface
             }
         });
 
-        $stream->on('close', function () {
-            $this->emit('close', [$this]);
-        });
+        // $stream->on('close', function () {
+        //     $this->emit('close', [$this]);
+        // });
 
         $stream->on('error', function ($error) {
             $this->emit('error', [$error, $this]);
@@ -132,6 +132,7 @@ class WebSocket implements EventEmitterInterface, ConnectionInterface
                 switch ($opcode) {
                     case Frame::OP_CLOSE:
                         $this->close($frame->getPayload());
+                        $this->emit('close', [$opcode]);
 
                         return;
                     case Frame::OP_PING:
@@ -142,6 +143,7 @@ class WebSocket implements EventEmitterInterface, ConnectionInterface
                         break;
                     default:
                         $this->close($frame->getPayload());
+                        $this->emit('close', [$opcode]);
 
                         return;
                 }
