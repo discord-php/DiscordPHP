@@ -10,6 +10,11 @@ An API to interact with the popular text and voice service Discord.
 
 Todo list is available in the [`TODO.md`](TODO.md) file.
 
+### Notes
+
+- If your bot is in a large number of guilds, PHP may crash because it has ran out of allocated memory. (200 guilds, 140mb memory usage and increases)
+- If a guild has more than 250 members, only online members will be available.
+
 ### Basic WebSocket client
 
 ```php
