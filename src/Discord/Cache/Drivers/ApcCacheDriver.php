@@ -46,7 +46,7 @@ class ApcCacheDriver implements CacheInterface
         if (is_string($ttl)) {
             $ttl = Cache::getDefaultTtl();
         }
-        
+
         return apc_store($key, $value, $ttl);
     }
 

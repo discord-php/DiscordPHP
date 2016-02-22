@@ -78,8 +78,8 @@ class RedisCacheDriver implements CacheInterface
         if (is_null($ttl)) {
             $ttl = Cache::getDefaultTtl();
         }
-        
-        if (!is_string($ttl)) {
+
+        if (! is_string($ttl)) {
             $this->redis->expire($key, $ttl);
         }
 

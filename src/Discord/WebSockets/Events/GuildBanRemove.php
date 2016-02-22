@@ -41,7 +41,7 @@ class GuildBanRemove extends Event
     public function updateDiscordInstance($data, $discord)
     {
         Cache::delete("guild.{$data->guild_id}.bans.{$data->user_id}");
-        
+
         foreach ($discord->guilds as $index => $guild) {
             if ($guild->id == $data->guild_id) {
                 foreach ($guild->bans as $bindex => $ban) {

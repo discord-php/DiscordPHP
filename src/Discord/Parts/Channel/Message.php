@@ -83,7 +83,7 @@ class Message extends Part
         if ($channel = Cache::get("channel.{$this->channel_id}")) {
             return $channel;
         }
-        
+
         if (isset($this->attributes_cache['channel'])) {
             return $this->attributes_cache['channel'];
         }

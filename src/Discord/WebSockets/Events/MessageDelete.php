@@ -35,7 +35,7 @@ class MessageDelete extends Event
     public function updateDiscordInstance($data, $discord)
     {
         Cache::remove("message.{$data->id}");
-        
+
         foreach ($discord->guilds as $index => $guild) {
             foreach ($guild->channels as $cindex => $channel) {
                 if ($channel->id == $data->channel_id) {

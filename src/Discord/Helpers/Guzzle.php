@@ -152,7 +152,7 @@ class Guzzle
 
         if (Str::contains(strtolower($content), [
                 'longer than 2000 characters',
-                'string value is too long'
+                'string value is too long',
             ]) &&
             $error_code == 500
         ) {

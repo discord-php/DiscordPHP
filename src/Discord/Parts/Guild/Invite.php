@@ -44,9 +44,9 @@ class Invite extends Part
     /**
      * Uses the invite.
      *
-     * @return boolean Whether the use succeeded.
+     * @return bool Whether the use succeeded.
      */
-    public function use()
+    public function use ()
     {
         if ($this->revoked) {
             return false;

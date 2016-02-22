@@ -52,16 +52,16 @@ $ws->on('ready', function ($discord) use ($ws, $argv) {
         echo "Joined voice channel.\r\n";
 
         // Here we will set the frame size to 40ms. Note: Lower is better!
-        // 
+        //
         // The valid options are:
         // - 20ms
         // - 40ms
         // - 60ms
-        // 
+        //
         // The lower the better. Always start with 20ms and work your way up.
         // If you are experiencing 'buffering' while playing audio, try increase
         // the frame size.
-        // 
+        //
         // You do not have to set the frame size every time. It defaults to 20ms.
         // The Voice Client also sets the frame size itself based on ping.
         $vc->setFrameSize(40)->then(function () use ($vc, $ws, $argv) {

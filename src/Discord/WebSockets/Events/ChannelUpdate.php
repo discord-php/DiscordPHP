@@ -36,7 +36,7 @@ class ChannelUpdate extends Event
     public function updateDiscordInstance($data, $discord)
     {
         Cache::set("channel.{$data->id}", $data);
-        
+
         foreach ($discord->guilds as $index => $guild) {
             if ($guild->id == $data->guild_id) {
                 foreach ($guild->channels as $cindex => $channel) {
