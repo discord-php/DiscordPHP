@@ -13,6 +13,7 @@ Todo list is available in the [`TODO.md`](TODO.md) file.
 ### Notes
 
 - If your bot is in a large number of guilds, PHP may crash because it has ran out of allocated memory. (200 guilds, 140mb memory usage and increases)
+	- You can increase the allocated memory by doing `ini_set('memory_limit', '{number-of-mb}M');` at the top of your bot file. Note: Change `{number-of-mb}` to the number of megabytes.
 - If a guild has more than 250 members, only online members will be available.
 
 ### Basic WebSocket client
