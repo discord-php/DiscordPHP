@@ -13,6 +13,7 @@ namespace Discord\WebSockets\Events;
 
 use Discord\Cache\Cache;
 use Discord\Parts\Guild\Ban;
+use Discord\Parts\Guild\Guild;
 use Discord\WebSockets\Event;
 
 /**
@@ -28,6 +29,10 @@ class GuildBanRemove extends Event
     public function getData($data, $discord)
     {
         $guild = $discord->guilds->get('id', $data->guild_id);
+
+        if (is_null($guild)) {
+            $guild = new Guild(['id' => $data->guild_id, 'name' => 'Unknown'], true);
+        }
 
         return new Ban([
             'guild' => $guild,
