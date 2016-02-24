@@ -1009,6 +1009,7 @@ class VoiceClient extends EventEmitter
             return $deferred->promise();
         }
 
+        $this->stop();
         $this->setSpeaking(false);
         $this->ready = false;
 
