@@ -1119,12 +1119,12 @@ class VoiceClient extends EventEmitter
         }
 
         $flags = [
-            '-ac', $channels, // Channels
-            '-aa', $this->audioApplication, // Audio application
-            '-ab', $this->bitrate / 1000, // Bitrate
-            '-as', $this->frameSize * 48, // Frame Size
-            // '-af', $this->volume, // Volume
-             '-i', (empty($filename)) ? 'pipe:0' : "\"{$filename}\"", // Input file
+             '-ac', $channels, // Channels
+             '-aa', $this->audioApplication, // Audio application
+             '-ab', $this->bitrate / 1000, // Bitrate
+             '-as', $this->frameSize * 48, // Frame Size
+            '-vol', $this->volume * 2.56, // Volume
+              '-i', (empty($filename)) ? 'pipe:0' : "\"{$filename}\"", // Input file
         ];
 
         $flags = implode(' ', $flags);
