@@ -1123,7 +1123,7 @@ class VoiceClient extends EventEmitter
              '-aa', $this->audioApplication, // Audio application
              '-ab', $this->bitrate / 1000, // Bitrate
              '-as', $this->frameSize * 48, // Frame Size
-            '-vol', $this->volume * 2.56, // Volume
+            '-vol', round($this->volume * 2.56), // Volume
               '-i', (empty($filename)) ? 'pipe:0' : "\"{$filename}\"", // Input file
         ];
 
