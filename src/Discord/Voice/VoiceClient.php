@@ -412,7 +412,7 @@ class VoiceClient extends EventEmitter
             $ws->on('message', $discoverUdp);
             $ws->on('message', function ($message) {
                 $data = json_decode($message);
-                dump($data);
+                
                 $this->emit('ws-message', [$message, $this]);
 
                 switch ($data->op) {
@@ -917,7 +917,6 @@ class VoiceClient extends EventEmitter
      */
     public function send(array $data)
     {
-        dump($data);
         $frame = new Frame(json_encode($data), true);
         $this->voiceWebsocket->send($frame);
     }
