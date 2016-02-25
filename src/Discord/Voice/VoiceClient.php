@@ -17,6 +17,7 @@ use Discord\Exceptions\FileNotFoundException;
 use Discord\Helpers\Collection;
 use Discord\Helpers\Process;
 use Discord\Parts\Channel\Channel;
+use Discord\Voice\Buffer;
 use Discord\WSClient\Factory as WsFactory;
 use Discord\WSClient\WebSocket as WS;
 use Discord\WebSockets\WebSocket;
@@ -159,6 +160,20 @@ class VoiceClient extends EventEmitter
      * @var string The voice mode.
      */
     protected $mode = 'plain';
+
+    /**
+     * Whether we are encrypting the voice data.
+     *
+     * @var bool Encrypting the voice data.
+     */
+    protected $encrypted = false;
+
+    /**
+     * The secret key used for encrypting voice.
+     *
+     * @var string The secret key.
+     */
+    protected $secret_key;
 
     /**
      * Are we currently set as speaking?
@@ -363,6 +378,11 @@ class VoiceClient extends EventEmitter
                             $port = substr($message, strlen($message) - 2);
                             $port = unpack('v', $port)[1];
 
+                            if (function_exists('\Sodium\crypto_secretbox')) {
+                                $this->mode = 'xsalsa20_poly1305'; // voice encryption!
+                                $this->encrypted = true;
+                            }
+
                             $payload = [
                                 'op' => 1,
                                 'd' => [
@@ -392,7 +412,7 @@ class VoiceClient extends EventEmitter
             $ws->on('message', $discoverUdp);
             $ws->on('message', function ($message) {
                 $data = json_decode($message);
-
+                dump($data);
                 $this->emit('ws-message', [$message, $this]);
 
                 switch ($data->op) {
@@ -414,6 +434,11 @@ class VoiceClient extends EventEmitter
                     case 4: // ready
                         $this->ready = true;
                         $this->mode = $data->d->mode;
+
+                        foreach ($data->d->secret_key as $part) {
+                            $this->secret_key .= pack('C*', $part);
+                        }
+
                         $this->emit('ready', [$this]);
                         break;
                     case 5: // user started speaking
@@ -673,7 +698,6 @@ class VoiceClient extends EventEmitter
      * Sends a buffer to the UDP socket.
      *
      * @param string $data     The data to send to the UDP server.
-     * @param int    $channels How many audio channels to encode with.
      *
      * @return void
      */
@@ -683,7 +707,7 @@ class VoiceClient extends EventEmitter
             return;
         }
 
-        $packet = new VoicePacket($data, $this->ssrc, $this->seq, $this->timestamp);
+        $packet = new VoicePacket($data, $this->ssrc, $this->seq, $this->timestamp, $this->encrypted, $this->secret_key);
         $this->client->send((string) $packet);
 
         $this->streamTime = microtime(true);
@@ -893,6 +917,7 @@ class VoiceClient extends EventEmitter
      */
     public function send(array $data)
     {
+        dump($data);
         $frame = new Frame(json_encode($data), true);
         $this->voiceWebsocket->send($frame);
     }

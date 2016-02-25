@@ -11,6 +11,8 @@
 
 namespace Discord\Voice;
 
+use Discord\Voice\Buffer;
+
 class VoicePacket
 {
     /**
@@ -40,40 +42,65 @@ class VoicePacket
     protected $buffer;
 
     /**
+     * The client SSRC.
+     *
+     * @var int The client SSRC.
+     */
+    protected $ssrc;
+
+    /**
+     * The packet sequence.
+     *
+     * @var int The packet sequence.
+     */
+    protected $seq;
+
+    /**
+     * The packet timestamp.
+     *
+     * @var int The packet timestamp.
+     */
+    protected $timestamp;
+
+    /**
      * Constructs the voice packet.
      *
-     * @param opus $opusdata
-     * @param int  $ssrc
-     * @param int  $seq
-     * @param int  $timestamp
+     * @param string $data The Opus data to encode.
+     * @param int  $ssrc The client SSRC value.
+     * @param int  $seq The packet sequence.
+     * @param int  $timestamp The packet timestamp.
+     * @param bool $encryption Whether the packet should be encrypted.
+     * @param string|null $key The encryption key.
      *
      * @return void
      */
-    public function __construct($opusdata, $ssrc, $seq, $timestamp)
+    public function __construct($data, $ssrc, $seq, $timestamp, $encryption = false, $key = null)
     {
-        $this->initBuffer($opusdata, $ssrc, $seq, $timestamp);
+        $this->ssrc = $ssrc;
+        $this->seq = $seq;
+        $this->timestamp = $timestamp;
+
+        if (!$encryption) {
+            $this->initBufferNoEncryption($data);
+        } else {
+            $this->initBufferEncryption($data, $key);
+        }
     }
 
     /**
-     * Initilizes the buffer.
+     * Initilizes the buffer with no encryption.
      *
-     * @param opus $opusdata
-     * @param int  $ssrc
-     * @param int  $seq
-     * @param int  $timestamp
+     * @param string $data The Opus data to encode.
      *
      * @return void
      */
-    public function initBuffer($opusdata, $ssrc, $seq, $timestamp)
+    protected function initBufferNoEncryption($data)
     {
-        $data = (binary) $opusdata;
+        $data = (binary) $data;
+        $header = $this->buildHeader();
 
-        $buffer = new Buffer(strlen($opusdata) + self::RTP_HEADER_BYTE_LENGTH);
-        $buffer[self::RTP_VERSION_PAD_EXTEND_INDEX] = pack('c', self::RTP_VERSION_PAD_EXTEND);
-        $buffer[self::RTP_PAYLOAD_INDEX] = pack('c', self::RTP_PAYLOAD_TYPE);
-        $buffer->writeShort($seq, self::SEQ_INDEX);
-        $buffer->writeInt($timestamp, self::TIMESTAMP_INDEX);
-        $buffer->writeInt($ssrc, self::SSRC_INDEX);
+        $buffer = new Buffer(strlen((string) $header) + strlen($data));
+        $buffer->write((string) $header, 0);
 
         for ($i = 0; $i < strlen($data); ++$i) {
             $buffer[self::RTP_HEADER_BYTE_LENGTH + $i] = $data[$i];
@@ -83,13 +110,52 @@ class VoicePacket
     }
 
     /**
+     * Initilizes the buffer with encryption.
+     *
+     * @param string $data The Opus data to encode.
+     * @param string $key The encryption key.
+     *
+     * @return void 
+     */
+    protected function initBufferEncryption($data, $key)
+    {
+        $data = (binary) $data;
+        $header = $this->buildHeader();
+        $nonce = new Buffer(24);
+        $nonce->write((string) $header, 0);
+
+        $data = \Sodium\crypto_secretbox($data, (string) $nonce, $key);
+
+        $this->buffer = new Buffer(strlen((string) $header) + strlen($data));
+        $this->buffer->write((string) $header, 0);
+        $this->buffer->write($data, 12);
+    }
+
+    /**
+     * Builds the header.
+     *
+     * @return string The header,
+     */
+    protected function buildHeader()
+    {
+        $header = new Buffer(self::RTP_HEADER_BYTE_LENGTH);
+        $header[self::RTP_VERSION_PAD_EXTEND_INDEX] = pack('c', self::RTP_VERSION_PAD_EXTEND);
+        $header[self::RTP_PAYLOAD_INDEX] = pack('c', self::RTP_PAYLOAD_TYPE);
+        $header->writeShort($this->seq, self::SEQ_INDEX);
+        $header->writeInt($this->timestamp, self::TIMESTAMP_INDEX);
+        $header->writeInt($this->ssrc, self::SSRC_INDEX);
+
+        return $header;
+    }
+
+    /**
      * Returns the sequence.
      *
      * @return int The packet sequence.
      */
     public function getSequence()
     {
-        return $this->buffer->readShort(self::SEQ_INDEX);
+        return $this->seq;
     }
 
     /**
@@ -99,7 +165,7 @@ class VoicePacket
      */
     public function getTimestamp()
     {
-        return $this->buffer->readInt(self::TIMESTAMP_INDEX);
+        return $this->timestamp;
     }
 
     /**
@@ -109,7 +175,7 @@ class VoicePacket
      */
     public function getSSRC()
     {
-        return $this->buffer->readInt(self::SSRC_INDEX);
+        return $this->ssrc;
     }
 
     /**
@@ -147,6 +213,10 @@ class VoicePacket
     public function setBuffer($buffer)
     {
         $this->buffer = $buffer;
+
+        $this->seq = $this->buffer->readShort(self::SEQ_INDEX);
+        $this->timestamp = $this->buffer->readInt(self::TIMESTAMP_INDEX);
+        $this->ssrc = $this->buffer->readInt(self::SSRC_INDEX);
 
         return $this;
     }
