@@ -1085,6 +1085,18 @@ class VoiceClient extends EventEmitter
      */
     protected function handleAudioData($message)
     {
+        if ($this->encrypted) {
+            $voicePacket = VoicePacket::make($message);
+            $nonce = new Buffer(24);
+            $nonce->write($voicePacket->getHeader(), 0);
+            $message = \Sodium\crypto_secretbox_open($message, (string) $nonce, $this->secret_key);
+
+            if ($message === false) {
+                // if we can't decode the message, drop it silently.
+                return;
+            }
+        }
+
         $this->emit('raw', [$message, $this]);
 
         return; // temp break until dca has decoding support

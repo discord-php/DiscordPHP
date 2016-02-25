@@ -179,6 +179,16 @@ class VoicePacket
     }
 
     /**
+     * Returns the header.
+     *
+     * @return string The packet header.
+     */
+    public function getHeader()
+    {
+        return $this->buffer->read(0, self::RTP_HEADER_BYTE_LENGTH);
+    }
+
+    /**
      * Returns the data.
      *
      * @return string The packet data.
