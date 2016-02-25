@@ -89,6 +89,13 @@ class WebSocket extends EventEmitter
     protected $voice;
 
     /**
+     * The WebSocket heartbeat.
+     *
+     * @var TimerInterface The WebSocket heartbeat.
+     */
+    protected $heartbeat;
+
+    /**
      * Constructs the WebSocket instance.
      *
      * @param Discord            $discord The Discord REST client instance.
@@ -155,11 +162,13 @@ class WebSocket extends EventEmitter
 
                 if ($data->t == Event::READY) {
                     $tts = $data->d->heartbeat_interval / 1000;
-                    $this->loop->addPeriodicTimer($tts, function () use ($ws) {
+                    $this->heartbeat = $this->loop->addPeriodicTimer($tts, function () use ($ws) {
+                        $time = microtime(true);
                         $this->send([
                             'op' => 1,
-                            'd' => microtime(true) * 1000,
+                            'd' => $time * 1000,
                         ]);
+                        $this->emit('heartbeat', [$time]);
                     });
 
                     $content = $data->d;
