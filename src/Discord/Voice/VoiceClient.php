@@ -14,13 +14,14 @@ namespace Discord\Voice;
 use Discord\Exceptions\DCANotFoundException;
 use Discord\Exceptions\FFmpegNotFoundException;
 use Discord\Exceptions\FileNotFoundException;
+use Discord\Helpers\Collection;
+use Discord\Helpers\Process;
 use Discord\Parts\Channel\Channel;
 use Discord\WSClient\Factory as WsFactory;
 use Discord\WSClient\WebSocket as WS;
 use Discord\WebSockets\WebSocket;
 use Evenement\EventEmitter;
 use Ratchet\WebSocket\Version\RFC6455\Frame;
-use Discord\Helpers\Process;
 use React\Datagram\Factory as DatagramFactory;
 use React\Datagram\Socket;
 use React\Dns\Resolver\Factory as DNSFactory;
@@ -223,11 +224,18 @@ class VoiceClient extends EventEmitter
     protected $frameSize = 20;
 
     /**
-     * Array of the status of people speaking.
+     * Collection of the status of people speaking.
      *
-     * @var array Status of people speaking.
+     * @var Collection Status of people speaking.
      */
-    protected $speakingStatus = [];
+    protected $speakingStatus;
+
+    /**
+     * Collection of voice decoders.
+     *
+     * @var Collection Voice decoders.
+     */
+    protected $voiceDecoders;
 
     /**
      * The volume the audio will be encoded with.
@@ -270,6 +278,7 @@ class VoiceClient extends EventEmitter
         $this->deaf = $data['deaf'];
         $this->mute = $data['mute'];
         $this->endpoint = str_replace([':80', ':443'], '', $data['endpoint']);
+        $this->speakingStatus = new Collection();
 
         $this->checkForFFmpeg();
         $this->checkForDCA();
@@ -369,12 +378,11 @@ class VoiceClient extends EventEmitter
                             $this->send($payload);
 
                             $client->removeListener('message', $decodeUDP);
+                            // disabled for now
+                            // $client->on('message', [$this, 'handleAudioData']);
                         };
 
                         $client->on('message', $decodeUDP);
-                        $client->on('message', function ($message) {
-                            $this->emit('raw', [$message, $this]);
-                        });
                     }, function ($e) {
                         $this->emit('error', [$e]);
                     });
@@ -410,7 +418,8 @@ class VoiceClient extends EventEmitter
                         break;
                     case 5: // user started speaking
                         $this->emit('speaking', [$data->d->speaking, $data->d->user_id, $this]);
-                        $this->speakingStatus[$data->d->user_id] = $data->d;
+                        $this->emit("speaking.{$data->d->user_id}", [$data->d->speaking, $this]);
+                        $this->speakingStatus[$data->d->ssrc] = $data->d;
                         break;
                 }
             });
@@ -1036,11 +1045,54 @@ class VoiceClient extends EventEmitter
         $this->sentLoginFrame = false;
         $this->startTime = null;
         $this->streamTime = 0;
-        $this->speakingStatus = [];
+        $this->speakingStatus = new Collection();
 
         $deferred->resolve();
 
         return $deferred->promise();
+    }
+
+    /**
+     * Handles raw opus data from the UDP server.
+     *
+     * @param string $message The data from the UDP server.
+     *
+     * @return void
+     */
+    protected function handleAudioData($message)
+    {
+        $this->emit('raw', [$message, $this]);
+
+        $vp = VoicePacket::make($message);
+        $ss = $this->speakingStatus->get('ssrc', $vp->getSSRC());
+        $decoder = $this->voiceDecoders->get('ssrc', $vp->getSSRC());
+
+        if (is_null($ss)) {
+            // for some reason we don't have a speaking status
+            return;
+        }
+
+        if (is_null($decoder)) {
+            // make a decoder
+            $flags = [
+                // todo add dca flags when dca has decoding support
+            ];
+
+            $decoder = new Process("{$this->dca} ".implode(' ', $flags));
+            $decoder->start($this->loop);
+            $decoder->stdout->on('data', function ($data) use ($ss) {
+                $this->emit("voice.{$ss->ssrc}", [$data, $this]);
+                $this->emit("voice.{$ss->user_id}", [$data, $this]);
+            });
+            $decoder->stderr->on('data', function ($data) use ($ss) {
+                $this->emit("voice.{$ss->ssrc}.stderr", [$data, $this]);
+                $this->emit("voice.{$ss->user_id}.stderr", [$data, $this]);
+            });
+
+            $this->voiceDecoders->push($decoder);
+        }
+
+        $decoder->stdin->write($vp->getData());
     }
 
     /**

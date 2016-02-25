@@ -83,6 +83,75 @@ class VoicePacket
     }
 
     /**
+     * Returns the sequence.
+     *
+     * @return int The packet sequence.
+     */
+    public function getSequence()
+    {
+        return $this->buffer->readShort(self::SEQ_INDEX);
+    }
+
+    /**
+     * Returns the timestamp.
+     *
+     * @return int The packet timestamp.
+     */
+    public function getTimestamp()
+    {
+        return $this->buffer->readInt(self::TIMESTAMP_INDEX);
+    }
+
+    /**
+     * Returns the SSRC.
+     *
+     * @return int The packet SSRC.
+     */
+    public function getSSRC()
+    {
+        return $this->buffer->readInt(self::SSRC_INDEX);
+    }
+
+    /**
+     * Returns the data.
+     *
+     * @return string The packet data.
+     */
+    public function getData()
+    {
+        return $this->buffer->read(self::RTP_HEADER_BYTE_LENGTH, strlen((string) $this->buffer) - self::RTP_HEADER_BYTE_LENGTH);
+    }
+
+    /**
+     * Creates a voice packet from data sent from Discord.
+     *
+     * @param string $data Data from Discord.
+     *
+     * @return self A voice packet.
+     */
+    public static function make($data)
+    {
+        $n = new self('', 0, 0, 0);
+        $n->setBuffer(new Buffer($data));
+
+        return $n;
+    }
+
+    /**
+     * Sets the buffer.
+     *
+     * @param Buffer $buffer The buffer to set.
+     *
+     * @return self 
+     */
+    public function setBuffer($buffer)
+    {
+        $this->buffer = $buffer;
+
+        return $this;
+    }
+
+    /**
      * Handles to string casting of object.
      *
      * @return string

@@ -59,6 +59,18 @@ class Buffer extends BaseBuffer implements ArrayAccess
     }
 
     /**
+     * Reads a signed integer.
+     *
+     * @param int $offset The offset to read from.
+     *
+     * @return int The data read.
+     */
+    public function readInt($offset)
+    {
+        return $this->extract('N', $offset, 4);
+    }
+
+    /**
      * Writes an unsigned big endian short.
      *
      * @param short $value  The value that will be written.
@@ -69,6 +81,18 @@ class Buffer extends BaseBuffer implements ArrayAccess
     public function writeShort($value, $offset)
     {
         $this->insert('n', $value, $offset, 2);
+    }
+
+    /**
+     * Reads an unsigned big endian short.
+     *
+     * @param int $offset The offset to read from.
+     *
+     * @return int The data read.
+     */
+    public function readShort($offset)
+    {
+        return $this->extract('n', $offset, 4);
     }
 
     /**
