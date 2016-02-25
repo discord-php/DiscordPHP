@@ -1065,7 +1065,7 @@ class VoiceClient extends EventEmitter
 
         $vp = VoicePacket::make($message);
         $ss = $this->speakingStatus->get('ssrc', $vp->getSSRC());
-        $decoder = $this->voiceDecoders->get('ssrc', $vp->getSSRC());
+        $decoder = $this->voiceDecoders[$vp->getSSRC()];
 
         if (is_null($ss)) {
             // for some reason we don't have a speaking status
@@ -1089,7 +1089,7 @@ class VoiceClient extends EventEmitter
                 $this->emit("voice.{$ss->user_id}.stderr", [$data, $this]);
             });
 
-            $this->voiceDecoders->push($decoder);
+            $this->voiceDecoders[$ss->ssrc] = ($decoder);
         }
 
         $decoder->stdin->write($vp->getData());
