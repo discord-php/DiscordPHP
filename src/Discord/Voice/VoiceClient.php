@@ -399,7 +399,7 @@ class VoiceClient extends EventEmitter
 
                             $client->removeListener('message', $decodeUDP);
                             // disabled for now
-                            // $client->on('message', [$this, 'handleAudioData']);
+                            $client->on('message', [$this, 'handleAudioData']);
                         };
 
                         $client->on('message', $decodeUDP);
@@ -1087,6 +1087,8 @@ class VoiceClient extends EventEmitter
     protected function handleAudioData($message)
     {
         $this->emit('raw', [$message, $this]);
+
+        return; // temp break until dca has decoding support
 
         $vp = VoicePacket::make($message);
         $ss = $this->speakingStatus->get('ssrc', $vp->getSSRC());
