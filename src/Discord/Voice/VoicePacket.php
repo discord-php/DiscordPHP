@@ -101,10 +101,7 @@ class VoicePacket
 
         $buffer = new Buffer(strlen((string) $header) + strlen($data));
         $buffer->write((string) $header, 0);
-
-        for ($i = 0; $i < strlen($data); ++$i) {
-            $buffer[self::RTP_HEADER_BYTE_LENGTH + $i] = $data[$i];
-        }
+        $buffer->write($data, 12);
 
         $this->buffer = $buffer;
     }
