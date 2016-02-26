@@ -166,7 +166,7 @@ class WebSocket extends EventEmitter
                         $time = microtime(true);
                         $this->send([
                             'op' => 1,
-                            'd' => $time * 1000,
+                            'd' => $time,
                         ]);
                         $this->emit('heartbeat', [$time]);
                     });
