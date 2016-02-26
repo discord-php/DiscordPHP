@@ -509,7 +509,7 @@ class VoiceClient extends EventEmitter
     }
 
     /**
-     * Plays a PHP resource stream.
+     * Plays a raw PCM16 stream.
      *
      * @param resource|Stream $stream   The stream to be encoded and sent.
      * @param int             $channels How many audio channels to encode with.
