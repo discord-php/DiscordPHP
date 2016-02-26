@@ -1089,7 +1089,7 @@ class VoiceClient extends EventEmitter
             $voicePacket = VoicePacket::make($message);
             $nonce = new Buffer(24);
             $nonce->write($voicePacket->getHeader(), 0);
-            $message = \Sodium\crypto_secretbox_open($message, (string) $nonce, $this->secret_key);
+            $message = \Sodium\crypto_secretbox_open($voicePacket->getData(), (string) $nonce, $this->secret_key);
 
             if ($message === false) {
                 // if we can't decode the message, drop it silently.
