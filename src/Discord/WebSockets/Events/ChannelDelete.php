@@ -36,7 +36,7 @@ class ChannelDelete extends Event
     public function updateDiscordInstance($data, $discord)
     {
         Cache::remove("channel.{$data->id}");
-        
+
         foreach ($discord->guilds as $index => $guild) {
             if ($guild->id == $data->guild_id) {
                 $discord->guilds->pull($index);

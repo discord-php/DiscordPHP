@@ -86,7 +86,7 @@ class GuildCreate extends Event
     public function updateDiscordInstance($data, $discord)
     {
         Cache::set("guild.{$data->id}", $data);
-        
+
         $discord->guilds->push($data);
 
         return $discord;

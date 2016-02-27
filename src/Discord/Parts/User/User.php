@@ -77,7 +77,7 @@ class User extends Part
         $message = new Message((array) $request, true);
 
         Cache::set("message.{$message->id}", $message);
-        
+
         return $message;
     }
 
