@@ -136,11 +136,20 @@ class WebSocket extends EventEmitter
                     return;
                 }
 
-                if (! is_null($handler = $this->handlers->getHandler($data->t))) {
-                    $handler = new $handler();
+                if (! is_null($handlerSettings = $this->handlers->getHandler($data->t))) {
+                    $handler = new $handlerSettings['class']();
                     $handlerData = $handler->getData($data->d, $this->discord);
                     $newDiscord = $handler->updateDiscordInstance($handlerData, $this->discord);
                     $this->emit($data->t, [$handlerData, $this->discord, $newDiscord]);
+
+                    foreach ($handlerSettings['alternatives'] as $alternative) {
+                        $this->emit($alternative, [$handlerData, $this->discord, $newDiscord]);
+                    }
+
+                    if ($data->t == Event::MESSAGE_CREATE && (strpos($handlerData->content, '<@'.$this->discord->id.'>') !== false)) {
+                        $this->emit('mention', [$handlerData, $this->discord, $newDiscord]);
+                    }
+
                     $this->discord = $newDiscord;
                 }
 
