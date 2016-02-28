@@ -1103,7 +1103,7 @@ class VoiceClient extends EventEmitter
 
         $vp = VoicePacket::make($message);
         $ss = $this->speakingStatus->get('ssrc', $vp->getSSRC());
-        $decoder = $this->voiceDecoders[$vp->getSSRC()];
+        $decoder = @$this->voiceDecoders[$vp->getSSRC()];
 
         if (is_null($ss)) {
             // for some reason we don't have a speaking status
@@ -1211,8 +1211,8 @@ class VoiceClient extends EventEmitter
         $flags = [
              '-ac', $channels, // Channels
              '-aa', $this->audioApplication, // Audio application
-             '-ab', $this->bitrate / 1000, // Bitrate
-             '-as', $this->frameSize * 48, // Frame Size
+             '-ab', round($this->bitrate / 1000), // Bitrate
+             '-as', round($this->frameSize * 48), // Frame Size
             '-vol', round($this->volume * 2.56), // Volume
               '-i', (empty($filename)) ? 'pipe:0' : "\"{$filename}\"", // Input file
         ];
