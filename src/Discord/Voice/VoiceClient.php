@@ -795,6 +795,8 @@ class VoiceClient extends EventEmitter
      * - 40
      * - 60
      *
+     * @param int $fs The frame size to set.
+     *
      * @return \React\Promise\Promise
      */
     public function setFrameSize($fs)
@@ -825,6 +827,8 @@ class VoiceClient extends EventEmitter
     /**
      * Sets the bitrate.
      *
+     * @param int $bitrate The bitrate to set.
+     *
      * @return \React\Promise\Promise
      */
     public function setBitrate($bitrate)
@@ -852,6 +856,8 @@ class VoiceClient extends EventEmitter
 
     /**
      * Sets the volume.
+     *
+     * @param int $volume The volume to set.
      *
      * @return \React\Promise\Promise
      */
@@ -881,6 +887,8 @@ class VoiceClient extends EventEmitter
     /**
      * Sets the audio application.
      *
+     * @param string $app The audio application to set.
+     * 
      * @return \React\Promise\Promise
      */
     public function setAudioApplication($app)
@@ -1077,6 +1085,45 @@ class VoiceClient extends EventEmitter
     }
 
     /**
+     * Handles a voice state update.
+     *
+     * @param object $data The WebSocket data.
+     *
+     * @return void 
+     */
+    public function handleVoiceStateUpdate($data)
+    {
+        if (
+            is_null($data->channel_id) &&
+            is_null($data->guild_id)
+        ) {
+            $ss = $this->speakingStatus->get('user_id', $data->user_id);
+
+            if (is_null($ss)) {
+                return; // no speaking status to remove
+            }
+
+            $decoder = @$this->voiceDecoders[$ss->ssrc];
+
+            if (is_null($decoder)) {
+                return; // no voice decoder to remove
+            }
+
+            $decoder->close();
+            unset($this->voiceDecoders[$ss->ssrc]);
+            unset($this->speakingStatus[$ss->ssrc]);
+
+            return;
+        }
+
+        if ($data->channel_id != $this->channel->id) {
+            return; // doesnt matter for us, not our channel
+        }
+
+
+    }
+
+    /**
      * Handles raw opus data from the UDP server.
      *
      * @param string $message The data from the UDP server.
@@ -1113,7 +1160,7 @@ class VoiceClient extends EventEmitter
         if (is_null($decoder)) {
             // make a decoder
             $flags = [
-                // todo add dca flags when dca has decoding support
+                '-mode', 'decode'
             ];
 
             $decoder = new Process("{$this->dca} ".implode(' ', $flags));
@@ -1127,10 +1174,14 @@ class VoiceClient extends EventEmitter
                 $this->emit("voice.{$ss->user_id}.stderr", [$data, $this]);
             });
 
-            $this->voiceDecoders[$ss->ssrc] = ($decoder);
+            $this->voiceDecoders[$ss->ssrc] = $decoder;
         }
 
-        $decoder->stdin->write($vp->getData());
+        $buff = new Buffer(strlen($vp->getData()) + 2);
+        $buff->write(pack('v', strlen($vp->getData())), 0);
+        $buff->write($vp->getData(), 2);
+
+        $decoder->stdin->write((string) $buff);
     }
 
     /**

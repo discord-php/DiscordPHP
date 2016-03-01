@@ -160,6 +160,12 @@ class WebSocket extends EventEmitter
                     $this->discord = $newDiscord;
                 }
 
+                if ($data->t == Event::VOICE_STATE_UPDATE) {
+                    if (!is_null($this->voice)) {
+                        $this->voice->handleVoiceStateUpdate($data->d);
+                    }
+                }
+
                 if ($data->t == Event::READY) {
                     $tts = $data->d->heartbeat_interval / 1000;
                     $this->heartbeat = $this->loop->addPeriodicTimer($tts, function () use ($ws) {
