@@ -624,7 +624,7 @@ class VoiceClient extends EventEmitter
                     $process->close();
                 }
 
-                $deferred->resolve();
+                $deferred->resolve(true);
 
                 return;
             }
@@ -645,7 +645,7 @@ class VoiceClient extends EventEmitter
                         $process->close();
                     }
 
-                    $deferred->resolve();
+                    $deferred->resolve(false);
                 } else {
                     $noDataHeader = true;
                     $this->loop->addTimer($this->frameSize / 1000, $processff2opus);
