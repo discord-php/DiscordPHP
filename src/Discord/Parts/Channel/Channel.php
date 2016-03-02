@@ -427,6 +427,7 @@ class Channel extends Part
         return [
             'name' => $this->name,
             'topic' => $this->topic,
+            'position' => $this->position,
         ];
     }
 }
