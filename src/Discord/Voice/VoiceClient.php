@@ -498,7 +498,7 @@ class VoiceClient extends EventEmitter
             return $deferred->promise();
         }
 
-        $process = $this->dcaConvert($file);
+        $process = $this->dcaConvert($file, $channels);
         $process->start($this->loop);
 
         $this->playDCAStream($process)->then(function ($result) use ($deferred) {
@@ -538,7 +538,7 @@ class VoiceClient extends EventEmitter
             $stream = new Stream($stream, $this->loop);
         }
 
-        $process = $this->dcaConvert();
+        $process = $this->dcaConvert('', $channels);
         $process->start($this->loop);
 
         $stream->pipe($process->stdin);
@@ -1211,11 +1211,11 @@ class VoiceClient extends EventEmitter
             $output = shell_exec("which {$binary}");
 
             if (! empty($output)) {
-                return;
+                return true;
             }
         }
 
-        throw new FFmpegNotFoundException('No FFmpeg binary was found.');
+        $this->emit('error', [new FFmpegNotFoundException('No FFmpeg binary was found.')]);
     }
 
     /**
@@ -1242,7 +1242,7 @@ class VoiceClient extends EventEmitter
             }
         }
 
-        throw new DCANotFoundException('No DCA binary was found.');
+        $this->emit('error', [new DCANotFoundException('No DCA binary was found.')]);
     }
 
     /**
