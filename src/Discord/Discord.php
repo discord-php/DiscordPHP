@@ -11,9 +11,11 @@
 
 namespace Discord;
 
+use Carbon\Carbon;
 use Discord\Exceptions\InviteInvalidException;
 use Discord\Helpers\Guzzle;
 use Discord\Parts\Guild\Invite;
+use Discord\Parts\Part;
 use Discord\Parts\User\Client;
 
 /**
@@ -30,6 +32,13 @@ class Discord
      * @var string
      */
     const VERSION = 'v3.1.1';
+
+    /**
+     * The Discord epoch value.
+     *
+     * @var int 
+     */
+    const DISCORD_EPOCH = 1420070400000;
 
     /**
      * The Client instance.
@@ -158,6 +167,28 @@ class Discord
         }
 
         return new Invite((array) $request, true);
+    }
+
+    /**
+     * Returns the date an object with an ID was created.
+     *
+     * @param Part|int $id The Part of ID to get the timestamp for.
+     *
+     * @return \Carbon\Carbon|null Carbon timestamp or null if can't be found.
+     */
+    public static function getTimestamp($id)
+    {
+        if ($id instanceof Part) {
+            $id = $id->id;
+
+            if (is_null($id)) {
+                return null;
+            }
+        }
+
+        $ms = ($id >> 22) + self::DISCORD_EPOCH;
+
+        return new Carbon(date('r', $ms / 1000));
     }
 
     /**
