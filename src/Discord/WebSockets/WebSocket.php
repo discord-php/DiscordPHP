@@ -161,7 +161,7 @@ class WebSocket extends EventEmitter
                 }
 
                 if ($data->t == Event::VOICE_STATE_UPDATE) {
-                    if (!is_null($this->voice)) {
+                    if (! is_null($this->voice)) {
                         $this->voice->handleVoiceStateUpdate($data->d);
                     }
                 }

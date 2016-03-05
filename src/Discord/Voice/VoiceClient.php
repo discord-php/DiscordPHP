@@ -17,7 +17,6 @@ use Discord\Exceptions\FileNotFoundException;
 use Discord\Helpers\Collection;
 use Discord\Helpers\Process;
 use Discord\Parts\Channel\Channel;
-use Discord\Voice\Buffer;
 use Discord\WSClient\Factory as WsFactory;
 use Discord\WSClient\WebSocket as WS;
 use Discord\WebSockets\WebSocket;
@@ -412,7 +411,7 @@ class VoiceClient extends EventEmitter
             $ws->on('message', $discoverUdp);
             $ws->on('message', function ($message) {
                 $data = json_decode($message);
-                
+
                 $this->emit('ws-message', [$message, $this]);
 
                 switch ($data->op) {
@@ -697,7 +696,7 @@ class VoiceClient extends EventEmitter
     /**
      * Sends a buffer to the UDP socket.
      *
-     * @param string $data     The data to send to the UDP server.
+     * @param string $data The data to send to the UDP server.
      *
      * @return void
      */
@@ -888,7 +887,7 @@ class VoiceClient extends EventEmitter
      * Sets the audio application.
      *
      * @param string $app The audio application to set.
-     * 
+     *
      * @return \React\Promise\Promise
      */
     public function setAudioApplication($app)
@@ -1089,7 +1088,7 @@ class VoiceClient extends EventEmitter
      *
      * @param object $data The WebSocket data.
      *
-     * @return void 
+     * @return void
      */
     public function handleVoiceStateUpdate($data)
     {
@@ -1119,8 +1118,6 @@ class VoiceClient extends EventEmitter
         if ($data->channel_id != $this->channel->id) {
             return; // doesnt matter for us, not our channel
         }
-
-
     }
 
     /**
@@ -1160,7 +1157,7 @@ class VoiceClient extends EventEmitter
         if (is_null($decoder)) {
             // make a decoder
             $flags = [
-                '-mode', 'decode'
+                '-mode', 'decode',
             ];
 
             $decoder = new Process("{$this->dca} ".implode(' ', $flags));

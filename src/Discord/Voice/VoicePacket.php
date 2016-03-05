@@ -11,8 +11,6 @@
 
 namespace Discord\Voice;
 
-use Discord\Voice\Buffer;
-
 class VoicePacket
 {
     /**
@@ -65,12 +63,12 @@ class VoicePacket
     /**
      * Constructs the voice packet.
      *
-     * @param string $data The Opus data to encode.
-     * @param int  $ssrc The client SSRC value.
-     * @param int  $seq The packet sequence.
-     * @param int  $timestamp The packet timestamp.
-     * @param bool $encryption Whether the packet should be encrypted.
-     * @param string|null $key The encryption key.
+     * @param string      $data       The Opus data to encode.
+     * @param int         $ssrc       The client SSRC value.
+     * @param int         $seq        The packet sequence.
+     * @param int         $timestamp  The packet timestamp.
+     * @param bool        $encryption Whether the packet should be encrypted.
+     * @param string|null $key        The encryption key.
      *
      * @return void
      */
@@ -80,7 +78,7 @@ class VoicePacket
         $this->seq = $seq;
         $this->timestamp = $timestamp;
 
-        if (!$encryption) {
+        if (! $encryption) {
             $this->initBufferNoEncryption($data);
         } else {
             $this->initBufferEncryption($data, $key);
@@ -110,9 +108,9 @@ class VoicePacket
      * Initilizes the buffer with encryption.
      *
      * @param string $data The Opus data to encode.
-     * @param string $key The encryption key.
+     * @param string $key  The encryption key.
      *
-     * @return void 
+     * @return void
      */
     protected function initBufferEncryption($data, $key)
     {
@@ -215,7 +213,7 @@ class VoicePacket
      *
      * @param Buffer $buffer The buffer to set.
      *
-     * @return self 
+     * @return self
      */
     public function setBuffer($buffer)
     {
