@@ -193,7 +193,7 @@ class Channel extends Part
      */
     public function getMessagesAttribute()
     {
-        if (!isset($this->attributes_cache['messages'])) {
+        if (! isset($this->attributes_cache['messages'])) {
             $this->attributes_cache['messages'] = new Collection();
         }
 

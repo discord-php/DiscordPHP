@@ -40,7 +40,7 @@ class VoiceClient extends EventEmitter
      *
      * @var string The DCA version.
      */
-    const DCA_VERSION = "DCA1";
+    const DCA_VERSION = 'DCA1';
 
     /**
      * Is the voice client ready?
@@ -705,7 +705,7 @@ class VoiceClient extends EventEmitter
         $readMagicBytes = false;
 
         $getMetadata = function () use (&$getMetadata, &$readMagicBytes, $stream, &$deferred, $processff2opus) {
-            if (!$readMagicBytes) {
+            if (! $readMagicBytes) {
                 $magicBytes = fread($stream, 4);
 
                 if (empty($magicBytes)) {
@@ -737,7 +737,7 @@ class VoiceClient extends EventEmitter
             $jsonLen = reset($buff);
             $json = json_decode(fread($stream, $jsonLen), true);
 
-            if (!is_null($json)) {
+            if (! is_null($json)) {
                 $this->frameSize = $json['opus']['frame_size'] / 48;
 
                 $deferred->notify($json);
