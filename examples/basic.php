@@ -45,7 +45,7 @@ $ws->on('ready', function ($discord) use ($ws) {
       // We are just checking if the message equils to ping and replying to the user with a pong!
       if($message->content == "ping"){
         $message->reply("pong!");
-      }
+        }
         $reply = $message->timestamp->format('d/m/y H:i:s').' - '; // Format the message timestamp.
         $reply .= $message->full_channel->guild->name.' - ';
         $reply .= $message->author->username.' - '; // Add the message author's username onto the string.
