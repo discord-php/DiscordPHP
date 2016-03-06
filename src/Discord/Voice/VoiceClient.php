@@ -36,6 +36,13 @@ use React\Stream\Stream;
 class VoiceClient extends EventEmitter
 {
     /**
+     * The DCA version the client is using.
+     *
+     * @var string The DCA version.
+     */
+    const DCA_VERSION = "DCA1";
+
+    /**
      * Is the voice client ready?
      *
      * @var bool Whether the voice client is ready.
@@ -503,6 +510,10 @@ class VoiceClient extends EventEmitter
 
         $this->playDCAStream($process)->then(function ($result) use ($deferred) {
             $deferred->resolve($result);
+        }, function ($e) use ($deferred) {
+            $deferred->reject($e);
+        }, function ($meta) use ($deferred) {
+            $deferred->notify($meta);
         });
 
         return $deferred->promise();
@@ -549,6 +560,8 @@ class VoiceClient extends EventEmitter
         }, function ($e) use ($deferred, $stream) {
             $stream->close();
             $deferred->reject($e);
+        }, function ($meta) use ($deferred) {
+            $deferred->notify($meta);
         });
 
         return $deferred->promise();
@@ -601,20 +614,6 @@ class VoiceClient extends EventEmitter
         $noDataHeader = false;
 
         $this->setSpeaking(true);
-
-        // read metadata and magic bytes
-        $magicBytes = fread($stream, 4);
-
-        if ($magicBytes !== "DCA1") {
-            $deferred->reject(new OutdatedDCAException('You are using an outdated version of DCA. Please make sure you have the latest version from https://github.com/bwmarrin/dca'));
-
-            return $deferred->promise();
-        }
-
-        $jsonLen = reset(unpack('l', fread($stream, 4)));
-        $json = json_decode(fread($stream, $jsonLen), true);
-
-        $deferred->notify($json);
 
         $processff2opus = function () use (&$processff2opus, $stream, &$noData, &$noDataHeader, $deferred, &$count, $process) {
             if ($this->isPaused) {
@@ -703,7 +702,46 @@ class VoiceClient extends EventEmitter
             $this->loop->addTimer($this->frameSize / 1000, $processff2opus);
         };
 
-        $processff2opus();
+        $readMagicBytes = false;
+
+        $getMetadata = function () use (&$getMetadata, &$readMagicBytes, $stream, $deferred, $processff2opus) {
+            if (!$readMagicBytes) {
+                $magicBytes = fread($stream, 4);
+
+                if (empty($magicBytes)) {
+                    // wait until it is written
+                    $this->loop->addTimer(0.01, $getMetadata);
+
+                    return;
+                }
+
+                if ($magicBytes !== self::DCA_VERSION) {
+                    $deferred->reject(new OutdatedDCAException('You are using an outdated version of DCA. Please make sure you have the latest version from https://github.com/bwmarrin/dca'));
+
+                    return;
+                }
+
+                $readMagicBytes = true;
+            }
+
+            $buff = fread($stream, 4);
+
+            if (empty($buff)) {
+                // wait until it is written
+                $this->loop->addTimer(0.01, $getMetadata);
+
+                return;
+            }
+
+            $jsonLen = reset(unpack('l', $buff));
+            $json = json_decode(fread($stream, $jsonLen), true);
+
+            $deferred->notify($json);
+
+            $processff2opus();
+        };
+
+        $getMetadata();
 
         return $deferred->promise();
     }
