@@ -577,7 +577,7 @@ class VoiceClient extends EventEmitter
     public function playDCAStream($stream)
     {
         $deferred = new Deferred();
-        $process;
+        $process = null;
 
         if (! $this->ready) {
             $deferred->reject(new \Exception('Voice Client is not ready.'));
@@ -733,10 +733,15 @@ class VoiceClient extends EventEmitter
                 return;
             }
 
-            $jsonLen = reset(unpack('l', $buff));
+            $buff = unpack('l', $buff);
+            $jsonLen = reset($buff);
             $json = json_decode(fread($stream, $jsonLen), true);
 
-            $deferred->notify($json);
+            if (!is_null($json)) {
+                $this->frameSize = $json['opus']['frame_size'] / 48;
+
+                $deferred->notify($json);
+            }
 
             $processff2opus();
         };
