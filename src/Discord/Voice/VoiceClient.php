@@ -704,7 +704,7 @@ class VoiceClient extends EventEmitter
 
         $readMagicBytes = false;
 
-        $getMetadata = function () use (&$getMetadata, &$readMagicBytes, $stream, $deferred, $processff2opus) {
+        $getMetadata = function () use (&$getMetadata, &$readMagicBytes, $stream, &$deferred, $processff2opus) {
             if (!$readMagicBytes) {
                 $magicBytes = fread($stream, 4);
 
@@ -743,7 +743,7 @@ class VoiceClient extends EventEmitter
                 $deferred->notify($json);
             }
 
-            $processff2opus();
+            $this->loop->addTimer(0.5, $processff2opus);
         };
 
         $getMetadata();
