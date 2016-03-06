@@ -14,6 +14,7 @@ namespace Discord\Voice;
 use Discord\Exceptions\DCANotFoundException;
 use Discord\Exceptions\FFmpegNotFoundException;
 use Discord\Exceptions\FileNotFoundException;
+use Discord\Exceptions\OutdatedDCAException;
 use Discord\Helpers\Collection;
 use Discord\Helpers\Process;
 use Discord\Parts\Channel\Channel;
@@ -600,6 +601,20 @@ class VoiceClient extends EventEmitter
         $noDataHeader = false;
 
         $this->setSpeaking(true);
+
+        // read metadata and magic bytes
+        $magicBytes = fread($stream, 4);
+
+        if ($magicBytes !== "DCA1") {
+            $deferred->reject(new OutdatedDCAException('You are using an outdated version of DCA. Please make sure you have the latest version from https://github.com/bwmarrin/dca'));
+
+            return $deferred->promise();
+        }
+
+        $jsonLen = reset(unpack('l', fread($stream, 4)));
+        $json = json_decode(fread($stream, $jsonLen), true);
+
+        $deferred->notify($json);
 
         $processff2opus = function () use (&$processff2opus, $stream, &$noData, &$noDataHeader, $deferred, &$count, $process) {
             if ($this->isPaused) {
