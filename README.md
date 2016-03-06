@@ -26,6 +26,7 @@ Todo list is available in the [`TODO.md`](TODO.md) file.
 {
 	"require": {
 		"team-reflex/discord-php": ">=3.1.2",
+		"(optional)"
 		"symfony/var-dumper": ">=3.0.3"
 	}
 }
@@ -84,6 +85,11 @@ If you need any help feel free to join the [DiscordAPI Server](https://discord.g
 ### Other Libraries
 
 You can find a comparison and list of all other Discord libraries over at the [DiscordAPI Comparison Page](https://discordapi.com/unofficial/comparison.html) (thanks @abalabahaha!)
+
+### Contributing
+
+We are open to anyone contributing as long as you follow our code standards. We use PSR-4 for our autoloading standard and PSR-2 for our code formatting standard. Please, if you send in pull requests follow these standards.
+ Page](https://discordapi.com/unofficial/comparison.html) (thanks @abalabahaha!)
 
 ### Contributing
 
