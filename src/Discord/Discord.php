@@ -180,10 +180,10 @@ class Discord
     {
         if ($id instanceof Part) {
             $id = $id->id;
+        }
 
-            if (is_null($id)) {
-                return null;
-            }
+        if (!is_int($id)) {
+            return;
         }
 
         $ms = ($id >> 22) + self::DISCORD_EPOCH;
