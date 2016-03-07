@@ -252,6 +252,11 @@ class Channel extends Part
 
         $overwrites = [];
 
+        // Will return an empty collection when you don't have permission.
+        if (is_null($this->attributes['permission_overwrites'])) {
+            return new Collection();
+        }
+
         foreach ($this->attributes['permission_overwrites'] as $index => $data) {
             $data = (array) $data;
             $data['channel_id'] = $this->attributes['id'];
