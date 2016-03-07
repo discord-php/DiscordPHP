@@ -26,7 +26,7 @@ Todo list is available in the [`TODO.md`](TODO.md) file.
 {
 	"require": {
 		"team-reflex/discord-php": ">=3.1.2",
-		//optional!
+		"Optional ↓"
 		"symfony/var-dumper": ">=3.0.3"
 	}
 }
