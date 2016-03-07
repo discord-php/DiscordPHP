@@ -39,8 +39,7 @@ class GuildUpdate extends Event
 
         foreach ($discord->guilds as $index => $guild) {
             if ($guild->id == $data->id) {
-                $discord->guilds->pull($index);
-                $discord->guilds->push($guild);
+                $discord->guilds[$index] = $guild;
 
                 break;
             }

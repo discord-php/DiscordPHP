@@ -44,15 +44,13 @@ class GuildRoleUpdate extends Event
             if ($guild->id == $data->guild_id) {
                 foreach ($guild->roles as $rindex => $role) {
                     if ($role->id == $data->id) {
-                        $guild->roles->pull($rindex);
-                        $guild->roles->push($data);
+                        $guild->roles[$rindex] = $data;
 
                         break;
                     }
                 }
 
-                $discord->guilds->pull($index);
-                $discord->guilds->push($guild);
+                $discord->guilds[$index] = $guild;
 
                 break;
             }

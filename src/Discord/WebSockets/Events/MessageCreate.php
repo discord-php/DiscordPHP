@@ -42,11 +42,8 @@ class MessageCreate extends Event
                 if ($channel->id == $data->channel_id) {
                     $channel->messages->push($data);
 
-                    $guild->channels->pull($cindex);
-                    $guild->channels->push($channel);
-
-                    $discord->guilds->pull($index);
-                    $discord->guilds->push($guild);
+                    $guild->channels[$cindex] = $channel;
+                    $discord->guilds[$index] = $guild;
 
                     return $discord;
                 }

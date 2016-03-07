@@ -46,8 +46,7 @@ class GuildRoleDelete extends Event
                     }
                 }
 
-                $discord->guilds->pull($index);
-                $discord->guilds->push($guild);
+                $discord->guilds[$index] = $guild;
 
                 break;
             }
