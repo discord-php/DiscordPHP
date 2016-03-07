@@ -89,4 +89,4 @@ You can find a comparison and list of all other Discord libraries over at the [D
 
 ### Contributing
 
-We are open to anyone contributing as long as you follow our code standards. We use PSR-4 for our autoloading standard and PSR-2 for our code formatting standard. Please, if you send in pull requests follow these standards.
+We are open to anyone contributing as long as you follow our code standards. We use PSR-4 for our autoloading standard and PSR-2 for our code formatting standard. Please, if you send in pull requests follow these standards and that you are making pull requests for the develop branch, changes to master are automaticly ignored. 
