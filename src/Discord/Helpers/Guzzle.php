@@ -89,10 +89,23 @@ class Guzzle
         $done = false;
         $finalRes = null;
         $content = (is_null($content)) ? null : json_encode($content);
+        $count = 0;
 
         while (! $done) {
             $request = new Request($method, $query_url, $headers, $content);
             $response = $guzzle->send($request);
+
+            // Bad Gateway
+            // Cloudflare SSL Handshake
+            if ($response->getStatusCode() == 502 || $response->getStatusCode() == 525) {
+                if ($count > 3) {
+                    self::handleError($response->getStatusCode(), $response->getReasonPhrase(), $response->getBody(true), $url);
+                    continue;
+                }
+
+                $count++;
+                continue;
+            }
 
             // Rate limiting
             if ($response->getStatusCode() == 429) {
