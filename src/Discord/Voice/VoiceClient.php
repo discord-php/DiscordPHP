@@ -642,8 +642,6 @@ class VoiceClient extends EventEmitter
                 return;
             }
 
-            $startTime = microtime(true);
-
             $header = @fread($stream, 2);
 
             if (! $header) {
@@ -700,11 +698,8 @@ class VoiceClient extends EventEmitter
             }
 
             $this->streamTime = $count * $this->frameSize;
-            $endTime = microtime(true);
 
-            $diff = $endTime - $startTime;
-
-            $this->loop->addTimer(($this->frameSize / 1000) - $diff, $processff2opus);
+            $this->loop->addTimer($this->startTime + $this->streamTime / 1000 - microtime(true), $processff2opus);
         };
 
         $readMagicBytes = false;
@@ -749,6 +744,8 @@ class VoiceClient extends EventEmitter
             }
 
             $this->loop->addTimer(0.5, $processff2opus);
+
+            $this->startTime = microtime(true);
         };
 
         $getMetadata();
