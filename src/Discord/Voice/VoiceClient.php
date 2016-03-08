@@ -642,8 +642,6 @@ class VoiceClient extends EventEmitter
                 return;
             }
 
-            $startTime = microtime(true);
-
             $header = @fread($stream, 2);
 
             if (! $header) {
@@ -700,25 +698,19 @@ class VoiceClient extends EventEmitter
             }
 
             $this->streamTime = $count * $this->frameSize;
-            $endTime = microtime(true);
 
-            $diff = $endTime - $startTime;
-
-            $this->loop->addTimer(($this->frameSize / 1000) - $diff, $processff2opus);
+            $this->loop->addTimer($this->startTime + $this->streamTime / 1000 - microtime(true), $processff2opus);
         };
 
         $readMagicBytes = false;
+        $readJsonLeng = false;
 
-        $getMetadata = function () use (&$getMetadata, &$readMagicBytes, $stream, &$deferred, $processff2opus) {
+        $jsonLen = 0;
+        $jsonBuff = '';
+
+        $this->loop->addReadStream($stream, function ($stream) use ($deferred, &$readMagicBytes, &$readJsonLeng, &$jsonLen, &$jsonBuff, $processff2opus) {
             if (! $readMagicBytes) {
                 $magicBytes = fread($stream, 4);
-
-                if (empty($magicBytes)) {
-                    // wait until it is written
-                    $this->loop->addTimer(0.01, $getMetadata);
-
-                    return;
-                }
 
                 if ($magicBytes !== self::DCA_VERSION) {
                     $deferred->reject(new OutdatedDCAException('You are using an outdated version of DCA. Please make sure you have the latest version from https://github.com/bwmarrin/dca'));
@@ -727,20 +719,31 @@ class VoiceClient extends EventEmitter
                 }
 
                 $readMagicBytes = true;
-            }
-
-            $buff = fread($stream, 4);
-
-            if (empty($buff)) {
-                // wait until it is written
-                $this->loop->addTimer(0.01, $getMetadata);
 
                 return;
             }
 
-            $buff = unpack('l', $buff);
-            $jsonLen = reset($buff);
-            $json = json_decode(fread($stream, $jsonLen), true);
+            if (! $readJsonLeng) {
+                $len = fread($stream, 4);
+                $len = unpack('l', $len);
+                $jsonLen = reset($len);
+
+                $readJsonLeng = true;
+
+                return;
+            }
+
+            $jsonBuffTemp = fread($stream, $jsonLen);
+            $buffTempLeng = strlen($jsonBuffTemp);
+
+            if ($buffTempLeng < $jsonLen) {
+                $jsonLen -= $buffTempLeng;
+                $jsonBuff .= $jsonBuffTemp;
+
+                return;
+            }
+
+            $json = json_decode($jsonBuff, true);
 
             if (! is_null($json)) {
                 $this->frameSize = $json['opus']['frame_size'] / 48;
@@ -748,11 +751,12 @@ class VoiceClient extends EventEmitter
                 $deferred->notify($json);
             }
 
+            $this->loop->removeReadStream($stream);
             $this->loop->addTimer(0.5, $processff2opus);
-        };
 
-        $getMetadata();
-
+            $this->startTime = microtime(true) + 0.5;
+        });
+        
         return $deferred->promise();
     }
 
