@@ -745,7 +745,7 @@ class VoiceClient extends EventEmitter
 
             $this->loop->addTimer(0.5, $processff2opus);
 
-            $this->startTime = microtime(true);
+            $this->startTime = microtime(true) + 0.5;
         };
 
         $getMetadata();
