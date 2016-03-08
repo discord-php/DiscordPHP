@@ -735,10 +735,10 @@ class VoiceClient extends EventEmitter
 
             $jsonBuffTemp = fread($stream, $jsonLen);
             $buffTempLeng = strlen($jsonBuffTemp);
+            $jsonBuff .= $jsonBuffTemp;
 
             if ($buffTempLeng < $jsonLen) {
                 $jsonLen -= $buffTempLeng;
-                $jsonBuff .= $jsonBuffTemp;
 
                 return;
             }
