@@ -42,12 +42,16 @@ $ws->on('ready', function ($discord) use ($ws) {
 
     // Here we will just log all messages.
     $ws->on(Event::MESSAGE_CREATE, function ($message, $discord, $newdiscord) {
+      // We are just checking if the message equils to ping and replying to the user with a pong!
+      if($message->content == "ping"){
+        $message->reply("pong!");
+        }
         $reply = $message->timestamp->format('d/m/y H:i:s').' - '; // Format the message timestamp.
         $reply .= $message->full_channel->guild->name.' - ';
         $reply .= $message->author->username.' - '; // Add the message author's username onto the string.
         $reply .= $message->content; // Add the message content.
-
         echo $reply.PHP_EOL; // Finally, echo the message with a PHP end of line.
+
     });
 });
 

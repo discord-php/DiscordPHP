@@ -10,6 +10,35 @@ An API to interact with the popular text and voice service Discord.
 
 Todo list is available in the [`TODO.md`](TODO.md) file.
 
+### Notes
+
+- If your bot is in a large number of guilds, PHP may crash because it has ran out of allocated memory. (200 guilds, 140mb memory usage and increases)
+	- You can increase the allocated memory by doing `ini_set('memory_limit', '{number-of-mb}M');` at the top of your bot file. Note: Change `{number-of-mb}` to the number of megabytes.
+- If a guild has more than 250 members, only online members will be available.
+
+### How To Install
+
+- In order to install DiscordPHP, please be sure that you have a version of PHP that is 5.5.9 or higher
+- and that you have composer installed if not here's a link https://getcomposer.org
+- Once you have the appropriate version of PHP and composer.
+- Create a json file called `composer.json` with this content
+```json
+{
+	"require": {
+		"team-reflex/discord-php": ">=3.1.2",
+		"Optional ↓"
+		"symfony/var-dumper": ">=3.0.3"
+	}
+}
+```
+Now run `php composer.phar install` (if you have composer installed locally) (if you have composer installed globally run `composer install` instead)
+this should install the dependencies
+in the folder called `vendor`.
+
+### Troubleshooting
+- If you're getting problems with Guzzle when running your bot please download this [certificate](https://www.dropbox.com/s/angtnh3lqrszs6x/cacert.pem?dl=0) *put it somewhere* and put this line into your `php.ini` file `curl.cainfo = "directory to the cert\cacert.pem"`
+- If you need more help then contact `@Uniquoooo` in the discordapi Server.
+
 ### Basic WebSocket client
 
 ```php
@@ -57,6 +86,7 @@ If you need any help feel free to join the [DiscordAPI Server](https://discord.g
 
 You can find a comparison and list of all other Discord libraries over at the [DiscordAPI Comparison Page](https://discordapi.com/unofficial/comparison.html) (thanks @abalabahaha!)
 
+
 ### Contributing
 
-We are open to anyone contributing as long as you follow our code standards. We use PSR-4 for our autoloading standard and PSR-2 for our code formatting standard. Please, if you send in pull requests follow these standards.
+We are open to anyone contributing as long as you follow our code standards. We use PSR-4 for our autoloading standard and PSR-2 for our code formatting standard. Please, if you send in pull requests follow these standards and that you are making pull requests for the develop branch, changes to master are automaticly ignored. 
