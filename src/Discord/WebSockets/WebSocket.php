@@ -249,8 +249,8 @@ class WebSocket extends EventEmitter
             }
         });
 
-        $ws->on('close', function ($ws) {
-            $this->emit('close', [$ws, $this->discord]);
+        $ws->on('close', function ($ws, $reason) {
+            $this->emit('close', [$ws, $reason, $this->discord]);
 
             if ($this->reconnectCount >= 4) {
                 $this->emit('ws-reconnect-max', [$this->discord]);
