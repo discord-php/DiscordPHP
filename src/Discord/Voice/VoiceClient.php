@@ -505,7 +505,7 @@ class VoiceClient extends EventEmitter
             return $deferred->promise();
         }
 
-        $process = $this->dcaConvert($file, $channels);
+        $process = $this->dcaEncode($file, $channels);
         $process->start($this->loop);
 
         $this->playDCAStream($process)->then(function ($result) use ($deferred) {
@@ -549,7 +549,7 @@ class VoiceClient extends EventEmitter
             $stream = new Stream($stream, $this->loop);
         }
 
-        $process = $this->dcaConvert('', $channels);
+        $process = $this->dcaEncode('', $channels);
         $process->start($this->loop);
 
         $stream->pipe($process->stdin);
@@ -1223,12 +1223,9 @@ class VoiceClient extends EventEmitter
 
         if (is_null($decoder)) {
             // make a decoder
-            $flags = [
-                '-mode', 'decode',
-            ];
-
-            $decoder = new Process("{$this->dca} ".implode(' ', $flags));
+            $decoder = $this->dcaDecode();
             $decoder->start($this->loop);
+
             $decoder->stdout->on('data', function ($data) use ($ss) {
                 $this->emit("voice.{$ss->ssrc}", [$data, $this]);
                 $this->emit("voice.{$ss->user_id}", [$data, $this]);
@@ -1242,7 +1239,7 @@ class VoiceClient extends EventEmitter
         }
 
         $buff = new Buffer(strlen($vp->getData()) + 2);
-        $buff->write(pack('v', strlen($vp->getData())), 0);
+        $buff->write(pack('s', strlen($vp->getData())), 0);
         $buff->write($vp->getData(), 2);
 
         $decoder->stdin->write((string) $buff);
@@ -1310,14 +1307,14 @@ class VoiceClient extends EventEmitter
     }
 
     /**
-     * Converts a file with DCA.
+     * Encodes a file to Opus with DCA.
      *
-     * @param string $filename The file name that will be converted
+     * @param string $filename The file name that will be encoded.
      * @param int    $channels How many audio channels to encode with.
      *
      * @return Process A ReactPHP Child Process
      */
-    public function dcaConvert($filename = '', $channels = 2)
+    public function dcaEncode($filename = '', $channels = 2)
     {
         if (! empty($filename) && ! file_exists($filename)) {
             return;
@@ -1330,6 +1327,32 @@ class VoiceClient extends EventEmitter
              '-as', round($this->frameSize * 48), // Frame Size
             '-vol', round($this->volume * 2.56), // Volume
               '-i', (empty($filename)) ? 'pipe:0' : "\"{$filename}\"", // Input file
+        ];
+
+        $flags = implode(' ', $flags);
+
+        return new Process("{$this->dca} {$flags}");
+    }
+
+    /**
+     * Decodes a file from Opus with DCA.
+     *
+     * @param int $channels  How many audio channels to decode with.
+     * @param int $frameSize The Opus packet frame size.
+     *
+     * @return Process A ReactPHP Child Process
+     */
+    public function dcaDecode($channels = 2, $frameSize = null)
+    {
+        if (is_null($frameSize)) {
+            $frameSize = round($this->frameSize * 48);
+        }
+
+        $flags = [
+            '-ac', $channels, // Channels
+            '-ab', round($this->bitrate / 1000), // Bitrate
+            '-as', $frameSize, // Frame Size
+            '-mode', 'decode' // Decode mode
         ];
 
         $flags = implode(' ', $flags);
