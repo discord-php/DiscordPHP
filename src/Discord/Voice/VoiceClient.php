@@ -1336,10 +1336,10 @@ class VoiceClient extends EventEmitter
 
         switch (PHP_OS) {
             case 'Darwin': // Mac OS
-                $this->dca = './bin/dca-darwin';
+                $this->dca = realpath(__DIR__.'/../../../bin/dca-darwin');
                 return;
             case 'Linux':
-                $this->dca = './bin/dca-linux';
+                $this->dca = realpath(__DIR__.'/../../../bin/dca-linux');
                 return;
         }
 
