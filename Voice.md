@@ -3,7 +3,7 @@
 Voice in DiscordPHP has 2 main requirements:
 
 - FFmpeg
-- DCA (Discord Audio)
+- DCA (Packaged with DiscordPHP)
 
 ### Encryption
 
@@ -26,6 +26,8 @@ Unencrypted audio will be removed in the near future. It will throw an exception
 2. Run `brew install ffmpeg`.
 
 #### DCA
+
+The latest DCA version is packaged with DiscordPHP. It is reccomended to use this version and not install another.
 
 Instructions to install DCA can be found in the DCA repo's [readme](https://github.com/bwmarrin/dca).
 
