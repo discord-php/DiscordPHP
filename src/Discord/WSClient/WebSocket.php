@@ -146,7 +146,7 @@ class WebSocket implements EventEmitterInterface, ConnectionInterface
                         break;
                     default:
                         $this->close($frame->getPayload());
-                        
+
                         $close_op = unpack('n', (binary) $frame->getPayload());
                         $close_op = reset($close_op);
                         $this->emit('close', [$close_op]);

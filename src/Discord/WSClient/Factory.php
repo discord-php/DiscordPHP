@@ -55,7 +55,7 @@ class Factory
         $this->_secureConnector = new SecureConnector($this->_connector, $loop);
     }
 
-    public function __invoke($url, array $subProtocols = [], array $headers = [])
+    public function createConnection($url, array $subProtocols = [], array $headers = [])
     {
         try {
             $request = $this->generateRequest($url, $subProtocols, $headers);
