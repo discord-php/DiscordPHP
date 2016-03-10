@@ -137,7 +137,7 @@ class WebSocket implements EventEmitterInterface, ConnectionInterface
                         $close_op = reset($close_op);
 
                         if (strlen($frame->getPayload()) > 2) {
-                            $reason = substr(2, strlen($frame->getPayload()));
+                            $reason = substr($frame->getPayload(), 2, strlen($frame->getPayload()));
                         } else {
                             $reason = "";
                         }
@@ -158,13 +158,13 @@ class WebSocket implements EventEmitterInterface, ConnectionInterface
                         $close_op = reset($close_op);
 
                         if (strlen($frame->getPayload()) > 2) {
-                            $reason = substr(2, strlen($frame->getPayload()));
+                            $reason = substr($frame->getPayload(), 2, strlen($frame->getPayload()));
                         } else {
                             $reason = "";
                         }
 
                         $this->emit('close', [$close_op, $reason]);
-                        
+
                         return;
                 }
             }
