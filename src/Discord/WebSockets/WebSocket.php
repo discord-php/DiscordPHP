@@ -82,6 +82,13 @@ class WebSocket extends EventEmitter
     protected $reconnectCount = 0;
 
     /**
+     * If the WebSocket is reconnecting.
+     *
+     * @var bool Whether the WebSocket is reconnecting.
+     */
+    protected $reconnecting = false;
+
+    /**
      * The Voice Client instance.
      *
      * @var VoiceClient The Voice Client.
@@ -247,7 +254,11 @@ class WebSocket extends EventEmitter
                 $this->discord->setCache('guilds', $guilds);
 
                 // after we do everything, emit ready
-                $this->emit('ready', [$this->discord]);
+                if (! $this->reconnecting) {
+                    $this->emit('ready', [$this->discord]);
+                }
+
+                $this->reconnecting = false;
             }
         });
 
@@ -261,11 +272,14 @@ class WebSocket extends EventEmitter
                 return;
             }
 
-            $this->emit('reconnecting', [$this->discord]);
+            if (! $this->reconnecting) {
+                $this->emit('reconnecting', [$this->discord]);
 
-            $this->getGateway();
-            $this->wsfactory->createConnection($this->gateway)->then([$this, 'handleWebSocketConnection'], [$this, 'handleWebSocketError']);
-            ++$this->reconnectCount;
+                $this->reconnecting = true;
+                $this->getGateway();
+                $this->wsfactory->createConnection($this->gateway)->then([$this, 'handleWebSocketConnection'], [$this, 'handleWebSocketError']);
+                ++$this->reconnectCount;
+            }
         });
 
         $ws->on('error', function ($error, $ws) {
@@ -287,17 +301,6 @@ class WebSocket extends EventEmitter
     public function handleWebSocketError($e)
     {
         $this->emit('ws-connect-error', [$e]);
-
-        if ($this->reconnectCount >= 4) {
-            $this->emit('ws-reconnect-max', [$this->discord]);
-            $this->loop->stop();
-
-            return;
-        }
-
-        $this->getGateway();
-        $this->wsfactory->createConnection($this->gateway)->then([$this, 'handleWebSocketConnection'], [$this, 'handleWebSocketError']);
-        ++$this->reconnectCount;
     }
 
     /**
