@@ -1151,6 +1151,29 @@ class VoiceClient extends EventEmitter
     }
 
     /**
+     * Checks if the user is speaking.
+     *
+     * @param int $id Either the User ID or SSRC.
+     *
+     * @return bool Whether the user is speaking.
+     */
+    public function isSpeaking($id)
+    {
+        $ssrc = @$this->speakingStatus[$id];
+        $user = $this->speakingStatus->get('user_id', $id);
+
+        if (is_null($ssrc) && ! is_null($user)) {
+            return $user->speaking;
+        } elseif (is_null($user) && ! is_null($ssrc)) {
+            return $user->speaking;
+        } elseif (is_null($user) && is_null($ssrc)) {
+            return $user->speaking;
+        } else {
+            return false;
+        }
+    }
+
+    /**
      * Handles a voice state update.
      *
      * @param object $data The WebSocket data.
@@ -1159,16 +1182,7 @@ class VoiceClient extends EventEmitter
      */
     public function handleVoiceStateUpdate($data)
     {
-        if (
-            is_null($data->channel_id) &&
-            is_null($data->guild_id)
-        ) {
-            $ss = $this->speakingStatus->get('user_id', $data->user_id);
-
-            if (is_null($ss)) {
-                return; // no speaking status to remove
-            }
-
+        $removeDecoder = function ($ss) {
             $decoder = @$this->voiceDecoders[$ss->ssrc];
 
             if (is_null($decoder)) {
@@ -1178,13 +1192,19 @@ class VoiceClient extends EventEmitter
             $decoder->close();
             unset($this->voiceDecoders[$ss->ssrc]);
             unset($this->speakingStatus[$ss->ssrc]);
+        };
 
-            return;
+        $ss = $this->speakingStatus->get('user_id', $data->user_id);
+
+        if (is_null($ss)) {
+            return; // not in our channel
         }
 
-        if ($data->channel_id != $this->channel->id) {
-            return; // doesnt matter for us, not our channel
+        if ($data->channel_id == $this->channel->id) {
+            return; // ignore, just a mute/deaf change
         }
+
+        $removeDecoder($ss);
     }
 
     /**
@@ -1223,19 +1243,30 @@ class VoiceClient extends EventEmitter
 
         if (is_null($decoder)) {
             // make a decoder
-            $decoder = $this->dcaDecode();
-            $decoder->start($this->loop);
+            $createDecoder = function () use (&$createDecoder, $ss) {
+                $decoder = $this->dcaDecode();
+                $decoder->start($this->loop);
 
-            $decoder->stdout->on('data', function ($data) use ($ss) {
-                $this->emit("voice.{$ss->ssrc}", [$data, $this]);
-                $this->emit("voice.{$ss->user_id}", [$data, $this]);
-            });
-            $decoder->stderr->on('data', function ($data) use ($ss) {
-                $this->emit("voice.{$ss->ssrc}.stderr", [$data, $this]);
-                $this->emit("voice.{$ss->user_id}.stderr", [$data, $this]);
-            });
+                $decoder->stdout->on('data', function ($data) use ($ss) {
+                    $this->emit("voice.{$ss->ssrc}", [$data, $this]);
+                    $this->emit("voice.{$ss->user_id}", [$data, $this]);
+                });
+                $decoder->stderr->on('data', function ($data) use ($ss) {
+                    $this->emit("voice.{$ss->ssrc}.stderr", [$data, $this]);
+                    $this->emit("voice.{$ss->user_id}.stderr", [$data, $this]);
+                });
+                $decoder->on('exit', function ($code, $term) use ($ss, &$createDecoder) {
+                    if ($code > 0) {
+                        $this->emit('decoder-error', [$code, $term, $ss]);
 
-            $this->voiceDecoders[$ss->ssrc] = $decoder;
+                        $createDecoder();
+                    }
+                });
+
+                $this->voiceDecoders[$ss->ssrc] = $decoder;
+            };
+
+            $createDecoder();
         }
 
         $buff = new Buffer(strlen($vp->getData()) + 2);

@@ -41,9 +41,17 @@ class Collection extends BaseCollection
                     }
                 }
             } else {
-                if (isset($item[$key])) {
-                    if ($item[$key] == $value) {
-                        return $item;
+                if (is_array($item)) {
+                    if (isset($item[$key])) {
+                        if ($item[$key] == $value) {
+                            return $item;
+                        }
+                    }
+                } else {
+                    if (isset($item->{$key})) {
+                        if ($item->{$key} == $value) {
+                            return $item;
+                        }
                     }
                 }
             }
@@ -73,9 +81,17 @@ class Collection extends BaseCollection
                     }
                 }
             } else {
-                if (isset($item[$key])) {
-                    if ($item[$key] == $value) {
-                        $items->push($item);
+                if (is_array($item)) {
+                    if (isset($item[$key])) {
+                        if ($item[$key] == $value) {
+                            $items->push($item);
+                        }
+                    }
+                } else {
+                    if (isset($item->{$key})) {
+                        if ($item->{$key} == $value) {
+                            $items->push($item);
+                        }
                     }
                 }
             }
