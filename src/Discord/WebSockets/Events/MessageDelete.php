@@ -47,15 +47,13 @@ class MessageDelete extends Event
                         }
                     }
 
-                    $guild->channels->pull($cindex);
-                    $guild->channels->push($channel);
+                    $guild->channels[$cindex] = $channel;
 
                     break;
                 }
             }
 
-            $discord->guilds->pull($index);
-            $discord->guilds->push($guild);
+            $discord->guilds[$index] = $guild;
         }
 
         return $discord;

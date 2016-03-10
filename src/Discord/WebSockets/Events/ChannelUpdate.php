@@ -41,8 +41,8 @@ class ChannelUpdate extends Event
             if ($guild->id == $data->guild_id) {
                 foreach ($guild->channels as $cindex => $channel) {
                     if ($channel->id == $data->id) {
-                        $guild->channels->pull($cindex);
-                        $guild->channels->push($data);
+                        $guild->channels[$cindex] = $data;
+                        $discord->guilds[$index] = $guild;
 
                         break;
                     }

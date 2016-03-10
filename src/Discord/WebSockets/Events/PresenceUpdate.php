@@ -41,15 +41,13 @@ class PresenceUpdate extends Event
                         $member->game = $data->game;
                         $member->status = $data->status;
 
-                        $guild->members->pull($mindex);
-                        $guild->members->push($member);
+                        $guild->members[$mindex] = $member;
 
                         break;
                     }
                 }
 
-                $discord->guilds->pull($index);
-                $discord->guilds->push($guild);
+                $discord->guilds[$index] = $guild;
 
                 break;
             }

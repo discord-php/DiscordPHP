@@ -40,15 +40,10 @@ class MessageCreate extends Event
         foreach ($discord->guilds as $index => $guild) {
             foreach ($guild->channels as $cindex => $channel) {
                 if ($channel->id == $data->channel_id) {
-                    if ($channel->cacheHas('messages')) {
-                        $channel->messages->push($data);
+                    $channel->messages->push($data);
 
-                        $guild->channels->pull($cindex);
-                        $guild->channels->push($channel);
-
-                        $discord->guilds->pull($index);
-                        $discord->guilds->push($guild);
-                    }
+                    $guild->channels[$cindex] = $channel;
+                    $discord->guilds[$index] = $guild;
 
                     return $discord;
                 }

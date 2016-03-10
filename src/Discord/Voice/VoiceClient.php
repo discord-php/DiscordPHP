@@ -319,7 +319,7 @@ class VoiceClient extends EventEmitter
         $resolver = (new DNSFactory())->createCached('8.8.8.8', $loop);
         $udpfac = new DatagramFactory($loop, $resolver);
 
-        $wsfac("wss://{$this->endpoint}")->then(function (WS $ws) use ($udpfac, &$loop) {
+        $wsfac->createCOnnection("wss://{$this->endpoint}")->then(function (WS $ws) use ($udpfac, &$loop) {
             $this->voiceWebsocket = $ws;
 
             $firstPack = true;

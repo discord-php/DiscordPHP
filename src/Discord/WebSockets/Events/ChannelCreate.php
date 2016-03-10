@@ -40,8 +40,8 @@ class ChannelCreate extends Event
         foreach ($discord->guilds as $index => $guild) {
             if ($guild->id == $data->guild_id) {
                 $guild->channels->push($data);
-                $discord->guilds->pull($index);
-                $discord->guilds->push($guild);
+
+                $discord->guilds[$index] = $guild;
 
                 break;
             }

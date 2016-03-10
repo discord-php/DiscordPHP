@@ -51,7 +51,7 @@ class Handlers
         $this->addHandler(Event::GUILD_BAN_REMOVE, \Discord\WebSockets\Events\GuildBanRemove::class);
 
         // Message handlers
-        $this->addHandler(Event::MESSAGE_CREATE, \Discord\WebSockets\Events\MessageCreate::class);
+        $this->addHandler(Event::MESSAGE_CREATE, \Discord\WebSockets\Events\MessageCreate::class, ['message']);
         $this->addHandler(Event::MESSAGE_DELETE, \Discord\WebSockets\Events\MessageDelete::class);
         $this->addHandler(Event::MESSAGE_UPDATE, \Discord\WebSockets\Events\MessageUpdate::class);
 
@@ -69,14 +69,18 @@ class Handlers
     /**
      * Adds a handler to the list.
      *
-     * @param string $event     The WebSocket event name.
-     * @param string $classname The Event class name.
+     * @param string $event        The WebSocket event name.
+     * @param string $classname    The Event class name.
+     * @param array  $alternatives Alternative event names for the handler.
      *
      * @return void
      */
-    public function addHandler($event, $classname)
+    public function addHandler($event, $classname, array $alternatives = [])
     {
-        $this->handlers[$event] = $classname;
+        $this->handlers[$event] = [
+            'class' => $classname,
+            'alternatives' => $alternatives,
+        ];
     }
 
     /**

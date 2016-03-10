@@ -40,15 +40,13 @@ class VoiceStateUpdate extends Event
                         $member->deaf = $data->deaf;
                         $member->mute = $data->mute;
 
-                        $guild->members->pull($mindex);
-                        $guild->members->push($member);
+                        $guild->members[$mindex] = $member;
 
                         break;
                     }
                 }
 
-                $discord->guilds->pull($index);
-                $discord->guilds->push($guild);
+                $discord->guilds[$index] = $guild;
 
                 break;
             }

@@ -132,6 +132,10 @@ class WebSocket implements EventEmitterInterface, ConnectionInterface
                 switch ($opcode) {
                     case Frame::OP_CLOSE:
                         $this->close($frame->getPayload());
+                        
+                        $close_op = unpack('n', (binary) $frame->getPayload());
+                        $close_op = reset($close_op);
+                        $this->emit('close', [$close_op]);
 
                         $close_op = unpack('n', (binary) $frame->getPayload());
                         $close_op = reset($close_op);
