@@ -1320,8 +1320,8 @@ class VoiceClient extends EventEmitter
     public function checkForDCA()
     {
         $binaries = [
-            'dca',
-            'ff2opus',
+            // 'dca',
+            // 'ff2opus',
         ];
 
         foreach ($binaries as $binary) {
@@ -1332,6 +1332,15 @@ class VoiceClient extends EventEmitter
 
                 return;
             }
+        }
+
+        switch (PHP_OS) {
+            case 'Darwin': // Mac OS
+                $this->dca = './bin/dca-darwin';
+                return;
+            case 'Linux':
+                $this->dca = './bin/dca-linux';
+                return;
         }
 
         $this->emit('error', [new DCANotFoundException('No DCA binary was found.')]);
