@@ -39,7 +39,7 @@ class GuildCreate extends Event
             $channel['guild_id'] = $data->id;
             $channelPart = new Channel($channel, true);
 
-            Cache::set("channel.{$channel->id}", $channelPart);
+            Cache::set("channel.{$channelPart->id}", $channelPart);
 
             $channels->push($channelPart);
         }
