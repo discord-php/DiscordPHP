@@ -178,12 +178,20 @@ class WebSocket extends EventEmitter
                 $this->reconnectCount = 0;
 
                 $tts = $data->d->heartbeat_interval / 1000;
-                $this->loop->addPeriodicTimer($tts, function () use ($ws) {
+                $this->heartbeat = $this->loop->addPeriodicTimer($tts, function () use ($ws) {
+                    $time = microtime(true);
                     $this->send([
                         'op' => 1,
-                        'd' => microtime(true) * 1000,
+                        'd' => $time,
                     ]);
+                    $this->emit('heartbeat', [$time]);
                 });
+
+                // don't want to reparse ready
+                if ($this->reconnecting) {
+                    $this->reconnecting = false;
+                    return;
+                }
 
                 $content = $data->d;
                 
@@ -240,17 +248,16 @@ class WebSocket extends EventEmitter
 
                 $this->discord->setCache('guilds', $guilds);
 
-                // after we do everything, emit ready
-                if (! $this->reconnecting) {
-                    $this->emit('ready', [$this->discord]);
-                }
-
-                $this->reconnecting = false;
+                $this->emit('ready', [$this->discord]);
             }
         });
 
         $ws->on('close', function ($ws, $reason) {
             $this->emit('close', [$ws, $reason, $this->discord]);
+
+            if (! is_null($this->heartbeat)) {
+                $this->loop->cancelTimer($this->heartbeat);
+            }
 
             if ($this->reconnectCount >= 4) {
                 $this->emit('ws-reconnect-max', [$this->discord]);
