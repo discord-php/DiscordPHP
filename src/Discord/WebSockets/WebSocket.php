@@ -180,10 +180,10 @@ class WebSocket extends EventEmitter
                 $tts = $data->d->heartbeat_interval / 1000;
                 $this->heartbeat = $this->loop->addPeriodicTimer($tts, function () use ($ws) {
                     $time = microtime(true);
-                    $this->send([
-                        'op' => 1,
-                        'd' => $time,
-                    ]);
+                    // $this->send([
+                    //     'op' => 1,
+                    //     'd' => $time,
+                    // ]);
                     $this->emit('heartbeat', [$time]);
                 });
 

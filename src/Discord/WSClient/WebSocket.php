@@ -135,7 +135,14 @@ class WebSocket implements EventEmitterInterface, ConnectionInterface
                         
                         $close_op = unpack('n', (binary) $frame->getPayload());
                         $close_op = reset($close_op);
-                        $this->emit('close', [$close_op]);
+
+                        if (strlen($frame->getPayload()) > 2) {
+                            $reason = substr(2, strlen($frame->getPayload()));
+                        } else {
+                            $reason = "";
+                        }
+
+                        $this->emit('close', [$close_op, $reason]);
 
                         return;
                     case Frame::OP_PING:
@@ -146,11 +153,18 @@ class WebSocket implements EventEmitterInterface, ConnectionInterface
                         break;
                     default:
                         $this->close($frame->getPayload());
-
+                        
                         $close_op = unpack('n', (binary) $frame->getPayload());
                         $close_op = reset($close_op);
-                        $this->emit('close', [$close_op]);
 
+                        if (strlen($frame->getPayload()) > 2) {
+                            $reason = substr(2, strlen($frame->getPayload()));
+                        } else {
+                            $reason = "";
+                        }
+
+                        $this->emit('close', [$close_op, $reason]);
+                        
                         return;
                 }
             }
