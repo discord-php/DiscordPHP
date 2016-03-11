@@ -193,7 +193,7 @@ class WebSocket extends EventEmitter
                 if (! is_null($this->reconnectResetTimer)) {
                     $this->loop->cancelTimer($this->reconnectResetTimer);
                 }
-
+                
                 $this->reconnectResetTimer = $this->loop->addTimer(60 * 2, function () {
                     $this->reconnectCount = 0;
                 });
@@ -215,11 +215,6 @@ class WebSocket extends EventEmitter
                 }
 
                 $content = $data->d;
-
-                // set user settings obtain guild data etc.
-
-                // user client settings
-                $this->discord->user_settings = $content->user_settings;
 
                 // guilds
                 $guilds = new Collection();
