@@ -18,6 +18,7 @@ use Discord\Exceptions\OutdatedDCAException;
 use Discord\Helpers\Collection;
 use Discord\Helpers\Process;
 use Discord\Parts\Channel\Channel;
+use Discord\Voice\RecieveStream;
 use Discord\WSClient\Factory as WsFactory;
 use Discord\WSClient\WebSocket as WS;
 use Discord\WebSockets\WebSocket;
@@ -258,6 +259,13 @@ class VoiceClient extends EventEmitter
      * @var Collection Voice decoders.
      */
     protected $voiceDecoders;
+
+    /**
+     * Voice audio recieve streams.
+     *
+     * @var array Voice audio recieve streams.
+     */
+    protected $recieveStreams;
 
     /**
      * The volume the audio will be encoded with.
@@ -1208,6 +1216,36 @@ class VoiceClient extends EventEmitter
     }
 
     /**
+     * Gets a recieve voice stream.
+     *
+     * @param int|string $id Either a SSRC or User ID.
+     *
+     * @return React\Promise\Promise
+     */
+    public function getRecieveStream($id)
+    {
+        $deferred = new Deferred();
+
+        if (isset($this->recieveStreams[$id])) {
+            $deferred->resolve($this->recieveStreams[$id]);
+
+            return $deferred->promise();
+        }
+
+        foreach ($this->speakingStatus as $status) {
+            if ($status->user_id == $id) {
+                $deferred->resolve($this->recieveStreams[$status->ssrc]);
+
+                return $deferred->promise();
+            }
+        }
+
+        $deferred->reject(new \Exception("Could not find a recieve stream with the ID \"{$id}\"."));
+
+        return $deferred->promise();
+    }
+
+    /**
      * Handles raw opus data from the UDP server.
      *
      * @param string $message The data from the UDP server.
@@ -1243,13 +1281,16 @@ class VoiceClient extends EventEmitter
 
         if (is_null($decoder)) {
             // make a decoder
+            if (! isset($this->recieveStreams[$ss->ssrc])) {
+                $this->recieveStreams[$ss->ssrc] = new RecieveStream();
+            }
+
             $createDecoder = function () use (&$createDecoder, $ss) {
                 $decoder = $this->dcaDecode();
                 $decoder->start($this->loop);
 
                 $decoder->stdout->on('data', function ($data) use ($ss) {
-                    $this->emit("voice.{$ss->ssrc}", [$data, $this]);
-                    $this->emit("voice.{$ss->user_id}", [$data, $this]);
+                    $this->recieveStreams[$ss->ssrc]->writePCM($data);
                 });
                 $decoder->stderr->on('data', function ($data) use ($ss) {
                     $this->emit("voice.{$ss->ssrc}.stderr", [$data, $this]);

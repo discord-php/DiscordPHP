@@ -89,6 +89,13 @@ class WebSocket extends EventEmitter
     protected $reconnecting = false;
 
     /**
+     * The reconnect reset timer.
+     *
+     * @var TimerInterface THe reconnect reset timer.
+     */
+    protected $reconnectResetTimer;
+
+    /**
      * The Voice Client instance.
      *
      * @var VoiceClient The Voice Client.
@@ -183,7 +190,13 @@ class WebSocket extends EventEmitter
             }
 
             if ($data->t == Event::READY) {
-                $this->reconnectCount = 0;
+                if (! is_null($this->reconnectResetTimer)) {
+                    $this->loop->cancelTimer($this->reconnectResetTimer);
+                }
+
+                $this->reconnectResetTimer = $this->loop->addTimer(60 * 2, function () {
+                    $this->reconnectCount = 0;
+                });
 
                 $tts = $data->d->heartbeat_interval / 1000;
                 $this->heartbeat = $this->loop->addPeriodicTimer($tts, function () use ($ws) {
