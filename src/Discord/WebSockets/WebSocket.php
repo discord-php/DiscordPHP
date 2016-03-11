@@ -156,9 +156,6 @@ class WebSocket extends EventEmitter
 
                     // set user settings obtain guild data etc.
 
-                    // user client settings
-                    $this->discord->user_settings = $content->user_settings;
-
                     // guilds
                     $guilds = new Collection();
 
