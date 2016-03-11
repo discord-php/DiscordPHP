@@ -163,14 +163,7 @@ class WebSocket extends EventEmitter
                         'd' => microtime(true) * 1000,
                     ]);
                 });
-
-                $content = $data->d;
-
-                // set user settings obtain guild data etc.
-
-                // user client settings
-                $this->discord->user_settings = $content->user_settings;
-
+                
                 // guilds
                 $guilds = new Collection();
 
