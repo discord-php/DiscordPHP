@@ -192,6 +192,23 @@ class Discord
     }
 
     /**
+     * Creates a Discord OAuth application.
+     *
+     * @param string $token Your authentication token.
+     * @param string $name Your OAuth app name.
+     */
+    public static function createOauthApp($token, $name)
+    {
+        $response = Guzzle::post('oauth2/applications', [
+            'name' => $name
+        ], true, [
+            'authorization' => $token
+        ]);
+
+        return $response;
+    }
+
+    /**
      * Handles dynamic calls to the class.
      *
      * @param string $name The function name.

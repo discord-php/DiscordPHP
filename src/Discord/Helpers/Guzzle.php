@@ -54,8 +54,9 @@ class Guzzle
         $url = $params[0];
         $content = (isset($params[1])) ? $params[1] : null;
         $auth = (isset($params[2])) ? true : false;
+        $headers = (isset($params[3])) ? $params[3] : [];
 
-        return self::runRequest($name, $url, $content, $auth);
+        return self::runRequest($name, $url, $content, $auth, $headers);
     }
 
     /**
@@ -65,10 +66,11 @@ class Guzzle
      * @param string $url     The endpoint that will be queried.
      * @param array  $content Parameters that will be encoded into JSON and sent with the request.
      * @param bool   $auth    Whether the authentication token will be sent with the request.
+     * @param array $extraHeaders Extra headers to send with the request.
      *
      * @return object An object that was returned from the Discord servers.
      */
-    public static function runRequest($method, $url, $content, $auth)
+    public static function runRequest($method, $url, $content, $auth, $extraHeaders)
     {
         $guzzle = new GuzzleClient(['http_errors' => false, 'allow_redirects' => true]);
         $query_url = self::$base_url."/{$url}";
@@ -85,6 +87,8 @@ class Guzzle
         if (! $auth) {
             $headers['authorization'] = DISCORD_TOKEN;
         }
+
+        $headers = array_merge($headers, $extraHeaders);
 
         $done = false;
         $finalRes = null;

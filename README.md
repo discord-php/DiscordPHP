@@ -82,10 +82,29 @@ If you would like to disable the cache, set the TTL to `0`.
 
 If you need any help feel free to join the [DiscordAPI Server](https://discord.gg/0SBTUU1wZTY56U7l) and ask in the `#php_discordphp` channel. Tag `@Uniquoooo` if you need any help specific to the API.
 
+### Converting to bot account
+
+There is an easy way to convert your normal account into a bot account.
+
+**NOTE:** This is non-reversable. Please be careful when converting your account.
+
+You need to get your main account token (which will own your OAuth application). You can get this by using Chrome devtools.
+
+```php
+$discord = new Discord('bot-email', 'bot-password');
+
+// Create an OAuth app first.
+$app = Discord::createOauthApp('my-account-token', "my bot name");
+
+// Convert the account
+$discord->convertToBot('my-account-token', $app->id, $app->secret);
+
+// Restart your bot.
+```
+
 ### Other Libraries
 
 You can find a comparison and list of all other Discord libraries over at the [DiscordAPI Comparison Page](https://discordapi.com/unofficial/comparison.html) (thanks @abalabahaha!)
-
 
 ### Contributing
 
