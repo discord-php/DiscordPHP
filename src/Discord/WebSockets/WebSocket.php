@@ -163,6 +163,8 @@ class WebSocket extends EventEmitter
                         'd' => microtime(true) * 1000,
                     ]);
                 });
+
+                $content = $data->d;
                 
                 // guilds
                 $guilds = new Collection();
