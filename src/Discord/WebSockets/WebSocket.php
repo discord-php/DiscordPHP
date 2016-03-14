@@ -397,7 +397,7 @@ class WebSocket extends EventEmitter
         $this->send([
             'op' => 2,
             'd' => [
-                'token' => DISCORD_TOKEN,
+                'token' => substr(DISCORD_TOKEN, 4), // temp fix
                 'v' => 3,
                 'properties' => [
                     '$os' => PHP_OS,
@@ -432,6 +432,6 @@ class WebSocket extends EventEmitter
      */
     public function getGateway()
     {
-        return Guzzle::get('gateway')->url;
+        return Guzzle::get('gateway', null, false, ['authorization' => substr(DISCORD_TOKEN, 4)])->url; // temp fix
     }
 }

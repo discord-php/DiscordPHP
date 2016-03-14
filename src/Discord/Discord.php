@@ -209,6 +209,20 @@ class Discord
     }
 
     /**
+     * Creates a Discord instance with a bot token.
+     *
+     * @param string $token The bot token.
+     *
+     * @return \Discord\Discord The Discord instance.
+     */
+    public static function createWithBotToken($token)
+    {
+        $discord = new self(null, null, "Bot {$token}");
+
+        return $discord;
+    }
+
+    /**
      * Handles dynamic calls to the class.
      *
      * @param string $name The function name.
