@@ -93,10 +93,23 @@ class Guzzle
         $done = false;
         $finalRes = null;
         $content = (is_null($content)) ? null : json_encode($content);
+        $count = 0;
 
         while (! $done) {
             $request = new Request($method, $query_url, $headers, $content);
             $response = $guzzle->send($request);
+
+            // Bad Gateway
+            // Cloudflare SSL Handshake
+            if ($response->getStatusCode() == 502 || $response->getStatusCode() == 525) {
+                if ($count > 3) {
+                    self::handleError($response->getStatusCode(), $response->getReasonPhrase(), $response->getBody(true), $url);
+                    continue;
+                }
+
+                $count++;
+                continue;
+            }
 
             // Rate limiting
             if ($response->getStatusCode() == 429) {
@@ -107,7 +120,7 @@ class Guzzle
 
             // Not good!
             if ($response->getStatusCode() < 200 || $response->getStatusCode() > 226) {
-                self::handleError($response->getStatusCode(), $response->getReasonPhrase(), $response->getBody(true));
+                self::handleError($response->getStatusCode(), $response->getReasonPhrase(), $response->getBody(true), $url);
                 continue;
             }
 
@@ -142,17 +155,18 @@ class Guzzle
      * @param int    $error_code The HTTP status code.
      * @param string $message    The HTTP reason phrase.
      * @param string $content    The HTTP response content.
+     * @param string $url        The HTTP url.
      *
      * @throws \Discord\Exceptions\DiscordRequestFailedException Thrown when the request fails.
      * @throws \Discord\Exceptions\ContentTooLongException       Thrown when the content is longer than 2000 characters.
      */
-    public static function handleError($error_code, $message, $content)
+    public static function handleError($error_code, $message, $content, $url)
     {
         if (! is_string($message)) {
             $message = $message->getReasonPhrase();
         }
 
-        $message .= " - {$content}";
+        $message .= " - {$content} - {$url}";
 
         if (Str::contains(strtolower($content), [
                 'longer than 2000 characters',
@@ -169,6 +183,9 @@ class Guzzle
         }
 
         switch ($error_code) {
+            case 404:
+                $response = "Error code 404: This resource does not exist. {$message}";
+                break;
             case 400:
                 $response = "Error code 400: This usually means you have entered an incorrect Email or Password. {$message}";
                 break;

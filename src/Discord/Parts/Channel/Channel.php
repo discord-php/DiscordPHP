@@ -36,7 +36,7 @@ class Channel extends Part
     /**
      * {@inheritdoc}
      */
-    protected $fillable = ['id', 'name', 'type', 'topic', 'guild_id', 'position', 'is_private', 'last_message_id', 'permission_overwrites', 'messages', 'message_count'];
+    protected $fillable = ['id', 'name', 'type', 'topic', 'guild_id', 'position', 'is_private', 'last_message_id', 'permission_overwrites', 'messages', 'message_count', 'bitrate'];
 
     /**
      * {@inheritdoc}
@@ -184,14 +184,29 @@ class Channel extends Part
     /**
      * Returns the messages attribute.
      *
+     * Note: This is only used for messages that have been
+     * recieved while the WebSocket has been running. If you
+     * want message history use the `message_history` attribute
+     * which is non-cached.
+     *
      * @return Collection A collection of messages.
      */
     public function getMessagesAttribute()
     {
-        if (isset($this->attributes_cache['messages'])) {
-            return $this->attributes_cache['messages'];
+        if (! isset($this->attributes_cache['messages'])) {
+            $this->attributes_cache['messages'] = new Collection();
         }
 
+        return $this->attributes_cache['messages'];
+    }
+
+    /**
+     * Returns the message history attribute.
+     *
+     * @return Collection A collection of messages.
+     */
+    public function getMessageHistoryAttribute()
+    {
         if ($this->message_count >= 100) {
             trigger_error('Requesting more messages than 100 will only return 100.');
         }
@@ -206,8 +221,6 @@ class Channel extends Part
         }
 
         $messages = new Collection($messages);
-
-        $this->attributes_cache['messages'] = $messages;
 
         return $messages;
     }

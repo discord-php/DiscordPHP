@@ -397,6 +397,18 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
     }
 
     /**
+     * Checks if the cache has a specific key.
+     *
+     * @param string $key The key to check for.
+     *
+     * @return bool Whether the cache has the key.
+     */
+    public function cacheHas($key)
+    {
+        return isset($this->attributes_cache[$key]);
+    }
+
+    /**
      * Gets an attribute via key. Used for ArrayAccess.
      *
      * @param string $key The attribute key.

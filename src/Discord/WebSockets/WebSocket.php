@@ -18,12 +18,14 @@ use Discord\Helpers\Guzzle;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\User\Member;
+use Discord\Voice\VoiceClient;
 use Discord\WSClient\Factory as WsFactory;
 use Discord\WSClient\WebSocket as WebSocketInstance;
 use Evenement\EventEmitter;
 use Ratchet\WebSocket\Version\RFC6455\Frame;
 use React\EventLoop\Factory as LoopFactory;
 use React\EventLoop\LoopInterface;
+use React\Promise\Deferred;
 
 /**
  * This class is the base for the Discord WebSocket.
@@ -85,6 +87,13 @@ class WebSocket extends EventEmitter
      * @var bool Whether the WebSocket is reconnecting.
      */
     protected $reconnecting = false;
+
+    /**
+     * The reconnect reset timer.
+     *
+     * @var TimerInterface THe reconnect reset timer.
+     */
+    protected $reconnectResetTimer;
 
     /**
      * The Voice Client instance.
@@ -171,11 +180,23 @@ class WebSocket extends EventEmitter
                     $this->emit('mention', [$handlerData, $this->discord, $newDiscord]);
                 }
 
+                if ($data->t == Event::VOICE_STATE_UPDATE) {
+                    if (! is_null($this->voice)) {
+                        $this->voice->handleVoiceStateUpdate($data->d);
+                    }
+                }
+
                 $this->discord = $newDiscord;
             }
 
             if ($data->t == Event::READY) {
-                $this->reconnectCount = 0;
+                if (! is_null($this->reconnectResetTimer)) {
+                    $this->loop->cancelTimer($this->reconnectResetTimer);
+                }
+                
+                $this->reconnectResetTimer = $this->loop->addTimer(60 * 2, function () {
+                    $this->reconnectCount = 0;
+                });
 
                 $tts = $data->d->heartbeat_interval / 1000;
                 $this->heartbeat = $this->loop->addPeriodicTimer($tts, function () use ($ws) {
@@ -192,6 +213,11 @@ class WebSocket extends EventEmitter
                     $this->reconnecting = false;
                     return;
                 }
+<<<<<<< HEAD
+=======
+
+                $content = $data->d;
+>>>>>>> voice
 
                 $content = $data->d;
                 
@@ -295,6 +321,68 @@ class WebSocket extends EventEmitter
     public function handleWebSocketError($e)
     {
         $this->emit('ws-connect-error', [$e]);
+<<<<<<< HEAD
+=======
+    }
+
+    /**
+     * Joins a voice channel.
+     *
+     * @param Channel $channel The channel to join.
+     * @param bool    $mute    Whether you should be mute when you join the channel.
+     * @param bool    $deaf    Whether you should be deaf when you join the channel.
+     *
+     * @return \React\Promise\Promise
+     */
+    public function joinVoiceChannel(Channel $channel, $mute = false, $deaf = false)
+    {
+        $deferred = new Deferred();
+        $arr = ['user_id' => $this->discord->id, 'deaf' => $deaf, 'mute' => $mute];
+
+        if ($channel->type != Channel::TYPE_VOICE) {
+            $deferred->reject(new \Exception('You cannot join a Text channel.'));
+
+            return $deferred->promise();
+        }
+
+        $closure = function ($message) use (&$closure, &$arr, $deferred, $channel) {
+            $data = json_decode($message);
+
+            if ($data->t == 'VOICE_STATE_UPDATE') {
+                $arr['session'] = $data->d->session_id;
+            } elseif ($data->t == 'VOICE_SERVER_UPDATE') {
+                $arr['token'] = $data->d->token;
+                $arr['endpoint'] = $data->d->endpoint;
+
+                $vc = new VoiceClient($this, $this->loop, $channel, $arr);
+                $vc->once('ready', function () use ($vc, $deferred, $channel) {
+                    $vc->setBitrate($channel->bitrate)->then(function () use ($vc, $deferred) {
+                        $deferred->resolve($vc);
+                    });
+                });
+                $vc->once('error', function ($e) use ($deferred) {
+                    $deferred->reject($e);
+                });
+                $this->voice = $vc;
+
+                $this->ws->removeListener('message', $closure);
+            }
+        };
+
+        $this->ws->on('message', $closure);
+
+        $this->send([
+            'op' => 4,
+            'd' => [
+                'guild_id' => $channel->guild_id,
+                'channel_id' => $channel->id,
+                'self_mute' => $mute,
+                'self_deaf' => $deaf,
+            ],
+        ]);
+
+        return $deferred->promise();
+>>>>>>> voice
     }
 
     /**
