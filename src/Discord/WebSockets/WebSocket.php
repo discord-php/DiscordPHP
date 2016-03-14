@@ -213,11 +213,6 @@ class WebSocket extends EventEmitter
                     $this->reconnecting = false;
                     return;
                 }
-<<<<<<< HEAD
-=======
-
-                $content = $data->d;
->>>>>>> voice
 
                 $content = $data->d;
                 
@@ -321,8 +316,6 @@ class WebSocket extends EventEmitter
     public function handleWebSocketError($e)
     {
         $this->emit('ws-connect-error', [$e]);
-<<<<<<< HEAD
-=======
     }
 
     /**
@@ -382,7 +375,6 @@ class WebSocket extends EventEmitter
         ]);
 
         return $deferred->promise();
->>>>>>> voice
     }
 
     /**
