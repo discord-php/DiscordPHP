@@ -327,7 +327,7 @@ class VoiceClient extends EventEmitter
         $resolver = (new DNSFactory())->createCached('8.8.8.8', $loop);
         $udpfac = new DatagramFactory($loop, $resolver);
 
-        $wsfac->createCOnnection("wss://{$this->endpoint}")->then(function (WS $ws) use ($udpfac, &$loop) {
+        $wsfac->createConnection("wss://{$this->endpoint}")->then(function (WS $ws) use ($udpfac, &$loop) {
             $this->voiceWebsocket = $ws;
 
             $firstPack = true;
@@ -466,6 +466,10 @@ class VoiceClient extends EventEmitter
 
             $ws->on('error', function ($e) {
                 $this->emit('ws-error', [$e]);
+            });
+
+            $ws->on('close', function ($op, $reason) {
+                $this->emit('ws-close', [$op, $reason, $this]);
             });
 
             if (! $this->sentLoginFrame) {
@@ -634,7 +638,7 @@ class VoiceClient extends EventEmitter
                 $this->stopAudio = false;
                 fclose($stream);
 
-                $this->setSpeaking(false);
+                // $this->setSpeaking(false);
 
                 $this->seq = 0;
                 $this->timestamp = 0;
@@ -999,6 +1003,7 @@ class VoiceClient extends EventEmitter
      */
     public function send(array $data)
     {
+        dump($data);
         $frame = new Frame(json_encode($data), true);
         $this->voiceWebsocket->send($frame);
     }
@@ -1110,11 +1115,11 @@ class VoiceClient extends EventEmitter
     }
 
     /**
-     * Leaves the voice channel.
+     * Closes the voice client.
      *
      * @return \React\Promise\Promise
      */
-    public function leave()
+    public function close()
     {
         $deferred = new Deferred();
 
@@ -1124,22 +1129,22 @@ class VoiceClient extends EventEmitter
             return $deferred->promise();
         }
 
-        $this->stop();
-        $this->setSpeaking(false);
+        // $this->stop();
+        // $this->setSpeaking(false);
         $this->ready = false;
 
         $this->mainWebsocket->send([
             'op' => 4,
             'd' => [
-                'guild_id' => null,
+                'guild_id' => $this->channel->guild_id,
                 'channel_id' => null,
-                'self_mute' => false,
-                'self_deaf' => false,
+                'self_mute' => true,
+                'self_deaf' => true,
             ],
         ]);
 
-        $this->voiceWebsocket->close();
         $this->client->close();
+        $this->voiceWebsocket->close();
 
         $this->heartbeat_interval = null;
         $this->loop->cancelTimer($this->heartbeat);
@@ -1152,6 +1157,8 @@ class VoiceClient extends EventEmitter
         $this->startTime = null;
         $this->streamTime = 0;
         $this->speakingStatus = new Collection();
+
+        $this->emit('close');
 
         $deferred->resolve();
 

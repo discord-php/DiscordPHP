@@ -96,11 +96,11 @@ class WebSocket extends EventEmitter
     protected $reconnectResetTimer;
 
     /**
-     * The Voice Client instance.
+     * An array of voice clients.
      *
-     * @var VoiceClient The Voice Client.
+     * @var array Array of voice clients.
      */
-    protected $voice;
+    protected $voiceClients = [];
 
     /**
      * The WebSocket heartbeat.
@@ -181,8 +181,8 @@ class WebSocket extends EventEmitter
                 }
 
                 if ($data->t == Event::VOICE_STATE_UPDATE) {
-                    if (! is_null($this->voice)) {
-                        $this->voice->handleVoiceStateUpdate($data->d);
+                    if (isset($this->voiceClients[$data->d->guild_id])) {
+                        $this->voiceClients[$data->d->guild_id]->handleVoiceStateUpdate($data->d);
                     }
                 }
 
@@ -338,6 +338,12 @@ class WebSocket extends EventEmitter
             return $deferred->promise();
         }
 
+        if (isset($this->voiceClients[$channel->guild_id])) {
+            $deferred->reject(new \Exception('You cannot join more than one voice channel per guild.'));
+
+            return $deferred->promise();
+        }
+
         $closure = function ($message) use (&$closure, &$arr, $deferred, $channel) {
             $data = json_decode($message);
 
@@ -356,7 +362,10 @@ class WebSocket extends EventEmitter
                 $vc->once('error', function ($e) use ($deferred) {
                     $deferred->reject($e);
                 });
-                $this->voice = $vc;
+                $vc->once('close', function () use ($channel) {
+                    unset($this->voiceClients[$channel->guild_id]);
+                });
+                $this->voiceClients[$channel->guild_id] = $vc;
 
                 $this->ws->removeListener('message', $closure);
             }
@@ -423,6 +432,7 @@ class WebSocket extends EventEmitter
      */
     public function send($data)
     {
+        dump($data);
         $frame = new Frame(json_encode($data), true);
         $this->ws->send($frame);
     }
