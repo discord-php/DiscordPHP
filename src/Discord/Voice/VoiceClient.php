@@ -14,6 +14,7 @@ namespace Discord\Voice;
 use Discord\Exceptions\DCANotFoundException;
 use Discord\Exceptions\FFmpegNotFoundException;
 use Discord\Exceptions\FileNotFoundException;
+use Discord\Exceptions\LibSodiumNotFoundException;
 use Discord\Exceptions\OutdatedDCAException;
 use Discord\Helpers\Collection;
 use Discord\Helpers\Process;
@@ -166,14 +167,7 @@ class VoiceClient extends EventEmitter
      *
      * @var string The voice mode.
      */
-    protected $mode = 'plain';
-
-    /**
-     * Whether we are encrypting the voice data.
-     *
-     * @var bool Encrypting the voice data.
-     */
-    protected $encrypted = false;
+    protected $mode = 'xsalsa20_poly1305';
 
     /**
      * The secret key used for encrypting voice.
@@ -392,9 +386,22 @@ class VoiceClient extends EventEmitter
                             $port = substr($message, strlen($message) - 2);
                             $port = unpack('v', $port)[1];
 
-                            if (function_exists('\Sodium\crypto_secretbox')) {
-                                $this->mode = 'xsalsa20_poly1305'; // voice encryption!
-                                $this->encrypted = true;
+                            if (! function_exists('\Sodium\crypto_secretbox')) {
+                                $this->emit('error', [new LibSodiumNotFoundException('libsodium-php could not be found.')]);
+                                $this->client->close();
+                                $this->voiceWebsocket->close();
+
+                                $this->mainWebsocket->send([
+                                    'op' => 4,
+                                    'd' => [
+                                        'guild_id' => $this->channel->guild_id,
+                                        'channel_id' => null,
+                                        'self_mute' => true,
+                                        'self_deaf' => true,
+                                    ],
+                                ]);
+
+                                return;
                             }
 
                             $payload = [
@@ -784,7 +791,7 @@ class VoiceClient extends EventEmitter
             return;
         }
 
-        $packet = new VoicePacket($data, $this->ssrc, $this->seq, $this->timestamp, $this->encrypted, $this->secret_key);
+        $packet = new VoicePacket($data, $this->ssrc, $this->seq, $this->timestamp, true, $this->secret_key);
         $this->client->send((string) $packet);
 
         $this->streamTime = microtime(true);
@@ -1260,16 +1267,14 @@ class VoiceClient extends EventEmitter
      */
     protected function handleAudioData($message)
     {
-        if ($this->encrypted) {
-            $voicePacket = VoicePacket::make($message);
-            $nonce = new Buffer(24);
-            $nonce->write($voicePacket->getHeader(), 0);
-            $message = \Sodium\crypto_secretbox_open($voicePacket->getData(), (string) $nonce, $this->secret_key);
+        $voicePacket = VoicePacket::make($message);
+        $nonce = new Buffer(24);
+        $nonce->write($voicePacket->getHeader(), 0);
+        $message = \Sodium\crypto_secretbox_open($voicePacket->getData(), (string) $nonce, $this->secret_key);
 
-            if ($message === false) {
-                // if we can't decode the message, drop it silently.
-                return;
-            }
+        if ($message === false) {
+            // if we can't decode the message, drop it silently.
+            return;
         }
 
         $this->emit('raw', [$message, $this]);

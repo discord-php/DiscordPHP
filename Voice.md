@@ -4,12 +4,7 @@ Voice in DiscordPHP has 2 main requirements:
 
 - FFmpeg
 - DCA (Packaged with DiscordPHP)
-
-### Encryption
-
-Currently, encryption is only enabled if you have `libsodium` as well as `libsodium-php` installed. If you don't, your audio will be unencrypted.
-
-Unencrypted audio will be removed in the near future. It will throw an exception if it is not installed.
+- libsodium-php
 
 ### Installations
 
@@ -32,6 +27,10 @@ The latest DCA version is packaged with DiscordPHP. It is reccomended to use thi
 Instructions to install DCA can be found in the DCA repo's [readme](https://github.com/bwmarrin/dca).
 
 **Note:** DCA must be installed in your path with the name `dca` or `ff2opus`.
+
+#### libsodium-php
+
+https://github.com/jedisct1/libsodium-php
 
 ### Usage
 
