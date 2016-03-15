@@ -189,6 +189,12 @@ class WebSocket extends EventEmitter
                 $this->discord = $newDiscord;
             }
 
+            if ($data->t == 'VOICE_SERVER_UPDATE') {
+                if (isset($this->voiceClients[$data->d->guild_id])) {
+                    $this->voiceClients[$data->d->guild_id]->handleVoiceServerChange((array) $data->d);
+                }
+            }
+
             if ($data->t == Event::READY) {
                 if (! is_null($this->reconnectResetTimer)) {
                     $this->loop->cancelTimer($this->reconnectResetTimer);
@@ -349,8 +355,16 @@ class WebSocket extends EventEmitter
             $data = json_decode($message);
 
             if ($data->t == 'VOICE_STATE_UPDATE') {
+                if ($data->d->guild_id != $channel->guild_id) {
+                    return;
+                }
+
                 $arr['session'] = $data->d->session_id;
             } elseif ($data->t == 'VOICE_SERVER_UPDATE') {
+                if ($data->d->guild_id != $channel->guild_id) {
+                    return;
+                }
+                
                 $arr['token'] = $data->d->token;
                 $arr['endpoint'] = $data->d->endpoint;
 
@@ -433,7 +447,6 @@ class WebSocket extends EventEmitter
      */
     public function send($data)
     {
-        dump($data);
         $frame = new Frame(json_encode($data), true);
         $this->ws->send($frame);
     }

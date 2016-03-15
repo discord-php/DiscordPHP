@@ -284,6 +284,13 @@ class VoiceClient extends EventEmitter
     protected $bitrate = 64000;
 
     /**
+     * Is the voice client reconnecting?
+     *
+     * @var bool Whether the voice client is reconnecting.
+     */
+    protected $reconnecting = false;
+
+    /**
      * Constructs the Voice Client instance.
      *
      * @param WebSocket     $websocket The main WebSocket client.
@@ -455,12 +462,19 @@ class VoiceClient extends EventEmitter
                     case 4: // ready
                         $this->ready = true;
                         $this->mode = $data->d->mode;
+                        $this->secret_key = '';
 
                         foreach ($data->d->secret_key as $part) {
                             $this->secret_key .= pack('C*', $part);
                         }
 
-                        $this->emit('ready', [$this]);
+                        if (! $this->reconnecting) {
+                            $this->emit('ready', [$this]);
+                        } else {
+                            $this->reconnecting = false;
+                            $this->emit('resumed', [$this]);
+                        }
+
                         break;
                     case 5: // user started speaking
                         $this->emit('speaking', [$data->d->speaking, $data->d->user_id, $this]);
@@ -495,6 +509,35 @@ class VoiceClient extends EventEmitter
         });
 
         return $loop;
+    }
+
+    /**
+     * Handles a voice server change.
+     *
+     * @param array $data New voice server information.
+     *
+     * @return void 
+     */
+    public function handleVoiceServerChange(array $data = [])
+    {
+        $this->reconnecting = true;
+        $this->sentLoginFrame = false;
+        $this->pause();
+
+        $this->client->close();
+        $this->voiceWebsocket->close();
+
+        $this->loop->cancelTimer($this->heartbeat);
+        $this->loop->cancelTimer($this->udpHeartbeat);
+
+        $this->data['token'] = $data['token']; // set the token if it changed
+        $this->endpoint = str_replace([':80', ':443'], '', $data['endpoint']);
+
+        $this->loop = $this->initSockets($this->loop);
+
+        $this->on('resumed', function () {
+            $this->unpause();
+        });
     }
 
     /**
@@ -1009,7 +1052,6 @@ class VoiceClient extends EventEmitter
      */
     public function send(array $data)
     {
-        dump($data);
         $frame = new Frame(json_encode($data), true);
         $this->voiceWebsocket->send($frame);
     }
