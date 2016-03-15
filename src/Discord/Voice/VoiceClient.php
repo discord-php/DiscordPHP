@@ -569,15 +569,7 @@ class VoiceClient extends EventEmitter
         $process = $this->dcaEncode($file, $channels);
         $process->start($this->loop);
 
-        $this->playDCAStream($process)->then(function ($result) use ($deferred) {
-            $deferred->resolve($result);
-        }, function ($e) use ($deferred) {
-            $deferred->reject($e);
-        }, function ($meta) use ($deferred) {
-            $deferred->notify($meta);
-        });
-
-        return $deferred->promise();
+        return $this->playDCAStream($process);
     }
 
     /**
@@ -615,17 +607,7 @@ class VoiceClient extends EventEmitter
 
         $stream->pipe($process->stdin);
 
-        $this->playDCAStream($process)->then(function ($result) use ($deferred, $stream) {
-            $stream->close();
-            $deferred->resolve($result);
-        }, function ($e) use ($deferred, $stream) {
-            $stream->close();
-            $deferred->reject($e);
-        }, function ($meta) use ($deferred) {
-            $deferred->notify($meta);
-        });
-
-        return $deferred->promise();
+        return $this->playDCAStream($process);
     }
 
     /**
@@ -684,10 +666,8 @@ class VoiceClient extends EventEmitter
             }
 
             if ($this->stopAudio) {
-                $this->stopAudio = false;
+                $this->setSpeaking(false);
                 fclose($stream);
-
-                // $this->setSpeaking(false);
 
                 $this->seq = 0;
                 $this->timestamp = 0;
@@ -698,6 +678,7 @@ class VoiceClient extends EventEmitter
                     $process->close();
                 }
 
+                $this->stopAudio = false;
                 $deferred->resolve(true);
 
                 return;
