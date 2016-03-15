@@ -36,7 +36,7 @@ class Discord
     /**
      * The Discord epoch value.
      *
-     * @var int 
+     * @var int
      */
     const DISCORD_EPOCH = 1420070400000;
 
@@ -182,7 +182,7 @@ class Discord
             $id = $id->id;
         }
 
-        if (!is_int($id)) {
+        if (! is_int($id)) {
             return;
         }
 
@@ -195,14 +195,14 @@ class Discord
      * Creates a Discord OAuth application.
      *
      * @param string $token Your authentication token.
-     * @param string $name Your OAuth app name.
+     * @param string $name  Your OAuth app name.
      */
     public static function createOauthApp($token, $name)
     {
         $response = Guzzle::post('oauth2/applications', [
-            'name' => $name
+            'name' => $name,
         ], true, [
-            'authorization' => $token
+            'authorization' => $token,
         ]);
 
         return $response;

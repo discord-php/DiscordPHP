@@ -139,7 +139,7 @@ class WebSocket extends EventEmitter
      *
      * @param WebSocketInstance $ws The WebSocket instance.
      *
-     * @return void 
+     * @return void
      */
     public function handleWebSocketConnection(WebSocketInstance &$ws)
     {
@@ -193,7 +193,7 @@ class WebSocket extends EventEmitter
                 if (! is_null($this->reconnectResetTimer)) {
                     $this->loop->cancelTimer($this->reconnectResetTimer);
                 }
-                
+
                 $this->reconnectResetTimer = $this->loop->addTimer(60 * 2, function () {
                     $this->reconnectCount = 0;
                 });
@@ -211,11 +211,12 @@ class WebSocket extends EventEmitter
                 // don't want to reparse ready
                 if ($this->reconnecting) {
                     $this->reconnecting = false;
+
                     return;
                 }
 
                 $content = $data->d;
-                
+
                 // guilds
                 $guilds = new Collection();
 
@@ -311,7 +312,7 @@ class WebSocket extends EventEmitter
      *
      * @param \Exception $e The error.
      *
-     * @return void 
+     * @return void
      */
     public function handleWebSocketError($e)
     {

@@ -18,7 +18,6 @@ use Discord\Exceptions\OutdatedDCAException;
 use Discord\Helpers\Collection;
 use Discord\Helpers\Process;
 use Discord\Parts\Channel\Channel;
-use Discord\Voice\RecieveStream;
 use Discord\WSClient\Factory as WsFactory;
 use Discord\WSClient\WebSocket as WS;
 use Discord\WebSockets\WebSocket;
@@ -764,7 +763,7 @@ class VoiceClient extends EventEmitter
 
             $this->startTime = microtime(true) + 0.5;
         });
-        
+
         return $deferred->promise();
     }
 
@@ -1378,9 +1377,11 @@ class VoiceClient extends EventEmitter
         switch (PHP_OS) {
             case 'Darwin': // Mac OS
                 $this->dca = realpath(__DIR__.'/../../../bin/dca-darwin');
+
                 return;
             case 'Linux':
                 $this->dca = realpath(__DIR__.'/../../../bin/dca-linux');
+
                 return;
         }
 
@@ -1433,7 +1434,7 @@ class VoiceClient extends EventEmitter
             '-ac', $channels, // Channels
             '-ab', round($this->bitrate / 1000), // Bitrate
             '-as', $frameSize, // Frame Size
-            '-mode', 'decode' // Decode mode
+            '-mode', 'decode', // Decode mode
         ];
 
         $flags = implode(' ', $flags);
