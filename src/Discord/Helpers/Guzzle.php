@@ -62,11 +62,11 @@ class Guzzle
     /**
      * Runs http calls.
      *
-     * @param string $method  The request method.
-     * @param string $url     The endpoint that will be queried.
-     * @param array  $content Parameters that will be encoded into JSON and sent with the request.
-     * @param bool   $auth    Whether the authentication token will be sent with the request.
-     * @param array $extraHeaders Extra headers to send with the request.
+     * @param string $method       The request method.
+     * @param string $url          The endpoint that will be queried.
+     * @param array  $content      Parameters that will be encoded into JSON and sent with the request.
+     * @param bool   $auth         Whether the authentication token will be sent with the request.
+     * @param array  $extraHeaders Extra headers to send with the request.
      *
      * @return object An object that was returned from the Discord servers.
      */
@@ -107,7 +107,7 @@ class Guzzle
                     continue;
                 }
 
-                $count++;
+                ++$count;
                 continue;
             }
 

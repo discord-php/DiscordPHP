@@ -69,9 +69,9 @@ class Client extends Part
     /**
      * Converts the account to a bot.
      *
-     * @param string $token Your authentication token.
-     * @param int $appID The OAuth2 app ID.
-     * @param int $secret The OAuth2 secret.
+     * @param string $token  Your authentication token.
+     * @param int    $appID  The OAuth2 app ID.
+     * @param int    $secret The OAuth2 secret.
      *
      * @return bool Whether the account was converted.
      */
@@ -212,7 +212,7 @@ class Client extends Part
 
             $attributes['email'] = $this->email;
             $attributes['password'] = $this->attributes['password'];
-        
+
             if (! empty($this->attributes['new_password'])) {
                 $attributes['new_password'] = $this->attributes['new_password'];
             }
