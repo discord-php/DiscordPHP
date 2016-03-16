@@ -50,123 +50,17 @@ class Discord
     /**
      * Logs into the Discord servers.
      *
-     * @param string $email    The Email for the account you are logging into.
-     * @param string $password The password for the account you are logging into.
-     * @param string $token    The account's token (optional)
+     * @param string $token The bot account's token.
      *
      * @return void
      */
-    public function __construct($email = null, $password = null, $token = null)
+    public function __construct($token)
     {
-        $this->setToken($email, $password, $token);
+        @define('DISCORD_TOKEN', "Bot {$token}");
 
         $request = Guzzle::get('users/@me');
 
         $this->client = new Client((array) $request, true);
-    }
-
-    /**
-     * Check the filesystem for the token.
-     *
-     * @param string $email The Email that will be checked for token caching
-     *
-     * @return string|null The Discord token or null.
-     */
-    protected function checkForCaching($email)
-    {
-        if (file_exists(getcwd().'/discord/'.md5($email))) {
-            $file = file_get_contents(getcwd().'/discord/'.md5($email));
-
-            return $file;
-        }
-    }
-
-    /**
-     * Sets the token for the API.
-     *
-     * @param string $email    The Email for the account you are logging into.
-     * @param string $password The password for the account you are logging into.
-     * @param string $token    The account's token (optional)
-     *
-     * @return void
-     */
-    protected function setToken($email, $password, $token)
-    {
-        if (! is_null($token)) {
-            @define('DISCORD_TOKEN', $token);
-
-            return;
-        }
-
-        if (! is_null($token = $this->checkForCaching($email))) {
-            @define('DISCORD_TOKEN', $token);
-
-            return;
-        }
-
-        $request = Guzzle::post('auth/login', [
-            'email' => $email,
-            'password' => $password,
-        ], true);
-
-        try {
-            if (! file_exists(getcwd().'/discord')) {
-                mkdir(getcwd().'/discord');
-            }
-
-            file_put_contents(getcwd().'/discord/'.md5($email), $request->token);
-        } catch (\Exception $e) {
-        }
-
-        @define('DISCORD_TOKEN', $request->token);
-
-        return;
-    }
-
-    /**
-     * Logs out of Discord.
-     *
-     * @return bool Whether the login succeeded or failed.
-     */
-    public function logout()
-    {
-        $request = Guzzle::post('auth/logout', [
-            'token' => DISCORD_TOKEN,
-        ]);
-
-        $this->client = null;
-
-        return true;
-    }
-
-    /**
-     * Accepts a Discord channel invite.
-     *
-     * @param string $code The invite code. (not including the URL)
-     *
-     * @return Invite The invite that was accepted, in \Discord\Parts\Guild\Invite format.
-     *
-     * @throws InviteInvalidException Thrown when the invite is invalid or not found.
-     *
-     * @see \Discord\Parts\Guild\Invite The type that the invite is returned in.
-     */
-    public function acceptInvite($code)
-    {
-        if ($code instanceof Invite) {
-            $code = $invite->code;
-        }
-
-        if (preg_match('/https:\/\/discord.gg\/(.+)/', $code, $matches)) {
-            $code = $matches[1];
-        }
-
-        try {
-            $request = Guzzle::post("invite/{$code}");
-        } catch (\Exception $e) {
-            throw new InviteInvalidException('The invite is invalid or has expired.');
-        }
-
-        return new Invite((array) $request, true);
     }
 
     /**
@@ -192,23 +86,6 @@ class Discord
     }
 
     /**
-     * Creates a Discord OAuth application.
-     *
-     * @param string $token Your authentication token.
-     * @param string $name  Your OAuth app name.
-     */
-    public static function createOauthApp($token, $name)
-    {
-        $response = Guzzle::post('oauth2/applications', [
-            'name' => $name,
-        ], true, [
-            'authorization' => $token,
-        ]);
-
-        return $response;
-    }
-
-    /**
      * Creates a Discord instance with a bot token.
      *
      * @param string $token The bot token.
@@ -217,7 +94,7 @@ class Discord
      */
     public static function createWithBotToken($token)
     {
-        $discord = new self(null, null, "Bot {$token}");
+        $discord = new self($token);
 
         return $discord;
     }

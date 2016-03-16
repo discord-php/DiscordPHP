@@ -463,7 +463,7 @@ class WebSocket extends EventEmitter
      */
     public function sendLoginFrame()
     {
-        $token = (substr(DISCORD_TOKEN, 0, 4) === 'Bot ') ? substr(DISCORD_TOKEN, 4) : DISCORD_TOKEN; // temp fix
+        $token = (substr(DISCORD_TOKEN, 0, 4) === 'Bot ') ? substr(DISCORD_TOKEN, 4) : DISCORD_TOKEN;
 
         $this->send([
             'op' => 2,
@@ -503,7 +503,7 @@ class WebSocket extends EventEmitter
      */
     public function getGateway()
     {
-        $token = (substr(DISCORD_TOKEN, 0, 4) === 'Bot ') ? substr(DISCORD_TOKEN, 4) : DISCORD_TOKEN; // temp fix
+        $token = (substr(DISCORD_TOKEN, 0, 4) === 'Bot ') ? substr(DISCORD_TOKEN, 4) : DISCORD_TOKEN;
         return Guzzle::get('gateway', null, false, ['authorization' => $token])->url;
     }
 }
