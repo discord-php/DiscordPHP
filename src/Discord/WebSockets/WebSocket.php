@@ -19,8 +19,8 @@ use Discord\Parts\Channel\Channel;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\User\Member;
 use Discord\Voice\VoiceClient;
-use Discord\WSClient\Factory as WsFactory;
-use Discord\WSClient\WebSocket as WebSocketInstance;
+use Ratchet\Client\Connector as WsFactory;
+use Ratchet\Client\WebSocket as WebSocketInstance;
 use Evenement\EventEmitter;
 use Ratchet\WebSocket\Version\RFC6455\Frame;
 use React\EventLoop\Factory as LoopFactory;
@@ -126,7 +126,7 @@ class WebSocket extends EventEmitter
 
         $this->handlers = new Handlers();
 
-        $this->wsfactory->createConnection($this->gateway)->then(
+        $this->wsfactory->__invoke($this->gateway)->then(
             [$this, 'handleWebSocketConnection'],
             [$this, 'handleWebSocketError']
         );
@@ -143,7 +143,8 @@ class WebSocket extends EventEmitter
      */
     public function handleWebSocketConnection(WebSocketInstance &$ws)
     {
-        $ws->on('message', function ($data, $ws) {
+        $ws->on('message', function ($message, $ws) {
+            $data = $message->isBinary() ? zlib_decode($message->getPayload()) : $message->getPayload();
             $this->emit('raw', [$data, $this->discord]);
             $data = json_decode($data);
 
@@ -447,8 +448,8 @@ class WebSocket extends EventEmitter
      */
     public function send($data)
     {
-        $frame = new Frame(json_encode($data), true);
-        $this->ws->send($frame);
+        $json = json_encode($data);
+        $this->ws->send($json);
     }
 
     /**
