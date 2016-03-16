@@ -110,6 +110,20 @@ class WebSocket extends EventEmitter
     protected $heartbeat;
 
     /**
+     * The current session ID.
+     *
+     * @var string The session ID.
+     */
+    protected $sessionId = '';
+
+    /**
+     * The WebSocket message sequence.
+     *
+     * @var int The sequence.
+     */
+    protected $seq;
+
+    /**
      * Constructs the WebSocket instance.
      *
      * @param Discord            $discord The Discord REST client instance.
@@ -141,7 +155,7 @@ class WebSocket extends EventEmitter
      *
      * @return void
      */
-    public function handleWebSocketConnection(WebSocketInstance &$ws)
+    public function handleWebSocketConnection(WebSocketInstance $ws)
     {
         $ws->on('message', function ($message, $ws) {
             $data = $message->isBinary() ? zlib_decode($message->getPayload()) : $message->getPayload();
@@ -165,6 +179,10 @@ class WebSocket extends EventEmitter
                 }
 
                 return;
+            }
+
+            if (isset($data->s)) {
+                $this->seq = $data->s;
             }
 
             if (! is_null($handlerSettings = $this->handlers->getHandler($data->t))) {
@@ -194,6 +212,20 @@ class WebSocket extends EventEmitter
                 if (isset($this->voiceClients[$data->d->guild_id])) {
                     $this->voiceClients[$data->d->guild_id]->handleVoiceServerChange((array) $data->d);
                 }
+            }
+
+            if ($data->t == Event::RESUMED) {
+                $tts = $data->d->heartbeat_interval / 1000;
+                $this->heartbeat = $this->loop->addPeriodicTimer($tts, function () use ($ws) {
+                    $time = microtime(true);
+                    $this->send([
+                        'op' => 1,
+                        'd' => $time,
+                    ]);
+                    $this->emit('heartbeat', [$time]);
+                });
+
+                $this->emit('reconnected', [$this]);
             }
 
             if ($data->t == Event::READY) {
@@ -277,6 +309,8 @@ class WebSocket extends EventEmitter
 
                 $this->discord->setCache('guilds', $guilds);
 
+                $this->sessionId = $content->session_id;
+
                 $this->emit('ready', [$this->discord]);
             }
         });
@@ -300,7 +334,7 @@ class WebSocket extends EventEmitter
 
                 $this->reconnecting = true;
                 $this->getGateway();
-                $this->wsfactory->createConnection($this->gateway)->then([$this, 'handleWebSocketConnection'], [$this, 'handleWebSocketError']);
+                $this->wsfactory->__invoke($this->gateway)->then([$this, 'handleWebSocketConnection'], [$this, 'handleWebSocketError']);
                 ++$this->reconnectCount;
             }
         });
@@ -311,7 +345,17 @@ class WebSocket extends EventEmitter
 
         $this->ws = $ws;
 
-        $this->sendLoginFrame();
+        if ($this->reconnecting) {
+            $this->send([
+                'op' => 6,
+                'd' => [
+                    'session_id' => $this->sessionId,
+                    'seq' => $this->seq,
+                ],
+            ]);
+        } else {
+            $this->sendLoginFrame();
+        }
     }
 
     /**

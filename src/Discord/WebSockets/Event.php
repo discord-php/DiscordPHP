@@ -19,6 +19,7 @@ class Event
 {
     // General
     const READY = 'READY';
+    const RESUMED = 'RESUMED';
     const PRESENCE_UPDATE = 'PRESENCE_UPDATE';
     const TYPING_START = 'TYPING_START';
     const USER_SETTINGS_UPDATE = 'USER_SETTINGS_UPDATE';
