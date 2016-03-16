@@ -22,16 +22,4 @@ class LoginLogoutTest extends PHPUnit_Framework_TestCase
     {
         $discord = new Discord(getenv('DISCORD_TOKEN'));
     }
-
-    /**
-     * Tests logging out of Discord.
-     *
-     * @return void
-     */
-    public function testLoggingOut()
-    {
-        $discord = new Discord(getenv('DISCORD_TOKEN'));
-
-        $discord->logout();
-    }
 }
