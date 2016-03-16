@@ -1497,4 +1497,14 @@ class VoiceClient extends EventEmitter
 
         return new Process("{$this->dca} {$flags}");
     }
+
+    /**
+     * Returns the connected channel.
+     *
+     * @return Channel The connected channel.
+     */
+    public function getChannel()
+    {
+        return $this->channel;
+    }
 }
