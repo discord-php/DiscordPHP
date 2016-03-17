@@ -157,7 +157,9 @@ class WebSocket extends EventEmitter
      */
     public function handleWebSocketConnection(WebSocketInstance $ws)
     {
-        $ws->on('message', function ($message, $ws) {
+        $largeServers = [];
+
+        $ws->on('message', function ($message, $ws) use (&$largeServers) {
             $data = $message->isBinary() ? zlib_decode($message->getPayload()) : $message->getPayload();
             $this->emit('raw', [$data, $this->discord]);
             $data = json_decode($data);
@@ -208,7 +210,7 @@ class WebSocket extends EventEmitter
                 $this->discord = $newDiscord;
             }
 
-            if ($data->t == 'VOICE_SERVER_UPDATE') {
+            if ($data->t == Event::VOICE_SERVER_UPDATE) {
                 if (isset($this->voiceClients[$data->d->guild_id])) {
                     $this->voiceClients[$data->d->guild_id]->handleVoiceServerChange((array) $data->d);
                 }
@@ -216,14 +218,8 @@ class WebSocket extends EventEmitter
 
             if ($data->t == Event::RESUMED) {
                 $tts = $data->d->heartbeat_interval / 1000;
-                $this->heartbeat = $this->loop->addPeriodicTimer($tts, function () use ($ws) {
-                    $time = microtime(true);
-                    $this->send([
-                        'op' => 1,
-                        'd' => $time,
-                    ]);
-                    $this->emit('heartbeat', [$time]);
-                });
+                $this->heartbeat();
+                $this->heartbeat = $this->loop->addPeriodicTimer($tts / 4, [$this, 'heartbeat']);
 
                 $this->emit('reconnected', [$this]);
             }
@@ -238,14 +234,8 @@ class WebSocket extends EventEmitter
                 });
 
                 $tts = $data->d->heartbeat_interval / 1000;
-                $this->heartbeat = $this->loop->addPeriodicTimer($tts, function () use ($ws) {
-                    $time = microtime(true);
-                    $this->send([
-                        'op' => 1,
-                        'd' => $time,
-                    ]);
-                    $this->emit('heartbeat', [$time]);
-                });
+                $this->heartbeat();
+                $this->heartbeat = $this->loop->addPeriodicTimer($tts / 4, [$this, 'heartbeat']);
 
                 // don't want to reparse ready
                 if ($this->reconnecting) {
@@ -295,7 +285,9 @@ class WebSocket extends EventEmitter
                             }
                         }
 
-                        $members->push($memberPart);
+                        // Since when we use GUILD_MEMBERS_CHUNK, we have to cycle through the current members
+                        // and see if they exist already. That takes ~34ms per member, way way too much.
+                        $members[$memberPart->id] = $memberPart;
 
                         Cache::set("guild.{$memberPart->guild_id}.members.{$memberPart->id}", $memberPart);
                     }
@@ -304,6 +296,10 @@ class WebSocket extends EventEmitter
 
                     $guilds->push($guildPart);
 
+                    if ($guildPart->large) {
+                        $largeServers[$guildPart->id] = $guildPart;
+                    }
+
                     Cache::set("guild.{$guildPart->id}", $guildPart);
                 }
 
@@ -311,7 +307,63 @@ class WebSocket extends EventEmitter
 
                 $this->sessionId = $content->session_id;
 
-                $this->emit('ready', [$this->discord]);
+                // guild_member_chunk
+                if (count($largeServers) > 0) {
+                    $servers = [];
+                    foreach ($largeServers as $server) {
+                        $servers[] = $server->id;
+                    }
+
+                    $this->send([
+                        'op' => 8,
+                        'd' => [
+                            'guild_id' => $servers,
+                            'query' => '',
+                            'limit' => 0,
+                        ],
+                    ]);
+                } else {
+                    $this->emit('ready', [$this->discord]);
+                }
+            }
+
+            if ($data->t == Event::GUILD_MEMBERS_CHUNK) {
+                $members = $data->d->members;
+
+                foreach ($this->discord->guilds as $index => $guild) {
+                    if ($guild->id == $data->d->guild_id) {
+                        if (is_null($guild)) {
+                            return;
+                        }
+
+                        foreach ($members as $member) {
+                            if (isset($guild->members[$member->user->id])) {
+                                continue;
+                            }
+
+                            $member = (array) $member;
+                            $member['guild_id'] = $data->d->guild_id;
+                            $member['status'] = 'offline';
+                            $member['game'] = null;
+                            $memberPart = new Member($member, true);
+
+                            $guild->members->push($memberPart);
+                        }
+
+                        $this->discord->guilds[$index] = $guild;
+
+                        if (count($members) < 1000) {
+                            unset($largeServers[$data->d->guild_id]);
+                            $this->emit('guild-ready', [$guild]);
+                        }
+
+                        if (count($largeServers) === 0) {
+                            $this->emit('ready', [$this->discord]);
+                        }
+
+                        break;
+                    }
+                }
             }
         });
 
@@ -368,6 +420,23 @@ class WebSocket extends EventEmitter
     public function handleWebSocketError($e)
     {
         $this->emit('ws-connect-error', [$e]);
+    }
+
+    /**
+     * Runs a heartbeat.
+     *
+     * @return void
+     */
+    public function heartbeat()
+    {
+        $time = microtime(true);
+
+        $this->send([
+            'op' => 1,
+            'd' => $time,
+        ]);
+
+        $this->emit('heartbeat', [$time]);
     }
 
     /**
