@@ -50,8 +50,6 @@ class GuildRoleUpdate extends Event
                     }
                 }
 
-                $discord->guilds[$index] = $guild;
-
                 break;
             }
         }

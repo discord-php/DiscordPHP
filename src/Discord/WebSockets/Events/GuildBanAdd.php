@@ -58,8 +58,6 @@ class GuildBanAdd extends Event
                     }
                 }
 
-                $discord->guilds[$index] = $guild;
-
                 break;
             }
         }

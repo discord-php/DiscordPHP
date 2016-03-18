@@ -41,8 +41,6 @@ class GuildMemberAdd extends Event
             if ($guild->id == $data->guild_id) {
                 $guild->members->push($data);
 
-                $discord->guilds[$index] = $guild;
-
                 break;
             }
         }

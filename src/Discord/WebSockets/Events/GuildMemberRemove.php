@@ -39,14 +39,7 @@ class GuildMemberRemove extends Event
 
         foreach ($discord->guilds as $index => $guild) {
             if ($guild->id == $data->guild_id) {
-                foreach ($guild->members as $mindex => $member) {
-                    if ($member->id == $data->user->id) {
-                        $guild->members->pull($mindex);
-                        break;
-                    }
-                }
-
-                $discord->guilds[$index] = $guild;
+                $guild->members->pull($data->user->id);
 
                 break;
             }

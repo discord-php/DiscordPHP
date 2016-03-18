@@ -131,16 +131,12 @@ class Channel extends Part
      */
     public function getGuildAttribute()
     {
-        if ($guild = Cache::get("guild.{$this->guild_id}")) {
-            return $guild;
-        }
-
-        if (isset($this->attributes_cache['guild'])) {
-            return $this->attributes_cache['guild'];
-        }
-
         if (is_null($this->guild_id)) {
             return;
+        }
+
+        if ($guild = Cache::get("guild.{$this->guild_id}")) {
+            return $guild;
         }
 
         $request = Guzzle::get("guilds/{$this->guild_id}");
@@ -193,11 +189,11 @@ class Channel extends Part
      */
     public function getMessagesAttribute()
     {
-        if (! isset($this->attributes_cache['messages'])) {
-            $this->attributes_cache['messages'] = new Collection();
+        if (! Cache::get("channel.{$this->id}.messages")) {
+            Cache::set("channel.{$this->id}.messages", new Collection([], "channel.{$this->id}.messages"));
         }
 
-        return $this->attributes_cache['messages'];
+        return Cache::get("channel.{$this->id}.messages");
     }
 
     /**
@@ -232,8 +228,8 @@ class Channel extends Part
      */
     public function getInvitesAttribute()
     {
-        if (isset($this->attributes_cache['invites'])) {
-            return $this->attributes_cache['invites'];
+        if ($invites = Cache::get("channel.{$this->id}.invites")) {
+            return $invites;
         }
 
         $request = Guzzle::get($this->replaceWithVariables('channels/:id/invites'));
@@ -245,9 +241,9 @@ class Channel extends Part
             $invites[$index] = $invite;
         }
 
-        $invites = new Collection($invites);
+        $invites = new Collection($invites, "channel.{$this->id}.invites");
 
-        $this->attributes_cache['invites'] = $invites;
+        Cache::set("channel.{$this->id}.invites", $invites);
 
         return $invites;
     }
@@ -263,11 +259,15 @@ class Channel extends Part
             return $this->attributes_cache['overwrites'];
         }
 
+        if ($overwrites = Cache::get("channels.{$this->id}.overwrites")) {
+            return $overwrites;
+        }
+
         $overwrites = [];
 
         // Will return an empty collection when you don't have permission.
         if (is_null($this->attributes['permission_overwrites'])) {
-            return new Collection();
+            return new Collection([], "channels.{$this->id}.overwrites");
         }
 
         foreach ($this->attributes['permission_overwrites'] as $index => $data) {
@@ -276,9 +276,9 @@ class Channel extends Part
             $overwrites[$index] = new Overwrite($data, true);
         }
 
-        $overwrites = new Collection($overwrites);
+        $overwrites = new Collection($overwrites, "channels.{$this->id}.overwrites");
 
-        $this->attributes_cache['overwrites'] = $overwrites;
+        Cache::set("channels.{$this->id}.overwrites", $overwrites);
 
         return $overwrites;
     }
@@ -306,11 +306,11 @@ class Channel extends Part
 
         Cache::set("message.{$message->id}", $message);
 
-        if (! isset($this->attributes_cache['messages'])) {
-            $this->attributes_cache['messages'] = new Collection();
+        if (! Cache::has("channel.{$this->id}.messages")) {
+            $this->getMessagesAttribute();
         }
 
-        $this->attributes_cache['messages']->push($message);
+        $this->messages->push($message);
 
         return $message;
     }
@@ -379,11 +379,11 @@ class Channel extends Part
 
         Cache::set("message.{$message->id}", $message);
 
-        if (! isset($this->attributes_cache['messages'])) {
-            $this->attributes_cache['messages'] = new Collection();
+        if (! Cache::has("channel.{$this->id}.messages")) {
+            $this->getMessagesAttribute();
         }
 
-        $this->attributes_cache['messages']->push($message);
+        $this->messages->push($message);
 
         return $message;
     }

@@ -11,6 +11,8 @@
 
 namespace Discord\Helpers;
 
+use Discord\Cache\Cache;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Collection as BaseCollection;
 
 /**
@@ -21,6 +23,22 @@ use Illuminate\Support\Collection as BaseCollection;
  */
 class Collection extends BaseCollection
 {
+    /**
+     * The cache key for the Collection.
+     *
+     * @var string The cache key.
+     */
+    protected $cacheKey;
+
+    /**
+     * {@inheritdoc}
+     */
+    public function __construct($items = [], $cacheKey = null)
+    {
+        $this->items = $this->getArrayableItems($items);
+        $this->cacheKey = $cacheKey;
+    }
+
     /**
      * Get an item from the collection with a
      * key and index.
@@ -98,5 +116,64 @@ class Collection extends BaseCollection
         }
 
         return $items;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function push($value, $setCache = true)
+    {
+        $this->items[] = $value;
+
+        if ($setCache && ! is_null($this->cacheKey)) {
+            Cache::set($this->cacheKey, $this);
+        }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function pull($key, $default = null, $setCache = true)
+    {
+        $value = Arr::pull($this->items, $key, $default);
+
+        if ($setCache && ! is_null($this->cacheKey)) {
+            Cache::set($this->cacheKey, $this);
+        }
+
+        return $value;
+    }
+
+    /**
+     * Sets the cache key.
+     *
+     * @param string $key The cache key to set.
+     * @param bool $updateNow Whether to set the collection to the cache now.
+     *
+     * @return self 
+     */
+    public function setCacheKey($key, $updateNow = false)
+    {
+        $this->cacheKey = $key;
+
+        if ($updateNow) {
+            Cache::set($key, $this);
+        }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function offsetSet($key, $value)
+    {
+        if (is_null($key)) {
+            $this->items[] = $value;
+        } else {
+            $this->items[$key] = $value;
+        }
+
+        if (! is_null($this->cacheKey)) {
+            Cache::set($this->cacheKey, $this);
+        }
     }
 }

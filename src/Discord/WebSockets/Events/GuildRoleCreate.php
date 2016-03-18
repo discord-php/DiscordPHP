@@ -44,8 +44,6 @@ class GuildRoleCreate extends Event
             if ($guild->id == $data->guild_id) {
                 $guild->roles->push($data);
 
-                $discord->guilds[$index] = $guild;
-
                 break;
             }
         }

@@ -39,8 +39,6 @@ class ChannelDelete extends Event
 
         foreach ($discord->guilds as $index => $guild) {
             if ($guild->id == $data->guild_id) {
-                $discord->guilds->pull($index);
-
                 foreach ($guild->channels as $cindex => $channel) {
                     if ($channel->id == $data->id) {
                         $guild->channels->pull($index);

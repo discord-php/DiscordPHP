@@ -58,15 +58,15 @@ class User extends Part
      */
     public function sendMessage($message, $tts = false)
     {
-        if (isset($this->attributes_cache['channel_id'])) {
-            $channel_id = $this->attributes_cache['channel_id'];
+        if ($channelID = Cache::get("user.{$this->id}.pm")) {
+            $channel_id = $channelID;
         } else {
             $channel = Guzzle::post('users/@me/channels', [
                 'recipient_id' => $this->id,
             ]);
 
             $channel_id = $channel->id;
-            $this->attributes_cache['channel_id'] = $channel->id;
+            Cache::set("user.{$this->id}.pm", $channel->id);
         }
 
         $request = Guzzle::post("channels/{$channel_id}/messages", [
@@ -88,15 +88,15 @@ class User extends Part
      */
     public function broadcastTyping()
     {
-        if (isset($this->attributes_cache['channel_id'])) {
-            $channel_id = $this->attributes_cache['channel_id'];
+        if ($channelID = Cache::get("user.{$this->id}.pm")) {
+            $channel_id = $channelID;
         } else {
             $channel = Guzzle::post('users/@me/channels', [
                 'recipient_id' => $this->id,
             ]);
 
             $channel_id = $channel->id;
-            $this->attributes_cache['channel_id'] = $channel->id;
+            Cache::set("user.{$this->id}.pm", $channel->id);
         }
 
         Guzzle::post("channels/{$channel_id}/typing");

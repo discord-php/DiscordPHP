@@ -210,8 +210,8 @@ class Member extends Part
      */
     public function getRolesAttribute()
     {
-        if (isset($this->attributes_cache['roles'])) {
-            return $this->attributes_cache['roles'];
+        if ($roles = Cache::get("guild.{$this->guild_id}.members.{$this->id}.roles")) {
+            return $roles;
         }
 
         $roles = [];
@@ -230,9 +230,9 @@ class Member extends Part
             }
         }
 
-        $roles = new Collection($roles);
+        $roles = new Collection($roles, "guild.{$this->guild_id}.members.{$this->id}.roles");
 
-        $this->attributes_cache['roles'] = $roles;
+        Cache::set("guild.{$this->guild_id}.members.{$this->id}.roles", $roles);
 
         return $roles;
     }

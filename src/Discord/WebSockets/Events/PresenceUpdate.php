@@ -42,7 +42,7 @@ class PresenceUpdate extends Event
                     $member->game = $data->game;
                     $member->status = $data->status;
                 
-                    $discord->guilds[$index] = $guild;
+                    $guild->members[$data->user->id] = $member;
                 }
 
                 break;

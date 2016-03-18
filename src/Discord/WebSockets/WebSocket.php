@@ -264,7 +264,7 @@ class WebSocket extends EventEmitter
                         Cache::set("channels.{$channelPart->id}", $channelPart);
                     }
 
-                    $guildPart->setCache('channels', $channels);
+                    $channels->setCacheKey("guild.{$guild->id}.channels", true);
 
                     // guild members
                     $members = new Collection();
@@ -289,10 +289,10 @@ class WebSocket extends EventEmitter
                         // and see if they exist already. That takes ~34ms per member, way way too much.
                         $members[$memberPart->id] = $memberPart;
 
-                        Cache::set("guild.{$memberPart->guild_id}.members.{$memberPart->id}", $memberPart);
+                        // Cache::set("guild.{$memberPart->guild_id}.members.{$memberPart->id}", $memberPart);
                     }
 
-                    $guildPart->setCache('members', $members);
+                    $members->setCacheKey("guild.{$guild->id}.members", true);
 
                     $guilds->push($guildPart);
 
@@ -330,14 +330,20 @@ class WebSocket extends EventEmitter
             if ($data->t == Event::GUILD_MEMBERS_CHUNK) {
                 $members = $data->d->members;
 
+                if (count($largeServers) === 0) {
+                    return;
+                }
+
                 foreach ($this->discord->guilds as $index => $guild) {
                     if ($guild->id == $data->d->guild_id) {
                         if (is_null($guild)) {
                             return;
                         }
 
+                        $memberColl = new Collection($guild->members->all());
+
                         foreach ($members as $member) {
-                            if (isset($guild->members[$member->user->id])) {
+                            if (isset($memberColl[$member->user->id])) {
                                 continue;
                             }
 
@@ -347,12 +353,12 @@ class WebSocket extends EventEmitter
                             $member['game'] = null;
                             $memberPart = new Member($member, true);
 
-                            $guild->members->push($memberPart);
+                            $memberColl[$memberPart->id] = $memberPart;
                         }
 
-                        $this->discord->guilds[$index] = $guild;
+                        $memberColl->setCacheKey("guild.{$guild->id}.members", true);
 
-                        if (count($members) < 1000) {
+                        if ($guild->members->count() == $guild->member_count) {
                             unset($largeServers[$data->d->guild_id]);
                             $this->emit('guild-ready', [$guild]);
                         }

@@ -35,18 +35,16 @@ class VoiceStateUpdate extends Event
     {
         foreach ($discord->guilds as $index => $guild) {
             if ($guild->id == $data->guild_id) {
-                foreach ($guild->members as $mindex => $member) {
-                    if ($member->id == $data->user_id) {
-                        $member->deaf = $data->deaf;
-                        $member->mute = $data->mute;
+                $member = @$guild->members[$data->user_id];
 
-                        $guild->members[$mindex] = $member;
-
-                        break;
-                    }
+                if (is_null($member)) {
+                    break;
                 }
 
-                $discord->guilds[$index] = $guild;
+                $member->deaf = $data->deaf;
+                $member->mute = $data->mute;
+
+                $guild->members[$data->user_id] = $member;
 
                 break;
             }
