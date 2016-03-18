@@ -538,7 +538,7 @@ class VoiceClient extends EventEmitter
      *
      * @param array $data New voice server information.
      *
-     * @return void 
+     * @return void
      */
     public function handleVoiceServerChange(array $data = [])
     {

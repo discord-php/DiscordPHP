@@ -46,7 +46,7 @@ $ws->on('ready', function ($discord) use ($ws) {
         if ($message->content == 'ping') {
             $message->reply('pong!');
         }
-        
+
         $reply = $message->timestamp->format('d/m/y H:i:s').' - '; // Format the message timestamp.
         $reply .= $message->full_channel->guild->name.' - ';
         $reply .= $message->author->username.' - '; // Add the message author's username onto the string.

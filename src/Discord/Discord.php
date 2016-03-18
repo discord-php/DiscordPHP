@@ -12,9 +12,7 @@
 namespace Discord;
 
 use Carbon\Carbon;
-use Discord\Exceptions\InviteInvalidException;
 use Discord\Helpers\Guzzle;
-use Discord\Parts\Guild\Invite;
 use Discord\Parts\Part;
 use Discord\Parts\User\Client;
 

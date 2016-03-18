@@ -19,7 +19,6 @@ use Discord\Parts\Channel\Channel;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\User\Member;
 use Discord\Voice\VoiceClient;
-use Discord\WebSockets\Event;
 use Evenement\EventEmitter;
 use Ratchet\Client\Connector as WsFactory;
 use Ratchet\Client\WebSocket as WebSocketInstance;
@@ -485,7 +484,7 @@ class WebSocket extends EventEmitter
                 if ($data->d->guild_id != $channel->guild_id) {
                     return;
                 }
-                
+
                 $arr['token'] = $data->d->token;
                 $arr['endpoint'] = $data->d->endpoint;
 
@@ -580,6 +579,7 @@ class WebSocket extends EventEmitter
     public function getGateway()
     {
         $token = (substr(DISCORD_TOKEN, 0, 4) === 'Bot ') ? substr(DISCORD_TOKEN, 4) : DISCORD_TOKEN;
+
         return Guzzle::get('gateway', null, false, ['authorization' => $token])->url;
     }
 }

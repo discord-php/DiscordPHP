@@ -207,7 +207,7 @@ class Guild extends Part
      */
     public function getChannelsAttribute()
     {
-       if ($channels = Cache::get("guild.{$this->id}.channels")) {
+        if ($channels = Cache::get("guild.{$this->id}.channels")) {
             return $channels;
         }
 

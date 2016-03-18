@@ -147,10 +147,10 @@ class Collection extends BaseCollection
     /**
      * Sets the cache key.
      *
-     * @param string $key The cache key to set.
-     * @param bool $updateNow Whether to set the collection to the cache now.
+     * @param string $key       The cache key to set.
+     * @param bool   $updateNow Whether to set the collection to the cache now.
      *
-     * @return self 
+     * @return self
      */
     public function setCacheKey($key, $updateNow = false)
     {
