@@ -28,5 +28,8 @@
     },
     "suggest": {
         "predis/predis": "Required to use the Redis cache driver."
+    },
+    "scripts": {
+        "test": "php tests/run.php"
     }
 }
