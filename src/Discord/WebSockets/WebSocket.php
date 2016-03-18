@@ -19,9 +19,10 @@ use Discord\Parts\Channel\Channel;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\User\Member;
 use Discord\Voice\VoiceClient;
+use Discord\WebSockets\Event;
+use Evenement\EventEmitter;
 use Ratchet\Client\Connector as WsFactory;
 use Ratchet\Client\WebSocket as WebSocketInstance;
-use Evenement\EventEmitter;
 use Ratchet\WebSocket\Version\RFC6455\Frame;
 use React\EventLoop\Factory as LoopFactory;
 use React\EventLoop\LoopInterface;
@@ -474,13 +475,13 @@ class WebSocket extends EventEmitter
         $closure = function ($message) use (&$closure, &$arr, $deferred, $channel) {
             $data = json_decode($message);
 
-            if ($data->t == 'VOICE_STATE_UPDATE') {
+            if ($data->t == Event::VOICE_STATE_UPDATE) {
                 if ($data->d->guild_id != $channel->guild_id) {
                     return;
                 }
 
                 $arr['session'] = $data->d->session_id;
-            } elseif ($data->t == 'VOICE_SERVER_UPDATE') {
+            } elseif ($data->t == Event::VOICE_SERVER_UPDATE) {
                 if ($data->d->guild_id != $channel->guild_id) {
                     return;
                 }
