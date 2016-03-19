@@ -142,7 +142,7 @@ class Member extends Part
         $this->getRolesAttribute();
 
         $this->attributes['roles'][] = $role->id;
-        $this->attributes_cache['roles']->push($role);
+        $this->roles->push($role);
 
         return true;
     }

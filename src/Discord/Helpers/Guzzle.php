@@ -191,7 +191,7 @@ class Guzzle
                 throw new NotFoundException("Error code 404: This resource does not exist. {$message}");
                 break;
             case 400:
-                throw new DiscordRequestFailedException("Error code 400: This usually means you have entered an incorrect Email or Password. {$message}");
+                throw new DiscordRequestFailedException("Error code 400: We sent a bad request. {$message}");
                 break;
             case 500:
                 throw new DiscordRequestFailedException("Error code 500: This usually means something went wrong with Discord. {$message}");
