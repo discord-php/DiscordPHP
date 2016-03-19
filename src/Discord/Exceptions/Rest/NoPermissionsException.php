@@ -9,13 +9,13 @@
  * with this source code in the LICENSE.md file.
  */
 
-namespace Discord\Exceptions;
+namespace Discord\Exceptions\Rest;
 
-use Discord\Exceptions\Rest\ContentTooLongException as Base;
+use Discord\Exceptions\DiscordRequestFailedException;
 
 /**
- * {@inheritdoc}
+ * Thrown when you do not have permissions to do something.
  */
-class ContentTooLongException extends Base
+class NoPermissionsException extends DiscordRequestFailedException
 {
 }

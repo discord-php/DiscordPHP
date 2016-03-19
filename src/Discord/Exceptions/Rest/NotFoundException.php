@@ -9,13 +9,13 @@
  * with this source code in the LICENSE.md file.
  */
 
-namespace Discord\Exceptions;
+namespace Discord\Exceptions\Rest;
 
-use Discord\Exceptions\Rest\ContentTooLongException as Base;
+use Discord\Exceptions\DiscordRequestFailedException;
 
 /**
- * {@inheritdoc}
+ * Thrown when a 404 Not Found response is recieved.
  */
-class ContentTooLongException extends Base
+class NotFoundException extends DiscordRequestFailedException
 {
 }
