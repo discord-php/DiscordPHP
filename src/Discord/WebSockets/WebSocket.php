@@ -26,6 +26,7 @@ use Ratchet\WebSocket\Version\RFC6455\Frame;
 use React\EventLoop\Factory as LoopFactory;
 use React\EventLoop\LoopInterface;
 use React\Promise\Deferred;
+use React\Stream\Stream;
 
 /**
  * This class is the base for the Discord WebSocket.
@@ -373,8 +374,13 @@ class WebSocket extends EventEmitter
             }
         });
 
-        $ws->on('close', function ($ws, $reason) {
-            $this->emit('close', [$ws, $reason, $this->discord]);
+        $ws->on('close', function ($op, $reason) {
+            if ($op instanceof Stream) {
+                $op = 0;
+                $reason = 'PHP Stream closed.';
+            }
+
+            $this->emit('close', [$op, $reason, $this->discord]);
 
             if (! is_null($this->heartbeat)) {
                 $this->loop->cancelTimer($this->heartbeat);
