@@ -202,8 +202,11 @@ class Client extends Part
     {
         $attributes = [
             'username' => $this->attributes['username'],
-            'avatar' => $this->attributes['avatarhash'],
         ];
+
+        if (isset($this->attributes['avatarhash'])) {
+            $attributes['avatar'] = $this->attributes['avatarhash'];
+        }
 
         if (! $this->bot) {
             if (empty($this->attributes['password'])) {

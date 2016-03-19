@@ -150,11 +150,10 @@ $ws->on('ready', function ($discord) use ($ws, $testingGuild, $testUser, $loop) 
 	$baseGuild = $discord->guilds->get('id', $testingGuild);
 	$testUser = User::find($testUser);
 
-	// Bots are unable to create guilds.
-	// require_once 'guilds.php';
 	require_once 'channels.php';
 	require_once 'messages.php';
 	require_once 'roles.php';
+	require_once 'user.php';
 	
 	printAllTests();
 	die;
