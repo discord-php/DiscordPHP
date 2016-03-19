@@ -38,6 +38,13 @@ class Guzzle
      */
     public static $cacheTtl = 300;
 
+	/**
+	 * The options to set in the Guzzle client
+	 *
+	 * @var array
+	 */
+	private static $guzzleOptions = ['http_errors' => false, 'allow_redirects' => true];
+
     /**
      * Handles dynamic calls to the class.
      *
@@ -72,7 +79,7 @@ class Guzzle
      */
     public static function runRequest($method, $url, $content, $auth, $extraHeaders)
     {
-        $guzzle = new GuzzleClient(['http_errors' => false, 'allow_redirects' => true]);
+        $guzzle = new GuzzleClient(self::$guzzleOptions);
         $query_url = self::$base_url."/{$url}";
 
         if (Cache::has("guzzle:{$query_url}") && (strtolower($method) == 'get')) {
@@ -212,4 +219,14 @@ class Guzzle
     {
         return 'DiscordPHP/'.Discord::VERSION.' DiscordBot (https://github.com/teamreflex/DiscordPHP, '.Discord::VERSION.')';
     }
+
+	/**
+	 * Merges the given options with the current options
+	 *
+	 * @param array $options The options to be set/updated
+	 */
+	public static function addGuzzleOptions(array $options)
+	{
+		self::$guzzleOptions = array_merge(self::$guzzleOptions, $options);
+	}
 }
