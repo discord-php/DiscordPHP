@@ -180,8 +180,9 @@ class WebSocket extends EventEmitter
     public function handleWebSocketConnection(WebSocketInstance $ws)
     {
         $largeServers = [];
+        $data = null;
 
-        $ws->on('message', function ($message, $ws) use (&$largeServers) {
+        $ws->on('message', function ($message, $ws) use (&$largeServers, &$data) {
             if ($message->isBinary()) {
                 if ($this->useEtf) {
                     $data = $this->etf->unpack($message->getPayload());
