@@ -510,7 +510,18 @@ class WebSocket extends EventEmitter
         }
 
         $closure = function ($message) use (&$closure, &$arr, $deferred, $channel) {
-            $data = json_decode($message);
+            if ($message->isBinary()) {
+                if ($this->useEtf) {
+                    $data = $this->etf->unpack($message->getPayload());
+                    $data = json_encode($data); // terrible hack to convert array -> object
+                } else {
+                    $data = zlib_decode($message->getPayload());
+                }
+            } else {
+                $data = $message->getPayload();
+            }
+
+            $data = json_decode($data);
 
             if ($data->t == Event::VOICE_STATE_UPDATE) {
                 if ($data->d->guild_id != $channel->guild_id) {
