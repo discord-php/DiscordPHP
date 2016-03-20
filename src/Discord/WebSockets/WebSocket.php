@@ -13,6 +13,7 @@ namespace Discord\WebSockets;
 
 use Discord\Cache\Cache;
 use Discord\Discord;
+use Discord\Erlpack\Erlpack;
 use Discord\Helpers\Collection;
 use Discord\Helpers\Guzzle;
 use Discord\Parts\Channel\Channel;
@@ -22,7 +23,7 @@ use Discord\Voice\VoiceClient;
 use Evenement\EventEmitter;
 use Ratchet\Client\Connector as WsFactory;
 use Ratchet\Client\WebSocket as WebSocketInstance;
-use Ratchet\WebSocket\Version\RFC6455\Frame;
+use Ratchet\RFC6455\Messaging\Frame;
 use React\EventLoop\Factory as LoopFactory;
 use React\EventLoop\LoopInterface;
 use React\Promise\Deferred;
@@ -125,19 +126,39 @@ class WebSocket extends EventEmitter
     protected $seq;
 
     /**
+     * Whether to use ETF.
+     *
+     * @var bool Whether to use ETF.
+     */
+    protected $useEtf = true;
+
+    /**
+     * The Erlang ETF encoder.
+     *
+     * @var Erlpack The encoder.
+     */
+    protected $etf;
+
+    /**
      * Constructs the WebSocket instance.
      *
      * @param Discord            $discord The Discord REST client instance.
      * @param LoopInterface|null $loop    The ReactPHP Event Loop.
+     * @param bool               $etf     Whether to use ETF.
      *
      * @return void
      */
-    public function __construct(Discord $discord, LoopInterface &$loop = null)
+    public function __construct(Discord $discord, LoopInterface &$loop = null, $etf = true)
     {
         $this->discord = $discord;
         $this->gateway = $this->getGateway();
         $loop = (is_null($loop)) ? LoopFactory::create() : $loop;
         $this->wsfactory = new WsFactory($loop);
+        $this->useEtf = $etf;
+
+        if ($etf) {
+            $this->etf = new Erlpack();
+        }
 
         $this->handlers = new Handlers();
 
@@ -161,9 +182,19 @@ class WebSocket extends EventEmitter
         $largeServers = [];
 
         $ws->on('message', function ($message, $ws) use (&$largeServers) {
-            $data = $message->isBinary() ? zlib_decode($message->getPayload()) : $message->getPayload();
-            $this->emit('raw', [$data, $this->discord]);
+            if ($message->isBinary()) {
+                if ($this->useEtf) {
+                    $data = $this->etf->unpack($message->getPayload());
+                    $data = json_encode($data); // terrible hack to convert array -> object
+                } else {
+                    $data = zlib_decode($message->getPayload());
+                }
+            } else {
+                $data = $message->getPayload();
+            }
+
             $data = json_decode($data);
+            $this->emit('raw', [$data, $this->discord]);
 
             if (isset($data->d->unavailable)) {
                 $this->emit('unavailable', [$data->t, $data->d]);
@@ -573,8 +604,15 @@ class WebSocket extends EventEmitter
      */
     public function send($data)
     {
-        $json = json_encode($data);
-        $this->ws->send($json);
+        if ($this->useEtf) {
+            $etf = $this->etf->pack($data);
+            $frame = new Frame($etf, true, 2);
+        } else {
+            $json = json_encode($data);
+            $frame = new Frame($json, true, 1);
+        }
+
+        $this->ws->send($frame);
     }
 
     /**

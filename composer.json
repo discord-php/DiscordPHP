@@ -24,7 +24,10 @@
     "autoload": {
     	"psr-4": {
     		"Discord\\": "src/Discord"
-    	}
+        },
+        "files": [
+            "src/Discord/Helpers/Erlang.php"
+        ]
     },
     "suggest": {
         "predis/predis": "Required to use the Redis cache driver."
