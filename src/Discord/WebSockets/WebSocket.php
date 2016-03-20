@@ -560,6 +560,22 @@ class WebSocket extends EventEmitter
     }
 
     /**
+     * Gets a voice client from a guild ID.
+     *
+     * @param int $id The guild ID to look up.
+     *
+     * @return \React\Promise\Promise 
+     */
+    public function getVoiceClient($id)
+    {
+        if (isset($this->voiceClients[$id])) {
+            return \React\Promise\resolve($this->voiceClients[$id]);
+        }
+
+        return \React\Promise\reject(new \Exception('Could not find the voice client.'));
+    }
+
+    /**
      * Runs the Event Loop.
      *
      * @return void
