@@ -11,15 +11,16 @@
 
 namespace Discord\Erlpack;
 
-use Discord\Helpers\OtpErlangBinary as Binary;
 use Discord\Helpers\OtpErlangAtom as Atom;
+use Discord\Helpers\OtpErlangBinary as Binary;
 use Discord\Helpers\OtpErlangList as EList;
 use Discord\Helpers\OtpErlangMap as Map;
+use Evenement\EventEmitter;
 
 /**
  * Encodes and decodes Erlang External Term Format.
  */
-class Erlpack
+class Erlpack extends EventEmitter
 {
     /**
      * Creates a new erlpack instance.
@@ -48,8 +49,7 @@ class Erlpack
 
             return $t;
         } catch (\Exception $e) {
-            dump($packed);
-            die;
+            $this->emit('error', [$e]);
         }
     }
 

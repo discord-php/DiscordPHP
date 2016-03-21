@@ -158,6 +158,9 @@ class WebSocket extends EventEmitter
 
         if ($etf) {
             $this->etf = new Erlpack();
+            $this->etf->on('error', function ($e) {
+                $this->emit('error', [$e]);
+            });
         }
 
         $this->handlers = new Handlers();
