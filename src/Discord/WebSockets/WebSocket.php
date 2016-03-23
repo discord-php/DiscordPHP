@@ -215,16 +215,12 @@ class WebSocket extends EventEmitter
                 $this->emit('unavailable', [$data->t, $data->d]);
 
                 if ($data->t == Event::GUILD_DELETE) {
-                    $discord = $this->discord;
-
-                    foreach ($discord->guilds as $index => $guild) {
+                    foreach ($this->discord->guilds as $index => $guild) {
                         if ($guild->id == $data->d->id) {
-                            $discord->guilds->pull($index);
+                            $this->discord->guilds->pull($index);
                             break;
                         }
                     }
-
-                    $this->discord = $discord;
                 }
 
                 return;
@@ -255,6 +251,7 @@ class WebSocket extends EventEmitter
                 }
 
                 $this->discord = $newDiscord;
+                unset($handler, $handlerData, $newDiscord, $handlerSettings);
             }
 
             if ($data->t == Event::VOICE_SERVER_UPDATE) {
@@ -312,6 +309,7 @@ class WebSocket extends EventEmitter
                     }
 
                     $channels->setCacheKey("guild.{$guild->id}.channels", true);
+                    unset($channels);
 
                     // guild members
                     $members = new Collection();
@@ -340,6 +338,7 @@ class WebSocket extends EventEmitter
                     }
 
                     $members->setCacheKey("guild.{$guild->id}.members", true);
+                    unset($members);
 
                     $guilds->push($guildPart);
 
@@ -351,6 +350,7 @@ class WebSocket extends EventEmitter
                 }
 
                 $this->discord->setCache('guilds', $guilds);
+                unset($guilds);
 
                 $this->sessionId = $content->session_id;
 
@@ -369,6 +369,8 @@ class WebSocket extends EventEmitter
                             'limit' => 0,
                         ],
                     ]);
+
+                    unset($servers);
                 } else {
                     if (! $this->invalidSession) {
                         $this->emit('ready', [$this->discord]);
@@ -415,6 +417,8 @@ class WebSocket extends EventEmitter
                             $this->emit('guild-ready', [$guild]);
                         }
 
+                        unset($memberColl);
+
                         if (count($largeServers) === 0) {
                             $this->emit('ready', [$this->discord]);
                         }
@@ -422,6 +426,8 @@ class WebSocket extends EventEmitter
                         break;
                     }
                 }
+
+                unset($members);
             }
         });
 
