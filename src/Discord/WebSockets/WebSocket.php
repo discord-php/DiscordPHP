@@ -140,6 +140,13 @@ class WebSocket extends EventEmitter
     protected $etf;
 
     /**
+     * Whether we have had an invalid session error.
+     *
+     * @var bool Invalid session.
+     */
+    protected $invalidSession = false;
+
+    /**
      * Constructs the WebSocket instance.
      *
      * @param Discord            $discord The Discord REST client instance.
@@ -154,13 +161,17 @@ class WebSocket extends EventEmitter
         $this->gateway = $this->getGateway();
         $loop = (is_null($loop)) ? LoopFactory::create() : $loop;
         $this->wsfactory = new WsFactory($loop);
-        $this->useEtf = $etf;
+        
+        // ETF breaks snowflake IDs on 32-bit.
+        if (2147483647 !== PHP_INT_MAX) {
+            $this->useEtf = $etf;
 
-        if ($etf) {
-            $this->etf = new Erlpack();
-            $this->etf->on('error', function ($e) {
-                $this->emit('error', [$e]);
-            });
+            if ($etf) {
+                $this->etf = new Erlpack();
+                $this->etf->on('error', function ($e) {
+                    $this->emit('error', [$e]);
+                });
+            }
         }
 
         $this->handlers = new Handlers();
@@ -359,7 +370,11 @@ class WebSocket extends EventEmitter
                         ],
                     ]);
                 } else {
-                    $this->emit('ready', [$this->discord]);
+                    if (! $this->invalidSession) {
+                        $this->emit('ready', [$this->discord]);
+                    }
+
+                    $this->invalidSession = false;
                 }
             }
 
@@ -426,6 +441,13 @@ class WebSocket extends EventEmitter
                 $this->loop->stop();
 
                 return;
+            }
+
+            // Invalid Session
+            if ($op == 4006 && strpos($reason, 'invalid session') !== false) {
+                $this->invalidSession = true;
+                $this->wsfactory->__invoke($this->gateway)->then([$this, 'handleWebSocketConnection'], [$this, 'handleWebSocketError']);
+                ++$this->reconnectCount;
             }
 
             if (! $this->reconnecting) {
