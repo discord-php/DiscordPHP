@@ -391,7 +391,8 @@ class WebSocket extends EventEmitter
                             return;
                         }
 
-                        $memberColl = new Collection($guild->members->all());
+                        $memberColl = $guild->members;
+                        $memberColl->setCacheKey(null, false);
 
                         foreach ($members as $member) {
                             if (isset($memberColl[$member->user->id])) {
@@ -409,7 +410,7 @@ class WebSocket extends EventEmitter
 
                         $memberColl->setCacheKey("guild.{$guild->id}.members", true);
 
-                        if ($guild->members->count() == $guild->member_count) {
+                        if ($memberColl->count() == $guild->member_count) {
                             unset($largeServers[$data->d->guild_id]);
                             $this->emit('guild-ready', [$guild]);
                         }
@@ -448,6 +449,8 @@ class WebSocket extends EventEmitter
                 $this->invalidSession = true;
                 $this->wsfactory->__invoke($this->gateway)->then([$this, 'handleWebSocketConnection'], [$this, 'handleWebSocketError']);
                 ++$this->reconnectCount;
+
+                return;
             }
 
             if (! $this->reconnecting) {
