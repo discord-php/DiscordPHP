@@ -123,7 +123,7 @@ function write($content)
 function checkAttributes($expectedAttributes, $part)
 {
     foreach ($expectedAttributes as $key => $val) {
-        if ($part->{$key} !== $val) {
+        if ($part->{$key} != $val) {
             fail("The key '{$key}' was not equal to expected value '{$val}', value was '{$part->{$key}}'.");
         }
     }
