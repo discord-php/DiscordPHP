@@ -36,16 +36,15 @@ class Erlpack extends EventEmitter
      * Packs a PHP array into Erlang ETF format.
      *
      * @param array $contents   The PHP array to pack.
-     * @param bool  $compressed Whether to compress the ETF.
      *
      * @return binary The packed ETF.
      */
-    public function pack(array $contents = [], $compressed = true)
+    public function pack(array $contents = [])
     {
         $packed = $this->arrayToMap($contents);
 
         try {
-            $t = \Discord\Helpers\term_to_binary($packed, $compressed);
+            $t = \Discord\Helpers\term_to_binary($packed);
 
             return $t;
         } catch (\Exception $e) {
