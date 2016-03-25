@@ -41,12 +41,8 @@ class Erlpack extends EventEmitter
      */
     public function pack(array $contents = [])
     {
-        $packed = $this->arrayToMap($contents);
-
         try {
-            $t = \Discord\Helpers\term_to_binary($packed);
-
-            return $t;
+            return \Discord\Helpers\term_to_binary($this->arrayToMap($contents));
         } catch (\Exception $e) {
             $this->emit('error', [$e]);
         }
@@ -61,9 +57,7 @@ class Erlpack extends EventEmitter
      */
     public function unpack($etf)
     {
-        $unpacked = \Discord\Helpers\binary_to_term($etf);
-
-        return $this->mapToArray($unpacked);
+        return $this->mapToArray(\Discord\Helpers\binary_to_term($etf));
     }
 
     /**

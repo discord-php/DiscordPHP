@@ -361,14 +361,24 @@ class WebSocket extends EventEmitter
                         $servers[] = $server->id;
                     }
 
-                    $this->send([
-                        'op' => 8,
-                        'd' => [
-                            'guild_id' => $servers,
-                            'query' => '',
-                            'limit' => 0,
-                        ],
-                    ]);
+                    $chunks = array_chunk($servers, 50);
+
+                    $sendChunk = function () use (&$sendChunk, &$chunks) {
+                        $chunk = array_pop($chunks);
+
+                        $this->send([
+                            'op' => 8,
+                            'd' => [
+                                'guild_id' => $chunk,
+                                'query' => '',
+                                'limit' => 0,
+                            ],
+                        ]);
+
+                        $this->loop->addTimer(1, $sendChunk);
+                    };
+
+                    $sendChunk();
 
                     unset($servers);
                 } else {
