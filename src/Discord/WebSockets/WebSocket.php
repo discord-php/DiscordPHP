@@ -18,6 +18,8 @@ use Discord\Helpers\Collection;
 use Discord\Helpers\Guzzle;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Guild\Guild;
+use Discord\Parts\Guild\Role;
+use Discord\Parts\Permissions\RolePermission as Permission;
 use Discord\Parts\User\Member;
 use Discord\Voice\VoiceClient;
 use Evenement\EventEmitter;
@@ -339,6 +341,27 @@ class WebSocket extends EventEmitter
 
                     $members->setCacheKey("guild.{$guild->id}.members", true);
                     unset($members);
+
+                    // guild roles
+                    $roles = new Collection();
+
+                    foreach ($guild->roles as $role) {
+                        $perm = new Permission([
+                            'perms' => $role->permissions,
+                        ]);
+                        
+                        $role = (array) $role;
+                        $role['guild_id'] = $guild->id;
+                        $role['permissions'] = $perm;
+                        $rolePart = new Role($role, true);
+
+                        $roles->push($rolePart);
+
+                        Cache::set("roles.{$rolePart->id}", $rolePart);
+                    }
+
+                    $roles->setCacheKey("guild.{$guild->id}.roles", true);
+                    unset($roles);
 
                     $guilds->push($guildPart);
 

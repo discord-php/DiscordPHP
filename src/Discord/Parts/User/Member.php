@@ -215,18 +215,27 @@ class Member extends Part
         }
 
         $roles = [];
-        $request = Guzzle::get($this->replaceWithVariables('guilds/:guild_id/roles'));
+        
+        if ($guildRoles = Cache::get("guild.{$this->guild_id}.roles")) {
+            foreach ($guildRoles as $role) {
+                if (false !== array_search($role->id, (array) $this->attributes['roles'])) {
+                    $roles[] = $role;
+                }
+            }
+        } else {
+            $request = Guzzle::get($this->replaceWithVariables('guilds/:guild_id/roles'));
 
-        foreach ($request as $key => $role) {
-            if (! (false === array_search($role->id, (array) $this->attributes['roles']))) {
-                $perm = new Permission([
-                    'perms' => $role->permissions,
-                ]);
-                $role = (array) $role;
-                $role['permissions'] = $perm;
-                $role = new Role($role, true);
-                Cache::set("role.{$role->id}", $role);
-                $roles[] = $role;
+            foreach ($request as $key => $role) {
+                if (false !== array_search($role->id, (array) $this->attributes['roles'])) {
+                    $perm = new Permission([
+                        'perms' => $role->permissions,
+                    ]);
+                    $role = (array) $role;
+                    $role['permissions'] = $perm;
+                    $role = new Role($role, true);
+                    Cache::set("role.{$role->id}", $role);
+                    $roles[] = $role;
+                }
             }
         }
 
