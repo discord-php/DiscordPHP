@@ -9,7 +9,7 @@
  * with this source code in the LICENSE.md file.
  */
 
-namespace Discord\Exceptions;
+namespace Discord\Exceptions\Rest;
 
 /**
  * Thrown when the Discord servers return `content longer than 2000 characters` after
