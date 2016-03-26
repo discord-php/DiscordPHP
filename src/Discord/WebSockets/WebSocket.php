@@ -156,6 +156,13 @@ class WebSocket extends EventEmitter
     protected $redirecting;
 
     /**
+     * Large servers.
+     *
+     * @var array Large servers.
+     */
+    protected $largeServers = [];
+
+    /**
      * Constructs the WebSocket instance.
      *
      * @param Discord            $discord The Discord REST client instance.
@@ -202,10 +209,9 @@ class WebSocket extends EventEmitter
      */
     public function handleWebSocketConnection(WebSocketInstance $ws)
     {
-        $largeServers = [];
         $data = null;
 
-        $ws->on('message', function ($message, $ws) use (&$largeServers, &$data) {
+        $ws->on('message', function ($message, $ws) use (&$data) {
             if ($message->isBinary()) {
                 if ($this->useEtf) {
                     $data = $this->etf->unpack($message->getPayload());
@@ -265,218 +271,19 @@ class WebSocket extends EventEmitter
 
             // Discord wants us to change WebSocket servers.
             if ($data->op == 7) {
-                $this->endpoint = $data->d->url;
-                $this->redirecting = true;
-                $ws->close();
-
-                return;
+                $this->handleOp7($data);
             }
 
-            if ($data->t == Event::VOICE_SERVER_UPDATE) {
-                if (isset($this->voiceClients[$data->d->guild_id])) {
-                    $this->voiceClients[$data->d->guild_id]->handleVoiceServerChange((array) $data->d);
-                }
-            }
+            $handlers = [
+                Event::VOICE_SERVER_UPDATE  => 'handleVoiceServerUpdate',
+                Event::RESUMED              => 'handleResume',
+                Event::READY                => 'handleReady',
+                Event::GUILD_MEMBERS_CHUNK  => 'handleGuildMembersChunk',
+                Event::VOICE_STATE_UPDATE   => 'handleVoiceStateUpdate',
+            ];
 
-            if ($data->t == Event::RESUMED) {
-                $tts = $data->d->heartbeat_interval / 1000;
-                $this->heartbeat();
-                $this->heartbeat = $this->loop->addPeriodicTimer($tts / 4, [$this, 'heartbeat']);
-
-                $this->emit('reconnected', [$this]);
-            }
-
-            if ($data->t == Event::READY) {
-                if (! is_null($this->reconnectResetTimer)) {
-                    $this->loop->cancelTimer($this->reconnectResetTimer);
-                }
-
-                $this->reconnectResetTimer = $this->loop->addTimer(60 * 2, function () {
-                    $this->reconnectCount = 0;
-                });
-
-                $tts = $data->d->heartbeat_interval / 1000;
-                $this->heartbeat();
-                $this->heartbeat = $this->loop->addPeriodicTimer($tts / 4, [$this, 'heartbeat']);
-
-                // don't want to reparse ready
-                if ($this->reconnecting) {
-                    $this->reconnecting = false;
-
-                    return;
-                }
-
-                $content = $data->d;
-
-                // guilds
-                $guilds = new Collection();
-
-                foreach ($content->guilds as $guild) {
-                    $guildPart = new Guild((array) $guild, true);
-
-                    $channels = new Collection();
-
-                    foreach ($guild->channels as $channel) {
-                        $channel = (array) $channel;
-                        $channel['guild_id'] = $guild->id;
-                        $channelPart = new Channel($channel, true);
-
-                        $channels->push($channelPart);
-
-                        Cache::set("channels.{$channelPart->id}", $channelPart);
-                    }
-
-                    $channels->setCacheKey("guild.{$guild->id}.channels", true);
-                    unset($channels);
-
-                    // guild members
-                    $members = new Collection();
-
-                    foreach ($guild->members as $member) {
-                        $member = (array) $member;
-                        $member['guild_id'] = $guild->id;
-                        $member['status'] = 'offline';
-                        $member['game'] = null;
-                        $memberPart = new Member($member, true);
-
-                        // check for presences
-
-                        foreach ($guild->presences as $presence) {
-                            if ($presence->user->id == $member['user']->id) {
-                                $memberPart->status = $presence->status;
-                                $memberPart->game = $presence->game;
-                            }
-                        }
-
-                        // Since when we use GUILD_MEMBERS_CHUNK, we have to cycle through the current members
-                        // and see if they exist already. That takes ~34ms per member, way way too much.
-                        $members[$memberPart->id] = $memberPart;
-
-                        // Cache::set("guild.{$memberPart->guild_id}.members.{$memberPart->id}", $memberPart);
-                    }
-
-                    $members->setCacheKey("guild.{$guild->id}.members", true);
-                    unset($members);
-
-                    // guild roles
-                    $roles = new Collection();
-
-                    foreach ($guild->roles as $role) {
-                        $perm = new Permission([
-                            'perms' => $role->permissions,
-                        ]);
-                        
-                        $role = (array) $role;
-                        $role['guild_id'] = $guild->id;
-                        $role['permissions'] = $perm;
-                        $rolePart = new Role($role, true);
-
-                        $roles->push($rolePart);
-
-                        Cache::set("roles.{$rolePart->id}", $rolePart);
-                    }
-
-                    $roles->setCacheKey("guild.{$guild->id}.roles", true);
-                    unset($roles);
-
-                    $guilds->push($guildPart);
-
-                    if ($guildPart->large) {
-                        $largeServers[$guildPart->id] = $guildPart;
-                    }
-
-                    Cache::set("guild.{$guildPart->id}", $guildPart);
-                }
-
-                $this->discord->setCache('guilds', $guilds);
-                unset($guilds);
-
-                $this->sessionId = $content->session_id;
-
-                // guild_member_chunk
-                if (count($largeServers) > 0) {
-                    $servers = [];
-                    foreach ($largeServers as $server) {
-                        $servers[] = $server->id;
-                    }
-
-                    $chunks = array_chunk($servers, 50);
-
-                    $sendChunk = function () use (&$sendChunk, &$chunks) {
-                        $chunk = array_pop($chunks);
-
-                        $this->send([
-                            'op' => 8,
-                            'd' => [
-                                'guild_id' => $chunk,
-                                'query' => '',
-                                'limit' => 0,
-                            ],
-                        ]);
-
-                        $this->loop->addTimer(1, $sendChunk);
-                    };
-
-                    $sendChunk();
-
-                    unset($servers);
-                } else {
-                    if (! $this->invalidSession) {
-                        $this->emit('ready', [$this->discord]);
-                    }
-
-                    $this->invalidSession = false;
-                }
-            }
-
-            if ($data->t == Event::GUILD_MEMBERS_CHUNK) {
-                $members = $data->d->members;
-
-                if (count($largeServers) === 0) {
-                    return;
-                }
-
-                foreach ($this->discord->guilds as $index => $guild) {
-                    if ($guild->id == $data->d->guild_id) {
-                        if (is_null($guild)) {
-                            return;
-                        }
-
-                        $memberColl = $guild->members;
-                        $memberColl->setCacheKey(null, false);
-
-                        foreach ($members as $member) {
-                            if (isset($memberColl[$member->user->id])) {
-                                continue;
-                            }
-
-                            $member = (array) $member;
-                            $member['guild_id'] = $data->d->guild_id;
-                            $member['status'] = 'offline';
-                            $member['game'] = null;
-                            $memberPart = new Member($member, true);
-
-                            $memberColl[$memberPart->id] = $memberPart;
-                        }
-
-                        $memberColl->setCacheKey("guild.{$guild->id}.members", true);
-
-                        if ($memberColl->count() == $guild->member_count) {
-                            unset($largeServers[$data->d->guild_id]);
-                            $this->emit('guild-ready', [$guild]);
-                        }
-
-                        unset($memberColl);
-
-                        if (count($largeServers) === 0) {
-                            $this->emit('ready', [$this->discord]);
-                        }
-
-                        break;
-                    }
-                }
-
-                unset($members);
+            if (isset($handlers[$data->t])) {
+                $this->{$handlers[$data->t]}($data);
             }
         });
 
@@ -556,6 +363,300 @@ class WebSocket extends EventEmitter
     public function handleWebSocketError($e)
     {
         $this->emit('ws-connect-error', [$e]);
+    }
+
+    /**
+     * Handles `RESUME` frames.
+     *
+     * @param array $data The WebSocket data.
+     * 
+     * @return void 
+     */
+    public function handleResume($data)
+    {
+        $tts = $data->d->heartbeat_interval / 1000;
+        $this->heartbeat();
+        $this->heartbeat = $this->loop->addPeriodicTimer($tts / 4, [$this, 'heartbeat']);
+
+        $this->emit('reconnected', [$this]);
+    }
+
+    /**
+     * Handles `VOICE_SERVER_UPDATE` frames.
+     *
+     * @param array $data The WebSocket data.
+     *
+     * @return void
+     */
+    public function handleVoiceServerUpdate($data)
+    {
+        if (isset($this->voiceClients[$data->d->guild_id])) {
+            $this->voiceClients[$data->d->guild_id]->handleVoiceServerChange((array) $data->d);
+        }
+    }
+
+    /**
+     * Handles `READY` frames.
+     *
+     * @param array $data The WebSocket data.
+     *
+     * @return void 
+     */
+    public function handleReady($data)
+    {
+        if (! is_null($this->reconnectResetTimer)) {
+            $this->loop->cancelTimer($this->reconnectResetTimer);
+        }
+
+        $this->reconnectResetTimer = $this->loop->addTimer(60 * 2, function () {
+            $this->reconnectCount = 0;
+        });
+
+        $tts = $data->d->heartbeat_interval / 1000;
+        $this->heartbeat();
+        $this->heartbeat = $this->loop->addPeriodicTimer($tts / 4, [$this, 'heartbeat']);
+
+        // don't want to reparse ready
+        if ($this->reconnecting) {
+            $this->reconnecting = false;
+
+            return;
+        }
+
+        $content = $data->d;
+
+        // guilds
+        $guilds = new Collection();
+
+        foreach ($content->guilds as $guild) {
+            $guildPart = new Guild((array) $guild, true);
+
+            $channels = new Collection();
+
+            foreach ($guild->channels as $channel) {
+                $channel = (array) $channel;
+                $channel['guild_id'] = $guild->id;
+                $channelPart = new Channel($channel, true);
+
+                $channels->push($channelPart);
+
+                Cache::set("channels.{$channelPart->id}", $channelPart);
+            }
+
+            $channels->setCacheKey("guild.{$guild->id}.channels", true);
+            unset($channels);
+
+            // guild members
+            $members = new Collection();
+
+            foreach ($guild->members as $member) {
+                $member = (array) $member;
+                $member['guild_id'] = $guild->id;
+                $member['status'] = 'offline';
+                $member['game'] = null;
+                $memberPart = new Member($member, true);
+
+                // check for presences
+
+                foreach ($guild->presences as $presence) {
+                    if ($presence->user->id == $member['user']->id) {
+                        $memberPart->status = $presence->status;
+                        $memberPart->game = $presence->game;
+                    }
+                }
+
+                // Since when we use GUILD_MEMBERS_CHUNK, we have to cycle through the current members
+                // and see if they exist already. That takes ~34ms per member, way way too much.
+                $members[$memberPart->id] = $memberPart;
+
+                // Cache::set("guild.{$memberPart->guild_id}.members.{$memberPart->id}", $memberPart);
+            }
+
+            $members->setCacheKey("guild.{$guild->id}.members", true);
+            unset($members);
+
+            // guild roles
+            $roles = new Collection();
+
+            foreach ($guild->roles as $role) {
+                $perm = new Permission([
+                    'perms' => $role->permissions,
+                ]);
+                
+                $role = (array) $role;
+                $role['guild_id'] = $guild->id;
+                $role['permissions'] = $perm;
+                $rolePart = new Role($role, true);
+
+                $roles->push($rolePart);
+
+                Cache::set("roles.{$rolePart->id}", $rolePart);
+            }
+
+            $roles->setCacheKey("guild.{$guild->id}.roles", true);
+            unset($roles);
+
+            $guilds->push($guildPart);
+
+            if ($guildPart->large) {
+                $this->largeServers[$guildPart->id] = $guildPart;
+            }
+
+            Cache::set("guild.{$guildPart->id}", $guildPart);
+        }
+
+        $this->discord->setCache('guilds', $guilds);
+        unset($guilds);
+
+        $this->sessionId = $content->session_id;
+
+        // guild_member_chunk
+        if (count($this->largeServers) > 0) {
+            $servers = [];
+            foreach ($this->largeServers as $server) {
+                $servers[] = $server->id;
+            }
+
+            $chunks = array_chunk($servers, 50);
+
+            $sendChunk = function () use (&$sendChunk, &$chunks) {
+                $chunk = array_pop($chunks);
+
+                $this->send([
+                    'op' => 8,
+                    'd' => [
+                        'guild_id' => $chunk,
+                        'query' => '',
+                        'limit' => 0,
+                    ],
+                ]);
+
+                $this->loop->addTimer(1, $sendChunk);
+            };
+
+            $sendChunk();
+
+            unset($servers);
+        } else {
+            if (! $this->invalidSession) {
+                $this->emit('ready', [$this->discord]);
+            }
+
+            $this->invalidSession = false;
+        }
+    }
+
+    /**
+     * Handles `VOICE_STATE_UPDATE` frames.
+     *
+     * @param array $data The WebSocket data.
+     *
+     * @return void 
+     */
+    public function handleVoiceStateUpdate($data)
+    {
+        if (isset($this->voiceClients[$data->d->guild_id])) {
+            $this->voiceClients[$data->d->guild_id]->handleVoiceStateUpdate($data->d);
+        }
+    }
+
+    /**
+     * Handles `GUILD_MEMBERS_CHUNK` frames.
+     *
+     * @param array $data The WebSocket data.
+     *
+     * @return void 
+     */
+    public function handleGuildMembersChunk($data)
+    {
+        $members = $data->d->members;
+
+        if (count($this->largeServers) === 0) {
+            return;
+        }
+
+        foreach ($this->discord->guilds as $index => $guild) {
+            if ($guild->id == $data->d->guild_id) {
+                if (is_null($guild)) {
+                    return;
+                }
+
+                $memberColl = $guild->members;
+                $memberColl->setCacheKey(null, false);
+
+                foreach ($members as $member) {
+                    if (isset($memberColl[$member->user->id])) {
+                        continue;
+                    }
+
+                    $member = (array) $member;
+                    $member['guild_id'] = $data->d->guild_id;
+                    $member['status'] = 'offline';
+                    $member['game'] = null;
+                    $memberPart = new Member($member, true);
+
+                    $memberColl[$memberPart->id] = $memberPart;
+                }
+
+                $memberColl->setCacheKey("guild.{$guild->id}.members", true);
+
+                if ($memberColl->count() == $guild->member_count) {
+                    unset($this->largeServers[$data->d->guild_id]);
+                    $this->emit('guild-ready', [$guild]);
+                }
+
+                unset($memberColl);
+
+                if (count($this->largeServers) === 0) {
+                    $this->emit('ready', [$this->discord]);
+                }
+
+                break;
+            }
+        }
+
+        unset($members);
+    }
+
+    /**
+     * Handles frames with an opcode of 7.
+     *
+     * @param array $data The WebSocket data.
+     *
+     * @return void 
+     */
+    public function handleOp7()
+    {
+        $this->endpoint = $data->d->url;
+        $this->redirecting = true;
+        $ws->close();
+    }
+
+    /**
+     * Handles and emits events with handlers.
+     *
+     * @param array $handlerSettings The handler to call.
+     * @param array $data            The WebSocket data.
+     *
+     * @return void 
+     */
+    public function handleHandler($handlerSettings, $data)
+    {
+        $handler = new $handlerSettings['class']();
+        $handlerData = $handler->getData($data->d, $this->discord);
+        $newDiscord = $handler->updateDiscordInstance($handlerData, $this->discord);
+        $this->emit($data->t, [$handlerData, $this->discord, $newDiscord]);
+
+        foreach ($handlerSettings['alternatives'] as $alternative) {
+            $this->emit($alternative, [$handlerData, $this->discord, $newDiscord]);
+        }
+
+        if ($data->t == Event::MESSAGE_CREATE && (strpos($handlerData->content, '<@'.$this->discord->id.'>') !== false)) {
+            $this->emit('mention', [$handlerData, $this->discord, $newDiscord]);
+        }
+
+        $this->discord = $newDiscord;
+        unset($handler, $handlerData, $newDiscord, $handlerSettings);
     }
 
     /**
