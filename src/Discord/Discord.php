@@ -50,10 +50,11 @@ class Discord
     /**
      * Logs into the Discord servers.
      *
-     * @param array $options Options for the bot
+     * @param string|array $options Either a token, or Options for the bot
      */
-    public function __construct(array $options = [])
+    public function __construct($options)
     {
+        $options = !is_array($options) ? ['token' => $options] : $options;
         $options = $this->resolveOptions($options);
 
         define('DISCORD_TOKEN', $options['token']);
@@ -72,8 +73,6 @@ class Discord
         $resolver = new OptionsResolver();
         $resolver
             ->setRequired('token')
-            ->setDefault('cache_dir', getcwd().'/discord/')
-            ->setAllowedTypes('cache_dir', 'string')
             ->setAllowedTypes('token', 'string');
 
         $result = $resolver->resolve($options);
