@@ -149,6 +149,13 @@ class WebSocket extends EventEmitter
     protected $invalidSession = false;
 
     /**
+     * Whether we are being redirected.
+     *
+     * @var bool Redirected.
+     */
+    protected $redirecting;
+
+    /**
      * Constructs the WebSocket instance.
      *
      * @param Discord            $discord The Discord REST client instance.
@@ -228,7 +235,7 @@ class WebSocket extends EventEmitter
                 return;
             }
 
-            if (isset($data->s)) {
+            if (isset($data->s) && ! is_null($data->s)) {
                 $this->seq = $data->s;
             }
 
@@ -254,6 +261,15 @@ class WebSocket extends EventEmitter
 
                 $this->discord = $newDiscord;
                 unset($handler, $handlerData, $newDiscord, $handlerSettings);
+            }
+
+            // Discord wants us to change WebSocket servers.
+            if ($data->op == 7) {
+                $this->endpoint = $data->d->url;
+                $this->redirecting = true;
+                $ws->close();
+
+                return;
             }
 
             if ($data->t == Event::VOICE_SERVER_UPDATE) {
@@ -474,6 +490,15 @@ class WebSocket extends EventEmitter
 
             if (! is_null($this->heartbeat)) {
                 $this->loop->cancelTimer($this->heartbeat);
+            }
+
+            if ($this->redirecting) {
+                $this->emit('redirecting', [$this->endpoint, $this]);
+                $this->redirecting = false;
+                $this->reconnecting = true;
+                $this->wsfactory->__invoke($this->gateway)->then([$this, 'handleWebSocketConnection'], [$this, 'handleWebSocketError']);
+
+                return;
             }
 
             if ($this->reconnectCount >= 4) {
