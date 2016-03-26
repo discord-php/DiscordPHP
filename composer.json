@@ -1,38 +1,40 @@
 {
-    "name": "team-reflex/discord-php",
+    "name":        "team-reflex/discord-php",
     "description": "An unofficial API to interact with the voice and text service Discord.",
-    "license": "MIT",
-    "authors": [
+    "license":     "MIT",
+    "authors":     [
         {
-            "name": "David Cole",
+            "name":  "David Cole",
             "email": "david@team-reflex.com"
         }
     ],
-    "require": {
-    	"guzzlehttp/guzzle": "~5.3|~6.0",
-        "illuminate/support": "^5.1",
-        "nesbot/carbon": "^1.21",
-        "react/socket-client": "0.4.*",
-        "react/datagram": "dev-master",
-        "TrafficCophp/ByteBuffer": "dev-master",
-        "ratchet/pawl": "dev-master"
+    "require":     {
+        "cache/cache":              "^0.1",
+        "guzzlehttp/guzzle":        "~5.3|~6.0",
+        "illuminate/support":       "^5.1",
+        "nesbot/carbon":            "^1.21",
+        "ratchet/pawl":             "dev-master",
+        "react/datagram":           "dev-master",
+        "react/socket-client":      "0.4.*",
+        "symfony/options-resolver": "^2.7|^3.0",
+        "TrafficCophp/ByteBuffer":  "dev-master"
     },
     "require-dev": {
-        "symfony/var-dumper": "^2.7",
-        "phpunit/phpunit": "^5.1"
+        "symfony/var-dumper": "^2.7|^3.0",
+        "phpunit/phpunit":    "^5.1|^6.0"
     },
-    "autoload": {
-    	"psr-4": {
-    		"Discord\\": "src/Discord"
+    "autoload":    {
+        "psr-4": {
+            "Discord\\": "src/Discord"
         },
         "files": [
             "src/Discord/Helpers/Erlang.php"
         ]
     },
-    "suggest": {
+    "suggest":     {
         "predis/predis": "Required to use the Redis cache driver."
     },
-    "scripts": {
+    "scripts":     {
         "test": "php tests/run.php"
     }
 }
