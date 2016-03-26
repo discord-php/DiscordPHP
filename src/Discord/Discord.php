@@ -13,8 +13,10 @@ namespace Discord;
 
 use Carbon\Carbon;
 use Discord\Helpers\Guzzle;
+use Discord\Helpers\TokenHelper;
 use Discord\Parts\Part;
 use Discord\Parts\User\Client;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * The Discord class is the base of the client. This is the class that you
@@ -48,17 +50,35 @@ class Discord
     /**
      * Logs into the Discord servers.
      *
-     * @param string $token The bot account's token.
-     *
-     * @return void
+     * @param array $options Options for the bot
      */
-    public function __construct($token)
+    public function __construct(array $options = [])
     {
-        @define('DISCORD_TOKEN', "Bot {$token}");
+        $options = $this->resolveOptions($options);
 
-        $request = Guzzle::get('users/@me');
+        define('DISCORD_TOKEN', $options['token']);
 
-        $this->client = new Client((array) $request, true);
+        $this->client = new Client((array) Guzzle::get('users/@me'), true);
+    }
+
+    /**
+     * @param array $options
+     *
+     * @return array
+     * @throws \Exception
+     */
+    private function resolveOptions(array $options)
+    {
+        $resolver = new OptionsResolver();
+        $resolver
+            ->setRequired('token')
+            ->setDefault('cache_dir', getcwd().'/discord/')
+            ->setAllowedTypes('cache_dir', 'string')
+            ->setAllowedTypes('token', 'string');
+
+        $result = $resolver->resolve($options);
+
+        return $result;
     }
 
     /**
@@ -74,7 +94,7 @@ class Discord
             $id = $id->id;
         }
 
-        if (! is_int($id)) {
+        if (!is_int($id)) {
             return;
         }
 

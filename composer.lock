@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "41963c1ba646728f719d57e98831ef0d",
-    "content-hash": "be20e1783cb1a9f3af345ef0a663121d",
+    "hash": "027873c047d2453610c5b9d778244fdf",
+    "content-hash": "aca05b2be6f66a2bfb62ec5f52150841",
     "packages": [
         {
             "name": "TrafficCophp/ByteBuffer",
@@ -50,6 +50,163 @@
                 "wrapper"
             ],
             "time": "2016-01-13 22:50:58"
+        },
+        {
+            "name": "cache/cache",
+            "version": "0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-cache/cache.git",
+                "reference": "9acb6314a767264570a6df00331c66e7df13c7e5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-cache/cache/zipball/9acb6314a767264570a6df00331c66e7df13c7e5",
+                "reference": "9acb6314a767264570a6df00331c66e7df13c7e5",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/cache": "^1.3",
+                "league/flysystem": "^1.0",
+                "php": "^5.5|^7.0",
+                "predis/predis": "^1.0",
+                "psr/cache": "^1.0"
+            },
+            "conflict": {
+                "cache/adapter-common": "*",
+                "cache/apc-adapter": "*",
+                "cache/apcu-adapter": "*",
+                "cache/array-adapter": "*",
+                "cache/chain-adapter": "*",
+                "cache/doctrine-adapter": "*",
+                "cache/filesystem-adapter": "*",
+                "cache/hierarchical-cache": "*",
+                "cache/memcache-adapter": "*",
+                "cache/memcached-adapter": "*",
+                "cache/mongodb-adapter": "*",
+                "cache/predis-adapter": "*",
+                "cache/psr-6-doctrine-bridge": "*",
+                "cache/redis-adapter": "*",
+                "cache/session-handler": "*",
+                "cache/taggable-cache": "*",
+                "cache/void-adapter": "*"
+            },
+            "require-dev": {
+                "cache/integration-tests": "0.7.0",
+                "mockery/mockery": "^0.9",
+                "phpunit/phpunit": "^4.0|^5.1"
+            },
+            "suggest": {
+                "ext-apc": "APC extension is required to use the APC Adapter",
+                "ext-apcu": "APCu extension is required to use the APCu Adapter",
+                "ext-memcache": "Memcache extension is required to use the Memcache Adapter",
+                "ext-memcached": "Memcached extension is required to use the Memcached Adapter",
+                "ext-mongodb": "Mongodb extension required to use the Mongodb adapter",
+                "ext-redis": "Redis extension is required to use the Redis adapter",
+                "mongodb/mongodb": "Mongodb extension required to use the Mongodb adapter"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Cache\\": "src/"
+                },
+                "exclude-from-classmap": [
+                    "**/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Aaron Scherer",
+                    "email": "aequasi@gmail.com",
+                    "homepage": "https://github.com/aequasi"
+                },
+                {
+                    "name": "Tobias Nyholm",
+                    "email": "tobias.nyholm@gmail.com",
+                    "homepage": "https://github.com/nyholm"
+                }
+            ],
+            "description": "Library of all the php-cache adapters",
+            "homepage": "http://www.php-cache.com",
+            "keywords": [
+                "cache",
+                "psr6"
+            ],
+            "time": "2016-02-05 21:36:11"
+        },
+        {
+            "name": "doctrine/cache",
+            "version": "v1.6.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/doctrine/cache.git",
+                "reference": "f8af318d14bdb0eff0336795b428b547bd39ccb6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/doctrine/cache/zipball/f8af318d14bdb0eff0336795b428b547bd39ccb6",
+                "reference": "f8af318d14bdb0eff0336795b428b547bd39ccb6",
+                "shasum": ""
+            },
+            "require": {
+                "php": "~5.5|~7.0"
+            },
+            "conflict": {
+                "doctrine/common": ">2.2,<2.4"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.8|~5.0",
+                "predis/predis": "~1.0",
+                "satooshi/php-coveralls": "~0.6"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.6.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Doctrine\\Common\\Cache\\": "lib/Doctrine/Common/Cache"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Roman Borschel",
+                    "email": "roman@code-factory.org"
+                },
+                {
+                    "name": "Benjamin Eberlei",
+                    "email": "kontakt@beberlei.de"
+                },
+                {
+                    "name": "Guilherme Blanco",
+                    "email": "guilhermeblanco@gmail.com"
+                },
+                {
+                    "name": "Jonathan Wage",
+                    "email": "jonwage@gmail.com"
+                },
+                {
+                    "name": "Johannes Schmitt",
+                    "email": "schmittjoh@gmail.com"
+                }
+            ],
+            "description": "Caching library offering an object-oriented API for many cache backends",
+            "homepage": "http://www.doctrine-project.org",
+            "keywords": [
+                "cache",
+                "caching"
+            ],
+            "time": "2015-12-31 16:37:02"
         },
         {
             "name": "doctrine/inflector",
@@ -434,6 +591,89 @@
             "time": "2016-02-22 20:29:02"
         },
         {
+            "name": "league/flysystem",
+            "version": "1.0.20",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/thephpleague/flysystem.git",
+                "reference": "e87a786e3ae12a25cf78a71bb07b4b384bfaa83a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/e87a786e3ae12a25cf78a71bb07b4b384bfaa83a",
+                "reference": "e87a786e3ae12a25cf78a71bb07b4b384bfaa83a",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0"
+            },
+            "conflict": {
+                "league/flysystem-sftp": "<1.0.6"
+            },
+            "require-dev": {
+                "ext-fileinfo": "*",
+                "mockery/mockery": "~0.9",
+                "phpspec/phpspec": "^2.2",
+                "phpunit/phpunit": "~4.8 || ~5.0"
+            },
+            "suggest": {
+                "ext-fileinfo": "Required for MimeType",
+                "league/flysystem-aws-s3-v2": "Allows you to use S3 storage with AWS SDK v2",
+                "league/flysystem-aws-s3-v3": "Allows you to use S3 storage with AWS SDK v3",
+                "league/flysystem-azure": "Allows you to use Windows Azure Blob storage",
+                "league/flysystem-cached-adapter": "Flysystem adapter decorator for metadata caching",
+                "league/flysystem-copy": "Allows you to use Copy.com storage",
+                "league/flysystem-dropbox": "Allows you to use Dropbox storage",
+                "league/flysystem-eventable-filesystem": "Allows you to use EventableFilesystem",
+                "league/flysystem-rackspace": "Allows you to use Rackspace Cloud Files",
+                "league/flysystem-sftp": "Allows you to use SFTP server storage via phpseclib",
+                "league/flysystem-webdav": "Allows you to use WebDAV storage",
+                "league/flysystem-ziparchive": "Allows you to use ZipArchive adapter"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.1-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "League\\Flysystem\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Frank de Jonge",
+                    "email": "info@frenky.net"
+                }
+            ],
+            "description": "Filesystem abstraction: Many filesystems, one API.",
+            "keywords": [
+                "Cloud Files",
+                "WebDAV",
+                "abstraction",
+                "aws",
+                "cloud",
+                "copy.com",
+                "dropbox",
+                "file systems",
+                "files",
+                "filesystem",
+                "filesystems",
+                "ftp",
+                "rackspace",
+                "remote",
+                "s3",
+                "sftp",
+                "storage"
+            ],
+            "time": "2016-03-14 21:54:11"
+        },
+        {
             "name": "nesbot/carbon",
             "version": "1.21.0",
             "source": {
@@ -479,6 +719,102 @@
                 "time"
             ],
             "time": "2015-11-04 20:07:17"
+        },
+        {
+            "name": "predis/predis",
+            "version": "v1.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nrk/predis.git",
+                "reference": "84060b9034d756b4d79641667d7f9efe1aeb8e04"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/nrk/predis/zipball/84060b9034d756b4d79641667d7f9efe1aeb8e04",
+                "reference": "84060b9034d756b4d79641667d7f9efe1aeb8e04",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.2"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.0"
+            },
+            "suggest": {
+                "ext-curl": "Allows access to Webdis when paired with phpiredis",
+                "ext-phpiredis": "Allows faster serialization and deserialization of the Redis protocol"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Predis\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Daniele Alessandri",
+                    "email": "suppakilla@gmail.com",
+                    "homepage": "http://clorophilla.net"
+                }
+            ],
+            "description": "Flexible and feature-complete PHP client library for Redis",
+            "homepage": "http://github.com/nrk/predis",
+            "keywords": [
+                "nosql",
+                "predis",
+                "redis"
+            ],
+            "time": "2015-07-30 18:34:15"
+        },
+        {
+            "name": "psr/cache",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-fig/cache.git",
+                "reference": "9e66031f41fbbdda45ee11e93c45d480ccba3eb3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-fig/cache/zipball/9e66031f41fbbdda45ee11e93c45d480ccba3eb3",
+                "reference": "9e66031f41fbbdda45ee11e93c45d480ccba3eb3",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Psr\\Cache\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "PHP-FIG",
+                    "homepage": "http://www.php-fig.org/"
+                }
+            ],
+            "description": "Common interface for caching libraries",
+            "keywords": [
+                "cache",
+                "psr",
+                "psr-6"
+            ],
+            "time": "2015-12-11 02:52:07"
         },
         {
             "name": "psr/http-message",
@@ -535,24 +871,30 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ratchetphp/Pawl.git",
-                "reference": "7c396649487d2ae040e753a1e8fd14f0e25d0e55"
+                "reference": "d047758596fa6ad4ebe960235f3f12de4c500e65"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ratchetphp/Pawl/zipball/7c396649487d2ae040e753a1e8fd14f0e25d0e55",
-                "reference": "7c396649487d2ae040e753a1e8fd14f0e25d0e55",
+                "url": "https://api.github.com/repos/ratchetphp/Pawl/zipball/d047758596fa6ad4ebe960235f3f12de4c500e65",
+                "reference": "d047758596fa6ad4ebe960235f3f12de4c500e65",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.4",
-                "ratchet/rfc6455": "0.2.*",
-                "react/socket-client": "0.4.*"
+                "ratchet/rfc6455": "^0.2.1",
+                "react/socket-client": "^0.4.3|^0.5"
+            },
+            "suggest": {
+                "reactivex/rxphp": "~1.1"
             },
             "type": "library",
             "autoload": {
                 "psr-4": {
                     "Ratchet\\Client\\": "src"
-                }
+                },
+                "files": [
+                    "src/functions_include.php"
+                ]
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -563,22 +905,23 @@
                 "Ratchet",
                 "async",
                 "client",
-                "websocket"
+                "websocket",
+                "websocket client"
             ],
-            "time": "2016-03-15 15:32:31"
+            "time": "2016-03-21 03:47:35"
         },
         {
             "name": "ratchet/rfc6455",
-            "version": "v0.2",
+            "version": "v0.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ratchetphp/RFC6455.git",
-                "reference": "cbd376e1b3d332466d8d5158abd5030e2a023089"
+                "reference": "055b3eca13f314fb910ea55052a9f7d4e516fbc8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ratchetphp/RFC6455/zipball/cbd376e1b3d332466d8d5158abd5030e2a023089",
-                "reference": "cbd376e1b3d332466d8d5158abd5030e2a023089",
+                "url": "https://api.github.com/repos/ratchetphp/RFC6455/zipball/055b3eca13f314fb910ea55052a9f7d4e516fbc8",
+                "reference": "055b3eca13f314fb910ea55052a9f7d4e516fbc8",
                 "shasum": ""
             },
             "require": {
@@ -613,7 +956,7 @@
                 "rfc6455",
                 "websocket"
             ],
-            "time": "2016-02-20 21:26:08"
+            "time": "2016-03-16 12:32:52"
         },
         {
             "name": "react/cache",
@@ -655,12 +998,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/reactphp/datagram.git",
-                "reference": "f052439554af8b1ebfc8f5e77e3c23408a7f1449"
+                "reference": "c7725b3b30cb3081ed62c707308c1029d053b688"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/reactphp/datagram/zipball/f052439554af8b1ebfc8f5e77e3c23408a7f1449",
-                "reference": "f052439554af8b1ebfc8f5e77e3c23408a7f1449",
+                "url": "https://api.github.com/repos/reactphp/datagram/zipball/c7725b3b30cb3081ed62c707308c1029d053b688",
+                "reference": "c7725b3b30cb3081ed62c707308c1029d053b688",
                 "shasum": ""
             },
             "require": {
@@ -668,7 +1011,7 @@
                 "php": ">=5.3",
                 "react/dns": ">=0.2, <0.5",
                 "react/event-loop": ">=0.2, <0.5",
-                "react/promise": "~2.0|~1.1"
+                "react/promise": "~2.1|~1.2"
             },
             "require-dev": {
                 "clue/block-react": "~1.0"
@@ -701,7 +1044,7 @@
                 "server",
                 "udp"
             ],
-            "time": "2016-03-16 00:44:48"
+            "time": "2016-03-19 11:59:13"
         },
         {
             "name": "react/dns",
@@ -963,6 +1306,60 @@
                 "stream"
             ],
             "time": "2015-10-07 18:32:58"
+        },
+        {
+            "name": "symfony/options-resolver",
+            "version": "v3.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/options-resolver.git",
+                "reference": "bc7ee3ef3905f7c21fbed4e921cb39d6518b1300"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/options-resolver/zipball/bc7ee3ef3905f7c21fbed4e921cb39d6518b1300",
+                "reference": "bc7ee3ef3905f7c21fbed4e921cb39d6518b1300",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.5.9"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\OptionsResolver\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony OptionsResolver Component",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "config",
+                "configuration",
+                "options"
+            ],
+            "time": "2016-01-21 09:38:31"
         },
         {
             "name": "symfony/polyfill-mbstring",

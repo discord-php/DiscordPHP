@@ -17,13 +17,13 @@ use Discord\WebSockets\WebSocket;
 // Includes the Composer autoload file
 include '../vendor/autoload.php';
 
-if ($argc < 4) {
-    echo 'You must pass your Email and Password into the cmdline. Example: php voice.php <email> <password> <file-to-play>';
+if ($argc != 3) {
+    echo 'You must pass your Token into the cmdline. Example: php voice.php <token> <file-to-play>';
     die(1);
 }
 
 // Init the Discord instance.
-$discord = new Discord($argv[1], $argv[2]);
+$discord = new Discord(['token' => $argv[1], 'cache_dir' => __DIR__.'/../cache/']);
 // Init the WebSocket instance.
 $ws = new WebSocket($discord);
 
@@ -66,7 +66,7 @@ $ws->on('ready', function ($discord) use ($ws, $argv) {
         // The Voice Client also sets the frame size itself based on ping.
         $vc->setFrameSize(40)->then(function () use ($vc, $ws, $argv) {
             // We can now play stuff!
-            $vc->playFile($argv[3])->then(function () {
+            $vc->playFile($argv[2])->then(function () {
                 echo "Finished playing song.\r\n";
             });
 
