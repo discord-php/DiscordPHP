@@ -502,6 +502,11 @@ class WebSocket extends EventEmitter
             $sendChunk = function () use (&$sendChunk, &$chunks) {
                 $chunk = array_pop($chunks);
 
+                // We have finished our chunks
+                if (is_null($chunk)) {
+                    return;
+                }
+
                 $this->send([
                     'op' => 8,
                     'd' => [
