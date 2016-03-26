@@ -246,27 +246,7 @@ class WebSocket extends EventEmitter
             }
 
             if (! is_null($handlerSettings = $this->handlers->getHandler($data->t))) {
-                $handler = new $handlerSettings['class']();
-                $handlerData = $handler->getData($data->d, $this->discord);
-                $newDiscord = $handler->updateDiscordInstance($handlerData, $this->discord);
-                $this->emit($data->t, [$handlerData, $this->discord, $newDiscord]);
-
-                foreach ($handlerSettings['alternatives'] as $alternative) {
-                    $this->emit($alternative, [$handlerData, $this->discord, $newDiscord]);
-                }
-
-                if ($data->t == Event::MESSAGE_CREATE && (strpos($handlerData->content, '<@'.$this->discord->id.'>') !== false)) {
-                    $this->emit('mention', [$handlerData, $this->discord, $newDiscord]);
-                }
-
-                if ($data->t == Event::VOICE_STATE_UPDATE) {
-                    if (isset($this->voiceClients[$data->d->guild_id])) {
-                        $this->voiceClients[$data->d->guild_id]->handleVoiceStateUpdate($data->d);
-                    }
-                }
-
-                $this->discord = $newDiscord;
-                unset($handler, $handlerData, $newDiscord, $handlerSettings);
+                $this->handleHandler($handlerSettings, $data);
             }
 
             // Discord wants us to change WebSocket servers.
