@@ -9,19 +9,19 @@
         }
     ],
     "require":     {
-        "cache/cache":              "^0.1",
-        "guzzlehttp/guzzle":        "~5.3|~6.0",
-        "illuminate/support":       "^5.1",
-        "nesbot/carbon":            "^1.21",
-        "ratchet/pawl":             "dev-master",
-        "react/datagram":           "dev-master",
-        "react/socket-client":      "0.4.*",
-        "symfony/options-resolver": "^2.7|^3.0",
-        "TrafficCophp/ByteBuffer":  "dev-master",
+        "cache/cache":                  "^0.1",
+        "guzzlehttp/guzzle":            "~5.3|~6.0",
+        "illuminate/support":           "^5.1",
+        "nesbot/carbon":                "^1.21",
+        "ratchet/pawl":                 "dev-master",
+        "react/datagram":               "dev-master",
+        "react/socket-client":          "0.4.*",
+        "symfony/options-resolver":     "^2.7|^3.0",
+        "TrafficCophp/ByteBuffer":      "dev-master",
         "symfony/dependency-injection": "^2.7|^3.0",
-        "symfony/config": "^2.7|^3.0",
-        "symfony/expression-language": "^2.7|^3.0",
-        "cache/adapter-bundle": "^0.3.3"
+        "symfony/config":               "^2.7|^3.0",
+        "symfony/expression-language":  "^2.7|^3.0",
+        "cache/adapter-bundle":         "^0.3.3"
     },
     "require-dev": {
         "symfony/var-dumper": "^2.7|^3.0",
