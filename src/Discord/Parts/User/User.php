@@ -12,7 +12,6 @@
 namespace Discord\Parts\User;
 
 use Discord\Cache\Cache;
-use Discord\Helpers\Guzzle;
 use Discord\Parts\Channel\Message;
 use Discord\Parts\Part;
 
@@ -61,20 +60,26 @@ class User extends Part
         if ($channelID = Cache::get("user.{$this->id}.pm")) {
             $channel_id = $channelID;
         } else {
-            $channel = Guzzle::post('users/@me/channels', [
-                'recipient_id' => $this->id,
-            ]);
+            $channel = $this->guzzle->post(
+                'users/@me/channels',
+                [
+                    'recipient_id' => $this->id,
+                ]
+            );
 
             $channel_id = $channel->id;
             Cache::set("user.{$this->id}.pm", $channel->id);
         }
 
-        $request = Guzzle::post("channels/{$channel_id}/messages", [
-            'content' => $message,
-            'tts' => $tts,
-        ]);
+        $request = $this->guzzle->post(
+            "channels/{$channel_id}/messages",
+            [
+                'content' => $message,
+                'tts'     => $tts,
+            ]
+        );
 
-        $message = new Message((array) $request, true);
+        $message = $this->partFactory->create(Message::class, $request, true);
 
         Cache::set("message.{$message->id}", $message);
 
@@ -89,17 +94,20 @@ class User extends Part
     public function broadcastTyping()
     {
         if ($channelID = Cache::get("user.{$this->id}.pm")) {
-            $channel_id = $channelID;
+            $channelId = $channelID;
         } else {
-            $channel = Guzzle::post('users/@me/channels', [
-                'recipient_id' => $this->id,
-            ]);
+            $channel = $this->guzzle->post(
+                'users/@me/channels',
+                [
+                    'recipient_id' => $this->id,
+                ]
+            );
 
-            $channel_id = $channel->id;
+            $channelId = $channel->id;
             Cache::set("user.{$this->id}.pm", $channel->id);
         }
 
-        Guzzle::post("channels/{$channel_id}/typing");
+        $this->guzzle->post("channels/{$channelId}/typing");
 
         return true;
     }

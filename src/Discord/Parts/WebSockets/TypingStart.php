@@ -34,9 +34,7 @@ class TypingStart extends Part
      */
     public function getUserAttribute()
     {
-        return new User([
-            'id' => $this->user_id,
-        ], true);
+        return $this->partFactory->create(User::class, ['id' => $this->user_id], true);
     }
 
     /**
@@ -56,8 +54,6 @@ class TypingStart extends Part
      */
     public function getChannelAttribute()
     {
-        return new Channel([
-            'id' => $this->channel_id,
-        ], true);
+        return $this->partFactory->create(Channel::class, ['id' => $this->channel_id], true);
     }
 }

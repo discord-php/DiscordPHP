@@ -16,7 +16,7 @@ use Discord\Parts\Channel\Channel;
 use Discord\WebSockets\Event;
 
 /**
- * Event that is emitted wheh `CHANNEL_DELETE` is fired.
+ * Event that is emitted when `CHANNEL_DELETE` is fired.
  */
 class ChannelDelete extends Event
 {
@@ -27,7 +27,7 @@ class ChannelDelete extends Event
      */
     public function getData($data, $discord)
     {
-        return new Channel((array) $data, true);
+        return $this->partFactory->create(Channel::class, $data, true);
     }
 
     /**

@@ -13,7 +13,6 @@ namespace Discord\Parts\Channel;
 
 use Carbon\Carbon;
 use Discord\Cache\Cache;
-use Discord\Helpers\Guzzle;
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
 
@@ -30,13 +29,26 @@ class Message extends Part
     /**
      * {@inheritdoc}
      */
-    protected $fillable = ['id', 'channel_id', 'content', 'mentions', 'author', 'mention_everyone', 'timestamp', 'edited_timestamp', 'tts', 'attachments', 'embeds', 'nonce'];
+    protected $fillable = [
+        'id',
+        'channel_id',
+        'content',
+        'mentions',
+        'author',
+        'mention_everyone',
+        'timestamp',
+        'edited_timestamp',
+        'tts',
+        'attachments',
+        'embeds',
+        'nonce'
+    ];
 
     /**
      * {@inheritdoc}
      */
     protected $uris = [
-        'get' => 'channels/:channel_id/messages/:id',
+        'get'    => 'channels/:channel_id/messages/:id',
         'create' => 'channels/:channel_id/messages',
         'update' => 'channels/:channel_id/messages/:id',
         'delete' => 'channels/:channel_id/messages/:id',
@@ -57,7 +69,8 @@ class Message extends Part
     /**
      * Returns the channel attribute.
      *
-     * Note: This channel object does not have a guild_id attribute, therfore you cannot get the guild from this object. If you neeed the guild, use the `full_channel` attribute on the channel.
+     * Note: This channel object does not have a guild_id attribute, therfore you cannot get the guild from this
+     * object. If you neeed the guild, use the `full_channel` attribute on the channel.
      *
      * @return Channel The channel the message was sent in.
      */
@@ -67,10 +80,14 @@ class Message extends Part
             return $channel;
         }
 
-        return new Channel([
-            'id' => $this->channel_id,
-            'type' => 'text',
-        ], true);
+        return $this->partFactory->create(
+            Channel::class,
+            [
+                'id'   => $this->channel_id,
+                'type' => 'text',
+            ],
+            true
+        );
     }
 
     /**
@@ -84,8 +101,8 @@ class Message extends Part
             return $channel;
         }
 
-        $request = Guzzle::get($this->replaceWithVariables('channels/:channel_id'));
-        $channel = new Channel((array) $request, true);
+        $request = $this->guzzle->get($this->replaceWithVariables('channels/:channel_id'));
+        $channel = $this->partFactory->create(Channel::class, $request, true);
 
         Cache::set("channels.{$channel->id}", $channel);
 
@@ -99,12 +116,15 @@ class Message extends Part
      */
     public function getAuthorAttribute()
     {
-        return new User([
-            'id' => $this->attributes['author']->id,
-            'username' => $this->attributes['author']->username,
-            'avatar' => $this->attributes['author']->avatar,
-            'discriminator' => $this->attributes['author']->discriminator,
-        ]);
+        return $this->partFactory->create(
+            User::class,
+            [
+                'id'            => $this->attributes['author']->id,
+                'username'      => $this->attributes['author']->username,
+                'avatar'        => $this->attributes['author']->avatar,
+                'discriminator' => $this->attributes['author']->discriminator,
+            ]
+        );
     }
 
     /**
@@ -123,9 +143,9 @@ class Message extends Part
     public function getCreatableAttributes()
     {
         return [
-            'content' => $this->content,
+            'content'  => $this->content,
             'mentions' => $this->mentions,
-            'tts' => $this->tts,
+            'tts'      => $this->tts,
         ];
     }
 
@@ -135,7 +155,7 @@ class Message extends Part
     public function getUpdatableAttributes()
     {
         return [
-            'content' => $this->content,
+            'content'  => $this->content,
             'mentions' => $this->mentions,
         ];
     }

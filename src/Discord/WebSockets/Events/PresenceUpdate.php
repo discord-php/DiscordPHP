@@ -26,7 +26,7 @@ class PresenceUpdate extends Event
      */
     public function getData($data, $discord)
     {
-        return new PresenceUpdatePart((array) $data, true);
+        return $this->partFactory->create(PresenceUpdatePart::class, $data, true);
     }
 
     /**

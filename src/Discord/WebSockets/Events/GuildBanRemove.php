@@ -17,7 +17,7 @@ use Discord\Parts\Guild\Guild;
 use Discord\WebSockets\Event;
 
 /**
- * Event that is emitted wheh `GUILD_BAN_REMOVE` is fired.
+ * Event that is emitted when `GUILD_BAN_REMOVE` is fired.
  */
 class GuildBanRemove extends Event
 {
@@ -31,13 +31,17 @@ class GuildBanRemove extends Event
         $guild = $discord->guilds->get('id', $data->guild_id);
 
         if (is_null($guild)) {
-            $guild = new Guild(['id' => $data->guild_id, 'name' => 'Unknown'], true);
+            $guild = $this->partFactory->create(Guild::class, ['id' => $data->guild_id, 'name' => 'Unknown'], true);
         }
 
-        return new Ban([
-            'guild' => $guild,
-            'user' => $data->user,
-        ], true);
+        return $this->partFactory->create(
+            Ban::class,
+            [
+                'guild' => $guild,
+                'user'  => $data->user,
+            ],
+            true
+        );
     }
 
     /**

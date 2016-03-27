@@ -15,9 +15,9 @@ use Discord\Cache\Cache;
 use Discord\Exceptions\FileNotFoundException;
 use Discord\Exceptions\PasswordEmptyException;
 use Discord\Helpers\Collection;
-use Discord\Helpers\Guzzle;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Part;
+use Discord\WebSockets\WebSocket;
 
 /**
  * The client is the main interface for the client. Most calls on the main class are forwarded here.
@@ -52,18 +52,32 @@ class Client extends Part
     ];
 
     /**
+     * @var WebSocket
+     */
+    protected $webSocket;
+
+    /**
      * Runs any extra construction tasks.
      *
      * @return void
      */
     public function afterConstruct()
     {
-        $this->user = new User([
-            'id' => $this->id,
-            'username' => $this->username,
-            'avatar' => $this->attributes['avatar'],
-            'discriminator' => $this->discriminator,
-        ], true);
+        $this->user = $this->partFactory->create(
+            User::class,
+            [
+                'id'            => $this->id,
+                'username'      => $this->username,
+                'avatar'        => $this->attributes['avatar'],
+                'discriminator' => $this->discriminator,
+            ],
+            true
+        );
+    }
+
+    public function setWebSocket(WebSocket $webSocket)
+    {
+        $this->webSocket = $webSocket;
     }
 
     /**
@@ -81,11 +95,16 @@ class Client extends Part
             return false;
         }
 
-        $request = Guzzle::post("oauth2/applications/{$appID}/bot", [
-            'secret' => $secret,
-        ], true, [
-            'authorization' => $token,
-        ]);
+        $request = $this->guzzle->post(
+            "oauth2/applications/{$appID}/bot",
+            [
+                'secret' => $secret,
+            ],
+            true,
+            [
+                'authorization' => $token,
+            ]
+        );
 
         $this->fill($request);
 
@@ -105,13 +124,13 @@ class Client extends Part
      */
     public function setAvatar($filepath)
     {
-        if (! file_exists($filepath)) {
+        if (!file_exists($filepath)) {
             throw new FileNotFoundException("File does not exist at path {$filepath}.");
         }
 
         $extension = pathinfo($filepath, PATHINFO_EXTENSION);
-        $file = file_get_contents($filepath);
-        $base64 = base64_encode($file);
+        $file      = file_get_contents($filepath);
+        $base64    = base64_encode($file);
 
         $this->attributes['avatarhash'] = "data:image/{$extension};base64,{$base64}";
 
@@ -121,25 +140,25 @@ class Client extends Part
     /**
      * Updates the clients presence.
      *
-     * @param WebSocket   $ws       The WebSocket client.
-     * @param string|null $gamename The game that you are playing or null.
-     * @param bool        $idle     Whether you are set to idle.
+     * @param WebSocket   $webSocket WebSocket
+     * @param string|null $gameName  The game that you are playing or null.
+     * @param bool        $idle      Whether you are set to idle.
      *
      * @return bool Whether the setting succeeded or failed.
      */
-    public function updatePresence($ws, $gamename, $idle)
+    public function updatePresence(WebSocket $webSocket, $gameName, $idle = false)
     {
-        $idle = ($idle == false) ? null : true;
+        $idle = ($idle === false) ? null : true;
 
-        $ws->send([
-            'op' => 3,
-            'd' => [
-                'game' => (! is_null($gamename) ? [
-                    'name' => $gamename,
-                ] : null),
-                'idle_since' => $idle,
-            ],
-        ]);
+        $webSocket->send(
+            [
+                'op' => 3,
+                'd'  => [
+                    'game'       => (!is_null($gameName) ? ['name' => $gameName] : null),
+                    'idle_since' => $idle,
+                ],
+            ]
+        );
 
         return true;
     }
@@ -155,11 +174,11 @@ class Client extends Part
             return $this->attributes_cache['guilds'];
         }
 
-        $guilds = [];
-        $request = Guzzle::get('users/@me/guilds');
+        $guilds  = [];
+        $request = $this->guzzle->get('users/@me/guilds');
 
         foreach ($request as $index => $guild) {
-            $guild = new Guild((array) $guild, true);
+            $guild = $this->partFactory->create(Guild::class, $guild, true);
             Cache::set("guild.{$guild->id}", $guild);
             $guilds[$index] = $guild;
         }
@@ -208,15 +227,15 @@ class Client extends Part
             $attributes['avatar'] = $this->attributes['avatarhash'];
         }
 
-        if (! $this->bot) {
+        if (!$this->bot) {
             if (empty($this->attributes['password'])) {
                 throw new PasswordEmptyException('You must enter your password to update your profile.');
             }
 
-            $attributes['email'] = $this->email;
+            $attributes['email']    = $this->email;
             $attributes['password'] = $this->attributes['password'];
 
-            if (! empty($this->attributes['new_password'])) {
+            if (!empty($this->attributes['new_password'])) {
                 $attributes['new_password'] = $this->attributes['new_password'];
             }
         }

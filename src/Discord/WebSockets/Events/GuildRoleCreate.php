@@ -30,7 +30,7 @@ class GuildRoleCreate extends Event
         $adata = (array) $data->role;
         $adata['guild_id'] = $data->guild_id;
 
-        return new Role($adata, true);
+        return $this->partFactory->create(Role::class, $adata, true);
     }
 
     /**

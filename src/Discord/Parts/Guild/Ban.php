@@ -69,7 +69,7 @@ class Ban extends Part
      */
     public function getUserAttribute()
     {
-        return new User((array) $this->attributes['user']);
+        return $this->partFactory->create(User::class, $this->attributes['user']);
     }
 
     /**

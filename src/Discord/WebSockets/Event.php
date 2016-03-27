@@ -11,6 +11,10 @@
 
 namespace Discord\WebSockets;
 
+use Discord\Discord;
+use Discord\Factory\PartFactory;
+use Discord\Guzzle;
+
 /**
  * Contains constants for WebSocket events as well as handlers
  * for the events.
@@ -53,10 +57,34 @@ class Event
     const MESSAGE_UPDATE = 'MESSAGE_UPDATE';
 
     /**
+     * @var Guzzle
+     */
+    protected $guzzle;
+
+    /**
+     * @var PartFactory
+     */
+    protected $partFactory;
+
+    /**
+     * Event constructor.
+     *
+     * @param Guzzle      $guzzle
+     * @param PartFactory $partFactory
+     */
+    public function __construct(Guzzle $guzzle, PartFactory $partFactory)
+    {
+        $this->guzzle = $guzzle;
+        $this->partFactory = $partFactory;
+    }
+
+    /**
      * Returns the formatted data.
      *
      * @param array   $data    The data that was sent with the WebSocket.
      * @param Discord $discord The Discord instance.
+     *
+     * @return mixed
      */
     public function getData($data, $discord)
     {

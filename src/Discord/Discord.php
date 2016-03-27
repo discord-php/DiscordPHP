@@ -11,11 +11,16 @@
 
 namespace Discord;
 
+use Cache\AdapterBundle\DependencyInjection\CacheAdapterExtension;
 use Carbon\Carbon;
-use Discord\Helpers\Guzzle;
-use Discord\Helpers\TokenHelper;
 use Discord\Parts\Part;
 use Discord\Parts\User\Client;
+use Discord\WebSockets\WebSocket;
+use Symfony\Component\Config\FileLocator;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -48,6 +53,11 @@ class Discord
     protected $client;
 
     /**
+     * @var ContainerInterface
+     */
+    protected $container;
+
+    /**
      * Logs into the Discord servers.
      *
      * @param string|array $options Either a token, or Options for the bot
@@ -57,9 +67,9 @@ class Discord
         $options = !is_array($options) ? ['token' => $options] : $options;
         $options = $this->resolveOptions($options);
 
-        define('DISCORD_TOKEN', $options['token']);
+        $options = $this->resolveOptions($options);
 
-        $this->client = new Client((array) Guzzle::get('users/@me'), true);
+        $this->container = $this->buildContainer($options);
     }
 
     /**
@@ -73,7 +83,9 @@ class Discord
         $resolver = new OptionsResolver();
         $resolver
             ->setRequired('token')
-            ->setAllowedTypes('token', 'string');
+            ->setDefault('cache', $this->getDefaultCache())
+            ->setAllowedTypes('token', 'string')
+            ->setAllowedTypes('cache', 'array');
 
         $result = $resolver->resolve($options);
 
@@ -94,7 +106,7 @@ class Discord
         }
 
         if (!is_int($id)) {
-            return;
+            return null;
         }
 
         $ms = ($id >> 22) + self::DISCORD_EPOCH;
@@ -111,7 +123,7 @@ class Discord
      */
     public static function createWithBotToken($token)
     {
-        $discord = new self($token);
+        $discord = new self(['token' => $token]);
 
         return $discord;
     }
@@ -120,17 +132,13 @@ class Discord
      * Handles dynamic calls to the class.
      *
      * @param string $name The function name.
-     * @param array  $name The function arguments.
+     * @param array  $args The function arguments.
      *
      * @return mixed The result of the function.
      */
     public function __call($name, array $args = [])
     {
-        if (is_null($this->client)) {
-            return false;
-        }
-
-        return call_user_func_array([$this->client, $name], $args);
+        return call_user_func_array([$this->getClient(), $name], $args);
     }
 
     /**
@@ -142,11 +150,7 @@ class Discord
      */
     public function __get($name)
     {
-        if (is_null($this->client)) {
-            return false;
-        }
-
-        return $this->client->getAttribute($name);
+        return $this->getClient()->getAttribute($name);
     }
 
     /**
@@ -159,6 +163,57 @@ class Discord
      */
     public function __set($variable, $value)
     {
-        $this->client->setAttribute($variable, $value);
+        $this->getClient()->setAttribute($variable, $value);
+    }
+
+    /**
+     * @param array $options
+     *
+     * @return ContainerBuilder
+     */
+    private function buildContainer(array $options)
+    {
+        $options['version'] = static::VERSION;
+        $container = new ContainerBuilder(new ParameterBag($options));
+
+        $cacheExtension = new CacheAdapterExtension();
+        $container->registerExtension($cacheExtension);
+        $container->loadFromExtension($cacheExtension->getAlias(), $options['cache']);
+
+        $container->set('discord', $this);
+
+        $loader    = new XmlFileLoader($container, new FileLocator(__DIR__.'/Resources/config/'));
+        $loader->load('services.xml');
+
+        $container->compile();
+
+        return $container;
+    }
+
+    /**
+     * @return WebSocket
+     */
+    public function getWebsocket()
+    {
+        return $this->container->get('websocket');
+    }
+
+    protected function getClient()
+    {
+        return $this->container->get('client');
+    }
+
+    /**
+     * @return array
+     */
+    private function getDefaultCache()
+    {
+        return [
+            'providers' => [
+                'array' => [
+                    'factory' => 'cache.factory.array'
+                ]
+            ]
+        ];
     }
 }

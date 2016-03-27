@@ -36,8 +36,8 @@ class Role extends Part
      */
     public function afterConstruct()
     {
-        if (! $this->created) {
-            $this->permissions = new Permission();
+        if (!$this->created) {
+            $this->permissions = $this->partFactory->create(Permission::class);
 
             if (isset($this->guild_id)) {
                 $this->save();
@@ -49,7 +49,7 @@ class Role extends Part
      * {@inheritdoc}
      */
     protected $uris = [
-        'get' => '',
+        'get'    => '',
         'create' => 'guilds/:guild_id/roles',
         'update' => 'guilds/:guild_id/roles/:id',
         'delete' => 'guilds/:guild_id/roles/:id',
@@ -64,7 +64,7 @@ class Role extends Part
      */
     public function setPermissionsAttribute($permission)
     {
-        if (! $permission instanceof Permission) {
+        if (!$permission instanceof Permission) {
             return false;
         }
 
@@ -109,9 +109,9 @@ class Role extends Part
     public function getUpdatableAttributes()
     {
         return [
-            'name' => $this->name,
-            'hoist' => $this->hoist,
-            'color' => $this->color,
+            'name'        => $this->name,
+            'hoist'       => $this->hoist,
+            'color'       => $this->color,
             'permissions' => $this->permissions->perms,
         ];
     }

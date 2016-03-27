@@ -33,7 +33,7 @@ class PresenceUpdate extends Part
      */
     public function getUserAttribute()
     {
-        return new User((array) $this->attributes['user'], true);
+        return $this->partFactory->create(User::class, $this->attributes['user'], true);
     }
 
     /**
@@ -43,8 +43,6 @@ class PresenceUpdate extends Part
      */
     public function getGuildAttribute()
     {
-        return new Guild([
-            'id' => $this->guild_id,
-        ], true);
+        return $this->partFactory->create(Guild::class, ['id' => $this->guild_id], true);
     }
 }

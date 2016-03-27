@@ -26,7 +26,7 @@ class TypingStart extends Event
      */
     public function getData($data, $discord)
     {
-        return new TypingStartPart((array) $data, true);
+        return $this->partFactory->create(TypingStartPart::class, $data, true);
     }
 
     /**

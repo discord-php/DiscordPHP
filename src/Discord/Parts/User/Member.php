@@ -15,7 +15,6 @@ use Carbon\Carbon;
 use Discord\Cache\Cache;
 use Discord\Exceptions\DiscordRequestFailedException;
 use Discord\Helpers\Collection;
-use Discord\Helpers\Guzzle;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Guild\Ban;
 use Discord\Parts\Guild\Guild;
@@ -52,7 +51,7 @@ class Member extends Part
      * {@inheritdoc}
      */
     protected $uris = [
-        'get' => '',
+        'get'    => '',
         'create' => '',
         'update' => 'guilds/:guild_id/members/:id',
         'delete' => 'guilds/:guild_id/members/:id',
@@ -81,20 +80,24 @@ class Member extends Part
     {
         $url = $this->replaceWithVariables('guilds/:guild_id/bans/:id');
 
-        if (! is_null($daysToDeleteMessasges)) {
+        if (!is_null($daysToDeleteMessasges)) {
             $url .= "?message-delete-days={$daysToDeleteMessasges}";
         }
 
         try {
-            $request = Guzzle::put($url);
+            $this->guzzle->put($url);
         } catch (DiscordRequestFailedException $e) {
             return false;
         }
 
-        return new Ban([
-            'user' => $this->user,
-            'guild' => new Guild(['id' => $this->guild_id], true),
-        ], true);
+        return $this->partFactory->create(
+            Ban::class,
+            [
+                'user'  => $this->user,
+                'guild' => $this->partFactory->create(Guild::class, ['id' => $this->guild_id], true),
+            ],
+            true
+        );
     }
 
     /**
@@ -110,9 +113,7 @@ class Member extends Part
             $channel = $channel->id;
         }
 
-        Guzzle::patch("guilds/{$this->guild_id}/members/{$this->id}", [
-            'channel_id' => $channel,
-        ]);
+        $this->guzzle->patch("guilds/{$this->guild_id}/members/{$this->id}", ['channel_id' => $channel]);
 
         // At the moment we are unable to check if the member
         // was moved successfully.
@@ -130,7 +131,7 @@ class Member extends Part
     public function addRole($role)
     {
         if (is_int($role)) {
-            $role = new Role(['id' => $role], true);
+            $role = $this->partFactory->create(Role::class, ['id' => $role], true);
         }
 
         // We don't want a double up on roles
@@ -200,7 +201,7 @@ class Member extends Part
      */
     public function getUserAttribute()
     {
-        return new User((array) $this->attributes['user'], true);
+        return $this->partFactory->create(User::class, $this->attributes['user'], true);
     }
 
     /**
@@ -215,7 +216,7 @@ class Member extends Part
         }
 
         $roles = [];
-        
+
         if ($guildRoles = Cache::get("guild.{$this->guild_id}.roles")) {
             foreach ($guildRoles as $role) {
                 if (false !== array_search($role->id, (array) $this->attributes['roles'])) {
@@ -223,16 +224,15 @@ class Member extends Part
                 }
             }
         } else {
-            $request = Guzzle::get($this->replaceWithVariables('guilds/:guild_id/roles'));
+            $request = $this->guzzle->get($this->replaceWithVariables('guilds/:guild_id/roles'));
 
             foreach ($request as $key => $role) {
                 if (false !== array_search($role->id, (array) $this->attributes['roles'])) {
-                    $perm = new Permission([
-                        'perms' => $role->permissions,
-                    ]);
-                    $role = (array) $role;
+                    $perm = $this->partFactory->create(Permission::class, ['perms' => $role->permissions]);
+
+                    $role                = (array) $role;
                     $role['permissions'] = $perm;
-                    $role = new Role($role, true);
+                    $role                = $this->partFactory->create(Role::class, $role, true);
                     Cache::set("role.{$role->id}", $role);
                     $roles[] = $role;
                 }

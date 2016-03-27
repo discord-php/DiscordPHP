@@ -12,11 +12,12 @@
 namespace Discord\Parts;
 
 use ArrayAccess;
+use Discord\Factory\PartFactory;
 use Serializable;
 use JsonSerializable;
 use Discord\Exceptions\DiscordRequestFailedException;
 use Discord\Exceptions\PartRequestFailedException;
-use Discord\Helpers\Guzzle;
+use Discord\Guzzle;
 use Illuminate\Support\Str;
 
 /**
@@ -25,6 +26,16 @@ use Illuminate\Support\Str;
  */
 abstract class Part implements ArrayAccess, Serializable, JsonSerializable
 {
+    /**
+     * @var PartFactory
+     */
+    protected $partFactory;
+
+    /**
+     * @var Guzzle
+     */
+    protected $guzzle;
+
     /**
      * The parts fillable attributes.
      *
@@ -126,46 +137,21 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
     /**
      * Create a new part instance.
      *
-     * @param array $attributes An array of attributes to build the part.
-     * @param bool  $created    Whether the part has already been created.
-     *
-     * @return void
+     * @param PartFactory $partFactory
+     * @param Guzzle      $guzzle
+     * @param array       $attributes An array of attributes to build the part.
+     * @param bool        $created    Whether the part has already been created.
      */
-    public function __construct(array $attributes = [], $created = false)
+    public function __construct(PartFactory $partFactory, Guzzle $guzzle, array $attributes = [], $created = false)
     {
-        $this->created = $created;
+        $this->partFactory = $partFactory;
+        $this->guzzle      = $guzzle;
+        $this->created     = $created;
         $this->fill($attributes);
 
         if (is_callable([$this, 'afterConstruct'])) {
             $this->afterConstruct();
         }
-    }
-
-    /**
-     * Attempts to get the part from the servers and
-     * return it.
-     *
-     * @param string $id An ID to find a part with.
-     *
-     * @return Part|null Either a Part if it was found or null.
-     */
-    public static function find($id)
-    {
-        $part = new static([], true);
-
-        if (! $part->findable) {
-            return;
-        }
-
-        try {
-            $request = Guzzle::get($part->uriReplace('get', ['id' => $id]));
-        } catch (DiscordRequestFailedException $e) {
-            return;
-        }
-
-        $part->fill($request);
-
-        return $part;
     }
 
     /**
@@ -191,11 +177,11 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
      */
     public function fresh()
     {
-        if ($this->deleted || ! $this->created) {
+        if ($this->deleted || !$this->created) {
             return false;
         }
 
-        $request = Guzzle::get($this->get);
+        $request = $this->guzzle->get($this->get);
 
         $this->fill($request);
 
@@ -206,6 +192,7 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
      * Saves the part to the Discord servers.
      *
      * @return bool Whether the attempt to save the part succeeded or failed.
+     * @throws PartRequestFailedException
      */
     public function save()
     {
@@ -213,17 +200,17 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
 
         try {
             if ($this->created) {
-                if (! $this->editable) {
+                if (!$this->editable) {
                     return false;
                 }
 
-                $request = Guzzle::patch($this->replaceWithVariables($this->uris['update']), $attributes);
+                $request = $this->guzzle->patch($this->replaceWithVariables($this->uris['update']), $attributes);
             } else {
-                if (! $this->creatable) {
+                if (!$this->creatable) {
                     return false;
                 }
 
-                $request = Guzzle::post($this->replaceWithVariables($this->uris['create']), $attributes);
+                $request       = $this->guzzle->post($this->replaceWithVariables($this->uris['create']), $attributes);
                 $this->created = true;
                 $this->deleted = false;
             }
@@ -242,15 +229,16 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
      * Deletes the part on the Discord servers.
      *
      * @return bool Whether the attempt to delete the part succeeded or failed.
+     * @throws PartRequestFailedException
      */
     public function delete()
     {
-        if (! $this->deletable) {
+        if (!$this->deletable) {
             return false;
         }
 
         try {
-            $request = Guzzle::delete($this->replaceWithVariables($this->uris['delete']));
+            $request       = $this->guzzle->delete($this->replaceWithVariables($this->uris['delete']));
             $this->created = false;
             $this->deleted = true;
         } catch (\Exception $e) {
@@ -304,7 +292,7 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
         $matcher = preg_match_all($this->regex, $string, $matches);
 
         $original = $matches[0];
-        $vars = $matches[1];
+        $vars     = $matches[1];
 
         foreach ($vars as $key => $variable) {
             if ($attribute = $this->getAttribute($variable)) {
@@ -333,7 +321,7 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
         $matcher = preg_match_all($this->regex, $string, $matches);
 
         $original = $matches[0];
-        $vars = $matches[1];
+        $vars     = $matches[1];
 
         foreach ($vars as $key => $variable) {
             if ($attribute = $params[$variable]) {
@@ -357,7 +345,7 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
             return $this->{$str}();
         }
 
-        if (! isset($this->attributes[$key])) {
+        if (!isset($this->attributes[$key])) {
             return;
         }
 
