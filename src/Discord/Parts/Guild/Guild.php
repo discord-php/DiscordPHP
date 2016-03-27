@@ -13,8 +13,8 @@ namespace Discord\Parts\Guild;
 
 use Discord\Cache\Cache;
 use Discord\Exceptions\DiscordRequestFailedException;
+use Discord\Exceptions\PartRequestFailedException;
 use Discord\Helpers\Collection;
-use Discord\Helpers\Guzzle;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Part;
 use Discord\Parts\Permissions\RolePermission as Permission;
@@ -26,36 +26,66 @@ use Discord\Parts\User\User;
  */
 class Guild extends Part
 {
-    const REGION_DEFAULT = self::REGION_US_WEST;
-    const REGION_US_WEST = 'us-west';
-    const REGION_US_SOUTH = 'us-south';
-    const REGION_US_EAST = 'us-east';
-    const REGION_US_CENTRAL = 'us-central';
-    const REGION_SINGAPORE = 'singapore';
-    const REGION_LONDON = 'london';
-    const REGION_SYDNEY = 'sydney';
-    const REGION_FRANKFURT = 'frankfurt';
-    const REGION_AMSTERDAM = 'amsterdam';
+    const REGION_DEFAULT    = self::REGION_US_WEST;
 
-    const LEVEL_OFF = 0;
-    const LEVEL_LOW = 1;
-    const LEVEL_MEDIUM = 2;
-    const LEVEL_TABLEFLIP = 3;
+    const REGION_US_WEST    = 'us-west';
+
+    const REGION_US_SOUTH   = 'us-south';
+
+    const REGION_US_EAST    = 'us-east';
+
+    const REGION_US_CENTRAL = 'us-central';
+
+    const REGION_SINGAPORE  = 'singapore';
+
+    const REGION_LONDON     = 'london';
+
+    const REGION_SYDNEY     = 'sydney';
+
+    const REGION_FRANKFURT  = 'frankfurt';
+
+    const REGION_AMSTERDAM  = 'amsterdam';
+
+    const LEVEL_OFF         = 0;
+
+    const LEVEL_LOW         = 1;
+
+    const LEVEL_MEDIUM      = 2;
+
+    const LEVEL_TABLEFLIP   = 3;
 
     /**
      * {@inheritdoc}
      */
-    protected $fillable = ['id', 'name', 'icon', 'region', 'owner_id', 'roles', 'joined_at', 'afk_channel_id', 'afk_timeout', 'embed_enabled', 'embed_channel_id', 'features', 'splash', 'emojis', 'large', 'verification_level', 'member_count'];
+    protected $fillable = [
+        'id',
+        'name',
+        'icon',
+        'region',
+        'owner_id',
+        'roles',
+        'joined_at',
+        'afk_channel_id',
+        'afk_timeout',
+        'embed_enabled',
+        'embed_channel_id',
+        'features',
+        'splash',
+        'emojis',
+        'large',
+        'verification_level',
+        'member_count'
+    ];
 
     /**
      * {@inheritdoc}
      */
     protected $uris = [
-        'get' => 'guilds/:id',
+        'get'    => 'guilds/:id',
         'create' => 'guilds',
         'update' => 'guilds/:id',
         'delete' => 'guilds/:id',
-        'leave' => 'users/@me/guilds/:id',
+        'leave'  => 'users/@me/guilds/:id',
     ];
 
     /**
@@ -83,12 +113,13 @@ class Guild extends Part
      *
      * @return bool Whether the attempt to leave succeeded or failed.
      *
+     * @throws PartRequestFailedException
      * @see \Discord\Parts\Part::delete() Used for leaving/deleting the guild if you are owner.
      */
     public function leave()
     {
         try {
-            $request = Guzzle::delete($this->replaceWithVariables($this->uris['leave']));
+            $this->guzzle->delete($this->replaceWithVariables($this->uris['leave']));
             $this->created = false;
             $this->deleted = true;
         } catch (\Exception $e) {
@@ -113,9 +144,12 @@ class Guild extends Part
         }
 
         try {
-            $request = Guzzle::patch($this->replaceWithVariables('guilds/:id'), [
-                'owner_id' => $member,
-            ]);
+            $request = $this->guzzle->patch(
+                $this->replaceWithVariables('guilds/:id'),
+                [
+                    'owner_id' => $member,
+                ]
+            );
 
             if ($request->owner_id != $member) {
                 return false;
@@ -165,12 +199,12 @@ class Guild extends Part
         $roles = [];
 
         foreach ($this->attributes['roles'] as $index => $role) {
-            $perm = new Permission();
-            $perm->perms = $role->permissions;
-            $role = (array) $role;
+            $perm                = $this->partFactory->create(Permission::class);
+            $perm->perms         = $role->permissions;
+            $role                = (array) $role;
             $role['permissions'] = $perm;
-            $role['guild_id'] = $this->id;
-            $roles[$index] = new Role($role, true);
+            $role['guild_id']    = $this->id;
+            $roles[$index]       = $this->partFactory->create(Role::class, $role, true);
         }
 
         $roles = new Collection($roles, "guild.{$this->id}.roles");
@@ -191,9 +225,9 @@ class Guild extends Part
             return $owner;
         }
 
-        $request = Guzzle::get($this->replaceWithVariables('users/:owner_id'));
+        $request = $this->guzzle->get($this->replaceWithVariables('users/:owner_id'));
 
-        $owner = new User((array) $request, true);
+        $owner = $this->partFactory->create(User::class, $request, true);
 
         Cache::set("user.{$user->id}", $owner);
 
@@ -212,10 +246,10 @@ class Guild extends Part
         }
 
         $channels = [];
-        $request = Guzzle::get($this->replaceWithVariables('guilds/:id/channels'));
+        $request  = $this->guzzle->get($this->replaceWithVariables('guilds/:id/channels'));
 
         foreach ($request as $index => $channel) {
-            $channel = new Channel((array) $channel, true);
+            $channel = $this->partFactory->create(Channel::class, $channel, true);
             Cache::set("channel.{$channel->id}", $channel);
             $channels[$index] = $channel;
         }
@@ -241,15 +275,15 @@ class Guild extends Part
         $bans = [];
 
         try {
-            $request = Guzzle::get($this->replaceWithVariables('guilds/:id/bans'));
+            $request = $this->guzzle->get($this->replaceWithVariables('guilds/:id/bans'));
         } catch (DiscordRequestFailedException $e) {
             return new Collection();
         }
 
         foreach ($request as $index => $ban) {
-            $ban = (array) $ban;
+            $ban          = (array) $ban;
             $ban['guild'] = $this;
-            $ban = new Ban($ban, true);
+            $ban = $this->partFactory->create(Ban::class, $ban, true);
             Cache::set("guild.{$this->id}.bans.{$ban->user_id}", $ban);
             $bans[$index] = $ban;
         }
@@ -276,11 +310,11 @@ class Guild extends Part
             return $invites;
         }
 
-        $request = Guzzle::get($this->replaceWithVariables('guilds/:id/invites'));
+        $request = $this->guzzle->get($this->replaceWithVariables('guilds/:id/invites'));
         $invites = [];
 
         foreach ($request as $index => $invite) {
-            $invite = new Invite((array) $invite, true);
+            $invite = $this->partFactory->create(Invite::class, $invite, true);
             Cache::set("invite.{$invite->id}", $invite);
             $invites[$index] = $invite;
         }
@@ -349,7 +383,7 @@ class Guild extends Part
      */
     public function validateRegion()
     {
-        if (! in_array($this->region, $this->regions)) {
+        if (!in_array($this->region, $this->regions)) {
             return self::REGION_DEFUALT;
         }
 
@@ -370,7 +404,7 @@ class Guild extends Part
     public function getCreatableAttributes()
     {
         return [
-            'name' => $this->name,
+            'name'   => $this->name,
             'region' => $this->validateRegion(),
         ];
     }
@@ -381,13 +415,13 @@ class Guild extends Part
     public function getUpdatableAttributes()
     {
         return [
-            'name' => $this->name,
-            'region' => $this->region,
-            'logo' => $this->logo,
-            'splash' => $this->splash,
+            'name'               => $this->name,
+            'region'             => $this->region,
+            'logo'               => $this->logo,
+            'splash'             => $this->splash,
             'verification_level' => $this->verification_level,
-            'afk_channel_id' => $this->afk_channel_id,
-            'afk_timeout' => $this->afk_timeout,
+            'afk_channel_id'     => $this->afk_channel_id,
+            'afk_timeout'        => $this->afk_timeout,
         ];
     }
 }

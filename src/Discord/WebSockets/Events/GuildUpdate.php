@@ -27,7 +27,7 @@ class GuildUpdate extends Event
      */
     public function getData($data, $discord)
     {
-        return new Guild((array) $data);
+        return $this->partFactory->create(Guild::class, $data);
     }
 
     /**

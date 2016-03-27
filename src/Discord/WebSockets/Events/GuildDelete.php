@@ -16,7 +16,7 @@ use Discord\Parts\Guild\Guild;
 use Discord\WebSockets\Event;
 
 /**
- * Event that is emitted wheh `GUILD_DELETE` is fired.
+ * Event that is emitted when `GUILD_DELETE` is fired.
  */
 class GuildDelete extends Event
 {
@@ -27,7 +27,7 @@ class GuildDelete extends Event
      */
     public function getData($data, $discord)
     {
-        $guildPart = new Guild((array) $data, true);
+        $guildPart = $this->partFactory->create(Guild::class, $data, true);
 
         return $guildPart;
     }

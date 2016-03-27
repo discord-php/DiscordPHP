@@ -11,6 +11,8 @@
 
 namespace Discord\Parts\Permissions;
 
+use Discord\Factory\PartFactory;
+use Discord\Guzzle;
 use Discord\Parts\Part;
 
 /**
@@ -50,9 +52,11 @@ abstract class Permission extends Part
     /**
      * {@inheritdoc}
      */
-    public function __construct(array $attributes = [], $created = false)
+    public function __construct(PartFactory $partFactory, Guzzle $guzzle, array $attributes = [], $created = false)
     {
-        $this->attributes['perms'] = $this->default; // Default perms
+        $attributes['perms'] = $this->default;
+        
+        parent::__construct($partFactory, $guzzle, $attributes, $created);
     }
 
     /**
@@ -66,11 +70,11 @@ abstract class Permission extends Part
             return;
         }
 
-        if (! in_array($key, $this->bitoffset)) {
+        if (!in_array($key, $this->bitoffset)) {
             return;
         }
 
-        if (! is_bool($value)) {
+        if (!is_bool($value)) {
             return;
         }
 
@@ -86,7 +90,7 @@ abstract class Permission extends Part
             return $this->attributes['perms'];
         }
 
-        if (! in_array($key, $this->bitoffset)) {
+        if (!in_array($key, $this->bitoffset)) {
             return;
         }
 

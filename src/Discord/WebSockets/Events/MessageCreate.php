@@ -16,7 +16,7 @@ use Discord\Parts\Channel\Message;
 use Discord\WebSockets\Event;
 
 /**
- * Event that is emitted wheh `MESSAGE_CREATE` is fired.
+ * Event that is emitted when `MESSAGE_CREATE` is fired.
  */
 class MessageCreate extends Event
 {
@@ -27,7 +27,7 @@ class MessageCreate extends Event
      */
     public function getData($data, $discord)
     {
-        return new Message((array) $data, true);
+        return $this->partFactory->create(Message::class, $data, true);
     }
 
     /**

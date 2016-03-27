@@ -27,7 +27,7 @@ class GuildMemberRemove extends Event
      */
     public function getData($data, $discord)
     {
-        return new Member((array) $data, true);
+        return $this->partFactory->create(Member::class, $data, true);
     }
 
     /**

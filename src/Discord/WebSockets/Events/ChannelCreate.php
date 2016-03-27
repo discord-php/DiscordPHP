@@ -16,7 +16,7 @@ use Discord\Parts\Channel\Channel;
 use Discord\WebSockets\Event;
 
 /**
- * Event that is emitted wheh `CHANNEL_CREATE` is fired.
+ * Event that is emitted when `CHANNEL_CREATE` is fired.
  */
 class ChannelCreate extends Event
 {
@@ -27,7 +27,7 @@ class ChannelCreate extends Event
      */
     public function getData($data, $discord)
     {
-        return new Channel((array) $data, true);
+        return $this->partFactory->create(Channel::class, $data, true);
     }
 
     /**

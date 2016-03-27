@@ -27,7 +27,7 @@ class MessageUpdate extends Event
      */
     public function getData($data, $discord)
     {
-        return new Message((array) $data, true);
+        return $this->partFactory->create(Message::class, $data, true);
     }
 
     /**

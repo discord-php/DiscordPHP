@@ -17,7 +17,7 @@ use Discord\Parts\Guild\Guild;
 use Discord\WebSockets\Event;
 
 /**
- * Event that is emitted wheh `GUILD_BAN_ADD` is fired.
+ * Event that is emitted when `GUILD_BAN_ADD` is fired.
  */
 class GuildBanAdd extends Event
 {
@@ -31,13 +31,17 @@ class GuildBanAdd extends Event
         $guild = $discord->guilds->get('id', $data->guild_id);
 
         if (is_null($guild)) {
-            $guild = new Guild(['id' => $data->guild_id, 'name' => 'Unknown'], true);
+            $guild = $this->partFactory->create(Guild::class, ['id' => $data->guild_id, 'name' => 'Unknown'], true);
         }
 
-        return new Ban([
-            'guild' => $guild,
-            'user' => $data->user,
-        ], true);
+        return $this->partFactory->create(
+            Ban::class,
+            [
+                'guild' => $guild,
+                'user'  => $data->user,
+            ],
+            true
+        );
     }
 
     /**
@@ -48,7 +52,7 @@ class GuildBanAdd extends Event
         Cache::set("guild.{$data->guild_id}.bans.{$data->user_id}", $data);
 
         foreach ($discord->guilds as $index => $guild) {
-            if ($guild->id == $data->guild_id && ! is_bool($guild->bans)) {
+            if ($guild->id == $data->guild_id && !is_bool($guild->bans)) {
                 $guild->bans->push($data);
 
                 foreach ($guild->members as $mindex => $member) {

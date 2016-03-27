@@ -12,7 +12,6 @@
 namespace Discord\Parts\Guild;
 
 use Carbon\Carbon;
-use Discord\Helpers\Guzzle;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
@@ -57,7 +56,7 @@ class Invite extends Part
         }
 
         try {
-            Guzzle::post("invite/{$this->code}");
+            $this->guzzle->post("invite/{$this->code}");
         } catch (\Exception $e) {
             return false;
         }
@@ -82,7 +81,7 @@ class Invite extends Part
      */
     public function getGuildAttribute()
     {
-        return new Guild((array) $this->attributes['guild'], true);
+        return $this->partFactory->create(Guild::class, $this->attributes['guild'], true);
     }
 
     /**
@@ -92,7 +91,7 @@ class Invite extends Part
      */
     public function getChannelAttribute()
     {
-        return new Channel((array) $this->attributes['channel'], true);
+        return $this->partFactory->create(Channel::class, $this->attributes['channel'], true);
     }
 
     /**
@@ -112,7 +111,7 @@ class Invite extends Part
      */
     public function getInviterAttribute()
     {
-        return new User((array) $this->attributes['inviter'], true);
+        return $this->partFactory->create(User::class, $this->attributes['inviter'], true);
     }
 
     /**

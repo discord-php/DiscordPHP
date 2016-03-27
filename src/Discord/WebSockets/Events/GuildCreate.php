@@ -19,7 +19,7 @@ use Discord\Parts\User\Member;
 use Discord\WebSockets\Event;
 
 /**
- * Event that is emitted wheh `GUILD_CREATE` is fired.
+ * Event that is emitted when `GUILD_CREATE` is fired.
  */
 class GuildCreate extends Event
 {
@@ -30,14 +30,14 @@ class GuildCreate extends Event
      */
     public function getData($data, $discord)
     {
-        $guildPart = new Guild((array) $data, true);
+        $guildPart = $this->partFactory->create(Guild::class, $data, true);
 
         $channels = new Collection();
 
         foreach ($data->channels as $channel) {
-            $channel = (array) $channel;
+            $channel             = (array) $channel;
             $channel['guild_id'] = $data->id;
-            $channelPart = new Channel($channel, true);
+            $channelPart         = $this->partFactory->create(Channel::class, $channel, true);
 
             Cache::set("channel.{$channelPart->id}", $channelPart);
 
@@ -50,23 +50,27 @@ class GuildCreate extends Event
         $members = new Collection();
 
         foreach ($data->members as $member) {
-            $memberPart = new Member([
-                'user' => $member->user,
-                'roles' => $member->roles,
-                'mute' => $member->mute,
-                'deaf' => $member->deaf,
-                'joined_at' => $member->joined_at,
-                'guild_id' => $data->id,
-                'status' => 'offline',
-                'game' => null,
-            ], true);
+            $memberPart = $this->partFactory->create(
+                Member::class,
+                [
+                    'user'      => $member->user,
+                    'roles'     => $member->roles,
+                    'mute'      => $member->mute,
+                    'deaf'      => $member->deaf,
+                    'joined_at' => $member->joined_at,
+                    'guild_id'  => $data->id,
+                    'status'    => 'offline',
+                    'game'      => null,
+                ],
+                true
+            );
 
             // check for presences
 
             foreach ($data->presences as $presence) {
                 if ($presence->user->id == $member->user->id) {
                     $memberPart->status = $presence->status;
-                    $memberPart->game = $presence->game;
+                    $memberPart->game   = $presence->game;
                 }
             }
 

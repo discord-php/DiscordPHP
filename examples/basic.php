@@ -11,7 +11,6 @@
 
 use Discord\Discord;
 use Discord\WebSockets\Event;
-use Discord\WebSockets\WebSocket;
 
 // Includes the Composer autoload file
 include __DIR__.'/../vendor/autoload.php';
@@ -22,9 +21,8 @@ if ($argc != 2) {
 }
 
 // Init the Discord instance.
-$discord = new Discord(['token' => $argv[1], 'cache_dir' => __DIR__.'/../cache/']);
-// Init the WebSocket instance.
-$ws = new WebSocket($discord);
+$discord = new Discord(['token' => $argv[1]]);
+$ws      = $discord->getWebsocket();
 
 // We use EventEmitters to emit events. They are pretty much
 // identical to the JavaScript/NodeJS implementation.
@@ -52,7 +50,7 @@ $ws->on(
                 }
 
                 $reply = $message->timestamp->format('d/m/y H:i:s').' - '; // Format the message timestamp.
-                $reply .= $message->full_channel->guild->name.' - ';
+                $reply .= ($message->full_channel->is_private ? 'PM' : $message->full_channel->guild->name).' - ';
                 $reply .= $message->author->username.' - '; // Add the message author's username onto the string.
                 $reply .= $message->content; // Add the message content.
                 echo $reply.PHP_EOL; // Finally, echo the message with a PHP end of line.
