@@ -74,7 +74,7 @@ class Guild extends Part
         'emojis',
         'large',
         'verification_level',
-        'member_count'
+        'member_count',
     ];
 
     /**
@@ -111,9 +111,10 @@ class Guild extends Part
      * Does not leave the guild if you are the owner however, please use
      * delete() for that.
      *
+     * @throws PartRequestFailedException
+     *
      * @return bool Whether the attempt to leave succeeded or failed.
      *
-     * @throws PartRequestFailedException
      * @see \Discord\Parts\Part::delete() Used for leaving/deleting the guild if you are owner.
      */
     public function leave()
@@ -283,7 +284,7 @@ class Guild extends Part
         foreach ($request as $index => $ban) {
             $ban          = (array) $ban;
             $ban['guild'] = $this;
-            $ban = $this->partFactory->create(Ban::class, $ban, true);
+            $ban          = $this->partFactory->create(Ban::class, $ban, true);
             Cache::set("guild.{$this->id}.bans.{$ban->user_id}", $ban);
             $bans[$index] = $ban;
         }

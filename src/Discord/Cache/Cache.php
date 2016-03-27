@@ -52,7 +52,7 @@ class Cache
      */
     public static function getCacheName()
     {
-        if (! self::$cache) {
+        if (!self::$cache) {
             // No cache driver, we will check for APC or use array.
             if (function_exists('apc_cache_info')) {
                 self::setCache(new ApcCacheDriver());
@@ -90,7 +90,7 @@ class Cache
      */
     public static function __callStatic($function, $args)
     {
-        if (! self::$cache) {
+        if (!self::$cache) {
             // No cache driver, we will check for APC or use array.
             if (function_exists('apc_cache_info')) {
                 self::setCache(new ApcCacheDriver());
@@ -99,7 +99,7 @@ class Cache
             }
         }
 
-        if (! is_callable([self::$cache, $function])) {
+        if (!is_callable([self::$cache, $function])) {
             return;
         }
 

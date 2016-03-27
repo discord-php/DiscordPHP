@@ -12,13 +12,12 @@
 namespace Discord\Parts;
 
 use ArrayAccess;
-use Discord\Factory\PartFactory;
-use Serializable;
-use JsonSerializable;
-use Discord\Exceptions\DiscordRequestFailedException;
 use Discord\Exceptions\PartRequestFailedException;
+use Discord\Factory\PartFactory;
 use Discord\Guzzle;
 use Illuminate\Support\Str;
+use JsonSerializable;
+use Serializable;
 
 /**
  * This class is the base of all objects that are returned. All "Parts" extend off this
@@ -139,8 +138,8 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
      *
      * @param PartFactory $partFactory
      * @param Guzzle      $guzzle
-     * @param array       $attributes An array of attributes to build the part.
-     * @param bool        $created    Whether the part has already been created.
+     * @param array       $attributes  An array of attributes to build the part.
+     * @param bool        $created     Whether the part has already been created.
      */
     public function __construct(PartFactory $partFactory, Guzzle $guzzle, array $attributes = [], $created = false)
     {
@@ -191,8 +190,9 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
     /**
      * Saves the part to the Discord servers.
      *
-     * @return bool Whether the attempt to save the part succeeded or failed.
      * @throws PartRequestFailedException
+     *
+     * @return bool Whether the attempt to save the part succeeded or failed.
      */
     public function save()
     {
@@ -228,8 +228,9 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
     /**
      * Deletes the part on the Discord servers.
      *
-     * @return bool Whether the attempt to delete the part succeeded or failed.
      * @throws PartRequestFailedException
+     *
+     * @return bool Whether the attempt to delete the part succeeded or failed.
      */
     public function delete()
     {

@@ -14,8 +14,8 @@ use Discord\Parts\Channel\Channel;
 startTest('Create Channel');
 
 $createAttributes = [
-    'name' => 'testchannel',
-    'type' => Channel::TYPE_TEXT,
+    'name'     => 'testchannel',
+    'type'     => Channel::TYPE_TEXT,
     'guild_id' => $baseGuild->id,
 ];
 
@@ -33,8 +33,8 @@ pass();
 startTest('Edit Channel');
 
 $updateAttributes = [
-    'name' => 'newname',
-    'topic' => 'dank memes',
+    'name'     => 'newname',
+    'topic'    => 'dank memes',
     'position' => rand(1, 10),
 ];
 

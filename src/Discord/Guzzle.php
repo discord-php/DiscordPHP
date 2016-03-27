@@ -12,8 +12,8 @@
 namespace Discord;
 
 use Discord\Cache\Cache;
-use Discord\Exceptions\Rest\ContentTooLongException;
 use Discord\Exceptions\DiscordRequestFailedException;
+use Discord\Exceptions\Rest\ContentTooLongException;
 use Discord\Exceptions\Rest\NoPermissionsException;
 use Discord\Exceptions\Rest\NotFoundException;
 use Discord\Parts\Channel\Channel;
@@ -105,15 +105,16 @@ class Guzzle extends GuzzleClient
      * @param bool|int|null $cache        If an integer is passed, used as cache TTL, if null is passed, default TTL is
      *                                    used, if false, cache is disabled
      *
-     * @return object An object that was returned from the Discord servers.
      * @throws ContentTooLongException
      * @throws DiscordRequestFailedException
      * @throws NoPermissionsException
      * @throws NotFoundException
+     *
+     * @return object An object that was returned from the Discord servers.
      */
     private function runRequest($method, $url, $content, $auth, $extraHeaders, $cache)
     {
-        $queryUrl = static::BASE_URL."/".$url;
+        $queryUrl = static::BASE_URL.'/'.$url;
 
         $key = 'guzzle.'.sha1($queryUrl);
         if ($this->cache->hasItem($key) && strtolower($method) === 'get') {
@@ -126,7 +127,7 @@ class Guzzle extends GuzzleClient
         ];
 
         if ($auth) {
-            $headers['authorization'] = 'Bot ' . $this->token;
+            $headers['authorization'] = 'Bot '.$this->token;
         }
 
         $headers = array_merge($headers, $extraHeaders);
@@ -281,7 +282,7 @@ class Guzzle extends GuzzleClient
                             'name'     => 'file',
                             'contents' => fopen($filepath, 'r'),
                             'filename' => $filename,
-                        ]
+                        ],
                     ],
                 ]
             );

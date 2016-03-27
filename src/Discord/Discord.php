@@ -75,8 +75,9 @@ class Discord
     /**
      * @param array $options
      *
-     * @return array
      * @throws \Exception
+     *
+     * @return array
      */
     private function resolveOptions(array $options)
     {
@@ -106,7 +107,7 @@ class Discord
         }
 
         if (!is_int($id)) {
-            return null;
+            return;
         }
 
         $ms = ($id >> 22) + self::DISCORD_EPOCH;
@@ -174,7 +175,7 @@ class Discord
     private function buildContainer(array $options)
     {
         $options['version'] = static::VERSION;
-        $container = new ContainerBuilder(new ParameterBag($options));
+        $container          = new ContainerBuilder(new ParameterBag($options));
 
         $cacheExtension = new CacheAdapterExtension();
         $container->registerExtension($cacheExtension);
@@ -211,9 +212,9 @@ class Discord
         return [
             'providers' => [
                 'array' => [
-                    'factory' => 'cache.factory.array'
-                ]
-            ]
+                    'factory' => 'cache.factory.array',
+                ],
+            ],
         ];
     }
 }

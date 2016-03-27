@@ -55,7 +55,7 @@ abstract class Permission extends Part
     public function __construct(PartFactory $partFactory, Guzzle $guzzle, array $attributes = [], $created = false)
     {
         $attributes['perms'] = $this->default;
-        
+
         parent::__construct($partFactory, $guzzle, $attributes, $created);
     }
 
