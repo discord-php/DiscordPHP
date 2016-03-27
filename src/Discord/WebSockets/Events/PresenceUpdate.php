@@ -11,8 +11,8 @@
 
 namespace Discord\WebSockets\Events;
 
-use Discord\WebSockets\Event;
 use Discord\Parts\WebSockets\PresenceUpdate as PresenceUpdatePart;
+use Discord\WebSockets\Event;
 
 /**
  * Event that is emitted wheh `PRESENCE_UPDATE` is fired.
@@ -38,8 +38,8 @@ class PresenceUpdate extends Event
             if ($guild->id == $data->guild_id) {
                 $member = @$guild->members[$data->user->id];
 
-                if (! is_null($member)) {
-                    $member->game = $data->game;
+                if (!is_null($member)) {
+                    $member->game   = $data->game;
                     $member->status = $data->status;
 
                     $guild->members[$data->user->id] = $member;

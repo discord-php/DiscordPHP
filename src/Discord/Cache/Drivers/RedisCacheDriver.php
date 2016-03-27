@@ -47,9 +47,9 @@ class RedisCacheDriver implements CacheInterface
     public function __construct($hostname, $port = 6379, $password = null, $db = 0)
     {
         $this->redis = new Client([
-            'scheme' => 'tcp',
-            'host' => $hostname,
-            'port' => $port,
+            'scheme'   => 'tcp',
+            'host'     => $hostname,
+            'port'     => $port,
             'database' => $db,
 
             'prefix' => 'discordphp:',
@@ -64,8 +64,6 @@ class RedisCacheDriver implements CacheInterface
         if ($this->has($key)) {
             return unserialize($this->redis->get($key));
         }
-
-        return;
     }
 
     /**
@@ -80,7 +78,7 @@ class RedisCacheDriver implements CacheInterface
             $ttl = Cache::getDefaultTtl();
         }
 
-        if (! is_null($ttl)) {
+        if (!is_null($ttl)) {
             $this->redis->expire($key, $ttl);
         }
 

@@ -27,12 +27,12 @@ pass();
 
 startTest('Edit Role');
 
-$p = new RolePermission();
-$p->manage_roles = true;
+$p                = new RolePermission();
+$p->manage_roles  = true;
 $updateAttributes = [
-    'name' => 'newname',
-    'hoist' => false,
-    'color' => 12745742,
+    'name'        => 'newname',
+    'hoist'       => false,
+    'color'       => 12745742,
     'permissions' => $p,
 ];
 

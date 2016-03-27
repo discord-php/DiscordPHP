@@ -15,8 +15,8 @@ use Discord\Cache\Cache;
 use Discord\Discord;
 use Discord\Erlpack\Erlpack;
 use Discord\Factory\PartFactory;
-use Discord\Helpers\Collection;
 use Discord\Guzzle;
+use Discord\Helpers\Collection;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Guild\Role;
@@ -181,12 +181,12 @@ class WebSocket extends EventEmitter
     /**
      * Constructs the WebSocket instance.
      *
-     * @param Discord            $discord The Discord REST client instance.
-     * @param Guzzle             $guzzle  The Guzzle Instance
+     * @param Discord            $discord     The Discord REST client instance.
+     * @param Guzzle             $guzzle      The Guzzle Instance
      * @param PartFactory        $partFactory
      * @param string             $token
-     * @param LoopInterface|null $loop    The ReactPHP Event Loop.
-     * @param bool               $etf     Whether to use ETF.
+     * @param LoopInterface|null $loop        The ReactPHP Event Loop.
+     * @param bool               $etf         Whether to use ETF.
      */
     public function __construct(
         Discord $discord,
@@ -678,7 +678,7 @@ class WebSocket extends EventEmitter
      */
     public function handleHandler($handlerSettings, $data)
     {
-        /** @type Event $handler */
+        /** @var Event $handler */
         $handler     = new $handlerSettings['class']($this->guzzle, $this->partFactory);
         $handlerData = $handler->getData($data->d, $this->discord);
         $newDiscord  = $handler->updateDiscordInstance($handlerData, $this->discord);

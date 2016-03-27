@@ -35,7 +35,7 @@ class Collection extends BaseCollection
      */
     public function __construct($items = [], $cacheKey = null)
     {
-        $this->items = $this->getArrayableItems($items);
+        $this->items    = $this->getArrayableItems($items);
         $this->cacheKey = $cacheKey;
     }
 
@@ -53,7 +53,7 @@ class Collection extends BaseCollection
     {
         foreach ($this->items as $item) {
             if (is_callable([$item, 'getAttribute'])) {
-                if (! empty($item->getAttribute($key))) {
+                if (!empty($item->getAttribute($key))) {
                     if ($item[$key] == $value) {
                         return $item;
                     }
@@ -93,7 +93,7 @@ class Collection extends BaseCollection
 
         foreach ($this->items as $item) {
             if (is_callable([$item, 'getAttribute'])) {
-                if (! empty($item->getAttribute($key))) {
+                if (!empty($item->getAttribute($key))) {
                     if ($item[$key] == $value) {
                         $items->push($item);
                     }
@@ -125,7 +125,7 @@ class Collection extends BaseCollection
     {
         $this->items[] = $value;
 
-        if ($setCache && ! is_null($this->cacheKey)) {
+        if ($setCache && !is_null($this->cacheKey)) {
             Cache::set($this->cacheKey, $this);
         }
     }
@@ -137,7 +137,7 @@ class Collection extends BaseCollection
     {
         $value = Arr::pull($this->items, $key, $default);
 
-        if ($setCache && ! is_null($this->cacheKey)) {
+        if ($setCache && !is_null($this->cacheKey)) {
             Cache::set($this->cacheKey, $this);
         }
 
@@ -172,7 +172,7 @@ class Collection extends BaseCollection
             $this->items[$key] = $value;
         }
 
-        if (! is_null($this->cacheKey)) {
+        if (!is_null($this->cacheKey)) {
             Cache::set($this->cacheKey, $this);
         }
     }

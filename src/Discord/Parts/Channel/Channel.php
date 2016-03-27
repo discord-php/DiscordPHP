@@ -45,7 +45,7 @@ class Channel extends Part
         'permission_overwrites',
         'messages',
         'message_count',
-        'bitrate'
+        'bitrate',
     ];
 
     /**
@@ -340,9 +340,9 @@ class Channel extends Part
      * @param string $filepath The path to the file to be sent.
      * @param string $filename The name to send the file as.
      *
-     * @return Message|bool Either a Message if the request passed or false if it failed.
-     *
      * @throws \Discord\Exceptions\FileNotFoundException Thrown when the file does not exist.
+     *
+     * @return Message|bool Either a Message if the request passed or false if it failed.
      */
     public function sendFile($filepath, $filename)
     {
@@ -353,7 +353,7 @@ class Channel extends Part
         if (!file_exists($filepath)) {
             throw new FileNotFoundException("File does not exist at path {$filepath}.");
         }
-        
+
         $request = $this->guzzle->sendFile($this, $filepath, $filename);
         $this->partFactory->create(Message::class, $request, true);
 

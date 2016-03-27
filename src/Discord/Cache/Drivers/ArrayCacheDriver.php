@@ -43,8 +43,6 @@ class ArrayCacheDriver implements CacheInterface
 
             return $this->cache[$key]['data'];
         }
-
-        return;
     }
 
     /**
@@ -57,8 +55,8 @@ class ArrayCacheDriver implements CacheInterface
         }
 
         $this->cache[$key] = [
-            'data' => $value,
-            'ttl' => $ttl,
+            'data'       => $value,
+            'ttl'        => $ttl,
             'store_time' => microtime(true),
         ];
 
@@ -111,7 +109,7 @@ class ArrayCacheDriver implements CacheInterface
      */
     protected function checkForExpiry($key)
     {
-        if (! isset($this->cache[$key])) {
+        if (!isset($this->cache[$key])) {
             return;
         }
 
@@ -119,7 +117,7 @@ class ArrayCacheDriver implements CacheInterface
             return;
         }
 
-        $ttl = $this->cache[$key]['ttl'];
+        $ttl        = $this->cache[$key]['ttl'];
         $store_time = $this->cache[$key]['store_time'];
 
         if (microtime(true) >= $store_time + $ttl) {

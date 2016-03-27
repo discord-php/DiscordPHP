@@ -42,7 +42,7 @@ class MessageUpdate extends Event
                 if ($channel->id == $data->channel_id) {
                     $message = $channel->messages->pull($data->id);
 
-                    if (! isset($data->content)) {
+                    if (!isset($data->content)) {
                         $channel->messages->push(new Message(array_merge((array) $message, (array) $data), true));
                     } else {
                         $channel->messages->push($data);
