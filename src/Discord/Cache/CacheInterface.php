@@ -34,7 +34,7 @@ interface CacheInterface
      *
      * @return bool Whether setting the item succeeded or failed.
      */
-    public function set($key, $value, $ttl = '');
+    public function set($key, $value, $ttl = null);
 
     /**
      * Checks if a key is set in the Cache.

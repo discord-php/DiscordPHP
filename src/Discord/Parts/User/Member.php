@@ -239,9 +239,8 @@ class Member extends Part
             }
         }
 
-        $roles = new Collection($roles, "guild.{$this->guild_id}.members.{$this->id}.roles");
-
-        Cache::set("guild.{$this->guild_id}.members.{$this->id}.roles", $roles);
+        $roles = new Collection($roles);
+        $roles->setCacheKey("guild.{$this->guild_id}.members.{$this->id}.roles", true);
 
         return $roles;
     }

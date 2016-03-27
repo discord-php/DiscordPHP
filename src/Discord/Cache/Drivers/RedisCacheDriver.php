@@ -71,16 +71,16 @@ class RedisCacheDriver implements CacheInterface
     /**
      * {@inheritdoc}
      */
-    public function set($key, $value, $ttl = '')
+    public function set($key, $value, $ttl = null)
     {
         $value = serialize($value);
         $this->redis->set($key, $value);
 
-        if (is_null($ttl)) {
+        if (is_string($ttl)) {
             $ttl = Cache::getDefaultTtl();
         }
 
-        if (! is_string($ttl)) {
+        if (! is_null($ttl)) {
             $this->redis->expire($key, $ttl);
         }
 

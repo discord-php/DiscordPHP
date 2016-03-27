@@ -64,10 +64,8 @@ class Discord
      */
     public function __construct($options)
     {
-        if (!is_array($options)) {
-            $token = $options;
-            $options = ['token' => $token];
-        }
+        $options = !is_array($options) ? ['token' => $options] : $options;
+        $options = $this->resolveOptions($options);
 
         $options = $this->resolveOptions($options);
 

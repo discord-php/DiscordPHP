@@ -50,7 +50,7 @@ class ArrayCacheDriver implements CacheInterface
     /**
      * {@inheritdoc}
      */
-    public function set($key, $value, $ttl = '')
+    public function set($key, $value, $ttl = null)
     {
         if (is_string($ttl)) {
             $ttl = Cache::getDefaultTtl();
