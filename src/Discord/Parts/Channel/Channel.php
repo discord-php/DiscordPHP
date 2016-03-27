@@ -11,7 +11,6 @@
 
 namespace Discord\Parts\Channel;
 
-use Discord\Cache\Cache;
 use Discord\Exceptions\FileNotFoundException;
 use Discord\Helpers\Collection;
 use Discord\Parts\Guild\Guild;
@@ -148,14 +147,14 @@ class Channel extends Part
             return;
         }
 
-        if ($guild = Cache::get("guild.{$this->guild_id}")) {
+        if ($guild = $this->cache->get("guild.{$this->guild_id}")) {
             return $guild;
         }
 
         $request = $this->guzzle->get("guilds/{$this->guild_id}");
         $guild   = $this->partFactory->create(Guild::class, $request, true);
 
-        Cache::set("guild.{$guild->id}", $guild);
+        $this->cache->set("guild.{$guild->id}", $guild);
 
         $this->attributes_cache['guild'] = $guild;
 
@@ -188,7 +187,7 @@ class Channel extends Part
 
         $invite = $this->partFactory->create(Invite::class, $request, true);
 
-        Cache::set("invite.{$invite->code}", $invite);
+        $this->cache->set("invite.{$invite->code}", $invite);
 
         return $invite;
     }
@@ -205,11 +204,11 @@ class Channel extends Part
      */
     public function getMessagesAttribute()
     {
-        if (!Cache::get("channel.{$this->id}.messages")) {
-            Cache::set("channel.{$this->id}.messages", new Collection([], "channel.{$this->id}.messages"));
+        if (!$this->cache->get("channel.{$this->id}.messages")) {
+            $this->cache->set("channel.{$this->id}.messages", new Collection([], "channel.{$this->id}.messages"));
         }
 
-        return Cache::get("channel.{$this->id}.messages");
+        return $this->cache->get("channel.{$this->id}.messages");
     }
 
     /**
@@ -228,7 +227,7 @@ class Channel extends Part
 
         foreach ($request as $index => $message) {
             $message = $this->partFactory->create(Message::class, $message, true);
-            Cache::set("message.{$message->id}", $message);
+            $this->cache->set("message.{$message->id}", $message);
             $messages[$index] = $message;
         }
 
@@ -244,7 +243,7 @@ class Channel extends Part
      */
     public function getInvitesAttribute()
     {
-        if ($invites = Cache::get("channel.{$this->id}.invites")) {
+        if ($invites = $this->cache->get("channel.{$this->id}.invites")) {
             return $invites;
         }
 
@@ -253,13 +252,13 @@ class Channel extends Part
 
         foreach ($request as $index => $invite) {
             $invite = $this->partFactory->create(Invite::class, $invite, true);
-            Cache::set("invites.{$invite->code}", $invite);
+            $this->cache->set("invites.{$invite->code}", $invite);
             $invites[$index] = $invite;
         }
 
         $invites = new Collection($invites, "channel.{$this->id}.invites");
 
-        Cache::set("channel.{$this->id}.invites", $invites);
+        $this->cache->set("channel.{$this->id}.invites", $invites);
 
         return $invites;
     }
@@ -275,7 +274,7 @@ class Channel extends Part
             return $this->attributes_cache['overwrites'];
         }
 
-        if ($overwrites = Cache::get("channels.{$this->id}.overwrites")) {
+        if ($overwrites = $this->cache->get("channels.{$this->id}.overwrites")) {
             return $overwrites;
         }
 
@@ -294,7 +293,7 @@ class Channel extends Part
 
         $overwrites = new Collection($overwrites, "channels.{$this->id}.overwrites");
 
-        Cache::set("channels.{$this->id}.overwrites", $overwrites);
+        $this->cache->set("channels.{$this->id}.overwrites", $overwrites);
 
         return $overwrites;
     }
@@ -323,9 +322,9 @@ class Channel extends Part
 
         $message = $this->partFactory->create(Message::class, $request, true);
 
-        Cache::set("message.{$message->id}", $message);
+        $this->cache->set("message.{$message->id}", $message);
 
-        if (!Cache::has("channel.{$this->id}.messages")) {
+        if (!$this->cache->has("channel.{$this->id}.messages")) {
             $this->getMessagesAttribute();
         }
 
@@ -357,9 +356,9 @@ class Channel extends Part
         $request = $this->guzzle->sendFile($this, $filepath, $filename);
         $this->partFactory->create(Message::class, $request, true);
 
-        Cache::set("message.{$message->id}", $message);
+        $this->cache->set("message.{$message->id}", $message);
 
-        if (!Cache::has("channel.{$this->id}.messages")) {
+        if (!$this->cache->has("channel.{$this->id}.messages")) {
             $this->getMessagesAttribute();
         }
 

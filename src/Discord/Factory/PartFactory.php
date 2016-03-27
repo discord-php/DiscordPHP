@@ -13,6 +13,7 @@ namespace Discord\Factory;
 
 use Discord\Guzzle;
 use Discord\Parts;
+use Discord\Wrapper\CacheWrapper;
 
 /**
  * @author Aaron Scherer <aequasi@gmail.com>
@@ -25,13 +26,20 @@ class PartFactory
     private $guzzle;
 
     /**
+     * @var CacheWrapper
+     */
+    private $cache;
+
+    /**
      * PartFactory constructor.
      *
-     * @param Guzzle $guzzle
+     * @param Guzzle       $guzzle
+     * @param CacheWrapper $cache
      */
-    public function __construct(Guzzle $guzzle)
+    public function __construct(Guzzle $guzzle, CacheWrapper $cache)
     {
         $this->guzzle = $guzzle;
+        $this->cache  = $cache;
     }
 
     /**
@@ -47,7 +55,7 @@ class PartFactory
             $attributes = (array) $attributes;
         }
 
-        $part = new $type($this, $this->guzzle, $attributes, $created);
+        $part = new $type($this, $this->guzzle, $this->cache, $attributes, $created);
 
         return $part;
     }

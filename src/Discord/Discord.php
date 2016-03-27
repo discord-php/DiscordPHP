@@ -19,8 +19,10 @@ use Discord\WebSockets\WebSocket;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
+use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -180,6 +182,13 @@ class Discord
         $cacheExtension = new CacheAdapterExtension();
         $container->registerExtension($cacheExtension);
         $container->loadFromExtension($cacheExtension->getAlias(), $options['cache']);
+
+        $container->setDefinition('cache_wrapper.default', new Definition('Discord\Wrapper\CacheWrapper'))
+            ->addArgument(new Reference('cache'));
+        foreach (array_keys($options['cache']['providers']) as $name) {
+            $container->setDefinition('cache_wrapper.'.$name, new Definition('Discord\Wrapper\CacheWrapper'))
+                ->addArgument(new Reference('cache.provider.'.$name));
+        }
 
         $container->set('discord', $this);
 

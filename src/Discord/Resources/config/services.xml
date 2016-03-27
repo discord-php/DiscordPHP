@@ -5,13 +5,14 @@
 
     <services>
         <service id="guzzle" class="Discord\Guzzle">
-            <argument type="service" id="cache"/>
+            <argument type="service" id="cache_wrapper.default"/>
             <argument>%token%</argument>
             <argument>%version%</argument>
         </service>
 
         <service id="part_factory" class="Discord\Factory\PartFactory">
             <argument type="service" id="guzzle"/>
+            <argument type="service" id="cache_wrapper.default"/>
         </service>
 
         <service id="client" class="Discord\Parts\User\Client">
@@ -24,6 +25,7 @@
             <argument type="service" id="discord"/>
             <argument type="service" id="guzzle"/>
             <argument type="service" id="part_factory"/>
+            <argument type="service" id="cache_wrapper.default"/>
             <argument>%token%</argument>
         </service>
     </services>

@@ -14,6 +14,7 @@ namespace Discord\Parts\Permissions;
 use Discord\Factory\PartFactory;
 use Discord\Guzzle;
 use Discord\Parts\Part;
+use Discord\Wrapper\CacheWrapper;
 
 /**
  * A Permission defines permissions for a role or user. A Permission can be attached to a channel or role.
@@ -52,11 +53,16 @@ abstract class Permission extends Part
     /**
      * {@inheritdoc}
      */
-    public function __construct(PartFactory $partFactory, Guzzle $guzzle, array $attributes = [], $created = false)
-    {
+    public function __construct(
+        PartFactory $partFactory,
+        Guzzle $guzzle,
+        CacheWrapper $cache,
+        array $attributes = [],
+        $created = false
+    ) {
         $attributes['perms'] = $this->default;
 
-        parent::__construct($partFactory, $guzzle, $attributes, $created);
+        parent::__construct($partFactory, $guzzle, $cache, $attributes, $created);
     }
 
     /**

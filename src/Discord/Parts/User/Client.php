@@ -11,7 +11,6 @@
 
 namespace Discord\Parts\User;
 
-use Discord\Cache\Cache;
 use Discord\Exceptions\FileNotFoundException;
 use Discord\Exceptions\PasswordEmptyException;
 use Discord\Helpers\Collection;
@@ -179,7 +178,7 @@ class Client extends Part
 
         foreach ($request as $index => $guild) {
             $guild = $this->partFactory->create(Guild::class, $guild, true);
-            Cache::set("guild.{$guild->id}", $guild);
+            $this->cache->set("guild.{$guild->id}", $guild);
             $guilds[$index] = $guild;
         }
 

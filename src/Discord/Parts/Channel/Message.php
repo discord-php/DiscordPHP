@@ -12,7 +12,6 @@
 namespace Discord\Parts\Channel;
 
 use Carbon\Carbon;
-use Discord\Cache\Cache;
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
 
@@ -76,7 +75,7 @@ class Message extends Part
      */
     public function getChannelAttribute()
     {
-        if ($channel = Cache::get("channels.{$this->channel_id}")) {
+        if ($channel = $this->cache->get("channels.{$this->channel_id}")) {
             return $channel;
         }
 
@@ -97,14 +96,14 @@ class Message extends Part
      */
     public function getFullChannelAttribute()
     {
-        if ($channel = Cache::get("channels.{$this->channel_id}")) {
+        if ($channel = $this->cache->get("channels.{$this->channel_id}")) {
             return $channel;
         }
 
         $request = $this->guzzle->get($this->replaceWithVariables('channels/:channel_id'));
         $channel = $this->partFactory->create(Channel::class, $request, true);
 
-        Cache::set("channels.{$channel->id}", $channel);
+        $this->cache->set("channels.{$channel->id}", $channel);
 
         return $channel;
     }

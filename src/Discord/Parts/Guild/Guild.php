@@ -11,7 +11,6 @@
 
 namespace Discord\Parts\Guild;
 
-use Discord\Cache\Cache;
 use Discord\Exceptions\DiscordRequestFailedException;
 use Discord\Exceptions\PartRequestFailedException;
 use Discord\Helpers\Collection;
@@ -171,15 +170,15 @@ class Guild extends Part
      */
     public function getMembersAttribute()
     {
-        if ($members = Cache::get("guild.{$this->id}.members")) {
+        if ($members = $this->cache->get("guild.{$this->id}.members")) {
             return $members;
         }
 
         // Members aren't retrievable via REST anymore,
         // they will be set if the websocket is used.
-        Cache::set("guild.{$this->id}.members", new Collection([], "guild.{$this->id}.members"));
+        $this->cache->set("guild.{$this->id}.members", new Collection([], "guild.{$this->id}.members"));
 
-        return Cache::get("guild.{$this->id}.members");
+        return $this->cache->get("guild.{$this->id}.members");
     }
 
     /**
@@ -193,7 +192,7 @@ class Guild extends Part
             return $this->attributes_cache['roles'];
         }
 
-        if ($roles = Cache::get("guild.{$this->id}.roles")) {
+        if ($roles = $this->cache->get("guild.{$this->id}.roles")) {
             return $roles;
         }
 
@@ -210,7 +209,7 @@ class Guild extends Part
 
         $roles = new Collection($roles, "guild.{$this->id}.roles");
 
-        Cache::set("guild.{$this->id}.roles", $roles);
+        $this->cache->set("guild.{$this->id}.roles", $roles);
 
         return $roles;
     }
@@ -222,7 +221,7 @@ class Guild extends Part
      */
     public function getOwnerAttribute()
     {
-        if ($owner = Cache::get("user.{$this->owner_id}")) {
+        if ($owner = $this->cache->get("user.{$this->owner_id}")) {
             return $owner;
         }
 
@@ -230,7 +229,7 @@ class Guild extends Part
 
         $owner = $this->partFactory->create(User::class, $request, true);
 
-        Cache::set("user.{$user->id}", $owner);
+        $this->cache->set("user.{$user->id}", $owner);
 
         return $owner;
     }
@@ -242,8 +241,9 @@ class Guild extends Part
      */
     public function getChannelsAttribute()
     {
-        if ($channels = Cache::get("guild.{$this->id}.channels")) {
-            return $channels;
+        $key = "guild.{$this->id}.channels";
+        if ($this->cache->has($key)) {
+            return $this->cache->get($key);
         }
 
         $channels = [];
@@ -251,13 +251,13 @@ class Guild extends Part
 
         foreach ($request as $index => $channel) {
             $channel = $this->partFactory->create(Channel::class, $channel, true);
-            Cache::set("channel.{$channel->id}", $channel);
+            $this->cache->set("channel.{$channel->id}", $channel);
             $channels[$index] = $channel;
         }
 
-        $channels = new Collection($channels, "guild.{$this->id}.channels");
+        $channels = new Collection($channels, $key);
 
-        Cache::set("guild.{$this->id}.channels", $channels);
+        $this->cache->set($key, $channels);
 
         return $channels;
     }
@@ -269,7 +269,7 @@ class Guild extends Part
      */
     public function getBansAttribute()
     {
-        if ($bans = Cache::get("guild.{$this->id}.bans")) {
+        if ($bans = $this->cache->get("guild.{$this->id}.bans")) {
             return $bans;
         }
 
@@ -285,13 +285,13 @@ class Guild extends Part
             $ban          = (array) $ban;
             $ban['guild'] = $this;
             $ban          = $this->partFactory->create(Ban::class, $ban, true);
-            Cache::set("guild.{$this->id}.bans.{$ban->user_id}", $ban);
+            $this->cache->set("guild.{$this->id}.bans.{$ban->user_id}", $ban);
             $bans[$index] = $ban;
         }
 
         $bans = new Collection($bans, "guild.{$this->id}.bans");
 
-        Cache::set("guild.{$this->id}.bans", $bans);
+        $this->cache->set("guild.{$this->id}.bans", $bans);
 
         return $bans;
     }
@@ -307,7 +307,7 @@ class Guild extends Part
             return $this->attributes_cache['invites'];
         }
 
-        if ($invites = Cache::get("guild.{$this->id}.invites")) {
+        if ($invites = $this->cache->get("guild.{$this->id}.invites")) {
             return $invites;
         }
 
@@ -316,13 +316,13 @@ class Guild extends Part
 
         foreach ($request as $index => $invite) {
             $invite = $this->partFactory->create(Invite::class, $invite, true);
-            Cache::set("invite.{$invite->id}", $invite);
+            $this->cache->set("invite.{$invite->id}", $invite);
             $invites[$index] = $invite;
         }
 
         $invites = new Collection($invites, "guild.{$this->id}.invites");
 
-        Cache::set("guild.{$this->id}.invites", $invites);
+        $this->cache->set("guild.{$this->id}.invites", $invites);
 
         return $invites;
     }
@@ -396,7 +396,7 @@ class Guild extends Part
      */
     public function setCache($key, $value)
     {
-        Cache::set("guild.{$this->id}.{$key}", $value);
+        $this->cache->set("guild.{$this->id}.{$key}", $value);
     }
 
     /**

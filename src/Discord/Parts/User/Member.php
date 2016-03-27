@@ -12,7 +12,6 @@
 namespace Discord\Parts\User;
 
 use Carbon\Carbon;
-use Discord\Cache\Cache;
 use Discord\Exceptions\DiscordRequestFailedException;
 use Discord\Helpers\Collection;
 use Discord\Parts\Channel\Channel;
@@ -211,13 +210,13 @@ class Member extends Part
      */
     public function getRolesAttribute()
     {
-        if ($roles = Cache::get("guild.{$this->guild_id}.members.{$this->id}.roles")) {
+        if ($roles = $this->cache->get("guild.{$this->guild_id}.members.{$this->id}.roles")) {
             return $roles;
         }
 
         $roles = [];
 
-        if ($guildRoles = Cache::get("guild.{$this->guild_id}.roles")) {
+        if ($guildRoles = $this->cache->get("guild.{$this->guild_id}.roles")) {
             foreach ($guildRoles as $role) {
                 if (false !== array_search($role->id, (array) $this->attributes['roles'])) {
                     $roles[] = $role;
@@ -233,7 +232,7 @@ class Member extends Part
                     $role                = (array) $role;
                     $role['permissions'] = $perm;
                     $role                = $this->partFactory->create(Role::class, $role, true);
-                    Cache::set("role.{$role->id}", $role);
+                    $this->cache->set("role.{$role->id}", $role);
                     $roles[] = $role;
                 }
             }
