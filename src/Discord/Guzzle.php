@@ -21,7 +21,6 @@ use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use Illuminate\Support\Str;
-use Psr\Cache\CacheItemPoolInterface;
 
 /**
  * Provides an easy wrapper for the Guzzle HTTP client.

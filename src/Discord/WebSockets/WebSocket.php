@@ -187,13 +187,13 @@ class WebSocket extends EventEmitter
     /**
      * Constructs the WebSocket instance.
      *
-     * @param Discord            $discord The Discord REST client instance.
-     * @param Guzzle             $guzzle  The Guzzle Instance
+     * @param Discord            $discord     The Discord REST client instance.
+     * @param Guzzle             $guzzle      The Guzzle Instance
      * @param PartFactory        $partFactory
      * @param CacheWrapper       $cache
      * @param string             $token
-     * @param LoopInterface|null $loop    The ReactPHP Event Loop.
-     * @param bool               $etf     Whether to use ETF.
+     * @param LoopInterface|null $loop        The ReactPHP Event Loop.
+     * @param bool               $etf         Whether to use ETF.
      */
     public function __construct(
         Discord $discord,
@@ -207,7 +207,7 @@ class WebSocket extends EventEmitter
         $this->discord     = $discord;
         $this->guzzle      = $guzzle;
         $this->partFactory = $partFactory;
-        $this->cache = $cache;
+        $this->cache       = $cache;
         $this->token       = $token;
         $this->gateway     = $this->getGateway();
         $loop              = (is_null($loop)) ? LoopFactory::create() : $loop;
