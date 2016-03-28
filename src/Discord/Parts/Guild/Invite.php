@@ -48,20 +48,21 @@ class Invite extends Part
     public function accept()
     {
         if ($this->revoked) {
-            return false;
+            return \React\Promise\reject(new \Exception('You cannot accept a revoked invite.'));
         }
 
         if ($this->uses >= $this->max_uses) {
-            return false;
+            return \React\Promise\reject(new \Exception('This invite has been used more than it\'s max uses.'));
         }
 
-        try {
-            $this->guzzle->post("invite/{$this->code}");
-        } catch (\Exception $e) {
-            return false;
-        }
+        $deferred = new Deferred();
 
-        return true;
+        $this->guzzle->post("invite/{$this->code}")->then(
+            \React\Partial\bind_right($this->resolve, $deferred),
+            \React\Partial\bind_right($this->reject, $deferred)
+        );
+
+        return $deferred->promise();
     }
 
     /**

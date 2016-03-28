@@ -130,8 +130,8 @@ class Http
         $deferred = new Deferred();
 
         $key = 'guzzle.'.sha1($url);
-        if ($this->cache->hasItem($key) && strtolower($method) === 'get') {
-            return $this->cache->getItem($key)->get();
+        if ($this->cache->has($key) && strtolower($method) === 'get') {
+            return $this->cache->get($key);
         }
 
         $headers = [

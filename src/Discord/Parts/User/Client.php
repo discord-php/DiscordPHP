@@ -80,39 +80,6 @@ class Client extends Part
     }
 
     /**
-     * Converts the account to a bot.
-     *
-     * @param string $token  Your authentication token.
-     * @param int    $appID  The OAuth2 app ID.
-     * @param int    $secret The OAuth2 secret.
-     *
-     * @return bool Whether the account was converted.
-     */
-    public function convertToBot($token, $appID, $secret)
-    {
-        if ($this->bot) {
-            return false;
-        }
-
-        $request = $this->guzzle->post(
-            "oauth2/applications/{$appID}/bot",
-            [
-                'secret' => $secret,
-            ],
-            true,
-            [
-                'authorization' => $token,
-            ]
-        );
-
-        $this->fill($request);
-
-        trigger_error('Please restart your bot before you try to do anything else.');
-
-        return true;
-    }
-
-    /**
      * Sets the users avatar.
      *
      * @param string $filepath The path to the file.
@@ -170,23 +137,25 @@ class Client extends Part
     public function getGuildsAttribute()
     {
         if (isset($this->attributes_cache['guilds'])) {
-            return $this->attributes_cache['guilds'];
+            return \React\Promise\resolve($this->attributes_cache['guilds']);
         }
 
-        $guilds  = [];
-        $request = $this->guzzle->get('users/@me/guilds');
+        $deferred = new Deferred();
 
-        foreach ($request as $index => $guild) {
-            $guild = $this->partFactory->create(Guild::class, $guild, true);
-            $this->cache->set("guild.{$guild->id}", $guild);
-            $guilds[$index] = $guild;
-        }
+        $this->guzzle->get('users/@me/guilds')->then(function ($response) use ($deferred) {
+            $guilds = new Collection();
 
-        $guilds = new Collection($guilds);
+            foreach ($response as $index => $guild) {
+                $guild = $this->partFactory->create(Guild::class, $guild, true);
+                $this->cache->set("guild.{$guild->id}", $guild);
+                $guilds[$index] = $guild;
+            }
 
-        $this->attributes_cache['guilds'] = $guilds;
+            $this->attributes_cache['guilds'] = $guilds;
+            $deferred->resolve($guilds);
+        }, \React\Partial\bind_right($this->reject, $deferred));
 
-        return $guilds;
+        return $deferred->promise();
     }
 
     /**
