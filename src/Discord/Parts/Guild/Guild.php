@@ -121,7 +121,7 @@ class Guild extends Part
     {
         $deferred = new Deferred();
 
-        $this->guzzle->delete($this->replaceWithVariables($this->uris['leave']))->then(function () use ($deferred) {
+        $this->http->delete($this->replaceWithVariables($this->uris['leave']))->then(function () use ($deferred) {
             $this->created = false;
             $this->deleted = true;
 
@@ -147,7 +147,7 @@ class Guild extends Part
 
         $$deferred = new Deferred();
 
-        $this->guzzle->patch(
+        $this->http->patch(
             $this->replaceWithVariables('guilds/:id'),
             [
                 'owner_id' => $member,
@@ -229,7 +229,7 @@ class Guild extends Part
 
         $deferred = new Deferred();
 
-        $this->guzzle->get($this->replaceWithVariables('users/:owner_id'))->then(function ($response) use ($deferred) {
+        $this->http->get($this->replaceWithVariables('users/:owner_id'))->then(function ($response) use ($deferred) {
             $owner = $this->partFactory->create(User::class, $response, true);
             $this->cache->set("user.{$user->id}", $owner);
 
@@ -252,7 +252,7 @@ class Guild extends Part
 
         $deferred = new Deferred();
 
-        $this->guzzle->get($this->replaceWithVariables('guilds/:id/channels'))->then(function ($response) use ($deferred) {
+        $this->http->get($this->replaceWithVariables('guilds/:id/channels'))->then(function ($response) use ($deferred) {
             $channels = new Collection();
 
             foreach ($response as $index => $channel) {
@@ -282,7 +282,7 @@ class Guild extends Part
 
         $deferred = new Deferred();
 
-        $this->guzzle->get($this->replaceWithVariables('guilds/:id/bans'))->then(function ($response) use ($deferred) {
+        $this->http->get($this->replaceWithVariables('guilds/:id/bans'))->then(function ($response) use ($deferred) {
             $bans = new Collection();
 
             foreach ($response as $index => $ban) {
@@ -314,7 +314,7 @@ class Guild extends Part
 
         $deferred = new Deferred();
 
-        $this->guzzle->get($this->replaceWithVariables('guilds/:id/invites'))->then(function ($response) use ($deferred) {
+        $this->http->get($this->replaceWithVariables('guilds/:id/invites'))->then(function ($response) use ($deferred) {
             $invites = new Collection();
 
             foreach ($response as $index => $invite) {

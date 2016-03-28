@@ -14,7 +14,7 @@ namespace Discord\Wrapper;
 use Psr\Cache\CacheItemPoolInterface;
 
 /**
- * Provides an easy wrapper for the Guzzle HTTP client.
+ * Provides an easy wrapper for the Cache Adapter.
  */
 class CacheWrapper
 {

@@ -15,7 +15,7 @@ use ArrayAccess;
 use Discord\Exceptions\DiscordRequestFailedException;
 use Discord\Exceptions\PartRequestFailedException;
 use Discord\Factory\PartFactory;
-use Discord\Guzzle;
+use Discord\Http\Http;
 use Discord\Wrapper\CacheWrapper;
 use Illuminate\Support\Str;
 use JsonSerializable;
@@ -34,9 +34,9 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
     protected $partFactory;
 
     /**
-     * @var Guzzle
+     * @var Http
      */
-    protected $guzzle;
+    protected $http;
 
     /**
      * @var CacheWrapper
@@ -159,20 +159,20 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
      * Create a new part instance.
      *
      * @param PartFactory  $partFactory
-     * @param Guzzle       $guzzle
+     * @param Http         $http
      * @param CacheWrapper $cache
-     * @param array        $attributes  An array of attributes to build the part.
-     * @param bool         $created     Whether the part has already been created.
+     * @param array        $attributes An array of attributes to build the part.
+     * @param bool         $created    Whether the part has already been created.
      */
     public function __construct(
         PartFactory $partFactory,
-        Guzzle $guzzle,
+        Http $http,
         CacheWrapper $cache,
         array $attributes = [],
         $created = false
     ) {
         $this->partFactory = $partFactory;
-        $this->guzzle      = $guzzle;
+        $this->http        = $http;
         $this->cache       = $cache;
 
         $this->created = $created;
@@ -185,7 +185,7 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
         $this->resolve = function ($response, &$deferred) {
             $deferred->resolve(true);
         };
-        
+
         $this->reject = function ($e, &$deferred) {
             $deferred->reject($e);
         };
@@ -220,9 +220,12 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
 
         $deferred = new Deferred();
 
-        $this->guzzle->get($this->get)->then(function ($response) {
-            $this->fill($response);
-        }, \React\Partial\bind_right($this->reject, $deferred));
+        $this->http->get($this->get)->then(
+            function ($response) {
+                $this->fill($response);
+            },
+            \React\Partial\bind_right($this->reject, $deferred)
+        );
 
         return $deferred->promise();
     }
@@ -245,26 +248,32 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
                 return \React\Promise\reject(new \Exception('You cannot edit a non-editable part.'));
             }
 
-            $this->guzzle->post(
+            $this->http->post(
                 $this->replaceWithVariables($this->uris['update']),
                 $attributes
-            )->then(function () use ($deferred) {
-                $deferred->resolve(true);
-            }, \React\Partial\bind_right($this->reject, $deferred));
+            )->then(
+                function () use ($deferred) {
+                    $deferred->resolve(true);
+                },
+                \React\Partial\bind_right($this->reject, $deferred)
+            );
         } else {
             if (!$this->creatable) {
                 return \React\Promise\reject(new \Exception('You cannot create a non-creatable part.'));
             }
 
-            $this->guzzle->post(
+            $this->http->post(
                 $this->replaceWithVariables($this->uris['create']),
                 $attributes
-            )->then(function () use ($deferred) {
-                $this->created = true;
-                $this->deleted = false;
+            )->then(
+                function () use ($deferred) {
+                    $this->created = true;
+                    $this->deleted = false;
 
-                $deferred->resolve(true);
-            }, \React\Partial\bind_right($this->reject, $deferred));
+                    $deferred->resolve(true);
+                },
+                \React\Partial\bind_right($this->reject, $deferred)
+            );
         }
 
         if ($this->fillAfterSave) {
@@ -289,14 +298,17 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
 
         $deferred = new Deferred();
 
-        $this->guzzle->delete(
+        $this->http->delete(
             $this->replaceWithVariables($this->uris['delete'])
-        )->then(function () use ($deferred) {
-            $this->created = false;
-            $this->deleted = true;
+        )->then(
+            function () use ($deferred) {
+                $this->created = false;
+                $this->deleted = true;
 
-            $deferred->resolve(true);
-        }, \React\Partial\bind_right($this->reject, $deferred));
+                $deferred->resolve(true);
+            },
+            \React\Partial\bind_right($this->reject, $deferred)
+        );
 
         return $deferred->promise();
     }

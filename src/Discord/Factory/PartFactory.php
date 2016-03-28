@@ -11,7 +11,7 @@
 
 namespace Discord\Factory;
 
-use Discord\Guzzle;
+use Discord\Http\Http;
 use Discord\Parts;
 use Discord\Wrapper\CacheWrapper;
 
@@ -21,9 +21,9 @@ use Discord\Wrapper\CacheWrapper;
 class PartFactory
 {
     /**
-     * @var Guzzle
+     * @var Http
      */
-    private $guzzle;
+    private $http;
 
     /**
      * @var CacheWrapper
@@ -33,13 +33,13 @@ class PartFactory
     /**
      * PartFactory constructor.
      *
-     * @param Guzzle       $guzzle
+     * @param Http         $http
      * @param CacheWrapper $cache
      */
-    public function __construct(Guzzle $guzzle, CacheWrapper $cache)
+    public function __construct(Http $http, CacheWrapper $cache)
     {
-        $this->guzzle = $guzzle;
-        $this->cache  = $cache;
+        $this->http  = $http;
+        $this->cache = $cache;
     }
 
     /**
@@ -55,7 +55,7 @@ class PartFactory
             $attributes = (array) $attributes;
         }
 
-        $part = new $type($this, $this->guzzle, $this->cache, $attributes, $created);
+        $part = new $type($this, $this->http, $this->cache, $attributes, $created);
 
         return $part;
     }

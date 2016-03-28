@@ -104,7 +104,7 @@ class Channel extends Part
             'deny'  => $deny->perms,
         ];
 
-        $this->guzzle->put("channels/{$this->id}/permissions/{$part->id}", $payload)->then(
+        $this->http->put("channels/{$this->id}/permissions/{$part->id}", $payload)->then(
             \React\Partial\bind_right($this->resolve, $deferred),
             \React\Partial\bind_right($this->reject, $deferred)
         );
@@ -129,7 +129,7 @@ class Channel extends Part
             $member = $member->id;
         }
 
-        $this->guzzle->patch(
+        $this->http->patch(
             "guilds/{$this->guild_id}/members/{$member}",
             [
                 'channel_id' => $this->id,
@@ -159,7 +159,7 @@ class Channel extends Part
 
         $deferred = new Deferred();
 
-        $this->guzzle->get("guilds/{$this->guild_id}")->then(function ($response) use ($deferred) {
+        $this->http->get("guilds/{$this->guild_id}")->then(function ($response) use ($deferred) {
             $guild = $this->partFactory->create(Guild::class, $response, true);
 
             $this->cache->set("guild.{$this->guild_id}", $guild);
@@ -184,7 +184,7 @@ class Channel extends Part
     {
         $deferred = new Deferred();
 
-        $this->guzzle->post(
+        $this->http->post(
             $this->replaceWithVariables('channels/:id/invites'),
             [
                 'validate' => null,
@@ -238,7 +238,7 @@ class Channel extends Part
 
         $deferred = new Deferred();
 
-        $this->guzzle->get("channels/{$this->id}/messages?limit={$this->message_count}")->then(function ($response) use ($deferred) {
+        $this->http->get("channels/{$this->id}/messages?limit={$this->message_count}")->then(function ($response) use ($deferred) {
             $messages = [];
 
             foreach ($response as $index => $message) {
@@ -266,7 +266,7 @@ class Channel extends Part
 
         $deferred = new Deferred();
 
-        $this->guzzle->get($this->replaceWithVariables('channels/:id/invites'))->then(function ($response) use ($deferred) {
+        $this->http->get($this->replaceWithVariables('channels/:id/invites'))->then(function ($response) use ($deferred) {
             $invites = new Collection();
 
             foreach ($request as $index => $invite) {
@@ -332,7 +332,7 @@ class Channel extends Part
             $this->getMessagesAttribute();
         }
 
-        $this->guzzle->post(
+        $this->http->post(
             "channels/{$this->id}/messages",
             [
                 'content' => $text,
@@ -367,7 +367,7 @@ class Channel extends Part
 
         $deferred = new Deferred();
 
-        $this->guzzle->sendFile($this, $filepath, $filename)->then(function ($response) use ($deferred) {
+        $this->http->sendFile($this, $filepath, $filename)->then(function ($response) use ($deferred) {
             $message = $this->partFactory->create(Message::class, $response, true);
 
             $this->cache->set("message.{$message->id}", $message);
@@ -395,7 +395,7 @@ class Channel extends Part
 
         $deferred = new Deferred();
 
-        $this->guzzle->post("channels/{$this->id}/typing")->then(
+        $this->http->post("channels/{$this->id}/typing")->then(
             \React\Partial\bind_right($this->resolve, $deferred),
             \React\Partial\bind_right($this->reject, $deferred)
         );

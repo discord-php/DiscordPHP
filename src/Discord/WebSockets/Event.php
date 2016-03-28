@@ -13,7 +13,7 @@ namespace Discord\WebSockets;
 
 use Discord\Discord;
 use Discord\Factory\PartFactory;
-use Discord\Guzzle;
+use Discord\Http\Http;
 use Discord\Wrapper\CacheWrapper;
 
 /**
@@ -79,9 +79,9 @@ class Event
     const MESSAGE_UPDATE = 'MESSAGE_UPDATE';
 
     /**
-     * @var Guzzle
+     * @var Http
      */
-    protected $guzzle;
+    protected $http;
 
     /**
      * @var PartFactory
@@ -96,13 +96,13 @@ class Event
     /**
      * Event constructor.
      *
-     * @param Guzzle       $guzzle
+     * @param Http         $http
      * @param PartFactory  $partFactory
      * @param CacheWrapper $cache
      */
-    public function __construct(Guzzle $guzzle, PartFactory $partFactory, CacheWrapper $cache)
+    public function __construct(Http $http, PartFactory $partFactory, CacheWrapper $cache)
     {
-        $this->guzzle      = $guzzle;
+        $this->http        = $http;
         $this->partFactory = $partFactory;
         $this->cache       = $cache;
     }

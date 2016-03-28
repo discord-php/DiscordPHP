@@ -18,6 +18,7 @@ use Discord\Exceptions\Rest\NoPermissionsException;
 use Discord\Exceptions\Rest\NotFoundException;
 use Discord\Http\Guzzle;
 use Discord\Parts\Channel\Channel;
+use Discord\Wrapper\CacheWrapper;
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
@@ -45,7 +46,7 @@ class Http
     const CACHE_TTL = 300;
 
     /**
-     * @var CacheItemPoolInterface
+     * @var CacheWrapper
      */
     private $cache;
 
@@ -62,19 +63,19 @@ class Http
     /**
      * The request driver.
      *
-     * @var HttpDriver 
+     * @var HttpDriver
      */
     protected $driver;
 
     /**
      * Guzzle constructor.
      *
-     * @param CacheItemPoolInterface $cache
-     * @param string                 $token
-     * @param string                 $version
-     * @param HttpDriver $driver The request driver.
+     * @param CacheWrapper $cache
+     * @param string       $token
+     * @param string       $version
+     * @param HttpDriver   $driver The request driver.
      */
-    public function __construct(CacheItemPoolInterface $cache, $token, $version, $driver = null)
+    public function __construct(CacheWrapper $cache, $token, $version, $driver = null)
     {
         if (is_null($driver)) {
             $driver = new Guzzle();
@@ -104,7 +105,7 @@ class Http
         $headers = (isset($params[3])) ? $params[3] : [];
         $cache   = (isset($params[4])) ? $params[4] : null;
 
-        return $this->runRequest($name, $url, $content, !$noAuth, $headers, $cache);
+        return $this->runRequest(strtolower($name), $url, $content, !$noAuth, $headers, $cache);
     }
 
     /**
@@ -119,7 +120,7 @@ class Http
      *                                    used, if false, cache is disabled
      *
      * @return \React\Promise\Promise
-     * 
+     *
      * @throws ContentTooLongException
      * @throws DiscordRequestFailedException
      * @throws NoPermissionsException
@@ -130,8 +131,8 @@ class Http
         $deferred = new Deferred();
 
         $key = 'guzzle.'.sha1($url);
-        if ($this->cache->hasItem($key) && strtolower($method) === 'get') {
-            return $this->cache->getItem($key)->get();
+        if ($method === 'get' && $this->cache->has($key)) {
+            return $this->cache->get($key);
         }
 
         $headers = [
@@ -140,35 +141,35 @@ class Http
         ];
 
         if ($auth) {
-            $headers['authorization'] = 'Bot ' . $this->token;
+            $headers['authorization'] = 'Bot '.$this->token;
         }
 
         $headers = array_merge($headers, $extraHeaders);
         $content = (is_null($content)) ? null : json_encode($content);
 
-        $this->driver->runRequest($method, $url, $headers, $content)->then(function ($response) use ($method, $cache, $key) {
-            $json = json_decode($response->getBody());
+        $this->driver->runRequest($method, $url, $headers, $content)->then(
+            function ($response) use ($method, $cache, $key, $deferred) {
+                $json = json_decode($response->getBody());
 
-            if (strtolower($method) === 'get' && $cache !== false) {
-                $item = $this->cache->getItem($key);
-                $item->set($json);
-                $item->expiresAfter($cache === null ? static::CACHE_TTL : (int) $cache);
-                $this->cache->save($item);
+                if ($method === 'get' && $cache !== false) {
+                    $this->cache->set($key, $json, $cache === null ? static::CACHE_TTL : (int) $cache);
+                }
+
+                $deferred->resolve($json);
+            },
+            function ($e) use ($deferred) {
+                if ($e instanceof Response) {
+                    $e = $this->handleError(
+                        $e->getStatusCode(),
+                        $e->getReasonPhrase(),
+                        $e->getBody(),
+                        $url
+                    );
+                }
+
+                $deferred->reject($e);
             }
-
-            $deferred->resolve($json);
-        }, function ($e) use ($deferred) {
-            if ($e instanceof Response) {
-                $e = $this->handleError(
-                    $e->getStatusCode(),
-                    $e->getReasonPhrase(),
-                    $e->getBody(),
-                    $url
-                );
-            }
-
-            $deferred->reject($e);
-        });
+        );
 
         return $deferred->promise();
     }
@@ -237,7 +238,7 @@ class Http
      * @param string  $filepath The path to the file.
      * @param string  $filename The name of the file when it is uploaded.
      *
-     * @return \React\Promise\Promise 
+     * @return \React\Promise\Promise
      */
     public function sendFile(Channel $channel, $filepath, $filename)
     {

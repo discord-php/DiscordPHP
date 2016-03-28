@@ -12,7 +12,7 @@
 namespace Discord\Parts\Permissions;
 
 use Discord\Factory\PartFactory;
-use Discord\Guzzle;
+use Discord\Http\Http;
 use Discord\Parts\Part;
 use Discord\Wrapper\CacheWrapper;
 
@@ -55,14 +55,14 @@ abstract class Permission extends Part
      */
     public function __construct(
         PartFactory $partFactory,
-        Guzzle $guzzle,
+        Http $http,
         CacheWrapper $cache,
         array $attributes = [],
         $created = false
     ) {
         $attributes['perms'] = $this->default;
 
-        parent::__construct($partFactory, $guzzle, $cache, $attributes, $created);
+        parent::__construct($partFactory, $http, $cache, $attributes, $created);
     }
 
     /**

@@ -15,6 +15,7 @@ use Discord\Discord;
 use Discord\Erlpack\Erlpack;
 use Discord\Factory\PartFactory;
 use Discord\Guzzle;
+use Discord\Http\Http;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Guild\Role;
@@ -66,9 +67,9 @@ class WebSocket extends EventEmitter
     protected $discord;
 
     /**
-     * @var Guzzle
+     * @var Http
      */
-    private $guzzle;
+    private $http;
 
     /**
      * @var PartFactory
@@ -186,17 +187,17 @@ class WebSocket extends EventEmitter
     /**
      * Constructs the WebSocket instance.
      *
-     * @param Discord            $discord     The Discord REST client instance.
-     * @param Guzzle             $guzzle      The Guzzle Instance
+     * @param Discord            $discord The Discord REST client instance.
+     * @param Http               $http    The Guzzle Instance
      * @param PartFactory        $partFactory
      * @param CacheWrapper       $cache
      * @param string             $token
-     * @param LoopInterface|null $loop        The ReactPHP Event Loop.
-     * @param bool               $etf         Whether to use ETF.
+     * @param LoopInterface|null $loop    The ReactPHP Event Loop.
+     * @param bool               $etf     Whether to use ETF.
      */
     public function __construct(
         Discord $discord,
-        Guzzle $guzzle,
+        Http $http,
         PartFactory $partFactory,
         CacheWrapper $cache,
         $token,
@@ -204,7 +205,7 @@ class WebSocket extends EventEmitter
         $etf = true
     ) {
         $this->discord     = $discord;
-        $this->guzzle      = $guzzle;
+        $this->http        = $http;
         $this->partFactory = $partFactory;
         $this->cache       = $cache;
         $this->token       = $token;
@@ -638,7 +639,7 @@ class WebSocket extends EventEmitter
                     $memberColl[$memberPart->id] = $memberPart;
                 }
 
-                if ($memberColl->count()) == $guild->member_count) {
+                if ($memberColl->count() == $guild->member_count) {
                     unset($this->largeServers[$data->d->guild_id]);
                     $this->emit('guild-ready', [$guild]);
                 }
@@ -681,7 +682,7 @@ class WebSocket extends EventEmitter
     public function handleHandler($handlerSettings, $data)
     {
         /** @var Event $handler */
-        $handler     = new $handlerSettings['class']($this->guzzle, $this->partFactory, $this->cache);
+        $handler     = new $handlerSettings['class']($this->http, $this->partFactory, $this->cache);
         $handlerData = $handler->getData($data->d, $this->discord);
         $newDiscord  = $handler->updateDiscordInstance($handlerData, $this->discord);
         $this->emit($data->t, [$handlerData, $this->discord, $newDiscord]);
@@ -861,7 +862,7 @@ class WebSocket extends EventEmitter
                     'v'               => 3,
                     'properties'      => [
                         '$os'               => PHP_OS,
-                        '$browser'          => $this->guzzle->getUserAgent(),
+                        '$browser'          => $this->http->getUserAgent(),
                         '$device'           => '',
                         '$referrer'         => 'https://github.com/teamreflex/DiscordPHP',
                         '$referring_domain' => 'https://github.com/teamreflex/DiscordPHP',
@@ -902,6 +903,6 @@ class WebSocket extends EventEmitter
     {
         $token = (substr($this->token, 0, 4) === 'Bot ') ? substr($this->token, 4) : $this->token;
 
-        return $this->guzzle->get('gateway', null, false, ['authorization' => $token])->url;
+        return $this->http->get('gateway', null, false, ['authorization' => $token])->url;
     }
 }

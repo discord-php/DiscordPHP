@@ -94,7 +94,7 @@ class Client extends Part
             return false;
         }
 
-        $request = $this->guzzle->post(
+        $request = $this->http->post(
             "oauth2/applications/{$appID}/bot",
             [
                 'secret' => $secret,
@@ -174,7 +174,7 @@ class Client extends Part
         }
 
         $guilds  = [];
-        $request = $this->guzzle->get('users/@me/guilds');
+        $request = $this->http->get('users/@me/guilds');
 
         foreach ($request as $index => $guild) {
             $guild = $this->partFactory->create(Guild::class, $guild, true);

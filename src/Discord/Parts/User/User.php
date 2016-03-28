@@ -59,7 +59,7 @@ class User extends Part
         if ($channelID = $this->cache->get("user.{$this->id}.pm")) {
             $channel_id = $channelID;
         } else {
-            $channel = $this->guzzle->post(
+            $channel = $this->http->post(
                 'users/@me/channels',
                 [
                     'recipient_id' => $this->id,
@@ -70,7 +70,7 @@ class User extends Part
             $this->cache->set("user.{$this->id}.pm", $channel->id);
         }
 
-        $request = $this->guzzle->post(
+        $request = $this->http->post(
             "channels/{$channel_id}/messages",
             [
                 'content' => $message,
@@ -95,7 +95,7 @@ class User extends Part
         if ($channelID = $this->cache->get("user.{$this->id}.pm")) {
             $channelId = $channelID;
         } else {
-            $channel = $this->guzzle->post(
+            $channel = $this->http->post(
                 'users/@me/channels',
                 [
                     'recipient_id' => $this->id,
@@ -106,7 +106,7 @@ class User extends Part
             $this->cache->set("user.{$this->id}.pm", $channel->id);
         }
 
-        $this->guzzle->post("channels/{$channelId}/typing");
+        $this->http->post("channels/{$channelId}/typing");
 
         return true;
     }
