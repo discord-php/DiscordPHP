@@ -28,4 +28,16 @@ interface HttpDriver
 	 * @return \React\Promise\Promise 
 	 */
 	public function sendFile(Channel $channel, $filepath, $filename);
+
+	/**
+	 * Runs a blocking HTTP request.
+	 *
+	 * @param string $method The HTTP method to use.
+	 * @param string $url The endpoint that will be queried.
+	 * @param array $headers The headers to send in the request.
+	 * @param string $body The request content.
+	 *
+	 * @return object The request response.
+	 */
+	public function blocking($method, $url, $headers, $body);
 }

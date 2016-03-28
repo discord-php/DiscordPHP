@@ -17,6 +17,7 @@ use Discord\Parts\Guild\Guild;
 use Discord\Parts\Part;
 use Discord\WebSockets\WebSocket;
 use Illuminate\Support\Collection;
+use React\Promise\Deferred;
 
 /**
  * The client is the main interface for the client. Most calls on the main class are forwarded here.
@@ -142,7 +143,7 @@ class Client extends Part
 
         $deferred = new Deferred();
 
-        $this->guzzle->get('users/@me/guilds')->then(function ($response) use ($deferred) {
+        $this->http->get('users/@me/guilds')->then(function ($response) use ($deferred) {
             $guilds = new Collection();
 
             foreach ($response as $index => $guild) {

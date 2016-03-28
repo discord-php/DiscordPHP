@@ -14,7 +14,6 @@ namespace Discord\WebSockets;
 use Discord\Discord;
 use Discord\Erlpack\Erlpack;
 use Discord\Factory\PartFactory;
-use Discord\Guzzle;
 use Discord\Http\Guzzle;
 use Discord\Http\Http;
 use Discord\Parts\Channel\Channel;
@@ -210,9 +209,10 @@ class WebSocket extends EventEmitter
         $this->partFactory = $partFactory;
         $this->cache       = $cache;
         $this->token       = $token;
-        $this->gateway     = $this->getGateway();
         $loop              = (is_null($loop)) ? LoopFactory::create() : $loop;
         $this->wsfactory   = new WsFactory($loop);
+
+        $this->getGateway();
 
         // ETF breaks snowflake IDs on 32-bit.
         if (2147483647 !== PHP_INT_MAX) {
@@ -223,7 +223,7 @@ class WebSocket extends EventEmitter
                 $this->etf->on(
                     'error',
                     function ($e) {
-                        $this->emit('error', [$e]);
+                        $this->emit('error', [$e, $this]);
                     }
                 );
             }
@@ -231,16 +231,16 @@ class WebSocket extends EventEmitter
 
         $this->handlers = new Handlers();
 
-        $this->wsfactory->__invoke($this->gateway)->then(
-            [$this, 'handleWebSocketConnection'],
-            [$this, 'handleWebSocketError']
-        );
-
         $loop->nextTick(function () use (&$loop) {
             $this->http->setDriver(new Guzzle($loop));
         });
 
         $this->loop = $loop;
+
+        $this->wsfactory->__invoke($this->gateway)->then(
+            [$this, 'handleWebSocketConnection'],
+            [$this, 'handleWebSocketError']
+        );
     }
 
     /**
@@ -341,7 +341,6 @@ class WebSocket extends EventEmitter
 
                 if ($this->reconnectCount >= 4) {
                     $this->emit('ws-reconnect-max', [$this->discord]);
-                    $this->loop->stop();
 
                     return;
                 }
@@ -405,7 +404,7 @@ class WebSocket extends EventEmitter
      */
     public function handleWebSocketError($e)
     {
-        $this->emit('ws-connect-error', [$e]);
+        $this->emit('error', [$e, $this]);
     }
 
     /**
@@ -902,12 +901,12 @@ class WebSocket extends EventEmitter
     /**
      * Gets the WebSocket gateway.
      *
-     * @return string The Discord WebSocket gateway.
+     * @return void
      */
     public function getGateway()
     {
-        $token = (substr($this->token, 0, 4) === 'Bot ') ? substr($this->token, 4) : $this->token;
+        $response = $this->http->get('gateway', null, null, null, true);
 
-        return $this->http->get('gateway', null, false, ['authorization' => $token])->url;
+        $this->gateway = $response->url;
     }
 }

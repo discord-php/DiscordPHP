@@ -112,13 +112,13 @@ class Http
      */
     public function __call($name, $params)
     {
-        $url     = $params[0];
-        $content = (isset($params[1])) ? $params[1] : null;
-        $noAuth  = (isset($params[2]));
-        $headers = (isset($params[3])) ? $params[3] : [];
-        $cache   = (isset($params[4])) ? $params[4] : null;
+        $url      = $params[0];
+        $content  = (isset($params[1])) ? $params[1] : null;
+        $headers  = (isset($params[2])) ? $params[2] : [];
+        $cache    = (isset($params[3])) ? $params[3] : null;
+        $blocking = (isset($params[4])) ? $params[4] : false;
 
-        return $this->runRequest(strtolower($name), $url, $content, !$noAuth, $headers, $cache);
+        return $this->runRequest(strtolower($name), $url, $content, $headers, $cache, $blocking);
     }
 
     /**
@@ -127,10 +127,10 @@ class Http
      * @param string        $method       The request method.
      * @param string        $url          The endpoint that will be queried.
      * @param array         $content      Parameters that will be encoded into JSON and sent with the request.
-     * @param bool          $auth         Whether the authentication token will be sent with the request.
      * @param array         $extraHeaders Extra headers to send with the request.
      * @param bool|int|null $cache        If an integer is passed, used as cache TTL, if null is passed, default TTL is
      *                                    used, if false, cache is disabled
+     * @param bool          $blocking     Whether the request should be sent as blocking.
      *
      * @return \React\Promise\Promise
      *
@@ -139,7 +139,7 @@ class Http
      * @throws NoPermissionsException
      * @throws NotFoundException
      */
-    private function runRequest($method, $url, $content, $auth, $extraHeaders, $cache)
+    private function runRequest($method, $url, $content, $extraHeaders, $cache, $blocking)
     {
         $deferred = new Deferred();
 
@@ -153,12 +153,16 @@ class Http
             'Content-Type' => 'application/json',
         ];
 
-        if ($auth) {
-            $headers['authorization'] = 'Bot '.$this->token;
-        }
+        $headers['authorization'] = 'Bot '.$this->token;
 
         $headers = array_merge($headers, $extraHeaders);
         $content = (is_null($content)) ? null : json_encode($content);
+
+        if ($blocking) {
+            $response = $this->driver->blocking($method, $url, $headers, $content);
+
+            return json_decode($response->getBody());
+        }
 
         $this->driver->runRequest($method, $url, $headers, $content)->then(
             function ($response) use ($method, $cache, $key, $deferred) {
@@ -170,7 +174,7 @@ class Http
 
                 $deferred->resolve($json);
             },
-            function ($e) use ($deferred) {
+            function ($e) use ($deferred, $url) {
                 if ($e instanceof Response) {
                     $e = $this->handleError(
                         $e->getStatusCode(),

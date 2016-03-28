@@ -57,7 +57,7 @@ class Invite extends Part
 
         $deferred = new Deferred();
 
-        $this->guzzle->post("invite/{$this->code}")->then(
+        $this->http->post("invite/{$this->code}")->then(
             \React\Partial\bind_right($this->resolve, $deferred),
             \React\Partial\bind_right($this->reject, $deferred)
         );

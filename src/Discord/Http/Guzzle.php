@@ -153,4 +153,19 @@ class Guzzle extends GuzzleClient implements HttpDriver
 
 		return $this->runRequest($request, null, null, null);
 	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function blocking($method, $url, $headers, $body)
+	{
+		$request = new Request(
+			$method,
+			Http::BASE_URL.'/'.$url,
+			$headers,
+			$body
+		);
+
+		return $this->send($request);
+	}
 }

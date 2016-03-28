@@ -33,7 +33,7 @@ class UserRepository extends AbstractRepository
             return $this->cache->get($key);
         }
 
-        $data = $this->guzzle->get('users/'.$id);
+        $data = $this->http->get('users/'.$id);
         $user = $this->partFactory->create(User::class, $data, true);
 
         return $this->cache->set($key, $user);
