@@ -17,6 +17,7 @@ use Discord\Exceptions\Rest\ContentTooLongException;
 use Discord\Exceptions\Rest\NoPermissionsException;
 use Discord\Exceptions\Rest\NotFoundException;
 use Discord\Http\Guzzle;
+use Discord\Http\HttpDriver;
 use Discord\Parts\Channel\Channel;
 use Discord\Wrapper\CacheWrapper;
 use GuzzleHttp\Client as GuzzleClient;
@@ -85,6 +86,18 @@ class Http
         $this->token   = $token;
         $this->version = $version;
         $this->driver  = $driver;
+    }
+
+    /**
+     * Sets the HTTP driver.
+     *
+     * @param HttpDriver $driver 
+     *
+     * @return void 
+     */
+    public function setDriver(HttpDriver $driver)
+    {
+        $this->driver = $driver;
     }
 
     /**

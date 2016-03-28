@@ -15,6 +15,7 @@ use Discord\Discord;
 use Discord\Erlpack\Erlpack;
 use Discord\Factory\PartFactory;
 use Discord\Guzzle;
+use Discord\Http\Guzzle;
 use Discord\Http\Http;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Guild\Guild;
@@ -234,6 +235,10 @@ class WebSocket extends EventEmitter
             [$this, 'handleWebSocketConnection'],
             [$this, 'handleWebSocketError']
         );
+
+        $loop->nextTick(function () use (&$loop) {
+            $this->http->setDriver(new Guzzle($loop));
+        });
 
         $this->loop = $loop;
     }
