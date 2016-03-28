@@ -2,6 +2,7 @@
 
 namespace Discord\Http;
 
+use Discord\Discord;
 use Discord\Http\Http;
 use Discord\Parts\Channel\Channel;
 use GuzzleHttp\Client as GuzzleClient;
@@ -62,7 +63,7 @@ class Guzzle extends GuzzleClient implements HttpDriver
 	{
 		$deferred = new Deferred();
 
-		$request = new Request(
+		$request = ($method instanceof Request) ? $method : new Request(
 			$method,
 			Http::BASE_URL.'/'.$url,
 			$headers,
@@ -129,9 +130,27 @@ class Guzzle extends GuzzleClient implements HttpDriver
 	public function sendFile(Channel $channel, $filepath, $filename)
 	{
 		$deferred = new Deferred();
+
+		if (! file_exists($filepath)) {
+			return \React\Promise\reject(new \Exception('The specified file path does not exist.'));
+		}
+
+		$data = file_get_contents($filepath);
+		$boundary = '-----------------------------735323031399963166993862150';
 		
-		$request = new Request();
-		
-		return $deferred->promise();
+		$headers = [
+			'User-Agent' => 'DiscordPHP/'.Discord::VERSION.' DiscordBot (https://github.com/teamreflex/DiscordPHP, '.Discord::VERSION.')',
+			'Content-Type' => 'multipart/form-data; boundary='.$boundary,
+			'Content-Length' => strlen($data),
+		];
+
+		$request = new Request(
+			'POST',
+			Http::BASE_URL."/channels/{$channel->id}/messages",
+			$headers,
+			$data.PHP_EOL.$boundary
+		);
+
+		return $this->runRequest($request, null, null, null);
 	}
 }
