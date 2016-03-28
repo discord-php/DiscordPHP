@@ -11,7 +11,6 @@
 
 namespace Discord\WebSockets\Events;
 
-use Discord\Cache\Cache;
 use Discord\Parts\Channel\Message;
 use Discord\WebSockets\Event;
 
@@ -35,7 +34,7 @@ class MessageUpdate extends Event
      */
     public function updateDiscordInstance($data, $discord)
     {
-        Cache::set("message.{$data->id}", $data);
+        $this->cache->set("message.{$data->id}", $data);
 
         foreach ($discord->guilds as $index => $guild) {
             foreach ($guild->channels as $cindex => $channel) {
@@ -43,7 +42,11 @@ class MessageUpdate extends Event
                     $message = $channel->messages->pull($data->id);
 
                     if (!isset($data->content)) {
-                        $channel->messages->push(new Message(array_merge((array) $message, (array) $data), true));
+                        $message = $this->partFactory->create(Message::class,
+                            array_merge((array) $message, (array) $data),
+                            true
+                        );
+                        $channel->messages->push($message);
                     } else {
                         $channel->messages->push($data);
                     }

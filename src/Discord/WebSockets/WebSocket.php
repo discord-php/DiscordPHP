@@ -11,12 +11,10 @@
 
 namespace Discord\WebSockets;
 
-use Discord\Cache\Cache;
 use Discord\Discord;
 use Discord\Erlpack\Erlpack;
 use Discord\Factory\PartFactory;
 use Discord\Guzzle;
-use Discord\Helpers\Collection;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Guild\Role;
@@ -25,6 +23,7 @@ use Discord\Parts\User\Member;
 use Discord\Voice\VoiceClient;
 use Discord\Wrapper\CacheWrapper;
 use Evenement\EventEmitter;
+use Illuminate\Support\Collection;
 use Ratchet\Client\Connector as WsFactory;
 use Ratchet\Client\WebSocket as WebSocketInstance;
 use Ratchet\RFC6455\Messaging\Frame;
@@ -481,10 +480,9 @@ class WebSocket extends EventEmitter
 
                 $channels->push($channelPart);
 
-                Cache::set("channels.{$channelPart->id}", $channelPart);
+                $this->cache->set("channels.{$channelPart->id}", $channelPart);
             }
 
-            $channels->setCacheKey("guild.{$guild->id}.channels", true);
             unset($channels);
 
             // guild members
@@ -509,10 +507,9 @@ class WebSocket extends EventEmitter
                 // Since when we use GUILD_MEMBERS_CHUNK, we have to cycle through the current members
                 // and see if they exist already. That takes ~34ms per member, way way too much.
                 $members[$memberPart->id] = $memberPart;
-                // Cache::set("guild.{$memberPart->guild_id}.members.{$memberPart->id}", $memberPart);
+                // $this->cache->set("guild.{$memberPart->guild_id}.members.{$memberPart->id}", $memberPart);
             }
 
-            $members->setCacheKey("guild.{$guild->id}.members", true);
             unset($members);
 
             // guild roles
@@ -528,10 +525,9 @@ class WebSocket extends EventEmitter
 
                 $roles->push($rolePart);
 
-                Cache::set("roles.{$rolePart->id}", $rolePart);
+                $this->cache->set("roles.{$rolePart->id}", $rolePart);
             }
 
-            $roles->setCacheKey("guild.{$guild->id}.roles", true);
             unset($roles);
 
             $guilds->push($guildPart);
@@ -540,10 +536,9 @@ class WebSocket extends EventEmitter
                 $this->largeServers[$guildPart->id] = $guildPart;
             }
 
-            Cache::set("guild.{$guildPart->id}", $guildPart);
+            $this->cache->set("guild.{$guildPart->id}", $guildPart);
         }
 
-        $this->discord->setCache('guilds', $guilds);
         unset($guilds);
 
         $this->sessionId = $content->session_id;
@@ -626,8 +621,8 @@ class WebSocket extends EventEmitter
                     return;
                 }
 
+                /** @type Collection $memberColl */
                 $memberColl = $guild->members;
-                $memberColl->setCacheKey(null, false);
 
                 foreach ($members as $member) {
                     if (isset($memberColl[$member->user->id])) {
@@ -643,9 +638,7 @@ class WebSocket extends EventEmitter
                     $memberColl[$memberPart->id] = $memberPart;
                 }
 
-                $memberColl->setCacheKey("guild.{$guild->id}.members", true);
-
-                if ($memberColl->count() == $guild->member_count) {
+                if ($memberColl->count()) == $guild->member_count) {
                     unset($this->largeServers[$data->d->guild_id]);
                     $this->emit('guild-ready', [$guild]);
                 }
@@ -688,7 +681,7 @@ class WebSocket extends EventEmitter
     public function handleHandler($handlerSettings, $data)
     {
         /** @var Event $handler */
-        $handler     = new $handlerSettings['class']($this->guzzle, $this->partFactory);
+        $handler     = new $handlerSettings['class']($this->guzzle, $this->partFactory, $this->cache);
         $handlerData = $handler->getData($data->d, $this->discord);
         $newDiscord  = $handler->updateDiscordInstance($handlerData, $this->discord);
         $this->emit($data->t, [$handlerData, $this->discord, $newDiscord]);

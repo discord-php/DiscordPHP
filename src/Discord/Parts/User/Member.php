@@ -13,13 +13,13 @@ namespace Discord\Parts\User;
 
 use Carbon\Carbon;
 use Discord\Exceptions\DiscordRequestFailedException;
-use Discord\Helpers\Collection;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Guild\Ban;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Guild\Role;
 use Discord\Parts\Part;
 use Discord\Parts\Permissions\RolePermission as Permission;
+use Illuminate\Support\Collection;
 
 /**
  * A member is a relationship between a user and a guild. It contains user-to-guild specific data like roles.
@@ -239,7 +239,6 @@ class Member extends Part
         }
 
         $roles = new Collection($roles);
-        $roles->setCacheKey("guild.{$this->guild_id}.members.{$this->id}.roles", true);
 
         return $roles;
     }

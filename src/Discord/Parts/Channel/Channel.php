@@ -12,13 +12,13 @@
 namespace Discord\Parts\Channel;
 
 use Discord\Exceptions\FileNotFoundException;
-use Discord\Helpers\Collection;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Guild\Invite;
 use Discord\Parts\Guild\Role;
 use Discord\Parts\Part;
 use Discord\Parts\Permissions\ChannelPermission;
 use Discord\Parts\User\Member;
+use Illuminate\Support\Collection;
 
 /**
  * A Channel can be either a text or voice channel on a Discord guild.
@@ -147,14 +147,15 @@ class Channel extends Part
             return;
         }
 
-        if ($guild = $this->cache->get("guild.{$this->guild_id}")) {
-            return $guild;
+        $key = "guild.".$this->guild_id;
+        if ($this->cache->has($key)) {
+            return $this->cache->get($key);
         }
 
-        $request = $this->guzzle->get("guilds/{$this->guild_id}");
+        $request = $this->guzzle->get("guilds/".$this->guild_id);
         $guild   = $this->partFactory->create(Guild::class, $request, true);
 
-        $this->cache->set("guild.{$guild->id}", $guild);
+        $this->cache->set($key, $guild);
 
         $this->attributes_cache['guild'] = $guild;
 
@@ -204,11 +205,12 @@ class Channel extends Part
      */
     public function getMessagesAttribute()
     {
-        if (!$this->cache->get("channel.{$this->id}.messages")) {
-            $this->cache->set("channel.{$this->id}.messages", new Collection([], "channel.{$this->id}.messages"));
+        $key = "channel.".$this->id.".messages";
+        if ($this->cache->has($key)) {
+            return $this->cache->get($key);
         }
 
-        return $this->cache->get("channel.{$this->id}.messages");
+        return $this->cache->set($key, new Collection());
     }
 
     /**
@@ -256,7 +258,7 @@ class Channel extends Part
             $invites[$index] = $invite;
         }
 
-        $invites = new Collection($invites, "channel.{$this->id}.invites");
+        $invites = new Collection($invites);
 
         $this->cache->set("channel.{$this->id}.invites", $invites);
 
@@ -282,7 +284,7 @@ class Channel extends Part
 
         // Will return an empty collection when you don't have permission.
         if (is_null($this->attributes['permission_overwrites'])) {
-            return new Collection([], "channels.{$this->id}.overwrites");
+            return new Collection();
         }
 
         foreach ($this->attributes['permission_overwrites'] as $index => $data) {
@@ -291,7 +293,7 @@ class Channel extends Part
             $overwrites[$index] = $this->partFactory->create(Overwrite::class, $data, true);
         }
 
-        $overwrites = new Collection($overwrites, "channels.{$this->id}.overwrites");
+        $overwrites = new Collection($overwrites);
 
         $this->cache->set("channels.{$this->id}.overwrites", $overwrites);
 

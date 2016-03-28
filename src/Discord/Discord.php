@@ -170,6 +170,30 @@ class Discord
     }
 
     /**
+     * Returns a service from the container
+     *
+     * @param string $id Service ID
+     *
+     * @return mixed|object
+     */
+    public function get($id)
+    {
+        return $this->container->get($id);
+    }
+
+    /**
+     * Returns a parameter from the container
+     *
+     * @param string $name
+     *
+     * @return mixed
+     */
+    public function getParameter($name)
+    {
+        return $this->container->getParameter($name);
+    }
+
+    /**
      * @param array $options
      *
      * @return ContainerBuilder
@@ -194,6 +218,7 @@ class Discord
 
         $loader    = new XmlFileLoader($container, new FileLocator(__DIR__.'/Resources/config/'));
         $loader->load('services.xml');
+        $loader->load('repositories.xml');
 
         $container->compile();
 
@@ -205,12 +230,12 @@ class Discord
      */
     public function getWebsocket()
     {
-        return $this->container->get('websocket');
+        return $this->get('websocket');
     }
 
     protected function getClient()
     {
-        return $this->container->get('client');
+        return $this->get('client');
     }
 
     /**

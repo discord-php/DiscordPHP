@@ -13,12 +13,12 @@ namespace Discord\Parts\Guild;
 
 use Discord\Exceptions\DiscordRequestFailedException;
 use Discord\Exceptions\PartRequestFailedException;
-use Discord\Helpers\Collection;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Part;
 use Discord\Parts\Permissions\RolePermission as Permission;
 use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
+use Illuminate\Support\Collection;
 
 /**
  * A Guild is Discord's equivalent of a server. It contains all the Members, Channels, Roles, Bans etc.
@@ -176,7 +176,7 @@ class Guild extends Part
 
         // Members aren't retrievable via REST anymore,
         // they will be set if the websocket is used.
-        $this->cache->set("guild.{$this->id}.members", new Collection([], "guild.{$this->id}.members"));
+        $this->cache->set("guild.{$this->id}.members", new Collection());
 
         return $this->cache->get("guild.{$this->id}.members");
     }
@@ -207,7 +207,7 @@ class Guild extends Part
             $roles[$index]       = $this->partFactory->create(Role::class, $role, true);
         }
 
-        $roles = new Collection($roles, "guild.{$this->id}.roles");
+        $roles = new Collection($roles);
 
         $this->cache->set("guild.{$this->id}.roles", $roles);
 
@@ -255,7 +255,7 @@ class Guild extends Part
             $channels[$index] = $channel;
         }
 
-        $channels = new Collection($channels, $key);
+        $channels = new Collection($channels);
 
         $this->cache->set($key, $channels);
 
@@ -289,7 +289,7 @@ class Guild extends Part
             $bans[$index] = $ban;
         }
 
-        $bans = new Collection($bans, "guild.{$this->id}.bans");
+        $bans = new Collection($bans);
 
         $this->cache->set("guild.{$this->id}.bans", $bans);
 
@@ -320,7 +320,7 @@ class Guild extends Part
             $invites[$index] = $invite;
         }
 
-        $invites = new Collection($invites, "guild.{$this->id}.invites");
+        $invites = new Collection($invites);
 
         $this->cache->set("guild.{$this->id}.invites", $invites);
 

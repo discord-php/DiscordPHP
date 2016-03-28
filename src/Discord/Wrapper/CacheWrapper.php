@@ -69,4 +69,12 @@ class CacheWrapper
 
         return $item->get();
     }
+
+    /**
+     * @param string $key
+     */
+    public function remove($key)
+    {
+        $this->cache->deleteItem($key);
+    }
 }

@@ -24,8 +24,6 @@ $currentTest      = 'No Test';
 $currentTestStart = null;
 $tests            = [];
 
-$loop = Factory::create();
-
 /**
  * Prints all the run tests.
  *
@@ -148,11 +146,7 @@ try {
 
 pass();
 
-startTest('Connecting to WebSocket');
-
-$ws = new WebSocket($discord, $loop);
-
-$ws->on('ready', function ($discord) use ($ws, $testingGuild, $testUser, $loop) {
+$discord->getWebsocket()->on('ready', function ($discord) use ($ws, $testingGuild, $testUser, $loop) {
     pass();
 
     $baseGuild = $discord->guilds->get('id', $testingGuild);
@@ -165,8 +159,8 @@ $ws->on('ready', function ($discord) use ($ws, $testingGuild, $testUser, $loop) 
 
     printAllTests();
     die;
-}, function ($e) {
+}, function (\Exception $e) {
     fail($e->getMessage());
 });
 
-$loop->run();
+$discord->getWebsocket()->run();
