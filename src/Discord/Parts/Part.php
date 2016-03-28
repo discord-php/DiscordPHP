@@ -145,8 +145,8 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
      * @param PartFactory  $partFactory
      * @param Guzzle       $guzzle
      * @param CacheWrapper $cache
-     * @param array        $attributes An array of attributes to build the part.
-     * @param bool         $created    Whether the part has already been created.
+     * @param array        $attributes  An array of attributes to build the part.
+     * @param bool         $created     Whether the part has already been created.
      */
     public function __construct(
         PartFactory $partFactory,
