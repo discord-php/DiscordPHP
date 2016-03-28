@@ -12,13 +12,14 @@
 namespace Discord\Parts;
 
 use ArrayAccess;
-use Discord\Factory\PartFactory;
-use Serializable;
-use JsonSerializable;
 use Discord\Exceptions\DiscordRequestFailedException;
 use Discord\Exceptions\PartRequestFailedException;
+use Discord\Factory\PartFactory;
 use Discord\Guzzle;
 use Illuminate\Support\Str;
+use JsonSerializable;
+use React\Promise\Deferred;
+use Serializable;
 
 /**
  * This class is the base of all objects that are returned. All "Parts" extend off this
@@ -135,6 +136,20 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
     protected $fillAfterSave = true;
 
     /**
+     * The promise resolve function.
+     *
+     * @var \Closure Resolve function.
+     */
+    public $resolve;
+
+    /**
+     * The promise reject function.
+     *
+     * @var \Closure Reject function.
+     */
+    public $reject;
+
+    /**
      * Create a new part instance.
      *
      * @param PartFactory $partFactory
@@ -152,6 +167,14 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
         if (is_callable([$this, 'afterConstruct'])) {
             $this->afterConstruct();
         }
+
+        $this->resolve = function ($response, &$deferred) {
+            $deferred->resolve(true);
+        };
+        
+        $this->reject = function ($e, &$deferred) {
+            $deferred->reject($e);
+        };
     }
 
     /**
@@ -178,14 +201,16 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
     public function fresh()
     {
         if ($this->deleted || !$this->created) {
-            return false;
+            return \React\Promise\reject(new \Exception('You cannot get a non-existant part.'));
         }
 
-        $request = $this->guzzle->get($this->get);
+        $deferred = new Deferred();
 
-        $this->fill($request);
+        $this->guzzle->get($this->get)->then(function ($response) {
+            $this->fill($response);
+        }, \React\Partial\bind_right($this->reject, $deferred));
 
-        return true;
+        return $deferred->promise();
     }
 
     /**
@@ -196,56 +221,67 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
      */
     public function save()
     {
+        $deferred = new Deferred();
+
         $attributes = $this->created ? $this->getUpdatableAttributes() : $this->getCreatableAttributes();
 
-        try {
-            if ($this->created) {
-                if (!$this->editable) {
-                    return false;
-                }
+        if ($this->created) {
+            if (!$this->editable) {
+                return \React\Promise\reject(new \Exception('You cannot edit a non-editable part.'));
+            }
 
-                $request = $this->guzzle->patch($this->replaceWithVariables($this->uris['update']), $attributes);
-            } else {
-                if (!$this->creatable) {
-                    return false;
-                }
+            $this->guzzle->post(
+                $this->replaceWithVariables($this->uris['update']),
+                $attributes
+            )->then(function () use ($deferred) {
+                $deferred->resolve(true);
+            }, \React\Partial\bind_right($this->reject, $deferred));
+        } else {
+            if (!$this->creatable) {
+                return \React\Promise\reject(new \Exception('You cannot create a non-creatable part.'));
+            }
 
-                $request       = $this->guzzle->post($this->replaceWithVariables($this->uris['create']), $attributes);
+            $this->guzzle->post(
+                $this->replaceWithVariables($this->uris['create']),
+                $attributes
+            )->then(function () use ($deferred) {
                 $this->created = true;
                 $this->deleted = false;
-            }
-        } catch (\Exception $e) {
-            throw new PartRequestFailedException($e->getMessage());
+
+                $deferred->resolve(true);
+            }, \React\Partial\bind_right($this->reject, $deferred));
         }
 
         if ($this->fillAfterSave) {
             $this->fill($request);
         }
 
-        return true;
+        return $deferred->promise();
     }
 
     /**
      * Deletes the part on the Discord servers.
      *
-     * @return bool Whether the attempt to delete the part succeeded or failed.
-     * @throws PartRequestFailedException
+     * @return \React\Promise\Promise
      */
     public function delete()
     {
         if (!$this->deletable) {
-            return false;
+            return \React\Promise\reject(new \Exception('You cannot delete a non-deletable part.'));
         }
 
-        try {
-            $request       = $this->guzzle->delete($this->replaceWithVariables($this->uris['delete']));
+        $deferred = new Deferred();
+
+        $this->guzzle->delete(
+            $this->replaceWithVariables($this->uris['delete'])
+        )->then(function () use ($deferred) {
             $this->created = false;
             $this->deleted = true;
-        } catch (\Exception $e) {
-            throw new PartRequestFailedException($e->getMessage());
-        }
 
-        return true;
+            $deferred->resolve(true);
+        }, \React\Partial\bind_right($this->reject, $deferred));
+
+        return $deferred->promise();
     }
 
     /**

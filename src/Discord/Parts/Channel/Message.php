@@ -15,6 +15,7 @@ use Carbon\Carbon;
 use Discord\Cache\Cache;
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
+use React\Promise\Deferred;
 
 /**
  * A message which is posted to a Discord text channel.
@@ -98,15 +99,19 @@ class Message extends Part
     public function getFullChannelAttribute()
     {
         if ($channel = Cache::get("channels.{$this->channel_id}")) {
-            return $channel;
+            return \React\Promise\resolve($channel);
         }
 
-        $request = $this->guzzle->get($this->replaceWithVariables('channels/:channel_id'));
-        $channel = $this->partFactory->create(Channel::class, $request, true);
+        $deferred = new Deferred();
 
-        Cache::set("channels.{$channel->id}", $channel);
+        $this->guzzle->get($this->replaceWithVariables('channels/:channel_id'))->then(function ($response) use ($deferred) {
+            $channel = $this->partFactory->create(Channel::class, $request, true);
 
-        return $channel;
+            Cache::set("channels.{$channel->id}", $channel);
+            $deferred->resolve($channel);
+        }, \React\Partial\bind_right($this->reject, $deferred));
+
+        return $deferred->promise();
     }
 
     /**

@@ -20,6 +20,7 @@ use Discord\Parts\Part;
 use Discord\Parts\Permissions\RolePermission as Permission;
 use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
+use React\Promise\Deferred;
 
 /**
  * A Guild is Discord's equivalent of a server. It contains all the Members, Channels, Roles, Bans etc.
@@ -118,15 +119,16 @@ class Guild extends Part
      */
     public function leave()
     {
-        try {
-            $this->guzzle->delete($this->replaceWithVariables($this->uris['leave']));
+        $deferred = new Deferred();
+
+        $this->guzzle->delete($this->replaceWithVariables($this->uris['leave']))->then(function () use ($deferred) {
             $this->created = false;
             $this->deleted = true;
-        } catch (\Exception $e) {
-            throw new PartRequestFailedException($e->getMessage());
-        }
 
-        return true;
+            $deferred->resolve(true);
+        }, \React\Partial\bind_right($this->reject, $deferred));
+
+        return $deferred->promise();
     }
 
     /**
@@ -143,24 +145,24 @@ class Guild extends Part
             $member = $member->id;
         }
 
-        try {
-            $request = $this->guzzle->patch(
-                $this->replaceWithVariables('guilds/:id'),
-                [
-                    'owner_id' => $member,
-                ]
-            );
+        $$deferred = new Deferred();
 
-            if ($request->owner_id != $member) {
-                return false;
+        $this->guzzle->patch(
+            $this->replaceWithVariables('guilds/:id'),
+            [
+                'owner_id' => $member,
+            ]
+        )->then(function ($response) use ($deferred, $member) {
+            if ($response->owner_id != $member) {
+                $deferred->reject(new \Exception('Transfer failed.'));
+
+                return;
             }
 
-            $this->fill((array) $request);
-        } catch (DiscordRequestFailedException $e) {
-            return false;
-        }
+            $this->fill((array) $response);
+        }, \React\Partial\bind_right($this->reject, $deferred));
 
-        return true;
+        return $deferred->promise();
     }
 
     /**
@@ -222,16 +224,19 @@ class Guild extends Part
     public function getOwnerAttribute()
     {
         if ($owner = Cache::get("user.{$this->owner_id}")) {
-            return $owner;
+            return \React\Promise\resolve($owner);
         }
 
-        $request = $this->guzzle->get($this->replaceWithVariables('users/:owner_id'));
+        $deferred = new Deferred();
 
-        $owner = $this->partFactory->create(User::class, $request, true);
+        $this->guzzle->get($this->replaceWithVariables('users/:owner_id'))->then(function ($response) use ($deferred) {
+            $owner = $this->partFactory->create(User::class, $response, true);
+            Cache::set("user.{$user->id}", $owner);
 
-        Cache::set("user.{$user->id}", $owner);
+            $deferred->resolve();
+        }, \React\Partial\bind_right($this->reject, $deferred));
 
-        return $owner;
+        return $deferred->promise();
     }
 
     /**
@@ -242,23 +247,26 @@ class Guild extends Part
     public function getChannelsAttribute()
     {
         if ($channels = Cache::get("guild.{$this->id}.channels")) {
-            return $channels;
+            return \React\Promise\resolve($channels);
         }
 
-        $channels = [];
-        $request  = $this->guzzle->get($this->replaceWithVariables('guilds/:id/channels'));
+        $deferred = new Deferred();
 
-        foreach ($request as $index => $channel) {
-            $channel = $this->partFactory->create(Channel::class, $channel, true);
-            Cache::set("channel.{$channel->id}", $channel);
-            $channels[$index] = $channel;
-        }
+        $this->guzzle->get($this->replaceWithVariables('guilds/:id/channels'))->then(function ($response) use ($deferred) {
+            $channels = new Collection();
 
-        $channels = new Collection($channels, "guild.{$this->id}.channels");
+            foreach ($response as $index => $channel) {
+                $channel = $this->partFactory->create(Channel::class, $channel, true);
+                Cache::set("channel.{$channel->id}", $channel);
+                $channels[$index] = $channel;
+            }
 
-        Cache::set("guild.{$this->id}.channels", $channels);
+            $channels->setCacheKey("guild.{$this->id}.channels", true);
 
-        return $channels;
+            $deferred->resolve($channels);
+        }, \React\Partial\bind_right($this->reject, $deferred));
+
+        return $deferred->promise();
     }
 
     /**
@@ -269,30 +277,28 @@ class Guild extends Part
     public function getBansAttribute()
     {
         if ($bans = Cache::get("guild.{$this->id}.bans")) {
-            return $bans;
+            return \React\Promise\resolve($bans);
         }
 
-        $bans = [];
+        $deferred = new Deferred();
 
-        try {
-            $request = $this->guzzle->get($this->replaceWithVariables('guilds/:id/bans'));
-        } catch (DiscordRequestFailedException $e) {
-            return new Collection();
-        }
+        $this->guzzle->get($this->replaceWithVariables('guilds/:id/bans'))->then(function ($response) use ($deferred) {
+            $bans = new Collection();
 
-        foreach ($request as $index => $ban) {
-            $ban          = (array) $ban;
-            $ban['guild'] = $this;
-            $ban = $this->partFactory->create(Ban::class, $ban, true);
-            Cache::set("guild.{$this->id}.bans.{$ban->user_id}", $ban);
-            $bans[$index] = $ban;
-        }
+            foreach ($response as $index => $ban) {
+                $ban          = (array) $ban;
+                $ban['guild'] = $this;
+                $ban = $this->partFactory->create(Ban::class, $ban, true);
+                Cache::set("guild.{$this->id}.bans.{$ban->user_id}", $ban);
+                $bans[$index] = $ban;
+            }
 
-        $bans = new Collection($bans, "guild.{$this->id}.bans");
+            $bans->setCacheKey("guild.{$this->id}.bans", true);
 
-        Cache::set("guild.{$this->id}.bans", $bans);
+            $deferred->resolve($bans);
+        }, \React\Partial\bind_right($this->reject, $deferred));
 
-        return $bans;
+        return $deferred->promise();
     }
 
     /**
@@ -302,28 +308,26 @@ class Guild extends Part
      */
     public function getInvitesAttribute()
     {
-        if (isset($this->attributes_cache['invites'])) {
-            return $this->attributes_cache['invites'];
-        }
-
         if ($invites = Cache::get("guild.{$this->id}.invites")) {
-            return $invites;
+            return \React\Promise\resolve($invites);
         }
 
-        $request = $this->guzzle->get($this->replaceWithVariables('guilds/:id/invites'));
-        $invites = [];
+        $deferred = new Deferred();
 
-        foreach ($request as $index => $invite) {
-            $invite = $this->partFactory->create(Invite::class, $invite, true);
-            Cache::set("invite.{$invite->id}", $invite);
-            $invites[$index] = $invite;
-        }
+        $this->guzzle->get($this->replaceWithVariables('guilds/:id/invites'))->then(function ($response) use ($deferred) {
+            $invites = new Collection();
 
-        $invites = new Collection($invites, "guild.{$this->id}.invites");
+            foreach ($response as $index => $invite) {
+                $invite = $this->partFactory->create(Invite::class, $invite, true);
+                Cache::set("invite.{$invite->id}", $invite);
+                $invites[$index] = $invite;
+            }
 
-        Cache::set("guild.{$this->id}.invites", $invites);
+            $invites->setCacheKey("guild.{$this->id}.invites", true);
+            $deferred->resolve($invites);
+        }, \React\Partial\bind_right($this->reject, $deferred));
 
-        return $invites;
+        return $deferred->promise();
     }
 
     /**

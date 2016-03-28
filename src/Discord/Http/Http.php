@@ -231,6 +231,20 @@ class Http
     }
 
     /**
+     * Sends a file to a channel.
+     *
+     * @param Channel $channel  The channel to send the file to.
+     * @param string  $filepath The path to the file.
+     * @param string  $filename The name of the file when it is uploaded.
+     *
+     * @return \React\Promise\Promise 
+     */
+    public function sendFile(Channel $channel, $filepath, $filename)
+    {
+        return $this->driver->sendFile($channel, $filepath, $filename);
+    }
+
+    /**
      * Returns the User-Agent of the API.
      *
      * @return string
@@ -238,53 +252,5 @@ class Http
     public function getUserAgent()
     {
         return 'DiscordPHP/'.$this->version.' DiscordBot (https://github.com/teamreflex/DiscordPHP, '.$this->version.')';
-    }
-
-    public function sendFile(Channel $channel, $filepath, $filename)
-    {
-        $url    = static::BASE_URL."/channels/{$channel->id}/messages";
-
-        $headers = [
-            'User-Agent'    => $this->getUserAgent(),
-            'authorization' => $this->token,
-        ];
-
-        $done     = false;
-        $finalRes = null;
-
-        while (!$done) {
-            $response = $this->request(
-                'post',
-                $url,
-                [
-                    'headers'   => $headers,
-                    'multipart' => [
-                        [
-                            'name'     => 'file',
-                            'contents' => fopen($filepath, 'r'),
-                            'filename' => $filename,
-                        ]
-                    ],
-                ]
-            );
-
-            // Rate limiting
-            if ($response->getStatusCode() == 429) {
-                $tts = $response->getHeader('Retry-After') * 1000;
-                usleep($tts);
-                continue;
-            }
-
-            // Not good!
-            if ($response->getStatusCode() < 200 || $response->getStatusCode() > 226) {
-                $this->handleError($response->getStatusCode(), $response->getReasonPhrase());
-                continue;
-            }
-
-            $done     = true;
-            $finalRes = $response;
-        }
-
-        return json_decode($finalRes->getBody());
     }
 }

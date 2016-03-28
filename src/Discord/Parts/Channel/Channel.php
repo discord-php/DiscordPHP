@@ -20,6 +20,7 @@ use Discord\Parts\Guild\Role;
 use Discord\Parts\Part;
 use Discord\Parts\Permissions\ChannelPermission;
 use Discord\Parts\User\Member;
+use React\Promise\Deferred;
 
 /**
  * A Channel can be either a text or voice channel on a Discord guild.
@@ -75,7 +76,7 @@ class Channel extends Part
      * @param Permission|null $allow    The permissions that define what the Member/Role can do.
      * @param Permission|null $disallow The permissions that define what the Member/Role can't do.
      *
-     * @return bool Whether the function succeeded or failed.
+     * @return \React\Promise\Promise Whether the function succeeded or failed.
      */
     public function setPermissions($part, $allow = null, $deny = null)
     {
@@ -84,8 +85,10 @@ class Channel extends Part
         } elseif ($part instanceof Role) {
             $type = 'role';
         } else {
-            return false;
+            return \React\Promise\reject(new \Exception('You can only set permissions on members and roles.'));
         }
+
+        $deferred = new Deferred();
 
         if (is_null($allow)) {
             $allow = $this->partFactory->create(ChannelPermission::class);
@@ -102,9 +105,12 @@ class Channel extends Part
             'deny'  => $deny->perms,
         ];
 
-        $this->guzzle->put("channels/{$this->id}/permissions/{$part->id}", $payload);
+        $this->guzzle->put("channels/{$this->id}/permissions/{$part->id}", $payload)->then(
+            \React\Partial\bind_right($this->resolve, $deferred),
+            \React\Partial\bind_right($this->reject, $deferred)
+        );
 
-        return true;
+        return $deferred->promise();
     }
 
     /**
@@ -112,12 +118,12 @@ class Channel extends Part
      *
      * @param Member|int The member to move. (either a Member part or the member ID)
      *
-     * @return bool Whether the move succeeded or failed.
+     * @return \React\Promise\Promise Whether the move succeeded or failed.
      */
     public function moveMember($member)
     {
         if ($this->type != self::TYPE_VOICE) {
-            return false;
+            return \React\Promise\reject(new \Exception('You cannot move a member to a text channel.'));
         }
 
         if ($member instanceof Member) {
@@ -129,37 +135,39 @@ class Channel extends Part
             [
                 'channel_id' => $this->id,
             ]
+        )->then(
+            \React\Partial\bind_right($this->resolve, $deferred),
+            \React\Partial\bind_right($this->reject, $deferred)
         );
 
-        // At the moment we are unable to check if the member
-        // was moved successfully.
-
-        return true;
+        return $deferred->resolve();
     }
 
     /**
      * Returns the guild attribute.
      *
-     * @return Guild|null The guild that the Channel belongs to or null if we don't have the guild ID.
+     * @return \React\Promise\Promise The guild that the Channel belongs to or null if we don't have the guild ID.
      */
     public function getGuildAttribute()
     {
         if (is_null($this->guild_id)) {
-            return;
+            return \React\Promise\reject(new \Exception('No guild ID set.'));
         }
 
         if ($guild = Cache::get("guild.{$this->guild_id}")) {
-            return $guild;
+            return \React\Promise\resolve($guild);
         }
 
-        $request = $this->guzzle->get("guilds/{$this->guild_id}");
-        $guild   = $this->partFactory->create(Guild::class, $request, true);
+        $deferred = new Deferred();
 
-        Cache::set("guild.{$guild->id}", $guild);
+        $this->guzzle->get("guilds/{$this->guild_id}")->then(function ($response) use ($deferred) {
+            $guild = $this->partFactory->create(Guild::class, $response, true);
 
-        $this->attributes_cache['guild'] = $guild;
+            Cache::set("guild.{$guild->id}", $guild);
+            $deferred->resolve($guild);
+        }, \React\Partial\bind_right($this->reject, $deferred));
 
-        return $guild;
+        return $deferred->promise();
     }
 
     /**
@@ -174,7 +182,9 @@ class Channel extends Part
      */
     public function createInvite($max_age = 3600, $max_uses = 0, $temporary = false, $xkcd = false)
     {
-        $request = $this->guzzle->post(
+        $deferred = new Deferred();
+
+        $this->guzzle->post(
             $this->replaceWithVariables('channels/:id/invites'),
             [
                 'validate' => null,
@@ -184,13 +194,14 @@ class Channel extends Part
                 'temporary' => $temporary,
                 'xkcdpass'  => $xkcd,
             ]
-        );
+        )->then(function ($response) use ($deferred) {
+            $invite = $this->partFactory->create(Invite::class, $response, true);
 
-        $invite = $this->partFactory->create(Invite::class, $request, true);
+            Cache::set("invite.{$invite->code}", $invite);
+            $deferred->resolve($invite);
+        }, \React\Partial\bind_right($this->reject, $deferred));
 
-        Cache::set("invite.{$invite->code}", $invite);
-
-        return $invite;
+        return $deferred->promise();
     }
 
     /**
@@ -223,16 +234,19 @@ class Channel extends Part
             trigger_error('Requesting more messages than 100 will only return 100.');
         }
 
-        $request  = $this->guzzle->get("channels/{$this->id}/messages?limit={$this->message_count}");
-        $messages = [];
+        $deferred = new Deferred();
 
-        foreach ($request as $index => $message) {
-            $message = $this->partFactory->create(Message::class, $message, true);
-            Cache::set("message.{$message->id}", $message);
-            $messages[$index] = $message;
-        }
+        $this->guzzle->get("channels/{$this->id}/messages?limit={$this->message_count}")->then(function ($response) use ($deferred) {
+            $messages = [];
 
-        $messages = new Collection($messages);
+            foreach ($response as $index => $message) {
+                $message = $this->partFactory->create(Message::class, $message, true);
+                Cache::set("message.{$message->id}", $message);
+                $messages[$index] = $message;
+            }
+
+            $deferred->resolve(new Collection($messages));
+        }, \React\Partial\bind_right($this->reject, $deferred));
 
         return $messages;
     }
@@ -245,23 +259,27 @@ class Channel extends Part
     public function getInvitesAttribute()
     {
         if ($invites = Cache::get("channel.{$this->id}.invites")) {
-            return $invites;
+            return \React\Promise\resolve($invites);
         }
 
-        $request = $this->guzzle->get($this->replaceWithVariables('channels/:id/invites'));
-        $invites = [];
+        $deferred = new Deferred();
 
-        foreach ($request as $index => $invite) {
-            $invite = $this->partFactory->create(Invite::class, $invite, true);
-            Cache::set("invites.{$invite->code}", $invite);
-            $invites[$index] = $invite;
-        }
+        $this->guzzle->get($this->replaceWithVariables('channels/:id/invites'))->then(function ($response) use ($deferred) {
+            $invites = [];
 
-        $invites = new Collection($invites, "channel.{$this->id}.invites");
+            foreach ($request as $index => $invite) {
+                $invite = $this->partFactory->create(Invite::class, $invite, true);
+                Cache::set("invites.{$invite->code}", $invite);
+                $invites[$index] = $invite;
+            }
 
-        Cache::set("channel.{$this->id}.invites", $invites);
+            $invites = new Collection($invites);
+            $invites->setCacheKey("channel.{$this->id}.invites", true);
 
-        return $invites;
+            $deferred->resolve($invites);
+        }, \React\Partial\bind_right($this->reject, $deferred));
+
+        return $deferred->promise();
     }
 
     /**
@@ -272,18 +290,18 @@ class Channel extends Part
     public function getOverwritesAttribute()
     {
         if (isset($this->attributes_cache['overwrites'])) {
-            return $this->attributes_cache['overwrites'];
+            return \React\Promise\resolve($this->attributes_cache['overwrites']);
         }
 
         if ($overwrites = Cache::get("channels.{$this->id}.overwrites")) {
-            return $overwrites;
+            return \React\Promise\resolve($overwrites);
         }
 
         $overwrites = [];
 
         // Will return an empty collection when you don't have permission.
         if (is_null($this->attributes['permission_overwrites'])) {
-            return new Collection([], "channels.{$this->id}.overwrites");
+            return \React\Promise\resolve(new Collection([], "channels.{$this->id}.overwrites"));
         }
 
         foreach ($this->attributes['permission_overwrites'] as $index => $data) {
@@ -292,11 +310,10 @@ class Channel extends Part
             $overwrites[$index] = $this->partFactory->create(Overwrite::class, $data, true);
         }
 
-        $overwrites = new Collection($overwrites, "channels.{$this->id}.overwrites");
+        $overwrites = new Collection($overwrites);
+        $overwrites->setCacheKey("channels.{$this->id}.overwrites", true);
 
-        Cache::set("channels.{$this->id}.overwrites", $overwrites);
-
-        return $overwrites;
+        return \React\Promise\resolve($overwrites);
     }
 
     /**
@@ -310,28 +327,26 @@ class Channel extends Part
     public function sendMessage($text, $tts = false)
     {
         if ($this->type != self::TYPE_TEXT) {
-            return false;
+            return \React\Promise\reject(new \Exception('You cannot send a message to a voice channel.'));
         }
 
-        $request = $this->guzzle->post(
+        $deferred = new Deferred();
+
+        $this->guzzle->post(
             "channels/{$this->id}/messages",
             [
                 'content' => $text,
                 'tts'     => $tts,
             ]
-        );
+        )->then(function ($response) use ($deferred) {
+            $message = $this->partFactory->create(Message::class, $response, true);
+            Cache::set("message.{$message->id}", $message);
+            $this->messages->push($message);
 
-        $message = $this->partFactory->create(Message::class, $request, true);
+            $deferred->resolve($message);
+        }, \React\Partial\bind_right($this->reject, $deferred));
 
-        Cache::set("message.{$message->id}", $message);
-
-        if (!Cache::has("channel.{$this->id}.messages")) {
-            $this->getMessagesAttribute();
-        }
-
-        $this->messages->push($message);
-
-        return $message;
+        return $deferred->promise();
     }
 
     /**
@@ -347,25 +362,24 @@ class Channel extends Part
     public function sendFile($filepath, $filename)
     {
         if ($this->type != self::TYPE_TEXT) {
-            return false;
+            return \React\Promise\reject(new \Exception('You cannot send a file to a voice channel.'));
         }
 
-        if (!file_exists($filepath)) {
-            throw new FileNotFoundException("File does not exist at path {$filepath}.");
-        }
-        
-        $request = $this->guzzle->sendFile($this, $filepath, $filename);
-        $this->partFactory->create(Message::class, $request, true);
+        $deferred = new Deferred();
 
-        Cache::set("message.{$message->id}", $message);
+        $this->guzzle->sendFile($this, $filepath, $filename)->then(function ($response) use ($deferred) {
+            $message = $this->partFactory->create(Message::class, $response, true);
 
-        if (!Cache::has("channel.{$this->id}.messages")) {
-            $this->getMessagesAttribute();
-        }
+            Cache::set("message.{$message->id}", $message);
 
-        $this->messages->push($message);
+            if (!Cache::has("channel.{$this->id}.messages")) {
+                $this->getMessagesAttribute();
+            }
 
-        return $message;
+            $this->messages->push($message);
+        }, \React\Partial\bind_right($this->reject, $deferred));
+
+        return $deferred->promise();
     }
 
     /**
@@ -376,12 +390,17 @@ class Channel extends Part
     public function broadcastTyping()
     {
         if ($this->type != self::TYPE_TEXT) {
-            return false;
+            return \React\Promise\reject(new \Exception('You cannot broadcast typing to a voice channel.'));
         }
 
-        $this->guzzle->post("channels/{$this->id}/typing");
+        $deferred = new Deferred();
 
-        return true;
+        $this->guzzle->post("channels/{$this->id}/typing")->then(
+            \React\Partial\bind_right($this->resolve, $deferred),
+            \React\Partial\bind_right($this->reject, $deferred)
+        );
+
+        return $deferred->promise();
     }
 
     /**
