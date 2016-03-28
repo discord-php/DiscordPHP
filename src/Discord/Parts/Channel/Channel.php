@@ -147,12 +147,12 @@ class Channel extends Part
             return;
         }
 
-        $key = "guild.".$this->guild_id;
+        $key = 'guild.'.$this->guild_id;
         if ($this->cache->has($key)) {
             return $this->cache->get($key);
         }
 
-        $request = $this->guzzle->get("guilds/".$this->guild_id);
+        $request = $this->guzzle->get('guilds/'.$this->guild_id);
         $guild   = $this->partFactory->create(Guild::class, $request, true);
 
         $this->cache->set($key, $guild);
@@ -205,7 +205,7 @@ class Channel extends Part
      */
     public function getMessagesAttribute()
     {
-        $key = "channel.".$this->id.".messages";
+        $key = 'channel.'.$this->id.'.messages';
         if ($this->cache->has($key)) {
             return $this->cache->get($key);
         }

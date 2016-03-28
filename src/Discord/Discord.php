@@ -170,7 +170,7 @@ class Discord
     }
 
     /**
-     * Returns a service from the container
+     * Returns a service from the container.
      *
      * @param string $id Service ID
      *
@@ -182,7 +182,7 @@ class Discord
     }
 
     /**
-     * Returns a parameter from the container
+     * Returns a parameter from the container.
      *
      * @param string $name
      *
