@@ -14,8 +14,6 @@ define('TICK', '✓');
 
 use Discord\Discord;
 use Discord\Parts\User\User;
-use Discord\WebSockets\WebSocket;
-use React\EventLoop\Factory;
 
 // Require Composer dependencies
 include __DIR__.'/../vendor/autoload.php';
