@@ -11,13 +11,12 @@
 
 namespace Discord\Parts\User;
 
-use Discord\Cache\Cache;
 use Discord\Exceptions\FileNotFoundException;
 use Discord\Exceptions\PasswordEmptyException;
-use Discord\Helpers\Collection;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Part;
 use Discord\WebSockets\WebSocket;
+use Illuminate\Support\Collection;
 
 /**
  * The client is the main interface for the client. Most calls on the main class are forwarded here.
@@ -118,9 +117,9 @@ class Client extends Part
      *
      * @param string $filepath The path to the file.
      *
-     * @return bool Whether the setting succeeded or failed.
-     *
      * @throws \Discord\Exceptions\FileNotFoundException Thrown when the file does not exist.
+     *
+     * @return bool Whether the setting succeeded or failed.
      */
     public function setAvatar($filepath)
     {
@@ -179,7 +178,7 @@ class Client extends Part
 
         foreach ($request as $index => $guild) {
             $guild = $this->partFactory->create(Guild::class, $guild, true);
-            Cache::set("guild.{$guild->id}", $guild);
+            $this->cache->set("guild.{$guild->id}", $guild);
             $guilds[$index] = $guild;
         }
 

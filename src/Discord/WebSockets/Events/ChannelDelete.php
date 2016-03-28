@@ -11,7 +11,6 @@
 
 namespace Discord\WebSockets\Events;
 
-use Discord\Cache\Cache;
 use Discord\Parts\Channel\Channel;
 use Discord\WebSockets\Event;
 
@@ -35,7 +34,7 @@ class ChannelDelete extends Event
      */
     public function updateDiscordInstance($data, $discord)
     {
-        Cache::remove("channel.{$data->id}");
+        $this->cache->remove("channel.{$data->id}");
 
         foreach ($discord->guilds as $index => $guild) {
             if ($guild->id == $data->guild_id) {

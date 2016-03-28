@@ -5,17 +5,18 @@
 
     <services>
         <service id="guzzle" class="Discord\Guzzle">
-            <argument type="service" id="cache"/>
+            <argument type="service" id="cache_wrapper.default"/>
             <argument>%token%</argument>
             <argument>%version%</argument>
         </service>
 
-        <service id="part_factory" class="Discord\Factory\PartFactory">
+        <service id="factory.part" class="Discord\Factory\PartFactory">
             <argument type="service" id="guzzle"/>
+            <argument type="service" id="cache_wrapper.default"/>
         </service>
 
         <service id="client" class="Discord\Parts\User\Client">
-            <factory service="part_factory" method="create"/>
+            <factory service="factory.part" method="create"/>
             <argument>Discord\Parts\User\Client</argument>
             <argument type="expression">service('guzzle').get('users/@me')</argument>
             <argument>true</argument>
@@ -23,7 +24,8 @@
         <service id="websocket" class="Discord\WebSockets\WebSocket">
             <argument type="service" id="discord"/>
             <argument type="service" id="guzzle"/>
-            <argument type="service" id="part_factory"/>
+            <argument type="service" id="factory.part"/>
+            <argument type="service" id="cache_wrapper.default"/>
             <argument>%token%</argument>
         </service>
     </services>

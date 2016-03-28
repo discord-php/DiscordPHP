@@ -11,12 +11,11 @@
 
 namespace Discord\WebSockets\Events;
 
-use Discord\Cache\Cache;
-use Discord\Helpers\Collection;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\User\Member;
 use Discord\WebSockets\Event;
+use Illuminate\Support\Collection;
 
 /**
  * Event that is emitted when `GUILD_CREATE` is fired.
@@ -39,7 +38,7 @@ class GuildCreate extends Event
             $channel['guild_id'] = $data->id;
             $channelPart         = $this->partFactory->create(Channel::class, $channel, true);
 
-            Cache::set("channel.{$channelPart->id}", $channelPart);
+            $this->cache->set("channel.{$channelPart->id}", $channelPart);
 
             $channels->push($channelPart);
         }
@@ -74,7 +73,7 @@ class GuildCreate extends Event
                 }
             }
 
-            Cache::set("guild.{$guildPart->id}.members.{$memberPart->id}", $memberPart);
+            $this->cache->set("guild.{$guildPart->id}.members.{$memberPart->id}", $memberPart);
 
             $members->push($memberPart);
         }
@@ -89,7 +88,7 @@ class GuildCreate extends Event
      */
     public function updateDiscordInstance($data, $discord)
     {
-        Cache::set("guild.{$data->id}", $data);
+        $this->cache->set("guild.{$data->id}", $data);
 
         $discord->guilds->push($data);
 

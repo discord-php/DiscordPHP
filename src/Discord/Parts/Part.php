@@ -16,6 +16,7 @@ use Discord\Exceptions\DiscordRequestFailedException;
 use Discord\Exceptions\PartRequestFailedException;
 use Discord\Factory\PartFactory;
 use Discord\Guzzle;
+use Discord\Wrapper\CacheWrapper;
 use Illuminate\Support\Str;
 use JsonSerializable;
 use React\Promise\Deferred;
@@ -36,6 +37,11 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
      * @var Guzzle
      */
     protected $guzzle;
+
+    /**
+     * @var CacheWrapper
+     */
+    protected $cache;
 
     /**
      * The parts fillable attributes.
@@ -152,16 +158,24 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
     /**
      * Create a new part instance.
      *
-     * @param PartFactory $partFactory
-     * @param Guzzle      $guzzle
-     * @param array       $attributes An array of attributes to build the part.
-     * @param bool        $created    Whether the part has already been created.
+     * @param PartFactory  $partFactory
+     * @param Guzzle       $guzzle
+     * @param CacheWrapper $cache
+     * @param array        $attributes  An array of attributes to build the part.
+     * @param bool         $created     Whether the part has already been created.
      */
-    public function __construct(PartFactory $partFactory, Guzzle $guzzle, array $attributes = [], $created = false)
-    {
+    public function __construct(
+        PartFactory $partFactory,
+        Guzzle $guzzle,
+        CacheWrapper $cache,
+        array $attributes = [],
+        $created = false
+    ) {
         $this->partFactory = $partFactory;
         $this->guzzle      = $guzzle;
-        $this->created     = $created;
+        $this->cache       = $cache;
+
+        $this->created = $created;
         $this->fill($attributes);
 
         if (is_callable([$this, 'afterConstruct'])) {
@@ -216,8 +230,9 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
     /**
      * Saves the part to the Discord servers.
      *
-     * @return bool Whether the attempt to save the part succeeded or failed.
      * @throws PartRequestFailedException
+     *
+     * @return bool Whether the attempt to save the part succeeded or failed.
      */
     public function save()
     {
@@ -262,7 +277,9 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
     /**
      * Deletes the part on the Discord servers.
      *
-     * @return \React\Promise\Promise
+     * @throws PartRequestFailedException
+     *
+     * @return \React\Promise\Promise Whether the attempt to delete the part succeeded or failed.
      */
     public function delete()
     {

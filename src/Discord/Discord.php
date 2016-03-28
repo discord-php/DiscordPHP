@@ -19,8 +19,10 @@ use Discord\WebSockets\WebSocket;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
+use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -75,8 +77,9 @@ class Discord
     /**
      * @param array $options
      *
-     * @return array
      * @throws \Exception
+     *
+     * @return array
      */
     private function resolveOptions(array $options)
     {
@@ -106,7 +109,7 @@ class Discord
         }
 
         if (!is_int($id)) {
-            return null;
+            return;
         }
 
         $ms = ($id >> 22) + self::DISCORD_EPOCH;
@@ -167,6 +170,30 @@ class Discord
     }
 
     /**
+     * Returns a service from the container.
+     *
+     * @param string $id Service ID
+     *
+     * @return mixed|object
+     */
+    public function get($id)
+    {
+        return $this->container->get($id);
+    }
+
+    /**
+     * Returns a parameter from the container.
+     *
+     * @param string $name
+     *
+     * @return mixed
+     */
+    public function getParameter($name)
+    {
+        return $this->container->getParameter($name);
+    }
+
+    /**
      * @param array $options
      *
      * @return ContainerBuilder
@@ -174,16 +201,24 @@ class Discord
     private function buildContainer(array $options)
     {
         $options['version'] = static::VERSION;
-        $container = new ContainerBuilder(new ParameterBag($options));
+        $container          = new ContainerBuilder(new ParameterBag($options));
 
         $cacheExtension = new CacheAdapterExtension();
         $container->registerExtension($cacheExtension);
         $container->loadFromExtension($cacheExtension->getAlias(), $options['cache']);
 
+        $container->setDefinition('cache_wrapper.default', new Definition('Discord\Wrapper\CacheWrapper'))
+            ->addArgument(new Reference('cache'));
+        foreach (array_keys($options['cache']['providers']) as $name) {
+            $container->setDefinition('cache_wrapper.'.$name, new Definition('Discord\Wrapper\CacheWrapper'))
+                ->addArgument(new Reference('cache.provider.'.$name));
+        }
+
         $container->set('discord', $this);
 
         $loader    = new XmlFileLoader($container, new FileLocator(__DIR__.'/Resources/config/'));
         $loader->load('services.xml');
+        $loader->load('repositories.xml');
 
         $container->compile();
 
@@ -195,12 +230,12 @@ class Discord
      */
     public function getWebsocket()
     {
-        return $this->container->get('websocket');
+        return $this->get('websocket');
     }
 
     protected function getClient()
     {
-        return $this->container->get('client');
+        return $this->get('client');
     }
 
     /**
@@ -211,9 +246,9 @@ class Discord
         return [
             'providers' => [
                 'array' => [
-                    'factory' => 'cache.factory.array'
-                ]
-            ]
+                    'factory' => 'cache.factory.array',
+                ],
+            ],
         ];
     }
 }
