@@ -18,7 +18,7 @@
         <service id="client" class="Discord\Parts\User\Client">
             <factory service="factory.part" method="create"/>
             <argument>Discord\Parts\User\Client</argument>
-            <argument type="expression">service('guzzle').get('users/@me')</argument>
+            <argument type="expression">service('http').get('users/@me')</argument>
             <argument>true</argument>
         </service>
         <service id="websocket" class="Discord\WebSockets\WebSocket">
