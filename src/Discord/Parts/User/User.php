@@ -11,7 +11,6 @@
 
 namespace Discord\Parts\User;
 
-use Discord\Cache\Cache;
 use Discord\Parts\Channel\Message;
 use Discord\Parts\Part;
 
@@ -57,7 +56,7 @@ class User extends Part
      */
     public function sendMessage($message, $tts = false)
     {
-        if ($channelID = Cache::get("user.{$this->id}.pm")) {
+        if ($channelID = $this->cache->get("user.{$this->id}.pm")) {
             $channel_id = $channelID;
         } else {
             $channel = $this->guzzle->post(
@@ -68,7 +67,7 @@ class User extends Part
             );
 
             $channel_id = $channel->id;
-            Cache::set("user.{$this->id}.pm", $channel->id);
+            $this->cache->set("user.{$this->id}.pm", $channel->id);
         }
 
         $request = $this->guzzle->post(
@@ -81,7 +80,7 @@ class User extends Part
 
         $message = $this->partFactory->create(Message::class, $request, true);
 
-        Cache::set("message.{$message->id}", $message);
+        $this->cache->set("message.{$message->id}", $message);
 
         return $message;
     }
@@ -93,7 +92,7 @@ class User extends Part
      */
     public function broadcastTyping()
     {
-        if ($channelID = Cache::get("user.{$this->id}.pm")) {
+        if ($channelID = $this->cache->get("user.{$this->id}.pm")) {
             $channelId = $channelID;
         } else {
             $channel = $this->guzzle->post(
@@ -104,7 +103,7 @@ class User extends Part
             );
 
             $channelId = $channel->id;
-            Cache::set("user.{$this->id}.pm", $channel->id);
+            $this->cache->set("user.{$this->id}.pm", $channel->id);
         }
 
         $this->guzzle->post("channels/{$channelId}/typing");

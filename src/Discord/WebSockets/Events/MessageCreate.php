@@ -11,7 +11,6 @@
 
 namespace Discord\WebSockets\Events;
 
-use Discord\Cache\Cache;
 use Discord\Parts\Channel\Message;
 use Discord\WebSockets\Event;
 
@@ -35,7 +34,7 @@ class MessageCreate extends Event
      */
     public function updateDiscordInstance($data, $discord)
     {
-        Cache::set("message.{$data->id}", $data);
+        $this->cache->set("message.{$data->id}", $data);
 
         foreach ($discord->guilds as $index => $guild) {
             foreach ($guild->channels as $cindex => $channel) {

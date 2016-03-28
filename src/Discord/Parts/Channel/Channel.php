@@ -11,9 +11,7 @@
 
 namespace Discord\Parts\Channel;
 
-use Discord\Cache\Cache;
 use Discord\Exceptions\FileNotFoundException;
-use Discord\Helpers\Collection;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Guild\Invite;
 use Discord\Parts\Guild\Role;
@@ -21,6 +19,7 @@ use Discord\Parts\Part;
 use Discord\Parts\Permissions\ChannelPermission;
 use Discord\Parts\User\Member;
 use React\Promise\Deferred;
+use Illuminate\Support\Collection;
 
 /**
  * A Channel can be either a text or voice channel on a Discord guild.
@@ -46,7 +45,7 @@ class Channel extends Part
         'permission_overwrites',
         'messages',
         'message_count',
-        'bitrate'
+        'bitrate',
     ];
 
     /**
@@ -154,7 +153,7 @@ class Channel extends Part
             return \React\Promise\reject(new \Exception('No guild ID set.'));
         }
 
-        if ($guild = Cache::get("guild.{$this->guild_id}")) {
+        if ($guild = $this->cache->get("guild.{$this->guild_id}")) {
             return \React\Promise\resolve($guild);
         }
 
@@ -163,7 +162,8 @@ class Channel extends Part
         $this->guzzle->get("guilds/{$this->guild_id}")->then(function ($response) use ($deferred) {
             $guild = $this->partFactory->create(Guild::class, $response, true);
 
-            Cache::set("guild.{$guild->id}", $guild);
+            $this->cache->set("guild.{$this->guild_id}", $guild);
+
             $deferred->resolve($guild);
         }, \React\Partial\bind_right($this->reject, $deferred));
 
@@ -197,7 +197,8 @@ class Channel extends Part
         )->then(function ($response) use ($deferred) {
             $invite = $this->partFactory->create(Invite::class, $response, true);
 
-            Cache::set("invite.{$invite->code}", $invite);
+            $this->cache->set("invite.{$invite->code}", $invite);
+
             $deferred->resolve($invite);
         }, \React\Partial\bind_right($this->reject, $deferred));
 
@@ -216,11 +217,12 @@ class Channel extends Part
      */
     public function getMessagesAttribute()
     {
-        if (!Cache::get("channel.{$this->id}.messages")) {
-            Cache::set("channel.{$this->id}.messages", new Collection([], "channel.{$this->id}.messages"));
+        $key = 'channel.'.$this->id.'.messages';
+        if ($this->cache->has($key)) {
+            return $this->cache->get($key);
         }
 
-        return Cache::get("channel.{$this->id}.messages");
+        return $this->cache->set($key, new Collection());
     }
 
     /**
@@ -241,7 +243,7 @@ class Channel extends Part
 
             foreach ($response as $index => $message) {
                 $message = $this->partFactory->create(Message::class, $message, true);
-                Cache::set("message.{$message->id}", $message);
+                $this->cache->set("message.{$message->id}", $message);
                 $messages[$index] = $message;
             }
 
@@ -258,23 +260,22 @@ class Channel extends Part
      */
     public function getInvitesAttribute()
     {
-        if ($invites = Cache::get("channel.{$this->id}.invites")) {
+        if ($invites = $this->cache->get("channel.{$this->id}.invites")) {
             return \React\Promise\resolve($invites);
         }
 
         $deferred = new Deferred();
 
         $this->guzzle->get($this->replaceWithVariables('channels/:id/invites'))->then(function ($response) use ($deferred) {
-            $invites = [];
+            $invites = new Collection();
 
             foreach ($request as $index => $invite) {
                 $invite = $this->partFactory->create(Invite::class, $invite, true);
-                Cache::set("invites.{$invite->code}", $invite);
+                $this->cache->set("invites.{$invite->code}", $invite);
                 $invites[$index] = $invite;
             }
 
-            $invites = new Collection($invites);
-            $invites->setCacheKey("channel.{$this->id}.invites", true);
+            $this->cache->set("channel.{$this->id}.invites", $invites);
 
             $deferred->resolve($invites);
         }, \React\Partial\bind_right($this->reject, $deferred));
@@ -289,19 +290,15 @@ class Channel extends Part
      */
     public function getOverwritesAttribute()
     {
-        if (isset($this->attributes_cache['overwrites'])) {
-            return \React\Promise\resolve($this->attributes_cache['overwrites']);
-        }
-
-        if ($overwrites = Cache::get("channels.{$this->id}.overwrites")) {
+        if ($overwrites = $this->cache->get("channels.{$this->id}.overwrites")) {
             return \React\Promise\resolve($overwrites);
         }
 
-        $overwrites = [];
+        $overwrites = new Collection();
 
         // Will return an empty collection when you don't have permission.
         if (is_null($this->attributes['permission_overwrites'])) {
-            return \React\Promise\resolve(new Collection([], "channels.{$this->id}.overwrites"));
+            return \React\Promise\resolve(new Collection());
         }
 
         foreach ($this->attributes['permission_overwrites'] as $index => $data) {
@@ -310,8 +307,7 @@ class Channel extends Part
             $overwrites[$index] = $this->partFactory->create(Overwrite::class, $data, true);
         }
 
-        $overwrites = new Collection($overwrites);
-        $overwrites->setCacheKey("channels.{$this->id}.overwrites", true);
+        $this->cache->set("channels.{$this->id}.overwrites", $overwrites);
 
         return \React\Promise\resolve($overwrites);
     }
@@ -332,6 +328,10 @@ class Channel extends Part
 
         $deferred = new Deferred();
 
+        if (!$this->cache->has("channel.{$this->id}.messages")) {
+            $this->getMessagesAttribute();
+        }
+
         $this->guzzle->post(
             "channels/{$this->id}/messages",
             [
@@ -340,7 +340,7 @@ class Channel extends Part
             ]
         )->then(function ($response) use ($deferred) {
             $message = $this->partFactory->create(Message::class, $response, true);
-            Cache::set("message.{$message->id}", $message);
+            $this->cache->set("message.{$message->id}", $message);
             $this->messages->push($message);
 
             $deferred->resolve($message);
@@ -355,9 +355,9 @@ class Channel extends Part
      * @param string $filepath The path to the file to be sent.
      * @param string $filename The name to send the file as.
      *
-     * @return Message|bool Either a Message if the request passed or false if it failed.
-     *
      * @throws \Discord\Exceptions\FileNotFoundException Thrown when the file does not exist.
+     *
+     * @return Message|bool Either a Message if the request passed or false if it failed.
      */
     public function sendFile($filepath, $filename)
     {
@@ -370,9 +370,9 @@ class Channel extends Part
         $this->guzzle->sendFile($this, $filepath, $filename)->then(function ($response) use ($deferred) {
             $message = $this->partFactory->create(Message::class, $response, true);
 
-            Cache::set("message.{$message->id}", $message);
+            $this->cache->set("message.{$message->id}", $message);
 
-            if (!Cache::has("channel.{$this->id}.messages")) {
+            if (! $this->cache->has("channel.{$this->id}.messages")) {
                 $this->getMessagesAttribute();
             }
 

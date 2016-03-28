@@ -11,7 +11,6 @@
 
 namespace Discord\WebSockets\Events;
 
-use Discord\Cache\Cache;
 use Discord\Parts\User\Member;
 use Discord\WebSockets\Event;
 
@@ -35,7 +34,7 @@ class GuildMemberRemove extends Event
      */
     public function updateDiscordInstance($data, $discord)
     {
-        Cache::remove("guild.{$data->guild_id}.members.{$data->id}");
+        $this->cache->remove("guild.{$data->guild_id}.members.{$data->id}");
 
         foreach ($discord->guilds as $index => $guild) {
             if ($guild->id == $data->guild_id) {

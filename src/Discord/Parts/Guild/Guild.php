@@ -11,16 +11,15 @@
 
 namespace Discord\Parts\Guild;
 
-use Discord\Cache\Cache;
 use Discord\Exceptions\DiscordRequestFailedException;
 use Discord\Exceptions\PartRequestFailedException;
-use Discord\Helpers\Collection;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Part;
 use Discord\Parts\Permissions\RolePermission as Permission;
 use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
 use React\Promise\Deferred;
+use Illuminate\Support\Collection;
 
 /**
  * A Guild is Discord's equivalent of a server. It contains all the Members, Channels, Roles, Bans etc.
@@ -75,7 +74,7 @@ class Guild extends Part
         'emojis',
         'large',
         'verification_level',
-        'member_count'
+        'member_count',
     ];
 
     /**
@@ -112,9 +111,10 @@ class Guild extends Part
      * Does not leave the guild if you are the owner however, please use
      * delete() for that.
      *
+     * @throws PartRequestFailedException
+     *
      * @return bool Whether the attempt to leave succeeded or failed.
      *
-     * @throws PartRequestFailedException
      * @see \Discord\Parts\Part::delete() Used for leaving/deleting the guild if you are owner.
      */
     public function leave()
@@ -172,15 +172,15 @@ class Guild extends Part
      */
     public function getMembersAttribute()
     {
-        if ($members = Cache::get("guild.{$this->id}.members")) {
+        if ($members = $this->cache->get("guild.{$this->id}.members")) {
             return $members;
         }
 
         // Members aren't retrievable via REST anymore,
         // they will be set if the websocket is used.
-        Cache::set("guild.{$this->id}.members", new Collection([], "guild.{$this->id}.members"));
+        $this->cache->set("guild.{$this->id}.members", new Collection());
 
-        return Cache::get("guild.{$this->id}.members");
+        return $this->cache->get("guild.{$this->id}.members");
     }
 
     /**
@@ -194,7 +194,7 @@ class Guild extends Part
             return $this->attributes_cache['roles'];
         }
 
-        if ($roles = Cache::get("guild.{$this->id}.roles")) {
+        if ($roles = $this->cache->get("guild.{$this->id}.roles")) {
             return $roles;
         }
 
@@ -209,9 +209,9 @@ class Guild extends Part
             $roles[$index]       = $this->partFactory->create(Role::class, $role, true);
         }
 
-        $roles = new Collection($roles, "guild.{$this->id}.roles");
+        $roles = new Collection($roles);
 
-        Cache::set("guild.{$this->id}.roles", $roles);
+        $this->cache->set("guild.{$this->id}.roles", $roles);
 
         return $roles;
     }
@@ -223,7 +223,7 @@ class Guild extends Part
      */
     public function getOwnerAttribute()
     {
-        if ($owner = Cache::get("user.{$this->owner_id}")) {
+        if ($owner = $this->cache->get("user.{$this->owner_id}")) {
             return \React\Promise\resolve($owner);
         }
 
@@ -231,7 +231,7 @@ class Guild extends Part
 
         $this->guzzle->get($this->replaceWithVariables('users/:owner_id'))->then(function ($response) use ($deferred) {
             $owner = $this->partFactory->create(User::class, $response, true);
-            Cache::set("user.{$user->id}", $owner);
+            $this->cache->set("user.{$user->id}", $owner);
 
             $deferred->resolve();
         }, \React\Partial\bind_right($this->reject, $deferred));
@@ -246,7 +246,7 @@ class Guild extends Part
      */
     public function getChannelsAttribute()
     {
-        if ($channels = Cache::get("guild.{$this->id}.channels")) {
+        if ($channels = $this->cache->get("guild.{$this->id}.channels")) {
             return \React\Promise\resolve($channels);
         }
 
@@ -257,11 +257,11 @@ class Guild extends Part
 
             foreach ($response as $index => $channel) {
                 $channel = $this->partFactory->create(Channel::class, $channel, true);
-                Cache::set("channel.{$channel->id}", $channel);
+                $this->cache->set("channel.{$channel->id}", $channel);
                 $channels[$index] = $channel;
             }
 
-            $channels->setCacheKey("guild.{$this->id}.channels", true);
+            $this->cache->set($key, $channels);
 
             $deferred->resolve($channels);
         }, \React\Partial\bind_right($this->reject, $deferred));
@@ -276,7 +276,7 @@ class Guild extends Part
      */
     public function getBansAttribute()
     {
-        if ($bans = Cache::get("guild.{$this->id}.bans")) {
+        if ($bans = $this->cache->get("guild.{$this->id}.bans")) {
             return \React\Promise\resolve($bans);
         }
 
@@ -289,11 +289,11 @@ class Guild extends Part
                 $ban          = (array) $ban;
                 $ban['guild'] = $this;
                 $ban = $this->partFactory->create(Ban::class, $ban, true);
-                Cache::set("guild.{$this->id}.bans.{$ban->user_id}", $ban);
+                $this->cache->set("guild.{$this->id}.bans.{$ban->user_id}", $ban);
                 $bans[$index] = $ban;
             }
 
-            $bans->setCacheKey("guild.{$this->id}.bans", true);
+            $this->cache->set("guild.{$this->id}.bans", $bans);
 
             $deferred->resolve($bans);
         }, \React\Partial\bind_right($this->reject, $deferred));
@@ -308,7 +308,7 @@ class Guild extends Part
      */
     public function getInvitesAttribute()
     {
-        if ($invites = Cache::get("guild.{$this->id}.invites")) {
+        if ($invites = $this->cache->get("guild.{$this->id}.invites")) {
             return \React\Promise\resolve($invites);
         }
 
@@ -319,11 +319,11 @@ class Guild extends Part
 
             foreach ($response as $index => $invite) {
                 $invite = $this->partFactory->create(Invite::class, $invite, true);
-                Cache::set("invite.{$invite->id}", $invite);
+                $this->cache->set("invite.{$invite->id}", $invite);
                 $invites[$index] = $invite;
             }
 
-            $invites->setCacheKey("guild.{$this->id}.invites", true);
+            $this->cache->set("guild.{$this->id}.invites", $invites);
             $deferred->resolve($invites);
         }, \React\Partial\bind_right($this->reject, $deferred));
 
@@ -399,7 +399,7 @@ class Guild extends Part
      */
     public function setCache($key, $value)
     {
-        Cache::set("guild.{$this->id}.{$key}", $value);
+        $this->cache->set("guild.{$this->id}.{$key}", $value);
     }
 
     /**

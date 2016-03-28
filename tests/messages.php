@@ -19,7 +19,7 @@ $expected = [
 
 try {
     $message = $channel->sendMessage('testing sending message');
-    $tts = $channel->sendMessage('testing sending message', true);
+    $tts     = $channel->sendMessage('testing sending message', true);
     // $everyone = $channel->sendMessage('@everyone unit tests');
     $file = $channel->sendFile(__DIR__.'/testimg.jpg', 'testimg.jpg');
 } catch (\Exception $e) {
@@ -30,7 +30,7 @@ checkAttributes($expected, $message);
 checkAttributes($expected + ['tts' => true], $tts);
 // checkAttributes($expected + ['mention_everyone' => true, 'content' => '@everyone unit tests'], $everyone);
 
-if (! isset($file['attachments'])) {
+if (!isset($file['attachments'])) {
     fail('The image was not attached.');
 }
 

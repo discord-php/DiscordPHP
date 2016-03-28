@@ -12,7 +12,6 @@
 namespace Discord\Parts\Channel;
 
 use Carbon\Carbon;
-use Discord\Cache\Cache;
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
 use React\Promise\Deferred;
@@ -42,7 +41,7 @@ class Message extends Part
         'tts',
         'attachments',
         'embeds',
-        'nonce'
+        'nonce',
     ];
 
     /**
@@ -77,7 +76,7 @@ class Message extends Part
      */
     public function getChannelAttribute()
     {
-        if ($channel = Cache::get("channels.{$this->channel_id}")) {
+        if ($channel = $this->cache->get("channels.{$this->channel_id}")) {
             return $channel;
         }
 
@@ -98,7 +97,7 @@ class Message extends Part
      */
     public function getFullChannelAttribute()
     {
-        if ($channel = Cache::get("channels.{$this->channel_id}")) {
+        if ($channel = $this->cache->get("channels.{$this->channel_id}")) {
             return \React\Promise\resolve($channel);
         }
 
@@ -107,10 +106,11 @@ class Message extends Part
         $this->guzzle->get($this->replaceWithVariables('channels/:channel_id'))->then(function ($response) use ($deferred) {
             $channel = $this->partFactory->create(Channel::class, $request, true);
 
-            Cache::set("channels.{$channel->id}", $channel);
+            $this->cache->set("channels.{$channel->id}", $channel);
             $deferred->resolve($channel);
         }, \React\Partial\bind_right($this->reject, $deferred));
 
+        
         return $deferred->promise();
     }
 

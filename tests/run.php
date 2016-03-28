@@ -14,17 +14,13 @@ define('TICK', '✓');
 
 use Discord\Discord;
 use Discord\Parts\User\User;
-use Discord\WebSockets\WebSocket;
-use React\EventLoop\Factory;
 
 // Require Composer dependencies
 include __DIR__.'/../vendor/autoload.php';
 
-$currentTest = 'No Test';
+$currentTest      = 'No Test';
 $currentTestStart = null;
-$tests = [];
-
-$loop = Factory::create();
+$tests            = [];
 
 /**
  * Prints all the run tests.
@@ -96,7 +92,7 @@ function startTest($test)
 {
     global $currentTest, $currentTestStart;
 
-    $currentTest = $test;
+    $currentTest      = $test;
     $currentTestStart = microtime(true);
 }
 
@@ -130,9 +126,9 @@ function checkAttributes($expectedAttributes, $part)
 }
 
 // get env
-$token = getenv('DISCORD_TOKEN');
+$token        = getenv('DISCORD_TOKEN');
 $testingGuild = getenv('DISCORD_TESTING_GUILD');
-$testUser = getenv('DISCORD_TESTING_PM');
+$testUser     = getenv('DISCORD_TESTING_PM');
 
 if (empty($token)) {
     fail('No token was provided.');
@@ -148,11 +144,7 @@ try {
 
 pass();
 
-startTest('Connecting to WebSocket');
-
-$ws = new WebSocket($discord, $loop);
-
-$ws->on('ready', function ($discord) use ($ws, $testingGuild, $testUser, $loop) {
+$discord->getWebsocket()->on('ready', function ($discord) use ($ws, $testingGuild, $testUser, $loop) {
     pass();
 
     $baseGuild = $discord->guilds->get('id', $testingGuild);
@@ -165,8 +157,8 @@ $ws->on('ready', function ($discord) use ($ws, $testingGuild, $testUser, $loop) 
 
     printAllTests();
     die;
-}, function ($e) {
+}, function (\Exception $e) {
     fail($e->getMessage());
 });
 
-$loop->run();
+$discord->getWebsocket()->run();

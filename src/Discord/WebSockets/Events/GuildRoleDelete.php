@@ -11,7 +11,6 @@
 
 namespace Discord\WebSockets\Events;
 
-use Discord\Cache\Cache;
 use Discord\WebSockets\Event;
 
 /**
@@ -34,7 +33,7 @@ class GuildRoleDelete extends Event
      */
     public function updateDiscordInstance($data, $discord)
     {
-        Cache::remove("guild.{$data->guild_id}.roles.{$data->role_id}");
+        $this->cache->remove("guild.{$data->guild_id}.roles.{$data->role_id}");
 
         foreach ($discord->guilds as $index => $guild) {
             if ($guild->id == $data->guild_id) {

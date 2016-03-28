@@ -147,27 +147,27 @@ class Http
         $content = (is_null($content)) ? null : json_encode($content);
 
         $this->driver->runRequest($method, $url, $headers, $content)->then(function ($response) use ($method, $cache, $key) {
-        	$json = json_decode($response->getBody());
+            $json = json_decode($response->getBody());
 
-        	if (strtolower($method) === 'get' && $cache !== false) {
-        		$item = $this->cache->getItem($key);
-        		$item->set($json);
-        		$item->expiresAfter($cache === null ? static::CACHE_TTL : (int) $cache);
-        		$this->cache->save($item);
-        	}
+            if (strtolower($method) === 'get' && $cache !== false) {
+                $item = $this->cache->getItem($key);
+                $item->set($json);
+                $item->expiresAfter($cache === null ? static::CACHE_TTL : (int) $cache);
+                $this->cache->save($item);
+            }
 
-        	$deferred->resolve($json);
+            $deferred->resolve($json);
         }, function ($e) use ($deferred) {
-        	if ($e instanceof Response) {
-        		$e = $this->handleError(
-        			$e->getStatusCode(),
-        			$e->getReasonPhrase(),
-        			$e->getBody(),
-        			$url
-        		);
-        	}
+            if ($e instanceof Response) {
+                $e = $this->handleError(
+                    $e->getStatusCode(),
+                    $e->getReasonPhrase(),
+                    $e->getBody(),
+                    $url
+                );
+            }
 
-        	$deferred->reject($e);
+            $deferred->reject($e);
         });
 
         return $deferred->promise();
@@ -198,13 +198,13 @@ class Http
 
         switch ($errorCode) {
             case 400:
-               	return new DiscordRequestFailedException("Error code 400: We sent a bad request. {$message}");
+                return new DiscordRequestFailedException("Error code 400: We sent a bad request. {$message}");
                 break;
             case 403:
-               	return new NoPermissionsException("Error code 403: You do not have permission to do this. {$message}");
+                return new NoPermissionsException("Error code 403: You do not have permission to do this. {$message}");
                 break;
             case 404:
-               	return new NotFoundException("Error code 404: This resource does not exist. {$message}");
+                return new NotFoundException("Error code 404: This resource does not exist. {$message}");
                 break;
             case 500:
                 if (Str::contains(strtolower($content), ['longer than 2000 characters', 'string value is too long'])) {
@@ -213,17 +213,17 @@ class Http
                     // sent and will return a 500 error.
                     //
                     // There is no way around this, you must use WebSockets.
-                   	return new ContentTooLongException(
+                    return new ContentTooLongException(
                         'The expected content was more than 2000 characters. Use websockets if you need this content.'
                     );
                 }
 
-               	return new DiscordRequestFailedException(
+                return new DiscordRequestFailedException(
                     "Error code 500: This usually means something went wrong with Discord. {$message}"
                 );
                 break;
             default:
-               	return new DiscordRequestFailedException(
+                return new DiscordRequestFailedException(
                     "Error code {$errorCode}: There was an error processing the request. {$message}"
                 );
                 break;

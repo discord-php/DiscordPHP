@@ -35,7 +35,7 @@ class Erlpack extends EventEmitter
     /**
      * Packs a PHP array into Erlang ETF format.
      *
-     * @param array $contents   The PHP array to pack.
+     * @param array $contents The PHP array to pack.
      *
      * @return binary The packed ETF.
      */
@@ -114,7 +114,7 @@ class Erlpack extends EventEmitter
 
             $key = $this->convertItem($key);
 
-            if (! is_string($key)) {
+            if (!is_string($key)) {
                 $key = $key->value;
             }
 
