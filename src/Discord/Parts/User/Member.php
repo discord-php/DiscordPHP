@@ -84,7 +84,7 @@ class Member extends Part
         }
 
         try {
-            $this->guzzle->put($url);
+            $this->http->put($url);
         } catch (DiscordRequestFailedException $e) {
             return false;
         }
@@ -112,7 +112,7 @@ class Member extends Part
             $channel = $channel->id;
         }
 
-        $this->guzzle->patch("guilds/{$this->guild_id}/members/{$this->id}", ['channel_id' => $channel]);
+        $this->http->patch("guilds/{$this->guild_id}/members/{$this->id}", ['channel_id' => $channel]);
 
         // At the moment we are unable to check if the member
         // was moved successfully.
@@ -223,7 +223,7 @@ class Member extends Part
                 }
             }
         } else {
-            $request = $this->guzzle->get($this->replaceWithVariables('guilds/:guild_id/roles'));
+            $request = $this->http->get($this->replaceWithVariables('guilds/:guild_id/roles'));
 
             foreach ($request as $key => $role) {
                 if (false !== array_search($role->id, (array) $this->attributes['roles'])) {

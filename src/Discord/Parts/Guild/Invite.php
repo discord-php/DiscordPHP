@@ -118,7 +118,7 @@ class Invite extends Part
     /**
      * Returns the created at attribute.
      *
-     * @return Carbon The time that the invite was created.
+     * @return grbon The time that the invite was created.
      */
     public function getCreatedAtAttribute()
     {

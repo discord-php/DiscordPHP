@@ -4,14 +4,14 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
-        <service id="guzzle" class="Discord\Guzzle">
+        <service id="http" class="Discord\Http\Http">
             <argument type="service" id="cache_wrapper.default"/>
             <argument>%token%</argument>
             <argument>%version%</argument>
         </service>
 
         <service id="factory.part" class="Discord\Factory\PartFactory">
-            <argument type="service" id="guzzle"/>
+            <argument type="service" id="http"/>
             <argument type="service" id="cache_wrapper.default"/>
         </service>
 
@@ -23,7 +23,7 @@
         </service>
         <service id="websocket" class="Discord\WebSockets\WebSocket">
             <argument type="service" id="discord"/>
-            <argument type="service" id="guzzle"/>
+            <argument type="service" id="http"/>
             <argument type="service" id="factory.part"/>
             <argument type="service" id="cache_wrapper.default"/>
             <argument>%token%</argument>

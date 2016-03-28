@@ -103,7 +103,7 @@ class Message extends Part
 
         $deferred = new Deferred();
 
-        $this->guzzle->get($this->replaceWithVariables('channels/:channel_id'))->then(function ($response) use ($deferred) {
+        $this->http->get($this->replaceWithVariables('channels/:channel_id'))->then(function ($response) use ($deferred) {
             $channel = $this->partFactory->create(Channel::class, $request, true);
 
             $this->cache->set("channels.{$channel->id}", $channel);

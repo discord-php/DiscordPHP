@@ -5,7 +5,7 @@
 
     <services>
         <service id="repository.abstract" class="Discord\Repository\AbstractRepository" abstract="true">
-            <argument type="service" id="guzzle"/>
+            <argument type="service" id="http"/>
             <argument type="service" id="cache_wrapper.default"/>
             <argument type="service" id="factory.part"/>
         </service>
