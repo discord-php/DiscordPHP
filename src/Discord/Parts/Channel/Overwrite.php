@@ -40,7 +40,7 @@ class Overwrite extends Part
      * {@inheritdoc}
      */
     protected $uris = [
-        'delete' => 'channels/:channel_id/permissions/:id'
+        'delete' => 'channels/:channel_id/permissions/:id',
     ];
 
     /**
