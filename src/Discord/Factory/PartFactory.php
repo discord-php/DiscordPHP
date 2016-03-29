@@ -38,7 +38,7 @@ class PartFactory
      */
     public function __construct(Http $http, CacheWrapper $cache)
     {
-        $this->http  = $http;
+        $this->http = $http;
         $this->cache = $cache;
     }
 
@@ -51,7 +51,7 @@ class PartFactory
      */
     public function create($type, $attributes = [], $created = false)
     {
-        if (!is_array($attributes)) {
+        if (! is_array($attributes)) {
             $attributes = (array) $attributes;
         }
 

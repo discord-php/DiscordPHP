@@ -204,13 +204,13 @@ class WebSocket extends EventEmitter
         LoopInterface &$loop = null,
         $etf = true
     ) {
-        $this->discord     = $discord;
-        $this->http        = $http;
+        $this->discord = $discord;
+        $this->http = $http;
         $this->partFactory = $partFactory;
-        $this->cache       = $cache;
-        $this->token       = $token;
-        $loop              = (is_null($loop)) ? LoopFactory::create() : $loop;
-        $this->wsfactory   = new WsFactory($loop);
+        $this->cache = $cache;
+        $this->token = $token;
+        $loop = (is_null($loop)) ? LoopFactory::create() : $loop;
+        $this->wsfactory = new WsFactory($loop);
 
         $this->getGateway();
 
@@ -286,11 +286,11 @@ class WebSocket extends EventEmitter
                     return;
                 }
 
-                if (isset($data->s) && !is_null($data->s)) {
+                if (isset($data->s) && ! is_null($data->s)) {
                     $this->seq = $data->s;
                 }
 
-                if (!is_null($handlerSettings = $this->handlers->getHandler($data->t))) {
+                if (! is_null($handlerSettings = $this->handlers->getHandler($data->t))) {
                     $this->handleHandler($handlerSettings, $data);
                 }
 
@@ -317,19 +317,19 @@ class WebSocket extends EventEmitter
             'close',
             function ($op, $reason) {
                 if ($op instanceof Stream) {
-                    $op     = 0;
+                    $op = 0;
                     $reason = 'PHP Stream closed.';
                 }
 
                 $this->emit('close', [$op, $reason, $this->discord]);
 
-                if (!is_null($this->heartbeat)) {
+                if (! is_null($this->heartbeat)) {
                     $this->loop->cancelTimer($this->heartbeat);
                 }
 
                 if ($this->redirecting) {
                     $this->emit('redirecting', [$this->endpoint, $this]);
-                    $this->redirecting  = false;
+                    $this->redirecting = false;
                     $this->reconnecting = true;
                     $this->wsfactory->__invoke($this->gateway)->then(
                         [$this, 'handleWebSocketConnection'],
@@ -357,7 +357,7 @@ class WebSocket extends EventEmitter
                     return;
                 }
 
-                if (!$this->reconnecting) {
+                if (! $this->reconnecting) {
                     $this->emit('reconnecting', [$this->discord]);
 
                     $this->reconnecting = true;
@@ -446,7 +446,7 @@ class WebSocket extends EventEmitter
      */
     public function handleReady($data)
     {
-        if (!is_null($this->reconnectResetTimer)) {
+        if (! is_null($this->reconnectResetTimer)) {
             $this->loop->cancelTimer($this->reconnectResetTimer);
         }
 
@@ -479,9 +479,9 @@ class WebSocket extends EventEmitter
             $channels = new Collection();
 
             foreach ($guild->channels as $channel) {
-                $channel             = (array) $channel;
+                $channel = (array) $channel;
                 $channel['guild_id'] = $guild->id;
-                $channelPart         = $this->partFactory->create(Channel::class, $channel, true);
+                $channelPart = $this->partFactory->create(Channel::class, $channel, true);
 
                 $channels->push($channelPart);
 
@@ -494,18 +494,18 @@ class WebSocket extends EventEmitter
             $members = new Collection();
 
             foreach ($guild->members as $member) {
-                $member             = (array) $member;
+                $member = (array) $member;
                 $member['guild_id'] = $guild->id;
-                $member['status']   = 'offline';
-                $member['game']     = null;
-                $memberPart         = $this->partFactory->create(Member::class, $member, true);
+                $member['status'] = 'offline';
+                $member['game'] = null;
+                $memberPart = $this->partFactory->create(Member::class, $member, true);
 
                 // check for presences
 
                 foreach ($guild->presences as $presence) {
                     if ($presence->user->id == $member['user']->id) {
                         $memberPart->status = $presence->status;
-                        $memberPart->game   = $presence->game;
+                        $memberPart->game = $presence->game;
                     }
                 }
 
@@ -523,10 +523,10 @@ class WebSocket extends EventEmitter
             foreach ($guild->roles as $role) {
                 $perm = $this->partFactory->create(Permission::class, ['perms' => $role->permissions]);
 
-                $role                = (array) $role;
-                $role['guild_id']    = $guild->id;
+                $role = (array) $role;
+                $role['guild_id'] = $guild->id;
                 $role['permissions'] = $perm;
-                $rolePart            = $this->partFactory->create(Role::class, $role, true);
+                $rolePart = $this->partFactory->create(Role::class, $role, true);
 
                 $roles->push($rolePart);
 
@@ -583,7 +583,7 @@ class WebSocket extends EventEmitter
 
             unset($servers);
         } else {
-            if (!$this->invalidSession) {
+            if (! $this->invalidSession) {
                 $this->emit('ready', [$this->discord]);
             }
 
@@ -626,7 +626,7 @@ class WebSocket extends EventEmitter
                     return;
                 }
 
-                /** @type Collection $memberColl */
+                /** @var Collection $memberColl */
                 $memberColl = $guild->members;
 
                 foreach ($members as $member) {
@@ -634,11 +634,11 @@ class WebSocket extends EventEmitter
                         continue;
                     }
 
-                    $member             = (array) $member;
+                    $member = (array) $member;
                     $member['guild_id'] = $data->d->guild_id;
-                    $member['status']   = 'offline';
-                    $member['game']     = null;
-                    $memberPart         = $this->partFactory->create(Member::class, $member, true);
+                    $member['status'] = 'offline';
+                    $member['game'] = null;
+                    $memberPart = $this->partFactory->create(Member::class, $member, true);
 
                     $memberColl[$memberPart->id] = $memberPart;
                 }
@@ -670,7 +670,7 @@ class WebSocket extends EventEmitter
      */
     public function handleOp7()
     {
-        $this->endpoint    = $data->d->url;
+        $this->endpoint = $data->d->url;
         $this->redirecting = true;
         $ws->close();
     }
@@ -686,9 +686,9 @@ class WebSocket extends EventEmitter
     public function handleHandler($handlerSettings, $data)
     {
         /** @var Event $handler */
-        $handler     = new $handlerSettings['class']($this->http, $this->partFactory, $this->cache);
+        $handler = new $handlerSettings['class']($this->http, $this->partFactory, $this->cache);
         $handlerData = $handler->getData($data->d, $this->discord);
-        $newDiscord  = $handler->updateDiscordInstance($handlerData, $this->discord);
+        $newDiscord = $handler->updateDiscordInstance($handlerData, $this->discord);
         $this->emit($data->t, [$handlerData, $this->discord, $newDiscord]);
 
         foreach ($handlerSettings['alternatives'] as $alternative) {
@@ -735,7 +735,7 @@ class WebSocket extends EventEmitter
     public function joinVoiceChannel(Channel $channel, $mute = false, $deaf = false)
     {
         $deferred = new Deferred();
-        $arr      = ['user_id' => $this->discord->id, 'deaf' => $deaf, 'mute' => $mute];
+        $arr = ['user_id' => $this->discord->id, 'deaf' => $deaf, 'mute' => $mute];
 
         if ($channel->type != Channel::TYPE_VOICE) {
             $deferred->reject(new \Exception('You cannot join a Text channel.'));
@@ -774,7 +774,7 @@ class WebSocket extends EventEmitter
                     return;
                 }
 
-                $arr['token']    = $data->d->token;
+                $arr['token'] = $data->d->token;
                 $arr['endpoint'] = $data->d->endpoint;
 
                 $vc = new VoiceClient($this, $this->loop, $channel, $arr);
@@ -888,10 +888,10 @@ class WebSocket extends EventEmitter
     public function send($data)
     {
         if ($this->useEtf) {
-            $etf   = $this->etf->pack($data);
+            $etf = $this->etf->pack($data);
             $frame = new Frame($etf, true, 2);
         } else {
-            $json  = json_encode($data);
+            $json = json_encode($data);
             $frame = new Frame($json, true, 1);
         }
 

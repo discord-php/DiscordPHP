@@ -11,7 +11,6 @@
 
 namespace Discord\Parts\Channel;
 
-use Discord\Exceptions\FileNotFoundException;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Guild\Invite;
 use Discord\Parts\Guild\Role;
@@ -26,7 +25,7 @@ use Illuminate\Support\Collection;
  */
 class Channel extends Part
 {
-    const TYPE_TEXT  = 'text';
+    const TYPE_TEXT = 'text';
 
     const TYPE_VOICE = 'voice';
 
@@ -302,7 +301,7 @@ class Channel extends Part
         }
 
         foreach ($this->attributes['permission_overwrites'] as $index => $data) {
-            $data               = (array) $data;
+            $data = (array) $data;
             $data['channel_id'] = $this->attributes['id'];
             $overwrites[$index] = $this->partFactory->create(Overwrite::class, $data, true);
         }
@@ -328,7 +327,7 @@ class Channel extends Part
 
         $deferred = new Deferred();
 
-        if (!$this->cache->has("channel.{$this->id}.messages")) {
+        if (! $this->cache->has("channel.{$this->id}.messages")) {
             $this->getMessagesAttribute();
         }
 
