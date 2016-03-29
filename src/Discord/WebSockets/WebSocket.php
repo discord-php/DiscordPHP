@@ -380,7 +380,7 @@ class WebSocket extends EventEmitter
 
         $this->ws = $ws;
 
-        if ($this->reconnecting) {
+        if ($this->reconnecting && ! is_null($this->sessionId)) {
             $this->send(
                 [
                     'op' => 6,
@@ -488,6 +488,8 @@ class WebSocket extends EventEmitter
                 $this->cache->set("channels.{$channelPart->id}", $channelPart);
             }
 
+            $this->cache->set("guild.{$guildPart->id}.channels", $channels);
+
             unset($channels);
 
             // guild members
@@ -514,6 +516,8 @@ class WebSocket extends EventEmitter
                 $members[$memberPart->id] = $memberPart;
                 // $this->cache->set("guild.{$memberPart->guild_id}.members.{$memberPart->id}", $memberPart);
             }
+
+            $this->cache->set("guild.{$guildPart->id}.members", $members);
 
             unset($members);
 
