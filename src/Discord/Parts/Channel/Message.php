@@ -91,11 +91,6 @@ class Message extends Part
         );
     }
 
-    public function getFullChannel(Callable $callback)
-    {
-        return $this->getFullChannelAttribute()->then($callback);
-    }
-
     /**
      * Returns the full channel attribute.
      *
