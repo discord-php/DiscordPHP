@@ -359,7 +359,7 @@ function _error_handler($errno = 0, $errstr = null,
 
 function binary_to_term($data)
 {
-    if (!is_string($data)) {
+    if (! is_string($data)) {
         throw new ParseException('not bytes input');
     }
     $size = strlen($data);
