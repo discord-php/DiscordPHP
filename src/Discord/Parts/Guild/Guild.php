@@ -11,7 +11,6 @@
 
 namespace Discord\Parts\Guild;
 
-use Discord\Exceptions\DiscordRequestFailedException;
 use Discord\Exceptions\PartRequestFailedException;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Part;
@@ -387,7 +386,7 @@ class Guild extends Part
      */
     public function validateRegion()
     {
-        if (!in_array($this->region, $this->regions)) {
+        if (! in_array($this->region, $this->regions)) {
             return self::REGION_DEFUALT;
         }
 
