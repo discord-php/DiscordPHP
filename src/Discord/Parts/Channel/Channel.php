@@ -11,7 +11,6 @@
 
 namespace Discord\Parts\Channel;
 
-use Discord\Exceptions\FileNotFoundException;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Guild\Invite;
 use Discord\Parts\Guild\Role;
@@ -328,7 +327,7 @@ class Channel extends Part
 
         $deferred = new Deferred();
 
-        if (!$this->cache->has("channel.{$this->id}.messages")) {
+        if (! $this->cache->has("channel.{$this->id}.messages")) {
             $this->getMessagesAttribute();
         }
 

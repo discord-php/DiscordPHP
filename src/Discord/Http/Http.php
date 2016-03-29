@@ -16,15 +16,11 @@ use Discord\Exceptions\DiscordRequestFailedException;
 use Discord\Exceptions\Rest\ContentTooLongException;
 use Discord\Exceptions\Rest\NoPermissionsException;
 use Discord\Exceptions\Rest\NotFoundException;
-use Discord\Http\Guzzle;
-use Discord\Http\HttpDriver;
 use Discord\Parts\Channel\Channel;
 use Discord\Wrapper\CacheWrapper;
-use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use Illuminate\Support\Str;
-use Psr\Cache\CacheItemPoolInterface;
 use React\Promise\Deferred;
 
 /**
@@ -91,9 +87,9 @@ class Http
     /**
      * Sets the HTTP driver.
      *
-     * @param HttpDriver $driver 
+     * @param HttpDriver $driver
      *
-     * @return void 
+     * @return void
      */
     public function setDriver(HttpDriver $driver)
     {
@@ -208,7 +204,7 @@ class Http
      */
     public function handleError($errorCode, $message, $content, $url)
     {
-        if (!is_string($message)) {
+        if (! is_string($message)) {
             $message = $message->getReasonPhrase();
         }
 
