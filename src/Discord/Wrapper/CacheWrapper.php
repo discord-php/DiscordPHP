@@ -15,6 +15,8 @@ use Psr\Cache\CacheItemPoolInterface;
 
 /**
  * Provides an easy wrapper for the Cache Adapter.
+ *
+ * @author Aaron Scherer <aequasi@gmail.com>
  */
 class CacheWrapper
 {

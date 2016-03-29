@@ -9,14 +9,6 @@
  * with this source code in the LICENSE.md file.
  */
 
-/**
- * This file is part of DiscordPHP.
- *
- * (c) Aaron Scherer <aequasi@gmail.com>
- *
- * This source file is subject to the license that is bundled
- * with this source code in the file LICENSE
- */
 namespace Discord\Repository;
 
 use Discord\Factory\PartFactory;

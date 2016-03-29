@@ -13,6 +13,11 @@ namespace Discord\Http;
 
 use Discord\Parts\Channel\Channel;
 
+/**
+ * Interface for HTTP drivers.
+ *
+ * @author David Cole <david@team-reflex.com>
+ */
 interface HttpDriver
 {
     /**

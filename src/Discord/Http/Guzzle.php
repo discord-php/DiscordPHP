@@ -20,6 +20,11 @@ use React\EventLoop\LoopInterface;
 use React\Promise\Deferred;
 use WyriHaximus\React\GuzzlePsr7\HttpClientAdapter;
 
+/**
+ * GuzzleHTTP driver.
+ *
+ * @author David Cole <david@team-reflex.com>
+ */
 class Guzzle extends GuzzleClient implements HttpDriver
 {
     /**

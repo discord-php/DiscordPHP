@@ -204,7 +204,7 @@ class Http
      */
     public function handleError($errorCode, $message, $content, $url)
     {
-        if (!is_string($message)) {
+        if (! is_string($message)) {
             $message = $message->getReasonPhrase();
         }
 
