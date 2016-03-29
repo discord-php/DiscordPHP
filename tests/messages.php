@@ -30,7 +30,7 @@ checkAttributes($expected, $message);
 checkAttributes($expected + ['tts' => true], $tts);
 // checkAttributes($expected + ['mention_everyone' => true, 'content' => '@everyone unit tests'], $everyone);
 
-if (! isset($file['attachments'])) {
+if (!isset($file['attachments'])) {
     fail('The image was not attached.');
 }
 

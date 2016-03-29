@@ -408,7 +408,7 @@ class VoiceClient extends EventEmitter
                         $port = substr($message, strlen($message) - 2);
                         $port = unpack('v', $port)[1];
 
-                        if (! function_exists('\Sodium\crypto_secretbox')) {
+                        if (!function_exists('\Sodium\crypto_secretbox')) {
                             $this->emit('error', [new LibSodiumNotFoundException('libsodium-php could not be found.')]);
                             $this->client->close();
                             $this->voiceWebsocket->close();
@@ -483,7 +483,7 @@ class VoiceClient extends EventEmitter
                         $this->secret_key .= pack('C*', $part);
                     }
 
-                    if (! $this->reconnecting) {
+                    if (!$this->reconnecting) {
                         $this->emit('ready', [$this]);
                     } else {
                         $this->reconnecting = false;
@@ -507,7 +507,7 @@ class VoiceClient extends EventEmitter
             $this->emit('ws-close', [$op, $reason, $this]);
         });
 
-        if (! $this->sentLoginFrame) {
+        if (!$this->sentLoginFrame) {
             $this->send([
                 'op' => 0,
                 'd'  => [
@@ -579,13 +579,13 @@ class VoiceClient extends EventEmitter
     {
         $deferred = new Deferred();
 
-        if (! file_exists($file)) {
+        if (!file_exists($file)) {
             $deferred->reject(new FileNotFoundException("Could not find the file \"{$file}\"."));
 
             return $deferred->promise();
         }
 
-        if (! $this->ready) {
+        if (!$this->ready) {
             $deferred->reject(new \Exception('Voice Client is not ready.'));
 
             return $deferred->promise();
@@ -611,13 +611,13 @@ class VoiceClient extends EventEmitter
     {
         $deferred = new Deferred();
 
-        if (! $this->ready) {
+        if (!$this->ready) {
             $deferred->reject(new \Exception('Voice Client is not ready.'));
 
             return $deferred->promise();
         }
 
-        if (! is_resource($stream) && ! $stream instanceof Stream) {
+        if (!is_resource($stream) && !$stream instanceof Stream) {
             $deferred->reject(new \RuntimeException('The stream passed to playRawStream was not an instance of resource or ReactPHP Stream.'));
 
             return $deferred->promise();
@@ -647,7 +647,7 @@ class VoiceClient extends EventEmitter
         $deferred = new Deferred();
         $process  = null;
 
-        if (! $this->ready) {
+        if (!$this->ready) {
             $deferred->reject(new \Exception('Voice Client is not ready.'));
 
             return $deferred->promise();
@@ -671,7 +671,7 @@ class VoiceClient extends EventEmitter
             $stream = $stream->stream;
         }
 
-        if (! is_resource($stream)) {
+        if (!is_resource($stream)) {
             $deferred->reject(new \RuntimeException('The stream passed to playDCAStream was not an instance of resource, ReactPHP Process or ReactPHP Stream.'));
 
             return $deferred->promise();
@@ -711,7 +711,7 @@ class VoiceClient extends EventEmitter
 
             $header = @fread($stream, 2);
 
-            if (! $header) {
+            if (!$header) {
                 if ($noDataHeader && $this->streamTime != 0) {
                     $this->setSpeaking(false);
                     fclose($stream);
@@ -772,7 +772,7 @@ class VoiceClient extends EventEmitter
         $jsonBuff = '';
 
         $this->loop->addReadStream($stream, function ($stream) use ($deferred, &$readMagicBytes, &$readJsonLeng, &$jsonLen, &$jsonBuff, $processff2opus) {
-            if (! $readMagicBytes) {
+            if (!$readMagicBytes) {
                 $magicBytes = fread($stream, 4);
 
                 if ($magicBytes !== self::DCA_VERSION) {
@@ -786,7 +786,7 @@ class VoiceClient extends EventEmitter
                 return;
             }
 
-            if (! $readJsonLeng) {
+            if (!$readJsonLeng) {
                 $len = fread($stream, 4);
                 $len = unpack('l', $len);
                 $jsonLen = reset($len);
@@ -808,7 +808,7 @@ class VoiceClient extends EventEmitter
 
             $json = json_decode($jsonBuff, true);
 
-            if (! is_null($json)) {
+            if (!is_null($json)) {
                 $this->frameSize = $json['opus']['frame_size'] / 48;
 
                 $deferred->notify($json);
@@ -832,7 +832,7 @@ class VoiceClient extends EventEmitter
      */
     public function sendBuffer($data)
     {
-        if (! $this->ready) {
+        if (!$this->ready) {
             return;
         }
 
@@ -861,7 +861,7 @@ class VoiceClient extends EventEmitter
             return $deferred->promise();
         }
 
-        if (! $this->ready) {
+        if (!$this->ready) {
             $deferred->reject(new \Exception('Voice Client is not ready.'));
 
             return $deferred->promise();
@@ -1070,7 +1070,7 @@ class VoiceClient extends EventEmitter
     {
         $deferred = new Deferred();
 
-        if (! $this->ready) {
+        if (!$this->ready) {
             $deferred->reject(new \Exception('The voice client must be ready before you can set mute or deaf.'));
 
             return $deferred->promise();
@@ -1103,7 +1103,7 @@ class VoiceClient extends EventEmitter
     {
         $deferred = new Deferred();
 
-        if (! $this->speaking) {
+        if (!$this->speaking) {
             $deferred->reject(new \Exception('Audio must be playing to pause it.'));
 
             return $deferred->promise();
@@ -1124,7 +1124,7 @@ class VoiceClient extends EventEmitter
     {
         $deferred = new Deferred();
 
-        if (! $this->speaking) {
+        if (!$this->speaking) {
             $deferred->reject(new \Exception('Audio must be playing to unpause it.'));
 
             return $deferred->promise();
@@ -1151,7 +1151,7 @@ class VoiceClient extends EventEmitter
             return $deferred->promise();
         }
 
-        if (! $this->speaking) {
+        if (!$this->speaking) {
             $deferred->reject(new \Exception('Audio must be playing to stop it.'));
 
             return $deferred->promise();
@@ -1173,7 +1173,7 @@ class VoiceClient extends EventEmitter
     {
         $deferred = new Deferred();
 
-        if (! $this->ready) {
+        if (!$this->ready) {
             $deferred->reject(new \Exception('Voice Client is not connected.'));
 
             return $deferred->promise();
@@ -1227,9 +1227,9 @@ class VoiceClient extends EventEmitter
         $ssrc = @$this->speakingStatus[$id];
         $user = $this->speakingStatus->get('user_id', $id);
 
-        if (is_null($ssrc) && ! is_null($user)) {
+        if (is_null($ssrc) && !is_null($user)) {
             return $user->speaking;
-        } elseif (is_null($user) && ! is_null($ssrc)) {
+        } elseif (is_null($user) && !is_null($ssrc)) {
             return $user->speaking;
         } elseif (is_null($user) && is_null($ssrc)) {
             return $user->speaking;
@@ -1336,7 +1336,7 @@ class VoiceClient extends EventEmitter
 
         if (is_null($decoder)) {
             // make a decoder
-            if (! isset($this->recieveStreams[$ss->ssrc])) {
+            if (!isset($this->recieveStreams[$ss->ssrc])) {
                 $this->recieveStreams[$ss->ssrc] = new RecieveStream();
             }
 
@@ -1398,7 +1398,7 @@ class VoiceClient extends EventEmitter
         foreach ($binaries as $binary) {
             $output = shell_exec("which {$binary}");
 
-            if (! empty($output)) {
+            if (!empty($output)) {
                 return true;
             }
         }
@@ -1423,7 +1423,7 @@ class VoiceClient extends EventEmitter
         foreach ($binaries as $binary) {
             $output = shell_exec("which {$binary}");
 
-            if (! empty($output)) {
+            if (!empty($output)) {
                 $this->dca = $binary;
 
                 return;
@@ -1454,7 +1454,7 @@ class VoiceClient extends EventEmitter
      */
     public function dcaEncode($filename = '', $channels = 2)
     {
-        if (! empty($filename) && ! file_exists($filename)) {
+        if (!empty($filename) && !file_exists($filename)) {
             return;
         }
 
