@@ -117,7 +117,7 @@ abstract class Event
     }
 
     /**
-     * Transforms the given data, and updates the discord instance if necessary
+     * Transforms the given data, and updates the discord instance if necessary.
      *
      * @param Deferred $deferred The promise to use
      * @param array    $data     The data that was sent with the WebSocket

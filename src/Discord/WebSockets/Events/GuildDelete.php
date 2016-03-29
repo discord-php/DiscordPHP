@@ -26,7 +26,7 @@ class GuildDelete extends Event
     public function handle(Deferred $deferred, array $data)
     {
         $data = $this->partFactory->create(Guild::class, $data, true);
-        $this->cache->remove("guild.".$data->id);
+        $this->cache->remove('guild.'.$data->id);
 
         foreach ($this->discord->guilds as $index => $guild) {
             if ($guild->id == $data->id) {

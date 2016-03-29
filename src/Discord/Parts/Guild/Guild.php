@@ -11,15 +11,14 @@
 
 namespace Discord\Parts\Guild;
 
-use Discord\Exceptions\DiscordRequestFailedException;
 use Discord\Exceptions\PartRequestFailedException;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Part;
 use Discord\Parts\Permissions\RolePermission as Permission;
 use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
-use React\Promise\Deferred;
 use Illuminate\Support\Collection;
+use React\Promise\Deferred;
 
 /**
  * A Guild is Discord's equivalent of a server. It contains all the Members, Channels, Roles, Bans etc.
