@@ -288,11 +288,11 @@ class WebSocket extends EventEmitter
                     return;
                 }
 
-                if (isset($data->s) && ! is_null($data->s)) {
+                if (isset($data->s) && !is_null($data->s)) {
                     $this->seq = $data->s;
                 }
 
-                if (! is_null($handlerSettings = $this->handlers->getHandler($data->t))) {
+                if (!is_null($handlerSettings = $this->handlers->getHandler($data->t))) {
                     $this->handleHandler($handlerSettings, $data);
                 }
 
@@ -325,7 +325,7 @@ class WebSocket extends EventEmitter
 
                 $this->emit('close', [$op, $reason, $this->discord]);
 
-                if (! is_null($this->heartbeat)) {
+                if (!is_null($this->heartbeat)) {
                     $this->loop->cancelTimer($this->heartbeat);
                 }
 
@@ -359,7 +359,7 @@ class WebSocket extends EventEmitter
                     return;
                 }
 
-                if (! $this->reconnecting) {
+                if (!$this->reconnecting) {
                     $this->emit('reconnecting', [$this->discord]);
 
                     $this->reconnecting = true;
@@ -382,7 +382,7 @@ class WebSocket extends EventEmitter
 
         $this->ws = $ws;
 
-        if ($this->reconnecting && ! is_null($this->sessionId)) {
+        if ($this->reconnecting && !is_null($this->sessionId)) {
             $this->send(
                 [
                     'op' => 6,
@@ -448,7 +448,7 @@ class WebSocket extends EventEmitter
      */
     public function handleReady($data)
     {
-        if (! is_null($this->reconnectResetTimer)) {
+        if (!is_null($this->reconnectResetTimer)) {
             $this->loop->cancelTimer($this->reconnectResetTimer);
         }
 
@@ -589,7 +589,7 @@ class WebSocket extends EventEmitter
 
             unset($servers);
         } else {
-            if (! $this->invalidSession) {
+            if (!$this->invalidSession) {
                 $this->emit('ready', [$this->discord]);
             }
 

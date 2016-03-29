@@ -386,7 +386,7 @@ class Guild extends Part
      */
     public function validateRegion()
     {
-        if (! in_array($this->region, $this->regions)) {
+        if (!in_array($this->region, $this->regions)) {
             return self::REGION_DEFUALT;
         }
 
