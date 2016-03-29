@@ -11,15 +11,14 @@
 
 namespace Discord\Parts\Channel;
 
-use Discord\Exceptions\FileNotFoundException;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Guild\Invite;
 use Discord\Parts\Guild\Role;
 use Discord\Parts\Part;
 use Discord\Parts\Permissions\ChannelPermission;
 use Discord\Parts\User\Member;
-use React\Promise\Deferred;
 use Illuminate\Support\Collection;
+use React\Promise\Deferred;
 
 /**
  * A Channel can be either a text or voice channel on a Discord guild.
@@ -161,7 +160,6 @@ class Channel extends Part
 
             return $deferred->promise();
         }
-
 
         $this->http->get("guilds/{$this->guild_id}")->then(function ($response) use ($deferred) {
             $guild = $this->partFactory->create(Guild::class, $response, true);
@@ -376,7 +374,7 @@ class Channel extends Part
 
             $this->cache->set("message.{$message->id}", $message);
 
-            if (! $this->cache->has("channel.{$this->id}.messages")) {
+            if (!$this->cache->has("channel.{$this->id}.messages")) {
                 $this->getMessagesAttribute();
             }
 

@@ -25,10 +25,10 @@ class MessageCreate extends Event
      */
     public function handle(Deferred $deferred, array $data)
     {
-        /** @type Message $data */
+        /** @var Message $data */
         $data = $this->partFactory->create(Message::class, $data, true);
 
-        $data->getFullChannelAttribute()->then(function($channel) use ($data, $deferred) {
+        $data->getFullChannelAttribute()->then(function ($channel) use ($data, $deferred) {
             $data->setAttribute('channel', $channel);
 
             $this->cache->set("message.{$data->id}", $data);

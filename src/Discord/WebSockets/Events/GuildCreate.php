@@ -17,7 +17,6 @@ use Discord\Parts\User\Member;
 use Discord\WebSockets\Event;
 use Illuminate\Support\Collection;
 use React\Promise\Deferred;
-use React\Promise\Promise;
 
 /**
  * Event that is emitted when `GUILD_CREATE` is fired.
