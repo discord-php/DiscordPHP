@@ -34,9 +34,9 @@ class GuildCreate extends Event
         $channels = new Collection();
 
         foreach ($data->channels as $channel) {
-            $channel             = (array) $channel;
+            $channel = (array) $channel;
             $channel['guild_id'] = $data->id;
-            $channelPart         = $this->partFactory->create(Channel::class, $channel, true);
+            $channelPart = $this->partFactory->create(Channel::class, $channel, true);
 
             $this->cache->set("channel.{$channelPart->id}", $channelPart);
 
@@ -69,7 +69,7 @@ class GuildCreate extends Event
             foreach ($data->presences as $presence) {
                 if ($presence->user->id == $member->user->id) {
                     $memberPart->status = $presence->status;
-                    $memberPart->game   = $presence->game;
+                    $memberPart->game = $presence->game;
                 }
             }
 

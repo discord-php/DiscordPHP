@@ -18,9 +18,9 @@ use Discord\Parts\User\User;
 // Require Composer dependencies
 include __DIR__.'/../vendor/autoload.php';
 
-$currentTest      = 'No Test';
+$currentTest = 'No Test';
 $currentTestStart = null;
-$tests            = [];
+$tests = [];
 
 /**
  * Prints all the run tests.
@@ -92,7 +92,7 @@ function startTest($test)
 {
     global $currentTest, $currentTestStart;
 
-    $currentTest      = $test;
+    $currentTest = $test;
     $currentTestStart = microtime(true);
 }
 
@@ -126,9 +126,9 @@ function checkAttributes($expectedAttributes, $part)
 }
 
 // get env
-$token        = getenv('DISCORD_TOKEN');
+$token = getenv('DISCORD_TOKEN');
 $testingGuild = getenv('DISCORD_TESTING_GUILD');
-$testUser     = getenv('DISCORD_TESTING_PM');
+$testUser = getenv('DISCORD_TESTING_PM');
 
 if (empty($token)) {
     fail('No token was provided.');

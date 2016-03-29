@@ -79,7 +79,7 @@ class Member extends Part
     {
         $url = $this->replaceWithVariables('guilds/:guild_id/bans/:id');
 
-        if (!is_null($daysToDeleteMessasges)) {
+        if (! is_null($daysToDeleteMessasges)) {
             $url .= "?message-delete-days={$daysToDeleteMessasges}";
         }
 
@@ -229,9 +229,9 @@ class Member extends Part
                 if (false !== array_search($role->id, (array) $this->attributes['roles'])) {
                     $perm = $this->partFactory->create(Permission::class, ['perms' => $role->permissions]);
 
-                    $role                = (array) $role;
+                    $role = (array) $role;
                     $role['permissions'] = $perm;
-                    $role                = $this->partFactory->create(Role::class, $role, true);
+                    $role = $this->partFactory->create(Role::class, $role, true);
                     $this->cache->set("role.{$role->id}", $role);
                     $roles[] = $role;
                 }

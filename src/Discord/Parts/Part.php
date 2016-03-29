@@ -12,7 +12,6 @@
 namespace Discord\Parts;
 
 use ArrayAccess;
-use Discord\Exceptions\DiscordRequestFailedException;
 use Discord\Exceptions\PartRequestFailedException;
 use Discord\Factory\PartFactory;
 use Discord\Http\Http;
@@ -172,8 +171,8 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
         $created = false
     ) {
         $this->partFactory = $partFactory;
-        $this->http        = $http;
-        $this->cache       = $cache;
+        $this->http = $http;
+        $this->cache = $cache;
 
         $this->created = $created;
         $this->fill($attributes);
@@ -214,7 +213,7 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
      */
     public function fresh()
     {
-        if ($this->deleted || !$this->created) {
+        if ($this->deleted || ! $this->created) {
             return \React\Promise\reject(new \Exception('You cannot get a non-existant part.'));
         }
 
@@ -244,7 +243,7 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
         $attributes = $this->created ? $this->getUpdatableAttributes() : $this->getCreatableAttributes();
 
         if ($this->created) {
-            if (!$this->editable) {
+            if (! $this->editable) {
                 return \React\Promise\reject(new \Exception('You cannot edit a non-editable part.'));
             }
 
@@ -258,7 +257,7 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
                 \React\Partial\bind_right($this->reject, $deferred)
             );
         } else {
-            if (!$this->creatable) {
+            if (! $this->creatable) {
                 return \React\Promise\reject(new \Exception('You cannot create a non-creatable part.'));
             }
 
@@ -292,7 +291,7 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
      */
     public function delete()
     {
-        if (!$this->deletable) {
+        if (! $this->deletable) {
             return \React\Promise\reject(new \Exception('You cannot delete a non-deletable part.'));
         }
 
@@ -357,7 +356,7 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
         $matcher = preg_match_all($this->regex, $string, $matches);
 
         $original = $matches[0];
-        $vars     = $matches[1];
+        $vars = $matches[1];
 
         foreach ($vars as $key => $variable) {
             if ($attribute = $this->getAttribute($variable)) {
@@ -386,7 +385,7 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
         $matcher = preg_match_all($this->regex, $string, $matches);
 
         $original = $matches[0];
-        $vars     = $matches[1];
+        $vars = $matches[1];
 
         foreach ($vars as $key => $variable) {
             if ($attribute = $params[$variable]) {
@@ -410,7 +409,7 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
             return $this->{$str}();
         }
 
-        if (!isset($this->attributes[$key])) {
+        if (! isset($this->attributes[$key])) {
             return;
         }
 

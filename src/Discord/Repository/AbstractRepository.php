@@ -52,8 +52,8 @@ abstract class AbstractRepository
      */
     public function __construct(Guzzle $guzzle, CacheWrapper $cache, PartFactory $partFactory)
     {
-        $this->guzzle      = $guzzle;
-        $this->cache       = $cache;
+        $this->guzzle = $guzzle;
+        $this->cache = $cache;
         $this->partFactory = $partFactory;
     }
 }

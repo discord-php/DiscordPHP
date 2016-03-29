@@ -11,7 +11,7 @@
 
 startTest('Update Username');
 
-$original          = $discord->username;
+$original = $discord->username;
 $discord->username = 'TestingUsernameUpdate';
 
 try {

@@ -11,7 +11,6 @@
 
 namespace Discord\Parts\Guild;
 
-use Discord\Exceptions\DiscordRequestFailedException;
 use Discord\Exceptions\PartRequestFailedException;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Part;
@@ -26,33 +25,33 @@ use Illuminate\Support\Collection;
  */
 class Guild extends Part
 {
-    const REGION_DEFAULT    = self::REGION_US_WEST;
+    const REGION_DEFAULT = self::REGION_US_WEST;
 
-    const REGION_US_WEST    = 'us-west';
+    const REGION_US_WEST = 'us-west';
 
-    const REGION_US_SOUTH   = 'us-south';
+    const REGION_US_SOUTH = 'us-south';
 
-    const REGION_US_EAST    = 'us-east';
+    const REGION_US_EAST = 'us-east';
 
     const REGION_US_CENTRAL = 'us-central';
 
-    const REGION_SINGAPORE  = 'singapore';
+    const REGION_SINGAPORE = 'singapore';
 
-    const REGION_LONDON     = 'london';
+    const REGION_LONDON = 'london';
 
-    const REGION_SYDNEY     = 'sydney';
+    const REGION_SYDNEY = 'sydney';
 
-    const REGION_FRANKFURT  = 'frankfurt';
+    const REGION_FRANKFURT = 'frankfurt';
 
-    const REGION_AMSTERDAM  = 'amsterdam';
+    const REGION_AMSTERDAM = 'amsterdam';
 
-    const LEVEL_OFF         = 0;
+    const LEVEL_OFF = 0;
 
-    const LEVEL_LOW         = 1;
+    const LEVEL_LOW = 1;
 
-    const LEVEL_MEDIUM      = 2;
+    const LEVEL_MEDIUM = 2;
 
-    const LEVEL_TABLEFLIP   = 3;
+    const LEVEL_TABLEFLIP = 3;
 
     /**
      * {@inheritdoc}
@@ -201,12 +200,12 @@ class Guild extends Part
         $roles = [];
 
         foreach ($this->attributes['roles'] as $index => $role) {
-            $perm                = $this->partFactory->create(Permission::class);
-            $perm->perms         = $role->permissions;
-            $role                = (array) $role;
+            $perm = $this->partFactory->create(Permission::class);
+            $perm->perms = $role->permissions;
+            $role = (array) $role;
             $role['permissions'] = $perm;
-            $role['guild_id']    = $this->id;
-            $roles[$index]       = $this->partFactory->create(Role::class, $role, true);
+            $role['guild_id'] = $this->id;
+            $roles[$index] = $this->partFactory->create(Role::class, $role, true);
         }
 
         $roles = new Collection($roles);
@@ -286,7 +285,7 @@ class Guild extends Part
             $bans = new Collection();
 
             foreach ($response as $index => $ban) {
-                $ban          = (array) $ban;
+                $ban = (array) $ban;
                 $ban['guild'] = $this;
                 $ban = $this->partFactory->create(Ban::class, $ban, true);
                 $this->cache->set("guild.{$this->id}.bans.{$ban->user_id}", $ban);
@@ -387,7 +386,7 @@ class Guild extends Part
      */
     public function validateRegion()
     {
-        if (!in_array($this->region, $this->regions)) {
+        if (! in_array($this->region, $this->regions)) {
             return self::REGION_DEFUALT;
         }
 

@@ -110,7 +110,6 @@ class Message extends Part
             $deferred->resolve($channel);
         }, \React\Partial\bind_right($this->reject, $deferred));
 
-        
         return $deferred->promise();
     }
 

@@ -22,7 +22,7 @@ if ($argc != 2) {
 
 // Init the Discord instance.
 $discord = new Discord(['token' => $argv[1]]);
-$ws      = $discord->getWebsocket();
+$ws = $discord->getWebsocket();
 
 // We use EventEmitters to emit events. They are pretty much
 // identical to the JavaScript/NodeJS implementation.
