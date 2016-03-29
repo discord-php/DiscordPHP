@@ -12,30 +12,21 @@
 namespace Discord\WebSockets\Events;
 
 use Discord\WebSockets\Event;
+use React\Promise\Deferred;
 
 /**
- * Event that is emitted wheh `GUILD_ROLE_DELETE` is fired.
+ * Event that is emitted when `GUILD_ROLE_DELETE` is fired.
  */
 class GuildRoleDelete extends Event
 {
     /**
      * {@inheritdoc}
-     *
-     * @return array The data.
      */
-    public function getData($data, $discord)
-    {
-        return $data;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function updateDiscordInstance($data, $discord)
+    public function handle(Deferred $deferred, array $data)
     {
         $this->cache->remove("guild.{$data->guild_id}.roles.{$data->role_id}");
 
-        foreach ($discord->guilds as $index => $guild) {
+        foreach ($this->discord->guilds as $index => $guild) {
             if ($guild->id == $data->guild_id) {
                 foreach ($guild->roles as $rindex => $role) {
                     if ($role->id == $data->role_id) {
@@ -49,6 +40,6 @@ class GuildRoleDelete extends Event
             }
         }
 
-        return $discord;
+        $deferred->resolve($data);
     }
 }

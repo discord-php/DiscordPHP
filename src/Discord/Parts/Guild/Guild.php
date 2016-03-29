@@ -17,8 +17,8 @@ use Discord\Parts\Part;
 use Discord\Parts\Permissions\RolePermission as Permission;
 use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
-use React\Promise\Deferred;
 use Illuminate\Support\Collection;
+use React\Promise\Deferred;
 
 /**
  * A Guild is Discord's equivalent of a server. It contains all the Members, Channels, Roles, Bans etc.
@@ -386,7 +386,7 @@ class Guild extends Part
      */
     public function validateRegion()
     {
-        if (! in_array($this->region, $this->regions)) {
+        if (!in_array($this->region, $this->regions)) {
             return self::REGION_DEFUALT;
         }
 

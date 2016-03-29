@@ -12,31 +12,20 @@
 namespace Discord\WebSockets\Events;
 
 use Discord\WebSockets\Event;
+use React\Promise\Deferred;
 
 /**
- * Event that is emitted wheh `USER_SETTINGS_UPDATE` is fired.
+ * Event that is emitted when `USER_SETTINGS_UPDATE` is fired.
  */
 class UserSettingsUpdate extends Event
 {
     /**
      * {@inheritdoc}
-     *
-     * @return array The data.
      */
-    public function getData($data, $discord)
+    public function handle(Deferred $deferred, array $data)
     {
-        return $data;
-    }
+        $this->discord->user_settings = (object) array_merge((array) $this->discord->user_settings, (array) $data);
 
-    /**
-     * {@inheritdoc}
-     */
-    public function updateDiscordInstance($data, $discord)
-    {
-        $new = (object) array_merge((array) $discord->user_settings, (array) $data);
-
-        $discord->user_settings = $new;
-
-        return $discord;
+        $deferred->resolve($data);
     }
 }

@@ -70,7 +70,7 @@ class Http
      * @param CacheWrapper $cache
      * @param string       $token
      * @param string       $version
-     * @param HttpDriver   $driver The request driver.
+     * @param HttpDriver   $driver  The request driver.
      */
     public function __construct(CacheWrapper $cache, $token, $version, $driver = null)
     {
@@ -128,12 +128,12 @@ class Http
      *                                    used, if false, cache is disabled
      * @param bool          $blocking     Whether the request should be sent as blocking.
      *
-     * @return \React\Promise\Promise
-     *
      * @throws ContentTooLongException
      * @throws DiscordRequestFailedException
      * @throws NoPermissionsException
      * @throws NotFoundException
+     *
+     * @return \React\Promise\Promise
      */
     private function runRequest($method, $url, $content, $extraHeaders, $cache, $blocking)
     {
@@ -204,7 +204,7 @@ class Http
      */
     public function handleError($errorCode, $message, $content, $url)
     {
-        if (! is_string($message)) {
+        if (!is_string($message)) {
             $message = $message->getReasonPhrase();
         }
 

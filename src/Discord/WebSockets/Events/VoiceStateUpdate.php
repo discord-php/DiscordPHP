@@ -12,31 +12,21 @@
 namespace Discord\WebSockets\Events;
 
 use Discord\WebSockets\Event;
+use React\Promise\Deferred;
 
 /**
- * Event that is emitted wheh `VOICE_STATE_UPDATE` is fired.
+ * Event that is emitted when `VOICE_STATE_UPDATE` is fired.
  */
 class VoiceStateUpdate extends Event
 {
     /**
      * {@inheritdoc}
-     *
-     * @return array The data.
      */
-    public function getData($data, $discord)
+    public function handle(Deferred $deferred, array $data)
     {
-        return $data;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function updateDiscordInstance($data, $discord)
-    {
-        foreach ($discord->guilds as $index => $guild) {
+        foreach ($this->discord->guilds as $index => $guild) {
             if ($guild->id == $data->guild_id) {
-                $member = @$guild->members[$data->user_id];
-
+                $member = array_key_exists($guild->members, $data->user_id) ? $guild->members[$data->user_id] : null;
                 if (is_null($member)) {
                     break;
                 }
@@ -50,6 +40,6 @@ class VoiceStateUpdate extends Event
             }
         }
 
-        return $discord;
+        $deferred->resolve($data);
     }
 }

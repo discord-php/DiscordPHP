@@ -23,10 +23,10 @@ interface HttpDriver
     /**
      * Runs an HTTP request.
      *
-     * @param string $method The HTTP method to use.
-     * @param string $url The endpoint that will be queried.
-     * @param array $headers The headers to send in the request.
-     * @param string $body The request content.
+     * @param string $method  The HTTP method to use.
+     * @param string $url     The endpoint that will be queried.
+     * @param array  $headers The headers to send in the request.
+     * @param string $body    The request content.
      *
      * @return \React\Promise\Promise
      */
@@ -46,10 +46,10 @@ interface HttpDriver
     /**
      * Runs a blocking HTTP request.
      *
-     * @param string $method The HTTP method to use.
-     * @param string $url The endpoint that will be queried.
-     * @param array $headers The headers to send in the request.
-     * @param string $body The request content.
+     * @param string $method  The HTTP method to use.
+     * @param string $url     The endpoint that will be queried.
+     * @param array  $headers The headers to send in the request.
+     * @param string $body    The request content.
      *
      * @return object The request response.
      */

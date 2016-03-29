@@ -13,38 +13,30 @@ namespace Discord\WebSockets\Events;
 
 use Discord\Parts\User\Member;
 use Discord\WebSockets\Event;
+use React\Promise\Deferred;
 
 /**
- * Event that is emitted wheh `GUILD_MEMBER_ADD` is fired.
+ * Event that is emitted when `GUILD_MEMBER_ADD` is fired.
  */
 class GuildMemberAdd extends Event
 {
     /**
      * {@inheritdoc}
-     *
-     * @return Member The parsed data.
      */
-    public function getData($data, $discord)
+    public function handle(Deferred $deferred, array $data)
     {
-        return $this->partFactory->create(Member::class, $data, true);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function updateDiscordInstance($data, $discord)
-    {
+        $data = $this->partFactory->create(Member::class, $data, true);
         $this->cache->set("guild.{$data->guild_id}.members.{$data->id}", $data);
 
-        foreach ($discord->guilds as $index => $guild) {
+        foreach ($this->discord->guilds as $index => $guild) {
             if ($guild->id == $data->guild_id) {
                 $guild->members->push($data);
-                ++$guild->member_count;
+                $guild->member_count++;
 
                 break;
             }
         }
 
-        return $discord;
+        $deferred->resolve($data);
     }
 }

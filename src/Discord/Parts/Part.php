@@ -160,8 +160,8 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
      * @param PartFactory  $partFactory
      * @param Http         $http
      * @param CacheWrapper $cache
-     * @param array        $attributes An array of attributes to build the part.
-     * @param bool         $created    Whether the part has already been created.
+     * @param array        $attributes  An array of attributes to build the part.
+     * @param bool         $created     Whether the part has already been created.
      */
     public function __construct(
         PartFactory $partFactory,
@@ -213,7 +213,7 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
      */
     public function fresh()
     {
-        if ($this->deleted || ! $this->created) {
+        if ($this->deleted || !$this->created) {
             return \React\Promise\reject(new \Exception('You cannot get a non-existant part.'));
         }
 
@@ -243,7 +243,7 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
         $attributes = $this->created ? $this->getUpdatableAttributes() : $this->getCreatableAttributes();
 
         if ($this->created) {
-            if (! $this->editable) {
+            if (!$this->editable) {
                 return \React\Promise\reject(new \Exception('You cannot edit a non-editable part.'));
             }
 
@@ -257,7 +257,7 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
                 \React\Partial\bind_right($this->reject, $deferred)
             );
         } else {
-            if (! $this->creatable) {
+            if (!$this->creatable) {
                 return \React\Promise\reject(new \Exception('You cannot create a non-creatable part.'));
             }
 
@@ -291,7 +291,7 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
      */
     public function delete()
     {
-        if (! $this->deletable) {
+        if (!$this->deletable) {
             return \React\Promise\reject(new \Exception('You cannot delete a non-deletable part.'));
         }
 
@@ -409,7 +409,7 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
             return $this->{$str}();
         }
 
-        if (! isset($this->attributes[$key])) {
+        if (!isset($this->attributes[$key])) {
             return;
         }
 

@@ -13,36 +13,30 @@ namespace Discord\WebSockets\Events;
 
 use Discord\Parts\Channel\Message;
 use Discord\WebSockets\Event;
+use React\Promise\Deferred;
 
 /**
- * Event that is emitted wheh `MESSAGE_UPDATE` is fired.
+ * Event that is emitted when `MESSAGE_UPDATE` is fired.
  */
 class MessageUpdate extends Event
 {
     /**
      * {@inheritdoc}
-     *
-     * @return Message The parsed data.
      */
-    public function getData($data, $discord)
+    public function handle(Deferred $deferred, array $data)
     {
-        return $this->partFactory->create(Message::class, $data, true);
-    }
+        $data = $this->partFactory->create(Message::class, $data, true);
 
-    /**
-     * {@inheritdoc}
-     */
-    public function updateDiscordInstance($data, $discord)
-    {
         $this->cache->set("message.{$data->id}", $data);
 
-        foreach ($discord->guilds as $index => $guild) {
+        foreach ($this->discord->guilds as $index => $guild) {
             foreach ($guild->channels as $cindex => $channel) {
                 if ($channel->id == $data->channel_id) {
                     $message = $channel->messages->pull($data->id);
 
-                    if (! isset($data->content)) {
-                        $message = $this->partFactory->create(Message::class,
+                    if (!isset($data->content)) {
+                        $message = $this->partFactory->create(
+                            Message::class,
                             array_merge((array) $message, (array) $data),
                             true
                         );
@@ -55,9 +49,9 @@ class MessageUpdate extends Event
                 }
             }
 
-            $discord->guilds[$index] = $guild;
+            $this->discord->guilds[$index] = $guild;
         }
 
-        return $discord;
+        $deferred->resolve($data);
     }
 }

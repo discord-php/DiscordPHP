@@ -13,6 +13,7 @@ namespace Discord\WebSockets\Events;
 
 use Discord\Parts\Channel\Message;
 use Discord\WebSockets\Event;
+use React\Promise\Deferred;
 
 /**
  * Event that is emitted when `MESSAGE_CREATE` is fired.
@@ -21,31 +22,28 @@ class MessageCreate extends Event
 {
     /**
      * {@inheritdoc}
-     *
-     * @return Message The parsed data.
      */
-    public function getData($data, $discord)
+    public function handle(Deferred $deferred, array $data)
     {
-        return $this->partFactory->create(Message::class, $data, true);
-    }
+        /** @var Message $data */
+        $data = $this->partFactory->create(Message::class, $data, true);
 
-    /**
-     * {@inheritdoc}
-     */
-    public function updateDiscordInstance($data, $discord)
-    {
-        $this->cache->set("message.{$data->id}", $data);
+        $data->getFullChannelAttribute()->then(function ($channel) use ($data, $deferred) {
+            $data->setAttribute('channel', $channel);
 
-        foreach ($discord->guilds as $index => $guild) {
-            foreach ($guild->channels as $cindex => $channel) {
-                if ($channel->id == $data->channel_id) {
-                    $channel->messages[$data->id] = $data;
+            $this->cache->set("message.{$data->id}", $data);
 
-                    return $discord;
+            foreach ($this->discord->guilds as $index => $guild) {
+                foreach ($guild->channels as $cindex => $channel) {
+                    if ($channel->id == $data->channel_id) {
+                        $channel->messages[$data->id] = $data;
+
+                        break 2;
+                    }
                 }
             }
-        }
 
-        return $discord;
+            $deferred->resolve($data);
+        });
     }
 }

@@ -17,8 +17,8 @@ use Discord\Parts\Guild\Role;
 use Discord\Parts\Part;
 use Discord\Parts\Permissions\ChannelPermission;
 use Discord\Parts\User\Member;
-use React\Promise\Deferred;
 use Illuminate\Support\Collection;
+use React\Promise\Deferred;
 
 /**
  * A Channel can be either a text or voice channel on a Discord guild.
@@ -148,15 +148,18 @@ class Channel extends Part
      */
     public function getGuildAttribute()
     {
+        $deferred = new Deferred();
         if (is_null($this->guild_id)) {
-            return \React\Promise\reject(new \Exception('No guild ID set.'));
+            $deferred->reject(new \Exception('No guild ID set.'));
+
+            return $deferred->promise();
         }
 
         if ($guild = $this->cache->get("guild.{$this->guild_id}")) {
-            return \React\Promise\resolve($guild);
-        }
+            $deferred->resolve($guild);
 
-        $deferred = new Deferred();
+            return $deferred->promise();
+        }
 
         $this->http->get("guilds/{$this->guild_id}")->then(function ($response) use ($deferred) {
             $guild = $this->partFactory->create(Guild::class, $response, true);
@@ -327,7 +330,7 @@ class Channel extends Part
 
         $deferred = new Deferred();
 
-        if (! $this->cache->has("channel.{$this->id}.messages")) {
+        if (!$this->cache->has("channel.{$this->id}.messages")) {
             $this->getMessagesAttribute();
         }
 
@@ -371,7 +374,7 @@ class Channel extends Part
 
             $this->cache->set("message.{$message->id}", $message);
 
-            if (! $this->cache->has("channel.{$this->id}.messages")) {
+            if (!$this->cache->has("channel.{$this->id}.messages")) {
                 $this->getMessagesAttribute();
             }
 

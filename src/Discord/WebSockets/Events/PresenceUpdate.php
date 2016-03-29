@@ -13,32 +13,24 @@ namespace Discord\WebSockets\Events;
 
 use Discord\Parts\WebSockets\PresenceUpdate as PresenceUpdatePart;
 use Discord\WebSockets\Event;
+use React\Promise\Deferred;
 
 /**
- * Event that is emitted wheh `PRESENCE_UPDATE` is fired.
+ * Event that is emitted when `PRESENCE_UPDATE` is fired.
  */
 class PresenceUpdate extends Event
 {
     /**
      * {@inheritdoc}
-     *
-     * @return PresenceUpdatePart The parsed data.
      */
-    public function getData($data, $discord)
+    public function handle(Deferred $deferred, array $data)
     {
-        return $this->partFactory->create(PresenceUpdatePart::class, $data, true);
-    }
+        $data = $this->partFactory->create(PresenceUpdatePart::class, $data, true);
 
-    /**
-     * {@inheritdoc}
-     */
-    public function updateDiscordInstance($data, $discord)
-    {
-        foreach ($discord->guilds as $index => $guild) {
+        foreach ($this->discord->guilds as $index => $guild) {
             if ($guild->id == $data->guild_id) {
-                $member = @$guild->members[$data->user->id];
-
-                if (! is_null($member)) {
+                $member = array_key_exists($guild->members, $data->user->id) ? $guild->members[$data->user->id] : null;
+                if (!is_null($member)) {
                     $member->game   = $data->game;
                     $member->status = $data->status;
 
@@ -49,6 +41,6 @@ class PresenceUpdate extends Event
             }
         }
 
-        return $discord;
+        $deferred->resolve($data);
     }
 }
