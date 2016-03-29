@@ -36,7 +36,7 @@ class GuildBanAdd extends Event
         $this->cache->set("guild.{$data->guild_id}.bans.{$data->user_id}", $data);
 
         foreach ($this->discord->guilds as $index => $guild) {
-            if ($guild->id == $data->guild_id && !is_bool($guild->bans)) {
+            if ($guild->id == $data->guild_id && ! is_bool($guild->bans)) {
                 $guild->bans->push($data);
 
                 foreach ($guild->members as $mindex => $member) {

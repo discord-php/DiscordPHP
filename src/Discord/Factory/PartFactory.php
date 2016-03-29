@@ -51,7 +51,7 @@ class PartFactory
      */
     public function create($type, $attributes = [], $created = false)
     {
-        if (!is_array($attributes)) {
+        if (! is_array($attributes)) {
             $attributes = (array) $attributes;
         }
 

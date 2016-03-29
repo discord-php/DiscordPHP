@@ -330,7 +330,7 @@ class Channel extends Part
 
         $deferred = new Deferred();
 
-        if (!$this->cache->has("channel.{$this->id}.messages")) {
+        if (! $this->cache->has("channel.{$this->id}.messages")) {
             $this->getMessagesAttribute();
         }
 
@@ -374,7 +374,7 @@ class Channel extends Part
 
             $this->cache->set("message.{$message->id}", $message);
 
-            if (!$this->cache->has("channel.{$this->id}.messages")) {
+            if (! $this->cache->has("channel.{$this->id}.messages")) {
                 $this->getMessagesAttribute();
             }
 

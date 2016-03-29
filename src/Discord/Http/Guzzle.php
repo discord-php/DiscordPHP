@@ -59,7 +59,7 @@ class Guzzle extends GuzzleClient implements HttpDriver
     {
         $options = ['http_errors' => false, 'allow_redirects' => true];
 
-        if (!is_null($loop)) {
+        if (! is_null($loop)) {
             $this->async        = true;
             $this->loop         = $loop;
             $this->adapter      = new HttpClientAdapter($this->loop);
@@ -127,7 +127,7 @@ class Guzzle extends GuzzleClient implements HttpDriver
                 $deferred->reject($e);
             });
 
-            if (!$this->async) {
+            if (! $this->async) {
                 $promise->wait();
             }
         };
@@ -144,7 +144,7 @@ class Guzzle extends GuzzleClient implements HttpDriver
     {
         $deferred = new Deferred();
 
-        if (!file_exists($filepath)) {
+        if (! file_exists($filepath)) {
             return \React\Promise\reject(new \Exception('The specified file path does not exist.'));
         }
 
