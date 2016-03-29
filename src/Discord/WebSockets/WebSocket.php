@@ -231,9 +231,11 @@ class WebSocket extends EventEmitter
 
         $this->handlers = new Handlers();
 
-        $loop->nextTick(function () use (&$loop) {
-            $this->http->setDriver(new Guzzle($loop));
-        });
+        $loop->nextTick(
+            function () use (&$loop) {
+                $this->http->setDriver(new Guzzle($loop));
+            }
+        );
 
         $this->loop = $loop;
 
@@ -686,22 +688,25 @@ class WebSocket extends EventEmitter
     public function handleHandler($handlerSettings, $data)
     {
         /** @var Event $handler */
-        $handler     = new $handlerSettings['class']($this->http, $this->partFactory, $this->cache);
-        $handlerData = $handler->getData($data->d, $this->discord);
-        $newDiscord  = $handler->updateDiscordInstance($handlerData, $this->discord);
-        $this->emit($data->t, [$handlerData, $this->discord, $newDiscord]);
+        $handler = new $handlerSettings['class']($this->http, $this->partFactory, $this->cache, $this->discord);
 
-        foreach ($handlerSettings['alternatives'] as $alternative) {
-            $this->emit($alternative, [$handlerData, $this->discord, $newDiscord]);
-        }
+        $deferred = new Deferred();
+        $handler->handle($deferred, (array) $data->d);
+        
+        $deferred->promise()->then(
+            function ($handlerData) use ($data, $handlerSettings) {
+                $this->emit($data->t, [$handlerData]);
 
-        $isMention = strpos($handlerData->content, '<@'.$this->discord->id.'>') !== false;
-        if ($data->t == Event::MESSAGE_CREATE && $isMention) {
-            $this->emit('mention', [$handlerData, $this->discord, $newDiscord]);
-        }
+                foreach ($handlerSettings['alternatives'] as $alternative) {
+                    $this->emit($alternative, [$handlerData]);
+                }
 
-        $this->discord = $newDiscord;
-        unset($handler, $handlerData, $newDiscord, $handlerSettings);
+                $isMention = strpos($handlerData->content, '<@'.$this->discord->id.'>') !== false;
+                if ($data->t == Event::MESSAGE_CREATE && $isMention) {
+                    $this->emit('mention', [$handlerData]);
+                }
+            }
+        );
     }
 
     /**

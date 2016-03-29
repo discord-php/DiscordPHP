@@ -13,33 +13,27 @@ namespace Discord\WebSockets\Events;
 
 use Discord\Parts\Guild\Role;
 use Discord\WebSockets\Event;
+use React\Promise\Deferred;
 
 /**
- * Event that is emitted wheh `GUILD_ROLE_CREATE` is fired.
+ * Event that is emitted when `GUILD_ROLE_CREATE` is fired.
  */
 class GuildRoleCreate extends Event
 {
     /**
      * {@inheritdoc}
-     *
-     * @return Role The parsed data.
      */
-    public function getData($data, $discord)
+    public function handle(Deferred $deferred, array $data)
     {
-        $adata             = (array) $data->role;
-        $adata['guild_id'] = $data->guild_id;
+        $guildId        = $data->guild_id;
+        $data           = $data->role;
+        $data->guild_id = $guildId;
 
-        return $this->partFactory->create(Role::class, $adata, true);
-    }
+        $data = $this->partFactory->create(Role::class, $data, true);
 
-    /**
-     * {@inheritdoc}
-     */
-    public function updateDiscordInstance($data, $discord)
-    {
         $this->cache->set("guild.{$data->guild_id}.roles.{$data->id}", $data);
 
-        foreach ($discord->guilds as $index => $guild) {
+        foreach ($this->discord->guilds as $index => $guild) {
             if ($guild->id == $data->guild_id) {
                 $guild->roles->push($data);
 
@@ -47,6 +41,6 @@ class GuildRoleCreate extends Event
             }
         }
 
-        return $discord;
+        $deferred->resolve($data);
     }
 }

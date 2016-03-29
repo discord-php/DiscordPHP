@@ -13,6 +13,7 @@ namespace Discord\WebSockets\Events;
 
 use Discord\Parts\Channel\Channel;
 use Discord\WebSockets\Event;
+use React\Promise\Deferred;
 
 /**
  * Event that is emitted when `CHANNEL_DELETE` is fired.
@@ -21,33 +22,24 @@ class ChannelDelete extends Event
 {
     /**
      * {@inheritdoc}
-     *
-     * @return Channel The parsed data.
      */
-    public function getData($data, $discord)
+    public function handle(Deferred $deferred, array $data)
     {
-        return $this->partFactory->create(Channel::class, $data, true);
-    }
+        $data = $this->partFactory->create(Channel::class, $data, true);
+        $this->cache->remove("channel.".$data->id);
 
-    /**
-     * {@inheritdoc}
-     */
-    public function updateDiscordInstance($data, $discord)
-    {
-        $this->cache->remove("channel.{$data->id}");
-
-        foreach ($discord->guilds as $index => $guild) {
+        foreach ($this->discord->guilds as $index => $guild) {
             if ($guild->id == $data->guild_id) {
                 foreach ($guild->channels as $cindex => $channel) {
                     if ($channel->id == $data->id) {
                         $guild->channels->pull($index);
 
-                        return $discord;
+                        break;
                     }
                 }
             }
         }
 
-        return $discord;
+        $deferred->resolve($data);
     }
 }

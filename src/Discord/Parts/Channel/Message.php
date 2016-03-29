@@ -15,6 +15,7 @@ use Carbon\Carbon;
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
 use React\Promise\Deferred;
+use React\Promise\Promise;
 
 /**
  * A message which is posted to a Discord text channel.
@@ -90,10 +91,15 @@ class Message extends Part
         );
     }
 
+    public function getFullChannel(Callable $callback)
+    {
+        return $this->getFullChannelAttribute()->then($callback);
+    }
+
     /**
      * Returns the full channel attribute.
      *
-     * @return Channel The channel the message was sent in with extra information.
+     * @return Promise Promise of the full channel attribute
      */
     public function getFullChannelAttribute()
     {
@@ -104,7 +110,7 @@ class Message extends Part
         $deferred = new Deferred();
 
         $this->http->get($this->replaceWithVariables('channels/:channel_id'))->then(function ($response) use ($deferred) {
-            $channel = $this->partFactory->create(Channel::class, $request, true);
+            $channel = $this->partFactory->create(Channel::class, $response, true);
 
             $this->cache->set("channels.{$channel->id}", $channel);
             $deferred->resolve($channel);

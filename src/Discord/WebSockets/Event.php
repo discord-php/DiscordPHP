@@ -15,12 +15,14 @@ use Discord\Discord;
 use Discord\Factory\PartFactory;
 use Discord\Http\Http;
 use Discord\Wrapper\CacheWrapper;
+use React\Promise\Deferred;
+use React\Promise\Promise;
 
 /**
  * Contains constants for WebSocket events as well as handlers
  * for the events.
  */
-class Event
+abstract class Event
 {
     // General
     const READY                = 'READY';
@@ -94,40 +96,31 @@ class Event
     protected $cache;
 
     /**
+     * @var Discord
+     */
+    protected $discord;
+
+    /**
      * Event constructor.
      *
      * @param Http         $http
      * @param PartFactory  $partFactory
      * @param CacheWrapper $cache
+     * @param Discord      $discord
      */
-    public function __construct(Http $http, PartFactory $partFactory, CacheWrapper $cache)
+    public function __construct(Http $http, PartFactory $partFactory, CacheWrapper $cache, Discord $discord)
     {
         $this->http        = $http;
         $this->partFactory = $partFactory;
         $this->cache       = $cache;
+        $this->discord     = $discord;
     }
 
     /**
-     * Returns the formatted data.
+     * Transforms the given data, and updates the discord instance if necessary
      *
-     * @param array   $data    The data that was sent with the WebSocket.
-     * @param Discord $discord The Discord instance.
-     *
-     * @return mixed
+     * @param Deferred $deferred The promise to use
+     * @param array    $data     The data that was sent with the WebSocket
      */
-    public function getData($data, $discord)
-    {
-    }
-
-    /**
-     * Updates the Discord instance with the new data.
-     *
-     * @param mixed   $data
-     * @param Discord $discord
-     *
-     * @return Discord
-     */
-    public function updateDiscordInstance($data, $discord)
-    {
-    }
+    abstract public function handle(Deferred $deferred, array $data);
 }

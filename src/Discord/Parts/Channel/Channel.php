@@ -149,15 +149,19 @@ class Channel extends Part
      */
     public function getGuildAttribute()
     {
+        $deferred = new Deferred();
         if (is_null($this->guild_id)) {
-            return \React\Promise\reject(new \Exception('No guild ID set.'));
+            $deferred->reject(new \Exception('No guild ID set.'));
+
+            return $deferred->promise();
         }
 
         if ($guild = $this->cache->get("guild.{$this->guild_id}")) {
-            return \React\Promise\resolve($guild);
+            $deferred->resolve($guild);
+
+            return $deferred->promise();
         }
 
-        $deferred = new Deferred();
 
         $this->http->get("guilds/{$this->guild_id}")->then(function ($response) use ($deferred) {
             $guild = $this->partFactory->create(Guild::class, $response, true);

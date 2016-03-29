@@ -12,30 +12,21 @@
 namespace Discord\WebSockets\Events;
 
 use Discord\WebSockets\Event;
+use React\Promise\Deferred;
 
 /**
- * Event that is emitted wheh `MESSAGE_DELETE` is fired.
+ * Event that is emitted when `MESSAGE_DELETE` is fired.
  */
 class MessageDelete extends Event
 {
     /**
      * {@inheritdoc}
-     *
-     * @return Message The parsed data.
      */
-    public function getData($data, $discord)
-    {
-        return $data;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function updateDiscordInstance($data, $discord)
+    public function handle(Deferred $deferred, array $data)
     {
         $this->cache->remove("message.{$data->id}");
 
-        foreach ($discord->guilds as $index => $guild) {
+        foreach ($this->discord->guilds as $index => $guild) {
             foreach ($guild->channels as $cindex => $channel) {
                 if ($channel->id == $data->channel_id) {
                     $channel->messages->pull($data->id);
@@ -45,6 +36,6 @@ class MessageDelete extends Event
             }
         }
 
-        return $discord;
+        $deferred->resolve($data);
     }
 }

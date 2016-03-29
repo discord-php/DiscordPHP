@@ -16,6 +16,8 @@ use Discord\Parts\Guild\Guild;
 use Discord\Parts\User\Member;
 use Discord\WebSockets\Event;
 use Illuminate\Support\Collection;
+use React\Promise\Deferred;
+use React\Promise\Promise;
 
 /**
  * Event that is emitted when `GUILD_CREATE` is fired.
@@ -24,10 +26,8 @@ class GuildCreate extends Event
 {
     /**
      * {@inheritdoc}
-     *
-     * @return Guild The parsed data.
      */
-    public function getData($data, $discord)
+    public function handle(Deferred $deferred, array $data)
     {
         $guildPart = $this->partFactory->create(Guild::class, $data, true);
 
@@ -79,19 +79,9 @@ class GuildCreate extends Event
         }
 
         $guildPart->setCache('members', $members);
+        $this->cache->set("guild.{$data->id}", $guildPart);
+        $this->discord->guilds->push($guildPart);
 
-        return $guildPart;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function updateDiscordInstance($data, $discord)
-    {
-        $this->cache->set("guild.{$data->id}", $data);
-
-        $discord->guilds->push($data);
-
-        return $discord;
+        $deferred->resolve($guildPart);
     }
 }

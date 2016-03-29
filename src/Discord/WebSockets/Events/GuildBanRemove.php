@@ -14,6 +14,7 @@ namespace Discord\WebSockets\Events;
 use Discord\Parts\Guild\Ban;
 use Discord\Parts\Guild\Guild;
 use Discord\WebSockets\Event;
+use React\Promise\Deferred;
 
 /**
  * Event that is emitted when `GUILD_BAN_REMOVE` is fired.
@@ -22,35 +23,19 @@ class GuildBanRemove extends Event
 {
     /**
      * {@inheritdoc}
-     *
-     * @return Ban The parsed data.
      */
-    public function getData($data, $discord)
+    public function handle(Deferred $deferred, array $data)
     {
-        $guild = $discord->guilds->get('id', $data->guild_id);
+        $guild = $this->discord->guilds->get('id', $data->guild_id);
 
         if (is_null($guild)) {
             $guild = $this->partFactory->create(Guild::class, ['id' => $data->guild_id, 'name' => 'Unknown'], true);
         }
 
-        return $this->partFactory->create(
-            Ban::class,
-            [
-                'guild' => $guild,
-                'user'  => $data->user,
-            ],
-            true
-        );
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function updateDiscordInstance($data, $discord)
-    {
+        $this->partFactory->create(Ban::class, ['guild' => $guild, 'user'  => $data->user], true);
         $this->cache->remove("guild.{$data->guild_id}.bans.{$data->user_id}");
 
-        foreach ($discord->guilds as $index => $guild) {
+        foreach ($this->discord->guilds as $index => $guild) {
             if ($guild->id == $data->guild_id) {
                 foreach ($guild->bans as $bindex => $ban) {
                     if ($ban->user_id == $data->user_id) {
@@ -64,6 +49,6 @@ class GuildBanRemove extends Event
             }
         }
 
-        return $discord;
+        $deferred->resolve($data);
     }
 }

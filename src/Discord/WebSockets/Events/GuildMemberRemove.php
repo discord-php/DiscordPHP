@@ -13,38 +13,31 @@ namespace Discord\WebSockets\Events;
 
 use Discord\Parts\User\Member;
 use Discord\WebSockets\Event;
+use React\Promise\Deferred;
 
 /**
- * Event that is emitted wheh `GUILD_MEMBER_REMOVE` is fired.
+ * Event that is emitted when `GUILD_MEMBER_REMOVE` is fired.
  */
 class GuildMemberRemove extends Event
 {
     /**
      * {@inheritdoc}
-     *
-     * @return Member The parsed data.
      */
-    public function getData($data, $discord)
+    public function handle(Deferred $deferred, array $data)
     {
-        return $this->partFactory->create(Member::class, $data, true);
-    }
+        $data = $this->partFactory->create(Member::class, $data, true);
 
-    /**
-     * {@inheritdoc}
-     */
-    public function updateDiscordInstance($data, $discord)
-    {
         $this->cache->remove("guild.{$data->guild_id}.members.{$data->id}");
 
-        foreach ($discord->guilds as $index => $guild) {
+        foreach ($this->discord->guilds as $index => $guild) {
             if ($guild->id == $data->guild_id) {
                 $guild->members->pull($data->user->id);
-                --$guild->member_count;
+                $guild->member_count--;
 
                 break;
             }
         }
 
-        return $discord;
+        $deferred->resolve($data);
     }
 }

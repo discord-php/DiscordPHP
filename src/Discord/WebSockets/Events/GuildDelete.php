@@ -13,6 +13,7 @@ namespace Discord\WebSockets\Events;
 
 use Discord\Parts\Guild\Guild;
 use Discord\WebSockets\Event;
+use React\Promise\Deferred;
 
 /**
  * Event that is emitted when `GUILD_DELETE` is fired.
@@ -21,29 +22,18 @@ class GuildDelete extends Event
 {
     /**
      * {@inheritdoc}
-     *
-     * @return Guild The parsed data.
      */
-    public function getData($data, $discord)
+    public function handle(Deferred $deferred, array $data)
     {
-        $guildPart = $this->partFactory->create(Guild::class, $data, true);
+        $data = $this->partFactory->create(Guild::class, $data, true);
+        $this->cache->remove("guild.".$data->id);
 
-        return $guildPart;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function updateDiscordInstance($data, $discord)
-    {
-        $this->cache->remove("guild.{$data->id}");
-
-        foreach ($discord->guilds as $index => $guild) {
+        foreach ($this->discord->guilds as $index => $guild) {
             if ($guild->id == $data->id) {
-                $discord->guilds->pull($index);
+                $this->discord->guilds->pull($index);
             }
         }
 
-        return $discord;
+        $deferred->resolve($data);
     }
 }

@@ -13,27 +13,20 @@ namespace Discord\WebSockets\Events;
 
 use Discord\Parts\WebSockets\TypingStart as TypingStartPart;
 use Discord\WebSockets\Event;
+use React\Promise\Deferred;
 
 /**
- * Event that is emitted wheh `TYPING_START` is fired.
+ * Event that is emitted when `TYPING_START` is fired.
  */
 class TypingStart extends Event
 {
     /**
      * {@inheritdoc}
-     *
-     * @return TypingStartPart The parsed data.
      */
-    public function getData($data, $discord)
+    public function handle(Deferred $deferred, array $data)
     {
-        return $this->partFactory->create(TypingStartPart::class, $data, true);
-    }
+        $data = $this->partFactory->create(TypingStartPart::class, $data, true);
 
-    /**
-     * {@inheritdoc}
-     */
-    public function updateDiscordInstance($data, $discord)
-    {
-        return $discord;
+        $deferred->resolve($data);
     }
 }

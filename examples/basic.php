@@ -10,6 +10,7 @@
  */
 
 use Discord\Discord;
+use Discord\Parts\Channel\Message;
 use Discord\WebSockets\Event;
 
 // Includes the Composer autoload file
@@ -43,18 +44,21 @@ $ws->on(
         // Here we will just log all messages.
         $ws->on(
             Event::MESSAGE_CREATE,
-            function ($message, $discord, $newdiscord) {
-                // We are just checking if the message equils to ping and replying to the user with a pong!
+            function ($message) {
+                /** @var Message $message */
+
+                // We are just checking if the message equals to ping and replying to the user with a pong!
                 if ($message->content == 'ping') {
                     $message->reply('pong!');
                 }
 
+                //dump($message->channel->guild);
+
                 $reply = $message->timestamp->format('d/m/y H:i:s').' - '; // Format the message timestamp.
-                $reply .= ($message->full_channel->is_private ? 'PM' : $message->full_channel->guild->name).' - ';
+                $reply .= ($message->channel->is_private ? 'PM' : $message->channel->guild->name).' - ';
                 $reply .= $message->author->username.' - '; // Add the message author's username onto the string.
                 $reply .= $message->content; // Add the message content.
                 echo $reply.PHP_EOL; // Finally, echo the message with a PHP end of line.
-
             }
         );
     }
