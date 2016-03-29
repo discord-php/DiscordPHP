@@ -26,7 +26,7 @@ class ChannelCreate extends Event
     public function handle(Deferred $deferred, array $data)
     {
         $data = $this->partFactory->create(Channel::class, $data, true);
-        $this->cache->set("channel.".$data->id, $data);
+        $this->cache->set('channel.'.$data->id, $data);
 
         foreach ($this->discord->guilds as $index => $guild) {
             if ($guild->id === $data->guild_id) {

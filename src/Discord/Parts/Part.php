@@ -12,7 +12,6 @@
 namespace Discord\Parts;
 
 use ArrayAccess;
-use Discord\Exceptions\DiscordRequestFailedException;
 use Discord\Exceptions\PartRequestFailedException;
 use Discord\Factory\PartFactory;
 use Discord\Http\Http;
@@ -161,8 +160,8 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
      * @param PartFactory  $partFactory
      * @param Http         $http
      * @param CacheWrapper $cache
-     * @param array        $attributes An array of attributes to build the part.
-     * @param bool         $created    Whether the part has already been created.
+     * @param array        $attributes  An array of attributes to build the part.
+     * @param bool         $created     Whether the part has already been created.
      */
     public function __construct(
         PartFactory $partFactory,

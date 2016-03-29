@@ -91,7 +91,7 @@ class Message extends Part
         );
     }
 
-    public function getFullChannel(Callable $callback)
+    public function getFullChannel(callable $callback)
     {
         return $this->getFullChannelAttribute()->then($callback);
     }
@@ -116,7 +116,6 @@ class Message extends Part
             $deferred->resolve($channel);
         }, \React\Partial\bind_right($this->reject, $deferred));
 
-        
         return $deferred->promise();
     }
 
