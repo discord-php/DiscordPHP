@@ -279,7 +279,7 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
                 return $repository;
             }
 
-            $class = $this->repositories[$key];
+            $class     = $this->repositories[$key];
             $namespace = str_replace('\\', '', $class);
 
             return $this->cache->set(
