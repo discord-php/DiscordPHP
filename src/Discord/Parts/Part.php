@@ -33,11 +33,6 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
     protected $partFactory;
 
     /**
-     * @var Http
-     */
-    protected $http;
-
-    /**
      * @var CacheWrapper
      */
     protected $cache;
@@ -48,13 +43,6 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
      * @var array The array of attributes that can be mass-assigned.
      */
     protected $fillable = [];
-
-    /**
-     * Extra fillable defined by the base part.
-     *
-     * @var array Extra attributes that can be mass-assigned.
-     */
-    protected $extra_fillable = [];
 
     /**
      * The parts attributes.
@@ -78,25 +66,18 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
     protected $hidden = [];
 
     /**
-     * URIs used to get/create/update/delete the part.
+     * An array of repositories that can exist in a part.
      *
-     * @var array Contains URIs to modify the part.
+     * @var array Repositories.
      */
-    protected $uris = [];
+    protected $repositories = [];
 
     /**
      * Is the part already created in the Discord servers?
      *
      * @var bool Whether the part has been created.
      */
-    protected $created = false;
-
-    /**
-     * Is the part deleted in the Discord servers?
-     *
-     * @var bool Whether the part has been deleted.
-     */
-    protected $deleted = false;
+    public $created = false;
 
     /**
      * The regex pattern to replace variables with.
@@ -104,34 +85,6 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
      * @var string The regex which is used to replace placeholders.
      */
     protected $regex = '/:([a-z_]+)/';
-
-    /**
-     * Is the part findable?
-     *
-     * @var bool Whether the part is findable.
-     */
-    public $findable = true;
-
-    /**
-     * Is the part creatable?
-     *
-     * @var bool Whether the part is creatable.
-     */
-    public $creatable = true;
-
-    /**
-     * Is the part deletable?
-     *
-     * @var bool Whether the part is deletable.
-     */
-    public $deletable = true;
-
-    /**
-     * Is the part editable?
-     *
-     * @var bool Whether the part is editable.
-     */
-    public $editable = true;
 
     /**
      * Should we fill the part after saving?
@@ -200,7 +153,7 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
     public function fill($attributes)
     {
         foreach ($attributes as $key => $value) {
-            if (in_array($key, $this->fillable + $this->extra_fillable)) {
+            if (in_array($key, $this->fillable)) {
                 $this->setAttribute($key, $value);
             }
         }
@@ -222,89 +175,6 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
         $this->http->get($this->get)->then(
             function ($response) {
                 $this->fill($response);
-            },
-            \React\Partial\bind_right($this->reject, $deferred)
-        );
-
-        return $deferred->promise();
-    }
-
-    /**
-     * Saves the part to the Discord servers.
-     *
-     * @throws PartRequestFailedException
-     *
-     * @return bool Whether the attempt to save the part succeeded or failed.
-     */
-    public function save()
-    {
-        $deferred = new Deferred();
-
-        $attributes = $this->created ? $this->getUpdatableAttributes() : $this->getCreatableAttributes();
-
-        if ($this->created) {
-            if (! $this->editable) {
-                return \React\Promise\reject(new \Exception('You cannot edit a non-editable part.'));
-            }
-
-            $this->http->post(
-                $this->replaceWithVariables($this->uris['update']),
-                $attributes
-            )->then(
-                function () use ($deferred) {
-                    $deferred->resolve(true);
-                },
-                \React\Partial\bind_right($this->reject, $deferred)
-            );
-        } else {
-            if (! $this->creatable) {
-                return \React\Promise\reject(new \Exception('You cannot create a non-creatable part.'));
-            }
-
-            $this->http->post(
-                $this->replaceWithVariables($this->uris['create']),
-                $attributes
-            )->then(
-                function () use ($deferred) {
-                    $this->created = true;
-                    $this->deleted = false;
-
-                    $deferred->resolve(true);
-                },
-                \React\Partial\bind_right($this->reject, $deferred)
-            );
-        }
-
-        if ($this->fillAfterSave) {
-            $this->fill($request);
-        }
-
-        return $deferred->promise();
-    }
-
-    /**
-     * Deletes the part on the Discord servers.
-     *
-     * @throws PartRequestFailedException
-     *
-     * @return \React\Promise\Promise Whether the attempt to delete the part succeeded or failed.
-     */
-    public function delete()
-    {
-        if (! $this->deletable) {
-            return \React\Promise\reject(new \Exception('You cannot delete a non-deletable part.'));
-        }
-
-        $deferred = new Deferred();
-
-        $this->http->delete(
-            $this->replaceWithVariables($this->uris['delete'])
-        )->then(
-            function () use ($deferred) {
-                $this->created = false;
-                $this->deleted = true;
-
-                $deferred->resolve(true);
             },
             \React\Partial\bind_right($this->reject, $deferred)
         );
@@ -405,6 +275,24 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
      */
     public function getAttribute($key)
     {
+        if (isset($this->repositories[$key])) {
+            if ($repository = $this->cache->get("repositories.{$this->id}.{$key}")) {
+                return $repository;
+            }
+
+            $className = $this->repositories[$key];
+
+            return $this->cache->set(
+                "repositories.{$className}.{$this->id}.{$key}",
+                new $className(
+                    $this->http,
+                    $this->cache,
+                    $this->partFactory,
+                    $this->attributes
+                )
+            );
+        }
+
         if ($str = $this->checkForMutator($key, 'get')) {
             return $this->{$str}();
         }
@@ -426,6 +314,19 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
      */
     public function setAttribute($key, $value)
     {
+        if (isset($this->repositories[$key])) {
+            if (!($value instanceof $this->repositories[$key])) {
+                return;
+            }
+
+            $this->cache->set(
+                "repositories.{$this->id}.{$key}",
+                $value
+            );
+
+            return;
+        }
+
         if ($str = $this->checkForMutator($key, 'set')) {
             $this->{$str}($value);
 
@@ -574,6 +475,16 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
         }
 
         return $data;
+    }
+
+    /**
+     * Gets the attributes to pass to repositories.
+     *
+     * @return array Attributes.
+     */
+    public function getRepositoryAttributes()
+    {
+        return $this->attributes;
     }
 
     /**

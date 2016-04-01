@@ -17,6 +17,10 @@ use Discord\Parts\Part;
 use Discord\Parts\Permissions\RolePermission as Permission;
 use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
+use Discord\Repository\Guild\ChannelRepository;
+use Discord\Repository\Guild\InviteRepository;
+use Discord\Repository\Guild\MemberRepository;
+use Discord\Repository\Guild\RoleRepository;
 use Illuminate\Support\Collection;
 use React\Promise\Deferred;
 
@@ -79,12 +83,11 @@ class Guild extends Part
     /**
      * {@inheritdoc}
      */
-    protected $uris = [
-        'get'    => 'guilds/:id',
-        'create' => 'guilds',
-        'update' => 'guilds/:id',
-        'delete' => 'guilds/:id',
-        'leave'  => 'users/@me/guilds/:id',
+    protected $repositories = [
+        'members'  => MemberRepository::class,
+        'chnanels' => ChannelRepository::class,
+        'invites'  => InviteRepository::class,
+        'roles'    => RoleRepository::class,
     ];
 
     /**
@@ -165,57 +168,6 @@ class Guild extends Part
     }
 
     /**
-     * Returns the guilds members.
-     *
-     * @return Collection A collection of members.
-     */
-    public function getMembersAttribute()
-    {
-        if ($members = $this->cache->get("guild.{$this->id}.members")) {
-            return $members;
-        }
-
-        // Members aren't retrievable via REST anymore,
-        // they will be set if the websocket is used.
-        $this->cache->set("guild.{$this->id}.members", new Collection());
-
-        return $this->cache->get("guild.{$this->id}.members");
-    }
-
-    /**
-     * Returns the guilds roles.
-     *
-     * @return Collection A collection of roles.
-     */
-    public function getRolesAttribute()
-    {
-        if (isset($this->attributes_cache['roles'])) {
-            return $this->attributes_cache['roles'];
-        }
-
-        if ($roles = $this->cache->get("guild.{$this->id}.roles")) {
-            return $roles;
-        }
-
-        $roles = [];
-
-        foreach ($this->attributes['roles'] as $index => $role) {
-            $perm                = $this->partFactory->create(Permission::class);
-            $perm->perms         = $role->permissions;
-            $role                = (array) $role;
-            $role['permissions'] = $perm;
-            $role['guild_id']    = $this->id;
-            $roles[$index]       = $this->partFactory->create(Role::class, $role, true);
-        }
-
-        $roles = new Collection($roles);
-
-        $this->cache->set("guild.{$this->id}.roles", $roles);
-
-        return $roles;
-    }
-
-    /**
      * Returns the owner.
      *
      * @return User An User part.
@@ -233,36 +185,6 @@ class Guild extends Part
             $this->cache->set("user.{$user->id}", $owner);
 
             $deferred->resolve();
-        }, \React\Partial\bind_right($this->reject, $deferred));
-
-        return $deferred->promise();
-    }
-
-    /**
-     * Returns the guilds channels.
-     *
-     * @return Collection A collection of channels.
-     */
-    public function getChannelsAttribute()
-    {
-        if ($channels = $this->cache->get("guild.{$this->id}.channels")) {
-            return \React\Promise\resolve($channels);
-        }
-
-        $deferred = new Deferred();
-
-        $this->http->get($this->replaceWithVariables('guilds/:id/channels'))->then(function ($response) use ($deferred) {
-            $channels = new Collection();
-
-            foreach ($response as $index => $channel) {
-                $channel = $this->partFactory->create(Channel::class, $channel, true);
-                $this->cache->set("channel.{$channel->id}", $channel);
-                $channels[$index] = $channel;
-            }
-
-            $this->cache->set($key, $channels);
-
-            $deferred->resolve($channels);
         }, \React\Partial\bind_right($this->reject, $deferred));
 
         return $deferred->promise();
@@ -295,35 +217,6 @@ class Guild extends Part
             $this->cache->set("guild.{$this->id}.bans", $bans);
 
             $deferred->resolve($bans);
-        }, \React\Partial\bind_right($this->reject, $deferred));
-
-        return $deferred->promise();
-    }
-
-    /**
-     * Returns the guilds invites.
-     *
-     * @return Collection A collection of invites.
-     */
-    public function getInvitesAttribute()
-    {
-        if ($invites = $this->cache->get("guild.{$this->id}.invites")) {
-            return \React\Promise\resolve($invites);
-        }
-
-        $deferred = new Deferred();
-
-        $this->http->get($this->replaceWithVariables('guilds/:id/invites'))->then(function ($response) use ($deferred) {
-            $invites = new Collection();
-
-            foreach ($response as $index => $invite) {
-                $invite = $this->partFactory->create(Invite::class, $invite, true);
-                $this->cache->set("invite.{$invite->id}", $invite);
-                $invites[$index] = $invite;
-            }
-
-            $this->cache->set("guild.{$this->id}.invites", $invites);
-            $deferred->resolve($invites);
         }, \React\Partial\bind_right($this->reject, $deferred));
 
         return $deferred->promise();
@@ -425,6 +318,16 @@ class Guild extends Part
             'verification_level' => $this->verification_level,
             'afk_channel_id'     => $this->afk_channel_id,
             'afk_timeout'        => $this->afk_timeout,
+        ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getRepositoryAttributes()
+    {
+        return [
+            'guild_id' => $this->id,
         ];
     }
 }

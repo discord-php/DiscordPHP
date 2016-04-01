@@ -38,8 +38,4 @@ class UserRepository extends AbstractRepository
 
         return $this->cache->set($key, $user);
     }
-
-    public function findOne(array $parameters)
-    {
-    }
 }

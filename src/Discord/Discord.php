@@ -228,7 +228,7 @@ class Discord
     /**
      * @return WebSocket
      */
-    public function getWebsocket()
+    public function getWebSocket()
     {
         return $this->get('websocket');
     }

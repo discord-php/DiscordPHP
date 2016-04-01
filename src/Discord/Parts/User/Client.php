@@ -15,6 +15,7 @@ use Discord\Exceptions\FileNotFoundException;
 use Discord\Exceptions\PasswordEmptyException;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Part;
+use Discord\Repository\GuildRepository;
 use Discord\WebSockets\WebSocket;
 use Illuminate\Support\Collection;
 use React\Promise\Deferred;
@@ -43,6 +44,13 @@ class Client extends Part
      * {@inheritdoc}
      */
     protected $fillable = ['id', 'username', 'password', 'email', 'verified', 'avatar', 'discriminator', 'bot'];
+
+    /**
+     * {@inheritdoc}
+     */
+    protected $repositories = [
+        'guilds' => GuildRepository::class,
+    ];
 
     /**
      * {@inheritdoc}
@@ -128,35 +136,6 @@ class Client extends Part
         );
 
         return true;
-    }
-
-    /**
-     * Returns an array of Guilds.
-     *
-     * @return Collection A collection of guilds.
-     */
-    public function getGuildsAttribute()
-    {
-        if (isset($this->attributes_cache['guilds'])) {
-            return \React\Promise\resolve($this->attributes_cache['guilds']);
-        }
-
-        $deferred = new Deferred();
-
-        $this->http->get('users/@me/guilds')->then(function ($response) use ($deferred) {
-            $guilds = new Collection();
-
-            foreach ($response as $index => $guild) {
-                $guild = $this->partFactory->create(Guild::class, $guild, true);
-                $this->cache->set("guild.{$guild->id}", $guild);
-                $guilds[$index] = $guild;
-            }
-
-            $this->attributes_cache['guilds'] = $guilds;
-            $deferred->resolve($guilds);
-        }, \React\Partial\bind_right($this->reject, $deferred));
-
-        return $deferred->promise();
     }
 
     /**
