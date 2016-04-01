@@ -275,15 +275,16 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
     public function getAttribute($key)
     {
         if (isset($this->repositories[$key])) {
-            if ($repository = $this->cache->get("repositories.{$this->id}.{$key}")) {
+            $className = str_replace('\\', '', $this->repositories[$key]);
+
+            if ($repository = $this->cache->get("repositories.{$className}.{$this->id}.{$key}")) {
                 return $repository;
             }
 
             $class = $this->repositories[$key];
-            $namespace = str_replace('\\', '', $class);
 
             return $this->cache->set(
-                "repositories.{$namespace}.{$this->id}.{$key}",
+                "repositories.{$className}.{$this->id}.{$key}",
                 new $class(
                     $this->http,
                     $this->cache,

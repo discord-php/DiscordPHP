@@ -274,4 +274,14 @@ abstract class AbstractRepository extends Collection implements RepositoryInterf
 
         return $string;
     }
+
+    /**
+     * Handles debug calls from var_dump and similar functions.
+     *
+     * @return array An array of attributes.
+     */
+    public function __debugInfo()
+    {
+        return $this->all();
+    }
 }
