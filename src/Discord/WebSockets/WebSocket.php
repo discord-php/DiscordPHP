@@ -19,7 +19,6 @@ use Discord\Http\Http;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Guild\Role;
-use Discord\Parts\Permissions\RolePermission as Permission;
 use Discord\Parts\User\Member;
 use Discord\Repository\GuildRepository;
 use Discord\Repository\Guild\ChannelRepository;
@@ -28,7 +27,6 @@ use Discord\Repository\Guild\RoleRepository;
 use Discord\Voice\VoiceClient;
 use Discord\Wrapper\CacheWrapper;
 use Evenement\EventEmitter;
-use Illuminate\Support\Collection;
 use Ratchet\Client\Connector as WsFactory;
 use Ratchet\Client\WebSocket as WebSocketInstance;
 use Ratchet\RFC6455\Messaging\Frame;
@@ -313,7 +311,7 @@ class WebSocket extends EventEmitter
                     // Invalid Session
                     case 9:
                         $this->ws->close(4006, 'invalid session - opcode 9');
-                        
+
                         break;
                 }
 
@@ -943,6 +941,6 @@ class WebSocket extends EventEmitter
         $response = $this->http->get('gateway', null, null, null, true);
 
         // $this->gateway = $response->url;
-        $this->gateway = "wss://gateway.discord.gg/?v=4";
+        $this->gateway = 'wss://gateway.discord.gg/?v=4';
     }
 }

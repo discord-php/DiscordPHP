@@ -12,9 +12,7 @@
 namespace Discord\Parts\Guild;
 
 use Discord\Exceptions\PartRequestFailedException;
-use Discord\Parts\Channel\Channel;
 use Discord\Parts\Part;
-use Discord\Parts\Permissions\RolePermission as Permission;
 use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
 use Discord\Repository\Guild\ChannelRepository;
