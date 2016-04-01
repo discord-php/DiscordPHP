@@ -258,11 +258,9 @@ class WebSocket extends EventEmitter
      */
     public function handleWebSocketConnection(WebSocketInstance $ws)
     {
-        $data = null;
-
         $ws->on(
             'message',
-            function ($message, $ws) use (&$data) {
+            function ($message, $ws) {
                 if ($message->isBinary()) {
                     if ($this->useEtf) {
                         $data = $this->etf->unpack($message->getPayload());
@@ -273,8 +271,6 @@ class WebSocket extends EventEmitter
                 } else {
                     $data = $message->getPayload();
                 }
-
-                dump('length: '.strlen($data));
 
                 $data = json_decode($data);
                 $this->emit('raw', [$data, $this->discord]);
@@ -662,8 +658,6 @@ class WebSocket extends EventEmitter
             return;
         }
 
-        dump('chunk');
-
         foreach ($this->discord->guilds as $index => $guild) {
             if ($guild->id == $data->d->guild_id) {
                 if (is_null($guild)) {
@@ -902,7 +896,7 @@ class WebSocket extends EventEmitter
                         '$referrer'         => 'https://github.com/teamreflex/DiscordPHP',
                         '$referring_domain' => 'https://github.com/teamreflex/DiscordPHP',
                     ],
-                    'large_threshold' => 100,
+                    'large_threshold' => 250,
                     'compress'        => true,
                 ],
             ]
@@ -918,7 +912,6 @@ class WebSocket extends EventEmitter
      */
     public function send($data)
     {
-        dump($data);
         if ($this->useEtf) {
             $etf   = $this->etf->pack($data);
             $frame = new Frame($etf, true, 2);
