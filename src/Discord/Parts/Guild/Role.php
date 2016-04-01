@@ -66,9 +66,9 @@ class Role extends Part
     public function setPermissionsAttribute($permission)
     {
         if (! $permission instanceof Permission) {
-            $perm = $this->partFactory->create(RolePermission::class);
+            $perm        = $this->partFactory->create(RolePermission::class);
             $perm->perms = $permission;
-            $permission = $perm;
+            $permission  = $perm;
         }
 
         $this->attributes['permissions'] = $permission;

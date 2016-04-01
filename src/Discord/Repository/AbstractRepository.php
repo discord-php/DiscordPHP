@@ -12,10 +12,8 @@
 namespace Discord\Repository;
 
 use Discord\Factory\PartFactory;
-use Discord\Guzzle;
 use Discord\Http\Http;
 use Discord\Parts\Part;
-use Discord\Repository\RepositoryInterface;
 use Discord\Wrapper\CacheWrapper;
 use Illuminate\Support\Collection;
 use React\Promise\Deferred;
@@ -67,7 +65,7 @@ abstract class AbstractRepository extends Collection implements RepositoryInterf
      * @param Http         $http
      * @param CacheWrapper $cache
      * @param PartFactory  $partFactory
-     * @param array        $vars 
+     * @param array        $vars
      */
     public function __construct(Http $http, CacheWrapper $cache, PartFactory $partFactory, $vars = [])
     {
@@ -152,16 +150,16 @@ abstract class AbstractRepository extends Collection implements RepositoryInterf
     public function save(Part &$part)
     {
         if ($part->created) {
-            $method = 'patch';
-            $endpoint = $part->replaceWithVariables($this->replaceWithVariables(@$this->endpoints['update']));
+            $method     = 'patch';
+            $endpoint   = $part->replaceWithVariables($this->replaceWithVariables(@$this->endpoints['update']));
             $attributes = $part->getCreatableAttributes();
 
             if (! isset($this->endpoints['update'])) {
                 return \React\Promise\reject(new \Exception('You cannot update this part.'));
             }
         } else {
-            $method = 'post';
-            $endpoint = $part->replaceWithVariables($this->replaceWithVariables(@$this->endpoints['create']));
+            $method     = 'post';
+            $endpoint   = $part->replaceWithVariables($this->replaceWithVariables(@$this->endpoints['create']));
             $attributes = $part->getUpdatableAttributes();
 
             if (! isset($this->endpoints['create'])) {

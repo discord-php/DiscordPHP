@@ -12,7 +12,6 @@
 namespace Discord\Parts;
 
 use ArrayAccess;
-use Discord\Exceptions\PartRequestFailedException;
 use Discord\Factory\PartFactory;
 use Discord\Http\Http;
 use Discord\Wrapper\CacheWrapper;
@@ -315,7 +314,7 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
     public function setAttribute($key, $value)
     {
         if (isset($this->repositories[$key])) {
-            if (!($value instanceof $this->repositories[$key])) {
+            if (! ($value instanceof $this->repositories[$key])) {
                 return;
             }
 

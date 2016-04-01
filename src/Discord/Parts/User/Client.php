@@ -13,12 +13,9 @@ namespace Discord\Parts\User;
 
 use Discord\Exceptions\FileNotFoundException;
 use Discord\Exceptions\PasswordEmptyException;
-use Discord\Parts\Guild\Guild;
 use Discord\Parts\Part;
 use Discord\Repository\GuildRepository;
 use Discord\WebSockets\WebSocket;
-use Illuminate\Support\Collection;
-use React\Promise\Deferred;
 
 /**
  * The client is the main interface for the client. Most calls on the main class are forwarded here.
