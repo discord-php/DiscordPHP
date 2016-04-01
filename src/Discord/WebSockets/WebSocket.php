@@ -333,7 +333,7 @@ class WebSocket extends EventEmitter
             'close',
             function ($op, $reason) {
                 if ($op instanceof Stream) {
-                    $op     = 0;
+                    $op     = 1006;
                     $reason = 'PHP Stream closed.';
                 }
 
@@ -402,6 +402,7 @@ class WebSocket extends EventEmitter
                 [
                     'op' => 6,
                     'd'  => [
+                        'token'      => $this->token,
                         'session_id' => $this->sessionId,
                         'seq'        => $this->seq,
                     ],
@@ -657,8 +658,6 @@ class WebSocket extends EventEmitter
     {
         $members = $data->d->members;
 
-        dump('dam chunk');
-
         if (count($this->largeServers) === 0) {
             return;
         }
@@ -715,7 +714,7 @@ class WebSocket extends EventEmitter
         $handler = new $handlerSettings['class']($this->http, $this->partFactory, $this->cache, $this->discord);
 
         $deferred = new Deferred();
-        $handler->handle($deferred, (array) $data->d);
+        $handler->handle($deferred, $data->d);
 
         $deferred->promise()->then(
             function ($handlerData) use ($data, $handlerSettings) {

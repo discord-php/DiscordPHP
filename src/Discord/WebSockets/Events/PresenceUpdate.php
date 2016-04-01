@@ -23,7 +23,7 @@ class PresenceUpdate extends Event
     /**
      * {@inheritdoc}
      */
-    public function handle(Deferred $deferred, array $data)
+    public function handle(Deferred $deferred, $data)
     {
         $data = $this->partFactory->create(PresenceUpdatePart::class, $data, true);
 

@@ -22,7 +22,7 @@ class GuildRoleDelete extends Event
     /**
      * {@inheritdoc}
      */
-    public function handle(Deferred $deferred, array $data)
+    public function handle(Deferred $deferred, $data)
     {
         $this->cache->remove("guild.{$data->guild_id}.roles.{$data->role_id}");
 

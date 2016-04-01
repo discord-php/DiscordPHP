@@ -279,11 +279,12 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
                 return $repository;
             }
 
-            $className = $this->repositories[$key];
+            $class = $this->repositories[$key];
+            $namespace = str_replace('\\', '', $class);
 
             return $this->cache->set(
-                "repositories.{$className}.{$this->id}.{$key}",
-                new $className(
+                "repositories.{$namespace}.{$this->id}.{$key}",
+                new $class(
                     $this->http,
                     $this->cache,
                     $this->partFactory,
@@ -318,8 +319,10 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
                 return;
             }
 
+            $className = str_replace('\\', '', $this->repositories[$key]);
+
             $this->cache->set(
-                "repositories.{$this->id}.{$key}",
+                "repositories.{$className}.{$this->id}.{$key}",
                 $value
             );
 

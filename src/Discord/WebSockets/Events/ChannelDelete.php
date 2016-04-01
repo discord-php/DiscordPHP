@@ -23,7 +23,7 @@ class ChannelDelete extends Event
     /**
      * {@inheritdoc}
      */
-    public function handle(Deferred $deferred, array $data)
+    public function handle(Deferred $deferred, $data)
     {
         $data = $this->partFactory->create(Channel::class, $data, true);
         $this->cache->remove('channel.'.$data->id);

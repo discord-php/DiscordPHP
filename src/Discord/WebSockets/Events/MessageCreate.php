@@ -23,7 +23,7 @@ class MessageCreate extends Event
     /**
      * {@inheritdoc}
      */
-    public function handle(Deferred $deferred, array $data)
+    public function handle(Deferred $deferred, $data)
     {
         /** @var Message $data */
         $data = $this->partFactory->create(Message::class, $data, true);

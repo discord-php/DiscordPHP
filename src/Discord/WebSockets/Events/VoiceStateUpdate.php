@@ -22,10 +22,8 @@ class VoiceStateUpdate extends Event
     /**
      * {@inheritdoc}
      */
-    public function handle(Deferred $deferred, array $data)
+    public function handle(Deferred $deferred, $data)
     {
-        $data = json_decode(json_encode($data)); // this is the worst i am so sorry but it's late
-
         foreach ($this->discord->guilds as $index => $guild) {
             if ($guild->id == $data->guild_id) {
                 $member = array_key_exists($data->user_id, $guild->members) ? $guild->members[$data->user_id] : null;
