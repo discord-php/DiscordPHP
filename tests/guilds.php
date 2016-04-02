@@ -14,7 +14,7 @@ use Discord\Parts\Guild\Guild;
 startTest('Create Guild');
 
 $createAttributes = [
-    'name' => 'DiscordPHP Unit Tests',
+    'name'   => 'DiscordPHP Unit Tests',
     'region' => Guild::REGION_SYDNEY,
 ];
 
@@ -33,8 +33,8 @@ pass();
 startTest('Edit Guild');
 
 $updateAttributes = [
-    'name' => 'DiscordPHP Unit Tests - Edited',
-    'region' => Guild::REGION_SINGAPORE,
+    'name'               => 'DiscordPHP Unit Tests - Edited',
+    'region'             => Guild::REGION_SINGAPORE,
     'verification_level' => Guild::LEVEL_TABLEFLIP,
 ];
 $guild->fill($updateAttributes);

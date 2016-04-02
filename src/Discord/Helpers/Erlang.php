@@ -87,7 +87,7 @@ class OtpErlangAtom
     public function __construct($value, $utf8 = false)
     {
         $this->value = $value;
-        $this->utf8 = $utf8;
+        $this->utf8  = $utf8;
     }
     public function binary()
     {
@@ -129,7 +129,7 @@ class OtpErlangList
     public $improper;
     public function __construct($value, $improper = false)
     {
-        $this->value = $value;
+        $this->value    = $value;
         $this->improper = $improper;
     }
     public function binary()
@@ -175,7 +175,7 @@ class OtpErlangBinary
     public function __construct($value, $bits = 8)
     {
         $this->value = $value;
-        $this->bits = $bits;
+        $this->bits  = $bits;
     }
     public function binary()
     {
@@ -205,7 +205,7 @@ class OtpErlangFunction
     public $value;
     public function __construct($tag, $value)
     {
-        $this->tag = $tag;
+        $this->tag   = $tag;
         $this->value = $value;
     }
     public function binary()
@@ -226,8 +226,8 @@ class OtpErlangReference
     public $creation;
     public function __construct($node, $id, $creation)
     {
-        $this->node = $node;
-        $this->id = $id;
+        $this->node     = $node;
+        $this->id       = $id;
         $this->creation = $creation;
     }
     public function binary()
@@ -255,8 +255,8 @@ class OtpErlangPort
     public $creation;
     public function __construct($node, $id, $creation)
     {
-        $this->node = $node;
-        $this->id = $id;
+        $this->node     = $node;
+        $this->id       = $id;
         $this->creation = $creation;
     }
     public function binary()
@@ -279,9 +279,9 @@ class OtpErlangPid
     public $creation;
     public function __construct($node, $id, $serial, $creation)
     {
-        $this->node = $node;
-        $this->id = $id;
-        $this->serial = $serial;
+        $this->node     = $node;
+        $this->id       = $id;
+        $this->serial   = $serial;
         $this->creation = $creation;
     }
     public function binary()
@@ -305,12 +305,12 @@ class OtpErlangMap
     }
     public function binary()
     {
-        $arity = count($this->pairs);
+        $arity       = count($this->pairs);
         $term_packed = '';
         foreach ($this->pairs as $pair) {
             list($key, $value) = $pair;
-            $key_packed = _term_to_binary($key);
-            $value_packed = _term_to_binary($value);
+            $key_packed        = _term_to_binary($key);
+            $value_packed      = _term_to_binary($value);
             $term_packed .= $key_packed.$value_packed;
         }
 
@@ -372,7 +372,7 @@ function term_to_binary($term, $compressed = false)
         if ($compressed < 0 || $compressed > 9) {
             throw new InputException('compressed in [0..9]');
         }
-        $data_compressed = gzcompress($data_uncompressed, $compressed);
+        $data_compressed   = gzcompress($data_uncompressed, $compressed);
         $size_uncompressed = strlen($data_uncompressed);
 
         return pack('CCN', TAG_VERSION, TAG_COMPRESSED_ZLIB,
@@ -422,7 +422,7 @@ function _binary_to_term($i, $data)
         case TAG_REFERENCE_EXT:
         case TAG_PORT_EXT:
             list($i, $node) = _binary_to_atom($i, $data);
-            $id = substr($data, $i, 4);
+            $id             = substr($data, $i, 4);
             $i += 4;
             $creation = $data[$i];
             $i += 1;
@@ -433,7 +433,7 @@ function _binary_to_term($i, $data)
             }
         case TAG_PID_EXT:
             list($i, $node) = _binary_to_atom($i, $data);
-            $id = substr($data, $i, 4);
+            $id             = substr($data, $i, 4);
             $i += 4;
             $serial = substr($data, $i, 4);
             $i += 4;
@@ -462,12 +462,12 @@ function _binary_to_term($i, $data)
         case TAG_LIST_EXT:
             list(, $arity) = unpack('N', substr($data, $i, 4));
             $i += 4;
-            list($i, $tmp) = _binary_to_term_sequence($i, $arity, $data);
+            list($i, $tmp)  = _binary_to_term_sequence($i, $arity, $data);
             list($i, $tail) = _binary_to_term($i, $data);
             if (get_class($tail) != __NAMESPACE__.'\OtpErlangList' or
                 $tail->value != []) {
                 $tmp[] = $tail;
-                $tmp = new OtpErlangList($tmp, true);
+                $tmp   = new OtpErlangList($tmp, true);
             } else {
                 $tmp = new OtpErlangList($tmp);
             }
@@ -488,11 +488,11 @@ function _binary_to_term($i, $data)
                 list(, $j) = unpack('N', substr($data, $i, 4));
                 $i += 4;
             }
-            $sign = ord($data[$i]);
+            $sign   = ord($data[$i]);
             $bignum = 0;
             if ($j > 0) {
                 foreach (range(0, $j - 1) as $bignum_index) {
-                    $digit = ord($data[$i + $j - $bignum_index]);
+                    $digit  = ord($data[$i + $j - $bignum_index]);
                     $bignum = $bignum * 256 + $digit;
                 }
             }
@@ -508,8 +508,8 @@ function _binary_to_term($i, $data)
             return [$i + $size,
                          new OtpErlangFunction($tag, substr($data, $i, $size)), ];
         case TAG_EXPORT_EXT:
-            $old_i = $i;
-            list($i, $module) = _binary_to_atom($i, $data);
+            $old_i              = $i;
+            list($i, $module)   = _binary_to_atom($i, $data);
             list($i, $function) = _binary_to_atom($i, $data);
             if (ord($data[$i]) != TAG_SMALL_INTEGER_EXT) {
                 throw new ParseException('invalid small integer tag');
@@ -527,7 +527,7 @@ function _binary_to_term($i, $data)
             $j *= 4;
             $i += 2;
             list($i, $node) = _binary_to_atom($i, $data);
-            $creation = $data[$i];
+            $creation       = $data[$i];
             $i += 1;
             $id = substr($data, $i, $j);
 
@@ -552,22 +552,22 @@ function _binary_to_term($i, $data)
             $pairs = [];
             if ($arity > 0) {
                 foreach (range(0, $arity - 1) as $arity_index) {
-                    list($i, $key) = _binary_to_term($i, $data);
+                    list($i, $key)   = _binary_to_term($i, $data);
                     list($i, $value) = _binary_to_term($i, $data);
-                    $pairs[] = [$key, $value];
+                    $pairs[]         = [$key, $value];
                 }
             }
 
             return [$i, new OtpErlangMap($pairs)];
         case TAG_FUN_EXT:
-            $old_i = $i;
+            $old_i           = $i;
             list(, $numfree) = unpack('N', substr($data, $i, 4));
             $i += 4;
-            list($i, $pid) = _binary_to_pid($i, $data);
+            list($i, $pid)         = _binary_to_pid($i, $data);
             list($i, $name_module) = _binary_to_atom($i, $data);
-            list($i, $index) = _binary_to_integer($i, $data);
-            list($i, $uniq) = _binary_to_integer($i, $data);
-            list($i, $free) = _binary_to_term_sequence($i, $numfree, $data);
+            list($i, $index)       = _binary_to_integer($i, $data);
+            list($i, $uniq)        = _binary_to_integer($i, $data);
+            list($i, $free)        = _binary_to_term_sequence($i, $numfree, $data);
 
             return [$i,
                          new OtpErlangFunction($tag,
@@ -591,8 +591,8 @@ function _binary_to_term($i, $data)
                 throw new ParseException('compressed data null');
             }
             $i += 4;
-            $data_compressed = substr($data, $i);
-            $j = strlen($data_compressed);
+            $data_compressed   = substr($data, $i);
+            $j                 = strlen($data_compressed);
             $data_uncompressed = gzuncompress($data_compressed);
             if ($size_uncompressed != strlen($data_uncompressed)) {
                 throw new ParseException('compression corrupt');
@@ -614,7 +614,7 @@ function _binary_to_term_sequence($i, $arity, $data)
     if ($arity > 0) {
         foreach (range(0, $arity - 1) as $arity_index) {
             list($i, $element) = _binary_to_term($i, $data);
-            $sequence[] = $element;
+            $sequence[]        = $element;
         }
     }
 
@@ -645,7 +645,7 @@ function _binary_to_pid($i, $data)
     $i += 1;
     if ($tag == TAG_PID_EXT) {
         list($i, $node) = _binary_to_atom($i, $data);
-        $id = substr($data, $i, 4);
+        $id             = substr($data, $i, 4);
         $i += 4;
         $serial = substr($data, $i, 4);
         $i += 4;
@@ -749,7 +749,7 @@ function _string_to_binary($term)
 
 function _tuple_to_binary($term)
 {
-    $arity = count($term);
+    $arity       = count($term);
     $term_packed = '';
     foreach ($term as $element) {
         $term_packed .= _term_to_binary($element);
@@ -776,7 +776,7 @@ function _bignum_to_binary($term)
 {
     // in PHP only for supporting integers > 32 bits (no native bignums)
     $bignum = abs($term);
-    $size = intval(ceil(_bignum_bit_length($bignum) / 8.0));
+    $size   = intval(ceil(_bignum_bit_length($bignum) / 8.0));
     if ($term < 0) {
         $sign = chr(1);
     } else {

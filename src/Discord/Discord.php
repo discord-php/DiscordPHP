@@ -13,7 +13,6 @@ namespace Discord;
 
 use Carbon\Carbon;
 use Discord\Helpers\Guzzle;
-use Discord\Helpers\TokenHelper;
 use Discord\Parts\Part;
 use Discord\Parts\User\Client;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -54,7 +53,7 @@ class Discord
      */
     public function __construct($options)
     {
-        $options = !is_array($options) ? ['token' => $options] : $options;
+        $options = ! is_array($options) ? ['token' => $options] : $options;
         $options = $this->resolveOptions($options);
 
         define('DISCORD_TOKEN', $options['token']);
@@ -93,7 +92,7 @@ class Discord
             $id = $id->id;
         }
 
-        if (!is_int($id)) {
+        if (! is_int($id)) {
             return;
         }
 
