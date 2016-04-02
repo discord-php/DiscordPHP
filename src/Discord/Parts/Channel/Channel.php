@@ -30,7 +30,7 @@ use GuzzleHttp\Psr7\Request;
  */
 class Channel extends Part
 {
-    const TYPE_TEXT = 'text';
+    const TYPE_TEXT  = 'text';
     const TYPE_VOICE = 'voice';
 
     /**
@@ -42,7 +42,7 @@ class Channel extends Part
      * {@inheritdoc}
      */
     protected $uris = [
-        'get' => 'channels/:id',
+        'get'    => 'channels/:id',
         'create' => 'guilds/:guild_id/channels',
         'update' => 'channels/:id',
         'delete' => 'channels/:id',
@@ -86,10 +86,10 @@ class Channel extends Part
         }
 
         $payload = [
-            'id' => $part->id,
-            'type' => $type,
+            'id'    => $part->id,
+            'type'  => $type,
             'allow' => $allow->perms,
-            'deny' => $deny->perms,
+            'deny'  => $deny->perms,
         ];
 
         Guzzle::put("channels/{$this->id}/permissions/{$part->id}", $payload);
@@ -158,7 +158,7 @@ class Channel extends Part
         }
 
         $request = Guzzle::get("guilds/{$this->guild_id}");
-        $guild = new Guild((array) $request, true);
+        $guild   = new Guild((array) $request, true);
 
         Cache::set("guild.{$guild->id}", $guild);
 
@@ -182,10 +182,10 @@ class Channel extends Part
         $request = Guzzle::post($this->replaceWithVariables('channels/:id/invites'), [
             'validate' => null,
 
-            'max_age' => $max_age,
-            'max_uses' => $max_uses,
+            'max_age'   => $max_age,
+            'max_uses'  => $max_uses,
             'temporary' => $temporary,
-            'xkcdpass' => $xkcd,
+            'xkcdpass'  => $xkcd,
         ]);
 
         $invite = new Invite((array) $request, true);
@@ -225,7 +225,7 @@ class Channel extends Part
             trigger_error('Requesting more messages than 100 will only return 100.');
         }
 
-        $request = Guzzle::get("channels/{$this->id}/messages?limit={$this->message_count}");
+        $request  = Guzzle::get("channels/{$this->id}/messages?limit={$this->message_count}");
         $messages = [];
 
         foreach ($request as $index => $message) {
@@ -285,7 +285,7 @@ class Channel extends Part
         }
 
         foreach ($this->attributes['permission_overwrites'] as $index => $data) {
-            $data = (array) $data;
+            $data               = (array) $data;
             $data['channel_id'] = $this->attributes['id'];
             $overwrites[$index] = new Overwrite($data, true);
         }
@@ -313,7 +313,7 @@ class Channel extends Part
 
         $request = Guzzle::post("channels/{$this->id}/messages", [
             'content' => $text,
-            'tts' => $tts,
+            'tts'     => $tts,
         ]);
 
         $message = new Message((array) $request, true);
@@ -350,21 +350,21 @@ class Channel extends Part
         }
 
         $guzzle = new GuzzleClient(['http_errors' => false, 'allow_redirects' => true]);
-        $url = Guzzle::$base_url."/channels/{$this->id}/messages";
+        $url    = Guzzle::$base_url."/channels/{$this->id}/messages";
 
         $headers = [
-            'User-Agent' => Guzzle::getUserAgent(),
+            'User-Agent'    => Guzzle::getUserAgent(),
             'authorization' => DISCORD_TOKEN,
         ];
 
-        $done = false;
+        $done     = false;
         $finalRes = null;
 
         while (! $done) {
             $response = $guzzle->request('post', $url, [
-                'headers' => $headers,
+                'headers'   => $headers,
                 'multipart' => [[
-                    'name' => 'file',
+                    'name'     => 'file',
                     'contents' => fopen($filepath, 'r'),
                     'filename' => $filename,
                 ]],
@@ -383,7 +383,7 @@ class Channel extends Part
                 continue;
             }
 
-            $done = true;
+            $done     = true;
             $finalRes = $response;
         }
 
@@ -457,8 +457,8 @@ class Channel extends Part
     public function getUpdatableAttributes()
     {
         return [
-            'name' => $this->name,
-            'topic' => $this->topic,
+            'name'     => $this->name,
+            'topic'    => $this->topic,
             'position' => $this->position,
         ];
     }

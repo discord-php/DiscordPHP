@@ -301,12 +301,12 @@ class VoiceClient extends EventEmitter
      */
     public function __construct(WebSocket $websocket, LoopInterface &$loop, Channel $channel, $data)
     {
-        $this->mainWebsocket = $websocket;
-        $this->channel = $channel;
-        $this->data = $data;
-        $this->deaf = $data['deaf'];
-        $this->mute = $data['mute'];
-        $this->endpoint = str_replace([':80', ':443'], '', $data['endpoint']);
+        $this->mainWebsocket  = $websocket;
+        $this->channel        = $channel;
+        $this->data           = $data;
+        $this->deaf           = $data['deaf'];
+        $this->mute           = $data['mute'];
+        $this->endpoint       = str_replace([':80', ':443'], '', $data['endpoint']);
         $this->speakingStatus = new Collection();
 
         $this->checkForFFmpeg();
@@ -322,9 +322,9 @@ class VoiceClient extends EventEmitter
      */
     public function initSockets($loop)
     {
-        $wsfac = new WsFactory($loop);
+        $wsfac    = new WsFactory($loop);
         $resolver = (new DNSFactory())->createCached('8.8.8.8', $loop);
-        $udpfac = new DatagramFactory($loop, $resolver);
+        $udpfac   = new DatagramFactory($loop, $resolver);
 
         $wsfac->createCOnnection("wss://{$this->endpoint}")->then(function (WS $ws) use ($udpfac, &$loop) {
             $this->voiceWebsocket = $ws;
@@ -344,14 +344,14 @@ class VoiceClient extends EventEmitter
 
                     $this->send([
                         'op' => 3,
-                        'd' => microtime(true),
+                        'd'  => microtime(true),
                     ]);
                     $this->emit('ws-heartbeat', []);
 
                     $this->heartbeat = $loop->addPeriodicTimer($this->heartbeat_interval / 1000, function () {
                         $this->send([
                             'op' => 3,
-                            'd' => microtime(true),
+                            'd'  => microtime(true),
                         ]);
                         $this->emit('ws-heartbeat', []);
                     });
@@ -399,12 +399,12 @@ class VoiceClient extends EventEmitter
 
                             $payload = [
                                 'op' => 1,
-                                'd' => [
+                                'd'  => [
                                     'protocol' => 'udp',
-                                    'data' => [
+                                    'data'     => [
                                         'address' => $ip,
-                                        'port' => (int) $port,
-                                        'mode' => $this->mode,
+                                        'port'    => (int) $port,
+                                        'mode'    => $this->mode,
                                     ],
                                 ],
                             ];
@@ -470,11 +470,11 @@ class VoiceClient extends EventEmitter
             if (! $this->sentLoginFrame) {
                 $this->send([
                     'op' => 0,
-                    'd' => [
-                        'server_id' => $this->channel->guild_id,
-                        'user_id' => $this->data['user_id'],
+                    'd'  => [
+                        'server_id'  => $this->channel->guild_id,
+                        'user_id'    => $this->data['user_id'],
                         'session_id' => $this->data['session'],
-                        'token' => $this->data['token'],
+                        'token'      => $this->data['token'],
                     ],
                 ]);
                 $this->sentLoginFrame = true;
@@ -584,7 +584,7 @@ class VoiceClient extends EventEmitter
     public function playDCAStream($stream)
     {
         $deferred = new Deferred();
-        $process = null;
+        $process  = null;
 
         if (! $this->ready) {
             $deferred->reject(new \Exception('Voice Client is not ready.'));
@@ -616,8 +616,8 @@ class VoiceClient extends EventEmitter
             return $deferred->promise();
         }
 
-        $count = 0;
-        $noData = false;
+        $count        = 0;
+        $noData       = false;
         $noDataHeader = false;
 
         $this->setSpeaking(true);
@@ -635,10 +635,10 @@ class VoiceClient extends EventEmitter
 
                 $this->setSpeaking(false);
 
-                $this->seq = 0;
-                $this->timestamp = 0;
+                $this->seq        = 0;
+                $this->timestamp  = 0;
                 $this->streamTime = 0;
-                $this->startTime = null;
+                $this->startTime  = null;
 
                 if (isset($process)) {
                     $process->close();
@@ -656,10 +656,10 @@ class VoiceClient extends EventEmitter
                     $this->setSpeaking(false);
                     fclose($stream);
 
-                    $this->seq = 0;
-                    $this->timestamp = 0;
+                    $this->seq        = 0;
+                    $this->timestamp  = 0;
                     $this->streamTime = 0;
-                    $this->startTime = null;
+                    $this->startTime  = null;
 
                     if (isset($process)) {
                         $process->close();
@@ -676,7 +676,7 @@ class VoiceClient extends EventEmitter
 
             $opusLength = unpack('v', $header);
             $opusLength = reset($opusLength);
-            $buffer = fread($stream, $opusLength);
+            $buffer     = fread($stream, $opusLength);
 
             if (! $this->speaking) {
                 $this->setSpeaking(true);
@@ -710,9 +710,9 @@ class VoiceClient extends EventEmitter
         };
 
         $readMagicBytes = false;
-        $readJsonLeng = false;
+        $readJsonLeng   = false;
 
-        $jsonLen = 0;
+        $jsonLen  = 0;
         $jsonBuff = '';
 
         $this->loop->addReadStream($stream, function ($stream) use ($deferred, &$readMagicBytes, &$readJsonLeng, &$jsonLen, &$jsonBuff, $processff2opus) {
@@ -813,9 +813,9 @@ class VoiceClient extends EventEmitter
 
         $this->send([
             'op' => 5,
-            'd' => [
+            'd'  => [
                 'speaking' => $speaking,
-                'delay' => 0,
+                'delay'    => 0,
             ],
         ]);
 
@@ -845,11 +845,11 @@ class VoiceClient extends EventEmitter
 
         $this->mainWebsocket->send([
             'op' => 4,
-            'd' => [
-                'guild_id' => $channel->guild_id,
+            'd'  => [
+                'guild_id'   => $channel->guild_id,
                 'channel_id' => $channel->id,
-                'self_mute' => $this->mute,
-                'self_deaf' => $this->deaf,
+                'self_mute'  => $this->mute,
+                'self_deaf'  => $this->deaf,
             ],
         ]);
 
@@ -1025,11 +1025,11 @@ class VoiceClient extends EventEmitter
 
         $this->mainWebsocket->send([
             'op' => 4,
-            'd' => [
-                'guild_id' => $this->channel->guild_id,
+            'd'  => [
+                'guild_id'   => $this->channel->guild_id,
                 'channel_id' => $this->channel->id,
-                'self_mute' => $mute,
-                'self_deaf' => $deaf,
+                'self_mute'  => $mute,
+                'self_deaf'  => $deaf,
             ],
         ]);
 
@@ -1129,11 +1129,11 @@ class VoiceClient extends EventEmitter
 
         $this->mainWebsocket->send([
             'op' => 4,
-            'd' => [
-                'guild_id' => null,
+            'd'  => [
+                'guild_id'   => null,
                 'channel_id' => null,
-                'self_mute' => false,
-                'self_deaf' => false,
+                'self_mute'  => false,
+                'self_deaf'  => false,
             ],
         ]);
 
@@ -1143,13 +1143,13 @@ class VoiceClient extends EventEmitter
         $this->heartbeat_interval = null;
         $this->loop->cancelTimer($this->heartbeat);
         $this->loop->cancelTimer($this->udpHeartbeat);
-        $this->heartbeat = null;
-        $this->udpHeartbeat = null;
-        $this->seq = 0;
-        $this->timestamp = 0;
+        $this->heartbeat      = null;
+        $this->udpHeartbeat   = null;
+        $this->seq            = 0;
+        $this->timestamp      = 0;
         $this->sentLoginFrame = false;
-        $this->startTime = null;
-        $this->streamTime = 0;
+        $this->startTime      = null;
+        $this->streamTime     = 0;
         $this->speakingStatus = new Collection();
 
         $deferred->resolve();
@@ -1255,7 +1255,7 @@ class VoiceClient extends EventEmitter
     {
         if ($this->encrypted) {
             $voicePacket = VoicePacket::make($message);
-            $nonce = new Buffer(24);
+            $nonce       = new Buffer(24);
             $nonce->write($voicePacket->getHeader(), 0);
             $message = \Sodium\crypto_secretbox_open($voicePacket->getData(), (string) $nonce, $this->secret_key);
 
@@ -1269,8 +1269,8 @@ class VoiceClient extends EventEmitter
 
         return; // temp break until dca has decoding support
 
-        $vp = VoicePacket::make($message);
-        $ss = $this->speakingStatus->get('ssrc', $vp->getSSRC());
+        $vp      = VoicePacket::make($message);
+        $ss      = $this->speakingStatus->get('ssrc', $vp->getSSRC());
         $decoder = @$this->voiceDecoders[$vp->getSSRC()];
 
         if (is_null($ss)) {

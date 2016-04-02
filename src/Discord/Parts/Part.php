@@ -223,7 +223,7 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
                     return false;
                 }
 
-                $request = Guzzle::post($this->replaceWithVariables($this->uris['create']), $attributes);
+                $request       = Guzzle::post($this->replaceWithVariables($this->uris['create']), $attributes);
                 $this->created = true;
                 $this->deleted = false;
             }
@@ -250,7 +250,7 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
         }
 
         try {
-            $request = Guzzle::delete($this->replaceWithVariables($this->uris['delete']));
+            $request       = Guzzle::delete($this->replaceWithVariables($this->uris['delete']));
             $this->created = false;
             $this->deleted = true;
         } catch (\Exception $e) {
@@ -304,7 +304,7 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
         $matcher = preg_match_all($this->regex, $string, $matches);
 
         $original = $matches[0];
-        $vars = $matches[1];
+        $vars     = $matches[1];
 
         foreach ($vars as $key => $variable) {
             if ($attribute = $this->getAttribute($variable)) {
@@ -333,7 +333,7 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
         $matcher = preg_match_all($this->regex, $string, $matches);
 
         $original = $matches[0];
-        $vars = $matches[1];
+        $vars     = $matches[1];
 
         foreach ($vars as $key => $variable) {
             if ($attribute = $params[$variable]) {

@@ -27,7 +27,7 @@ class GuildRoleUpdate extends Event
      */
     public function getData($data, $discord)
     {
-        $adata = (array) $data;
+        $adata             = (array) $data;
         $adata['guild_id'] = $data->guild_id;
 
         return new Role($adata, true);

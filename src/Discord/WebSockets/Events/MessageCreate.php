@@ -43,7 +43,7 @@ class MessageCreate extends Event
                     $channel->messages->push($data);
 
                     $guild->channels[$cindex] = $channel;
-                    $discord->guilds[$index] = $guild;
+                    $discord->guilds[$index]  = $guild;
 
                     return $discord;
                 }

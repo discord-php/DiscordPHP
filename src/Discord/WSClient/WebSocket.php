@@ -58,9 +58,9 @@ class WebSocket implements EventEmitterInterface, ConnectionInterface
 
     public function __construct(DuplexStreamInterface $stream, Response $response, Request $request)
     {
-        $this->_stream = $stream;
+        $this->_stream  = $stream;
         $this->response = $response;
-        $this->request = $request;
+        $this->request  = $request;
 
         $stream->on('data', function ($data) {
             $this->handleData($data);

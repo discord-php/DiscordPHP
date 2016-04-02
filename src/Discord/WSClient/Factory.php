@@ -34,10 +34,10 @@ class Factory
     protected $_secureConnector;
 
     public $defaultHeaders = [
-        'Connection' => 'Upgrade',
-        'Cache-Control' => 'no-cache',
-        'Pragma' => 'no-cache',
-        'Upgrade' => 'websocket',
+        'Connection'            => 'Upgrade',
+        'Cache-Control'         => 'no-cache',
+        'Pragma'                => 'no-cache',
+        'Upgrade'               => 'websocket',
         'Sec-WebSocket-Version' => 13,
     ];
 
@@ -46,12 +46,12 @@ class Factory
         $this->defaultHeaders['User-Agent'] = Guzzle::getUserAgent();
 
         if (null === $resolver) {
-            $factory = new DnsFactory();
+            $factory  = new DnsFactory();
             $resolver = $factory->create('8.8.8.8', $loop);
         }
 
-        $this->_loop = $loop;
-        $this->_connector = new Connector($loop, $resolver);
+        $this->_loop            = $loop;
+        $this->_connector       = new Connector($loop, $resolver);
         $this->_secureConnector = new SecureConnector($this->_connector, $loop);
     }
 
@@ -117,7 +117,7 @@ class Factory
 
     protected function generateRequest($url, array $subProtocols, array $headers)
     {
-        $headers = array_merge($this->defaultHeaders, $headers);
+        $headers                      = array_merge($this->defaultHeaders, $headers);
         $headers['Sec-WebSocket-Key'] = $this->generateKey();
 
         $request = new Request('GET', $url, $headers);
@@ -152,9 +152,9 @@ class Factory
 
     protected function generateKey()
     {
-        $chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwzyz1234567890+/=';
+        $chars     = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwzyz1234567890+/=';
         $charRange = strlen($chars) - 1;
-        $key = '';
+        $key       = '';
 
         for ($i = 0; $i < 16; ++$i) {
             $key .= $chars[mt_rand(0, $charRange)];
