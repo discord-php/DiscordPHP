@@ -74,7 +74,7 @@ class Process extends EventEmitter
             }
         }
 
-        $this->options = $options;
+        $this->options                      = $options;
         $this->enhanceSigchildCompatibility = $this->isSigchildEnabled();
     }
 
@@ -95,7 +95,7 @@ class Process extends EventEmitter
             throw new \RuntimeException('Process is already running');
         }
 
-        $cmd = $this->cmd;
+        $cmd    = $this->cmd;
         $fdSpec = [
             ['pipe', 'r'], // stdin
             ['pipe', 'w'], // stdout
@@ -105,7 +105,7 @@ class Process extends EventEmitter
         // Read exit code through fourth pipe to work around --enable-sigchild
         if ($this->isSigchildEnabled() && $this->enhanceSigchildCompatibility) {
             $fdSpec[] = ['pipe', 'w'];
-            $cmd = sprintf('(%s) 3>/dev/null; code=$?; echo $code >&3; exit $code', $cmd);
+            $cmd      = sprintf('(%s) 3>/dev/null; code=$?; echo $code >&3; exit $code', $cmd);
         }
 
         $this->process = proc_open($cmd, $fdSpec, $this->pipes, $this->cwd, $this->env, $this->options);
@@ -153,7 +153,7 @@ class Process extends EventEmitter
             $this->closeExitCodePipe();
         }
 
-        $exitCode = proc_close($this->process);
+        $exitCode      = proc_close($this->process);
         $this->process = null;
 
         if ($this->exitCode === null && $exitCode !== -1) {
@@ -165,7 +165,7 @@ class Process extends EventEmitter
         }
 
         if ($this->exitCode === null && $this->fallbackExitCode !== null) {
-            $this->exitCode = $this->fallbackExitCode;
+            $this->exitCode         = $this->fallbackExitCode;
             $this->fallbackExitCode = null;
         }
     }

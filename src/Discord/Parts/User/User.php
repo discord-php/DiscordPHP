@@ -65,13 +65,13 @@ class User extends Part
                 'recipient_id' => $this->id,
             ]);
 
-            $channel_id = $channel->id;
+            $channel_id                           = $channel->id;
             $this->attributes_cache['channel_id'] = $channel->id;
         }
 
         $request = Guzzle::post("channels/{$channel_id}/messages", [
             'content' => $message,
-            'tts' => $tts,
+            'tts'     => $tts,
         ]);
 
         $message = new Message((array) $request, true);
@@ -95,7 +95,7 @@ class User extends Part
                 'recipient_id' => $this->id,
             ]);
 
-            $channel_id = $channel->id;
+            $channel_id                           = $channel->id;
             $this->attributes_cache['channel_id'] = $channel->id;
         }
 

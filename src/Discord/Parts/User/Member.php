@@ -52,7 +52,7 @@ class Member extends Part
      * {@inheritdoc}
      */
     protected $uris = [
-        'get' => '',
+        'get'    => '',
         'create' => '',
         'update' => 'guilds/:guild_id/members/:id',
         'delete' => 'guilds/:guild_id/members/:id',
@@ -92,7 +92,7 @@ class Member extends Part
         }
 
         return new Ban([
-            'user' => $this->user,
+            'user'  => $this->user,
             'guild' => new Guild(['id' => $this->guild_id], true),
         ], true);
     }
@@ -214,7 +214,7 @@ class Member extends Part
             return $this->attributes_cache['roles'];
         }
 
-        $roles = [];
+        $roles   = [];
         $request = Guzzle::get($this->replaceWithVariables('guilds/:guild_id/roles'));
 
         foreach ($request as $key => $role) {
@@ -222,9 +222,9 @@ class Member extends Part
                 $perm = new Permission([
                     'perms' => $role->permissions,
                 ]);
-                $role = (array) $role;
+                $role                = (array) $role;
                 $role['permissions'] = $perm;
-                $role = new Role($role, true);
+                $role                = new Role($role, true);
                 Cache::set("role.{$role->id}", $role);
                 $roles[] = $role;
             }

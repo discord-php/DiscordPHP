@@ -119,9 +119,9 @@ class WebSocket extends EventEmitter
      */
     public function __construct(Discord $discord, LoopInterface &$loop = null)
     {
-        $this->discord = $discord;
-        $this->gateway = $this->getGateway();
-        $loop = (is_null($loop)) ? LoopFactory::create() : $loop;
+        $this->discord   = $discord;
+        $this->gateway   = $this->getGateway();
+        $loop            = (is_null($loop)) ? LoopFactory::create() : $loop;
         $this->wsfactory = new WsFactory($loop);
 
         $this->handlers = new Handlers();
@@ -203,7 +203,7 @@ class WebSocket extends EventEmitter
                     $time = microtime(true);
                     $this->send([
                         'op' => 1,
-                        'd' => $time,
+                        'd'  => $time,
                     ]);
                     $this->emit('heartbeat', [$time]);
                 });
@@ -331,7 +331,7 @@ class WebSocket extends EventEmitter
     public function joinVoiceChannel(Channel $channel, $mute = false, $deaf = false)
     {
         $deferred = new Deferred();
-        $arr = ['user_id' => $this->discord->id, 'deaf' => $deaf, 'mute' => $mute];
+        $arr      = ['user_id' => $this->discord->id, 'deaf' => $deaf, 'mute' => $mute];
 
         if ($channel->type != Channel::TYPE_VOICE) {
             $deferred->reject(new \Exception('You cannot join a Text channel.'));
@@ -345,7 +345,7 @@ class WebSocket extends EventEmitter
             if ($data->t == 'VOICE_STATE_UPDATE') {
                 $arr['session'] = $data->d->session_id;
             } elseif ($data->t == 'VOICE_SERVER_UPDATE') {
-                $arr['token'] = $data->d->token;
+                $arr['token']    = $data->d->token;
                 $arr['endpoint'] = $data->d->endpoint;
 
                 $vc = new VoiceClient($this, $this->loop, $channel, $arr);
@@ -367,11 +367,11 @@ class WebSocket extends EventEmitter
 
         $this->send([
             'op' => 4,
-            'd' => [
-                'guild_id' => $channel->guild_id,
+            'd'  => [
+                'guild_id'   => $channel->guild_id,
                 'channel_id' => $channel->id,
-                'self_mute' => $mute,
-                'self_deaf' => $deaf,
+                'self_mute'  => $mute,
+                'self_deaf'  => $deaf,
             ],
         ]);
 
@@ -397,18 +397,18 @@ class WebSocket extends EventEmitter
     {
         $this->send([
             'op' => 2,
-            'd' => [
-                'token' => DISCORD_TOKEN,
-                'v' => 3,
+            'd'  => [
+                'token'      => DISCORD_TOKEN,
+                'v'          => 3,
                 'properties' => [
-                    '$os' => PHP_OS,
-                    '$browser' => Guzzle::getUserAgent(),
-                    '$device' => '',
-                    '$referrer' => 'https://github.com/teamreflex/DiscordPHP',
+                    '$os'               => PHP_OS,
+                    '$browser'          => Guzzle::getUserAgent(),
+                    '$device'           => '',
+                    '$referrer'         => 'https://github.com/teamreflex/DiscordPHP',
                     '$referring_domain' => 'https://github.com/teamreflex/DiscordPHP',
                 ],
                 'large_threshold' => 100,
-                'compress' => true,
+                'compress'        => true,
             ],
         ]);
     }

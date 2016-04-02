@@ -105,7 +105,7 @@ class Discord
         }
 
         $request = Guzzle::post('auth/login', [
-            'email' => $email,
+            'email'    => $email,
             'password' => $password,
         ], true);
 
