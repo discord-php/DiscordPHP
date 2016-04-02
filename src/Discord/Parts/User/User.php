@@ -71,7 +71,7 @@ class User extends Part
 
         $request = Guzzle::post("channels/{$channel_id}/messages", [
             'content' => $message,
-            'tts' => $tts,
+            'tts'     => $tts,
         ]);
 
         $message = new Message((array) $request, true);

@@ -36,7 +36,7 @@ class GuildBanAdd extends Event
 
         return new Ban([
             'guild' => $guild,
-            'user' => $data->user,
+            'user'  => $data->user,
         ], true);
     }
 

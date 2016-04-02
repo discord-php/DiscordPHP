@@ -35,7 +35,7 @@ class Collection extends BaseCollection
      */
     public function __construct($items = [], $cacheKey = null)
     {
-        $this->items = $this->getArrayableItems($items);
+        $this->items    = $this->getArrayableItems($items);
         $this->cacheKey = $cacheKey;
     }
 

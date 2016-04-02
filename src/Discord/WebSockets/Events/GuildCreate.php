@@ -35,9 +35,9 @@ class GuildCreate extends Event
         $channels = new Collection();
 
         foreach ($data->channels as $channel) {
-            $channel = (array) $channel;
+            $channel             = (array) $channel;
             $channel['guild_id'] = $data->id;
-            $channelPart = new Channel($channel, true);
+            $channelPart         = new Channel($channel, true);
 
             Cache::set("channel.{$channelPart->id}", $channelPart);
 
@@ -51,14 +51,14 @@ class GuildCreate extends Event
 
         foreach ($data->members as $member) {
             $memberPart = new Member([
-                'user' => $member->user,
-                'roles' => $member->roles,
-                'mute' => $member->mute,
-                'deaf' => $member->deaf,
+                'user'      => $member->user,
+                'roles'     => $member->roles,
+                'mute'      => $member->mute,
+                'deaf'      => $member->deaf,
                 'joined_at' => $member->joined_at,
-                'guild_id' => $data->id,
-                'status' => 'offline',
-                'game' => null,
+                'guild_id'  => $data->id,
+                'status'    => 'offline',
+                'game'      => null,
             ], true);
 
             // check for presences
@@ -66,7 +66,7 @@ class GuildCreate extends Event
             foreach ($data->presences as $presence) {
                 if ($presence->user->id == $member->user->id) {
                     $memberPart->status = $presence->status;
-                    $memberPart->game = $presence->game;
+                    $memberPart->game   = $presence->game;
                 }
             }
 

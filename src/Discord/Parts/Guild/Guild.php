@@ -26,20 +26,20 @@ use Discord\Parts\User\User;
  */
 class Guild extends Part
 {
-    const REGION_DEFAULT = self::REGION_US_WEST;
-    const REGION_US_WEST = 'us-west';
-    const REGION_US_SOUTH = 'us-south';
-    const REGION_US_EAST = 'us-east';
+    const REGION_DEFAULT    = self::REGION_US_WEST;
+    const REGION_US_WEST    = 'us-west';
+    const REGION_US_SOUTH   = 'us-south';
+    const REGION_US_EAST    = 'us-east';
     const REGION_US_CENTRAL = 'us-central';
-    const REGION_SINGAPORE = 'singapore';
-    const REGION_LONDON = 'london';
-    const REGION_SYDNEY = 'sydney';
-    const REGION_FRANKFURT = 'frankfurt';
-    const REGION_AMSTERDAM = 'amsterdam';
+    const REGION_SINGAPORE  = 'singapore';
+    const REGION_LONDON     = 'london';
+    const REGION_SYDNEY     = 'sydney';
+    const REGION_FRANKFURT  = 'frankfurt';
+    const REGION_AMSTERDAM  = 'amsterdam';
 
-    const LEVEL_OFF = 0;
-    const LEVEL_LOW = 1;
-    const LEVEL_MEDIUM = 2;
+    const LEVEL_OFF       = 0;
+    const LEVEL_LOW       = 1;
+    const LEVEL_MEDIUM    = 2;
     const LEVEL_TABLEFLIP = 3;
 
     /**
@@ -51,11 +51,11 @@ class Guild extends Part
      * {@inheritdoc}
      */
     protected $uris = [
-        'get' => 'guilds/:id',
+        'get'    => 'guilds/:id',
         'create' => 'guilds',
         'update' => 'guilds/:id',
         'delete' => 'guilds/:id',
-        'leave' => 'users/@me/guilds/:id',
+        'leave'  => 'users/@me/guilds/:id',
     ];
 
     /**
@@ -88,7 +88,7 @@ class Guild extends Part
     public function leave()
     {
         try {
-            $request = Guzzle::delete($this->replaceWithVariables($this->uris['leave']));
+            $request       = Guzzle::delete($this->replaceWithVariables($this->uris['leave']));
             $this->created = false;
             $this->deleted = true;
         } catch (\Exception $e) {
@@ -165,12 +165,12 @@ class Guild extends Part
         $roles = [];
 
         foreach ($this->attributes['roles'] as $index => $role) {
-            $perm = new Permission();
-            $perm->perms = $role->permissions;
-            $role = (array) $role;
+            $perm                = new Permission();
+            $perm->perms         = $role->permissions;
+            $role                = (array) $role;
             $role['permissions'] = $perm;
-            $role['guild_id'] = $this->id;
-            $roles[$index] = new Role($role, true);
+            $role['guild_id']    = $this->id;
+            $roles[$index]       = new Role($role, true);
         }
 
         $roles = new Collection($roles, "guild.{$this->id}.roles");
@@ -212,7 +212,7 @@ class Guild extends Part
         }
 
         $channels = [];
-        $request = Guzzle::get($this->replaceWithVariables('guilds/:id/channels'));
+        $request  = Guzzle::get($this->replaceWithVariables('guilds/:id/channels'));
 
         foreach ($request as $index => $channel) {
             $channel = new Channel((array) $channel, true);
@@ -247,9 +247,9 @@ class Guild extends Part
         }
 
         foreach ($request as $index => $ban) {
-            $ban = (array) $ban;
+            $ban          = (array) $ban;
             $ban['guild'] = $this;
-            $ban = new Ban($ban, true);
+            $ban          = new Ban($ban, true);
             Cache::set("guild.{$this->id}.bans.{$ban->user_id}", $ban);
             $bans[$index] = $ban;
         }
@@ -370,7 +370,7 @@ class Guild extends Part
     public function getCreatableAttributes()
     {
         return [
-            'name' => $this->name,
+            'name'   => $this->name,
             'region' => $this->validateRegion(),
         ];
     }
@@ -381,13 +381,13 @@ class Guild extends Part
     public function getUpdatableAttributes()
     {
         return [
-            'name' => $this->name,
-            'region' => $this->region,
-            'logo' => $this->logo,
-            'splash' => $this->splash,
+            'name'               => $this->name,
+            'region'             => $this->region,
+            'logo'               => $this->logo,
+            'splash'             => $this->splash,
             'verification_level' => $this->verification_level,
-            'afk_channel_id' => $this->afk_channel_id,
-            'afk_timeout' => $this->afk_timeout,
+            'afk_channel_id'     => $this->afk_channel_id,
+            'afk_timeout'        => $this->afk_timeout,
         ];
     }
 }

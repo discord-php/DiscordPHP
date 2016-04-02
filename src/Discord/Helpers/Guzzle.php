@@ -53,9 +53,9 @@ class Guzzle
      */
     public static function __callStatic($name, $params)
     {
-        $url = $params[0];
+        $url     = $params[0];
         $content = (isset($params[1])) ? $params[1] : null;
-        $auth = (isset($params[2])) ? true : false;
+        $auth    = (isset($params[2])) ? true : false;
         $headers = (isset($params[3])) ? $params[3] : [];
 
         return self::runRequest($name, $url, $content, $auth, $headers);
@@ -74,7 +74,7 @@ class Guzzle
      */
     public static function runRequest($method, $url, $content, $auth, $extraHeaders)
     {
-        $guzzle = new GuzzleClient(['http_errors' => false, 'allow_redirects' => true]);
+        $guzzle    = new GuzzleClient(['http_errors' => false, 'allow_redirects' => true]);
         $query_url = self::$base_url."/{$url}";
 
         if (Cache::has("guzzle:{$query_url}") && (strtolower($method) == 'get')) {
@@ -82,7 +82,7 @@ class Guzzle
         }
 
         $headers = [
-            'User-Agent' => self::getUserAgent(),
+            'User-Agent'   => self::getUserAgent(),
             'Content-Type' => 'application/json',
         ];
 
@@ -92,13 +92,13 @@ class Guzzle
 
         $headers = array_merge($headers, $extraHeaders);
 
-        $done = false;
+        $done     = false;
         $finalRes = null;
-        $content = (is_null($content)) ? null : json_encode($content);
-        $count = 0;
+        $content  = (is_null($content)) ? null : json_encode($content);
+        $count    = 0;
 
         while (! $done) {
-            $request = new Request($method, $query_url, $headers, $content);
+            $request  = new Request($method, $query_url, $headers, $content);
             $response = $guzzle->send($request);
 
             // Bad Gateway
@@ -126,7 +126,7 @@ class Guzzle
                 continue;
             }
 
-            $done = true;
+            $done     = true;
             $finalRes = $response;
         }
 

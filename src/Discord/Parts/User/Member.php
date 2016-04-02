@@ -52,7 +52,7 @@ class Member extends Part
      * {@inheritdoc}
      */
     protected $uris = [
-        'get' => '',
+        'get'    => '',
         'create' => '',
         'update' => 'guilds/:guild_id/members/:id',
         'delete' => 'guilds/:guild_id/members/:id',
@@ -92,7 +92,7 @@ class Member extends Part
         }
 
         return new Ban([
-            'user' => $this->user,
+            'user'  => $this->user,
             'guild' => new Guild(['id' => $this->guild_id], true),
         ], true);
     }
@@ -215,7 +215,7 @@ class Member extends Part
         }
 
         $roles = [];
-        
+
         if ($guildRoles = Cache::get("guild.{$this->guild_id}.roles")) {
             foreach ($guildRoles as $role) {
                 if (false !== array_search($role->id, (array) $this->attributes['roles'])) {
@@ -230,9 +230,9 @@ class Member extends Part
                     $perm = new Permission([
                         'perms' => $role->permissions,
                     ]);
-                    $role = (array) $role;
+                    $role                = (array) $role;
                     $role['permissions'] = $perm;
-                    $role = new Role($role, true);
+                    $role                = new Role($role, true);
                     Cache::set("role.{$role->id}", $role);
                     $roles[] = $role;
                 }

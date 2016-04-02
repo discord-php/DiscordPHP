@@ -47,9 +47,9 @@ class RedisCacheDriver implements CacheInterface
     public function __construct($hostname, $port = 6379, $password = null, $db = 0)
     {
         $this->redis = new Client([
-            'scheme' => 'tcp',
-            'host' => $hostname,
-            'port' => $port,
+            'scheme'   => 'tcp',
+            'host'     => $hostname,
+            'port'     => $port,
             'database' => $db,
 
             'prefix' => 'discordphp:',

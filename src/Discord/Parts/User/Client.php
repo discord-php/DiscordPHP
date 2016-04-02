@@ -59,9 +59,9 @@ class Client extends Part
     public function afterConstruct()
     {
         $this->user = new User([
-            'id' => $this->id,
-            'username' => $this->username,
-            'avatar' => $this->attributes['avatar'],
+            'id'            => $this->id,
+            'username'      => $this->username,
+            'avatar'        => $this->attributes['avatar'],
             'discriminator' => $this->discriminator,
         ], true);
     }
@@ -110,8 +110,8 @@ class Client extends Part
         }
 
         $extension = pathinfo($filepath, PATHINFO_EXTENSION);
-        $file = file_get_contents($filepath);
-        $base64 = base64_encode($file);
+        $file      = file_get_contents($filepath);
+        $base64    = base64_encode($file);
 
         $this->attributes['avatarhash'] = "data:image/{$extension};base64,{$base64}";
 
@@ -133,7 +133,7 @@ class Client extends Part
 
         $ws->send([
             'op' => 3,
-            'd' => [
+            'd'  => [
                 'game' => (! is_null($gamename) ? [
                     'name' => $gamename,
                 ] : null),
@@ -155,7 +155,7 @@ class Client extends Part
             return $this->attributes_cache['guilds'];
         }
 
-        $guilds = [];
+        $guilds  = [];
         $request = Guzzle::get('users/@me/guilds');
 
         foreach ($request as $index => $guild) {
@@ -213,7 +213,7 @@ class Client extends Part
                 throw new PasswordEmptyException('You must enter your password to update your profile.');
             }
 
-            $attributes['email'] = $this->email;
+            $attributes['email']    = $this->email;
             $attributes['password'] = $this->attributes['password'];
 
             if (! empty($this->attributes['new_password'])) {

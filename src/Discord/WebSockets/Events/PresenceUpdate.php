@@ -39,7 +39,7 @@ class PresenceUpdate extends Event
                 $member = @$guild->members[$data->user->id];
 
                 if (! is_null($member)) {
-                    $member->game = $data->game;
+                    $member->game   = $data->game;
                     $member->status = $data->status;
 
                     $guild->members[$data->user->id] = $member;
