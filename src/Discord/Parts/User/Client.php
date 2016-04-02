@@ -187,4 +187,12 @@ class Client extends Part
 
         return $attributes;
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getRepositoryAttributes()
+    {
+        return [];
+    }
 }

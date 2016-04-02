@@ -83,7 +83,7 @@ class Guild extends Part
      */
     protected $repositories = [
         'members'  => MemberRepository::class,
-        'chnanels' => ChannelRepository::class,
+        'channels' => ChannelRepository::class,
         'invites'  => InviteRepository::class,
         'roles'    => RoleRepository::class,
     ];

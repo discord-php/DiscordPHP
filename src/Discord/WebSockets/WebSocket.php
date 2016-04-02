@@ -71,22 +71,22 @@ class WebSocket extends EventEmitter
     /**
      * @var Http
      */
-    private $http;
+    protected $http;
 
     /**
      * @var PartFactory
      */
-    private $partFactory;
+    protected $partFactory;
 
     /**
      * @var CacheWrapper
      */
-    private $cache;
+    protected $cache;
 
     /**
      * @var string
      */
-    private $token;
+    protected $token;
 
     /**
      * The Discord WebSocket gateway.

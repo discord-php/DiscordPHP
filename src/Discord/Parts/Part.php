@@ -27,6 +27,11 @@ use Serializable;
 abstract class Part implements ArrayAccess, Serializable, JsonSerializable
 {
     /**
+     * @var Http 
+     */
+    protected $http;
+
+    /**
      * @var PartFactory
      */
     protected $partFactory;
@@ -327,6 +332,14 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
                 $value
             );
 
+            return;
+        }
+
+        // We don't want to set these attributes
+        $noset = ['http', 'partFactory', 'cache'];
+
+        if (array_search($key, $noset) !== false) {
+            dump($key);
             return;
         }
 
