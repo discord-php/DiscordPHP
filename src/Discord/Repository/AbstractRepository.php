@@ -109,7 +109,7 @@ abstract class AbstractRepository extends Collection implements RepositoryInterf
     /**
      * Get an item from the collection with a key and value.
      *
-     * @param mixed $key The key to match with the value.
+     * @param mixed $key   The key to match with the value.
      * @param mixed $value The value to match with the key.
      *
      * @return mixed The value or null.
@@ -126,7 +126,7 @@ abstract class AbstractRepository extends Collection implements RepositoryInterf
     /**
      * Gets a collection of items from the repository with a key and value.
      *
-     * @param mixed $key The key to match with the value.
+     * @param mixed $key   The key to match with the value.
      * @param mixed $value The value to match with the key.
      *
      * @return Collection A collection.

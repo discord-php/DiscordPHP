@@ -542,7 +542,7 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
         if ($key == 'partFactory') {
             return $this->partFactory;
         }
-        
+
         return $this->getAttribute($key);
     }
 
