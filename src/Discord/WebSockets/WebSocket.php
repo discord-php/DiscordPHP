@@ -37,6 +37,13 @@ use React\Stream\Stream;
 class WebSocket extends EventEmitter
 {
     /**
+     * The current gateway version.
+     *
+     * @var int THe gateway version.
+     */
+    const CURRENT_GATEWAY_VERSION = 4;
+
+    /**
      * The WebSocket event loop.
      *
      * @var \React\EventLoop\Factory The Event Loop.
@@ -269,7 +276,7 @@ class WebSocket extends EventEmitter
 
         $ws->on('close', function ($op, $reason) {
             if ($op instanceof Stream) {
-                $op = 0;
+                $op = 1006;
                 $reason = 'PHP Stream closed.';
             }
 
@@ -404,6 +411,8 @@ class WebSocket extends EventEmitter
         }
 
         $content = $data->d;
+
+        $this->emit('trace', $content->_trace);
 
         // guilds
         $guilds = new Collection();
@@ -787,7 +796,7 @@ class WebSocket extends EventEmitter
             'op' => 2,
             'd' => [
                 'token' => $token,
-                'v' => 3,
+                'v' => self::CURRENT_GATEWAY_VERSION,
                 'properties' => [
                     '$os' => PHP_OS,
                     '$browser' => Guzzle::getUserAgent(),
@@ -828,6 +837,9 @@ class WebSocket extends EventEmitter
      */
     public function getGateway()
     {
+        // temporary until v4 is deployed
+        return "wss://gateway.discord.gg?v=4&encoding=".($this->useEtf ? 'etf' : 'json');
+
         $token = (substr(DISCORD_TOKEN, 0, 4) === 'Bot ') ? substr(DISCORD_TOKEN, 4) : DISCORD_TOKEN;
 
         return Guzzle::get('gateway', null, false, ['authorization' => $token])->url;

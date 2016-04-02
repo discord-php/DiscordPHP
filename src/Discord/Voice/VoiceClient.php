@@ -1454,9 +1454,9 @@ class VoiceClient extends EventEmitter
      */
     public function dcaEncode($filename = '', $channels = 2)
     {
-        if (! empty($filename) && ! file_exists($filename)) {
-            return;
-        }
+        // if (! empty($filename) && ! file_exists($filename)) {
+        //     return;
+        // }
 
         $flags = [
              '-ac', $channels, // Channels
