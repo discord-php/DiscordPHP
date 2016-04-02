@@ -18,8 +18,8 @@ interface RepositoryInterface
     /**
      * Attempts to get an object from the cache.
      *
-     * @param string $key The key to search for.
-     * @param mixed $value The value to match with the key.
+     * @param string $key   The key to search for.
+     * @param mixed  $value The value to match with the key.
      *
      * @return \React\Promise\Promise
      */
