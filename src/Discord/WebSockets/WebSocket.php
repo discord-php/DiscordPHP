@@ -535,7 +535,7 @@ class WebSocket extends EventEmitter
                 }
 
                 $this->send([
-                    'op' => 8,
+                    'op' => Op::OP_GUILD_MEBMER_CHUNK,
                     'd'  => [
                         'guild_id' => $chunk,
                         'query'    => '',
