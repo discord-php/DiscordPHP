@@ -317,6 +317,7 @@ class WebSocket extends EventEmitter
             // Invalid Session
             if ($op == Op::CLOSE_INVALID_SESSION && strpos($reason, 'invalid session') !== false) {
                 $this->invalidSession = true;
+                $this->reconnecting = false;
                 $this->wsfactory->__invoke($this->gateway)->then([$this, 'handleWebSocketConnection'], [$this, 'handleWebSocketError']);
                 ++$this->reconnectCount;
 
@@ -405,6 +406,11 @@ class WebSocket extends EventEmitter
     {
         if (! is_null($this->reconnectResetTimer)) {
             $this->loop->cancelTimer($this->reconnectResetTimer);
+        }
+
+        if ($this->invalidSession) {
+            $this->invalidSession = false;
+            return;
         }
 
         $this->reconnectResetTimer = $this->loop->addTimer(60 * 2, function () {
