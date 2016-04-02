@@ -22,7 +22,6 @@ use Discord\Parts\Guild\Role;
 use Discord\Parts\Permissions\RolePermission as Permission;
 use Discord\Parts\User\Member;
 use Discord\Voice\VoiceClient;
-use Discord\WebSockets\Op;
 use Evenement\EventEmitter;
 use Ratchet\Client\Connector as WsFactory;
 use Ratchet\Client\WebSocket as WebSocketInstance;
@@ -274,7 +273,7 @@ class WebSocket extends EventEmitter
                 case Op::OP_HEARTBEAT:
                     $this->send([
                         'op' => Op::OP_HEARTBEAT,
-                        'd'  => $data->d
+                        'd'  => $data->d,
                     ]);
                     break;
                 case Op::OP_RECONNECT:
@@ -410,6 +409,7 @@ class WebSocket extends EventEmitter
 
         if ($this->invalidSession) {
             $this->invalidSession = false;
+
             return;
         }
 
