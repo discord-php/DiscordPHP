@@ -27,7 +27,7 @@ use Serializable;
 abstract class Part implements ArrayAccess, Serializable, JsonSerializable
 {
     /**
-     * @var Http 
+     * @var Http
      */
     protected $http;
 
@@ -340,6 +340,7 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
 
         if (array_search($key, $noset) !== false) {
             dump($key);
+
             return;
         }
 
