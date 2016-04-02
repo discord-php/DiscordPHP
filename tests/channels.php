@@ -10,76 +10,58 @@
  */
 
 use Discord\Parts\Channel\Channel;
+use React\Promise\Deferred;
+
+$deferred = new Deferred();
 
 startTest('Create Channel');
 
 $createAttributes = [
     'name'     => 'testchannel',
     'type'     => Channel::TYPE_TEXT,
-    'guild_id' => $baseGuild->id,
 ];
 
-$channel = new Channel($createAttributes);
+$channel = $discord->partFactory->create(Channel::class, $createAttributes);
 
-try {
-    $channel->save();
-} catch (\Exception $e) {
-    fail($e);
-}
+$baseGuild->channels->save($channel)->then(function ($channel) use ($baseGuild, $failPromise, $deferred) {
+    checkAttributes($createAttributes, $channel);
+    pass();
 
-checkAttributes($createAttributes, $channel);
-pass();
+    startTest('Edit Channel');
 
-startTest('Edit Channel');
+    $updateAttributes = [
+        'name'     => 'newname',
+        'topic'    => 'dank memes',
+        'position' => rand(1, 10),
+    ];
 
-$updateAttributes = [
-    'name'     => 'newname',
-    'topic'    => 'dank memes',
-    'position' => rand(1, 10),
-];
-
-try {
     $channel->fill($updateAttributes);
-    $channel->save();
-} catch (\Exception $e) {
-    fail($e);
-}
+    $baseGuild->channels->save($channel)->then(function ($channel) use ($baseGuild, $failPromise, $deferred) {
+        checkAttributes($updateAttributes, $channel);
+        pass();
 
-checkAttributes($updateAttributes, $channel);
-pass();
+        startTest('Create Invite');
 
-startTest('Create Invite');
+        $channel->createInvite()->then(function ($invite) use ($channel, $baseGuild, $failPromise, $deferred) {
+            pass();
 
-try {
-    $invite = $channel->createInvite();
-} catch (\Exception $e) {
-    fail($e);
-}
+            startTest('Broadcasting Typing');
 
-pass();
+            $channel->broadcastTyping()->then(function () use ($channel, $baseGuild, $failPromise, $deferred) {
+                pass();
 
-startTest('Broadcasting Typing');
+                startTest('Delete Channel');
 
-try {
-    $channel->broadcastTyping();
-} catch (\Exception $e) {
-    fail($e);
-}
+                $baseGuild->channels->delete($channel)->then(function ($channel) use ($baseGuild, $failPromise, $deferred) {
+                    if ($baseGuild->channels->get('id', $channel->id) !== null) {
+                        fail('Deleting the channel did not work.');
+                    }
 
-pass();
+                    pass();
 
-startTest('Delete Channel');
-
-try {
-    $channel->delete();
-} catch (\Exception $e) {
-    fail($e);
-}
-
-$guild = $discord->guilds->get('id', $channel->guild_id);
-
-if ($guild->channels->get('id', $channel->id) !== null) {
-    fail('Deleting the channel did not work.');
-}
-
-pass();
+                    require_once 'messages.php';
+                }, $failPromise);
+            }, $failPromise);
+        }, $failPromise);
+    }, $failPromise);
+}, $failPromise);

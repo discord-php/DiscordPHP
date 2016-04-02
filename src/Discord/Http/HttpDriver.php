@@ -38,10 +38,11 @@ interface HttpDriver
      * @param Channel $channel  The channel to send the file to.
      * @param string  $filepath The path to the file.
      * @param string  $filename The name of the file when it is uploaded.
+     * @param string  $token    The client token.
      *
      * @return \React\Promise\Promise
      */
-    public function sendFile(Channel $channel, $filepath, $filename);
+    public function sendFile(Channel $channel, $filepath, $filename, $token);
 
     /**
      * Runs a blocking HTTP request.

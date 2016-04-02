@@ -118,7 +118,7 @@ abstract class AbstractRepository extends Collection implements RepositoryInterf
     {
         foreach ($this->items as $item) {
             if ($item->{$key} == $value) {
-                return $value;
+                return $item;
             }
         }
     }
@@ -137,7 +137,7 @@ abstract class AbstractRepository extends Collection implements RepositoryInterf
 
         foreach ($this->items as $item) {
             if ($item->{$key} == $value) {
-                $collection->push($value);
+                $collection->push($item);
             }
         }
 

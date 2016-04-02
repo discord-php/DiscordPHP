@@ -17,62 +17,46 @@ $expected = [
     'content' => 'testing sending message',
 ];
 
-try {
-    $message = $channel->sendMessage('testing sending message');
-    $tts     = $channel->sendMessage('testing sending message', true);
-    // $everyone = $channel->sendMessage('@everyone unit tests');
-    $file = $channel->sendFile(__DIR__.'/testimg.jpg', 'testimg.jpg');
-} catch (\Exception $e) {
-    fail($e);
-}
+$channel->sendMessage('testing sending message')->then(function ($message) use ($channel, $baseGuild, $failPromise, $expected) {
+    checkAttributes($expected, $message);
 
-checkAttributes($expected, $message);
-checkAttributes($expected + ['tts' => true], $tts);
-// checkAttributes($expected + ['mention_everyone' => true, 'content' => '@everyone unit tests'], $everyone);
+    $channel->sendMessage('testing tts message', true)->then(function ($message) use ($channel, $baseGuild, $failPromise) {
+        checkAttributes($expected + ['tts' => true], $tts);
 
-if (! isset($file['attachments'])) {
-    fail('The image was not attached.');
-}
+        $channel->sendFile(__DIR__.'/testimg.jpg', 'testimg.jpg')->then(function ($message) use ($channel, $baseGuild, $failPromise) {
+            if (! isset($message['attachments'])) {
+                fail('The image was not attached.');
+            }
 
-pass();
+            pass();
 
-startTest('Editing Message');
+            startTest('Editing Message');
 
-$expected['content'] = 'testing editing';
+            $expected = [
+                'content' => 'testing editing',
+            ];
 
-try {
-    $message->content = $expected['content'];
-    $message->save();
-} catch (\Exception $e) {
-    fail($e);
-}
+            $message->fill($expected);
+            $channel->messages->save($message)->then(function ($message) use ($channel, $baseGuild, $failPromise, $expected) {
+                checkAttributes($expected, $message);
 
-checkAttributes($expected, $message);
+                pass();
 
-pass();
+                startTest('Deleting Message');
 
-startTest('Deleting Message');
+                $channel->messages->delete($message)->then(function ($message) use ($channel, $baseGuild, $failPromise) {
+                    pass();
 
-try {
-    $message->delete();
-} catch (\Exception $e) {
-    fail($e);
-}
+                    startTest('Send PM');
 
-$loop->addTimer(2, function () use ($channel, $message) {
-    if ($channel->messages->get('id', $message->id) !== null) {
-        fail('Deleting the message did not work.');
-    }
+                    $testUser = $baseGuild->members->get('id', getenv('DISCORD_TESTING_PM'));
+                    $testUser->sendMessage('Test Suite!')->then(function ($e) use ($channel, $baseGuild, $failPromise) {
+                        pass();
 
-    pass();
-});
-
-startTest('Send PM');
-
-try {
-    $testUser->sendMessage('Test Suite!');
-} catch (\Exception $e) {
-    fail($e);
-}
-
-pass();
+                        require_once 'roles.php';
+                    }, $failPromise);
+                }, $failPromise);
+            }, $failPromise);
+        }, $failPromise);
+    }, $failPromise);
+}, $failPromise);

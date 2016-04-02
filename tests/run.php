@@ -138,21 +138,24 @@ startTest('Logging in');
 
 try {
     $discord = new Discord($token);
+    $ws      = $discord->getWebSocket();
 } catch (\Exception $e) {
     fail($e);
 }
 
 pass();
 
-$discord->getWebsocket()->on('ready', function ($discord) use ($ws, $testingGuild, $testUser, $loop) {
+$ws->on('ready', function ($discord) use ($ws, $testingGuild, $testUser) {
     pass();
+
+    $failPromise = function ($e) {
+        fail($e);
+    };
 
     $baseGuild = $discord->guilds->get('id', $testingGuild);
     $testUser = User::find($testUser);
 
     require_once 'channels.php';
-    require_once 'messages.php';
-    require_once 'roles.php';
     require_once 'user.php';
 
     printAllTests();
@@ -161,4 +164,4 @@ $discord->getWebsocket()->on('ready', function ($discord) use ($ws, $testingGuil
     fail($e->getMessage());
 });
 
-$discord->getWebsocket()->run();
+$ws->run();

@@ -140,7 +140,7 @@ class Guzzle extends GuzzleClient implements HttpDriver
     /**
      * {@inheritdoc}
      */
-    public function sendFile(Channel $channel, $filepath, $filename)
+    public function sendFile(Channel $channel, $filepath, $filename, $token)
     {
         $deferred = new Deferred();
 
@@ -155,6 +155,7 @@ class Guzzle extends GuzzleClient implements HttpDriver
             'User-Agent'     => 'DiscordPHP/'.Discord::VERSION.' DiscordBot (https://github.com/teamreflex/DiscordPHP, '.Discord::VERSION.')',
             'Content-Type'   => 'multipart/form-data; boundary='.$boundary,
             'Content-Length' => strlen($data),
+            'authorization'  => 'Bot '.$token
         ];
 
         $request = new Request(

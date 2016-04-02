@@ -18,6 +18,7 @@ use Discord\Parts\Part;
 use Discord\Parts\Permissions\ChannelPermission;
 use Discord\Parts\User\Member;
 use Discord\Repository\Channel\InviteRepository;
+use Discord\Repository\Channel\MessageRepository;
 use Illuminate\Support\Collection;
 use React\Promise\Deferred;
 
@@ -52,7 +53,8 @@ class Channel extends Part
      * {@inheritdoc}
      */
     protected $repositories = [
-        'invites' => InviteRepository::class,
+        'invites'  => InviteRepository::class,
+        'messages' => MessageRepository::class,
     ];
 
     /**
@@ -348,6 +350,8 @@ class Channel extends Part
             }
 
             $this->messages->push($message);
+
+            $deferred->resolve($message);
         }, \React\Partial\bind_right($this->reject, $deferred));
 
         return $deferred->promise();
