@@ -22,6 +22,7 @@ use Discord\Parts\Guild\Role;
 use Discord\Parts\Permissions\RolePermission as Permission;
 use Discord\Parts\User\Member;
 use Discord\Voice\VoiceClient;
+use Discord\WebSockets\Op;
 use Evenement\EventEmitter;
 use Ratchet\Client\Connector as WsFactory;
 use Ratchet\Client\WebSocket as WebSocketInstance;
@@ -252,31 +253,42 @@ class WebSocket extends EventEmitter
                 $this->seq = $data->s;
             }
 
-            if (! is_null($handlerSettings = $this->handlers->getHandler($data->t))) {
-                $this->handleHandler($handlerSettings, $data);
-            }
+            switch ($data->op) {
+                case Op::OP_DISPATCH:
+                    if (! is_null($handlerSettings = $this->handlers->getHandler($data->t))) {
+                        $this->handleHandler($handlerSettings, $data);
+                    }
 
-            // Discord wants us to change WebSocket servers.
-            if ($data->op == 7) {
-                $this->handleOp7($data);
-            }
+                    $handlers = [
+                        Event::VOICE_SERVER_UPDATE  => 'handleVoiceServerUpdate',
+                        Event::RESUMED              => 'handleResume',
+                        Event::READY                => 'handleReady',
+                        Event::GUILD_MEMBERS_CHUNK  => 'handleGuildMembersChunk',
+                        Event::VOICE_STATE_UPDATE   => 'handleVoiceStateUpdate',
+                    ];
 
-            $handlers = [
-                Event::VOICE_SERVER_UPDATE  => 'handleVoiceServerUpdate',
-                Event::RESUMED              => 'handleResume',
-                Event::READY                => 'handleReady',
-                Event::GUILD_MEMBERS_CHUNK  => 'handleGuildMembersChunk',
-                Event::VOICE_STATE_UPDATE   => 'handleVoiceStateUpdate',
-            ];
-
-            if (isset($handlers[$data->t])) {
-                $this->{$handlers[$data->t]}($data);
+                    if (isset($handlers[$data->t])) {
+                        $this->{$handlers[$data->t]}($data);
+                    }
+                    break;
+                case Op::OP_HEARTBEAT:
+                    $this->send([
+                        'op' => Op::OP_HEARTBEAT,
+                        'd'  => $data->d
+                    ]);
+                    break;
+                case Op::OP_RECONNECT:
+                    $this->ws->close(Op::CLOSE_NORMAL, 'gateway redirecting - opcode 7');
+                    break;
+                case Op::OP_INVALID_SESSION:
+                    $this->ws->close(Op::CLOSE_INVALID_SESSION, 'invalid session - opcode 7');
+                    break;
             }
         });
 
         $ws->on('close', function ($op, $reason) {
             if ($op instanceof Stream) {
-                $op = 1006;
+                $op = Op::CLOSE_ABNORMAL;
                 $reason = 'PHP Stream closed.';
             }
 
@@ -303,7 +315,7 @@ class WebSocket extends EventEmitter
             }
 
             // Invalid Session
-            if ($op == 4006 && strpos($reason, 'invalid session') !== false) {
+            if ($op == Op::CLOSE_INVALID_SESSION && strpos($reason, 'invalid session') !== false) {
                 $this->invalidSession = true;
                 $this->wsfactory->__invoke($this->gateway)->then([$this, 'handleWebSocketConnection'], [$this, 'handleWebSocketError']);
                 ++$this->reconnectCount;
@@ -329,7 +341,7 @@ class WebSocket extends EventEmitter
 
         if ($this->reconnecting) {
             $this->send([
-                'op' => 6,
+                'op' => Op::OP_RESUME,
                 'd'  => [
                     'session_id' => $this->sessionId,
                     'seq'        => $this->seq,
@@ -621,7 +633,6 @@ class WebSocket extends EventEmitter
      */
     public function handleOp7()
     {
-        $this->endpoint    = $data->d->url;
         $this->redirecting = true;
         $ws->close();
     }
@@ -660,14 +671,12 @@ class WebSocket extends EventEmitter
      */
     public function heartbeat()
     {
-        $time = microtime(true);
-
         $this->send([
-            'op' => 1,
-            'd'  => $time,
+            'op' => Op::OP_HEARTBEAT,
+            'd'  => $this->seq,
         ]);
 
-        $this->emit('heartbeat', [$time]);
+        $this->emit('heartbeat', [$this->seq, $this]);
     }
 
     /**
@@ -745,7 +754,7 @@ class WebSocket extends EventEmitter
         $this->ws->on('message', $closure);
 
         $this->send([
-            'op' => 4,
+            'op' => Op::OP_VOICE_STATE_UPDATE,
             'd'  => [
                 'guild_id'   => $channel->guild_id,
                 'channel_id' => $channel->id,
@@ -793,7 +802,7 @@ class WebSocket extends EventEmitter
         $token = (substr(DISCORD_TOKEN, 0, 4) === 'Bot ') ? substr(DISCORD_TOKEN, 4) : DISCORD_TOKEN;
 
         $this->send([
-            'op' => 2,
+            'op' => Op::OP_IDENTIFY,
             'd'  => [
                 'token'      => $token,
                 'v'          => self::CURRENT_GATEWAY_VERSION,
@@ -837,11 +846,6 @@ class WebSocket extends EventEmitter
      */
     public function getGateway()
     {
-        // temporary until v4 is deployed
-        return 'wss://gateway.discord.gg?v=4&encoding='.($this->useEtf ? 'etf' : 'json');
-
-        $token = (substr(DISCORD_TOKEN, 0, 4) === 'Bot ') ? substr(DISCORD_TOKEN, 4) : DISCORD_TOKEN;
-
-        return Guzzle::get('gateway', null, false, ['authorization' => $token])->url;
+        return 'wss://gateway.discord.gg?v='.self::CURRENT_GATEWAY_VERSION.'&encoding='.($this->useEtf ? 'etf' : 'json');
     }
 }

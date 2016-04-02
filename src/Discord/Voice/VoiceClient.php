@@ -19,10 +19,11 @@ use Discord\Exceptions\OutdatedDCAException;
 use Discord\Helpers\Collection;
 use Discord\Helpers\Process;
 use Discord\Parts\Channel\Channel;
-use Ratchet\Client\Connector as WsFactory;
-use Ratchet\Client\WebSocket as WS;
+use Discord\WebSockets\Op;
 use Discord\WebSockets\WebSocket;
 use Evenement\EventEmitter;
+use Ratchet\Client\Connector as WsFactory;
+use Ratchet\Client\WebSocket as WS;
 use Ratchet\WebSocket\Version\RFC6455\Frame;
 use React\Datagram\Factory as DatagramFactory;
 use React\Datagram\Socket;
@@ -351,7 +352,7 @@ class VoiceClient extends EventEmitter
         $discoverUdp = function ($message) use (&$ws, &$discoverUdp, $udpfac, &$firstPack, &$ip, &$port) {
             $data = json_decode($message->getPayload());
 
-            if ($data->op == 2) {
+            if ($data->op == Op::VOICE_READY) {
                 $ws->removeListener('message', $discoverUdp);
 
                 $this->udpPort            = $data->d->port;
@@ -359,14 +360,14 @@ class VoiceClient extends EventEmitter
                 $this->ssrc               = $data->d->ssrc;
 
                 $this->send([
-                    'op' => 3,
+                    'op' => Op::VOICE_HEARTBEAT,
                     'd'  => microtime(true),
                 ]);
                 $this->emit('ws-heartbeat', []);
 
                 $this->heartbeat = $this->loop->addPeriodicTimer($this->heartbeat_interval / 1000, function () {
                     $this->send([
-                        'op' => 3,
+                        'op' => Op::VOICE_HEARTBEAT,
                         'd'  => microtime(true),
                     ]);
                     $this->emit('ws-heartbeat', []);
@@ -414,7 +415,7 @@ class VoiceClient extends EventEmitter
                             $this->voiceWebsocket->close();
 
                             $this->mainWebsocket->send([
-                                'op' => 4,
+                                'op' => Op::OP_VOICE_STATE_UPDATE,
                                 'd'  => [
                                     'guild_id'   => $this->channel->guild_id,
                                     'channel_id' => null,
@@ -427,7 +428,7 @@ class VoiceClient extends EventEmitter
                         }
 
                         $payload = [
-                            'op' => 1,
+                            'op' => Op::VOICE_SELECT_PROTO,
                             'd'  => [
                                 'protocol' => 'udp',
                                 'data'     => [
@@ -459,7 +460,7 @@ class VoiceClient extends EventEmitter
             $this->emit('ws-message', [$message, $this]);
 
             switch ($data->op) {
-                case 3: // keepalive response
+                case Op::VOICE_HEARTBEAT: // keepalive response
                     $end = microtime(true);
                     $start = $data->d;
                     $diff = ($end - $start) * 1000;
@@ -474,7 +475,7 @@ class VoiceClient extends EventEmitter
 
                     $this->emit('ws-ping', [$diff]);
                     break;
-                case 4: // ready
+                case Op::VOICE_DESCRIPTION: // ready
                     $this->ready = true;
                     $this->mode = $data->d->mode;
                     $this->secret_key = '';
@@ -491,7 +492,7 @@ class VoiceClient extends EventEmitter
                     }
 
                     break;
-                case 5: // user started speaking
+                case Op::VOICE_SPEAKING: // user started speaking
                     $this->emit('speaking', [$data->d->speaking, $data->d->user_id, $this]);
                     $this->emit("speaking.{$data->d->user_id}", [$data->d->speaking, $this]);
                     $this->speakingStatus[$data->d->ssrc] = $data->d;
@@ -509,7 +510,7 @@ class VoiceClient extends EventEmitter
 
         if (! $this->sentLoginFrame) {
             $this->send([
-                'op' => 0,
+                'op' => Op::VOICE_IDENTIFY,
                 'd'  => [
                     'server_id'  => $this->channel->guild_id,
                     'user_id'    => $this->data['user_id'],
@@ -868,7 +869,7 @@ class VoiceClient extends EventEmitter
         }
 
         $this->send([
-            'op' => 5,
+            'op' => Op::VOICE_SPEAKING,
             'd'  => [
                 'speaking' => $speaking,
                 'delay'    => 0,
@@ -900,7 +901,7 @@ class VoiceClient extends EventEmitter
         }
 
         $this->mainWebsocket->send([
-            'op' => 4,
+            'op' => Op::OP_VOICE_STATE_UPDATE,
             'd'  => [
                 'guild_id'   => $channel->guild_id,
                 'channel_id' => $channel->id,
@@ -1080,7 +1081,7 @@ class VoiceClient extends EventEmitter
         $this->deaf = $deaf;
 
         $this->mainWebsocket->send([
-            'op' => 4,
+            'op' => Op::OP_VOICE_STATE_UPDATE,
             'd'  => [
                 'guild_id'   => $this->channel->guild_id,
                 'channel_id' => $this->channel->id,
@@ -1131,6 +1132,7 @@ class VoiceClient extends EventEmitter
         }
 
         $this->isPaused = false;
+        $this->startTime = microtime(true) + 0.5;
         $deferred->resolve();
 
         return $deferred->promise();
@@ -1184,7 +1186,7 @@ class VoiceClient extends EventEmitter
         $this->ready = false;
 
         $this->mainWebsocket->send([
-            'op' => 4,
+            'op' => Op::VOICE_STATE_UPDATE,
             'd'  => [
                 'guild_id'   => $this->channel->guild_id,
                 'channel_id' => null,
