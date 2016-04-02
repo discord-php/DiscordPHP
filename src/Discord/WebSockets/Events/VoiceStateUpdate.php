@@ -11,6 +11,9 @@
 
 namespace Discord\WebSockets\Events;
 
+use Discord\Cache\Cache;
+use Discord\Helpers\Collection;
+use Discord\Parts\WebSockets\VoiceStateUpdate as VoiceStateUpdatePart;
 use Discord\WebSockets\Event;
 
 /**
@@ -25,7 +28,7 @@ class VoiceStateUpdate extends Event
      */
     public function getData($data, $discord)
     {
-        return $data;
+        return new VoiceStateUpdatePart((array) $data, true);
     }
 
     /**
@@ -45,6 +48,15 @@ class VoiceStateUpdate extends Event
                         break;
                     }
                 }
+
+                if (Cache::has("channels.{$data->channel_id}.voice.members")) {
+                    $collection = Cache::get("channels.{$data->channel_id}.voice.members");
+                } else {
+                    $collection = new Collection();
+                }
+
+                $collection[$data->user_id] = $data;
+                Cache::set("channels.{$data->channel_id}.voice.members", $collection);
 
                 $discord->guilds[$index] = $guild;
 
