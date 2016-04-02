@@ -1131,7 +1131,7 @@ class VoiceClient extends EventEmitter
             return $deferred->promise();
         }
 
-        $this->isPaused = false;
+        $this->isPaused  = false;
         $this->startTime = microtime(true) + 0.5;
         $deferred->resolve();
 
