@@ -11,6 +11,7 @@
 
 namespace Discord\Parts\Guild;
 
+use Discord\Cache\Cache;
 use Discord\Exceptions\DiscordRequestFailedException;
 use Discord\Helpers\Collection;
 use Discord\Helpers\Guzzle;
@@ -50,11 +51,11 @@ class Guild extends Part
      * {@inheritdoc}
      */
     protected $uris = [
-        'get' => 'guilds/:id',
+        'get'    => 'guilds/:id',
         'create' => 'guilds',
         'update' => 'guilds/:id',
         'delete' => 'guilds/:id',
-        'leave' => 'users/@me/guilds/:id',
+        'leave'  => 'users/@me/guilds/:id',
     ];
 
     /**
@@ -87,7 +88,7 @@ class Guild extends Part
     public function leave()
     {
         try {
-            $request = Guzzle::delete($this->replaceWithVariables($this->uris['leave']));
+            $request       = Guzzle::delete($this->replaceWithVariables($this->uris['leave']));
             $this->created = false;
             $this->deleted = true;
         } catch (\Exception $e) {
@@ -160,12 +161,12 @@ class Guild extends Part
         $roles = [];
 
         foreach ($this->attributes['roles'] as $index => $role) {
-            $perm = new Permission();
-            $perm->perms = $role->permissions;
-            $role = (array) $role;
+            $perm                = new Permission();
+            $perm->perms         = $role->permissions;
+            $role                = (array) $role;
             $role['permissions'] = $perm;
-            $role['guild_id'] = $this->id;
-            $roles[$index] = new Role($role, true);
+            $role['guild_id']    = $this->id;
+            $roles[$index]       = new Role($role, true);
         }
 
         $roles = new Collection($roles);
@@ -182,6 +183,10 @@ class Guild extends Part
      */
     public function getOwnerAttribute()
     {
+        if ($owner = Cache::get("user.{$this->owner_id}")) {
+            return $owner;
+        }
+
         if (isset($this->attributes_cache['owner'])) {
             return $this->attributes_cache['owner'];
         }
@@ -189,6 +194,8 @@ class Guild extends Part
         $request = Guzzle::get($this->replaceWithVariables('users/:owner_id'));
 
         $owner = new User((array) $request, true);
+
+        Cache::set("user.{$user->id}", $owner);
 
         $this->attributes_cache['owner'] = $owner;
 
@@ -207,10 +214,12 @@ class Guild extends Part
         }
 
         $channels = [];
-        $request = Guzzle::get($this->replaceWithVariables('guilds/:id/channels'));
+        $request  = Guzzle::get($this->replaceWithVariables('guilds/:id/channels'));
 
         foreach ($request as $index => $channel) {
-            $channels[$index] = new Channel((array) $channel, true);
+            $channel = new Channel((array) $channel, true);
+            Cache::set("channel.{$channel->id}", $channel);
+            $channels[$index] = $channel;
         }
 
         $channels = new Collection($channels);
@@ -236,13 +245,15 @@ class Guild extends Part
         try {
             $request = Guzzle::get($this->replaceWithVariables('guilds/:id/bans'));
         } catch (DiscordRequestFailedException $e) {
-            return false;
+            return new Collection();
         }
 
         foreach ($request as $index => $ban) {
-            $ban = (array) $ban;
+            $ban          = (array) $ban;
             $ban['guild'] = $this;
-            $bans[$index] = new Ban($ban, true);
+            $ban          = new Ban($ban, true);
+            Cache::set("guild.{$this->id}.bans.{$ban->user_id}", $ban);
+            $bans[$index] = $ban;
         }
 
         $bans = new Collection($bans);
@@ -267,7 +278,9 @@ class Guild extends Part
         $invites = [];
 
         foreach ($request as $index => $invite) {
-            $invites[$index] = new Invite((array) $invite, true);
+            $invite = new Invite((array) $invite, true);
+            Cache::set("invite.{$invite->id}", $invite);
+            $invites[$index] = $invite;
         }
 
         $invites = new Collection($invites);
@@ -347,7 +360,7 @@ class Guild extends Part
     public function getCreatableAttributes()
     {
         return [
-            'name' => $this->name,
+            'name'   => $this->name,
             'region' => $this->validateRegion(),
         ];
     }
@@ -358,13 +371,13 @@ class Guild extends Part
     public function getUpdatableAttributes()
     {
         return [
-            'name' => $this->name,
-            'region' => $this->region,
-            'logo' => $this->logo,
-            'splash' => $this->splash,
+            'name'               => $this->name,
+            'region'             => $this->region,
+            'logo'               => $this->logo,
+            'splash'             => $this->splash,
             'verification_level' => $this->verification_level,
-            'afk_channel_id' => $this->afk_channel_id,
-            'afk_timeout' => $this->afk_timeout,
+            'afk_channel_id'     => $this->afk_channel_id,
+            'afk_timeout'        => $this->afk_timeout,
         ];
     }
 }

@@ -11,6 +11,7 @@
 
 namespace Discord\Cache\Drivers;
 
+use Discord\Cache\Cache;
 use Discord\Cache\CacheInterface;
 
 /**
@@ -40,8 +41,12 @@ class ApcCacheDriver implements CacheInterface
     /**
      * {@inheritdoc}
      */
-    public function set($key, $value, $ttl = 300)
+    public function set($key, $value, $ttl = '')
     {
+        if (is_string($ttl)) {
+            $ttl = Cache::getDefaultTtl();
+        }
+
         return apc_store($key, $value, $ttl);
     }
 

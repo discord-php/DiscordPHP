@@ -12,6 +12,7 @@
 namespace Discord\Parts\Channel;
 
 use Carbon\Carbon;
+use Discord\Cache\Cache;
 use Discord\Helpers\Guzzle;
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
@@ -35,7 +36,7 @@ class Message extends Part
      * {@inheritdoc}
      */
     protected $uris = [
-        'get' => 'channels/:channel_id/messages/:id',
+        'get'    => 'channels/:channel_id/messages/:id',
         'create' => 'channels/:channel_id/messages',
         'update' => 'channels/:channel_id/messages/:id',
         'delete' => 'channels/:channel_id/messages/:id',
@@ -67,7 +68,7 @@ class Message extends Part
         }
 
         return new Channel([
-            'id' => $this->channel_id,
+            'id'   => $this->channel_id,
             'type' => 'text',
         ], true);
     }
@@ -79,12 +80,18 @@ class Message extends Part
      */
     public function getFullChannelAttribute()
     {
+        if ($channel = Cache::get("channel.{$this->channel_id}")) {
+            return $channel;
+        }
+
         if (isset($this->attributes_cache['channel'])) {
             return $this->attributes_cache['channel'];
         }
 
         $request = Guzzle::get($this->replaceWithVariables('channels/:channel_id'));
         $channel = new Channel((array) $request, true);
+
+        Cache::set("channel.{$channel->id}", $channel);
 
         $this->attributes_cache['channel'] = $channel;
 
@@ -99,9 +106,9 @@ class Message extends Part
     public function getAuthorAttribute()
     {
         return new User([
-            'id' => $this->attributes['author']->id,
-            'username' => $this->attributes['author']->username,
-            'avatar' => $this->attributes['author']->avatar,
+            'id'            => $this->attributes['author']->id,
+            'username'      => $this->attributes['author']->username,
+            'avatar'        => $this->attributes['author']->avatar,
             'discriminator' => $this->attributes['author']->discriminator,
         ]);
     }
@@ -122,9 +129,9 @@ class Message extends Part
     public function getCreatableAttributes()
     {
         return [
-            'content' => $this->content,
+            'content'  => $this->content,
             'mentions' => $this->mentions,
-            'tts' => $this->tts,
+            'tts'      => $this->tts,
         ];
     }
 
@@ -134,7 +141,7 @@ class Message extends Part
     public function getUpdatableAttributes()
     {
         return [
-            'content' => $this->content,
+            'content'  => $this->content,
             'mentions' => $this->mentions,
         ];
     }

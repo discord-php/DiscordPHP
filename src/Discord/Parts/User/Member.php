@@ -12,9 +12,13 @@
 namespace Discord\Parts\User;
 
 use Carbon\Carbon;
+use Discord\Cache\Cache;
+use Discord\Exceptions\DiscordRequestFailedException;
 use Discord\Helpers\Collection;
 use Discord\Helpers\Guzzle;
 use Discord\Parts\Channel\Channel;
+use Discord\Parts\Guild\Ban;
+use Discord\Parts\Guild\Guild;
 use Discord\Parts\Guild\Role;
 use Discord\Parts\Part;
 use Discord\Parts\Permissions\RolePermission as Permission;
@@ -48,7 +52,7 @@ class Member extends Part
      * {@inheritdoc}
      */
     protected $uris = [
-        'get' => '',
+        'get'    => '',
         'create' => '',
         'update' => 'guilds/:guild_id/members/:id',
         'delete' => 'guilds/:guild_id/members/:id',
@@ -64,6 +68,33 @@ class Member extends Part
     public function kick()
     {
         return $this->delete();
+    }
+
+    /**
+     * Bans the member.
+     *
+     * @param int $daysToDeleteMessasges The amount of days to delete messages from.
+     *
+     * @return bool Whether the attempt to ban the member succeeded or failed.
+     */
+    public function ban($daysToDeleteMessasges = null)
+    {
+        $url = $this->replaceWithVariables('guilds/:guild_id/bans/:id');
+
+        if (! is_null($daysToDeleteMessasges)) {
+            $url .= "?message-delete-days={$daysToDeleteMessasges}";
+        }
+
+        try {
+            $request = Guzzle::put($url);
+        } catch (DiscordRequestFailedException $e) {
+            return false;
+        }
+
+        return new Ban([
+            'user'  => $this->user,
+            'guild' => new Guild(['id' => $this->guild_id], true),
+        ], true);
     }
 
     /**
@@ -183,7 +214,7 @@ class Member extends Part
             return $this->attributes_cache['roles'];
         }
 
-        $roles = [];
+        $roles   = [];
         $request = Guzzle::get($this->replaceWithVariables('guilds/:guild_id/roles'));
 
         foreach ($request as $key => $role) {
@@ -191,9 +222,11 @@ class Member extends Part
                 $perm = new Permission([
                     'perms' => $role->permissions,
                 ]);
-                $role = (array) $role;
+                $role                = (array) $role;
                 $role['permissions'] = $perm;
-                $roles[] = new Role($role, true);
+                $role                = new Role($role, true);
+                Cache::set("role.{$role->id}", $role);
+                $roles[] = $role;
             }
         }
 

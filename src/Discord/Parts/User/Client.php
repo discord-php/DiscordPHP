@@ -11,6 +11,7 @@
 
 namespace Discord\Parts\User;
 
+use Discord\Cache\Cache;
 use Discord\Exceptions\FileNotFoundException;
 use Discord\Exceptions\PasswordEmptyException;
 use Discord\Helpers\Collection;
@@ -41,7 +42,7 @@ class Client extends Part
     /**
      * {@inheritdoc}
      */
-    protected $fillable = ['id', 'username', 'password', 'email', 'verified', 'avatar', 'discriminator'];
+    protected $fillable = ['id', 'username', 'password', 'email', 'verified', 'avatar', 'discriminator', 'bot'];
 
     /**
      * {@inheritdoc}
@@ -58,11 +59,39 @@ class Client extends Part
     public function afterConstruct()
     {
         $this->user = new User([
-            'id' => $this->id,
-            'username' => $this->username,
-            'avatar' => $this->attributes['avatar'],
+            'id'            => $this->id,
+            'username'      => $this->username,
+            'avatar'        => $this->attributes['avatar'],
             'discriminator' => $this->discriminator,
         ], true);
+    }
+
+    /**
+     * Converts the account to a bot.
+     *
+     * @param string $token  Your authentication token.
+     * @param int    $appID  The OAuth2 app ID.
+     * @param int    $secret The OAuth2 secret.
+     *
+     * @return bool Whether the account was converted.
+     */
+    public function convertToBot($token, $appID, $secret)
+    {
+        if ($this->bot) {
+            return false;
+        }
+
+        $request = Guzzle::post("oauth2/applications/{$appID}/bot", [
+            'secret' => $secret,
+        ], true, [
+            'authorization' => $token,
+        ]);
+
+        $this->fill($request);
+
+        trigger_error('Please restart your bot before you try to do anything else.');
+
+        return true;
     }
 
     /**
@@ -81,8 +110,8 @@ class Client extends Part
         }
 
         $extension = pathinfo($filepath, PATHINFO_EXTENSION);
-        $file = file_get_contents($filepath);
-        $base64 = base64_encode($file);
+        $file      = file_get_contents($filepath);
+        $base64    = base64_encode($file);
 
         $this->attributes['avatarhash'] = "data:image/{$extension};base64,{$base64}";
 
@@ -104,7 +133,7 @@ class Client extends Part
 
         $ws->send([
             'op' => 3,
-            'd' => [
+            'd'  => [
                 'game' => (! is_null($gamename) ? [
                     'name' => $gamename,
                 ] : null),
@@ -126,11 +155,13 @@ class Client extends Part
             return $this->attributes_cache['guilds'];
         }
 
-        $guilds = [];
+        $guilds  = [];
         $request = Guzzle::get('users/@me/guilds');
 
         foreach ($request as $index => $guild) {
-            $guilds[$index] = new Guild((array) $guild, true);
+            $guild = new Guild((array) $guild, true);
+            Cache::set("guild.{$guild->id}", $guild);
+            $guilds[$index] = $guild;
         }
 
         $guilds = new Collection($guilds);
@@ -169,19 +200,22 @@ class Client extends Part
      */
     public function getUpdatableAttributes()
     {
-        if (empty($this->attributes['password'])) {
-            throw new PasswordEmptyException('You must enter your password to update your profile.');
-        }
-
         $attributes = [
             'username' => $this->attributes['username'],
-            'email' => $this->email,
-            'password' => $this->attributes['password'],
-            'avatar' => $this->attributes['avatarhash'],
+            'avatar'   => $this->attributes['avatarhash'],
         ];
 
-        if (! empty($this->attributes['new_password'])) {
-            $attributes['new_password'] = $this->attributes['new_password'];
+        if (! $this->bot) {
+            if (empty($this->attributes['password'])) {
+                throw new PasswordEmptyException('You must enter your password to update your profile.');
+            }
+
+            $attributes['email']    = $this->email;
+            $attributes['password'] = $this->attributes['password'];
+
+            if (! empty($this->attributes['new_password'])) {
+                $attributes['new_password'] = $this->attributes['new_password'];
+            }
         }
 
         return $attributes;

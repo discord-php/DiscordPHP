@@ -11,6 +11,7 @@
 
 namespace Discord\Parts\User;
 
+use Discord\Cache\Cache;
 use Discord\Helpers\Guzzle;
 use Discord\Parts\Channel\Message;
 use Discord\Parts\Part;
@@ -64,16 +65,20 @@ class User extends Part
                 'recipient_id' => $this->id,
             ]);
 
-            $channel_id = $channel->id;
+            $channel_id                           = $channel->id;
             $this->attributes_cache['channel_id'] = $channel->id;
         }
 
         $request = Guzzle::post("channels/{$channel_id}/messages", [
             'content' => $message,
-            'tts' => $tts,
+            'tts'     => $tts,
         ]);
 
-        return new Message((array) $request, true);
+        $message = new Message((array) $request, true);
+
+        Cache::set("message.{$message->id}", $message);
+
+        return $message;
     }
 
     /**
@@ -90,7 +95,7 @@ class User extends Part
                 'recipient_id' => $this->id,
             ]);
 
-            $channel_id = $channel->id;
+            $channel_id                           = $channel->id;
             $this->attributes_cache['channel_id'] = $channel->id;
         }
 

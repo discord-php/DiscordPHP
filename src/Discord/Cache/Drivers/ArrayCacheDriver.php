@@ -11,6 +11,7 @@
 
 namespace Discord\Cache\Drivers;
 
+use Discord\Cache\Cache;
 use Discord\Cache\CacheInterface;
 
 /**
@@ -49,13 +50,21 @@ class ArrayCacheDriver implements CacheInterface
     /**
      * {@inheritdoc}
      */
-    public function set($key, $value, $ttl = 300)
+    public function set($key, $value, $ttl = '')
     {
+        if (is_string($ttl)) {
+            $ttl = Cache::getDefaultTtl();
+        }
+
         $this->cache[$key] = [
-            'data' => $value,
-            'ttl' => $ttl,
+            'data'       => $value,
+            'ttl'        => $ttl,
             'store_time' => microtime(true),
         ];
+
+        if (is_null($ttl)) {
+            $this->cache[$key]['disable_ttl'] = true;
+        }
 
         return true;
     }
@@ -106,7 +115,11 @@ class ArrayCacheDriver implements CacheInterface
             return;
         }
 
-        $ttl = $this->cache[$key]['ttl'];
+        if (isset($this->cache[$key]['disable_ttl']) && $this->cache[$key]['disable_ttl']) {
+            return;
+        }
+
+        $ttl        = $this->cache[$key]['ttl'];
         $store_time = $this->cache[$key]['store_time'];
 
         if (microtime(true) >= $store_time + $ttl) {

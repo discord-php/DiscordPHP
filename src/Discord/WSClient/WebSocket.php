@@ -58,9 +58,9 @@ class WebSocket implements EventEmitterInterface, ConnectionInterface
 
     public function __construct(DuplexStreamInterface $stream, Response $response, Request $request)
     {
-        $this->_stream = $stream;
+        $this->_stream  = $stream;
         $this->response = $response;
-        $this->request = $request;
+        $this->request  = $request;
 
         $stream->on('data', function ($data) {
             $this->handleData($data);
@@ -73,9 +73,9 @@ class WebSocket implements EventEmitterInterface, ConnectionInterface
             }
         });
 
-        $stream->on('close', function () {
-            $this->emit('close', [$this]);
-        });
+        // $stream->on('close', function () {
+        //     $this->emit('close', [$this]);
+        // });
 
         $stream->on('error', function ($error) {
             $this->emit('error', [$error, $this]);
@@ -133,6 +133,17 @@ class WebSocket implements EventEmitterInterface, ConnectionInterface
                     case Frame::OP_CLOSE:
                         $this->close($frame->getPayload());
 
+                        $close_op = unpack('n', (binary) $frame->getPayload());
+                        $close_op = reset($close_op);
+
+                        if (strlen($frame->getPayload()) > 2) {
+                            $reason = substr($frame->getPayload(), 2, strlen($frame->getPayload()));
+                        } else {
+                            $reason = '';
+                        }
+
+                        $this->emit('close', [$close_op, $reason]);
+
                         return;
                     case Frame::OP_PING:
                         $this->send(new Frame($frame->getPayload(), true, Frame::OP_PONG));
@@ -142,6 +153,17 @@ class WebSocket implements EventEmitterInterface, ConnectionInterface
                         break;
                     default:
                         $this->close($frame->getPayload());
+
+                        $close_op = unpack('n', (binary) $frame->getPayload());
+                        $close_op = reset($close_op);
+
+                        if (strlen($frame->getPayload()) > 2) {
+                            $reason = substr($frame->getPayload(), 2, strlen($frame->getPayload()));
+                        } else {
+                            $reason = '';
+                        }
+
+                        $this->emit('close', [$close_op, $reason]);
 
                         return;
                 }

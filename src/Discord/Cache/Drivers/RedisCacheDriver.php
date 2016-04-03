@@ -11,6 +11,7 @@
 
 namespace Discord\Cache\Drivers;
 
+use Discord\Cache\Cache;
 use Discord\Cache\CacheInterface;
 use Predis\Client;
 
@@ -46,9 +47,9 @@ class RedisCacheDriver implements CacheInterface
     public function __construct($hostname, $port = 6379, $password = null, $db = 0)
     {
         $this->redis = new Client([
-            'scheme' => 'tcp',
-            'host' => $hostname,
-            'port' => $port,
+            'scheme'   => 'tcp',
+            'host'     => $hostname,
+            'port'     => $port,
             'database' => $db,
 
             'prefix' => 'discordphp:',
@@ -70,10 +71,17 @@ class RedisCacheDriver implements CacheInterface
     /**
      * {@inheritdoc}
      */
-    public function set($key, $value, $ttl = 300)
+    public function set($key, $value, $ttl = '')
     {
         $this->redis->set($key, $value);
-        $this->redis->expire($key, $ttl);
+
+        if (is_null($ttl)) {
+            $ttl = Cache::getDefaultTtl();
+        }
+
+        if (! is_string($ttl)) {
+            $this->redis->expire($key, $ttl);
+        }
 
         return true;
     }

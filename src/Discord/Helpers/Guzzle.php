@@ -17,6 +17,7 @@ use Discord\Exceptions\ContentTooLongException;
 use Discord\Exceptions\DiscordRequestFailedException;
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\Psr7\Request;
+use Illuminate\Support\Str;
 
 /**
  * Provides an easy wrapper for the Guzzle HTTP client.
@@ -38,6 +39,13 @@ class Guzzle
     public static $cacheTtl = 300;
 
     /**
+     * The options to set in the Guzzle client.
+     *
+     * @var array
+     */
+    private static $guzzleOptions = ['http_errors' => false, 'allow_redirects' => true];
+
+    /**
      * Handles dynamic calls to the class.
      *
      * @param string $url    The endpoint that will be queried.
@@ -50,26 +58,28 @@ class Guzzle
      */
     public static function __callStatic($name, $params)
     {
-        $url = $params[0];
+        $url     = $params[0];
         $content = (isset($params[1])) ? $params[1] : null;
-        $auth = (isset($params[2])) ? true : false;
+        $auth    = (isset($params[2])) ? true : false;
+        $headers = (isset($params[3])) ? $params[3] : [];
 
-        return self::runRequest($name, $url, $content, $auth);
+        return self::runRequest($name, $url, $content, $auth, $headers);
     }
 
     /**
      * Runs http calls.
      *
-     * @param string $method  The request method.
-     * @param string $url     The endpoint that will be queried.
-     * @param array  $content Parameters that will be encoded into JSON and sent with the request.
-     * @param bool   $auth    Whether the authentication token will be sent with the request.
+     * @param string $method       The request method.
+     * @param string $url          The endpoint that will be queried.
+     * @param array  $content      Parameters that will be encoded into JSON and sent with the request.
+     * @param bool   $auth         Whether the authentication token will be sent with the request.
+     * @param array  $extraHeaders Extra headers to send with the request.
      *
      * @return object An object that was returned from the Discord servers.
      */
-    public static function runRequest($method, $url, $content, $auth)
+    public static function runRequest($method, $url, $content, $auth, $extraHeaders)
     {
-        $guzzle = new GuzzleClient(['http_errors' => false, 'allow_redirects' => true]);
+        $guzzle    = new GuzzleClient(self::$guzzleOptions);
         $query_url = self::$base_url."/{$url}";
 
         if (Cache::has("guzzle:{$query_url}") && (strtolower($method) == 'get')) {
@@ -77,7 +87,7 @@ class Guzzle
         }
 
         $headers = [
-            'User-Agent' => self::getUserAgent(),
+            'User-Agent'   => self::getUserAgent(),
             'Content-Type' => 'application/json',
         ];
 
@@ -85,13 +95,28 @@ class Guzzle
             $headers['authorization'] = DISCORD_TOKEN;
         }
 
-        $done = false;
+        $headers = array_merge($headers, $extraHeaders);
+
+        $done     = false;
         $finalRes = null;
-        $content = (is_null($content)) ? null : json_encode($content);
+        $content  = (is_null($content)) ? null : json_encode($content);
+        $count    = 0;
 
         while (! $done) {
-            $request = new Request($method, $query_url, $headers, $content);
+            $request  = new Request($method, $query_url, $headers, $content);
             $response = $guzzle->send($request);
+
+            // Bad Gateway
+            // Cloudflare SSL Handshake
+            if ($response->getStatusCode() == 502 || $response->getStatusCode() == 525) {
+                if ($count > 3) {
+                    self::handleError($response->getStatusCode(), $response->getReasonPhrase(), $response->getBody(true), $url);
+                    continue;
+                }
+
+                ++$count;
+                continue;
+            }
 
             // Rate limiting
             if ($response->getStatusCode() == 429) {
@@ -102,11 +127,11 @@ class Guzzle
 
             // Not good!
             if ($response->getStatusCode() < 200 || $response->getStatusCode() > 226) {
-                self::handleError($response->getStatusCode(), $response->getReasonPhrase(), $response->getBody(true));
+                self::handleError($response->getStatusCode(), $response->getReasonPhrase(), $response->getBody(true), $url);
                 continue;
             }
 
-            $done = true;
+            $done     = true;
             $finalRes = $response;
         }
 
@@ -137,20 +162,23 @@ class Guzzle
      * @param int    $error_code The HTTP status code.
      * @param string $message    The HTTP reason phrase.
      * @param string $content    The HTTP response content.
+     * @param string $url        The HTTP url.
      *
      * @throws \Discord\Exceptions\DiscordRequestFailedException Thrown when the request fails.
      * @throws \Discord\Exceptions\ContentTooLongException       Thrown when the content is longer than 2000 characters.
      */
-    public static function handleError($error_code, $message, $content)
+    public static function handleError($error_code, $message, $content, $url)
     {
         if (! is_string($message)) {
             $message = $message->getReasonPhrase();
         }
 
-        $message .= " - {$content}";
+        $message .= " - {$content} - {$url}";
 
-        if (false !== strpos($content, 'longer than 2000 characters') &&
-            false !== strpos($content, 'String value is too long') &&
+        if (Str::contains(strtolower($content), [
+                'longer than 2000 characters',
+                'string value is too long',
+            ]) &&
             $error_code == 500
         ) {
             // Discord has set a restriction with content sent over REST,
@@ -162,6 +190,9 @@ class Guzzle
         }
 
         switch ($error_code) {
+            case 404:
+                $response = "Error code 404: This resource does not exist. {$message}";
+                break;
             case 400:
                 $response = "Error code 400: This usually means you have entered an incorrect Email or Password. {$message}";
                 break;
@@ -187,5 +218,15 @@ class Guzzle
     public static function getUserAgent()
     {
         return 'DiscordPHP/'.Discord::VERSION.' DiscordBot (https://github.com/teamreflex/DiscordPHP, '.Discord::VERSION.')';
+    }
+
+    /**
+     * Merges the given options with the current options.
+     *
+     * @param array $options The options to be set/updated
+     */
+    public static function addGuzzleOptions(array $options)
+    {
+        self::$guzzleOptions = array_merge(self::$guzzleOptions, $options);
     }
 }

@@ -11,9 +11,11 @@
 
 namespace Discord;
 
+use Carbon\Carbon;
 use Discord\Exceptions\InviteInvalidException;
 use Discord\Helpers\Guzzle;
 use Discord\Parts\Guild\Invite;
+use Discord\Parts\Part;
 use Discord\Parts\User\Client;
 
 /**
@@ -27,14 +29,21 @@ class Discord
     /**
      * The current version of the API.
      *
-     * @var string
+     * @var string The current version of the API.
      */
-    const VERSION = 'v3.1.1';
+    const VERSION = 'v3.2.0-beta';
+
+    /**
+     * The Discord epoch value.
+     *
+     * @var int
+     */
+    const DISCORD_EPOCH = 1420070400000;
 
     /**
      * The Client instance.
      *
-     * @var Client
+     * @var Client The Discord Client instance.
      */
     protected $client;
 
@@ -61,7 +70,7 @@ class Discord
      *
      * @param string $email The Email that will be checked for token caching
      *
-     * @return string|null
+     * @return string|null The Discord token or null.
      */
     protected function checkForCaching($email)
     {
@@ -96,7 +105,7 @@ class Discord
         }
 
         $request = Guzzle::post('auth/login', [
-            'email' => $email,
+            'email'    => $email,
             'password' => $password,
         ], true);
 
@@ -143,6 +152,14 @@ class Discord
      */
     public function acceptInvite($code)
     {
+        if ($code instanceof Invite) {
+            $code = $invite->code;
+        }
+
+        if (preg_match('/https:\/\/discord.gg\/(.+)/', $code, $matches)) {
+            $code = $matches[1];
+        }
+
         try {
             $request = Guzzle::post("invite/{$code}");
         } catch (\Exception $e) {
@@ -150,6 +167,45 @@ class Discord
         }
 
         return new Invite((array) $request, true);
+    }
+
+    /**
+     * Returns the date an object with an ID was created.
+     *
+     * @param Part|int $id The Part of ID to get the timestamp for.
+     *
+     * @return \Carbon\Carbon|null Carbon timestamp or null if can't be found.
+     */
+    public static function getTimestamp($id)
+    {
+        if ($id instanceof Part) {
+            $id = $id->id;
+        }
+
+        if (! is_int($id)) {
+            return;
+        }
+
+        $ms = ($id >> 22) + self::DISCORD_EPOCH;
+
+        return new Carbon(date('r', $ms / 1000));
+    }
+
+    /**
+     * Creates a Discord OAuth application.
+     *
+     * @param string $token Your authentication token.
+     * @param string $name  Your OAuth app name.
+     */
+    public static function createOauthApp($token, $name)
+    {
+        $response = Guzzle::post('oauth2/applications', [
+            'name' => $name,
+        ], true, [
+            'authorization' => $token,
+        ]);
+
+        return $response;
     }
 
     /**
@@ -188,8 +244,8 @@ class Discord
     /**
      * Handles dynamic set calls to the class.
      *
-     * @param string $variable
-     * @param mixed  $value
+     * @param string $variable The variable name.
+     * @param mixed  $value    The value to set.
      *
      * @return void
      */

@@ -11,6 +11,7 @@
 
 namespace Discord\WebSockets\Events;
 
+use Discord\Cache\Cache;
 use Discord\Parts\Channel\Channel;
 use Discord\WebSockets\Event;
 
@@ -34,12 +35,14 @@ class ChannelUpdate extends Event
      */
     public function updateDiscordInstance($data, $discord)
     {
+        Cache::set("channel.{$data->id}", $data);
+
         foreach ($discord->guilds as $index => $guild) {
             if ($guild->id == $data->guild_id) {
                 foreach ($guild->channels as $cindex => $channel) {
                     if ($channel->id == $data->id) {
-                        $guild->channels->pull($cindex);
-                        $guild->channels->push($data);
+                        $guild->channels[$cindex] = $data;
+                        $discord->guilds[$index]  = $guild;
 
                         break;
                     }

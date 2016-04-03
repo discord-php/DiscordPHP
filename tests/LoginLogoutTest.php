@@ -20,7 +20,7 @@ class LoginLogoutTest extends PHPUnit_Framework_TestCase
      */
     public function testLoggingIn()
     {
-        $discord = new Discord(getenv('DISCORD_EMAIL'), getenv('DISCORD_PASSWORD'));
+        $discord = new Discord(null, null, getenv('DISCORD_TOKEN'));
     }
 
     /**
@@ -30,7 +30,7 @@ class LoginLogoutTest extends PHPUnit_Framework_TestCase
      */
     public function testLoggingOut()
     {
-        $discord = new Discord(getenv('DISCORD_EMAIL'), getenv('DISCORD_PASSWORD'));
+        $discord = new Discord(null, null, getenv('DISCORD_TOKEN'));
 
         $discord->logout();
     }
