@@ -46,7 +46,7 @@ class WebSocket extends EventEmitter
     const CURRENT_GATEWAY_VERSION = 4;
 
     /**
-     * Number of servers to grab for GUILD_MEMBER_CHUNk
+     * Number of servers to grab for GUILD_MEMBER_CHUNk.
      *
      * @var int Number of servers
      */
@@ -568,7 +568,7 @@ class WebSocket extends EventEmitter
 
             $event = $stopwatch->stop('guildCreate');
 
-            dump($event->getDuration() / 1000 . 's');
+            dump($event->getDuration() / 1000 .'s');
         }
 
         $this->sessionId = $content->session_id;
@@ -608,7 +608,7 @@ class WebSocket extends EventEmitter
 
             unset($servers);
         } else {
-            if (! $this->invalidSession) {
+            if (!$this->invalidSession) {
                 $this->emit('ready');
             }
 
