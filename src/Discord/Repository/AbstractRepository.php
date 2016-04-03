@@ -120,14 +120,15 @@ abstract class AbstractRepository
      */
     public function count()
     {
-        return sizeof($this->all());
+        return count($this->all());
     }
 
     /**
      * @param AbstractModel $model
      *
-     * @return string
      * @throws \Exception
+     *
+     * @return string
      */
     public function getIdentifier(AbstractModel $model)
     {
@@ -135,7 +136,7 @@ abstract class AbstractRepository
             return $model->getId();
         }
 
-        throw new \Exception("This Repository must override getIdentifier");
+        throw new \Exception('This Repository must override getIdentifier');
     }
 
     /**

@@ -13,9 +13,7 @@ namespace Discord\Manager;
 
 use Discord\Annotation\Build;
 use Discord\Model\AbstractModel;
-use Discord\Model\Guild;
 use Discord\Model\IdentifierModelInterface;
-use Discord\Model\User;
 use Discord\Repository\AbstractRepository;
 use Doctrine\Common\Annotations\Reader;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -65,7 +63,7 @@ abstract class AbstractManager
     }
 
     /**
-     * Returns a model class name
+     * Returns a model class name.
      *
      * @return string
      */
@@ -82,11 +80,12 @@ abstract class AbstractManager
     }
 
     /**
-     * @param array         $data
-     * @param bool          $complete Is the model built completely
+     * @param array $data
+     * @param bool  $complete Is the model built completely
+     *
+     * @throws \Exception
      *
      * @return AbstractModel
-     * @throws \Exception
      */
     public function create($data, $complete = true)
     {
@@ -97,7 +96,7 @@ abstract class AbstractManager
         $model = new $cls();
 
         if (!($model instanceof AbstractModel)) {
-            throw new \Exception("getModel must return a class that extends Discord\\Model\\AbstractModel.");
+            throw new \Exception('getModel must return a class that extends Discord\\Model\\AbstractModel.');
         }
 
         // This feels hacky. But its working for now.
@@ -205,7 +204,7 @@ abstract class AbstractManager
     }
 
     /**
-     * Casts value to $type, if not null
+     * Casts value to $type, if not null.
      *
      * @param string|null $type
      * @param mixed       $value

@@ -23,14 +23,12 @@ use Discord\Parts\Permissions\RolePermission as Permission;
 use Discord\Parts\User\Member;
 use Discord\Voice\VoiceClient;
 use Discord\Wrapper\CacheWrapper;
-use Doctrine\Common\Collections\ArrayCollection;
 use Evenement\EventEmitter;
 use Illuminate\Support\Collection;
 use Ratchet\Client\Connector as WsFactory;
 use Ratchet\Client\WebSocket as WebSocketInstance;
 use Ratchet\RFC6455\Messaging\Frame;
 use React\EventLoop\Factory as LoopFactory;
-use React\EventLoop\LoopInterface;
 use React\Promise\Deferred;
 use React\Stream\Stream;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -506,8 +504,9 @@ class WebSocket extends EventEmitter
                 $this->largeServers[$guild->getId()] = $guild;
             }
         }
-        
-        dump($this->container->get('repository.guild')->count());die();
+
+        dump($this->container->get('repository.guild')->count());
+        die();
 
         $this->sessionId = $content->session_id;
 
