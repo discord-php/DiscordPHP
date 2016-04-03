@@ -4,7 +4,6 @@ An API to interact with the popular text and voice service Discord.
 
 ### Special Thanks
 
-- [Chris Boden](https://github.com/cboden) for the WebSocket client that is based off [RatchetPHP/Pawl](https://github.com/ratchetphp/Pawl)
 - ReactPHP for the Process class which is based off [ReactPHP/Child-Process](https://github.com/reactphp/child-process)
 
 ### Todo
@@ -20,25 +19,13 @@ Todo list is available in the [`TODO.md`](TODO.md) file.
 ### How To Install
 
 - In order to install DiscordPHP, please be sure that you have a version of PHP that is 5.5.9 or higher
-- and that you have composer installed if not here's a link https://getcomposer.org
-- Once you have the appropriate version of PHP and composer.
-- Create a json file called `composer.json` with this content
-```json
-{
-	"require": {
-		"team-reflex/discord-php": ">=3.1.2",
-		"Optional ↓"
-		"symfony/var-dumper": ">=3.0.3"
-	}
-}
-```
-Now run `php composer.phar install` (if you have composer installed locally) (if you have composer installed globally run `composer install` instead)
-this should install the dependencies
-in the folder called `vendor`.
+- Make sure you have [Composer](https://getcomposer.org) installed, globally or locally.
+- Run `composer require team-reflex/discord-php`.
+- Include the `vendor/autoload.php` file in your main file.
 
 ### Troubleshooting
 - If you're getting problems with Guzzle when running your bot please download this [certificate](https://www.dropbox.com/s/angtnh3lqrszs6x/cacert.pem?dl=0) *put it somewhere* and put this line into your `php.ini` file `curl.cainfo = "directory to the cert\cacert.pem"`
-- If you need more help then contact `@Uniquoooo` in the discordapi Server.
+- If you need more help then contact `@David#4618` in the DiscordAPI Server.
 
 ### Basic WebSocket client
 
@@ -52,13 +39,17 @@ use Discord\WebSockets\Event;
 use Discord\WebSockets\WebSocket;
 
 $discord = new Discord(':email', ':password');
-$websocket = new WebSocket($discord);
+$ws = new WebSocket($discord);
 
-$websocket->on(Event::MESSAGE_CREATE, function ($message, $discord, $new) {
-	echo "New message from {$message->author->username}: {$message->content}".PHP_EOL;
+$ws->on('ready', function ($discord) use ($ws) {
+	echo "Discord WebSocket is ready.".PHP_EOL\;
+
+	$ws->on(Event::MESSAGE_CREATE, function ($message, $discord, $new) {
+		echo "New message from {$message->author->username}: {$message->content}".PHP_EOL;
+	});
 });
 
-$websocket->run();
+$ws->run();
 ```
 
 ### Documentation
