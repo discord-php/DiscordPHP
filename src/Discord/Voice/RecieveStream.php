@@ -197,7 +197,7 @@ class RecieveStream extends EventEmitter implements DuplexStreamInterface
             return;
         }
 
-        if (! $this->isPaused) {
+        if (!$this->isPaused) {
             return;
         }
 
