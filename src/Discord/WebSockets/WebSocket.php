@@ -193,7 +193,7 @@ class WebSocket extends EventEmitter
                 if (! is_null($this->reconnectResetTimer)) {
                     $this->loop->cancelTimer($this->reconnectResetTimer);
                 }
-                
+
                 $this->reconnectResetTimer = $this->loop->addTimer(60 * 2, function () {
                     $this->reconnectCount = 0;
                 });

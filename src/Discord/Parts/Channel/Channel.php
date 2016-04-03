@@ -106,7 +106,7 @@ class Channel extends Part
      */
     public function removePermissions($part)
     {
-        if (!($part instanceof Member) && !($part instanceof Role)) {
+        if (! ($part instanceof Member) && ! ($part instanceof Role)) {
             return false;
         }
 
@@ -307,7 +307,7 @@ class Channel extends Part
         }
 
         foreach ($this->attributes['permission_overwrites'] as $index => $data) {
-            $data = (array) $data;
+            $data               = (array) $data;
             $data['channel_id'] = $this->attributes['id'];
             $overwrites[$index] = new Overwrite($data, true);
         }
