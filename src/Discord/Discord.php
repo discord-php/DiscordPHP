@@ -71,7 +71,7 @@ class Discord
         AnnotationRegistry::registerFile(__DIR__.'/Annotation/Build.php');
         AnnotationRegistry::loadAnnotationClass(Build::class);
 
-        $options = ! is_array($options) ? ['token' => $options] : $options;
+        $options = !is_array($options) ? ['token' => $options] : $options;
         $options = $this->resolveOptions($options);
 
         $options = $this->resolveOptions($options);
@@ -114,7 +114,7 @@ class Discord
             $id = $id->id;
         }
 
-        if (! is_int($id)) {
+        if (!is_int($id)) {
             return;
         }
 
@@ -222,7 +222,7 @@ class Discord
 
         $container->set('discord', $this);
 
-        $loader    = new XmlFileLoader($container, new FileLocator(__DIR__.'/Resources/config/'));
+        $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/Resources/config/'));
         $loader->load('services.xml');
         $loader->load('repositories.xml');
         $loader->load('managers.xml');
