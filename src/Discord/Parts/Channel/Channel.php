@@ -98,6 +98,28 @@ class Channel extends Part
     }
 
     /**
+     * Removes a permission overwrite from the channel.
+     *
+     * @param Member|Role $part Either a Member or Role, permissions that will be deleted.
+     *
+     * @return bool Whether the function succeeded or failed.
+     */
+    public function removePermissions($part)
+    {
+        if (!($part instanceof Member) && !($part instanceof Role)) {
+            return false;
+        }
+
+        try {
+            Guzzle::delete("channels/{$this->id}/permissions/{$part->id}");
+        } catch (\Exception $e) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
      * Moves a member to another voice channel.
      *
      * @param Member|int The member to move. (either a Member part or the member ID)
