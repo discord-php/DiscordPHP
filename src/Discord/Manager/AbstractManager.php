@@ -125,8 +125,6 @@ abstract class AbstractManager
                 continue;
             }
 
-            $property->setAccessible(true);
-
             /*
              * If the annotation doesn't have a class, its not a reference, so just cast it
              */
@@ -169,7 +167,6 @@ abstract class AbstractManager
                     $property->setValue($model, new ArrayCollection($values));
                 }
             }
-            $property->setAccessible(false);
         }
 
         $model->setBuilt($complete);
@@ -179,18 +176,6 @@ abstract class AbstractManager
         }
 
         return $model;
-    }
-
-    /**
-     * @param AbstractModel $model
-     */
-    protected function addToRepository(AbstractModel $model)
-    {
-        if ($this->repository === null) {
-            return;
-        }
-
-        $this->repository->add($model);
     }
 
     /**

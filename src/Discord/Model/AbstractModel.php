@@ -27,7 +27,7 @@ abstract class AbstractModel
     /**
      * @var bool
      */
-    protected $built = false;
+    public $built = false;
 
     /**
      * @return bool

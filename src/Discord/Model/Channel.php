@@ -22,43 +22,43 @@ class Channel extends AbstractModel implements IdentifierModelInterface
      * @var string
      * @Build("id")
      */
-    protected $id;
+    public $id;
 
     /**
      * @var Message
      * @Build("last_message_id", class="Discord\Model\Message", isId=true)
      */
-    protected $lastMessage;
+    public $lastMessage;
 
     /**
      * @var string
      * @Build("name")
      */
-    protected $name;
+    public $name;
 
     /**
      * @var array
      * @Build("permission_overwrites", type="array")
      */
-    protected $permissionOverwrites;
+    public $permissionOverwrites;
 
     /**
      * @var int
      * @Build("position", type="int")
      */
-    protected $position;
+    public $position;
 
     /**
      * @var string
      * @Build("topic")
      */
-    protected $topic;
+    public $topic;
 
     /**
      * @var string
      * @Build("type")
      */
-    protected $type;
+    public $type;
 
     /**
      * @return string

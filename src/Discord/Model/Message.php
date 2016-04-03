@@ -47,72 +47,72 @@ class Message extends AbstractModel implements IdentifierModelInterface
      * @var string
      * @Build("id")
      */
-    protected $id;
+    public $id;
 
     /**
      * @var Channel
      * @Build("channel_id", class="Discord\Model\Channel")
      */
-    protected $channel;
+    public $channel;
 
     /**
      * @var string
      * @Build("content")
      */
-    protected $content;
+    public $content;
 
     /**
      * @var User[]|ArrayCollection
      * @Build("mentions", class="Discord\Model\User", type="array")
      */
-    protected $mentions;
+    public $mentions;
 
     /**
      * @var User
      * @Build("author", class="Discord\Model\User")
      */
-    protected $author;
+    public $author;
 
     /**
      * @var bool
      * @Build("mentionEveryone", type="bool")
      */
-    protected $mentionEveryone;
+    public $mentionEveryone;
 
     /**
      * @var int
      * @Build("timestamp", type="int")
      */
-    protected $timestamp;
+    public $timestamp;
 
     /**
      * @var int
      * @Build("edited_timestamp", type="int")
      */
-    protected $editedTimestamp;
+    public $editedTimestamp;
 
     /**
      * @var bool
      * @Build("tts", type="bool")
      */
-    protected $tts;
+    public $tts;
 
     /**
      * @var array
      * @Build("attachments", type="array")
      */
-    protected $attachments;
+    public $attachments;
 
     /**
      * @var array
      * @Build("attachments", type="array")
      */
-    protected $embeds;
+    public $embeds;
 
     /**
      * @var mixed
      */
-    protected $nonce;
+    public $nonce;
 
     /**
      * @return string

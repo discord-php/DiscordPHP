@@ -53,115 +53,115 @@ class Guild extends AbstractModel implements IdentifierModelInterface
      * @var string
      * @Build("id")
      */
-    protected $id;
+    public $id;
 
     /**
      * @var string
      * @Build("name")
      */
-    protected $name;
+    public $name;
 
     /**
      * @var string
      * @Build("icon")
      */
-    protected $icon;
+    public $icon;
 
     /**
      * @var string
      * @Build("region")
      */
-    protected $region;
+    public $region;
 
     /**
      * @var Role[]|ArrayCollection
      * @Build("roles", class="Discord\Model\Role", type="array")
      */
-    protected $roles;
+    public $roles;
 
     /**
      * @var \DateTime
      * @Build("joined_at", class="DateTime")
      */
-    protected $joinedAt;
+    public $joinedAt;
 
     /**
      * @var int
      * @Build("afk_timeout", type="int")
      */
-    protected $afkTimeout;
+    public $afkTimeout;
 
     /**
      * @var bool
      * @Build("embed_enabled", type="bool")
      */
-    protected $embedEnabled;
+    public $embedEnabled;
 
     /**
      * @var mixed
      * @Build("features", type="array")
      */
-    protected $features;
+    public $features;
 
     /**
      * @var mixed
      * @Build("splash")
      */
-    protected $splash;
+    public $splash;
 
     /**
      * @var mixed
      * @Build("emojis", type="array")
      */
-    protected $emojis;
+    public $emojis;
 
     /**
      * @var mixed
      * @Build("large")
      */
-    protected $large;
+    public $large;
 
     /**
      * @var int
      * @Build("verification_level", type="int")
      */
-    protected $verificationLevel;
+    public $verificationLevel;
 
     /**
      * @var int
      * @Build("member_count", type="int")
      */
-    protected $memberCount;
+    public $memberCount;
 
     /**
      * @var User[]|ArrayCollection
      * @Build("members", class="Discord\Model\User", type="array")
      */
-    protected $members;
+    public $members;
 
     /**
      * @var Channel[]|ArrayCollection
      * @Build("channels", class="Discord\Model\Channel", type="array")
      */
-    protected $channels;
+    public $channels;
 
     /**
      * @var User
      * @Build("owner_id", class="Discord\Model\User", isId=true)
      */
-    protected $owner;
+    public $owner;
 
     /**
      * @var Channel
      * @Build("embed_channel_id", class="Discord\Model\Channel", isId=true)
      */
-    protected $embedChannel;
+    public $embedChannel;
 
     /**
      * @var Channel
      * @Build("afk_channel_id", class="Discord\Model\Channel", isId=true)
      */
-    protected $afkChannel;
+    public $afkChannel;
 
     /**
      * @return string

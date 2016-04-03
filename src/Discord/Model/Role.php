@@ -22,43 +22,43 @@ class Role extends AbstractModel implements IdentifierModelInterface
      * @var string
      * @Build("id")
      */
-    protected $id;
+    public $id;
 
     /**
      * @var int
      * @Build("color", type="int")
      */
-    protected $color;
+    public $color;
 
     /**
      * @var bool
      * @Build("hoist", type="bool")
      */
-    protected $hoist;
+    public $hoist;
 
     /**
      * @var bool
      * @Build("managed", type="bool")
      */
-    protected $managed;
+    public $managed;
 
     /**
      * @var string
      * @Build("name")
      */
-    protected $name;
+    public $name;
 
     /**
      * @var int
      * @Build("permissions", type="int")
      */
-    protected $permissions;
+    public $permissions;
 
     /**
      * @var int
      * @Build("position", type="int")
      */
-    protected $position;
+    public $position;
 
     /**
      * @return string

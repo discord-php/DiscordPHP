@@ -23,59 +23,59 @@ class User extends AbstractModel implements IdentifierModelInterface
      * @var string
      * @Build("user['id']")
      */
-    protected $id;
+    public $id;
 
     /**
      * @var string
      * @Build("user['username']")
      */
-    protected $username;
+    public $username;
 
     /**
      * @var string
      * @Build("user['discriminator']")
      */
-    protected $discriminator;
+    public $discriminator;
 
     /**
      * @var string
      * @Build("user['avatar']")
      */
-    protected $avatar;
+    public $avatar;
 
     /**
      * @var Role[]|ArrayCollection
      * @Build("roles", type="array", class="Discord\Model\Role", isId=true)
      */
-    protected $roles;
+    public $roles;
 
     /**
      * @var bool
      * @Build("mute", type="bool")
      */
-    protected $mute;
+    public $mute;
 
     /**
      * @var \DateTime
      * @Build("joined_at", class="DateTime")
      */
-    protected $joinedAt;
+    public $joinedAt;
 
     /**
      * @var bool
      * @Build("deaf", type="bool")
      */
-    protected $deaf;
+    public $deaf;
 
     /**
      * @var string
      */
-    protected $status;
+    public $status;
 
     /**
      * @var string|null
      */
-    protected $game;
+    public $game;
 
     /**
      * @return string

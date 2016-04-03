@@ -34,6 +34,7 @@ use React\EventLoop\Factory as LoopFactory;
 use React\Promise\Deferred;
 use React\Stream\Stream;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Stopwatch\Stopwatch;
 
 /**
  * This class is the base for the Discord WebSocket.
@@ -46,6 +47,13 @@ class WebSocket extends EventEmitter
      * @var int The gateway version.
      */
     const CURRENT_GATEWAY_VERSION = 4;
+
+    /**
+     * Number of servers to grab for GUILD_MEMBER_CHUNk
+     *
+     * @var int Number of servers
+     */
+    const GUILD_MEMBER_CHUNK_SIZE = 50;
 
     /**
      * The WebSocket event loop.
@@ -84,11 +92,6 @@ class WebSocket extends EventEmitter
      * @var Http
      */
     protected $http;
-
-    /**
-     * @var PartFactory
-     */
-    protected $partFactory;
 
     /**
      * @var CacheWrapper
@@ -194,7 +197,7 @@ class WebSocket extends EventEmitter
     /**
      * Large servers.
      *
-     * @var array Large servers.
+     * @var \Discord\Model\Guild[] Large servers.
      */
     protected $largeServers = [];
 
@@ -516,8 +519,11 @@ class WebSocket extends EventEmitter
 
         $content = $data->d;
 
+        $stopwatch = new Stopwatch();
+
         // guilds
         foreach ($content->guilds as $guildData) {
+            $stopwatch->start('guildCreate');
             /** @var \Discord\Model\Guild $guild */
             $guild = $this->container->get('manager.guild')->create($guildData);
 
@@ -562,6 +568,10 @@ class WebSocket extends EventEmitter
             if ($guildData->large) {
                 $this->largeServers[$guild->getId()] = $guild;
             }
+
+            $event = $stopwatch->stop('guildCreate');
+
+            dump($event->getDuration() / 1000 . 's');
         }
 
         $this->sessionId = $content->session_id;
@@ -570,10 +580,10 @@ class WebSocket extends EventEmitter
         if (count($this->largeServers) > 0) {
             $servers = [];
             foreach ($this->largeServers as $server) {
-                $servers[] = $server->id;
+                $servers[] = $server->getId();
             }
 
-            $chunks = array_chunk($servers, 50);
+            $chunks = array_chunk($servers, static::GUILD_MEMBER_CHUNK_SIZE);
 
             $sendChunk = function () use (&$sendChunk, &$chunks) {
                 $chunk = array_pop($chunks);
@@ -602,11 +612,13 @@ class WebSocket extends EventEmitter
             unset($servers);
         } else {
             if (! $this->invalidSession) {
-                $this->emit('ready', [$this->discord]);
+                $this->emit('ready');
             }
 
             $this->invalidSession = false;
         }
+
+        die();
     }
 
     /**
