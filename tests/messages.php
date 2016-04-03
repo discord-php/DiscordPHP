@@ -24,7 +24,7 @@ $channel->sendMessage('testing sending message')->then(function ($message) use (
         checkAttributes($expected + ['tts' => true], $tts);
 
         $channel->sendFile(__DIR__.'/testimg.jpg', 'testimg.jpg')->then(function ($message) use ($channel, $baseGuild, $failPromise) {
-            if (! isset($message['attachments'])) {
+            if (!isset($message['attachments'])) {
                 fail('The image was not attached.');
             }
 

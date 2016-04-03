@@ -9,20 +9,28 @@
  * with this source code in the LICENSE.md file.
  */
 
-namespace Discord\Repository;
+/**
+ * This file is part of DiscordPHP.
+ *
+ * (c) Aaron Scherer <aequasi@gmail.com>
+ *
+ * This source file is subject to the license that is bundled
+ * with this source code in the file LICENSE
+ */
+namespace Discord\Manager;
 
-use Discord\Model\User;
+use Discord\Model\Guild;
 
 /**
  * @author Aaron Scherer <aequasi@gmail.com>
  */
-class UserRepository extends AbstractRepository
+class GuildManager extends AbstractManager
 {
     /**
-     * {@inheritdoc}
+     * @return string
      */
     public function getModel()
     {
-        return User::class;
+        return Guild::class;
     }
 }

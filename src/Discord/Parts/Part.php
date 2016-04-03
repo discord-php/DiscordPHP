@@ -170,7 +170,7 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
      */
     public function fresh()
     {
-        if ($this->deleted || ! $this->created) {
+        if ($this->deleted || !$this->created) {
             return \React\Promise\reject(new \Exception('You cannot get a non-existant part.'));
         }
 
@@ -303,7 +303,7 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
             return $this->{$str}();
         }
 
-        if (! isset($this->attributes[$key])) {
+        if (!isset($this->attributes[$key])) {
             return;
         }
 
@@ -321,7 +321,7 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
     public function setAttribute($key, $value)
     {
         if (isset($this->repositories[$key])) {
-            if (! ($value instanceof $this->repositories[$key])) {
+            if (!($value instanceof $this->repositories[$key])) {
                 return;
             }
 

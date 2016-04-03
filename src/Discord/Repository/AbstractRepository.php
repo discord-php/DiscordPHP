@@ -11,277 +11,144 @@
 
 namespace Discord\Repository;
 
-use Discord\Factory\PartFactory;
-use Discord\Http\Http;
-use Discord\Parts\Part;
+use Discord\Model\AbstractModel;
+use Discord\Model\IdentifierModelInterface;
 use Discord\Wrapper\CacheWrapper;
-use Illuminate\Support\Collection;
-use React\Promise\Deferred;
 
 /**
  * @author Aaron Scherer <aequasi@gmail.com>
  */
-abstract class AbstractRepository extends Collection implements RepositoryInterface
+abstract class AbstractRepository
 {
-    /**
-     * @var Http
-     */
-    protected $http;
-
     /**
      * @var CacheWrapper
      */
     protected $cache;
 
     /**
-     * @var PartFactory
-     */
-    protected $partFactory;
-
-    /**
-     * Endpoints for interacting with the Discord servers.
-     *
-     * @var array Endpoints.
-     */
-    protected $endpoints = [];
-
-    /**
-     * The part that the repository serves.
-     *
-     * @var string The part that the repository serves.
-     */
-    protected $part;
-
-    /**
-     * Variables that are related to the repository.
-     *
-     * @var array Variables.
-     */
-    protected $vars = [];
-
-    /**
      * AbstractRepository constructor.
      *
-     * @param Http         $http
      * @param CacheWrapper $cache
-     * @param PartFactory  $partFactory
-     * @param array        $vars
      */
-    public function __construct(Http $http, CacheWrapper $cache, PartFactory $partFactory, $vars = [])
+    public function __construct(CacheWrapper $cache)
     {
-        $this->http        = $http;
-        $this->cache       = $cache;
-        $this->partFactory = $partFactory;
-        $this->vars        = $vars;
+        $this->cache = $cache;
     }
 
     /**
-     * Freshens the repository collection.
+     * @param AbstractModel $model
      *
-     * @return \React\Promise\Promise
+     * @return bool
      */
-    public function freshen()
+    public function add(AbstractModel $model)
     {
-        if (! isset($this->endpoints['all'])) {
-            return \React\Promise\reject(new \Exception('You cannot freshen this repository.'));
-        }
+        $items = $this->all();
 
-        $deferred = new Deferred();
+        $items[$this->getIdentifier($model)] = $model;
 
-        $this->http->get(
-            $this->replaceWithVariables(
-                $this->endpoints['all']
-            )
-        )->then(function ($response) {
-            $this->items = [];
+        $this->cache->set($this->getKey(), $items);
 
-            foreach ($response as $value) {
-                $value = array_merge($this->vars, (array) $value);
-                $part = $this->partFactory->create($this->part, $value, true);
-
-                $this->push($part);
-            }
-        }, function ($e) use ($deferred) {
-            $deferred->reject($e);
-        });
+        return true;
     }
 
     /**
-     * Get an item from the collection with a key and value.
+     * @param AbstractModel $model
      *
-     * @param mixed $key   The key to match with the value.
-     * @param mixed $value The value to match with the key.
-     *
-     * @return mixed The value or null.
+     * @return bool
      */
-    public function get($key, $value = null)
+    public function delete(AbstractModel $model)
     {
-        foreach ($this->items as $item) {
-            if ($item->{$key} == $value) {
-                return $item;
-            }
-        }
+        $items = $this->all();
+
+        unset($items[$this->getIdentifier($model)]);
+
+        $this->cache->set($this->getKey(), $items);
+
+        return true;
     }
 
     /**
-     * Gets a collection of items from the repository with a key and value.
+     * @param AbstractModel $model
      *
-     * @param mixed $key   The key to match with the value.
-     * @param mixed $value The value to match with the key.
-     *
-     * @return Collection A collection.
+     * @return bool
      */
-    public function getAll($key, $value = null)
+    public function has(AbstractModel $model)
     {
-        $collection = new Collection();
-
-        foreach ($this->items as $item) {
-            if ($item->{$key} == $value) {
-                $collection->push($item);
-            }
-        }
-
-        return $collection;
+        return $this->hasKey($this->getIdentifier($model));
     }
 
     /**
-     * {@inheritdoc}
-     */
-    public function save(Part &$part)
-    {
-        if ($part->created) {
-            $method     = 'patch';
-            $endpoint   = $part->replaceWithVariables($this->replaceWithVariables(@$this->endpoints['update']));
-            $attributes = $part->getCreatableAttributes();
-
-            if (! isset($this->endpoints['update'])) {
-                return \React\Promise\reject(new \Exception('You cannot update this part.'));
-            }
-        } else {
-            $method     = 'post';
-            $endpoint   = $part->replaceWithVariables($this->replaceWithVariables(@$this->endpoints['create']));
-            $attributes = $part->getUpdatableAttributes();
-
-            if (! isset($this->endpoints['create'])) {
-                return \React\Promise\reject(new \Exception('You cannot create this part.'));
-            }
-        }
-
-        $deferred = new Deferred();
-
-        $this->http->{$method}(
-            $endpoint,
-            $attributes
-        )->then(function ($response) use ($deferred, &$part, $method) {
-            $part->fill($response);
-
-            $part->created = true;
-            $part->deleted = false;
-
-            $deferred->resolve($part);
-        }, function ($e) use ($deferred) {
-            $deferred->reject($e);
-        });
-
-        return $deferred->promise();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function delete(Part &$part)
-    {
-        if (! $part->created) {
-            return \React\Promise\reject(new \Exception('You cannot delete a non-existant part.'));
-        }
-
-        if (! isset($this->endpoints['delete'])) {
-            return \React\Promise\reject(new \Exception('You cannot delete this part.'));
-        }
-
-        $deferred = new Deferred();
-
-        $this->http->delete(
-            $part->replaceWithVariables(
-                $this->replaceWithVariables(
-                    $this->endpoints['delete']
-                )
-            )
-        )->then(function ($response) use ($deferred, &$part) {
-            $part->created = false;
-
-            $deferred->resolve($part);
-        }, function ($e) use ($deferred) {
-            $deferred->reject($e);
-        });
-
-        return $deferred->promise();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function fresh(Part &$part)
-    {
-        if (! $part->created) {
-            return \React\Promise\reject(new \Exception('You cannot get a non-existant part.'));
-        }
-
-        if (! isset($this->endpoints['get'])) {
-            return \React\Promise\reject(new \Exception('You cannot get this part.'));
-        }
-
-        $deferred = new Deferred();
-
-        $this->http->get(
-            $part->replaceWithVariables(
-                $this->replaceWithVariables(
-                    $this->endpoints['get']
-                )
-            )
-        )->then(function ($response) use ($deferred, &$part) {
-            $part->fill($response);
-
-            $deferred->resolve($part);
-        }, function ($e) use ($deferred) {
-            $deferred->reject($e);
-        });
-
-        return $deferred->promise();
-    }
-
-    /**
-     * Replaces variables in string with syntax :{varname}.
+     * @param string $identifier
      *
-     * @param string $string A string with placeholders.
-     *
-     * @return string A string with placeholders replaced.
+     * @return bool
      */
-    protected function replaceWithVariables($string)
+    public function hasKey($identifier)
     {
-        if (preg_match_all('/:([a-z_]+)/', $string, $matches)) {
-            list(
-                $original,
-                $vars
-            ) = $matches;
+        return array_key_exists($identifier, $this->all());
+    }
 
-            foreach ($vars as $key => $var) {
-                if (isset($this->vars[$var])) {
-                    $string = str_replace($original[$key], $this->vars[$var], $string);
-                }
-            }
-        }
-
-        return $string;
+    public function get($identifier)
+    {
+        return $this->all()[$identifier];
     }
 
     /**
-     * Handles debug calls from var_dump and similar functions.
+     * @param AbstractModel $model
      *
-     * @return array An array of attributes.
+     * @return bool
      */
-    public function __debugInfo()
+    public function update(AbstractModel $model)
     {
-        return $this->all();
+        return $this->add($model);
+    }
+
+    /**
+     * @return AbstractModel[]
+     */
+    public function all()
+    {
+        $items = $this->cache->get($this->getKey());
+        if (null === $items) {
+            $items = [];
+        }
+
+        return $items;
+    }
+
+    /**
+     * @return int
+     */
+    public function count()
+    {
+        return count($this->all());
+    }
+
+    /**
+     * @param AbstractModel $model
+     *
+     * @throws \Exception
+     *
+     * @return string
+     */
+    public function getIdentifier(AbstractModel $model)
+    {
+        if ($model instanceof IdentifierModelInterface) {
+            return $model->getId();
+        }
+
+        throw new \Exception('This Repository must override getIdentifier');
+    }
+
+    /**
+     * @return string
+     */
+    abstract public function getModel();
+
+    /**
+     * @return string
+     */
+    protected function getKey()
+    {
+        return 'cache.repository.'.str_replace('\\', '-', $this->getModel());
     }
 }
