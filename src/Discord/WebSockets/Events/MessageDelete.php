@@ -22,7 +22,7 @@ class MessageDelete extends Event
     /**
      * {@inheritdoc}
      */
-    public function handle(Deferred $deferred, array $data)
+    public function handle(Deferred $deferred, $data)
     {
         $this->cache->remove("message.{$data->id}");
 

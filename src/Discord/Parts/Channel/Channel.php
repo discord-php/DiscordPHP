@@ -17,6 +17,8 @@ use Discord\Parts\Guild\Role;
 use Discord\Parts\Part;
 use Discord\Parts\Permissions\ChannelPermission;
 use Discord\Parts\User\Member;
+use Discord\Repository\Channel\InviteRepository;
+use Discord\Repository\Channel\MessageRepository;
 use Illuminate\Support\Collection;
 use React\Promise\Deferred;
 
@@ -50,11 +52,9 @@ class Channel extends Part
     /**
      * {@inheritdoc}
      */
-    protected $uris = [
-        'get'    => 'channels/:id',
-        'create' => 'guilds/:guild_id/channels',
-        'update' => 'channels/:id',
-        'delete' => 'channels/:id',
+    protected $repositories = [
+        'invites'  => InviteRepository::class,
+        'messages' => MessageRepository::class,
     ];
 
     /**
@@ -149,6 +149,7 @@ class Channel extends Part
     public function getGuildAttribute()
     {
         $deferred = new Deferred();
+
         if (is_null($this->guild_id)) {
             $deferred->reject(new \Exception('No guild ID set.'));
 
@@ -256,36 +257,6 @@ class Channel extends Part
     }
 
     /**
-     * Returns the channels invites.
-     *
-     * @return Collection A collection of invites.
-     */
-    public function getInvitesAttribute()
-    {
-        if ($invites = $this->cache->get("channel.{$this->id}.invites")) {
-            return \React\Promise\resolve($invites);
-        }
-
-        $deferred = new Deferred();
-
-        $this->http->get($this->replaceWithVariables('channels/:id/invites'))->then(function ($response) use ($deferred) {
-            $invites = new Collection();
-
-            foreach ($request as $index => $invite) {
-                $invite = $this->partFactory->create(Invite::class, $invite, true);
-                $this->cache->set("invites.{$invite->code}", $invite);
-                $invites[$index] = $invite;
-            }
-
-            $this->cache->set("channel.{$this->id}.invites", $invites);
-
-            $deferred->resolve($invites);
-        }, \React\Partial\bind_right($this->reject, $deferred));
-
-        return $deferred->promise();
-    }
-
-    /**
      * Gets the overwrites attribute.
      *
      * @return Collection The overwrites attribute.
@@ -330,7 +301,7 @@ class Channel extends Part
 
         $deferred = new Deferred();
 
-        if (!$this->cache->has("channel.{$this->id}.messages")) {
+        if (! $this->cache->has("channel.{$this->id}.messages")) {
             $this->getMessagesAttribute();
         }
 
@@ -374,11 +345,13 @@ class Channel extends Part
 
             $this->cache->set("message.{$message->id}", $message);
 
-            if (!$this->cache->has("channel.{$this->id}.messages")) {
+            if (! $this->cache->has("channel.{$this->id}.messages")) {
                 $this->getMessagesAttribute();
             }
 
             $this->messages->push($message);
+
+            $deferred->resolve($message);
         }, \React\Partial\bind_right($this->reject, $deferred));
 
         return $deferred->promise();
@@ -447,6 +420,16 @@ class Channel extends Part
             'name'     => $this->name,
             'topic'    => $this->topic,
             'position' => $this->position,
+        ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getRepositoryAttributes()
+    {
+        return [
+            'channel_id' => $this->id,
         ];
     }
 }

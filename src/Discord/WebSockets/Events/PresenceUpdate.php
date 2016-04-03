@@ -23,14 +23,14 @@ class PresenceUpdate extends Event
     /**
      * {@inheritdoc}
      */
-    public function handle(Deferred $deferred, array $data)
+    public function handle(Deferred $deferred, $data)
     {
         $data = $this->partFactory->create(PresenceUpdatePart::class, $data, true);
 
         foreach ($this->discord->guilds as $index => $guild) {
             if ($guild->id == $data->guild_id) {
-                $member = array_key_exists($guild->members, $data->user->id) ? $guild->members[$data->user->id] : null;
-                if (!is_null($member)) {
+                $member = array_key_exists($data->user->id, $guild->members) ? $guild->members[$data->user->id] : null;
+                if (! is_null($member)) {
                     $member->game   = $data->game;
                     $member->status = $data->status;
 

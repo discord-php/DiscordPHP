@@ -24,7 +24,7 @@ class GuildBanAdd extends Event
     /**
      * {@inheritdoc}
      */
-    public function handle(Deferred $deferred, array $data)
+    public function handle(Deferred $deferred, $data)
     {
         $guild = $this->discord->guilds->get('id', $data->guild_id);
 
@@ -36,7 +36,7 @@ class GuildBanAdd extends Event
         $this->cache->set("guild.{$data->guild_id}.bans.{$data->user_id}", $data);
 
         foreach ($this->discord->guilds as $index => $guild) {
-            if ($guild->id == $data->guild_id && !is_bool($guild->bans)) {
+            if ($guild->id == $data->guild_id && ! is_bool($guild->bans)) {
                 $guild->bans->push($data);
 
                 foreach ($guild->members as $mindex => $member) {

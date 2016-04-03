@@ -13,11 +13,9 @@ namespace Discord\Parts\User;
 
 use Discord\Exceptions\FileNotFoundException;
 use Discord\Exceptions\PasswordEmptyException;
-use Discord\Parts\Guild\Guild;
 use Discord\Parts\Part;
+use Discord\Repository\GuildRepository;
 use Discord\WebSockets\WebSocket;
-use Illuminate\Support\Collection;
-use React\Promise\Deferred;
 
 /**
  * The client is the main interface for the client. Most calls on the main class are forwarded here.
@@ -43,6 +41,13 @@ class Client extends Part
      * {@inheritdoc}
      */
     protected $fillable = ['id', 'username', 'password', 'email', 'verified', 'avatar', 'discriminator', 'bot'];
+
+    /**
+     * {@inheritdoc}
+     */
+    protected $repositories = [
+        'guilds' => GuildRepository::class,
+    ];
 
     /**
      * {@inheritdoc}
@@ -91,7 +96,7 @@ class Client extends Part
      */
     public function setAvatar($filepath)
     {
-        if (!file_exists($filepath)) {
+        if (! file_exists($filepath)) {
             throw new FileNotFoundException("File does not exist at path {$filepath}.");
         }
 
@@ -121,42 +126,13 @@ class Client extends Part
             [
                 'op' => 3,
                 'd'  => [
-                    'game'       => (!is_null($gameName) ? ['name' => $gameName] : null),
+                    'game'       => (! is_null($gameName) ? ['name' => $gameName] : null),
                     'idle_since' => $idle,
                 ],
             ]
         );
 
         return true;
-    }
-
-    /**
-     * Returns an array of Guilds.
-     *
-     * @return Collection A collection of guilds.
-     */
-    public function getGuildsAttribute()
-    {
-        if (isset($this->attributes_cache['guilds'])) {
-            return \React\Promise\resolve($this->attributes_cache['guilds']);
-        }
-
-        $deferred = new Deferred();
-
-        $this->http->get('users/@me/guilds')->then(function ($response) use ($deferred) {
-            $guilds = new Collection();
-
-            foreach ($response as $index => $guild) {
-                $guild = $this->partFactory->create(Guild::class, $guild, true);
-                $this->cache->set("guild.{$guild->id}", $guild);
-                $guilds[$index] = $guild;
-            }
-
-            $this->attributes_cache['guilds'] = $guilds;
-            $deferred->resolve($guilds);
-        }, \React\Partial\bind_right($this->reject, $deferred));
-
-        return $deferred->promise();
     }
 
     /**
@@ -196,7 +172,7 @@ class Client extends Part
             $attributes['avatar'] = $this->attributes['avatarhash'];
         }
 
-        if (!$this->bot) {
+        if (! $this->bot) {
             if (empty($this->attributes['password'])) {
                 throw new PasswordEmptyException('You must enter your password to update your profile.');
             }
@@ -204,11 +180,19 @@ class Client extends Part
             $attributes['email']    = $this->email;
             $attributes['password'] = $this->attributes['password'];
 
-            if (!empty($this->attributes['new_password'])) {
+            if (! empty($this->attributes['new_password'])) {
                 $attributes['new_password'] = $this->attributes['new_password'];
             }
         }
 
         return $attributes;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getRepositoryAttributes()
+    {
+        return [];
     }
 }

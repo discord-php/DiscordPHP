@@ -18,6 +18,7 @@ use Discord\Exceptions\LibSodiumNotFoundException;
 use Discord\Exceptions\OutdatedDCAException;
 use Discord\Helpers\Process;
 use Discord\Parts\Channel\Channel;
+use Discord\WebSockets\Op;
 use Discord\WebSockets\WebSocket;
 use Evenement\EventEmitter;
 use Illuminate\Support\Collection;
@@ -351,7 +352,7 @@ class VoiceClient extends EventEmitter
         $discoverUdp = function ($message) use (&$ws, &$discoverUdp, $udpfac, &$firstPack, &$ip, &$port) {
             $data = json_decode($message->getPayload());
 
-            if ($data->op == 2) {
+            if ($data->op == Op::VOICE_READY) {
                 $ws->removeListener('message', $discoverUdp);
 
                 $this->udpPort            = $data->d->port;
@@ -359,14 +360,14 @@ class VoiceClient extends EventEmitter
                 $this->ssrc               = $data->d->ssrc;
 
                 $this->send([
-                    'op' => 3,
+                    'op' => Op::VOICE_HEARTBEAT,
                     'd'  => microtime(true),
                 ]);
                 $this->emit('ws-heartbeat', []);
 
                 $this->heartbeat = $this->loop->addPeriodicTimer($this->heartbeat_interval / 1000, function () {
                     $this->send([
-                        'op' => 3,
+                        'op' => Op::VOICE_HEARTBEAT,
                         'd'  => microtime(true),
                     ]);
                     $this->emit('ws-heartbeat', []);
@@ -408,13 +409,13 @@ class VoiceClient extends EventEmitter
                         $port = substr($message, strlen($message) - 2);
                         $port = unpack('v', $port)[1];
 
-                        if (!function_exists('\Sodium\crypto_secretbox')) {
+                        if (! function_exists('\Sodium\crypto_secretbox')) {
                             $this->emit('error', [new LibSodiumNotFoundException('libsodium-php could not be found.')]);
                             $this->client->close();
                             $this->voiceWebsocket->close();
 
                             $this->mainWebsocket->send([
-                                'op' => 4,
+                                'op' => Op::OP_VOICE_STATE_UPDATE,
                                 'd'  => [
                                     'guild_id'   => $this->channel->guild_id,
                                     'channel_id' => null,
@@ -427,7 +428,7 @@ class VoiceClient extends EventEmitter
                         }
 
                         $payload = [
-                            'op' => 1,
+                            'op' => Op::VOICE_SELECT_PROTO,
                             'd'  => [
                                 'protocol' => 'udp',
                                 'data'     => [
@@ -459,7 +460,7 @@ class VoiceClient extends EventEmitter
             $this->emit('ws-message', [$message, $this]);
 
             switch ($data->op) {
-                case 3: // keepalive response
+                case Op::VOICE_HEARTBEAT: // keepalive response
                     $end = microtime(true);
                     $start = $data->d;
                     $diff = ($end - $start) * 1000;
@@ -474,7 +475,7 @@ class VoiceClient extends EventEmitter
 
                     $this->emit('ws-ping', [$diff]);
                     break;
-                case 4: // ready
+                case Op::VOICE_DESCRIPTION: // ready
                     $this->ready = true;
                     $this->mode = $data->d->mode;
                     $this->secret_key = '';
@@ -483,7 +484,7 @@ class VoiceClient extends EventEmitter
                         $this->secret_key .= pack('C*', $part);
                     }
 
-                    if (!$this->reconnecting) {
+                    if (! $this->reconnecting) {
                         $this->emit('ready', [$this]);
                     } else {
                         $this->reconnecting = false;
@@ -491,7 +492,7 @@ class VoiceClient extends EventEmitter
                     }
 
                     break;
-                case 5: // user started speaking
+                case Op::VOICE_SPEAKING: // user started speaking
                     $this->emit('speaking', [$data->d->speaking, $data->d->user_id, $this]);
                     $this->emit("speaking.{$data->d->user_id}", [$data->d->speaking, $this]);
                     $this->speakingStatus[$data->d->ssrc] = $data->d;
@@ -507,9 +508,9 @@ class VoiceClient extends EventEmitter
             $this->emit('ws-close', [$op, $reason, $this]);
         });
 
-        if (!$this->sentLoginFrame) {
+        if (! $this->sentLoginFrame) {
             $this->send([
-                'op' => 0,
+                'op' => Op::VOICE_IDENTIFY,
                 'd'  => [
                     'server_id'  => $this->channel->guild_id,
                     'user_id'    => $this->data['user_id'],
@@ -579,13 +580,13 @@ class VoiceClient extends EventEmitter
     {
         $deferred = new Deferred();
 
-        if (!file_exists($file)) {
+        if (! file_exists($file)) {
             $deferred->reject(new FileNotFoundException("Could not find the file \"{$file}\"."));
 
             return $deferred->promise();
         }
 
-        if (!$this->ready) {
+        if (! $this->ready) {
             $deferred->reject(new \Exception('Voice Client is not ready.'));
 
             return $deferred->promise();
@@ -611,13 +612,13 @@ class VoiceClient extends EventEmitter
     {
         $deferred = new Deferred();
 
-        if (!$this->ready) {
+        if (! $this->ready) {
             $deferred->reject(new \Exception('Voice Client is not ready.'));
 
             return $deferred->promise();
         }
 
-        if (!is_resource($stream) && !$stream instanceof Stream) {
+        if (! is_resource($stream) && ! $stream instanceof Stream) {
             $deferred->reject(new \RuntimeException('The stream passed to playRawStream was not an instance of resource or ReactPHP Stream.'));
 
             return $deferred->promise();
@@ -647,7 +648,7 @@ class VoiceClient extends EventEmitter
         $deferred = new Deferred();
         $process  = null;
 
-        if (!$this->ready) {
+        if (! $this->ready) {
             $deferred->reject(new \Exception('Voice Client is not ready.'));
 
             return $deferred->promise();
@@ -671,7 +672,7 @@ class VoiceClient extends EventEmitter
             $stream = $stream->stream;
         }
 
-        if (!is_resource($stream)) {
+        if (! is_resource($stream)) {
             $deferred->reject(new \RuntimeException('The stream passed to playDCAStream was not an instance of resource, ReactPHP Process or ReactPHP Stream.'));
 
             return $deferred->promise();
@@ -711,7 +712,7 @@ class VoiceClient extends EventEmitter
 
             $header = @fread($stream, 2);
 
-            if (!$header) {
+            if (! $header) {
                 if ($noDataHeader && $this->streamTime != 0) {
                     $this->setSpeaking(false);
                     fclose($stream);
@@ -772,7 +773,7 @@ class VoiceClient extends EventEmitter
         $jsonBuff = '';
 
         $this->loop->addReadStream($stream, function ($stream) use ($deferred, &$readMagicBytes, &$readJsonLeng, &$jsonLen, &$jsonBuff, $processff2opus) {
-            if (!$readMagicBytes) {
+            if (! $readMagicBytes) {
                 $magicBytes = fread($stream, 4);
 
                 if ($magicBytes !== self::DCA_VERSION) {
@@ -786,7 +787,7 @@ class VoiceClient extends EventEmitter
                 return;
             }
 
-            if (!$readJsonLeng) {
+            if (! $readJsonLeng) {
                 $len = fread($stream, 4);
                 $len = unpack('l', $len);
                 $jsonLen = reset($len);
@@ -808,7 +809,7 @@ class VoiceClient extends EventEmitter
 
             $json = json_decode($jsonBuff, true);
 
-            if (!is_null($json)) {
+            if (! is_null($json)) {
                 $this->frameSize = $json['opus']['frame_size'] / 48;
 
                 $deferred->notify($json);
@@ -832,7 +833,7 @@ class VoiceClient extends EventEmitter
      */
     public function sendBuffer($data)
     {
-        if (!$this->ready) {
+        if (! $this->ready) {
             return;
         }
 
@@ -861,14 +862,14 @@ class VoiceClient extends EventEmitter
             return $deferred->promise();
         }
 
-        if (!$this->ready) {
+        if (! $this->ready) {
             $deferred->reject(new \Exception('Voice Client is not ready.'));
 
             return $deferred->promise();
         }
 
         $this->send([
-            'op' => 5,
+            'op' => Op::VOICE_SPEAKING,
             'd'  => [
                 'speaking' => $speaking,
                 'delay'    => 0,
@@ -900,7 +901,7 @@ class VoiceClient extends EventEmitter
         }
 
         $this->mainWebsocket->send([
-            'op' => 4,
+            'op' => Op::OP_VOICE_STATE_UPDATE,
             'd'  => [
                 'guild_id'   => $channel->guild_id,
                 'channel_id' => $channel->id,
@@ -1070,7 +1071,7 @@ class VoiceClient extends EventEmitter
     {
         $deferred = new Deferred();
 
-        if (!$this->ready) {
+        if (! $this->ready) {
             $deferred->reject(new \Exception('The voice client must be ready before you can set mute or deaf.'));
 
             return $deferred->promise();
@@ -1080,7 +1081,7 @@ class VoiceClient extends EventEmitter
         $this->deaf = $deaf;
 
         $this->mainWebsocket->send([
-            'op' => 4,
+            'op' => Op::OP_VOICE_STATE_UPDATE,
             'd'  => [
                 'guild_id'   => $this->channel->guild_id,
                 'channel_id' => $this->channel->id,
@@ -1103,7 +1104,7 @@ class VoiceClient extends EventEmitter
     {
         $deferred = new Deferred();
 
-        if (!$this->speaking) {
+        if (! $this->speaking) {
             $deferred->reject(new \Exception('Audio must be playing to pause it.'));
 
             return $deferred->promise();
@@ -1124,7 +1125,7 @@ class VoiceClient extends EventEmitter
     {
         $deferred = new Deferred();
 
-        if (!$this->speaking) {
+        if (! $this->speaking) {
             $deferred->reject(new \Exception('Audio must be playing to unpause it.'));
 
             return $deferred->promise();
@@ -1151,7 +1152,7 @@ class VoiceClient extends EventEmitter
             return $deferred->promise();
         }
 
-        if (!$this->speaking) {
+        if (! $this->speaking) {
             $deferred->reject(new \Exception('Audio must be playing to stop it.'));
 
             return $deferred->promise();
@@ -1173,7 +1174,7 @@ class VoiceClient extends EventEmitter
     {
         $deferred = new Deferred();
 
-        if (!$this->ready) {
+        if (! $this->ready) {
             $deferred->reject(new \Exception('Voice Client is not connected.'));
 
             return $deferred->promise();
@@ -1184,7 +1185,7 @@ class VoiceClient extends EventEmitter
         $this->ready = false;
 
         $this->mainWebsocket->send([
-            'op' => 4,
+            'op' => Op::OP_VOICE_STATE_UPDATE,
             'd'  => [
                 'guild_id'   => $this->channel->guild_id,
                 'channel_id' => null,
@@ -1227,9 +1228,9 @@ class VoiceClient extends EventEmitter
         $ssrc = @$this->speakingStatus[$id];
         $user = $this->speakingStatus->get('user_id', $id);
 
-        if (is_null($ssrc) && !is_null($user)) {
+        if (is_null($ssrc) && ! is_null($user)) {
             return $user->speaking;
-        } elseif (is_null($user) && !is_null($ssrc)) {
+        } elseif (is_null($user) && ! is_null($ssrc)) {
             return $user->speaking;
         } elseif (is_null($user) && is_null($ssrc)) {
             return $user->speaking;
@@ -1336,7 +1337,7 @@ class VoiceClient extends EventEmitter
 
         if (is_null($decoder)) {
             // make a decoder
-            if (!isset($this->recieveStreams[$ss->ssrc])) {
+            if (! isset($this->recieveStreams[$ss->ssrc])) {
                 $this->recieveStreams[$ss->ssrc] = new RecieveStream();
             }
 
@@ -1398,7 +1399,7 @@ class VoiceClient extends EventEmitter
         foreach ($binaries as $binary) {
             $output = shell_exec("which {$binary}");
 
-            if (!empty($output)) {
+            if (! empty($output)) {
                 return true;
             }
         }
@@ -1423,7 +1424,7 @@ class VoiceClient extends EventEmitter
         foreach ($binaries as $binary) {
             $output = shell_exec("which {$binary}");
 
-            if (!empty($output)) {
+            if (! empty($output)) {
                 $this->dca = $binary;
 
                 return;
@@ -1454,7 +1455,7 @@ class VoiceClient extends EventEmitter
      */
     public function dcaEncode($filename = '', $channels = 2)
     {
-        if (!empty($filename) && !file_exists($filename)) {
+        if (! empty($filename) && ! file_exists($filename)) {
             return;
         }
 

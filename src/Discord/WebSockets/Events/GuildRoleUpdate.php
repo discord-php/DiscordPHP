@@ -23,7 +23,7 @@ class GuildRoleUpdate extends Event
     /**
      * {@inheritdoc}
      */
-    public function handle(Deferred $deferred, array $data)
+    public function handle(Deferred $deferred, $data)
     {
         $guildId        = $data->guild_id;
         $data           = $data->role;

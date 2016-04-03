@@ -22,7 +22,7 @@ class UserSettingsUpdate extends Event
     /**
      * {@inheritdoc}
      */
-    public function handle(Deferred $deferred, array $data)
+    public function handle(Deferred $deferred, $data)
     {
         $this->discord->user_settings = (object) array_merge((array) $this->discord->user_settings, (array) $data);
 

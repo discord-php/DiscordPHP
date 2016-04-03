@@ -23,7 +23,7 @@ class MessageUpdate extends Event
     /**
      * {@inheritdoc}
      */
-    public function handle(Deferred $deferred, array $data)
+    public function handle(Deferred $deferred, $data)
     {
         $data = $this->partFactory->create(Message::class, $data, true);
 
@@ -34,7 +34,7 @@ class MessageUpdate extends Event
                 if ($channel->id == $data->channel_id) {
                     $message = $channel->messages->pull($data->id);
 
-                    if (!isset($data->content)) {
+                    if (! isset($data->content)) {
                         $message = $this->partFactory->create(
                             Message::class,
                             array_merge((array) $message, (array) $data),

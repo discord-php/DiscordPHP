@@ -24,7 +24,7 @@ class GuildBanRemove extends Event
     /**
      * {@inheritdoc}
      */
-    public function handle(Deferred $deferred, array $data)
+    public function handle(Deferred $deferred, $data)
     {
         $guild = $this->discord->guilds->get('id', $data->guild_id);
 
@@ -32,7 +32,7 @@ class GuildBanRemove extends Event
             $guild = $this->partFactory->create(Guild::class, ['id' => $data->guild_id, 'name' => 'Unknown'], true);
         }
 
-        $this->partFactory->create(Ban::class, ['guild' => $guild, 'user'  => $data->user], true);
+        $data = $this->partFactory->create(Ban::class, ['guild' => $guild, 'user'  => $data->user], true);
         $this->cache->remove("guild.{$data->guild_id}.bans.{$data->user_id}");
 
         foreach ($this->discord->guilds as $index => $guild) {

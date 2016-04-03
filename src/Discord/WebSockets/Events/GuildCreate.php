@@ -26,7 +26,7 @@ class GuildCreate extends Event
     /**
      * {@inheritdoc}
      */
-    public function handle(Deferred $deferred, array $data)
+    public function handle(Deferred $deferred, $data)
     {
         $guildPart = $this->partFactory->create(Guild::class, $data, true);
 

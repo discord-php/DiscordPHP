@@ -13,6 +13,7 @@ namespace Discord\Parts\Guild;
 
 use Discord\Parts\Part;
 use Discord\Parts\Permissions\RolePermission as Permission;
+use Discord\Parts\Permissions\RolePermission;
 
 /**
  * A role defines permissions for the guild. Members can be added to the role. The role belongs to a guild.
@@ -36,8 +37,8 @@ class Role extends Part
      */
     public function afterConstruct()
     {
-        if (!$this->created) {
-            $this->permissions = $this->partFactory->create(Permission::class);
+        if (! $this->created) {
+            $this->permissions = $this->partFactory->create(RolePermission::class);
 
             if (isset($this->guild_id)) {
                 $this->save();
@@ -64,8 +65,10 @@ class Role extends Part
      */
     public function setPermissionsAttribute($permission)
     {
-        if (!$permission instanceof Permission) {
-            return false;
+        if (! $permission instanceof Permission) {
+            $perm        = $this->partFactory->create(RolePermission::class);
+            $perm->perms = $permission;
+            $permission  = $perm;
         }
 
         $this->attributes['permissions'] = $permission;

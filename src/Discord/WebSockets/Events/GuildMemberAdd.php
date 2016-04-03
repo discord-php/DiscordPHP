@@ -23,7 +23,7 @@ class GuildMemberAdd extends Event
     /**
      * {@inheritdoc}
      */
-    public function handle(Deferred $deferred, array $data)
+    public function handle(Deferred $deferred, $data)
     {
         $data = $this->partFactory->create(Member::class, $data, true);
         $this->cache->set("guild.{$data->guild_id}.members.{$data->id}", $data);

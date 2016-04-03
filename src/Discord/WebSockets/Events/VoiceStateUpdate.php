@@ -22,11 +22,11 @@ class VoiceStateUpdate extends Event
     /**
      * {@inheritdoc}
      */
-    public function handle(Deferred $deferred, array $data)
+    public function handle(Deferred $deferred, $data)
     {
         foreach ($this->discord->guilds as $index => $guild) {
             if ($guild->id == $data->guild_id) {
-                $member = array_key_exists($guild->members, $data->user_id) ? $guild->members[$data->user_id] : null;
+                $member = array_key_exists($data->user_id, $guild->members) ? $guild->members[$data->user_id] : null;
                 if (is_null($member)) {
                     break;
                 }
