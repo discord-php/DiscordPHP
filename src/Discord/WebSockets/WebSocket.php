@@ -25,7 +25,6 @@ use Discord\Repository\Guild\ChannelRepository;
 use Discord\Repository\Guild\MemberRepository;
 use Discord\Repository\Guild\RoleRepository;
 use Discord\Voice\VoiceClient;
-use Discord\WebSockets\Op;
 use Discord\Wrapper\CacheWrapper;
 use Evenement\EventEmitter;
 use Ratchet\Client\Connector as WsFactory;
@@ -416,8 +415,8 @@ class WebSocket extends EventEmitter
      * Handles dispatch frames.
      *
      * @param object $data The frame data.
-     * 
-     * @return void 
+     *
+     * @return void
      */
     public function handleDispatch($data)
     {
@@ -443,7 +442,7 @@ class WebSocket extends EventEmitter
      *
      * @param object $data The frame data.
      *
-     * @return void 
+     * @return void
      */
     public function handleHeartbeat($data)
     {
