@@ -101,7 +101,7 @@ class Role extends AbstractModel implements IdentifierModelInterface
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isHoist()
     {
@@ -109,7 +109,7 @@ class Role extends AbstractModel implements IdentifierModelInterface
     }
 
     /**
-     * @param boolean $hoist
+     * @param bool $hoist
      *
      * @return Role
      */
@@ -121,7 +121,7 @@ class Role extends AbstractModel implements IdentifierModelInterface
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isManaged()
     {
@@ -129,7 +129,7 @@ class Role extends AbstractModel implements IdentifierModelInterface
     }
 
     /**
-     * @param boolean $managed
+     * @param bool $managed
      *
      * @return Role
      */

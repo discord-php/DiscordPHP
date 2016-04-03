@@ -1,18 +1,26 @@
 <?php
 
+/*
+ * This file is apart of the DiscordPHP project.
+ *
+ * Copyright (c) 2016 David Cole <david@team-reflex.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the LICENSE.md file.
+ */
+
 /**
- * This file is part of DiscordPHP
+ * This file is part of DiscordPHP.
  *
  * (c) Aaron Scherer <aequasi@gmail.com>
  *
  * This source file is subject to the license that is bundled
  * with this source code in the file LICENSE
  */
-
 namespace Discord\Model;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Discord\Annotation\Build;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @author Aaron Scherer <aequasi@gmail.com>
@@ -20,21 +28,21 @@ use Discord\Annotation\Build;
 class Guild extends AbstractModel implements IdentifierModelInterface
 {
     /**
-     * Regions
+     * Regions.
      */
     const REGION_DEFAULT    = self::REGION_US_WEST;
     const REGION_US_WEST    = 'us-west';
     const REGION_US_SOUTH   = 'us-south';
     const REGION_US_EAST    = 'us-east';
     const REGION_US_CENTRAL = 'us-central';
-    const REGION_SINGAPORE = 'singapore';
-    const REGION_LONDON    = 'london';
-    const REGION_SYDNEY    = 'sydney';
-    const REGION_FRANKFURT = 'frankfurt';
-    const REGION_AMSTERDAM = 'amsterdam';
+    const REGION_SINGAPORE  = 'singapore';
+    const REGION_LONDON     = 'london';
+    const REGION_SYDNEY     = 'sydney';
+    const REGION_FRANKFURT  = 'frankfurt';
+    const REGION_AMSTERDAM  = 'amsterdam';
 
     /**
-     * Verification Levels
+     * Verification Levels.
      */
     const LEVEL_OFF       = 0;
     const LEVEL_LOW       = 1;
@@ -336,7 +344,7 @@ class Guild extends AbstractModel implements IdentifierModelInterface
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isEmbedEnabled()
     {
@@ -344,7 +352,7 @@ class Guild extends AbstractModel implements IdentifierModelInterface
     }
 
     /**
-     * @param boolean $embedEnabled
+     * @param bool $embedEnabled
      *
      * @return Guild
      */

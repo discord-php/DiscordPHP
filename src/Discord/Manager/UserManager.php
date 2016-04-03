@@ -11,7 +11,6 @@
 
 namespace Discord\Manager;
 
-use Discord\Model\AbstractModel;
 use Discord\Model\User;
 
 /**

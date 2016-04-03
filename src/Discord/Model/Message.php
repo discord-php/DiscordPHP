@@ -1,18 +1,26 @@
 <?php
 
+/*
+ * This file is apart of the DiscordPHP project.
+ *
+ * Copyright (c) 2016 David Cole <david@team-reflex.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the LICENSE.md file.
+ */
+
 /**
- * This file is part of DiscordPHP
+ * This file is part of DiscordPHP.
  *
  * (c) Aaron Scherer <aequasi@gmail.com>
  *
  * This source file is subject to the license that is bundled
  * with this source code in the file LICENSE
  */
-
 namespace Discord\Model;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Discord\Annotation\Build;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @author Aaron Scherer <aequasi@gmail.com>
@@ -207,7 +215,7 @@ class Message extends AbstractModel implements IdentifierModelInterface
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isMentionEveryone()
     {
@@ -215,7 +223,7 @@ class Message extends AbstractModel implements IdentifierModelInterface
     }
 
     /**
-     * @param boolean $mentionEveryone
+     * @param bool $mentionEveryone
      *
      * @return Message
      */
@@ -267,7 +275,7 @@ class Message extends AbstractModel implements IdentifierModelInterface
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isTts()
     {
@@ -275,7 +283,7 @@ class Message extends AbstractModel implements IdentifierModelInterface
     }
 
     /**
-     * @param boolean $tts
+     * @param bool $tts
      *
      * @return Message
      */

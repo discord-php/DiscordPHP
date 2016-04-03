@@ -11,8 +11,8 @@
 
 namespace Discord\Model;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Discord\Annotation\Build;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @author Aaron Scherer <aequasi@gmail.com>
@@ -178,7 +178,7 @@ class User extends AbstractModel implements IdentifierModelInterface
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isMute()
     {
@@ -186,7 +186,7 @@ class User extends AbstractModel implements IdentifierModelInterface
     }
 
     /**
-     * @param boolean $mute
+     * @param bool $mute
      *
      * @return Member
      */
@@ -218,7 +218,7 @@ class User extends AbstractModel implements IdentifierModelInterface
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isDeaf()
     {
@@ -226,7 +226,7 @@ class User extends AbstractModel implements IdentifierModelInterface
     }
 
     /**
-     * @param boolean $deaf
+     * @param bool $deaf
      *
      * @return Member
      */
