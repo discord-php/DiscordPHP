@@ -11,18 +11,18 @@
 
 namespace Discord\Repository;
 
-use Discord\Model\User;
+use Discord\Model\Channel;
 
 /**
  * @author Aaron Scherer <aequasi@gmail.com>
  */
-class UserRepository extends AbstractRepository
+class ChannelRepository extends AbstractRepository
 {
     /**
      * {@inheritdoc}
      */
     public function getModel()
     {
-        return User::class;
+        return Channel::class;
     }
 }

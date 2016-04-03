@@ -11,18 +11,18 @@
 
 namespace Discord\Repository;
 
-use Discord\Model\User;
+use Discord\Model\Guild;
 
 /**
  * @author Aaron Scherer <aequasi@gmail.com>
  */
-class UserRepository extends AbstractRepository
+class GuildRepository extends AbstractRepository
 {
     /**
      * {@inheritdoc}
      */
     public function getModel()
     {
-        return User::class;
+        return Guild::class;
     }
 }

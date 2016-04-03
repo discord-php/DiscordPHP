@@ -5,11 +5,13 @@
 
     <services>
         <service id="repository.abstract" class="Discord\Repository\AbstractRepository" abstract="true">
-            <argument type="service" id="http"/>
             <argument type="service" id="cache_wrapper.default"/>
-            <argument type="service" id="factory.part"/>
         </service>
 
+        <service id="repository.channel" class="Discord\Repository\ChannelRepository" parent="repository.abstract"/>
+        <service id="repository.guild" class="Discord\Repository\GuildRepository" parent="repository.abstract"/>
+        <service id="repository.message" class="Discord\Repository\MessageRepository" parent="repository.abstract"/>
+        <service id="repository.role" class="Discord\Repository\RoleRepository" parent="repository.abstract"/>
         <service id="repository.user" class="Discord\Repository\UserRepository" parent="repository.abstract"/>
     </services>
 </container>

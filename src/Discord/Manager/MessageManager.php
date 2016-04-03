@@ -9,20 +9,20 @@
  * with this source code in the LICENSE.md file.
  */
 
-namespace Discord\Repository;
+namespace Discord\Manager;
 
-use Discord\Model\User;
+use Discord\Model\Message;
 
 /**
  * @author Aaron Scherer <aequasi@gmail.com>
  */
-class UserRepository extends AbstractRepository
+class MessageManager extends AbstractManager
 {
     /**
-     * {@inheritdoc}
+     * @return string
      */
     public function getModel()
     {
-        return User::class;
+        return Message::class;
     }
 }

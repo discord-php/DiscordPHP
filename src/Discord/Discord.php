@@ -13,9 +13,11 @@ namespace Discord;
 
 use Cache\AdapterBundle\DependencyInjection\CacheAdapterExtension;
 use Carbon\Carbon;
+use Discord\Annotation\Build;
 use Discord\Parts\Part;
 use Discord\Parts\User\Client;
 use Discord\WebSockets\WebSocket;
+use Doctrine\Common\Annotations\AnnotationRegistry;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -66,6 +68,9 @@ class Discord
      */
     public function __construct($options)
     {
+        AnnotationRegistry::registerFile(__DIR__.'/Annotation/Build.php');
+        AnnotationRegistry::loadAnnotationClass(Build::class);
+
         $options = ! is_array($options) ? ['token' => $options] : $options;
         $options = $this->resolveOptions($options);
 
@@ -87,6 +92,7 @@ class Discord
         $resolver
             ->setRequired('token')
             ->setDefault('cache', $this->getDefaultCache())
+            ->setDefault('debug', false)
             ->setAllowedTypes('token', 'string')
             ->setAllowedTypes('cache', 'array');
 
@@ -219,6 +225,7 @@ class Discord
         $loader    = new XmlFileLoader($container, new FileLocator(__DIR__.'/Resources/config/'));
         $loader->load('services.xml');
         $loader->load('repositories.xml');
+        $loader->load('managers.xml');
 
         $container->compile();
 

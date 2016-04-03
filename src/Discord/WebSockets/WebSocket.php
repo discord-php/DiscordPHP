@@ -23,6 +23,7 @@ use Discord\Parts\Permissions\RolePermission as Permission;
 use Discord\Parts\User\Member;
 use Discord\Voice\VoiceClient;
 use Discord\Wrapper\CacheWrapper;
+use Doctrine\Common\Collections\ArrayCollection;
 use Evenement\EventEmitter;
 use Illuminate\Support\Collection;
 use Ratchet\Client\Connector as WsFactory;
@@ -32,6 +33,7 @@ use React\EventLoop\Factory as LoopFactory;
 use React\EventLoop\LoopInterface;
 use React\Promise\Deferred;
 use React\Stream\Stream;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * This class is the base for the Discord WebSocket.
@@ -65,6 +67,11 @@ class WebSocket extends EventEmitter
      * @var \Discord\Discord The Discord REST client instance.
      */
     protected $discord;
+
+    /**
+     * @var ContainerInterface
+     */
+    protected $container;
 
     /**
      * @var Http
@@ -187,57 +194,41 @@ class WebSocket extends EventEmitter
     /**
      * Constructs the WebSocket instance.
      *
-     * @param Discord            $discord     The Discord REST client instance.
-     * @param Http               $http        The Guzzle Instance
-     * @param PartFactory        $partFactory
-     * @param CacheWrapper       $cache
-     * @param string             $token
-     * @param LoopInterface|null $loop        The ReactPHP Event Loop.
-     * @param bool               $etf         Whether to use ETF.
+     * @param ContainerInterface $container
      */
-    public function __construct(
-        Discord $discord,
-        Http $http,
-        PartFactory $partFactory,
-        CacheWrapper $cache,
-        $token,
-        LoopInterface &$loop = null,
-        $etf = true
-    ) {
-        $this->discord     = $discord;
-        $this->http        = $http;
-        $this->partFactory = $partFactory;
-        $this->cache       = $cache;
-        $this->token       = $token;
-        $loop              = (is_null($loop)) ? LoopFactory::create() : $loop;
-        $this->wsfactory   = new WsFactory($loop);
+    public function __construct(ContainerInterface $container)
+    {
+        $this->discord   = $container->get('discord');
+        $this->http      = $container->get('http');
+        $this->cache     = $container->get('cache');
+        $this->token     = $container->getParameter('token');
+        $this->container = $container;
+
+        $this->loop      = LoopFactory::create();
+        $this->wsfactory = new WsFactory($this->loop);
 
         $this->getGateway();
 
         // ETF breaks snowflake IDs on 32-bit.
         if (2147483647 !== PHP_INT_MAX) {
-            $this->useEtf = $etf;
+            $this->useEtf = true;
 
-            if ($etf) {
-                $this->etf = new Erlpack();
-                $this->etf->on(
-                    'error',
-                    function ($e) {
-                        $this->emit('error', [$e, $this]);
-                    }
-                );
-            }
+            $this->etf = new Erlpack();
+            $this->etf->on(
+                'error',
+                function ($e) {
+                    $this->emit('error', [$e, $this]);
+                }
+            );
         }
 
         $this->handlers = new Handlers();
 
-        $loop->nextTick(
+        $this->loop->nextTick(
             function () use (&$loop) {
-                $this->http->setDriver(new Guzzle($loop));
+                $this->http->setDriver(new Guzzle($this->loop));
             }
         );
-
-        $this->loop = $loop;
 
         $this->wsfactory->__invoke($this->gateway)->then(
             [$this, 'handleWebSocketConnection'],
@@ -288,11 +279,11 @@ class WebSocket extends EventEmitter
                     return;
                 }
 
-                if (isset($data->s) && ! is_null($data->s)) {
+                if (isset($data->s) && !is_null($data->s)) {
                     $this->seq = $data->s;
                 }
 
-                if (! is_null($handlerSettings = $this->handlers->getHandler($data->t))) {
+                if (!is_null($handlerSettings = $this->handlers->getHandler($data->t))) {
                     $this->handleHandler($handlerSettings, $data);
                 }
 
@@ -325,7 +316,7 @@ class WebSocket extends EventEmitter
 
                 $this->emit('close', [$op, $reason, $this->discord]);
 
-                if (! is_null($this->heartbeat)) {
+                if (!is_null($this->heartbeat)) {
                     $this->loop->cancelTimer($this->heartbeat);
                 }
 
@@ -359,7 +350,7 @@ class WebSocket extends EventEmitter
                     return;
                 }
 
-                if (! $this->reconnecting) {
+                if (!$this->reconnecting) {
                     $this->emit('reconnecting', [$this->discord]);
 
                     $this->reconnecting = true;
@@ -382,7 +373,7 @@ class WebSocket extends EventEmitter
 
         $this->ws = $ws;
 
-        if ($this->reconnecting && ! is_null($this->sessionId)) {
+        if ($this->reconnecting && !is_null($this->sessionId)) {
             $this->send(
                 [
                     'op' => 6,
@@ -448,7 +439,7 @@ class WebSocket extends EventEmitter
      */
     public function handleReady($data)
     {
-        if (! is_null($this->reconnectResetTimer)) {
+        if (!is_null($this->reconnectResetTimer)) {
             $this->loop->cancelTimer($this->reconnectResetTimer);
         }
 
@@ -473,56 +464,25 @@ class WebSocket extends EventEmitter
         $content = $data->d;
 
         // guilds
-        $guilds = new Collection();
+        foreach ($content->guilds as $guildData) {
+            /** @var \Discord\Model\Guild $guild */
+            $guild = $this->container->get('manager.guild')->create($guildData);
 
-        foreach ($content->guilds as $guild) {
-            $guildPart = $this->partFactory->create(Guild::class, $guild, true);
+            // guild members, getting presences
+            foreach ($guild->getMembers() as $member) {
+                $member->setStatus('offline');
+                $member->setGame(null);
 
-            $channels = new Collection();
-
-            foreach ($guild->channels as $channel) {
-                $channel             = (array) $channel;
-                $channel['guild_id'] = $guild->id;
-                $channelPart         = $this->partFactory->create(Channel::class, $channel, true);
-
-                $channels->push($channelPart);
-
-                $this->cache->set("channels.{$channelPart->id}", $channelPart);
-            }
-
-            $this->cache->set("guild.{$guildPart->id}.channels", $channels);
-
-            unset($channels);
-
-            // guild members
-            $members = new Collection();
-
-            foreach ($guild->members as $member) {
-                $member             = (array) $member;
-                $member['guild_id'] = $guild->id;
-                $member['status']   = 'offline';
-                $member['game']     = null;
-                $memberPart         = $this->partFactory->create(Member::class, $member, true);
-
-                // check for presences
-
-                foreach ($guild->presences as $presence) {
-                    if ($presence->user->id == $member['user']->id) {
-                        $memberPart->status = $presence->status;
-                        $memberPart->game   = $presence->game;
+                foreach ($guildData->presences as $presence) {
+                    if ($presence->user->id === $member->getId()) {
+                        $member->setStatus($presence->status);
+                        $member->setGame($presence->game);
                     }
                 }
-
-                // Since when we use GUILD_MEMBERS_CHUNK, we have to cycle through the current members
-                // and see if they exist already. That takes ~34ms per member, way way too much.
-                $members[$memberPart->id] = $memberPart;
-                // $this->cache->set("guild.{$memberPart->guild_id}.members.{$memberPart->id}", $memberPart);
             }
 
-            $this->cache->set("guild.{$guildPart->id}.members", $members);
-
-            unset($members);
-
+            /*
+             * @TODO Add Permissions
             // guild roles
             $roles = new Collection();
 
@@ -540,17 +500,14 @@ class WebSocket extends EventEmitter
             }
 
             unset($roles);
+            */
 
-            $guilds->push($guildPart);
-
-            if ($guildPart->large) {
-                $this->largeServers[$guildPart->id] = $guildPart;
+            if ($guildData->large) {
+                $this->largeServers[$guild->getId()] = $guild;
             }
-
-            $this->cache->set("guild.{$guildPart->id}", $guildPart);
         }
-
-        unset($guilds);
+        
+        dump($this->container->get('repository.guild')->count());die();
 
         $this->sessionId = $content->session_id;
 
@@ -589,7 +546,7 @@ class WebSocket extends EventEmitter
 
             unset($servers);
         } else {
-            if (! $this->invalidSession) {
+            if (!$this->invalidSession) {
                 $this->emit('ready', [$this->discord]);
             }
 

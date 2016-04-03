@@ -9,20 +9,20 @@
  * with this source code in the LICENSE.md file.
  */
 
-namespace Discord\Repository;
+namespace Discord\Manager;
 
-use Discord\Model\User;
+use Discord\Model\Role;
 
 /**
  * @author Aaron Scherer <aequasi@gmail.com>
  */
-class UserRepository extends AbstractRepository
+class RoleManager extends AbstractManager
 {
     /**
-     * {@inheritdoc}
+     * @return string
      */
     public function getModel()
     {
-        return User::class;
+        return Role::class;
     }
 }

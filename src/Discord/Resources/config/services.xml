@@ -22,11 +22,9 @@
             <argument>true</argument>
         </service>
         <service id="websocket" class="Discord\WebSockets\WebSocket">
-            <argument type="service" id="discord"/>
-            <argument type="service" id="http"/>
-            <argument type="service" id="factory.part"/>
-            <argument type="service" id="cache_wrapper.default"/>
-            <argument>%token%</argument>
+            <argument type="service" id="service_container"/>
         </service>
+
+        <service id="annotation_reader" class="Doctrine\Common\Annotations\AnnotationReader"/>
     </services>
 </container>

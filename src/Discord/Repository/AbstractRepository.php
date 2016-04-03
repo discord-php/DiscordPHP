@@ -11,8 +11,8 @@
 
 namespace Discord\Repository;
 
-use Discord\Factory\PartFactory;
-use Discord\Guzzle;
+use Discord\Model\AbstractModel;
+use Discord\Model\IdentifierModelInterface;
 use Discord\Wrapper\CacheWrapper;
 
 /**
@@ -21,31 +21,133 @@ use Discord\Wrapper\CacheWrapper;
 abstract class AbstractRepository
 {
     /**
-     * @var Guzzle
-     */
-    protected $guzzle;
-
-    /**
      * @var CacheWrapper
      */
     protected $cache;
 
     /**
-     * @var PartFactory
-     */
-    protected $partFactory;
-
-    /**
      * AbstractRepository constructor.
      *
-     * @param Guzzle       $guzzle
      * @param CacheWrapper $cache
-     * @param PartFactory  $partFactory
      */
-    public function __construct(Guzzle $guzzle, CacheWrapper $cache, PartFactory $partFactory)
+    public function __construct(CacheWrapper $cache)
     {
-        $this->guzzle      = $guzzle;
-        $this->cache       = $cache;
-        $this->partFactory = $partFactory;
+        $this->cache = $cache;
+    }
+
+    /**
+     * @param AbstractModel $model
+     *
+     * @return bool
+     */
+    public function add(AbstractModel $model)
+    {
+        $items = $this->all();
+
+        $items[$this->getIdentifier($model)] = $model;
+
+        $this->cache->set($this->getKey(), $items);
+
+        return true;
+    }
+
+    /**
+     * @param AbstractModel $model
+     *
+     * @return bool
+     */
+    public function delete(AbstractModel $model)
+    {
+        $items = $this->all();
+
+        unset($items[$this->getIdentifier($model)]);
+
+        $this->cache->set($this->getKey(), $items);
+
+        return true;
+    }
+
+    /**
+     * @param AbstractModel $model
+     *
+     * @return bool
+     */
+    public function has(AbstractModel $model)
+    {
+        return $this->hasKey($this->getIdentifier($model));
+    }
+
+    /**
+     * @param string $identifier
+     *
+     * @return bool
+     */
+    public function hasKey($identifier)
+    {
+        return array_key_exists($identifier, $this->all());
+    }
+
+    public function get($identifier)
+    {
+        return $this->all()[$identifier];
+    }
+
+    /**
+     * @param AbstractModel $model
+     *
+     * @return bool
+     */
+    public function update(AbstractModel $model)
+    {
+        return $this->add($model);
+    }
+
+    /**
+     * @return AbstractModel[]
+     */
+    public function all()
+    {
+        $items = $this->cache->get($this->getKey());
+        if (null === $items) {
+            $items = [];
+        }
+
+        return $items;
+    }
+
+    /**
+     * @return int
+     */
+    public function count()
+    {
+        return sizeof($this->all());
+    }
+
+    /**
+     * @param AbstractModel $model
+     *
+     * @return string
+     * @throws \Exception
+     */
+    public function getIdentifier(AbstractModel $model)
+    {
+        if ($model instanceof IdentifierModelInterface) {
+            return $model->getId();
+        }
+
+        throw new \Exception("This Repository must override getIdentifier");
+    }
+
+    /**
+     * @return string
+     */
+    abstract public function getModel();
+
+    /**
+     * @return string
+     */
+    protected function getKey()
+    {
+        return 'cache.repository.'.str_replace('\\', '-', $this->getModel());
     }
 }
