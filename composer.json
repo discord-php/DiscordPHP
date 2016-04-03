@@ -14,7 +14,7 @@
         "nesbot/carbon": "^1.21",
         "react/socket-client": "0.4.*",
         "cboden/ratchet": "0.3.*",
-        "react/datagram": "dev-master",
+        "react/datagram": "^1.1.0",
         "TrafficCophp/ByteBuffer": "dev-master"
     },
     "require-dev": {
