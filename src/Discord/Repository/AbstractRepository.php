@@ -15,7 +15,6 @@ use Discord\Model\AbstractModel;
 use Discord\Model\IdentifierModelInterface;
 use Discord\Wrapper\CacheWrapper;
 use Illuminate\Support\Collection;
-use React\Promise\Deferred;
 
 /**
  * @author Aaron Scherer <aequasi@gmail.com>

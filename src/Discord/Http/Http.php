@@ -171,7 +171,7 @@ class Http
                 $deferred->resolve($json);
             },
             function ($e) use ($deferred, $url) {
-                if (! ($e instanceof \Throwable)) {
+                if (!($e instanceof \Throwable)) {
                     $e = $this->handleError(
                         $e->getStatusCode(),
                         $e->getReasonPhrase(),
@@ -204,7 +204,7 @@ class Http
      */
     public function handleError($errorCode, $message, $content, $url)
     {
-        if (! is_string($message)) {
+        if (!is_string($message)) {
             $message = $message->getReasonPhrase();
         }
 
@@ -264,7 +264,7 @@ class Http
                 $deferred->resolve($json);
             },
             function ($e) use ($deferred) {
-                if (! ($e instanceof \Throwable)) {
+                if (!($e instanceof \Throwable)) {
                     $e = $this->handleError(
                         $e->getStatusCode(),
                         $e->getReasonPhrase(),
