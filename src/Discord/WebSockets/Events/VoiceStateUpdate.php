@@ -37,7 +37,7 @@ class VoiceStateUpdate extends Event
         foreach ($discord->guilds as $index => $guild) {
             if ($guild->id == $data->guild_id) {
                 $data->channel->members[$data->user_id] = $data;
-                
+
                 $member = @$guild->members[$data->user_id];
 
                 if (is_null($member)) {
