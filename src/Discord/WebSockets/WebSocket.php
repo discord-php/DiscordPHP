@@ -21,6 +21,7 @@ use Discord\Parts\Guild\Guild;
 use Discord\Parts\Guild\Role;
 use Discord\Parts\Permissions\RolePermission as Permission;
 use Discord\Parts\User\Member;
+use Discord\Parts\WebSockets\VoiceStateUpdate;
 use Discord\Voice\VoiceClient;
 use Evenement\EventEmitter;
 use Ratchet\Client\Connector as WsFactory;
@@ -507,6 +508,13 @@ class WebSocket extends EventEmitter
 
             if ($guildPart->large) {
                 $this->largeServers[$guildPart->id] = $guildPart;
+            }
+
+            // voice states
+            foreach ($guild->voice_states as $state) {
+                if ($channel = $guildPart->channels->get('id', $state->channel_id)) {
+                    $channel->members->push(new VoiceStateUpdate((array) $state, true));
+                }
             }
 
             Cache::set("guild.{$guildPart->id}", $guildPart);
