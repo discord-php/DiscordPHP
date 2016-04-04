@@ -36,18 +36,13 @@ class VoiceStateUpdate extends Event
     {
         foreach ($discord->guilds as $index => $guild) {
             if ($guild->id == $data->guild_id) {
+                $data->channel->members[$data->user_id] = $data;
+                
                 $member = @$guild->members[$data->user_id];
 
                 if (is_null($member)) {
                     continue;
                 }
-
-                // We aren't in the guild that the user switched to
-                if (is_null($data->channel)) {
-                    continue;
-                }
-
-                $data->channel->members[$data->user_id] = $data;
 
                 $member->deaf = $data->deaf;
                 $member->mute = $data->mute;
