@@ -652,7 +652,7 @@ class WebSocket extends EventEmitter
     public function handleHandler($handlerSettings, $data)
     {
         $handler     = new $handlerSettings['class']();
-        
+
         $handler->on('unavailable', function ($id) use ($handlerSettings) {
             $this->emit('unavailable', [$handlerSettings['class'], $id, $this]);
         });

@@ -20,7 +20,7 @@ use Evenement\EventEmitterTrait;
 class Event
 {
     use EventEmitterTrait;
-    
+
     // General
     const READY                = 'READY';
     const RESUMED              = 'RESUMED';
