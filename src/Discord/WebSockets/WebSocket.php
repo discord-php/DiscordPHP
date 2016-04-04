@@ -234,21 +234,6 @@ class WebSocket extends EventEmitter
             $data = json_decode($data);
             $this->emit('raw', [$data, $this->discord]);
 
-            if (isset($data->d->unavailable)) {
-                $this->emit('unavailable', [$data->t, $data->d]);
-
-                if ($data->t == Event::GUILD_DELETE) {
-                    foreach ($this->discord->guilds as $index => $guild) {
-                        if ($guild->id == $data->d->id) {
-                            $this->discord->guilds->pull($index);
-                            break;
-                        }
-                    }
-                }
-
-                return;
-            }
-
             if (isset($data->s) && ! is_null($data->s)) {
                 $this->seq = $data->s;
             }
@@ -437,6 +422,11 @@ class WebSocket extends EventEmitter
         $guilds = new Collection();
 
         foreach ($content->guilds as $guild) {
+            if (isset($guild->unavailable)) {
+                $this->emit('unavailable', ['READY', $guild->id, $this]);
+                continue;
+            }
+
             $guildPart = new Guild((array) $guild, true);
 
             $channels = new Collection();
@@ -662,6 +652,11 @@ class WebSocket extends EventEmitter
     public function handleHandler($handlerSettings, $data)
     {
         $handler     = new $handlerSettings['class']();
+        
+        $handler->on('unavailable', function ($id) use ($handlerSettings) {
+            $this->emit('unavailable', [$handlerSettings['class'], $id, $this]);
+        });
+
         $handlerData = $handler->getData($data->d, $this->discord);
         $newDiscord  = $handler->updateDiscordInstance($handlerData, $this->discord);
         $this->emit($data->t, [$handlerData, $this->discord, $newDiscord]);

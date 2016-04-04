@@ -11,12 +11,16 @@
 
 namespace Discord\WebSockets;
 
+use Evenement\EventEmitterTrait;
+
 /**
  * Contains constants for WebSocket events as well as handlers
  * for the events.
  */
 class Event
 {
+    use EventEmitterTrait;
+    
     // General
     const READY                = 'READY';
     const RESUMED              = 'RESUMED';
