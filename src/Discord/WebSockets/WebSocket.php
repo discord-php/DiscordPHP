@@ -327,7 +327,7 @@ class WebSocket extends EventEmitter
                 $this->emit('reconnecting', [$this->discord]);
 
                 $this->reconnecting = true;
-                $this->getGateway();
+                $this->gateway      = $this->getGateway();
                 $this->wsfactory->__invoke($this->gateway)->then([$this, 'handleWebSocketConnection'], [$this, 'handleWebSocketError']);
                 ++$this->reconnectCount;
             }

@@ -12,6 +12,7 @@
 namespace Discord\WebSockets\Events;
 
 use Discord\WebSockets\Event;
+use Discord\Parts\WebSockets\VoiceStateUpdate as VoiceStateUpdatePart;
 
 /**
  * Event that is emitted wheh `VOICE_STATE_UPDATE` is fired.
@@ -25,7 +26,7 @@ class VoiceStateUpdate extends Event
      */
     public function getData($data, $discord)
     {
-        return $data;
+        return new VoiceStateUpdatePart((array) $data, true);
     }
 
     /**
@@ -38,15 +39,32 @@ class VoiceStateUpdate extends Event
                 $member = @$guild->members[$data->user_id];
 
                 if (is_null($member)) {
-                    break;
+                    continue;
                 }
+
+                // We aren't in the guild that the user switched to
+                if (is_null($data->channel)) {
+                    continue;
+                }
+
+                $data->channel->members[$data->user_id] = $data;
 
                 $member->deaf = $data->deaf;
                 $member->mute = $data->mute;
 
                 $guild->members[$data->user_id] = $member;
 
-                break;
+                foreach ($guild->channels->getAll('type', 'voice') as $cindex => $channel) {
+                    if ($channel->id == $data->channel->id) {
+                        continue;
+                    }
+
+                    $channel->members->pull($data->user_id);
+                }
+            } else {
+                foreach ($guild->channels->getAll('type', 'voice') as $cindex => $channel) {
+                    $channel->members->pull($data->user_id);
+                }
             }
         }
 

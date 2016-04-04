@@ -123,7 +123,11 @@ class Collection extends BaseCollection
      */
     public function push($value, $setCache = true)
     {
-        $this->items[] = $value;
+        // if (isset($value->id)) {
+            // $this->items[$value->id] = $value;
+        // } else {
+            $this->items[] = $value;
+        // }
 
         if ($setCache && ! is_null($this->cacheKey)) {
             Cache::set($this->cacheKey, $this);

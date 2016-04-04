@@ -125,6 +125,20 @@ class Channel extends Part
     }
 
     /**
+     * Returns the members attribute. Only used for voice channels.
+     *
+     * @return Collection The voice channel members.
+     */
+    public function getMembersAttribute()
+    {
+        if (! Cache::has("channels.{$this->id}.voice.members")) {
+            Cache::set("channels.{$this->id}.voice.members", new Collection([], "channels.{$this->id}.voice.members"));
+        }
+
+        return Cache::get("channels.{$this->id}.voice.members");
+    }
+
+    /**
      * Returns the guild attribute.
      *
      * @return Guild|null The guild that the Channel belongs to or null if we don't have the guild ID.
