@@ -1,103 +1,68 @@
-## DiscordPHP [![Build Status](https://travis-ci.org/teamreflex/DiscordPHP.svg?branch=master)](https://travis-ci.org/teamreflex/DiscordPHP)
+DiscordPHP
+====
+[![Build Status](https://travis-ci.org/teamreflex/DiscordPHP.svg?branch=master)](https://travis-ci.org/teamreflex/DiscordPHP)
 
-An API to interact with the popular text and voice service Discord.
+A wrapper for the unofficial [Discord](https://discordapp.com) REST, gateway and voice APIs.
 
-### Special Thanks
+## Getting Started
 
-- ReactPHP for the Process class which is based off [ReactPHP/Child-Process](https://github.com/reactphp/child-process)
+### Installing DiscordPHP
 
-### Todo
+DiscordPHP is installed using [Composer](https://getcomposer.org). Make sure you have installed Composer and are used to how it operates. We require a minimum PHP version of PHP 5.5.9, however it is reccomended that you use PHP 7.
 
-Todo list is available in the [`TODO.md`](TODO.md) file.
+This library has not been tested with HHVM.
 
-### Notes
+1. Run `composer require team-reflex/discord-php`. This will install the lastest release.
+	- If you would like, you can also install the development branch by running `composer require team-reflex/discord-php dev-develop`.
+2. Include the Composer autoload file at the top of your main file:
+	- `include __DIR__.'/vendor/autoload.php';`
+3. Make a bot!
+	- There are examples in the `examples/` folder in the project.
 
-- If your bot is in a large number of guilds, PHP may crash because it has ran out of allocated memory. (200 guilds, 140mb memory usage and increases)
-	- You can increase the allocated memory by doing `ini_set('memory_limit', '{number-of-mb}M');` at the top of your bot file. Note: Change `{number-of-mb}` to the number of megabytes.
-- If a guild has more than 250 members, only online members will be available.
-
-### How To Install
-
-- In order to install DiscordPHP, please be sure that you have a version of PHP that is 5.5.9 or higher
-- Make sure you have [Composer](https://getcomposer.org) installed, globally or locally.
-- Run `composer require team-reflex/discord-php`.
-- Include the `vendor/autoload.php` file in your main file.
-
-### Troubleshooting
-- If you're getting problems with Guzzle when running your bot please download this [certificate](https://www.dropbox.com/s/angtnh3lqrszs6x/cacert.pem?dl=0) *put it somewhere* and put this line into your `php.ini` file `curl.cainfo = "directory to the cert\cacert.pem"`
-- If you need more help then contact `@David#4618` in the DiscordAPI Server.
-
-### Basic WebSocket client
+### Basic Example
 
 ```php
 <?php
 
-include 'vendor/autoload.php';
+include __DIR__.'/vendor/autoload.php';
 
 use Discord\Discord;
-use Discord\WebSockets\Event;
 use Discord\WebSockets\WebSocket;
 
-$discord = new Discord(':email', ':password');
-$ws = new WebSocket($discord);
+$discord = new Discord('email', 'password');
+$ws      = new WebSocket($discord);
 
 $ws->on('ready', function ($discord) use ($ws) {
-	echo "Discord WebSocket is ready.".PHP_EOL\;
+	echo "Bot is ready!".PHP_EOL;
 
-	$ws->on(Event::MESSAGE_CREATE, function ($message, $discord, $new) {
-		echo "New message from {$message->author->username}: {$message->content}".PHP_EOL;
+	// We will listen for messages
+	$ws->on('message', function ($message, $discord) {
+		echo "Message from {$message->author->username}: {$message->content}".PHP_EOL;
 	});
 });
 
 $ws->run();
 ```
 
-### Documentation
+## Notes
 
-I have generated documentation which can be viewed [here](https://teamreflex.github.io/DiscordPHP). The code is well documentated so feel free to read through it if you want.
+- This library can use a lot of RAM and PHP may hit the memory limit. To increase the emmory limit, use `ini_set('memory_limit', '200M')` to increase it to 200 mb. If you would like it to be unlimited, use `ini_set('memory_limit', '-1')`.
 
-If you have any questions feel free to message me on Discord which can be viewed below.
+## Documentation
 
-### Cache
+At the moment, there is no solid documentation. However, there are class references available [here](https://teamreflex.github.io/DiscordPHP/).
 
-There is caching built into the API. By default, the time to live for an item in the cache is 300 seconds (5 minutes). If you would like to change that, do the following:
+## Examples
 
-```php
-use Discord\Helpers\Guzzle;
+- [Basic Bot](examples/basic.php)
+- [Permissions](examples/perms.php)
+- [Roles](examples/roles.php)
+- [Voice](examples/voice.php)
 
-Guzzle::setCacheTtl(:time);
-```
+## Contributing
 
-If you would like to disable the cache, set the TTL to `0`.
+We are open to contributions. However, please make sure you follow our coding standards (PSR-4 autoloading and custon styling). We use StyleCI to format our code. Our StyleCI settings can be found [here](https://github.com/teamreflex/DiscordPHP/wiki/StyleCI).
 
-### Help
+## Library Comparison
 
-If you need any help feel free to join the [DiscordAPI Server](https://discord.gg/0SBTUU1wZTY56U7l) and ask in the `#php_discordphp` channel. Tag `@Uniquoooo` if you need any help specific to the API.
-
-### Converting to bot account
-
-There is an easy way to convert your normal account into a bot account.
-
-**NOTE:** This is non-reversable. Please be careful when converting your account.
-
-You need to get your main account token (which will own your OAuth application). You can get this by using Chrome devtools.
-
-```php
-$discord = new Discord('bot-email', 'bot-password');
-
-// Create an OAuth app first.
-$app = Discord::createOauthApp('my-account-token', "my bot name");
-
-// Convert the account
-$discord->convertToBot('my-account-token', $app->id, $app->secret);
-
-// Restart your bot.
-```
-
-### Other Libraries
-
-You can find a comparison and list of all other Discord libraries over at the [DiscordAPI Comparison Page](https://discordapi.com/unofficial/comparison.html) (thanks @abalabahaha!)
-
-### Contributing
-
-We are open to anyone contributing as long as you follow our code standards. We use PSR-4 for our autoloading standard and PSR-2 for our code formatting standard. Please, if you send in pull requests follow these standards and that you are making pull requests for the develop branch, changes to master are automaticly ignored. 
+See [this chart](https://abal.moe/Discord/Libraries.html) for a feature comparison and list of other Discord API libraries.
