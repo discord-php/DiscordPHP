@@ -21,7 +21,6 @@ use Discord\Parts\User\Member;
 use Discord\Voice\VoiceClient;
 use Discord\WSClient\Factory as WsFactory;
 use Discord\WSClient\WebSocket as WebSocketInstance;
-use Discord\WebSockets\Event;
 use Evenement\EventEmitter;
 use Ratchet\WebSocket\Version\RFC6455\Frame;
 use React\EventLoop\Factory as LoopFactory;
@@ -208,7 +207,7 @@ class WebSocket extends EventEmitter
                 if (! is_null($this->reconnectResetTimer)) {
                     $this->loop->cancelTimer($this->reconnectResetTimer);
                 }
-                
+
                 $this->reconnectResetTimer = $this->loop->addTimer(60 * 2, function () {
                     $this->reconnectCount = 0;
                 });
@@ -294,7 +293,7 @@ class WebSocket extends EventEmitter
 
                 if (count($this->unavailableServers) > 1) {
                     $this->unavailableTimer = $this->loop->addTimer(60 * 2, function () {
-                        $this->emit('ready', [$this->discord]);    
+                        $this->emit('ready', [$this->discord]);
                     });
 
                     $handleGuildCreate = function ($guild) use (&$handleGuildCreate) {
