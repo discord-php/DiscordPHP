@@ -82,7 +82,7 @@ class GuildCreate extends Event
 
         $guildPart->setCache('members', $members);
 
-        foreach ($guild->voice_states as $state) {
+        foreach ($data->voice_states as $state) {
             if ($channel = $guildPart->channels->get('id', $state->channel_id)) {
                 $channel->members->push(new VoiceStateUpdate((array) $state, true));
             }
