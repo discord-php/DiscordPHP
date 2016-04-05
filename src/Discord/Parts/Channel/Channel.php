@@ -106,7 +106,7 @@ class Channel extends Part
      */
     public function removePermissions($part)
     {
-        if (!($part instanceof Member) && !($part instanceof Role)) {
+        if (! ($part instanceof Member) && ! ($part instanceof Role)) {
             return false;
         }
 
