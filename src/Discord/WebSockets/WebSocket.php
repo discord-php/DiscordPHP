@@ -864,7 +864,7 @@ class WebSocket extends EventEmitter
                     '$referrer'         => 'https://github.com/teamreflex/DiscordPHP',
                     '$referring_domain' => 'https://github.com/teamreflex/DiscordPHP',
                 ],
-                'large_threshold' => 100,
+                'large_threshold' => 250,
                 'compress'        => true,
             ],
         ]);
