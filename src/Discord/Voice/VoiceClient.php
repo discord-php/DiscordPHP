@@ -1186,7 +1186,7 @@ class VoiceClient extends EventEmitter
         $this->ready = false;
 
         $this->mainWebsocket->send([
-            'op' => Op::VOICE_STATE_UPDATE,
+            'op' => Op::OP_VOICE_STATE_UPDATE,
             'd'  => [
                 'guild_id'   => $this->channel->guild_id,
                 'channel_id' => null,
