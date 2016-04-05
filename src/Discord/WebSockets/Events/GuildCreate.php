@@ -84,7 +84,7 @@ class GuildCreate extends Event
 
         foreach ($data->voice_states as $state) {
             if ($channel = $guildPart->channels->get('id', $state->channel_id)) {
-                $channel->members->push(new VoiceStateUpdate((array) $state, true));
+                $channel->members[$state->user_id] = new VoiceStateUpdate((array) $state, true);
             }
         }
 
