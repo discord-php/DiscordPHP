@@ -16,6 +16,7 @@ use Discord\Helpers\Collection;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\User\Member;
+use Discord\Parts\WebSockets\VoiceStateUpdate;
 use Discord\WebSockets\Event;
 
 /**
@@ -80,6 +81,12 @@ class GuildCreate extends Event
         }
 
         $guildPart->setCache('members', $members);
+
+        foreach ($guild->voice_states as $state) {
+            if ($channel = $guildPart->channels->get('id', $state->channel_id)) {
+                $channel->members->push(new VoiceStateUpdate((array) $state, true));
+            }
+        }
 
         return $guildPart;
     }
