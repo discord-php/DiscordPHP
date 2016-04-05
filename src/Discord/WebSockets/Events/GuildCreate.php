@@ -72,7 +72,7 @@ class GuildCreate extends Event
 
             Cache::set("guild.{$guildPart->id}.members.{$memberPart->id}", $memberPart);
 
-            $members->push($memberPart);
+            $members[$guildPart->id] = $memberPart;
         }
 
         $guildPart->setCache('members', $members);

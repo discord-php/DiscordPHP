@@ -21,6 +21,7 @@ use Discord\Parts\User\Member;
 use Discord\Voice\VoiceClient;
 use Discord\WSClient\Factory as WsFactory;
 use Discord\WSClient\WebSocket as WebSocketInstance;
+use Discord\WebSockets\Event;
 use Evenement\EventEmitter;
 use Ratchet\WebSocket\Version\RFC6455\Frame;
 use React\EventLoop\Factory as LoopFactory;
@@ -108,6 +109,20 @@ class WebSocket extends EventEmitter
      * @var TimerInterface The WebSocket heartbeat.
      */
     protected $heartbeat;
+
+    /**
+     * Unavailable servers.
+     *
+     * @var array Unavailable servers.
+     */
+    protected $unavailableServers = [];
+
+    /**
+     * Timer that waits for unavailable servers to come online.
+     *
+     * @var Timer The timer.
+     */
+    protected $unavailableTimer;
 
     /**
      * Constructs the WebSocket instance.
@@ -221,6 +236,13 @@ class WebSocket extends EventEmitter
                 $guilds = new Collection();
 
                 foreach ($content->guilds as $guild) {
+                    if (isset($guild->unavailable) && $guild->unavailable) {
+                        $this->emit('unavailable', ['READY', $guild->id, $this]);
+                        $this->unavailableServers[$guild->id] = $guild->id;
+
+                        continue;
+                    }
+
                     $guildPart = new Guild((array) $guild, true);
 
                     $channels = new Collection();
@@ -270,7 +292,30 @@ class WebSocket extends EventEmitter
 
                 $this->discord->setCache('guilds', $guilds);
 
-                $this->emit('ready', [$this->discord]);
+                if (count($this->unavailableServers) > 1) {
+                    $this->unavailableTimer = $this->loop->addTimer(60 * 2, function () {
+                        $this->emit('ready', [$this->discord]);    
+                    });
+
+                    $handleGuildCreate = function ($guild) use (&$handleGuildCreate) {
+                        if (! isset($this->unavailableServers[$guild->id])) {
+                            return;
+                        }
+
+                        unset($this->unavailableServers[$guild->id]);
+                        $this->emit('available', [$guild->id, $this]);
+
+                        if (count($this->unavailableServers) < 1) {
+                            $this->loop->cancelTimer($this->unavailableTimer);
+                            $this->removeListener(Event::GUILD_CREATE, $handleGuildCreate);
+                            $this->emit('ready', [$this->discord]);
+                        }
+                    };
+
+                    $this->on(Event::GUILD_CREATE, $handleGuildCreate);
+                } else {
+                    $this->emit('ready', [$this->discord]);
+                }
             }
         });
 
