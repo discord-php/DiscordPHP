@@ -52,7 +52,7 @@ class VoiceStateUpdate extends Event
                 $guild->members[$data->user_id] = $member;
 
                 foreach ($guild->channels->getAll('type', 'voice') as $cindex => $channel) {
-                    if ($channel->id == $data->channel->id) {
+                    if ($channel->id == $data->channel_id) {
                         continue;
                     }
 
