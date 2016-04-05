@@ -22,7 +22,7 @@ class VoiceStateUpdate extends Event
     /**
      * {@inheritdoc}
      *
-     * @return array The data.
+     * @return VoiceStateUpdatePart The voice state.
      */
     public function getData($data, $discord)
     {
@@ -34,33 +34,39 @@ class VoiceStateUpdate extends Event
      */
     public function updateDiscordInstance($data, $discord)
     {
+        /*
+        VOICE_STATE_UPDATE
+
+        Cases:
+        - User switches from guild A channel 1 to guild A channel 2
+            - Remove the state from guild A channel 1
+            - Add the state to guild A channel 2
+        - User switches from guild A channel 1 to guild B channel 1
+            - User is a bot:
+                - Add the state to guild B channel 1
+            - User is not a bot:
+                - Remove the state from guild A channel 1
+                - Add the state to guild B channel 1
+        - User leaves guild A channel 1
+            - Remove the state from guild A channel 1
+         */
+
         foreach ($discord->guilds as $index => $guild) {
             if ($guild->id == $data->guild_id) {
-                if ($data->channel) {
-                    $data->channel->members[$data->user_id] = $data;
-                }
-
-                $member = @$guild->members[$data->user_id];
-
-                if (is_null($member)) {
-                    continue;
-                }
-
-                $member->deaf = $data->deaf;
-                $member->mute = $data->mute;
-
-                $guild->members[$data->user_id] = $member;
-
-                foreach ($guild->channels->getAll('type', 'voice') as $cindex => $channel) {
-                    if ($channel->id == $data->channel_id) {
-                        continue;
+                foreach ($guild->channels as $cindex => $channel) {
+                    if (isset($channel->members[$data->user_id])) {
+                        unset($channel->members[$data->user_id]);
                     }
 
-                    $channel->members->pull($data->user_id);
+                    if ($channel->id == $data->channel_id) {
+                        $channel->members[$data->user_id] = $data;
+                    }
                 }
             } else {
-                foreach ($guild->channels->getAll('type', 'voice') as $cindex => $channel) {
-                    $channel->members->pull($data->user_id);
+                foreach ($guild->channels as $cindex => $channel) {
+                    if (isset($channel->members[$data->user_id]) && ! $discord->bot) {
+                        unset($channel->members[$data->user_id]);
+                    }
                 }
             }
         }
