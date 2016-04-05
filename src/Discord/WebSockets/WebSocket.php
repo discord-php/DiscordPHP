@@ -23,7 +23,6 @@ use Discord\Parts\Permissions\RolePermission as Permission;
 use Discord\Parts\User\Member;
 use Discord\Parts\WebSockets\VoiceStateUpdate;
 use Discord\Voice\VoiceClient;
-use Discord\WebSockets\Event;
 use Evenement\EventEmitter;
 use Ratchet\Client\Connector as WsFactory;
 use Ratchet\Client\WebSocket as WebSocketInstance;
@@ -553,7 +552,7 @@ class WebSocket extends EventEmitter
                     foreach ($this->discord->guilds as $guild) {
                         if ($guild->large) {
                             $this->largeServers[$guild->id] = $guild->id;
-                            $servers[] = $guild->id;
+                            $servers[]                      = $guild->id;
                         }
                     }
 
