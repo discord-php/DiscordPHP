@@ -294,7 +294,7 @@ class WebSocket extends EventEmitter
                     $this->ws->close(Op::CLOSE_NORMAL, 'gateway redirecting - opcode 7');
                     break;
                 case Op::OP_INVALID_SESSION:
-                    $this->ws->close(Op::CLOSE_INVALID_SESSION, 'invalid session - opcode 7');
+                    $this->sendLoginFrame();
                     break;
             }
         });
@@ -637,10 +637,6 @@ class WebSocket extends EventEmitter
     {
         $members = $data->d->members;
 
-        if (count($this->largeServers) === 0) {
-            return;
-        }
-
         foreach ($this->discord->guilds as $index => $guild) {
             if ($guild->id == $data->d->guild_id) {
                 if (is_null($guild)) {
@@ -667,13 +663,21 @@ class WebSocket extends EventEmitter
                 $memberColl->setCacheKey("guild.{$guild->id}.members", true);
 
                 if ($memberColl->count() == $guild->member_count) {
-                    unset($this->largeServers[$data->d->guild_id]);
+                    if (isset($this->largeServers[$data->d->guild_id])) {
+                        unset($this->largeServers[$data->d->guild_id]);
+                    }
+
                     $this->emit('guild-ready', [$guild]);
                 }
 
                 unset($memberColl);
 
+                if ($this->largeServers === true) {
+                    break;
+                }
+
                 if (count($this->largeServers) === 0) {
+                    $this->largeServers = true;
                     $this->emit('ready', [$this->discord]);
                 }
 
@@ -712,6 +716,8 @@ class WebSocket extends EventEmitter
         $handler->on('unavailable', function ($id) use ($handlerSettings) {
             $this->emit('unavailable', [$handlerSettings['class'], $id, $this]);
         });
+
+        $handler->on('send-packet', [$this, 'send']);
 
         $handlerData = $handler->getData($data->d, $this->discord);
         $newDiscord  = $handler->updateDiscordInstance($handlerData, $this->discord);
