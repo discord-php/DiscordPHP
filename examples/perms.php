@@ -24,7 +24,7 @@ if ($argc != 2) {
 }
 
 // Init the Discord instance.
-$discord = new Discord(['token' => $argv[1], 'cache_dir' => __DIR__.'/../cache/']);
+$discord = new Discord(['token' => $argv[1]]);
 // Init the WebSocket instance.
 $ws = new WebSocket($discord);
 
