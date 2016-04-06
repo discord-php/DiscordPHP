@@ -59,6 +59,16 @@ class Op
     const CLOSE_NORMAL          = 1000;
     // Abnormal close.
     const CLOSE_ABNORMAL        = 1006;
+    // Unknown opcode was went.
+    const CLOSE_INVALID_OPCODE  = 4001;
+    // Invalid message was sent.
+    const CLOSE_INVALID_MESSAGE = 4002;
+    // Invalid token on IDENTIFY.
+    const CLOSE_INVALID_TOKEN   = 4004;
     // Session is invalid.
     const CLOSE_INVALID_SESSION = 4006;
+    // Invalid RESUME sequence.
+    const CLOSE_INVALID_SEQ     = 4007;
+    // Too many messages sent.
+    const CLOSE_TOO_MANY_MSG    = 4008;
 }
