@@ -190,10 +190,11 @@ class WebSocket extends EventEmitter
      * @param Discord            $discord The Discord REST client instance.
      * @param LoopInterface|null $loop    The ReactPHP Event Loop.
      * @param bool               $etf     Whether to use ETF.
+     * @param int                $flush   The time interval to flush all message caches. Null if disabled.
      *
      * @return void
      */
-    public function __construct(Discord $discord, LoopInterface &$loop = null, $etf = true)
+    public function __construct(Discord $discord, LoopInterface &$loop = null, $etf = true, $flush = 600)
     {
         $this->discord   = $discord;
         $this->gateway   = $this->getGateway();
@@ -218,6 +219,19 @@ class WebSocket extends EventEmitter
             [$this, 'handleWebSocketConnection'],
             [$this, 'handleWebSocketError']
         );
+
+        if (! is_null($flush)) {
+            $loop->addPeriodicTimer($flush, function () {
+                foreach ($this->discord->guilds as $guild) {
+                    foreach ($guild->channels->getAll('type', 'text') as $channel) {
+                        $collection = new Collection();
+                        $collection->setCacheKey("channel.{$channel->id}.messages", true);
+                    }
+                }
+
+                $this->emit('messages-flushed', [$this]);
+            });
+        }
 
         $this->loop = $loop;
     }
