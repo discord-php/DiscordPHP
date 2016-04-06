@@ -29,7 +29,7 @@ include __DIR__.'/vendor/autoload.php';
 use Discord\Discord;
 use Discord\WebSockets\WebSocket;
 
-$discord = new Discord('email', 'password');
+$discord = new Discord('bot-token');
 $ws      = new WebSocket($discord);
 
 $ws->on('ready', function ($discord) use ($ws) {
