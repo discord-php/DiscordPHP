@@ -195,7 +195,7 @@ class Guild extends Part
 
         $owner = new User((array) $request, true);
 
-        Cache::set("user.{$user->id}", $owner);
+        Cache::set("user.{$owner->id}", $owner);
 
         return $owner;
     }
