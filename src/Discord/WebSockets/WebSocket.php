@@ -546,7 +546,7 @@ class WebSocket extends EventEmitter
         $this->sessionId = $content->session_id;
 
         // unavailable servers
-        if (count($this->unavailableServers) > 1) {
+        if (count($this->unavailableServers) > 0) {
             $this->unavailableTimer = $this->loop->addTimer(60 * 2, function () {
                 $this->emit('ready', [$this->discord]);
             });
