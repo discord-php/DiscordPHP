@@ -13,8 +13,8 @@
         "guzzlehttp/guzzle":        "~5.3|~6.0",
         "illuminate/support":       "^5.1",
         "nesbot/carbon":            "^1.21",
-        "ratchet/pawl":             "dev-master",
-        "react/datagram":           "dev-master",
+        "ratchet/pawl":             "0.2.*",
+        "react/datagram":           "1.1.*",
         "react/socket-client":      "0.4.*",
         "symfony/options-resolver": "^2.7|^3.0",
         "TrafficCophp/ByteBuffer":  "dev-master"
