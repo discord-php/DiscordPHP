@@ -25,7 +25,6 @@ use Discord\Repository\Guild\ChannelRepository;
 use Discord\Repository\Guild\MemberRepository;
 use Discord\Repository\Guild\RoleRepository;
 use Discord\Voice\VoiceClient;
-use Discord\WebSockets\Event;
 use Discord\Wrapper\CacheWrapper;
 use Evenement\EventEmitter;
 use Ratchet\Client\Connector as WsFactory;
@@ -532,7 +531,7 @@ class WebSocket extends EventEmitter
             if (isset($guild->unavailable) && $guild->unavailable) {
                 $this->emit('unavailable', ['READY', $guild->id, $this]);
                 $this->unavailableServers[$guild->id] = $guild->id;
-                
+
                 continue;
             }
 

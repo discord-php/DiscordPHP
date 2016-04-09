@@ -57,7 +57,7 @@ interface RepositoryInterface
      *
      * @param string $id The ID to search for.
      *
-     * @return \React\Promise\Promise 
+     * @return \React\Promise\Promise
      */
     public function fetch($id);
 }
