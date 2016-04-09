@@ -334,12 +334,14 @@ class Channel extends Part
      *
      * @param string $filepath The path to the file to be sent.
      * @param string $filename The name to send the file as.
+     * @param string $content  Message content to send with the file.
+     * @param bool   $tts      Whether to send the message with TTS.
      *
      * @return Message|bool Either a Message if the request passed or false if it failed.
      *
      * @throws \Discord\Exceptions\FileNotFoundException Thrown when the file does not exist.
      */
-    public function sendFile($filepath, $filename)
+    public function sendFile($filepath, $filename, $content = null, $tts = false)
     {
         if ($this->type != self::TYPE_TEXT) {
             return false;
@@ -357,17 +359,31 @@ class Channel extends Part
             'authorization' => DISCORD_TOKEN,
         ];
 
-        $done     = false;
-        $finalRes = null;
+        $done      = false;
+        $finalRes  = null;
+        $multipart = [
+            [
+                'name'     => 'file',
+                'contents' => fopen($filepath, 'r'),
+                'filename' => $filename,
+            ],
+            [
+                'name'     => 'tts',
+                'contents' => $tts,
+            ],
+        ];
+
+        if (! is_null($content)) {
+            $multipart[] = [
+                'name'     => 'content',
+                'contents' => $content,
+            ];
+        }
 
         while (! $done) {
             $response = $guzzle->request('post', $url, [
                 'headers'   => $headers,
-                'multipart' => [[
-                    'name'     => 'file',
-                    'contents' => fopen($filepath, 'r'),
-                    'filename' => $filename,
-                ]],
+                'multipart' => $multipart,
             ]);
 
             // Rate limiting
