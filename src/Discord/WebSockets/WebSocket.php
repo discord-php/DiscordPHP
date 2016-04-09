@@ -548,7 +548,7 @@ class WebSocket extends EventEmitter
         // unavailable servers
         if (count($this->unavailableServers) > 0) {
             $this->unavailableTimer = $this->loop->addTimer(60 * 2, function () {
-                $this->emit('ready', [$this->discord]);
+                $this->emit('ready', [$this->discord, $this]);
             });
 
             $handleGuildCreate = function ($guild) use (&$handleGuildCreate) {
@@ -574,7 +574,7 @@ class WebSocket extends EventEmitter
                         $this->removeListener(Event::GUILD_CREATE, $handleGuildCreate);
 
                         if (! $this->invalidSession) {
-                            $this->emit('ready', [$this->discord]);
+                            $this->emit('ready', [$this->discord, $this]);
                         } else {
                             $this->invalidSession = false;
                         }
@@ -610,7 +610,7 @@ class WebSocket extends EventEmitter
 
             $this->on(Event::GUILD_CREATE, $handleGuildCreate);
         } else {
-            $this->emit('ready', [$this->discord]);
+            $this->emit('ready', [$this->discord, $this]);
         }
     }
 
@@ -680,7 +680,7 @@ class WebSocket extends EventEmitter
 
                 if (count($this->largeServers) === 0) {
                     $this->largeServers = true;
-                    $this->emit('ready', [$this->discord]);
+                    $this->emit('ready', [$this->discord, $this]);
                 }
 
                 break;
