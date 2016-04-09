@@ -609,6 +609,8 @@ class WebSocket extends EventEmitter
             };
 
             $this->on(Event::GUILD_CREATE, $handleGuildCreate);
+        } else {
+            $this->emit('ready', [$this->discord]);
         }
     }
 
