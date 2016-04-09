@@ -51,4 +51,13 @@ interface RepositoryInterface
      * @return \React\Promise\Promise
      */
     public function fresh(Part &$part);
+
+    /**
+     * Force gets a part from the Discord servers.
+     *
+     * @param string $id The ID to search for.
+     *
+     * @return \React\Promise\Promise 
+     */
+    public function fetch($id);
 }

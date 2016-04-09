@@ -251,6 +251,32 @@ abstract class AbstractRepository extends Collection implements RepositoryInterf
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function fetch($id)
+    {
+        if (! isset($this->endpoints['get'])) {
+            return \React\Promise\reject(new \Exception('You cannot get this part.'));
+        }
+
+        $deferred = new Deferred();
+
+        $this->http->get(
+            $this->replaceWithVariables(
+                str_replace(':id', $id, $this->endpoints['get'])
+            )
+        )->then(function ($response) use ($deferred) {
+            $part = $this->partFactory->create($this->part, $response, true);
+
+            $deferred->resolve($part);
+        }, function ($e) use ($deferred) {
+            $deferred->reject($e);
+        });
+
+        return $deferred->promise();
+    }
+
+    /**
      * Replaces variables in string with syntax :{varname}.
      *
      * @param string $string A string with placeholders.

@@ -25,6 +25,7 @@ use Discord\Repository\Guild\ChannelRepository;
 use Discord\Repository\Guild\MemberRepository;
 use Discord\Repository\Guild\RoleRepository;
 use Discord\Voice\VoiceClient;
+use Discord\WebSockets\Event;
 use Discord\Wrapper\CacheWrapper;
 use Evenement\EventEmitter;
 use Ratchet\Client\Connector as WsFactory;
@@ -194,6 +195,20 @@ class WebSocket extends EventEmitter
     protected $largeServers = [];
 
     /**
+     * Unavailable servers.
+     *
+     * @var array Unavailable servers.
+     */
+    protected $unavailableServers = [];
+
+    /**
+     * Timer that waits for unavailable servers to come online.
+     *
+     * @var Timer The timer.
+     */
+    protected $unavailableTimer;
+
+    /**
      * Constructs the WebSocket instance.
      *
      * @param Discord            $discord     The Discord REST client instance.
@@ -211,7 +226,7 @@ class WebSocket extends EventEmitter
         CacheWrapper $cache,
         $token,
         LoopInterface &$loop = null,
-        $etf = false
+        $etf = true
     ) {
         $this->discord     = $discord;
         $this->http        = $http;
@@ -220,8 +235,6 @@ class WebSocket extends EventEmitter
         $this->token       = $token;
         $loop              = (is_null($loop)) ? LoopFactory::create() : $loop;
         $this->wsfactory   = new WsFactory($loop);
-
-        $this->getGateway();
 
         // ETF breaks snowflake IDs on 32-bit.
         if (2147483647 !== PHP_INT_MAX) {
@@ -238,8 +251,7 @@ class WebSocket extends EventEmitter
             }
         }
 
-        $this->useEtf = false;
-
+        $this->getGateway();
         $this->handlers = new Handlers();
 
         $loop->nextTick(
@@ -282,21 +294,6 @@ class WebSocket extends EventEmitter
                 $data = json_decode($data);
                 $this->emit('raw', [$data, $this->discord]);
 
-                if (isset($data->d->unavailable)) {
-                    $this->emit('unavailable', [$data->t, $data->d]);
-
-                    if ($data->t == Event::GUILD_DELETE) {
-                        foreach ($this->discord->guilds as $index => $guild) {
-                            if ($guild->id == $data->d->id) {
-                                $this->discord->guilds->pull($index);
-                                break;
-                            }
-                        }
-                    }
-
-                    return;
-                }
-
                 if (isset($data->s) && ! is_null($data->s)) {
                     $this->seq = $data->s;
                 }
@@ -311,10 +308,7 @@ class WebSocket extends EventEmitter
                         );
                     },
                     Op::OP_INVALID_SESSION => function () {
-                        $this->ws->close(
-                            Op::CLOSE_INVALID_SESSION,
-                            'invalid session - opcode '.Op::OP_INVALID_SESSION
-                        );
+                        $this->sendLoginFrame();
                     },
                 ];
 
@@ -395,7 +389,7 @@ class WebSocket extends EventEmitter
 
         $this->ws = $ws;
 
-        if ($this->reconnecting && ! is_null($this->sessionId)) {
+        if ($this->reconnecting && ! empty($this->sessionId)) {
             $this->send(
                 [
                     'op' => Op::OP_RESUME,
@@ -535,6 +529,13 @@ class WebSocket extends EventEmitter
         );
 
         foreach ($content->guilds as $guild) {
+            if (isset($guild->unavailable) && $guild->unavailable) {
+                $this->emit('unavailable', ['READY', $guild->id, $this]);
+                $this->unavailableServers[$guild->id] = $guild->id;
+                
+                continue;
+            }
+
             $guildPart = $this->partFactory->create(Guild::class, $guild, true);
 
             $channels = new ChannelRepository(
@@ -585,7 +586,6 @@ class WebSocket extends EventEmitter
                 // Since when we use GUILD_MEMBERS_CHUNK, we have to cycle through the current members
                 // and see if they exist already. That takes ~34ms per member, way way too much.
                 $members[$memberPart->id] = $memberPart;
-                // $this->cache->set("guild.{$memberPart->guild_id}.members.{$memberPart->id}", $memberPart);
             }
 
             $guildPart->members = $members;
@@ -616,10 +616,6 @@ class WebSocket extends EventEmitter
 
             $guilds->push($guildPart);
 
-            if ($guildPart->large) {
-                $this->largeServers[$guildPart->id] = $guildPart;
-            }
-
             $this->cache->set("guild.{$guildPart->id}", $guildPart);
         }
 
@@ -629,43 +625,66 @@ class WebSocket extends EventEmitter
 
         $this->sessionId = $content->session_id;
 
-        // guild_member_chunk
-        if (count($this->largeServers) > 0) {
-            $servers = [];
-            foreach ($this->largeServers as $server) {
-                $servers[] = $server->id;
-            }
-
-            $chunks = array_chunk($servers, 50);
-
-            $sendChunk = function () use (&$sendChunk, &$chunks) {
-                $chunk = array_pop($chunks);
-
-                // We have finished our chunks
-                if (is_null($chunk)) {
+        if (count($this->unavailableServers) > 0) {
+            $handleGuildCreate = function ($guild) use (&$handleGuildCreate) {
+                if (! isset($this->unavailableServers[$guild->id])) {
                     return;
                 }
 
-                $this->send(
-                    [
-                        'op' => Op::OP_GUILD_MEBMER_CHUNK,
-                        'd'  => [
-                            'guild_id' => $chunk,
-                            'query'    => '',
-                            'limit'    => 0,
-                        ],
-                    ]
-                );
+                unset($this->unavailableServers[$guild->id]);
+                $this->emit('available', [$guild->id, $this]);
 
-                $this->loop->addTimer(1, $sendChunk);
+                if (count($this->unavailableServers) < 1) {
+                    foreach ($this->discord->guilds as $guild) {
+                        if ($guild->large) {
+                            $this->largeServers[$guild->id] = $guild->id;
+                        }
+                    }
+
+                    $servers = array_keys($this->largeServers);
+
+                    if (count($servers) < 1) {
+                        $this->removeListener(Event::GUILD_CREATE, $handleGuildCreate);
+
+                        if (! $this->invalidSession) {
+                            $this->emit('ready', [$this->discord, $this]);
+                        } else {
+                            $this->invalidSession = false;
+                        }
+
+                        return;
+                    }
+
+                    $chunks = array_chunk($servers, 50);
+
+                    $sendChunk = function () use (&$sendChunk, &$chunks) {
+                        $chunk = array_pop($chunks);
+
+                        // We have finished our chunks
+                        if (is_null($chunk)) {
+                            return;
+                        }
+
+                        $this->send([
+                            'op' => Op::OP_GUILD_MEBMER_CHUNK,
+                            'd'  => [
+                                'guild_id' => $chunk,
+                                'query'    => '',
+                                'limit'    => 0,
+                            ],
+                        ]);
+
+                        $this->loop->addTimer(1, $sendChunk);
+                    };
+
+                    $sendChunk();
+                }
             };
 
-            $sendChunk();
-
-            unset($servers);
+            $this->on(Event::GUILD_CREATE, $handleGuildCreate);
         } else {
             if (! $this->invalidSession) {
-                $this->emit('ready', [$this->discord]);
+                $this->emit('ready', [$this->discord, $this]);
             }
 
             $this->invalidSession = false;
