@@ -19,7 +19,6 @@ use Discord\Repository\Guild\ChannelRepository;
 use Discord\Repository\Guild\MemberRepository;
 use Discord\Repository\Guild\RoleRepository;
 use Discord\WebSockets\Event;
-use Illuminate\Support\Collection;
 use React\Promise\Deferred;
 
 /**
