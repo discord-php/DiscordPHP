@@ -369,7 +369,7 @@ class Channel extends Part
             ],
             [
                 'name'     => 'tts',
-                'contents' => $tts,
+                'contents' => ($tts ? 'true' : 'false'),
             ],
         ];
 
