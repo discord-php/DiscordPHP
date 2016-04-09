@@ -336,7 +336,7 @@ class WebSocket extends EventEmitter
                 $this->emit('reconnecting', [$this->discord]);
 
                 $this->reconnecting = true;
-                $this->getGateway();
+                $this->gateway = $this->getGateway();
                 $this->wsfactory->createConnection($this->gateway)->then([$this, 'handleWebSocketConnection'], [$this, 'handleWebSocketError']);
                 ++$this->reconnectCount;
             }
@@ -443,7 +443,7 @@ class WebSocket extends EventEmitter
             'op' => 2,
             'd'  => [
                 'token'      => DISCORD_TOKEN,
-                'v'          => 3,
+                'v'          => 4,
                 'properties' => [
                     '$os'               => PHP_OS,
                     '$browser'          => Guzzle::getUserAgent(),
@@ -477,6 +477,9 @@ class WebSocket extends EventEmitter
      */
     public function getGateway()
     {
-        return Guzzle::get('gateway')->url;
+        $url  = Guzzle::get('gateway')->url;
+        $url .= '/?v=4';
+
+        return $url;
     }
 }
