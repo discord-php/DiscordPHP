@@ -395,7 +395,7 @@ class VoiceClient extends EventEmitter
 
                             if (! function_exists('\Sodium\crypto_secretbox')) {
                                 $this->emit('error', [new LibSodiumNotFoundException('libsodium-php was not found.')]);
-                                
+
                                 $this->client->close();
                                 $this->voiceWebsocket->close();
                                 $this->mainWebsocket->send([
