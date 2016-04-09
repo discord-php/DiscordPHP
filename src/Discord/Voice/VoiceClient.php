@@ -15,6 +15,7 @@ use Discord\Exceptions\DCANotFoundException;
 use Discord\Exceptions\FFmpegNotFoundException;
 use Discord\Exceptions\FileNotFoundException;
 use Discord\Exceptions\OutdatedDCAException;
+use Discord\Exceptions\LibSodiumNotFoundException;
 use Discord\Helpers\Collection;
 use Discord\Helpers\Process;
 use Discord\Parts\Channel\Channel;
@@ -392,7 +393,23 @@ class VoiceClient extends EventEmitter
                             $port = substr($message, strlen($message) - 2);
                             $port = unpack('v', $port)[1];
 
-                            if (function_exists('\Sodium\crypto_secretbox')) {
+                            if (! function_exists('\Sodium\crypto_secretbox')) {
+                                $this->emit('error', [new LibSodiumNotFoundException('libsodium-php was not found.')]);
+                                
+                                $this->client->close();
+                                $this->voiceWebsocket->close();
+                                $this->mainWebsocket->send([
+                                    'op' => 4,
+                                    'd'  => [
+                                        'guild_id'   => null,
+                                        'channel_id' => null,
+                                        'self_mute'  => false,
+                                        'self_deaf'  => false,
+                                    ],
+                                ]);
+
+                                return;
+                            } else {
                                 $this->mode = 'xsalsa20_poly1305'; // voice encryption!
                                 $this->encrypted = true;
                             }
