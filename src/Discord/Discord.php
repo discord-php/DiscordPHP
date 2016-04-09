@@ -31,7 +31,7 @@ class Discord
      *
      * @var string The current version of the API.
      */
-    const VERSION = 'v3.2.0-beta';
+    const VERSION = 'v3.2.0';
 
     /**
      * The Discord epoch value.
