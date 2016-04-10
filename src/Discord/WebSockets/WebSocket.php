@@ -542,7 +542,7 @@ class WebSocket extends EventEmitter
                 // Since when we use GUILD_MEMBERS_CHUNK, we have to cycle through the current members
                 // and see if they exist already. That takes ~34ms per member, way way too much.
                 $guildMembers[$memberPart->id] = $memberPart;
-                $members[$memberPart->id] = $memberPart;
+                $members[$memberPart->id]      = $memberPart;
                 // Cache::set("guild.{$memberPart->guild_id}.members.{$memberPart->id}", $memberPart);
             }
 

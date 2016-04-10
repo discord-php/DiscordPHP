@@ -99,13 +99,13 @@ class Client extends Part
      *
      * @param string $filepath The path to the file.
      *
-     * @return bool Whether the setting succeeded or failed.
-     *
      * @throws \Discord\Exceptions\FileNotFoundException Thrown when the file does not exist.
+     *
+     * @return bool Whether the setting succeeded or failed.
      */
     public function setAvatar($filepath)
     {
-        if (! file_exists($filepath)) {
+        if (!file_exists($filepath)) {
             throw new FileNotFoundException("File does not exist at path {$filepath}.");
         }
 
@@ -134,7 +134,7 @@ class Client extends Part
         $ws->send([
             'op' => 3,
             'd'  => [
-                'game' => (! is_null($gamename) ? [
+                'game' => (!is_null($gamename) ? [
                     'name' => $gamename,
                 ] : null),
                 'idle_since' => $idle,
@@ -208,7 +208,7 @@ class Client extends Part
             $attributes['avatar'] = $this->attributes['avatarhash'];
         }
 
-        if (! $this->bot) {
+        if (!$this->bot) {
             if (empty($this->attributes['password'])) {
                 throw new PasswordEmptyException('You must enter your password to update your profile.');
             }
@@ -216,7 +216,7 @@ class Client extends Part
             $attributes['email']    = $this->email;
             $attributes['password'] = $this->attributes['password'];
 
-            if (! empty($this->attributes['new_password'])) {
+            if (!empty($this->attributes['new_password'])) {
                 $attributes['new_password'] = $this->attributes['new_password'];
             }
         }
