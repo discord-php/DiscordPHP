@@ -214,33 +214,42 @@ class WebSocket extends EventEmitter
 
             if ($etf) {
                 $this->etf = new Erlpack();
-                $this->etf->on('error', function ($e) {
-                    $this->emit('error', [$e]);
-                });
+                $this->etf->on(
+                    'error',
+                    function ($e) {
+                        $this->emit('error', [$e]);
+                    }
+                );
             }
         }
 
         $this->handlers = new Handlers();
-        $this->on('ready', function () {
-            $this->emittedReady = true;
-        });
+        $this->on(
+            'ready',
+            function () {
+                $this->emittedReady = true;
+            }
+        );
 
         $this->wsfactory->__invoke($this->gateway)->then(
             [$this, 'handleWebSocketConnection'],
             [$this, 'handleWebSocketError']
         );
 
-        if (! is_null($flush)) {
-            $loop->addPeriodicTimer($flush, function () {
-                foreach ($this->discord->guilds as $guild) {
-                    foreach ($guild->channels->getAll('type', 'text') as $channel) {
-                        $collection = new Collection();
-                        $collection->setCacheKey("channel.{$channel->id}.messages", true);
+        if (!is_null($flush)) {
+            $loop->addPeriodicTimer(
+                $flush,
+                function () {
+                    foreach ($this->discord->guilds as $guild) {
+                        foreach ($guild->channels->getAll('type', 'text') as $channel) {
+                            $collection = new Collection();
+                            $collection->setCacheKey("channel.{$channel->id}.messages", true);
+                        }
                     }
-                }
 
-                $this->emit('messages-flushed', [$this]);
-            });
+                    $this->emit('messages-flushed', [$this]);
+                }
+            );
         }
 
         $this->loop = $loop;
@@ -257,120 +266,142 @@ class WebSocket extends EventEmitter
     {
         $data = null;
 
-        $ws->on('message', function ($message, $ws) use (&$data) {
-            if ($message->isBinary()) {
-                if ($this->useEtf) {
-                    $data = $this->etf->unpack($message->getPayload());
-                    $data = json_encode($data); // terrible hack to convert array -> object
+        $ws->on(
+            'message',
+            function ($message, $ws) use (&$data) {
+                if ($message->isBinary()) {
+                    if ($this->useEtf) {
+                        $data = $this->etf->unpack($message->getPayload());
+                        $data = json_encode($data); // terrible hack to convert array -> object
+                    } else {
+                        $data = zlib_decode($message->getPayload());
+                    }
                 } else {
-                    $data = zlib_decode($message->getPayload());
+                    $data = $message->getPayload();
                 }
-            } else {
-                $data = $message->getPayload();
+
+                $data = json_decode($data);
+                $this->emit('raw', [$data, $this->discord]);
+
+                if (isset($data->s) && !is_null($data->s)) {
+                    $this->seq = $data->s;
+                }
+
+                switch ($data->op) {
+                    case Op::OP_DISPATCH:
+                        if (!is_null($handlerSettings = $this->handlers->getHandler($data->t))) {
+                            $this->handleHandler($handlerSettings, $data);
+                        }
+
+                        $handlers = [
+                            Event::VOICE_SERVER_UPDATE => 'handleVoiceServerUpdate',
+                            Event::RESUMED             => 'handleResume',
+                            Event::READY               => 'handleReady',
+                            Event::GUILD_MEMBERS_CHUNK => 'handleGuildMembersChunk',
+                            Event::VOICE_STATE_UPDATE  => 'handleVoiceStateUpdate',
+                        ];
+
+                        if (isset($handlers[$data->t])) {
+                            $this->{$handlers[$data->t]}($data);
+                        }
+                        break;
+                    case Op::OP_HEARTBEAT:
+                        $this->send(
+                            [
+                                'op' => Op::OP_HEARTBEAT,
+                                'd'  => $data->d,
+                            ]
+                        );
+                        break;
+                    case Op::OP_RECONNECT:
+                        $this->ws->close(Op::CLOSE_NORMAL, 'gateway redirecting - opcode 7');
+                        break;
+                    case Op::OP_INVALID_SESSION:
+                        $this->sendLoginFrame();
+                        break;
+                }
             }
+        );
 
-            $data = json_decode($data);
-            $this->emit('raw', [$data, $this->discord]);
+        $ws->on(
+            'close',
+            function ($op, $reason) {
+                if ($op instanceof Stream) {
+                    $op     = Op::CLOSE_ABNORMAL;
+                    $reason = 'PHP Stream closed.';
+                }
 
-            if (isset($data->s) && ! is_null($data->s)) {
-                $this->seq = $data->s;
+                $this->emit('close', [$op, $reason, $this->discord]);
+
+                if (!is_null($this->heartbeat)) {
+                    $this->loop->cancelTimer($this->heartbeat);
+                }
+
+                if ($this->redirecting) {
+                    $this->emit('redirecting', [$this->endpoint, $this]);
+                    $this->redirecting  = false;
+                    $this->reconnecting = true;
+                    $this->wsfactory->__invoke($this->gateway)->then(
+                        [$this, 'handleWebSocketConnection'],
+                        [$this, 'handleWebSocketError']
+                    );
+
+                    return;
+                }
+
+                if ($this->reconnectCount >= 4) {
+                    $this->emit('ws-reconnect-max', [$this->discord]);
+                    $this->loop->stop();
+
+                    return;
+                }
+
+                // Invalid Session
+                if ($op == Op::CLOSE_INVALID_SESSION && strpos($reason, 'invalid session') !== false) {
+                    $this->invalidSession = true;
+                    $this->reconnecting   = false;
+                    $this->wsfactory->__invoke($this->gateway)->then(
+                        [$this, 'handleWebSocketConnection'],
+                        [$this, 'handleWebSocketError']
+                    );
+                    ++$this->reconnectCount;
+
+                    return;
+                }
+
+                if (!$this->reconnecting) {
+                    $this->emit('reconnecting', [$this->discord]);
+
+                    $this->reconnecting = true;
+                    $this->gateway      = $this->getGateway();
+                    $this->wsfactory->__invoke($this->gateway)->then(
+                        [$this, 'handleWebSocketConnection'],
+                        [$this, 'handleWebSocketError']
+                    );
+                    ++$this->reconnectCount;
+                }
             }
+        );
 
-            switch ($data->op) {
-                case Op::OP_DISPATCH:
-                    if (! is_null($handlerSettings = $this->handlers->getHandler($data->t))) {
-                        $this->handleHandler($handlerSettings, $data);
-                    }
-
-                    $handlers = [
-                        Event::VOICE_SERVER_UPDATE  => 'handleVoiceServerUpdate',
-                        Event::RESUMED              => 'handleResume',
-                        Event::READY                => 'handleReady',
-                        Event::GUILD_MEMBERS_CHUNK  => 'handleGuildMembersChunk',
-                        Event::VOICE_STATE_UPDATE   => 'handleVoiceStateUpdate',
-                    ];
-
-                    if (isset($handlers[$data->t])) {
-                        $this->{$handlers[$data->t]}($data);
-                    }
-                    break;
-                case Op::OP_HEARTBEAT:
-                    $this->send([
-                        'op' => Op::OP_HEARTBEAT,
-                        'd'  => $data->d,
-                    ]);
-                    break;
-                case Op::OP_RECONNECT:
-                    $this->ws->close(Op::CLOSE_NORMAL, 'gateway redirecting - opcode 7');
-                    break;
-                case Op::OP_INVALID_SESSION:
-                    $this->sendLoginFrame();
-                    break;
+        $ws->on(
+            'error',
+            function ($error, $ws) {
+                $this->emit('error', [$error, $ws, $this->discord]);
             }
-        });
-
-        $ws->on('close', function ($op, $reason) {
-            if ($op instanceof Stream) {
-                $op = Op::CLOSE_ABNORMAL;
-                $reason = 'PHP Stream closed.';
-            }
-
-            $this->emit('close', [$op, $reason, $this->discord]);
-
-            if (! is_null($this->heartbeat)) {
-                $this->loop->cancelTimer($this->heartbeat);
-            }
-
-            if ($this->redirecting) {
-                $this->emit('redirecting', [$this->endpoint, $this]);
-                $this->redirecting = false;
-                $this->reconnecting = true;
-                $this->wsfactory->__invoke($this->gateway)->then([$this, 'handleWebSocketConnection'], [$this, 'handleWebSocketError']);
-
-                return;
-            }
-
-            if ($this->reconnectCount >= 4) {
-                $this->emit('ws-reconnect-max', [$this->discord]);
-                $this->loop->stop();
-
-                return;
-            }
-
-            // Invalid Session
-            if ($op == Op::CLOSE_INVALID_SESSION && strpos($reason, 'invalid session') !== false) {
-                $this->invalidSession = true;
-                $this->reconnecting = false;
-                $this->wsfactory->__invoke($this->gateway)->then([$this, 'handleWebSocketConnection'], [$this, 'handleWebSocketError']);
-                ++$this->reconnectCount;
-
-                return;
-            }
-
-            if (! $this->reconnecting) {
-                $this->emit('reconnecting', [$this->discord]);
-
-                $this->reconnecting = true;
-                $this->gateway      = $this->getGateway();
-                $this->wsfactory->__invoke($this->gateway)->then([$this, 'handleWebSocketConnection'], [$this, 'handleWebSocketError']);
-                ++$this->reconnectCount;
-            }
-        });
-
-        $ws->on('error', function ($error, $ws) {
-            $this->emit('error', [$error, $ws, $this->discord]);
-        });
+        );
 
         $this->ws = $ws;
 
         if ($this->reconnecting) {
-            $this->send([
-                'op' => Op::OP_RESUME,
-                'd'  => [
-                    'session_id' => $this->sessionId,
-                    'seq'        => $this->seq,
-                ],
-            ]);
+            $this->send(
+                [
+                    'op' => Op::OP_RESUME,
+                    'd'  => [
+                        'session_id' => $this->sessionId,
+                        'seq'        => $this->seq,
+                    ],
+                ]
+            );
         } else {
             $this->sendLoginFrame();
         }
@@ -427,7 +458,7 @@ class WebSocket extends EventEmitter
      */
     public function handleReady($data)
     {
-        if (! is_null($this->reconnectResetTimer)) {
+        if (!is_null($this->reconnectResetTimer)) {
             $this->loop->cancelTimer($this->reconnectResetTimer);
         }
 
@@ -437,9 +468,12 @@ class WebSocket extends EventEmitter
             return;
         }
 
-        $this->reconnectResetTimer = $this->loop->addTimer(60 * 2, function () {
-            $this->reconnectCount = 0;
-        });
+        $this->reconnectResetTimer = $this->loop->addTimer(
+            60 * 2,
+            function () {
+                $this->reconnectCount = 0;
+            }
+        );
 
         $tts = $data->d->heartbeat_interval / 1000;
         $this->heartbeat();
@@ -456,8 +490,9 @@ class WebSocket extends EventEmitter
 
         $this->emit('trace', $content->_trace);
 
-        // guilds
-        $guilds = new Collection();
+        $guilds   = new Collection();
+        $channels = new Collection();
+        $members  = new Collection();
 
         foreach ($content->guilds as $guild) {
             if (isset($guild->unavailable)) {
@@ -469,23 +504,24 @@ class WebSocket extends EventEmitter
 
             $guildPart = new Guild((array) $guild, true);
 
-            $channels = new Collection();
+            $guildChannels = new Collection();
 
             foreach ($guild->channels as $channel) {
                 $channel             = (array) $channel;
                 $channel['guild_id'] = $guild->id;
                 $channelPart         = new Channel($channel, true);
 
+                $guildChannels->push($channelPart);
                 $channels->push($channelPart);
 
                 Cache::set("channels.{$channelPart->id}", $channelPart);
             }
 
-            $channels->setCacheKey("guild.{$guild->id}.channels", true);
-            unset($channels);
+            $guildChannels->setCacheKey("guild.{$guild->id}.channels", true);
+            unset($guildChannels);
 
             // guild members
-            $members = new Collection();
+            $guildMembers = new Collection();
 
             foreach ($guild->members as $member) {
                 $member             = (array) $member;
@@ -505,21 +541,23 @@ class WebSocket extends EventEmitter
 
                 // Since when we use GUILD_MEMBERS_CHUNK, we have to cycle through the current members
                 // and see if they exist already. That takes ~34ms per member, way way too much.
-                $members[$memberPart->id] = $memberPart;
-
+                $guildMembers[$memberPart->id] = $memberPart;
+                $members[$memberPart->id]      = $memberPart;
                 // Cache::set("guild.{$memberPart->guild_id}.members.{$memberPart->id}", $memberPart);
             }
 
-            $members->setCacheKey("guild.{$guild->id}.members", true);
-            unset($members);
+            $guildMembers->setCacheKey("guild.{$guild->id}.members", true);
+            unset($guildMembers);
 
             // guild roles
             $roles = new Collection();
 
             foreach ($guild->roles as $role) {
-                $perm = new Permission([
-                    'perms' => $role->permissions,
-                ]);
+                $perm = new Permission(
+                    [
+                        'perms' => $role->permissions,
+                    ]
+                );
 
                 $role                = (array) $role;
                 $role['guild_id']    = $guild->id;
@@ -551,18 +589,23 @@ class WebSocket extends EventEmitter
         }
 
         $this->discord->setCache('guilds', $guilds);
-        unset($guilds);
+        $this->discord->setCache('channels', $channels);
+        $this->discord->setCache('members', $members);
+        unset($guilds, $channels, $members);
 
         $this->sessionId = $content->session_id;
 
         // unavailable servers
         if (count($this->unavailableServers) > 0) {
-            $this->unavailableTimer = $this->loop->addTimer(60 * 2, function () {
-                $this->emit('ready', [$this->discord, $this]);
-            });
+            $this->unavailableTimer = $this->loop->addTimer(
+                60 * 2,
+                function () {
+                    $this->emit('ready', [$this->discord, $this]);
+                }
+            );
 
             $handleGuildCreate = function ($guild) use (&$handleGuildCreate) {
-                if (! isset($this->unavailableServers[$guild->id])) {
+                if (!isset($this->unavailableServers[$guild->id])) {
                     return;
                 }
 
@@ -583,7 +626,7 @@ class WebSocket extends EventEmitter
                     if (count($servers) < 1) {
                         $this->removeListener(Event::GUILD_CREATE, $handleGuildCreate);
 
-                        if (! $this->invalidSession) {
+                        if (!$this->invalidSession) {
                             $this->emit('ready', [$this->discord, $this]);
                         } else {
                             $this->invalidSession = false;
@@ -602,14 +645,16 @@ class WebSocket extends EventEmitter
                             return;
                         }
 
-                        $this->send([
-                            'op' => Op::OP_GUILD_MEBMER_CHUNK,
-                            'd'  => [
-                                'guild_id' => $chunk,
-                                'query'    => '',
-                                'limit'    => 0,
-                            ],
-                        ]);
+                        $this->send(
+                            [
+                                'op' => Op::OP_GUILD_MEBMER_CHUNK,
+                                'd'  => [
+                                    'guild_id' => $chunk,
+                                    'query'    => '',
+                                    'limit'    => 0,
+                                ],
+                            ]
+                        );
 
                         $this->loop->addTimer(1, $sendChunk);
                     };
@@ -688,7 +733,7 @@ class WebSocket extends EventEmitter
                     break;
                 }
 
-                if (count($this->largeServers) === 0 && ! $this->emittedReady) {
+                if (count($this->largeServers) === 0 && !$this->emittedReady) {
                     $this->largeServers = true;
                     $this->emit('ready', [$this->discord, $this]);
                 }
@@ -723,11 +768,14 @@ class WebSocket extends EventEmitter
      */
     public function handleHandler($handlerSettings, $data)
     {
-        $handler     = new $handlerSettings['class']();
+        $handler = new $handlerSettings['class']();
 
-        $handler->on('unavailable', function ($id) use ($handlerSettings) {
-            $this->emit('unavailable', [$handlerSettings['class'], $id, $this]);
-        });
+        $handler->on(
+            'unavailable',
+            function ($id) use ($handlerSettings) {
+                $this->emit('unavailable', [$handlerSettings['class'], $id, $this]);
+            }
+        );
 
         $handler->on('send-packet', [$this, 'send']);
 
@@ -739,7 +787,11 @@ class WebSocket extends EventEmitter
             $this->emit($alternative, [$handlerData, $this->discord, $newDiscord]);
         }
 
-        if ($data->t == Event::MESSAGE_CREATE && (strpos($handlerData->content, '<@'.$this->discord->id.'>') !== false)) {
+        if ($data->t == Event::MESSAGE_CREATE && (strpos(
+                    $handlerData->content,
+                    '<@'.$this->discord->id.'>'
+                ) !== false)
+        ) {
             $this->emit('mention', [$handlerData, $this->discord, $newDiscord]);
         }
 
@@ -754,10 +806,12 @@ class WebSocket extends EventEmitter
      */
     public function heartbeat()
     {
-        $this->send([
-            'op' => Op::OP_HEARTBEAT,
-            'd'  => $this->seq,
-        ]);
+        $this->send(
+            [
+                'op' => Op::OP_HEARTBEAT,
+                'd'  => $this->seq,
+            ]
+        );
 
         $this->emit('heartbeat', [$this->seq, $this]);
     }
@@ -817,17 +871,28 @@ class WebSocket extends EventEmitter
                 $arr['endpoint'] = $data->d->endpoint;
 
                 $vc = new VoiceClient($this, $this->loop, $channel, $arr);
-                $vc->once('ready', function () use ($vc, $deferred, $channel) {
-                    $vc->setBitrate($channel->bitrate)->then(function () use ($vc, $deferred) {
-                        $deferred->resolve($vc);
-                    });
-                });
-                $vc->once('error', function ($e) use ($deferred) {
-                    $deferred->reject($e);
-                });
-                $vc->once('close', function () use ($channel) {
-                    unset($this->voiceClients[$channel->guild_id]);
-                });
+                $vc->once(
+                    'ready',
+                    function () use ($vc, $deferred, $channel) {
+                        $vc->setBitrate($channel->bitrate)->then(
+                            function () use ($vc, $deferred) {
+                                $deferred->resolve($vc);
+                            }
+                        );
+                    }
+                );
+                $vc->once(
+                    'error',
+                    function ($e) use ($deferred) {
+                        $deferred->reject($e);
+                    }
+                );
+                $vc->once(
+                    'close',
+                    function () use ($channel) {
+                        unset($this->voiceClients[$channel->guild_id]);
+                    }
+                );
                 $this->voiceClients[$channel->guild_id] = $vc;
 
                 $this->ws->removeListener('message', $closure);
@@ -836,15 +901,17 @@ class WebSocket extends EventEmitter
 
         $this->ws->on('message', $closure);
 
-        $this->send([
-            'op' => Op::OP_VOICE_STATE_UPDATE,
-            'd'  => [
-                'guild_id'   => $channel->guild_id,
-                'channel_id' => $channel->id,
-                'self_mute'  => $mute,
-                'self_deaf'  => $deaf,
-            ],
-        ]);
+        $this->send(
+            [
+                'op' => Op::OP_VOICE_STATE_UPDATE,
+                'd'  => [
+                    'guild_id'   => $channel->guild_id,
+                    'channel_id' => $channel->id,
+                    'self_mute'  => $mute,
+                    'self_deaf'  => $deaf,
+                ],
+            ]
+        );
 
         return $deferred->promise();
     }
@@ -884,22 +951,24 @@ class WebSocket extends EventEmitter
     {
         $token = (substr(DISCORD_TOKEN, 0, 4) === 'Bot ') ? substr(DISCORD_TOKEN, 4) : DISCORD_TOKEN;
 
-        $this->send([
-            'op' => Op::OP_IDENTIFY,
-            'd'  => [
-                'token'      => $token,
-                'v'          => self::CURRENT_GATEWAY_VERSION,
-                'properties' => [
-                    '$os'               => PHP_OS,
-                    '$browser'          => Guzzle::getUserAgent(),
-                    '$device'           => '',
-                    '$referrer'         => 'https://github.com/teamreflex/DiscordPHP',
-                    '$referring_domain' => 'https://github.com/teamreflex/DiscordPHP',
+        $this->send(
+            [
+                'op' => Op::OP_IDENTIFY,
+                'd'  => [
+                    'token'           => $token,
+                    'v'               => self::CURRENT_GATEWAY_VERSION,
+                    'properties'      => [
+                        '$os'               => PHP_OS,
+                        '$browser'          => Guzzle::getUserAgent(),
+                        '$device'           => '',
+                        '$referrer'         => 'https://github.com/teamreflex/DiscordPHP',
+                        '$referring_domain' => 'https://github.com/teamreflex/DiscordPHP',
+                    ],
+                    'large_threshold' => 250,
+                    'compress'        => true,
                 ],
-                'large_threshold' => 250,
-                'compress'        => true,
-            ],
-        ]);
+            ]
+        );
     }
 
     /**

@@ -43,8 +43,6 @@ class ArrayCacheDriver implements CacheInterface
 
             return $this->cache[$key]['data'];
         }
-
-        return;
     }
 
     /**
@@ -111,7 +109,7 @@ class ArrayCacheDriver implements CacheInterface
      */
     protected function checkForExpiry($key)
     {
-        if (! isset($this->cache[$key])) {
+        if (!isset($this->cache[$key])) {
             return;
         }
 
