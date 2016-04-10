@@ -60,7 +60,7 @@ class Process extends EventEmitter
      */
     public function __construct($cmd, $cwd = null, array $env = null, array $options = [])
     {
-        if (! function_exists('proc_open')) {
+        if (!function_exists('proc_open')) {
             throw new \RuntimeException('The Process class relies on proc_open(), which is not available on your PHP installation.');
         }
 
@@ -110,7 +110,7 @@ class Process extends EventEmitter
 
         $this->process = proc_open($cmd, $fdSpec, $this->pipes, $this->cwd, $this->env, $this->options);
 
-        if (! is_resource($this->process)) {
+        if (!is_resource($this->process)) {
             throw new \RuntimeException('Unable to launch a new process.');
         }
 
@@ -124,7 +124,7 @@ class Process extends EventEmitter
         }
 
         $loop->addPeriodicTimer($interval, function (Timer $timer) {
-            if (! $this->isRunning()) {
+            if (!$this->isRunning()) {
                 // $this->close();
                 $timer->cancel();
                 $this->emit('exit', [$this->getExitCode(), $this->getTermSignal()]);
@@ -216,9 +216,9 @@ class Process extends EventEmitter
      *
      * @param bool $enhance
      *
-     * @return self
-     *
      * @throws RuntimeException If the process is already running
+     *
+     * @return self
      */
     final public function setEnhanceSigchildCompatibility($enhance)
     {
@@ -351,7 +351,7 @@ class Process extends EventEmitter
      */
     private function pollExitCodePipe()
     {
-        if (! isset($this->pipes[3])) {
+        if (!isset($this->pipes[3])) {
             return;
         }
 
@@ -378,7 +378,7 @@ class Process extends EventEmitter
      */
     private function closeExitCodePipe()
     {
-        if (! isset($this->pipes[3])) {
+        if (!isset($this->pipes[3])) {
             return;
         }
 
@@ -439,7 +439,7 @@ class Process extends EventEmitter
             $this->termSignal = $this->status['termsig'];
         }
 
-        if (! $this->status['running'] && -1 !== $this->status['exitcode']) {
+        if (!$this->status['running'] && -1 !== $this->status['exitcode']) {
             $this->exitCode = $this->status['exitcode'];
         }
     }

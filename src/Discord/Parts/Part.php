@@ -12,12 +12,12 @@
 namespace Discord\Parts;
 
 use ArrayAccess;
-use Serializable;
-use JsonSerializable;
 use Discord\Exceptions\DiscordRequestFailedException;
 use Discord\Exceptions\PartRequestFailedException;
 use Discord\Helpers\Guzzle;
 use Illuminate\Support\Str;
+use JsonSerializable;
+use Serializable;
 
 /**
  * This class is the base of all objects that are returned. All "Parts" extend off this
@@ -153,7 +153,7 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
     {
         $part = new static([], true);
 
-        if (! $part->findable) {
+        if (!$part->findable) {
             return;
         }
 
@@ -191,7 +191,7 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
      */
     public function fresh()
     {
-        if ($this->deleted || ! $this->created) {
+        if ($this->deleted || !$this->created) {
             return false;
         }
 
@@ -213,13 +213,13 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
 
         try {
             if ($this->created) {
-                if (! $this->editable) {
+                if (!$this->editable) {
                     return false;
                 }
 
                 $request = Guzzle::patch($this->replaceWithVariables($this->uris['update']), $attributes);
             } else {
-                if (! $this->creatable) {
+                if (!$this->creatable) {
                     return false;
                 }
 
@@ -245,7 +245,7 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
      */
     public function delete()
     {
-        if (! $this->deletable) {
+        if (!$this->deletable) {
             return false;
         }
 
@@ -357,7 +357,7 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
             return $this->{$str}();
         }
 
-        if (! isset($this->attributes[$key])) {
+        if (!isset($this->attributes[$key])) {
             return;
         }
 
