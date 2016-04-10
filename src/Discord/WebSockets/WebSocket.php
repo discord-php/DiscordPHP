@@ -27,6 +27,8 @@ use Evenement\EventEmitter;
 use Ratchet\Client\Connector as WsFactory;
 use Ratchet\Client\WebSocket as WebSocketInstance;
 use Ratchet\RFC6455\Messaging\Frame;
+use React\Dns\Resolver\Factory as DnsFactory;
+use React\Dns\Resolver\Resolver;
 use React\EventLoop\Factory as LoopFactory;
 use React\EventLoop\LoopInterface;
 use React\Promise\Deferred;
@@ -194,19 +196,21 @@ class WebSocket extends EventEmitter
     /**
      * Constructs the WebSocket instance.
      *
-     * @param Discord            $discord The Discord REST client instance.
-     * @param LoopInterface|null $loop    The ReactPHP Event Loop.
-     * @param bool               $etf     Whether to use ETF.
-     * @param int                $flush   The time interval to flush all message caches. Null if disabled.
+     * @param Discord            $discord  The Discord REST client instance.
+     * @param LoopInterface|null $loop     The ReactPHP Event Loop.
+     * @param bool               $etf      Whether to use ETF.
+     * @param int                $flush    The time interval to flush all message caches. Null if disabled.
+     * @param Resolver           $resolver The DNS resolver to use.
      *
      * @return void
      */
-    public function __construct(Discord $discord, LoopInterface &$loop = null, $etf = true, $flush = 600)
+    public function __construct(Discord $discord, LoopInterface &$loop = null, $etf = true, $flush = 600, Resolver $resolver = null)
     {
         $this->discord   = $discord;
         $this->gateway   = $this->getGateway();
         $loop            = (is_null($loop)) ? LoopFactory::create() : $loop;
-        $this->wsfactory = new WsFactory($loop);
+        $resolver        = (is_null($resolver)) ? (new DnsFactory())->create('8.8.8.8', $loop) : $resolver;
+        $this->wsfactory = new WsFactory($loop, $resolver);
 
         // ETF breaks snowflake IDs on 32-bit.
         if (2147483647 !== PHP_INT_MAX) {
