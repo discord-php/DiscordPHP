@@ -185,6 +185,13 @@ class WebSocket extends EventEmitter
     protected $unavailableTimer;
 
     /**
+     * Whether we have emitted ready.
+     *
+     * @var bool Emitted ready.
+     */
+    protected $emittedReady = false;
+
+    /**
      * Constructs the WebSocket instance.
      *
      * @param Discord            $discord The Discord REST client instance.
@@ -214,6 +221,9 @@ class WebSocket extends EventEmitter
         }
 
         $this->handlers = new Handlers();
+        $this->on('ready', function () {
+            $this->emittedReady = true;
+        });
 
         $this->wsfactory->__invoke($this->gateway)->then(
             [$this, 'handleWebSocketConnection'],
@@ -678,7 +688,7 @@ class WebSocket extends EventEmitter
                     break;
                 }
 
-                if (count($this->largeServers) === 0) {
+                if (count($this->largeServers) === 0 && ! $this->emittedReady) {
                     $this->largeServers = true;
                     $this->emit('ready', [$this->discord, $this]);
                 }
