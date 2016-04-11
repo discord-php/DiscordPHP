@@ -86,7 +86,7 @@ class Guzzle
             'Content-Type' => 'application/json',
         ];
 
-        if (!$auth) {
+        if (! $auth) {
             $headers['authorization'] = DISCORD_TOKEN;
         }
 
@@ -97,7 +97,7 @@ class Guzzle
         $content  = (is_null($content)) ? null : json_encode($content);
         $count    = 0;
 
-        while (!$done) {
+        while (! $done) {
             $request  = new Request($method, $query_url, $headers, $content);
             $response = $guzzle->send($request);
 
@@ -166,7 +166,7 @@ class Guzzle
      */
     public static function handleError($error_code, $message, $content, $url)
     {
-        if (!is_string($message)) {
+        if (! is_string($message)) {
             $message = $message->getReasonPhrase();
         }
 
