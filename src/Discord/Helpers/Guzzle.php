@@ -13,8 +13,8 @@ namespace Discord\Helpers;
 
 use Discord\Cache\Cache;
 use Discord\Discord;
-use Discord\Exceptions\Rest\ContentTooLongException;
 use Discord\Exceptions\DiscordRequestFailedException;
+use Discord\Exceptions\Rest\ContentTooLongException;
 use Discord\Exceptions\Rest\NoPermissionsException;
 use Discord\Exceptions\Rest\NotFoundException;
 use GuzzleHttp\Client as GuzzleClient;

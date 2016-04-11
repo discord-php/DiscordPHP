@@ -99,9 +99,9 @@ class Client extends Part
      *
      * @param string $filepath The path to the file.
      *
-     * @return bool Whether the setting succeeded or failed.
-     *
      * @throws \Discord\Exceptions\FileNotFoundException Thrown when the file does not exist.
+     *
+     * @return bool Whether the setting succeeded or failed.
      */
     public function setAvatar($filepath)
     {

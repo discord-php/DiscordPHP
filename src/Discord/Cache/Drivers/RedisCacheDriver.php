@@ -64,8 +64,6 @@ class RedisCacheDriver implements CacheInterface
         if ($this->has($key)) {
             return unserialize($this->redis->get($key));
         }
-
-        return;
     }
 
     /**

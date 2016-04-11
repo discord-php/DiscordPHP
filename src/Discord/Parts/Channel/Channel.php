@@ -337,9 +337,9 @@ class Channel extends Part
      * @param string $content  Message content to send with the file.
      * @param bool   $tts      Whether to send the message with TTS.
      *
-     * @return Message|bool Either a Message if the request passed or false if it failed.
-     *
      * @throws \Discord\Exceptions\FileNotFoundException Thrown when the file does not exist.
+     *
+     * @return Message|bool Either a Message if the request passed or false if it failed.
      */
     public function sendFile($filepath, $filename, $content = null, $tts = false)
     {

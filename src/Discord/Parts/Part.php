@@ -12,12 +12,12 @@
 namespace Discord\Parts;
 
 use ArrayAccess;
-use Serializable;
-use JsonSerializable;
 use Discord\Exceptions\DiscordRequestFailedException;
 use Discord\Exceptions\PartRequestFailedException;
 use Discord\Helpers\Guzzle;
 use Illuminate\Support\Str;
+use JsonSerializable;
+use Serializable;
 
 /**
  * This class is the base of all objects that are returned. All "Parts" extend off this
