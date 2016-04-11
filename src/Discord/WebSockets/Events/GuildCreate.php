@@ -90,14 +90,7 @@ class GuildCreate extends Event
         }
 
         if ($guildPart->large) {
-            $this->emit('send-packet', [[
-                'op' => Op::OP_GUILD_MEBMER_CHUNK,
-                'd'  => [
-                    'guild_id' => [$guildPart->id],
-                    'query'    => '',
-                    'limit'    => 0,
-                ],
-            ]]);
+            $this->emit('large', [$guildPart]);
         }
 
         return $guildPart;
