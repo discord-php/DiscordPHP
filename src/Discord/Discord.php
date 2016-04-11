@@ -47,6 +47,11 @@ class Discord
     protected $client;
 
     /**
+     * @var array
+     */
+    protected $options;
+
+    /**
      * Logs into the Discord servers.
      *
      * @param string|array $options Either a token, or Options for the bot
@@ -55,6 +60,7 @@ class Discord
     {
         $options = ! is_array($options) ? ['token' => $options] : $options;
         $options = $this->resolveOptions($options);
+        $this->options = $options;
 
         define('DISCORD_TOKEN', $options['token']);
 
@@ -72,7 +78,11 @@ class Discord
         $resolver = new OptionsResolver();
         $resolver
             ->setRequired('token')
-            ->setAllowedTypes('token', 'string');
+            ->setAllowedTypes('token', 'string')
+            ->setDefined([
+                'shardId',
+                'shardCount'
+            ]);
 
         $result = $resolver->resolve($options);
 
@@ -159,5 +169,45 @@ class Discord
     public function __set($variable, $value)
     {
         $this->client->setAttribute($variable, $value);
+    }
+
+    /**
+     * @return array
+     */
+    public function getOptions()
+    {
+        return $this->options;
+    }
+
+    /**
+     * @param array $options
+     *
+     * @return Discord
+     */
+    public function setOptions($options)
+    {
+        $this->options = $options;
+
+        return $this;
+    }
+
+    /**
+     * @return Client
+     */
+    public function getClient()
+    {
+        return $this->client;
+    }
+
+    /**
+     * @param Client $client
+     *
+     * @return Discord
+     */
+    public function setClient($client)
+    {
+        $this->client = $client;
+
+        return $this;
     }
 }
