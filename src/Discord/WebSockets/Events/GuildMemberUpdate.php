@@ -39,7 +39,7 @@ class GuildMemberUpdate extends Event
 
         foreach ($discord->guilds as $index => $guild) {
             if ($guild->id == $data->guild_id) {
-                $guild->members[$data->user->id] = $data;
+                $guild->members[$data->id] = $data;
 
                 break;
             }
