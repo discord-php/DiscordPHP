@@ -84,11 +84,13 @@ class OtpErlangAtom
 {
     public $value;
     public $utf8;
+
     public function __construct($value, $utf8 = false)
     {
         $this->value = $value;
         $this->utf8  = $utf8;
     }
+
     public function binary()
     {
         if (is_int($this->value)) {
@@ -116,6 +118,7 @@ class OtpErlangAtom
             throw new OutputException('unknown atom type');
         }
     }
+
     public function __toString()
     {
         return sprintf('%s(%s,utf8=%s)', get_class(),
@@ -127,11 +130,13 @@ class OtpErlangList
 {
     public $value;
     public $improper;
+
     public function __construct($value, $improper = false)
     {
         $this->value    = $value;
         $this->improper = $improper;
     }
+
     public function binary()
     {
         if (is_array($this->value)) {
@@ -160,6 +165,7 @@ class OtpErlangList
             throw new OutputException('unknown list type');
         }
     }
+
     public function __toString()
     {
         return sprintf('%s(array(%s),improper=%s)', get_class(),
@@ -172,11 +178,13 @@ class OtpErlangBinary
 {
     public $value;
     public $bits;
+
     public function __construct($value, $bits = 8)
     {
         $this->value = $value;
         $this->bits  = $bits;
     }
+
     public function binary()
     {
         if (is_string($this->value)) {
@@ -192,6 +200,7 @@ class OtpErlangBinary
             throw new OutputException('unknown binary type');
         }
     }
+
     public function __toString()
     {
         return sprintf('%s(%s,bits=%d)', get_class(),
@@ -203,15 +212,18 @@ class OtpErlangFunction
 {
     public $tag;
     public $value;
+
     public function __construct($tag, $value)
     {
         $this->tag   = $tag;
         $this->value = $value;
     }
+
     public function binary()
     {
         return chr($this->tag).$this->value;
     }
+
     public function __toString()
     {
         return sprintf('%s(%s,%s)', get_class(),
@@ -224,12 +236,14 @@ class OtpErlangReference
     public $node;
     public $id;
     public $creation;
+
     public function __construct($node, $id, $creation)
     {
         $this->node     = $node;
         $this->id       = $id;
         $this->creation = $creation;
     }
+
     public function binary()
     {
         $size = intval(strlen($this->id) / 4);
@@ -241,6 +255,7 @@ class OtpErlangReference
                    $this->node->binary().$this->id.$this->creation;
         }
     }
+
     public function __toString()
     {
         return sprintf('%s(%s,%s,%s)', get_class(),
@@ -253,17 +268,20 @@ class OtpErlangPort
     public $node;
     public $id;
     public $creation;
+
     public function __construct($node, $id, $creation)
     {
         $this->node     = $node;
         $this->id       = $id;
         $this->creation = $creation;
     }
+
     public function binary()
     {
         return chr(TAG_PORT_EXT).
                $this->node->binary().$this->id.$this->creation;
     }
+
     public function __toString()
     {
         return sprintf('%s(%s,%s,%s)', get_class(),
@@ -277,6 +295,7 @@ class OtpErlangPid
     public $id;
     public $serial;
     public $creation;
+
     public function __construct($node, $id, $serial, $creation)
     {
         $this->node     = $node;
@@ -284,11 +303,13 @@ class OtpErlangPid
         $this->serial   = $serial;
         $this->creation = $creation;
     }
+
     public function binary()
     {
         return chr(TAG_PID_EXT).$this->node->binary().
                $this->id.$this->serial.$this->creation;
     }
+
     public function __toString()
     {
         return sprintf('%s(%s,%s,%s,%s)', get_class(),
@@ -299,10 +320,12 @@ class OtpErlangPid
 class OtpErlangMap
 {
     public $pairs;
+
     public function __construct($pairs)
     {
         $this->pairs = $pairs;
     }
+
     public function binary()
     {
         $arity       = count($this->pairs);
@@ -316,6 +339,7 @@ class OtpErlangMap
 
         return pack('CN', TAG_MAP_EXT, $arity).$term_packed;
     }
+
     public function __toString()
     {
         return sprintf('%s(%d)', get_class(),
@@ -335,7 +359,7 @@ function _error_handler($errno = 0, $errstr = null,
 
 function binary_to_term($data)
 {
-    if (! is_string($data)) {
+    if (!is_string($data)) {
         throw new ParseException('not bytes input');
     }
     $size = strlen($data);

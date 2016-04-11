@@ -78,7 +78,7 @@ class VoicePacket
         $this->seq       = $seq;
         $this->timestamp = $timestamp;
 
-        if (! $encryption) {
+        if (!$encryption) {
             $this->initBufferNoEncryption($data);
         } else {
             $this->initBufferEncryption($data, $key);

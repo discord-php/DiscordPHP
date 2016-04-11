@@ -64,8 +64,6 @@ class RedisCacheDriver implements CacheInterface
         if ($this->has($key)) {
             return unserialize($this->redis->get($key));
         }
-
-        return;
     }
 
     /**
@@ -80,7 +78,7 @@ class RedisCacheDriver implements CacheInterface
             $ttl = Cache::getDefaultTtl();
         }
 
-        if (! is_null($ttl)) {
+        if (!is_null($ttl)) {
             $this->redis->expire($key, $ttl);
         }
 

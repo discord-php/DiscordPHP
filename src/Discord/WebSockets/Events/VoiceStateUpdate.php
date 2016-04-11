@@ -11,8 +11,8 @@
 
 namespace Discord\WebSockets\Events;
 
-use Discord\WebSockets\Event;
 use Discord\Parts\WebSockets\VoiceStateUpdate as VoiceStateUpdatePart;
+use Discord\WebSockets\Event;
 
 /**
  * Event that is emitted wheh `VOICE_STATE_UPDATE` is fired.
@@ -64,7 +64,7 @@ class VoiceStateUpdate extends Event
                 }
             } else {
                 foreach ($guild->channels as $cindex => $channel) {
-                    if (isset($channel->members[$data->user_id]) && ! $discord->bot) {
+                    if (isset($channel->members[$data->user_id]) && !$discord->bot) {
                         unset($channel->members[$data->user_id]);
                     }
                 }

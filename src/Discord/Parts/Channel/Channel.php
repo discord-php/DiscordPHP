@@ -131,7 +131,7 @@ class Channel extends Part
      */
     public function getMembersAttribute()
     {
-        if (! Cache::has("channels.{$this->id}.voice.members")) {
+        if (!Cache::has("channels.{$this->id}.voice.members")) {
             Cache::set("channels.{$this->id}.voice.members", new Collection([], "channels.{$this->id}.voice.members"));
         }
 
@@ -203,7 +203,7 @@ class Channel extends Part
      */
     public function getMessagesAttribute()
     {
-        if (! Cache::get("channel.{$this->id}.messages")) {
+        if (!Cache::get("channel.{$this->id}.messages")) {
             Cache::set("channel.{$this->id}.messages", new Collection([], "channel.{$this->id}.messages"));
         }
 
@@ -320,7 +320,7 @@ class Channel extends Part
 
         Cache::set("message.{$message->id}", $message);
 
-        if (! Cache::has("channel.{$this->id}.messages")) {
+        if (!Cache::has("channel.{$this->id}.messages")) {
             $this->getMessagesAttribute();
         }
 
@@ -337,9 +337,9 @@ class Channel extends Part
      * @param string $content  Message content to send with the file.
      * @param bool   $tts      Whether to send the message with TTS.
      *
-     * @return Message|bool Either a Message if the request passed or false if it failed.
-     *
      * @throws \Discord\Exceptions\FileNotFoundException Thrown when the file does not exist.
+     *
+     * @return Message|bool Either a Message if the request passed or false if it failed.
      */
     public function sendFile($filepath, $filename, $content = null, $tts = false)
     {
@@ -347,7 +347,7 @@ class Channel extends Part
             return false;
         }
 
-        if (! file_exists($filepath)) {
+        if (!file_exists($filepath)) {
             throw new FileNotFoundException("File does not exist at path {$filepath}.");
         }
 
@@ -373,14 +373,14 @@ class Channel extends Part
             ],
         ];
 
-        if (! is_null($content)) {
+        if (!is_null($content)) {
             $multipart[] = [
                 'name'     => 'content',
                 'contents' => $content,
             ];
         }
 
-        while (! $done) {
+        while (!$done) {
             $response = $guzzle->request('post', $url, [
                 'headers'   => $headers,
                 'multipart' => $multipart,
@@ -409,7 +409,7 @@ class Channel extends Part
 
         Cache::set("message.{$message->id}", $message);
 
-        if (! Cache::has("channel.{$this->id}.messages")) {
+        if (!Cache::has("channel.{$this->id}.messages")) {
             $this->getMessagesAttribute();
         }
 
