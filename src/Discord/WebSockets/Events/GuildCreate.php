@@ -18,7 +18,6 @@ use Discord\Parts\Guild\Guild;
 use Discord\Parts\User\Member;
 use Discord\Parts\WebSockets\VoiceStateUpdate;
 use Discord\WebSockets\Event;
-use Discord\WebSockets\Op;
 
 /**
  * Event that is emitted wheh `GUILD_CREATE` is fired.
