@@ -66,11 +66,11 @@ abstract class Permission extends Part
             return;
         }
 
-        if (! in_array($key, $this->bitoffset)) {
+        if (!in_array($key, $this->bitoffset)) {
             return;
         }
 
-        if (! is_bool($value)) {
+        if (!is_bool($value)) {
             return;
         }
 
@@ -86,7 +86,7 @@ abstract class Permission extends Part
             return $this->attributes['perms'];
         }
 
-        if (! in_array($key, $this->bitoffset)) {
+        if (!in_array($key, $this->bitoffset)) {
             return;
         }
 

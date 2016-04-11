@@ -58,8 +58,8 @@ class Discord
      */
     public function __construct($options)
     {
-        $options = ! is_array($options) ? ['token' => $options] : $options;
-        $options = $this->resolveOptions($options);
+        $options       = !is_array($options) ? ['token' => $options] : $options;
+        $options       = $this->resolveOptions($options);
         $this->options = $options;
 
         define('DISCORD_TOKEN', $options['token']);
@@ -70,8 +70,9 @@ class Discord
     /**
      * @param array $options
      *
-     * @return array
      * @throws \Exception
+     *
+     * @return array
      */
     private function resolveOptions(array $options)
     {
@@ -81,7 +82,7 @@ class Discord
             ->setAllowedTypes('token', 'string')
             ->setDefined([
                 'shardId',
-                'shardCount'
+                'shardCount',
             ]);
 
         $result = $resolver->resolve($options);
@@ -102,7 +103,7 @@ class Discord
             $id = $id->id;
         }
 
-        if (! is_int($id)) {
+        if (!is_int($id)) {
             return;
         }
 
