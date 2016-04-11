@@ -58,7 +58,7 @@ class Discord
      */
     public function __construct($options)
     {
-        $options       = !is_array($options) ? ['token' => $options] : $options;
+        $options       = ! is_array($options) ? ['token' => $options] : $options;
         $options       = $this->resolveOptions($options);
         $this->options = $options;
 
@@ -103,7 +103,7 @@ class Discord
             $id = $id->id;
         }
 
-        if (!is_int($id)) {
+        if (! is_int($id)) {
             return;
         }
 

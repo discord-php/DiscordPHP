@@ -109,7 +109,7 @@ class ArrayCacheDriver implements CacheInterface
      */
     protected function checkForExpiry($key)
     {
-        if (!isset($this->cache[$key])) {
+        if (! isset($this->cache[$key])) {
             return;
         }
 
