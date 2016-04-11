@@ -1325,9 +1325,7 @@ class VoiceClient extends EventEmitter
 
         $this->emit('raw', [$message, $this]);
 
-        return; // temp break until dca has decoding support
-
-        $vp      = VoicePacket::make($message);
+        $vp      = VoicePacket::make($voicePacket->getHeader().$message);
         $ss      = $this->speakingStatus->get('ssrc', $vp->getSSRC());
         $decoder = @$this->voiceDecoders[$vp->getSSRC()];
 
@@ -1340,6 +1338,14 @@ class VoiceClient extends EventEmitter
             // make a decoder
             if (! isset($this->recieveStreams[$ss->ssrc])) {
                 $this->recieveStreams[$ss->ssrc] = new RecieveStream();
+
+                $this->recieveStreams[$ss->ssrc]->on('pcm', function ($d) {
+                    $this->emit('channel-pcm', [$d, $this]);
+                });
+
+                $this->recieveStreams[$ss->ssrc]->on('opus', function ($d) {
+                    $this->emit('channel-opus', [$d, $this]);
+                });
             }
 
             $createDecoder = function () use (&$createDecoder, $ss) {
@@ -1365,6 +1371,7 @@ class VoiceClient extends EventEmitter
             };
 
             $createDecoder();
+            $decoder = @$this->voiceDecoders[$vp->getSSRC()];
         }
 
         $buff = new Buffer(strlen($vp->getData()) + 2);

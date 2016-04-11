@@ -202,8 +202,9 @@ class VoicePacket
      */
     public static function make($data)
     {
-        $n = new self('', 0, 0, 0);
-        $n->setBuffer(new Buffer($data));
+        $n    = new self('', 0, 0, 0);
+        $buff = new Buffer($data);
+        $n->setBuffer($buff);
 
         return $n;
     }

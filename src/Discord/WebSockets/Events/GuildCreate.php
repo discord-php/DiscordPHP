@@ -18,7 +18,6 @@ use Discord\Parts\Guild\Guild;
 use Discord\Parts\User\Member;
 use Discord\Parts\WebSockets\VoiceStateUpdate;
 use Discord\WebSockets\Event;
-use Discord\WebSockets\Op;
 
 /**
  * Event that is emitted wheh `GUILD_CREATE` is fired.
@@ -90,14 +89,7 @@ class GuildCreate extends Event
         }
 
         if ($guildPart->large) {
-            $this->emit('send-packet', [[
-                'op' => Op::OP_GUILD_MEBMER_CHUNK,
-                'd'  => [
-                    'guild_id' => [$guildPart->id],
-                    'query'    => '',
-                    'limit'    => 0,
-                ],
-            ]]);
+            $this->emit('large', [$guildPart]);
         }
 
         return $guildPart;

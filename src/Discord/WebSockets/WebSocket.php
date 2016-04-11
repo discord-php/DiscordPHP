@@ -27,6 +27,8 @@ use Evenement\EventEmitter;
 use Ratchet\Client\Connector as WsFactory;
 use Ratchet\Client\WebSocket as WebSocketInstance;
 use Ratchet\RFC6455\Messaging\Frame;
+use React\Dns\Resolver\Factory as DnsFactory;
+use React\Dns\Resolver\Resolver;
 use React\EventLoop\Factory as LoopFactory;
 use React\EventLoop\LoopInterface;
 use React\Promise\Deferred;
@@ -194,19 +196,21 @@ class WebSocket extends EventEmitter
     /**
      * Constructs the WebSocket instance.
      *
-     * @param Discord            $discord The Discord REST client instance.
-     * @param LoopInterface|null $loop    The ReactPHP Event Loop.
-     * @param bool               $etf     Whether to use ETF.
-     * @param int                $flush   The time interval to flush all message caches. Null if disabled.
+     * @param Discord            $discord  The Discord REST client instance.
+     * @param LoopInterface|null $loop     The ReactPHP Event Loop.
+     * @param bool               $etf      Whether to use ETF.
+     * @param int                $flush    The time interval to flush all message caches. Null if disabled.
+     * @param Resolver           $resolver The DNS resolver to use.
      *
      * @return void
      */
-    public function __construct(Discord $discord, LoopInterface &$loop = null, $etf = true, $flush = 600)
+    public function __construct(Discord $discord, LoopInterface &$loop = null, $etf = true, $flush = 600, Resolver $resolver = null)
     {
         $this->discord   = $discord;
         $this->gateway   = $this->getGateway();
         $loop            = (is_null($loop)) ? LoopFactory::create() : $loop;
-        $this->wsfactory = new WsFactory($loop);
+        $resolver        = (is_null($resolver)) ? (new DnsFactory())->create('8.8.8.8', $loop) : $resolver;
+        $this->wsfactory = new WsFactory($loop, $resolver);
 
         // ETF breaks snowflake IDs on 32-bit.
         if (2147483647 !== PHP_INT_MAX) {
@@ -571,14 +575,7 @@ class WebSocket extends EventEmitter
 
                 if (count($this->unavailableServers) < 1) {
                     $this->loop->cancelTimer($this->unavailableTimer);
-                    $servers = [];
-
-                    foreach ($this->discord->guilds as $guild) {
-                        if ($guild->large) {
-                            $this->largeServers[$guild->id] = $guild->id;
-                            $servers[]                      = $guild->id;
-                        }
-                    }
+                    $servers = array_values($this->largeServers);
 
                     if (count($servers) < 1) {
                         $this->removeListener(Event::GUILD_CREATE, $handleGuildCreate);
@@ -689,6 +686,35 @@ class WebSocket extends EventEmitter
                 }
 
                 if (count($this->largeServers) === 0 && ! $this->emittedReady) {
+                    $this->loop->addPeriodicTimer(5, function () {
+                        if (count($this->largeServers) > 0) {
+                            $servers = array_values($this->largeServers);
+                            $this->largeServers = [];
+                            $chunks  = array_chunk($servers, 50);
+
+                            $sendChunk = function () use (&$sendChunk, &$chunks) {
+                                $chunk = array_pop($chunks);
+
+                                // We have finished our chunks
+                                if (is_null($chunk)) {
+                                    return;
+                                }
+
+                                $this->send([
+                                    'op' => Op::OP_GUILD_MEBMER_CHUNK,
+                                    'd'  => [
+                                        'guild_id' => $chunk,
+                                        'query'    => '',
+                                        'limit'    => 0,
+                                    ],
+                                ]);
+
+                                $this->loop->addTimer(1, $sendChunk);
+                            };
+
+                            $sendChunk();
+                        }
+                    });
                     $this->largeServers = true;
                     $this->emit('ready', [$this->discord, $this]);
                 }
@@ -727,6 +753,10 @@ class WebSocket extends EventEmitter
 
         $handler->on('unavailable', function ($id) use ($handlerSettings) {
             $this->emit('unavailable', [$handlerSettings['class'], $id, $this]);
+        });
+
+        $handler->on('large', function ($guild) {
+            $this->largeServers[$guild->id] = $guild->id;
         });
 
         $handler->on('send-packet', [$this, 'send']);
