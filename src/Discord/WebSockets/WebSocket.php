@@ -687,7 +687,7 @@ class WebSocket extends EventEmitter
 
                 if (count($this->largeServers) === 0 && ! $this->emittedReady) {
                     $this->loop->addPeriodicTimer(5, function () {
-                        if (count($this->largeServers) > 0) {
+                        if (is_array($this->largeServers) && count($this->largeServers) > 0) {
                             $servers = array_values($this->largeServers);
                             $this->largeServers = [];
                             $chunks  = array_chunk($servers, 50);
