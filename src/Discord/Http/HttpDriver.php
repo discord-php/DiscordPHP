@@ -31,7 +31,7 @@ interface HttpDriver
      *
      * @return \React\Promise\Promise
      */
-    public function runRequest($method, $url, $headers, $body, $options = []);
+    public function runRequest($method, $url, $headers, $body, array $options = []);
 
     /**
      * Sends a file to a channel.
