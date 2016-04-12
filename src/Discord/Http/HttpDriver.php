@@ -11,7 +11,6 @@
 
 namespace Discord\Http;
 
-use Discord\Http\Http;
 use Discord\Parts\Channel\Channel;
 
 /**
