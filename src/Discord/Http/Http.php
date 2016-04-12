@@ -262,7 +262,7 @@ class Http
     {
         $deferred = new Deferred();
 
-        $this->driver->sendFile($channel, $filepath, $filename, $content, $tts, $this->token)->then(
+        $this->driver->sendFile($this, $channel, $filepath, $filename, $content, $tts, $this->token)->then(
             function ($response) use ($deferred) {
                 $json = json_decode($response->getBody());
 

@@ -11,6 +11,7 @@
 
 namespace Discord\Http;
 
+use Discord\Http\Http;
 use Discord\Parts\Channel\Channel;
 
 /**
@@ -36,6 +37,7 @@ interface HttpDriver
     /**
      * Sends a file to a channel.
      *
+     * @param Http    $http     The HTTP client.
      * @param Channel $channel  The channel to send the file to.
      * @param string  $filepath The path to the file.
      * @param string  $filename The name of the file when it is uploaded.
@@ -45,7 +47,7 @@ interface HttpDriver
      *
      * @return \React\Promise\Promise
      */
-    public function sendFile(Channel $channel, $filepath, $filename, $content, $tts, $token);
+    public function sendFile(Http $http, Channel $channel, $filepath, $filename, $content, $tts, $token);
 
     /**
      * Runs a blocking HTTP request.

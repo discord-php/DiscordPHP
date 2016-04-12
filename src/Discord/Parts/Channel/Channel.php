@@ -327,12 +327,14 @@ class Channel extends Part
      *
      * @param string $filepath The path to the file to be sent.
      * @param string $filename The name to send the file as.
+     * @param string $content  Content to send the file with.
+     * @param bool   $tts      Whether to send the message as TTS.
      *
      * @throws \Discord\Exceptions\FileNotFoundException Thrown when the file does not exist.
      *
      * @return Message|bool Either a Message if the request passed or false if it failed.
      */
-    public function sendFile($filepath, $filename)
+    public function sendFile($filepath, $filename, $content = null, $tts = false)
     {
         if ($this->type != self::TYPE_TEXT) {
             return \React\Promise\reject(new \Exception('You cannot send a file to a voice channel.'));
@@ -340,7 +342,7 @@ class Channel extends Part
 
         $deferred = new Deferred();
 
-        $this->http->sendFile($this, $filepath, $filename)->then(function ($response) use ($deferred) {
+        $this->http->sendFile($this, $filepath, $filename, $content, $tts)->then(function ($response) use ($deferred) {
             $message = $this->partFactory->create(Message::class, $response, true);
 
             $this->cache->set("message.{$message->id}", $message);

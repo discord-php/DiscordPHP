@@ -12,6 +12,7 @@
 namespace Discord\Http;
 
 use Discord\Discord;
+use Discord\Http\Http;
 use Discord\Parts\Channel\Channel;
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\HandlerStack;
@@ -87,7 +88,7 @@ class Guzzle extends GuzzleClient implements HttpDriver
         $sendRequest = function () use (&$sendRequest, &$count, $request, $deferred, $options) {
             $promise = $this->sendAsync($request, $options);
 
-            $promise->then(function ($response) use (&$count, $deferred) {
+            $promise->then(function ($response) use (&$count, &$sendRequest, $deferred) {
                 // Discord Rate-Limiting
                 if ($response->getStatusCode() == 429) {
                     $tts = (int) $response->getHeader('Retry-After')[0] / 1000;
@@ -146,7 +147,7 @@ class Guzzle extends GuzzleClient implements HttpDriver
     /**
      * {@inheritdoc}
      */
-    public function sendFile(Channel $channel, $filepath, $filename, $content, $tts, $token)
+    public function sendFile(Http $http, Channel $channel, $filepath, $filename, $content, $tts, $token)
     {
         $multipart = [
             [
@@ -170,7 +171,10 @@ class Guzzle extends GuzzleClient implements HttpDriver
             ];
         }
 
-        return $this->runRequest('POST', "channels/{$channel->id}/messages", [], null, [
+        return $this->runRequest('POST', "channels/{$channel->id}/messages", [
+            'authorization' => $token,
+            'User-Agent'    => $http->getUserAgent(),
+        ], null, [
             'multipart' => $multipart,
         ]);
     }
