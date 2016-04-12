@@ -171,7 +171,7 @@ class Guzzle extends GuzzleClient implements HttpDriver
         }
 
         return $this->runRequest('POST', "channels/{$channel->id}/messages", [], null, [
-            'multipart' => $multipart
+            'multipart' => $multipart,
         ]);
     }
 
