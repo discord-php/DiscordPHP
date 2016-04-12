@@ -154,7 +154,7 @@ class Http
 
         if (! is_null($content)) {
             $headers['Content-Type'] = 'application/json';
-            $content = json_encode($content);
+            $content                 = json_encode($content);
         }
 
         if ($blocking) {
