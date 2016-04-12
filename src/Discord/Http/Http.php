@@ -145,14 +145,17 @@ class Http
         }
 
         $headers = [
-            'User-Agent'   => $this->getUserAgent(),
-            'Content-Type' => 'application/json',
+            'User-Agent' => $this->getUserAgent(),
         ];
 
         $headers['authorization'] = 'Bot '.$this->token;
 
         $headers = array_merge($headers, $extraHeaders);
-        $content = (is_null($content)) ? null : json_encode($content);
+
+        if (! is_null($content)) {
+            $headers['Content-Type'] = 'application/json';
+            $content = json_encode($content);
+        }
 
         if ($blocking) {
             $response = $this->driver->blocking($method, $url, $headers, $content);
@@ -250,14 +253,16 @@ class Http
      * @param Channel $channel  The channel to send the file to.
      * @param string  $filepath The path to the file.
      * @param string  $filename The name of the file when it is uploaded.
+     * @param string  $content  The content to send with the message.
+     * @param bool    $tts      Whether to send the message as TTS.
      *
      * @return \React\Promise\Promise
      */
-    public function sendFile(Channel $channel, $filepath, $filename)
+    public function sendFile(Channel $channel, $filepath, $filename, $content = null, $tts = false)
     {
         $deferred = new Deferred();
 
-        $this->driver->sendFile($channel, $filepath, $filename, $this->token)->then(
+        $this->driver->sendFile($channel, $filepath, $filename, $content, $tts, $this->token)->then(
             function ($response) use ($deferred) {
                 $json = json_decode($response->getBody());
 

@@ -27,10 +27,11 @@ interface HttpDriver
      * @param string $url     The endpoint that will be queried.
      * @param array  $headers The headers to send in the request.
      * @param string $body    The request content.
+     * @param array  $options An array of Guzzle options.
      *
      * @return \React\Promise\Promise
      */
-    public function runRequest($method, $url, $headers, $body);
+    public function runRequest($method, $url, $headers, $body, $options = []);
 
     /**
      * Sends a file to a channel.
@@ -38,11 +39,13 @@ interface HttpDriver
      * @param Channel $channel  The channel to send the file to.
      * @param string  $filepath The path to the file.
      * @param string  $filename The name of the file when it is uploaded.
+     * @param string  $content  The content to send with the message.
+     * @param bool    $tts      Whether to send the message as TTS.
      * @param string  $token    The client token.
      *
      * @return \React\Promise\Promise
      */
-    public function sendFile(Channel $channel, $filepath, $filename, $token);
+    public function sendFile(Channel $channel, $filepath, $filename, $content, $tts, $token);
 
     /**
      * Runs a blocking HTTP request.

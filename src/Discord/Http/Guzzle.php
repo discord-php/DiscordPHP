@@ -72,7 +72,7 @@ class Guzzle extends GuzzleClient implements HttpDriver
     /**
      * {@inheritdoc}
      */
-    public function runRequest($method, $url, $headers, $body)
+    public function runRequest($method, $url, $headers, $body, array $options = [])
     {
         $deferred = new Deferred();
 
@@ -84,8 +84,8 @@ class Guzzle extends GuzzleClient implements HttpDriver
         );
         $count = 0;
 
-        $sendRequest = function () use (&$sendRequest, &$count, $request, $deferred) {
-            $promise = $this->sendAsync($request);
+        $sendRequest = function () use (&$sendRequest, &$count, $request, $deferred, $options) {
+            $promise = $this->sendAsync($request, $options);
 
             $promise->then(function ($response) use (&$count, $deferred) {
                 // Discord Rate-Limiting
@@ -113,7 +113,13 @@ class Guzzle extends GuzzleClient implements HttpDriver
                         return;
                     }
 
-                    $sendRequest();
+                    if ($this->async) {
+                        $this->loop->addTimer(0.1, $sendRequest);
+                    }
+                    // It's more harm to us for sleeping for 0.1 and blocking than sending the request again.
+                    else {
+                        $sendRequest();
+                    }
                 }
                 // Handle any other codes that are not successful.
                 elseif ($response->getStatusCode() < 200 || $response->getStatusCode() > 226) {
@@ -140,32 +146,33 @@ class Guzzle extends GuzzleClient implements HttpDriver
     /**
      * {@inheritdoc}
      */
-    public function sendFile(Channel $channel, $filepath, $filename, $token)
+    public function sendFile(Channel $channel, $filepath, $filename, $content, $tts, $token)
     {
-        $deferred = new Deferred();
-
-        if (! file_exists($filepath)) {
-            return \React\Promise\reject(new \Exception('The specified file path does not exist.'));
-        }
-
-        $data     = file_get_contents($filepath);
-        $boundary = '-----------------------------735323031399963166993862150';
-
-        $headers = [
-            'User-Agent'     => 'DiscordPHP/'.Discord::VERSION.' DiscordBot (https://github.com/teamreflex/DiscordPHP, '.Discord::VERSION.')',
-            'Content-Type'   => 'multipart/form-data; boundary='.$boundary,
-            'Content-Length' => strlen($data),
-            'authorization'  => 'Bot '.$token,
+        $multipart = [
+            [
+                'name'     => 'file',
+                'contents' => fopen($filepath, 'r'),
+                'filename' => $filename,
+            ],
         ];
 
-        $request = new Request(
-            'POST',
-            Http::BASE_URL."/channels/{$channel->id}/messages",
-            $headers,
-            $data.PHP_EOL.$boundary
-        );
+        if (! is_null($content)) {
+            $multipart[] = [
+                'name'     => 'content',
+                'contents' => $content,
+            ];
+        }
 
-        return $this->runRequest($request, null, null, null);
+        if ($tts) {
+            $multipart[] = [
+                'name'     => 'tts',
+                'contents' => 'true',
+            ];
+        }
+
+        return $this->runRequest('POST', "channels/{$channel->id}/messages", [], null, [
+            'multipart' => $multipart
+        ]);
     }
 
     /**
