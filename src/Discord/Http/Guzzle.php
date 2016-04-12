@@ -12,7 +12,6 @@
 namespace Discord\Http;
 
 use Discord\Discord;
-use Discord\Http\Http;
 use Discord\Parts\Channel\Channel;
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\HandlerStack;
