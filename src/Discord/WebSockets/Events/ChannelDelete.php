@@ -28,14 +28,24 @@ class ChannelDelete extends Event
         $data = $this->partFactory->create(Channel::class, $data, true);
         $this->cache->remove('channel.'.$data->id);
 
-        foreach ($this->discord->guilds as $index => $guild) {
-            if ($guild->id == $data->guild_id) {
-                foreach ($guild->channels as $cindex => $channel) {
-                    if ($channel->id == $data->id) {
-                        $guild->channels->pull($index);
+        if (! $data->is_private) {
+            foreach ($this->discord->guilds as $index => $guild) {
+                if ($guild->id == $data->guild_id) {
+                    foreach ($guild->channels as $cindex => $channel) {
+                        if ($channel->id == $data->id) {
+                            $guild->channels->pull($index);
 
-                        break;
+                            break;
+                        }
                     }
+                }
+            }
+        } else {
+            foreach ($this->discord->privateChannels as $index => $channel) {
+                if ($channel->id == $data->id) {
+                    $this->discord->privateChannels->pull($index);
+
+                    break;
                 }
             }
         }

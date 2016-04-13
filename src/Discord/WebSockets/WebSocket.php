@@ -11,6 +11,7 @@
 
 namespace Discord\WebSockets;
 
+use Discord\Repository\PrivateChannelRepository;
 use Discord\Discord;
 use Discord\Erlpack\Erlpack;
 use Discord\Factory\PartFactory;
@@ -519,6 +520,20 @@ class WebSocket extends EventEmitter
         }
 
         $content = $data->d;
+
+        // private channels
+        $privateChan = new PrivateChannelRepository(
+            $this->http,
+            $this->cache,
+            $this->partFactory
+        );
+
+        foreach ($content->private_channels as $channel) {
+            $channel = $this->partFactory->create(Channel::class, $channel, true);
+            $privateChan->push($channel);
+        }
+
+        $this->discord->privateChannels = $privateChan;
 
         // guilds
         $guilds = new GuildRepository(

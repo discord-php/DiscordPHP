@@ -11,6 +11,7 @@
 
 namespace Discord\Parts\User;
 
+use Discord\Repository\PrivateChannelRepository;
 use Discord\Exceptions\FileNotFoundException;
 use Discord\Exceptions\PasswordEmptyException;
 use Discord\Parts\Part;
@@ -46,7 +47,8 @@ class Client extends Part
      * {@inheritdoc}
      */
     protected $repositories = [
-        'guilds' => GuildRepository::class,
+        'guilds'          => GuildRepository::class,
+        'privateChannels' => PrivateChannelRepository::class,
     ];
 
     /**

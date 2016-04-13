@@ -28,12 +28,16 @@ class ChannelCreate extends Event
         $data = $this->partFactory->create(Channel::class, $data, true);
         $this->cache->set('channel.'.$data->id, $data);
 
-        foreach ($this->discord->guilds as $index => $guild) {
-            if ($guild->id === $data->guild_id) {
-                $guild->channels->push($data);
+        if (! $data->is_private) {
+            foreach ($this->discord->guilds as $index => $guild) {
+                if ($guild->id === $data->guild_id) {
+                    $guild->channels->push($data);
 
-                break;
+                    break;
+                }
             }
+        } else {
+            $this->discord->privateChannels->push($data);
         }
 
         $deferred->resolve($data);
