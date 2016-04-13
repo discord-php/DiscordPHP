@@ -76,7 +76,7 @@ class Guzzle extends GuzzleClient implements HttpDriver
     public function __construct(CacheWrapper $cache, LoopInterface $loop = null)
     {
         $this->cache = $cache;
-        $options = ['http_errors' => false, 'allow_redirects' => true];
+        $options     = ['http_errors' => false, 'allow_redirects' => true];
 
         if (! is_null($loop)) {
             $this->async        = true;
@@ -171,6 +171,7 @@ class Guzzle extends GuzzleClient implements HttpDriver
 
                     if (is_null($guild)) {
                         $sendRequest();
+
                         return;
                     }
 
