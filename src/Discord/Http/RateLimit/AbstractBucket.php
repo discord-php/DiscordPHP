@@ -23,20 +23,20 @@ abstract class AbstractBucket
      */
     protected $loop;
 
-	/**
-	 * The name of the bucket.
-	 *
-	 * @var string Name.
-	 */
-	protected $name;
+    /**
+     * The name of the bucket.
+     *
+     * @var string Name.
+     */
+    protected $name;
 
-	/**
-	 * How many requests the bucket can handle
-	 * within the time specified in $time.
-	 *
-	 * @var int Total requests.
-	 */
-	protected $uses;
+    /**
+     * How many requests the bucket can handle
+     * within the time specified in $time.
+     *
+     * @var int Total requests.
+     */
+    protected $uses;
 
     /**
      * How often the bucket resets.
@@ -76,30 +76,30 @@ abstract class AbstractBucket
             $promises = $this->promises;
             $this->promises = [];
 
-			foreach ($promises as $deferred) {
-				$this->queue($deferred);
-			}
-		});
-	}
+            foreach ($promises as $deferred) {
+                $this->queue($deferred);
+            }
+        });
+    }
 
-	/**
-	 * Queues a request on the bucket.
-	 *
-	 * @param Deferred|null $deferred Deferred promise.
-	 * 
-	 * @return \React\Promise\Promise 
-	 */
-	public function queue(Deferred $deferred = null)
-	{
-		$deferred = $deferred ?: new Deferred();
+    /**
+     * Queues a request on the bucket.
+     *
+     * @param Deferred|null $deferred Deferred promise.
+     *
+     * @return \React\Promise\Promise
+     */
+    public function queue(Deferred $deferred = null)
+    {
+        $deferred = $deferred ?: new Deferred();
 
-		if ($this->currentCount >= $this->uses) {
-			$deferred->notify('Bucket '.$this->name.' - You have been rate limited.');
-			$this->promises[] = $deferred;
-		} else {
-			++$this->currentCount;
-			$deferred->resolve();
-		}
+        if ($this->currentCount >= $this->uses) {
+            $deferred->notify('Bucket '.$this->name.' - You have been rate limited.');
+            $this->promises[] = $deferred;
+        } else {
+            ++$this->currentCount;
+            $deferred->resolve();
+        }
 
         return $deferred->promise();
     }
