@@ -1,8 +1,15 @@
 <?php
 
-namespace Discord\Http\RateLimit;
+/*
+ * This file is apart of the DiscordPHP project.
+ *
+ * Copyright (c) 2016 David Cole <david@team-reflex.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the LICENSE.md file.
+ */
 
-use Discord\Http\RateLimit\AbstractBucket;
+namespace Discord\Http\RateLimit;
 
 class GlobalBucket extends AbstractBucket
 {
@@ -16,8 +23,8 @@ class GlobalBucket extends AbstractBucket
 	 */
 	protected $uses = 50;
 
-	/**
-	 * {@inheritdoc}
-	 */
-	protected $time = 10;
+    /**
+     * {@inheritdoc}
+     */
+    protected $time = 10;
 }
