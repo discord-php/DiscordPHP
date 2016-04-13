@@ -184,6 +184,8 @@ class Guzzle extends GuzzleClient implements HttpDriver
                     $this->buckets['guild.'.$guild->id]->queue()->then($sendRequest, null, function ($content) use ($deferred) {
                         $deferred->notify($content);
                     });
+                } else {
+                    $sendRequest();
                 }
             }, null, function ($content) use ($deferred) {
                 $deferred->notify($content);
