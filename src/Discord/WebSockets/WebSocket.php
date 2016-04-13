@@ -756,6 +756,10 @@ class WebSocket extends EventEmitter
         });
 
         $handler->on('large', function ($guild) {
+            if (! is_array($this->largeServers)) {
+                $this->largeServers = [];
+            }
+            
             $this->largeServers[$guild->id] = $guild->id;
         });
 
