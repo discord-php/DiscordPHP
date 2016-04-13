@@ -9,6 +9,11 @@ class GlobalBucket extends AbstractBucket
 	/**
 	 * {@inheritdoc}
 	 */
+	protected $name = 'Global';
+	
+	/**
+	 * {@inheritdoc}
+	 */
 	protected $uses = 50;
 
 	/**

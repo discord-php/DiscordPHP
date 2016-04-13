@@ -12,7 +12,10 @@
 namespace Discord\Http;
 
 use Discord\Discord;
+use Discord\Http\RateLimit\GlobalBucket;
+use Discord\Http\RateLimit\ServerBucket;
 use Discord\Parts\Channel\Channel;
+use Discord\Wrapper\CacheWrapper;
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Request;
@@ -35,6 +38,13 @@ class Guzzle extends GuzzleClient implements HttpDriver
     protected $async = false;
 
     /**
+     * The cache wrapper.
+     *
+     * @var CacheWrapper Wrapper.
+     */
+    protected $cache;
+
+    /**
      * The ReactPHP event loop.
      *
      * @var LoopInterface Event loop.
@@ -49,14 +59,23 @@ class Guzzle extends GuzzleClient implements HttpDriver
     protected $adapter;
 
     /**
+     * Rate limit buckets.
+     *
+     * @var array Buckets.
+     */
+    protected $buckets = [];
+
+    /**
      * Constructs a Guzzle driver.
      *
-     * @param LoopInterface|null $loop The ReactPHP event loop.
+     * @param CacheWrapper       $cache The cache wrapper.
+     * @param LoopInterface|null $loop  The ReactPHP event loop.
      *
      * @return void
      */
-    public function __construct(LoopInterface $loop = null)
+    public function __construct(CacheWrapper $cache, LoopInterface $loop = null)
     {
+        $this->cache = $cache;
         $options = ['http_errors' => false, 'allow_redirects' => true];
 
         if (! is_null($loop)) {
@@ -64,6 +83,10 @@ class Guzzle extends GuzzleClient implements HttpDriver
             $this->loop         = $loop;
             $this->adapter      = new HttpClientAdapter($this->loop);
             $options['handler'] = HandlerStack::create($this->adapter);
+
+            $this->buckets = [
+                'global' => new GlobalBucket($loop),
+            ];
         }
 
         return parent::__construct($options);
@@ -95,8 +118,10 @@ class Guzzle extends GuzzleClient implements HttpDriver
                     switch ($this->async) {
                         case true:
                             $this->loop->addTimer($tts, $sendRequest);
+                            $deferred->notify('You have been rate limited.');
                             break;
                         default:
+                            $deferred->notify('You have been rate limited.');
                             usleep($tts * 1000 * 1000);
                             $sendRequest();
                             break;
@@ -138,7 +163,33 @@ class Guzzle extends GuzzleClient implements HttpDriver
             }
         };
 
-        $sendRequest();
+        if ($this->async) {
+            $this->buckets['global']->queue()->then(function () use ($sendRequest, $url, $deferred) {
+                if (preg_match('/channels\/([0-9]+)\/messages/', $url, $matches)) {
+                    $channel = $this->cache->get('channel.'.$matches[1]);
+                    $guild = $this->cache->get('guild.'.$channel->guild_id);
+
+                    if (is_null($guild)) {
+                        $sendRequest();
+                        return;
+                    }
+
+                    if (! isset(
+                        $this->buckets['guild.'.$guild->id]
+                    )) {
+                        $this->buckets['guild.'.$guild->id] = new ServerBucket($this->loop, $guild);
+                    }
+
+                    $this->buckets['guild.'.$guild->id]->queue()->then($sendRequest, null, function ($content) use ($deferred) {
+                        $deferred->notify($content);
+                    });
+                }
+            }, null, function ($content) use ($deferred) {
+                $deferred->notify($content);
+            });
+        } else {
+            $sendRequest();
+        }
 
         return $deferred->promise();
     }

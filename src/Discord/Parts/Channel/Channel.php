@@ -317,7 +317,9 @@ class Channel extends Part
             $this->messages->push($message);
 
             $deferred->resolve($message);
-        }, \React\Partial\bind_right($this->reject, $deferred));
+        }, \React\Partial\bind_right($this->reject, $deferred), function ($c) use ($deferred) {
+            $deferred->notify($c);
+        });
 
         return $deferred->promise();
     }

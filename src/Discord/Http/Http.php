@@ -16,6 +16,7 @@ use Discord\Exceptions\DiscordRequestFailedException;
 use Discord\Exceptions\Rest\ContentTooLongException;
 use Discord\Exceptions\Rest\NoPermissionsException;
 use Discord\Exceptions\Rest\NotFoundException;
+use Discord\Http\RateLimit\GlobalBucket;
 use Discord\Parts\Channel\Channel;
 use Discord\Wrapper\CacheWrapper;
 use GuzzleHttp\Psr7\Request;
@@ -75,7 +76,7 @@ class Http
     public function __construct(CacheWrapper $cache, $token, $version, $driver = null)
     {
         if (is_null($driver)) {
-            $driver = new Guzzle();
+            $driver = new Guzzle($cache);
         }
 
         $this->cache   = $cache;
@@ -184,6 +185,9 @@ class Http
                 }
 
                 $deferred->reject($e);
+            },
+            function ($content) use ($deferred) {
+                $deferred->notify($content);
             }
         );
 

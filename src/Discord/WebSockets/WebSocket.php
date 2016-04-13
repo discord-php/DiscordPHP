@@ -255,7 +255,7 @@ class WebSocket extends EventEmitter
 
         $loop->nextTick(
             function () use (&$loop) {
-                $this->http->setDriver(new Guzzle($loop));
+                $this->http->setDriver(new Guzzle($this->cache, $loop));
             }
         );
 

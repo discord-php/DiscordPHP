@@ -16,6 +16,13 @@ abstract class AbstractBucket
 	protected $loop;
 
 	/**
+	 * The name of the bucket.
+	 *
+	 * @var string Name.
+	 */
+	protected $name;
+
+	/**
 	 * How many requests the bucket can handle
 	 * within the time specified in $time.
 	 *
@@ -62,23 +69,24 @@ abstract class AbstractBucket
 			$this->promises = [];
 
 			foreach ($promises as $deferred) {
-				$this->handle()->then(function () use ($deferred) {
-					$deferred->resolve();
-				});
+				$this->queue($deferred);
 			}
 		});
 	}
 
 	/**
-	 * Handles a request on the bucket.
+	 * Queues a request on the bucket.
 	 *
+	 * @param Deferred|null $deferred Deferred promise.
+	 * 
 	 * @return \React\Promise\Promise 
 	 */
-	public function handle()
+	public function queue(Deferred $deferred = null)
 	{
-		$deferred = new Deferred();
+		$deferred = $deferred ?: new Deferred();
 
 		if ($this->currentCount >= $this->uses) {
+			$deferred->notify('Bucket '.$this->name.' - You have been rate limited.');
 			$this->promises[] = $deferred;
 		} else {
 			++$this->currentCount;
