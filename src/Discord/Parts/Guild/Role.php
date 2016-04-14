@@ -19,7 +19,7 @@ use Discord\Parts\Part;
  *
  * @property string  $id
  * @property string  $name
- * @property integer $color
+ * @property int $color
  * @property bool    $managed
  * @property bool    $hoist
  * @property int     $position
@@ -45,7 +45,7 @@ class Role extends Part
      */
     public function afterConstruct()
     {
-        if (!$this->created) {
+        if (! $this->created) {
             $this->permissions = new Permission();
 
             if (isset($this->guild_id)) {
@@ -73,7 +73,7 @@ class Role extends Part
      */
     public function setPermissionsAttribute($permission)
     {
-        if (!$permission instanceof Permission) {
+        if (! $permission instanceof Permission) {
             return false;
         }
 

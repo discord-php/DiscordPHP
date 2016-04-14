@@ -90,7 +90,7 @@ class Member extends Part
     {
         $url = $this->replaceWithVariables('guilds/:guild_id/bans/:id');
 
-        if (!is_null($daysToDeleteMessasges)) {
+        if (! is_null($daysToDeleteMessasges)) {
             $url .= "?message-delete-days={$daysToDeleteMessasges}";
         }
 

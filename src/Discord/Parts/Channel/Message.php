@@ -55,7 +55,7 @@ class Message extends Part
         'tts',
         'attachments',
         'embeds',
-        'nonce'
+        'nonce',
     ];
 
     /**
