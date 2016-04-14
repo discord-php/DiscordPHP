@@ -16,6 +16,15 @@ use Discord\Parts\Part;
 
 /**
  * A role defines permissions for the guild. Members can be added to the role. The role belongs to a guild.
+ *
+ * @property string  $id
+ * @property string  $name
+ * @property int $color
+ * @property bool    $managed
+ * @property bool    $hoist
+ * @property int     $position
+ * @property int     $permissions
+ * @property string  $guild_id
  */
 class Role extends Part
 {
