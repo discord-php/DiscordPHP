@@ -29,7 +29,6 @@ use React\Dns\Model\Message;
 /**
  * A Channel can be either a text or voice channel on a Discord guild.
  *
- *
  * @property string            $id
  * @property string            $name
  * @property string            $type
