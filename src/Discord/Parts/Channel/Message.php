@@ -90,7 +90,7 @@ class Message extends Part
      */
     public function getChannelAttribute()
     {
-        if ($channel = Cache::get("channels.{$this->channel_id}")) {
+        if ($channel = Cache::get("channel.{$this->channel_id}")) {
             return $channel;
         }
 
@@ -109,14 +109,14 @@ class Message extends Part
      */
     public function getFullChannelAttribute()
     {
-        if ($channel = Cache::get("channels.{$this->channel_id}")) {
+        if ($channel = Cache::get("channel.{$this->channel_id}")) {
             return $channel;
         }
 
         $request = Guzzle::get($this->replaceWithVariables('channels/:channel_id'));
         $channel = new Channel((array) $request, true);
 
-        Cache::set("channels.{$channel->id}", $channel);
+        Cache::set("channel.{$channel->id}", $channel);
 
         return $channel;
     }

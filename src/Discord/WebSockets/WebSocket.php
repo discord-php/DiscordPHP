@@ -478,7 +478,7 @@ class WebSocket extends EventEmitter
 
                 $channels->push($channelPart);
 
-                Cache::set("channels.{$channelPart->id}", $channelPart);
+                Cache::set("channel.{$channelPart->id}", $channelPart);
             }
 
             $channels->setCacheKey("guild.{$guild->id}.channels", true);
