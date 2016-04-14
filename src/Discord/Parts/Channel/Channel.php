@@ -15,7 +15,6 @@ use Discord\Cache\Cache;
 use Discord\Exceptions\FileNotFoundException;
 use Discord\Helpers\Collection;
 use Discord\Helpers\Guzzle;
-use Discord\Parts\Channel\Message;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Guild\Invite;
 use Discord\Parts\Guild\Role;
