@@ -64,7 +64,7 @@ class Channel extends Part
         'permission_overwrites',
         'messages',
         'message_count',
-        'bitrate'
+        'bitrate',
     ];
 
     /**
@@ -163,7 +163,7 @@ class Channel extends Part
      */
     public function getMembersAttribute()
     {
-        if (!Cache::has("channels.{$this->id}.voice.members")) {
+        if (! Cache::has("channels.{$this->id}.voice.members")) {
             Cache::set("channels.{$this->id}.voice.members", new Collection([], "channels.{$this->id}.voice.members"));
         }
 
@@ -238,7 +238,7 @@ class Channel extends Part
      */
     public function getMessagesAttribute()
     {
-        if (!Cache::get("channel.{$this->id}.messages")) {
+        if (! Cache::get("channel.{$this->id}.messages")) {
             Cache::set("channel.{$this->id}.messages", new Collection([], "channel.{$this->id}.messages"));
         }
 
@@ -358,7 +358,7 @@ class Channel extends Part
 
         Cache::set("message.{$message->id}", $message);
 
-        if (!Cache::has("channel.{$this->id}.messages")) {
+        if (! Cache::has("channel.{$this->id}.messages")) {
             $this->getMessagesAttribute();
         }
 
@@ -385,7 +385,7 @@ class Channel extends Part
             return false;
         }
 
-        if (!file_exists($filepath)) {
+        if (! file_exists($filepath)) {
             throw new FileNotFoundException("File does not exist at path {$filepath}.");
         }
 
@@ -411,14 +411,14 @@ class Channel extends Part
             ],
         ];
 
-        if (!is_null($content)) {
+        if (! is_null($content)) {
             $multipart[] = [
                 'name'     => 'content',
                 'contents' => $content,
             ];
         }
 
-        while (!$done) {
+        while (! $done) {
             $response = $guzzle->request(
                 'post',
                 $url,
@@ -451,7 +451,7 @@ class Channel extends Part
 
         Cache::set("message.{$message->id}", $message);
 
-        if (!Cache::has("channel.{$this->id}.messages")) {
+        if (! Cache::has("channel.{$this->id}.messages")) {
             $this->getMessagesAttribute();
         }
 

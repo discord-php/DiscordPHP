@@ -16,7 +16,7 @@ use Discord\Parts\Part;
 use Discord\Parts\User\Member;
 
 /**
- * VoiceStateUpdate Class
+ * VoiceStateUpdate Class.
  *
  * @property string $channel_id
  * @property bool   $deaf
@@ -44,7 +44,7 @@ class VoiceStateUpdate extends Part
         'session_id',
         'supress',
         'token',
-        'user_id'
+        'user_id',
     ];
 
     /**

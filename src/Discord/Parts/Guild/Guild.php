@@ -11,7 +11,6 @@
 
 namespace Discord\Parts\Guild;
 
-use Carbon\Carbon;
 use Discord\Cache\Cache;
 use Discord\Exceptions\DiscordRequestFailedException;
 use Discord\Helpers\Collection;
@@ -93,7 +92,7 @@ class Guild extends Part
         'emojis',
         'large',
         'verification_level',
-        'member_count'
+        'member_count',
     ];
 
     /**
@@ -401,7 +400,7 @@ class Guild extends Part
      */
     public function validateRegion()
     {
-        if (!in_array($this->region, $this->regions)) {
+        if (! in_array($this->region, $this->regions)) {
             return self::REGION_DEFUALT;
         }
 
