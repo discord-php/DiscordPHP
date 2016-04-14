@@ -54,7 +54,7 @@ class Invite extends Part
         'max_uses',
         'inviter',
         'xkcdpass',
-        'channel'
+        'channel',
     ];
 
     /**

@@ -15,7 +15,7 @@ use Discord\Parts\Part;
 use Discord\Parts\Permissions\ChannelPermission;
 
 /**
- * Overwrite Class
+ * Overwrite Class.
  *
  * @property string $id
  * @property string $channel_id
