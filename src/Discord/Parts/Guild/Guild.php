@@ -25,23 +25,25 @@ use Discord\Parts\User\User;
 /**
  * A Guild is Discord's equivalent of a server. It contains all the Members, Channels, Roles, Bans etc.
  *
- * @property string       $id
- * @property string       $name
- * @property string       $icon
- * @property string       $region
- * @property string       $owner_id
- * @property array|Role[] $roles
- * @property \DateTime    $joined_at
- * @property string       $afk_channel_id
- * @property int          $afk_timeout
- * @property bool         $embed_enabled
- * @property string       $embed_channel_id
- * @property array        $features
- * @property string       $splash
- * @property array        $emojis
- * @property bool         $large
- * @property int          $verification_level
- * @property int          $member_count
+ * @property string                     $id
+ * @property string                     $name
+ * @property string                     $icon
+ * @property string                     $region
+ * @property string                     $owner_id
+ * @property array|Role[]               $roles
+ * @property \DateTime                  $joined_at
+ * @property string                     $afk_channel_id
+ * @property int                        $afk_timeout
+ * @property bool                       $embed_enabled
+ * @property string                     $embed_channel_id
+ * @property array                      $features
+ * @property string                     $splash
+ * @property array                      $emojis
+ * @property bool                       $large
+ * @property int                        $verification_level
+ * @property int                        $member_count
+ * @property Collection|array|Channel[] $channels
+ * @property Collection|array|Member[]  $members
  */
 class Guild extends Part
 {
