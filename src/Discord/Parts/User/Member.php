@@ -26,6 +26,9 @@ use Discord\Parts\Permissions\RolePermission as Permission;
 /**
  * A member is a relationship between a user and a guild. It contains user-to-guild specific data like roles.
  *
+ * @property string       $id
+ * @property string       $username
+ * @property string       $discriminator
  * @property User         $user
  * @property array|Role[] $roles
  * @property bool         $deaf
@@ -90,7 +93,7 @@ class Member extends Part
     {
         $url = $this->replaceWithVariables('guilds/:guild_id/bans/:id');
 
-        if (! is_null($daysToDeleteMessasges)) {
+        if (!is_null($daysToDeleteMessasges)) {
             $url .= "?message-delete-days={$daysToDeleteMessasges}";
         }
 
@@ -205,6 +208,16 @@ class Member extends Part
     public function getUsernameAttribute()
     {
         return $this->user->username;
+    }
+
+    /**
+     * Returns the discriminator attribute.
+     *
+     * @return string The discriminator of the member.
+     */
+    public function getDiscriminatorAttribute()
+    {
+        return $this->user->discriminator;
     }
 
     /**
