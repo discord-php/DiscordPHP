@@ -957,7 +957,7 @@ class WebSocket extends EventEmitter
             $json  = json_encode($data);
             $frame = new Frame($json, true, 1);
         }
-        
+
         $this->ws->send($frame);
     }
 
