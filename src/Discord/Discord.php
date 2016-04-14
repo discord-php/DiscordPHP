@@ -160,4 +160,12 @@ class Discord
     {
         $this->client->setAttribute($variable, $value);
     }
+
+    /**
+     * @return Client
+     */
+    public function getClient()
+    {
+        return $this->client;
+    }
 }

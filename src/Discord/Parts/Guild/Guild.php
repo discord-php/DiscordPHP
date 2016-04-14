@@ -11,6 +11,7 @@
 
 namespace Discord\Parts\Guild;
 
+use Carbon\Carbon;
 use Discord\Cache\Cache;
 use Discord\Exceptions\DiscordRequestFailedException;
 use Discord\Helpers\Collection;
@@ -23,29 +24,77 @@ use Discord\Parts\User\User;
 
 /**
  * A Guild is Discord's equivalent of a server. It contains all the Members, Channels, Roles, Bans etc.
+ *
+ * @property string       $id
+ * @property string       $name
+ * @property string       $icon
+ * @property string       $region
+ * @property string       $owner_id
+ * @property array|Role[] $roles
+ * @property \DateTime    $joined_at
+ * @property string       $afk_channel_id
+ * @property int          $afk_timeout
+ * @property bool         $embed_enabled
+ * @property string       $embed_channel_id
+ * @property array        $features
+ * @property string       $splash
+ * @property array        $emojis
+ * @property bool         $large
+ * @property int          $verification_level
+ * @property int          $member_count
  */
 class Guild extends Part
 {
     const REGION_DEFAULT    = self::REGION_US_WEST;
+
     const REGION_US_WEST    = 'us-west';
+
     const REGION_US_SOUTH   = 'us-south';
+
     const REGION_US_EAST    = 'us-east';
+
     const REGION_US_CENTRAL = 'us-central';
+
     const REGION_SINGAPORE  = 'singapore';
+
     const REGION_LONDON     = 'london';
+
     const REGION_SYDNEY     = 'sydney';
+
     const REGION_FRANKFURT  = 'frankfurt';
+
     const REGION_AMSTERDAM  = 'amsterdam';
 
-    const LEVEL_OFF       = 0;
-    const LEVEL_LOW       = 1;
-    const LEVEL_MEDIUM    = 2;
-    const LEVEL_TABLEFLIP = 3;
+    const LEVEL_OFF         = 0;
+
+    const LEVEL_LOW         = 1;
+
+    const LEVEL_MEDIUM      = 2;
+
+    const LEVEL_TABLEFLIP   = 3;
 
     /**
      * {@inheritdoc}
      */
-    protected $fillable = ['id', 'name', 'icon', 'region', 'owner_id', 'roles', 'joined_at', 'afk_channel_id', 'afk_timeout', 'embed_enabled', 'embed_channel_id', 'features', 'splash', 'emojis', 'large', 'verification_level', 'member_count'];
+    protected $fillable = [
+        'id',
+        'name',
+        'icon',
+        'region',
+        'owner_id',
+        'roles',
+        'joined_at',
+        'afk_channel_id',
+        'afk_timeout',
+        'embed_enabled',
+        'embed_channel_id',
+        'features',
+        'splash',
+        'emojis',
+        'large',
+        'verification_level',
+        'member_count'
+    ];
 
     /**
      * {@inheritdoc}
@@ -113,9 +162,12 @@ class Guild extends Part
         }
 
         try {
-            $request = Guzzle::patch($this->replaceWithVariables('guilds/:id'), [
-                'owner_id' => $member,
-            ]);
+            $request = Guzzle::patch(
+                $this->replaceWithVariables('guilds/:id'),
+                [
+                    'owner_id' => $member,
+                ]
+            );
 
             if ($request->owner_id != $member) {
                 return false;
@@ -349,7 +401,7 @@ class Guild extends Part
      */
     public function validateRegion()
     {
-        if (! in_array($this->region, $this->regions)) {
+        if (!in_array($this->region, $this->regions)) {
             return self::REGION_DEFUALT;
         }
 

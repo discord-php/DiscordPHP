@@ -14,6 +14,15 @@ namespace Discord\Parts\Channel;
 use Discord\Parts\Part;
 use Discord\Parts\Permissions\ChannelPermission;
 
+/**
+ * Overwrite Class
+ *
+ * @property string $id
+ * @property string $channel_id
+ * @property string $type
+ * @property bool   $allow
+ * @property bool   $deny
+ */
 class Overwrite extends Part
 {
     /**

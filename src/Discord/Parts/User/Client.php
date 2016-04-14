@@ -21,6 +21,15 @@ use Discord\Parts\Part;
 
 /**
  * The client is the main interface for the client. Most calls on the main class are forwarded here.
+ *
+ * @property string $id
+ * @property string $username
+ * @property string $password
+ * @property string $email
+ * @property bool   $verified
+ * @property string $avatar
+ * @property string $discriminator
+ * @property bool   $bot
  */
 class Client extends Part
 {
@@ -58,12 +67,14 @@ class Client extends Part
      */
     public function afterConstruct()
     {
-        $this->user = new User([
-            'id'            => $this->id,
-            'username'      => $this->username,
-            'avatar'        => $this->attributes['avatar'],
-            'discriminator' => $this->discriminator,
-        ], true);
+        $this->user = new User(
+            [
+                'id'            => $this->id,
+                'username'      => $this->username,
+                'avatar'        => $this->attributes['avatar'],
+                'discriminator' => $this->discriminator,
+            ], true
+        );
     }
 
     /**
@@ -81,11 +92,16 @@ class Client extends Part
             return false;
         }
 
-        $request = Guzzle::post("oauth2/applications/{$appID}/bot", [
-            'secret' => $secret,
-        ], true, [
-            'authorization' => $token,
-        ]);
+        $request = Guzzle::post(
+            "oauth2/applications/{$appID}/bot",
+            [
+                'secret' => $secret,
+            ],
+            true,
+            [
+                'authorization' => $token,
+            ]
+        );
 
         $this->fill($request);
 
@@ -105,7 +121,7 @@ class Client extends Part
      */
     public function setAvatar($filepath)
     {
-        if (! file_exists($filepath)) {
+        if (!file_exists($filepath)) {
             throw new FileNotFoundException("File does not exist at path {$filepath}.");
         }
 
@@ -131,15 +147,17 @@ class Client extends Part
     {
         $idle = ($idle == false) ? null : true;
 
-        $ws->send([
-            'op' => 3,
-            'd'  => [
-                'game' => (! is_null($gamename) ? [
-                    'name' => $gamename,
-                ] : null),
-                'idle_since' => $idle,
-            ],
-        ]);
+        $ws->send(
+            [
+                'op' => 3,
+                'd'  => [
+                    'game'       => (!is_null($gamename) ? [
+                        'name' => $gamename,
+                    ] : null),
+                    'idle_since' => $idle,
+                ],
+            ]
+        );
 
         return true;
     }
@@ -208,7 +226,7 @@ class Client extends Part
             $attributes['avatar'] = $this->attributes['avatarhash'];
         }
 
-        if (! $this->bot) {
+        if (!$this->bot) {
             if (empty($this->attributes['password'])) {
                 throw new PasswordEmptyException('You must enter your password to update your profile.');
             }
@@ -216,7 +234,7 @@ class Client extends Part
             $attributes['email']    = $this->email;
             $attributes['password'] = $this->attributes['password'];
 
-            if (! empty($this->attributes['new_password'])) {
+            if (!empty($this->attributes['new_password'])) {
                 $attributes['new_password'] = $this->attributes['new_password'];
             }
         }

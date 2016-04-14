@@ -16,6 +16,15 @@ use Discord\Parts\Part;
 
 /**
  * A role defines permissions for the guild. Members can be added to the role. The role belongs to a guild.
+ *
+ * @property string  $id
+ * @property string  $name
+ * @property integer $color
+ * @property bool    $managed
+ * @property bool    $hoist
+ * @property int     $position
+ * @property int     $permissions
+ * @property string  $guild_id
  */
 class Role extends Part
 {
@@ -36,7 +45,7 @@ class Role extends Part
      */
     public function afterConstruct()
     {
-        if (! $this->created) {
+        if (!$this->created) {
             $this->permissions = new Permission();
 
             if (isset($this->guild_id)) {
@@ -64,7 +73,7 @@ class Role extends Part
      */
     public function setPermissionsAttribute($permission)
     {
-        if (! $permission instanceof Permission) {
+        if (!$permission instanceof Permission) {
             return false;
         }
 
