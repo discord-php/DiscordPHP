@@ -24,7 +24,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * will start off with when you do anything with the client.
  *
  * @see \Discord\Parts\User\Client Most functions are forwarded onto the Client class.
- *                                 
+ *
  * @property Collection|array|Guild[] $guilds
  */
 class Discord
