@@ -163,11 +163,11 @@ class Channel extends Part
      */
     public function getMembersAttribute()
     {
-        if (! Cache::has("channels.{$this->id}.voice.members")) {
-            Cache::set("channels.{$this->id}.voice.members", new Collection([], "channels.{$this->id}.voice.members"));
+        if (! Cache::has("channel.{$this->id}.voice.members")) {
+            Cache::set("channel.{$this->id}.voice.members", new Collection([], "channel.{$this->id}.voice.members"));
         }
 
-        return Cache::get("channels.{$this->id}.voice.members");
+        return Cache::get("channel.{$this->id}.voice.members");
     }
 
     /**
@@ -308,7 +308,7 @@ class Channel extends Part
             return $this->attributes_cache['overwrites'];
         }
 
-        if ($overwrites = Cache::get("channels.{$this->id}.overwrites")) {
+        if ($overwrites = Cache::get("channel.{$this->id}.overwrites")) {
             return $overwrites;
         }
 
@@ -316,7 +316,7 @@ class Channel extends Part
 
         // Will return an empty collection when you don't have permission.
         if (is_null($this->attributes['permission_overwrites'])) {
-            return new Collection([], "channels.{$this->id}.overwrites");
+            return new Collection([], "channel.{$this->id}.overwrites");
         }
 
         foreach ($this->attributes['permission_overwrites'] as $index => $data) {
@@ -325,9 +325,9 @@ class Channel extends Part
             $overwrites[$index] = new Overwrite($data, true);
         }
 
-        $overwrites = new Collection($overwrites, "channels.{$this->id}.overwrites");
+        $overwrites = new Collection($overwrites, "channel.{$this->id}.overwrites");
 
-        Cache::set("channels.{$this->id}.overwrites", $overwrites);
+        Cache::set("channel.{$this->id}.overwrites", $overwrites);
 
         return $overwrites;
     }

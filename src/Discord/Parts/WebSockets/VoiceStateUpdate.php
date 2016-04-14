@@ -64,7 +64,7 @@ class VoiceStateUpdate extends Part
      */
     public function getChannelAttribute()
     {
-        return Cache::get("channels.{$this->channel_id}");
+        return Cache::get("channel.{$this->channel_id}");
     }
 
     /**
