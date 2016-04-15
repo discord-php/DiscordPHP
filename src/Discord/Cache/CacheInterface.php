@@ -26,6 +26,15 @@ interface CacheInterface
     public function get($key);
 
     /**
+     * Gets all the attributes in the cache.
+     *
+     * @param string $query A query string to run on the cache key(s).
+     * 
+     * @return Collection A collection of cache objects.
+     */
+    public function getAll($query = null);
+
+    /**
      * Sets an item in the Cache.
      *
      * @param mixed $key   The key to place the value at.

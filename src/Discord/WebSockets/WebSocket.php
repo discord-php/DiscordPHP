@@ -507,7 +507,8 @@ class WebSocket extends EventEmitter
                 // and see if they exist already. That takes ~34ms per member, way way too much.
                 $members[$memberPart->id] = $memberPart;
 
-                // Cache::set("guild.{$memberPart->guild_id}.members.{$memberPart->id}", $memberPart);
+                Cache::set("guild.{$guildPart->id}.members.{$memberPart->id}", $memberPart);
+                Cache::set("user.{$memberPart->id}", $memberPart->user);
             }
 
             $members->setCacheKey("guild.{$guild->id}.members", true);

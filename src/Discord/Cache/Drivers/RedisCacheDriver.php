@@ -13,6 +13,7 @@ namespace Discord\Cache\Drivers;
 
 use Discord\Cache\Cache;
 use Discord\Cache\CacheInterface;
+use Discord\Helpers\Collection;
 use Predis\Client;
 
 /**
@@ -66,6 +67,14 @@ class RedisCacheDriver implements CacheInterface
         }
 
         return;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getAll($query = null)
+    {
+        return new Collection(); // todo later
     }
 
     /**

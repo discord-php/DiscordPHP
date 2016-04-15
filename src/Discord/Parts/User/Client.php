@@ -163,6 +163,26 @@ class Client extends Part
     }
 
     /**
+     * Returns a collection of channels.
+     *
+     * @return Collection A collection of channels.
+     */
+    public function getChannelsAttribute()
+    {
+        return Cache::getAll("/channel.([0-9]+)/");
+    }
+
+    /**
+     * Returns a collection of users.
+     *
+     * @return Collection A collection of users.
+     */
+    public function getUsersAttribute()
+    {
+        return Cache::getAll("/user.([0-9]+)/");
+    }
+
+    /**
      * Returns an array of Guilds.
      *
      * @return Collection A collection of guilds.
