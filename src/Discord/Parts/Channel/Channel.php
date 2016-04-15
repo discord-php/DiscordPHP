@@ -135,7 +135,7 @@ class Channel extends Part
      */
     public function moveMember($member)
     {
-        if ($this->type != self::TYPE_VOICE) {
+        if ($this->getChannelType() != self::TYPE_VOICE) {
             return false;
         }
 
@@ -342,7 +342,7 @@ class Channel extends Part
      */
     public function sendMessage($text, $tts = false)
     {
-        if ($this->type != self::TYPE_TEXT) {
+        if ($this->getChannelType() != self::TYPE_TEXT) {
             return false;
         }
 
@@ -381,7 +381,7 @@ class Channel extends Part
      */
     public function sendFile($filepath, $filename, $content = null, $tts = false)
     {
-        if ($this->type != self::TYPE_TEXT) {
+        if ($this->getChannelType() != self::TYPE_TEXT) {
             return false;
         }
 
@@ -467,7 +467,7 @@ class Channel extends Part
      */
     public function broadcastTyping()
     {
-        if ($this->type != self::TYPE_TEXT) {
+        if ($this->getChannelType() != self::TYPE_TEXT) {
             return false;
         }
 
