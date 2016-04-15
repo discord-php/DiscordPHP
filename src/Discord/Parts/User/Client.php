@@ -169,7 +169,7 @@ class Client extends Part
      */
     public function getChannelsAttribute()
     {
-        return Cache::getAll("/channel.([0-9]+)/");
+        return Cache::getAll('/channel.([0-9]+)/');
     }
 
     /**
@@ -179,7 +179,7 @@ class Client extends Part
      */
     public function getUsersAttribute()
     {
-        return Cache::getAll("/user.([0-9]+)/");
+        return Cache::getAll('/user.([0-9]+)/');
     }
 
     /**
