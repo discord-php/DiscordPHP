@@ -24,6 +24,7 @@ use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\Psr7\Request;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * A Channel can be either a text or voice channel on a Discord guild.
@@ -241,6 +242,54 @@ class Channel extends Part
         }
 
         return Cache::get("channel.{$this->id}.messages");
+    }
+
+    /**
+     * Fetches message history.
+     *
+     * @param array $options
+     *
+     * @return array|Collection
+     * @throws \Exception
+     */
+    public function getMessageHistory(array $options)
+    {
+        $resolver = new OptionsResolver();
+        $resolver->setDefaults(['limit' => 100]);
+        $resolver->setDefined(['before', 'after']);
+        $resolver->setAllowedValues('limit', range(1, 100));
+
+        $options = $resolver->resolve($options);
+        if (isset($options['before'], $options['after'])) {
+            throw new \Exception('Can only specify before, or after, not both.');
+        }
+
+        $url = "channels/{$this->id}/messages?limit={$options['limit']}";
+        if (isset($options['before'])) {
+            if ($options['before'] instanceof Message) {
+                throw new \Exception('before must be an instance of '.Message::class);
+            }
+            $url .= '&before='.$options['before']->id;
+        }
+        if (isset($options['after'])) {
+            if ($options['after'] instanceof Message) {
+                throw new \Exception('after must be an instance of '.Message::class);
+            }
+            $url .= '&after='.$options['after']->id;
+        }
+
+        $request  = Guzzle::get($url);
+        $messages = [];
+
+        foreach ($request as $index => $message) {
+            $message = new Message((array) $message, true);
+            Cache::set("message.{$message->id}", $message);
+            $messages[$index] = $message;
+        }
+
+        $messages = new Collection($messages);
+
+        return $messages;
     }
 
     /**

@@ -23,6 +23,11 @@ use Illuminate\Support\Str;
 
 /**
  * Provides an easy wrapper for the Guzzle HTTP client.
+ *
+ * @method static object get(...$params)
+ * @method static object post(...$params)
+ * @method static object put(...$params)
+ * @method static object delete(...$params)
  */
 class Guzzle
 {
