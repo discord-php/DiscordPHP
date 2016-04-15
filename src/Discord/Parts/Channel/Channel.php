@@ -245,7 +245,7 @@ class Channel extends Part
     }
 
     /**
-     * Fetches message history
+     * Fetches message history.
      *
      * @param array $options
      *
@@ -261,7 +261,7 @@ class Channel extends Part
 
         $options = $resolver->resolve($options);
         if (isset($options['before'], $options['after'])) {
-            throw new \Exception("Can only specify before, or after, not both.");
+            throw new \Exception('Can only specify before, or after, not both.');
         }
 
         $url = "channels/{$this->id}/messages?limit={$options['limit']}";
