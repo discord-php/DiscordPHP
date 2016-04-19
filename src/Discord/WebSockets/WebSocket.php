@@ -930,7 +930,7 @@ class WebSocket extends EventEmitter
 
         $options = $this->discord->getOptions();
         if (! empty($options['shardId']) && ! empty($options['shardCount'])) {
-            $data['shard_key'] = [$options['shardId'], $options['shardCount']];
+            $data['shard'] = [$options['shardId'], $options['shardCount']];
         }
 
         $this->send(['op' => Op::OP_IDENTIFY, 'd'  => $data]);
