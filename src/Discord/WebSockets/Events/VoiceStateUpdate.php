@@ -11,8 +11,8 @@
 
 namespace Discord\WebSockets\Events;
 
-use Discord\WebSockets\Event;
 use Discord\Parts\WebSockets\VoiceStateUpdate as VoiceStateUpdatePart;
+use Discord\WebSockets\Event;
 
 /**
  * Event that is emitted wheh `VOICE_STATE_UPDATE` is fired.
