@@ -76,6 +76,7 @@ class GuildCreate extends Event
             }
 
             Cache::set("guild.{$guildPart->id}.members.{$memberPart->id}", $memberPart);
+            Cache::set("user.{$memberPart->id}", $memberPart->user);
 
             $members[$memberPart->id] = $memberPart;
         }

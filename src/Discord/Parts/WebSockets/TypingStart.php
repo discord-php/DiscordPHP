@@ -19,6 +19,10 @@ use Discord\Parts\User\User;
 /**
  * A TypingStart part is used when the `TYPING_START` event is fired on the WebSocket. It contains
  * information such as when the event was fired and then channel it was fired in.
+ *
+ * @property string $user_id
+ * @property int    $timestamp
+ * @property string $channel_id
  */
 class TypingStart extends Part
 {
@@ -34,9 +38,7 @@ class TypingStart extends Part
      */
     public function getUserAttribute()
     {
-        return new User([
-            'id' => $this->user_id,
-        ], true);
+        return new User(['id' => $this->user_id], true);
     }
 
     /**
@@ -56,8 +58,10 @@ class TypingStart extends Part
      */
     public function getChannelAttribute()
     {
-        return new Channel([
-            'id' => $this->channel_id,
-        ], true);
+        return new Channel(
+            [
+                'id' => $this->channel_id,
+            ], true
+        );
     }
 }

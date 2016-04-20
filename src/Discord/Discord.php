@@ -12,7 +12,9 @@
 namespace Discord;
 
 use Carbon\Carbon;
+use Discord\Helpers\Collection;
 use Discord\Helpers\Guzzle;
+use Discord\Parts\Guild\Guild;
 use Discord\Parts\Part;
 use Discord\Parts\User\Client;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -22,6 +24,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * will start off with when you do anything with the client.
  *
  * @see \Discord\Parts\User\Client Most functions are forwarded onto the Client class.
+ *
+ * @property Collection|array|Guild[] $guilds
  */
 class Discord
 {

@@ -24,19 +24,47 @@ use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\Psr7\Request;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * A Channel can be either a text or voice channel on a Discord guild.
+ *
+ * @property string            $id
+ * @property string            $name
+ * @property string            $type
+ * @property string            $topic
+ * @property string            $guild_id
+ * @property int               $position
+ * @property bool              $is_private
+ * @property string            $last_message_id
+ * @property array|Overwrite[] $permission_overwrites
+ * @property array|Message[]   $messages
+ * @property int               $message_count
+ * @property int               $bitrate
  */
 class Channel extends Part
 {
     const TYPE_TEXT  = 'text';
+
     const TYPE_VOICE = 'voice';
 
     /**
      * {@inheritdoc}
      */
-    protected $fillable = ['id', 'name', 'type', 'topic', 'guild_id', 'position', 'is_private', 'last_message_id', 'permission_overwrites', 'messages', 'message_count', 'bitrate'];
+    protected $fillable = [
+        'id',
+        'name',
+        'type',
+        'topic',
+        'guild_id',
+        'position',
+        'is_private',
+        'last_message_id',
+        'permission_overwrites',
+        'messages',
+        'message_count',
+        'bitrate',
+    ];
 
     /**
      * {@inheritdoc}
@@ -106,7 +134,7 @@ class Channel extends Part
      */
     public function moveMember($member)
     {
-        if ($this->type != self::TYPE_VOICE) {
+        if ($this->getChannelType() != self::TYPE_VOICE) {
             return false;
         }
 
@@ -114,9 +142,12 @@ class Channel extends Part
             $member = $member->id;
         }
 
-        Guzzle::patch("guilds/{$this->guild_id}/members/{$member}", [
-            'channel_id' => $this->id,
-        ]);
+        Guzzle::patch(
+            "guilds/{$this->guild_id}/members/{$member}",
+            [
+                'channel_id' => $this->id,
+            ]
+        );
 
         // At the moment we are unable to check if the member
         // was moved successfully.
@@ -131,11 +162,11 @@ class Channel extends Part
      */
     public function getMembersAttribute()
     {
-        if (! Cache::has("channels.{$this->id}.voice.members")) {
-            Cache::set("channels.{$this->id}.voice.members", new Collection([], "channels.{$this->id}.voice.members"));
+        if (! Cache::has("channel.{$this->id}.voice.members")) {
+            Cache::set("channel.{$this->id}.voice.members", new Collection([], "channel.{$this->id}.voice.members"));
         }
 
-        return Cache::get("channels.{$this->id}.voice.members");
+        return Cache::get("channel.{$this->id}.voice.members");
     }
 
     /**
@@ -175,14 +206,17 @@ class Channel extends Part
      */
     public function createInvite($max_age = 3600, $max_uses = 0, $temporary = false, $xkcd = false)
     {
-        $request = Guzzle::post($this->replaceWithVariables('channels/:id/invites'), [
-            'validate' => null,
+        $request = Guzzle::post(
+            $this->replaceWithVariables('channels/:id/invites'),
+            [
+                'validate' => null,
 
-            'max_age'   => $max_age,
-            'max_uses'  => $max_uses,
-            'temporary' => $temporary,
-            'xkcdpass'  => $xkcd,
-        ]);
+                'max_age'   => $max_age,
+                'max_uses'  => $max_uses,
+                'temporary' => $temporary,
+                'xkcdpass'  => $xkcd,
+            ]
+        );
 
         $invite = new Invite((array) $request, true);
 
@@ -208,6 +242,54 @@ class Channel extends Part
         }
 
         return Cache::get("channel.{$this->id}.messages");
+    }
+
+    /**
+     * Fetches message history.
+     *
+     * @param array $options
+     *
+     * @return array|Collection
+     * @throws \Exception
+     */
+    public function getMessageHistory(array $options)
+    {
+        $resolver = new OptionsResolver();
+        $resolver->setDefaults(['limit' => 100]);
+        $resolver->setDefined(['before', 'after']);
+        $resolver->setAllowedValues('limit', range(1, 100));
+
+        $options = $resolver->resolve($options);
+        if (isset($options['before'], $options['after'])) {
+            throw new \Exception('Can only specify before, or after, not both.');
+        }
+
+        $url = "channels/{$this->id}/messages?limit={$options['limit']}";
+        if (isset($options['before'])) {
+            if ($options['before'] instanceof Message) {
+                throw new \Exception('before must be an instance of '.Message::class);
+            }
+            $url .= '&before='.$options['before']->id;
+        }
+        if (isset($options['after'])) {
+            if ($options['after'] instanceof Message) {
+                throw new \Exception('after must be an instance of '.Message::class);
+            }
+            $url .= '&after='.$options['after']->id;
+        }
+
+        $request  = Guzzle::get($url);
+        $messages = [];
+
+        foreach ($request as $index => $message) {
+            $message = new Message((array) $message, true);
+            Cache::set("message.{$message->id}", $message);
+            $messages[$index] = $message;
+        }
+
+        $messages = new Collection($messages);
+
+        return $messages;
     }
 
     /**
@@ -273,7 +355,7 @@ class Channel extends Part
             return $this->attributes_cache['overwrites'];
         }
 
-        if ($overwrites = Cache::get("channels.{$this->id}.overwrites")) {
+        if ($overwrites = Cache::get("channel.{$this->id}.overwrites")) {
             return $overwrites;
         }
 
@@ -281,7 +363,7 @@ class Channel extends Part
 
         // Will return an empty collection when you don't have permission.
         if (is_null($this->attributes['permission_overwrites'])) {
-            return new Collection([], "channels.{$this->id}.overwrites");
+            return new Collection([], "channel.{$this->id}.overwrites");
         }
 
         foreach ($this->attributes['permission_overwrites'] as $index => $data) {
@@ -290,9 +372,9 @@ class Channel extends Part
             $overwrites[$index] = new Overwrite($data, true);
         }
 
-        $overwrites = new Collection($overwrites, "channels.{$this->id}.overwrites");
+        $overwrites = new Collection($overwrites, "channel.{$this->id}.overwrites");
 
-        Cache::set("channels.{$this->id}.overwrites", $overwrites);
+        Cache::set("channel.{$this->id}.overwrites", $overwrites);
 
         return $overwrites;
     }
@@ -307,14 +389,17 @@ class Channel extends Part
      */
     public function sendMessage($text, $tts = false)
     {
-        if ($this->type != self::TYPE_TEXT) {
+        if ($this->getChannelType() != self::TYPE_TEXT) {
             return false;
         }
 
-        $request = Guzzle::post("channels/{$this->id}/messages", [
-            'content' => $text,
-            'tts'     => $tts,
-        ]);
+        $request = Guzzle::post(
+            "channels/{$this->id}/messages",
+            [
+                'content' => $text,
+                'tts'     => $tts,
+            ]
+        );
 
         $message = new Message((array) $request, true);
 
@@ -343,7 +428,7 @@ class Channel extends Part
      */
     public function sendFile($filepath, $filename, $content = null, $tts = false)
     {
-        if ($this->type != self::TYPE_TEXT) {
+        if ($this->getChannelType() != self::TYPE_TEXT) {
             return false;
         }
 
@@ -381,10 +466,14 @@ class Channel extends Part
         }
 
         while (! $done) {
-            $response = $guzzle->request('post', $url, [
-                'headers'   => $headers,
-                'multipart' => $multipart,
-            ]);
+            $response = $guzzle->request(
+                'post',
+                $url,
+                [
+                    'headers'   => $headers,
+                    'multipart' => $multipart,
+                ]
+            );
 
             // Rate limiting
             if ($response->getStatusCode() == 429) {
@@ -425,7 +514,7 @@ class Channel extends Part
      */
     public function broadcastTyping()
     {
-        if ($this->type != self::TYPE_TEXT) {
+        if ($this->getChannelType() != self::TYPE_TEXT) {
             return false;
         }
 

@@ -19,6 +19,19 @@ use Discord\Parts\User\User;
 
 /**
  * A message which is posted to a Discord text channel.
+ *
+ * @property string       $id
+ * @property string       $channel_id
+ * @property string       $content
+ * @property array|User[] $mentions
+ * @property User         $author
+ * @property bool         $mention_everyone
+ * @property int          $timestamp
+ * @property int|null     $edited_timestamp
+ * @property bool         $tts
+ * @property array        $attachments
+ * @property array        $embeds
+ * @property int|null     $nonce
  */
 class Message extends Part
 {
@@ -30,7 +43,20 @@ class Message extends Part
     /**
      * {@inheritdoc}
      */
-    protected $fillable = ['id', 'channel_id', 'content', 'mentions', 'author', 'mention_everyone', 'timestamp', 'edited_timestamp', 'tts', 'attachments', 'embeds', 'nonce'];
+    protected $fillable = [
+        'id',
+        'channel_id',
+        'content',
+        'mentions',
+        'author',
+        'mention_everyone',
+        'timestamp',
+        'edited_timestamp',
+        'tts',
+        'attachments',
+        'embeds',
+        'nonce',
+    ];
 
     /**
      * {@inheritdoc}
@@ -57,20 +83,23 @@ class Message extends Part
     /**
      * Returns the channel attribute.
      *
-     * Note: This channel object does not have a guild_id attribute, therfore you cannot get the guild from this object. If you neeed the guild, use the `full_channel` attribute on the channel.
+     * Note: This channel object does not have a guild_id attribute, therfore you cannot get the guild from this
+     * object. If you neeed the guild, use the `full_channel` attribute on the channel.
      *
      * @return Channel The channel the message was sent in.
      */
     public function getChannelAttribute()
     {
-        if ($channel = Cache::get("channels.{$this->channel_id}")) {
+        if ($channel = Cache::get("channel.{$this->channel_id}")) {
             return $channel;
         }
 
-        return new Channel([
-            'id'   => $this->channel_id,
-            'type' => 'text',
-        ], true);
+        return new Channel(
+            [
+                'id'   => $this->channel_id,
+                'type' => 'text',
+            ], true
+        );
     }
 
     /**
@@ -80,14 +109,14 @@ class Message extends Part
      */
     public function getFullChannelAttribute()
     {
-        if ($channel = Cache::get("channels.{$this->channel_id}")) {
+        if ($channel = Cache::get("channel.{$this->channel_id}")) {
             return $channel;
         }
 
         $request = Guzzle::get($this->replaceWithVariables('channels/:channel_id'));
         $channel = new Channel((array) $request, true);
 
-        Cache::set("channels.{$channel->id}", $channel);
+        Cache::set("channel.{$channel->id}", $channel);
 
         return $channel;
     }
@@ -99,12 +128,14 @@ class Message extends Part
      */
     public function getAuthorAttribute()
     {
-        return new User([
-            'id'            => $this->attributes['author']->id,
-            'username'      => $this->attributes['author']->username,
-            'avatar'        => $this->attributes['author']->avatar,
-            'discriminator' => $this->attributes['author']->discriminator,
-        ]);
+        return new User(
+            [
+                'id'            => $this->attributes['author']->id,
+                'username'      => $this->attributes['author']->username,
+                'avatar'        => $this->attributes['author']->avatar,
+                'discriminator' => $this->attributes['author']->discriminator,
+            ]
+        );
     }
 
     /**

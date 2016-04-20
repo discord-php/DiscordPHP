@@ -15,12 +15,37 @@ use Discord\Cache\Cache;
 use Discord\Parts\Part;
 use Discord\Parts\User\Member;
 
+/**
+ * VoiceStateUpdate Class.
+ *
+ * @property string $channel_id
+ * @property bool   $deaf
+ * @property string $guild_id
+ * @property bool   $mute
+ * @property bool   $self_deaf
+ * @property bool   $self_mute
+ * @property string $session_id
+ * @property string $supress
+ * @property string $token
+ * @property string $user_id
+ */
 class VoiceStateUpdate extends Part
 {
     /**
      * {@inheritdoc}
      */
-    protected $fillable = ['channel_id', 'deaf', 'guild_id', 'mute', 'self_deaf', 'self_mute', 'session_id', 'supress', 'token', 'user_id'];
+    protected $fillable = [
+        'channel_id',
+        'deaf',
+        'guild_id',
+        'mute',
+        'self_deaf',
+        'self_mute',
+        'session_id',
+        'supress',
+        'token',
+        'user_id',
+    ];
 
     /**
      * Gets the member attribute.
@@ -39,7 +64,7 @@ class VoiceStateUpdate extends Part
      */
     public function getChannelAttribute()
     {
-        return Cache::get("channels.{$this->channel_id}");
+        return Cache::get("channel.{$this->channel_id}");
     }
 
     /**
