@@ -572,9 +572,9 @@ class VoiceClient extends EventEmitter
      * @param string $file     The file to play.
      * @param int    $channels How many audio channels to encode with.
      *
-     * @return \React\Promise\Promise
-     *
      * @throws FileNotFoundException Thrown when the file specified could not be found.
+     *
+     * @return \React\Promise\Promise
      */
     public function playFile($file, $channels = 2)
     {
@@ -604,9 +604,9 @@ class VoiceClient extends EventEmitter
      * @param resource|Stream $stream   The stream to be encoded and sent.
      * @param int             $channels How many audio channels to encode with.
      *
-     * @return \React\Promise\Promise
-     *
      * @throws \RuntimeException Thrown when the stream passed to playRawStream is not a valid resource.
+     *
+     * @return \React\Promise\Promise
      */
     public function playRawStream($stream, $channels = 2)
     {
@@ -1394,9 +1394,9 @@ class VoiceClient extends EventEmitter
     /**
      * Checks if FFmpeg is installed.
      *
-     * @return bool Whether FFmpeg is installed or not.
-     *
      * @throws \Discord\Exceptions\FFmpegNotFoundException Thrown when FFmpeg is not found.
+     *
+     * @return bool Whether FFmpeg is installed or not.
      */
     public function checkForFFmpeg()
     {
@@ -1418,9 +1418,9 @@ class VoiceClient extends EventEmitter
     /**
      * Checks if DCA is installed.
      *
-     * @return bool Whether DCA is installed or not.
-     *
      * @throws \Discord\Exceptions\DCANotFoundException Thrown when DCA is not found.
+     *
+     * @return bool Whether DCA is installed or not.
      */
     public function checkForDCA()
     {

@@ -11,8 +11,8 @@
 
 namespace Discord\WebSockets\Events;
 
-use Discord\WebSockets\Event;
 use Discord\Parts\WebSockets\PresenceUpdate as PresenceUpdatePart;
+use Discord\WebSockets\Event;
 
 /**
  * Event that is emitted wheh `PRESENCE_UPDATE` is fired.

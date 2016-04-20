@@ -35,8 +35,6 @@ class ApcCacheDriver implements CacheInterface
         if ($this->has($key)) {
             return apc_fetch($key);
         }
-
-        return;
     }
 
     /**

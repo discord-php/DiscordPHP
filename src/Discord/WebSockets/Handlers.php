@@ -95,8 +95,6 @@ class Handlers
         if (isset($this->handlers[$event])) {
             return $this->handlers[$event];
         }
-
-        return;
     }
 
     /**

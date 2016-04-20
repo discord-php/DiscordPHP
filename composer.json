@@ -17,7 +17,7 @@
         "react/datagram":           "1.1.*",
         "react/socket-client":      "0.4.*",
         "symfony/options-resolver": "^2.7|^3.0",
-        "TrafficCophp/ByteBuffer":  "dev-master"
+        "TrafficCophp/ByteBuffer":  "^0.3"
     },
     "require-dev": {
         "symfony/var-dumper": "^2.7|^3.0",
