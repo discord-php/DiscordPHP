@@ -458,7 +458,6 @@ class WebSocket extends EventEmitter
 
         // guilds
         $guilds = new Collection();
-        dump($content->guilds);
 
         foreach ($content->guilds as $guild) {
             if (isset($guild->unavailable)) {
@@ -945,7 +944,6 @@ class WebSocket extends EventEmitter
             $data['shard'] = [(int) $options['shardId'], (int) $options['shardCount']];
         }
 
-        dump(['op' => Op::OP_IDENTIFY, 'd' => $data]);
         $this->send(['op' => Op::OP_IDENTIFY, 'd'  => $data]);
     }
 
