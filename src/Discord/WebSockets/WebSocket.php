@@ -940,7 +940,7 @@ class WebSocket extends EventEmitter
         ];
 
         $options = $this->discord->getOptions();
-        if (isset($options['shardId'], $options['shardCount']) && $options['shardId'] !== false && $options['shardCount'] !== false) {
+        if (array_key_exists('shardId', $options) && array_key_exists('shardCount', $options)) {
             $data['shard'] = [(int) $options['shardId'], (int) $options['shardCount']];
         }
 
