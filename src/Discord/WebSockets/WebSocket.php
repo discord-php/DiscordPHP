@@ -458,6 +458,7 @@ class WebSocket extends EventEmitter
 
         // guilds
         $guilds = new Collection();
+        dump($content->guilds);
 
         foreach ($content->guilds as $guild) {
             if (isset($guild->unavailable)) {
@@ -940,10 +941,11 @@ class WebSocket extends EventEmitter
         ];
 
         $options = $this->discord->getOptions();
-        if (! empty($options['shardId']) && ! empty($options['shardCount'])) {
-            $data['shard'] = [$options['shardId'], $options['shardCount']];
+        if ($options['shardId'] !== false && $options['shardCount'] !== false) {
+            $data['shard'] = [(int) $options['shardId'], (int) $options['shardCount']];
         }
 
+        dump(['op' => Op::OP_IDENTIFY, 'd' => $data]);
         $this->send(['op' => Op::OP_IDENTIFY, 'd'  => $data]);
     }
 
