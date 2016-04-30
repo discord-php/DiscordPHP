@@ -2,3 +2,4 @@ test.php
 composer.lock
 /vendor
 /discord
+/nbproject/private/

@@ -29,7 +29,7 @@ interface CacheInterface
      * Gets all the attributes in the cache.
      *
      * @param string $query A query string to run on the cache key(s).
-     * 
+     *
      * @return Collection A collection of cache objects.
      */
     public function getAll($query = null);

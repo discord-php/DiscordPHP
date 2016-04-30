@@ -13,8 +13,8 @@ namespace Discord\Helpers;
 
 use Discord\Cache\Cache;
 use Discord\Discord;
-use Discord\Exceptions\Rest\ContentTooLongException;
 use Discord\Exceptions\DiscordRequestFailedException;
+use Discord\Exceptions\Rest\ContentTooLongException;
 use Discord\Exceptions\Rest\NoPermissionsException;
 use Discord\Exceptions\Rest\NotFoundException;
 use GuzzleHttp\Client as GuzzleClient;
@@ -23,6 +23,11 @@ use Illuminate\Support\Str;
 
 /**
  * Provides an easy wrapper for the Guzzle HTTP client.
+ *
+ * @method static object get(...$params)
+ * @method static object post(...$params)
+ * @method static object put(...$params)
+ * @method static object delete(...$params)
  */
 class Guzzle
 {

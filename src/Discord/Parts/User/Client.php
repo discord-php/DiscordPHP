@@ -115,9 +115,9 @@ class Client extends Part
      *
      * @param string $filepath The path to the file.
      *
-     * @return bool Whether the setting succeeded or failed.
-     *
      * @throws \Discord\Exceptions\FileNotFoundException Thrown when the file does not exist.
+     *
+     * @return bool Whether the setting succeeded or failed.
      */
     public function setAvatar($filepath)
     {
@@ -169,7 +169,7 @@ class Client extends Part
      */
     public function getChannelsAttribute()
     {
-        return Cache::getAll("/channel.([0-9]+)/");
+        return Cache::getAll('/channel.([0-9]+)/');
     }
 
     /**
@@ -179,7 +179,7 @@ class Client extends Part
      */
     public function getUsersAttribute()
     {
-        return Cache::getAll("/user.([0-9]+)/");
+        return Cache::getAll('/user.([0-9]+)/');
     }
 
     /**

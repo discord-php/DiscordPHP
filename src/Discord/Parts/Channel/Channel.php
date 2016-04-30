@@ -24,6 +24,7 @@ use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\Psr7\Request;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * A Channel can be either a text or voice channel on a Discord guild.
@@ -133,7 +134,7 @@ class Channel extends Part
      */
     public function moveMember($member)
     {
-        if ($this->type != self::TYPE_VOICE) {
+        if ($this->getChannelType() != self::TYPE_VOICE) {
             return false;
         }
 
@@ -244,6 +245,54 @@ class Channel extends Part
     }
 
     /**
+     * Fetches message history.
+     *
+     * @param array $options
+     *
+     * @return array|Collection
+     * @throws \Exception
+     */
+    public function getMessageHistory(array $options)
+    {
+        $resolver = new OptionsResolver();
+        $resolver->setDefaults(['limit' => 100]);
+        $resolver->setDefined(['before', 'after']);
+        $resolver->setAllowedValues('limit', range(1, 100));
+
+        $options = $resolver->resolve($options);
+        if (isset($options['before'], $options['after'])) {
+            throw new \Exception('Can only specify before, or after, not both.');
+        }
+
+        $url = "channels/{$this->id}/messages?limit={$options['limit']}";
+        if (isset($options['before'])) {
+            if ($options['before'] instanceof Message) {
+                throw new \Exception('before must be an instance of '.Message::class);
+            }
+            $url .= '&before='.$options['before']->id;
+        }
+        if (isset($options['after'])) {
+            if ($options['after'] instanceof Message) {
+                throw new \Exception('after must be an instance of '.Message::class);
+            }
+            $url .= '&after='.$options['after']->id;
+        }
+
+        $request  = Guzzle::get($url);
+        $messages = [];
+
+        foreach ($request as $index => $message) {
+            $message = new Message((array) $message, true);
+            Cache::set("message.{$message->id}", $message);
+            $messages[$index] = $message;
+        }
+
+        $messages = new Collection($messages);
+
+        return $messages;
+    }
+
+    /**
      * Returns the message history attribute.
      *
      * @return Collection A collection of messages.
@@ -340,7 +389,7 @@ class Channel extends Part
      */
     public function sendMessage($text, $tts = false)
     {
-        if ($this->type != self::TYPE_TEXT) {
+        if ($this->getChannelType() != self::TYPE_TEXT) {
             return false;
         }
 
@@ -373,13 +422,13 @@ class Channel extends Part
      * @param string $content  Message content to send with the file.
      * @param bool   $tts      Whether to send the message with TTS.
      *
-     * @return Message|bool Either a Message if the request passed or false if it failed.
-     *
      * @throws \Discord\Exceptions\FileNotFoundException Thrown when the file does not exist.
+     *
+     * @return Message|bool Either a Message if the request passed or false if it failed.
      */
     public function sendFile($filepath, $filename, $content = null, $tts = false)
     {
-        if ($this->type != self::TYPE_TEXT) {
+        if ($this->getChannelType() != self::TYPE_TEXT) {
             return false;
         }
 
@@ -465,7 +514,7 @@ class Channel extends Part
      */
     public function broadcastTyping()
     {
-        if ($this->type != self::TYPE_TEXT) {
+        if ($this->getChannelType() != self::TYPE_TEXT) {
             return false;
         }
 
