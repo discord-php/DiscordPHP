@@ -246,19 +246,21 @@ class Member extends Part
                 }
             }
         } else {
-            $request = Guzzle::get("guilds/{$this->guild_id}/members/{$this->id}");
-
-            foreach ($request->roles as $key => $role) {
-                $perm                = new Permission(
-                    [
-                        'perms' => $role->permissions,
-                    ]
-                );
-                $role                = (array) $role;
-                $role['permissions'] = $perm;
-                $role                = new Role($role, true);
-                Cache::set("role.{$role->id}", $role);
-                $roles[] = $role;
+            $request = Guzzle::get($this->replaceWithVariables('guilds/:guild_id/roles'));
+            
+            foreach ($request as $key => $role) {
+                if (false !== array_search($role->id, (array) $this->attributes['roles'])) {
+                    $perm                = new Permission(
+                        [
+                            'perms' => $role->permissions,
+                        ]
+                    );
+                    $role                = (array) $role;
+                    $role['permissions'] = $perm;
+                    $role                = new Role($role, true);
+                    Cache::set("role.{$role->id}", $role);
+                    $roles[] = $role;
+                }
             }
         }
 
