@@ -224,11 +224,7 @@ class Member extends Part
      */
     public function getRolesAttribute()
     {
-        if ($roles = Cache::get("guild.{$this->guild_id}.members.{$this->id}.roles")) {
-            return $roles;
-        }
-
-        $roles = [];
+        $roles = new Collection();
 
         if ($guildRoles = Cache::get("guild.{$this->guild_id}.roles")) {
             foreach ($guildRoles as $role) {
@@ -237,26 +233,21 @@ class Member extends Part
                 }
             }
         } else {
-            $request = Guzzle::get($this->replaceWithVariables('guilds/:guild_id/roles'));
+            $request = Guzzle::get("guilds/{$this->guild_id}/members/{$this->id}");
 
-            foreach ($request as $key => $role) {
-                if (false !== array_search($role->id, (array) $this->attributes['roles'])) {
-                    $perm                = new Permission(
-                        [
-                            'perms' => $role->permissions,
-                        ]
-                    );
-                    $role                = (array) $role;
-                    $role['permissions'] = $perm;
-                    $role                = new Role($role, true);
-                    Cache::set("role.{$role->id}", $role);
-                    $roles[] = $role;
-                }
+            foreach ($request->roles as $key => $role) {
+                $perm                = new Permission(
+                    [
+                        'perms' => $role->permissions,
+                    ]
+                );
+                $role                = (array) $role;
+                $role['permissions'] = $perm;
+                $role                = new Role($role, true);
+                Cache::set("role.{$role->id}", $role);
+                $roles[] = $role;
             }
         }
-
-        $roles = new Collection($roles);
-        $roles->setCacheKey("guild.{$this->guild_id}.members.{$this->id}.roles", true);
 
         return $roles;
     }
