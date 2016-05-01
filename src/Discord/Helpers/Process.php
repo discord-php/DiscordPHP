@@ -216,9 +216,9 @@ class Process extends EventEmitter
      *
      * @param bool $enhance
      *
-     * @return self
-     *
      * @throws RuntimeException If the process is already running
+     *
+     * @return self
      */
     final public function setEnhanceSigchildCompatibility($enhance)
     {

@@ -44,8 +44,6 @@ class ArrayCacheDriver implements CacheInterface
 
             return $this->cache[$key]['data'];
         }
-
-        return;
     }
 
     /**

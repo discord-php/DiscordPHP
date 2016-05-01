@@ -925,21 +925,26 @@ class WebSocket extends EventEmitter
     {
         $token = (substr(DISCORD_TOKEN, 0, 4) === 'Bot ') ? substr(DISCORD_TOKEN, 4) : DISCORD_TOKEN;
 
-        $this->send([
-            'op' => Op::OP_IDENTIFY,
-            'd'  => [
-                'token'      => $token,
-                'properties' => [
-                    '$os'               => PHP_OS,
-                    '$browser'          => Guzzle::getUserAgent(),
-                    '$device'           => '',
-                    '$referrer'         => 'https://github.com/teamreflex/DiscordPHP',
-                    '$referring_domain' => 'https://github.com/teamreflex/DiscordPHP',
-                ],
-                'large_threshold' => 250,
-                'compress'        => true,
+        $data = [
+            'token'           => $token,
+            'v'               => self::CURRENT_GATEWAY_VERSION,
+            'properties'      => [
+                '$os'               => PHP_OS,
+                '$browser'          => Guzzle::getUserAgent(),
+                '$device'           => '',
+                '$referrer'         => 'https://github.com/teamreflex/DiscordPHP',
+                '$referring_domain' => 'https://github.com/teamreflex/DiscordPHP',
             ],
-        ]);
+            'large_threshold' => 250,
+            'compress'        => true,
+        ];
+
+        $options = $this->discord->getOptions();
+        if ($options['shardId'] !== false && $options['shardCount'] !== false) {
+            $data['shard'] = [(int) $options['shardId'], (int) $options['shardCount']];
+        }
+
+        $this->send(['op' => Op::OP_IDENTIFY, 'd'  => $data]);
     }
 
     /**
