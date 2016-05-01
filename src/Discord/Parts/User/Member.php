@@ -237,11 +237,7 @@ class Member extends Part
      */
     public function getRolesAttribute()
     {
-        if ($roles = Cache::get("guild.{$this->guild_id}.members.{$this->id}.roles")) {
-            return $roles;
-        }
-
-        $roles = [];
+        $roles = new Collection();
 
         if ($guildRoles = Cache::get("guild.{$this->guild_id}.roles")) {
             foreach ($guildRoles as $role) {
@@ -251,7 +247,7 @@ class Member extends Part
             }
         } else {
             $request = Guzzle::get($this->replaceWithVariables('guilds/:guild_id/roles'));
-
+            
             foreach ($request as $key => $role) {
                 if (false !== array_search($role->id, (array) $this->attributes['roles'])) {
                     $perm                = new Permission(
@@ -267,9 +263,6 @@ class Member extends Part
                 }
             }
         }
-
-        $roles = new Collection($roles);
-        $roles->setCacheKey("guild.{$this->guild_id}.members.{$this->id}.roles", true);
 
         return $roles;
     }
