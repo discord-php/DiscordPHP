@@ -356,7 +356,7 @@ class Guild extends Part
             return;
         }
 
-        return "https://cdn.discordapp.com/icons/{$this->attributes['id']}/{$this->attributes['icon']}.jpg"
+        return "https://cdn.discordapp.com/icons/{$this->attributes['id']}/{$this->attributes['icon']}.jpg";
     }
 
     /**
@@ -380,7 +380,7 @@ class Guild extends Part
             return;
         }
 
-        return "https://cdn.discordapp.com/splash/{$this->attributes['id']}/{$this->attributes['icon']}.jpg"
+        return "https://cdn.discordapp.com/splash/{$this->attributes['id']}/{$this->attributes['icon']}.jpg";
     }
 
     /**
