@@ -142,7 +142,7 @@ class WebSocket extends EventEmitter
      *
      * @var bool Whether to use ETF.
      */
-    protected $useEtf = true;
+    protected $useEtf;
 
     /**
      * The Erlang ETF encoder.
@@ -211,11 +211,10 @@ class WebSocket extends EventEmitter
         $loop            = (is_null($loop)) ? LoopFactory::create() : $loop;
         $resolver        = (is_null($resolver)) ? (new DnsFactory())->create('8.8.8.8', $loop) : $resolver;
         $this->wsfactory = new WsFactory($loop, $resolver);
+        $this->useEtf    = $etf;
 
         // ETF breaks snowflake IDs on 32-bit.
         if (2147483647 !== PHP_INT_MAX && $etf) {
-            $this->useEtf = $etf;
-
             $this->etf = new Erlpack();
             $this->etf->on('error', function ($e) {
                 $this->emit('error', [$e, $this]);
