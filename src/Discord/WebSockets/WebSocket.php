@@ -213,15 +213,13 @@ class WebSocket extends EventEmitter
         $this->wsfactory = new WsFactory($loop, $resolver);
 
         // ETF breaks snowflake IDs on 32-bit.
-        if (2147483647 !== PHP_INT_MAX) {
+        if (2147483647 !== PHP_INT_MAX && $etf) {
             $this->useEtf = $etf;
 
-            if ($etf) {
-                $this->etf = new Erlpack();
-                $this->etf->on('error', function ($e) {
-                    $this->emit('error', [$e, $this]);
-                });
-            }
+            $this->etf = new Erlpack();
+            $this->etf->on('error', function ($e) {
+                $this->emit('error', [$e, $this]);
+            });
         }
 
         $this->handlers = new Handlers();
