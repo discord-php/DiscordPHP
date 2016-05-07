@@ -226,6 +226,32 @@ class Channel extends Part
     }
 
     /**
+     * Bulk deletes an array of messages.
+     *
+     * @param array $messages An array of messages to delete.
+     *
+     * @return void 
+     */
+    public function deleteMessages(array $messages)
+    {
+        $messageID = [];
+
+        foreach ($messages as $message) {
+            if ($message instanceof Message) {
+                $messageID[] = $message->id;
+            } else {
+                $messageID[] = $message;
+            }
+        }
+
+        dump($messageID);
+
+        Guzzle::delete("channels/{$this->id}/messages", [
+            'messages' => $messageID,
+        ]);
+    }
+
+    /**
      * Returns the messages attribute.
      *
      * Note: This is only used for messages that have been
