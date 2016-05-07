@@ -28,7 +28,7 @@ class RolePermission extends Permission
         'create_instant_invite' => 0,
         'kick_members'          => 1,
         'ban_members'           => 2,
-        'manage_roles'          => 3,
+        'administrator'         => 3,
         'manage_channels'       => 4,
         'manage_server'         => 5,
 
@@ -47,5 +47,8 @@ class RolePermission extends Permission
         'voice_deafen_members' => 23,
         'voice_move_members'   => 24,
         'voice_use_vad'        => 25,
+        'change_nickname'      => 26,
+        'manage_nicknames'     => 27,
+        'manage_roles'         => 28,
     ];
 }

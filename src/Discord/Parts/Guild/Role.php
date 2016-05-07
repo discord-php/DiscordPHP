@@ -124,4 +124,14 @@ class Role extends Part
             'permissions' => $this->permissions->perms,
         ];
     }
+
+    /**
+     * Returns a formatted mention.
+     *
+     * @return string A formatted mention.
+     */
+    public function __toString()
+    {
+        return "<@&{$this->id}>";
+    }
 }
