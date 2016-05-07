@@ -246,7 +246,7 @@ class Channel extends Part
 
         dump($messageID);
 
-        Guzzle::delete("channels/{$this->id}/messages", [
+        Guzzle::post("channels/{$this->id}/messages/bulk_delete", [
             'messages' => $messageID,
         ]);
     }
