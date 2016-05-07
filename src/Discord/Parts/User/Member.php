@@ -22,6 +22,7 @@ use Discord\Parts\Guild\Guild;
 use Discord\Parts\Guild\Role;
 use Discord\Parts\Part;
 use Discord\Parts\Permissions\RolePermission as Permission;
+use Discord\Parts\User\Game;
 
 /**
  * A member is a relationship between a user and a guild. It contains user-to-guild specific data like roles.
@@ -188,6 +189,16 @@ class Member extends Part
         }
 
         return true;
+    }
+
+    /**
+     * Gets the game attribute.
+     *
+     * @return Game The game attribute.
+     */
+    public function getGameAttribute()
+    {
+        return new Game((array) $this->attributes['game'], true);
     }
 
     /**

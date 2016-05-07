@@ -20,6 +20,7 @@ use Discord\Parts\Channel\Channel;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Guild\Role;
 use Discord\Parts\Permissions\RolePermission as Permission;
+use Discord\Parts\User\Game;
 use Discord\Parts\User\Member;
 use Discord\Parts\WebSockets\VoiceStateUpdate;
 use Discord\Voice\VoiceClient;
@@ -942,6 +943,39 @@ class WebSocket extends EventEmitter
         }
 
         $this->send(['op' => Op::OP_IDENTIFY, 'd'  => $data]);
+    }
+
+    /**
+     * Updates the clients presence.
+     *
+     * @param Game $game The game object.
+     * @param bool $idle Whether we are idle.
+     *
+     * @return void 
+     */
+    public function updatePresence(Game $game = null, $idle = false)
+    {
+        $idle = ($idle) ? $idle : null;
+
+        if (! is_null($game)) {
+            $game = $game->getPublicAttributes();
+        }
+
+        dump([
+            'op' => 3,
+            'd'  => [
+                'game'       => $game,
+                'idle_since' => $idle,
+            ]
+        ]);
+
+        $this->send([
+            'op' => 3,
+            'd'  => [
+                'game'       => $game,
+                'idle_since' => $idle,
+            ]
+        ]);
     }
 
     /**

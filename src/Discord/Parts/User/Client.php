@@ -18,6 +18,7 @@ use Discord\Helpers\Collection;
 use Discord\Helpers\Guzzle;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Part;
+use Discord\Parts\User\Game;
 
 /**
  * The client is the main interface for the client. Most calls on the main class are forwarded here.
@@ -143,21 +144,11 @@ class Client extends Part
      *
      * @return bool Whether the setting succeeded or failed.
      */
-    public function updatePresence($ws, $gamename, $idle)
+    public function updatePresence($ws, $gamename, $idle = false)
     {
-        $idle = ($idle == false) ? null : true;
-
-        $ws->send(
-            [
-                'op' => 3,
-                'd'  => [
-                    'game'       => (! is_null($gamename) ? [
-                        'name' => $gamename,
-                    ] : null),
-                    'idle_since' => $idle,
-                ],
-            ]
-        );
+        $ws->updatePresence(new Game([
+            'name' => $gamename,
+        ]), $idle);
 
         return true;
     }
