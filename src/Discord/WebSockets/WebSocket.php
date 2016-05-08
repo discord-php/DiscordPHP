@@ -961,14 +961,6 @@ class WebSocket extends EventEmitter
             $game = $game->getPublicAttributes();
         }
 
-        dump([
-            'op' => 3,
-            'd'  => [
-                'game'       => $game,
-                'idle_since' => $idle,
-            ]
-        ]);
-
         $this->send([
             'op' => 3,
             'd'  => [

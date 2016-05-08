@@ -196,7 +196,6 @@ class OtpErlangBinary
                 return pack('CN', TAG_BINARY_EXT, $size).$this->value;
             }
         } else {
-            dump($this->value);
             throw new OutputException('unknown binary type');
         }
     }
