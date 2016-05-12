@@ -46,9 +46,9 @@ $ws->run();
 
 ## Notes
 
-- This library can use a lot of RAM and PHP may hit the memory limit. To increase the emmory limit, use `ini_set('memory_limit', '200M')` to increase it to 200 mb. If you would like it to be unlimited, use `ini_set('memory_limit', '-1')`.
+- This library can use a lot of RAM and PHP may hit the memory limit. To increase the memory limit, use `ini_set('memory_limit', '200M')` to increase it to 200 mb. If you would like it to be unlimited, use `ini_set('memory_limit', '-1')`.
 
-## Documentation
+## Documentatinon
 
 At the moment, there is no solid documentation. However, there are class references available [here](https://teamreflex.github.io/DiscordPHP/).
 
@@ -61,7 +61,7 @@ At the moment, there is no solid documentation. However, there are class referen
 
 ## Contributing
 
-We are open to contributions. However, please make sure you follow our coding standards (PSR-4 autoloading and custon styling). We use StyleCI to format our code. Our StyleCI settings can be found [here](https://github.com/teamreflex/DiscordPHP/wiki/StyleCI).
+We are open to contributions. However, please make sure you follow our coding standards (PSR-4 autoloading and custom styling). We use StyleCI to format our code. Our StyleCI settings can be found [here](https://github.com/teamreflex/DiscordPHP/wiki/StyleCI).
 
 ## Library Comparison
 
