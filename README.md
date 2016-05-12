@@ -48,7 +48,7 @@ $ws->run();
 
 - This library can use a lot of RAM and PHP may hit the memory limit. To increase the memory limit, use `ini_set('memory_limit', '200M')` to increase it to 200 mb. If you would like it to be unlimited, use `ini_set('memory_limit', '-1')`.
 
-## Documentatinon
+## Documentation
 
 At the moment, there is no solid documentation. However, there are class references available [here](https://teamreflex.github.io/DiscordPHP/).
 
