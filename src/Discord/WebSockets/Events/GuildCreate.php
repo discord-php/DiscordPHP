@@ -33,6 +33,8 @@ class GuildCreate extends Event
     {
         if (isset($data->unavailable) && $data->unavailable) {
             $this->emit('unavailable', [$data->id]);
+
+            return;
         }
 
         $guildPart = new Guild((array) $data, true);
@@ -101,6 +103,10 @@ class GuildCreate extends Event
      */
     public function updateDiscordInstance($data, $discord)
     {
+        if (is_null($data)) {
+            return $discord;
+        }
+
         Cache::set("guild.{$data->id}", $data);
 
         $discord->guilds->push($data);
