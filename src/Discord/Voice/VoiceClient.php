@@ -1433,7 +1433,6 @@ class VoiceClient extends EventEmitter
             $binary = realpath(__DIR__.'/../../../bin/'.$binaries[PHP_OS][PHP_INT_SIZE * 8]);
 
             $this->dca = $binary;
-            echo $binary, PHP_EOL;
 
             return;
         }
