@@ -348,10 +348,6 @@ class Channel extends Part
      */
     public function getInvitesAttribute()
     {
-        if ($invites = Cache::get("channel.{$this->id}.invites")) {
-            return $invites;
-        }
-
         $request = Guzzle::get($this->replaceWithVariables('channels/:id/invites'));
         $invites = [];
 
@@ -361,9 +357,7 @@ class Channel extends Part
             $invites[$index] = $invite;
         }
 
-        $invites = new Collection($invites, "channel.{$this->id}.invites");
-
-        Cache::set("channel.{$this->id}.invites", $invites);
+        $invites = new Collection($invites);
 
         return $invites;
     }

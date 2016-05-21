@@ -321,14 +321,6 @@ class Guild extends Part
      */
     public function getInvitesAttribute()
     {
-        if (isset($this->attributes_cache['invites'])) {
-            return $this->attributes_cache['invites'];
-        }
-
-        if ($invites = Cache::get("guild.{$this->id}.invites")) {
-            return $invites;
-        }
-
         $request = Guzzle::get($this->replaceWithVariables('guilds/:id/invites'));
         $invites = [];
 
@@ -338,9 +330,7 @@ class Guild extends Part
             $invites[$index] = $invite;
         }
 
-        $invites = new Collection($invites, "guild.{$this->id}.invites");
-
-        Cache::set("guild.{$this->id}.invites", $invites);
+        $invites = new Collection($invites);
 
         return $invites;
     }
