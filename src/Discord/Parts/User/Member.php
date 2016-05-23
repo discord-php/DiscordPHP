@@ -148,7 +148,13 @@ class Member extends Part
     public function addRole($role)
     {
         if (is_int($role)) {
-            $role = new Role(['id' => $role], true);
+            $roles = Cache::getAll('/guilds.([0-9]+).roles.'.$role.'/');
+
+            if (! $roles->isEmpty()) {
+                $role = new Role(['id' => $role], true);
+            } else {
+                $role = $roles->first();
+            }
         }
 
         // We don't want a double up on roles
