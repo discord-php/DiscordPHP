@@ -205,7 +205,7 @@ class WebSocket extends EventEmitter
      *
      * @return void
      */
-    public function __construct(Discord $discord, LoopInterface &$loop = null, $etf = true, $flush = 600, Resolver $resolver = null)
+    public function __construct(Discord $discord, LoopInterface &$loop = null, $etf = false, $flush = 600, Resolver $resolver = null)
     {
         $this->discord   = $discord;
         $this->gateway   = $this->getGateway();
