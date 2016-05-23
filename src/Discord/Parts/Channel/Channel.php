@@ -495,7 +495,7 @@ class Channel extends Part
 
             // Rate limiting
             if ($response->getStatusCode() == 429) {
-                $tts = $response->getHeader('Retry-After') * 1000;
+                $tts = (int) $response->getHeader('Retry-After')[0] * 1000;
                 usleep($tts);
                 continue;
             }
