@@ -454,16 +454,6 @@ class Channel extends Part
             throw new FileNotFoundException("File does not exist at path {$filepath}.");
         }
 
-        $guzzle = new GuzzleClient(['http_errors' => false, 'allow_redirects' => true]);
-        $url    = Guzzle::$base_url."/channels/{$this->id}/messages";
-
-        $headers = [
-            'User-Agent'    => Guzzle::getUserAgent(),
-            'authorization' => DISCORD_TOKEN,
-        ];
-
-        $done      = false;
-        $finalRes  = null;
         $multipart = [
             [
                 'name'     => 'file',
@@ -476,41 +466,14 @@ class Channel extends Part
             ],
         ];
 
-        if (! is_null($content)) {
-            $multipart[] = [
-                'name'     => 'content',
-                'contents' => $content,
-            ];
-        }
-
-        while (! $done) {
-            $response = $guzzle->request(
-                'post',
-                $url,
-                [
-                    'headers'   => $headers,
-                    'multipart' => $multipart,
-                ]
-            );
-
-            // Rate limiting
-            if ($response->getStatusCode() == 429) {
-                $tts = (int) $response->getHeader('Retry-After')[0] * 1000;
-                usleep($tts);
-                continue;
-            }
-
-            // Not good!
-            if ($response->getStatusCode() < 200 || $response->getStatusCode() > 226) {
-                Guzzle::handleError($response->getStatusCode(), $response->getReasonPhrase());
-                continue;
-            }
-
-            $done     = true;
-            $finalRes = $response;
-        }
-
-        $request = json_decode($finalRes->getBody());
+        $request = Guzzle::runRequest(
+            'POST',
+            "channels/{$this->id}/messages",
+            null,
+            false,
+            [],
+            ['multipart' => $multipart]
+        );
 
         $message = new Message((array) $request, true);
 
