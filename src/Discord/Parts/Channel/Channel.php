@@ -239,7 +239,7 @@ class Channel extends Part
         if ($count == 0) {
             return false;
         } elseif ($count == 1) {
-            return (array_shift($count))->delete();
+            return reset($test)->delete();
         }
 
         $messageID = [];
