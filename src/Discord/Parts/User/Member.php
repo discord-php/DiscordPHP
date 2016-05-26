@@ -22,7 +22,6 @@ use Discord\Parts\Guild\Guild;
 use Discord\Parts\Guild\Role;
 use Discord\Parts\Part;
 use Discord\Parts\Permissions\RolePermission as Permission;
-use Discord\Parts\User\Game;
 
 /**
  * A member is a relationship between a user and a guild. It contains user-to-guild specific data like roles.
@@ -264,7 +263,7 @@ class Member extends Part
             }
         } else {
             $request = Guzzle::get($this->replaceWithVariables('guilds/:guild_id/roles'));
-            
+
             foreach ($request as $key => $role) {
                 if (false !== array_search($role->id, (array) $this->attributes['roles'])) {
                     $perm                = new Permission(

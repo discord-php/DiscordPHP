@@ -772,7 +772,7 @@ class WebSocket extends EventEmitter
 
         $handlerData = $handler->getData($data->d, $this->discord);
         $newDiscord  = $handler->updateDiscordInstance($handlerData, $this->discord);
-        
+
         if (! is_null($handlerData)) {
             $this->emit($data->t, [$handlerData, $this->discord, $newDiscord, $this]);
 
@@ -954,7 +954,7 @@ class WebSocket extends EventEmitter
      * @param Game $game The game object.
      * @param bool $idle Whether we are idle.
      *
-     * @return void 
+     * @return void
      */
     public function updatePresence(Game $game = null, $idle = false)
     {
@@ -969,7 +969,7 @@ class WebSocket extends EventEmitter
             'd'  => [
                 'game'       => $game,
                 'idle_since' => $idle,
-            ]
+            ],
         ]);
     }
 
