@@ -14,6 +14,7 @@ namespace Discord\Parts\WebSockets;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Guild\Role;
 use Discord\Parts\Part;
+use Discord\Parts\User\Game;
 use Discord\Parts\User\User;
 
 /**
@@ -55,5 +56,15 @@ class PresenceUpdate extends Part
                 'id' => $this->guild_id,
             ], true
         );
+    }
+
+    /**
+     * Gets the game attribute.
+     *
+     * @return Game The game attribute.
+     */
+    public function getGameAttribute()
+    {
+        return new Game((array) $this->attributes['game'], true);
     }
 }

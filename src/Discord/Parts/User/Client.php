@@ -115,9 +115,9 @@ class Client extends Part
      *
      * @param string $filepath The path to the file.
      *
-     * @return bool Whether the setting succeeded or failed.
-     *
      * @throws \Discord\Exceptions\FileNotFoundException Thrown when the file does not exist.
+     *
+     * @return bool Whether the setting succeeded or failed.
      */
     public function setAvatar($filepath)
     {
@@ -143,23 +143,33 @@ class Client extends Part
      *
      * @return bool Whether the setting succeeded or failed.
      */
-    public function updatePresence($ws, $gamename, $idle)
+    public function updatePresence($ws, $gamename, $idle = false)
     {
-        $idle = ($idle == false) ? null : true;
-
-        $ws->send(
-            [
-                'op' => 3,
-                'd'  => [
-                    'game'       => (! is_null($gamename) ? [
-                        'name' => $gamename,
-                    ] : null),
-                    'idle_since' => $idle,
-                ],
-            ]
-        );
+        $ws->updatePresence(new Game([
+            'name' => $gamename,
+        ]), $idle);
 
         return true;
+    }
+
+    /**
+     * Returns a collection of channels.
+     *
+     * @return Collection A collection of channels.
+     */
+    public function getChannelsAttribute()
+    {
+        return Cache::getAll('/channel.([0-9]+)/');
+    }
+
+    /**
+     * Returns a collection of users.
+     *
+     * @return Collection A collection of users.
+     */
+    public function getUsersAttribute()
+    {
+        return Cache::getAll('/user.([0-9]+)/');
     }
 
     /**

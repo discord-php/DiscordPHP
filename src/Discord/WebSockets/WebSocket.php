@@ -20,6 +20,7 @@ use Discord\Parts\Channel\Channel;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Guild\Role;
 use Discord\Parts\Permissions\RolePermission as Permission;
+use Discord\Parts\User\Game;
 use Discord\Parts\User\Member;
 use Discord\Parts\WebSockets\VoiceStateUpdate;
 use Discord\Voice\VoiceClient;
@@ -142,7 +143,7 @@ class WebSocket extends EventEmitter
      *
      * @var bool Whether to use ETF.
      */
-    protected $useEtf = true;
+    protected $useEtf;
 
     /**
      * The Erlang ETF encoder.
@@ -204,24 +205,21 @@ class WebSocket extends EventEmitter
      *
      * @return void
      */
-    public function __construct(Discord $discord, LoopInterface &$loop = null, $etf = true, $flush = 600, Resolver $resolver = null)
+    public function __construct(Discord $discord, LoopInterface &$loop = null, $etf = false, $flush = 600, Resolver $resolver = null)
     {
         $this->discord   = $discord;
         $this->gateway   = $this->getGateway();
         $loop            = (is_null($loop)) ? LoopFactory::create() : $loop;
         $resolver        = (is_null($resolver)) ? (new DnsFactory())->create('8.8.8.8', $loop) : $resolver;
         $this->wsfactory = new WsFactory($loop, $resolver);
+        $this->useEtf    = $etf;
 
         // ETF breaks snowflake IDs on 32-bit.
-        if (2147483647 !== PHP_INT_MAX) {
-            $this->useEtf = $etf;
-
-            if ($etf) {
-                $this->etf = new Erlpack();
-                $this->etf->on('error', function ($e) {
-                    $this->emit('error', [$e, $this]);
-                });
-            }
+        if (2147483647 !== PHP_INT_MAX && $etf) {
+            $this->etf = new Erlpack();
+            $this->etf->on('error', function ($e) {
+                $this->emit('error', [$e, $this]);
+            });
         }
 
         $this->handlers = new Handlers();
@@ -507,7 +505,8 @@ class WebSocket extends EventEmitter
                 // and see if they exist already. That takes ~34ms per member, way way too much.
                 $members[$memberPart->id] = $memberPart;
 
-                // Cache::set("guild.{$memberPart->guild_id}.members.{$memberPart->id}", $memberPart);
+                Cache::set("guild.{$guildPart->id}.members.{$memberPart->id}", $memberPart);
+                Cache::set("user.{$memberPart->id}", $memberPart->user);
             }
 
             $members->setCacheKey("guild.{$guild->id}.members", true);
@@ -773,14 +772,17 @@ class WebSocket extends EventEmitter
 
         $handlerData = $handler->getData($data->d, $this->discord);
         $newDiscord  = $handler->updateDiscordInstance($handlerData, $this->discord);
-        $this->emit($data->t, [$handlerData, $this->discord, $newDiscord, $this]);
 
-        foreach ($handlerSettings['alternatives'] as $alternative) {
-            $this->emit($alternative, [$handlerData, $this->discord, $newDiscord, $this]);
-        }
+        if (! is_null($handlerData)) {
+            $this->emit($data->t, [$handlerData, $this->discord, $newDiscord, $this]);
 
-        if ($data->t == Event::MESSAGE_CREATE && (strpos($handlerData->content, '<@'.$this->discord->id.'>') !== false)) {
-            $this->emit('mention', [$handlerData, $this->discord, $newDiscord, $this]);
+            foreach ($handlerSettings['alternatives'] as $alternative) {
+                $this->emit($alternative, [$handlerData, $this->discord, $newDiscord, $this]);
+            }
+
+            if ($data->t == Event::MESSAGE_CREATE && (strpos($handlerData->content, '<@'.$this->discord->id.'>') !== false)) {
+                $this->emit('mention', [$handlerData, $this->discord, $newDiscord, $this]);
+            }
         }
 
         $this->discord = $newDiscord;
@@ -924,19 +926,49 @@ class WebSocket extends EventEmitter
     {
         $token = (substr(DISCORD_TOKEN, 0, 4) === 'Bot ') ? substr(DISCORD_TOKEN, 4) : DISCORD_TOKEN;
 
+        $data = [
+            'token'           => $token,
+            'v'               => self::CURRENT_GATEWAY_VERSION,
+            'properties'      => [
+                '$os'               => PHP_OS,
+                '$browser'          => Guzzle::getUserAgent(),
+                '$device'           => '',
+                '$referrer'         => 'https://github.com/teamreflex/DiscordPHP',
+                '$referring_domain' => 'https://github.com/teamreflex/DiscordPHP',
+            ],
+            'large_threshold' => 250,
+            'compress'        => true,
+        ];
+
+        $options = $this->discord->getOptions();
+        if (array_key_exists('shardId', $options) && array_key_exists('shardCount', $options)) {
+            $data['shard'] = [(int) $options['shardId'], (int) $options['shardCount']];
+        }
+
+        $this->send(['op' => Op::OP_IDENTIFY, 'd'  => $data]);
+    }
+
+    /**
+     * Updates the clients presence.
+     *
+     * @param Game $game The game object.
+     * @param bool $idle Whether we are idle.
+     *
+     * @return void
+     */
+    public function updatePresence(Game $game = null, $idle = false)
+    {
+        $idle = ($idle) ? $idle : null;
+
+        if (! is_null($game)) {
+            $game = $game->getPublicAttributes();
+        }
+
         $this->send([
-            'op' => Op::OP_IDENTIFY,
+            'op' => 3,
             'd'  => [
-                'token'      => $token,
-                'properties' => [
-                    '$os'               => PHP_OS,
-                    '$browser'          => Guzzle::getUserAgent(),
-                    '$device'           => '',
-                    '$referrer'         => 'https://github.com/teamreflex/DiscordPHP',
-                    '$referring_domain' => 'https://github.com/teamreflex/DiscordPHP',
-                ],
-                'large_threshold' => 250,
-                'compress'        => true,
+                'game'       => $game,
+                'idle_since' => $idle,
             ],
         ]);
     }

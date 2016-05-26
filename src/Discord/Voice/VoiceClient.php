@@ -572,9 +572,9 @@ class VoiceClient extends EventEmitter
      * @param string $file     The file to play.
      * @param int    $channels How many audio channels to encode with.
      *
-     * @return \React\Promise\Promise
-     *
      * @throws FileNotFoundException Thrown when the file specified could not be found.
+     *
+     * @return \React\Promise\Promise
      */
     public function playFile($file, $channels = 2)
     {
@@ -604,9 +604,9 @@ class VoiceClient extends EventEmitter
      * @param resource|Stream $stream   The stream to be encoded and sent.
      * @param int             $channels How many audio channels to encode with.
      *
-     * @return \React\Promise\Promise
-     *
      * @throws \RuntimeException Thrown when the stream passed to playRawStream is not a valid resource.
+     *
+     * @return \React\Promise\Promise
      */
     public function playRawStream($stream, $channels = 2)
     {
@@ -646,7 +646,6 @@ class VoiceClient extends EventEmitter
     public function playDCAStream($stream)
     {
         $deferred = new Deferred();
-        $process  = null;
 
         if (! $this->ready) {
             $deferred->reject(new \Exception('Voice Client is not ready.'));
@@ -655,13 +654,16 @@ class VoiceClient extends EventEmitter
         }
 
         if ($stream instanceof Process) {
-            $process = $stream;
-            $process->stderr->on('data', function ($d) {
+            $stream->stderr->on('data', function ($d) {
                 if (empty($d)) {
                     return;
                 }
 
                 $this->emit('stderr', [$d, $this]);
+            });
+
+            $deferred->promise()->then(function () use ($stream) {
+                $stream->close();
             });
 
             $stream = $stream->stdout;
@@ -684,7 +686,7 @@ class VoiceClient extends EventEmitter
 
         $this->setSpeaking(true);
 
-        $processff2opus = function () use (&$processff2opus, $stream, &$noData, &$noDataHeader, $deferred, &$count, $process) {
+        $processff2opus = function () use (&$processff2opus, $stream, &$noData, &$noDataHeader, $deferred, &$count) {
             if ($this->isPaused) {
                 $this->loop->addTimer($this->frameSize / 1000, $processff2opus);
 
@@ -699,10 +701,6 @@ class VoiceClient extends EventEmitter
                 $this->timestamp  = 0;
                 $this->streamTime = 0;
                 $this->startTime  = null;
-
-                if (isset($process)) {
-                    $process->close();
-                }
 
                 $this->stopAudio = false;
                 $deferred->resolve(true);
@@ -721,10 +719,6 @@ class VoiceClient extends EventEmitter
                     $this->timestamp  = 0;
                     $this->streamTime = 0;
                     $this->startTime  = null;
-
-                    if (isset($process)) {
-                        $process->close();
-                    }
 
                     $deferred->resolve(false);
                 } else {
@@ -1181,8 +1175,8 @@ class VoiceClient extends EventEmitter
             return $deferred->promise();
         }
 
-        // $this->stop();
-        // $this->setSpeaking(false);
+        $this->stop();
+        $this->setSpeaking(false);
         $this->ready = false;
 
         $this->mainWebsocket->send([
@@ -1394,9 +1388,9 @@ class VoiceClient extends EventEmitter
     /**
      * Checks if FFmpeg is installed.
      *
-     * @return bool Whether FFmpeg is installed or not.
-     *
      * @throws \Discord\Exceptions\FFmpegNotFoundException Thrown when FFmpeg is not found.
+     *
+     * @return bool Whether FFmpeg is installed or not.
      */
     public function checkForFFmpeg()
     {
@@ -1418,39 +1412,32 @@ class VoiceClient extends EventEmitter
     /**
      * Checks if DCA is installed.
      *
-     * @return bool Whether DCA is installed or not.
-     *
      * @throws \Discord\Exceptions\DCANotFoundException Thrown when DCA is not found.
+     *
+     * @return bool Whether DCA is installed or not.
      */
     public function checkForDCA()
     {
         $binaries = [
-            // 'dca',
-            // 'ff2opus',
+            'Darwin' => [
+                32 => 'dca-v0.1.0-darwin-10.6-386',
+                64 => 'dca-v0.1.0-darwin-10.6-amd64',
+            ],
+            'Linux' => [
+                32 => 'dca-v0.1.0-linux-386',
+                64 => 'dca-v0.1.0-linux-amd64',
+            ],
         ];
 
-        foreach ($binaries as $binary) {
-            $output = shell_exec("which {$binary}");
+        if (array_key_exists(PHP_OS, $binaries)) {
+            $binary = realpath(__DIR__.'/../../../bin/'.$binaries[PHP_OS][PHP_INT_SIZE * 8]);
 
-            if (! empty($output)) {
-                $this->dca = $binary;
+            $this->dca = $binary;
 
-                return;
-            }
+            return;
         }
 
-        switch (PHP_OS) {
-            case 'Darwin': // Mac OS
-                $this->dca = realpath(__DIR__.'/../../../bin/dca-darwin');
-
-                return;
-            case 'Linux':
-                $this->dca = realpath(__DIR__.'/../../../bin/dca-linux');
-
-                return;
-        }
-
-        $this->emit('error', [new DCANotFoundException('No DCA binary was found.')]);
+        $this->emit('error', [new DCANotFoundException('No DCA binary was found that is compatible with your operating system and arch.')]);
     }
 
     /**

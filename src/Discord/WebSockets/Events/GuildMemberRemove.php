@@ -36,6 +36,7 @@ class GuildMemberRemove extends Event
     public function updateDiscordInstance($data, $discord)
     {
         Cache::remove("guild.{$data->guild_id}.members.{$data->id}");
+        Cache::remove("user.{$data->id}");
 
         foreach ($discord->guilds as $index => $guild) {
             if ($guild->id == $data->guild_id) {

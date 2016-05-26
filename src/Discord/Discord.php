@@ -12,7 +12,9 @@
 namespace Discord;
 
 use Carbon\Carbon;
+use Discord\Helpers\Collection;
 use Discord\Helpers\Guzzle;
+use Discord\Parts\Guild\Guild;
 use Discord\Parts\Part;
 use Discord\Parts\User\Client;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -22,6 +24,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * will start off with when you do anything with the client.
  *
  * @see \Discord\Parts\User\Client Most functions are forwarded onto the Client class.
+ *
+ * @property Collection|array|Guild[] $guilds
  */
 class Discord
 {
@@ -47,14 +51,20 @@ class Discord
     protected $client;
 
     /**
+     * @var array
+     */
+    protected $options;
+
+    /**
      * Logs into the Discord servers.
      *
      * @param string|array $options Either a token, or Options for the bot
      */
     public function __construct($options)
     {
-        $options = ! is_array($options) ? ['token' => $options] : $options;
-        $options = $this->resolveOptions($options);
+        $options       = ! is_array($options) ? ['token' => $options] : $options;
+        $options       = $this->resolveOptions($options);
+        $this->options = $options;
 
         define('DISCORD_TOKEN', $options['token']);
 
@@ -64,15 +74,20 @@ class Discord
     /**
      * @param array $options
      *
-     * @return array
      * @throws \Exception
+     *
+     * @return array
      */
     private function resolveOptions(array $options)
     {
         $resolver = new OptionsResolver();
         $resolver
             ->setRequired('token')
-            ->setAllowedTypes('token', 'string');
+            ->setAllowedTypes('token', 'string')
+            ->setDefined([
+                'shardId',
+                'shardCount',
+            ]);
 
         $result = $resolver->resolve($options);
 
@@ -162,10 +177,42 @@ class Discord
     }
 
     /**
+     * @return array
+     */
+    public function getOptions()
+    {
+        return $this->options;
+    }
+
+    /**
+     * @param array $options
+     *
+     * @return Discord
+     */
+    public function setOptions($options)
+    {
+        $this->options = $options;
+
+        return $this;
+    }
+
+    /**
      * @return Client
      */
     public function getClient()
     {
         return $this->client;
+    }
+
+    /**
+     * @param Client $client
+     *
+     * @return Discord
+     */
+    public function setClient($client)
+    {
+        $this->client = $client;
+
+        return $this;
     }
 }

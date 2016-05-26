@@ -13,8 +13,8 @@ namespace Discord\Helpers;
 
 use Discord\Cache\Cache;
 use Discord\Discord;
-use Discord\Exceptions\Rest\ContentTooLongException;
 use Discord\Exceptions\DiscordRequestFailedException;
+use Discord\Exceptions\Rest\ContentTooLongException;
 use Discord\Exceptions\Rest\NoPermissionsException;
 use Discord\Exceptions\Rest\NotFoundException;
 use GuzzleHttp\Client as GuzzleClient;
@@ -23,6 +23,11 @@ use Illuminate\Support\Str;
 
 /**
  * Provides an easy wrapper for the Guzzle HTTP client.
+ *
+ * @method static object get(...$params)
+ * @method static object post(...$params)
+ * @method static object put(...$params)
+ * @method static object delete(...$params)
  */
 class Guzzle
 {
@@ -69,10 +74,11 @@ class Guzzle
      * @param array  $content      Parameters that will be encoded into JSON and sent with the request.
      * @param bool   $auth         Whether the authentication token will be sent with the request.
      * @param array  $extraHeaders Extra headers to send with the request.
+     * @param array  $options      Options for Guzzle.
      *
      * @return object An object that was returned from the Discord servers.
      */
-    public static function runRequest($method, $url, $content, $auth, $extraHeaders)
+    public static function runRequest($method, $url, $content, $auth, $extraHeaders, $options = [])
     {
         $guzzle    = new GuzzleClient(['http_errors' => false, 'allow_redirects' => true]);
         $query_url = self::$base_url."/{$url}";
@@ -83,8 +89,11 @@ class Guzzle
 
         $headers = [
             'User-Agent'   => self::getUserAgent(),
-            'Content-Type' => 'application/json',
         ];
+
+        if (! is_null($content)) {
+            $headers['Content-Type'] = 'application/json';
+        }
 
         if (! $auth) {
             $headers['authorization'] = DISCORD_TOKEN;
@@ -99,7 +108,7 @@ class Guzzle
 
         while (! $done) {
             $request  = new Request($method, $query_url, $headers, $content);
-            $response = $guzzle->send($request);
+            $response = $guzzle->send($request, $options);
 
             // Bad Gateway
             // Cloudflare SSL Handshake

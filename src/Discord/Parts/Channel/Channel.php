@@ -15,20 +15,17 @@ use Discord\Cache\Cache;
 use Discord\Exceptions\FileNotFoundException;
 use Discord\Helpers\Collection;
 use Discord\Helpers\Guzzle;
-use Discord\Parts\Channel\Message;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Guild\Invite;
 use Discord\Parts\Guild\Role;
 use Discord\Parts\Part;
 use Discord\Parts\Permissions\ChannelPermission;
 use Discord\Parts\User\Member;
-use Discord\Parts\User\User;
-use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\Psr7\Request;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * A Channel can be either a text or voice channel on a Discord guild.
- *
  *
  * @property string            $id
  * @property string            $name
@@ -135,7 +132,7 @@ class Channel extends Part
      */
     public function moveMember($member)
     {
-        if ($this->type != self::TYPE_VOICE) {
+        if ($this->getChannelType() != self::TYPE_VOICE) {
             return false;
         }
 
@@ -227,6 +224,38 @@ class Channel extends Part
     }
 
     /**
+     * Bulk deletes an array of messages.
+     *
+     * @param array $messages An array of messages to delete.
+     *
+     * @return void
+     */
+    public function deleteMessages(array $messages)
+    {
+        $count = count($messages);
+
+        if ($count == 0) {
+            return false;
+        } elseif ($count == 1) {
+            return reset($test)->delete();
+        }
+
+        $messageID = [];
+
+        foreach ($messages as $message) {
+            if ($message instanceof Message) {
+                $messageID[] = $message->id;
+            } else {
+                $messageID[] = $message;
+            }
+        }
+
+        Guzzle::post("channels/{$this->id}/messages/bulk_delete", [
+            'messages' => $messageID,
+        ]);
+    }
+
+    /**
      * Returns the messages attribute.
      *
      * Note: This is only used for messages that have been
@@ -243,6 +272,54 @@ class Channel extends Part
         }
 
         return Cache::get("channel.{$this->id}.messages");
+    }
+
+    /**
+     * Fetches message history.
+     *
+     * @param array $options
+     *
+     * @return array|Collection
+     * @throws \Exception
+     */
+    public function getMessageHistory(array $options)
+    {
+        $resolver = new OptionsResolver();
+        $resolver->setDefaults(['limit' => 100]);
+        $resolver->setDefined(['before', 'after']);
+        $resolver->setAllowedValues('limit', range(1, 100));
+
+        $options = $resolver->resolve($options);
+        if (isset($options['before'], $options['after'])) {
+            throw new \Exception('Can only specify before, or after, not both.');
+        }
+
+        $url = "channels/{$this->id}/messages?limit={$options['limit']}";
+        if (isset($options['before'])) {
+            if ($options['before'] instanceof Message) {
+                throw new \Exception('before must be an instance of '.Message::class);
+            }
+            $url .= '&before='.$options['before']->id;
+        }
+        if (isset($options['after'])) {
+            if ($options['after'] instanceof Message) {
+                throw new \Exception('after must be an instance of '.Message::class);
+            }
+            $url .= '&after='.$options['after']->id;
+        }
+
+        $request  = Guzzle::get($url);
+        $messages = [];
+
+        foreach ($request as $index => $message) {
+            $message = new Message((array) $message, true);
+            Cache::set("message.{$message->id}", $message);
+            $messages[$index] = $message;
+        }
+
+        $messages = new Collection($messages);
+
+        return $messages;
     }
 
     /**
@@ -277,10 +354,6 @@ class Channel extends Part
      */
     public function getInvitesAttribute()
     {
-        if ($invites = Cache::get("channel.{$this->id}.invites")) {
-            return $invites;
-        }
-
         $request = Guzzle::get($this->replaceWithVariables('channels/:id/invites'));
         $invites = [];
 
@@ -290,9 +363,7 @@ class Channel extends Part
             $invites[$index] = $invite;
         }
 
-        $invites = new Collection($invites, "channel.{$this->id}.invites");
-
-        Cache::set("channel.{$this->id}.invites", $invites);
+        $invites = new Collection($invites);
 
         return $invites;
     }
@@ -342,7 +413,7 @@ class Channel extends Part
      */
     public function sendMessage($text, $tts = false)
     {
-        if ($this->type != self::TYPE_TEXT) {
+        if ($this->getChannelType() != self::TYPE_TEXT) {
             return false;
         }
 
@@ -375,13 +446,13 @@ class Channel extends Part
      * @param string $content  Message content to send with the file.
      * @param bool   $tts      Whether to send the message with TTS.
      *
-     * @return Message|bool Either a Message if the request passed or false if it failed.
-     *
      * @throws \Discord\Exceptions\FileNotFoundException Thrown when the file does not exist.
+     *
+     * @return Message|bool Either a Message if the request passed or false if it failed.
      */
     public function sendFile($filepath, $filename, $content = null, $tts = false)
     {
-        if ($this->type != self::TYPE_TEXT) {
+        if ($this->getChannelType() != self::TYPE_TEXT) {
             return false;
         }
 
@@ -389,16 +460,6 @@ class Channel extends Part
             throw new FileNotFoundException("File does not exist at path {$filepath}.");
         }
 
-        $guzzle = new GuzzleClient(['http_errors' => false, 'allow_redirects' => true]);
-        $url    = Guzzle::$base_url."/channels/{$this->id}/messages";
-
-        $headers = [
-            'User-Agent'    => Guzzle::getUserAgent(),
-            'authorization' => DISCORD_TOKEN,
-        ];
-
-        $done      = false;
-        $finalRes  = null;
         $multipart = [
             [
                 'name'     => 'file',
@@ -411,41 +472,14 @@ class Channel extends Part
             ],
         ];
 
-        if (! is_null($content)) {
-            $multipart[] = [
-                'name'     => 'content',
-                'contents' => $content,
-            ];
-        }
-
-        while (! $done) {
-            $response = $guzzle->request(
-                'post',
-                $url,
-                [
-                    'headers'   => $headers,
-                    'multipart' => $multipart,
-                ]
-            );
-
-            // Rate limiting
-            if ($response->getStatusCode() == 429) {
-                $tts = $response->getHeader('Retry-After') * 1000;
-                usleep($tts);
-                continue;
-            }
-
-            // Not good!
-            if ($response->getStatusCode() < 200 || $response->getStatusCode() > 226) {
-                Guzzle::handleError($response->getStatusCode(), $response->getReasonPhrase());
-                continue;
-            }
-
-            $done     = true;
-            $finalRes = $response;
-        }
-
-        $request = json_decode($finalRes->getBody());
+        $request = Guzzle::runRequest(
+            'POST',
+            "channels/{$this->id}/messages",
+            null,
+            false,
+            [],
+            ['multipart' => $multipart]
+        );
 
         $message = new Message((array) $request, true);
 
@@ -467,7 +501,7 @@ class Channel extends Part
      */
     public function broadcastTyping()
     {
-        if ($this->type != self::TYPE_TEXT) {
+        if ($this->getChannelType() != self::TYPE_TEXT) {
             return false;
         }
 

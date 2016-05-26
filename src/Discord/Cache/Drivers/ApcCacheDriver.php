@@ -13,6 +13,7 @@ namespace Discord\Cache\Drivers;
 
 use Discord\Cache\Cache;
 use Discord\Cache\CacheInterface;
+use Discord\Helpers\Collection;
 
 /**
  * The APC cache driver.
@@ -34,8 +35,14 @@ class ApcCacheDriver implements CacheInterface
         if ($this->has($key)) {
             return apc_fetch($key);
         }
+    }
 
-        return;
+    /**
+     * {@inheritdoc}
+     */
+    public function getAll($query = null)
+    {
+        return new Collection(); // todo later
     }
 
     /**

@@ -26,6 +26,9 @@ use Discord\Parts\Permissions\RolePermission as Permission;
 /**
  * A member is a relationship between a user and a guild. It contains user-to-guild specific data like roles.
  *
+ * @property string       $id
+ * @property string       $username
+ * @property string       $discriminator
  * @property User         $user
  * @property array|Role[] $roles
  * @property bool         $deaf
@@ -144,7 +147,13 @@ class Member extends Part
     public function addRole($role)
     {
         if (is_int($role)) {
-            $role = new Role(['id' => $role], true);
+            $roles = Cache::getAll('/guilds.([0-9]+).roles.'.$role.'/');
+
+            if (! $roles->isEmpty()) {
+                $role = new Role(['id' => $role], true);
+            } else {
+                $role = $roles->first();
+            }
         }
 
         // We don't want a double up on roles
@@ -188,6 +197,16 @@ class Member extends Part
     }
 
     /**
+     * Gets the game attribute.
+     *
+     * @return Game The game attribute.
+     */
+    public function getGameAttribute()
+    {
+        return new Game((array) $this->attributes['game'], true);
+    }
+
+    /**
      * Returns the id attribute.
      *
      * @return int The user ID of the member.
@@ -208,6 +227,16 @@ class Member extends Part
     }
 
     /**
+     * Returns the discriminator attribute.
+     *
+     * @return string The discriminator of the member.
+     */
+    public function getDiscriminatorAttribute()
+    {
+        return $this->user->discriminator;
+    }
+
+    /**
      * Returns the user attribute.
      *
      * @return User The user that owns the member.
@@ -224,11 +253,7 @@ class Member extends Part
      */
     public function getRolesAttribute()
     {
-        if ($roles = Cache::get("guild.{$this->guild_id}.members.{$this->id}.roles")) {
-            return $roles;
-        }
-
-        $roles = [];
+        $roles = new Collection();
 
         if ($guildRoles = Cache::get("guild.{$this->guild_id}.roles")) {
             foreach ($guildRoles as $role) {
@@ -254,9 +279,6 @@ class Member extends Part
                 }
             }
         }
-
-        $roles = new Collection($roles);
-        $roles->setCacheKey("guild.{$this->guild_id}.members.{$this->id}.roles", true);
 
         return $roles;
     }

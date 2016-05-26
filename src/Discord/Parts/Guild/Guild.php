@@ -24,23 +24,25 @@ use Discord\Parts\User\User;
 /**
  * A Guild is Discord's equivalent of a server. It contains all the Members, Channels, Roles, Bans etc.
  *
- * @property string       $id
- * @property string       $name
- * @property string       $icon
- * @property string       $region
- * @property string       $owner_id
- * @property array|Role[] $roles
- * @property \DateTime    $joined_at
- * @property string       $afk_channel_id
- * @property int          $afk_timeout
- * @property bool         $embed_enabled
- * @property string       $embed_channel_id
- * @property array        $features
- * @property string       $splash
- * @property array        $emojis
- * @property bool         $large
- * @property int          $verification_level
- * @property int          $member_count
+ * @property string                     $id
+ * @property string                     $name
+ * @property string                     $icon
+ * @property string                     $region
+ * @property string                     $owner_id
+ * @property array|Role[]               $roles
+ * @property \DateTime                  $joined_at
+ * @property string                     $afk_channel_id
+ * @property int                        $afk_timeout
+ * @property bool                       $embed_enabled
+ * @property string                     $embed_channel_id
+ * @property array                      $features
+ * @property string                     $splash
+ * @property array                      $emojis
+ * @property bool                       $large
+ * @property int                        $verification_level
+ * @property int                        $member_count
+ * @property Collection|array|Channel[] $channels
+ * @property Collection|array|Member[]  $members
  */
 class Guild extends Part
 {
@@ -319,14 +321,6 @@ class Guild extends Part
      */
     public function getInvitesAttribute()
     {
-        if (isset($this->attributes_cache['invites'])) {
-            return $this->attributes_cache['invites'];
-        }
-
-        if ($invites = Cache::get("guild.{$this->id}.invites")) {
-            return $invites;
-        }
-
         $request = Guzzle::get($this->replaceWithVariables('guilds/:id/invites'));
         $invites = [];
 
@@ -336,9 +330,7 @@ class Guild extends Part
             $invites[$index] = $invite;
         }
 
-        $invites = new Collection($invites, "guild.{$this->id}.invites");
-
-        Cache::set("guild.{$this->id}.invites", $invites);
+        $invites = new Collection($invites);
 
         return $invites;
     }
@@ -354,7 +346,7 @@ class Guild extends Part
             return;
         }
 
-        return "https://discordapp.com/{$this->attributes['id']}/icons/{$this->attributes['icon']}.jpg";
+        return "https://cdn.discordapp.com/icons/{$this->attributes['id']}/{$this->attributes['icon']}.jpg";
     }
 
     /**
@@ -378,7 +370,7 @@ class Guild extends Part
             return;
         }
 
-        return "https://discordapp.com/api/guilds/{$this->id}/splashes/{$this->attributes['splash']}.jpg";
+        return "https://cdn.discordapp.com/splash/{$this->attributes['id']}/{$this->attributes['icon']}.jpg";
     }
 
     /**

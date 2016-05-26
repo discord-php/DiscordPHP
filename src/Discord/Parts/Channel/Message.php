@@ -56,6 +56,7 @@ class Message extends Part
         'attachments',
         'embeds',
         'nonce',
+        'mention_roles',
     ];
 
     /**

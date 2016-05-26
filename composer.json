@@ -9,10 +9,11 @@
         }
     ],
     "require":     {
-        "cache/cache":              "^0.1",
+        "cache/adapter-bundle":     "^0.3.3",
+        "cache/array-adapter":      "^0.4.0",
         "guzzlehttp/guzzle":        "~5.3|~6.0",
-        "illuminate/support":       "^5.1",
-        "nesbot/carbon":            "^1.21",
+        "illuminate/support":       "^4.0|^5.0",
+        "nesbot/carbon":            "^1.18",
         "ratchet/pawl":             "0.2.*",
         "react/datagram":           "1.1.*",
         "react/socket-client":      "0.4.*",
@@ -32,7 +33,10 @@
         ]
     },
     "suggest":     {
-        "predis/predis": "Required to use the Redis cache driver."
+        "cache/apc-adapter":       "Required to use the APC cache driver",
+        "cache/memcache-adapter":  "Required to use the Memcache cache driver",
+        "cache/memcached-adapter": "Required to use the Memcached cache driver",
+        "cache/redis-adapter":     "Required to use the Redis cache driver"
     },
     "scripts":     {
         "test": "php tests/run.php"

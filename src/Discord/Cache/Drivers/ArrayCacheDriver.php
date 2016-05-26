@@ -13,6 +13,7 @@ namespace Discord\Cache\Drivers;
 
 use Discord\Cache\Cache;
 use Discord\Cache\CacheInterface;
+use Discord\Helpers\Collection;
 
 /**
  * The Array cache driver.
@@ -43,8 +44,22 @@ class ArrayCacheDriver implements CacheInterface
 
             return $this->cache[$key]['data'];
         }
+    }
 
-        return;
+    /**
+     * {@inheritdoc}
+     */
+    public function getAll($query = null)
+    {
+        $collection = new Collection();
+
+        foreach ($this->cache as $key => $item) {
+            if (! is_null($query) && preg_match($query, $key)) {
+                $collection->push($this->get($key));
+            }
+        }
+
+        return $collection;
     }
 
     /**
