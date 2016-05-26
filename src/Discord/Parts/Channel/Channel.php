@@ -21,8 +21,6 @@ use Discord\Parts\Guild\Role;
 use Discord\Parts\Part;
 use Discord\Parts\Permissions\ChannelPermission;
 use Discord\Parts\User\Member;
-use Discord\Parts\User\User;
-use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\Psr7\Request;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -230,7 +228,7 @@ class Channel extends Part
      *
      * @param array $messages An array of messages to delete.
      *
-     * @return void 
+     * @return void
      */
     public function deleteMessages(array $messages)
     {

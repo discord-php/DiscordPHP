@@ -1426,7 +1426,7 @@ class VoiceClient extends EventEmitter
             'Linux' => [
                 32 => 'dca-v0.1.0-linux-386',
                 64 => 'dca-v0.1.0-linux-amd64',
-            ]
+            ],
         ];
 
         if (array_key_exists(PHP_OS, $binaries)) {

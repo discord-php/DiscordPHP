@@ -18,7 +18,6 @@ use Discord\Helpers\Collection;
 use Discord\Helpers\Guzzle;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Part;
-use Discord\Parts\User\Game;
 
 /**
  * The client is the main interface for the client. Most calls on the main class are forwarded here.
