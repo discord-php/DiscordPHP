@@ -367,7 +367,7 @@ class WebSocket extends EventEmitter
 
         $this->ws = $ws;
 
-        if ($this->reconnecting && is_null($this->sessionId)) {
+        if ($this->reconnecting && ! is_null($this->sessionId)) {
             $token = (substr(DISCORD_TOKEN, 0, 4) === 'Bot ') ? substr(DISCORD_TOKEN, 4) : DISCORD_TOKEN;
 
             $this->send([
