@@ -19,7 +19,7 @@ class UserRepository extends AbstractRepository
      * {@inheritdoc}
      */
     protected $endpoints = [
-    	'get' => 'users/:id',
+        'get' => 'users/:id',
     ];
 
     /**

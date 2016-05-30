@@ -13,17 +13,13 @@ namespace Discord\Parts\User;
 
 use Carbon\Carbon;
 use Discord\Cache\Cache;
-use Discord\Exceptions\DiscordRequestFailedException;
 use Discord\Helpers\Collection;
-use Discord\Helpers\Guzzle;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Guild\Ban;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Guild\Role;
 use Discord\Parts\Part;
-use Discord\Parts\Permissions\RolePermission as Permission;
 use React\Promise\Deferred;
-use React\Promise\FulfilledPromise;
 
 /**
  * A member is a relationship between a user and a guild. It contains user-to-guild specific data like roles.
@@ -73,7 +69,7 @@ class Member extends Part
             function () use ($deferred) {
                 $deferred->resolve($this->factory->create(Ban::class,
                     [
-                        'user'  => $this->user,
+                        'user' => $this->user,
                         'guild' => new Guild(['id' => $this->guild_id], true),
                     ], true
                 ));

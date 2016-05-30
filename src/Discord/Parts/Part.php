@@ -12,15 +12,11 @@
 namespace Discord\Parts;
 
 use ArrayAccess;
-use Discord\Exceptions\DiscordRequestFailedException;
-use Discord\Exceptions\PartRequestFailedException;
 use Discord\Factory\Factory;
-use Discord\Helpers\Guzzle;
 use Discord\Http\Http;
 use Discord\Wrapper\CacheWrapper;
 use Illuminate\Support\Str;
 use JsonSerializable;
-use React\Promise\FulfilledPromise;
 use React\Promise\Promise;
 use Serializable;
 
@@ -124,11 +120,11 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
     /**
      * Create a new part instance.
      *
-     * @param Factory $factory The factory.
-     * @param Http $http The HTTP client.
-     * @param CacheWrapper $cache The cache.
-     * @param array $attributes An array of attributes to build the part.
-     * @param bool  $created    Whether the part has already been created.
+     * @param Factory      $factory    The factory.
+     * @param Http         $http       The HTTP client.
+     * @param CacheWrapper $cache      The cache.
+     * @param array        $attributes An array of attributes to build the part.
+     * @param bool         $created    Whether the part has already been created.
      *
      * @return void
      */
@@ -154,7 +150,7 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
             if (is_null($response)) {
                 $response = true;
             }
-            
+
             $deferred->resolve(true);
         };
 
@@ -223,7 +219,7 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
         $matcher = preg_match_all($this->regex, $string, $matches);
 
         $original = $matches[0];
-        $vars     = $matches[1];
+        $vars = $matches[1];
 
         foreach ($vars as $key => $variable) {
             if ($attribute = $this->getAttribute($variable)) {
@@ -252,7 +248,7 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
         $matcher = preg_match_all($this->regex, $string, $matches);
 
         $original = $matches[0];
-        $vars     = $matches[1];
+        $vars = $matches[1];
 
         foreach ($vars as $key => $variable) {
             if ($attribute = $params[$variable]) {

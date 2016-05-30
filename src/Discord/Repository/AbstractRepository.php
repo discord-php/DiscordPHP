@@ -64,15 +64,15 @@ abstract class AbstractRepository extends Collection implements RepositoryInterf
      *
      * @param Http         $http
      * @param CacheWrapper $cache
-     * @param Factory  $factory
+     * @param Factory      $factory
      * @param array        $vars
      */
     public function __construct(Http $http, CacheWrapper $cache, Factory $factory, $vars = [])
     {
-        $this->http        = $http;
-        $this->cache       = $cache;
+        $this->http = $http;
+        $this->cache = $cache;
         $this->factory = $factory;
-        $this->vars        = $vars;
+        $this->vars = $vars;
     }
 
     /**
@@ -150,16 +150,16 @@ abstract class AbstractRepository extends Collection implements RepositoryInterf
     public function save(Part &$part)
     {
         if ($part->created) {
-            $method     = 'patch';
-            $endpoint   = $part->replaceWithVariables($this->replaceWithVariables(@$this->endpoints['update']));
+            $method = 'patch';
+            $endpoint = $part->replaceWithVariables($this->replaceWithVariables(@$this->endpoints['update']));
             $attributes = $part->getCreatableAttributes();
 
             if (! isset($this->endpoints['update'])) {
                 return \React\Promise\reject(new \Exception('You cannot update this part.'));
             }
         } else {
-            $method     = 'post';
-            $endpoint   = $part->replaceWithVariables($this->replaceWithVariables(@$this->endpoints['create']));
+            $method = 'post';
+            $endpoint = $part->replaceWithVariables($this->replaceWithVariables(@$this->endpoints['create']));
             $attributes = $part->getUpdatableAttributes();
 
             if (! isset($this->endpoints['create'])) {

@@ -18,7 +18,7 @@ use Discord\Parts\Part;
  */
 class Game extends Part
 {
-    const TYPE_PLAYING   = 0;
+    const TYPE_PLAYING = 0;
     const TYPE_STREAMING = 1;
 
     /**

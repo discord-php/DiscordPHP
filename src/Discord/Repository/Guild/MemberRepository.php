@@ -20,7 +20,7 @@ class MemberRepository extends AbstractRepository
      * {@inheritdoc}
      */
     protected $endpoints = [
-        'get'    => 'guild/:guild_id/members/:id',
+        'get' => 'guild/:guild_id/members/:id',
         'update' => 'guild/:guild_id/members/:id',
         'delete' => 'guild/:guild_id/members/:id',
     ];
@@ -35,7 +35,8 @@ class MemberRepository extends AbstractRepository
      *
      * @param Member $member The member to kick.
      *
-     * @return \React\Promise\Promise 
+     * @return \React\Promise\Promise
+     *
      * @see self::delete()
      */
     public function kick($member)

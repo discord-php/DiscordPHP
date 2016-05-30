@@ -20,8 +20,8 @@ class RoleRepository extends AbstractRepository
      * {@inheritdoc}
      */
     protected $endpoints = [
-        'all'    => 'guilds/:guild_id/roles',
-        'get'    => 'guilds/:guild_id/roles/:id',
+        'all' => 'guilds/:guild_id/roles',
+        'get' => 'guilds/:guild_id/roles/:id',
         'create' => 'guilds/:guild_id/roles',
         'update' => 'guilds/:guild_id/roles/:id',
         'delete' => 'guilds/:guild_id/roles/:id',

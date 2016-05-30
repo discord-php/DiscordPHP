@@ -12,7 +12,6 @@
 namespace Discord\Parts\Guild;
 
 use Carbon\Carbon;
-use Discord\Helpers\Guzzle;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Part;
 use Discord\Parts\User\Member;

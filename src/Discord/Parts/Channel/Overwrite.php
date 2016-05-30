@@ -37,7 +37,7 @@ class Overwrite extends Part
      */
     public function getAllowAttribute()
     {
-        $perm        = new ChannelPermission();
+        $perm = new ChannelPermission();
         $perm->perms = $this->attributes['allow'];
 
         return $perm;
@@ -50,7 +50,7 @@ class Overwrite extends Part
      */
     public function getDenyAttribute()
     {
-        $perm        = new ChannelPermission();
+        $perm = new ChannelPermission();
         $perm->perms = $this->attributes['deny'];
 
         return $perm;

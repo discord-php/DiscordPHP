@@ -78,7 +78,7 @@ class Handlers
     public function addHandler($event, $classname, array $alternatives = [])
     {
         $this->handlers[$event] = [
-            'class'        => $classname,
+            'class' => $classname,
             'alternatives' => $alternatives,
         ];
     }

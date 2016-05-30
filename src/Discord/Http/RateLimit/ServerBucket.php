@@ -34,7 +34,7 @@ class ServerBucket extends AbstractBucket
     public function __construct(LoopInterface $loop, Guild $guild)
     {
         $this->guild = $guild;
-        $this->name  = 'Guild '.$guild->name.' - '.$guild->id;
+        $this->name = 'Guild '.$guild->name.' - '.$guild->id;
 
         parent::__construct($loop);
     }

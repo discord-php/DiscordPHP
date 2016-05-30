@@ -14,7 +14,6 @@ namespace Discord\Parts\Channel;
 use Discord\Cache\Cache;
 use Discord\Exceptions\FileNotFoundException;
 use Discord\Helpers\Collection;
-use Discord\Helpers\Guzzle;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Guild\Invite;
 use Discord\Parts\Guild\Role;
@@ -47,7 +46,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class Channel extends Part
 {
-    const TYPE_TEXT  = 'text';
+    const TYPE_TEXT = 'text';
     const TYPE_VOICE = 'voice';
 
     /**
@@ -73,8 +72,8 @@ class Channel extends Part
      * {@inheritdoc}
      */
     protected $repositories = [
-        'members'    => MemberRepository::class,
-        'messages'   => MessageRepository::class,
+        'members' => MemberRepository::class,
+        'messages' => MessageRepository::class,
         'overwrites' => OverwriteRepository::class,
     ];
 
@@ -116,10 +115,10 @@ class Channel extends Part
         }
 
         $payload = [
-            'id'    => $part->id,
-            'type'  => $type,
+            'id' => $part->id,
+            'type' => $type,
             'allow' => $allow->perms,
-            'deny'  => $deny->perms,
+            'deny' => $deny->perms,
         ];
 
         $this->http->put("channels/{$this->id}/permissions/{$part->id}", $payload)->then(
@@ -217,10 +216,10 @@ class Channel extends Part
             [
                 'validate' => null,
 
-                'max_age'   => $max_age,
-                'max_uses'  => $max_uses,
+                'max_age' => $max_age,
+                'max_uses' => $max_uses,
                 'temporary' => $temporary,
-                'xkcdpass'  => $xkcd,
+                'xkcdpass' => $xkcd,
             ]
         )->then(function ($response) use ($deferred) {
             $invite = $this->factory->create(Invite::class, $response, true);
@@ -250,7 +249,7 @@ class Channel extends Part
             return $deferred->promise();
         } elseif ($count == 1) {
             $deferred->reject(new \Exception('You cannot delete 1 message.'));
-            
+
             return $deferred->promise();
         }
 
@@ -357,7 +356,7 @@ class Channel extends Part
     /**
      * Sets the permission overwrites attribute.
      *
-     * @return void 
+     * @return void
      */
     public function setPermissionOverwritesAttribute($overwrites)
     {
@@ -395,7 +394,7 @@ class Channel extends Part
             "channels/{$this->id}/messages",
             [
                 'content' => $text,
-                'tts'     => $tts,
+                'tts' => $tts,
             ]
         )->then(function ($response) use ($deferred) {
             $message = $this->factory->create(Message::class, $response, true);
@@ -436,12 +435,12 @@ class Channel extends Part
 
         $multipart = [
             [
-                'name'     => 'file',
+                'name' => 'file',
                 'contents' => fopen($filepath, 'r'),
                 'filename' => $filename,
             ],
             [
-                'name'     => 'tts',
+                'name' => 'tts',
                 'contents' => ($tts ? 'true' : 'false'),
             ],
         ];
@@ -453,7 +452,7 @@ class Channel extends Part
             null,
             false,
             [
-                'multipart' => $multipart
+                'multipart' => $multipart,
             ]
         )->then(function ($response) use ($deferred) {
             $message = $this->factory->create(Message::class, $response, true);
@@ -528,8 +527,8 @@ class Channel extends Part
     public function getUpdatableAttributes()
     {
         return [
-            'name'     => $this->name,
-            'topic'    => $this->topic,
+            'name' => $this->name,
+            'topic' => $this->topic,
             'position' => $this->position,
         ];
     }

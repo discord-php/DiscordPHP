@@ -78,10 +78,10 @@ class Http
             $driver = new Guzzle($cache);
         }
 
-        $this->cache   = $cache;
-        $this->token   = $token;
+        $this->cache = $cache;
+        $this->token = $token;
         $this->version = $version;
-        $this->driver  = $driver;
+        $this->driver = $driver;
     }
 
     /**
@@ -108,12 +108,12 @@ class Http
      */
     public function __call($name, $params)
     {
-        $url      = $params[0];
-        $content  = (isset($params[1])) ? $params[1] : null;
-        $headers  = (isset($params[2])) ? $params[2] : [];
-        $cache    = (isset($params[3])) ? $params[3] : null;
+        $url = $params[0];
+        $content = (isset($params[1])) ? $params[1] : null;
+        $headers = (isset($params[2])) ? $params[2] : [];
+        $cache = (isset($params[3])) ? $params[3] : null;
         $blocking = (isset($params[4])) ? $params[4] : false;
-        $options  = (isset($params[5])) ? $params[5] : [];
+        $options = (isset($params[5])) ? $params[5] : [];
 
         return $this->runRequest(strtolower($name), $url, $content, $headers, $cache, $blocking, $options);
     }
@@ -158,7 +158,7 @@ class Http
 
         if (! is_null($content)) {
             $headers['Content-Type'] = 'application/json';
-            $content                 = json_encode($content);
+            $content = json_encode($content);
         }
 
         if ($blocking) {

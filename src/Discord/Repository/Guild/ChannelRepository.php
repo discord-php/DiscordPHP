@@ -20,8 +20,8 @@ class ChannelRepository extends AbstractRepository
      * {@inheritdoc}
      */
     protected $endpoints = [
-        'all'    => 'guilds/:guild_id/channels',
-        'get'    => 'channels/:id',
+        'all' => 'guilds/:guild_id/channels',
+        'get' => 'channels/:id',
         'create' => 'guilds/:guild_id/channels',
         'update' => 'channels/:id',
         'delete' => 'guilds/:guild_id/channels',
