@@ -16,6 +16,15 @@ use Discord\Parts\Part;
 interface RepositoryInterface
 {
     /**
+     * Builds a new, empty part.
+     *
+     * @param array $attributes The attributes for the new part.
+     * 
+     * @return Part The new part.
+     */
+    public function new(array $attributes = []);
+
+    /**
      * Attempts to get an object from the cache.
      *
      * @param string $key   The key to search for.

@@ -11,8 +11,9 @@
 
 namespace Discord\WebSockets\Events;
 
-use React\Promise\Deferred;
+use Discord\Parts\Guild\Ban;
 use Discord\WebSockets\Event;
+use React\Promise\Deferred;
 
 class GuildBanRemove extends Event
 {

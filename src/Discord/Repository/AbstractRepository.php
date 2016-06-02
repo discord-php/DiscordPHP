@@ -153,6 +153,16 @@ abstract class AbstractRepository extends Collection implements RepositoryInterf
     /**
      * {@inheritdoc}
      */
+    public function new(array $attributes = [])
+    {
+        $attributes = array_merge($attributes, $this->vars);
+        
+        return $this->factory->create($this->part, $attributes);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function save(Part &$part)
     {
         if ($part->created) {

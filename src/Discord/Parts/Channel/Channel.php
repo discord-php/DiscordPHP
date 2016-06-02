@@ -496,4 +496,14 @@ class Channel extends Part
             'position' => $this->position,
         ];
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getRepositoryAttributes()
+    {
+        return [
+            'channel_id' => $this->id,
+        ];
+    }
 }

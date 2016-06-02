@@ -258,4 +258,14 @@ class Guild extends Part
             'afk_timeout' => $this->afk_timeout,
         ];
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getRepositoryAttributes()
+    {
+        return [
+            'guild_id' => $this->id,
+        ];
+    }
 }

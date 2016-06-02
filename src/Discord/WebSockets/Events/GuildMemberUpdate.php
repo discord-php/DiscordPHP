@@ -2,8 +2,9 @@
 
 namespace Discord\WebSockets\Events;
 
-use React\Promise\Deferred;
+use Discord\Parts\User\Member;
 use Discord\WebSockets\Event;
+use React\Promise\Deferred;
 
 class GuildMemberUpdate extends Event
 {
