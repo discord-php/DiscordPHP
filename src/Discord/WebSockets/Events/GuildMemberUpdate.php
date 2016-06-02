@@ -23,7 +23,7 @@ class GuildMemberUpdate extends Event
 		$guild->members->push($memberPart);
 
 		$this->discord->guilds->push($guild);
-		$this->cache->set("guild.{$guild->id}");
+		$this->cache->set("guild.{$guild->id}", $guild);
 
 		$deferred->resolve($memberPart);
 	}
