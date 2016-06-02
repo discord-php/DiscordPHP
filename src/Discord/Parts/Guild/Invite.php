@@ -98,7 +98,7 @@ class Invite extends Part
      */
     public function getGuildAttribute()
     {
-        return new Guild((array) $this->attributes['guild'], true);
+        return $this->factory->create(Guild::class, (array) $this->attributes['guild'], true);
     }
 
     /**
@@ -108,7 +108,7 @@ class Invite extends Part
      */
     public function getChannelAttribute()
     {
-        return new Channel((array) $this->attributes['channel'], true);
+        return $this->factory->create(Channel::class, (array) $this->attributes['channel'], true);
     }
 
     /**
@@ -128,7 +128,7 @@ class Invite extends Part
      */
     public function getInviterAttribute()
     {
-        return new User((array) $this->attributes['inviter'], true);
+        return $this->factory->create(User::class, (array) $this->attributes['inviter'], true);
     }
 
     /**

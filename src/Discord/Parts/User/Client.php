@@ -53,7 +53,7 @@ class Client extends Part
      */
     public function afterConstruct()
     {
-        $this->factory->create(User::class,
+        $this->user = $this->factory->create(User::class,
             [
                 'id' => $this->id,
                 'username' => $this->username,

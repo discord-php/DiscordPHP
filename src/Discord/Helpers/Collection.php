@@ -15,16 +15,30 @@ use Illuminate\Support\Collection as BaseCollection;
 
 class Collection extends BaseCollection
 {
+    protected $discrim = 'id';
+
+    /**
+     * {@inheritdoc}
+     *
+     * @param string $discrim The discriminator.
+     */
+    public function __construct($items = [], $discrim = null)
+    {
+        $this->discrim = $discrim;
+
+        parent::__construct($items);
+    }
+
     /**
      * {@inheritdoc}
      */
     public function offsetSet($key, $value)
     {
-        if (array_key_exists('id', $value)) {
+        if (! is_null($this->discrim)) {
             if (! is_array($value)) {
-                $this->items[$value->id] = $value;
+                $this->items[$value->{$this->discrim}] = $value;
             } else {
-                $this->items[$value['id']] = $value;
+                $this->items[$value[$this->discrim]] = $value;
             }
 
             return;

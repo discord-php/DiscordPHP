@@ -117,8 +117,14 @@ abstract class AbstractRepository extends Collection implements RepositoryInterf
     public function get($key, $value = null)
     {
         foreach ($this->items as $item) {
-            if ($item->{$key} == $value) {
-                return $item;
+            if (is_array($item)) {
+                if ($item[$key] == $value) {
+                    return $item;
+                }
+            } else {
+                if ($item->{$key} == $value) {
+                    return $item;
+                }
             }
         }
     }

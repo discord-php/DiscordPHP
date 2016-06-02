@@ -1,0 +1,25 @@
+<?php
+
+namespace Discord\WebSockets\Events;
+
+use Discord\Parts\Channel\Message;
+use Discord\WebSockets\Event;
+use React\Promise\Deferred;
+
+class MessageUpdate extends Event
+{
+	/**
+	 * {@inheritdoc}
+	 */
+	public function handle(Deferred $deferred, $data)
+	{
+		$messagePart = $this->factory->create(Message::class, $data, true);
+
+		$channel = $this->cache->get("channel.{$messagePart->channel_id}");
+		$message = $channel->messages->get('id', $messagePart->id);
+		$newMessage = array_merge($message->getPublicAttributes(), $messagePart->getPublicAttributes());
+		$channel->messages->push($newMessage);
+
+		$deferred->resolve($messagePart);
+	}
+}

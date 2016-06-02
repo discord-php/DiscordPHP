@@ -91,6 +91,7 @@ class GuildCreate extends Event
             }
 
             $this->cache->set("guild.{$guildPart->id}.members.{$memberPart->id}", $memberPart);
+            $this->cache->set("user.{$memberPart->id}", $memberPart->user);
             $this->discord->users->push($memberPart->user);
             $members->push($memberPart);
         }

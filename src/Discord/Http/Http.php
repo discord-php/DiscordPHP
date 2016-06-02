@@ -255,44 +255,6 @@ class Http
     }
 
     /**
-     * Sends a file to a channel.
-     *
-     * @param Channel $channel  The channel to send the file to.
-     * @param string  $filepath The path to the file.
-     * @param string  $filename The name of the file when it is uploaded.
-     * @param string  $content  The content to send with the message.
-     * @param bool    $tts      Whether to send the message as TTS.
-     *
-     * @return \React\Promise\Promise
-     */
-    public function sendFile(Channel $channel, $filepath, $filename, $content = null, $tts = false)
-    {
-        $deferred = new Deferred();
-
-        $this->driver->sendFile($this, $channel, $filepath, $filename, $content, $tts, $this->token)->then(
-            function ($response) use ($deferred) {
-                $json = json_decode($response->getBody());
-
-                $deferred->resolve($json);
-            },
-            function ($e) use ($deferred) {
-                if (! ($e instanceof \Throwable)) {
-                    $e = $this->handleError(
-                        $e->getStatusCode(),
-                        $e->getReasonPhrase(),
-                        $e->getBody(),
-                        ''
-                    );
-                }
-
-                $deferred->reject($e);
-            }
-        );
-
-        return $deferred->promise();
-    }
-
-    /**
      * Returns the User-Agent of the API.
      *
      * @return string

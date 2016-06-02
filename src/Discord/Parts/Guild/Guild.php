@@ -157,21 +157,7 @@ class Guild extends Part
      */
     public function getOwnerAttribute()
     {
-        $deferred = new Deferred();
-
-        if ($owner = Cache::get("user.{$this->owner_id}")) {
-            $deferred->resolve($owner);
-
-            return $deferred->promise();
-        }
-
-        $this->http->get($this->replaceWithVariables('users/:owner_id'))->then(function ($response) use ($deferred) {
-            $owner = $this->factory->create(User::class, $response, true);
-            $this->cache->set("user.{$owner->id}", $owner);
-            $deferred->resolve($owner);
-        }, \React\Partial\bind_right($this->reject, $deferred));
-
-        return $deferred->promise();
+        return $this->cache->get("user.{$this->owner_id}");
     }
 
     /**

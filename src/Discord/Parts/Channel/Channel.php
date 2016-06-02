@@ -30,19 +30,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * A Channel can be either a text or voice channel on a Discord guild.
- *
- * @property string            $id
- * @property string            $name
- * @property string            $type
- * @property string            $topic
- * @property string            $guild_id
- * @property int               $position
- * @property bool              $is_private
- * @property string            $last_message_id
- * @property array|Overwrite[] $permission_overwrites
- * @property array|Message[]   $messages
- * @property int               $message_count
- * @property int               $bitrate
  */
 class Channel extends Part
 {
@@ -62,8 +49,6 @@ class Channel extends Part
         'is_private',
         'last_message_id',
         'permission_overwrites',
-        'messages',
-        'message_count',
         'bitrate',
         'recipient',
     ];
@@ -121,7 +106,7 @@ class Channel extends Part
             'deny' => $deny->perms,
         ];
 
-        $this->http->put("channels/{$this->id}/permissions/{$part->id}", $payload)->then(
+        $this->http->put("channels/{$This->id}/permissions/{$part->id}", $payload)->then(
             \React\Partial\bind_right($this->resolve, $deferred),
             \React\Partial\bind_right($this->reject, $deferred)
         );
@@ -169,32 +154,11 @@ class Channel extends Part
     /**
      * Returns the guild attribute.
      *
-     * @return \React\Promise\Promise
+     * @return Guild The guild attribute.
      */
     public function getGuildAttribute()
     {
-        $deferred = new Deferred();
-
-        if (is_null($this->guild_id)) {
-            $deferred->reject('No guild ID to check.');
-
-            return $deferred->promise();
-        }
-
-        if ($this->cache->has("guild.{$this->guild_id}")) {
-            $deferred->resolve($this->cache->get("guild.{$this->guild_id}"));
-
-            return $deferred->promise();
-        }
-
-        $this->http->get("guilds/{$this->guild_id}")->then(function ($response) {
-            $guild = $this->factory->create(Guild::class, $response, true);
-            $this->cache->set("guild.{$guild->id}", $guild);
-
-            $deferred->resolve($guild);
-        }, \React\Partial\bind_right($this->reject, $deferred));
-
-        return $deferred->promise();
+        return $this->cache->get("guild.{$this->guild_id}");
     }
 
     /**
@@ -334,7 +298,7 @@ class Channel extends Part
      *
      * @return \React\Promise\Promise
      */
-    public function getInvitesAttribute()
+    public function getInvites()
     {
         $deferred = new Deferred();
 

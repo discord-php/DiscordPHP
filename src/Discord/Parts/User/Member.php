@@ -131,7 +131,7 @@ class Member extends Part
         $this->attributes['roles'][] = $role->id;
         $this->roles->push($role);
 
-        return \React\Promise\resolve();
+        return \React\Promise\resolve($role);
     }
 
     /**
@@ -167,7 +167,7 @@ class Member extends Part
      */
     public function getGameAttribute()
     {
-        return new Game((array) $this->attributes['game'], true);
+        return $this->factory->create(Game::class, (array) $this->attributes['game'], true);
     }
 
     /**
@@ -227,7 +227,7 @@ class Member extends Part
             }
         }
 
-        return \React\Promise\resolve($roles);
+        return $roles;
     }
 
     /**

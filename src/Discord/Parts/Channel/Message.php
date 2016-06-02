@@ -73,21 +73,7 @@ class Message extends Part
      */
     public function getChannelAttribute()
     {
-        $deferred = new Deferred();
-
-        if ($channel = $this->cache->get("channel.{$this->channel_id}")) {
-            $deferred->resolve($channel);
-
-            return $deferred->promise();
-        }
-
-        $this->http->get($this->replaceWithVariables('channels/:channel_id'))->then(function ($response) use ($deferred) {
-            $channel = $this->factory->create(Channel::class, $response, true);
-            $this->cache->set("channel.{$channel->id}", $channel);
-            $deferred->resolve($channel);
-        }, \React\Partial\bind_right($this->reject, $deferred));
-
-        return $deferred->promise();
+        return $this->cache->get("channel.{$this->channel_id}");
     }
 
     /**
@@ -97,7 +83,8 @@ class Message extends Part
      */
     public function getAuthorAttribute()
     {
-        return \React\Promise\FulfilledPromise($this->factory->create(User::class,
+        return $this->factory->create(
+            User::class,
             [
                 'id' => $this->attributes['author']->id,
                 'username' => $this->attributes['author']->username,
@@ -105,7 +92,7 @@ class Message extends Part
                 'discriminator' => $this->attributes['author']->discriminator,
             ],
             true
-        ));
+        );
     }
 
     /**

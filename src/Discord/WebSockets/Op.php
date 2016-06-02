@@ -30,7 +30,7 @@ class Op
     // Used to redirect clients to a new gateway.
     const OP_RECONNECT = 7;
     // Used to request member chunks.
-    const OP_GUILD_MEBMER_CHUNK = 8;
+    const OP_GUILD_MEMBER_CHUNK = 8;
     // Used to notify clients when they have an invalid session.
     const OP_INVALID_SESSION = 9;
 

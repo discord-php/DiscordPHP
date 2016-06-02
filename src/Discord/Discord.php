@@ -18,9 +18,11 @@ use Discord\Http\Http;
 use Discord\Logging\Logger;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\User\Client;
+use Discord\Parts\User\Game;
 use Discord\Parts\User\Member;
 use Discord\Repository\GuildRepository;
 use Discord\Repository\PrivateChannelRepository;
+use Discord\Voice\VoiceClient;
 use Discord\WebSockets\Event;
 use Discord\WebSockets\Events\GuildCreate;
 use Discord\WebSockets\Handlers;
@@ -44,6 +46,7 @@ class Discord
     const DISCORD_VERSION = 'v4.0.0-develop';
 
     protected $logger;
+    protected $voiceLoggers = [];
     protected $options;
     protected $token;
     protected $loop;
@@ -55,6 +58,8 @@ class Discord
     protected $sessionId;
     protected $voiceClients = [];
     protected $largeGuilds = [];
+    protected $largeSent = [];
+    protected $unparsedPackets = [];
     protected $heatbeatTimer;
     protected $emittedReady = false;
     protected $gateway;
@@ -180,8 +185,10 @@ class Discord
             $deferred = new Deferred();
 
             $deferred->promise()->then(null, function ($d) use (&$unavailable) {
-                if ($d[0] == 'unavailable') {
-                    $unavailable[$d[1]] = $d[1];
+                list($status, $data) = $d;
+
+                if ($status == 'unavailable') {
+                    $unavailable[$data] = $data;
                 }
             });
 
@@ -194,7 +201,7 @@ class Discord
             return $this->ready();
         }
 
-        $function = function ($guild) use (&$function, $unavailable) {
+        $function = function ($guild) use (&$function, &$unavailable) {
             if (array_key_exists($guild->id, $unavailable)) {
                 unset($unavailable[$guild->id]);
             }
@@ -232,11 +239,24 @@ class Discord
 
             $memberPart = $this->factory->create(Member::class, $member, true);
             $this->cache->set("guild.{$guild->id}.members.{$memberPart->id}", $memberPart);
+            $this->cache->set("user.{$memberPart->id}", $memberPart->user);
             $guild->members->push($memberPart);
             ++$count;
         }
 
         $this->logger->debug('parsed '.$count.' members');
+
+        if ($guild->members->count() == $guild->member_count) {
+            if (($key = array_search($guild->id, $this->largeSent)) !== false) {
+                unset($this->largeSent[$key]);
+            }
+
+            $this->logger->debug('all users have been loaded', ['guild' => $guild->id, 'member_collection' => $guild->members->count(), 'member_count' => $guild->member_count]);
+        }
+
+        if (count($this->largeSent) < 1) {
+            $this->ready();
+        }
     }
 
     protected function handleVoiceStateUpdate($data)
@@ -320,7 +340,19 @@ class Discord
                 $this->logger->debug('error while trying to handle dispatch packet', ['packet' => $data->t, 'error' => $e]);
             });
 
-            $handler->handle($deferred, $data->d);
+            $parse = [
+                Event::GUILD_CREATE,
+            ];
+
+            if (! $this->emittedReady && (array_search($data->t, $parse) === false)) {
+                $this->logger->debug('client not ready, not parsing', ['event' => $data->t]);
+
+                $this->unparsedPackets[] = function () use (&$handler, &$deferred, &$data) {
+                    $handler->handle($deferred, $data->d);
+                };
+            } else {
+                $handler->handle($deferred, $data->d);
+            }
         }
 
         $handlers = [
@@ -383,11 +415,10 @@ class Discord
                 'op' => Op::OP_IDENTIFY,
                 'd' => [
                     'token' => $this->token,
-                    'v' => self::GATEWAY_VERSION,
                     'properties' => [
                         '$os' => PHP_OS,
-                        '$browser' => '',
-                        '$device' => PHP_OS,
+                        '$browser' => $this->getUserAgent(),
+                        '$device' => $this->getUserAgent(),
                         '$referrer' => 'https://github.com/teamreflex/DiscordPHP',
                         '$referring_domain' => 'https://github.com/teamreflex/DiscordPHP',
                     ],
@@ -431,7 +462,7 @@ class Discord
         }
 
         $checkForChunks = function () {
-            if (count($this->largeGuilds) < 1) {
+            if ((count($this->largeGuilds) < 1) && (count($this->largeSent) < 1)) {
                 $this->ready();
 
                 return;
@@ -439,6 +470,7 @@ class Discord
 
             $chunks = array_chunk($this->largeGuilds, 50);
             $this->logger->debug('sending '.count($chunks).' chunks with '.count($this->largeGuilds).' large guilds overall');
+            $this->largeSent = array_merge($this->largeGuilds, $this->largeSent);
             $this->largeGuilds = [];
 
             $sendChunks = function () use (&$sendChunks, &$chunks) {
@@ -511,6 +543,135 @@ class Discord
 
         $this->logger->debug('client is ready');
         $this->emit('ready', [$this]);
+
+        foreach ($this->unparsedPackets as $parser) {
+            $parser();
+        }
+    }
+
+    /**
+     * Updates the clients presence.
+     *
+     * @param Game $game The game object.
+     * @param bool $idle Whether we are idle.
+     *
+     * @return void
+     */
+    public function updatePresence(Game $game = null, $idle = false)
+    {
+        $idle = ($idle) ? $idle : null;
+
+        if (! is_null($game)) {
+            $game = $game->getPublicAttributes();
+        }
+
+        $payload = [
+            'op' => Op::OP_PRESENCE_UPDATE,
+            'd'  => [
+                'game'       => $game,
+                'idle_since' => $idle,
+            ],
+        ];
+
+        $this->send($payload);
+    }
+
+    /**
+     * Gets a voice client from a guild ID.
+     *
+     * @param int $id The guild ID to look up.
+     *
+     * @return \React\Promise\Promise
+     */
+    public function getVoiceClient($id)
+    {
+        if (isset($this->voiceClients[$id])) {
+            return \React\Promise\resolve($this->voiceClients[$id]);
+        }
+
+        return \React\Promise\reject(new \Exception('Could not find the voice client.'));
+    }
+
+    /**
+     * Joins a voice channel.
+     *
+     * @param Channel $channel The channel to join.
+     * @param bool    $mute    Whether you should be mute when you join the channel.
+     * @param bool    $deaf    Whether you should be deaf when you join the channel.
+     *
+     * @return \React\Promise\Promise
+     */
+    public function joinVoiceChannel(Channel $channel, $mute = false, $deaf = false)
+    {
+        $deferred = new Deferred();
+
+        if ($channel->type != Channel::TYPE_VOICE) {
+            $deferred->reject(new \Exception('You cannot join a text channel.'));
+
+            return $deferred->promise();
+        }
+
+        if (isset($this->voiceClients[$channel->guild_id])) {
+            $deferred->reject(new \Exception('You cannot join more than one voice channel per guild.'));
+
+            return $deferred->promise();
+        }
+
+        $data = [
+            'user_id' => $this->id,
+            'deaf'    => $deaf,
+            'mute'    => $mute,
+        ];
+
+        $voiceStateUpdate = function ($vs, $discord) use ($channel, &$data, &$voiceStateUpdate) {
+            if ($vs->guild_id != $channel->guild_id) {
+                return; // This voice state update isn't for our guild.
+            }
+
+            $data['session'] = $vs->session_id;
+            $this->logger->debug('recieved session id for voice sesion', ['guild' => $channel->guild_id, 'session_id' => $vs->session_id]);
+            $this->removeListener(Event::VOICE_STATE_UPDATE, $voiceStateUpdate);
+        };
+
+        $voiceServerUpdate = function ($vs, $discord) use ($channel, &$data, &$voiceServerUpdate, $deferred) {
+            if ($vs->guild_id != $channel->guild_id) {
+                return; // This voice server update isn't for our guild.
+            }
+
+            $data['token'] = $vs->token;
+            $data['endpoint'] = $vs->endpoint;
+            $this->logger->debug('recieved token and endpoint for voic session', ['guild' => $channel->guild_id, 'token' => $vs->token, 'endpoint' => $vs->endpoint]);
+
+            $monolog = new Monolog('Voice-'.$channel->guild_id);
+            $logger  = new Logger($monolog, $this->options['logging']); 
+            $vc      = new VoiceClient($this, $this->loop, $channel, $logger, $data);
+
+            $vc->once('ready', function () use ($vc, $deferred, $channel, $logger) {
+                $logger->debug('voice client is ready');
+
+                $vc->setBitrate($channel->bitrate)->then(function () use ($vc, $deferred, $logger, $channel) {
+                    $logger->debug('set voice client bitrate', ['bitrate' => $channel->bitrate]);
+                    $deferred->resolve($vc);
+                });
+            });
+            $vc->once('error', function ($e) use ($deferred, $logger) {
+                $logger->error('error initilizing voice client', ['e' => $e->getMessage()]);
+                $deferred->reject($e);
+            });
+            $vc->once('close', function () use ($channel, $logger) {
+                $logger->debug('voice client closed');
+                unset($this->voiceClients[$channel->guild_id]);
+            });
+
+            $this->voiceLoggers[$channel->guild_id] = $logger;
+            $this->voiceClients[$channel->guild_id] = $vc;
+            $this->removeListener(Event::VOICE_SERVER_UPDATE, $voiceServerUpdate);
+        };
+
+        $this->on(Event::VOICE_STATE_UPDATE, $voiceStateUpdate);
+        $this->on(Event::VOICE_SERVER_UPDATE, $voiceServerUpdate);
+
+        return $deferred->promise();
     }
 
     protected function setGateway($gateway = null)
@@ -532,6 +693,9 @@ class Discord
         if (is_null($gateway)) {
             $this->http->get('gateway')->then(function ($response) use ($buildParams) {
                 $buildParams($response->url);
+            }, function ($e) use ($buildParams) {
+                // Can't access the API server so we will use the default gateway.
+                $buildParams('wss://gateway.discord.gg');
             });
         } else {
             $buildParams($gateway);
@@ -539,6 +703,8 @@ class Discord
 
         $deferred->promise()->then(function ($gateway) {
             $this->logger->debug('gateway retrieved and set', ['gateway' => $gateway]);
+        }, function ($e) {
+            $this->logger->error('error obtaining gateway', ['e' => $e->getMessage()]);
         });
 
         return $deferred->promise();

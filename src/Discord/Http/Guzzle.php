@@ -78,16 +78,14 @@ class Guzzle extends GuzzleClient implements HttpDriver
         $this->cache = $cache;
         $options = ['http_errors' => false, 'allow_redirects' => true];
 
-        if (! is_null($loop)) {
-            $this->async = true;
-            $this->loop = $loop;
-            $this->adapter = new HttpClientAdapter($this->loop);
-            $options['handler'] = HandlerStack::create($this->adapter);
+        $this->async = true;
+        $this->loop = $loop;
+        $this->adapter = new HttpClientAdapter($this->loop);
+        $options['handler'] = HandlerStack::create($this->adapter);
 
-            $this->buckets = [
-                'global' => new GlobalBucket($loop),
-            ];
-        }
+        // $this->buckets = [
+        //     'global' => new GlobalBucket($loop),
+        // ];
 
         return parent::__construct($options);
     }
@@ -115,17 +113,8 @@ class Guzzle extends GuzzleClient implements HttpDriver
                 if ($response->getStatusCode() == 429) {
                     $tts = (int) $response->getHeader('Retry-After')[0] / 1000;
 
-                    switch ($this->async) {
-                        case true:
-                            $this->loop->addTimer($tts, $sendRequest);
-                            $deferred->notify('You have been rate limited.');
-                            break;
-                        default:
-                            $deferred->notify('You have been rate limited.');
-                            usleep($tts * 1000 * 1000);
-                            $sendRequest();
-                            break;
-                    }
+                    $this->loop->addTimer($tts, $sendRequest);
+                    $deferred->notify('You have been rate limited.');
                 }
                 // Bad Gateway
                 // Cloudflare SSL Handshake Error
@@ -138,13 +127,8 @@ class Guzzle extends GuzzleClient implements HttpDriver
                         return;
                     }
 
-                    if ($this->async) {
-                        $this->loop->addTimer(0.1, $sendRequest);
-                    }
-                    // It's more harm to us for sleeping for 0.1 and blocking than sending the request again.
-                    else {
-                        $sendRequest();
-                    }
+                    // Slight delay of 0.1s to satisfy Andrei and Jake
+                    $this->loop->addTimer(0.1, $sendRequest);
                 }
                 // Handle any other codes that are not successful.
                 elseif ($response->getStatusCode() < 200 || $response->getStatusCode() > 226) {
@@ -157,42 +141,9 @@ class Guzzle extends GuzzleClient implements HttpDriver
             }, function ($e) use ($deferred) {
                 $deferred->reject($e);
             });
-
-            if (! $this->async) {
-                $promise->wait();
-            }
         };
 
-        if ($this->async) {
-            $this->buckets['global']->queue()->then(function () use ($sendRequest, $url, $deferred) {
-                if (preg_match('/channels\/([0-9]+)\/messages/', $url, $matches)) {
-                    $channel = $this->cache->get('channel.'.$matches[1]);
-                    $guild = $this->cache->get('guild.'.$channel->guild_id);
-
-                    if (is_null($guild)) {
-                        $sendRequest();
-
-                        return;
-                    }
-
-                    if (! isset(
-                        $this->buckets['guild.'.$guild->id]
-                    )) {
-                        $this->buckets['guild.'.$guild->id] = new ServerBucket($this->loop, $guild);
-                    }
-
-                    $this->buckets['guild.'.$guild->id]->queue()->then($sendRequest, null, function ($content) use ($deferred) {
-                        $deferred->notify($content);
-                    });
-                } else {
-                    $sendRequest();
-                }
-            }, null, function ($content) use ($deferred) {
-                $deferred->notify($content);
-            });
-        } else {
-            $sendRequest();
-        }
+        $sendRequest();
 
         return $deferred->promise();
     }

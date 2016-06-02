@@ -33,13 +33,6 @@ class User extends Part
     protected $fillable = ['id', 'username', 'avatar', 'discriminator'];
 
     /**
-     * {@inheritdoc}
-     */
-    protected $uris = [
-        'get' => 'users/:id',
-    ];
-
-    /**
      * Sends a message to the user.
      *
      * @param string $text The text to send in the message.
