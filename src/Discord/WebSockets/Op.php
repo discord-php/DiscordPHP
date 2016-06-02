@@ -33,6 +33,8 @@ class Op
     const OP_GUILD_MEMBER_CHUNK = 8;
     // Used to notify clients when they have an invalid session.
     const OP_INVALID_SESSION = 9;
+    // Used to pass through the heartbeat interval
+    const OP_HELLO = 10;
 
     ///////////////////////////////////////
     ///////////////////////////////////////

@@ -42,7 +42,7 @@ class Discord
 {
     use EventEmitterTrait;
 
-    const GATEWAY_VERSION = 4;
+    const GATEWAY_VERSION = 5;
     const DISCORD_VERSION = 'v4.0.0-develop';
 
     protected $logger;
@@ -127,7 +127,6 @@ class Discord
     protected function handleReady($data)
     {
         $this->logger->debug('ready packet recieved');
-        $this->setupHeartbeat($data->d->heartbeat_interval);
 
         // If this is a reconnect we don't want to
         // reparse the READY packet as it would remove
@@ -140,8 +139,6 @@ class Discord
         }
 
         $content = $data->d;
-        $this->emit('trace', $content->_trace);
-        $this->logger->debug('discord trace recieved', ['trace' => $content->_trace]);
 
         // Setup the user account
         $this->client = $this->factory->create(Client::class, $content->user, true);
@@ -276,8 +273,6 @@ class Discord
         $ws->on('message', [$this, 'handleWsMessage']);
         $ws->on('close', [$this, 'handleWsClose']);
         $ws->on('error', [$this, 'handleWsError']);
-
-        $this->identify();
     }
 
     public function handleWsMessage($message)
@@ -300,6 +295,7 @@ class Discord
             Op::OP_HEARTBEAT => 'handleHeartbeat',
             Op::OP_RECONNECT => 'handleReconnect',
             Op::OP_INVALID_SESSION => 'handleInvalidSession',
+            Op::OP_HELLO => 'handleHello',
         ];
 
         if (isset($op[$data->op])) {
@@ -394,6 +390,18 @@ class Discord
         $this->logger->debug('invalid session, re-identifying');
 
         $this->identify(false);
+    }
+
+    protected function handleHello($data)
+    {
+        $this->logger->debug('recieved hello');
+
+        $this->identify();
+
+        $this->setupHeartbeat($data->d->heartbeat_interval);
+        $this->emit('trace', $data->d->_trace);
+
+        $this->logger->debug('discord trace recieved', ['trace' => $data->d->_trace, 'heartbeat_interval' => $data->d->heartbeat_interval]);
     }
 
     protected function identify($resume = true)
