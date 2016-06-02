@@ -17,7 +17,13 @@ class MessageUpdate extends Event
 
 		$channel = $this->cache->get("channel.{$messagePart->channel_id}");
 		$message = $channel->messages->get('id', $messagePart->id);
-		$newMessage = array_merge($message->getPublicAttributes(), $messagePart->getPublicAttributes());
+
+		if (is_null($message)) {
+			$newMessage = $messagePart;
+		} else {
+			$newMessage = array_merge($message->getPublicAttributes(), $messagePart->getPublicAttributes());
+		}
+
 		$channel->messages->push($newMessage);
 
 		$deferred->resolve($messagePart);

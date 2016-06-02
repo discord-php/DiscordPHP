@@ -223,7 +223,7 @@ class Discord
         $guild = $this->guilds->get('id', $data->d->guild_id);
         $members = $data->d->members;
 
-        $this->logger->debug('recieved guild member chunk', ['guild' => $guild->getPublicAttributes(), 'member_count' => count($members)]);
+        $this->logger->debug('recieved guild member chunk', ['guild_id' => $guild->id, 'guild_name' => $guild->name, 'member_count' => count($members)]);
 
         $count = 0;
 
@@ -244,7 +244,7 @@ class Discord
             ++$count;
         }
 
-        $this->logger->debug('parsed '.$count.' members');
+        $this->logger->debug('parsed '.$count.' members', ['repository_count' => $guild->members->count(), 'actual_count' => $guild->member_count]);
 
         if ($guild->members->count() == $guild->member_count) {
             if (($key = array_search($guild->id, $this->largeSent)) !== false) {
@@ -330,7 +330,6 @@ class Discord
 
             $deferred = new Deferred();
             $deferred->promise()->then(function ($d) use ($data, $hData) {
-                $this->logger->debug('event '.$data->t);
                 $this->emit($data->t, [$d, $this]);
 
                 foreach ($hData['alternatives'] as $alternative) {
