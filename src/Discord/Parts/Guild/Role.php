@@ -19,8 +19,9 @@ use Discord\Parts\Permissions\RolePermission as Permission;
  *
  * @property string  $id
  * @property string  $name
- * @property int $color
+ * @property int     $color
  * @property bool    $managed
+ * @property bool    $mentionable
  * @property bool    $hoist
  * @property int     $position
  * @property int     $permissions
@@ -36,7 +37,7 @@ class Role extends Part
     /**
      * {@inheritdoc}
      */
-    protected $fillable = ['id', 'name', 'color', 'managed', 'hoist', 'position', 'permissions', 'guild_id'];
+    protected $fillable = ['id', 'name', 'color', 'mentionable', 'managed', 'hoist', 'position', 'permissions', 'guild_id'];
 
     /**
      * Runs extra construction tasks.
@@ -121,6 +122,7 @@ class Role extends Part
             'name'        => $this->name,
             'hoist'       => $this->hoist,
             'color'       => $this->color,
+            'mentionable' => $this->mentionable,
             'permissions' => $this->permissions->perms,
         ];
     }
