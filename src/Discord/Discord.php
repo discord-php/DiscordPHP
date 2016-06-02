@@ -139,6 +139,8 @@ class Discord
         }
 
         $content = $data->d;
+        $this->emit('trace', $data->d->_trace);
+        $this->logger->debug('discord trace recieved', ['trace' => $content->_trace]);
 
         // Setup the user account
         $this->client = $this->factory->create(Client::class, $content->user, true);
@@ -399,9 +401,6 @@ class Discord
         $this->identify();
 
         $this->setupHeartbeat($data->d->heartbeat_interval);
-        $this->emit('trace', $data->d->_trace);
-
-        $this->logger->debug('discord trace recieved', ['trace' => $data->d->_trace, 'heartbeat_interval' => $data->d->heartbeat_interval]);
     }
 
     protected function identify($resume = true)
