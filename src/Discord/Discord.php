@@ -743,6 +743,7 @@ class Discord
             ->setRequired('token')
             ->setAllowedTypes('token', 'string')
             ->setDefined([
+                'token',
                 'shardId',
                 'shardCount',
                 'loop',
