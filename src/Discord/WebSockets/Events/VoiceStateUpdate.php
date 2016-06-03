@@ -28,7 +28,7 @@ class VoiceStateUpdate extends Event
                 }
             } else {
                 foreach ($guild->channels as $cindex => $channel) {
-                    if (isset($channel->members[$state->user_id]) && ! $discord->bot) {
+                    if (isset($channel->members[$state->user_id]) && ! $this->discord->bot) {
                         unset($channel->members[$state->user_id]);
                     }
                 }

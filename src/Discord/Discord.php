@@ -60,6 +60,7 @@ class Discord
     protected $largeGuilds = [];
     protected $largeSent = [];
     protected $unparsedPackets = [];
+    protected $reconnectCount = 0;
     protected $heatbeatTimer;
     protected $emittedReady = false;
     protected $gateway;
@@ -308,6 +309,17 @@ class Discord
     public function handleWsClose($op, $reason)
     {
         $this->logger->warning('websocket closed', ['op' => $op, 'reason' => $reason]);
+
+        if ($op == Op::CLOSE_INVALID_TOKEN) {
+            $this->emit('error', ['token is invalid', $this]);
+            $this->logger->error('the token you provided is invalid');
+
+            return;
+        }
+
+        ++$this->reconnectCount;
+        $this->logger->debug('starting reconnect', ['reconnect_count' => $this->reconnectCount]);
+        $this->connectWs();
     }
 
     public function handleWsError($e)
