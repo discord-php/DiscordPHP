@@ -777,6 +777,11 @@ class Discord
         $this->loop->run();
     }
 
+    public function factory()
+    {
+        return call_user_func_array([$this->factory, 'create'], func_get_args());
+    }
+
     public function __get($name)
     {
         if (is_null($this->client)) {
