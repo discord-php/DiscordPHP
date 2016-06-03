@@ -43,7 +43,7 @@ class Discord
     use EventEmitterTrait;
 
     const GATEWAY_VERSION = 5;
-    const DISCORD_VERSION = 'v4.0.0-develop';
+    const VERSION = 'v4.0.0-develop';
 
     protected $logger;
     protected $voiceLoggers = [];
@@ -99,7 +99,7 @@ class Discord
         $this->http = new Http(
             $this->cache,
             $this->token,
-            self::DISCORD_VERSION,
+            self::VERSION,
             new Guzzle($this->cache, $this->loop)
         );
         $this->factory = new Factory($this->http, $this->cache);
