@@ -62,7 +62,7 @@ class CacheWrapper
      *
      * @return mixed
      */
-    public function set($key, $value, $ttl = 300)
+    public function set($key, $value, $ttl = null)
     {
         $item = $this->cache->getItem($key);
         $item->set($value);

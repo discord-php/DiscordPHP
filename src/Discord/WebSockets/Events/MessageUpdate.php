@@ -21,7 +21,7 @@ class MessageUpdate extends Event
 		if (is_null($message)) {
 			$newMessage = $messagePart;
 		} else {
-			$newMessage = array_merge($message->getPublicAttributes(), $messagePart->getPublicAttributes());
+			$newMessage = $this->factory->create(Message::class, array_merge($message->getPublicAttributes(), $messagePart->getPublicAttributes()), true);
 		}
 
 		$channel->messages->push($newMessage);

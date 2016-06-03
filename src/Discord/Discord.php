@@ -318,6 +318,7 @@ class Discord
         }
 
         ++$this->reconnectCount;
+        $this->reconnecting = true;
         $this->logger->debug('starting reconnect', ['reconnect_count' => $this->reconnectCount]);
         $this->connectWs();
     }
