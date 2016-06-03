@@ -45,7 +45,7 @@ class WebSocket extends EventEmitter
      *
      * @var int THe gateway version.
      */
-    const CURRENT_GATEWAY_VERSION = 4;
+    const CURRENT_GATEWAY_VERSION = 5;
 
     /**
      * The WebSocket event loop.
@@ -308,6 +308,13 @@ class WebSocket extends EventEmitter
                 case Op::OP_INVALID_SESSION:
                     $this->sendLoginFrame();
                     break;
+                case Op::OP_HELLO:
+                    $this->identify();
+
+                    $tts = $data->d->heartbeat_interval / 1000;
+                    $this->heartbeat();
+                    $this->heartbeat = $this->loop->addPeriodicTimer($tts / 4, [$this, 'heartbeat']);
+                    break;
             }
         });
 
@@ -366,7 +373,15 @@ class WebSocket extends EventEmitter
         });
 
         $this->ws = $ws;
+    }
 
+    /**
+     * Identifies with Discord.
+     *
+     * @return void 
+     */
+    public function identify()
+    {
         if ($this->reconnecting && ! is_null($this->sessionId)) {
             $token = (substr(DISCORD_TOKEN, 0, 4) === 'Bot ') ? substr(DISCORD_TOKEN, 4) : DISCORD_TOKEN;
 
@@ -404,10 +419,6 @@ class WebSocket extends EventEmitter
      */
     public function handleResume($data)
     {
-        $tts = $data->d->heartbeat_interval / 1000;
-        $this->heartbeat();
-        $this->heartbeat = $this->loop->addPeriodicTimer($tts / 4, [$this, 'heartbeat']);
-
         $this->emit('reconnected', [$this]);
     }
 
@@ -441,10 +452,6 @@ class WebSocket extends EventEmitter
         $this->reconnectResetTimer = $this->loop->addTimer(60 * 2, function () {
             $this->reconnectCount = 0;
         });
-
-        $tts = $data->d->heartbeat_interval / 1000;
-        $this->heartbeat();
-        $this->heartbeat = $this->loop->addPeriodicTimer($tts / 4, [$this, 'heartbeat']);
 
         // don't want to reparse ready
         if ($this->reconnecting) {

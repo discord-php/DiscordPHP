@@ -296,13 +296,13 @@ class Channel extends Part
 
         $url = "channels/{$this->id}/messages?limit={$options['limit']}";
         if (isset($options['before'])) {
-            if ($options['before'] instanceof Message) {
+            if (!($options['before'] instanceof Message)) {
                 throw new \Exception('before must be an instance of '.Message::class);
             }
             $url .= '&before='.$options['before']->id;
         }
         if (isset($options['after'])) {
-            if ($options['after'] instanceof Message) {
+            if (!($options['after'] instanceof Message)) {
                 throw new \Exception('after must be an instance of '.Message::class);
             }
             $url .= '&after='.$options['after']->id;

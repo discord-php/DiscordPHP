@@ -197,6 +197,16 @@ class Member extends Part
     }
 
     /**
+     * Gets the guild attribute.
+     *
+     * @return Guild The guild attribute.
+     */
+    public function getGuildAttribute()
+    {
+        return Cache::get("guild.{$this->guild_id}");
+    }
+
+    /**
      * Gets the game attribute.
      *
      * @return Game The game attribute.

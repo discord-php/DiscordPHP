@@ -33,6 +33,8 @@ class Op
     const OP_GUILD_MEBMER_CHUNK = 8;
     // Used to notify clients when they have an invalid session.
     const OP_INVALID_SESSION    = 9;
+    // Used to pass through the heartbeat interval
+    const OP_HELLO              = 10;
 
     ///////////////////////////////////////
     ///////////////////////////////////////
@@ -56,19 +58,29 @@ class Op
     ///////////////////////////////////////
 
     // Normal close or heartbeat is invalid.
-    const CLOSE_NORMAL          = 1000;
+    const CLOSE_NORMAL            = 1000;
     // Abnormal close.
-    const CLOSE_ABNORMAL        = 1006;
+    const CLOSE_ABNORMAL          = 1006;
+    // Unknown error.
+    const CLOSE_UNKNOWN_ERROR     = 1000;
     // Unknown opcode was went.
-    const CLOSE_INVALID_OPCODE  = 4001;
+    const CLOSE_INVALID_OPCODE    = 4001;
     // Invalid message was sent.
-    const CLOSE_INVALID_MESSAGE = 4002;
+    const CLOSE_INVALID_MESSAGE   = 4002;
+    // Not authenticated.
+    const CLOSE_NOT_AUTHENTICATED = 4003;
     // Invalid token on IDENTIFY.
-    const CLOSE_INVALID_TOKEN   = 4004;
+    const CLOSE_INVALID_TOKEN     = 4004;
+    // Already authenticated.
+    const CONST_ALREADY_AUTHD     = 4005;
     // Session is invalid.
-    const CLOSE_INVALID_SESSION = 4006;
+    const CLOSE_INVALID_SESSION   = 4006;
     // Invalid RESUME sequence.
-    const CLOSE_INVALID_SEQ     = 4007;
+    const CLOSE_INVALID_SEQ       = 4007;
     // Too many messages sent.
-    const CLOSE_TOO_MANY_MSG    = 4008;
+    const CLOSE_TOO_MANY_MSG      = 4008;
+    // Session timeout.
+    const CLOSE_SESSION_TIMEOUT   = 4009;
+    // Invalid shard.
+    const CLOSE_INVALID_SHARD     = 4010;
 }
