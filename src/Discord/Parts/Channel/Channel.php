@@ -83,6 +83,8 @@ class Channel extends Part
      */
     public function setPermissions($part, $allow = null, $deny = null)
     {
+        $deferred = new Deferred();
+
         if ($part instanceof Member) {
             $type = 'member';
         } elseif ($part instanceof Role) {
@@ -106,7 +108,7 @@ class Channel extends Part
             'deny' => $deny->perms,
         ];
 
-        $this->http->put("channels/{$This->id}/permissions/{$part->id}", $payload)->then(
+        $this->http->put("channels/{$this->id}/permissions/{$part->id}", $payload)->then(
             \React\Partial\bind_right($this->resolve, $deferred),
             \React\Partial\bind_right($this->reject, $deferred)
         );
