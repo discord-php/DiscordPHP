@@ -86,7 +86,7 @@ class RecieveStream extends EventEmitter implements DuplexStreamInterface
         }
 
         if ($this->isPaused) {
-            $this->pcmPauseBuffer[] = $data;
+            $this->pcmPauseBuffer[] = $pcm;
 
             return;
         }
@@ -110,7 +110,7 @@ class RecieveStream extends EventEmitter implements DuplexStreamInterface
         }
 
         if ($this->isPaused) {
-            $this->opusPauseBuffer[] = $data;
+            $this->opusPauseBuffer[] = $opus;
 
             return;
         }

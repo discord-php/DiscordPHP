@@ -11,7 +11,6 @@
 
 namespace Discord\Parts\Channel;
 
-use Discord\Cache\Cache;
 use Discord\Exceptions\FileNotFoundException;
 use Discord\Helpers\Collection;
 use Discord\Parts\Guild\Guild;

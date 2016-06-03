@@ -80,7 +80,7 @@ class User extends Part
         $deferred = new Deferred();
         $getChannelID = new Deferred();
 
-        $getChannelID->promise()->then(function ($channel) use ($message, $tts, $deferred) {
+        $getChannelID->promise()->then(function ($channel) use ($deferred) {
             $channel->broadcastTyping()->then(
                 \React\Partial\bind_right($this->resolve, $deferred),
                 \React\Partial\bind_right($this->reject, $deferred)

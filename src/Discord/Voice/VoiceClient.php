@@ -21,7 +21,6 @@ use Discord\Helpers\Process;
 use Discord\Logging\Logger;
 use Discord\Parts\Channel\Channel;
 use Discord\WebSockets\Op;
-use Discord\WebSockets\WebSocket;
 use Evenement\EventEmitter;
 use Ratchet\Client\Connector as WsFactory;
 use Ratchet\Client\WebSocket as WS;

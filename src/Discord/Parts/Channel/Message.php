@@ -12,7 +12,6 @@
 namespace Discord\Parts\Channel;
 
 use Carbon\Carbon;
-use Discord\Cache\Cache;
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
 use React\Promise\Deferred;

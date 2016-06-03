@@ -11,7 +11,6 @@
 
 namespace Discord\Parts\Guild;
 
-use Discord\Cache\Cache;
 use Discord\Helpers\Collection;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Part;
@@ -139,7 +138,7 @@ class Guild extends Part
                 'owner_id' => $member,
             ]
         )->then(function ($response) use ($member, $deferred) {
-            if ($respose->owner_id != $member) {
+            if ($response->owner_id != $member) {
                 $deferred->reject(new \Exception('Ownership was not transferred correctly.'));
                 $this->fill((array) $response);
             } else {

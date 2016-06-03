@@ -448,8 +448,8 @@ class Discord
             if (array_key_exists('shardId', $this->options) &&
                 array_key_exists('shardCount', $this->options)) {
                 $payload['d']['shard'] = [
-                    (int) $options['shardId'],
-                    (int) $pptions['shardCount'],
+                    (int) $this->options['shardId'],
+                    (int) $this->pptions['shardCount'],
                 ];
             }
 
