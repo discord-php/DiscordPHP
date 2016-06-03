@@ -435,8 +435,8 @@ class Discord
                     'token' => $this->token,
                     'properties' => [
                         '$os' => PHP_OS,
-                        '$browser' => $this->getUserAgent(),
-                        '$device' => $this->getUserAgent(),
+                        '$browser' => $this->http->getUserAgent(),
+                        '$device' => $this->http->getUserAgent(),
                         '$referrer' => 'https://github.com/teamreflex/DiscordPHP',
                         '$referring_domain' => 'https://github.com/teamreflex/DiscordPHP',
                     ],
