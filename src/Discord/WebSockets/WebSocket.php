@@ -419,10 +419,6 @@ class WebSocket extends EventEmitter
      */
     public function handleResume($data)
     {
-        $tts = $data->d->heartbeat_interval / 1000;
-        $this->heartbeat();
-        $this->heartbeat = $this->loop->addPeriodicTimer($tts / 4, [$this, 'heartbeat']);
-
         $this->emit('reconnected', [$this]);
     }
 
