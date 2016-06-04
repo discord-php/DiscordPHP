@@ -37,5 +37,12 @@ class ChannelPermission extends Permission
         'attach_files' => 15,
         'read_message_history' => 16,
         'mention_everyone' => 17,
+
+        'connect' => 20,
+        'speak' => 21,
+        'mute_members' => 22,
+        'deafen_members' => 23,
+        'move_members' => 24,
+        'use_vad' => 25,
     ];
 }
