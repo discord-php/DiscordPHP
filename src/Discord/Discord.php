@@ -96,6 +96,10 @@ class Discord
             $this->emittedReady = true;
         });
 
+        foreach ($options['disabledEvents'] as $event) {
+            $this->handlers->removeHandler($event);
+        }
+
         $this->options = $options;
 
         $this->cache = new CacheWrapper($this->cachePool); // todo cache pool
@@ -774,6 +778,7 @@ class Discord
                 'logging',
                 'cachePool',
                 'loadAllMembers',
+                'disabledEvents',
             ])
             ->setDefaults([
                 'loop' => LoopFactory::create(),
@@ -782,6 +787,7 @@ class Discord
                 'logging' => true,
                 'cachePool' => new ArrayCachePool(),
                 'loadAllMembers' => false,
+                'disabledEvents' => [],
             ])
             ->setAllowedTypes('loop', LoopInterface::class)
             ->setAllowedTypes('logging', 'bool')

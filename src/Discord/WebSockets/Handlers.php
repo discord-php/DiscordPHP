@@ -106,4 +106,26 @@ class Handlers
     {
         return $this->handlers;
     }
+
+    /**
+     * Returns the handlers.
+     *
+     * @return array Array of handler events.
+     */
+    public function getHandlerKeys()
+    {
+        return array_keys($this->handlers);
+    }
+
+    /**
+     * Removes a handler.
+     *
+     * @param string $event The event handler to remove.
+     *
+     * @return void 
+     */
+    public function removeHandler($event)
+    {
+        unset($this->handlers[$event]);
+    }
 }
