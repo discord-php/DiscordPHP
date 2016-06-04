@@ -62,6 +62,8 @@ class Discord
     protected $unparsedPackets = [];
     protected $reconnectCount = 0;
     protected $heatbeatTimer;
+    protected $heartbeatAckTimer;
+    protected $heartbeatTime;
     protected $emittedReady = false;
     protected $gateway;
     protected $encoding = 'json';
@@ -119,8 +121,6 @@ class Discord
 
     protected function handleResume($data)
     {
-        $this->setupHeartbeat($data->d->heartbeat_interval);
-
         $this->logger->debug('websocket reconnected to discord');
         $this->emit('reconnected', [$this]);
     }
@@ -147,7 +147,7 @@ class Discord
         $this->client = $this->factory->create(Client::class, $content->user, true);
         $this->sessionId = $content->session_id;
 
-        $this->logger->debug('client created and session id stored', ['session_id' => $content->session_id, 'client' => $this->client->getPublicAttributes()]);
+        $this->logger->debug('client created and session id stored', ['session_id' => $content->session_id, 'user' => $this->client->user->getPublicAttributes()]);
 
         // Private Channels
         $private_channels = new PrivateChannelRepository(
@@ -246,7 +246,7 @@ class Discord
 
         $this->logger->debug('parsed '.$count.' members', ['repository_count' => $guild->members->count(), 'actual_count' => $guild->member_count]);
 
-        if ($guild->members->count() == $guild->member_count) {
+        if ($guild->members->count() >= $guild->member_count) {
             if (($key = array_search($guild->id, $this->largeSent)) !== false) {
                 unset($this->largeSent[$key]);
             }
@@ -299,6 +299,7 @@ class Discord
             Op::OP_RECONNECT => 'handleReconnect',
             Op::OP_INVALID_SESSION => 'handleInvalidSession',
             Op::OP_HELLO => 'handleHello',
+            Op::OP_HEARTBEAT_ACK => 'handleHeartbeatAck',
         ];
 
         if (isset($op[$data->op])) {
@@ -390,6 +391,17 @@ class Discord
         $this->send($payload);
     }
 
+    protected function handleHeartbeatAck($data)
+    {
+        $recieved = microtime(true);
+        $diff = $recieved - $this->heartbeatTime;
+        $time = $diff * 1000;
+
+        $this->heartbeatAckTimer->cancel();
+        $this->emit('heartbeat-ack', [$time, $this]);
+        $this->logger->debug('recieved heartbeat ack', ['response_time' => $time]);
+    }
+
     protected function handleReconnect($data)
     {
         $this->logger->debug('recieved opcode 7 for reconnect');
@@ -469,7 +481,13 @@ class Discord
         ];
 
         $this->send($payload);
+        $this->heartbeatTime = microtime(true);
         $this->emit('heartbeat', [$this->seq, $this]);
+
+        $this->heartbeatAckTimer = $this->loop->addTimer(5, function () {
+            $this->logger->debug('did not recieve heartbeat ACK within 5 seconds, sending heartbeat again');
+            $this->heartbeat();
+        });
     }
 
     protected function setupChunking()

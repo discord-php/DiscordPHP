@@ -35,6 +35,8 @@ class Op
     const OP_INVALID_SESSION = 9;
     // Used to pass through the heartbeat interval
     const OP_HELLO = 10;
+    // Used to acknowledge heartbeats.
+    const OP_HEARTBEAT_ACK = 11;
 
     ///////////////////////////////////////
     ///////////////////////////////////////

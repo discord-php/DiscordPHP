@@ -107,50 +107,6 @@ abstract class AbstractRepository extends Collection implements RepositoryInterf
     }
 
     /**
-     * Get an item from the collection with a key and value.
-     *
-     * @param mixed $key   The key to match with the value.
-     * @param mixed $value The value to match with the key.
-     *
-     * @return mixed The value or null.
-     */
-    public function get($key, $value = null)
-    {
-        foreach ($this->items as $item) {
-            if (is_array($item)) {
-                if ($item[$key] == $value) {
-                    return $item;
-                }
-            } else {
-                if ($item->{$key} == $value) {
-                    return $item;
-                }
-            }
-        }
-    }
-
-    /**
-     * Gets a collection of items from the repository with a key and value.
-     *
-     * @param mixed $key   The key to match with the value.
-     * @param mixed $value The value to match with the key.
-     *
-     * @return Collection A collection.
-     */
-    public function getAll($key, $value = null)
-    {
-        $collection = new Collection();
-
-        foreach ($this->items as $item) {
-            if ($item->{$key} == $value) {
-                $collection->push($item);
-            }
-        }
-
-        return $collection;
-    }
-
-    /**
      * {@inheritdoc}
      */
     public function new(array $attributes = [])
