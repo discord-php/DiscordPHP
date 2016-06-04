@@ -211,6 +211,16 @@ class Member extends Part
     }
 
     /**
+     * Returns the guild attribute.
+     *
+     * @return Guild The guild.
+     */
+    public function getGuildAttribute()
+    {
+        return $this->cache->get("guild.{$this->guild_id}");
+    }
+
+    /**
      * Returns the roles attribute.
      *
      * @return Collection A collection of roles the member is in.
@@ -219,9 +229,7 @@ class Member extends Part
     {
         $roles = new Collection();
 
-        $guildRoles = $this->cache->get("guild.{$this->guild_id}.roles");
-
-        foreach ($guildRoles as $role) {
+        foreach ($this->guild->roles as $role) {
             if (array_search($role->id, $this->attributes['roles']) !== false) {
                 $roles->push($role);
             }
