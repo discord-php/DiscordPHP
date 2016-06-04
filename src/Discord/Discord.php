@@ -821,6 +821,12 @@ class Discord
 
     public function __get($name)
     {
+        $allowed = ['loop'];
+
+        if (array_search($name, $allowed) !== false) {
+            return $this->{$name};
+        }
+        
         if (is_null($this->client)) {
             return;
         }
