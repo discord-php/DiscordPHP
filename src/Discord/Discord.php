@@ -29,6 +29,7 @@ use Discord\WebSockets\Handlers;
 use Discord\WebSockets\Op;
 use Discord\Wrapper\CacheWrapper;
 use Evenement\EventEmitterTrait;
+use Monolog\Handler\StreamHandler;
 use Monolog\Logger as Monolog;
 use Psr\Cache\CacheItemPoolInterface;
 use Ratchet\Client\Connector;
@@ -121,7 +122,7 @@ class Discord
 
     protected function handleResume($data)
     {
-        $this->logger->debug('websocket reconnected to discord');
+        $this->logger->info('websocket reconnected to discord');
         $this->emit('reconnected', [$this]);
     }
 
@@ -164,7 +165,7 @@ class Discord
         }
 
         $this->private_channels = $private_channels;
-        $this->logger->debug('stored private channels', ['count' => $private_channels->count()]);
+        $this->logger->info('stored private channels', ['count' => $private_channels->count()]);
 
         // Guilds
         $this->guilds = new GuildRepository(
@@ -195,7 +196,7 @@ class Discord
             $event->handle($deferred, $guild);
         }
 
-        $this->logger->debug('stored guilds', ['count' => $this->guilds->count()]);
+        $this->logger->info('stored guilds', ['count' => $this->guilds->count()]);
 
         if (count($unavailable) < 1) {
             return $this->ready();
@@ -208,7 +209,7 @@ class Discord
 
             // todo setup timer to continue after x amount of time
             if (count($unavailable) < 1) {
-                $this->logger->debug('all guilds are now available', ['count' => $this->guilds->count()]);
+                $this->logger->info('all guilds are now available', ['count' => $this->guilds->count()]);
                 $this->removeListener(Event::GUILD_CREATE, $function);
 
                 $this->setupChunking();
@@ -262,7 +263,7 @@ class Discord
     protected function handleVoiceStateUpdate($data)
     {
         if (isset($this->voiceClients[$data->d->guild_id])) {
-            $this->logger->debug('voic state update recieved', ['guild' => $data->d->guild, 'data' => $data->d]);
+            $this->logger->debug('voice state update recieved', ['guild' => $data->d->guild, 'data' => $data->d]);
             $this->voiceClients[$data->d->guild_id]->handleVoiceStateUpdate($data->d);
         }
     }
@@ -271,7 +272,7 @@ class Discord
     {
         $this->ws = $ws;
 
-        $this->logger->debug('websocket connection has been created');
+        $this->logger->info('websocket connection has been created');
 
         $ws->on('message', [$this, 'handleWsMessage']);
         $ws->on('close', [$this, 'handleWsClose']);
@@ -320,7 +321,7 @@ class Discord
 
         ++$this->reconnectCount;
         $this->reconnecting = true;
-        $this->logger->debug('starting reconnect', ['reconnect_count' => $this->reconnectCount]);
+        $this->logger->info('starting reconnect', ['reconnect_count' => $this->reconnectCount]);
         $this->connectWs();
     }
 
@@ -342,13 +343,16 @@ class Discord
 
             $deferred = new Deferred();
             $deferred->promise()->then(function ($d) use ($data, $hData) {
-                $this->emit($data->t, [$d, $this]);
+                $old = clone $this;
+                $this->emit($data->t, [$d, $this, $old]);
 
                 foreach ($hData['alternatives'] as $alternative) {
                     $this->emit($alternative, [$d, $this]);
                 }
             }, function ($e) use ($data) {
-                $this->logger->debug('error while trying to handle dispatch packet', ['packet' => $data->t, 'error' => $e]);
+                $this->logger->warning('error while trying to handle dispatch packet', ['packet' => $data->t, 'error' => $e]);
+            }, function ($d) use ($data) {
+                $this->logger->warning('notified from event', ['data' => $d, 'packet' => $data->t]);
             });
 
             $parse = [
@@ -356,8 +360,6 @@ class Discord
             ];
 
             if (! $this->emittedReady && (array_search($data->t, $parse) === false)) {
-                $this->logger->debug('client not ready, not parsing', ['event' => $data->t]);
-
                 $this->unparsedPackets[] = function () use (&$handler, &$deferred, &$data) {
                     $handler->handle($deferred, $data->d);
                 };
@@ -404,7 +406,7 @@ class Discord
 
     protected function handleReconnect($data)
     {
-        $this->logger->debug('recieved opcode 7 for reconnect');
+        $this->logger->warning('recieved opcode 7 for reconnect');
 
         $this->ws->close(
             Op::CLOSE_NORMAL,
@@ -414,14 +416,14 @@ class Discord
 
     protected function handleInvalidSession($data)
     {
-        $this->logger->debug('invalid session, re-identifying');
+        $this->logger->warning('invalid session, re-identifying');
 
         $this->identify(false);
     }
 
     protected function handleHello($data)
     {
-        $this->logger->debug('recieved hello');
+        $this->logger->info('recieved hello');
 
         $this->identify();
 
@@ -440,7 +442,7 @@ class Discord
                 ],
             ];
 
-            $this->logger->debug('resuming connection', ['payload' => $payload]);
+            $this->logger->info('resuming connection', ['payload' => $payload]);
         } else {
             $payload = [
                 'op' => Op::OP_IDENTIFY,
@@ -465,7 +467,7 @@ class Discord
                 ];
             }
 
-            $this->logger->debug('identifying', ['payload' => $payload]);
+            $this->logger->info('identifying', ['payload' => $payload]);
         }
 
         $this->send($payload);
@@ -485,7 +487,7 @@ class Discord
         $this->emit('heartbeat', [$this->seq, $this]);
 
         $this->heartbeatAckTimer = $this->loop->addTimer(5, function () {
-            $this->logger->debug('did not recieve heartbeat ACK within 5 seconds, sending heartbeat again');
+            $this->logger->warning('did not recieve heartbeat ACK within 5 seconds, sending heartbeat again');
             $this->heartbeat();
         });
     }
@@ -493,7 +495,7 @@ class Discord
     protected function setupChunking()
     {
         if (! $this->options['loadAllMembers']) {
-            $this->logger->debug('loadAllMembers option is disabled, not setting chunking up');
+            $this->logger->info('loadAllMembers option is disabled, not setting chunking up');
 
             return $this->ready();
         }
@@ -514,7 +516,7 @@ class Discord
                 $chunk = array_pop($chunks);
 
                 if (is_null($chunk)) {
-                    $this->logger->debug('finished sending chunks');
+                    $this->logger->info('finished sending chunks');
 
                     return;
                 }
@@ -538,7 +540,7 @@ class Discord
         };
 
         $this->loop->addPeriodicTimer(5, $checkForChunks);
-        $this->logger->debug('set up chunking, checking for chunks every 5 seconds');
+        $this->logger->info('set up chunking, checking for chunks every 5 seconds');
         $checkForChunks();
     }
 
@@ -552,12 +554,12 @@ class Discord
         $this->heartbeatTimer = $this->loop->addPeriodicTimer($interval, [$this, 'heartbeat']);
         $this->heartbeat();
 
-        $this->logger->debug('heartbeat timer initilized', ['interval' => $interval * 1000]);
+        $this->logger->info('heartbeat timer initilized', ['interval' => $interval * 1000]);
     }
 
     protected function connectWs()
     {
-        $this->logger->debug('starting connection to websocket', ['gateway' => $this->gateway]);
+        $this->logger->info('starting connection to websocket', ['gateway' => $this->gateway]);
 
         $this->wsFactory->__invoke($this->gateway)->then(
             [$this, 'handleWsConnection'],
@@ -578,7 +580,7 @@ class Discord
             return false;
         }
 
-        $this->logger->debug('client is ready');
+        $this->logger->info('client is ready');
         $this->emit('ready', [$this]);
 
         foreach ($this->unparsedPackets as $parser) {
@@ -739,7 +741,7 @@ class Discord
         }
 
         $deferred->promise()->then(function ($gateway) {
-            $this->logger->debug('gateway retrieved and set', ['gateway' => $gateway]);
+            $this->logger->info('gateway retrieved and set', ['gateway' => $gateway]);
         }, function ($e) {
             $this->logger->error('error obtaining gateway', ['e' => $e->getMessage()]);
         });
@@ -757,6 +759,7 @@ class Discord
     protected function resolveOptions(array $options = [])
     {
         $resolver = new OptionsResolver();
+        $logger = new Monolog('DiscordPHP');
 
         $resolver
             ->setRequired('token')
@@ -767,24 +770,32 @@ class Discord
                 'shardCount',
                 'loop',
                 'logger',
+                'loggerLevel',
                 'logging',
                 'cachePool',
                 'loadAllMembers',
             ])
             ->setDefaults([
                 'loop' => LoopFactory::create(),
-                'logger' => new Monolog('DiscordPHP'),
+                'logger' => null,
+                'loggerLevel' => Monolog::INFO,
                 'logging' => true,
                 'cachePool' => new ArrayCachePool(),
                 'loadAllMembers' => false,
             ])
             ->setAllowedTypes('loop', LoopInterface::class)
-            ->setAllowedTypes('logger', Monolog::class)
             ->setAllowedTypes('logging', 'bool')
             ->setAllowedTypes('cachePool', CacheItemPoolInterface::class)
             ->setAllowedTypes('loadAllMembers', 'bool');
 
-        return $resolver->resolve($options);
+        $options = $resolver->resolve($options);
+
+        if (is_null($options['logger'])) {
+            $logger->pushHandler(new StreamHandler('php://stdout', $options['loggerLevel']));
+            $options['logger'] = $logger;
+        }
+
+        return $options;
     }
 
     public function addLargeGuild($guild)

@@ -20,6 +20,11 @@ class GuildUpdate extends Event
 	 */
 	public function handle(Deferred $deferred, $data)
 	{
+        if (isset($data->unavailable) && $data->unavailable) {
+            $deferred->notify('Guild is unavailable.');
+            return;
+        }
+
 		$guildPart = $this->factory->create(Guild::class, $data, true);
 
         $roles = new RoleRepository(
