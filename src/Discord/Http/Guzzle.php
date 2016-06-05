@@ -13,7 +13,6 @@ namespace Discord\Http;
 
 use Discord\Discord;
 use Discord\Http\RateLimit\GlobalBucket;
-use Discord\Http\RateLimit\ServerBucket;
 use Discord\Parts\Channel\Channel;
 use Discord\Wrapper\CacheWrapper;
 use GuzzleHttp\Client as GuzzleClient;

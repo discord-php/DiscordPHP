@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is apart of the DiscordPHP project.
+ *
+ * Copyright (c) 2016 David Cole <david@team-reflex.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the LICENSE.md file.
+ */
+
 namespace Discord\WebSockets\Events;
 
 use Discord\Parts\Channel\Channel;
@@ -15,17 +24,18 @@ use React\Promise\Deferred;
 
 class GuildUpdate extends Event
 {
-	/**
-	 * {@inheritdoc}
-	 */
-	public function handle(Deferred $deferred, $data)
-	{
+    /**
+     * {@inheritdoc}
+     */
+    public function handle(Deferred $deferred, $data)
+    {
         if (isset($data->unavailable) && $data->unavailable) {
             $deferred->notify('Guild is unavailable.');
+
             return;
         }
 
-		$guildPart = $this->factory->create(Guild::class, $data, true);
+        $guildPart = $this->factory->create(Guild::class, $data, true);
 
         $roles = new RoleRepository(
             $this->http,
@@ -104,5 +114,5 @@ class GuildUpdate extends Event
         $this->discord->guilds->push($guildPart);
 
         $deferred->resolve($guildPart);
-	}
+    }
 }

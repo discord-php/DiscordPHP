@@ -34,52 +34,229 @@ use Monolog\Logger as Monolog;
 use Psr\Cache\CacheItemPoolInterface;
 use Ratchet\Client\Connector;
 use Ratchet\Client\WebSocket;
+use Ratchet\RFC6455\Messaging\Message;
 use React\EventLoop\Factory as LoopFactory;
 use React\EventLoop\LoopInterface;
+use React\EventLoop\Timer\TimerInterface;
 use React\Promise\Deferred;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * The Discord client class.
+ */
 class Discord
 {
     use EventEmitterTrait;
 
+    /**
+     * The gateway version the client uses.
+     *
+     * @var int Gateway version.
+     */
     const GATEWAY_VERSION = 5;
+
+    /**
+     * The client version.
+     *
+     * @var string Version.
+     */
     const VERSION = 'v4.0.0-develop';
 
+    /**
+     * The logger.
+     *
+     * @var Logger Logger.
+     */
     protected $logger;
+
+    /**
+     * An array of loggers for voice clients.
+     *
+     * @var array Loggers.
+     */
     protected $voiceLoggers = [];
+
+    /**
+     * An array of options passed to the client.
+     *
+     * @var array Options.
+     */
     protected $options;
+
+    /**
+     * The authentication token.
+     *
+     * @var string Token.
+     */
     protected $token;
+
+    /**
+     * The ReactPHP event loop.
+     *
+     * @var LoopInterface Event loop.
+     */
     protected $loop;
+
+    /**
+     * The WebSocket client factory.
+     *
+     * @var WsFactory Factory.
+     */
     protected $wsFactory;
+
+    /**
+     * The WebSocket instance.
+     *
+     * @var WebSocket Instance.
+     */
     protected $ws;
+
+    /**
+     * The event handlers.
+     *
+     * @var Handlers Handlers.
+     */
     protected $handlers;
+
+    /**
+     * The packet sequence that the client is up to.
+     *
+     * @var int Sequence.
+     */
     protected $seq;
+
+    /**
+     * Whether the client is currently reconnecting.
+     *
+     * @var bool Reconnecting.
+     */
     protected $reconnecting = false;
+
+    /**
+     * The session ID of the current session.
+     *
+     * @var string Session ID.
+     */
     protected $sessionId;
+
+    /**
+     * An array of voice clients that are currently connected.
+     *
+     * @var array Voice Clients.
+     */
     protected $voiceClients = [];
+
+    /**
+     * An array of large guilds that need to be requested for
+     * members.
+     *
+     * @var array Large guilds.
+     */
     protected $largeGuilds = [];
+
+    /**
+     * An array of large guilds that have been requested for members.
+     *
+     * @var array Large guilds.
+     */
     protected $largeSent = [];
+
+    /**
+     * An array of unparsed packets.
+     *
+     * @var array Unparsed packets.
+     */
     protected $unparsedPackets = [];
+
+    /**
+     * How many times the client has reconnected.
+     *
+     * @var int Reconnect count.
+     */
     protected $reconnectCount = 0;
+
+    /**
+     * The timer that sends the heartbeat packet.
+     *
+     * @var TimerInterface Timer.
+     */
     protected $heatbeatTimer;
+
+    /**
+     * The timer that resends the heartbeat packet if
+     * a HEARTBEAT_ACK packet is not received in 5 seconds.
+     *
+     * @var TimerInterface Timer.
+     */
     protected $heartbeatAckTimer;
+
+    /**
+     * The time that the last heartbeat packet was sent.
+     *
+     * @var int Epoch time.
+     */
     protected $heartbeatTime;
+
+    /**
+     * Whether `ready` has been emitted.
+     *
+     * @var bool Emitted.
+     */
     protected $emittedReady = false;
+
+    /**
+     * The gateway URL that the WebSocket client will connect to.
+     *
+     * @var string Gateway URL.
+     */
     protected $gateway;
+
+    /**
+     * What encoding the client will use, either `json` or `etf`.
+     *
+     * @var string Encoding.
+     */
     protected $encoding = 'json';
+
+    /**
+     * The HTTP client.
+     *
+     * @var Http Client.
+     */
     protected $http;
+
+    /**
+     * The part/repository factory.
+     *
+     * @var Factory Part factory.
+     */
     protected $factory;
+
+    /**
+     * The cache wrapper.
+     *
+     * @var CacheWrapper Cache.
+     */
     protected $cache;
+
+    /**
+     * The cache pool that is in use.
+     *
+     * @var CacheItemPoolInterface Cache pool.
+     */
     protected $cachePool;
+
+    /**
+     * The Client class.
+     *
+     * @var Client Discord client.
+     */
     protected $client;
 
     /**
      * Creates a Discord client instance.
      *
      * @param array $options Array of options.
-     *
-     * @return void
      */
     public function __construct(array $options = [])
     {
@@ -116,23 +293,38 @@ class Discord
         });
     }
 
+    /**
+     * Handles `VOICE_SERVER_UPDATE` packets.
+     *
+     * @param object $data Packet data.
+     */
     protected function handleVoiceServerUpdate($data)
     {
         if (isset($this->voiceClients[$data->d->guild_id])) {
-            $this->logger->debug('voice server update recieved', ['guild' => $data->d->guild_id, 'data' => $data->d]);
+            $this->logger->debug('voice server update received', ['guild' => $data->d->guild_id, 'data' => $data->d]);
             $this->voiceClients[$data->d->guild_id]->handleVoiceServerChange((array) $data->d);
         }
     }
 
+    /**
+     * Handles `RESUME` packets.
+     *
+     * @param object $data Packet data.
+     */
     protected function handleResume($data)
     {
         $this->logger->info('websocket reconnected to discord');
         $this->emit('reconnected', [$this]);
     }
 
+    /**
+     * Handles `READY` packets.
+     *
+     * @param object $data Packet data.
+     */
     protected function handleReady($data)
     {
-        $this->logger->debug('ready packet recieved');
+        $this->logger->debug('ready packet received');
 
         // If this is a reconnect we don't want to
         // reparse the READY packet as it would remove
@@ -146,7 +338,7 @@ class Discord
 
         $content = $data->d;
         $this->emit('trace', $data->d->_trace);
-        $this->logger->debug('discord trace recieved', ['trace' => $content->_trace]);
+        $this->logger->debug('discord trace received', ['trace' => $content->_trace]);
 
         // Setup the user account
         $this->client = $this->factory->create(Client::class, $content->user, true);
@@ -223,12 +415,17 @@ class Discord
         $this->on(Event::GUILD_CREATE, $function);
     }
 
+    /**
+     * Handles `GUILD_MEMBERS_CHUNK` packets.
+     *
+     * @param object $data Packet data.
+     */
     protected function handleGuildMembersChunk($data)
     {
         $guild = $this->guilds->get('id', $data->d->guild_id);
         $members = $data->d->members;
 
-        $this->logger->debug('recieved guild member chunk', ['guild_id' => $guild->id, 'guild_name' => $guild->name, 'member_count' => count($members)]);
+        $this->logger->debug('received guild member chunk', ['guild_id' => $guild->id, 'guild_name' => $guild->name, 'member_count' => count($members)]);
 
         $count = 0;
 
@@ -264,14 +461,24 @@ class Discord
         }
     }
 
+    /**
+     * Handles `VOICE_STATE_UPDATE` packets.
+     *
+     * @param object $data Packet data.
+     */
     protected function handleVoiceStateUpdate($data)
     {
         if (isset($this->voiceClients[$data->d->guild_id])) {
-            $this->logger->debug('voice state update recieved', ['guild' => $data->d->guild, 'data' => $data->d]);
+            $this->logger->debug('voice state update received', ['guild' => $data->d->guild, 'data' => $data->d]);
             $this->voiceClients[$data->d->guild_id]->handleVoiceStateUpdate($data->d);
         }
     }
 
+    /**
+     * Handles WebSocket connections received by the client.
+     *
+     * @param WebSocket $ws WebSocket client.
+     */
     public function handleWsConnection(WebSocket $ws)
     {
         $this->ws = $ws;
@@ -283,6 +490,11 @@ class Discord
         $ws->on('error', [$this, 'handleWsError']);
     }
 
+    /**
+     * Handles WebSocket messages received by the client.
+     *
+     * @param Message $message Message object.
+     */
     public function handleWsMessage($message)
     {
         if ($message->isBinary()) {
@@ -312,6 +524,12 @@ class Discord
         }
     }
 
+    /**
+     * Handles WebSocket closes received by the client.
+     *
+     * @param int    $op     The close code.
+     * @param string $reason The reason the WebSocket closed.
+     */
     public function handleWsClose($op, $reason)
     {
         $this->logger->warning('websocket closed', ['op' => $op, 'reason' => $reason]);
@@ -329,12 +547,22 @@ class Discord
         $this->connectWs();
     }
 
+    /**
+     * Handles WebSocket errors received by the client.
+     *
+     * @param \Exception $e The error.
+     */
     public function handleWsError($e)
     {
         $this->logger->error('websocket error', ['e' => $e->getMessage()]);
         $this->emit('error', [$e, $this]);
     }
 
+    /**
+     * Handles dispatch events received by the WebSocket.
+     *
+     * @param object $data Packet data.
+     */
     protected function handleDispatch($data)
     {
         if (! is_null($hData = $this->handlers->getHandler($data->t))) {
@@ -385,9 +613,14 @@ class Discord
         }
     }
 
+    /**
+     * Handles heartbeat packets received by the client.
+     *
+     * @param object $data Packet data.
+     */
     protected function handleHeartbeat($data)
     {
-        $this->logger->debug('recieved heartbeat', ['seq' => $data->d]);
+        $this->logger->debug('received heartbeat', ['seq' => $data->d]);
 
         $payload = [
             'op' => Op::OP_HEARTBEAT,
@@ -397,20 +630,30 @@ class Discord
         $this->send($payload);
     }
 
+    /**
+     * Handles heartbeat ACK packets received by the client.
+     *
+     * @param object $data Packet data.
+     */
     protected function handleHeartbeatAck($data)
     {
-        $recieved = microtime(true);
-        $diff = $recieved - $this->heartbeatTime;
+        $received = microtime(true);
+        $diff = $received - $this->heartbeatTime;
         $time = $diff * 1000;
 
         $this->heartbeatAckTimer->cancel();
         $this->emit('heartbeat-ack', [$time, $this]);
-        $this->logger->debug('recieved heartbeat ack', ['response_time' => $time]);
+        $this->logger->debug('received heartbeat ack', ['response_time' => $time]);
     }
 
+    /**
+     * Handles reconnect packets received by the client.
+     *
+     * @param object $data Packet data.
+     */
     protected function handleReconnect($data)
     {
-        $this->logger->warning('recieved opcode 7 for reconnect');
+        $this->logger->warning('received opcode 7 for reconnect');
 
         $this->ws->close(
             Op::CLOSE_NORMAL,
@@ -418,6 +661,11 @@ class Discord
         );
     }
 
+    /**
+     * Handles invalid session packets received by the client.
+     *
+     * @param object $data Packet data.
+     */
     protected function handleInvalidSession($data)
     {
         $this->logger->warning('invalid session, re-identifying');
@@ -425,15 +673,25 @@ class Discord
         $this->identify(false);
     }
 
+    /**
+     * Handles HELLO packets received by the websocket.
+     *
+     * @param object $data Packet data.
+     */
     protected function handleHello($data)
     {
-        $this->logger->info('recieved hello');
+        $this->logger->info('received hello');
 
         $this->identify();
 
         $this->setupHeartbeat($data->d->heartbeat_interval);
     }
 
+    /**
+     * Identifies with the Discord gateway with `IDENTIFY` or `RESUME` packets.
+     *
+     * @param bool $resume Whether resume should be enabled.
+     */
     protected function identify($resume = true)
     {
         if ($resume && $this->reconnecting && ! is_null($this->sessionId)) {
@@ -477,6 +735,11 @@ class Discord
         $this->send($payload);
     }
 
+    /**
+     * Sends a heartbeat packet to the Discord gateway.
+     *
+     * @return void
+     */
     public function heartbeat()
     {
         $this->logger->debug('sending heartbeat', ['seq' => $this->seq]);
@@ -496,6 +759,11 @@ class Discord
         });
     }
 
+    /**
+     * Sets guild member chunking up.
+     *
+     * @return void
+     */
     protected function setupChunking()
     {
         if (! $this->options['loadAllMembers']) {
@@ -548,6 +816,11 @@ class Discord
         $checkForChunks();
     }
 
+    /**
+     * Sets the heartbeat timer up.
+     *
+     * @param int $interval The heartbeat interval in milliseconds.
+     */
     protected function setupHeartbeat($interval)
     {
         if (isset($this->heartbeatTimer)) {
@@ -561,6 +834,11 @@ class Discord
         $this->logger->info('heartbeat timer initilized', ['interval' => $interval * 1000]);
     }
 
+    /**
+     * Initilizes the connection with the Discord gateway.
+     *
+     * @return void
+     */
     protected function connectWs()
     {
         $this->logger->info('starting connection to websocket', ['gateway' => $this->gateway]);
@@ -571,6 +849,11 @@ class Discord
         );
     }
 
+    /**
+     * Sends a packet to the Discord gateway.
+     *
+     * @param array $data Packet data.
+     */
     protected function send(array $data)
     {
         $json = json_encode($data);
@@ -578,6 +861,11 @@ class Discord
         $this->ws->send($json);
     }
 
+    /**
+     * Emits ready if it has not been emitted already.
+     *
+     * @return void
+     */
     protected function ready()
     {
         if ($this->emittedReady) {
@@ -597,8 +885,6 @@ class Discord
      *
      * @param Game $game The game object.
      * @param bool $idle Whether we are idle.
-     *
-     * @return void
      */
     public function updatePresence(Game $game = null, $idle = false)
     {
@@ -610,8 +896,8 @@ class Discord
 
         $payload = [
             'op' => Op::OP_PRESENCE_UPDATE,
-            'd'  => [
-                'game'       => $game,
+            'd' => [
+                'game' => $game,
                 'idle_since' => $idle,
             ],
         ];
@@ -662,8 +948,8 @@ class Discord
 
         $data = [
             'user_id' => $this->id,
-            'deaf'    => $deaf,
-            'mute'    => $mute,
+            'deaf' => $deaf,
+            'mute' => $mute,
         ];
 
         $voiceStateUpdate = function ($vs, $discord) use ($channel, &$data, &$voiceStateUpdate) {
@@ -672,7 +958,7 @@ class Discord
             }
 
             $data['session'] = $vs->session_id;
-            $this->logger->debug('recieved session id for voice sesion', ['guild' => $channel->guild_id, 'session_id' => $vs->session_id]);
+            $this->logger->debug('received session id for voice sesion', ['guild' => $channel->guild_id, 'session_id' => $vs->session_id]);
             $this->removeListener(Event::VOICE_STATE_UPDATE, $voiceStateUpdate);
         };
 
@@ -683,11 +969,11 @@ class Discord
 
             $data['token'] = $vs->token;
             $data['endpoint'] = $vs->endpoint;
-            $this->logger->debug('recieved token and endpoint for voic session', ['guild' => $channel->guild_id, 'token' => $vs->token, 'endpoint' => $vs->endpoint]);
+            $this->logger->debug('received token and endpoint for voic session', ['guild' => $channel->guild_id, 'token' => $vs->token, 'endpoint' => $vs->endpoint]);
 
             $monolog = new Monolog('Voice-'.$channel->guild_id);
-            $logger  = new Logger($monolog, $this->options['logging']); 
-            $vc      = new VoiceClient($this, $this->loop, $channel, $logger, $data);
+            $logger = new Logger($monolog, $this->options['logging']);
+            $vc = new VoiceClient($this, $this->loop, $channel, $logger, $data);
 
             $vc->once('ready', function () use ($vc, $deferred, $channel, $logger) {
                 $logger->debug('voice client is ready');
@@ -717,6 +1003,13 @@ class Discord
         return $deferred->promise();
     }
 
+    /**
+     * Retrieves and sets the gateway URL for the client.
+     *
+     * @param string|null $gateway Gateway URL to set.
+     *
+     * @return \React\Promise\Promise
+     */
     protected function setGateway($gateway = null)
     {
         $deferred = new Deferred();
@@ -804,21 +1097,47 @@ class Discord
         return $options;
     }
 
+    /**
+     * Adds a large guild to the large guild array.
+     *
+     * @param Guild $guild The guild.
+     */
     public function addLargeGuild($guild)
     {
         $this->largeGuilds[] = $guild->id;
     }
 
+    /**
+     * Starts the ReactPHP event loop.
+     *
+     * @return void
+     */
     public function run()
     {
         $this->loop->run();
     }
 
+    /**
+     * Allows access to the part/repository factory.
+     *
+     * @param …
+     *
+     * @return mixed
+     *
+     * @see Factory::create()
+     */
     public function factory()
     {
         return call_user_func_array([$this->factory, 'create'], func_get_args());
     }
 
+    /**
+     * Handles dynamic get calls to the client.
+     *
+     * @param string $name Variable name.
+     *
+     * @return mixed
+     */
     public function __get($name)
     {
         $allowed = ['loop'];
@@ -826,7 +1145,7 @@ class Discord
         if (array_search($name, $allowed) !== false) {
             return $this->{$name};
         }
-        
+
         if (is_null($this->client)) {
             return;
         }
@@ -834,6 +1153,12 @@ class Discord
         return $this->client->{$name};
     }
 
+    /**
+     * Handles dynamic set calls to the client.
+     *
+     * @param string $name  Variable name.
+     * @param mixed  $value Value to set.
+     */
     public function __set($name, $value)
     {
         if (is_null($this->client)) {
@@ -843,6 +1168,14 @@ class Discord
         $this->client->{$name} = $value;
     }
 
+    /**
+     * Handles dynamic calls to the client.
+     *
+     * @param string $name   Function name.
+     * @param array  $params Function paramaters.
+     *
+     * @return mixed
+     */
     public function __call($name, $params)
     {
         if (is_null($this->client)) {

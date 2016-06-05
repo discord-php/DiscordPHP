@@ -14,7 +14,6 @@ namespace Discord\Parts\Channel;
 use Carbon\Carbon;
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
-use React\Promise\Deferred;
 
 /**
  * A message which is posted to a Discord text channel.

@@ -19,7 +19,7 @@ interface RepositoryInterface
      * Builds a new, empty part.
      *
      * @param array $attributes The attributes for the new part.
-     * 
+     *
      * @return Part The new part.
      */
     public function new(array $attributes = []);

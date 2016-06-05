@@ -11,8 +11,6 @@
 
 namespace Discord\Http;
 
-use Discord\Parts\Channel\Channel;
-
 /**
  * Interface for HTTP drivers.
  *

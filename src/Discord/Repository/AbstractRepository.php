@@ -112,7 +112,7 @@ abstract class AbstractRepository extends Collection implements RepositoryInterf
     public function new(array $attributes = [])
     {
         $attributes = array_merge($attributes, $this->vars);
-        
+
         return $this->factory->create($this->part, $attributes);
     }
 

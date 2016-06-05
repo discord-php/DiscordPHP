@@ -122,7 +122,7 @@ class Handlers
      *
      * @param string $event The event handler to remove.
      *
-     * @return void 
+     * @return void
      */
     public function removeHandler($event)
     {
