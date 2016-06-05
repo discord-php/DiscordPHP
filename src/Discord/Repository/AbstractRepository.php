@@ -124,7 +124,7 @@ abstract class AbstractRepository extends Collection implements RepositoryInterf
         if ($part->created) {
             $method = 'patch';
             $endpoint = $part->replaceWithVariables($this->replaceWithVariables(@$this->endpoints['update']));
-            $attributes = $part->getCreatableAttributes();
+            $attributes = $part->getUpdatableAttributes();
 
             if (! isset($this->endpoints['update'])) {
                 return \React\Promise\reject(new \Exception('You cannot update this part.'));

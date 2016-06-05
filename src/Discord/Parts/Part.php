@@ -87,7 +87,7 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
      *
      * @var bool Whether the part has been created.
      */
-    protected $created = false;
+    public $created = false;
 
     /**
      * The regex pattern to replace variables with.
@@ -283,7 +283,7 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
                     $this->http,
                     $this->cache,
                     $this->factory,
-                    $this->attributes
+                    $this->getRepositoryAttributes()
                 )
             );
         }
