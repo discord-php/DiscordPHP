@@ -53,6 +53,7 @@ class Handlers
         // Message handlers
         $this->addHandler(Event::MESSAGE_CREATE, \Discord\WebSockets\Events\MessageCreate::class, ['message']);
         $this->addHandler(Event::MESSAGE_DELETE, \Discord\WebSockets\Events\MessageDelete::class);
+        $this->addHandler(Event::MESSAGE_DELETE_BULK, \Discord\WebSockets\Events\MessageDeleteBulk::class);
         $this->addHandler(Event::MESSAGE_UPDATE, \Discord\WebSockets\Events\MessageUpdate::class);
 
         // New Member Event handlers

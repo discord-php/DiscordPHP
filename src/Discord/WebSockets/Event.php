@@ -60,6 +60,7 @@ abstract class Event
     const MESSAGE_CREATE = 'MESSAGE_CREATE';
     const MESSAGE_DELETE = 'MESSAGE_DELETE';
     const MESSAGE_UPDATE = 'MESSAGE_UPDATE';
+    const MESSAGE_DELETE_BULK = 'MESSAGE_DELETE_BULK';
 
     /**
      * The HTTP client.
