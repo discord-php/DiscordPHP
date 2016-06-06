@@ -29,11 +29,13 @@ class GuildMemberAdd extends Event
 
         $guild = $this->discord->guilds->get('id', $memberPart->guild_id);
 
-        $guild->members->push($memberPart);
-        ++$guild->member_count;
+        if (! is_null($guild)) {
+            $guild->members->push($memberPart);
+            ++$guild->member_count;
 
-        $this->discord->guilds->push($guild);
-        $this->cache->set("guild.{$guild->id}", $guild);
+            $this->discord->guilds->push($guild);
+            $this->cache->set("guild.{$guild->id}", $guild);
+        }
 
         $deferred->resolve($memberPart);
     }

@@ -29,10 +29,12 @@ class GuildMemberUpdate extends Event
 
         $guild = $this->discord->guilds->get('id', $memberPart->guild_id);
 
-        $guild->members->push($memberPart);
+        if (! is_null($guild)) {
+            $guild->members->push($memberPart);
 
-        $this->discord->guilds->push($guild);
-        $this->cache->set("guild.{$guild->id}", $guild);
+            $this->discord->guilds->push($guild);
+            $this->cache->set("guild.{$guild->id}", $guild);
+        }
 
         $deferred->resolve($memberPart);
     }
