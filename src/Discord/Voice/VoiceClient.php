@@ -18,12 +18,12 @@ use Discord\Exceptions\LibSodiumNotFoundException;
 use Discord\Exceptions\OutdatedDCAException;
 use Discord\Helpers\Collection;
 use Discord\Helpers\Process;
-use Discord\Logging\Logger;
+use Discord\Wrapper\LoggerWrapper as Logger;
 use Discord\Parts\Channel\Channel;
 use Discord\WebSockets\Op;
 use Evenement\EventEmitter;
 use Ratchet\Client\Connector as WsFactory;
-use Ratchet\Client\WebSocket as WS;
+use Ratchet\Client\WebSocket;
 use Ratchet\WebSocket\Version\RFC6455\Frame;
 use React\Datagram\Factory as DatagramFactory;
 use React\Datagram\Socket;
@@ -75,7 +75,7 @@ class VoiceClient extends EventEmitter
     /**
      * The voice WebSocket instance.
      *
-     * @var WS The voice WebSocket client.
+     * @var WebSocket The voice WebSocket client.
      */
     protected $voiceWebsocket;
 
@@ -344,11 +344,11 @@ class VoiceClient extends EventEmitter
     /**
      * Handles a WebSocket connection.
      *
-     * @param WS $ws The WebSocket instance.
+     * @param WebSocket $ws The WebSocket instance.
      *
      * @return void
      */
-    public function handleWebSocketConnection(WS $ws)
+    public function handleWebSocketConnection(WebSocket $ws)
     {
         $this->logger->debug('connected to voice websocket');
 
@@ -370,7 +370,7 @@ class VoiceClient extends EventEmitter
                 $this->heartbeat_interval = $data->d->heartbeat_interval;
                 $this->ssrc = $data->d->ssrc;
 
-                $this->logger->debug('received voice ready packet', $data->d);
+                $this->logger->debug('received voice ready packet', ['data' => json_decode(json_encode($data->d), true)]);
 
                 $this->send([
                     'op' => Op::VOICE_HEARTBEAT,
@@ -502,7 +502,7 @@ class VoiceClient extends EventEmitter
                         $this->secret_key .= pack('C*', $part);
                     }
 
-                    $this->logger->debug('received description packet, vc ready', ['data' => $data->d]);
+                    $this->logger->debug('received description packet, vc ready', ['data' => json_decode(json_encode($data->d), true)]);
 
                     if (! $this->reconnecting) {
                         $this->emit('ready', [$this]);

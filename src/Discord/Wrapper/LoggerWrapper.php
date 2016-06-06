@@ -9,11 +9,11 @@
  * with this source code in the LICENSE.md file.
  */
 
-namespace Discord\Logging;
+namespace Discord\Wrapper;
 
 use Monolog\Logger as Monolog;
 
-class Logger
+class LoggerWrapper
 {
     /**
      * The monolog logger.

@@ -15,7 +15,7 @@ use Cache\Adapter\PHPArray\ArrayCachePool;
 use Discord\Factory\Factory;
 use Discord\Http\Guzzle;
 use Discord\Http\Http;
-use Discord\Logging\Logger;
+use Discord\Wrapper\LoggerWrapper as Logger;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\User\Client;
 use Discord\Parts\User\Game;
@@ -469,7 +469,7 @@ class Discord
     protected function handleVoiceStateUpdate($data)
     {
         if (isset($this->voiceClients[$data->d->guild_id])) {
-            $this->logger->debug('voice state update received', ['guild' => $data->d->guild, 'data' => $data->d]);
+            $this->logger->debug('voice state update received', ['guild' => $data->d->guild_id, 'data' => $data->d]);
             $this->voiceClients[$data->d->guild_id]->handleVoiceStateUpdate($data->d);
         }
     }
@@ -958,7 +958,7 @@ class Discord
             }
 
             $data['session'] = $vs->session_id;
-            $this->logger->debug('received session id for voice sesion', ['guild' => $channel->guild_id, 'session_id' => $vs->session_id]);
+            $this->logger->info('received session id for voice sesion', ['guild' => $channel->guild_id, 'session_id' => $vs->session_id]);
             $this->removeListener(Event::VOICE_STATE_UPDATE, $voiceStateUpdate);
         };
 
@@ -969,17 +969,18 @@ class Discord
 
             $data['token'] = $vs->token;
             $data['endpoint'] = $vs->endpoint;
-            $this->logger->debug('received token and endpoint for voic session', ['guild' => $channel->guild_id, 'token' => $vs->token, 'endpoint' => $vs->endpoint]);
+            $this->logger->info('received token and endpoint for voice session', ['guild' => $channel->guild_id, 'token' => $vs->token, 'endpoint' => $vs->endpoint]);
 
             $monolog = new Monolog('Voice-'.$channel->guild_id);
             $logger = new Logger($monolog, $this->options['logging']);
-            $vc = new VoiceClient($this, $this->loop, $channel, $logger, $data);
+            $vc = new VoiceClient($this->ws, $this->loop, $channel, $logger, $data);
 
             $vc->once('ready', function () use ($vc, $deferred, $channel, $logger) {
-                $logger->debug('voice client is ready');
+                $logger->info('voice client is ready');
+                $this->voiceClients[$channel->guild_id] = $vc;
 
                 $vc->setBitrate($channel->bitrate)->then(function () use ($vc, $deferred, $logger, $channel) {
-                    $logger->debug('set voice client bitrate', ['bitrate' => $channel->bitrate]);
+                    $logger->info('set voice client bitrate', ['bitrate' => $channel->bitrate]);
                     $deferred->resolve($vc);
                 });
             });
@@ -988,17 +989,28 @@ class Discord
                 $deferred->reject($e);
             });
             $vc->once('close', function () use ($channel, $logger) {
-                $logger->debug('voice client closed');
+                $logger->warning('voice client closed');
                 unset($this->voiceClients[$channel->guild_id]);
             });
 
             $this->voiceLoggers[$channel->guild_id] = $logger;
-            $this->voiceClients[$channel->guild_id] = $vc;
             $this->removeListener(Event::VOICE_SERVER_UPDATE, $voiceServerUpdate);
         };
 
         $this->on(Event::VOICE_STATE_UPDATE, $voiceStateUpdate);
         $this->on(Event::VOICE_SERVER_UPDATE, $voiceServerUpdate);
+
+        $payload = [
+            'op' => Op::OP_VOICE_STATE_UPDATE,
+            'd' => [
+                'guild_id' => $channel->guild_id,
+                'channel_id' => $channel->id,
+                'self_mute' => $mute,
+                'self_deaf' => $mute,
+            ],
+        ];
+
+        $this->send($payload);
 
         return $deferred->promise();
     }
