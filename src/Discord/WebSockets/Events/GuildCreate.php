@@ -15,7 +15,7 @@ use Discord\Parts\Channel\Channel;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Guild\Role;
 use Discord\Parts\User\Member;
-use Discord\Parts\WebSockets\VoiceStateUpdate;
+use Discord\Parts\WebSockets\VoiceStateUpdate as VoiceStateUpdatePart;
 use Discord\Repository\Guild\ChannelRepository;
 use Discord\Repository\Guild\MemberRepository;
 use Discord\Repository\Guild\RoleRepository;
@@ -98,7 +98,7 @@ class GuildCreate extends Event
 
         foreach ($data->voice_states as $state) {
             if ($channel = $guildPart->channels->get('id', $state->channel_id)) {
-                $channel->members->push($this->factory->create(VoiceStateUpdate::class, (array) $state, true));
+                $channel->members->push($this->factory->create(VoiceStateUpdatePart::class, (array) $state, true));
             }
         }
 

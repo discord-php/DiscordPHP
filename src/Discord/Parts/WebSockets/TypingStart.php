@@ -48,7 +48,7 @@ class TypingStart extends Part
      */
     public function getTimestampAttribute()
     {
-        return $this->factory->create(Carbon::class, gmdate('r', $this->attributes['timestamp']));
+        return new Carbon(gmdate('r', $this->attributes['timestamp']));
     }
 
     /**
