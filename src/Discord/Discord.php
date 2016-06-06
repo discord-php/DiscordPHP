@@ -133,6 +133,13 @@ class Discord
     protected $reconnecting = false;
 
     /**
+     * Whether the client is connected to the gateway.
+     *
+     * @var bool Connected.
+     */
+    protected $connected = false;
+
+    /**
      * The session ID of the current session.
      *
      * @var string Session ID.
@@ -482,6 +489,7 @@ class Discord
     public function handleWsConnection(WebSocket $ws)
     {
         $this->ws = $ws;
+        $this->connected = true;
 
         $this->logger->info('websocket connection has been created');
 
@@ -532,6 +540,7 @@ class Discord
      */
     public function handleWsClose($op, $reason)
     {
+        $this->connected = false;
         $this->logger->warning('websocket closed', ['op' => $op, 'reason' => $reason]);
 
         if ($op == Op::CLOSE_INVALID_TOKEN) {
@@ -754,6 +763,10 @@ class Discord
         $this->emit('heartbeat', [$this->seq, $this]);
 
         $this->heartbeatAckTimer = $this->loop->addTimer(5, function () {
+            if (! $this->connected) {
+                return;
+            }
+            
             $this->logger->warning('did not recieve heartbeat ACK within 5 seconds, sending heartbeat again');
             $this->heartbeat();
         });
