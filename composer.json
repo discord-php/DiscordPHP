@@ -37,7 +37,10 @@
         "cache/apc-adapter":       "Required to use the APC cache driver",
         "cache/memcache-adapter":  "Required to use the Memcache cache driver",
         "cache/memcached-adapter": "Required to use the Memcached cache driver",
-        "cache/redis-adapter":     "Required to use the Redis cache driver"
+        "cache/redis-adapter":     "Required to use the Redis cache driver",
+        "ext-libevent":            "For a faster, and more performant loop. Preferred",
+        "ext-libev":               "For a faster, and more performant loop",
+        "ext-event":               "For a faster, and more performant loop"
     },
     "scripts":     {
         "test": "php tests/run.php"
