@@ -21,8 +21,6 @@ class MessageDelete extends Event
      */
     public function handle(Deferred $deferred, $data)
     {
-        $this->cache->remove("message.{$data->id}");
-
         $channel = $this->cache->get("channel.{$data->channel_id}");
         $channel->messages->pull($data->id);
 

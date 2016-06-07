@@ -24,8 +24,6 @@ class MessageCreate extends Event
     {
         $messagePart = $this->factory->create(Message::class, $data, true);
 
-        $this->cache->set("message.{$messagePart->id}", $messagePart);
-
         $channel = $this->cache->get("channel.{$messagePart->channel_id}");
         $channel->messages->push($messagePart);
 
