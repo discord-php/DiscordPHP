@@ -35,7 +35,7 @@ class Client extends Part
     /**
      * {@inheritdoc}
      */
-    protected $fillable = ['id', 'username', 'password', 'email', 'verified', 'avatar', 'discriminator', 'bot'];
+    protected $fillable = ['id', 'username', 'password', 'email', 'verified', 'avatar', 'discriminator', 'bot', 'user'];
 
     /**
      * {@inheritdoc}

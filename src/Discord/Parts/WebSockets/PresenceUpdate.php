@@ -32,7 +32,7 @@ class PresenceUpdate extends Part
     /**
      * {@inheritdoc}
      */
-    protected $fillable = ['user', 'roles', 'guild_id', 'status', 'game'];
+    protected $fillable = ['user', 'roles', 'guild_id', 'status', 'game', 'nick'];
 
     /**
      * Gets the user attribute.

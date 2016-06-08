@@ -53,7 +53,7 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
      *
      * @var Discord Client.
      */
-    protected $client;
+    protected $discord;
 
     /**
      * The parts fillable attributes.
@@ -343,7 +343,9 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
             return;
         }
 
-        $this->attributes[$key] = $value;
+        if (array_search($key, $this->fillable) !== false) {
+            $this->attributes[$key] = $value;
+        }
     }
 
     /**

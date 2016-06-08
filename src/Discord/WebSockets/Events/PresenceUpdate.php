@@ -28,8 +28,14 @@ class PresenceUpdate extends Event
         $member = $guild->members->get('id', $presenceUpdate->user->id);
 
         if (! is_null($member)) {
-            $member->game = $presenceUpdate->game;
-            $member->status = $presenceUpdate->status;
+            $presenceAttributes = $presenceUpdate->getRawAttributes();
+            $member->fill([
+                'status' => $presenceAttributes['status'],
+                'roles' => $presenceAttributes['roles'],
+                'nick' => $presenceAttributes['nick'],
+                'game' => $presenceAttributes['game'],
+            ]);
+
             $guild->members->push($member);
         }
 
