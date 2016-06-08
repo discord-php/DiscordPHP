@@ -11,6 +11,7 @@
 
 namespace Discord\Parts\Channel;
 
+use Traversable;
 use Discord\Exceptions\FileNotFoundException;
 use Discord\Helpers\Collection;
 use Discord\Parts\Guild\Guild;
@@ -198,13 +199,21 @@ class Channel extends Part
     /**
      * Bulk deletes an array of messages.
      *
-     * @param array $messages An array of messages to delete.
+     * @param array|Traversable $messages An array of messages to delete.
      *
      * @return \React\Promise\Promise
      */
-    public function deleteMessages(array $messages)
+    public function deleteMessages($messages)
     {
         $deferred = new Deferred();
+
+        if (! is_array($messages) &&
+            ! ($messages instanceof Traversable)) {
+            $deferred->reject(new \Exception('$messages must be an array or implement Traversable.'));
+
+            return $deferred->promise();
+        }
+
         $count = count($messages);
 
         if ($count == 0) {
