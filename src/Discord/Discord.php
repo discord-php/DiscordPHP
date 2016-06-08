@@ -360,15 +360,19 @@ class Discord
             $this->factory
         );
 
-        foreach ($content->private_channels as $channel) {
-            $channelPart = $this->factory->create(Channel::class, $channel, true);
-            $this->cache->set("channels.{$channelPart->id}", $channelPart);
-            $this->cache->set("pm_channels.{$channelPart->recipient->id}", $channelPart);
-            $private_channels->push($channelPart);
+        if ($this->options['pmChannels']) {
+            foreach ($content->private_channels as $channel) {
+                $channelPart = $this->factory->create(Channel::class, $channel, true);
+                $this->cache->set("pm_channels.{$channelPart->recipient->id}", $channelPart);
+                $private_channels->push($channelPart);
+            }
+
+            $this->logger->info('stored private channels', ['count' => $private_channels->count()]);
+        } else {
+            $this->logger->info('did not parse private channels');
         }
 
         $this->private_channels = $private_channels;
-        $this->logger->info('stored private channels', ['count' => $private_channels->count()]);
 
         // Guilds
         $this->guilds = new GuildRepository(
@@ -447,8 +451,6 @@ class Discord
             $member['game'] = null;
 
             $memberPart = $this->factory->create(Member::class, $member, true);
-            $this->cache->set("guild.{$guild->id}.members.{$memberPart->id}", $memberPart);
-            $this->cache->set("user.{$memberPart->id}", $memberPart->user);
             $guild->members->push($memberPart);
             ++$count;
         }
@@ -1097,6 +1099,7 @@ class Discord
                 'cachePool',
                 'loadAllMembers',
                 'disabledEvents',
+                'pmChannels',
             ])
             ->setDefaults([
                 'loop' => LoopFactory::create(),
@@ -1106,11 +1109,14 @@ class Discord
                 'cachePool' => new ArrayCachePool(),
                 'loadAllMembers' => false,
                 'disabledEvents' => [],
+                'pmChannels' => false,
             ])
             ->setAllowedTypes('loop', LoopInterface::class)
             ->setAllowedTypes('logging', 'bool')
             ->setAllowedTypes('cachePool', CacheItemPoolInterface::class)
-            ->setAllowedTypes('loadAllMembers', 'bool');
+            ->setAllowedTypes('loadAllMembers', 'bool')
+            ->setAllowedTypes('disabledEvents', 'array')
+            ->setAllowedTypes('pmChannels', 'bool');
 
         $options = $resolver->resolve($options);
 

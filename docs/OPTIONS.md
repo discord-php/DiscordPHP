@@ -14,3 +14,4 @@ The Discord client constructor takes an array of options. Here are the valid opt
 | cachePool | a cache pool to use | false | Array Cache Pool |
 | loadAllMembers | whether we should preload all members | false | false |
 | disabledEvents | an array of events that will not be parsed | false | [] |
+| pmChannels | whether pm channels should be parsed on READY | false | false |

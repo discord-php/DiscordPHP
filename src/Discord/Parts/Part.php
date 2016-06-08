@@ -488,6 +488,16 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
     }
 
     /**
+     * Returns an array of raw attributes.
+     *
+     * @return array Raw attributes.
+     */
+    public function getRawAttributes()
+    {
+        return $this->attributes;
+    }
+
+    /**
      * Gets the attributes to pass to repositories.
      *
      * @return array Attributes.
