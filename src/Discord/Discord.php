@@ -1100,6 +1100,7 @@ class Discord
                 'loadAllMembers',
                 'disabledEvents',
                 'pmChannels',
+                'storeMessages',
             ])
             ->setDefaults([
                 'loop' => LoopFactory::create(),
@@ -1110,13 +1111,15 @@ class Discord
                 'loadAllMembers' => false,
                 'disabledEvents' => [],
                 'pmChannels' => false,
+                'storeMessages' => false,
             ])
             ->setAllowedTypes('loop', LoopInterface::class)
             ->setAllowedTypes('logging', 'bool')
             ->setAllowedTypes('cachePool', CacheItemPoolInterface::class)
             ->setAllowedTypes('loadAllMembers', 'bool')
             ->setAllowedTypes('disabledEvents', 'array')
-            ->setAllowedTypes('pmChannels', 'bool');
+            ->setAllowedTypes('pmChannels', 'bool')
+            ->setAllowedTypes('storeMessages', 'bool');
 
         $options = $resolver->resolve($options);
 
@@ -1202,7 +1205,7 @@ class Discord
      */
     public function __get($name)
     {
-        $allowed = ['loop'];
+        $allowed = ['loop', 'options'];
 
         if (array_search($name, $allowed) !== false) {
             return $this->{$name};
