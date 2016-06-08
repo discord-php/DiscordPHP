@@ -11,13 +11,8 @@
 
 namespace Discord\WebSockets\Events;
 
-use Discord\Parts\Channel\Channel;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Guild\Role;
-use Discord\Parts\User\Member;
-use Discord\Parts\WebSockets\VoiceStateUpdate as VoiceStateUpdatePart;
-use Discord\Repository\Guild\ChannelRepository;
-use Discord\Repository\Guild\MemberRepository;
 use Discord\Repository\Guild\RoleRepository;
 use Discord\WebSockets\Event;
 use React\Promise\Deferred;

@@ -87,7 +87,7 @@ class GuildCreate extends Event
                     $memberPart->game = $presence->game;
                 }
             }
-            
+
             $this->discord->users->push($memberPart->user);
             $members->push($memberPart);
         }

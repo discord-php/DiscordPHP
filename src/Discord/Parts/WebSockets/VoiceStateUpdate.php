@@ -11,7 +11,6 @@
 
 namespace Discord\Parts\WebSockets;
 
-use Discord\Cache\Cache;
 use Discord\Parts\Part;
 use Discord\Parts\User\Member;
 

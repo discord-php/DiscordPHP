@@ -12,7 +12,6 @@
 namespace Discord\Parts\User;
 
 use Carbon\Carbon;
-use Discord\Cache\Cache;
 use Discord\Helpers\Collection;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Guild\Ban;

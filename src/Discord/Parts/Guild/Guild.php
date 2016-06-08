@@ -15,7 +15,6 @@ use Discord\Helpers\Collection;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Part;
 use Discord\Parts\User\Member;
-use Discord\Parts\User\User;
 use Discord\Repository\Guild\BanRepository;
 use Discord\Repository\Guild\ChannelRepository;
 use Discord\Repository\Guild\InviteRepository;
@@ -115,6 +114,30 @@ class Guild extends Part
         self::REGION_FRANKFURT,
         self::REGION_AMSTERDAM,
     ];
+
+    /**
+     * Creates a role.
+     *
+     * @param array $data The data to fill the role with.
+     *
+     * @return \React\Promise\Promise
+     */
+    public function createRole(array $data = [])
+    {
+        $deferred = new Deferred();
+
+        $rolePart = $this->factory->create(Role::class);
+
+        $this->roles->save($rolePart)->then(function ($role) use ($deferred, $data) {
+            $role->fill($data);
+
+            $this->roles->save($role)->then(function ($role) use ($deferred) {
+                $deferred->resolve($role);
+            }, \React\Partial\bind_right($this->reject, $deferred));
+        }, \React\Partial\bind_right($this->reject, $deferred));
+
+        return $deferred->promise();
+    }
 
     /**
      * Transfers ownership of the guild to

@@ -13,7 +13,6 @@ namespace Discord\WebSockets\Events;
 
 use Discord\Parts\Channel\Message;
 use Discord\Repository\Channel\MessageRepository;
-use Discord\Repository\Guild\ChannelRepository;
 use Discord\WebSockets\Event;
 use React\Promise\Deferred;
 

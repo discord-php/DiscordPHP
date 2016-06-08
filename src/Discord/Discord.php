@@ -768,7 +768,7 @@ class Discord
             if (! $this->connected) {
                 return;
             }
-            
+
             $this->logger->warning('did not recieve heartbeat ACK within 5 seconds, sending heartbeat again');
             $this->heartbeat();
         });
@@ -1169,11 +1169,11 @@ class Discord
      * Attempts to get a repository from the cache.
      *
      * @param string $class The repository to look for.
-     * @param string $id The snowflake to look for.
-     * @param string $key The key to look for.
-     * @param array  $vars An array of args to pass to the repository.
+     * @param string $id    The snowflake to look for.
+     * @param string $key   The key to look for.
+     * @param array  $vars  An array of args to pass to the repository.
      *
-     * @return AbstractRepository 
+     * @return AbstractRepository
      */
     public function getRepository($class, $id, $key, $vars = [])
     {
