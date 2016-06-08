@@ -21,8 +21,13 @@ class MessageDelete extends Event
      */
     public function handle(Deferred $deferred, $data)
     {
-        $channel = $this->cache->get("channel.{$data->channel_id}");
-        $channel->messages->pull($data->id);
+        $messages = $this->discord->getRepository(
+            MessageRepository::class,
+            $data->channel_id,
+            'messages',
+            ['channel_id' => $data->channel_id]
+        );
+        $messages->pull($data->id);
 
         $deferred->resolve();
     }

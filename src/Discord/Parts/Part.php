@@ -12,6 +12,7 @@
 namespace Discord\Parts;
 
 use ArrayAccess;
+use Discord\Discord;
 use Discord\Factory\Factory;
 use Discord\Http\Http;
 use Discord\Wrapper\CacheWrapper;
@@ -46,6 +47,13 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
      * @var CacheWrapper Cache.
      */
     protected $cache;
+
+    /**
+     * The Discord client.
+     *
+     * @var Discord Client.
+     */
+    protected $client;
 
     /**
      * The parts fillable attributes.
@@ -121,6 +129,7 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
      * Create a new part instance.
      *
      * @param Factory      $factory    The factory.
+     * @param Discord      $discord    The Discord client.
      * @param Http         $http       The HTTP client.
      * @param CacheWrapper $cache      The cache.
      * @param array        $attributes An array of attributes to build the part.
@@ -130,12 +139,14 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
      */
     public function __construct(
         Factory $factory,
+        Discord $discord,
         Http $http,
         CacheWrapper $cache,
         array $attributes = [],
         $created = false
     ) {
         $this->factory = $factory;
+        $this->discord = $discord;
         $this->http = $http;
         $this->cache = $cache;
 
@@ -465,7 +476,7 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
     {
         $data = [];
 
-        foreach ($this->attributes as $key => $value) {
+        foreach ($this->fillable as $key) {
             if (in_array($key, $this->hidden)) {
                 continue;
             }

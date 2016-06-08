@@ -217,7 +217,7 @@ class Member extends Part
      */
     public function getGuildAttribute()
     {
-        return $this->cache->get("guild.{$this->guild_id}");
+        return $this->discord->guilds->get('id', $this->guild_id);
     }
 
     /**

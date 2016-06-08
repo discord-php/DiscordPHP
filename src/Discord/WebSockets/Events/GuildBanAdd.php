@@ -28,8 +28,6 @@ class GuildBanAdd extends Event
             'user' => $data->user,
         ], true);
 
-        $this->cache->set("ban.{$ban->guild->id}.bans.{$ban->user->id}", $ban);
-
         $guild = $this->discord->guilds->get('id', $ban->guild->id);
         $guild->bans->push($ban);
 

@@ -21,8 +21,6 @@ class GuildRoleDelete extends Event
      */
     public function handle(Deferred $deferred, $data)
     {
-        $this->cache->remove("guild.{$data->guild_id}.roles.{$data->role_id}");
-
         $guild = $this->discord->guilds->get('id', $data->guild_id);
         $guild->roles->pull($data->role_id);
 

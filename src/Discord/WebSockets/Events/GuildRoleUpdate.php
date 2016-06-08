@@ -27,8 +27,6 @@ class GuildRoleUpdate extends Event
 
         $rolePart = $this->factory->create(Role::class, $adata, true);
 
-        $this->cache->set("guild.{$rolePart->guild_id}.roles.{$rolePart->id}", $rolePart);
-
         $guild = $this->discord->guilds->get('id', $rolePart->guild_id);
         $guild->roles->push($rolePart);
 

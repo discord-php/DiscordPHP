@@ -24,9 +24,6 @@ class GuildMemberRemove extends Event
     {
         $memberPart = $this->factory->create(Member::class, $data, true);
 
-        $this->cache->remove("guild.{$memberPart->guild_id}.members.{$memberPart->id}");
-        $this->cache->remove("user.{$memberPart->id}");
-
         $guild = $this->discord->guilds->get('id', $memberPart->guild_id);
 
         if (! is_null($guild)) {
@@ -34,7 +31,6 @@ class GuildMemberRemove extends Event
             --$guild->member_count;
 
             $this->discord->guilds->push($guild);
-            $this->cache->set("guild.{$guild->id}", $guild);
         }
 
         $deferred->resolve($memberPart);

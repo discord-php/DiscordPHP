@@ -156,7 +156,7 @@ class Guild extends Part
      */
     public function getOwnerAttribute()
     {
-        return $this->cache->get("user.{$this->owner_id}");
+        return $this->discord->users->get('id', $this->owner_id);
     }
 
     /**

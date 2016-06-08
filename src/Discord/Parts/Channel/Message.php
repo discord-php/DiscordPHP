@@ -71,7 +71,11 @@ class Message extends Part
      */
     public function getChannelAttribute()
     {
-        return $this->cache->get("channel.{$this->channel_id}");
+        foreach ($this->discord->guilds as $guild) {
+            if ($channel = $guild->channels->get('id', $this->channel_id)) {
+                return $channel;
+            }
+        }
     }
 
     /**

@@ -46,7 +46,6 @@ class GuildCreate extends Event
         foreach ($data->roles as $role) {
             $rolePart = $this->factory->create(Role::class, $role, true);
 
-            $this->cache->set("guild.{$guildPart->id}.roles.{$rolePart->id}", $rolePart);
             $roles->push($rolePart);
         }
 
@@ -61,7 +60,6 @@ class GuildCreate extends Event
             $channel['guild_id'] = $data->id;
             $channelPart = $this->factory->create(Channel::class, $channel, true);
 
-            $this->cache->set("channel.{$channelPart->id}", $channelPart);
             $channels->push($channelPart);
         }
 
@@ -89,9 +87,7 @@ class GuildCreate extends Event
                     $memberPart->game = $presence->game;
                 }
             }
-
-            $this->cache->set("guild.{$guildPart->id}.members.{$memberPart->id}", $memberPart);
-            $this->cache->set("user.{$memberPart->id}", $memberPart->user);
+            
             $this->discord->users->push($memberPart->user);
             $members->push($memberPart);
         }
@@ -110,7 +106,6 @@ class GuildCreate extends Event
             $this->discord->addLargeGuild($guildPart);
         }
 
-        $this->cache->set("guilds.{$guildPart->id}", $guildPart);
         $this->discord->guilds->push($guildPart);
 
         $deferred->resolve($guildPart);

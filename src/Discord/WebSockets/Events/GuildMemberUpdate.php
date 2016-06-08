@@ -24,16 +24,12 @@ class GuildMemberUpdate extends Event
     {
         $memberPart = $this->factory->create(Member::class, $data, true);
 
-        $this->cache->set("guild.{$memberPart->guild_id}.members.{$memberPart->id}", $memberPart);
-        $this->cache->set("user.{$memberPart->id}", $memberPart->user);
-
         $guild = $this->discord->guilds->get('id', $memberPart->guild_id);
 
         if (! is_null($guild)) {
             $guild->members->push($memberPart);
 
             $this->discord->guilds->push($guild);
-            $this->cache->set("guild.{$guild->id}", $guild);
         }
 
         $deferred->resolve($memberPart);

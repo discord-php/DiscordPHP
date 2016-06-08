@@ -11,11 +11,19 @@
 
 namespace Discord\Factory;
 
+use Discord\Discord;
 use Discord\Http\Http;
 use Discord\Wrapper\CacheWrapper;
 
 class Factory
 {
+    /**
+     * The Discord client.
+     *
+     * @var Discord Client.
+     */
+    protected $discord;
+
     /**
      * The HTTP client.
      *
@@ -32,11 +40,13 @@ class Factory
     /**
      * Constructs a factory.
      *
-     * @param Http         $http  The HTTP client.
-     * @param CacheWrapper $cache The cache.
+     * @param Discord      $discord The Discord client.
+     * @param Http         $http    The HTTP client.
+     * @param CacheWrapper $cache   The cache.
      */
-    public function __construct(Http $http, CacheWrapper $cache)
+    public function __construct(Discord $discord, Http $http, CacheWrapper $cache)
     {
+        $this->discord = $discord;
         $this->http = $http;
         $this->cache = $cache;
     }
@@ -57,7 +67,7 @@ class Factory
         }
 
         if (strpos($class, 'Discord\\Parts') !== false) {
-            $object = new $class($this, $this->http, $this->cache, $data, $created);
+            $object = new $class($this, $this->discord, $this->http, $this->cache, $data, $created);
         } elseif (strpos($class, 'Discord\\Repository') !== false) {
             $object = new $class($this->http, $this->cache, $this, $data);
         }

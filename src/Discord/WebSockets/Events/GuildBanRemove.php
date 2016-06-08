@@ -28,8 +28,6 @@ class GuildBanRemove extends Event
             'user' => $data->user,
         ], true);
 
-        $this->cache->remove("ban.{$ban->guild->id}.bans.{$ban->user->id}");
-
         $guild = $this->discord->guilds->get('id', $ban->guild->id);
         $guild->bans->pull($ban->id);
 

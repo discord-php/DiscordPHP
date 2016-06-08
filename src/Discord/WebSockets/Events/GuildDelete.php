@@ -24,7 +24,6 @@ class GuildDelete extends Event
     {
         $guildPart = $this->factory->create(Guild::class, $data, true);
 
-        $this->cache->remove("guild.{$guildPart->id}");
         $this->discord->guilds->pull($guildPart->id);
 
         $deferred->resolve($guildPart);

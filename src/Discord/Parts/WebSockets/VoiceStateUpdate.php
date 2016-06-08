@@ -54,7 +54,9 @@ class VoiceStateUpdate extends Part
      */
     public function getMemberAttribute()
     {
-        return $this->cache->get("guild.{$this->guild_id}.members.{$this->user_id}");
+        $guild = $this->discord->guilds->get('id', $this->guild_id);
+
+        return $guild->members->get('id', $this->user_id);
     }
 
     /**
@@ -64,7 +66,7 @@ class VoiceStateUpdate extends Part
      */
     public function getChannelAttribute()
     {
-        return $this->cache->get("channel.{$this->channel_id}");
+        return $this->guild->channels->get('id', $this->channel_id);
     }
 
     /**
@@ -74,6 +76,6 @@ class VoiceStateUpdate extends Part
      */
     public function getGuildAttribute()
     {
-        return $this->cache->get("guild.{$this->guild_id}");
+        return $this->discord->guilds->get('id', $this->guild_id);
     }
 }

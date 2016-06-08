@@ -293,7 +293,7 @@ class Discord
             self::VERSION,
             new Guzzle($this->cache, $this->loop)
         );
-        $this->factory = new Factory($this->http, $this->cache);
+        $this->factory = new Factory($this, $this->http, $this->cache);
 
         $this->setGateway()->then(function ($g) {
             $this->connectWs();
@@ -1154,6 +1154,37 @@ class Discord
     public function factory()
     {
         return call_user_func_array([$this->factory, 'create'], func_get_args());
+    }
+
+    /**
+     * Attempts to get a repository from the cache.
+     *
+     * @param string $class The repository to look for.
+     * @param string $id The snowflake to look for.
+     * @param string $key The key to look for.
+     * @param array  $vars An array of args to pass to the repository.
+     *
+     * @return AbstractRepository 
+     */
+    public function getRepository($class, $id, $key, $vars = [])
+    {
+        $classKey = str_replace('\\', '', $class);
+        $cacheKey = "repositories.{$classKey}.{$id}.{$key}";
+
+        if ($object = $this->cache->get($cacheKey)) {
+            return $object;
+        }
+
+        $repository = new $class(
+            $this->http,
+            $this->cache,
+            $this->factory,
+            $vars
+        );
+
+        $this->cache->set($cacheKey, $repository);
+
+        return $repository;
     }
 
     /**

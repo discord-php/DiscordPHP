@@ -23,7 +23,6 @@ class ChannelUpdate extends Event
     public function handle(Deferred $deferred, $data)
     {
         $channel = $this->factory->create(Channel::class, $data, true);
-        $this->cache->set("channel.{$channel->id}", $channel);
 
         if ($channel->is_private) {
             $this->discord->private_channels->push($channel);

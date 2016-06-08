@@ -46,7 +46,6 @@ class GuildUpdate extends Event
         foreach ($data->roles as $role) {
             $rolePart = $this->factory->create(Role::class, $role, true);
 
-            $this->cache->set("guild.{$guildPart->id}.roles.{$rolePart->id}", $rolePart);
             $roles->push($rolePart);
         }
 
@@ -56,7 +55,6 @@ class GuildUpdate extends Event
             $this->discord->addLargeGuild($guildPart);
         }
 
-        $this->cache->set("guilds.{$guildPart->id}", $guildPart);
         $this->discord->guilds->push($guildPart);
 
         $deferred->resolve($guildPart);
