@@ -11,8 +11,9 @@
 
 namespace Discord\WebSockets\Events;
 
-use React\Promise\Deferred;
+use Discord\Repository\Channel\MessageRepository;
 use Discord\WebSockets\Event;
+use React\Promise\Deferred;
 
 class MessageDelete extends Event
 {
