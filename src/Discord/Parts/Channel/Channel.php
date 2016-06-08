@@ -188,7 +188,6 @@ class Channel extends Part
             ]
         )->then(function ($response) use ($deferred) {
             $invite = $this->factory->create(Invite::class, $response, true);
-            $this->cache->set("invite.{$invite->code}", $invite);
 
             $deferred->resolve($invite);
         }, \React\Partial\bind_right($this->reject, $deferred));
@@ -284,7 +283,6 @@ class Channel extends Part
 
             foreach ($response as $message) {
                 $message = $this->factory->create(Message::class, $message, true);
-                $this->cache->set("message.{$message->id}", $message);
                 $messages->push($message);
             }
 
@@ -308,7 +306,6 @@ class Channel extends Part
 
             foreach ($response as $invite) {
                 $invite = $this->factory->create(Invite::class, $invite, true);
-                $this->cache->set("invites.{$invite->code}", $invite);
                 $invites->push($invite);
             }
 
@@ -363,7 +360,6 @@ class Channel extends Part
             ]
         )->then(function ($response) use ($deferred) {
             $message = $this->factory->create(Message::class, $response, true);
-            $this->cache->set("message.{$message->id}", $message);
             $this->messages->push($message);
 
             $deferred->resolve($message);
@@ -421,7 +417,6 @@ class Channel extends Part
             ]
         )->then(function ($response) use ($deferred) {
             $message = $this->factory->create(Message::class, $response, true);
-            $this->cache->set("message.{$message->id}", $message);
             $this->messages->push($message);
 
             $deferred->resolve($message);

@@ -49,7 +49,6 @@ class User extends Part
             $channel->sendMessage($message, $tts)->then(
                 function ($response) use ($deferred) {
                     $message = $this->factory->create(Message::class, $response, true);
-                    $this->cache->set("message.{$message->id}", $message);
                     $deferred->resolve($message);
                 },
                 \React\Partial\bind_right($this->reject, $deferred)
