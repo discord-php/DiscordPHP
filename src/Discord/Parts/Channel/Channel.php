@@ -11,6 +11,7 @@
 
 namespace Discord\Parts\Channel;
 
+use Traversable;
 use Discord\Cache\Cache;
 use Discord\Exceptions\FileNotFoundException;
 use Discord\Helpers\Collection;
@@ -226,12 +227,17 @@ class Channel extends Part
     /**
      * Bulk deletes an array of messages.
      *
-     * @param array $messages An array of messages to delete.
+     * @param array|Traversable $messages An array of messages to delete.
      *
      * @return void
      */
-    public function deleteMessages(array $messages)
+    public function deleteMessages($messages)
     {
+        if (! is_array($messages) &&
+            ! ($messages instanceof Traversable)) {
+            throw new \Exception('$messages must be an array or implement Traversable.');
+        }
+
         $count = count($messages);
 
         if ($count == 0) {
