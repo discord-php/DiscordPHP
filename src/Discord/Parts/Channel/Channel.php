@@ -272,19 +272,17 @@ class Channel extends Part
         $url = "channels/{$this->id}/messages?limit={$options['limit']}";
         if (isset($options['before'])) {
             if ($options['before'] instanceof Message) {
-                $deferred->reject(new \Exception('before must be an instance of '.Message::class));
-
-                return $deferred->promise();
+                $url .= '&before='.$options['before']->id;
+            } elseif (is_int($options['before']) || is_string($options['before'])) {
+                $url .= '&before='.$options['before'];
             }
-            $url .= '&before='.$options['before']->id;
         }
         if (isset($options['after'])) {
             if ($options['after'] instanceof Message) {
-                $deferred->reject(new \Exception('after must be an instance of '.Message::class));
-
-                return $deferred->promise();
+                $url .= '&after='.$options['after']->id;
+            } elseif (is_int($options['after']) || is_string($options['after'])) {
+                $url .= '&after='.$options['after'];
             }
-            $url .= '&after='.$options['after']->id;
         }
 
         $this->http->get($url)->then(function ($response) use ($deferred) {
