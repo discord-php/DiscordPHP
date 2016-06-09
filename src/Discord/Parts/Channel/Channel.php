@@ -250,10 +250,11 @@ class Channel extends Part
      * Fetches message history.
      *
      * @param array $options
+     * @param bool  $cache
      *
      * @return \React\Promise\Promise
      */
-    public function getMessageHistory(array $options)
+    public function getMessageHistory(array $options, $cache = true)
     {
         $deferred = new Deferred();
 
@@ -285,7 +286,7 @@ class Channel extends Part
             }
         }
 
-        $this->http->get($url)->then(function ($response) use ($deferred) {
+        $this->http->get($url, null, [], $cache ? null : 0)->then(function ($response) use ($deferred) {
             $messages = new Collection();
 
             foreach ($response as $message) {
