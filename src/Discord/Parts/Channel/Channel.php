@@ -33,7 +33,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class Channel extends Part
 {
-    const TYPE_TEXT = 'text';
+    const TYPE_TEXT  = 'text';
+
     const TYPE_VOICE = 'voice';
 
     /**
@@ -57,8 +58,8 @@ class Channel extends Part
      * {@inheritdoc}
      */
     protected $repositories = [
-        'members' => MemberRepository::class,
-        'messages' => MessageRepository::class,
+        'members'    => MemberRepository::class,
+        'messages'   => MessageRepository::class,
         'overwrites' => OverwriteRepository::class,
     ];
 
@@ -102,10 +103,10 @@ class Channel extends Part
         }
 
         $payload = [
-            'id' => $part->id,
-            'type' => $type,
+            'id'    => $part->id,
+            'type'  => $type,
             'allow' => $allow->perms,
-            'deny' => $deny->perms,
+            'deny'  => $deny->perms,
         ];
 
         $this->http->put("channels/{$this->id}/permissions/{$part->id}", $payload)->then(
@@ -182,16 +183,19 @@ class Channel extends Part
             [
                 'validate' => null,
 
-                'max_age' => $max_age,
-                'max_uses' => $max_uses,
+                'max_age'   => $max_age,
+                'max_uses'  => $max_uses,
                 'temporary' => $temporary,
-                'xkcdpass' => $xkcd,
+                'xkcdpass'  => $xkcd,
             ]
-        )->then(function ($response) use ($deferred) {
-            $invite = $this->factory->create(Invite::class, $response, true);
+        )->then(
+            function ($response) use ($deferred) {
+                $invite = $this->factory->create(Invite::class, $response, true);
 
-            $deferred->resolve($invite);
-        }, \React\Partial\bind_right($this->reject, $deferred));
+                $deferred->resolve($invite);
+            },
+            \React\Partial\bind_right($this->reject, $deferred)
+        );
 
         return $deferred->promise();
     }
@@ -207,8 +211,9 @@ class Channel extends Part
     {
         $deferred = new Deferred();
 
-        if (! is_array($messages) &&
-            ! ($messages instanceof Traversable)) {
+        if (!is_array($messages) &&
+            !($messages instanceof Traversable)
+        ) {
             $deferred->reject(new \Exception('$messages must be an array or implement Traversable.'));
 
             return $deferred->promise();
@@ -236,9 +241,12 @@ class Channel extends Part
             }
         }
 
-        $this->http->post("channels/{$this->id}/messages/bulk_delete", [
-            'messages' => $messageID,
-        ])->then(
+        $this->http->post(
+            "channels/{$this->id}/messages/bulk_delete",
+            [
+                'messages' => $messageID,
+            ]
+        )->then(
             \React\Partial\bind_right($this->resolve, $deferred),
             \React\Partial\bind_right($this->reject, $deferred)
         );
@@ -258,7 +266,7 @@ class Channel extends Part
         $deferred = new Deferred();
 
         $resolver = new OptionsResolver();
-        $resolver->setDefaults(['limit' => 100]);
+        $resolver->setDefaults(['limit' => 100, 'cache' => true]);
         $resolver->setDefined(['before', 'after']);
         $resolver->setAllowedValues('limit', range(1, 100));
 
@@ -287,16 +295,19 @@ class Channel extends Part
             $url .= '&after='.$options['after']->id;
         }
 
-        $this->http->get($url)->then(function ($response) use ($deferred) {
-            $messages = new Collection();
+        $this->http->get($url, null, [], $options['cache'] ? null : 0)->then(
+            function ($response) use ($deferred) {
+                $messages = new Collection();
 
-            foreach ($response as $message) {
-                $message = $this->factory->create(Message::class, $message, true);
-                $messages->push($message);
-            }
+                foreach ($response as $message) {
+                    $message = $this->factory->create(Message::class, $message, true);
+                    $messages->push($message);
+                }
 
-            $deferred->resolve($messages);
-        }, \React\Partial\bind_right($this->reject, $deferred));
+                $deferred->resolve($messages);
+            },
+            \React\Partial\bind_right($this->reject, $deferred)
+        );
 
         return $deferred->promise();
     }
@@ -310,16 +321,19 @@ class Channel extends Part
     {
         $deferred = new Deferred();
 
-        $this->http->get($this->replaceWithVariables('channels/:id/invites'))->then(function ($response) use ($deferred) {
-            $invites = new Collection();
+        $this->http->get($this->replaceWithVariables('channels/:id/invites'))->then(
+            function ($response) use ($deferred) {
+                $invites = new Collection();
 
-            foreach ($response as $invite) {
-                $invite = $this->factory->create(Invite::class, $invite, true);
-                $invites->push($invite);
-            }
+                foreach ($response as $invite) {
+                    $invite = $this->factory->create(Invite::class, $invite, true);
+                    $invites->push($invite);
+                }
 
-            $deferred->resolve($invites);
-        }, \React\Partial\bind_right($this->reject, $deferred));
+                $deferred->resolve($invites);
+            },
+            \React\Partial\bind_right($this->reject, $deferred)
+        );
 
         return $deferred->promise();
     }
@@ -333,9 +347,9 @@ class Channel extends Part
     {
         $this->attributes['permission_overwrites'] = $overwrites;
 
-        if (! is_null($overwrites)) {
+        if (!is_null($overwrites)) {
             foreach ($overwrites as $overwrite) {
-                $overwrite = (array) $overwrite;
+                $overwrite               = (array) $overwrite;
                 $overwrite['channel_id'] = $this->id;
 
                 $this->overwrites->push($overwrite);
@@ -365,14 +379,17 @@ class Channel extends Part
             "channels/{$this->id}/messages",
             [
                 'content' => $text,
-                'tts' => $tts,
+                'tts'     => $tts,
             ]
-        )->then(function ($response) use ($deferred) {
-            $message = $this->factory->create(Message::class, $response, true);
-            $this->messages->push($message);
+        )->then(
+            function ($response) use ($deferred) {
+                $message = $this->factory->create(Message::class, $response, true);
+                $this->messages->push($message);
 
-            $deferred->resolve($message);
-        }, \React\Partial\bind_right($this->reject, $deferred));
+                $deferred->resolve($message);
+            },
+            \React\Partial\bind_right($this->reject, $deferred)
+        );
 
         return $deferred->promise();
     }
@@ -397,7 +414,7 @@ class Channel extends Part
             return $deferred->promise();
         }
 
-        if (! file_exists($filepath)) {
+        if (!file_exists($filepath)) {
             $deferred->reject(new FileNotFoundException("File does not exist at path {$filepath}."));
 
             return $deferred->promise();
@@ -405,12 +422,12 @@ class Channel extends Part
 
         $multipart = [
             [
-                'name' => 'file',
+                'name'     => 'file',
                 'contents' => fopen($filepath, 'r'),
                 'filename' => $filename,
             ],
             [
-                'name' => 'tts',
+                'name'     => 'tts',
                 'contents' => ($tts ? 'true' : 'false'),
             ],
         ];
@@ -424,12 +441,15 @@ class Channel extends Part
             [
                 'multipart' => $multipart,
             ]
-        )->then(function ($response) use ($deferred) {
-            $message = $this->factory->create(Message::class, $response, true);
-            $this->messages->push($message);
+        )->then(
+            function ($response) use ($deferred) {
+                $message = $this->factory->create(Message::class, $response, true);
+                $this->messages->push($message);
 
-            $deferred->resolve($message);
-        }, \React\Partial\bind_right($this->reject, $deferred));
+                $deferred->resolve($message);
+            },
+            \React\Partial\bind_right($this->reject, $deferred)
+        );
 
         return $deferred->promise();
     }
@@ -496,8 +516,8 @@ class Channel extends Part
     public function getUpdatableAttributes()
     {
         return [
-            'name' => $this->name,
-            'topic' => $this->topic,
+            'name'     => $this->name,
+            'topic'    => $this->topic,
             'position' => $this->position,
         ];
     }
