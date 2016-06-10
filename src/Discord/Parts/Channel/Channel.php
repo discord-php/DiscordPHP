@@ -34,7 +34,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class Channel extends Part
 {
     const TYPE_TEXT  = 'text';
-
     const TYPE_VOICE = 'voice';
 
     /**
@@ -62,6 +61,16 @@ class Channel extends Part
         'messages'   => MessageRepository::class,
         'overwrites' => OverwriteRepository::class,
     ];
+
+    /**
+     * {@inheritdoc}
+     */
+    public function afterConstruct()
+    {
+        if (is_null($this->attributes['bitrate'])) {
+            $this->bitrate = 64000;
+        }
+    }
 
     /**
      * Gets the recipient attribute.
