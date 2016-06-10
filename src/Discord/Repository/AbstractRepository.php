@@ -132,7 +132,7 @@ abstract class AbstractRepository extends Collection implements RepositoryInterf
         } else {
             $method = 'post';
             $endpoint = $part->replaceWithVariables($this->replaceWithVariables(@$this->endpoints['create']));
-            $attributes = $part->getUpdatableAttributes();
+            $attributes = $part->getCreatableAttributes();
 
             if (! isset($this->endpoints['create'])) {
                 return \React\Promise\reject(new \Exception('You cannot create this part.'));
