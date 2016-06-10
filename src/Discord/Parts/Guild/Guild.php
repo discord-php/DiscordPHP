@@ -57,6 +57,7 @@ class Guild extends Part
     const REGION_SYDNEY = 'sydney';
     const REGION_FRANKFURT = 'frankfurt';
     const REGION_AMSTERDAM = 'amsterdam';
+    const REGION_BRAZIL = 'brazil';
 
     const LEVEL_OFF = 0;
     const LEVEL_LOW = 1;
@@ -113,6 +114,7 @@ class Guild extends Part
         self::REGION_SYDNEY,
         self::REGION_FRANKFURT,
         self::REGION_AMSTERDAM,
+        self::REGION_BRAZIL,
     ];
 
     /**

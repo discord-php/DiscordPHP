@@ -13,6 +13,7 @@ namespace Discord\Parts\User;
 
 use Discord\Exceptions\FileNotFoundException;
 use Discord\Exceptions\PasswordEmptyException;
+use Discord\Parts\OAuth\Application;
 use Discord\Parts\Part;
 use Discord\Repository\GuildRepository;
 use Discord\Repository\PrivateChannelRepository;
@@ -35,7 +36,7 @@ class Client extends Part
     /**
      * {@inheritdoc}
      */
-    protected $fillable = ['id', 'username', 'password', 'email', 'verified', 'avatar', 'discriminator', 'bot', 'user'];
+    protected $fillable = ['id', 'username', 'password', 'email', 'verified', 'avatar', 'discriminator', 'bot', 'user', 'application'];
 
     /**
      * {@inheritdoc}
@@ -61,6 +62,11 @@ class Client extends Part
                 'discriminator' => $this->discriminator,
             ], true
         );
+        $this->application = $this->factory->create(Application::class, [], true);
+
+        $this->http->get('oauth2/applications/@me')->then(function ($response) {
+            $this->application->fill((array) $response);
+        });
     }
 
     /**
