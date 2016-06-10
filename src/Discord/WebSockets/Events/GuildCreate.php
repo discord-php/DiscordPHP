@@ -40,7 +40,8 @@ class GuildCreate extends Event
         $roles = new RoleRepository(
             $this->http,
             $this->cache,
-            $this->factory
+            $this->factory,
+            $guildPart->getRepositoryAttributes()
         );
 
         foreach ($data->roles as $role) {
@@ -52,7 +53,8 @@ class GuildCreate extends Event
         $channels = new ChannelRepository(
             $this->http,
             $this->cache,
-            $this->factory
+            $this->factory,
+            $guildPart->getRepositoryAttributes()
         );
 
         foreach ($data->channels as $channel) {
@@ -66,7 +68,8 @@ class GuildCreate extends Event
         $members = new MemberRepository(
             $this->http,
             $this->cache,
-            $this->factory
+            $this->factory,
+            $guildPart->getRepositoryAttributes()
         );
 
         foreach ($data->members as $member) {
