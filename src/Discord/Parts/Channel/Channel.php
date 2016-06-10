@@ -271,7 +271,7 @@ class Channel extends Part
 
         $url = "channels/{$this->id}/messages?limit={$options['limit']}";
         if (isset($options['before'])) {
-            if ($options['before'] instanceof Message) {
+            if (! ($options['before'] instanceof Message)) {
                 $deferred->reject(new \Exception('before must be an instance of '.Message::class));
 
                 return $deferred->promise();
@@ -279,7 +279,7 @@ class Channel extends Part
             $url .= '&before='.$options['before']->id;
         }
         if (isset($options['after'])) {
-            if ($options['after'] instanceof Message) {
+            if (! ($options['after'] instanceof Message)) {
                 $deferred->reject(new \Exception('after must be an instance of '.Message::class));
 
                 return $deferred->promise();
