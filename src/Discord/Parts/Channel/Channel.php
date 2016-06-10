@@ -515,6 +515,7 @@ class Channel extends Part
         return [
             'name' => $this->name,
             'type' => $this->getChannelType(),
+            'bitrate' => $this->bitrate,
         ];
     }
 
