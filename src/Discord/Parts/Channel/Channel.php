@@ -67,7 +67,8 @@ class Channel extends Part
      */
     public function afterConstruct()
     {
-        if (is_null($this->attributes['bitrate'])) {
+        if (! array_key_exists('bitrate', $this->attributes) &&
+            $this->type != self::TYPE_TEXT) {
             $this->bitrate = 64000;
         }
     }
