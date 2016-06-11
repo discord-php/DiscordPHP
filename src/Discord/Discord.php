@@ -1205,7 +1205,7 @@ class Discord
      */
     public function __get($name)
     {
-        $allowed = ['loop', 'options'];
+        $allowed = ['loop', 'options', 'logger'];
 
         if (array_search($name, $allowed) !== false) {
             return $this->{$name};
