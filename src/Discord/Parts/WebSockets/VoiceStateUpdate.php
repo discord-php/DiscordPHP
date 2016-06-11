@@ -47,6 +47,16 @@ class VoiceStateUpdate extends Part
     ];
 
     /**
+     * Gets the id attribute.
+     *
+     * @return id The member id.
+     */
+    public function getIdAttribute()
+    {
+        return $this->user_id;
+    }
+
+    /**
      * Gets the member attribute.
      *
      * @return Member|null The member attribute.

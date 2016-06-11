@@ -95,15 +95,15 @@ class GuildCreate extends Event
             $members->push($memberPart);
         }
 
+        $guildPart->roles = $roles;
+        $guildPart->channels = $channels;
+        $guildPart->members = $members;
+
         foreach ($data->voice_states as $state) {
             if ($channel = $guildPart->channels->get('id', $state->channel_id)) {
                 $channel->members->push($this->factory->create(VoiceStateUpdatePart::class, (array) $state, true));
             }
         }
-
-        $guildPart->roles = $roles;
-        $guildPart->channels = $channels;
-        $guildPart->members = $members;
 
         if ($guildPart->large) {
             $this->discord->addLargeGuild($guildPart);

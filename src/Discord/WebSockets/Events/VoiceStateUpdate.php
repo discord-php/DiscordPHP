@@ -27,18 +27,18 @@ class VoiceStateUpdate extends Event
         foreach ($this->discord->guilds as $index => $guild) {
             if ($guild->id == $state->guild_id) {
                 foreach ($guild->channels as $cindex => $channel) {
-                    if (isset($channel->members[$state->user_id])) {
-                        unset($channel->members[$state->user_id]);
-                    }
+                    $channel->members->pull($state->id);
 
                     if ($channel->id == $state->channel_id) {
-                        $channel->members[$state->user_id] = $state;
+                        $channel->members->push($state);
                     }
                 }
             } else {
+                $user = $this->discord->users->get('id', $state->id);
+
                 foreach ($guild->channels as $cindex => $channel) {
-                    if (isset($channel->members[$state->user_id]) && ! $this->discord->bot) {
-                        unset($channel->members[$state->user_id]);
+                    if (! (isset($user) && $user->bot)) {
+                        $channel->members->pull($state->id);
                     }
                 }
             }
