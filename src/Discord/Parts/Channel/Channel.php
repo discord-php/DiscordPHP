@@ -86,13 +86,12 @@ class Channel extends Part
     /**
      * Sets a permission value to the channel.
      *
-     * @param Member|Role     $part     Either a Member or Role, permissions will be set on it.
-     * @param Permission|null $allow    The permissions that define what the Member/Role can do.
-     * @param Permission|null $disallow The permissions that define what the Member/Role can't do.
+     * @param Member|Role       $part  Either a Member or Role, permissions will be set on it.
+     * @param ChannelPermission $permissions The permissions that define what the Member/Role can and cannot do.
      *
      * @return \React\Promise\Promise
      */
-    public function setPermissions($part, $allow = null, $deny = null)
+    public function setPermissions(Part $part, ChannelPermission $permissions = null)
     {
         $deferred = new Deferred();
 
@@ -104,19 +103,17 @@ class Channel extends Part
             return false;
         }
 
-        if (is_null($allow)) {
-            $allow = new ChannelPermission();
+        if (is_null($permissions)) {
+            $permissions = $this->factory->create(ChannelPermission::class);
         }
 
-        if (is_null($deny)) {
-            $deny = new ChannelPermission();
-        }
+        list($allow, $deny) = $permissions->bitwise;
 
         $payload = [
             'id'    => $part->id,
             'type'  => $type,
-            'allow' => $allow->perms,
-            'deny'  => $deny->perms,
+            'allow' => $allow,
+            'deny'  => $deny,
         ];
 
         $this->http->put("channels/{$this->id}/permissions/{$part->id}", $payload)->then(

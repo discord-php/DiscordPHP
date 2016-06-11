@@ -13,6 +13,7 @@ namespace Discord\Parts\Guild;
 
 use Discord\Parts\Part;
 use Discord\Parts\Permissions\RolePermission as Permission;
+use Discord\Parts\Permissions\RolePermission;
 use React\Promise\Deferred;
 
 /**
@@ -41,33 +42,28 @@ class Role extends Part
      */
     public function afterConstruct()
     {
-        if (! $this->created) {
-            $this->permissions = new Permission();
+        if (! isset($this->attributes['permissions'])) {
+            $this->permissions = $this->factory->create(RolePermission::class);
         }
     }
 
     /**
      * Sets the permissions attribute.
      *
-     * @param Permission|int $permission The Permissions that you want to set.
-     *
-     * @return \React\Promise\Promise
+     * @param RolePermission|int $permission The permissions to set.
+     * 
+     * @return void 
      */
     public function setPermissionsAttribute($permission)
     {
-        $deferred = new Deferred();
+        if (! ($permission instanceof RolePermission)) {
+            $permissionPart = $this->factory->create(RolePermission::class);
+            $permissionPart->decodeBitwise($permission);
 
-        if (! $permission instanceof Permission) {
-            $deferred->reject(new \Exception('$permission must be an instance of Permission.'));
-
-            return $deferred->promise();
+            $permission = $permissionPart;
         }
 
         $this->attributes['permissions'] = $permission;
-
-        $deferred->resolve();
-
-        return $deferred->promise();
     }
 
     /**

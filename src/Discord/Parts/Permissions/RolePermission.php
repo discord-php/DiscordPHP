@@ -19,18 +19,16 @@ class RolePermission extends Permission
     /**
      * {@inheritdoc}
      */
-    protected $default = 36953089;
-
-    /**
-     * {@inheritdoc}
-     */
-    protected $bitoffset = [
+    protected $bitwise = [
         'create_instant_invite' => 0,
         'kick_members' => 1,
         'ban_members' => 2,
         'administrator' => 3,
         'manage_channels' => 4,
         'manage_server' => 5,
+        'change_nickname' => 26,
+        'manage_nicknames' => 27,
+        'manage_roles' => 28,
 
         'read_messages' => 10,
         'send_messages' => 11,
@@ -38,8 +36,8 @@ class RolePermission extends Permission
         'manage_messages' => 13,
         'embed_links' => 14,
         'attach_files' => 15,
-        'read_message_history' => 16,
-        'mention_everyone' => 17,
+        'read_message_history' => 17,
+        'mention_everyone' => 18,
 
         'voice_connect' => 20,
         'voice_speak' => 21,
@@ -47,8 +45,27 @@ class RolePermission extends Permission
         'voice_deafen_members' => 23,
         'voice_move_members' => 24,
         'voice_use_vad' => 25,
-        'change_nickname' => 26,
-        'manage_nicknames' => 27,
-        'manage_roles' => 28,
     ];
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getDefault()
+    {
+        return [
+            'create_instant_invite' => true,
+
+            'read_messages' => true,
+            'send_messages' => true,
+            'send_tts_messages' => true,
+            'embed_links' => true,
+            'attach_files' => true,
+            'read_message_history' => true,
+            'mention_everyone' => true,
+
+            'voice_connect' => true,
+            'voice_speak' => true,
+            'voice_use_vad' => true,
+        ];
+    }
 }

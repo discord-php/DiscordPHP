@@ -28,32 +28,35 @@ class Overwrite extends Part
     /**
      * {@inheritdoc}
      */
-    protected $fillable = ['id', 'channel_id', 'type', 'allow', 'deny'];
+    protected $fillable = ['id', 'channel_id', 'type', 'allow', 'deny', 'permissions'];
 
     /**
-     * Returns the allow attribute.
-     *
-     * @return ChannelPermission The allow attribute.
+     * {@inheritdoc}
      */
-    public function getAllowAttribute()
+    public function afterConstruct()
     {
-        $perm = new ChannelPermission();
-        $perm->perms = $this->attributes['allow'];
-
-        return $perm;
+        $this->permissions = $this->factory->create(ChannelPermission::class);
+        $this->permissions->decodeBitwise($this->allow, $this->deny);
     }
 
     /**
-     * Returns the deny attribute.
+     * Sets the permissions attribute.
      *
-     * @return ChannelPermission The deny attribute.
+     * @param ChannelPermission $permissions Permission object.
+     *
+     * @return void 
      */
-    public function getDenyAttribute()
+    public function setPermissionsAttribute($permissions)
     {
-        $perm = new ChannelPermission();
-        $perm->perms = $this->attributes['deny'];
+        if (! ($permissions instanceof ChannelPermission)) {
+            return;
+        }
 
-        return $perm;
+        list($allow, $deny) = $permissions->bitwise;
+        $this->allow = $allow;
+        $this->deny = $deny;
+
+        $this->attributes['permissions'] = $permissions;
     }
 
     /**

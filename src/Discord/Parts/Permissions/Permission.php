@@ -1,117 +1,88 @@
 <?php
 
-/*
- * This file is apart of the DiscordPHP project.
- *
- * Copyright (c) 2016 David Cole <david@team-reflex.com>
- *
- * This source file is subject to the MIT license that is bundled
- * with this source code in the LICENSE.md file.
- */
-
 namespace Discord\Parts\Permissions;
 
+use Discord\Discord;
+use Discord\Factory\Factory;
+use Discord\Http\Http;
 use Discord\Parts\Part;
+use Discord\Wrapper\CacheWrapper;
 
-/**
- * A Permission defines permissions for a role or user. A Permission can be attached to a channel or role.
- */
-abstract class Permission extends Part
+class Permission extends Part
 {
-    /**
-     * The default permissions.
-     *
-     * @var int The default permissions.
-     */
-    protected $default;
+	/**
+	 * {@inheritdoc}
+	 */
+	public function __construct(
+		Factory $factory,
+        Discord $discord,
+        Http $http,
+        CacheWrapper $cache,
+        array $attributes = [],
+        $created = false
+	) {
+		$this->fillable = array_keys($this->bitwise);
+		$this->fillable[] = 'bitwise';
 
-    /**
-     * The Bit Offset map.
-     *
-     * @var array The array of bit offsets.
-     */
-    protected $bitoffset = [];
+		$default = [];
 
-    /**
-     * {@inheritdoc}
-     */
-    public function __construct(array $attributes = [], $created = false)
-    {
-        $this->attributes['perms'] = $this->default; // Default perms
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setAttribute($key, $value)
-    {
-        if ($key == 'perms') {
-            $this->attributes['perms'] = $value;
-
-            return;
+        foreach ($this->bitwise as $key => $bit) {
+            $default[$key] = false;
         }
 
-        if (! in_array($key, $this->bitoffset)) {
-            return;
-        }
+        $default = array_merge($default, $this->getDefault());
 
-        if (! is_bool($value)) {
-            return;
-        }
+		parent::__construct($factory, $discord, $http, $cache, $default, $created);
+		$this->fill($attributes);
+	}
 
-        $this->setBitwise($this->bitoffset[$key], $value);
-    }
+	/**
+	 * Decodes a bitwise integer.
+	 *
+	 * @param int $bitwise The bitwise integer to decode.
+	 *
+	 * @return this
+	 */
+	public function decodeBitwise($bitwise)
+	{
+		$result = [];
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getAttribute($key)
-    {
-        if ($key == 'perms') {
-            return $this->attributes['perms'];
-        }
+		foreach ($this->bitwise as $key => $value) {
+			$result[$key] = ((($bitwise >> $value) & 1) == 1);
+		}
 
-        if (! in_array($key, $this->bitoffset)) {
-            return;
-        }
+		$this->fill($result);
+		
+		return $this;
+	}
 
-        if ((($this->perms >> $this->bitoffset[$key]) & 1) == 1) {
-            return true;
-        }
+	/**
+	 * Retrieves the bitwise integer.
+	 *
+	 * @return int 
+	 */
+	public function getBitwiseAttribute()
+	{
+		$bitwise = 0;
 
-        return false;
-    }
+		foreach ($this->attributes as $key => $value) {
+			if ($value) {
+				$bitwise |= (1 << $this->bitwise[$key]);
+			} else {
+				$bitwise &= ~(1 << $this->bitwise[$key]);
+			}
+		}
 
-    /**
-     * Sets a bitwise attribute.
-     *
-     * @param int  $key   The bitwise key.
-     * @param bool $value The value that is being set.
-     *
-     * @return bool The value that is being set.
-     */
-    public function setBitwise($key, $value)
-    {
-        if ($value) {
-            $this->attributes['perms'] |= (1 << $key);
-        } else {
-            $this->attributes['perms'] &= ~(1 << $key);
-        }
+		return $bitwise;
+	}
 
-        return $value;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getPublicAttributes()
-    {
-        $return = ['perms' => $this->attributes['perms']];
-
-        foreach ($this->bitoffset as $key => $offset) {
-            $return[$key] = $this->getAttribute($key);
-        }
-
-        return $return;
-    }
+	/**
+	 * Returns the default permissions.
+	 *
+	 * @return array Default perms.
+	 */
+	public function getDefault()
+	{
+		return [];
+	}
 }

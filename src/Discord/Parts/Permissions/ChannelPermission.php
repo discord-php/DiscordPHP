@@ -19,15 +19,10 @@ class ChannelPermission extends Permission
     /**
      * {@inheritdoc}
      */
-    protected $default = 0;
-
-    /**
-     * {@inheritdoc}
-     */
-    protected $bitoffset = [
+    protected $bitwise = [
         'create_instant_invite' => 0,
-        'manage_permissions' => 3,
-        'manage_channel' => 4,
+        'manage_channels' => 4,
+        'manage_permissions' => 28,
 
         'read_messages' => 10,
         'send_messages' => 11,
@@ -35,14 +30,73 @@ class ChannelPermission extends Permission
         'manage_messages' => 13,
         'embed_links' => 14,
         'attach_files' => 15,
-        'read_message_history' => 16,
-        'mention_everyone' => 17,
+        'read_message_history' => 17,
+        'mention_everyone' => 18,
 
-        'connect' => 20,
-        'speak' => 21,
-        'mute_members' => 22,
-        'deafen_members' => 23,
-        'move_members' => 24,
-        'use_vad' => 25,
+        'voice_connect' => 20,
+        'voice_speak' => 21,
+        'voice_mute_members' => 22,
+        'voice_deafen_members' => 23,
+        'voice_move_members' => 24,
+        'voice_use_vad' => 25,
     ];
+
+    /**
+     * {@inheritdoc}
+     *
+     * @param int $deny The deny bitwise integer.
+     *
+     * @return this 
+     */
+    public function decodeBitwise($bitwise, $deny = 0)
+    {
+        $result = $this->getDefault();
+
+        foreach ($this->bitwise as $key => $value) {
+            if (true === ((($bitwise >> $value) & 1) == 1)) {
+                $result[$key] = true;
+            } elseif (true === ((($deny >> $value) & 1) == 1)) {
+                $result[$key] = false;
+            }
+        }
+
+        $this->fill($result);
+        
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @return array Bitwise.
+     */
+    public function getBitwiseAttribute()
+    {
+        $allow = 0;
+        $deny = 0;
+
+        foreach ($this->attributes as $key => $value) {
+            if (true === $value) {
+                $allow |= (1 << $this->bitwise[$key]);
+            } elseif (false === $value) {
+                $deny |= (1 << $this->bitwise[$key]);
+            }
+        }
+
+        return [$allow, $deny];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getDefault()
+    {
+        $default = [];
+
+        foreach ($this->bitwise as $key => $bit) {
+            $default[$key] = null;
+        }
+
+        return $default;
+    }
 }
