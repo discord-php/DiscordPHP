@@ -131,7 +131,7 @@ class Channel extends Part
      *
      * @param string $id The message snowflake.
      *
-     * @return \React\Promise\Promise 
+     * @return \React\Promise\Promise
      */
     public function getMessage($id)
     {
@@ -140,16 +140,19 @@ class Channel extends Part
         $id = (int) $id;
         ++$id;
 
-        $this->http->get("channels/{$this->id}/messages?before={$id}&limit=1")->then(function ($response) {
-            if (count($response) < 1) {
-                return $deferred->reject(new \Exception('Could not find the message.'));
-            }
+        $this->http->get("channels/{$this->id}/messages?before={$id}&limit=1")->then(
+            function ($response) use ($deferred) {
+                if (count($response) < 1) {
+                    return $deferred->reject(new \Exception('Could not find the message.'));
+                }
 
-            $messageResponse = array_shift($response);
-            $message = $this->factory->create(Message::class, $messageResponse, true);
+                $messageResponse = array_shift($response);
+                $message         = $this->factory->create(Message::class, $messageResponse, true);
 
-            $deferred->resolve($message);
-        }, \React\Partial\bind_right($this->reject, $deferred));
+                $deferred->resolve($message);
+            },
+            \React\Partial\bind_right($this->reject, $deferred)
+        );
 
         return $deferred->promise();
     }
