@@ -135,6 +135,9 @@ class Channel extends Part
     {
         $deferred = new Deferred();
 
+        $id = (int) $id;
+        ++$id;
+
         $this->http->get("channels/{$this->id}/messages?before={$id}&limit=1")->then(function ($response) {
             if (count($response) < 1) {
                 return $deferred->reject(new \Exception('Could not find the message.'));
