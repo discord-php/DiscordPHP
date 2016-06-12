@@ -58,11 +58,18 @@ class Guzzle extends GuzzleClient implements HttpDriver
     protected $adapter;
 
     /**
-     * Rate limit buckets.
+     * Whether the HTTP client has been rate limited.
      *
-     * @var array Buckets.
+     * @var bool Rate limited.
      */
-    protected $buckets = [];
+    protected $rateLimited = false;
+
+    /**
+     * Array of rate limit promises.
+     *
+     * @var array Rate Limits.
+     */
+    protected $rateLimits = [];
 
     /**
      * Constructs a Guzzle driver.
@@ -111,8 +118,21 @@ class Guzzle extends GuzzleClient implements HttpDriver
                 // Discord Rate-Limiting
                 if ($response->getStatusCode() == 429) {
                     $tts = (int) $response->getHeader('Retry-After')[0] / 1000;
+                    $this->rateLimited = true;
 
-                    $this->loop->addTimer($tts, $sendRequest);
+                    $deferred = new Deferred();
+                    $deferred->promise()->then($sendRequest);
+
+                    $this->rateLimits[] = $deferred;
+
+                    $this->loop->addTimer($tts, function () {
+                        foreach ($this->rateLimits as $d) {
+                            $d->resolve();
+                        }
+                        
+                        $this->rateLimited = false;
+                    });
+
                     $deferred->notify('You have been rate limited.');
                 }
                 // Bad Gateway
@@ -142,7 +162,13 @@ class Guzzle extends GuzzleClient implements HttpDriver
             });
         };
 
-        $sendRequest();
+        if ($this->rateLimited) {
+            $deferred = new Deferred();
+            $deferred->promise()->then($sendRequest);
+            $this->rateLimits[] = $deferred;
+        } else {
+            $sendRequest();
+        }
 
         return $deferred->promise();
     }
