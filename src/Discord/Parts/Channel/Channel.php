@@ -34,6 +34,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class Channel extends Part
 {
     const TYPE_TEXT  = 'text';
+
     const TYPE_VOICE = 'voice';
 
     /**
@@ -67,8 +68,9 @@ class Channel extends Part
      */
     public function afterConstruct()
     {
-        if (! array_key_exists('bitrate', $this->attributes) &&
-            $this->type != self::TYPE_TEXT) {
+        if (!array_key_exists('bitrate', $this->attributes) &&
+            $this->type != self::TYPE_TEXT
+        ) {
             $this->bitrate = 64000;
         }
     }
@@ -86,7 +88,7 @@ class Channel extends Part
     /**
      * Sets a permission value to the channel.
      *
-     * @param Member|Role       $part  Either a Member or Role, permissions will be set on it.
+     * @param Member|Role       $part        Either a Member or Role, permissions will be set on it.
      * @param ChannelPermission $permissions The permissions that define what the Member/Role can and cannot do.
      *
      * @return \React\Promise\Promise
@@ -303,6 +305,8 @@ class Channel extends Part
         $resolver = new OptionsResolver();
         $resolver->setDefaults(['limit' => 100, 'cache' => true]);
         $resolver->setDefined(['before', 'after']);
+        $resolver->setAllowedTypes('before', [Message::class, 'string']);
+        $resolver->setAllowedTypes('after', [Message::class, 'string']);
         $resolver->setAllowedValues('limit', range(1, 100));
 
         $options = $resolver->resolve($options);
@@ -314,20 +318,10 @@ class Channel extends Part
 
         $url = "channels/{$this->id}/messages?limit={$options['limit']}";
         if (isset($options['before'])) {
-            if (! ($options['before'] instanceof Message)) {
-                $deferred->reject(new \Exception('before must be an instance of '.Message::class));
-
-                return $deferred->promise();
-            }
-            $url .= '&before='.$options['before']->id;
+            $url .= '&before='.($options['before'] instanceof Message ? $options['before']->id : $options['before']);
         }
         if (isset($options['after'])) {
-            if (! ($options['after'] instanceof Message)) {
-                $deferred->reject(new \Exception('after must be an instance of '.Message::class));
-
-                return $deferred->promise();
-            }
-            $url .= '&after='.$options['after']->id;
+            $url .= '&after='.($options['after'] instanceof Message ? $options['after']->id : $options['after']);
         }
 
         $this->http->get($url, null, [], $options['cache'] ? null : 0)->then(
@@ -538,8 +532,8 @@ class Channel extends Part
     public function getCreatableAttributes()
     {
         return [
-            'name' => $this->name,
-            'type' => $this->getChannelType(),
+            'name'    => $this->name,
+            'type'    => $this->getChannelType(),
             'bitrate' => $this->bitrate,
         ];
     }
