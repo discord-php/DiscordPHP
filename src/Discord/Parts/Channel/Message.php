@@ -12,6 +12,7 @@
 namespace Discord\Parts\Channel;
 
 use Carbon\Carbon;
+use Discord\Helpers\Collection;
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
 
@@ -76,6 +77,24 @@ class Message extends Part
                 return $channel;
             }
         }
+    }
+
+    /**
+     * Returns the mention_roles attribute.
+     *
+     * @return Collection The roles that were mentioned.
+     */
+    public function getMentionRolesAttribute()
+    {
+        $roles = new Collection([], 'id');
+
+        foreach ($this->channel->guild->roles as $role) {
+            if (array_search($role->id, $this->attributes['mention_roles']) !== false) {
+                $roles->push($role);
+            }
+        }
+
+        return $roles;
     }
 
     /**

@@ -39,6 +39,8 @@ class GuildUpdate extends Event
         );
 
         foreach ($data->roles as $role) {
+            $role = (array) $role;
+            $role['guild_id'] = $guildPart->id;
             $rolePart = $this->factory->create(Role::class, $role, true);
 
             $roles->push($rolePart);
