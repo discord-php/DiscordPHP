@@ -126,10 +126,11 @@ class Guzzle extends GuzzleClient implements HttpDriver
                     $this->rateLimits[] = $deferred;
 
                     $this->loop->addTimer($tts, function () {
-                        foreach ($this->rateLimits as $d) {
+                        foreach ($this->rateLimits as $i => $d) {
                             $d->resolve();
+                            unset($this->rateLimits[$i]);
                         }
-                        
+
                         $this->rateLimited = false;
                     });
 
