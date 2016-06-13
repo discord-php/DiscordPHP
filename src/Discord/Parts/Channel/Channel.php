@@ -82,6 +82,11 @@ class Channel extends Part
      */
     public function getRecipientAttribute()
     {
+        // Only for PM channels.
+        if (! isset($this->attributes['recipient'])) {
+            return null;
+        }
+
         return $this->factory->create(User::class, $this->attributes['recipient'], true);
     }
 
