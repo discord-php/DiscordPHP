@@ -1,48 +1,47 @@
 {
-    "name":        "team-reflex/discord-php",
-    "description": "An unofficial API to interact with the voice and text service Discord.",
-    "license":     "MIT",
-    "authors":     [
-        {
-            "name":  "David Cole",
-            "email": "david@team-reflex.com"
-        }
-    ],
-    "require":     {
-        "cache/adapter-bundle":     "^0.3.3",
-        "cache/array-adapter":      "^0.4.0",
-        "guzzlehttp/guzzle":        "~5.3|~6.0",
-        "illuminate/support":       "^4.0|^5.0",
-        "nesbot/carbon":            "^1.18",
-        "ratchet/pawl":             "0.2.*",
-        "react/datagram":           "1.1.*",
-        "react/socket-client":      "0.4.*",
-        "symfony/options-resolver": "^2.7|^3.0",
-        "TrafficCophp/ByteBuffer":  "^0.3",
-        "dusank/knapsack": "^6.2",
-        "monolog/monolog": "^1.19",
-        "wyrihaximus/react-guzzle-psr7": "^1.0",
-        "react/partial": "^2.0"
+  "name": "team-reflex/discord-php",
+  "description": "An unofficial API to interact with the voice and text service Discord.",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "David Cole",
+      "email": "david@team-reflex.com"
     },
-    "require-dev": {
-        "symfony/var-dumper": "^2.7|^3.0",
-        "phpunit/phpunit":    "^5.1|^6.0"
-    },
-    "autoload":    {
-        "psr-4": {
-            "Discord\\": "src/Discord"
-        }
-    },
-    "suggest":     {
-        "cache/apc-adapter":       "Required to use the APC cache driver",
-        "cache/memcache-adapter":  "Required to use the Memcache cache driver",
-        "cache/memcached-adapter": "Required to use the Memcached cache driver",
-        "cache/redis-adapter":     "Required to use the Redis cache driver",
-        "ext-libevent":            "For a faster, and more performant loop. Preferred",
-        "ext-libev":               "For a faster, and more performant loop",
-        "ext-event":               "For a faster, and more performant loop"
-    },
-    "scripts":     {
-        "test": "php tests/run.php"
+    {
+      "name": "Aaron Scherer",
+      "email": "aequasi@gmail.com"
     }
+  ],
+  "require": {
+    "cache/array-adapter": "^0.4.0",
+    "guzzlehttp/guzzle": "~5.3|~6.0",
+    "illuminate/support": "^4.0|^5.0",
+    "nesbot/carbon": "^1.18",
+    "ratchet/pawl": "0.2.*",
+    "react/datagram": "1.1.*",
+    "react/socket-client": "0.4.*",
+    "symfony/options-resolver": "^2.7|^3.0",
+    "TrafficCophp/ByteBuffer": "^0.3",
+    "monolog/monolog": "^1.19",
+    "wyrihaximus/react-guzzle-psr7": "^1.0",
+    "react/partial": "^2.0"
+  },
+  "require-dev": {
+    "symfony/var-dumper": "^2.7|^3.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Discord\\": "src/Discord"
+    }
+  },
+  "suggest": {
+    "cache/apc-adapter": "Required to use the APC cache driver",
+    "cache/memcache-adapter": "Required to use the Memcache cache driver",
+    "cache/memcached-adapter": "Required to use the Memcached cache driver",
+    "cache/redis-adapter": "Required to use the Redis cache driver",
+    "ext-libevent": "For a faster, and more performant loop. Preferred",
+    "ext-libev": "For a faster, and more performant loop",
+    "ext-event": "For a faster, and more performant loop"
+  },
+  "scripts": {}
 }
