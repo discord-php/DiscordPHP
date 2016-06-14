@@ -52,8 +52,9 @@ class GuildUpdate extends Event
             $this->discord->addLargeGuild($guildPart);
         }
 
+        $old = $this->discord->guilds->get('id', $guildPart->id);
         $this->discord->guilds->push($guildPart);
 
-        $deferred->resolve($guildPart);
+        $deferred->resolve([$guildPart, $old]);
     }
 }

@@ -586,8 +586,14 @@ class Discord
 
             $deferred = new Deferred();
             $deferred->promise()->then(function ($d) use ($data, $hData) {
-                $old = clone $this;
-                $this->emit($data->t, [$d, $this, $old]);
+                if (is_array($d) && count($d) == 2) {
+                    list($new, $old) = $d;
+                } else {
+                    $new = $d;
+                    $old = null;
+                }
+
+                $this->emit($data->t, [$new, $this, $old]);
 
                 foreach ($hData['alternatives'] as $alternative) {
                     $this->emit($alternative, [$d, $this]);

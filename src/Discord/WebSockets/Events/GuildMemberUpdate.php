@@ -23,15 +23,17 @@ class GuildMemberUpdate extends Event
     public function handle(Deferred $deferred, $data)
     {
         $memberPart = $this->factory->create(Member::class, $data, true);
+        $old = null;
 
         $guild = $this->discord->guilds->get('id', $memberPart->guild_id);
 
         if (! is_null($guild)) {
+            $old = $guild->members->get('id', $memberPart->id);
             $guild->members->push($memberPart);
 
             $this->discord->guilds->push($guild);
         }
 
-        $deferred->resolve($memberPart);
+        $deferred->resolve([$memberPart, $old]);
     }
 }

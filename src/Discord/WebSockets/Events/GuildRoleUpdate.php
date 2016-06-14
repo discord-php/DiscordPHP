@@ -28,8 +28,9 @@ class GuildRoleUpdate extends Event
         $rolePart = $this->factory->create(Role::class, $adata, true);
 
         $guild = $this->discord->guilds->get('id', $rolePart->guild_id);
+        $old = $guild->roles->get('id', $rolePart->id);
         $guild->roles->push($rolePart);
 
-        $deferred->resolve($rolePart);
+        $deferred->resolve([$rolePart, $old]);
     }
 }
