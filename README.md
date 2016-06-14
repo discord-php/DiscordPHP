@@ -49,7 +49,7 @@ $discord->run();
 
 ## Documentation
 
-At the moment, there is no documentation however it is being written at the moment.
+Documentation is currently being written. You can check it out [here](https://discordphp.readme.io).
 
 ## Contributing
 
