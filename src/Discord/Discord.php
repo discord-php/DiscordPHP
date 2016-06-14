@@ -321,6 +321,7 @@ class Discord
     protected function handleResume($data)
     {
         $this->logger->info('websocket reconnected to discord');
+        $this->setupHeartbeat($data->d->heartbeat_interval);
         $this->emit('reconnected', [$this]);
     }
 
@@ -699,9 +700,11 @@ class Discord
     {
         $this->logger->info('received hello');
 
-        $this->identify();
+        $resume = $this->identify();
 
-        $this->setupHeartbeat($data->d->heartbeat_interval);
+        if (! $resume) {
+            $this->setupHeartbeat($data->d->heartbeat_interval);
+        }
     }
 
     /**
@@ -750,6 +753,8 @@ class Discord
         }
 
         $this->send($payload);
+
+        return ($payload['op'] == Op::OP_RESUME);
     }
 
     /**
