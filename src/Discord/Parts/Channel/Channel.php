@@ -123,10 +123,15 @@ class Channel extends Part
             'deny'  => $deny,
         ];
 
-        $this->http->put("channels/{$this->id}/permissions/{$part->id}", $payload)->then(
-            \React\Partial\bind_right($this->resolve, $deferred),
-            \React\Partial\bind_right($this->reject, $deferred)
-        );
+        if (! $this->created) {
+            $this->attributes['permission_overwrites'][] = $payload;
+            $deferred->resolve();
+        } else {
+            $this->http->put("channels/{$this->id}/permissions/{$part->id}", $payload)->then(
+                \React\Partial\bind_right($this->resolve, $deferred),
+                \React\Partial\bind_right($this->reject, $deferred)
+            );
+        }
 
         return $deferred->promise();
     }
@@ -540,9 +545,10 @@ class Channel extends Part
     public function getCreatableAttributes()
     {
         return [
-            'name'    => $this->name,
-            'type'    => $this->getChannelType(),
-            'bitrate' => $this->bitrate,
+            'name'                  => $this->name,
+            'type'                  => $this->getChannelType(),
+            'bitrate'               => $this->bitrate,
+            'permission_overwrites' => $this->permission_overwrites,
         ];
     }
 
