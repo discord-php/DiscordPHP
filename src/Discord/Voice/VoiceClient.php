@@ -383,15 +383,18 @@ class VoiceClient extends EventEmitter
                         $client->send((string) $buffer);
                     });
 
-                    $this->udpHeartbeat = $this->loop->addPeriodicTimer(5, function () use ($client) {
-                        $buffer = new Buffer(9);
-                        $buffer[0] = pack('c', 0xC9);
-                        $buffer->writeUInt64LE($this->heartbeatSeq, 1);
-                        ++$this->heartbeatSeq;
+                    // Can't pack 64-bit integers on 32-bit PHP.
+                    if (2147483647 !== PHP_INT_MAX) {
+                        $this->udpHeartbeat = $this->loop->addPeriodicTimer(5, function () use ($client) {
+                            $buffer = new Buffer(9);
+                            $buffer[0] = pack('c', 0xC9);
+                            $buffer->writeUInt64LE($this->heartbeatSeq, 1);
+                            ++$this->heartbeatSeq;
 
-                        $client->send((string) $buffer);
-                        $this->emit('udp-heartbeat', []);
-                    });
+                            $client->send((string) $buffer);
+                            $this->emit('udp-heartbeat', []);
+                        });
+                    }
 
                     $client->on('error', function ($e) {
                         $this->emit('udp-error', [$e]);
