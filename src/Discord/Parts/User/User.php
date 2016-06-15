@@ -30,7 +30,7 @@ class User extends Part
     /**
      * {@inheritdoc}
      */
-    protected $fillable = ['id', 'username', 'avatar', 'discriminator'];
+    protected $fillable = ['id', 'username', 'avatar', 'discriminator', 'bot'];
 
     /**
      * Sends a message to the user.

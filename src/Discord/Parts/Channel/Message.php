@@ -98,6 +98,22 @@ class Message extends Part
     }
 
     /**
+     * Returns the mention attribute.
+     *
+     * @return Collection The users that were mentioned.
+     */
+    public function getMentionsAttribute()
+    {
+        $users = new Collection([], 'id');
+
+        foreach ($this->attributes['mentions'] as $mention) {
+            $users->push($this->factory->create(User::class, $mention, true));
+        }
+
+        return $users;
+    }
+
+    /**
      * Returns the author attribute.
      *
      * @return User The User that sent the message.
