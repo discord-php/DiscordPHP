@@ -227,6 +227,10 @@ abstract class AbstractRepository extends Collection implements RepositoryInterf
      */
     public function fetch($id)
     {
+        if ($part = $this->get('id', $id)) {
+            return \React\Promise\resolve($part);
+        }
+
         if (! isset($this->endpoints['get'])) {
             return \React\Promise\reject(new \Exception('You cannot get this part.'));
         }
