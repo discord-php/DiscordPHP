@@ -24,12 +24,15 @@ use Discord\Parts\User\User;
 use Discord\Repository\Channel\MessageRepository;
 use Discord\Repository\Channel\OverwriteRepository;
 use Discord\Repository\Guild\MemberRepository;
-use GuzzleHttp\Psr7\Request;
 use React\Promise\Deferred;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * A Channel can be either a text or voice channel on a Discord guild.
+ *
+ * @property MemberRepository    $members
+ * @property MessageRepository   $messages
+ * @property OverwriteRepository $overwrites
  */
 class Channel extends Part
 {
@@ -83,7 +86,7 @@ class Channel extends Part
     public function getRecipientAttribute()
     {
         // Only for PM channels.
-        if (! isset($this->attributes['recipient'])) {
+        if (!isset($this->attributes['recipient'])) {
             return null;
         }
 
@@ -123,7 +126,7 @@ class Channel extends Part
             'deny'  => $deny,
         ];
 
-        if (! $this->created) {
+        if (!$this->created) {
             $this->attributes['permission_overwrites'][] = $payload;
             $deferred->resolve();
         } else {

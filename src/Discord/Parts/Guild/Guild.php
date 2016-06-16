@@ -11,58 +11,67 @@
 
 namespace Discord\Parts\Guild;
 
-use Discord\Helpers\Collection;
-use Discord\Parts\Channel\Channel;
 use Discord\Parts\Part;
 use Discord\Parts\User\Member;
-use Discord\Repository\Guild\BanRepository;
-use Discord\Repository\Guild\ChannelRepository;
-use Discord\Repository\Guild\InviteRepository;
-use Discord\Repository\Guild\MemberRepository;
-use Discord\Repository\Guild\RoleRepository;
+use Discord\Repository\Guild as Repository;
 use React\Promise\Deferred;
 
 /**
  * A Guild is Discord's equivalent of a server. It contains all the Members, Channels, Roles, Bans etc.
  *
- * @property string                     $id
- * @property string                     $name
- * @property string                     $icon
- * @property string                     $region
- * @property string                     $owner_id
- * @property array|Role[]               $roles
- * @property \DateTime                  $joined_at
- * @property string                     $afk_channel_id
- * @property int                        $afk_timeout
- * @property bool                       $embed_enabled
- * @property string                     $embed_channel_id
- * @property array                      $features
- * @property string                     $splash
- * @property array                      $emojis
- * @property bool                       $large
- * @property int                        $verification_level
- * @property int                        $member_count
- * @property Collection|array|Channel[] $channels
- * @property Collection|array|Member[]  $members
+ * @property string                       $id
+ * @property string                       $name
+ * @property string                       $icon
+ * @property string                       $region
+ * @property string                       $owner_id
+ * @property \DateTime                    $joined_at
+ * @property string                       $afk_channel_id
+ * @property int                          $afk_timeout
+ * @property bool                         $embed_enabled
+ * @property string                       $embed_channel_id
+ * @property array                        $features
+ * @property string                       $splash
+ * @property array                        $emojis
+ * @property bool                         $large
+ * @property int                          $verification_level
+ * @property int                          $member_count
+ * @property Repository\RoleRepository    $roles
+ * @property Repository\ChannelRepository $channels
+ * @property Repository\MemberRepository  $members
+ * @property Repository\InviteRepository  $invites
+ * @property Repository\BanRepository     $bans
  */
 class Guild extends Part
 {
-    const REGION_DEFAULT = self::REGION_US_WEST;
-    const REGION_US_WEST = 'us-west';
-    const REGION_US_SOUTH = 'us-south';
-    const REGION_US_EAST = 'us-east';
-    const REGION_US_CENTRAL = 'us-central';
-    const REGION_SINGAPORE = 'singapore';
-    const REGION_LONDON = 'london';
-    const REGION_SYDNEY = 'sydney';
-    const REGION_FRANKFURT = 'frankfurt';
-    const REGION_AMSTERDAM = 'amsterdam';
-    const REGION_BRAZIL = 'brazil';
+    const REGION_DEFAULT    = self::REGION_US_WEST;
 
-    const LEVEL_OFF = 0;
-    const LEVEL_LOW = 1;
-    const LEVEL_MEDIUM = 2;
-    const LEVEL_TABLEFLIP = 3;
+    const REGION_US_WEST    = 'us-west';
+
+    const REGION_US_SOUTH   = 'us-south';
+
+    const REGION_US_EAST    = 'us-east';
+
+    const REGION_US_CENTRAL = 'us-central';
+
+    const REGION_SINGAPORE  = 'singapore';
+
+    const REGION_LONDON     = 'london';
+
+    const REGION_SYDNEY     = 'sydney';
+
+    const REGION_FRANKFURT  = 'frankfurt';
+
+    const REGION_AMSTERDAM  = 'amsterdam';
+
+    const REGION_BRAZIL     = 'brazil';
+
+    const LEVEL_OFF         = 0;
+
+    const LEVEL_LOW         = 1;
+
+    const LEVEL_MEDIUM      = 2;
+
+    const LEVEL_TABLEFLIP   = 3;
 
     /**
      * {@inheritdoc}
@@ -92,11 +101,11 @@ class Guild extends Part
      * {@inheritdoc}
      */
     protected $repositories = [
-        'members' => MemberRepository::class,
-        'roles' => RoleRepository::class,
-        'channels' => ChannelRepository::class,
-        'bans' => BanRepository::class,
-        'invites' => InviteRepository::class,
+        'members'  => Repository\MemberRepository::class,
+        'roles'    => Repository\RoleRepository::class,
+        'channels' => Repository\ChannelRepository::class,
+        'bans'     => Repository\BanRepository::class,
+        'invites'  => Repository\InviteRepository::class,
     ];
 
     /**
@@ -130,13 +139,19 @@ class Guild extends Part
 
         $rolePart = $this->factory->create(Role::class);
 
-        $this->roles->save($rolePart)->then(function ($role) use ($deferred, $data) {
-            $role->fill($data);
+        $this->roles->save($rolePart)->then(
+            function ($role) use ($deferred, $data) {
+                $role->fill($data);
 
-            $this->roles->save($role)->then(function ($role) use ($deferred) {
-                $deferred->resolve($role);
-            }, \React\Partial\bind_right($this->reject, $deferred));
-        }, \React\Partial\bind_right($this->reject, $deferred));
+                $this->roles->save($role)->then(
+                    function ($role) use ($deferred) {
+                        $deferred->resolve($role);
+                    },
+                    \React\Partial\bind_right($this->reject, $deferred)
+                );
+            },
+            \React\Partial\bind_right($this->reject, $deferred)
+        );
 
         return $deferred->promise();
     }
@@ -162,14 +177,17 @@ class Guild extends Part
             [
                 'owner_id' => $member,
             ]
-        )->then(function ($response) use ($member, $deferred) {
-            if ($response->owner_id != $member) {
-                $deferred->reject(new \Exception('Ownership was not transferred correctly.'));
-                $this->fill((array) $response);
-            } else {
-                $deferred->resolve();
-            }
-        }, \React\Partial\bind_right($this->reject, $deferred));
+        )->then(
+            function ($response) use ($member, $deferred) {
+                if ($response->owner_id != $member) {
+                    $deferred->reject(new \Exception('Ownership was not transferred correctly.'));
+                    $this->fill((array) $response);
+                } else {
+                    $deferred->resolve();
+                }
+            },
+            \React\Partial\bind_right($this->reject, $deferred)
+        );
 
         return $deferred->promise();
     }
@@ -241,7 +259,7 @@ class Guild extends Part
      */
     public function validateRegion()
     {
-        if (! in_array($this->region, $this->regions)) {
+        if (!in_array($this->region, $this->regions)) {
             return self::REGION_DEFUALT;
         }
 
@@ -262,7 +280,7 @@ class Guild extends Part
     public function getCreatableAttributes()
     {
         return [
-            'name' => $this->name,
+            'name'   => $this->name,
             'region' => $this->validateRegion(),
         ];
     }
@@ -273,13 +291,13 @@ class Guild extends Part
     public function getUpdatableAttributes()
     {
         return [
-            'name' => $this->name,
-            'region' => $this->region,
-            'logo' => $this->logo,
-            'splash' => $this->splash,
+            'name'               => $this->name,
+            'region'             => $this->region,
+            'logo'               => $this->logo,
+            'splash'             => $this->splash,
             'verification_level' => $this->verification_level,
-            'afk_channel_id' => $this->afk_channel_id,
-            'afk_timeout' => $this->afk_timeout,
+            'afk_channel_id'     => $this->afk_channel_id,
+            'afk_timeout'        => $this->afk_timeout,
         ];
     }
 
