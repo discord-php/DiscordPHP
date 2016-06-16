@@ -11,39 +11,35 @@
 
 namespace Discord\Parts\Guild;
 
-use Discord\Helpers\Collection;
-use Discord\Parts\Channel\Channel;
 use Discord\Parts\Part;
 use Discord\Parts\User\Member;
-use Discord\Repository\Guild\BanRepository;
-use Discord\Repository\Guild\ChannelRepository;
-use Discord\Repository\Guild\InviteRepository;
-use Discord\Repository\Guild\MemberRepository;
-use Discord\Repository\Guild\RoleRepository;
+use Discord\Repository\Guild as Repository;
 use React\Promise\Deferred;
 
 /**
  * A Guild is Discord's equivalent of a server. It contains all the Members, Channels, Roles, Bans etc.
  *
- * @property string                     $id
- * @property string                     $name
- * @property string                     $icon
- * @property string                     $region
- * @property string                     $owner_id
- * @property array|Role[]               $roles
- * @property \DateTime                  $joined_at
- * @property string                     $afk_channel_id
- * @property int                        $afk_timeout
- * @property bool                       $embed_enabled
- * @property string                     $embed_channel_id
- * @property array                      $features
- * @property string                     $splash
- * @property array                      $emojis
- * @property bool                       $large
- * @property int                        $verification_level
- * @property int                        $member_count
- * @property Collection|array|Channel[] $channels
- * @property Collection|array|Member[]  $members
+ * @property string                       $id
+ * @property string                       $name
+ * @property string                       $icon
+ * @property string                       $region
+ * @property string                       $owner_id
+ * @property \DateTime                    $joined_at
+ * @property string                       $afk_channel_id
+ * @property int                          $afk_timeout
+ * @property bool                         $embed_enabled
+ * @property string                       $embed_channel_id
+ * @property array                        $features
+ * @property string                       $splash
+ * @property array                        $emojis
+ * @property bool                         $large
+ * @property int                          $verification_level
+ * @property int                          $member_count
+ * @property Repository\RoleRepository    $roles
+ * @property Repository\ChannelRepository $channels
+ * @property Repository\MemberRepository  $members
+ * @property Repository\InviteRepository  $invites
+ * @property Repository\BanRepository     $bans
  */
 class Guild extends Part
 {
