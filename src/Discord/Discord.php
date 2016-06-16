@@ -183,6 +183,13 @@ class Discord
     protected $reconnectCount = 0;
 
     /**
+     * The heartbeat interval.
+     *
+     * @var int Heartbeat interval.
+     */
+    protected $heartbeatInterval;
+
+    /**
      * The timer that sends the heartbeat packet.
      *
      * @var TimerInterface Timer.
@@ -321,7 +328,6 @@ class Discord
     protected function handleResume($data)
     {
         $this->logger->info('websocket reconnected to discord');
-        $this->setupHeartbeat($data->d->heartbeat_interval);
         $this->emit('reconnected', [$this]);
     }
 
@@ -775,13 +781,13 @@ class Discord
         $this->heartbeatTime = microtime(true);
         $this->emit('heartbeat', [$this->seq, $this]);
 
-        $this->heartbeatAckTimer = $this->loop->addTimer(5, function () {
+        $this->heartbeatAckTimer = $this->loop->addTimer($this->heartbeatInterval / 1000, function () {
             if (! $this->connected) {
                 return;
             }
 
-            $this->logger->warning('did not recieve heartbeat ACK within 5 seconds, sending heartbeat again');
-            $this->heartbeat();
+            $this->logger->warning('did not receive heartbeat ACK within heartbeat interval, closing connection');
+            $this->ws->close(1001, 'did not receive heartbeat ack');
         });
     }
 
@@ -849,6 +855,7 @@ class Discord
      */
     protected function setupHeartbeat($interval)
     {
+        $this->heartbeatInterval = $interval;
         if (isset($this->heartbeatTimer)) {
             $this->heartbeatTimer->cancel();
         }
