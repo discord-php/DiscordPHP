@@ -31,6 +31,7 @@ use Discord\Parts\User\User;
  * @property array        $attachments
  * @property array        $embeds
  * @property int|null     $nonce
+ * @property Channel      $channel
  */
 class Message extends Part
 {

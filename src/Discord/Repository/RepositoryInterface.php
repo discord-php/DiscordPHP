@@ -12,6 +12,7 @@
 namespace Discord\Repository;
 
 use Discord\Parts\Part;
+use React\Promise\PromiseInterface;
 
 interface RepositoryInterface
 {
@@ -30,7 +31,7 @@ interface RepositoryInterface
      * @param string $key   The key to search for.
      * @param mixed  $value The value to match with the key.
      *
-     * @return \React\Promise\Promise
+     * @return PromiseInterface
      */
     public function get($key, $value);
 
@@ -39,7 +40,7 @@ interface RepositoryInterface
      *
      * @param Part $part The part to save.
      *
-     * @return \React\Promise\Promise
+     * @return PromiseInterface
      */
     public function save(Part &$part);
 
@@ -48,7 +49,7 @@ interface RepositoryInterface
      *
      * @param Part $part The part to delete.
      *
-     * @return \React\Promise\Promise
+     * @return PromiseInterface
      */
     public function delete(Part &$part);
 
@@ -57,7 +58,7 @@ interface RepositoryInterface
      *
      * @param Part $part The part to get fresh values.
      *
-     * @return \React\Promise\Promise
+     * @return PromiseInterface
      */
     public function fresh(Part &$part);
 
@@ -66,7 +67,7 @@ interface RepositoryInterface
      *
      * @param string $id The ID to search for.
      *
-     * @return \React\Promise\Promise
+     * @return PromiseInterface
      */
     public function fetch($id);
 }
