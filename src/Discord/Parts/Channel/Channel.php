@@ -11,9 +11,9 @@
 
 namespace Discord\Parts\Channel;
 
-use Traversable;
 use Discord\Exceptions\FileNotFoundException;
 use Discord\Helpers\Collection;
+use Discord\Parts\Channel\Message;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Guild\Invite;
 use Discord\Parts\Guild\Role;
@@ -26,6 +26,7 @@ use Discord\Repository\Channel\OverwriteRepository;
 use Discord\Repository\Guild\MemberRepository;
 use React\Promise\Deferred;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Traversable;
 
 /**
  * A Channel can be either a text or voice channel on a Discord guild.
@@ -322,6 +323,92 @@ class Channel extends Part
         }
 
         $this->http->get($url, null, [], $options['cache'] ? null : 0)->then(
+            function ($response) use ($deferred) {
+                $messages = new Collection();
+
+                foreach ($response as $message) {
+                    $message = $this->factory->create(Message::class, $message, true);
+                    $messages->push($message);
+                }
+
+                $deferred->resolve($messages);
+            },
+            \React\Partial\bind_right($this->reject, $deferred)
+        );
+
+        return $deferred->promise();
+    }
+
+    /**
+     * Adds a message to the channels pinboard.
+     *
+     * @param Message $message The message to pin.
+     *
+     * @return \React\Promise\Promise 
+     */
+    public function pinMessage(Message $message)
+    {
+        $deferred = new Deferred();
+
+        if ($message->pinned) {
+            return \React\Promise\reject(new \Exception('This message is already pinned.'));
+        }
+
+        if ($message->channel_id != $this->id) {
+            return \React\Promise\reject(new \Exception('You cannot pin a message to a different channel.'));
+        }
+
+        $this->http->put("channels/{$this->id}/pins/{$message->id}")->then(
+            function () use (&$message, $deferred) {
+                $message->pinned = true;
+                $deferred->resolve($message);
+            },
+            \React\Partial\bind_right($this->reject, $deferred)
+        );
+
+        return $deferred->promise();
+    }
+
+    /**
+     * Removes a message from the channels pinboard.
+     *
+     * @param Message $message The message to un-pin.
+     *
+     * @return \React\Promise\Promise 
+     */
+    public function unpinMessage(Message $message)
+    {
+        $deferred = new Deferred();
+
+        if (! $message->pinned) {
+            return \React\Promise\reject(new \Exception('This message is not pinned.'));
+        }
+
+        if ($message->channel_id != $this->id) {
+            return \React\Promise\reject(new \Exception('You cannot un-pin a message from a different channel.'));
+        }
+
+        $this->http->delete("channels/{$this->id}/pins/{$message->id}")->then(
+            function () use (&$message, $deferred) {
+                $message->pinned = false;
+                $deferred->resolve($message);
+            },
+            \React\Partial\bind_right($this->reject, $deferred)
+        );
+
+        return $deferred->promise();
+    }
+
+    /**
+     * Returns the channels pinned messages.
+     *
+     * @return \React\Promise\Promise 
+     */
+    public function getPinnedMessages()
+    {
+        $deferred = new Deferred();
+
+        $this->http->get($this->replaceWithVariables('channels/:id/pins'))->then(
             function ($response) use ($deferred) {
                 $messages = new Collection();
 

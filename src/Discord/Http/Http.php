@@ -149,6 +149,7 @@ class Http
 
         $headers = [
             'User-Agent' => $this->getUserAgent(),
+            'Content-Length' => 0,
         ];
 
         $headers['authorization'] = 'Bot '.$this->token;
@@ -158,6 +159,7 @@ class Http
         if (! is_null($content)) {
             $headers['Content-Type'] = 'application/json';
             $content = json_encode($content);
+            $headers['Content-Length'] = strlen($content);
         }
 
         if ($blocking) {

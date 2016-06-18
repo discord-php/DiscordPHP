@@ -98,4 +98,14 @@ class Collection extends BaseCollection
             $this->items[$key] = $value;
         }
     }
+
+    /**
+     * Handles debug calls from var_dump and similar functions.
+     *
+     * @return array An array of public attributes.
+     */
+    public function __debugInfo()
+    {
+        return $this->items;
+    }
 }

@@ -51,6 +51,7 @@ class Message extends Part
         'embeds',
         'nonce',
         'mention_roles',
+        'pinned',
     ];
 
     /**
