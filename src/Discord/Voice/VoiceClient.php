@@ -431,7 +431,7 @@ class VoiceClient extends EventEmitter
                             $this->client->close();
                             $this->voiceWebsocket->close();
 
-                            $this->mainWebsocket->send([
+                            $this->mainSend([
                                 'op' => Op::OP_VOICE_STATE_UPDATE,
                                 'd' => [
                                     'guild_id' => $this->channel->guild_id,
@@ -923,7 +923,7 @@ class VoiceClient extends EventEmitter
             return $deferred->promise();
         }
 
-        $this->mainWebsocket->send([
+        $this->mainSend([
             'op' => Op::OP_VOICE_STATE_UPDATE,
             'd' => [
                 'guild_id' => $channel->guild_id,
@@ -1083,6 +1083,19 @@ class VoiceClient extends EventEmitter
     }
 
     /**
+     * Sends a message to the main websocket.
+     *
+     * @param array $data The data to send to the main WebSocket.
+     *
+     * @return void 
+     */
+    public function mainSend(array $data)
+    {
+        $json = json_encode($data);
+        $this->mainWebsocket->send($json);
+    }
+
+    /**
      * Changes your mute and deaf value.
      *
      * @param bool $mute Whether you should be muted.
@@ -1103,7 +1116,7 @@ class VoiceClient extends EventEmitter
         $this->mute = $mute;
         $this->deaf = $deaf;
 
-        $this->mainWebsocket->send([
+        $this->mainSend([
             'op' => Op::OP_VOICE_STATE_UPDATE,
             'd' => [
                 'guild_id' => $this->channel->guild_id,
@@ -1208,7 +1221,7 @@ class VoiceClient extends EventEmitter
         $this->setSpeaking(false);
         $this->ready = false;
 
-        $this->mainWebsocket->send([
+        $this->mainSend([
             'op' => Op::OP_VOICE_STATE_UPDATE,
             'd' => [
                 'guild_id' => $this->channel->guild_id,
