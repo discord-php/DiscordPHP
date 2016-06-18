@@ -34,6 +34,7 @@ use Traversable;
  * @property MemberRepository    $members
  * @property MessageRepository   $messages
  * @property OverwriteRepository $overwrites
+ * @property Guild               $guild
  */
 class Channel extends Part
 {
