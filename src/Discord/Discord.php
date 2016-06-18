@@ -416,6 +416,11 @@ class Discord
             return $this->ready();
         }
 
+        // Emit ready after 60 seconds
+        $this->loop->addTimer(60, function () {
+            $this->ready();
+        });
+
         $function = function ($guild) use (&$function, &$unavailable) {
             if (array_key_exists($guild->id, $unavailable)) {
                 unset($unavailable[$guild->id]);
@@ -550,6 +555,17 @@ class Discord
     public function handleWsClose($op, $reason)
     {
         $this->connected = false;
+
+        if (! is_null($this->heartbeatTimer)) {
+            $this->heartbeatTimer->cancel();
+            $this->heartbeatTimer = null;
+        }
+        
+        if (! is_null($this->heartbeatAckTimer)) {
+            $this->heartbeatAckTimer->cancel();
+            $this->heartbeatAckTimer = null;
+        }
+
         $this->logger->warning('websocket closed', ['op' => $op, 'reason' => $reason]);
 
         if ($op == Op::CLOSE_INVALID_TOKEN) {
@@ -572,8 +588,15 @@ class Discord
      */
     public function handleWsError($e)
     {
+        // Pawl pls
+        if (strpos($e->getMessage(), 'Tried to write to closed stream') !== false) {
+            return;
+        }
+
         $this->logger->error('websocket error', ['e' => $e->getMessage()]);
         $this->emit('error', [$e, $this]);
+
+        $this->handleWsClose(0, 'websocket error');
     }
 
     /**
@@ -820,8 +843,6 @@ class Discord
                 $chunk = array_pop($chunks);
 
                 if (is_null($chunk)) {
-                    $this->logger->info('finished sending chunks');
-
                     return;
                 }
 
@@ -960,10 +981,11 @@ class Discord
      * @param Channel $channel The channel to join.
      * @param bool    $mute    Whether you should be mute when you join the channel.
      * @param bool    $deaf    Whether you should be deaf when you join the channel.
+     * @param Monolog $monolog A Monolog logger to use.
      *
      * @return \React\Promise\Promise
      */
-    public function joinVoiceChannel(Channel $channel, $mute = false, $deaf = false)
+    public function joinVoiceChannel(Channel $channel, $mute = false, $deaf = false, $monolog = null)
     {
         $deferred = new Deferred();
 
@@ -995,7 +1017,7 @@ class Discord
             $this->removeListener(Event::VOICE_STATE_UPDATE, $voiceStateUpdate);
         };
 
-        $voiceServerUpdate = function ($vs, $discord) use ($channel, &$data, &$voiceServerUpdate, $deferred) {
+        $voiceServerUpdate = function ($vs, $discord) use ($channel, &$data, &$voiceServerUpdate, $deferred, $monolog) {
             if ($vs->guild_id != $channel->guild_id) {
                 return; // This voice server update isn't for our guild.
             }
@@ -1004,7 +1026,10 @@ class Discord
             $data['endpoint'] = $vs->endpoint;
             $this->logger->info('received token and endpoint for voice session', ['guild' => $channel->guild_id, 'token' => $vs->token, 'endpoint' => $vs->endpoint]);
 
-            $monolog = new Monolog('Voice-'.$channel->guild_id);
+            if (is_null($monolog)) {
+                $monolog = new Monolog('Voice-'.$channel->guild_id);
+            }
+            
             $logger = new Logger($monolog, $this->options['logging']);
             $vc = new VoiceClient($this->ws, $this->loop, $channel, $logger, $data);
 
