@@ -1064,7 +1064,7 @@ class Discord
                 'guild_id' => $channel->guild_id,
                 'channel_id' => $channel->id,
                 'self_mute' => $mute,
-                'self_deaf' => $mute,
+                'self_deaf' => $deaf,
             ],
         ];
 
