@@ -760,7 +760,7 @@ class Discord
 
         $this->send($payload);
 
-        return ($payload['op'] == Op::OP_RESUME);
+        return $payload['op'] == Op::OP_RESUME;
     }
 
     /**

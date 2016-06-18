@@ -123,9 +123,9 @@ class Message extends Part
         return $this->factory->create(
             User::class,
             [
-                'id'            => $this->attributes['author']->id,
-                'username'      => $this->attributes['author']->username,
-                'avatar'        => $this->attributes['author']->avatar,
+                'id' => $this->attributes['author']->id,
+                'username' => $this->attributes['author']->username,
+                'avatar' => $this->attributes['author']->avatar,
                 'discriminator' => $this->attributes['author']->discriminator,
             ],
             true
@@ -148,9 +148,9 @@ class Message extends Part
     public function getCreatableAttributes()
     {
         return [
-            'content'  => $this->content,
+            'content' => $this->content,
             'mentions' => $this->mentions,
-            'tts'      => $this->tts,
+            'tts' => $this->tts,
         ];
     }
 
@@ -160,7 +160,7 @@ class Message extends Part
     public function getUpdatableAttributes()
     {
         return [
-            'content'  => $this->content,
+            'content' => $this->content,
             'mentions' => $this->mentions,
         ];
     }

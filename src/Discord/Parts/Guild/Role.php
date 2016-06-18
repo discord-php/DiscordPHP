@@ -12,7 +12,6 @@
 namespace Discord\Parts\Guild;
 
 use Discord\Parts\Part;
-use Discord\Parts\Permissions\RolePermission as Permission;
 use Discord\Parts\Permissions\RolePermission;
 use React\Promise\Deferred;
 
@@ -51,8 +50,8 @@ class Role extends Part
      * Sets the permissions attribute.
      *
      * @param RolePermission|int $permission The permissions to set.
-     * 
-     * @return void 
+     *
+     * @return void
      */
     public function setPermissionsAttribute($permission)
     {

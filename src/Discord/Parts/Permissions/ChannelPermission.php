@@ -46,7 +46,7 @@ class ChannelPermission extends Permission
      *
      * @param int $deny The deny bitwise integer.
      *
-     * @return this 
+     * @return this
      */
     public function decodeBitwise($bitwise, $deny = 0)
     {
@@ -61,7 +61,7 @@ class ChannelPermission extends Permission
         }
 
         $this->fill($result);
-        
+
         return $this;
     }
 

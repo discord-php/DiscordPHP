@@ -12,7 +12,6 @@
 namespace Discord\Repository\Channel;
 
 use Discord\Parts\WebSockets\VoiceStateUpdate;
-use Discord\WebSockets\Events\VoiceStateUpdatePart;
 
 class VoiceMemberRepository extends AbstractRepository
 {

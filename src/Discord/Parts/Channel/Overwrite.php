@@ -44,7 +44,7 @@ class Overwrite extends Part
      *
      * @param ChannelPermission $permissions Permission object.
      *
-     * @return void 
+     * @return void
      */
     public function setPermissionsAttribute($permissions)
     {

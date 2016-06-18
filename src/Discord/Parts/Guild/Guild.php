@@ -43,35 +43,23 @@ use React\Promise\Deferred;
  */
 class Guild extends Part
 {
-    const REGION_DEFAULT    = self::REGION_US_WEST;
-
-    const REGION_US_WEST    = 'us-west';
-
-    const REGION_US_SOUTH   = 'us-south';
-
-    const REGION_US_EAST    = 'us-east';
-
+    const REGION_DEFAULT = self::REGION_US_WEST;
+    
+    const REGION_US_WEST = 'us-west';
+    const REGION_US_SOUTH = 'us-south';
+    const REGION_US_EAST = 'us-east';
     const REGION_US_CENTRAL = 'us-central';
+    const REGION_SINGAPORE = 'singapore';
+    const REGION_LONDON = 'london';
+    const REGION_SYDNEY = 'sydney';
+    const REGION_FRANKFURT = 'frankfurt';
+    const REGION_AMSTERDAM = 'amsterdam';
+    const REGION_BRAZIL = 'brazil';
 
-    const REGION_SINGAPORE  = 'singapore';
-
-    const REGION_LONDON     = 'london';
-
-    const REGION_SYDNEY     = 'sydney';
-
-    const REGION_FRANKFURT  = 'frankfurt';
-
-    const REGION_AMSTERDAM  = 'amsterdam';
-
-    const REGION_BRAZIL     = 'brazil';
-
-    const LEVEL_OFF         = 0;
-
-    const LEVEL_LOW         = 1;
-
-    const LEVEL_MEDIUM      = 2;
-
-    const LEVEL_TABLEFLIP   = 3;
+    const LEVEL_OFF = 0;
+    const LEVEL_LOW = 1;
+    const LEVEL_MEDIUM = 2;
+    const LEVEL_TABLEFLIP = 3;
 
     /**
      * {@inheritdoc}
@@ -101,11 +89,11 @@ class Guild extends Part
      * {@inheritdoc}
      */
     protected $repositories = [
-        'members'  => Repository\MemberRepository::class,
-        'roles'    => Repository\RoleRepository::class,
+        'members' => Repository\MemberRepository::class,
+        'roles' => Repository\RoleRepository::class,
         'channels' => Repository\ChannelRepository::class,
-        'bans'     => Repository\BanRepository::class,
-        'invites'  => Repository\InviteRepository::class,
+        'bans' => Repository\BanRepository::class,
+        'invites' => Repository\InviteRepository::class,
     ];
 
     /**
@@ -259,7 +247,7 @@ class Guild extends Part
      */
     public function validateRegion()
     {
-        if (!in_array($this->region, $this->regions)) {
+        if (! in_array($this->region, $this->regions)) {
             return self::REGION_DEFUALT;
         }
 
@@ -280,7 +268,7 @@ class Guild extends Part
     public function getCreatableAttributes()
     {
         return [
-            'name'   => $this->name,
+            'name' => $this->name,
             'region' => $this->validateRegion(),
         ];
     }
@@ -291,13 +279,13 @@ class Guild extends Part
     public function getUpdatableAttributes()
     {
         return [
-            'name'               => $this->name,
-            'region'             => $this->region,
-            'logo'               => $this->logo,
-            'splash'             => $this->splash,
+            'name' => $this->name,
+            'region' => $this->region,
+            'logo' => $this->logo,
+            'splash' => $this->splash,
             'verification_level' => $this->verification_level,
-            'afk_channel_id'     => $this->afk_channel_id,
-            'afk_timeout'        => $this->afk_timeout,
+            'afk_channel_id' => $this->afk_channel_id,
+            'afk_timeout' => $this->afk_timeout,
         ];
     }
 

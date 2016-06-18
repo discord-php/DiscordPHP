@@ -36,7 +36,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class Channel extends Part
 {
-    const TYPE_TEXT  = 'text';
+    const TYPE_TEXT = 'text';
 
     const TYPE_VOICE = 'voice';
 
@@ -61,8 +61,8 @@ class Channel extends Part
      * {@inheritdoc}
      */
     protected $repositories = [
-        'members'    => MemberRepository::class,
-        'messages'   => MessageRepository::class,
+        'members' => MemberRepository::class,
+        'messages' => MessageRepository::class,
         'overwrites' => OverwriteRepository::class,
     ];
 
@@ -71,7 +71,7 @@ class Channel extends Part
      */
     public function afterConstruct()
     {
-        if (!array_key_exists('bitrate', $this->attributes) &&
+        if (! array_key_exists('bitrate', $this->attributes) &&
             $this->type != self::TYPE_TEXT
         ) {
             $this->bitrate = 64000;
@@ -86,8 +86,8 @@ class Channel extends Part
     public function getRecipientAttribute()
     {
         // Only for PM channels.
-        if (!isset($this->attributes['recipient'])) {
-            return null;
+        if (! isset($this->attributes['recipient'])) {
+            return;
         }
 
         return $this->factory->create(User::class, $this->attributes['recipient'], true);
@@ -120,13 +120,13 @@ class Channel extends Part
         list($allow, $deny) = $permissions->bitwise;
 
         $payload = [
-            'id'    => $part->id,
-            'type'  => $type,
+            'id' => $part->id,
+            'type' => $type,
             'allow' => $allow,
-            'deny'  => $deny,
+            'deny' => $deny,
         ];
 
-        if (!$this->created) {
+        if (! $this->created) {
             $this->attributes['permission_overwrites'][] = $payload;
             $deferred->resolve();
         } else {
@@ -217,10 +217,10 @@ class Channel extends Part
             [
                 'validate' => null,
 
-                'max_age'   => $max_age,
-                'max_uses'  => $max_uses,
+                'max_age' => $max_age,
+                'max_uses' => $max_uses,
                 'temporary' => $temporary,
-                'xkcdpass'  => $xkcd,
+                'xkcdpass' => $xkcd,
             ]
         )->then(
             function ($response) use ($deferred) {
@@ -245,8 +245,8 @@ class Channel extends Part
     {
         $deferred = new Deferred();
 
-        if (!is_array($messages) &&
-            !($messages instanceof Traversable)
+        if (! is_array($messages) &&
+            ! ($messages instanceof Traversable)
         ) {
             $deferred->reject(new \Exception('$messages must be an array or implement Traversable.'));
 
@@ -373,9 +373,9 @@ class Channel extends Part
     {
         $this->attributes['permission_overwrites'] = $overwrites;
 
-        if (!is_null($overwrites)) {
+        if (! is_null($overwrites)) {
             foreach ($overwrites as $overwrite) {
-                $overwrite               = (array) $overwrite;
+                $overwrite = (array) $overwrite;
                 $overwrite['channel_id'] = $this->id;
 
                 $this->overwrites->push($overwrite);
@@ -405,7 +405,7 @@ class Channel extends Part
             "channels/{$this->id}/messages",
             [
                 'content' => $text,
-                'tts'     => $tts,
+                'tts' => $tts,
             ]
         )->then(
             function ($response) use ($deferred) {
@@ -440,7 +440,7 @@ class Channel extends Part
             return $deferred->promise();
         }
 
-        if (!file_exists($filepath)) {
+        if (! file_exists($filepath)) {
             $deferred->reject(new FileNotFoundException("File does not exist at path {$filepath}."));
 
             return $deferred->promise();
@@ -448,12 +448,12 @@ class Channel extends Part
 
         $multipart = [
             [
-                'name'     => 'file',
+                'name' => 'file',
                 'contents' => fopen($filepath, 'r'),
                 'filename' => $filename,
             ],
             [
-                'name'     => 'tts',
+                'name' => 'tts',
                 'contents' => ($tts ? 'true' : 'false'),
             ],
         ];
@@ -529,9 +529,9 @@ class Channel extends Part
     public function getCreatableAttributes()
     {
         return [
-            'name'                  => $this->name,
-            'type'                  => $this->getChannelType(),
-            'bitrate'               => $this->bitrate,
+            'name' => $this->name,
+            'type' => $this->getChannelType(),
+            'bitrate' => $this->bitrate,
             'permission_overwrites' => $this->permission_overwrites,
         ];
     }
@@ -544,8 +544,8 @@ class Channel extends Part
     public function getUpdatableAttributes()
     {
         return [
-            'name'     => $this->name,
-            'topic'    => $this->topic,
+            'name' => $this->name,
+            'topic' => $this->topic,
             'position' => $this->position,
         ];
     }

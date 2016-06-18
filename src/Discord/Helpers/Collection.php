@@ -66,7 +66,7 @@ class Collection extends BaseCollection
      */
     public function getAll($key, $value = null)
     {
-        $collection = new Collection();
+        $collection = new self();
 
         foreach ($this->items as $item) {
             if ($item->{$key} == $value) {
