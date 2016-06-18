@@ -18,6 +18,7 @@ use Discord\Parts\Part;
 use Discord\Repository\GuildRepository;
 use Discord\Repository\PrivateChannelRepository;
 use Discord\Repository\UserRepository;
+use React\Promise\Deferred;
 
 /**
  * The client is the main interface for the client. Most calls on the main class are forwarded here.
@@ -115,6 +116,23 @@ class Client extends Part
     public function getAvatarIDAttribute()
     {
         return $this->avatar;
+    }
+
+    /**
+     * Saves the client instance.
+     *
+     * @return \React\Promise\Promise
+     */
+    public function save()
+    {
+        $deferred = new Deferred();
+
+        $this->http->patch('users/@me', $this->getUpdatableAttributes())->then(
+            \React\Partial\bind_right($this->resolve, $deferred),
+            \React\Partial\bind_right($this->reject, $deferred)
+        );
+
+        return $deferred->promise();
     }
 
     /**
