@@ -43,7 +43,7 @@ class Member extends Part
     /**
      * {@inheritdoc}
      */
-    protected $fillable = ['user', 'roles', 'deaf', 'mute', 'joined_at', 'guild_id', 'status', 'game'];
+    protected $fillable = ['user', 'roles', 'deaf', 'mute', 'joined_at', 'guild_id', 'status', 'game', 'nick'];
 
     /**
      * {@inheritdoc}
