@@ -560,7 +560,7 @@ class Discord
             $this->heartbeatTimer->cancel();
             $this->heartbeatTimer = null;
         }
-        
+
         if (! is_null($this->heartbeatAckTimer)) {
             $this->heartbeatAckTimer->cancel();
             $this->heartbeatAckTimer = null;
@@ -1029,7 +1029,7 @@ class Discord
             if (is_null($monolog)) {
                 $monolog = new Monolog('Voice-'.$channel->guild_id);
             }
-            
+
             $logger = new Logger($monolog, $this->options['logging']);
             $vc = new VoiceClient($this->ws, $this->loop, $channel, $logger, $data);
 

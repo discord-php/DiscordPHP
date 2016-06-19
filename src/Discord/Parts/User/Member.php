@@ -80,6 +80,37 @@ class Member extends Part
     }
 
     /**
+     * Sets the nickname of the member.
+     *
+     * @param string|null $nick The nickname of the member.
+     *
+     * @return \React\Promise\Promise
+     */
+    public function setNickname($nick = null)
+    {
+        $deferred = new Deferred();
+
+        $nick = $nick ?: '';
+        $payload = [
+            'nick' => $nick,
+        ];
+
+        // jake plz
+        if ($this->discord->id == $this->user->id) {
+            $promise = $this->http->patch("guilds/{$this->guild_id}/members/@me/nick", $payload);
+        } else {
+            $promise = $this->http->patch("guilds/{$this->guild_id}/members/{$this->user->id}", $payload);
+        }
+
+        $promise->then(
+            \React\Partial\bind_right($this->resolve, $deferred),
+            \React\Partial\bind_right($this->reject, $deferred)
+        );
+
+        return $deferred->promise();
+    }
+
+    /**
      * Moves the member to another voice channel.
      *
      * @param Channel|int $channel The channel to move the member to.

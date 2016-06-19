@@ -1087,7 +1087,7 @@ class VoiceClient extends EventEmitter
      *
      * @param array $data The data to send to the main WebSocket.
      *
-     * @return void 
+     * @return void
      */
     public function mainSend(array $data)
     {

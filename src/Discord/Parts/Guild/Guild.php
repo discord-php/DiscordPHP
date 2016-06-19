@@ -44,7 +44,7 @@ use React\Promise\Deferred;
 class Guild extends Part
 {
     const REGION_DEFAULT = self::REGION_US_WEST;
-    
+
     const REGION_US_WEST = 'us-west';
     const REGION_US_SOUTH = 'us-south';
     const REGION_US_EAST = 'us-east';

@@ -13,7 +13,6 @@ namespace Discord\Parts\Channel;
 
 use Discord\Exceptions\FileNotFoundException;
 use Discord\Helpers\Collection;
-use Discord\Parts\Channel\Message;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Guild\Invite;
 use Discord\Parts\Guild\Role;
@@ -345,7 +344,7 @@ class Channel extends Part
      *
      * @param Message $message The message to pin.
      *
-     * @return \React\Promise\Promise 
+     * @return \React\Promise\Promise
      */
     public function pinMessage(Message $message)
     {
@@ -375,7 +374,7 @@ class Channel extends Part
      *
      * @param Message $message The message to un-pin.
      *
-     * @return \React\Promise\Promise 
+     * @return \React\Promise\Promise
      */
     public function unpinMessage(Message $message)
     {
@@ -403,7 +402,7 @@ class Channel extends Part
     /**
      * Returns the channels pinned messages.
      *
-     * @return \React\Promise\Promise 
+     * @return \React\Promise\Promise
      */
     public function getPinnedMessages()
     {
