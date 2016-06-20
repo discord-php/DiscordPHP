@@ -140,6 +140,13 @@ class Discord
     protected $connected = false;
 
     /**
+     * Whether the client is closing.
+     *
+     * @var bool Closing.
+     */
+    protected $closing = false;
+
+    /**
      * The session ID of the current session.
      *
      * @var string Session ID.
@@ -564,6 +571,10 @@ class Discord
         if (! is_null($this->heartbeatAckTimer)) {
             $this->heartbeatAckTimer->cancel();
             $this->heartbeatAckTimer = null;
+        }
+
+        if ($this->closing) {
+            return;
         }
 
         $this->logger->warning('websocket closed', ['op' => $op, 'reason' => $reason]);
@@ -1192,6 +1203,18 @@ class Discord
     public function run()
     {
         $this->loop->run();
+    }
+
+    /**
+     * Closes the Discord client.
+     *
+     * @return void 
+     */
+    public function close()
+    {
+        $this->closing = true;
+        $this->ws->close(1000, 'discordphp closing...');
+        $this->emit('closed', [$this]);
     }
 
     /**

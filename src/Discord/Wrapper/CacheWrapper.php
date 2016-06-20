@@ -79,4 +79,17 @@ class CacheWrapper
     {
         $this->cache->deleteItem($key);
     }
+
+    /**
+     * Handles dynamic calls to the class.
+     *
+     * @param string $function The function called.
+     * @param array  $params   Parameters.
+     *
+     * @return mixed
+     */
+    public function __call($function, $params)
+    {
+        return call_user_func_array([$this->cache, $function], $params);
+    }
 }
