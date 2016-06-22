@@ -26,16 +26,6 @@ interface RepositoryInterface
     public function new(array $attributes = []);
 
     /**
-     * Attempts to get an object from the cache.
-     *
-     * @param string $key   The key to search for.
-     * @param mixed  $value The value to match with the key.
-     *
-     * @return PromiseInterface
-     */
-    public function get($key, $value);
-
-    /**
      * Attempts to save a part to the Discord servers.
      *
      * @param Part $part The part to save.

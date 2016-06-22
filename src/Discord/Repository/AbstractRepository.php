@@ -21,8 +21,15 @@ use React\Promise\Deferred;
 /**
  * @author Aaron Scherer <aequasi@gmail.com>
  */
-abstract class AbstractRepository extends Collection implements RepositoryInterface
+abstract class AbstractRepository implements RepositoryInterface
 {
+    /**
+     * The discriminator.
+     * 
+     * @var string Discriminator.
+     */
+    protected $discrim = 'id';
+
     /**
      * @var Http
      */
@@ -37,6 +44,13 @@ abstract class AbstractRepository extends Collection implements RepositoryInterf
      * @var Factory
      */
     protected $factory;
+
+    /**
+     * The collection of items.
+     *
+     * @var Collection Items.
+     */
+    protected $collection;
 
     /**
      * Endpoints for interacting with the Discord servers.
@@ -72,6 +86,7 @@ abstract class AbstractRepository extends Collection implements RepositoryInterf
         $this->http = $http;
         $this->cache = $cache;
         $this->factory = $factory;
+        $this->collection = new Collection([], $this->discrim);
         $this->vars = $vars;
     }
 
@@ -93,7 +108,7 @@ abstract class AbstractRepository extends Collection implements RepositoryInterf
                 $this->endpoints['all']
             )
         )->then(function ($response) {
-            $this->items = [];
+            $this->fill([]);
 
             foreach ($response as $value) {
                 $value = array_merge($this->vars, (array) $value);
@@ -285,5 +300,18 @@ abstract class AbstractRepository extends Collection implements RepositoryInterf
     public function __debugInfo()
     {
         return $this->all();
+    }
+
+    /**
+     * Handles dynamic calls to the repository.
+     *
+     * @param string $function The function called.
+     * @param array  $params   Array of parameters.
+     *
+     * @return mixed 
+     */
+    public function __call($function, array $params)
+    {
+        return call_user_func_array([$this->collection, $function], $params);
     }
 }
