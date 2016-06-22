@@ -62,8 +62,8 @@ class Channel extends Part
      * {@inheritdoc}
      */
     protected $repositories = [
-        'members' => MemberRepository::class,
-        'messages' => MessageRepository::class,
+        'members'    => MemberRepository::class,
+        'messages'   => MessageRepository::class,
         'overwrites' => OverwriteRepository::class,
     ];
 
@@ -121,10 +121,10 @@ class Channel extends Part
         list($allow, $deny) = $permissions->bitwise;
 
         $payload = [
-            'id' => $part->id,
-            'type' => $type,
+            'id'    => $part->id,
+            'type'  => $type,
             'allow' => $allow,
-            'deny' => $deny,
+            'deny'  => $deny,
         ];
 
         if (! $this->created) {
@@ -218,10 +218,10 @@ class Channel extends Part
             [
                 'validate' => null,
 
-                'max_age' => $max_age,
-                'max_uses' => $max_uses,
+                'max_age'   => $max_age,
+                'max_uses'  => $max_uses,
                 'temporary' => $temporary,
-                'xkcdpass' => $xkcd,
+                'xkcdpass'  => $xkcd,
             ]
         )->then(
             function ($response) use ($deferred) {
@@ -462,7 +462,7 @@ class Channel extends Part
 
         if (! is_null($overwrites)) {
             foreach ($overwrites as $overwrite) {
-                $overwrite = (array) $overwrite;
+                $overwrite               = (array) $overwrite;
                 $overwrite['channel_id'] = $this->id;
 
                 $this->overwrites->push($overwrite);
@@ -492,7 +492,7 @@ class Channel extends Part
             "channels/{$this->id}/messages",
             [
                 'content' => $text,
-                'tts' => $tts,
+                'tts'     => $tts,
             ]
         )->then(
             function ($response) use ($deferred) {
@@ -535,12 +535,12 @@ class Channel extends Part
 
         $multipart = [
             [
-                'name' => 'file',
+                'name'     => 'file',
                 'contents' => fopen($filepath, 'r'),
                 'filename' => $filename,
             ],
             [
-                'name' => 'tts',
+                'name'     => 'tts',
                 'contents' => ($tts ? 'true' : 'false'),
             ],
         ];
@@ -616,9 +616,9 @@ class Channel extends Part
     public function getCreatableAttributes()
     {
         return [
-            'name' => $this->name,
-            'type' => $this->getChannelType(),
-            'bitrate' => $this->bitrate,
+            'name'                  => $this->name,
+            'type'                  => $this->getChannelType(),
+            'bitrate'               => $this->bitrate,
             'permission_overwrites' => $this->permission_overwrites,
         ];
     }
@@ -631,8 +631,8 @@ class Channel extends Part
     public function getUpdatableAttributes()
     {
         return [
-            'name' => $this->name,
-            'topic' => $this->topic,
+            'name'     => $this->name,
+            'topic'    => $this->topic,
             'position' => $this->position,
         ];
     }

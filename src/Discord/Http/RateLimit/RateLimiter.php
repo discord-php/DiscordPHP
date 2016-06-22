@@ -46,7 +46,7 @@ class RateLimiter
      */
     public function __construct(LoopInterface $loop, CacheWrapper $cache)
     {
-        $this->loop = $loop;
+        $this->loop  = $loop;
         $this->cache = $cache;
 
         $this->addBuckets();

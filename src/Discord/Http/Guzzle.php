@@ -82,11 +82,11 @@ class Guzzle extends GuzzleClient implements HttpDriver
     public function __construct(CacheWrapper $cache, LoopInterface $loop)
     {
         $this->cache = $cache;
-        $options = ['http_errors' => false, 'allow_redirects' => true];
+        $options     = ['http_errors' => false, 'allow_redirects' => true];
 
-        $this->async = true;
-        $this->loop = $loop;
-        $this->adapter = new HttpClientAdapter($this->loop);
+        $this->async        = true;
+        $this->loop         = $loop;
+        $this->adapter      = new HttpClientAdapter($this->loop);
         $options['handler'] = HandlerStack::create($this->adapter);
 
         // $this->buckets = [
@@ -181,7 +181,7 @@ class Guzzle extends GuzzleClient implements HttpDriver
     {
         $multipart = [
             [
-                'name' => 'file',
+                'name'     => 'file',
                 'contents' => fopen($filepath, 'r'),
                 'filename' => $filename,
             ],
@@ -189,21 +189,21 @@ class Guzzle extends GuzzleClient implements HttpDriver
 
         if (! is_null($content)) {
             $multipart[] = [
-                'name' => 'content',
+                'name'     => 'content',
                 'contents' => $content,
             ];
         }
 
         if ($tts) {
             $multipart[] = [
-                'name' => 'tts',
+                'name'     => 'tts',
                 'contents' => 'true',
             ];
         }
 
         return $this->runRequest('POST', "channels/{$channel->id}/messages", [
             'authorization' => $token,
-            'User-Agent' => $http->getUserAgent(),
+            'User-Agent'    => $http->getUserAgent(),
         ], null, [
             'multipart' => $multipart,
         ]);

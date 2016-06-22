@@ -25,7 +25,7 @@ abstract class AbstractRepository implements RepositoryInterface
 {
     /**
      * The discriminator.
-     * 
+     *
      * @var string Discriminator.
      */
     protected $discrim = 'id';
@@ -83,11 +83,11 @@ abstract class AbstractRepository implements RepositoryInterface
      */
     public function __construct(Http $http, CacheWrapper $cache, Factory $factory, $vars = [])
     {
-        $this->http = $http;
-        $this->cache = $cache;
-        $this->factory = $factory;
+        $this->http       = $http;
+        $this->cache      = $cache;
+        $this->factory    = $factory;
         $this->collection = new Collection([], $this->discrim);
-        $this->vars = $vars;
+        $this->vars       = $vars;
     }
 
     /**
@@ -137,16 +137,16 @@ abstract class AbstractRepository implements RepositoryInterface
     public function save(Part &$part)
     {
         if ($part->created) {
-            $method = 'patch';
-            $endpoint = $part->replaceWithVariables($this->replaceWithVariables(@$this->endpoints['update']));
+            $method     = 'patch';
+            $endpoint   = $part->replaceWithVariables($this->replaceWithVariables(@$this->endpoints['update']));
             $attributes = $part->getUpdatableAttributes();
 
             if (! isset($this->endpoints['update'])) {
                 return \React\Promise\reject(new \Exception('You cannot update this part.'));
             }
         } else {
-            $method = 'post';
-            $endpoint = $part->replaceWithVariables($this->replaceWithVariables(@$this->endpoints['create']));
+            $method     = 'post';
+            $endpoint   = $part->replaceWithVariables($this->replaceWithVariables(@$this->endpoints['create']));
             $attributes = $part->getCreatableAttributes();
 
             if (! isset($this->endpoints['create'])) {
@@ -308,7 +308,7 @@ abstract class AbstractRepository implements RepositoryInterface
      * @param string $function The function called.
      * @param array  $params   Array of parameters.
      *
-     * @return mixed 
+     * @return mixed
      */
     public function __call($function, array $params)
     {

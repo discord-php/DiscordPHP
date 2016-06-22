@@ -42,7 +42,7 @@ class User extends Part
      */
     public function sendMessage($message, $tts = false)
     {
-        $deferred = new Deferred();
+        $deferred     = new Deferred();
         $getChannelID = new Deferred();
 
         $getChannelID->promise()->then(function ($channel) use ($message, $tts, $deferred) {
@@ -76,7 +76,7 @@ class User extends Part
      */
     public function broadcastTyping()
     {
-        $deferred = new Deferred();
+        $deferred     = new Deferred();
         $getChannelID = new Deferred();
 
         $getChannelID->promise()->then(function ($channel) use ($deferred) {

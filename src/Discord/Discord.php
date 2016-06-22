@@ -283,11 +283,11 @@ class Discord
     {
         $options = $this->resolveOptions($options);
 
-        $this->token = $options['token'];
-        $this->loop = $options['loop'];
-        $this->logger = new Logger($options['logger'], $options['logging']);
+        $this->token     = $options['token'];
+        $this->loop      = $options['loop'];
+        $this->logger    = new Logger($options['logger'], $options['logging']);
         $this->wsFactory = new Connector($this->loop);
-        $this->handlers = new Handlers();
+        $this->handlers  = new Handlers();
         $this->cachePool = $options['cachePool'];
 
         $this->on('ready', function () {
@@ -301,7 +301,7 @@ class Discord
         $this->options = $options;
 
         $this->cache = new CacheWrapper($this->cachePool); // todo cache pool
-        $this->http = new Http(
+        $this->http  = new Http(
             $this->cache,
             $this->token,
             self::VERSION,
@@ -362,7 +362,7 @@ class Discord
         $this->logger->debug('discord trace received', ['trace' => $content->_trace]);
 
         // Setup the user account
-        $this->client = $this->factory->create(Client::class, $content->user, true);
+        $this->client    = $this->factory->create(Client::class, $content->user, true);
         $this->sessionId = $content->session_id;
 
         $this->logger->debug('client created and session id stored', ['session_id' => $content->session_id, 'user' => $this->client->user->getPublicAttributes()]);
@@ -452,7 +452,7 @@ class Discord
      */
     protected function handleGuildMembersChunk($data)
     {
-        $guild = $this->guilds->get('id', $data->d->guild_id);
+        $guild   = $this->guilds->get('id', $data->d->guild_id);
         $members = $data->d->members;
 
         $this->logger->debug('received guild member chunk', ['guild_id' => $guild->id, 'guild_name' => $guild->name, 'member_count' => count($members)]);
@@ -464,10 +464,10 @@ class Discord
                 continue;
             }
 
-            $member = (array) $member;
+            $member             = (array) $member;
             $member['guild_id'] = $guild->id;
-            $member['status'] = 'offline';
-            $member['game'] = null;
+            $member['status']   = 'offline';
+            $member['game']     = null;
 
             $memberPart = $this->factory->create(Member::class, $member, true);
             $guild->members->push($memberPart);
@@ -509,7 +509,7 @@ class Discord
      */
     public function handleWsConnection(WebSocket $ws)
     {
-        $this->ws = $ws;
+        $this->ws        = $ws;
         $this->connected = true;
 
         $this->logger->info('websocket connection has been created');
@@ -540,12 +540,12 @@ class Discord
         }
 
         $op = [
-            Op::OP_DISPATCH => 'handleDispatch',
-            Op::OP_HEARTBEAT => 'handleHeartbeat',
-            Op::OP_RECONNECT => 'handleReconnect',
+            Op::OP_DISPATCH        => 'handleDispatch',
+            Op::OP_HEARTBEAT       => 'handleHeartbeat',
+            Op::OP_RECONNECT       => 'handleReconnect',
             Op::OP_INVALID_SESSION => 'handleInvalidSession',
-            Op::OP_HELLO => 'handleHello',
-            Op::OP_HEARTBEAT_ACK => 'handleHeartbeatAck',
+            Op::OP_HELLO           => 'handleHello',
+            Op::OP_HEARTBEAT_ACK   => 'handleHeartbeatAck',
         ];
 
         if (isset($op[$data->op])) {
@@ -660,10 +660,10 @@ class Discord
 
         $handlers = [
             Event::VOICE_SERVER_UPDATE => 'handleVoiceServerUpdate',
-            Event::RESUMED => 'handleResume',
-            Event::READY => 'handleReady',
+            Event::RESUMED             => 'handleResume',
+            Event::READY               => 'handleReady',
             Event::GUILD_MEMBERS_CHUNK => 'handleGuildMembersChunk',
-            Event::VOICE_STATE_UPDATE => 'handleVoiceStateUpdate',
+            Event::VOICE_STATE_UPDATE  => 'handleVoiceStateUpdate',
         ];
 
         if (isset($handlers[$data->t])) {
@@ -682,7 +682,7 @@ class Discord
 
         $payload = [
             'op' => Op::OP_HEARTBEAT,
-            'd' => $data->d,
+            'd'  => $data->d,
         ];
 
         $this->send($payload);
@@ -696,8 +696,8 @@ class Discord
     protected function handleHeartbeatAck($data)
     {
         $received = microtime(true);
-        $diff = $received - $this->heartbeatTime;
-        $time = $diff * 1000;
+        $diff     = $received - $this->heartbeatTime;
+        $time     = $diff * 1000;
 
         $this->heartbeatAckTimer->cancel();
         $this->emit('heartbeat-ack', [$time, $this]);
@@ -757,10 +757,10 @@ class Discord
         if ($resume && $this->reconnecting && ! is_null($this->sessionId)) {
             $payload = [
                 'op' => Op::OP_RESUME,
-                'd' => [
+                'd'  => [
                     'session_id' => $this->sessionId,
-                    'seq' => $this->seq,
-                    'token' => $this->token,
+                    'seq'        => $this->seq,
+                    'token'      => $this->token,
                 ],
             ];
 
@@ -768,13 +768,13 @@ class Discord
         } else {
             $payload = [
                 'op' => Op::OP_IDENTIFY,
-                'd' => [
-                    'token' => $this->token,
+                'd'  => [
+                    'token'      => $this->token,
                     'properties' => [
-                        '$os' => PHP_OS,
-                        '$browser' => $this->http->getUserAgent(),
-                        '$device' => $this->http->getUserAgent(),
-                        '$referrer' => 'https://github.com/teamreflex/DiscordPHP',
+                        '$os'               => PHP_OS,
+                        '$browser'          => $this->http->getUserAgent(),
+                        '$device'           => $this->http->getUserAgent(),
+                        '$referrer'         => 'https://github.com/teamreflex/DiscordPHP',
                         '$referring_domain' => 'https://github.com/teamreflex/DiscordPHP',
                     ],
                     'compress' => true,
@@ -808,7 +808,7 @@ class Discord
 
         $payload = [
             'op' => Op::OP_HEARTBEAT,
-            'd' => $this->seq,
+            'd'  => $this->seq,
         ];
 
         $this->send($payload);
@@ -847,7 +847,7 @@ class Discord
 
             $chunks = array_chunk($this->largeGuilds, 50);
             $this->logger->debug('sending '.count($chunks).' chunks with '.count($this->largeGuilds).' large guilds overall');
-            $this->largeSent = array_merge($this->largeGuilds, $this->largeSent);
+            $this->largeSent   = array_merge($this->largeGuilds, $this->largeSent);
             $this->largeGuilds = [];
 
             $sendChunks = function () use (&$sendChunks, &$chunks) {
@@ -861,10 +861,10 @@ class Discord
 
                 $payload = [
                     'op' => Op::OP_GUILD_MEMBER_CHUNK,
-                    'd' => [
+                    'd'  => [
                         'guild_id' => $chunk,
-                        'query' => '',
-                        'limit' => 0,
+                        'query'    => '',
+                        'limit'    => 0,
                     ],
                 ];
 
@@ -892,7 +892,7 @@ class Discord
             $this->heartbeatTimer->cancel();
         }
 
-        $interval = $interval / 1000;
+        $interval             = $interval / 1000;
         $this->heartbeatTimer = $this->loop->addPeriodicTimer($interval, [$this, 'heartbeat']);
         $this->heartbeat();
 
@@ -961,8 +961,8 @@ class Discord
 
         $payload = [
             'op' => Op::OP_PRESENCE_UPDATE,
-            'd' => [
-                'game' => $game,
+            'd'  => [
+                'game'       => $game,
                 'idle_since' => $idle,
             ],
         ];
@@ -1014,8 +1014,8 @@ class Discord
 
         $data = [
             'user_id' => $this->id,
-            'deaf' => $deaf,
-            'mute' => $mute,
+            'deaf'    => $deaf,
+            'mute'    => $mute,
         ];
 
         $voiceStateUpdate = function ($vs, $discord) use ($channel, &$data, &$voiceStateUpdate) {
@@ -1033,7 +1033,7 @@ class Discord
                 return; // This voice server update isn't for our guild.
             }
 
-            $data['token'] = $vs->token;
+            $data['token']    = $vs->token;
             $data['endpoint'] = $vs->endpoint;
             $this->logger->info('received token and endpoint for voice session', ['guild' => $channel->guild_id, 'token' => $vs->token, 'endpoint' => $vs->endpoint]);
 
@@ -1042,7 +1042,7 @@ class Discord
             }
 
             $logger = new Logger($monolog, $this->options['logging']);
-            $vc = new VoiceClient($this->ws, $this->loop, $channel, $logger, $data);
+            $vc     = new VoiceClient($this->ws, $this->loop, $channel, $logger, $data);
 
             $vc->once('ready', function () use ($vc, $deferred, $channel, $logger) {
                 $logger->info('voice client is ready');
@@ -1071,11 +1071,11 @@ class Discord
 
         $payload = [
             'op' => Op::OP_VOICE_STATE_UPDATE,
-            'd' => [
-                'guild_id' => $channel->guild_id,
+            'd'  => [
+                'guild_id'   => $channel->guild_id,
                 'channel_id' => $channel->id,
-                'self_mute' => $mute,
-                'self_deaf' => $deaf,
+                'self_mute'  => $mute,
+                'self_deaf'  => $deaf,
             ],
         ];
 
@@ -1097,11 +1097,11 @@ class Discord
 
         $buildParams = function ($gateway) use ($deferred) {
             $params = [
-                'v' => self::GATEWAY_VERSION,
+                'v'        => self::GATEWAY_VERSION,
                 'encoding' => $this->encoding,
             ];
 
-            $query = http_build_query($params);
+            $query         = http_build_query($params);
             $this->gateway = trim($gateway, '/').'/?'.$query;
 
             $deferred->resolve($this->gateway);
@@ -1137,7 +1137,7 @@ class Discord
     protected function resolveOptions(array $options = [])
     {
         $resolver = new OptionsResolver();
-        $logger = new Monolog('DiscordPHP');
+        $logger   = new Monolog('DiscordPHP');
 
         $resolver
             ->setRequired('token')
@@ -1157,15 +1157,15 @@ class Discord
                 'storeMessages',
             ])
             ->setDefaults([
-                'loop' => LoopFactory::create(),
-                'logger' => null,
-                'loggerLevel' => Monolog::INFO,
-                'logging' => true,
-                'cachePool' => new ArrayCachePool(),
+                'loop'           => LoopFactory::create(),
+                'logger'         => null,
+                'loggerLevel'    => Monolog::INFO,
+                'logging'        => true,
+                'cachePool'      => new ArrayCachePool(),
                 'loadAllMembers' => false,
                 'disabledEvents' => [],
-                'pmChannels' => false,
-                'storeMessages' => false,
+                'pmChannels'     => false,
+                'storeMessages'  => false,
             ])
             ->setAllowedTypes('loop', LoopInterface::class)
             ->setAllowedTypes('logging', 'bool')
@@ -1208,7 +1208,7 @@ class Discord
     /**
      * Closes the Discord client.
      *
-     * @return void 
+     * @return void
      */
     public function close()
     {

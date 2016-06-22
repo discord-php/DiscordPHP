@@ -147,8 +147,8 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
     ) {
         $this->factory = $factory;
         $this->discord = $discord;
-        $this->http = $http;
-        $this->cache = $cache;
+        $this->http    = $http;
+        $this->cache   = $cache;
 
         $this->created = $created;
         $this->fill($attributes);
@@ -230,7 +230,7 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
         $matcher = preg_match_all($this->regex, $string, $matches);
 
         $original = $matches[0];
-        $vars = $matches[1];
+        $vars     = $matches[1];
 
         foreach ($vars as $key => $variable) {
             if ($attribute = $this->getAttribute($variable)) {
@@ -259,7 +259,7 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
         $matcher = preg_match_all($this->regex, $string, $matches);
 
         $original = $matches[0];
-        $vars = $matches[1];
+        $vars     = $matches[1];
 
         foreach ($vars as $key => $variable) {
             if ($attribute = $params[$variable]) {

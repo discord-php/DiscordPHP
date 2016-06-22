@@ -30,7 +30,7 @@ class Permission extends Part
         array $attributes = [],
         $created = false
     ) {
-        $this->fillable = array_keys($this->bitwise);
+        $this->fillable   = array_keys($this->bitwise);
         $this->fillable[] = 'bitwise';
 
         $default = [];

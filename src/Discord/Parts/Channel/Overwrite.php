@@ -53,8 +53,8 @@ class Overwrite extends Part
         }
 
         list($allow, $deny) = $permissions->bitwise;
-        $this->allow = $allow;
-        $this->deny = $deny;
+        $this->allow        = $allow;
+        $this->deny         = $deny;
 
         $this->attributes['permissions'] = $permissions;
     }

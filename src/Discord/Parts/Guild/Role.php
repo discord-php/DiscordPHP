@@ -107,9 +107,9 @@ class Role extends Part
     public function getUpdatableAttributes()
     {
         return [
-            'name' => $this->name,
-            'hoist' => $this->hoist,
-            'color' => $this->color,
+            'name'        => $this->name,
+            'hoist'       => $this->hoist,
+            'color'       => $this->color,
             'permissions' => $this->permissions->perms,
         ];
     }

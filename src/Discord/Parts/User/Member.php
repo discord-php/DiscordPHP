@@ -68,7 +68,7 @@ class Member extends Part
             function () use ($deferred) {
                 $deferred->resolve($this->factory->create(Ban::class,
                     [
-                        'user' => $this->user,
+                        'user'  => $this->user,
                         'guild' => new Guild(['id' => $this->guild_id], true),
                     ], true
                 ));
@@ -90,7 +90,7 @@ class Member extends Part
     {
         $deferred = new Deferred();
 
-        $nick = $nick ?: '';
+        $nick    = $nick ?: '';
         $payload = [
             'nick' => $nick,
         ];

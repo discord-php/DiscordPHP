@@ -20,8 +20,8 @@ class InviteRepository extends AbstractRepository
      * {@inheritdoc}
      */
     protected $endpoints = [
-        'all' => 'channels/:channel_id/invites',
-        'get' => 'invites/:code',
+        'all'    => 'channels/:channel_id/invites',
+        'get'    => 'invites/:code',
         'create' => 'channels/:channel_id/invites',
         'delete' => 'invites/:code',
     ];
