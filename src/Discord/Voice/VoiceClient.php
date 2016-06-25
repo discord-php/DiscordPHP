@@ -459,8 +459,10 @@ class VoiceClient extends EventEmitter
                         $this->send($payload);
 
                         $client->removeListener('message', $decodeUDP);
-                        // disabled for now
-                        $client->on('message', [$this, 'handleAudioData']);
+
+                        if (! $this->deaf) {
+                            $client->on('message', [$this, 'handleAudioData']);
+                        }
                     };
 
                     $client->on('message', $decodeUDP);
@@ -1126,6 +1128,12 @@ class VoiceClient extends EventEmitter
             ],
         ]);
 
+        $this->client->removeListener('message', [$this, 'handleAudioData']);
+
+        if (! $deaf) {
+            $this->client->on('message', [$this, 'handleAudioData']);
+        }
+
         $deferred->resolve();
 
         return $deferred->promise();
@@ -1349,10 +1357,6 @@ class VoiceClient extends EventEmitter
      */
     protected function handleAudioData($message)
     {
-        if ($this->deaf) {
-            return;
-        }
-        
         $voicePacket = VoicePacket::make($message);
         $nonce       = new Buffer(24);
         $nonce->write($voicePacket->getHeader(), 0);
