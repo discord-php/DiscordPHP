@@ -785,7 +785,7 @@ class Discord
                 array_key_exists('shardCount', $this->options)) {
                 $payload['d']['shard'] = [
                     (int) $this->options['shardId'],
-                    (int) $this->pptions['shardCount'],
+                    (int) $this->options['shardCount'],
                 ];
             }
 
