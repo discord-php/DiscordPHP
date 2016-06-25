@@ -22,7 +22,7 @@ class Collection extends BaseCollection
      *
      * @param string $discrim The discriminator.
      */
-    public function __construct($items = [], $discrim = null)
+    public function __construct($items = [], $discrim = 'id')
     {
         $this->discrim = $discrim;
 

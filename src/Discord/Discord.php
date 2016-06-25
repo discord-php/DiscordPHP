@@ -996,7 +996,7 @@ class Discord
      *
      * @return \React\Promise\Promise
      */
-    public function joinVoiceChannel(Channel $channel, $mute = false, $deaf = false, $monolog = null)
+    public function joinVoiceChannel(Channel $channel, $mute = false, $deaf = true, $monolog = null)
     {
         $deferred = new Deferred();
 
