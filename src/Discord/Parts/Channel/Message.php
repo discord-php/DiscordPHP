@@ -74,9 +74,15 @@ class Message extends Part
      */
     public function getChannelAttribute()
     {
-        return $this->discord->guilds->map(function ($guild) {
-            return $guild->channels->get('id', $this->channel_id);
-        })->get('id', $this->channel_id);
+        $channel = null;
+
+        $this->discord->guilds->each(function ($guild) use (&$channel) {
+            if ($guild->channels->has($this->channel_id)) {
+                $channel = $guild->channels->get('id', $this->channel_id);
+            }
+        });
+
+        return $channel;
     }
 
     /**

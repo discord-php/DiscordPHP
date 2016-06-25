@@ -48,7 +48,7 @@ class Collection extends BaseCollection
                 if ($item[$key] == $value) {
                     return $item;
                 }
-            } else {
+            } elseif (is_object($item)) {
                 if ($item->{$key} == $value) {
                     return $item;
                 }
