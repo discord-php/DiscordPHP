@@ -1352,7 +1352,7 @@ class VoiceClient extends EventEmitter
         if ($this->deaf) {
             return;
         }
-        
+
         $voicePacket = VoicePacket::make($message);
         $nonce       = new Buffer(24);
         $nonce->write($voicePacket->getHeader(), 0);
