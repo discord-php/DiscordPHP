@@ -11,6 +11,9 @@
 
 namespace Discord\Repository;
 
+use ArrayAccess;
+use Countable;
+use IteratorAggregate;
 use Discord\Factory\Factory;
 use Discord\Helpers\Collection;
 use Discord\Http\Http;
@@ -21,7 +24,7 @@ use React\Promise\Deferred;
 /**
  * @author Aaron Scherer <aequasi@gmail.com>
  */
-abstract class AbstractRepository implements RepositoryInterface
+abstract class AbstractRepository implements RepositoryInterface, ArrayAccess, Countable, IteratorAggregate
 {
     /**
      * The discriminator.
@@ -290,6 +293,81 @@ abstract class AbstractRepository implements RepositoryInterface
         }
 
         return $string;
+    }
+
+    /**
+     * Returns how many items are in the repository.
+     *
+     * @return int Count.
+     */
+    public function count()
+    {
+        return $this->collection->count();
+    }
+
+    /**
+     * Get an iterator for the items.
+     *
+     * @return \ArrayIterator
+     */
+    public function getIterator()
+    {
+        return $this->collection->getIterator();
+    }
+
+    /**
+     * Determine if an item exists at an offset.
+     *
+     * @param  mixed  $key
+     * @return bool
+     */
+    public function offsetExists($key)
+    {
+        return $this->collection->offsetExists($key);
+    }
+
+    /**
+     * Get an item at a given offset.
+     *
+     * @param  mixed  $key
+     * @return mixed
+     */
+    public function offsetGet($key)
+    {
+        return $this->collection->offsetGet($key);
+    }
+
+    /**
+     * Set the item at a given offset.
+     *
+     * @param  mixed  $key
+     * @param  mixed  $value
+     * @return void
+     */
+    public function offsetSet($key, $value)
+    {
+        $this->collection->offsetSet($key, $value);
+    }
+
+    /**
+     * Unset the item at a given offset.
+     *
+     * @param  string  $key
+     * @return void
+     */
+    public function offsetUnset($key)
+    {
+        $this->collection->offsetUnset($key);
+    }
+
+    /**
+     * Convert the object into something JSON serializable.
+     *
+     * @return array
+     */
+    public function jsonSerialize()
+    {
+        return $this->collection->jsonSerialize();
     }
 
     /**
