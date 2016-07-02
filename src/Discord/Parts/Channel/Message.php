@@ -79,6 +79,14 @@ class Message extends Part
                 return $guild->channels->get('id', $this->channel_id);
             }
         }
+
+        if ($this->cache->has("pm_channels.{$this->channel_id}")) {
+            return $this->cache->get("pm_channels.{$this->channel_id}");
+        }
+
+        return $this->factory->create(Channel::class, [
+            'id' => $this->channel_id,
+        ], true);
     }
 
     /**
