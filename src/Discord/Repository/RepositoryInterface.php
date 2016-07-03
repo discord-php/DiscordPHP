@@ -23,7 +23,7 @@ interface RepositoryInterface
      *
      * @return Part The new part.
      */
-    public function new(array $attributes = []);
+    public function create(array $attributes = []);
 
     /**
      * Attempts to save a part to the Discord servers.

@@ -127,7 +127,7 @@ abstract class AbstractRepository implements RepositoryInterface, ArrayAccess, C
     /**
      * {@inheritdoc}
      */
-    public function new(array $attributes = [])
+    public function create(array $attributes = [])
     {
         $attributes = array_merge($attributes, $this->vars);
 
