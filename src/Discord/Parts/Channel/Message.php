@@ -85,7 +85,7 @@ class Message extends Part
         }
 
         return $this->factory->create(Channel::class, [
-            'id' => $this->channel_id,
+            'id'         => $this->channel_id,
             'is_private' => true,
         ], true);
     }
