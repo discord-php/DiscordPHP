@@ -66,7 +66,9 @@ class Discord
         $options       = $this->resolveOptions($options);
         $this->options = $options;
 
-        define('DISCORD_TOKEN', $options['token']);
+        if(!defined('DISCORD_TOKEN')) {
+            define('DISCORD_TOKEN', $options['token']);
+        }
 
         $this->client = new Client((array) Guzzle::get('users/@me'), true);
     }
