@@ -25,14 +25,14 @@ class DiscordCommandClient extends Discord
 
     /**
      * A map of the commands.
-     * 
+     *
      * @var array Commands.
      */
     protected $commands = [];
 
     /**
      * A map of aliases for commands.
-     * 
+     *
      * @var array Aliases.
      */
     protected $aliases  = [];

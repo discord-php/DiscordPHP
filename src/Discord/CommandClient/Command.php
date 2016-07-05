@@ -18,35 +18,35 @@ class Command
 {
     /**
      * The trigger for the command.
-     * 
+     *
      * @var string Command trigger.
      */
     protected $command;
 
     /**
      * The description of the command.
-     * 
+     *
      * @var string Description.
      */
     protected $description;
 
     /**
      * The usage of the command.
-     * 
+     *
      * @var string Command usage.
      */
     protected $usage;
 
     /**
      * A map of sub-commands.
-     * 
+     *
      * @var array Sub-Commands.
      */
     protected $subCommands = [];
 
     /**
      * A map of sub-command aliases.
-     * 
+     *
      * @var array Sub-Command aliases.
      */
     protected $subCommandAliases = [];
@@ -180,7 +180,7 @@ class Command
         }
 
         return [
-            'text' => $helpString,
+            'text'              => $helpString,
             'subCommandAliases' => $this->subCommandAliases,
         ];
     }
