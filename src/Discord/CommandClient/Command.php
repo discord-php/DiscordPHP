@@ -16,10 +16,39 @@ use Discord\Parts\Channel\Message;
 
 class Command
 {
+    /**
+     * The trigger for the command.
+     * 
+     * @var string Command trigger.
+     */
     protected $command;
+
+    /**
+     * The description of the command.
+     * 
+     * @var string Description.
+     */
     protected $description;
+
+    /**
+     * The usage of the command.
+     * 
+     * @var string Command usage.
+     */
     protected $usage;
-    protected $subCommands       = [];
+
+    /**
+     * A map of sub-commands.
+     * 
+     * @var array Sub-Commands.
+     */
+    protected $subCommands = [];
+
+    /**
+     * A map of sub-command aliases.
+     * 
+     * @var array Sub-Command aliases.
+     */
     protected $subCommandAliases = [];
 
     /**
@@ -71,14 +100,42 @@ class Command
     }
 
     /**
-     * Adds a sub-command alias.
+     * Unregisters a sub-command.
+     *
+     * @param string $command The command name.
+     */
+    public function unregisterSubCommand($command)
+    {
+        if (! array_key_exists($command, $this->subCommands)) {
+            throw new \Exception("A sub-command with the name {$command} does not exist.");
+        }
+
+        unset($this->subCommands[$command]);
+    }
+
+    /**
+     * Registers a sub-command alias.
      *
      * @param string $alias   The alias to add.
      * @param string $command The command.
      */
-    public function addSubCommandAlias($alias, $command)
+    public function registerSubCommandAlias($alias, $command)
     {
         $this->subCommandAliases[$alias] = $command;
+    }
+
+    /**
+     * Unregisters a sub-command alias.
+     *
+     * @param string $alias The alias name.
+     */
+    public function unregisterSubCommandAlias($alias)
+    {
+        if (! array_key_exists($alias, $this->subCommandAliases)) {
+            throw new \Exception("A sub-command alias with the name {$alias} does not exist.");
+        }
+
+        unset($this->subCommandAliases[$alias]);
     }
 
     /**
@@ -104,6 +161,28 @@ class Command
         }
 
         return call_user_func_array($this->callable, [$message, $args]);
+    }
+
+    /**
+     * Gets help for the command.
+     *
+     * @param string $prefix The prefix of the bot.
+     *
+     * @return string The help.
+     */
+    public function getHelp($prefix)
+    {
+        $helpString = "{$prefix}{$this->command} {$this->usage}- {$this->description}\r\n";
+
+        foreach ($this->subCommands as $command) {
+            $help = $command->getHelp($prefix);
+            $helpString .= "    {$help['text']}\r\n";
+        }
+
+        return [
+            'text' => $helpString,
+            'subCommandAliases' => $this->subCommandAliases,
+        ];
     }
 
     /**

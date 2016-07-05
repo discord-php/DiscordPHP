@@ -16,8 +16,25 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class DiscordCommandClient extends Discord
 {
+    /**
+     * An array of options passed to the client.
+     *
+     * @var array Options.
+     */
     protected $commandClientOptions;
+
+    /**
+     * A map of the commands.
+     * 
+     * @var array Commands.
+     */
     protected $commands = [];
+
+    /**
+     * A map of aliases for commands.
+     * 
+     * @var array Aliases.
+     */
     protected $aliases  = [];
 
     /**
@@ -37,6 +54,7 @@ class DiscordCommandClient extends Discord
 
         $this->on('ready', function () {
             $this->commandClientOptions['prefix'] = str_replace('@mention', (string) $this->user, $this->commandClientOptions['prefix']);
+            $this->commandClientOptions['name'] = str_replace('<UsernamePlaceholder>', $this->username, $this->commandClientOptions['name']);
 
             $this->on('message', function ($message) {
                 if ($message->author->id == $this->id) {
@@ -65,6 +83,53 @@ class DiscordCommandClient extends Discord
                 }
             });
         });
+
+        if ($this->commandClientOptions['defaultHelpCommand']) {
+            $this->registerCommand('help', function ($message, $args) {
+                $prefix = str_replace((string) $this->user, '@'.$this->username, $this->commandClientOptions['prefix']);
+
+                if (count($args) > 0) {
+                    $commandString = implode(' ', $args);
+                    $command = $this->getCommand($commandString);
+
+                    if (is_null($command)) {
+                        return "The command {$commandString} does not exist.";
+                    }
+
+                    $help = $command->getHelp($prefix);
+                    $response = "```\r\n{$this->commandClientOptions['name']} - {$this->commandClientOptions['description']}\r\n\r\n{$help['text']}Aliases:\r\n";
+
+                    foreach ($this->aliases as $alias => $command) {
+                        if ($command != $commandString) {
+                            continue;
+                        }
+
+                        $response .= "- {$alias}\r\n";
+                    }
+
+                    $response .= '```';
+
+                    $message->channel->sendMessage($response);
+
+                    return;
+                }
+
+                $response = "```\r\n{$this->commandClientOptions['name']} - {$this->commandClientOptions['description']}\r\n\r\n";
+
+                foreach ($this->commands as $command) {
+                    $help = $command->getHelp($prefix);
+                    $response .= $help['text'];
+                }
+
+                $response .= "Run {$prefix}help command to get more information about a specific function.\r\n";
+                $response .= '```';
+
+                $message->channel->sendMessage($response);
+            }, [
+                'description' => 'Provides a list of commands available.',
+                'usage'       => '[command]',
+            ]);
+        }
     }
 
     /**
@@ -93,14 +158,61 @@ class DiscordCommandClient extends Discord
     }
 
     /**
-     * Adds a command alias.
+     * Unregisters a command.
+     *
+     * @param string $command The command name.
+     */
+    public function unregisterCommand($command)
+    {
+        if (! array_key_exists($command, $this->commands)) {
+            throw new \Exception("A command with the name {$command} does not exist.");
+        }
+
+        unset($this->commands[$command]);
+    }
+
+    /**
+     * Registers a command alias.
      *
      * @param string $alias   The alias to add.
      * @param string $command The command.
      */
-    public function addCommandAlias($alias, $command)
+    public function registerAlias($alias, $command)
     {
         $this->aliases[$alias] = $command;
+    }
+
+    /**
+     * Unregisters a command alias.
+     *
+     * @param string $alias The alias name.
+     */
+    public function unregisterCommandAlias($alias)
+    {
+        if (! array_key_exists($alias, $this->aliases)) {
+            throw new \Exception("A command alias with the name {$alias} does not exist.");
+        }
+
+        unset($this->aliases[$alias]);
+    }
+
+    /**
+     * Attempts to get a command.
+     *
+     * @param string $command The command to get.
+     * @param bool   $aliases Whether to search aliases as well.
+     *
+     * @return Command|null The command.
+     */
+    public function getCommand($command, $aliases = true)
+    {
+        if (array_key_exists($command, $this->commands)) {
+            return $this->commands[$command];
+        }
+
+        if (array_key_exists($command, $this->aliases) && $aliases) {
+            return $this->commands[$this->aliases[$command]];
+        }
     }
 
     /**
@@ -155,12 +267,18 @@ class DiscordCommandClient extends Discord
                 'aliases',
             ])
             ->setDefaults([
-                'description' => '',
+                'description' => 'No description provided.',
                 'usage'       => '',
                 'aliases'     => [],
             ]);
 
-        return $resolver->resolve($options);
+        $options = $resolver->resolve($options);
+
+        if (! empty($options['usage'])) {
+            $options['usage'] .= ' ';
+        }
+
+        return $options;
     }
 
     /**
@@ -180,11 +298,17 @@ class DiscordCommandClient extends Discord
             ->setDefined([
                 'token',
                 'prefix',
+                'name',
+                'description',
+                'defaultHelpCommand',
                 'discordOptions',
             ])
             ->setDefaults([
-                'prefix'         => '@mention ',
-                'discordOptions' => [],
+                'prefix'             => '@mention ',
+                'name'               => '<UsernamePlaceholder>',
+                'description'        => 'A bot made with DiscordPHP.',
+                'defaultHelpCommand' => true,
+                'discordOptions'     => [],
             ]);
 
         return $resolver->resolve($options);
