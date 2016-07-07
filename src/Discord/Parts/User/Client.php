@@ -109,13 +109,13 @@ class Client extends Part
     }
 
     /**
-     * Returns the avatar ID for the client.
+     * Returns the avatar hash for the client.
      *
-     * @return string The avatar ID for the client.
+     * @return string The avatar hash for the client.
      */
-    public function getAvatarIDAttribute()
+    public function getAvatarHashAttribute()
     {
-        return $this->avatar;
+        return $this->attributes['avatar'];
     }
 
     /**
