@@ -1155,6 +1155,7 @@ class Discord
                 'disabledEvents',
                 'pmChannels',
                 'storeMessages',
+                'retrieveBans',
             ])
             ->setDefaults([
                 'loop'           => LoopFactory::create(),
@@ -1166,6 +1167,7 @@ class Discord
                 'disabledEvents' => [],
                 'pmChannels'     => false,
                 'storeMessages'  => false,
+                'retrieveBans'   => true,
             ])
             ->setAllowedTypes('loop', LoopInterface::class)
             ->setAllowedTypes('logging', 'bool')
@@ -1173,7 +1175,8 @@ class Discord
             ->setAllowedTypes('loadAllMembers', 'bool')
             ->setAllowedTypes('disabledEvents', 'array')
             ->setAllowedTypes('pmChannels', 'bool')
-            ->setAllowedTypes('storeMessages', 'bool');
+            ->setAllowedTypes('storeMessages', 'bool')
+            ->setAllowedTypes('retrieveBans', 'bool');
 
         $options = $resolver->resolve($options);
 

@@ -25,7 +25,7 @@ class Ban extends Part
     /**
      * {@inheritdoc}
      */
-    protected $fillable = ['user', 'guild'];
+    protected $fillable = ['user', 'guild', 'reason'];
 
     /**
      * Returns the guild id attribute.

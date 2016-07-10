@@ -12,10 +12,12 @@
 namespace Discord\WebSockets\Events;
 
 use Discord\Parts\Channel\Channel;
+use Discord\Parts\Guild\Ban;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Guild\Role;
 use Discord\Parts\User\Member;
 use Discord\Parts\WebSockets\VoiceStateUpdate as VoiceStateUpdatePart;
+use Discord\Repository\Guild\BanRepository;
 use Discord\Repository\Guild\ChannelRepository;
 use Discord\Repository\Guild\MemberRepository;
 use Discord\Repository\Guild\RoleRepository;
@@ -107,12 +109,39 @@ class GuildCreate extends Event
             }
         }
 
-        if ($guildPart->large) {
-            $this->discord->addLargeGuild($guildPart);
+        $resolve = function () use (&$guildPart, $deferred) {
+            if ($guildPart->large) {
+                $this->discord->addLargeGuild($guildPart);
+            }
+
+            $this->discord->guilds->push($guildPart);
+
+            $deferred->resolve($guildPart);
+        };
+
+        if ($this->discord->options['retrieveBans']) {
+            $this->http->get("guilds/{$guildPart->id}/bans")->then(function ($rawBans) use (&$guildPart, $resolve) {
+                $bans = new BanRepository(
+                    $this->http,
+                    $this->cache,
+                    $this->factory,
+                    $guildPart->getRepositoryAttributes()
+                );
+
+                foreach ($rawBans as $ban) {
+                    $ban = (array) $ban;
+                    $ban['guild'] = $guildPart;
+
+                    $banPart = $this->factory->create(Ban::class, $ban, true);
+
+                    $bans->push($banPart);
+                }
+
+                $guildPart->bans = $bans;
+                $resolve();
+            }, $resolve);
+        } else {
+            $resolve();
         }
-
-        $this->discord->guilds->push($guildPart);
-
-        $deferred->resolve($guildPart);
     }
 }

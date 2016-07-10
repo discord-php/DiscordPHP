@@ -19,6 +19,11 @@ class BanRepository extends AbstractRepository
     /**
      * {@inheritdoc}
      */
+    protected $discrim = 'user_id';
+    
+    /**
+     * {@inheritdoc}
+     */
     protected $endpoints = [
         'all'    => 'guilds/:guild_id/bans',
         'create' => 'guilds/:guild_id/bans/:user_id',
