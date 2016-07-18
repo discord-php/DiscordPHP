@@ -20,7 +20,7 @@ class BanRepository extends AbstractRepository
      * {@inheritdoc}
      */
     protected $discrim = 'user_id';
-    
+
     /**
      * {@inheritdoc}
      */
