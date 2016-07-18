@@ -70,6 +70,8 @@ class Factory
             $object = new $class($this, $this->discord, $this->http, $this->cache, $data, $created);
         } elseif (strpos($class, 'Discord\\Repository') !== false) {
             $object = new $class($this->http, $this->cache, $this, $data);
+        } else {
+            throw new \Exception('The class '.$class.' is not a Part or a Repository.');
         }
 
         return $object;
