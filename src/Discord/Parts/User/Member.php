@@ -299,6 +299,10 @@ class Member extends Part
      */
     public function __toString()
     {
+        if ($this->nick) {
+            return "<@!{$this->user->id}";
+        }
+        
         return "<@{$this->user->id}>";
     }
 }
