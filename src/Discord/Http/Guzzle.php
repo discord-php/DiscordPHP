@@ -105,7 +105,7 @@ class Guzzle extends GuzzleClient implements HttpDriver
 
         $request = ($method instanceof Request) ? $method : new Request(
             $method,
-            Http::BASE_URL.'/'.$url,
+            Http::BASE_URL.'/v'.Discord::HTTP_API_VERSION.'/'.$url,
             $headers,
             $body
         );

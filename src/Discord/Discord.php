@@ -53,7 +53,14 @@ class Discord
      *
      * @var int Gateway version.
      */
-    const GATEWAY_VERSION = 5;
+    const GATEWAY_VERSION = 6;
+
+    /**
+     * The HTTP API version the client usees.
+     *
+     * @var int HTTP API version.
+     */
+    const HTTP_API_VERSION = 6;
 
     /**
      * The client version.

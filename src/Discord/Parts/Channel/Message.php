@@ -35,6 +35,13 @@ use Discord\Parts\User\User;
  */
 class Message extends Part
 {
+    const TYPE_NORMAL = 0;
+    const TYPE_USER_ADDED = 1;
+    const TYPE_USER_REMOVED = 2;
+    const TYPE_CALL = 3;
+    const TYPE_CHANNEL_NAME_CHANGE = 4;
+    const TYPE_CHANNEL_ICON_CHANGE = 5;
+    
     /**
      * {@inheritdoc}
      */
@@ -42,6 +49,7 @@ class Message extends Part
         'id',
         'channel_id',
         'content',
+        'type',
         'mentions',
         'author',
         'mention_everyone',
