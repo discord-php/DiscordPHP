@@ -14,6 +14,9 @@ namespace Discord\CommandClient;
 use Discord\DiscordCommandClient;
 use Discord\Parts\Channel\Message;
 
+/**
+ * A command that the Command Client will listen for.
+ */
 class Command
 {
     /**

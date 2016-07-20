@@ -11,14 +11,16 @@
 
 namespace Discord\Parts\Guild;
 
+use Discord\Parts\Guild\Guild;
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
 
 /**
  * A Ban is a ban on a user specific to a guild. It is also IP based.
  *
- * @property User  $user
- * @property Guild $guild
+ * @property Discord\Parts\User\User  $user The user that was banned.
+ * @property Discord\Parts\Guild\Guild $guild The guild that the user was banned from.
+ * @property string|null $reason The reason the user was banned.
  */
 class Ban extends Part
 {
@@ -55,6 +57,16 @@ class Ban extends Part
     public function getUserAttribute()
     {
         return $this->factory->create(User::class, (array) $this->attributes['user']);
+    }
+
+    /**
+     * Gets the guild attribute.
+     *
+     * @return Guild The guild that the user is banned from.
+     */
+    public function getGuildAttribute()
+    {
+        return $this->discord->guilds->get('id', $this->attributes['guild']->id);
     }
 
     /**

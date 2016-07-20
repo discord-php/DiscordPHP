@@ -13,6 +13,15 @@ namespace Discord\Parts\OAuth;
 
 use Discord\Parts\Part;
 
+/**
+ * The OAuth2 application of the bot.
+ *
+ * @property string $id The client ID of the OAuth application.
+ * @property string $name The name of the OAuth application.
+ * @property string $description The description of the OAuth application.
+ * @property string $icon The icon hash of the OAuth application.
+ * @property string $invite_url The invite URL to invite the bot to a guild.
+ */
 class Application extends Part
 {
     /**

@@ -16,6 +16,9 @@ use GuzzleHttp\Psr7\Request;
 use React\EventLoop\LoopInterface;
 use React\Promise\Deferred;
 
+/**
+ * Handles requests that the HTTP client can send.
+ */
 class RateLimiter
 {
     /**

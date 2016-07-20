@@ -15,6 +15,9 @@ use Discord\Discord;
 use Discord\Http\Http;
 use Discord\Wrapper\CacheWrapper;
 
+/**
+ * Exposes an interface to build part objects without the other requirements.
+ */
 class Factory
 {
     /**

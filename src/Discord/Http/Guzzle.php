@@ -23,7 +23,7 @@ use React\Promise\Deferred;
 use WyriHaximus\React\GuzzlePsr7\HttpClientAdapter;
 
 /**
- * GuzzleHTTP driver.
+ * The Guzzle PHP library driver for the HTTP client.
  *
  * @author David Cole <david@team-reflex.com>
  */

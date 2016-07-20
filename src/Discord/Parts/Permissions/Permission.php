@@ -17,6 +17,9 @@ use Discord\Http\Http;
 use Discord\Parts\Part;
 use Discord\Wrapper\CacheWrapper;
 
+/**
+ * The permissions object of a role or channel.
+ */
 class Permission extends Part
 {
     /**

@@ -13,6 +13,30 @@ namespace Discord\Parts\Permissions;
 
 /**
  * {@inheritdoc}
+ *
+ * @property bool $create_instant_invite 
+ * @property bool $kick_members
+ * @property bool $ban_members
+ * @property bool $administrator
+ * @property bool $manage_channels 
+ * @property bool $manage_server
+ * @property bool $change_nickname 
+ * @property bool $manage_nicknames
+ * @property bool $manage_roles
+ * @property bool $read_messages 
+ * @property bool $send_messages
+ * @property bool $send_tts_messages
+ * @property bool $manage_messages
+ * @property bool $embed_links
+ * @property bool $attach_files
+ * @property bool $read_message_history
+ * @property bool $mention_everyone
+ * @property bool $voice_connect
+ * @property bool $voice_speak
+ * @property bool $voice_mute_members 
+ * @property bool $voice_deafen_members
+ * @property bool $voice_move_members
+ * @property bool $voice_use_vad
  */
 class RolePermission extends Permission
 {

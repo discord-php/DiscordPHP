@@ -19,19 +19,22 @@ use Discord\Parts\User\User;
 /**
  * A message which is posted to a Discord text channel.
  *
- * @property string       $id
- * @property string       $channel_id
- * @property string       $content
- * @property array|User[] $mentions
- * @property User         $author
- * @property bool         $mention_everyone
- * @property Carbon       $timestamp
- * @property int|null     $edited_timestamp
- * @property bool         $tts
- * @property array        $attachments
- * @property array        $embeds
- * @property int|null     $nonce
- * @property Channel      $channel
+ * @property string       $id The unique identifier of the message.
+ * @property Discord\Parts\Channel\Channel $channel The channel that the message was sent in.
+ * @property string       $channel_id The unique identifier of the channel that the message was went in.
+ * @property string       $content The content of the message if it is a normal message.
+ * @property int          $type The type of message.
+ * @property Collection[User] $mentions A collection of the users mentioned in the message.
+ * @property Discord\Parts\User\User         $author The author of the message.
+ * @property bool         $mention_everyone Whether the message contained an @everyone mention.
+ * @property Carbon       $timestamp A timestamp of when the message was sent.
+ * @property Carbon|null     $edited_timestamp A timestamp of when the message was edited, or null.
+ * @property bool         $tts Whether the message was sent as a text-to-speech message.
+ * @property array        $attachments An array of attachment objects.
+ * @property array        $embeds An array of embed objects.
+ * @property string|null     $nonce A randomly generated string that provides verification for the client. Not required.
+ * @property Collection[Role] $mention_roles A collection of roles that were mentioned in the message.
+ * @property bool $pinned Whether the message is pinned to the channel.
  */
 class Message extends Part
 {
@@ -159,6 +162,20 @@ class Message extends Part
     public function getTimestampAttribute()
     {
         return new Carbon($this->attributes['timestamp']);
+    }
+
+    /**
+     * Returns the edited_timestamp attribute.
+     *
+     * @return Carbon|null The time that the message was edited.
+     */
+    public function getEditedTimestampAttribute()
+    {
+        if (! $this->attributes['edited_timestamp']) {
+            return;
+        }
+
+        return new Carbon($this->attributes['edited_timestamp']);
     }
 
     /**

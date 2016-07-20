@@ -18,21 +18,23 @@ use React\Promise\Deferred;
 /**
  * A role defines permissions for the guild. Members can be added to the role. The role belongs to a guild.
  *
- * @property string  $id
- * @property string  $name
- * @property int $color
- * @property bool    $managed
- * @property bool    $hoist
- * @property int     $position
- * @property int     $permissions
- * @property string  $guild_id
+ * @property string  $id The unique identifier of the role.
+ * @property string  $name The name of the role.
+ * @property int     $color The color of the guild.
+ * @property bool    $managed Whether the role is managed by a Twitch subscriber feature.
+ * @property bool    $hoist Whether the role is hoisted on the sidebar.
+ * @property int     $position The position of the role on the sidebar.
+ * @property Discord\Parts\Permissions\RolePermission     $permissions The permissions of the role.
+ * @property bool $mentionable Whether the role is mentionable.
+ * @property Discord\Parts\Guild\Guild $guild The guild that the role belongs to.
+ * @property string  $guild_id The unique identifier of the guild that the role belongs to.
  */
 class Role extends Part
 {
     /**
      * {@inheritdoc}
      */
-    protected $fillable = ['id', 'name', 'color', 'managed', 'hoist', 'position', 'permissions', 'guild_id'];
+    protected $fillable = ['id', 'name', 'color', 'managed', 'hoist', 'position', 'permissions', 'mentionable', 'guild_id'];
 
     /**
      * Runs extra construction tasks.
@@ -44,6 +46,16 @@ class Role extends Part
         if (! isset($this->attributes['permissions'])) {
             $this->permissions = $this->factory->create(RolePermission::class);
         }
+    }
+
+    /**
+     * Gets the guild attribute.
+     *
+     * @return Guild The guild attribute.
+     */
+    public function getGuildAttribute()
+    {
+        return $this->discord->guilds->get('id', $this->guild_id);
     }
 
     /**

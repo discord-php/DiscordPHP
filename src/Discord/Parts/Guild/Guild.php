@@ -11,35 +11,40 @@
 
 namespace Discord\Parts\Guild;
 
+use Carbon\Carbon;
 use Discord\Parts\Part;
 use Discord\Parts\User\Member;
+use Discord\Repository\Guild\BanRepository;
 use Discord\Repository\Guild as Repository;
 use React\Promise\Deferred;
 
 /**
  * A Guild is Discord's equivalent of a server. It contains all the Members, Channels, Roles, Bans etc.
  *
- * @property string                       $id
- * @property string                       $name
- * @property string                       $icon
- * @property string                       $region
- * @property string                       $owner_id
- * @property \DateTime                    $joined_at
- * @property string                       $afk_channel_id
- * @property int                          $afk_timeout
- * @property bool                         $embed_enabled
- * @property string                       $embed_channel_id
- * @property array                        $features
- * @property string                       $splash
- * @property array                        $emojis
- * @property bool                         $large
- * @property int                          $verification_level
- * @property int                          $member_count
- * @property Repository\RoleRepository    $roles
- * @property Repository\ChannelRepository $channels
- * @property Repository\MemberRepository  $members
- * @property Repository\InviteRepository  $invites
- * @property Repository\BanRepository     $bans
+ * @property string                       $id The unique identifier of the guild.
+ * @property string                       $name The name of the guild.
+ * @property string                       $icon The URL to the guild icon.
+ * @property string                       $icon_hash The icon hash for the guild.
+ * @property string                       $region The region the guild's voice channels are hosted in.
+ * @property Discord\Parts\User\User      $owner The owner of the guild.
+ * @property string                       $owner_id The unique identifier of the owner of the guild.
+ * @property Carbon                       $joined_at A timestamp of when the current user joined the guild.
+ * @property string                       $afk_channel_id The unique identifier of the AFK channel ID.
+ * @property int                          $afk_timeout How long you will remain in the voice channel until you are moved into the AFK channel.
+ * @property bool                         $embed_enabled Whether the embed is enabled.
+ * @property string                       $embed_channel_id The unique identifier of the channel that will be used for the embed.
+ * @property array[string]                $features An array of features that the guild has.
+ * @property string                       $splash The URL to the guild splash.
+ * @property string                       $splash_hash The splash hash for the guild.
+ * @property array                        $emojis An array of emojis available in the guild.
+ * @property bool                         $large Whether the guild is considered 'large' (over 250 members).
+ * @property int                          $verification_level The verification level used for the guild.
+ * @property int                          $member_count How many members are in the guild.
+ * @property Discord\Repository\Guild\RoleRepository    $roles
+ * @property Discord\Repository\Guild\ChannelRepository $channels
+ * @property Discord\Repository\Guild\MemberRepository  $members
+ * @property Discord\Repository\Guild\InviteRepository  $invites
+ * @property Discord\Repository\Guild\BanRepository     $bans
  */
 class Guild extends Part
 {
@@ -56,9 +61,38 @@ class Guild extends Part
     const REGION_AMSTERDAM  = 'amsterdam';
     const REGION_BRAZIL     = 'brazil';
 
+    /**
+     * The 'off' verification level.
+     *
+     * @var int Raw verification level.
+     */
     const LEVEL_OFF       = 0;
+
+    /**
+     * The 'low' verification level.
+     *
+     * Members must have a verified email before they can message.
+     *
+     * @var int Raw verification level.
+     */
     const LEVEL_LOW       = 1;
+
+    /**
+     * The 'medium' verification level.
+     *
+     * Members must also be registered on Discord for more than 5 minutes.
+     *
+     * @var int Raw verification level.
+     */
     const LEVEL_MEDIUM    = 2;
+
+    /**
+     * The 'tableflip' verification level.
+     *
+     * Members must also be a member of the guild for more than 10 minutes.
+     *
+     * @var int Raw verification level.
+     */
     const LEVEL_TABLEFLIP = 3;
 
     /**
@@ -82,7 +116,6 @@ class Guild extends Part
         'large',
         'verification_level',
         'member_count',
-        'default_message_notifications',
     ];
 
     /**
@@ -188,6 +221,16 @@ class Guild extends Part
     public function getOwnerAttribute()
     {
         return $this->discord->users->get('id', $this->owner_id);
+    }
+
+    /**
+     * Returns the joined_at attribute.
+     *
+     * @return Carbon The joined_at attribute.
+     */
+    public function getJoinedAtAttribute()
+    {
+        return new Carbon($this->attributes['joined_at']);
     }
 
     /**

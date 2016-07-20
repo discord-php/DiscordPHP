@@ -13,6 +13,24 @@ namespace Discord\Parts\Permissions;
 
 /**
  * {@inheritdoc}
+ *
+ * @property bool $create_instant_invite 
+ * @property bool $manage_channels 
+ * @property bool $manage_permissions 
+ * @property bool $read_messages 
+ * @property bool $send_messages
+ * @property bool $send_tts_messages
+ * @property bool $manage_messages
+ * @property bool $embed_links
+ * @property bool $attach_files
+ * @property bool $read_message_history
+ * @property bool $mention_everyone
+ * @property bool $voice_connect
+ * @property bool $voice_speak
+ * @property bool $voice_mute_members 
+ * @property bool $voice_deafen_members
+ * @property bool $voice_move_members
+ * @property bool $voice_use_vad
  */
 class ChannelPermission extends Permission
 {

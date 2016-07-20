@@ -23,7 +23,7 @@ use Illuminate\Support\Str;
 use React\Promise\Deferred;
 
 /**
- * Provides an easy wrapper for the Guzzle HTTP client.
+ * Provides an easy wrapper for HTTP requests, allows for interchangable connectors.
  */
 class Http
 {

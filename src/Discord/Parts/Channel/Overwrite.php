@@ -17,11 +17,12 @@ use Discord\Parts\Permissions\ChannelPermission;
 /**
  * Overwrite Class.
  *
- * @property string $id
- * @property string $channel_id
- * @property string $type
- * @property bool   $allow
- * @property bool   $deny
+ * @property string $id The unique identifier of the user/role that the overwrite applies to.
+ * @property string $channel_id The unique identifier of the channel that the overwrite belongs to.
+ * @property string $type The type of part that the overwrite applies to. Can be 'role' or 'user'.
+ * @property int   $allow The bitwise integer for allow permissions.
+ * @property int   $deny The bitwise integer for deny permissions.
+ * @property Discord\Parts\Permissions\ChannelPermission $permissions The overwrite permissions.
  */
 class Overwrite extends Part
 {

@@ -14,6 +14,9 @@ namespace Discord\Http\RateLimit;
 use React\EventLoop\LoopInterface;
 use React\Promise\Deferred;
 
+/**
+ * Contains requests that need to be sent.
+ */
 abstract class AbstractBucket
 {
     /**

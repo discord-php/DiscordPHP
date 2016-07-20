@@ -22,7 +22,7 @@ use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
 use Discord\Repository\Channel\MessageRepository;
 use Discord\Repository\Channel\OverwriteRepository;
-use Discord\Repository\Guild\MemberRepository;
+use Discord\Repository\Channel\VoiceMemberRepository as MemberRepository;
 use React\Promise\Deferred;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Traversable;
@@ -30,10 +30,22 @@ use Traversable;
 /**
  * A Channel can be either a text or voice channel on a Discord guild.
  *
- * @property MemberRepository    $members
- * @property MessageRepository   $messages
- * @property OverwriteRepository $overwrites
- * @property Guild               $guild
+ * @property string $id The unique identifier of the Channel.
+ * @property string $name The name of the channel.
+ * @property int $type The type of the channel.
+ * @property string $topic The topic of the channel.
+ * @property Discord\Parts\Guild\Guild $guild The guild that the channel belongs to. Only for text or voice channels.
+ * @property string|null $guild_id The unique identifier of the guild that the channel belongs to. Only for text or voice channels.
+ * @property int $position The position of the channel on the sidebar.
+ * @property bool $is_private Whether the channel is a private channel.
+ * @property string $last_message_id The unique identifier of the last message sent in the channel.
+ * @property int $bitrate The bitrate of the channel. Only for voice channels.
+ * @property Discord\Parts\User\User $recipient The first recipient of the channel. Only for DM or group channels.
+ * @property Collection[User] $recipients A collection of all the recipients in the channel. Only for DM or group channels.
+ * @property Discord\Repository\Channel\VoiceMemberRepository    $members
+ * @property Discord\Repository\Channel\MessageRepository   $messages
+ * @property Discord\Repository\Channel\OverwriteRepository $overwrites
+ * @property Discord\Parts\Guild\Guild               $guild
  */
 class Channel extends Part
 {
@@ -56,7 +68,7 @@ class Channel extends Part
         'last_message_id',
         'permission_overwrites',
         'bitrate',
-        'recipient',
+        'recipients',
     ];
 
     /**
@@ -83,16 +95,27 @@ class Channel extends Part
     /**
      * Gets the recipient attribute.
      *
-     * @return User The Recipient.
+     * @return User The recipient.
      */
     public function getRecipientAttribute()
     {
-        // Only for PM channels.
-        if (! isset($this->attributes['recipient'])) {
-            return;
+        return $this->recipients->first();
+    }
+
+    /**
+     * Gets the recipients attribute.
+     *
+     * @return Collection A collection of recepients.
+     */
+    public function getRecipientsAttribute()
+    {
+        $recipients = new Collection();
+
+        foreach ((array) $this->attributes['recipients'] as $recipient) {
+            $recipients->push($this->factory->create(User::class, $recipient, true));
         }
 
-        return $this->factory->create(User::class, $this->attributes['recipient'], true);
+        return $recipients;
     }
 
     /**
