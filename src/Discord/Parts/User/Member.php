@@ -302,7 +302,7 @@ class Member extends Part
         if ($this->nick) {
             return "<@!{$this->user->id}";
         }
-        
+
         return "<@{$this->user->id}>";
     }
 }

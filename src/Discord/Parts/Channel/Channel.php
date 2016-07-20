@@ -37,8 +37,8 @@ use Traversable;
  */
 class Channel extends Part
 {
-    const TYPE_TEXT = 0;
-    const TYPE_DM = 1;
+    const TYPE_TEXT  = 0;
+    const TYPE_DM    = 1;
     const TYPE_VOICE = 2;
     const TYPE_GROUP = 3;
 
