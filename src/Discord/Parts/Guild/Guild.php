@@ -14,7 +14,6 @@ namespace Discord\Parts\Guild;
 use Carbon\Carbon;
 use Discord\Parts\Part;
 use Discord\Parts\User\Member;
-use Discord\Repository\Guild\BanRepository;
 use Discord\Repository\Guild as Repository;
 use React\Promise\Deferred;
 
