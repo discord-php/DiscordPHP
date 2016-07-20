@@ -319,7 +319,7 @@ class VoiceClient extends EventEmitter
         $this->deaf           = $data['deaf'];
         $this->mute           = $data['mute'];
         $this->endpoint       = str_replace([':80', ':443'], '', $data['endpoint']);
-        $this->speakingStatus = new Collection();
+        $this->speakingStatus = new Collection([], 'ssrc');
 
         $this->checkForFFmpeg();
         $this->checkForDCA();
@@ -1252,7 +1252,7 @@ class VoiceClient extends EventEmitter
         $this->sentLoginFrame = false;
         $this->startTime      = null;
         $this->streamTime     = 0;
-        $this->speakingStatus = new Collection();
+        $this->speakingStatus = new Collection([], 'ssrc');
 
         $this->emit('close');
 
