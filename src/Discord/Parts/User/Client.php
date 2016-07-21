@@ -35,8 +35,8 @@ use React\Promise\Deferred;
  * @property Discord\Parts\User\User $user The user instance of the client.
  * @property Discord\Parts\OAuth\Application $application The OAuth2 application of the bot.
  * @property Discord\Repository\GuildRepository $guilds
- * @property Discord\Repository\PrivateChannelRepository $private_channels 
- * @property Discord\Repository\UserRepository $users 
+ * @property Discord\Repository\PrivateChannelRepository $private_channels
+ * @property Discord\Repository\UserRepository $users
  */
 class Client extends Part
 {

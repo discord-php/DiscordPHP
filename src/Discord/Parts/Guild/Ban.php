@@ -11,7 +11,6 @@
 
 namespace Discord\Parts\Guild;
 
-use Discord\Parts\Guild\Guild;
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
 
