@@ -646,6 +646,10 @@ class Discord
                 foreach ($hData['alternatives'] as $alternative) {
                     $this->emit($alternative, [$d, $this]);
                 }
+
+                if ($data->t == Event::MESSAGE_CREATE && mentioned($this->client->user, $new)) {
+                    $this->emit('mention', [$new, $this, $old]);
+                }
             }, function ($e) use ($data) {
                 $this->logger->warning('error while trying to handle dispatch packet', ['packet' => $data->t, 'error' => $e]);
             }, function ($d) use ($data) {
