@@ -12,7 +12,6 @@
 namespace Discord\Http;
 
 use Discord\Discord;
-use Discord\Http\RateLimit\GlobalBucket;
 use Discord\Parts\Channel\Channel;
 use Discord\Wrapper\CacheWrapper;
 use GuzzleHttp\Client as GuzzleClient;
@@ -88,10 +87,6 @@ class Guzzle extends GuzzleClient implements HttpDriver
         $this->loop         = $loop;
         $this->adapter      = new HttpClientAdapter($this->loop);
         $options['handler'] = HandlerStack::create($this->adapter);
-
-        // $this->buckets = [
-        //     'global' => new GlobalBucket($loop),
-        // ];
 
         return parent::__construct($options);
     }
