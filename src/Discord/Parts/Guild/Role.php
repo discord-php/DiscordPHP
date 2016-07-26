@@ -18,16 +18,16 @@ use React\Promise\Deferred;
 /**
  * A role defines permissions for the guild. Members can be added to the role. The role belongs to a guild.
  *
- * @property string  $id The unique identifier of the role.
- * @property string  $name The name of the role.
- * @property int     $color The color of the guild.
- * @property bool    $managed Whether the role is managed by a Twitch subscriber feature.
- * @property bool    $hoist Whether the role is hoisted on the sidebar.
- * @property int     $position The position of the role on the sidebar.
- * @property Discord\Parts\Permissions\RolePermission     $permissions The permissions of the role.
- * @property bool $mentionable Whether the role is mentionable.
- * @property Discord\Parts\Guild\Guild $guild The guild that the role belongs to.
- * @property string  $guild_id The unique identifier of the guild that the role belongs to.
+ * @property string                                   $id          The unique identifier of the role.
+ * @property string                                   $name        The name of the role.
+ * @property int                                      $color       The color of the guild.
+ * @property bool                                     $managed     Whether the role is managed by a Twitch subscriber feature.
+ * @property bool                                     $hoist       Whether the role is hoisted on the sidebar.
+ * @property int                                      $position    The position of the role on the sidebar.
+ * @property Discord\Parts\Permissions\RolePermission $permissions The permissions of the role.
+ * @property bool                                     $mentionable Whether the role is mentionable.
+ * @property Discord\Parts\Guild\Guild                $guild       The guild that the role belongs to.
+ * @property string                                   $guild_id    The unique identifier of the guild that the role belongs to.
  */
 class Role extends Part
 {

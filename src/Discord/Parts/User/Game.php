@@ -17,8 +17,8 @@ use Discord\Parts\Part;
  * The Game part defines what game the user is playing at the moment.
  *
  * @property string $name The name of the game.
- * @property string $url The URL to the stream if the user is streaming.
- * @property int $type The type of game, either playing or streaming.
+ * @property string $url  The URL to the stream if the user is streaming.
+ * @property int    $type The type of game, either playing or streaming.
  */
 class Game extends Part
 {

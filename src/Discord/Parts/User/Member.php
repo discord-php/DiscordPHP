@@ -23,19 +23,19 @@ use React\Promise\Deferred;
 /**
  * A member is a relationship between a user and a guild. It contains user-to-guild specific data like roles.
  *
- * @property string       $id The unique identifier of the member.
- * @property string       $username The username of the member.
- * @property string       $discriminator The discriminator of the member.
- * @property Discord\Parts\Role\Role         $user The user part of the member.
- * @property Collection[Role] $roles A collection of Roles that the member has.
- * @property bool         $deaf Whether the member is deaf.
- * @property bool         $mute Whether the member is mute.
- * @property Carbon       $joined_at A timestamp of when the member joined the guild.
- * @property Discord\Parts\Guild\Guild $guild The guild that the member belongs to.
- * @property string       $guild_id The unique identifier of the guild that the member belongs to.
- * @property string       $status The status of the member.
- * @property Discord\Parts\User\Game       $game The game the member is playing.
- * @property string|null $nick The nickname of the member.
+ * @property string                    $id            The unique identifier of the member.
+ * @property string                    $username      The username of the member.
+ * @property string                    $discriminator The discriminator of the member.
+ * @property Discord\Parts\Role\Role   $user          The user part of the member.
+ * @property Collection[Role]          $roles         A collection of Roles that the member has.
+ * @property bool                      $deaf          Whether the member is deaf.
+ * @property bool                      $mute          Whether the member is mute.
+ * @property Carbon                    $joined_at     A timestamp of when the member joined the guild.
+ * @property Discord\Parts\Guild\Guild $guild         The guild that the member belongs to.
+ * @property string                    $guild_id      The unique identifier of the guild that the member belongs to.
+ * @property string                    $status        The status of the member.
+ * @property Discord\Parts\User\Game   $game          The game the member is playing.
+ * @property string|null               $nick          The nickname of the member.
  */
 class Member extends Part
 {

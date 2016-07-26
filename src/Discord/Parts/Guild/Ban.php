@@ -17,9 +17,9 @@ use Discord\Parts\User\User;
 /**
  * A Ban is a ban on a user specific to a guild. It is also IP based.
  *
- * @property Discord\Parts\User\User  $user The user that was banned.
- * @property Discord\Parts\Guild\Guild $guild The guild that the user was banned from.
- * @property string|null $reason The reason the user was banned.
+ * @property Discord\Parts\User\User   $user   The user that was banned.
+ * @property Discord\Parts\Guild\Guild $guild  The guild that the user was banned from.
+ * @property string|null               $reason The reason the user was banned.
  */
 class Ban extends Part
 {

@@ -17,14 +17,14 @@ use Discord\Parts\User\User;
 /**
  * The OAuth2 application of the bot.
  *
- * @property string $id The client ID of the OAuth application.
- * @property string $name The name of the OAuth application.
- * @property string $description The description of the OAuth application.
- * @property string $icon The icon hash of the OAuth application.
- * @property string $invite_url The invite URL to invite the bot to a guild.
- * @property array[string] $rpc_origins An array of RPC origin URLs.
- * @property int    $flags ?
- * @property Discord\Parts\User\User $owner The owner of the OAuth application.
+ * @property string                  $id          The client ID of the OAuth application.
+ * @property string                  $name        The name of the OAuth application.
+ * @property string                  $description The description of the OAuth application.
+ * @property string                  $icon        The icon hash of the OAuth application.
+ * @property string                  $invite_url  The invite URL to invite the bot to a guild.
+ * @property array[string]           $rpc_origins An array of RPC origin URLs.
+ * @property int                     $flags       ?
+ * @property Discord\Parts\User\User $owner       The owner of the OAuth application.
  */
 class Application extends Part
 {

@@ -35,7 +35,7 @@ class DiscordCommandClient extends Discord
      *
      * @var array Aliases.
      */
-    protected $aliases  = [];
+    protected $aliases = [];
 
     /**
      * Constructs a new command client.

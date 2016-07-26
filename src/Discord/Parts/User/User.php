@@ -20,12 +20,12 @@ use React\Promise\Deferred;
 /**
  * A user is a general user that is not attached to a guild.
  *
- * @property string $id The unique identifier of the user.
- * @property string $username The username of the user.
- * @property string $avatar The avatar URL of the user.
- * @property string $avatar_hash The avatar hash of the user.
+ * @property string $id            The unique identifier of the user.
+ * @property string $username      The username of the user.
+ * @property string $avatar        The avatar URL of the user.
+ * @property string $avatar_hash   The avatar hash of the user.
  * @property string $discriminator The discriminator of the user.
- * @property bool $bot Whether the user is a bot.
+ * @property bool   $bot           Whether the user is a bot.
  */
 class User extends Part
 {
