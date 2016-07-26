@@ -23,7 +23,7 @@ use React\Promise\Deferred;
 
 /**
  * Repositories provide a way to store and update parts on the Discord server.
- * 
+ *
  * @author Aaron Scherer <aequasi@gmail.com>
  */
 abstract class AbstractRepository implements RepositoryInterface, ArrayAccess, Countable, IteratorAggregate
@@ -37,21 +37,21 @@ abstract class AbstractRepository implements RepositoryInterface, ArrayAccess, C
 
     /**
      * The HTTP client.
-     * 
+     *
      * @var Http Client.
      */
     protected $http;
 
     /**
      * The Cache wrapper.
-     * 
+     *
      * @var CacheWrapper Cache.
      */
     protected $cache;
 
     /**
      * The parts factory.
-     * 
+     *
      * @var Factory Parts factory.
      */
     protected $factory;
