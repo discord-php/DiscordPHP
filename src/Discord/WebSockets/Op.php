@@ -11,6 +11,9 @@
 
 namespace Discord\WebSockets;
 
+/**
+ * Contains constants used in websockets.
+ */
 class Op
 {
     // Dispatches an event.

@@ -14,6 +14,9 @@ namespace Discord;
 use Discord\CommandClient\Command;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * Provides an easy way to have triggerable commands.
+ */
 class DiscordCommandClient extends Discord
 {
     /**

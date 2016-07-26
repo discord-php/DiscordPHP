@@ -14,6 +14,9 @@ namespace Discord\Repository;
 use Discord\Parts\Part;
 use React\Promise\PromiseInterface;
 
+/**
+ * Provides an interface for repositories.
+ */
 interface RepositoryInterface
 {
     /**

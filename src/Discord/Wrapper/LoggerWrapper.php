@@ -13,6 +13,9 @@ namespace Discord\Wrapper;
 
 use Monolog\Logger as Monolog;
 
+/**
+ * Provides an easy to use wrapper for the logger.
+ */
 class LoggerWrapper
 {
     /**

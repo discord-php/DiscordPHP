@@ -13,6 +13,11 @@ namespace Discord\Repository;
 
 use Discord\Parts\User\User;
 
+/**
+ * Contains users that the user shares guilds with.
+ *
+ * @see Discord\Parts\User\User 
+ */
 class UserRepository extends AbstractRepository
 {
     /**

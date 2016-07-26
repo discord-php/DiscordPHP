@@ -14,6 +14,12 @@ namespace Discord\Repository\Guild;
 use Discord\Parts\Guild\Invite;
 use Discord\Repository\AbstractRepository;
 
+/**
+ * Contains invites to guilds.
+ *
+ * @see Discord\Parts\Guild\Invite
+ * @see Discord\Parts\Guild\Guild 
+ */
 class InviteRepository extends AbstractRepository
 {
     /**

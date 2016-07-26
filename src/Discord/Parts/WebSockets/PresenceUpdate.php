@@ -26,7 +26,7 @@ use Discord\Parts\User\User;
  * @property Discord\Parts\Guild\Guild $guild The guild that the presence update affects.
  * @property string                    $guild_id The unique identifier of the guild that the presence update affects.
  * @property string                    $status The updated status of the user.
- * @property Discord\Parts\User\Game    $game The updated game of the user.
+ * @property Discord\Parts\User\Game   $game The updated game of the user.
  */
 class PresenceUpdate extends Part
 {

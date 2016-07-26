@@ -14,6 +14,12 @@ namespace Discord\Repository\Guild;
 use Discord\Parts\User\Member;
 use Discord\Repository\AbstractRepository;
 
+/**
+ * Contains members of a guild.
+ *
+ * @see Discord\Parts\User\Member
+ * @see Discord\Parts\Guild\Guild
+ */
 class MemberRepository extends AbstractRepository
 {
     /**

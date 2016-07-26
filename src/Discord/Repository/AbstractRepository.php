@@ -22,6 +22,8 @@ use Discord\Wrapper\CacheWrapper;
 use React\Promise\Deferred;
 
 /**
+ * Repositories provide a way to store and update parts on the Discord server.
+ * 
  * @author Aaron Scherer <aequasi@gmail.com>
  */
 abstract class AbstractRepository implements RepositoryInterface, ArrayAccess, Countable, IteratorAggregate
@@ -34,17 +36,23 @@ abstract class AbstractRepository implements RepositoryInterface, ArrayAccess, C
     protected $discrim = 'id';
 
     /**
-     * @var Http
+     * The HTTP client.
+     * 
+     * @var Http Client.
      */
     protected $http;
 
     /**
-     * @var CacheWrapper
+     * The Cache wrapper.
+     * 
+     * @var CacheWrapper Cache.
      */
     protected $cache;
 
     /**
-     * @var Factory
+     * The parts factory.
+     * 
+     * @var Factory Parts factory.
      */
     protected $factory;
 
@@ -79,10 +87,10 @@ abstract class AbstractRepository implements RepositoryInterface, ArrayAccess, C
     /**
      * AbstractRepository constructor.
      *
-     * @param Http         $http
-     * @param CacheWrapper $cache
-     * @param Factory      $factory
-     * @param array        $vars
+     * @param Http         $http    The HTTP client.
+     * @param CacheWrapper $cache   The cache wrapper.
+     * @param Factory      $factory The parts factory.
+     * @param array        $vars    An array of variables used for the endpoint.
      */
     public function __construct(Http $http, CacheWrapper $cache, Factory $factory, $vars = [])
     {
