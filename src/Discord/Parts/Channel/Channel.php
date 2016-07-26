@@ -42,7 +42,7 @@ use Traversable;
  * @property int                       $bitrate         The bitrate of the channel. Only for voice channels.
  * @property Discord\Parts\User\User   $recipient       The first recipient of the channel. Only for DM or group channels.
  * @property Collection[User]          $recipients      A collection of all the recipients in the channel. Only for DM or group channels.
- * 
+ *
  * @property Discord\Repository\Channel\VoiceMemberRepository $members
  * @property Discord\Repository\Channel\MessageRepository     $messages
  * @property Discord\Repository\Channel\OverwriteRepository   $overwrites
