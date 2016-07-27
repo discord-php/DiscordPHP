@@ -16,17 +16,18 @@ use Discord\Parts\Guild\Role;
 use Discord\Parts\Part;
 use Discord\Parts\User\Game;
 use Discord\Parts\User\User;
+use Illuminate\Support\Collection;
 
 /**
  * A PresenceUpdate part is used when the `PRESENCE_UPDATE` event is fired on the WebSocket. It contains
  * information about the users presence suck as their status (online/away) and their current game.
  *
- * @property Discord\Parts\User\User   $user The user that the presence update affects.
- * @property Collection[Role]          $roles The roles that the user has.
- * @property Discord\Parts\Guild\Guild $guild The guild that the presence update affects.
- * @property string                    $guild_id The unique identifier of the guild that the presence update affects.
- * @property string                    $status The updated status of the user.
- * @property Discord\Parts\User\Game   $game The updated game of the user.
+ * @property \Discord\Parts\User\User   $user The user that the presence update affects.
+ * @property Collection[Role]           $roles The roles that the user has.
+ * @property \Discord\Parts\Guild\Guild $guild The guild that the presence update affects.
+ * @property string                     $guild_id The unique identifier of the guild that the presence update affects.
+ * @property string                     $status The updated status of the user.
+ * @property \Discord\Parts\User\Game   $game The updated game of the user.
  */
 class PresenceUpdate extends Part
 {

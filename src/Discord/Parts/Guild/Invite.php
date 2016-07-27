@@ -20,16 +20,16 @@ use React\Promise\Deferred;
 /**
  * An invite to a Channel and Guild.
  *
- * @property string                        $code       The invite code.
- * @property int                           $max_age    How many seconds the invite will be alive.
- * @property Discord\Parts\Guild\Guild     $guild      The guild that the invite is for.
- * @property bool                          $revoked    Whether the invite has been revoked.
- * @property Carbon                        $created_at A timestamp of when the invite was created.
- * @property bool                          $temporary  Whether the invite is for temporary membership.
- * @property int                           $uses       How many times the invite has been used.
- * @property int                           $max_uses   How many times the invite can be used.
- * @property Discord\Parts\User\User       $inviter    The user that created the invite.
- * @property Discord\Parts\Channel\Channel $channel    The channel that the invite is for.
+ * @property string                         $code       The invite code.
+ * @property int                            $max_age    How many seconds the invite will be alive.
+ * @property \Discord\Parts\Guild\Guild     $guild      The guild that the invite is for.
+ * @property bool                           $revoked    Whether the invite has been revoked.
+ * @property Carbon                         $created_at A timestamp of when the invite was created.
+ * @property bool                           $temporary  Whether the invite is for temporary membership.
+ * @property int                            $uses       How many times the invite has been used.
+ * @property int                            $max_uses   How many times the invite can be used.
+ * @property \Discord\Parts\User\User       $inviter    The user that created the invite.
+ * @property \Discord\Parts\Channel\Channel $channel    The channel that the invite is for.
  */
 class Invite extends Part
 {
