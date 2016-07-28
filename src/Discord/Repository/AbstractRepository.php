@@ -171,7 +171,7 @@ abstract class AbstractRepository implements RepositoryInterface, ArrayAccess, C
             $endpoint,
             $attributes
         )->then(function ($response) use ($deferred, &$part, $method) {
-            $part->fill($response);
+            $part->fill((array) $response);
 
             $part->created = true;
             $part->deleted = false;
