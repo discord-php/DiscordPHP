@@ -622,12 +622,12 @@ class Channel extends Part
     public function getChannelType()
     {
         switch ($this->type) {
-            case 'text':
-            case 'voice':
+            case self::TYPE_TEXT:
+            case self::TYPE_VOICE:
                 return $this->type;
                 break;
             default:
-                return 'text';
+                return self::TYPE_TEXT;
                 break;
         }
     }
