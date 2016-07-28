@@ -319,6 +319,11 @@ class Discord
         $this->setGateway()->then(function ($g) {
             $this->connectWs();
         });
+
+        if (php_sapi_name() !== 'cli') {
+            trigger_error('DiscordPHP will not run on a webserver. Please use PHP CLI to run a DiscordPHP bot.', E_USER_ERROR);
+            exit(1);
+        }
     }
 
     /**
