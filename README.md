@@ -49,7 +49,7 @@ $discord->run();
 
 ## Documentation
 
-Documentation is currently being written. You can check it out [here](https://discordphp.readme.io).
+Raw documentation can be found in-line in the code and on the [DiscordPHP Class Reference](http://teamreflex.github.io/DiscordPHP/). More user friendly and examples will soon be coming on the [DiscordPHP Wiki](https://discordphp.readme.io/).
 
 ## Contributing
 
