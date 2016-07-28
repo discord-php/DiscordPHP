@@ -42,6 +42,6 @@ class MessageUpdate extends Event
         $old = $messages->get('id', $messagePart->id);
         $messages->push($newMessage);
 
-        $deferred->resolve($messagePart);
+        $deferred->resolve([$messagePart, $old]);
     }
 }

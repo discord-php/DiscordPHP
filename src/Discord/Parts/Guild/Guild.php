@@ -20,31 +20,31 @@ use React\Promise\Deferred;
 /**
  * A Guild is Discord's equivalent of a server. It contains all the Members, Channels, Roles, Bans etc.
  *
- * @property string                       $id                 The unique identifier of the guild.
- * @property string                       $name               The name of the guild.
- * @property string                       $icon               The URL to the guild icon.
- * @property string                       $icon_hash          The icon hash for the guild.
- * @property string                       $region             The region the guild's voice channels are hosted in.
- * @property Discord\Parts\User\User      $owner              The owner of the guild.
- * @property string                       $owner_id           The unique identifier of the owner of the guild.
- * @property Carbon                       $joined_at          A timestamp of when the current user joined the guild.
- * @property string                       $afk_channel_id     The unique identifier of the AFK channel ID.
- * @property int                          $afk_timeout        How long you will remain in the voice channel until you are moved into the AFK channel.
- * @property bool                         $embed_enabled      Whether the embed is enabled.
- * @property string                       $embed_channel_id   The unique identifier of the channel that will be used for the embed.
- * @property array[string]                $features           An array of features that the guild has.
- * @property string                       $splash             The URL to the guild splash.
- * @property string                       $splash_hash        The splash hash for the guild.
- * @property array                        $emojis             An array of emojis available in the guild.
- * @property bool                         $large              Whether the guild is considered 'large' (over 250 members).
- * @property int                          $verification_level The verification level used for the guild.
- * @property int                          $member_count       How many members are in the guild.
+ * @property string                   $id                 The unique identifier of the guild.
+ * @property string                   $name               The name of the guild.
+ * @property string                   $icon               The URL to the guild icon.
+ * @property string                   $icon_hash          The icon hash for the guild.
+ * @property string                   $region             The region the guild's voice channels are hosted in.
+ * @property \Discord\Parts\User\User $owner              The owner of the guild.
+ * @property string                   $owner_id           The unique identifier of the owner of the guild.
+ * @property Carbon                   $joined_at          A timestamp of when the current user joined the guild.
+ * @property string                   $afk_channel_id     The unique identifier of the AFK channel ID.
+ * @property int                      $afk_timeout        How long you will remain in the voice channel until you are moved into the AFK channel.
+ * @property bool                     $embed_enabled      Whether the embed is enabled.
+ * @property string                   $embed_channel_id   The unique identifier of the channel that will be used for the embed.
+ * @property array[string]            $features           An array of features that the guild has.
+ * @property string                   $splash             The URL to the guild splash.
+ * @property string                   $splash_hash        The splash hash for the guild.
+ * @property array                    $emojis             An array of emojis available in the guild.
+ * @property bool                     $large              Whether the guild is considered 'large' (over 250 members).
+ * @property int                      $verification_level The verification level used for the guild.
+ * @property int                      $member_count       How many members are in the guild.
  *
- * @property Discord\Repository\Guild\RoleRepository    $roles
- * @property Discord\Repository\Guild\ChannelRepository $channels
- * @property Discord\Repository\Guild\MemberRepository  $members
- * @property Discord\Repository\Guild\InviteRepository  $invites
- * @property Discord\Repository\Guild\BanRepository     $bans
+ * @property \Discord\Repository\Guild\RoleRepository    $roles
+ * @property \Discord\Repository\Guild\ChannelRepository $channels
+ * @property \Discord\Repository\Guild\MemberRepository  $members
+ * @property \Discord\Repository\Guild\InviteRepository  $invites
+ * @property \Discord\Repository\Guild\BanRepository     $bans
  */
 class Guild extends Part
 {

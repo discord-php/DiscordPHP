@@ -20,11 +20,11 @@ use Discord\Parts\User\User;
  * A TypingStart part is used when the `TYPING_START` event is fired on the WebSocket. It contains
  * information such as when the event was fired and then channel it was fired in.
  *
- * @property Discord\Parts\User\User       $user       The user that started typing.
- * @property string                        $user_id    The unique identifier of the user that started typing
- * @property Carbon                        $timestamp  A timestamp of when the user started typing.
- * @property Discord\Parts\Channel\Channel $channel    The channel that the user started typing in.
- * @property string                        $channel_id The unique identifier of the channel that the user started typing in.
+ * @property \Discord\Parts\User\User       $user       The user that started typing.
+ * @property string                         $user_id    The unique identifier of the user that started typing
+ * @property Carbon                         $timestamp  A timestamp of when the user started typing.
+ * @property \Discord\Parts\Channel\Channel $channel    The channel that the user started typing in.
+ * @property string                         $channel_id The unique identifier of the channel that the user started typing in.
  */
 class TypingStart extends Part
 {
