@@ -12,6 +12,8 @@
 namespace Discord\Parts\Guild;
 
 use Carbon\Carbon;
+use Discord\Helpers\Collection;
+use Discord\Parts\Guild\Invite;
 use Discord\Parts\Part;
 use Discord\Parts\User\Member;
 use Discord\Repository\Guild as Repository;
