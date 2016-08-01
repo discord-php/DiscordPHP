@@ -214,6 +214,32 @@ class Guild extends Part
     }
 
     /**
+     * Returns the channels invites.
+     *
+     * @return \React\Promise\Promise
+     */
+    public function getInvites()
+    {
+        $deferred = new Deferred();
+
+        $this->http->get($this->replaceWithVariables('guilds/:id/invites'))->then(
+            function ($response) use ($deferred) {
+                $invites = new Collection();
+
+                foreach ($response as $invite) {
+                    $invite = $this->factory->create(Invite::class, $invite, true);
+                    $invites->push($invite);
+                }
+
+                $deferred->resolve($invites);
+            },
+            \React\Partial\bind_right($this->reject, $deferred)
+        );
+
+        return $deferred->promise();
+    }
+
+    /**
      * Returns the owner.
      *
      * @return \React\Promise\Promise
