@@ -35,6 +35,29 @@ class User extends Part
     protected $fillable = ['id', 'username', 'avatar', 'discriminator', 'bot'];
 
     /**
+     * Gets the private channel for the user.
+     *
+     * @return \React\Promise\Promise 
+     */
+    public function getPrivateChannel()
+    {
+        $deferred = new Deferred();
+
+        if ($this->cache->has("pm_channel.{$this->id}")) {
+            $deferred->resolve($this->cache->get("pm_channel.{$this->id}"));
+        } else {
+            $this->http->post('users/@me/channels', ['recipient_id' => $this->id])->then(function ($response) use ($deferred) {
+                $channel = $this->factory->create(Channel::class, $response, true);
+                $this->cache->set("pm_channel.{$this->id}", $channel);
+
+                $getChannelID->resolve($channel);
+            }, \React\Partial\bind_right($this->reject, $deferred));
+        }
+
+        return $deferred->promise();
+    }
+
+    /**
      * Sends a message to the user.
      *
      * @param string $text The text to send in the message.
@@ -44,29 +67,14 @@ class User extends Part
      */
     public function sendMessage($message, $tts = false)
     {
-        $deferred     = new Deferred();
-        $getChannelID = new Deferred();
+        $deferred = new Deferred();
 
-        $getChannelID->promise()->then(function ($channel) use ($message, $tts, $deferred) {
-            $channel->sendMessage($message, $tts)->then(
-                function ($response) use ($deferred) {
-                    $message = $this->factory->create(Message::class, $response, true);
-                    $deferred->resolve($message);
-                },
-                \React\Partial\bind_right($this->reject, $deferred)
-            );
-        });
-
-        if ($this->cache->has("pm_channel.{$this->id}")) {
-            $getChannelID->resolve($this->cache->get("pm_channel.{$this->id}"));
-        } else {
-            $this->http->post('users/@me/channels', ['recipient_id' => $this->id])->then(function ($response) use ($getChannelID) {
-                $channel = $this->factory->create(Channel::class, $response, true);
-                $this->cache->set("pm_channel.{$this->id}", $channel);
-
-                $getChannelID->resolve($channel);
-            }, \React\Partial\bind_right($this->reject, $getChannelID));
-        }
+        $this->getPrivateChannel()->then(function ($channel) {
+            $channel->sendMessage($message, $tts)->then(function ($response) use ($deferred) {
+                $message = $this->factory->create(Message::class, $response, true);
+                $deferred->resolve($message);
+            }, \React\Partial\bind_right($this->reject, $deferred));
+        }, \React\Partial\bind_right($this->reject, $deferred));
 
         return $deferred->promise();
     }
