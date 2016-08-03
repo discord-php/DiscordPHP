@@ -37,7 +37,7 @@ class User extends Part
     /**
      * Gets the private channel for the user.
      *
-     * @return \React\Promise\Promise 
+     * @return \React\Promise\Promise
      */
     public function getPrivateChannel()
     {
