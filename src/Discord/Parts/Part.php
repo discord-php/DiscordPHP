@@ -157,7 +157,7 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
             $this->afterConstruct();
         }
 
-        $this->resolve = function ($response, &$deferred) {
+        $this->resolve = function ($response, $deferred) {
             if (is_null($response)) {
                 $response = true;
             }
@@ -165,7 +165,7 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
             $deferred->resolve(true);
         };
 
-        $this->reject = function ($e, &$deferred) {
+        $this->reject = function ($e, $deferred) {
             $deferred->reject($e);
         };
     }
