@@ -69,7 +69,7 @@ class User extends Part
     {
         $deferred = new Deferred();
 
-        $this->getPrivateChannel()->then(function ($channel) {
+        $this->getPrivateChannel()->then(function ($channel) use ($message, $tts) {
             $channel->sendMessage($message, $tts)->then(function ($response) use ($deferred) {
                 $message = $this->factory->create(Message::class, $response, true);
                 $deferred->resolve($message);
