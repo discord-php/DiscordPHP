@@ -98,7 +98,7 @@ class Role extends Part
             return $deferred->promise();
         }
 
-        $this->setAttribute('color', "{$red}{$green}{$blue}");
+        $this->setAttribute('color', $red * 16 ** 4 + $green * 16 ** 2 + $blue);
 
         $deferred->resolve();
 
