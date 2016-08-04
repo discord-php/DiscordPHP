@@ -50,7 +50,7 @@ class User extends Part
                 $channel = $this->factory->create(Channel::class, $response, true);
                 $this->cache->set("pm_channel.{$this->id}", $channel);
 
-                $getChannelID->resolve($channel);
+                $deferred->resolve($channel);
             }, \React\Partial\bind_right($this->reject, $deferred));
         }
 
