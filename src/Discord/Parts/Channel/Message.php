@@ -13,7 +13,6 @@ namespace Discord\Parts\Channel;
 
 use Carbon\Carbon;
 use Discord\Helpers\Collection;
-use Discord\Parts\Channel\Channel;
 use Discord\Parts\Part;
 use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
