@@ -13,7 +13,9 @@ namespace Discord\Parts\Channel;
 
 use Carbon\Carbon;
 use Discord\Helpers\Collection;
+use Discord\Parts\Channel\Channel;
 use Discord\Parts\Part;
+use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
 
 /**
@@ -97,7 +99,7 @@ class Message extends Part
 
         return $this->factory->create(Channel::class, [
             'id'         => $this->channel_id,
-            'is_private' => true,
+            'type'       => Channel::TYPE_DM,
         ], true);
     }
 
@@ -138,20 +140,15 @@ class Message extends Part
     /**
      * Returns the author attribute.
      *
-     * @return User The User that sent the message.
+     * @return Member|User The member that sent the message. Will return a User object if it is a PM.
      */
     public function getAuthorAttribute()
     {
-        return $this->factory->create(
-            User::class,
-            [
-                'id'            => $this->attributes['author']->id,
-                'username'      => $this->attributes['author']->username,
-                'avatar'        => $this->attributes['author']->avatar,
-                'discriminator' => $this->attributes['author']->discriminator,
-            ],
-            true
-        );
+        if ($this->channel->type != Channel::TYPE_TEXT) {
+            return $this->factory->create(User::class, $this->attributes['author'], true);
+        }
+
+        return $this->channel->guild->members->get('id', $this->attributes['author']->id);
     }
 
     /**
