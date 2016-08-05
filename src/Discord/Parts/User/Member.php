@@ -147,23 +147,22 @@ class Member extends Part
      *
      * @param Role|int $role The role to add to the member.
      *
-     * @return \React\Promise\Promise
+     * @return bool Whether adding the role succeeded.
      */
     public function addRole($role)
     {
-        if (is_int($role)) {
-            $role = new Role(['id' => $role], true);
+        if ($role instanceof Role) {
+            $role = $role->id;
         }
 
         // We don't want a double up on roles
-        if (false !== array_search($role->id, (array) $this->attributes['roles'])) {
+        if (false !== array_search($role, (array) $this->attributes['roles'])) {
             return false;
         }
 
-        $this->attributes['roles'][] = $role->id;
-        $this->roles->push($role);
+        $this->attributes['roles'][] = $role;
 
-        return \React\Promise\resolve($role);
+        return true;
     }
 
     /**
@@ -171,7 +170,7 @@ class Member extends Part
      *
      * @param Role|int $role The role to remove from the member.
      *
-     * @return \React\Promise\Promise
+     * @return bool Whether removing the role succeeded.
      */
     public function removeRole($role)
     {
@@ -179,17 +178,11 @@ class Member extends Part
             $role = $role->id;
         }
 
-        if (false !== $index = array_search($role, $this->attributes['roles'])) {
+        if (false !== ($index = array_search($role, $this->attributes['roles']))) {
             unset($this->attributes['roles'][$index]);
         }
 
-        $rolePart = $this->roles->get('id', $role);
-
-        if (false !== $index = array_search($rolePart, $this->roles->all())) {
-            $this->roles->pull($index);
-        }
-
-        return \React\Promise\resolve();
+        return true;
     }
 
     /**
