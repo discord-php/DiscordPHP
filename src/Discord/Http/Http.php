@@ -16,6 +16,7 @@ use Discord\Exceptions\DiscordRequestFailedException;
 use Discord\Exceptions\Rest\ContentTooLongException;
 use Discord\Exceptions\Rest\NoPermissionsException;
 use Discord\Exceptions\Rest\NotFoundException;
+use Discord\Parts\Channel\Channel;
 use Discord\Wrapper\CacheWrapper;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
@@ -149,7 +150,6 @@ class Http
 
         $headers = [
             'User-Agent'     => $this->getUserAgent(),
-            'Content-Length' => 0,
         ];
 
         $headers['authorization'] = 'Bot '.$this->token;
@@ -196,6 +196,46 @@ class Http
         );
 
         return $deferred->promise();
+    }
+
+    /**
+     * Uploads a file to a channel.
+     *
+     * @param Channel $channel  The channel to send to.
+     * @param string  $filepath The path to the file.
+     * @param string  $filename The name to upload the file as.
+     * @param string  $content  Extra text content to go with the file.
+     * @param bool    $tts      Whether the message should be TTS.
+     *
+     * @return \React\Promise\Promise 
+     */
+    public function sendFile(Channel $channel, $filepath, $filename, $content, $tts)
+    {
+        $multipart = [
+            [
+                'name'     => 'file',
+                'contents' => fopen($filepath, 'r'),
+                'filename' => $filename,
+            ],
+            [
+                'name' => 'tts',
+                'contents' => ($tts ? 'true' : 'false'),
+            ],
+            [
+                'name'     => 'content',
+                'contents' => (string) $content,
+            ]
+        ];
+
+        return $this->runRequest(
+            'POST',
+            "channels/{$channel->id}/messages",
+            null,
+            [],
+            false,
+            false,
+            ['multipart' => $multipart]
+        );
     }
 
     /**
