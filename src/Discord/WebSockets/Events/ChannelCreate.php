@@ -24,7 +24,7 @@ class ChannelCreate extends Event
     {
         $channel = $this->factory->create(Channel::class, $data, true);
 
-        if ($channel->is_private) {
+        if (array_search($channel->type, [Channel::TYPE_TEXT, Channel::TYPE_VOICE]) === false) {
             $this->discord->private_channels->push($channel);
         } else {
             $guild = $this->discord->guilds->get('id', $channel->guild_id);
