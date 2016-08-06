@@ -283,7 +283,7 @@ class Member extends Part
     public function getUpdatableAttributes()
     {
         return [
-            'roles' => array_keys($this->attributes['roles']),
+            'roles' => array_values($this->attributes['roles']),
         ];
     }
 
