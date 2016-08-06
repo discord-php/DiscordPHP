@@ -69,7 +69,7 @@ class User extends Part
     {
         $deferred = new Deferred();
 
-        $this->getPrivateChannel()->then(function ($channel) use ($message, $tts) {
+        $this->getPrivateChannel()->then(function ($channel) use ($message, $tts, $deferred) {
             $channel->sendMessage($message, $tts)->then(function ($response) use ($deferred) {
                 $message = $this->factory->create(Message::class, $response, true);
                 $deferred->resolve($message);
@@ -87,25 +87,13 @@ class User extends Part
     public function broadcastTyping()
     {
         $deferred     = new Deferred();
-        $getChannelID = new Deferred();
 
-        $getChannelID->promise()->then(function ($channel) use ($deferred) {
+        $this->getPrivateChannel()->then(function ($channel) use ($deferred) {
             $channel->broadcastTyping()->then(
                 \React\Partial\bind_right($this->resolve, $deferred),
                 \React\Partial\bind_right($this->reject, $deferred)
             );
         });
-
-        if ($this->cache->has("pm_channel.{$this->id}")) {
-            $getChannelID->resolve($this->cache->get("pm_channel.{$this->id}"));
-        } else {
-            $this->http->post('users/@me/channels', ['recipient_id' => $this->id])->then(function ($response) use ($getChannelID) {
-                $channel = $this->factory->create(Channel::class, $response, true);
-                $this->cache->set("pm_channel.{$this->id}", $channel);
-
-                $getChannelID->resolve($channel);
-            }, \React\Partial\bind_right($this->reject, $getChannelID));
-        }
 
         return $deferred->promise();
     }
