@@ -207,7 +207,7 @@ class Http
      * @param string  $content  Extra text content to go with the file.
      * @param bool    $tts      Whether the message should be TTS.
      *
-     * @return \React\Promise\Promise 
+     * @return \React\Promise\Promise
      */
     public function sendFile(Channel $channel, $filepath, $filename, $content, $tts)
     {
@@ -218,13 +218,13 @@ class Http
                 'filename' => $filename,
             ],
             [
-                'name' => 'tts',
+                'name'     => 'tts',
                 'contents' => ($tts ? 'true' : 'false'),
             ],
             [
                 'name'     => 'content',
                 'contents' => (string) $content,
-            ]
+            ],
         ];
 
         return $this->runRequest(
