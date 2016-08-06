@@ -111,8 +111,10 @@ class Channel extends Part
     {
         $recipients = new Collection();
 
-        foreach ((array) $this->attributes['recipients'] as $recipient) {
-            $recipients->push($this->factory->create(User::class, $recipient, true));
+        if (array_key_exists('recipients', $this->attributes)) {
+            foreach ((array) $this->attributes['recipients'] as $recipient) {
+                $recipients->push($this->factory->create(User::class, $recipient, true));
+            }
         }
 
         return $recipients;

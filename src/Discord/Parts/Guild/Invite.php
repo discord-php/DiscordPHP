@@ -79,6 +79,16 @@ class Invite extends Part
     }
 
     /**
+     * Returns the id attribute.
+     *
+     * @return string The id attribute.
+     */
+    public function getIdAttribute()
+    {
+        return $this->code;
+    }
+
+    /**
      * Returns the invite URL attribute.
      *
      * @return string The URL to the invite.

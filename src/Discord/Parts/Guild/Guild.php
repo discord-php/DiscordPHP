@@ -253,10 +253,14 @@ class Guild extends Part
     /**
      * Returns the joined_at attribute.
      *
-     * @return Carbon The joined_at attribute.
+     * @return Carbon|null The joined_at attribute.
      */
     public function getJoinedAtAttribute()
     {
+        if (! array_key_exists('joined_at', $this->attributes)) {
+            return null;
+        }
+
         return new Carbon($this->attributes['joined_at']);
     }
 
