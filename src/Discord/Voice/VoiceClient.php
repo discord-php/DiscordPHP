@@ -323,6 +323,15 @@ class VoiceClient extends EventEmitter
 
         $this->checkForFFmpeg();
         $this->checkForDCA();
+        $this->checkForLibsodium();
+
+        // temp
+        if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+            $this->emit('error', [new \Exception('The voice client does not work on Windows operating systems at the moment.')]);
+
+            return;
+        }
+
         $this->initSockets();
     }
 
@@ -1488,6 +1497,18 @@ class VoiceClient extends EventEmitter
         }
 
         $this->emit('error', [new DCANotFoundException('No DCA binary was found that is compatible with your operating system and arch.')]);
+    }
+
+    /**
+     * Checks if libsodium-php is installed.
+     *
+     * @throws \Discord\Exceptions\LibSodiumNotFoundException Thrown when libsodium-php is not found.
+     */
+    public function checkForLibsodium()
+    {
+        if (! function_exists('\Sodium\crypto_secretbox')) {
+            throw new LibSodiumNotFoundException('libsodium-php could not be found.');
+        }
     }
 
     /**
