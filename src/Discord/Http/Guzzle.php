@@ -11,6 +11,7 @@
 
 namespace Discord\Http;
 
+use Carbon\Carbon;
 use Discord\Discord;
 use Discord\Parts\Channel\Channel;
 use Discord\Wrapper\CacheWrapper;
@@ -151,6 +152,22 @@ class Guzzle extends GuzzleClient implements HttpDriver
                 }
                 // All is good!
                 else {
+                    if ($response->getHeader('X-RateLimit-Remaining') == 0) {
+                        $this->rateLimited = true;
+
+                        $limitEnd = Carbon::createFromTimestamp($response->getHeader('X-RateLimit-Reset'));
+                        $this->loop->addTimer(Carbon::now()->diffInSeconds($limitEnd), function () {
+                            foreach ($this->rateLimits as $i => $d) {
+                                $d->resolve();
+                                unset($this->rateLimits[$i]);
+                            }
+
+                            $this->rateLimited = false;
+                        });
+
+                        $deferred->notify('The next request will hit a rate limit.');
+                    }
+
                     $deferred->resolve($response);
                 }
             }, function ($e) use ($deferred) {
