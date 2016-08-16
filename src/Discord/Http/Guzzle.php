@@ -126,7 +126,7 @@ class Guzzle extends GuzzleClient implements HttpDriver
 
                     $deferred->notify('The next request will hit a rate limit.');
                 }
-                
+
                 // Discord Rate-Limiting
                 if ($response->getStatusCode() == 429) {
                     $tts = (int) $response->getHeader('Retry-After')[0] / 1000;
