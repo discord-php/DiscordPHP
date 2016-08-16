@@ -93,6 +93,16 @@ class Channel extends Part
     }
 
     /**
+     * Gets the is_private attribute.
+     *
+     * @return bool Whether the channel is private.
+     */
+    public function getIsPrivateAttribute()
+    {
+        return (array_search($this->type, [self::TYPE_DM, self::TYPE_GROUP]) !== false);
+    }
+
+    /**
      * Gets the recipient attribute.
      *
      * @return User The recipient.
