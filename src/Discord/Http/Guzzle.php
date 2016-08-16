@@ -111,6 +111,22 @@ class Guzzle extends GuzzleClient implements HttpDriver
             $promise = $this->sendAsync($request, $options);
 
             $promise->then(function ($response) use (&$count, &$sendRequest, $deferred) {
+                if ($response->getStatusCode() !== 429 && $response->getHeader('X-RateLimit-Remaining') == 0) {
+                    $this->rateLimited = true;
+
+                    $limitEnd = Carbon::createFromTimestamp($response->getHeader('X-RateLimit-Reset'));
+                    $this->loop->addTimer(Carbon::now()->diffInSeconds($limitEnd), function () {
+                        foreach ($this->rateLimits as $i => $d) {
+                            $d->resolve();
+                            unset($this->rateLimits[$i]);
+                        }
+
+                        $this->rateLimited = false;
+                    });
+
+                    $deferred->notify('The next request will hit a rate limit.');
+                }
+                
                 // Discord Rate-Limiting
                 if ($response->getStatusCode() == 429) {
                     $tts = (int) $response->getHeader('Retry-After')[0] / 1000;
@@ -152,22 +168,6 @@ class Guzzle extends GuzzleClient implements HttpDriver
                 }
                 // All is good!
                 else {
-                    if ($response->getHeader('X-RateLimit-Remaining') == 0) {
-                        $this->rateLimited = true;
-
-                        $limitEnd = Carbon::createFromTimestamp($response->getHeader('X-RateLimit-Reset'));
-                        $this->loop->addTimer(Carbon::now()->diffInSeconds($limitEnd), function () {
-                            foreach ($this->rateLimits as $i => $d) {
-                                $d->resolve();
-                                unset($this->rateLimits[$i]);
-                            }
-
-                            $this->rateLimited = false;
-                        });
-
-                        $deferred->notify('The next request will hit a rate limit.');
-                    }
-
                     $deferred->resolve($response);
                 }
             }, function ($e) use ($deferred) {
