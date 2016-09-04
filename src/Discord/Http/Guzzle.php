@@ -13,7 +13,6 @@ namespace Discord\Http;
 
 use Carbon\Carbon;
 use Discord\Discord;
-use Discord\Http\Http;
 use Discord\Parts\Channel\Channel;
 use Discord\Wrapper\CacheWrapper;
 use GuzzleHttp\Client as GuzzleClient;
