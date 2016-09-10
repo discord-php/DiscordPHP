@@ -59,7 +59,7 @@ class Member extends Part
     public function ban($daysToDeleteMessasges = null)
     {
         $deferred = new Deferred();
-        $content = [];
+        $content  = [];
 
         $url = $this->replaceWithVariables('guilds/:guild_id/bans/:id');
 
@@ -70,10 +70,10 @@ class Member extends Part
         $this->http->put($url, $content)->then(
             function () use ($deferred) {
                 $ban = $this->factory->create(Ban::class, [
-                    'user' => $this->user,
+                    'user'  => $this->user,
                     'guild' => $this->discord->guilds->get('id', $this->guild_id),
                 ], true);
-                
+
                 $deferred->resolve($ban);
             },
             \React\Partial\bind_right($this->reject, $deferred)
