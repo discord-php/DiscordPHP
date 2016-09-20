@@ -325,7 +325,7 @@ class VoiceClient extends EventEmitter
     /**
      * Starts the voice client.
      *
-     * @return void 
+     * @return void
      */
     public function start()
     {
@@ -1457,6 +1457,7 @@ class VoiceClient extends EventEmitter
         }
 
         $this->emit('error', [new FFmpegNotFoundException('No FFmpeg binary was found.')]);
+
         return false;
     }
 
@@ -1489,6 +1490,7 @@ class VoiceClient extends EventEmitter
         }
 
         $this->emit('error', [new DCANotFoundException('No DCA binary was found that is compatible with your operating system and arch.')]);
+
         return false;
     }
 
@@ -1501,6 +1503,7 @@ class VoiceClient extends EventEmitter
     {
         if (! function_exists('\Sodium\crypto_secretbox')) {
             $this->emit('error', [new LibSodiumNotFoundException('libsodium-php could not be found.')]);
+
             return false;
         }
 
