@@ -1077,6 +1077,8 @@ class Discord
                 unset($this->voiceClients[$channel->guild_id]);
             });
 
+            $vc->start();
+
             $this->voiceLoggers[$channel->guild_id] = $logger;
             $this->removeListener(Event::VOICE_SERVER_UPDATE, $voiceServerUpdate);
         };
