@@ -13,6 +13,7 @@ namespace Discord\Parts\Guild;
 
 use Carbon\Carbon;
 use Discord\Helpers\Collection;
+use Discord\Parts\Guild\Emoji;
 use Discord\Parts\Part;
 use Discord\Parts\User\Member;
 use Discord\Repository\Guild as Repository;
@@ -36,7 +37,6 @@ use React\Promise\Deferred;
  * @property array[string]            $features           An array of features that the guild has.
  * @property string                   $splash             The URL to the guild splash.
  * @property string                   $splash_hash        The splash hash for the guild.
- * @property array                    $emojis             An array of emojis available in the guild.
  * @property bool                     $large              Whether the guild is considered 'large' (over 250 members).
  * @property int                      $verification_level The verification level used for the guild.
  * @property int                      $member_count       How many members are in the guild.
@@ -46,6 +46,7 @@ use React\Promise\Deferred;
  * @property \Discord\Repository\Guild\MemberRepository  $members
  * @property \Discord\Repository\Guild\InviteRepository  $invites
  * @property \Discord\Repository\Guild\BanRepository     $bans
+ * @property \Discord\Repository\Guild\EmojiRepository   $emojis 
  */
 class Guild extends Part
 {
@@ -128,6 +129,7 @@ class Guild extends Part
         'channels' => Repository\ChannelRepository::class,
         'bans'     => Repository\BanRepository::class,
         'invites'  => Repository\InviteRepository::class,
+        'emojis'   => Repository\EmojiRepository::class,
     ];
 
     /**

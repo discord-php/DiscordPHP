@@ -152,7 +152,7 @@ class Http
             'User-Agent'     => $this->getUserAgent(),
         ];
 
-        $headers['authorization'] = 'Bot '.$this->token;
+        $headers['authorization'] = $this->token;
 
         $headers = array_merge($headers, $extraHeaders);
 
