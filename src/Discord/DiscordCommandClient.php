@@ -233,7 +233,7 @@ class DiscordCommandClient extends Discord
             $callable = function ($message) use ($callable) {
                 return $callable;
             };
-        } elseif (is_array($callable)) {
+        } elseif (is_array($callable) && ! is_callable($callable)) {
             $callable = function ($message) use ($callable) {
                 return $callable[array_rand($callable)];
             };
