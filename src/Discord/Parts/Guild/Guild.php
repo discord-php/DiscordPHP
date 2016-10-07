@@ -13,7 +13,6 @@ namespace Discord\Parts\Guild;
 
 use Carbon\Carbon;
 use Discord\Helpers\Collection;
-use Discord\Parts\Guild\Emoji;
 use Discord\Parts\Part;
 use Discord\Parts\User\Member;
 use Discord\Repository\Guild as Repository;
@@ -46,7 +45,7 @@ use React\Promise\Deferred;
  * @property \Discord\Repository\Guild\MemberRepository  $members
  * @property \Discord\Repository\Guild\InviteRepository  $invites
  * @property \Discord\Repository\Guild\BanRepository     $bans
- * @property \Discord\Repository\Guild\EmojiRepository   $emojis 
+ * @property \Discord\Repository\Guild\EmojiRepository   $emojis
  */
 class Guild extends Part
 {
