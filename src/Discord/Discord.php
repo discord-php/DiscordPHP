@@ -310,7 +310,7 @@ class Discord
         $this->cache = new CacheWrapper($this->cachePool); // todo cache pool
         $this->http  = new Http(
             $this->cache,
-            $this->token,
+            ($options['bot'] ? 'Bot ' : '').$this->token,
             self::VERSION,
             new Guzzle($this->cache, $this->loop)
         );
@@ -1077,6 +1077,8 @@ class Discord
                 unset($this->voiceClients[$channel->guild_id]);
             });
 
+            $vc->start();
+
             $this->voiceLoggers[$channel->guild_id] = $logger;
             $this->removeListener(Event::VOICE_SERVER_UPDATE, $voiceServerUpdate);
         };
@@ -1159,6 +1161,7 @@ class Discord
             ->setAllowedTypes('token', 'string')
             ->setDefined([
                 'token',
+                'bot',
                 'shardId',
                 'shardCount',
                 'loop',
@@ -1174,6 +1177,7 @@ class Discord
             ])
             ->setDefaults([
                 'loop'           => LoopFactory::create(),
+                'bot'            => true,
                 'logger'         => null,
                 'loggerLevel'    => Monolog::INFO,
                 'logging'        => true,
@@ -1184,6 +1188,7 @@ class Discord
                 'storeMessages'  => false,
                 'retrieveBans'   => true,
             ])
+            ->setAllowedTypes('bot', 'bool')
             ->setAllowedTypes('loop', LoopInterface::class)
             ->setAllowedTypes('logging', 'bool')
             ->setAllowedTypes('cachePool', CacheItemPoolInterface::class)
@@ -1289,7 +1294,7 @@ class Discord
      */
     public function __get($name)
     {
-        $allowed = ['loop', 'options', 'logger'];
+        $allowed = ['loop', 'options', 'logger', 'http'];
 
         if (array_search($name, $allowed) !== false) {
             return $this->{$name};

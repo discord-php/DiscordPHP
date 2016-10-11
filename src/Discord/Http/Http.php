@@ -152,7 +152,7 @@ class Http
             'User-Agent'     => $this->getUserAgent(),
         ];
 
-        $headers['authorization'] = 'Bot '.$this->token;
+        $headers['authorization'] = $this->token;
 
         $headers = array_merge($headers, $extraHeaders);
 
@@ -179,13 +179,22 @@ class Http
                 $deferred->resolve($json);
             },
             function ($e) use ($deferred, $url) {
-                if (! ($e instanceof \Throwable)) {
-                    $e = $this->handleError(
-                        $e->getStatusCode(),
-                        $e->getReasonPhrase(),
-                        $e->getBody(),
-                        $url
-                    );
+                if (! ($e instanceof \Exception)) {
+                    if (is_callable([$e, 'getStatusCode'])) {
+                        $e = $this->handleError(
+                            $e->getStatusCode(),
+                            $e->getReasonPhrase(),
+                            $e->getBody(),
+                            $url
+                        );
+                    } else {
+                        $e = $this->handleError(
+                            0,
+                            'unknown',
+                            'unknown',
+                            $url
+                        );
+                    }
                 }
 
                 $deferred->reject($e);

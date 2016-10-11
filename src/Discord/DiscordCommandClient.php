@@ -66,7 +66,7 @@ class DiscordCommandClient extends Discord
 
                 if (substr($message->content, 0, strlen($this->commandClientOptions['prefix'])) == $this->commandClientOptions['prefix']) {
                     $withoutPrefix = substr($message->content, strlen($this->commandClientOptions['prefix']));
-                    $args = explode(' ', $withoutPrefix);
+                    $args = str_getcsv($withoutPrefix, ' ');
                     $command = array_shift($args);
 
                     if (array_key_exists($command, $this->commands)) {
@@ -233,7 +233,7 @@ class DiscordCommandClient extends Discord
             $callable = function ($message) use ($callable) {
                 return $callable;
             };
-        } elseif (is_array($callable)) {
+        } elseif (is_array($callable) && ! is_callable($callable)) {
             $callable = function ($message) use ($callable) {
                 return $callable[array_rand($callable)];
             };

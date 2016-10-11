@@ -320,16 +320,26 @@ class VoiceClient extends EventEmitter
         $this->mute           = $data['mute'];
         $this->endpoint       = str_replace([':80', ':443'], '', $data['endpoint']);
         $this->speakingStatus = new Collection([], 'ssrc');
+    }
 
-        $this->checkForFFmpeg();
-        $this->checkForDCA();
-        $this->checkForLibsodium();
+    /**
+     * Starts the voice client.
+     *
+     * @return void
+     */
+    public function start()
+    {
+        if (! $this->checkForFFmpeg() ||
+            ! $this->checkForDCA() ||
+            ! $this->checkForLibsodium()) {
+            return false;
+        }
 
         // temp
         if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
             $this->emit('error', [new \Exception('The voice client does not work on Windows operating systems at the moment.')]);
 
-            return;
+            return false;
         }
 
         $this->initSockets();
@@ -433,25 +443,6 @@ class VoiceClient extends EventEmitter
                         $port = unpack('v', $port)[1];
 
                         $this->logger->debug('received our IP and port', ['ip' => $ip, 'port' => $port]);
-
-                        if (! function_exists('\Sodium\crypto_secretbox')) {
-                            $this->logger->error('libsodium was not found, closing');
-                            $this->emit('error', [new LibSodiumNotFoundException('libsodium-php could not be found.')]);
-                            $this->client->close();
-                            $this->voiceWebsocket->close();
-
-                            $this->mainSend([
-                                'op' => Op::OP_VOICE_STATE_UPDATE,
-                                'd'  => [
-                                    'guild_id'   => $this->channel->guild_id,
-                                    'channel_id' => null,
-                                    'self_mute'  => true,
-                                    'self_deaf'  => true,
-                                ],
-                            ]);
-
-                            return;
-                        }
 
                         $payload = [
                             'op' => Op::VOICE_SELECT_PROTO,
@@ -1466,6 +1457,8 @@ class VoiceClient extends EventEmitter
         }
 
         $this->emit('error', [new FFmpegNotFoundException('No FFmpeg binary was found.')]);
+
+        return false;
     }
 
     /**
@@ -1493,10 +1486,12 @@ class VoiceClient extends EventEmitter
 
             $this->dca = $binary;
 
-            return;
+            return true;
         }
 
         $this->emit('error', [new DCANotFoundException('No DCA binary was found that is compatible with your operating system and arch.')]);
+
+        return false;
     }
 
     /**
@@ -1507,8 +1502,12 @@ class VoiceClient extends EventEmitter
     public function checkForLibsodium()
     {
         if (! function_exists('\Sodium\crypto_secretbox')) {
-            throw new LibSodiumNotFoundException('libsodium-php could not be found.');
+            $this->emit('error', [new LibSodiumNotFoundException('libsodium-php could not be found.')]);
+
+            return false;
         }
+
+        return true;
     }
 
     /**

@@ -26,7 +26,7 @@ use React\Promise\Deferred;
  * @property string                     $id            The unique identifier of the member.
  * @property string                     $username      The username of the member.
  * @property string                     $discriminator The discriminator of the member.
- * @property \Discord\Parts\Guild\Role  $user          The user part of the member.
+ * @property \Discord\Parts\Guild\User  $user          The user part of the member.
  * @property Collection[Role]           $roles         A collection of Roles that the member has.
  * @property bool                       $deaf          Whether the member is deaf.
  * @property bool                       $mute          Whether the member is mute.
@@ -59,21 +59,22 @@ class Member extends Part
     public function ban($daysToDeleteMessasges = null)
     {
         $deferred = new Deferred();
+        $content  = [];
 
         $url = $this->replaceWithVariables('guilds/:guild_id/bans/:id');
 
         if (! is_null($daysToDeleteMessasges)) {
-            $url .= "?message-delete-days={$daysToDeleteMessasges}";
+            $content['delete-message-days'] = $daysToDeleteMessasges;
         }
 
-        $this->http->put($url)->then(
+        $this->http->put($url, $content)->then(
             function () use ($deferred) {
-                $deferred->resolve($this->factory->create(Ban::class,
-                    [
-                        'user'  => $this->user,
-                        'guild' => new Guild(['id' => $this->guild_id], true),
-                    ], true
-                ));
+                $ban = $this->factory->create(Ban::class, [
+                    'user'  => $this->user,
+                    'guild' => $this->discord->guilds->get('id', $this->guild_id),
+                ], true);
+
+                $deferred->resolve($ban);
             },
             \React\Partial\bind_right($this->reject, $deferred)
         );
@@ -295,7 +296,7 @@ class Member extends Part
     public function __toString()
     {
         if ($this->nick) {
-            return "<@!{$this->user->id}";
+            return "<@!{$this->user->id}>";
         }
 
         return "<@{$this->user->id}>";

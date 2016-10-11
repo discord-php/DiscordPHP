@@ -2,7 +2,12 @@ DiscordPHP
 ====
 [![Build Status](https://travis-ci.org/teamreflex/DiscordPHP.svg?branch=master)](https://travis-ci.org/teamreflex/DiscordPHP) [![Discord Chat](https://img.shields.io/badge/chat-Discord%20API-blue.svg)](https://discord.gg/0SBTUU1wZTX4Mjwn) [![PHP Discorders](https://img.shields.io/badge/chat-PHP%20Discord-blue.svg)](https://discord.gg/0duG4FF1ElFGUFVq)
 
-A wrapper for the unofficial [Discord](https://discordapp.com) REST, gateway and voice APIs.
+A wrapper for the official [Discord](https://discordapp.com) REST, gateway and voice APIs.
+
+## FAQ
+
+1. Can I run DiscordPHP on a webserver (e.g. Apache, nginx)?
+    - No, DiscordPHP will only run in CLI. If you want to have an interface for your bot you can integrate [react/http](https://github.com/ReactPHP/http) with your bot and run it through CLI.
 
 ## Getting Started
 
