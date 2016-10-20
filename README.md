@@ -13,7 +13,7 @@ A wrapper for the official [Discord](https://discordapp.com) REST, gateway and v
 
 ### Installing DiscordPHP
 
-DiscordPHP is installed using [Composer](https://getcomposer.org). Make sure you have installed Composer and are used to how it operates. We require a minimum PHP version of PHP 5.5.9, however it is reccomended that you use PHP 7. PHP 5.x support **will** be removed in the future.
+DiscordPHP is installed using [Composer](https://getcomposer.org). Make sure you have installed Composer and are used to how it operates. We require a minimum PHP version of PHP 5.5.9, however it is recommended that you use PHP 7. PHP 5.x support **will** be removed in the future.
 
 This library has not been tested with HHVM.
 
