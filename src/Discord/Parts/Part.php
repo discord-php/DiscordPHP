@@ -487,7 +487,7 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
             $value = $this->getAttribute($key);
 
             if ($value instanceof Carbon) {
-                $value = str_replace('+00:00', 'Z', $value->toAtomString());
+                $value = $value->format('Y-m-d\TH:i:s').'Z';
             }
 
             $data[$key] = $value;
