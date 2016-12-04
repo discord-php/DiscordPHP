@@ -12,6 +12,7 @@
 namespace Discord\Parts;
 
 use ArrayAccess;
+use Carbon\Carbon;
 use Discord\Discord;
 use Discord\Factory\Factory;
 use Discord\Http\Http;
@@ -483,7 +484,13 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
                 continue;
             }
 
-            $data[$key] = $this->getAttribute($key);
+            $value = $this->getAttribute($key);
+
+            if ($value instanceof Carbon) {
+                $value = str_replace('+00:00', 'Z', $value->toAtomString());
+            }
+
+            $data[$key] = $value;
         }
 
         return $data;

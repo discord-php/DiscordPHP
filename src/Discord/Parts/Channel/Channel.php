@@ -509,12 +509,13 @@ class Channel extends Part
     /**
      * Sends a message to the channel if it is a text channel.
      *
-     * @param string $text The text to send in the message.
-     * @param bool   $tts  Whether the message should be sent with text to speech enabled.
+     * @param string $text   The text to send in the message.
+     * @param bool   $tts    Whether the message should be sent with text to speech enabled.
+     * @param Embed  $embed  An embed to send.
      *
      * @return \React\Promise\Promise
      */
-    public function sendMessage($text, $tts = false)
+    public function sendMessage($text, $tts = false, $embed = null)
     {
         $deferred = new Deferred();
 
@@ -529,6 +530,7 @@ class Channel extends Part
             [
                 'content' => $text,
                 'tts'     => $tts,
+                'embed'  => $embed,
             ]
         )->then(
             function ($response) use ($deferred) {
