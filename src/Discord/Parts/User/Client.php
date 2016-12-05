@@ -34,7 +34,6 @@ use React\Promise\Deferred;
  * @property bool                             $bot           Whether the client is a bot.
  * @property \Discord\Parts\User\User         $user          The user instance of the client.
  * @property \Discord\Parts\OAuth\Application $application   The OAuth2 application of the bot.
- *
  * @property \Discord\Repository\GuildRepository          $guilds
  * @property \Discord\Repository\PrivateChannelRepository $private_channels
  * @property \Discord\Repository\UserRepository           $users

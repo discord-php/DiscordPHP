@@ -149,7 +149,7 @@ class Http
         }
 
         $headers = [
-            'User-Agent'     => $this->getUserAgent(),
+            'User-Agent' => $this->getUserAgent(),
         ];
 
         $headers['authorization'] = $this->token;

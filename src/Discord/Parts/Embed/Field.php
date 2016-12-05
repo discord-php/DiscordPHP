@@ -13,22 +13,22 @@ use Discord\Parts\Part;
  */
 class Field extends Part
 {
-	/**
-	 * {@inheritdoc}
-	 */
-	protected $fillable = ['name', 'value', 'inline'];
+    /**
+     * {@inheritdoc}
+     */
+    protected $fillable = ['name', 'value', 'inline'];
 
-	/**
-	 * Gets the inline attribute.
-	 *
-	 * @return bool The inline attribute.
-	 */
-	public function getInlineAttribute()
-	{
-		if (! array_key_exists('inline', $this->attributes)) {
-			return false;
-		}
+    /**
+     * Gets the inline attribute.
+     *
+     * @return bool The inline attribute.
+     */
+    public function getInlineAttribute()
+    {
+        if (! array_key_exists('inline', $this->attributes)) {
+            return false;
+        }
 
-		return $this->attributes['inline'];
-	}
+        return $this->attributes['inline'];
+    }
 }

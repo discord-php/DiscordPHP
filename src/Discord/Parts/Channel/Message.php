@@ -32,7 +32,7 @@ use Discord\Parts\User\User;
  * @property Carbon|null                    $edited_timestamp A timestamp of when the message was edited, or null.
  * @property bool                           $tts              Whether the message was sent as a text-to-speech message.
  * @property array                          $attachments      An array of attachment objects.
- * @property array                          $embeds           An array of embed objects.
+ * @property Collection[Embed]              $embeds           A collection of embed objects.
  * @property string|null                    $nonce            A randomly generated string that provides verification for the client. Not required.
  * @property Collection[Role]               $mention_roles    A collection of roles that were mentioned in the message.
  * @property bool                           $pinned           Whether the message is pinned to the channel.
@@ -97,8 +97,8 @@ class Message extends Part
         }
 
         return $this->factory->create(Channel::class, [
-            'id'         => $this->channel_id,
-            'type'       => Channel::TYPE_DM,
+            'id'   => $this->channel_id,
+            'type' => Channel::TYPE_DM,
         ], true);
     }
 
@@ -148,6 +148,22 @@ class Message extends Part
         }
 
         return $this->channel->guild->members->get('id', $this->attributes['author']->id);
+    }
+
+    /**
+     * Returns the embed attribute.
+     *
+     * @return Collection A collection of embeds.
+     */
+    public function getEmbedsAttribute()
+    {
+        $embeds = new Collection();
+
+        foreach ($this->attributes['embeds'] as $embed) {
+            $embeds->push($this->factory->create(Embed::class, $embed, true));
+        }
+
+        return $embeds;
     }
 
     /**

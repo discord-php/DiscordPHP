@@ -39,7 +39,6 @@ use React\Promise\Deferred;
  * @property bool                     $large              Whether the guild is considered 'large' (over 250 members).
  * @property int                      $verification_level The verification level used for the guild.
  * @property int                      $member_count       How many members are in the guild.
- *
  * @property \Discord\Repository\Guild\RoleRepository    $roles
  * @property \Discord\Repository\Guild\ChannelRepository $channels
  * @property \Discord\Repository\Guild\MemberRepository  $members

@@ -42,7 +42,6 @@ use Traversable;
  * @property int                        $bitrate         The bitrate of the channel. Only for voice channels.
  * @property \Discord\Parts\User\User   $recipient       The first recipient of the channel. Only for DM or group channels.
  * @property Collection[User]           $recipients      A collection of all the recipients in the channel. Only for DM or group channels.
- *
  * @property \Discord\Repository\Channel\VoiceMemberRepository $members
  * @property \Discord\Repository\Channel\MessageRepository     $messages
  * @property \Discord\Repository\Channel\OverwriteRepository   $overwrites
@@ -99,7 +98,7 @@ class Channel extends Part
      */
     public function getIsPrivateAttribute()
     {
-        return (array_search($this->type, [self::TYPE_DM, self::TYPE_GROUP]) !== false);
+        return array_search($this->type, [self::TYPE_DM, self::TYPE_GROUP]) !== false;
     }
 
     /**
@@ -509,9 +508,9 @@ class Channel extends Part
     /**
      * Sends a message to the channel if it is a text channel.
      *
-     * @param string $text   The text to send in the message.
-     * @param bool   $tts    Whether the message should be sent with text to speech enabled.
-     * @param Embed  $embed  An embed to send.
+     * @param string $text  The text to send in the message.
+     * @param bool   $tts   Whether the message should be sent with text to speech enabled.
+     * @param Embed  $embed An embed to send.
      *
      * @return \React\Promise\Promise
      */
@@ -530,7 +529,7 @@ class Channel extends Part
             [
                 'content' => $text,
                 'tts'     => $tts,
-                'embed'  => $embed,
+                'embed'   => $embed,
             ]
         )->then(
             function ($response) use ($deferred) {

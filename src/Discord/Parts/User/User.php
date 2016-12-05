@@ -86,7 +86,7 @@ class User extends Part
      */
     public function broadcastTyping()
     {
-        $deferred     = new Deferred();
+        $deferred = new Deferred();
 
         $this->getPrivateChannel()->then(function ($channel) use ($deferred) {
             $channel->broadcastTyping()->then(

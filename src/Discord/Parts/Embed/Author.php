@@ -14,8 +14,8 @@ use Discord\Parts\Part;
  */
 class Author extends Part
 {
-	/**
-	 * {@inheritdoc}
-	 */
-	protected $fillable = ['name', 'url', 'icon_url', 'proxy_icon_url'];
+    /**
+     * {@inheritdoc}
+     */
+    protected $fillable = ['name', 'url', 'icon_url', 'proxy_icon_url'];
 }
