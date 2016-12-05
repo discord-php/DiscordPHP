@@ -27,8 +27,7 @@ class Embed extends Part
     /**
      * {@inheritdoc}
      */
-    protected $fillable = ['title', 'type', 'description', 'url', 'timestamp', 'color',
-                           'footer', 'image', 'thumbnail', 'video', 'provider', 'author', 'fields', ];
+    protected $fillable = ['title', 'type', 'description', 'url', 'timestamp', 'color', 'footer', 'image', 'thumbnail', 'video', 'provider', 'author', 'fields'];
 
     /**
      * Gets the timestamp attribute.
