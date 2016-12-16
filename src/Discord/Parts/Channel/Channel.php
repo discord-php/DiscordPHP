@@ -337,14 +337,17 @@ class Channel extends Part
 
         $resolver = new OptionsResolver();
         $resolver->setDefaults(['limit' => 100, 'cache' => true]);
-        $resolver->setDefined(['before', 'after']);
+        $resolver->setDefined(['before', 'after', 'around']);
         $resolver->setAllowedTypes('before', [Message::class, 'string']);
         $resolver->setAllowedTypes('after', [Message::class, 'string']);
+        $resolver->setAllowedTypes('around', [Message::class, 'string']);
         $resolver->setAllowedValues('limit', range(1, 100));
 
         $options = $resolver->resolve($options);
-        if (isset($options['before'], $options['after'])) {
-            $deferred->reject(new \Exception('Can only specify before, or after, not both.'));
+        if (isset($options['before'], $options['after']) ||
+            isset($options['before'], $options['around']) ||
+            isset($options['around'], $options['around'])) {
+            $deferred->reject(new \Exception('Can only specify one of before, after and around.'));
 
             return $deferred->promise();
         }
@@ -355,6 +358,9 @@ class Channel extends Part
         }
         if (isset($options['after'])) {
             $url .= '&after='.($options['after'] instanceof Message ? $options['after']->id : $options['after']);
+        }
+        if (isset($options['around'])) {
+            $url .= '&around='.($options['around'] instanceof Message ? $options['around']->id : $options['around']);
         }
 
         $this->http->get($url, null, [], $options['cache'] ? null : 0)->then(
