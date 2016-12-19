@@ -482,6 +482,7 @@ class Discord
 
             $memberPart = $this->factory->create(Member::class, $member, true);
             $guild->members->push($memberPart);
+            $this->users->push($memberPart->user);
             ++$count;
         }
 
