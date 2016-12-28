@@ -13,6 +13,7 @@ namespace Discord\Parts\Channel;
 
 use Discord\Exceptions\FileNotFoundException;
 use Discord\Helpers\Collection;
+use Discord\Parts\Embed\Embed;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Guild\Invite;
 use Discord\Parts\Guild\Role;
