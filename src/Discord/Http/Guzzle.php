@@ -103,7 +103,8 @@ class Guzzle extends GuzzleClient implements HttpDriver
             $method,
             $url,
             $headers,
-            $body
+            $body,
+            '1.0'
         );
         $count = 0;
 

@@ -35,6 +35,6 @@ function mentioned($part, Message $message)
     } elseif ($part instanceof Channel) {
         return strpos($message->content, "<#{$part->id}>") !== false;
     } else {
-        return (strpos($message->content, $part) !== false);
+        return strpos($message->content, $part) !== false;
     }
 }

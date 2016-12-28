@@ -43,6 +43,10 @@ class PresenceUpdate extends Part
      */
     public function getUserAttribute()
     {
+        if ($this->discord->users->has($this->attributes['user']->id)) {
+            return $this->discord->users->get($this->attributes['user']->id);
+        }
+        
         return $this->factory->create(User::class, (array) $this->attributes['user'], true);
     }
 

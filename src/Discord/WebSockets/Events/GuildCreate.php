@@ -83,6 +83,7 @@ class GuildCreate extends Event
                 'mute'      => $member->mute,
                 'deaf'      => $member->deaf,
                 'joined_at' => $member->joined_at,
+                'nick'      => (property_exists($member, 'nick')) ? $member->nick : null,
                 'guild_id'  => $data->id,
                 'status'    => 'offline',
                 'game'      => null,

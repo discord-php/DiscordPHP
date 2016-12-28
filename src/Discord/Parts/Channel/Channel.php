@@ -42,7 +42,6 @@ use Traversable;
  * @property int                        $bitrate         The bitrate of the channel. Only for voice channels.
  * @property \Discord\Parts\User\User   $recipient       The first recipient of the channel. Only for DM or group channels.
  * @property Collection[User]           $recipients      A collection of all the recipients in the channel. Only for DM or group channels.
- *
  * @property \Discord\Repository\Channel\VoiceMemberRepository $members
  * @property \Discord\Repository\Channel\MessageRepository     $messages
  * @property \Discord\Repository\Channel\OverwriteRepository   $overwrites
@@ -99,7 +98,7 @@ class Channel extends Part
      */
     public function getIsPrivateAttribute()
     {
-        return (array_search($this->type, [self::TYPE_DM, self::TYPE_GROUP]) !== false);
+        return array_search($this->type, [self::TYPE_DM, self::TYPE_GROUP]) !== false;
     }
 
     /**
@@ -338,14 +337,17 @@ class Channel extends Part
 
         $resolver = new OptionsResolver();
         $resolver->setDefaults(['limit' => 100, 'cache' => true]);
-        $resolver->setDefined(['before', 'after']);
+        $resolver->setDefined(['before', 'after', 'around']);
         $resolver->setAllowedTypes('before', [Message::class, 'string']);
         $resolver->setAllowedTypes('after', [Message::class, 'string']);
+        $resolver->setAllowedTypes('around', [Message::class, 'string']);
         $resolver->setAllowedValues('limit', range(1, 100));
 
         $options = $resolver->resolve($options);
-        if (isset($options['before'], $options['after'])) {
-            $deferred->reject(new \Exception('Can only specify before, or after, not both.'));
+        if (isset($options['before'], $options['after']) ||
+            isset($options['before'], $options['around']) ||
+            isset($options['around'], $options['around'])) {
+            $deferred->reject(new \Exception('Can only specify one of before, after and around.'));
 
             return $deferred->promise();
         }
@@ -356,6 +358,9 @@ class Channel extends Part
         }
         if (isset($options['after'])) {
             $url .= '&after='.($options['after'] instanceof Message ? $options['after']->id : $options['after']);
+        }
+        if (isset($options['around'])) {
+            $url .= '&around='.($options['around'] instanceof Message ? $options['around']->id : $options['around']);
         }
 
         $this->http->get($url, null, [], $options['cache'] ? null : 0)->then(
@@ -509,12 +514,13 @@ class Channel extends Part
     /**
      * Sends a message to the channel if it is a text channel.
      *
-     * @param string $text The text to send in the message.
-     * @param bool   $tts  Whether the message should be sent with text to speech enabled.
+     * @param string $text  The text to send in the message.
+     * @param bool   $tts   Whether the message should be sent with text to speech enabled.
+     * @param Embed  $embed An embed to send.
      *
      * @return \React\Promise\Promise
      */
-    public function sendMessage($text, $tts = false)
+    public function sendMessage($text, $tts = false, $embed = null)
     {
         $deferred = new Deferred();
 
@@ -529,6 +535,7 @@ class Channel extends Part
             [
                 'content' => $text,
                 'tts'     => $tts,
+                'embed'   => $embed,
             ]
         )->then(
             function ($response) use ($deferred) {
