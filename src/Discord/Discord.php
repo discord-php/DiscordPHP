@@ -598,10 +598,12 @@ class Discord
             return;
         }
 
-        ++$this->reconnectCount;
-        $this->reconnecting = true;
-        $this->logger->info('starting reconnect', ['reconnect_count' => $this->reconnectCount]);
-        $this->connectWs();
+        $this->loop->addTimer(2, function () {
+            ++$this->reconnectCount;
+            $this->reconnecting = true;
+            $this->logger->info('starting reconnect', ['reconnect_count' => $this->reconnectCount]);
+            $this->connectWs();
+        });
     }
 
     /**
