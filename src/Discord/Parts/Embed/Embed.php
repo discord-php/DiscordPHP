@@ -96,11 +96,11 @@ class Embed extends Part
     /**
      * Gets the fields attribute.
      *
-     * @return Collection[Field] The fields attribute.
+     * @return array[Field] The fields attribute.
      */
     public function getFieldsAttribute()
     {
-        $fields = new Collection();
+        $fields = [];
 
         if (! array_key_exists('fields', $this->attributes)) {
             return $fields;
@@ -111,7 +111,7 @@ class Embed extends Part
                 $field = $this->discord->factory(Field::class, $field, true);
             }
 
-            $fields->push($field);
+            $fields[] = $field;
         }
 
         return $fields;
