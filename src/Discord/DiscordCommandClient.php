@@ -154,7 +154,7 @@ class DiscordCommandClient extends Discord
         $this->commands[$command]        = $commandInstance;
 
         foreach ($options['aliases'] as $alias) {
-            $this->addCommandAlias($alias, $command);
+            $this->registerCommandAlias($alias, $command);
         }
 
         return $commandInstance;
