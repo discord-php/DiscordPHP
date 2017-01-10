@@ -101,15 +101,22 @@ class User extends Part
     /**
      * Returns the avatar URL for the client.
      *
+     * @param string $format The image format.
+     * @param int    $size   The size of the image.
+     * 
      * @return string The URL to the clients avatar.
      */
-    public function getAvatarAttribute()
+    public function getAvatarAttribute($format = 'jpg', $size = 1024)
     {
         if (empty($this->attributes['avatar'])) {
             return;
         }
 
-        return "https://discordapp.com/api/users/{$this->id}/avatars/{$this->attributes['avatar']}.jpg";
+        if (false === array_search($format, ['png', 'jpg', 'webp'])) {
+            $format = 'jpg';
+        }
+
+        return "https://cdn.discordapp.com/avatars/{$this->id}/{$this->attributes['avatar']}.{$format}?size={$size}";
     }
 
     /**

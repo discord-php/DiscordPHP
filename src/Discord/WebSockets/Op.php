@@ -88,4 +88,6 @@ class Op
     const CLOSE_SESSION_TIMEOUT = 4009;
     // Invalid shard.
     const CLOSE_INVALID_SHARD = 4010;
+    // Sharding requred.
+    const CLOSE_SHARDING_REQUIRED = 4011;
 }
