@@ -605,7 +605,7 @@ class Discord
                 return;
             case Op::CLOSE_INVALID_SHARD:
                 $this->emit('error', ['shard is invalid', $this]);
-                $this->logger->erorr('the shard you provided is invalid');
+                $this->logger->error('the shard you provided is invalid');
                 return;
             case Op::CLOSE_SHARDING_REQUIRED:
                 $this->emit('error', ['sharding required', $this]);
