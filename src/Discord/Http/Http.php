@@ -151,8 +151,11 @@ class Http
 
         $headers = [
             'User-Agent' => $this->getUserAgent(),
-            'Content-Length' => 0,
         ];
+
+        if (! isset($options['multipart'])) {
+            $headers['Content-Length'] = 0;
+        }
 
         $headers['authorization'] = $this->token;
 
