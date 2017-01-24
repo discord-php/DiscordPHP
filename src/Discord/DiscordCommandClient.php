@@ -331,5 +331,7 @@ class DiscordCommandClient extends Discord
         if (array_search($name, $allowed) !== false) {
             return $this->{$name};
         }
+
+        return parent::__get($name);
     }
 }
