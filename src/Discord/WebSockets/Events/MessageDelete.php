@@ -30,6 +30,6 @@ class MessageDelete extends Event
         );
         $messages->pull($data->id);
 
-        $deferred->resolve();
+        $deferred->resolve($data->id);
     }
 }
