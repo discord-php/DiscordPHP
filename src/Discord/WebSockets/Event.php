@@ -57,10 +57,13 @@ abstract class Event
     const CHANNEL_UPDATE = 'CHANNEL_UPDATE';
 
     // Messages
-    const MESSAGE_CREATE      = 'MESSAGE_CREATE';
-    const MESSAGE_DELETE      = 'MESSAGE_DELETE';
-    const MESSAGE_UPDATE      = 'MESSAGE_UPDATE';
-    const MESSAGE_DELETE_BULK = 'MESSAGE_DELETE_BULK';
+    const MESSAGE_CREATE              = 'MESSAGE_CREATE';
+    const MESSAGE_DELETE              = 'MESSAGE_DELETE';
+    const MESSAGE_UPDATE              = 'MESSAGE_UPDATE';
+    const MESSAGE_DELETE_BULK         = 'MESSAGE_DELETE_BULK';
+    const MESSAGE_REACTION_ADD        = 'MESSAGE_REACTION_ADD';
+    const MESSAGE_REACTION_REMOVE     = 'MESSAGE_REACTION_REMOVE';
+    const MESSAGE_REACTION_REMOVE_ALL = 'MESSAGE_REACTION_REMOVE_ALL';
 
     /**
      * The HTTP client.
