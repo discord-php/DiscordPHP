@@ -79,6 +79,34 @@ class Message extends Part
     {
         return $this->channel->sendMessage("{$this->author}, {$text}");
     }
+    
+    /**
+     * Updates the message.
+     *
+     * @param string $text  The text to send in the message.
+     *
+     * @return \React\Promise\Promise
+     */
+    public function edit($text)
+    {
+        $deferred = new Deferred();
+
+        $this->http->patch(
+            "channels/{$this->channel->id}/messages/{$this->id}",
+            [
+                'content' => $text
+            ]
+        )->then(
+            function ($response) use ($deferred) {
+                $this->fill($response);
+
+                $deferred->resolve($this);
+            },
+            \React\Partial\bind_right($this->reject, $deferred)
+        );
+
+        return $deferred->promise();
+    }
 
     /**
      * Returns the channel attribute.
@@ -88,8 +116,9 @@ class Message extends Part
     public function getChannelAttribute()
     {
         foreach ($this->discord->guilds as $guild) {
-            if ($guild->channels->has($this->channel_id)) {
-                return $guild->channels->get('id', $this->channel_id);
+            $channel = $guild->channels->get('id', $this->channel_id);
+            if (!empty($channel)) {
+                return $channel;
             }
         }
 
