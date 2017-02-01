@@ -39,8 +39,10 @@ class Embed extends Part
         if (! array_key_exists('timestamp', $this->attributes)) {
             return Carbon::now();
         }
-
-        return Carbon::parse($this->attributes['timestamp']);
+        if (!empty($this->attributes['timestamp']))
+        {
+            return Carbon::parse($this->attributes['timestamp']);
+        }
     }
 
     /**
