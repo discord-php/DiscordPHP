@@ -132,6 +132,24 @@ class Message extends Part
 
         return $deferred->promise();
     }
+    
+    /**
+     * Delete the message.
+     *
+     * @return \React\Promise\Promise
+     */
+    public function delete()
+    {
+        $deferred = new Deferred();
+
+        $this->channel->messages->delete($this)->then(
+            function () use ($deffered) {
+                $deferred->resolve();
+            },
+            \React\Partial\bind_right($this->reject, $deferred)
+        );
+        return $deferred->promise();
+    }
 
     /**
      * Returns the channel attribute.
