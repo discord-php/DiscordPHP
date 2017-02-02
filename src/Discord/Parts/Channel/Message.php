@@ -106,6 +106,53 @@ class Message extends Part
     }
     
     /**
+     * Delete a reaction.
+     *
+     * @param array $settings  (id and emoticon)
+     *
+     * @return \React\Promise\Promise
+     */
+    public function react_delete($type, $emoticon = null, $id = null)
+    {
+        $deferred = new Deferred();
+		
+		$types = ['all', 'me', 'id'];
+		
+		if (in_array($type, $types))
+		{
+			if ($type === 'all')
+			{
+				$url = "channels/{$this->channel->id}/messages/{$this->id}/reactions";
+			}
+			else
+			if ($type === 'me')
+			{
+				$url = "channels/{$this->channel->id}/messages/{$this->id}/reactions/{$emoticon}/@me";
+			}
+			else
+			{
+				$url = "channels/{$this->channel->id}/messages/{$this->id}/reactions/{$emoticon}/{$id}";
+			}
+			
+			$this->http->delete(
+				$url, []
+			)->then(
+				function ($response) use ($deferred) {
+
+					$deferred->resolve($this);
+				},
+				\React\Partial\bind_right($this->reject, $deferred)
+			);
+		}
+		else
+		{
+			$deferred->reject();
+		}
+
+        return $deferred->promise();
+    }
+    
+    /**
      * Updates the message.
      *
      * @param string $text  The text to send in the message.
