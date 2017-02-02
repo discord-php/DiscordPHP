@@ -52,9 +52,10 @@ abstract class Event
     const GUILD_ROLE_DELETE   = 'GUILD_ROLE_DELETE';
 
     // Channel
-    const CHANNEL_CREATE = 'CHANNEL_CREATE';
-    const CHANNEL_DELETE = 'CHANNEL_DELETE';
-    const CHANNEL_UPDATE = 'CHANNEL_UPDATE';
+    const CHANNEL_CREATE      = 'CHANNEL_CREATE';
+    const CHANNEL_DELETE      = 'CHANNEL_DELETE';
+    const CHANNEL_UPDATE      = 'CHANNEL_UPDATE';
+    const CHANNEL_PINS_UPDATE = 'CHANNEL_PINS_UPDATE';
 
     // Messages
     const MESSAGE_CREATE              = 'MESSAGE_CREATE';
