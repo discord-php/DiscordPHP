@@ -17,6 +17,7 @@ use Discord\Parts\Embed\Embed;
 use Discord\Parts\Part;
 use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
+use React\Promise\Deferred;
 
 /**
  * A message which is posted to a Discord text channel.
@@ -78,6 +79,30 @@ class Message extends Part
     public function reply($text)
     {
         return $this->channel->sendMessage("{$this->author}, {$text}");
+    }
+    
+    /**
+     * React to a message.
+     *
+     * @param Emoji $emoticon  The emoticon to react with. (example: 👎)
+     *
+     * @return \React\Promise\Promise
+     */
+    public function react($emoticon)
+    {
+        $deferred = new Deferred();
+
+        $this->http->put(
+            "channels/{$this->channel->id}/messages/{$this->id}/reactions/{$emoticon}/@me"
+        )->then(
+            function ($response) use ($deferred) {
+
+                $deferred->resolve($this);
+            },
+            \React\Partial\bind_right($this->reject, $deferred)
+        );
+
+        return $deferred->promise();
     }
     
     /**
