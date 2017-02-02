@@ -84,7 +84,7 @@ class Message extends Part
     /**
      * React to a message.
      *
-     * @param Emoji $emoticon  The emoticon to react with. (example: 👎)
+     * @param Emoji $emoticon  The emoticon to react with. (example: '👎', custom: ':michael:251127796439449631')
      *
      * @return \React\Promise\Promise
      */
