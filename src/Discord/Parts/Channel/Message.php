@@ -190,10 +190,12 @@ class Message extends Part
         $deferred = new Deferred();
 
         $this->channel->messages->delete($this)->then(
-            function () use ($deffered) {
-                $deferred->resolve();
+            function ($message) use ($deferred) {
+                $deferred->resolve($message);
             },
-            \React\Partial\bind_right($this->reject, $deferred)
+            function ($e) use ($deferred) {
+                $deferred->reject($e);
+            }
         );
         return $deferred->promise();
     }
