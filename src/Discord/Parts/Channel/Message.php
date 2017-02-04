@@ -190,8 +190,8 @@ class Message extends Part
         $deferred = new Deferred();
 
         $this->channel->messages->delete($this)->then(
-            function ($message) use ($deferred) {
-                $deferred->resolve($message);
+            function () use ($deferred) {
+                $deferred->resolve($this);
             },
             function ($e) use ($deferred) {
                 $deferred->reject($e);
