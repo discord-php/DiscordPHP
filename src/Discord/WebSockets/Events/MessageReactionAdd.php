@@ -21,7 +21,7 @@ class MessageReactionAdd extends Event
      */
     public function handle(Deferred $deferred, $data)
     {
-    	// todo
+        // todo
         $deferred->resolve($data);
     }
 }

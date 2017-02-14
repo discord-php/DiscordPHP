@@ -21,7 +21,7 @@ class MessageReactionRemove extends Event
      */
     public function handle(Deferred $deferred, $data)
     {
-    	// todo
-    	$deferred->resolve($data);
+        // todo
+        $deferred->resolve($data);
     }
 }
