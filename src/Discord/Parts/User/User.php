@@ -105,7 +105,7 @@ class User extends Part
      *
      * @param string $format The image format.
      * @param int    $size   The size of the image.
-     * 
+     *
      * @return string The URL to the clients avatar.
      */
     public function getAvatarAttribute($format = 'jpg', $size = 1024)

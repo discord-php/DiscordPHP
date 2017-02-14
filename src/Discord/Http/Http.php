@@ -139,7 +139,7 @@ class Http
      */
     private function runRequest($method, $url, $content, $extraHeaders, $cache, $blocking, $options)
     {
-        $deferred = new Deferred();
+        $deferred     = new Deferred();
         $disable_json = false;
 
         $key = 'guzzle.'.sha1($url);
@@ -183,7 +183,7 @@ class Http
                 if ($disable_json) {
                     return $deferred->resolve($response->getBody());
                 }
-                
+
                 $json = json_decode($response->getBody());
 
                 if ($method === 'get' && $cache !== false) {

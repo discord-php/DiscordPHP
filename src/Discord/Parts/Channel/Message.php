@@ -48,6 +48,10 @@ class Message extends Part
     const TYPE_CHANNEL_NAME_CHANGE = 4;
     const TYPE_CHANNEL_ICON_CHANGE = 5;
 
+    const REACT_DELETE_ALL = 0;
+    const REACT_DELETE_ME  = 1;
+    const REACT_DELETE_ID  = 2;
+
     /**
      * {@inheritdoc}
      */
@@ -80,11 +84,11 @@ class Message extends Part
     {
         return $this->channel->sendMessage("{$this->author}, {$text}");
     }
-    
+
     /**
-     * React to a message.
+     * Reacts to the message.
      *
-     * @param Emoji $emoticon  The emoticon to react with. (example: '👎', custom: ':michael:251127796439449631')
+     * @param string $emoticon The emoticon to react with. (custom: ':michael:251127796439449631')
      *
      * @return \React\Promise\Promise
      */
@@ -95,108 +99,51 @@ class Message extends Part
         $this->http->put(
             "channels/{$this->channel->id}/messages/{$this->id}/reactions/{$emoticon}/@me"
         )->then(
-            function ($response) use ($deferred) {
-
-                $deferred->resolve($this);
-            },
+            \React\Partial\bind_right($this->resolve, $deferred),
             \React\Partial\bind_right($this->reject, $deferred)
         );
 
         return $deferred->promise();
     }
-    
+
     /**
-     * Delete a reaction.
+     * Deletes a reaction.
      *
-     * @param array $settings  (id and emoticon)
+     * @param int    $type     The type of deletion to perform.
+     * @param string $emoticon The emoticon to delete (if not all).
+     * @param string $id       The user reaction to delete (if not all).
      *
      * @return \React\Promise\Promise
      */
-    public function react_delete($type, $emoticon = null, $id = null)
-    {
-        $deferred = new Deferred();
-		
-		$types = ['all', 'me', 'id'];
-		
-		if (in_array($type, $types))
-		{
-			if ($type === 'all')
-			{
-				$url = "channels/{$this->channel->id}/messages/{$this->id}/reactions";
-			}
-			else
-			if ($type === 'me')
-			{
-				$url = "channels/{$this->channel->id}/messages/{$this->id}/reactions/{$emoticon}/@me";
-			}
-			else
-			{
-				$url = "channels/{$this->channel->id}/messages/{$this->id}/reactions/{$emoticon}/{$id}";
-			}
-			
-			$this->http->delete(
-				$url, []
-			)->then(
-				function ($response) use ($deferred) {
-
-					$deferred->resolve($this);
-				},
-				\React\Partial\bind_right($this->reject, $deferred)
-			);
-		}
-		else
-		{
-			$deferred->reject();
-		}
-
-        return $deferred->promise();
-    }
-    
-    /**
-     * Updates the message.
-     *
-     * @param string $text  The text to send in the message.
-     *
-     * @return \React\Promise\Promise
-     */
-    public function edit($text)
+    public function deleteReaction($type, $emoticon = null, $id = null)
     {
         $deferred = new Deferred();
 
-        $this->http->patch(
-            "channels/{$this->channel->id}/messages/{$this->id}",
-            [
-                'content' => $text
-            ]
-        )->then(
-            function ($response) use ($deferred) {
-                $this->fill($response);
+        $types = [self::REACT_DELETE_ALL, self::REACT_DELETE_ME, self::REACT_DELETE_ID];
 
-                $deferred->resolve($this);
-            },
-            \React\Partial\bind_right($this->reject, $deferred)
-        );
-
-        return $deferred->promise();
-    }
-    
-    /**
-     * Delete the message.
-     *
-     * @return \React\Promise\Promise
-     */
-    public function delete()
-    {
-        $deferred = new Deferred();
-
-        $this->channel->messages->delete($this)->then(
-            function () use ($deferred) {
-                $deferred->resolve($this);
-            },
-            function ($e) use ($deferred) {
-                $deferred->reject($e);
+        if (in_array($type, $types)) {
+            switch ($type) {
+                case self::REACT_DELETE_ALL:
+                    $url = "channels/{$this->channel->id}/messages/{$this->id}/reactions";
+                    break;
+                case self::REACT_DELETE_ME:
+                    $url = "channels/{$this->channel->id}/messages/{$this->id}/reactions/{$emoticon}/@me";
+                    break;
+                case self::REACT_DELETE_ID:
+                    $url = "channels/{$this->channel->id}/messages/{$this->id}/reactions/{$emoticon}/{$id}";
+                    break;
             }
-        );
+
+            $this->http->delete(
+                $url, []
+            )->then(
+                \React\Partial\bind_right($this->resolve, $deferred),
+                \React\Partial\bind_right($this->reject, $deferred)
+            );
+        } else {
+            $deferred->reject();
+        }
+
         return $deferred->promise();
     }
 
@@ -209,7 +156,7 @@ class Message extends Part
     {
         foreach ($this->discord->guilds as $guild) {
             $channel = $guild->channels->get('id', $this->channel_id);
-            if (!empty($channel)) {
+            if (! empty($channel)) {
                 return $channel;
             }
         }

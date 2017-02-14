@@ -269,7 +269,7 @@ class Guild extends Part
      *
      * @param string $format The image format.
      * @param int    $size   The size of the image.
-     * 
+     *
      * @return string|null The URL to the guild icon or null.
      */
     public function getIconAttribute($format = 'jpg', $size = 1024)
@@ -300,7 +300,7 @@ class Guild extends Part
      *
      * @param string $format The image format.
      * @param int    $size   The size of the image.
-     * 
+     *
      * @return string|null The URL to the guild splash or null.
      */
     public function getSplashAttribute($format = 'jpg', $size = 2048)

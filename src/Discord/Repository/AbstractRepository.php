@@ -127,12 +127,13 @@ abstract class AbstractRepository implements RepositoryInterface, ArrayAccess, C
 
                 $this->push($part);
             }
-			$deferred->resolve($this);
+            
+            $deferred->resolve($this);
         }, function ($e) use ($deferred) {
             $deferred->reject($e);
         });
-		
-		return $deferred->promise();
+
+        return $deferred->promise();
     }
 
     /**

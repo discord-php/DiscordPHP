@@ -11,8 +11,6 @@
 
 namespace Discord\WebSockets\Events;
 
-use Discord\Parts\Channel\Message;
-use Discord\Repository\Channel\MessageRepository;
 use Discord\WebSockets\Event;
 use React\Promise\Deferred;
 
@@ -23,7 +21,7 @@ class MessageReactionAdd extends Event
      */
     public function handle(Deferred $deferred, $data)
     {
-        //wip
+    	// todo
         $deferred->resolve($data);
     }
 }
