@@ -322,7 +322,7 @@ class DiscordCommandClient extends Discord
      *
      * @param string $name Variable name.
      *
-     * @return mixed 
+     * @return mixed
      */
     public function __get($name)
     {
