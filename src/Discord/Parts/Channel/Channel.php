@@ -561,7 +561,7 @@ class Channel extends Part
      *
      * @return \React\Promise\Promise
      */
-    public function sendFile($filepath, $filename = null, $content = null, $tts = false)
+    public function sendFile($filepath, $filename = null, $content = null, $tts = false, $embed = null)
     {
         $deferred = new Deferred();
 
@@ -581,7 +581,7 @@ class Channel extends Part
             $filename = basename($filepath);
         }
 
-        $this->http->sendFile($this, $filepath, $filename, $content, $tts)->then(
+        $this->http->sendFile($this, $filepath, $filename, $content, $tts, $embed)->then(
             function ($response) use ($deferred) {
                 $message = $this->factory->create(Message::class, $response, true);
                 $this->messages->push($message);
