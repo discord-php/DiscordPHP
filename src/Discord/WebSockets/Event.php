@@ -41,7 +41,7 @@ abstract class Event
     const GUILD_CREATE = 'GUILD_CREATE';
     const GUILD_DELETE = 'GUILD_DELETE';
     const GUILD_UPDATE = 'GUILD_UPDATE';
-	const GUILD_SYNC   = 'GUILD_SYNC';
+    const GUILD_SYNC   = 'GUILD_SYNC';
 
     const GUILD_BAN_ADD       = 'GUILD_BAN_ADD';
     const GUILD_BAN_REMOVE    = 'GUILD_BAN_REMOVE';
