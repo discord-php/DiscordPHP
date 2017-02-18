@@ -71,6 +71,7 @@ class Message extends Part
         'nonce',
         'mention_roles',
         'pinned',
+		'reactions'
     ];
 
     /**
@@ -155,14 +156,13 @@ class Message extends Part
     public function getChannelAttribute()
     {
         foreach ($this->discord->guilds as $guild) {
-            $channel = $guild->channels->get('id', $this->channel_id);
-            if (! empty($channel)) {
-                return $channel;
+            if ($guild->channels->has($this->channel_id)) {
+                return $guild->channels->offsetGet($this->channel_id);
             }
         }
 
-        if ($this->cache->has("pm_channels.{$this->channel_id}")) {
-            return $this->cache->get("pm_channels.{$this->channel_id}");
+        if ($this->discord->private_channels->has($this->channel_id)) {
+            return $this->discord->private_channels->offsetGet($this->channel_id);
         }
 
         return $this->factory->create(Channel::class, [
@@ -180,11 +180,13 @@ class Message extends Part
     {
         $roles = new Collection([], 'id');
 
-        foreach ($this->channel->guild->roles as $role) {
-            if (array_search($role->id, $this->attributes['mention_roles']) !== false) {
-                $roles->push($role);
-            }
-        }
+		$guildRoles = $this->channel->guild->roles;
+		
+		foreach ($this->attributes['mention_roles'] as $mentionRoleID) {
+			if ($guildRoles->has($mentionRoleID)) {
+				$roles->push($guildRoles->offsetGet($mentionRoleID));
+			}
+		}
 
         return $roles;
     }
@@ -210,17 +212,23 @@ class Message extends Part
      *
      * @return Member|User The member that sent the message. Will return a User object if it is a PM.
      */
-    public function getAuthorAttribute()
+    public function getAuthorAttribute($type = 0)
     {
-        if ($this->channel->type != Channel::TYPE_TEXT) {
-            return $this->factory->create(User::class, $this->attributes['author'], true);
+        if ($this->channel->type != Channel::TYPE_TEXT || $type === 1) {
+            if ($this->attributes['author'] instanceof User) {
+				return $this->attributes['author'];
+			} else {
+				$this->attributes['author'] = $this->factory->create(User::class, $this->attributes['author'], true);
+				return $this->attributes['author'];
+			}
         }
 
-        if ($member = $this->channel->guild->members->get('id', $this->attributes['author']->id)) {
-            return $member;
-        }
-
-        return $this->factory->create(User::class, $this->attributes['author'], true);
+		if ($type = 0) {
+			$guild = $this->channel->guild;
+			if ($guild->members->has($this->attributes['author']->id)) {
+				return $guild->members->offsetGet($this->attributes['author']->id);
+			}
+		}
     }
 
     /**
@@ -233,11 +241,11 @@ class Message extends Part
         $embeds = new Collection();
 
         foreach ($this->attributes['embeds'] as $embed) {
-            if ($embed instanceof Embed) {
-                $embeds->push($embed);
-            } else {
-                $embeds->push($this->factory->create(Embed::class, $embed, true));
-            }
+			if ($embed instanceof Embed) {
+				$embeds->push($embed);
+			} else {
+				$embeds->push($this->factory->create(Embed::class, $embed, true));
+			}
         }
 
         return $embeds;
@@ -286,7 +294,7 @@ class Message extends Part
     {
         return [
             'content'  => $this->content,
-            'embed'    => $this->embeds->first(),
+			'embed'    => $this->embeds->first(),
             'mentions' => $this->mentions,
         ];
     }

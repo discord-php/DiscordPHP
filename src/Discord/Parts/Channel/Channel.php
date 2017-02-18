@@ -232,7 +232,7 @@ class Channel extends Part
      */
     public function getGuildAttribute()
     {
-        return $this->discord->guilds->get('id', $this->guild_id);
+        return $this->discord->guilds->offsetGet($this->guild_id);
     }
 
     /**
@@ -306,14 +306,21 @@ class Channel extends Part
 
         foreach ($messages as $message) {
             if ($message instanceof Message) {
-                $messageID[] = $message->id;
+                $id = $message->id;
             } else {
-                $messageID[] = $message;
+                $id = $message;
             }
+			$timestamp = timestampFromSnowFlake($id);
+			if ((time() - $timestamp) <= 1209600) {
+				//check to see if younger than 2 weeks old, current bulk-delete requires it.
+				$messageID[] = $id;
+			}
         }
 
+		//add checks to see if more than 2 weeks old and dont include
+		
         $this->http->post(
-            "channels/{$this->id}/messages/bulk_delete",
+            "channels/{$this->id}/messages/bulk-delete",
             [
                 'messages' => $messageID,
             ]
@@ -371,6 +378,9 @@ class Channel extends Part
                 foreach ($response as $message) {
                     $message = $this->factory->create(Message::class, $message, true);
                     $messages->offsetSet($message->id, $message);
+					if ($this->discord->options['storeMessages']) {
+						$this->messages->offsetSet($message->id, $message);
+					}
                 }
 
                 $deferred->resolve($messages);
@@ -457,6 +467,9 @@ class Channel extends Part
                 foreach ($response as $message) {
                     $message = $this->factory->create(Message::class, $message, true);
                     $messages->offsetSet($message->id, $message);
+					if ($this->discord->options['storeMessages']) {
+						$this->messages->offsetSet($message->id, $message);
+					}
                 }
 
                 $deferred->resolve($messages);
@@ -541,9 +554,6 @@ class Channel extends Part
         )->then(
             function ($response) use ($deferred) {
                 $message = $this->factory->create(Message::class, $response, true);
-                if ($this->discord->options['storeMessages']) {
-                    $this->messages->offsetSet($message->id, $message);
-                }
 
                 $deferred->resolve($message);
             },
@@ -586,9 +596,6 @@ class Channel extends Part
         $this->http->sendFile($this, $filepath, $filename, $content, $tts, $embed)->then(
             function ($response) use ($deferred) {
                 $message = $this->factory->create(Message::class, $response, true);
-                if ($this->discord->options['storeMessages']) {
-                    $this->messages->offsetSet($message->id, $message);
-                }
 
                 $deferred->resolve($message);
             },
