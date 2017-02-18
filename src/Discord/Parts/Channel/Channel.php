@@ -49,8 +49,8 @@ use Traversable;
  */
 class Channel extends Part
 {
-    const TYPE_TEXT = 0;
-    const TYPE_DM = 1;
+    const TYPE_TEXT  = 0;
+    const TYPE_DM    = 1;
     const TYPE_VOICE = 2;
     const TYPE_GROUP = 3;
 
@@ -85,7 +85,7 @@ class Channel extends Part
      */
     public function afterConstruct()
     {
-        if (!array_key_exists('bitrate', $this->attributes) &&
+        if (! array_key_exists('bitrate', $this->attributes) &&
             $this->type != self::TYPE_TEXT
         ) {
             $this->bitrate = 64000;
@@ -163,7 +163,7 @@ class Channel extends Part
             'deny'  => $deny,
         ];
 
-        if (!$this->created) {
+        if (! $this->created) {
             $this->attributes['permission_overwrites'][] = $payload;
             $deferred->resolve();
         } else {
@@ -282,8 +282,8 @@ class Channel extends Part
     {
         $deferred = new Deferred();
 
-        if (!is_array($messages) &&
-            !($messages instanceof Traversable)
+        if (! is_array($messages) &&
+            ! ($messages instanceof Traversable)
         ) {
             $deferred->reject(new \Exception('$messages must be an array or implement Traversable.'));
 
@@ -422,7 +422,7 @@ class Channel extends Part
     {
         $deferred = new Deferred();
 
-        if (!$message->pinned) {
+        if (! $message->pinned) {
             return \React\Promise\reject(new \Exception('This message is not pinned.'));
         }
 
@@ -502,9 +502,9 @@ class Channel extends Part
     {
         $this->attributes['permission_overwrites'] = $overwrites;
 
-        if (!is_null($overwrites)) {
+        if (! is_null($overwrites)) {
             foreach ($overwrites as $overwrite) {
-                $overwrite = (array) $overwrite;
+                $overwrite               = (array) $overwrite;
                 $overwrite['channel_id'] = $this->id;
 
                 $this->overwrites->push($overwrite);
@@ -573,7 +573,7 @@ class Channel extends Part
             return $deferred->promise();
         }
 
-        if (!file_exists($filepath)) {
+        if (! file_exists($filepath)) {
             $deferred->reject(new FileNotFoundException("File does not exist at path {$filepath}."));
 
             return $deferred->promise();
