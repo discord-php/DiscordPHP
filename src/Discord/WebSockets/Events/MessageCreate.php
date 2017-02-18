@@ -26,13 +26,17 @@ class MessageCreate extends Event
         $messagePart = $this->factory->create(Message::class, $data, true);
 
         if ($this->discord->options['storeMessages']) {
-            $messages = $this->discord->getRepository(
-                MessageRepository::class,
-                $messagePart->channel_id,
-                'messages',
-                ['channel_id' => $messagePart->channel_id]
-            );
-            $messages->offsetSet($messagePart->id, $messagePart);
+			if ($this->discord->private_channels->has($messagePart->channel_id)) {
+				$messages = $this->discord->private_channels->offsetGet($messagePart->channel_id)->messages;
+			} else {
+				$messages = $this->discord->getRepository(
+					MessageRepository::class,
+					$messagePart->channel_id,
+					'messages',
+					['channel_id' => $messagePart->channel_id]
+				);
+			}
+			$messages->offsetSet($messagePart->id, $messagePart);
         }
 
         $deferred->resolve($messagePart);

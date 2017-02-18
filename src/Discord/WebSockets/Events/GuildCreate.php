@@ -38,8 +38,8 @@ class GuildCreate extends Event
         }
 
         $guildPart = $this->factory->create(Guild::class, $data, true);
-
-        $this->discord->guilds->offsetSet($guildPart->id, $guildPart);
+		
+		$this->discord->guilds->offsetSet($guildPart->id, $guildPart);
 
         $roles = new RoleRepository(
             $this->http,
@@ -107,13 +107,14 @@ class GuildCreate extends Event
         $guildPart->members  = $members;
 
         foreach ($data->voice_states as $state) {
-            if ($channel = $guildPart->channels->get('id', $state->channel_id)) {
+            if ($guildPart->channels->has($state->channel_id)) {
+				$channel = $guildPart->channels->offsetGet($state->channel_id);
                 $channel->members->offsetSet($state->user_id, $this->factory->create(VoiceStateUpdatePart::class, (array) $state, true));
             }
         }
 
         $resolve = function () use (&$guildPart, $deferred) {
-            if ($guildPart->member_count > 100) {
+            if ($guildPart->large) {
                 $this->discord->addLargeGuild($guildPart);
             }
 

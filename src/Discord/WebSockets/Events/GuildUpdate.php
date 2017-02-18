@@ -48,11 +48,7 @@ class GuildUpdate extends Event
 
         $guildPart->roles = $roles;
 
-        if ($guildPart->member_count > 100) {
-            $this->discord->addLargeGuild($guildPart);
-        }
-
-        $old = $this->discord->guilds->get('id', $guildPart->id);
+		$old = $this->discord->guilds->has($guildPart->id) ? $this->discord->guilds->offsetGet($guildPart->id) : null;
         $this->discord->guilds->offsetSet($guildPart->id, $guildPart);
 
         $deferred->resolve([$guildPart, $old]);

@@ -22,16 +22,24 @@ class MessageDeleteBulk extends Event
      */
     public function handle(Deferred $deferred, $data)
     {
-        $messages = $this->discord->getRepository(
-            MessageRepository::class,
-            $data->channel_id,
-            'messages',
-            ['channel_id' => $data->channel_id]
-        );
-
-        foreach ($data->ids as $message) {
-            $messages->pull($message);
-        }
+		if ($this->discord->options['storeMessages']) {
+			if ($this->discord->private_channels->has($data->channel_id)) {
+				$messages = $this->discord->private_channels->offsetGet($data->channel_id)->messages;
+			} else {
+				$messages = $this->discord->getRepository(
+					MessageRepository::class,
+					$data->channel_id,
+					'messages',
+					['channel_id' => $data->channel_id]
+				);
+			}
+			
+			foreach ($data->ids as $messageid) {
+				if ($channel->messages->has($messageid)) {
+					$channel->messages->pull($messageid);
+				}
+			}
+		}
 
         $deferred->resolve($data);
     }

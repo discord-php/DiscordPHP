@@ -24,9 +24,9 @@ class GuildMemberAdd extends Event
     {
         $memberPart = $this->factory->create(Member::class, $data, true);
 
-        $guild = $this->discord->guilds->get('id', $memberPart->guild_id);
 
-        if (! is_null($guild)) {
+        if ($this->discord->guilds->has($memberPart->guild_id)) {
+			$guild = $this->discord->guilds->offsetGet($memberPart->guild_id);
             $guild->members->offsetSet($memberPart->id, $memberPart);
             ++$guild->member_count;
 

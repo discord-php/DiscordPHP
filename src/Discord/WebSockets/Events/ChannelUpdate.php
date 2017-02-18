@@ -25,11 +25,11 @@ class ChannelUpdate extends Event
         $channel = $this->factory->create(Channel::class, $data, true);
 
         if ($channel->is_private) {
-            $old = $this->discord->private_channels->get('id', $channel->id);
-            $this->discord->private_channels->push($channel);
+            $old = $this->discord->private_channels->has($channel->id) ? $this->discord->private_channels->offsetGet($channel->id) : null;
+            $this->discord->private_channels->offsetSet($channel->id, $channel);
         } else {
-            $guild = $this->discord->guilds->get('id', $channel->guild_id);
-            $old   = $guild->channels->get('id', $channel->id);
+            $guild = $this->discord->guilds->offsetGet($channel->guild_id);
+            $old   = $guild->channels->has($channel->id) ? $guild->channels->offsetGet($channel->id) : null;
             $guild->channels->offsetSet($channel->id, $channel);
         }
 

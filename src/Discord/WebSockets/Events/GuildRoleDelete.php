@@ -11,8 +11,8 @@
 
 namespace Discord\WebSockets\Events;
 
-use Discord\WebSockets\Event;
 use React\Promise\Deferred;
+use Discord\WebSockets\Event;
 
 class GuildRoleDelete extends Event
 {
@@ -21,8 +21,12 @@ class GuildRoleDelete extends Event
      */
     public function handle(Deferred $deferred, $data)
     {
-        $guild = $this->discord->guilds->get('id', $data->guild_id);
-        $guild->roles->pull($data->role_id);
+        if ($this->discord->guilds->has($data->guild_id)) {
+			$guild = $this->discord->guilds->offsetGet($data->guild_id);
+            $guild->roles->pull($data->role_id);
+			
+			$this->discord->guilds->offsetSet($guild->id, $guild);
+        }
 
         $deferred->resolve($data);
     }
