@@ -38,8 +38,8 @@ class GuildCreate extends Event
         }
 
         $guildPart = $this->factory->create(Guild::class, $data, true);
-		
-		$this->discord->guilds->offsetSet($guildPart->id, $guildPart);
+
+        $this->discord->guilds->offsetSet($guildPart->id, $guildPart);
 
         $roles = new RoleRepository(
             $this->http,
