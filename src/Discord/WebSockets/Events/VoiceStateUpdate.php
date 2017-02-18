@@ -37,7 +37,7 @@ class VoiceStateUpdate extends Event
                 $user = $this->discord->users->get('id', $state->id);
 
                 foreach ($guild->channels as $cindex => $channel) {
-                    if (! (isset($user) && $user->bot)) {
+                    if (!(isset($user) && $user->bot)) {
                         $channel->members->pull($state->id);
                     }
                 }

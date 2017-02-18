@@ -60,7 +60,7 @@ class Process extends EventEmitter
      */
     public function __construct($cmd, $cwd = null, array $env = null, array $options = [])
     {
-        if (! function_exists('proc_open')) {
+        if (!function_exists('proc_open')) {
             throw new \RuntimeException('The Process class relies on proc_open(), which is not available on your PHP installation.');
         }
 
@@ -74,7 +74,7 @@ class Process extends EventEmitter
             }
         }
 
-        $this->options                      = $options;
+        $this->options = $options;
         $this->enhanceSigchildCompatibility = $this->isSigchildEnabled();
     }
 
@@ -95,7 +95,7 @@ class Process extends EventEmitter
             throw new \RuntimeException('Process is already running');
         }
 
-        $cmd    = $this->cmd;
+        $cmd = $this->cmd;
         $fdSpec = [
             ['pipe', 'r'], // stdin
             ['pipe', 'w'], // stdout
@@ -105,12 +105,12 @@ class Process extends EventEmitter
         // Read exit code through fourth pipe to work around --enable-sigchild
         if ($this->isSigchildEnabled() && $this->enhanceSigchildCompatibility) {
             $fdSpec[] = ['pipe', 'w'];
-            $cmd      = sprintf('(%s) 3>/dev/null; code=$?; echo $code >&3; exit $code', $cmd);
+            $cmd = sprintf('(%s) 3>/dev/null; code=$?; echo $code >&3; exit $code', $cmd);
         }
 
         $this->process = proc_open($cmd, $fdSpec, $this->pipes, $this->cwd, $this->env, $this->options);
 
-        if (! is_resource($this->process)) {
+        if (!is_resource($this->process)) {
             throw new \RuntimeException('Unable to launch a new process.');
         }
 
@@ -124,7 +124,7 @@ class Process extends EventEmitter
         }
 
         $loop->addPeriodicTimer($interval, function (Timer $timer) {
-            if (! $this->isRunning()) {
+            if (!$this->isRunning()) {
                 // $this->close();
                 $timer->cancel();
                 $this->emit('exit', [$this->getExitCode(), $this->getTermSignal()]);
@@ -154,7 +154,7 @@ class Process extends EventEmitter
         }
 
         $this->terminate();
-        $exitCode      = proc_close($this->process);
+        $exitCode = proc_close($this->process);
         $this->process = null;
 
         if ($this->exitCode === null && $exitCode !== -1) {
@@ -166,7 +166,7 @@ class Process extends EventEmitter
         }
 
         if ($this->exitCode === null && $this->fallbackExitCode !== null) {
-            $this->exitCode         = $this->fallbackExitCode;
+            $this->exitCode = $this->fallbackExitCode;
             $this->fallbackExitCode = null;
         }
     }
@@ -351,7 +351,7 @@ class Process extends EventEmitter
      */
     private function pollExitCodePipe()
     {
-        if (! isset($this->pipes[3])) {
+        if (!isset($this->pipes[3])) {
             return;
         }
 
@@ -378,7 +378,7 @@ class Process extends EventEmitter
      */
     private function closeExitCodePipe()
     {
-        if (! isset($this->pipes[3])) {
+        if (!isset($this->pipes[3])) {
             return;
         }
 
@@ -439,7 +439,7 @@ class Process extends EventEmitter
             $this->termSignal = $this->status['termsig'];
         }
 
-        if (! $this->status['running'] && -1 !== $this->status['exitcode']) {
+        if (!$this->status['running'] && -1 !== $this->status['exitcode']) {
             $this->exitCode = $this->status['exitcode'];
         }
     }
