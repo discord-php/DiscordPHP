@@ -229,7 +229,6 @@ class Http
      * @param string  $filename The name to upload the file as.
      * @param string  $content  Extra text content to go with the file.
      * @param bool    $tts      Whether the message should be TTS.
-     * @param Embed   $embed    Embed to send.
      *
      * @return \React\Promise\Promise
      */
@@ -242,18 +241,20 @@ class Http
                 'filename' => $filename,
             ],
             [
-                'name'     => 'content',
-                'contents' => (string) $content,
-            ],
-            [
                 'name'     => 'tts',
                 'contents' => ($tts ? 'true' : 'false'),
             ],
             [
-                'name'     => 'embed',
-                'contents' => $embed,
+                'name'     => 'content',
+                'contents' => (string) $content,
             ],
         ];
+		
+		if (! is_null($embed)) {
+			$postEmbed['name'] = 'content';
+			$postEmbed['contents'] = $embed;
+			$multipart[] = $postEmbed;
+		}
 
         return $this->runRequest(
             'POST',
