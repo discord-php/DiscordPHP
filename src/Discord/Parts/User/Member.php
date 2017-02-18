@@ -261,13 +261,13 @@ class Member extends Part
     {
         $roles = new Collection();
 
-		$guildRoles = $this->guild->roles;
-		
-		foreach ($this->attributes['roles'] as $memberRoleID) {
-			if ($guildRoles->has($memberRoleID)) {
-				$roles->push($guildRoles->offsetGet($memberRoleID));
-			}
-		}
+        $guildRoles = $this->guild->roles;
+
+        foreach ($this->attributes['roles'] as $memberRoleID) {
+            if ($guildRoles->has($memberRoleID)) {
+                $roles->push($guildRoles->offsetGet($memberRoleID));
+            }
+        }
 
         return $roles;
     }

@@ -26,37 +26,37 @@ class PresenceUpdate extends Event
         $old            = null;
 
         if ($this->discord->guilds->has($presenceUpdate->guild_id)) {
-			$guild = $this->discord->guilds->offsetGet($presenceUpdate->guild_id);
+            $guild = $this->discord->guilds->offsetGet($presenceUpdate->guild_id);
 
-			if ($guild->members->has($presenceUpdate->user->id)) {
-				$member = $guild->members->offsetGet($presenceUpdate->user->id);
-				$rawOld = array_merge([
-					'roles'  => [],
-					'status' => null,
-					'game'   => null,
-					'nick'   => null,
-				], $member->getRawAttributes());
+            if ($guild->members->has($presenceUpdate->user->id)) {
+                $member = $guild->members->offsetGet($presenceUpdate->user->id);
+                $rawOld = array_merge([
+                    'roles'  => [],
+                    'status' => null,
+                    'game'   => null,
+                    'nick'   => null,
+                ], $member->getRawAttributes());
 
-				$old = $this->factory->create(PresenceUpdatePart::class, [
-					'user'     => $member->user,
-					'roles'    => $rawOld['roles'],
-					'guild_id' => $presenceUpdate->guild_id,
-					'status'   => $rawOld['status'],
-					'game'     => $rawOld['game'],
-					'nick'     => $rawOld['nick'],
-				], true);
+                $old = $this->factory->create(PresenceUpdatePart::class, [
+                    'user'     => $member->user,
+                    'roles'    => $rawOld['roles'],
+                    'guild_id' => $presenceUpdate->guild_id,
+                    'status'   => $rawOld['status'],
+                    'game'     => $rawOld['game'],
+                    'nick'     => $rawOld['nick'],
+                ], true);
 
-				$presenceAttributes = $presenceUpdate->getRawAttributes();
-				$member->fill([
-					'status' => $presenceAttributes['status'],
-					'roles'  => $presenceAttributes['roles'],
-					'nick'   => isset($presenceAttributes['nick']) ? $presenceAttributes['nick'] : null,
-					'game'   => $presenceAttributes['game'],
-				]);
+                $presenceAttributes = $presenceUpdate->getRawAttributes();
+                $member->fill([
+                    'status' => $presenceAttributes['status'],
+                    'roles'  => $presenceAttributes['roles'],
+                    'nick'   => isset($presenceAttributes['nick']) ? $presenceAttributes['nick'] : null,
+                    'game'   => $presenceAttributes['game'],
+                ]);
 
-				$guild->members->offsetSet($member->id, $member);
-			}
-		}
+                $guild->members->offsetSet($member->id, $member);
+            }
+        }
 
         $deferred->resolve([$presenceUpdate, $old]);
     }

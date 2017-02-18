@@ -310,15 +310,15 @@ class Channel extends Part
             } else {
                 $id = $message;
             }
-			$timestamp = timestampFromSnowFlake($id);
-			if ((time() - $timestamp) <= 1209600) {
-				//check to see if younger than 2 weeks old, current bulk-delete requires it.
-				$messageID[] = $id;
-			}
+            $timestamp = timestampFromSnowFlake($id);
+            if ((time() - $timestamp) <= 1209600) {
+                //check to see if younger than 2 weeks old, current bulk-delete requires it.
+                $messageID[] = $id;
+            }
         }
 
-		//add checks to see if more than 2 weeks old and dont include
-		
+        //add checks to see if more than 2 weeks old and dont include
+
         $this->http->post(
             "channels/{$this->id}/messages/bulk-delete",
             [
@@ -378,9 +378,9 @@ class Channel extends Part
                 foreach ($response as $message) {
                     $message = $this->factory->create(Message::class, $message, true);
                     $messages->offsetSet($message->id, $message);
-					if ($this->discord->options['storeMessages']) {
-						$this->messages->offsetSet($message->id, $message);
-					}
+                    if ($this->discord->options['storeMessages']) {
+                        $this->messages->offsetSet($message->id, $message);
+                    }
                 }
 
                 $deferred->resolve($messages);
@@ -467,9 +467,9 @@ class Channel extends Part
                 foreach ($response as $message) {
                     $message = $this->factory->create(Message::class, $message, true);
                     $messages->offsetSet($message->id, $message);
-					if ($this->discord->options['storeMessages']) {
-						$this->messages->offsetSet($message->id, $message);
-					}
+                    if ($this->discord->options['storeMessages']) {
+                        $this->messages->offsetSet($message->id, $message);
+                    }
                 }
 
                 $deferred->resolve($messages);
