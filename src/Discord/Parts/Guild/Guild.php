@@ -15,7 +15,6 @@ use Carbon\Carbon;
 use Discord\Helpers\Collection;
 use Discord\Parts\Part;
 use Discord\Parts\User\Member;
-use Discord\Parts\User\User;
 use Discord\Repository\Guild as Repository;
 use React\Promise\Deferred;
 
@@ -168,6 +167,7 @@ class Guild extends Part
 
                 $this->roles->save($role)->then(
                     function ($role) use ($deferred) {
+						$this->discord->guilds->offsetSet($this->id, $this);
                         $deferred->resolve($role);
                     },
                     \React\Partial\bind_right($this->reject, $deferred)
@@ -248,7 +248,9 @@ class Guild extends Part
      */
     public function getOwnerAttribute()
     {
-        return $this->discord->users->get('id', $this->owner_id);
+		if ($user = $this->discord->users->get('id', $this->owner_id)) {
+			return $user;
+		}
     }
 
     /**
@@ -270,7 +272,7 @@ class Guild extends Part
      *
      * @param string $format The image format.
      * @param int    $size   The size of the image.
-     * 
+     *
      * @return string|null The URL to the guild icon or null.
      */
     public function getIconAttribute($format = 'jpg', $size = 1024)
@@ -301,7 +303,7 @@ class Guild extends Part
      *
      * @param string $format The image format.
      * @param int    $size   The size of the image.
-     * 
+     *
      * @return string|null The URL to the guild splash or null.
      */
     public function getSplashAttribute($format = 'jpg', $size = 2048)
