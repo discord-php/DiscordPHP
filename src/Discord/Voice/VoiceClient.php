@@ -1271,15 +1271,15 @@ class VoiceClient extends EventEmitter
      */
     public function isSpeaking($id = null)
     {
-		if ($id) {
-			if ($this->speakingStatus->has($id)) {
-				return $this->speakingStatus->offsetGet($id)->speaking;
-			} else {
-				return false;
-			}
-		} else {
-			return $this->speaking;
-		}
+        if ($id) {
+            if ($this->speakingStatus->has($id)) {
+                return $this->speakingStatus->offsetGet($id)->speaking;
+            } else {
+                return false;
+            }
+        } else {
+            return $this->speaking;
+        }
     }
 
     /**
@@ -1303,8 +1303,7 @@ class VoiceClient extends EventEmitter
             unset($this->speakingStatus[$ss->ssrc]);
         };
 
-
-        if (!$this->speakingStatus->has($data->user_id)) {
+        if (! $this->speakingStatus->has($data->user_id)) {
             return; // not in our channel
         }
 
@@ -1312,7 +1311,7 @@ class VoiceClient extends EventEmitter
             return; // ignore, just a mute/deaf change
         }
 
-		$ss = $this->speakingStatus->offsetGet($data->user_id);
+        $ss = $this->speakingStatus->offsetGet($data->user_id);
         $removeDecoder($ss);
     }
 

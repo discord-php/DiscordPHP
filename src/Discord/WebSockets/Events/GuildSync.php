@@ -23,16 +23,16 @@ class GuildSync extends Event
      */
     public function handle(Deferred $deferred, $data)
     {
-		$guild = $this->discord->guilds->offsetGet($data->id);
-		
-		$members = new MemberRepository(
+        $guild = $this->discord->guilds->offsetGet($data->id);
+
+        $members = new MemberRepository(
             $this->http,
             $this->cache,
             $this->factory,
             $guild->getRepositoryAttributes()
         );
-		
-		foreach ($data->members as $member) {
+
+        foreach ($data->members as $member) {
             $memberPart = $this->factory->create(Member::class, [
                 'user'      => $member->user,
                 'roles'     => $member->roles,
@@ -55,11 +55,11 @@ class GuildSync extends Event
             $this->discord->users->offsetSet($memberPart->id, $memberPart->user);
             $members->offsetSet($memberPart->id, $memberPart);
         }
-		
-		$guild->large = $data->large;
-		$guild->members = $members;
-		
-		$resolve = function () use (&$guild, $deferred) {
+
+        $guild->large   = $data->large;
+        $guild->members = $members;
+
+        $resolve = function () use (&$guild, $deferred) {
             if ($guild->large) {
                 $this->discord->addLargeGuild($guild);
             }
@@ -68,7 +68,7 @@ class GuildSync extends Event
 
             $deferred->resolve($guild);
         };
-		
-		$resolve();
+
+        $resolve();
     }
 }

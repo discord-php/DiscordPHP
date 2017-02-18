@@ -63,20 +63,20 @@ class Client extends Part
     {
         $this->user = $this->factory->create(User::class,
             [
-                'id'            => $this->id,
-                'username'      => $this->username,
-                'avatar'        => $this->attributes['avatar'],
-                'discriminator' => $this->discriminator,
-				'bot'			=> $this->bot
+                'id'             => $this->id,
+                'username'       => $this->username,
+                'avatar'         => $this->attributes['avatar'],
+                'discriminator'  => $this->discriminator,
+                'bot'            => $this->bot,
             ], true
         );
-		if ($this->bot) {
-			$this->application = $this->factory->create(Application::class, [], true);
-			
-			$this->http->get('oauth2/applications/@me')->then(function ($response) {
-				$this->application->fill((array) $response);
-			});
-		}
+        if ($this->bot) {
+            $this->application = $this->factory->create(Application::class, [], true);
+
+            $this->http->get('oauth2/applications/@me')->then(function ($response) {
+                $this->application->fill((array) $response);
+            });
+        }
     }
 
     /**
