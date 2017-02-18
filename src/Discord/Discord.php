@@ -481,8 +481,8 @@ class Discord
             $member['game']     = null;
 
             $memberPart = $this->factory->create(Member::class, $member, true);
-            $guild->members->push($memberPart);
-            $this->users->push($memberPart->user);
+            $guild->members->offsetSet($memberPart->id, $memberPart);
+            $this->users->offsetSet($memberPart->id, $memberPart->user);
             ++$count;
         }
 
