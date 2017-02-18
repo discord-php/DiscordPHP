@@ -67,15 +67,16 @@ class Client extends Part
                 'username'      => $this->username,
                 'avatar'        => $this->attributes['avatar'],
                 'discriminator' => $this->discriminator,
+				'bot'			=> $this->bot
             ], true
         );
-        if ($this->user->bot) {
-            $this->application = $this->factory->create(Application::class, [], true);
-
-            $this->http->get('oauth2/applications/@me')->then(function ($response) {
-                $this->application->fill((array) $response);
-            });
-        }
+		if ($this->bot) {
+			$this->application = $this->factory->create(Application::class, [], true);
+			
+			$this->http->get('oauth2/applications/@me')->then(function ($response) {
+				$this->application->fill((array) $response);
+			});
+		}
     }
 
     /**

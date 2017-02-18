@@ -44,12 +44,12 @@ class User extends Part
     {
         $deferred = new Deferred();
 
-        if ($this->cache->has("pm_channel.{$this->id}")) {
-            $deferred->resolve($this->cache->get("pm_channel.{$this->id}"));
+        if ($this->discord->private_channels->has($this->id)) {
+            $deferred->resolve($this->discord->private_channels->offsetGet($this->id));
         } else {
             $this->http->post('users/@me/channels', ['recipient_id' => $this->id])->then(function ($response) use ($deferred) {
                 $channel = $this->factory->create(Channel::class, $response, true);
-                $this->cache->set("pm_channel.{$this->id}", $channel);
+				$this->discord->private_channels->offsetSet($this->id, $channel);
 
                 $deferred->resolve($channel);
             }, \React\Partial\bind_right($this->reject, $deferred));
@@ -72,7 +72,7 @@ class User extends Part
         $deferred = new Deferred();
 
         $this->getPrivateChannel()->then(function ($channel) use ($message, $tts, $embed, $deferred) {
-            $channel->sendMessage($message, $tts, $embed)->then(function ($response) use ($deferred) {
+            $channel->sendMessage($message, $tts, $embed)->then(function ($response) use ($channel, $deferred) {
                 $message = $this->factory->create(Message::class, $response, true);
                 $deferred->resolve($message);
             }, \React\Partial\bind_right($this->reject, $deferred));

@@ -71,7 +71,7 @@ class Member extends Part
             function () use ($deferred) {
                 $ban = $this->factory->create(Ban::class, [
                     'user'  => $this->user,
-                    'guild' => $this->discord->guilds->get('id', $this->guild_id),
+                    'guild' => $this->guild,
                 ], true);
 
                 $deferred->resolve($ban);
@@ -249,7 +249,7 @@ class Member extends Part
      */
     public function getGuildAttribute()
     {
-        return $this->discord->guilds->get('id', $this->guild_id);
+        return $this->discord->guilds->offsetGet($this->guild_id);
     }
 
     /**
@@ -261,11 +261,13 @@ class Member extends Part
     {
         $roles = new Collection();
 
-        foreach ($this->guild->roles as $role) {
-            if (array_search($role->id, $this->attributes['roles']) !== false) {
-                $roles->push($role);
-            }
-        }
+		$guildRoles = $this->guild->roles;
+		
+		foreach ($this->attributes['roles'] as $memberRoleID) {
+			if ($guildRoles->has($memberRoleID)) {
+				$roles->push($guildRoles->offsetGet($memberRoleID));
+			}
+		}
 
         return $roles;
     }
