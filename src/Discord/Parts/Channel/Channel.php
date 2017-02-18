@@ -370,7 +370,7 @@ class Channel extends Part
 
                 foreach ($response as $message) {
                     $message = $this->factory->create(Message::class, $message, true);
-                    $messages->push($message);
+                    $messages->offsetSet($message->id, $message);
                 }
 
                 $deferred->resolve($messages);
@@ -456,7 +456,7 @@ class Channel extends Part
 
                 foreach ($response as $message) {
                     $message = $this->factory->create(Message::class, $message, true);
-                    $messages->push($message);
+                    $messages->offsetSet($message->id, $message);
                 }
 
                 $deferred->resolve($messages);
@@ -541,7 +541,9 @@ class Channel extends Part
         )->then(
             function ($response) use ($deferred) {
                 $message = $this->factory->create(Message::class, $response, true);
-                $this->messages->push($message);
+                if ($this->discord->options['storeMessages']) {
+                    $this->messages->offsetSet($message->id, $message);
+                }
 
                 $deferred->resolve($message);
             },
@@ -561,7 +563,7 @@ class Channel extends Part
      *
      * @return \React\Promise\Promise
      */
-    public function sendFile($filepath, $filename = null, $content = null, $tts = false)
+    public function sendFile($filepath, $filename = null, $content = null, $tts = false, $embed = null)
     {
         $deferred = new Deferred();
 
@@ -581,10 +583,12 @@ class Channel extends Part
             $filename = basename($filepath);
         }
 
-        $this->http->sendFile($this, $filepath, $filename, $content, $tts)->then(
+        $this->http->sendFile($this, $filepath, $filename, $content, $tts, $embed)->then(
             function ($response) use ($deferred) {
                 $message = $this->factory->create(Message::class, $response, true);
-                $this->messages->push($message);
+                if ($this->discord->options['storeMessages']) {
+                    $this->messages->offsetSet($message->id, $message);
+                }
 
                 $deferred->resolve($message);
             },

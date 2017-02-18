@@ -167,6 +167,7 @@ class Guild extends Part
 
                 $this->roles->save($role)->then(
                     function ($role) use ($deferred) {
+                        $this->discord->guilds->offsetSet($this->id, $this);
                         $deferred->resolve($role);
                     },
                     \React\Partial\bind_right($this->reject, $deferred)
@@ -247,7 +248,9 @@ class Guild extends Part
      */
     public function getOwnerAttribute()
     {
-        return $this->discord->users->get('id', $this->owner_id);
+        if ($user = $this->discord->users->get('id', $this->owner_id)) {
+            return $user;
+        }
     }
 
     /**

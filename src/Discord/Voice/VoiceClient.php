@@ -18,9 +18,9 @@ use Discord\Exceptions\LibSodiumNotFoundException;
 use Discord\Exceptions\OutdatedDCAException;
 use Discord\Helpers\Collection;
 use Discord\Helpers\Process;
-use Discord\Wrapper\LoggerWrapper as Logger;
 use Discord\Parts\Channel\Channel;
 use Discord\WebSockets\Op;
+use Discord\Wrapper\LoggerWrapper as Logger;
 use Evenement\EventEmitter;
 use Ratchet\Client\Connector as WsFactory;
 use Ratchet\Client\WebSocket;
@@ -1271,14 +1271,12 @@ class VoiceClient extends EventEmitter
      */
     public function isSpeaking($id)
     {
-        $ssrc = @$this->speakingStatus[$id];
+        $ssrc = $this->speakingStatus->offsetGet($id);
         $user = $this->speakingStatus->get('user_id', $id);
 
         if (is_null($ssrc) && ! is_null($user)) {
             return $user->speaking;
         } elseif (is_null($user) && ! is_null($ssrc)) {
-            return $user->speaking;
-        } elseif (is_null($user) && is_null($ssrc)) {
             return $user->speaking;
         } else {
             return false;

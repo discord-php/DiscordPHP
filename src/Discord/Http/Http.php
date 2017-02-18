@@ -232,7 +232,7 @@ class Http
      *
      * @return \React\Promise\Promise
      */
-    public function sendFile(Channel $channel, $filepath, $filename, $content, $tts)
+    public function sendFile(Channel $channel, $filepath, $filename, $content, $tts, $embed)
     {
         $multipart = [
             [
@@ -249,6 +249,12 @@ class Http
                 'contents' => (string) $content,
             ],
         ];
+
+        if (! is_null($embed)) {
+            $postEmbed['name']     = 'content';
+            $postEmbed['contents'] = $embed;
+            $multipart[]           = $postEmbed;
+        }
 
         return $this->runRequest(
             'POST',

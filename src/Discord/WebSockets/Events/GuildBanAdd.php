@@ -29,7 +29,7 @@ class GuildBanAdd extends Event
         ], true);
 
         $guild = $this->discord->guilds->get('id', $ban->guild->id);
-        $guild->bans->push($ban);
+        $guild->bans->offsetSet($ban->id, $ban);
 
         $deferred->resolve($ban);
     }

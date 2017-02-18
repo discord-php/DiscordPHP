@@ -30,5 +30,5 @@ class VoiceMemberRepository extends AbstractRepository
     /**
      * {@inheritdoc}
      */
-    protected $class = VoiceStateUpdate::class;
+    protected $part = VoiceStateUpdate::class;
 }

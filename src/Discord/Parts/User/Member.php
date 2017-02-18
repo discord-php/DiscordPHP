@@ -100,12 +100,12 @@ class Member extends Part
 
         // jake plz
         if ($this->discord->id == $this->user->id) {
-            $promise = $this->http->patch("guilds/{$this->guild_id}/members/@me/nick", $payload);
+            $url = "guilds/{$this->guild_id}/members/@me/nick";
         } else {
-            $promise = $this->http->patch("guilds/{$this->guild_id}/members/{$this->user->id}", $payload);
+            $url = "guilds/{$this->guild_id}/members/{$this->user->id}";
         }
 
-        $promise->then(
+        $this->http->patch($url, $payload)->then(
             \React\Partial\bind_right($this->resolve, $deferred),
             \React\Partial\bind_right($this->reject, $deferred)
         );

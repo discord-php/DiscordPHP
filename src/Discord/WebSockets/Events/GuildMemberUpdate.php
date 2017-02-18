@@ -32,9 +32,9 @@ class GuildMemberUpdate extends Event
             $raw        = (is_null($old)) ? [] : $old->getRawAttributes();
             $memberPart = $this->factory->create(Member::class, array_merge($raw, (array) $data), true);
 
-            $guild->members->push($memberPart);
+            $guild->members->offsetSet($memberPart->id, $memberPart);
 
-            $this->discord->guilds->push($guild);
+            $this->discord->guilds->offsetSet($guild->id, $guild);
         }
 
         $deferred->resolve([$memberPart, $old]);

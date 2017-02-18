@@ -216,7 +216,11 @@ class Message extends Part
             return $this->factory->create(User::class, $this->attributes['author'], true);
         }
 
-        return $this->channel->guild->members->get('id', $this->attributes['author']->id);
+        if ($member = $this->channel->guild->members->get('id', $this->attributes['author']->id)) {
+            return $member;
+        }
+
+        return $this->factory->create(User::class, $this->attributes['author'], true);
     }
 
     /**
@@ -229,7 +233,11 @@ class Message extends Part
         $embeds = new Collection();
 
         foreach ($this->attributes['embeds'] as $embed) {
-            $embeds->push($this->factory->create(Embed::class, $embed, true));
+            if ($embed instanceof Embed) {
+                $embeds->push($embed);
+            } else {
+                $embeds->push($this->factory->create(Embed::class, $embed, true));
+            }
         }
 
         return $embeds;
@@ -278,6 +286,7 @@ class Message extends Part
     {
         return [
             'content'  => $this->content,
+            'embed'    => $this->embeds->first(),
             'mentions' => $this->mentions,
         ];
     }

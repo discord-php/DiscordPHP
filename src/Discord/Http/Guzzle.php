@@ -13,7 +13,6 @@ namespace Discord\Http;
 
 use Carbon\Carbon;
 use Discord\Discord;
-use Discord\Parts\Channel\Channel;
 use Discord\Wrapper\CacheWrapper;
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\HandlerStack;
@@ -185,41 +184,6 @@ class Guzzle extends GuzzleClient implements HttpDriver
         }
 
         return $deferred->promise();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function sendFile(Http $http, Channel $channel, $filepath, $filename, $content, $tts, $token)
-    {
-        $multipart = [
-            [
-                'name'     => 'file',
-                'contents' => fopen($filepath, 'r'),
-                'filename' => $filename,
-            ],
-        ];
-
-        if (! is_null($content)) {
-            $multipart[] = [
-                'name'     => 'content',
-                'contents' => $content,
-            ];
-        }
-
-        if ($tts) {
-            $multipart[] = [
-                'name'     => 'tts',
-                'contents' => 'true',
-            ];
-        }
-
-        return $this->runRequest('POST', "channels/{$channel->id}/messages", [
-            'authorization' => $token,
-            'User-Agent'    => $http->getUserAgent(),
-        ], null, [
-            'multipart' => $multipart,
-        ]);
     }
 
     /**

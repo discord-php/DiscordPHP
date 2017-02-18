@@ -40,6 +40,7 @@ class Factory
      * @var CacheWrapper Cache.
      */
     protected $cache;
+
     /**
      * Constructs a factory.
      *

@@ -14,16 +14,14 @@ namespace Discord\WebSockets\Events;
 use Discord\WebSockets\Event;
 use React\Promise\Deferred;
 
-class GuildRoleDelete extends Event
+class GuildSync extends Event
 {
     /**
      * {@inheritdoc}
      */
     public function handle(Deferred $deferred, $data)
     {
-        $guild = $this->discord->guilds->get('id', $data->guild_id);
-        $guild->roles->pull($data->role_id);
-
+        //wip
         $deferred->resolve($data);
     }
 }

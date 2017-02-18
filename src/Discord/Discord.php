@@ -15,7 +15,6 @@ use Cache\Adapter\PHPArray\ArrayCachePool;
 use Discord\Factory\Factory;
 use Discord\Http\Guzzle;
 use Discord\Http\Http;
-use Discord\Wrapper\LoggerWrapper as Logger;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\User\Client;
 use Discord\Parts\User\Game;
@@ -28,6 +27,7 @@ use Discord\WebSockets\Events\GuildCreate;
 use Discord\WebSockets\Handlers;
 use Discord\WebSockets\Op;
 use Discord\Wrapper\CacheWrapper;
+use Discord\Wrapper\LoggerWrapper as Logger;
 use Evenement\EventEmitterTrait;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger as Monolog;
@@ -481,8 +481,8 @@ class Discord
             $member['game']     = null;
 
             $memberPart = $this->factory->create(Member::class, $member, true);
-            $guild->members->push($memberPart);
-            $this->users->push($memberPart->user);
+            $guild->members->offsetSet($memberPart->id, $memberPart);
+            $this->users->offsetSet($memberPart->id, $memberPart->user);
             ++$count;
         }
 

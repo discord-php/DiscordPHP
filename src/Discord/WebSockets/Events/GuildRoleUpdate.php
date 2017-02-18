@@ -29,7 +29,7 @@ class GuildRoleUpdate extends Event
 
         $guild = $this->discord->guilds->get('id', $rolePart->guild_id);
         $old   = $guild->roles->get('id', $rolePart->id);
-        $guild->roles->push($rolePart);
+        $guild->roles->offsetSet($rolePart->id, $rolePart);
 
         $deferred->resolve([$rolePart, $old]);
     }

@@ -36,5 +36,5 @@ class RoleRepository extends AbstractRepository
     /**
      * {@inheritdoc}
      */
-    protected $class = Role::class;
+    protected $part = Role::class;
 }
