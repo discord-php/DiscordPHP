@@ -26,14 +26,14 @@ class VoicePacket
     const RTP_HEADER_BYTE_LENGTH = 12;
 
     const RTP_VERSION_PAD_EXTEND_INDEX = 0;
-    const RTP_VERSION_PAD_EXTEND       = 0x80;
+    const RTP_VERSION_PAD_EXTEND = 0x80;
 
     const RTP_PAYLOAD_INDEX = 1;
-    const RTP_PAYLOAD_TYPE  = 0x78;
+    const RTP_PAYLOAD_TYPE = 0x78;
 
-    const SEQ_INDEX       = 2;
+    const SEQ_INDEX = 2;
     const TIMESTAMP_INDEX = 4;
-    const SSRC_INDEX      = 8;
+    const SSRC_INDEX = 8;
 
     /**
      * The voice packet buffer.
@@ -77,11 +77,11 @@ class VoicePacket
      */
     public function __construct($data, $ssrc, $seq, $timestamp, $encryption = false, $key = null)
     {
-        $this->ssrc      = $ssrc;
-        $this->seq       = $seq;
+        $this->ssrc = $ssrc;
+        $this->seq = $seq;
         $this->timestamp = $timestamp;
 
-        if (! $encryption) {
+        if (!$encryption) {
             $this->initBufferNoEncryption($data);
         } else {
             $this->initBufferEncryption($data, $key);
@@ -97,7 +97,7 @@ class VoicePacket
      */
     protected function initBufferNoEncryption($data)
     {
-        $data   = (binary) $data;
+        $data = (binary) $data;
         $header = $this->buildHeader();
 
         $buffer = new Buffer(strlen((string) $header) + strlen($data));
@@ -117,9 +117,9 @@ class VoicePacket
      */
     protected function initBufferEncryption($data, $key)
     {
-        $data   = (binary) $data;
+        $data = (binary) $data;
         $header = $this->buildHeader();
-        $nonce  = new Buffer(24);
+        $nonce = new Buffer(24);
         $nonce->write((string) $header, 0);
 
         $data = \Sodium\crypto_secretbox($data, (string) $nonce, $key);
@@ -136,9 +136,9 @@ class VoicePacket
      */
     protected function buildHeader()
     {
-        $header                                     = new Buffer(self::RTP_HEADER_BYTE_LENGTH);
+        $header = new Buffer(self::RTP_HEADER_BYTE_LENGTH);
         $header[self::RTP_VERSION_PAD_EXTEND_INDEX] = pack('c', self::RTP_VERSION_PAD_EXTEND);
-        $header[self::RTP_PAYLOAD_INDEX]            = pack('c', self::RTP_PAYLOAD_TYPE);
+        $header[self::RTP_PAYLOAD_INDEX] = pack('c', self::RTP_PAYLOAD_TYPE);
         $header->writeShort($this->seq, self::SEQ_INDEX);
         $header->writeInt($this->timestamp, self::TIMESTAMP_INDEX);
         $header->writeInt($this->ssrc, self::SSRC_INDEX);
@@ -205,7 +205,7 @@ class VoicePacket
      */
     public static function make($data)
     {
-        $n    = new self('', 0, 0, 0);
+        $n = new self('', 0, 0, 0);
         $buff = new Buffer($data);
         $n->setBuffer($buff);
 
@@ -223,9 +223,9 @@ class VoicePacket
     {
         $this->buffer = $buffer;
 
-        $this->seq       = $this->buffer->readShort(self::SEQ_INDEX);
+        $this->seq = $this->buffer->readShort(self::SEQ_INDEX);
         $this->timestamp = $this->buffer->readInt(self::TIMESTAMP_INDEX);
-        $this->ssrc      = $this->buffer->readInt(self::SSRC_INDEX);
+        $this->ssrc = $this->buffer->readInt(self::SSRC_INDEX);
 
         return $this;
     }

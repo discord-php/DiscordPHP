@@ -40,7 +40,7 @@ class LoggerWrapper
      */
     public function __construct(Monolog $logger, $enabled = true)
     {
-        $this->logger  = $logger;
+        $this->logger = $logger;
         $this->enabled = $enabled;
     }
 
@@ -54,7 +54,7 @@ class LoggerWrapper
      */
     public function __call($function, $params)
     {
-        if (! $this->enabled) {
+        if (!$this->enabled) {
             return false;
         }
 

@@ -91,7 +91,7 @@ class ChannelPermission extends Permission
     public function getBitwiseAttribute()
     {
         $allow = 0;
-        $deny  = 0;
+        $deny = 0;
 
         foreach ($this->attributes as $key => $value) {
             if (true === $value) {

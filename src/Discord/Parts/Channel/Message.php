@@ -41,16 +41,16 @@ use React\Promise\Deferred;
  */
 class Message extends Part
 {
-    const TYPE_NORMAL              = 0;
-    const TYPE_USER_ADDED          = 1;
-    const TYPE_USER_REMOVED        = 2;
-    const TYPE_CALL                = 3;
+    const TYPE_NORMAL = 0;
+    const TYPE_USER_ADDED = 1;
+    const TYPE_USER_REMOVED = 2;
+    const TYPE_CALL = 3;
     const TYPE_CHANNEL_NAME_CHANGE = 4;
     const TYPE_CHANNEL_ICON_CHANGE = 5;
 
     const REACT_DELETE_ALL = 0;
-    const REACT_DELETE_ME  = 1;
-    const REACT_DELETE_ID  = 2;
+    const REACT_DELETE_ME = 1;
+    const REACT_DELETE_ID = 2;
 
     /**
      * {@inheritdoc}
@@ -156,7 +156,7 @@ class Message extends Part
     {
         foreach ($this->discord->guilds as $guild) {
             $channel = $guild->channels->get('id', $this->channel_id);
-            if (! empty($channel)) {
+            if (!empty($channel)) {
                 return $channel;
             }
         }
@@ -217,10 +217,10 @@ class Message extends Part
         }
 
         if ($member = $this->channel->guild->members->get('id', $this->attributes['author']->id)) {
-			return $member;
-		}
-		
-		return $this->factory->create(User::class, $this->attributes['author'], true);
+            return $member;
+        }
+
+        return $this->factory->create(User::class, $this->attributes['author'], true);
     }
 
     /**
@@ -233,11 +233,11 @@ class Message extends Part
         $embeds = new Collection();
 
         foreach ($this->attributes['embeds'] as $embed) {
-			if ($embed instanceof Embed) {
-				$embeds->push($embed);
-			} else {
-				$embeds->push($this->factory->create(Embed::class, $embed, true));
-			}
+            if ($embed instanceof Embed) {
+                $embeds->push($embed);
+            } else {
+                $embeds->push($this->factory->create(Embed::class, $embed, true));
+            }
         }
 
         return $embeds;
@@ -260,7 +260,7 @@ class Message extends Part
      */
     public function getEditedTimestampAttribute()
     {
-        if (! $this->attributes['edited_timestamp']) {
+        if (!$this->attributes['edited_timestamp']) {
             return;
         }
 
@@ -286,7 +286,7 @@ class Message extends Part
     {
         return [
             'content'  => $this->content,
-			'embed'    => $this->embeds->first(),
+            'embed'    => $this->embeds->first(),
             'mentions' => $this->mentions,
         ];
     }

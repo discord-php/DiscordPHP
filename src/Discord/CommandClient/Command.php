@@ -70,11 +70,11 @@ class Command
         $description,
         $usage
     ) {
-        $this->client      = $client;
-        $this->command     = $command;
-        $this->callable    = $callable;
+        $this->client = $client;
+        $this->command = $command;
+        $this->callable = $callable;
         $this->description = $description;
-        $this->usage       = $usage;
+        $this->usage = $usage;
     }
 
     /**
@@ -93,7 +93,7 @@ class Command
         }
 
         list($commandInstance, $options) = $this->client->buildCommand($command, $callable, $options);
-        $this->subCommands[$command]     = $commandInstance;
+        $this->subCommands[$command] = $commandInstance;
 
         foreach ($options['aliases'] as $alias) {
             $this->registerSubCommandAlias($alias, $command);
@@ -109,7 +109,7 @@ class Command
      */
     public function unregisterSubCommand($command)
     {
-        if (! array_key_exists($command, $this->subCommands)) {
+        if (!array_key_exists($command, $this->subCommands)) {
             throw new \Exception("A sub-command with the name {$command} does not exist.");
         }
 
@@ -134,7 +134,7 @@ class Command
      */
     public function unregisterSubCommandAlias($alias)
     {
-        if (! array_key_exists($alias, $this->subCommandAliases)) {
+        if (!array_key_exists($alias, $this->subCommandAliases)) {
             throw new \Exception("A sub-command alias with the name {$alias} does not exist.");
         }
 
@@ -159,7 +159,7 @@ class Command
             return $this->subCommands[$this->subCommandAliases[$subCommand]]->handle($message, $args);
         }
 
-        if (! is_null($subCommand)) {
+        if (!is_null($subCommand)) {
             array_unshift($args, $subCommand);
         }
 
