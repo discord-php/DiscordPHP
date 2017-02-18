@@ -38,8 +38,8 @@ class GuildCreate extends Event
         }
 
         $guildPart = $this->factory->create(Guild::class, $data, true);
-
-        $this->discord->guilds->offsetSet($guildPart->id, $guildPart);
+		
+		$this->discord->guilds->offsetSet($guildPart->id, $guildPart);
 
         $roles = new RoleRepository(
             $this->http,
@@ -108,7 +108,7 @@ class GuildCreate extends Event
 
         foreach ($data->voice_states as $state) {
             if ($channel = $guildPart->channels->get('id', $state->channel_id)) {
-                $channel->members->offsetSet($state->id, $this->factory->create(VoiceStateUpdatePart::class, (array) $state, true));
+                $channel->members->offsetSet($state->user_id, $this->factory->create(VoiceStateUpdatePart::class, (array) $state, true));
             }
         }
 
