@@ -18,9 +18,9 @@ use Discord\Exceptions\LibSodiumNotFoundException;
 use Discord\Exceptions\OutdatedDCAException;
 use Discord\Helpers\Collection;
 use Discord\Helpers\Process;
+use Discord\Wrapper\LoggerWrapper as Logger;
 use Discord\Parts\Channel\Channel;
 use Discord\WebSockets\Op;
-use Discord\Wrapper\LoggerWrapper as Logger;
 use Evenement\EventEmitter;
 use Ratchet\Client\Connector as WsFactory;
 use Ratchet\Client\WebSocket;
@@ -1269,18 +1269,17 @@ class VoiceClient extends EventEmitter
      *
      * @return bool Whether the user is speaking.
      */
-    public function isSpeaking($id)
+    public function isSpeaking($id = null)
     {
-        $ssrc = $this->speakingStatus->offsetGet($id);
-        $user = $this->speakingStatus->get('user_id', $id);
-
-        if (is_null($ssrc) && ! is_null($user)) {
-            return $user->speaking;
-        } elseif (is_null($user) && ! is_null($ssrc)) {
-            return $user->speaking;
-        } else {
-            return false;
-        }
+		if ($id) {
+			if ($this->speakingStatus->has($id)) {
+				return $this->speakingStatus->offsetGet($id)->speaking;
+			} else {
+				return false;
+			}
+		} else {
+			return $this->speaking;
+		}
     }
 
     /**
@@ -1304,9 +1303,8 @@ class VoiceClient extends EventEmitter
             unset($this->speakingStatus[$ss->ssrc]);
         };
 
-        $ss = $this->speakingStatus->get('user_id', $data->user_id);
 
-        if (is_null($ss)) {
+        if (!$this->speakingStatus->has($data->user_id)) {
             return; // not in our channel
         }
 
@@ -1314,6 +1312,7 @@ class VoiceClient extends EventEmitter
             return; // ignore, just a mute/deaf change
         }
 
+		$ss = $this->speakingStatus->offsetGet($data->user_id);
         $removeDecoder($ss);
     }
 
