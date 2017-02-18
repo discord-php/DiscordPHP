@@ -22,6 +22,6 @@ class GuildSync extends Event
     public function handle(Deferred $deferred, $data)
     {
         //wip
-		$deferred->resolve($data);
+        $deferred->resolve($data);
     }
 }
