@@ -44,7 +44,7 @@ class PresenceUpdate extends Part
     public function getUserAttribute()
     {
         if ($this->discord->users->has($this->attributes['user']->id)) {
-            return $this->discord->users->get($this->attributes['user']->id);
+            return $this->discord->users->offsetGet($this->attributes['user']->id);
         }
 
         return $this->factory->create(User::class, (array) $this->attributes['user'], true);
@@ -57,7 +57,7 @@ class PresenceUpdate extends Part
      */
     public function getGuildAttribute()
     {
-        return $this->discord->guilds->get('id', $this->guild_id);
+        return $this->discord->guilds->offsetGet($this->guild_id);
     }
 
     /**
