@@ -40,7 +40,10 @@ class MessageUpdate extends Event
         }
 
         $old = $messages->get('id', $messagePart->id);
-        $messages->push($newMessage);
+		
+		if ($this->discord->options['storeMessages']) {
+			$messages->offsetSet($newMessage->id, $newMessage);
+		}
 
         $deferred->resolve([$messagePart, $old]);
     }

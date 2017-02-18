@@ -30,7 +30,7 @@ class GuildMemberRemove extends Event
             $guild->members->pull($memberPart->id);
             --$guild->member_count;
 
-            $this->discord->guilds->push($guild);
+            $this->discord->guilds->offsetSet($guild->id, $guild);
         }
 
         $deferred->resolve($memberPart);

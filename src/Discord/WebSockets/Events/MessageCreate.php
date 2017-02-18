@@ -32,7 +32,7 @@ class MessageCreate extends Event
                 'messages',
                 ['channel_id' => $messagePart->channel_id]
             );
-            $messages->push($messagePart);
+            $messages->offsetSet($messagePart->id, $messagePart);
         }
 
         $deferred->resolve($messagePart);

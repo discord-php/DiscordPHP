@@ -28,7 +28,7 @@ class ChannelCreate extends Event
             $this->discord->private_channels->push($channel);
         } else {
             $guild = $this->discord->guilds->get('id', $channel->guild_id);
-            $guild->channels->push($channel);
+            $guild->channels->offsetSet($channel->id, $channel);
         }
 
         $deferred->resolve($channel);

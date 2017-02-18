@@ -27,10 +27,10 @@ class GuildMemberAdd extends Event
         $guild = $this->discord->guilds->get('id', $memberPart->guild_id);
 
         if (! is_null($guild)) {
-            $guild->members->push($memberPart);
+            $guild->members->offsetSet($memberPart->id, $memberPart);
             ++$guild->member_count;
 
-            $this->discord->guilds->push($guild);
+            $this->discord->guilds->offsetSet($guild->id, $guild);
         }
 
         $deferred->resolve($memberPart);

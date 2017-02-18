@@ -30,7 +30,7 @@ class VoiceStateUpdate extends Event
                     $channel->members->pull($state->id);
 
                     if ($channel->id == $state->channel_id) {
-                        $channel->members->push($state);
+                        $channel->members->offsetSet($state->id, $state);
                     }
                 }
             } else {

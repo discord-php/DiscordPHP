@@ -43,17 +43,17 @@ class GuildUpdate extends Event
             $role['guild_id'] = $guildPart->id;
             $rolePart         = $this->factory->create(Role::class, $role, true);
 
-            $roles->push($rolePart);
+            $roles->offsetSet($rolePart->id, $rolePart);
         }
 
         $guildPart->roles = $roles;
 
-        if ($guildPart->large) {
+        if ($guildPart->member_count > 100) {
             $this->discord->addLargeGuild($guildPart);
         }
 
         $old = $this->discord->guilds->get('id', $guildPart->id);
-        $this->discord->guilds->push($guildPart);
+        $this->discord->guilds->offsetSet($guildPart->id, $guildPart);
 
         $deferred->resolve([$guildPart, $old]);
     }

@@ -30,7 +30,7 @@ class ChannelUpdate extends Event
         } else {
             $guild = $this->discord->guilds->get('id', $channel->guild_id);
             $old   = $guild->channels->get('id', $channel->id);
-            $guild->channels->push($channel);
+            $guild->channels->offsetSet($channel->id, $channel);
         }
 
         $deferred->resolve([$channel, $old]);
