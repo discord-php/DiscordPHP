@@ -40,6 +40,8 @@ class Op
     const OP_HELLO = 10;
     // Used to acknowledge heartbeats.
     const OP_HEARTBEAT_ACK = 11;
+	// Used to sync guilds (USER ONLY).
+    const OP_GUILD_SYNC = 12;
 
     ///////////////////////////////////////
     ///////////////////////////////////////
