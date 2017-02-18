@@ -69,11 +69,13 @@ class Client extends Part
                 'discriminator' => $this->discriminator,
             ], true
         );
-        $this->application = $this->factory->create(Application::class, [], true);
-
-        $this->http->get('oauth2/applications/@me')->then(function ($response) {
-            $this->application->fill((array) $response);
-        });
+		if ($this->user->bot) {
+			$this->application = $this->factory->create(Application::class, [], true);
+			
+			$this->http->get('oauth2/applications/@me')->then(function ($response) {
+				$this->application->fill((array) $response);
+			});
+		}
     }
 
     /**
