@@ -46,7 +46,8 @@ function mentioned($part, Message $message)
  *
  * @return UNIX timestamp
  */
-function timestampFromSnowFlake(string $snowflake)
+function timestampFromSnowFlake(string $snowflake, $float = false)
 {
-    return (($snowflake >> 22) + 1420070400000);
+	$timestamp = ((($snowflake >> 22) + 1420070400000) / 1000);
+	return ($float) ? (float) $timestamp : (int) floor($timestamp);
 }
