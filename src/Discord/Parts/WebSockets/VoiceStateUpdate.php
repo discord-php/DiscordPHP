@@ -63,10 +63,10 @@ class VoiceStateUpdate extends Part
      */
     public function getMemberAttribute()
     {
-        $members = $this->guild->members;
-        if ($members->has($this->user_id)) {
-            return $members->offsetGet($this->user_id);
-        }
+		$members = $this->guild->members;
+		if ($members->has($this->user_id)) {
+			return $members->offsetGet($this->user_id);
+		}
     }
 
     /**
@@ -76,10 +76,10 @@ class VoiceStateUpdate extends Part
      */
     public function getChannelAttribute()
     {
-        $channels = $this->guild->channels;
-        if ($channels->has($this->channel_id)) {
-            return $channels->offsetGet($this->channel_id);
-        }
+		$channels = $this->guild->channels;
+		if ($channels->has($this->channel_id)) {
+			return $channels->offsetGet($this->channel_id);
+		}
     }
 
     /**
