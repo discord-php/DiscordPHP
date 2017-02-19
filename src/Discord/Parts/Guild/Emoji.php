@@ -49,18 +49,16 @@ class Emoji extends Part
      */
     public function getRolesAttribute()
     {
-		$roles = new Collection();
-		
-		$gRoles = $this->guild->roles;
-		
-		foreach ($this->attributes['roles'] as $roleid)
-		{
-			if ($gRoles->has($roleid))
-			{
-				$roles->offsetSet($roleid, $gRoles->offsetGet($roleid));
-			}
-		}
-		
-		return $roles;
+        $roles = new Collection();
+
+        $gRoles = $this->guild->roles;
+
+        foreach ($this->attributes['roles'] as $roleid) {
+            if ($gRoles->has($roleid)) {
+                $roles->offsetSet($roleid, $gRoles->offsetGet($roleid));
+            }
+        }
+
+        return $roles;
     }
 }

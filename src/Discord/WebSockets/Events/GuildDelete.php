@@ -24,9 +24,9 @@ class GuildDelete extends Event
     {
         $guildPart = $this->factory->create(Guild::class, $data, true);
 
-		if ($this->discord->guilds->has($guildPart->id)) {
-			$this->discord->guilds->pull($guildPart->id);
-		}
+        if ($this->discord->guilds->has($guildPart->id)) {
+            $this->discord->guilds->pull($guildPart->id);
+        }
 
         $deferred->resolve($guildPart);
     }

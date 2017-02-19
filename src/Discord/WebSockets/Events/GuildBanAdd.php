@@ -23,7 +23,7 @@ class GuildBanAdd extends Event
     public function handle(Deferred $deferred, $data)
     {
         $guild = $this->discord->guilds->offsetGet($data->guild_id);
-		
+
         $ban   = $this->factory->create(Ban::class, [
             'guild' => $guild,
             'user'  => $data->user,

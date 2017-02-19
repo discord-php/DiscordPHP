@@ -42,11 +42,11 @@ function mentioned($part, Message $message)
 /**
  * Calculates UNIX timestamp from snowflake.
  *
- * @param STRING $snowflake    The snowflake
+ * @param STRING $snowflake The snowflake
  *
  * @return UNIX timestamp
  */
 function timestampFromSnowFlake(string $snowflake)
 {
-	return (($snowflake >> 22) + 1420070400000);
+    return (($snowflake >> 22) + 1420070400000);
 }
