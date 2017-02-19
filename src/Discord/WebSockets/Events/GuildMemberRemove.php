@@ -23,6 +23,7 @@ class GuildMemberRemove extends Event
     public function handle(Deferred $deferred, $data)
     {
         $memberPart = $this->factory->create(Member::class, $data, true);
+		$this->discord->users->offsetSet($memberPart->id, $memberPart->user);
 
         if ($this->discord->guilds->has($memberPart->guild_id)) {
             $guild = $this->discord->guilds->offsetGet($memberPart->guild_id);
