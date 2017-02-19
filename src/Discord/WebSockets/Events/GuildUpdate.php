@@ -48,7 +48,7 @@ class GuildUpdate extends Event
 
         $guildPart->roles = $roles;
 
-        $old = $this->discord->guilds->has($guildPart->id) ? $this->discord->guilds->offsetGet($guildPart->id) : null;
+		$old = $this->discord->guilds->has($guildPart->id) ? $this->discord->guilds->offsetGet($guildPart->id) : null;
         $this->discord->guilds->offsetSet($guildPart->id, $guildPart);
 
         $deferred->resolve([$guildPart, $old]);

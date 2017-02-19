@@ -26,7 +26,7 @@ class GuildMemberUpdate extends Event
         $old        = null;
 
         if ($this->discord->guilds->has($memberPart->guild_id)) {
-            $guild      = $this->discord->guilds->offsetGet($memberPart->guild_id);
+			$guild = $this->discord->guilds->offsetGet($memberPart->guild_id);
             $old        = $guild->members->get('id', $memberPart->id);
             $raw        = (is_null($old)) ? [] : $old->getRawAttributes();
             $memberPart = $this->factory->create(Member::class, array_merge($raw, (array) $data), true);

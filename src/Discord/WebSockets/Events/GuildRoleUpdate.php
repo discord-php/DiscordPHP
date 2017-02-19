@@ -22,15 +22,15 @@ class GuildRoleUpdate extends Event
      */
     public function handle(Deferred $deferred, $data)
     {
-        $rolePart = $this->factory->create(Role::class, $data, true);
-        $old      = null;
+		$rolePart = $this->factory->create(Role::class, $data, true);
+		$old = null;
 
         if ($this->discord->guilds->has($rolePart->guild_id)) {
-            $guild = $this->discord->guilds->offsetGet($rolePart->guild_id);
-            $old   = $guild->roles->has($rolePart->id) ? $guild->roles->offsetGet($rolePart->id) : null;
+			$guild = $this->discord->guilds->offsetGet($rolePart->guild_id);
+			$old   = $guild->roles->has($rolePart->id) ? $guild->roles->offsetGet($rolePart->id) : null;
             $guild->roles->offsetSet($rolePart->id, $rolePart);
-
-            $this->discord->guilds->offsetSet($guild->id, $guild);
+			
+			$this->discord->guilds->offsetSet($guild->id, $guild);
         }
 
         $deferred->resolve([$rolePart, $old]);

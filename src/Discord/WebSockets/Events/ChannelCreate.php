@@ -27,10 +27,10 @@ class ChannelCreate extends Event
         if (array_search($channel->type, [Channel::TYPE_TEXT, Channel::TYPE_VOICE]) === false) {
             $this->discord->private_channels->offsetSet($channel->id, $channel);
         } else {
-            if ($this->discord->guilds->has($channel->guild_id)) {
-                $guild = $this->discord->guilds->offsetGet($channel->guild_id);
-                $guild->channels->offsetSet($channel->id, $channel);
-            }
+			if ($this->discord->guilds->has($channel->guild_id)) {
+				$guild = $this->discord->guilds->offsetGet($channel->guild_id);
+				$guild->channels->offsetSet($channel->id, $channel);
+			}
         }
 
         $deferred->resolve($channel);
