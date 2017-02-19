@@ -28,8 +28,8 @@ class VoiceStateUpdate extends Event
             if ($guild->id == $state->guild_id) {
                 foreach ($guild->channels as $channel) {
                     if ($channel->members->has($state->user_id)) {
-						$channel->members->pull($state->user_id);
-					}
+                        $channel->members->pull($state->user_id);
+                    }
 
                     if ($channel->id == $state->channel_id) {
                         $channel->members->offsetSet($state->user_id, $state);
@@ -37,14 +37,14 @@ class VoiceStateUpdate extends Event
                 }
             } else {
                 if ($this->discord->users->has($state->user_id)) {
-					$user = $this->discord->users->offsetGet($state->user_id);
-					if (!$user->bot) {
-						foreach ($guild->channels as $channel) {
-							if ($channel->members->has($state->user_id)) {
-								$channel->members->pull($state->user_id);
-							}
-						}
-					}
+                    $user = $this->discord->users->offsetGet($state->user_id);
+                    if (! $user->bot) {
+                        foreach ($guild->channels as $channel) {
+                            if ($channel->members->has($state->user_id)) {
+                                $channel->members->pull($state->user_id);
+                            }
+                        }
+                    }
                 }
             }
         }
