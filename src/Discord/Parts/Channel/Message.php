@@ -71,7 +71,8 @@ class Message extends Part
         'nonce',
         'mention_roles',
         'pinned',
-        'reactions',
+		'reactions',
+		'webhook_id',
     ];
 
     /**
@@ -83,7 +84,8 @@ class Message extends Part
      */
     public function reply($text)
     {
-        return $this->channel->sendMessage("{$this->author}, {$text}");
+		$user = $this->getAuthorAttribute(1);
+        return $this->channel->sendMessage("{$user->id}, {$text}");
     }
 
     /**
@@ -180,13 +182,13 @@ class Message extends Part
     {
         $roles = new Collection([], 'id');
 
-        $guildRoles = $this->channel->guild->roles;
-
-        foreach ($this->attributes['mention_roles'] as $mentionRoleID) {
-            if ($guildRoles->has($mentionRoleID)) {
-                $roles->push($guildRoles->offsetGet($mentionRoleID));
-            }
-        }
+		$guildRoles = $this->channel->guild->roles;
+		
+		foreach ($this->attributes['mention_roles'] as $mentionRoleID) {
+			if ($guildRoles->has($mentionRoleID)) {
+				$roles->push($guildRoles->offsetGet($mentionRoleID));
+			}
+		}
 
         return $roles;
     }
@@ -214,17 +216,16 @@ class Message extends Part
      */
     public function getAuthorAttribute($type = 0)
     {
-        if ($this->channel->type != Channel::TYPE_TEXT || $type === 1 || ! $this->channel->guild->members->has($this->attributes['author']->id)) {
+        if ($this->channel->type != Channel::TYPE_TEXT || $type === 1 || !$this->channel->guild->members->has($this->attributes['author']->id)) {
             if ($this->attributes['author'] instanceof User) {
-                return $this->attributes['author'];
-            } else {
-                $this->attributes['author'] = $this->factory->create(User::class, $this->attributes['author'], true);
-
-                return $this->attributes['author'];
-            }
+				return $this->attributes['author'];
+			} else {
+				$this->attributes['author'] = $this->factory->create(User::class, $this->attributes['author'], true);
+				return $this->attributes['author'];
+			}
         }
 
-        return $this->channel->guild->members->offsetGet($this->attributes['author']->id);
+		return $this->channel->guild->members->offsetGet($this->attributes['author']->id);
     }
 
     /**
@@ -237,11 +238,11 @@ class Message extends Part
         $embeds = new Collection();
 
         foreach ($this->attributes['embeds'] as $embed) {
-            if ($embed instanceof Embed) {
-                $embeds->push($embed);
-            } else {
-                $embeds->push($this->factory->create(Embed::class, $embed, true));
-            }
+			if ($embed instanceof Embed) {
+				$embeds->push($embed);
+			} else {
+				$embeds->push($this->factory->create(Embed::class, $embed, true));
+			}
         }
 
         return $embeds;
@@ -290,7 +291,7 @@ class Message extends Part
     {
         return [
             'content'  => $this->content,
-            'embed'    => $this->embeds->first(),
+			'embed'    => $this->embeds->first(),
             'mentions' => $this->mentions,
         ];
     }
