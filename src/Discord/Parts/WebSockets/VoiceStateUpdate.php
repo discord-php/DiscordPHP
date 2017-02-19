@@ -42,7 +42,7 @@ class VoiceStateUpdate extends Part
         'self_deaf',
         'self_mute',
         'session_id',
-        'supress',
+        'suppress',
         'user_id',
     ];
 
