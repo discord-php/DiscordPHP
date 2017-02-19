@@ -125,11 +125,14 @@ abstract class AbstractRepository implements RepositoryInterface, ArrayAccess, C
                 $value = array_merge($this->vars, (array) $value);
                 $part = $this->factory->create($this->part, $value, true);
 
-                if (isset($part->id)) {
-                    $this->offsetSet($part->id, $part);
-                } else {
-                    $this->push($part);
-                }
+				if (isset($part->id))
+				{
+					$this->offsetSet($part->id, $part);
+				}
+				else
+				{
+					$this->push($part);
+				}
             }
 
             $deferred->resolve($this);
@@ -276,12 +279,13 @@ abstract class AbstractRepository implements RepositoryInterface, ArrayAccess, C
                 str_replace(':id', $id, $this->endpoints['get'])
             )
         )->then(function ($response) use ($id, $deferred) {
-            if (isset($this->vars['guild_id'])) {
-                $response->guild_id = $this->vars['guild_id'];
-            }
+			if (isset($this->vars['guild_id']))
+			{
+				$response->guild_id = $this->vars['guild_id'];
+			}
             $part = $this->factory->create($this->part, $response, true);
-
-            $this->offsetSet($id, $part);
+			
+			$this->offsetSet($id, $part);
 
             $deferred->resolve($part);
         }, function ($e) use ($deferred) {
