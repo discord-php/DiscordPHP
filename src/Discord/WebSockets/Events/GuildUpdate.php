@@ -30,32 +30,32 @@ class GuildUpdate extends Event
             return;
         }
 
-		$old = null;
-		if ($this->discord->guilds->has($data->id)) {
-			$old = $this->discord->guilds->offsetGet($data->id);
-			$guildPart = $this->discord->guilds->offsetGet($data->id);
-			$guildPart->fill($data);
-		} else {
-			$guildPart = $this->factory->create(Guild::class, $data, true);
+        $old = null;
+        if ($this->discord->guilds->has($data->id)) {
+            $old       = $this->discord->guilds->offsetGet($data->id);
+            $guildPart = $this->discord->guilds->offsetGet($data->id);
+            $guildPart->fill($data);
+        } else {
+            $guildPart = $this->factory->create(Guild::class, $data, true);
 
-			$roles = new RoleRepository(
-				$this->http,
-				$this->cache,
-				$this->factory
-			);
+            $roles = new RoleRepository(
+                $this->http,
+                $this->cache,
+                $this->factory
+            );
 
-			foreach ($data->roles as $role) {
-				$role             = (array) $role;
-				$role['guild_id'] = $guildPart->id;
-				$rolePart         = $this->factory->create(Role::class, $role, true);
+            foreach ($data->roles as $role) {
+                $role             = (array) $role;
+                $role['guild_id'] = $guildPart->id;
+                $rolePart         = $this->factory->create(Role::class, $role, true);
 
-				$roles->offsetSet($rolePart->id, $rolePart);
-			}
+                $roles->offsetSet($rolePart->id, $rolePart);
+            }
 
-			$guildPart->roles = $roles;
-			
-			$this->discord->guilds->offsetSet($guildPart->id, $guildPart);
-		}
+            $guildPart->roles = $roles;
+
+            $this->discord->guilds->offsetSet($guildPart->id, $guildPart);
+        }
 
         $deferred->resolve([$guildPart, $old]);
     }
