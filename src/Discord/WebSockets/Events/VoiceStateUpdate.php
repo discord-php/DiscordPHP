@@ -35,14 +35,14 @@ class VoiceStateUpdate extends Event
                 }
             } else {
                 if ($this->discord->users->has($state->user_id)) {
-					$user = $this->discord->users->offsetGet($state->user_id);
-					
-					foreach ($guild->channels as $cindex => $channel) {
-						if (! (isset($user) && $user->bot)) {
-							$channel->members->pull($state->user_id);
-						}
-					}
-				}
+                    $user = $this->discord->users->offsetGet($state->user_id);
+
+                    foreach ($guild->channels as $cindex => $channel) {
+                        if (! (isset($user) && $user->bot)) {
+                            $channel->members->pull($state->user_id);
+                        }
+                    }
+                }
             }
         }
 

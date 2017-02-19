@@ -22,21 +22,21 @@ class MessageDelete extends Event
      */
     public function handle(Deferred $deferred, $data)
     {
-		if ($this->discord->options['storeMessages']) {
-			if ($this->discord->private_channels->has($data->channel_id)) {
-				$messages = $this->discord->private_channels->offsetGet($data->channel_id)->messages;
-			} else {
-				$messages = $this->discord->getRepository(
-					MessageRepository::class,
-					$data->channel_id,
-					'messages',
-					['channel_id' => $data->channel_id]
-				);
-			}
-			if ($messages->has($data->id)) {
-				$messages->pull($data->id);
-			}
-		}
+        if ($this->discord->options['storeMessages']) {
+            if ($this->discord->private_channels->has($data->channel_id)) {
+                $messages = $this->discord->private_channels->offsetGet($data->channel_id)->messages;
+            } else {
+                $messages = $this->discord->getRepository(
+                    MessageRepository::class,
+                    $data->channel_id,
+                    'messages',
+                    ['channel_id' => $data->channel_id]
+                );
+            }
+            if ($messages->has($data->id)) {
+                $messages->pull($data->id);
+            }
+        }
 
         $deferred->resolve($data->id);
     }
