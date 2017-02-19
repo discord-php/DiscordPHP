@@ -115,6 +115,8 @@ class Guild extends Part
         'emojis',
         'large',
         'verification_level',
+		'mfa_level',
+		'default_message_notifications',
         'member_count',
     ];
 
@@ -167,7 +169,7 @@ class Guild extends Part
 
                 $this->roles->save($role)->then(
                     function ($role) use ($deferred) {
-                        $this->discord->guilds->offsetSet($this->id, $this);
+						$this->discord->guilds->offsetSet($this->id, $this);
                         $deferred->resolve($role);
                     },
                     \React\Partial\bind_right($this->reject, $deferred)
@@ -177,6 +179,25 @@ class Guild extends Part
         );
 
         return $deferred->promise();
+    }
+	
+	public function setEmojisAttribute(array $data = [])
+    {
+		$emojis = new Repository\EmojiRepository(
+            $this->http,
+            $this->cache,
+            $this->factory,
+            $this->getRepositoryAttributes()
+        );
+		
+		foreach ($data as $emoji)
+		{
+			$emoji->guild_id = $this->id;
+			$emojiPart = $this->factory->create(Emoji::Class, $emoji, true);
+			$emojis->offsetSet($emojiPart->id, $emojiPart);
+		}
+		
+		$this->emojis = $emojis;
     }
 
     /**
@@ -248,9 +269,9 @@ class Guild extends Part
      */
     public function getOwnerAttribute()
     {
-        if ($user = $this->discord->users->get('id', $this->owner_id)) {
-            return $user;
-        }
+		if ($user = $this->discord->users->get('id', $this->owner_id)) {
+			return $user;
+		}
     }
 
     /**
