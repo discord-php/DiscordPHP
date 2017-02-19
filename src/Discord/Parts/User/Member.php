@@ -239,7 +239,13 @@ class Member extends Part
      */
     public function getUserAttribute()
     {
-        return $this->factory->create(User::class, $this->attributes['user'], true);
+		if ($this->attributes['user'] instanceof User) {
+			return $this->attributes['user'];
+		} else {
+			$this->attributes['user'] = $this->factory->create(User::class, $this->attributes['user'], true);
+			$this->discord->users->offsetSet($this->attributes['user']->id, $this->attributes['user']);
+			return $this->attributes['user'];
+		}
     }
 
     /**
@@ -261,13 +267,13 @@ class Member extends Part
     {
         $roles = new Collection();
 
-        $guildRoles = $this->guild->roles;
-
-        foreach ($this->attributes['roles'] as $memberRoleID) {
-            if ($guildRoles->has($memberRoleID)) {
-                $roles->push($guildRoles->offsetGet($memberRoleID));
-            }
-        }
+		$guildRoles = $this->guild->roles;
+		
+		foreach ($this->attributes['roles'] as $memberRoleID) {
+			if ($guildRoles->has($memberRoleID)) {
+				$roles->push($guildRoles->offsetGet($memberRoleID));
+			}
+		}
 
         return $roles;
     }
