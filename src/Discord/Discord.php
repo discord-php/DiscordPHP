@@ -428,84 +428,86 @@ class Discord
         }
 
         $this->logger->info('stored guilds', ['count' => $this->guilds->count()]);
+		
+        if (!$this->user->bot && $this->options['loadAllMembers']) {
+			$syncGuilds = [];
+			foreach ($this->guilds->all() as $guild)
+			{
+				$syncGuilds[] = $guild->id;
+			}
+			$syncSent = [];
+			$checkForChunks = function () use (&$syncGuilds, &$syncSent) {
+				$chunks = array_chunk($syncGuilds, 50);
+				$this->logger->debug('sending '.count($chunks).' chunks with '.count($syncGuilds).' guilds overall. (GUILD SYNC)');
+				$syncSent   = array_merge($syncGuilds, $syncSent);
+				$syncGuilds = [];
+				
+				$sendChunks = function () use (&$sendChunks, &$chunks) {
+					$chunk = array_pop($chunks);
+					
+					if (is_null($chunk)) {
+						return;
+					}
 
-        if (! $this->user->bot && $this->options['loadAllMembers']) {
-            $syncGuilds = [];
-            foreach ($this->guilds->all() as $guild) {
-                $syncGuilds[] = $guild->id;
-            }
-            $syncSent       = [];
-            $checkForChunks = function () use (&$syncGuilds, &$syncSent) {
-                $chunks = array_chunk($syncGuilds, 50);
-                $this->logger->debug('sending '.count($chunks).' chunks with '.count($syncGuilds).' guilds overall. (GUILD SYNC)');
-                $syncSent   = array_merge($syncGuilds, $syncSent);
-                $syncGuilds = [];
+					$this->logger->debug('sending chunk with '.count($chunk).' guilds (GUILD SYNC)');
 
-                $sendChunks = function () use (&$sendChunks, &$chunks) {
-                    $chunk = array_pop($chunks);
+					$payload = [
+						'op' => Op::OP_GUILD_SYNC,
+						'd'  => $chunk,
+					];
 
-                    if (is_null($chunk)) {
-                        return;
-                    }
+					$this->send($payload);
+					$this->loop->addTimer(1, $sendChunks);
+				};
 
-                    $this->logger->debug('sending chunk with '.count($chunk).' guilds (GUILD SYNC)');
+				$sendChunks();
+			};
+			$this->logger->info('set up guild sync');
+			$checkForChunks();
 
-                    $payload = [
-                        'op' => Op::OP_GUILD_SYNC,
-                        'd'  => $chunk,
-                    ];
+			$function = function ($guild) use (&$function, &$syncSent) {
+				if (in_array($guild->id, $syncSent)) {
+					unset($syncSent[array_search($guild->id, $syncSent)]);
+				}
 
-                    $this->send($payload);
-                    $this->loop->addTimer(1, $sendChunks);
-                };
+				// todo setup timer to continue after x amount of time
+				if (count($syncSent) < 1) {
+					$this->logger->info('all guilds are now available', ['count' => $this->guilds->count()]);
+					$this->removeListener(Event::GUILD_SYNC, $function);
 
-                $sendChunks();
-            };
-            $this->logger->info('set up guild sync');
-            $checkForChunks();
+					$this->ready();
+					$this->setupChunking();
+				}
+			};
 
-            $function = function ($guild) use (&$function, &$syncSent) {
-                if (in_array($guild->id, $syncSent)) {
-                    unset($syncSent[array_search($guild->id, $syncSent)]);
-                }
+			$this->on(Event::GUILD_SYNC, $function);
+		} else {
+			$function = function ($guild) use (&$function, &$unavailable) {
+				if (array_key_exists($guild->id, $unavailable)) {
+					unset($unavailable[$guild->id]);
+				}
 
-                // todo setup timer to continue after x amount of time
-                if (count($syncSent) < 1) {
-                    $this->logger->info('all guilds are now available', ['count' => $this->guilds->count()]);
-                    $this->removeListener(Event::GUILD_SYNC, $function);
+				// todo setup timer to continue after x amount of time
+				if (count($unavailable) < 1) {
+					$this->logger->info('all guilds are now available', ['count' => $this->guilds->count()]);
+					$this->removeListener(Event::GUILD_CREATE, $function);
 
-                    $this->ready();
-                    $this->setupChunking();
-                }
-            };
+					$this->setupChunking();
+				}
+			};
 
-            $this->on(Event::GUILD_SYNC, $function);
-        } else {
-            $function = function ($guild) use (&$function, &$unavailable) {
-                if (array_key_exists($guild->id, $unavailable)) {
-                    unset($unavailable[$guild->id]);
-                }
-
-                // todo setup timer to continue after x amount of time
-                if (count($unavailable) < 1) {
-                    $this->logger->info('all guilds are now available', ['count' => $this->guilds->count()]);
-                    $this->removeListener(Event::GUILD_CREATE, $function);
-
-                    $this->setupChunking();
-                }
-            };
-
-            $this->on(Event::GUILD_CREATE, $function);
-
-            if (count($unavailable) < 1) {
-                return $this->ready();
-            }
-
-            // Emit ready after 60 seconds
-            $this->loop->addTimer(60, function () {
-                $this->ready();
-            });
-        }
+			$this->on(Event::GUILD_CREATE, $function);
+			
+			if (count($unavailable) < 1) {
+				return $this->ready();
+			}
+			
+			// Emit ready after 60 seconds
+			$this->loop->addTimer(60, function () {
+				$this->ready();
+			});
+		}
+		
     }
 
     /**
@@ -735,7 +737,7 @@ class Discord
 
             $parse = [
                 Event::GUILD_CREATE,
-                Event::GUILD_SYNC,
+				Event::GUILD_SYNC
             ];
 
             if (! $this->emittedReady && (array_search($data->t, $parse) === false)) {
