@@ -26,7 +26,7 @@ use Discord\Parts\User\Member;
  * @property bool                           $self_deaf  Whether the user is self deafened.
  * @property bool                           $self_mute  Whether the user is self muted.
  * @property string                         $session_id The session ID for the voice session.
- * @property string                         $supress    Whether the user is muted by the current user.
+ * @property string                         $suppress    Whether the user is muted by the current user.
  * @property string                         $user_id    The user that is affected by this voice state update.
  */
 class VoiceStateUpdate extends Part
