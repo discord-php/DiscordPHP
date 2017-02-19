@@ -35,8 +35,8 @@ class MessageDeleteBulk extends Event
             }
 
             foreach ($data->ids as $messageid) {
-                if ($channel->messages->has($messageid)) {
-                    $channel->messages->pull($messageid);
+                if ($messages->has($messageid)) {
+                    $messages->pull($messageid);
                 }
             }
         }
