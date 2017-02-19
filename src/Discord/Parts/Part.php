@@ -323,10 +323,7 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
      */
     public function setAttribute($key, $value)
     {
-        if (isset($this->repositories[$key])) {
-            if (! ($value instanceof $this->repositories[$key])) {
-                return;
-            }
+        if (isset($this->repositories[$key]) && ($value instanceof $this->repositories[$key])) {
 
             $className = str_replace('\\', '', $this->repositories[$key]);
 
