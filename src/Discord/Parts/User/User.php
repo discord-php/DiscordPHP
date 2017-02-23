@@ -113,11 +113,10 @@ class User extends Part
             return;
         }
 
-		if ($format === 'default' && substr($this->attributes['avatar'], 0, 2) === 'a_')
-		{
-			$format = 'gif';
-		}
-		
+        if ($format === 'default' && substr($this->attributes['avatar'], 0, 2) === 'a_') {
+            $format = 'gif';
+        }
+
         if (false === array_search($format, ['png', 'jpg', 'webp', 'gif'])) {
             $format = 'jpg';
         }

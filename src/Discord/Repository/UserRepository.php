@@ -35,5 +35,5 @@ class UserRepository extends AbstractRepository
     /**
      * {@inheritdoc}
      */
-	protected $storeOption = 'storeUsers';
+    protected $storeOption = 'storeUsers';
 }

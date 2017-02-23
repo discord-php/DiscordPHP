@@ -243,10 +243,10 @@ class Member extends Part
             return $this->discord->users->offsetGet($this->attributes['user']->id);
         } else {
             $user = $this->factory->create(User::class, $this->attributes['user'], true);
-			
-			if ($this->discord->options['storeUsers']) {
-				$this->discord->users->offsetSet($user->id, $user);
-			}
+
+            if ($this->discord->options['storeUsers']) {
+                $this->discord->users->offsetSet($user->id, $user);
+            }
 
             return $user;
         }

@@ -23,11 +23,11 @@ class GuildMemberUpdate extends Event
     public function handle(Deferred $deferred, $data)
     {
         $memberPart = $this->factory->create(Member::class, $data, true);
-		$old        = null;
-		
-		if ($this->discord->options['storeUsers']) {
-			$this->discord->users->offsetSet($memberPart->id, $memberPart->user);
-		}
+        $old        = null;
+
+        if ($this->discord->options['storeUsers']) {
+            $this->discord->users->offsetSet($memberPart->id, $memberPart->user);
+        }
 
         if ($this->discord->guilds->has($memberPart->guild_id) && $this->discord->options['storeMembers']) {
             $guild      = $this->discord->guilds->offsetGet($memberPart->guild_id);

@@ -276,12 +276,12 @@ class Discord
      */
     protected $cachePool;
 
-	/**
-     * All Repositories
+    /**
+     * All Repositories.
      *
      * @var Repositories pool.
      */
-	protected $repositories;
+    protected $repositories;
     /**
      * The Client class.
      *
@@ -323,8 +323,8 @@ class Discord
             new Guzzle($this->cache, $this->loop, $options['guzzleOptions'])
         );
         $this->factory = new Factory($this, $this->http, $this->cache);
-		
-		$this->repositories = new CacheRepository(
+
+        $this->repositories = new CacheRepository(
             $this->http,
             $this->cache,
             $this->factory
@@ -391,7 +391,7 @@ class Discord
         $this->sessionId = $content->session_id;
 
         $this->logger->debug('client created and session id stored', ['session_id' => $content->session_id, 'user' => $this->client->user->getPublicAttributes()]);
-		
+
         // Private Channels
         $this->private_channels = new PrivateChannelRepository(
             $this->http,
@@ -409,7 +409,7 @@ class Discord
         } else {
             $this->logger->info('did not parse private channels');
         }
-		
+
         // Guilds
         $this->guilds = new GuildRepository(
             $this->http,
@@ -938,12 +938,12 @@ class Discord
 
             return $this->ready();
         }
-		
-		if (! $this->options['storeMembers'] && ! $this->options['storeUsers']) {
-			$this->logger->info('loadAllMembers option is enabled, but storeMembers and storeUsers are disabled, not setting chunking up.');
+
+        if (! $this->options['storeMembers'] && ! $this->options['storeUsers']) {
+            $this->logger->info('loadAllMembers option is enabled, but storeMembers and storeUsers are disabled, not setting chunking up.');
 
             return $this->ready();
-		}
+        }
 
         $checkForChunks = function () {
             if ((count($this->largeGuilds) < 1) && (count($this->largeSent) < 1)) {
@@ -1261,14 +1261,14 @@ class Discord
                 'loggerLevel',
                 'logging',
                 'cachePool',
-				'guzzleOptions',
+                'guzzleOptions',
                 'loadAllMembers',
                 'disabledEvents',
                 'pmChannels',
                 'storeMessages',
-				'storeUsers',
-				'storeMembers',
-				'storeVoiceMembers',
+                'storeUsers',
+                'storeMembers',
+                'storeVoiceMembers',
                 'retrieveBans',
             ])
             ->setDefaults([
@@ -1278,14 +1278,14 @@ class Discord
                 'loggerLevel'       => Monolog::INFO,
                 'logging'           => true,
                 'cachePool'         => new ArrayCachePool(),
-				'guzzleOptions'     => [],
+                'guzzleOptions'     => [],
                 'loadAllMembers'    => false,
                 'disabledEvents'    => [],
                 'pmChannels'        => false,
                 'storeMessages'     => false,
-				'storeUsers'        => true,
-				'storeMembers'      => true,
-				'storeVoiceMembers' => true,
+                'storeUsers'        => true,
+                'storeMembers'      => true,
+                'storeVoiceMembers' => true,
                 'retrieveBans'      => true,
             ])
             ->setAllowedTypes('bot', 'bool')
@@ -1296,9 +1296,9 @@ class Discord
             ->setAllowedTypes('disabledEvents', 'array')
             ->setAllowedTypes('pmChannels', 'bool')
             ->setAllowedTypes('storeMessages', 'bool')
-			->setAllowedTypes('storeUsers', 'bool')
-			->setAllowedTypes('storeMembers', 'bool')
-			->setAllowedTypes('storeVoiceMembers', 'bool')
+            ->setAllowedTypes('storeUsers', 'bool')
+            ->setAllowedTypes('storeMembers', 'bool')
+            ->setAllowedTypes('storeVoiceMembers', 'bool')
             ->setAllowedTypes('retrieveBans', 'bool');
 
         $options = $resolver->resolve($options);
@@ -1371,18 +1371,15 @@ class Discord
     {
         $classKey = str_replace('\\', '', $class);
 
-		if ($this->repositories->has($classKey))
-		{
-			$partRepo = $this->repositories->offsetGet($classKey); //className
-			if ($partRepo->has($id))
-			{
-				$part = $partRepo->offsetGet($id); //id
-				if ($part->has($key))
-				{
-					return $part->offsetGet($key);
-				}
-			}
-		}
+        if ($this->repositories->has($classKey)) {
+            $partRepo = $this->repositories->offsetGet($classKey); //className
+            if ($partRepo->has($id)) {
+                $part = $partRepo->offsetGet($id); //id
+                if ($part->has($key)) {
+                    return $part->offsetGet($key);
+                }
+            }
+        }
 
         $repository = new $class(
             $this->http,
@@ -1390,32 +1387,26 @@ class Discord
             $this->factory,
             $vars
         );
-		
-		if ($this->repositories->has($classKey))
-		{
-			$partRepo = $this->repositories->offsetGet($classKey); //className
-			if ($partRepo->has($id))
-			{
-				$part = $partRepo->offsetGet($id); //id
-				$part->offsetSet($key, $repository);          //key
-			}
-			else
-			{
-				$part = new Collection();
-				$part->offsetSet($key, $repository);         //key
-				$partRepo->offsetSet($id, $part); //id
-			}
-		}
-		else
-		{
-			$partRepo = new Collection(); //ClassName
-			$part = new Collection();     //id
-			$part->offsetSet($key, $repository); //key
-			$partRepo->offsetSet($id, $part);
-			$this->repositories->offsetSet($classKey, $partRepo);
-			//className->id->key = Repo
-			//make one
-		}
+
+        if ($this->repositories->has($classKey)) {
+            $partRepo = $this->repositories->offsetGet($classKey); //className
+            if ($partRepo->has($id)) {
+                $part = $partRepo->offsetGet($id); //id
+                $part->offsetSet($key, $repository);          //key
+            } else {
+                $part = new Collection();
+                $part->offsetSet($key, $repository);         //key
+                $partRepo->offsetSet($id, $part); //id
+            }
+        } else {
+            $partRepo = new Collection(); //ClassName
+            $part     = new Collection();     //id
+            $part->offsetSet($key, $repository); //key
+            $partRepo->offsetSet($id, $part);
+            $this->repositories->offsetSet($classKey, $partRepo);
+            //className->id->key = Repo
+            //make one
+        }
 
         return $repository;
     }
