@@ -11,9 +11,9 @@
 
 namespace Discord\Parts\User;
 
-use Discord\Cache\Cache;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Channel\Message;
+use Discord\Parts\Embed\Embed;
 use Discord\Parts\Part;
 use React\Promise\Deferred;
 
@@ -43,12 +43,12 @@ class User extends Part
     {
         $deferred = new Deferred();
 
-        if ($this->cache->has("pm_channel.{$this->id}")) {
-            $deferred->resolve($this->cache->get("pm_channel.{$this->id}"));
+        if ($this->discord->private_channels->has($this->id)) {
+            $deferred->resolve($this->discord->private_channels->offsetGet($this->id));
         } else {
             $this->http->post('users/@me/channels', ['recipient_id' => $this->id])->then(function ($response) use ($deferred) {
                 $channel = $this->factory->create(Channel::class, $response, true);
-                $this->cache->set("pm_channel.{$this->id}", $channel);
+                $this->discord->private_channels->offsetSet($this->id, $channel);
 
                 $deferred->resolve($channel);
             }, \React\Partial\bind_right($this->reject, $deferred));
@@ -60,17 +60,18 @@ class User extends Part
     /**
      * Sends a message to the user.
      *
-     * @param string $text The text to send in the message.
-     * @param bool   $tts  Whether the message should be sent with text to speech enabled.
+     * @param string $text  The text to send in the message.
+     * @param bool   $tts   Whether the message should be sent with text to speech enabled.
+     * @param Embed  $embed An embed to send.
      *
      * @return \React\Promise\Promise
      */
-    public function sendMessage($message, $tts = false)
+    public function sendMessage($message, $tts = false, $embed = null)
     {
         $deferred = new Deferred();
 
-        $this->getPrivateChannel()->then(function ($channel) use ($message, $tts, $deferred) {
-            $channel->sendMessage($message, $tts)->then(function ($response) use ($deferred) {
+        $this->getPrivateChannel()->then(function ($channel) use ($message, $tts, $embed, $deferred) {
+            $channel->sendMessage($message, $tts, $embed)->then(function ($response) use ($deferred) {
                 $message = $this->factory->create(Message::class, $response, true);
                 $deferred->resolve($message);
             }, \React\Partial\bind_right($this->reject, $deferred));
@@ -101,15 +102,27 @@ class User extends Part
     /**
      * Returns the avatar URL for the client.
      *
+     * @param string $format The image format.
+     * @param int    $size   The size of the image.
+     *
      * @return string The URL to the clients avatar.
      */
-    public function getAvatarAttribute()
+    public function getAvatarAttribute($format = 'default', $size = 1024)
     {
         if (empty($this->attributes['avatar'])) {
             return;
         }
 
-        return "https://discordapp.com/api/users/{$this->id}/avatars/{$this->attributes['avatar']}.jpg";
+		if ($format === 'default' && substr($this->attributes['avatar'], 0, 2) === 'a_')
+		{
+			$format = 'gif';
+		}
+		
+        if (false === array_search($format, ['png', 'jpg', 'webp', 'gif'])) {
+            $format = 'jpg';
+        }
+
+        return "https://cdn.discordapp.com/avatars/{$this->id}/{$this->attributes['avatar']}.{$format}?size={$size}";
     }
 
     /**

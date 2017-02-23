@@ -22,6 +22,7 @@ use Discord\Parts\User\Game;
 use Discord\Parts\User\Member;
 use Discord\Repository\GuildRepository;
 use Discord\Repository\PrivateChannelRepository;
+use Discord\Repository\CacheRepository;
 use Discord\Voice\VoiceClient;
 use Discord\WebSockets\Event;
 use Discord\WebSockets\Events\GuildCreate;
@@ -40,6 +41,7 @@ use React\EventLoop\LoopInterface;
 use React\EventLoop\Timer\TimerInterface;
 use React\Promise\Deferred;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Discord\Helpers\Collection;
 
 /**
  * The Discord client class.
@@ -274,6 +276,12 @@ class Discord
      */
     protected $cachePool;
 
+	/**
+     * All Repositories
+     *
+     * @var Repositories pool.
+     */
+	protected $repositories;
     /**
      * The Client class.
      *
@@ -312,9 +320,15 @@ class Discord
             $this->cache,
             ($options['bot'] ? 'Bot ' : '').$this->token,
             self::VERSION,
-            new Guzzle($this->cache, $this->loop)
+            new Guzzle($this->cache, $this->loop, $options['guzzleOptions'])
         );
         $this->factory = new Factory($this, $this->http, $this->cache);
+		
+		$this->repositories = new CacheRepository(
+            $this->http,
+            $this->cache,
+            $this->factory
+        );
 
         $this->setGateway()->then(function ($g) {
             $this->connectWs();
@@ -377,9 +391,9 @@ class Discord
         $this->sessionId = $content->session_id;
 
         $this->logger->debug('client created and session id stored', ['session_id' => $content->session_id, 'user' => $this->client->user->getPublicAttributes()]);
-
+		
         // Private Channels
-        $private_channels = new PrivateChannelRepository(
+        $this->private_channels = new PrivateChannelRepository(
             $this->http,
             $this->cache,
             $this->factory
@@ -388,17 +402,14 @@ class Discord
         if ($this->options['pmChannels']) {
             foreach ($content->private_channels as $channel) {
                 $channelPart = $this->factory->create(Channel::class, $channel, true);
-                $this->cache->set("pm_channels.{$channelPart->recipient->id}", $channelPart);
-                $private_channels->push($channelPart);
+                $this->private_channels->offsetSet($channelPart->id, $channelPart);
             }
 
-            $this->logger->info('stored private channels', ['count' => $private_channels->count()]);
+            $this->logger->info('stored private channels', ['count' => $this->private_channels->count()]);
         } else {
             $this->logger->info('did not parse private channels');
         }
-
-        $this->private_channels = $private_channels;
-
+		
         // Guilds
         $this->guilds = new GuildRepository(
             $this->http,
@@ -430,30 +441,83 @@ class Discord
 
         $this->logger->info('stored guilds', ['count' => $this->guilds->count()]);
 
-        if (count($unavailable) < 1) {
-            return $this->ready();
-        }
-
-        // Emit ready after 60 seconds
-        $this->loop->addTimer(60, function () {
-            $this->ready();
-        });
-
-        $function = function ($guild) use (&$function, &$unavailable) {
-            if (array_key_exists($guild->id, $unavailable)) {
-                unset($unavailable[$guild->id]);
+        if (! $this->user->bot && $this->options['loadAllMembers'] && ($this->options['storeMembers'] || $this->options['storeUsers'])) {
+            $syncGuilds = [];
+            foreach ($this->guilds as $guild) {
+                $syncGuilds[] = $guild->id;
             }
+            $syncSent       = [];
+            $checkForChunks = function () use (&$syncGuilds, &$syncSent) {
+                $chunks = array_chunk($syncGuilds, 50);
+                $this->logger->debug('sending '.count($chunks).' chunks with '.count($syncGuilds).' guilds overall. (GUILD SYNC)');
+                $syncSent   = array_merge($syncGuilds, $syncSent);
+                $syncGuilds = [];
 
-            // todo setup timer to continue after x amount of time
+                $sendChunks = function () use (&$sendChunks, &$chunks) {
+                    $chunk = array_pop($chunks);
+
+                    if (is_null($chunk)) {
+                        return;
+                    }
+
+                    $this->logger->debug('sending chunk with '.count($chunk).' guilds (GUILD SYNC)');
+
+                    $payload = [
+                        'op' => Op::OP_GUILD_SYNC,
+                        'd'  => $chunk,
+                    ];
+
+                    $this->send($payload);
+                    $this->loop->addTimer(1, $sendChunks);
+                };
+
+                $sendChunks();
+            };
+            $this->logger->info('set up guild sync');
+            $checkForChunks();
+
+            $function = function ($guild) use (&$function, &$syncSent) {
+                if (in_array($guild->id, $syncSent)) {
+                    unset($syncSent[array_search($guild->id, $syncSent)]);
+                }
+
+                // todo setup timer to continue after x amount of time
+                if (count($syncSent) < 1) {
+                    $this->logger->info('all guilds are now available', ['count' => $this->guilds->count()]);
+                    $this->removeListener(Event::GUILD_SYNC, $function);
+
+                    $this->ready();
+                    $this->setupChunking();
+                }
+            };
+
+            $this->on(Event::GUILD_SYNC, $function);
+        } else {
+            $function = function ($guild) use (&$function, &$unavailable) {
+                if (array_key_exists($guild->id, $unavailable)) {
+                    unset($unavailable[$guild->id]);
+                }
+
+                // todo setup timer to continue after x amount of time
+                if (count($unavailable) < 1) {
+                    $this->logger->info('all guilds are now available', ['count' => $this->guilds->count()]);
+                    $this->removeListener(Event::GUILD_CREATE, $function);
+
+                    $this->setupChunking();
+                }
+            };
+
+            $this->on(Event::GUILD_CREATE, $function);
+
             if (count($unavailable) < 1) {
-                $this->logger->info('all guilds are now available', ['count' => $this->guilds->count()]);
-                $this->removeListener(Event::GUILD_CREATE, $function);
-
-                $this->setupChunking();
+                return $this->ready();
             }
-        };
 
-        $this->on(Event::GUILD_CREATE, $function);
+            // Emit ready after 60 seconds
+            $this->loop->addTimer(60, function () {
+                $this->ready();
+            });
+        }
     }
 
     /**
@@ -481,8 +545,8 @@ class Discord
             $member['game']     = null;
 
             $memberPart = $this->factory->create(Member::class, $member, true);
-            $guild->members->push($memberPart);
-            $this->users->push($memberPart->user);
+            $guild->members->offsetSet($memberPart->id, $memberPart);
+            $this->users->offsetSet($memberPart->id, $memberPart->user);
             ++$count;
         }
 
@@ -598,10 +662,30 @@ class Discord
             return;
         }
 
-        ++$this->reconnectCount;
-        $this->reconnecting = true;
-        $this->logger->info('starting reconnect', ['reconnect_count' => $this->reconnectCount]);
-        $this->connectWs();
+        switch ($op) {
+            case Op::CLOSE_INVALID_TOKEN:
+                $this->emit('error', ['token is invalid', $this]);
+                $this->logger->error('the token you provided is invalid');
+
+                return;
+            case Op::CLOSE_INVALID_SHARD:
+                $this->emit('error', ['shard is invalid', $this]);
+                $this->logger->error('the shard you provided is invalid');
+
+                return;
+            case Op::CLOSE_SHARDING_REQUIRED:
+                $this->emit('error', ['sharding required', $this]);
+                $this->logger->error('due to the size of your bot sharding is required');
+
+                return;
+        }
+
+        $this->loop->addTimer(2, function () {
+            ++$this->reconnectCount;
+            $this->reconnecting = true;
+            $this->logger->info('starting reconnect', ['reconnect_count' => $this->reconnectCount]);
+            $this->connectWs();
+        });
     }
 
     /**
@@ -663,6 +747,7 @@ class Discord
 
             $parse = [
                 Event::GUILD_CREATE,
+                Event::GUILD_SYNC,
             ];
 
             if (! $this->emittedReady && (array_search($data->t, $parse) === false)) {
@@ -853,6 +938,12 @@ class Discord
 
             return $this->ready();
         }
+		
+		if (! $this->options['storeMembers'] && ! $this->options['storeUsers']) {
+			$this->logger->info('loadAllMembers option is enabled, but storeMembers and storeUsers are disabled, not setting chunking up.');
+
+            return $this->ready();
+		}
 
         $checkForChunks = function () {
             if ((count($this->largeGuilds) < 1) && (count($this->largeSent) < 1)) {
@@ -1170,24 +1261,32 @@ class Discord
                 'loggerLevel',
                 'logging',
                 'cachePool',
+				'guzzleOptions',
                 'loadAllMembers',
                 'disabledEvents',
                 'pmChannels',
                 'storeMessages',
+				'storeUsers',
+				'storeMembers',
+				'storeVoiceMembers',
                 'retrieveBans',
             ])
             ->setDefaults([
-                'loop'           => LoopFactory::create(),
-                'bot'            => true,
-                'logger'         => null,
-                'loggerLevel'    => Monolog::INFO,
-                'logging'        => true,
-                'cachePool'      => new ArrayCachePool(),
-                'loadAllMembers' => false,
-                'disabledEvents' => [],
-                'pmChannels'     => false,
-                'storeMessages'  => false,
-                'retrieveBans'   => true,
+                'loop'              => LoopFactory::create(),
+                'bot'               => true,
+                'logger'            => null,
+                'loggerLevel'       => Monolog::INFO,
+                'logging'           => true,
+                'cachePool'         => new ArrayCachePool(),
+				'guzzleOptions'     => [],
+                'loadAllMembers'    => false,
+                'disabledEvents'    => [],
+                'pmChannels'        => false,
+                'storeMessages'     => false,
+				'storeUsers'        => true,
+				'storeMembers'      => true,
+				'storeVoiceMembers' => true,
+                'retrieveBans'      => true,
             ])
             ->setAllowedTypes('bot', 'bool')
             ->setAllowedTypes('loop', LoopInterface::class)
@@ -1197,6 +1296,9 @@ class Discord
             ->setAllowedTypes('disabledEvents', 'array')
             ->setAllowedTypes('pmChannels', 'bool')
             ->setAllowedTypes('storeMessages', 'bool')
+			->setAllowedTypes('storeUsers', 'bool')
+			->setAllowedTypes('storeMembers', 'bool')
+			->setAllowedTypes('storeVoiceMembers', 'bool')
             ->setAllowedTypes('retrieveBans', 'bool');
 
         $options = $resolver->resolve($options);
@@ -1268,11 +1370,19 @@ class Discord
     public function getRepository($class, $id, $key, $vars = [])
     {
         $classKey = str_replace('\\', '', $class);
-        $cacheKey = "repositories.{$classKey}.{$id}.{$key}";
 
-        if ($object = $this->cache->get($cacheKey)) {
-            return $object;
-        }
+		if ($this->repositories->has($classKey))
+		{
+			$partRepo = $this->repositories->offsetGet($classKey); //className
+			if ($partRepo->has($id))
+			{
+				$part = $partRepo->offsetGet($id); //id
+				if ($part->has($key))
+				{
+					return $part->offsetGet($key);
+				}
+			}
+		}
 
         $repository = new $class(
             $this->http,
@@ -1280,8 +1390,32 @@ class Discord
             $this->factory,
             $vars
         );
-
-        $this->cache->set($cacheKey, $repository);
+		
+		if ($this->repositories->has($classKey))
+		{
+			$partRepo = $this->repositories->offsetGet($classKey); //className
+			if ($partRepo->has($id))
+			{
+				$part = $partRepo->offsetGet($id); //id
+				$part->offsetSet($key, $repository);          //key
+			}
+			else
+			{
+				$part = new Collection();
+				$part->offsetSet($key, $repository);         //key
+				$partRepo->offsetSet($id, $part); //id
+			}
+		}
+		else
+		{
+			$partRepo = new Collection(); //ClassName
+			$part = new Collection();     //id
+			$part->offsetSet($key, $repository); //key
+			$partRepo->offsetSet($id, $part);
+			$this->repositories->offsetSet($classKey, $partRepo);
+			//className->id->key = Repo
+			//make one
+		}
 
         return $repository;
     }
@@ -1295,7 +1429,7 @@ class Discord
      */
     public function __get($name)
     {
-        $allowed = ['loop', 'options', 'logger', 'http'];
+        $allowed = ['loop', 'options', 'logger', 'repositories', 'http'];
 
         if (array_search($name, $allowed) !== false) {
             return $this->{$name};

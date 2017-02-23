@@ -11,94 +11,150 @@
 
 namespace Discord\Helpers;
 
-use Illuminate\Support\Collection as BaseCollection;
+use ArrayIterator;
+use IteratorAggregate;
+use Judy;
 
-class Collection extends BaseCollection
+class Collection implements IteratorAggregate
 {
-    protected $discrim = 'id';
+    protected $discrim; //useless now
+	
+	protected $items;
 
-    /**
-     * {@inheritdoc}
-     *
-     * @param string $discrim The discriminator.
-     */
-    public function __construct($items = [], $discrim = 'id')
+    public function __construct($items = [], $discrim = null, $type = 'string')
     {
-        $this->discrim = $discrim;
-
-        parent::__construct($items);
+		if ($type === 'int')
+		{
+			$this->items = new Judy(Judy::INT_TO_MIXED);
+		}
+		elseif ($type === 'string')
+		{
+			$this->items = new Judy(Judy::STRING_TO_MIXED);
+		}
     }
 
-    /**
-     * Get an item from the collection with a key and value.
-     *
-     * @param mixed $key   The key to match with the value.
-     * @param mixed $value The value to match with the key.
-     *
-     * @return mixed The value or null.
-     */
-    public function get($key, $value = null)
-    {
-        if ($key == $this->discrim && array_key_exists($value, $this->items)) {
-            return $this->items[$value];
-        }
 
-        foreach ($this->items as $item) {
-            if (is_array($item)) {
-                if ($item[$key] == $value) {
-                    return $item;
-                }
-            } elseif (is_object($item)) {
-                if ($item->{$key} == $value) {
-                    return $item;
-                }
-            }
-        }
-    }
-
-    /**
-     * Gets a collection of items from the repository with a key and value.
-     *
-     * @param mixed $key   The key to match with the value.
-     * @param mixed $value The value to match with the key.
-     *
-     * @return Collection A collection.
-     */
-    public function getAll($key, $value = null)
-    {
+	public function get($key, $value = null)
+	{
+		foreach ($this->items as $item)
+		{
+			if (is_array($item))
+			{
+				if ($item[$key] == $value)
+				{
+					return $item;
+				}
+			}
+			elseif (is_object($item))
+			{
+				if ($item->{$key} == $value)
+				{
+					return $item;
+				}
+			}
+		}
+	}
+	
+	public function getAll($key, $value = null)
+	{
         $collection = new self();
 
-        foreach ($this->items as $item) {
-            if ($item->{$key} == $value) {
-                $collection->push($item);
-            }
-        }
+		foreach ($this->items as $item)
+		{
+			if ($item->{$key} === $value)
+			{
+				$collection->push($item);
+			}
+		}
 
-        return $collection;
-    }
+		return $collection;
+	}
 
-    /**
-     * {@inheritdoc}
-     */
-    public function offsetSet($key, $value)
-    {
-        if (! is_null($this->discrim)) {
-            if (! is_array($value)) {
-                $this->items[$value->{$this->discrim}] = $value;
-            } else {
-                $this->items[$value[$this->discrim]] = $value;
-            }
+	public function has($key)
+	{
+		return $this->offsetExists($key);
+	}
+	
+	public function offsetExists($key)
+	{
+		return $this->items->offsetExists($key);
+	}
+	
+	public function offsetGet($key)
+	{
+		return $this->items->offsetGet($key);
+	}
+	
+	public function offsetSet($key, $value)
+	{
+		$this->items->offsetSet($key, $value); 
+	}
+	
+	public function push($value)
+	{
+		$this->items->offsetSet($this->items->count(), $value);
+	}
+	
+	public function pull($key)
+	{
+		$this->offsetUnset($key);
+	}
+	
+	public function offsetUnset($key)
+	{
+		$this->items->offsetUnset($key);
+	}
+	
+	public function count()
+	{
+		return $this->items->count();
+	}
+	
+	public function all()
+	{
+		$items = [];
+		foreach ($this->items as $item)
+		{
+			$items[] = $item;
+		}
+		return $items;
+	}
+	
+	public function first()
+	{
+		return $this->items->offsetGet($this->items->first());
+	}
+	
+	public function last()
+	{
+		return $this->items->offsetGet($this->items->last());
+	}
+	
+	public function getIterator()
+	{
+		return new ArrayIterator($this->all());
+	}
 
-            return;
-        }
+	public function memoryUsage()
+	{
+		return $this->items->memoryUsage();
+	}
+	
+	public function size()
+	{
+		return $this->items->size();
+	}
 
-        if (is_null($key)) {
-            $this->items[] = $value;
-        } else {
-            $this->items[$key] = $value;
-        }
-    }
-
+	public function __toString()
+	{
+		return json_encode($this->all());
+	}
+	
+	public function __call($function, $params)
+	{
+		return call_user_func_array([$this->items, $function], $params);
+	}
+	
     /**
      * Handles debug calls from var_dump and similar functions.
      *
@@ -106,6 +162,6 @@ class Collection extends BaseCollection
      */
     public function __debugInfo()
     {
-        return $this->items;
+		return $this->all();
     }
 }

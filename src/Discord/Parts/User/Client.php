@@ -63,17 +63,20 @@ class Client extends Part
     {
         $this->user = $this->factory->create(User::class,
             [
-                'id'            => $this->id,
-                'username'      => $this->username,
-                'avatar'        => $this->attributes['avatar'],
-                'discriminator' => $this->discriminator,
+                'id'             => $this->id,
+                'username'       => $this->username,
+                'avatar'         => $this->attributes['avatar'],
+                'discriminator'  => $this->discriminator,
+                'bot'            => $this->bot,
             ], true
         );
-        $this->application = $this->factory->create(Application::class, [], true);
+        if ($this->bot) {
+            $this->application = $this->factory->create(Application::class, [], true);
 
-        $this->http->get('oauth2/applications/@me')->then(function ($response) {
-            $this->application->fill((array) $response);
-        });
+            $this->http->get('oauth2/applications/@me')->then(function ($response) {
+                $this->application->fill((array) $response);
+            });
+        }
     }
 
     /**
@@ -103,15 +106,14 @@ class Client extends Part
     /**
      * Returns the avatar URL for the client.
      *
-     * @return string The URL to the client's avatar.
+     * @param string $format The image format.
+     * @param int    $size   The size of the image.
+     *
+     * @return string The URL to the clients avatar.
      */
     public function getAvatarAttribute()
     {
-        if (empty($this->attributes['avatar'])) {
-            return;
-        }
-
-        return "https://discordapp.com/api/users/{$this->id}/avatars/{$this->attributes['avatar']}.jpg";
+        return call_user_func_array([$this->user, 'getAvatarAttribute'], func_get_args());
     }
 
     /**

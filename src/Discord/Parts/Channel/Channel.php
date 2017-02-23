@@ -13,6 +13,7 @@ namespace Discord\Parts\Channel;
 
 use Discord\Exceptions\FileNotFoundException;
 use Discord\Helpers\Collection;
+use Discord\Parts\Embed\Embed;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Guild\Invite;
 use Discord\Parts\Guild\Role;
@@ -68,6 +69,7 @@ class Channel extends Part
         'permission_overwrites',
         'bitrate',
         'recipients',
+        'user_limit',
     ];
 
     /**
@@ -176,7 +178,7 @@ class Channel extends Part
     }
 
     /**
-     * Fetches a message object from the Discord servers.
+     * Fetches a message object from the Discord servers or Cache (if store message enabled)
      *
      * @param string $id The message snowflake.
      *
@@ -184,7 +186,23 @@ class Channel extends Part
      */
     public function getMessage($id)
     {
-        return $this->messages->fetch($id);
+		$getLastMessage = function () use ($id) {
+			$deferred = new Deferred();
+			
+			if ($this->messages->has($id)) {
+				$deferred->resolve($this->messages->offsetGet($id));
+			} else {
+				$this->messages->fetch($id)->then(function ($message) use ($deferred) {
+					$deferred->resolve($message);
+				}, function ($e) use ($deferred) {
+					$deferred->reject($e);
+				});
+			}
+			
+			return $deferred->promise();
+		};
+		
+        return $getLastMessage();
     }
 
     /**
@@ -231,7 +249,11 @@ class Channel extends Part
      */
     public function getGuildAttribute()
     {
-        return $this->discord->guilds->get('id', $this->guild_id);
+        if ($this->is_private) {
+            return;
+        }
+
+        return $this->discord->guilds->offsetGet($this->guild_id);
     }
 
     /**
@@ -305,14 +327,21 @@ class Channel extends Part
 
         foreach ($messages as $message) {
             if ($message instanceof Message) {
-                $messageID[] = $message->id;
+                $id = $message->id;
             } else {
-                $messageID[] = $message;
+                $id = $message;
+            }
+            $timestamp = \Discord\timestampFromSnowFlake($id);
+            if ((time() - $timestamp) <= 1209600) {
+                //check to see if younger than 2 weeks old, current bulk-delete requires it.
+                $messageID[] = $id;
             }
         }
 
+        //add checks to see if more than 2 weeks old and dont include
+
         $this->http->post(
-            "channels/{$this->id}/messages/bulk_delete",
+            "channels/{$this->id}/messages/bulk-delete",
             [
                 'messages' => $messageID,
             ]
@@ -369,7 +398,10 @@ class Channel extends Part
 
                 foreach ($response as $message) {
                     $message = $this->factory->create(Message::class, $message, true);
-                    $messages->push($message);
+                    $messages->offsetSet($message->id, $message);
+                    if ($this->discord->options['storeMessages']) {
+                        $this->messages->offsetSet($message->id, $message);
+                    }
                 }
 
                 $deferred->resolve($messages);
@@ -455,7 +487,10 @@ class Channel extends Part
 
                 foreach ($response as $message) {
                     $message = $this->factory->create(Message::class, $message, true);
-                    $messages->push($message);
+                    $messages->offsetSet($message->id, $message);
+                    if ($this->discord->options['storeMessages']) {
+                        $this->messages->offsetSet($message->id, $message);
+                    }
                 }
 
                 $deferred->resolve($messages);
@@ -540,7 +575,6 @@ class Channel extends Part
         )->then(
             function ($response) use ($deferred) {
                 $message = $this->factory->create(Message::class, $response, true);
-                $this->messages->push($message);
 
                 $deferred->resolve($message);
             },
@@ -560,7 +594,7 @@ class Channel extends Part
      *
      * @return \React\Promise\Promise
      */
-    public function sendFile($filepath, $filename = null, $content = null, $tts = false)
+    public function sendFile($filepath, $filename = null, $content = null, $tts = false, $embed = null)
     {
         $deferred = new Deferred();
 
@@ -580,10 +614,9 @@ class Channel extends Part
             $filename = basename($filepath);
         }
 
-        $this->http->sendFile($this, $filepath, $filename, $content, $tts)->then(
+        $this->http->sendFile($this, $filepath, $filename, $content, $tts, $embed)->then(
             function ($response) use ($deferred) {
                 $message = $this->factory->create(Message::class, $response, true);
-                $this->messages->push($message);
 
                 $deferred->resolve($message);
             },

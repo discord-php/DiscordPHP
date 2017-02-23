@@ -802,7 +802,8 @@ class VoiceClient extends EventEmitter
                 $magicBytes = fread($stream, 4);
 
                 if ($magicBytes !== self::DCA_VERSION) {
-                    $deferred->reject(new OutdatedDCAException('You are using an outdated version of DCA. Please make sure you have the latest version from https://github.com/bwmarrin/dca'));
+                    $content = fread($stream, 1024);
+                    $deferred->reject(new OutdatedDCAException('You are using an outdated version of DCA. Please make sure you have the latest version from https://github.com/bwmarrin/dca - Debugging: '.$magicBytes.$content));
 
                     return;
                 }
@@ -1268,19 +1269,16 @@ class VoiceClient extends EventEmitter
      *
      * @return bool Whether the user is speaking.
      */
-    public function isSpeaking($id)
+    public function isSpeaking($id = null)
     {
-        $ssrc = @$this->speakingStatus[$id];
-        $user = $this->speakingStatus->get('user_id', $id);
-
-        if (is_null($ssrc) && ! is_null($user)) {
-            return $user->speaking;
-        } elseif (is_null($user) && ! is_null($ssrc)) {
-            return $user->speaking;
-        } elseif (is_null($user) && is_null($ssrc)) {
-            return $user->speaking;
+        if ($id) {
+            if ($this->speakingStatus->has($id)) {
+                return $this->speakingStatus->offsetGet($id)->speaking;
+            } else {
+                return false;
+            }
         } else {
-            return false;
+            return $this->speaking;
         }
     }
 
@@ -1305,9 +1303,7 @@ class VoiceClient extends EventEmitter
             unset($this->speakingStatus[$ss->ssrc]);
         };
 
-        $ss = $this->speakingStatus->get('user_id', $data->user_id);
-
-        if (is_null($ss)) {
+        if (! $this->speakingStatus->has($data->user_id)) {
             return; // not in our channel
         }
 
@@ -1315,6 +1311,7 @@ class VoiceClient extends EventEmitter
             return; // ignore, just a mute/deaf change
         }
 
+        $ss = $this->speakingStatus->offsetGet($data->user_id);
         $removeDecoder($ss);
     }
 

@@ -40,6 +40,8 @@ class Op
     const OP_HELLO = 10;
     // Used to acknowledge heartbeats.
     const OP_HEARTBEAT_ACK = 11;
+    // Used to sync guilds (USER ONLY).
+    const OP_GUILD_SYNC = 12;
 
     ///////////////////////////////////////
     ///////////////////////////////////////
@@ -88,4 +90,6 @@ class Op
     const CLOSE_SESSION_TIMEOUT = 4009;
     // Invalid shard.
     const CLOSE_INVALID_SHARD = 4010;
+    // Sharding requred.
+    const CLOSE_SHARDING_REQUIRED = 4011;
 }

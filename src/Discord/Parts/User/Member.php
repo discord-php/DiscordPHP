@@ -71,7 +71,7 @@ class Member extends Part
             function () use ($deferred) {
                 $ban = $this->factory->create(Ban::class, [
                     'user'  => $this->user,
-                    'guild' => $this->discord->guilds->get('id', $this->guild_id),
+                    'guild' => $this->guild,
                 ], true);
 
                 $deferred->resolve($ban);
@@ -100,12 +100,12 @@ class Member extends Part
 
         // jake plz
         if ($this->discord->id == $this->user->id) {
-            $promise = $this->http->patch("guilds/{$this->guild_id}/members/@me/nick", $payload);
+            $url = "guilds/{$this->guild_id}/members/@me/nick";
         } else {
-            $promise = $this->http->patch("guilds/{$this->guild_id}/members/{$this->user->id}", $payload);
+            $url = "guilds/{$this->guild_id}/members/{$this->user->id}";
         }
 
-        $promise->then(
+        $this->http->patch($url, $payload)->then(
             \React\Partial\bind_right($this->resolve, $deferred),
             \React\Partial\bind_right($this->reject, $deferred)
         );
@@ -181,9 +181,11 @@ class Member extends Part
 
         if (false !== ($index = array_search($role, $this->attributes['roles']))) {
             unset($this->attributes['roles'][$index]);
+
+            return true;
         }
 
-        return true;
+        return false;
     }
 
     /**
@@ -237,7 +239,17 @@ class Member extends Part
      */
     public function getUserAttribute()
     {
-        return $this->factory->create(User::class, $this->attributes['user'], true);
+        if ($this->discord->users->has($this->attributes['user']->id)) {
+            return $this->discord->users->offsetGet($this->attributes['user']->id);
+        } else {
+            $user = $this->factory->create(User::class, $this->attributes['user'], true);
+			
+			if ($this->discord->options['storeUsers']) {
+				$this->discord->users->offsetSet($user->id, $user);
+			}
+
+            return $user;
+        }
     }
 
     /**
@@ -247,7 +259,7 @@ class Member extends Part
      */
     public function getGuildAttribute()
     {
-        return $this->discord->guilds->get('id', $this->guild_id);
+        return $this->discord->guilds->offsetGet($this->guild_id);
     }
 
     /**
@@ -259,9 +271,11 @@ class Member extends Part
     {
         $roles = new Collection();
 
-        foreach ($this->guild->roles as $role) {
-            if (array_search($role->id, $this->attributes['roles']) !== false) {
-                $roles->push($role);
+        $guildRoles = $this->guild->roles;
+
+        foreach ($this->attributes['roles'] as $memberRoleID) {
+            if ($guildRoles->has($memberRoleID)) {
+                $roles->push($guildRoles->offsetGet($memberRoleID));
             }
         }
 

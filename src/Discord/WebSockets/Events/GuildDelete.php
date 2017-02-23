@@ -24,7 +24,16 @@ class GuildDelete extends Event
     {
         $guildPart = $this->factory->create(Guild::class, $data, true);
 
-        $this->discord->guilds->pull($guildPart->id);
+        if ($this->discord->guilds->has($guildPart->id)) {
+			$this->discord->repositories->offsetGet('DiscordRepositoryGuildBanRepository')->offsetUnset($guildPart->id);
+			$this->discord->repositories->offsetGet('DiscordRepositoryGuildChannelRepository')->offsetUnset($guildPart->id);
+			$this->discord->repositories->offsetGet('DiscordRepositoryGuildEmojiRepository')->offsetUnset($guildPart->id);
+			$this->discord->repositories->offsetGet('DiscordRepositoryGuildInviteRepository')->offsetUnset($guildPart->id);
+			$this->discord->repositories->offsetGet('DiscordRepositoryGuildMemberRepository')->offsetUnset($guildPart->id);
+			$this->discord->repositories->offsetGet('DiscordRepositoryGuildRoleRepository')->offsetUnset($guildPart->id);
+			$this->discord->repositories->offsetGet('DiscordRepositoryGuildBanRepository')->offsetUnset($guildPart->id);
+			$this->discord->guilds->pull($guildPart->id);
+        }
 
         $deferred->resolve($guildPart);
     }

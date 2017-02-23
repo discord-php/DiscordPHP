@@ -36,4 +36,9 @@ class MessageRepository extends AbstractRepository
      * {@inheritdoc}
      */
     protected $part = Message::class;
+		
+    /**
+     * {@inheritdoc}
+     */
+	protected $storeOption = 'storeMessages';
 }

@@ -21,6 +21,7 @@ use Illuminate\Support\Str;
 use JsonSerializable;
 use React\Promise\Promise;
 use Serializable;
+use Discord\Helpers\Collection;
 
 /**
  * This class is the base of all objects that are returned. All "Parts" extend off this
@@ -87,7 +88,7 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
     /**
      * An array of repositories that can exist in a part.
      *
-     * @var array Repositories.
+     * @var array repositories.
      */
     protected $repositories = [];
 
@@ -283,21 +284,54 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
         if (isset($this->repositories[$key])) {
             $className = str_replace('\\', '', $this->repositories[$key]);
 
-            if ($repository = $this->cache->get("repositories.{$className}.{$this->id}.{$key}")) {
-                return $repository;
-            }
+			if ($this->discord->repositories->has($className))
+			{
+				$partRepo = $this->discord->repositories->offsetGet($className); //className
+				if ($partRepo->has($this->id))
+				{
+					$part = $partRepo->offsetGet($this->id); //id
+					if ($part->has($key))
+					{
+						return $part->offsetGet($key);
+					}
+				}
+			}
 
             $class = $this->repositories[$key];
-
-            return $this->cache->set(
-                "repositories.{$className}.{$this->id}.{$key}",
-                new $class(
+			$value = new $class(
                     $this->http,
                     $this->cache,
                     $this->factory,
                     $this->getRepositoryAttributes()
-                )
-            );
+                );
+			
+			if ($this->discord->repositories->has($className))
+			{
+				$partRepo = $this->discord->repositories->offsetGet($className); //className
+				if ($partRepo->has($this->id))
+				{
+					$part = $partRepo->offsetGet($this->id); //id
+					$part->offsetSet($key, $value);          //key
+				}
+				else
+				{
+					$part = new Collection([], null, 'int');
+					$part->offsetSet($key, $value);         //key
+					$partRepo->offsetSet($this->id, $part); //id
+				}
+			}
+			else
+			{
+				$partRepo = new Collection([], null); //ClassName
+				$part = new Collection([], null, 'int');     //id
+				$part->offsetSet($key, $value); //key
+				$partRepo->offsetSet($this->id, $part);
+				$this->discord->repositories->offsetSet($className, $partRepo);
+				//className->id->key = Repo
+				//make one
+			}
+			
+			return $value;
         }
 
         if ($str = $this->checkForMutator($key, 'get')) {
@@ -323,17 +357,34 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
      */
     public function setAttribute($key, $value)
     {
-        if (isset($this->repositories[$key])) {
-            if (! ($value instanceof $this->repositories[$key])) {
-                return;
-            }
-
+        if (isset($this->repositories[$key]) && ($value instanceof $this->repositories[$key])) {
             $className = str_replace('\\', '', $this->repositories[$key]);
 
-            $this->cache->set(
-                "repositories.{$className}.{$this->id}.{$key}",
-                $value
-            );
+			if ($this->discord->repositories->has($className))
+			{
+				$partRepo = $this->discord->repositories->offsetGet($className); //className
+				if ($partRepo->has($this->id))
+				{
+					$part = $partRepo->offsetGet($this->id); //id
+					$part->offsetSet($key, $value);          //key
+				}
+				else
+				{
+					$part = new Collection([], null, 'int');
+					$part->offsetSet($key, $value);         //key
+					$partRepo->offsetSet($this->id, $part); //id
+				}
+			}
+			else
+			{
+				$partRepo = new Collection([], null); //ClassName
+				$part = new Collection([], null, 'int');     //id
+				$part->offsetSet($key, $value); //key
+				$partRepo->offsetSet($this->id, $part);
+				$this->discord->repositories->offsetSet($className, $partRepo);
+				//className->id->key = Repo
+				//make one
+			}
 
             return;
         }

@@ -24,23 +24,28 @@ class MessageUpdate extends Event
     public function handle(Deferred $deferred, $data)
     {
         $messagePart = $this->factory->create(Message::class, $data, true);
+        $old         = null;
 
-        $messages = $this->discord->getRepository(
-            MessageRepository::class,
-            $messagePart->channel_id,
-            'messages',
-            ['channel_id' => $messagePart->channel_id]
-        );
-        $message = $messages->get('id', $messagePart->id);
+        if ($this->discord->options['storeMessages']) {
+            if ($this->discord->private_channels->has($messagePart->channel_id)) {
+                $messages = $this->discord->private_channels->offsetGet($messagePart->channel_id)->messages;
+            } else {
+                $messages = $this->discord->getRepository(
+                    MessageRepository::class,
+                    $messagePart->channel_id,
+                    'messages',
+                    ['channel_id' => $messagePart->channel_id]
+                );
+            }
 
-        if (is_null($message)) {
-            $newMessage = $messagePart;
-        } else {
-            $newMessage = $this->factory->create(Message::class, array_merge($message->getRawAttributes(), $messagePart->getRawAttributes()), true);
+            if ($messages->has($messagePart->id)) {
+                $old        = $messages->offsetGet($messagePart->id);
+                $newMessage = $this->factory->create(Message::class, array_merge($old->getRawAttributes(), $messagePart->getRawAttributes()), true);
+            } else {
+                $newMessage = $messagePart;
+            }
+            $messages->offsetSet($newMessage->id, $newMessage);
         }
-
-        $old = $messages->get('id', $messagePart->id);
-        $messages->push($newMessage);
 
         $deferred->resolve([$messagePart, $old]);
     }

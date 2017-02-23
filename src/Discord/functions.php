@@ -38,3 +38,30 @@ function mentioned($part, Message $message)
         return strpos($message->content, $part) !== false;
     }
 }
+
+/**
+ * Calculates UNIX timestamp from snowflake.
+ *
+ * @param STRING $snowflake The snowflake
+ *
+ * @return UNIX timestamp
+ */
+function timestampFromSnowFlake($snowflake, $float = false)
+{
+	$timestamp = ((($snowflake >> 22) + 1420070400000) / 1000);
+	return ($float) ? (float) $timestamp : (int) floor($timestamp);
+}
+
+/**
+ * Calculates INT from RGB value.
+ *
+ * @param INT $r Red color
+ * @param INT $g Green color
+ * @param INT $b Blue color
+ *
+ * @return INT color
+ */
+function rgbToInteger($r = 0, $g = 0, $b = 0)
+{
+	return ($r << 16) + ($g << 8) + $b;
+}

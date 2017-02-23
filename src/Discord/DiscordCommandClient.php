@@ -154,7 +154,7 @@ class DiscordCommandClient extends Discord
         $this->commands[$command]        = $commandInstance;
 
         foreach ($options['aliases'] as $alias) {
-            $this->addCommandAlias($alias, $command);
+            $this->registerAlias($alias, $command);
         }
 
         return $commandInstance;
@@ -315,5 +315,23 @@ class DiscordCommandClient extends Discord
             ]);
 
         return $resolver->resolve($options);
+    }
+
+    /**
+     * Handles dynamic get calls to the command client.
+     *
+     * @param string $name Variable name.
+     *
+     * @return mixed
+     */
+    public function __get($name)
+    {
+        $allowed = ['commands', 'aliases'];
+
+        if (array_search($name, $allowed) !== false) {
+            return $this->{$name};
+        }
+
+        return parent::__get($name);
     }
 }

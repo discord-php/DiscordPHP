@@ -41,6 +41,7 @@ abstract class Event
     const GUILD_CREATE = 'GUILD_CREATE';
     const GUILD_DELETE = 'GUILD_DELETE';
     const GUILD_UPDATE = 'GUILD_UPDATE';
+    const GUILD_SYNC   = 'GUILD_SYNC';
 
     const GUILD_BAN_ADD       = 'GUILD_BAN_ADD';
     const GUILD_BAN_REMOVE    = 'GUILD_BAN_REMOVE';
@@ -52,15 +53,19 @@ abstract class Event
     const GUILD_ROLE_DELETE   = 'GUILD_ROLE_DELETE';
 
     // Channel
-    const CHANNEL_CREATE = 'CHANNEL_CREATE';
-    const CHANNEL_DELETE = 'CHANNEL_DELETE';
-    const CHANNEL_UPDATE = 'CHANNEL_UPDATE';
+    const CHANNEL_CREATE      = 'CHANNEL_CREATE';
+    const CHANNEL_DELETE      = 'CHANNEL_DELETE';
+    const CHANNEL_UPDATE      = 'CHANNEL_UPDATE';
+    const CHANNEL_PINS_UPDATE = 'CHANNEL_PINS_UPDATE';
 
     // Messages
-    const MESSAGE_CREATE      = 'MESSAGE_CREATE';
-    const MESSAGE_DELETE      = 'MESSAGE_DELETE';
-    const MESSAGE_UPDATE      = 'MESSAGE_UPDATE';
-    const MESSAGE_DELETE_BULK = 'MESSAGE_DELETE_BULK';
+    const MESSAGE_CREATE              = 'MESSAGE_CREATE';
+    const MESSAGE_DELETE              = 'MESSAGE_DELETE';
+    const MESSAGE_UPDATE              = 'MESSAGE_UPDATE';
+    const MESSAGE_DELETE_BULK         = 'MESSAGE_DELETE_BULK';
+    const MESSAGE_REACTION_ADD        = 'MESSAGE_REACTION_ADD';
+    const MESSAGE_REACTION_REMOVE     = 'MESSAGE_REACTION_REMOVE';
+    const MESSAGE_REACTION_REMOVE_ALL = 'MESSAGE_REACTION_REMOVE_ALL';
 
     /**
      * The HTTP client.

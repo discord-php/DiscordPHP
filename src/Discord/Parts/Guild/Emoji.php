@@ -39,7 +39,7 @@ class Emoji extends Part
      */
     public function getGuildAttribute()
     {
-        return $this->discord->guilds->get('id', $this->guild_id);
+        return $this->discord->guilds->offsetGet($this->guild_id);
     }
 
     /**
@@ -49,8 +49,16 @@ class Emoji extends Part
      */
     public function getRolesAttribute()
     {
-        return $this->guild->roles->filter(function ($role) {
-            return array_search($role->id, $this->attributes['roles']) !== false;
-        });
+        $roles = new Collection();
+
+        $gRoles = $this->guild->roles;
+
+        foreach ($this->attributes['roles'] as $roleid) {
+            if ($gRoles->has($roleid)) {
+                $roles->offsetSet($roleid, $gRoles->offsetGet($roleid));
+            }
+        }
+
+        return $roles;
     }
 }

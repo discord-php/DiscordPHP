@@ -28,12 +28,6 @@ use React\Promise\Deferred;
  */
 abstract class AbstractRepository implements RepositoryInterface, ArrayAccess, Countable, IteratorAggregate
 {
-    /**
-     * The discriminator.
-     *
-     * @var string Discriminator.
-     */
-    protected $discrim = 'id';
 
     /**
      * The HTTP client.
@@ -97,7 +91,7 @@ abstract class AbstractRepository implements RepositoryInterface, ArrayAccess, C
         $this->http       = $http;
         $this->cache      = $cache;
         $this->factory    = $factory;
-        $this->collection = new Collection([], $this->discrim);
+        $this->collection = new Collection();
         $this->vars       = $vars;
     }
 
@@ -118,18 +112,26 @@ abstract class AbstractRepository implements RepositoryInterface, ArrayAccess, C
             $this->replaceWithVariables(
                 $this->endpoints['all']
             )
-        )->then(function ($response) {
+        )->then(function ($response) use ($deferred) {
             $this->fill([]);
 
             foreach ($response as $value) {
                 $value = array_merge($this->vars, (array) $value);
                 $part = $this->factory->create($this->part, $value, true);
 
-                $this->push($part);
+                if (isset($part->id)) {
+                    $this->offsetSet($part->id, $part);
+                } else {
+                    $this->push($part);
+                }
             }
+
+            $deferred->resolve($this);
         }, function ($e) use ($deferred) {
             $deferred->reject($e);
         });
+
+        return $deferred->promise();
     }
 
     /**
@@ -267,8 +269,23 @@ abstract class AbstractRepository implements RepositoryInterface, ArrayAccess, C
             $this->replaceWithVariables(
                 str_replace(':id', $id, $this->endpoints['get'])
             )
-        )->then(function ($response) use ($deferred) {
+        )->then(function ($response) use ($id, $deferred) {
+            if (isset($this->vars['guild_id'])) {
+                $response->guild_id = $this->vars['guild_id'];
+            }
             $part = $this->factory->create($this->part, $response, true);
+
+			if (isset($this->storeOption))
+			{
+				if ($this->discord->options[$this->storeOption])
+				{
+					$this->offsetSet($id, $part);
+				}
+			}
+			else
+			{
+				$this->offsetSet($id, $part);
+			}
 
             $deferred->resolve($part);
         }, function ($e) use ($deferred) {
@@ -302,7 +319,6 @@ abstract class AbstractRepository implements RepositoryInterface, ArrayAccess, C
 
         return $string;
     }
-
     /**
      * Returns how many items are in the repository.
      *

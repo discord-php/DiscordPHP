@@ -13,9 +13,11 @@ namespace Discord\Parts\Channel;
 
 use Carbon\Carbon;
 use Discord\Helpers\Collection;
+use Discord\Parts\Embed\Embed;
 use Discord\Parts\Part;
 use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
+use React\Promise\Deferred;
 
 /**
  * A message which is posted to a Discord text channel.
@@ -46,6 +48,10 @@ class Message extends Part
     const TYPE_CHANNEL_NAME_CHANGE = 4;
     const TYPE_CHANNEL_ICON_CHANGE = 5;
 
+    const REACT_DELETE_ALL = 0;
+    const REACT_DELETE_ME  = 1;
+    const REACT_DELETE_ID  = 2;
+
     /**
      * {@inheritdoc}
      */
@@ -65,6 +71,8 @@ class Message extends Part
         'nonce',
         'mention_roles',
         'pinned',
+        'reactions',
+        'webhook_id',
     ];
 
     /**
@@ -76,7 +84,71 @@ class Message extends Part
      */
     public function reply($text)
     {
-        return $this->channel->sendMessage("{$this->author}, {$text}");
+        $user = $this->getAuthorAttribute(1);
+
+        return $this->channel->sendMessage("{$user->id}, {$text}");
+    }
+
+    /**
+     * Reacts to the message.
+     *
+     * @param string $emoticon The emoticon to react with. (custom: ':michael:251127796439449631')
+     *
+     * @return \React\Promise\Promise
+     */
+    public function react($emoticon)
+    {
+        $deferred = new Deferred();
+
+        $this->http->put(
+            "channels/{$this->channel->id}/messages/{$this->id}/reactions/{$emoticon}/@me"
+        )->then(
+            \React\Partial\bind_right($this->resolve, $deferred),
+            \React\Partial\bind_right($this->reject, $deferred)
+        );
+
+        return $deferred->promise();
+    }
+
+    /**
+     * Deletes a reaction.
+     *
+     * @param int    $type     The type of deletion to perform.
+     * @param string $emoticon The emoticon to delete (if not all).
+     * @param string $id       The user reaction to delete (if not all).
+     *
+     * @return \React\Promise\Promise
+     */
+    public function deleteReaction($type, $emoticon = null, $id = null)
+    {
+        $deferred = new Deferred();
+
+        $types = [self::REACT_DELETE_ALL, self::REACT_DELETE_ME, self::REACT_DELETE_ID];
+
+        if (in_array($type, $types)) {
+            switch ($type) {
+                case self::REACT_DELETE_ALL:
+                    $url = "channels/{$this->channel->id}/messages/{$this->id}/reactions";
+                    break;
+                case self::REACT_DELETE_ME:
+                    $url = "channels/{$this->channel->id}/messages/{$this->id}/reactions/{$emoticon}/@me";
+                    break;
+                case self::REACT_DELETE_ID:
+                    $url = "channels/{$this->channel->id}/messages/{$this->id}/reactions/{$emoticon}/{$id}";
+                    break;
+            }
+
+            $this->http->delete(
+                $url, []
+            )->then(
+                \React\Partial\bind_right($this->resolve, $deferred),
+                \React\Partial\bind_right($this->reject, $deferred)
+            );
+        } else {
+            $deferred->reject();
+        }
+
+        return $deferred->promise();
     }
 
     /**
@@ -88,12 +160,12 @@ class Message extends Part
     {
         foreach ($this->discord->guilds as $guild) {
             if ($guild->channels->has($this->channel_id)) {
-                return $guild->channels->get('id', $this->channel_id);
+                return $guild->channels->offsetGet($this->channel_id);
             }
         }
 
-        if ($this->cache->has("pm_channels.{$this->channel_id}")) {
-            return $this->cache->get("pm_channels.{$this->channel_id}");
+        if ($this->discord->private_channels->has($this->channel_id)) {
+            return $this->discord->private_channels->offsetGet($this->channel_id);
         }
 
         return $this->factory->create(Channel::class, [
@@ -109,11 +181,13 @@ class Message extends Part
      */
     public function getMentionRolesAttribute()
     {
-        $roles = new Collection([], 'id');
+        $roles = new Collection();
 
-        foreach ($this->channel->guild->roles as $role) {
-            if (array_search($role->id, $this->attributes['mention_roles']) !== false) {
-                $roles->push($role);
+        $guildRoles = $this->channel->guild->roles;
+
+        foreach ($this->attributes['mention_roles'] as $mentionRoleID) {
+            if ($guildRoles->has($mentionRoleID)) {
+                $roles->push($guildRoles->offsetGet($mentionRoleID));
             }
         }
 
@@ -127,7 +201,7 @@ class Message extends Part
      */
     public function getMentionsAttribute()
     {
-        $users = new Collection([], 'id');
+        $users = new Collection();
 
         foreach ($this->attributes['mentions'] as $mention) {
             $users->push($this->factory->create(User::class, $mention, true));
@@ -141,13 +215,28 @@ class Message extends Part
      *
      * @return Member|User The member that sent the message. Will return a User object if it is a PM.
      */
-    public function getAuthorAttribute()
+    public function getAuthorAttribute($type = 0)
     {
-        if ($this->channel->type != Channel::TYPE_TEXT) {
-            return $this->factory->create(User::class, $this->attributes['author'], true);
+        if ($this->channel->type != Channel::TYPE_TEXT || $type === 1) {
+            if ($this->discord->users->has($this->attributes['author']->id)) {
+                return $this->discord->users->offsetGet($this->attributes['author']->id);
+            } else {
+                $user = $this->factory->create(User::class, $this->attributes['author'], true);
+				
+				if ($this->discord->options['storeUsers'])
+				{
+					$this->discord->users->offsetSet($user->id, $user);
+				}
+
+                return $user;
+            }
         }
 
-        return $this->channel->guild->members->get('id', $this->attributes['author']->id);
+		if ($this->channel->guild->members->has($this->attributes['author']->id) && $this->discord->options['storeMembers']) {
+			return $this->channel->guild->members->offsetGet($this->attributes['author']->id);
+		}
+		
+		return $this->factory->create(User::class, $this->attributes['author'], true);
     }
 
     /**
@@ -160,7 +249,11 @@ class Message extends Part
         $embeds = new Collection();
 
         foreach ($this->attributes['embeds'] as $embed) {
-            $embeds->push($this->factory->create(Embed::class, $embed, true));
+            if ($embed instanceof Embed) {
+                $embeds->push($embed);
+            } else {
+                $embeds->push($this->factory->create(Embed::class, $embed, true));
+            }
         }
 
         return $embeds;
@@ -209,6 +302,7 @@ class Message extends Part
     {
         return [
             'content'  => $this->content,
+            'embed'    => $this->embeds->first(),
             'mentions' => $this->mentions,
         ];
     }

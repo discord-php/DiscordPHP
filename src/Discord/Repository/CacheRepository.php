@@ -11,29 +11,18 @@
 
 namespace Discord\Repository;
 
-use Discord\Parts\User\User;
-
 /**
- * Contains users that the user shares guilds with.
- *
- * @see Discord\Parts\User\User
+ * Cache
  */
-class UserRepository extends AbstractRepository
+class CacheRepository extends AbstractRepository
 {
     /**
      * {@inheritdoc}
      */
-    protected $endpoints = [
-        'get' => 'users/:id',
-    ];
+    protected $endpoints = [];
 
     /**
      * {@inheritdoc}
      */
-    protected $part = User::class;
-
-    /**
-     * {@inheritdoc}
-     */
-	protected $storeOption = 'storeUsers';
+    protected $part;
 }

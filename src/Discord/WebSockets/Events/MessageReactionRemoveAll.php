@@ -11,26 +11,17 @@
 
 namespace Discord\WebSockets\Events;
 
-use Discord\Parts\Guild\Ban;
 use Discord\WebSockets\Event;
 use React\Promise\Deferred;
 
-class GuildBanRemove extends Event
+class MessageReactionRemoveAll extends Event
 {
     /**
      * {@inheritdoc}
      */
     public function handle(Deferred $deferred, $data)
     {
-        $guild = $this->discord->guilds->offsetGet($data->guild_id);
-
-        $ban   = $this->factory->create(Ban::class, [
-            'guild' => $guild,
-            'user'  => $data->user,
-        ], true);
-
-        $guild->bans->pull($ban->id);
-
-        $deferred->resolve($ban);
+        // todo
+        $deferred->resolve($data);
     }
 }

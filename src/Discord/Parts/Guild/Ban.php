@@ -65,7 +65,7 @@ class Ban extends Part
      */
     public function getGuildAttribute()
     {
-        return $this->discord->guilds->get('id', $this->attributes['guild']->id);
+        return $this->discord->guilds->offsetGet($this->attributes['guild']->id);
     }
 
     /**

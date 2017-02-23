@@ -62,7 +62,7 @@ class TypingStart extends Part
     {
         foreach ($this->discord->guilds as $guild) {
             if ($guild->channels->has($this->channel_id)) {
-                return $guild->channels->get('id', $this->channel_id);
+                return $guild->channels->offsetGet($this->channel_id);
             }
         }
     }
