@@ -283,46 +283,40 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
     {
         if (isset($this->repositories[$key])) {
             $className = str_replace('\\', '', $this->repositories[$key]);
-
-            if ($this->discord->repositories->has($className)) {
-                $partRepo = $this->discord->repositories->offsetGet($className); //className
-                if ($partRepo->has($this->id)) {
-                    $part = $partRepo->offsetGet($this->id); //id
-                    if ($part->has($key)) {
-                        return $part->offsetGet($key);
-                    }
-                }
-            }
+			$id = intval($this->id);
+			
+			if ($this->discord->repositories->has($className))
+			{
+				$partRepo = $this->discord->repositories->offsetGet($className); //className
+				if ($partRepo->has($id))
+				{
+					return $partRepo->offsetGet($id); //id
+				}
+			}
 
             $class = $this->repositories[$key];
-            $value = new $class(
+			$value = new $class(
                     $this->http,
                     $this->cache,
                     $this->factory,
                     $this->getRepositoryAttributes()
                 );
-
-            if ($this->discord->repositories->has($className)) {
-                $partRepo = $this->discord->repositories->offsetGet($className); //className
-                if ($partRepo->has($this->id)) {
-                    $part = $partRepo->offsetGet($this->id); //id
-                    $part->offsetSet($key, $value);          //key
-                } else {
-                    $part = new Collection([], null, 'int');
-                    $part->offsetSet($key, $value);         //key
-                    $partRepo->offsetSet($this->id, $part); //id
-                }
-            } else {
-                $partRepo = new Collection([], null); //ClassName
-                $part     = new Collection([], null, 'int');     //id
-                $part->offsetSet($key, $value); //key
-                $partRepo->offsetSet($this->id, $part);
-                $this->discord->repositories->offsetSet($className, $partRepo);
-                //className->id->key = Repo
-                //make one
-            }
-
-            return $value;
+			
+			if ($this->discord->repositories->has($className))
+			{
+				$partRepo = $this->discord->repositories->offsetGet($className); //className
+				$partRepo->offsetSet($id, $value); //id
+			}
+			else
+			{
+				$partRepo = new Collection(); //ClassName
+				$partRepo->offsetSet($id, $value);
+				$this->discord->repositories->offsetSet($className, $partRepo);
+				//className->id = Repo
+				//make one
+			}
+			
+			return $value;
         }
 
         if ($str = $this->checkForMutator($key, 'get')) {
@@ -350,26 +344,21 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
     {
         if (isset($this->repositories[$key]) && ($value instanceof $this->repositories[$key])) {
             $className = str_replace('\\', '', $this->repositories[$key]);
+			$id = intval($this->id);
 
-            if ($this->discord->repositories->has($className)) {
-                $partRepo = $this->discord->repositories->offsetGet($className); //className
-                if ($partRepo->has($this->id)) {
-                    $part = $partRepo->offsetGet($this->id); //id
-                    $part->offsetSet($key, $value);          //key
-                } else {
-                    $part = new Collection([], null, 'int');
-                    $part->offsetSet($key, $value);         //key
-                    $partRepo->offsetSet($this->id, $part); //id
-                }
-            } else {
-                $partRepo = new Collection([], null); //ClassName
-                $part     = new Collection([], null, 'int');     //id
-                $part->offsetSet($key, $value); //key
-                $partRepo->offsetSet($this->id, $part);
-                $this->discord->repositories->offsetSet($className, $partRepo);
-                //className->id->key = Repo
-                //make one
-            }
+			if ($this->discord->repositories->has($className))
+			{
+				$partRepo = $this->discord->repositories->offsetGet($className); //className
+				$partRepo->offsetSet($id, $value); //id
+			}
+			else
+			{
+				$partRepo = new Collection(); //ClassName
+				$partRepo->offsetSet($id, $value);
+				$this->discord->repositories->offsetSet($className, $partRepo);
+				//className->id->key = Repo
+				//make one
+			}
 
             return;
         }

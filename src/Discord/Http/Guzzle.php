@@ -78,10 +78,13 @@ class Guzzle extends GuzzleClient implements HttpDriver
      *
      * @return void
      */
-    public function __construct(CacheWrapper $cache, LoopInterface $loop)
+    public function __construct(CacheWrapper $cache, LoopInterface $loop, $options = [])
     {
         $this->cache = $cache;
-        $options     = ['http_errors' => false, 'allow_redirects' => true, 'base_uri' => Http::BASE_URL.'/v'.Discord::HTTP_API_VERSION];
+		
+		$options['http_errors']		= false;
+		$options['allow_redirects']	= true;
+		$options['base_uri']		= Http::BASE_URL.'/v'.Discord::HTTP_API_VERSION;
 
         $this->async        = true;
         $this->loop         = $loop;
