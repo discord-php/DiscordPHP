@@ -15,15 +15,14 @@ use Illuminate\Support\Collection as BaseCollection;
 
 class Collection extends BaseCollection
 {
-
-	 /**
+    /**
      * {@inheritdoc}
      *
      * @param string $discrim The discriminator.
      */
     public function __construct($items = [])
     {
-		parent::__construct($items);
+        parent::__construct($items);
     }
 
     /**
@@ -34,33 +33,25 @@ class Collection extends BaseCollection
      *
      * @return mixed The value or null.
      */
+    public function get($key, $value = null)
+    {
+        if ($key === 'id' && $this->has($value)) {
+            return $this->offsetGet($value);
+        }
+        foreach ($this->items as $item) {
+            if (is_array($item)) {
+                if ($item[$key] == $value) {
+                    return $item;
+                }
+            } elseif (is_object($item)) {
+                if ($item->{$key} == $value) {
+                    return $item;
+                }
+            }
+        }
+    }
 
-	public function get($key, $value = null)
-	{
-		if ($key === 'id' && $this->has($value))
-		{
-			return $this->offsetGet($value);
-		}
-		foreach ($this->items as $item)
-		{
-			if (is_array($item))
-			{
-				if ($item[$key] == $value)
-				{
-					return $item;
-				}
-			}
-			elseif (is_object($item))
-			{
-				if ($item->{$key} == $value)
-				{
-					return $item;
-				}
-			}
-		}
-	}
-	
-	 /**
+    /**
      * Gets a collection of items from the repository with a key and value.
      *
      * @param mixed $key   The key to match with the value.
@@ -68,22 +59,19 @@ class Collection extends BaseCollection
      *
      * @return Collection A collection.
      */
-	
-	public function getAll($key, $value = null)
-	{
+    public function getAll($key, $value = null)
+    {
         $collection = new self();
 
-		foreach ($this->items as $item)
-		{
-			if ($item->{$key} === $value)
-			{
-				$collection->push($item);
-			}
-		}
+        foreach ($this->items as $item) {
+            if ($item->{$key} === $value) {
+                $collection->push($item);
+            }
+        }
 
-		return $collection;
-	}
-	
+        return $collection;
+    }
+
     /**
      * Handles debug calls from var_dump and similar functions.
      *
@@ -91,6 +79,6 @@ class Collection extends BaseCollection
      */
     public function __debugInfo()
     {
-		return $this->items;
+        return $this->items;
     }
 }
