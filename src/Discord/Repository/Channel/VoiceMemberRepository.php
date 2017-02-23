@@ -31,9 +31,9 @@ class VoiceMemberRepository extends AbstractRepository
      * {@inheritdoc}
      */
     protected $part = VoiceStateUpdate::class;
-	
+
     /**
      * {@inheritdoc}
      */
-	protected $storeOption = 'storeVoiceMembers';
+    protected $storeOption = 'storeVoiceMembers';
 }

@@ -18,143 +18,131 @@ use Judy;
 class Collection implements IteratorAggregate
 {
     protected $discrim; //useless now
-	
-	protected $items;
+
+    protected $items;
 
     public function __construct($items = [], $discrim = null, $type = 'string')
     {
-		if ($type === 'int')
-		{
-			$this->items = new Judy(Judy::INT_TO_MIXED);
-		}
-		elseif ($type === 'string')
-		{
-			$this->items = new Judy(Judy::STRING_TO_MIXED);
-		}
+        if ($type === 'int') {
+            $this->items = new Judy(Judy::INT_TO_MIXED);
+        } elseif ($type === 'string') {
+            $this->items = new Judy(Judy::STRING_TO_MIXED);
+        }
     }
 
+    public function get($key, $value = null)
+    {
+        foreach ($this->items as $item) {
+            if (is_array($item)) {
+                if ($item[$key] == $value) {
+                    return $item;
+                }
+            } elseif (is_object($item)) {
+                if ($item->{$key} == $value) {
+                    return $item;
+                }
+            }
+        }
+    }
 
-	public function get($key, $value = null)
-	{
-		foreach ($this->items as $item)
-		{
-			if (is_array($item))
-			{
-				if ($item[$key] == $value)
-				{
-					return $item;
-				}
-			}
-			elseif (is_object($item))
-			{
-				if ($item->{$key} == $value)
-				{
-					return $item;
-				}
-			}
-		}
-	}
-	
-	public function getAll($key, $value = null)
-	{
+    public function getAll($key, $value = null)
+    {
         $collection = new self();
 
-		foreach ($this->items as $item)
-		{
-			if ($item->{$key} === $value)
-			{
-				$collection->push($item);
-			}
-		}
+        foreach ($this->items as $item) {
+            if ($item->{$key} === $value) {
+                $collection->push($item);
+            }
+        }
 
-		return $collection;
-	}
+        return $collection;
+    }
 
-	public function has($key)
-	{
-		return $this->offsetExists($key);
-	}
-	
-	public function offsetExists($key)
-	{
-		return $this->items->offsetExists($key);
-	}
-	
-	public function offsetGet($key)
-	{
-		return $this->items->offsetGet($key);
-	}
-	
-	public function offsetSet($key, $value)
-	{
-		$this->items->offsetSet($key, $value); 
-	}
-	
-	public function push($value)
-	{
-		$this->items->offsetSet($this->items->count(), $value);
-	}
-	
-	public function pull($key)
-	{
-		$this->offsetUnset($key);
-	}
-	
-	public function offsetUnset($key)
-	{
-		$this->items->offsetUnset($key);
-	}
-	
-	public function count()
-	{
-		return $this->items->count();
-	}
-	
-	public function all()
-	{
-		$items = [];
-		foreach ($this->items as $item)
-		{
-			$items[] = $item;
-		}
-		return $items;
-	}
-	
-	public function first()
-	{
-		return $this->items->offsetGet($this->items->first());
-	}
-	
-	public function last()
-	{
-		return $this->items->offsetGet($this->items->last());
-	}
-	
-	public function getIterator()
-	{
-		return new ArrayIterator($this->all());
-	}
+    public function has($key)
+    {
+        return $this->offsetExists($key);
+    }
 
-	public function memoryUsage()
-	{
-		return $this->items->memoryUsage();
-	}
-	
-	public function size()
-	{
-		return $this->items->size();
-	}
+    public function offsetExists($key)
+    {
+        return $this->items->offsetExists($key);
+    }
 
-	public function __toString()
-	{
-		return json_encode($this->all());
-	}
-	
-	public function __call($function, $params)
-	{
-		return call_user_func_array([$this->items, $function], $params);
-	}
-	
+    public function offsetGet($key)
+    {
+        return $this->items->offsetGet($key);
+    }
+
+    public function offsetSet($key, $value)
+    {
+        $this->items->offsetSet($key, $value);
+    }
+
+    public function push($value)
+    {
+        $this->items->offsetSet($this->items->count(), $value);
+    }
+
+    public function pull($key)
+    {
+        $this->offsetUnset($key);
+    }
+
+    public function offsetUnset($key)
+    {
+        $this->items->offsetUnset($key);
+    }
+
+    public function count()
+    {
+        return $this->items->count();
+    }
+
+    public function all()
+    {
+        $items = [];
+        foreach ($this->items as $item) {
+            $items[] = $item;
+        }
+
+        return $items;
+    }
+
+    public function first()
+    {
+        return $this->items->offsetGet($this->items->first());
+    }
+
+    public function last()
+    {
+        return $this->items->offsetGet($this->items->last());
+    }
+
+    public function getIterator()
+    {
+        return new ArrayIterator($this->all());
+    }
+
+    public function memoryUsage()
+    {
+        return $this->items->memoryUsage();
+    }
+
+    public function size()
+    {
+        return $this->items->size();
+    }
+
+    public function __toString()
+    {
+        return json_encode($this->all());
+    }
+
+    public function __call($function, $params)
+    {
+        return call_user_func_array([$this->items, $function], $params);
+    }
+
     /**
      * Handles debug calls from var_dump and similar functions.
      *
@@ -162,6 +150,6 @@ class Collection implements IteratorAggregate
      */
     public function __debugInfo()
     {
-		return $this->all();
+        return $this->all();
     }
 }

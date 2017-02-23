@@ -222,21 +222,20 @@ class Message extends Part
                 return $this->discord->users->offsetGet($this->attributes['author']->id);
             } else {
                 $user = $this->factory->create(User::class, $this->attributes['author'], true);
-				
-				if ($this->discord->options['storeUsers'])
-				{
-					$this->discord->users->offsetSet($user->id, $user);
-				}
+
+                if ($this->discord->options['storeUsers']) {
+                    $this->discord->users->offsetSet($user->id, $user);
+                }
 
                 return $user;
             }
         }
 
-		if ($this->channel->guild->members->has($this->attributes['author']->id) && $this->discord->options['storeMembers']) {
-			return $this->channel->guild->members->offsetGet($this->attributes['author']->id);
-		}
-		
-		return $this->factory->create(User::class, $this->attributes['author'], true);
+        if ($this->channel->guild->members->has($this->attributes['author']->id) && $this->discord->options['storeMembers']) {
+            return $this->channel->guild->members->offsetGet($this->attributes['author']->id);
+        }
+
+        return $this->factory->create(User::class, $this->attributes['author'], true);
     }
 
     /**

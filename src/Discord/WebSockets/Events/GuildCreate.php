@@ -79,57 +79,55 @@ class GuildCreate extends Event
             $guildPart->getRepositoryAttributes()
         );
 
-		if ($this->discord->options['storeMembers'] || $this->discord->options['storeUsers']) {
-			if ($this->discord->options['storeMembers']) {
-				$presences = [];
-				foreach ($data->presences as $presence) {
-					$presences[$presence->user->id] = $presence;
-				}
-			}
-			foreach ($data->members as $member) {
-				if ($this->discord->options['storeMembers']) {
-					$memberPart = $this->factory->create(Member::class, [
-						'user'      => $member->user,
-						'roles'     => $member->roles,
-						'mute'      => $member->mute,
-						'deaf'      => $member->deaf,
-						'joined_at' => $member->joined_at,
-						'nick'      => (property_exists($member, 'nick')) ? $member->nick : null,
-						'guild_id'  => $data->id,
-						'status'    => 'offline',
-						'game'      => null,
-					], true);
+        if ($this->discord->options['storeMembers'] || $this->discord->options['storeUsers']) {
+            if ($this->discord->options['storeMembers']) {
+                $presences = [];
+                foreach ($data->presences as $presence) {
+                    $presences[$presence->user->id] = $presence;
+                }
+            }
+            foreach ($data->members as $member) {
+                if ($this->discord->options['storeMembers']) {
+                    $memberPart = $this->factory->create(Member::class, [
+                        'user'      => $member->user,
+                        'roles'     => $member->roles,
+                        'mute'      => $member->mute,
+                        'deaf'      => $member->deaf,
+                        'joined_at' => $member->joined_at,
+                        'nick'      => (property_exists($member, 'nick')) ? $member->nick : null,
+                        'guild_id'  => $data->id,
+                        'status'    => 'offline',
+                        'game'      => null,
+                    ], true);
 
-					if (array_key_exists($member->user->id, $presences))
-					{
-						$presence = $presences[$member->user->id];
-						$memberPart->status = $presence->status;
-						$memberPart->game   = $presence->game;
-					}
-					
-					
-					$members->offsetSet($member->user->id, $memberPart);
-				}
+                    if (array_key_exists($member->user->id, $presences)) {
+                        $presence           = $presences[$member->user->id];
+                        $memberPart->status = $presence->status;
+                        $memberPart->game   = $presence->game;
+                    }
 
-				if ($this->discord->options['storeUsers']) {
-					$user = $this->factory->create(User::class, $member->user, true);
-					$this->discord->users->offsetSet($user->id, $user);
-				}
-			}
-		}
+                    $members->offsetSet($member->user->id, $memberPart);
+                }
+
+                if ($this->discord->options['storeUsers']) {
+                    $user = $this->factory->create(User::class, $member->user, true);
+                    $this->discord->users->offsetSet($user->id, $user);
+                }
+            }
+        }
 
         $guildPart->roles    = $roles;
         $guildPart->channels = $channels;
         $guildPart->members  = $members;
 
-		if ($this->discord->options['storeVoiceMembers']) {
-			foreach ($data->voice_states as $state) {
-				if ($guildPart->channels->has($state->channel_id)) {
-					$channel = $guildPart->channels->offsetGet($state->channel_id);
-					$channel->members->offsetSet($state->user_id, $this->factory->create(VoiceStateUpdatePart::class, (array) $state, true));
-				}
-			}
-		}
+        if ($this->discord->options['storeVoiceMembers']) {
+            foreach ($data->voice_states as $state) {
+                if ($guildPart->channels->has($state->channel_id)) {
+                    $channel = $guildPart->channels->offsetGet($state->channel_id);
+                    $channel->members->offsetSet($state->user_id, $this->factory->create(VoiceStateUpdatePart::class, (array) $state, true));
+                }
+            }
+        }
 
         $resolve = function () use (&$guildPart, $deferred) {
             if ($guildPart->large) {

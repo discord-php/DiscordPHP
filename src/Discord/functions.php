@@ -48,8 +48,9 @@ function mentioned($part, Message $message)
  */
 function timestampFromSnowFlake($snowflake, $float = false)
 {
-	$timestamp = ((($snowflake >> 22) + 1420070400000) / 1000);
-	return ($float) ? (float) $timestamp : (int) floor($timestamp);
+    $timestamp = ((($snowflake >> 22) + 1420070400000) / 1000);
+
+    return ($float) ? (float) $timestamp : (int) floor($timestamp);
 }
 
 /**
@@ -63,5 +64,5 @@ function timestampFromSnowFlake($snowflake, $float = false)
  */
 function rgbToInteger($r = 0, $g = 0, $b = 0)
 {
-	return ($r << 16) + ($g << 8) + $b;
+    return ($r << 16) + ($g << 8) + $b;
 }

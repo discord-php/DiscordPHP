@@ -28,7 +28,6 @@ use React\Promise\Deferred;
  */
 abstract class AbstractRepository implements RepositoryInterface, ArrayAccess, Countable, IteratorAggregate
 {
-
     /**
      * The HTTP client.
      *
@@ -275,17 +274,13 @@ abstract class AbstractRepository implements RepositoryInterface, ArrayAccess, C
             }
             $part = $this->factory->create($this->part, $response, true);
 
-			if (isset($this->storeOption))
-			{
-				if ($this->discord->options[$this->storeOption])
-				{
-					$this->offsetSet($id, $part);
-				}
-			}
-			else
-			{
-				$this->offsetSet($id, $part);
-			}
+            if (isset($this->storeOption)) {
+                if ($this->discord->options[$this->storeOption]) {
+                    $this->offsetSet($id, $part);
+                }
+            } else {
+                $this->offsetSet($id, $part);
+            }
 
             $deferred->resolve($part);
         }, function ($e) use ($deferred) {

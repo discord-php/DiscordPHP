@@ -35,11 +35,11 @@ class MemberRepository extends AbstractRepository
      * {@inheritdoc}
      */
     protected $part = Member::class;
-	
+
     /**
      * {@inheritdoc}
      */
-	protected $storeOption = 'storeMembers';
+    protected $storeOption = 'storeMembers';
 
     /**
      * Alias for delete.
