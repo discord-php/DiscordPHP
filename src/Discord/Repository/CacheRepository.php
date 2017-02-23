@@ -12,7 +12,7 @@
 namespace Discord\Repository;
 
 /**
- * Cache
+ * Cache.
  */
 class CacheRepository extends AbstractRepository
 {
