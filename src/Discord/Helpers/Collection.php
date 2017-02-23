@@ -34,7 +34,7 @@ class Collection extends BaseCollection
      *
      * @return mixed The value or null.
      */
-	
+
 	public function get($key, $value = null)
 	{
 		if ($key === 'id' && $this->has($value))
