@@ -25,14 +25,28 @@ class GuildDelete extends Event
         $guildPart = $this->factory->create(Guild::class, $data, true);
 
         if ($this->discord->guilds->has($guildPart->id)) {
-            $this->discord->repositories->offsetGet('DiscordRepositoryGuildBanRepository')->offsetUnset($guildPart->id);
-            $this->discord->repositories->offsetGet('DiscordRepositoryGuildChannelRepository')->offsetUnset($guildPart->id);
-            $this->discord->repositories->offsetGet('DiscordRepositoryGuildEmojiRepository')->offsetUnset($guildPart->id);
-            $this->discord->repositories->offsetGet('DiscordRepositoryGuildInviteRepository')->offsetUnset($guildPart->id);
-            $this->discord->repositories->offsetGet('DiscordRepositoryGuildMemberRepository')->offsetUnset($guildPart->id);
-            $this->discord->repositories->offsetGet('DiscordRepositoryGuildRoleRepository')->offsetUnset($guildPart->id);
-            $this->discord->repositories->offsetGet('DiscordRepositoryGuildBanRepository')->offsetUnset($guildPart->id);
-            $this->discord->guilds->pull($guildPart->id);
+			$repositories = [
+				'DiscordRepositoryGuildBanRepository',
+				'DiscordRepositoryGuildChannelRepository',
+				'DiscordRepositoryGuildEmojiRepository',
+				'DiscordRepositoryGuildInviteRepository',
+				'DiscordRepositoryGuildMemberRepository',
+				'DiscordRepositoryGuildRoleRepository',
+				'DiscordRepositoryGuildBanRepository'
+			];
+			
+			foreach ($repositories as $repository)
+			{
+				if ($this->discord->repositories->has($repository))
+				{
+					$repository = $this->discord->repositories->offsetGet($repository);
+					if ($repository->has($guildPart->id))
+					{
+						$repository->pull($guildPart->id);
+					}
+				}
+			}
+			$this->discord->guilds->pull($guildPart->id);
         }
 
         $deferred->resolve($guildPart);
