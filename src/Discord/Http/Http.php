@@ -229,32 +229,28 @@ class Http
      * @param string  $filename The name to upload the file as.
      * @param string  $content  Extra text content to go with the file.
      * @param bool    $tts      Whether the message should be TTS.
+     * @param Embed   $embed An embed to send.
      *
      * @return \React\Promise\Promise
      */
     public function sendFile(Channel $channel, $filepath, $filename, $content, $tts, $embed)
     {
+		$post = [
+			'content' => (string) $content,
+			'tts' => ($tts ? true : false),
+			'embed' => $embed
+		];
         $multipart = [
             [
                 'name'     => 'file',
                 'contents' => fopen($filepath, 'r'),
                 'filename' => $filename,
             ],
-            [
-                'name'     => 'tts',
-                'contents' => ($tts ? 'true' : 'false'),
-            ],
-            [
-                'name'     => 'content',
-                'contents' => (string) $content,
-            ],
+			[
+				'name' => 'payload_json',
+				'contents' => json_encode($post)
+			],
         ];
-
-        if (! is_null($embed)) {
-            $postEmbed['name']     = 'content';
-            $postEmbed['contents'] = $embed;
-            $multipart[]           = $postEmbed;
-        }
 
         return $this->runRequest(
             'POST',
