@@ -178,7 +178,7 @@ class Channel extends Part
     }
 
     /**
-     * Fetches a message object from the Discord servers or Cache (if store message enabled)
+     * Fetches a message object from the Discord servers or Cache (if store message enabled).
      *
      * @param string $id The message snowflake.
      *
@@ -186,22 +186,22 @@ class Channel extends Part
      */
     public function getMessage($id)
     {
-		$getLastMessage = function () use ($id) {
-			$deferred = new Deferred();
-			
-			if ($this->messages->has($id)) {
-				$deferred->resolve($this->messages->offsetGet($id));
-			} else {
-				$this->messages->fetch($id)->then(function ($message) use ($deferred) {
-					$deferred->resolve($message);
-				}, function ($e) use ($deferred) {
-					$deferred->reject($e);
-				});
-			}
-			
-			return $deferred->promise();
-		};
-		
+        $getLastMessage = function () use ($id) {
+            $deferred = new Deferred();
+
+            if ($this->messages->has($id)) {
+                $deferred->resolve($this->messages->offsetGet($id));
+            } else {
+                $this->messages->fetch($id)->then(function ($message) use ($deferred) {
+                    $deferred->resolve($message);
+                }, function ($e) use ($deferred) {
+                    $deferred->reject($e);
+                });
+            }
+
+            return $deferred->promise();
+        };
+
         return $getLastMessage();
     }
 
@@ -591,7 +591,7 @@ class Channel extends Part
      * @param string $filename The name to send the file as.
      * @param string $content  Message content to send with the file.
      * @param bool   $tts      Whether to send the message with TTS.
-     * @param Embed  $embed An embed to send.
+     * @param Embed  $embed    An embed to send.
      *
      * @return \React\Promise\Promise
      */
