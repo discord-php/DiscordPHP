@@ -25,25 +25,27 @@ class GuildDelete extends Event
         $guildPart = $this->factory->create(Guild::class, $data, true);
 
         if ($this->discord->guilds->has($guildPart->id)) {
-            $repositories = [
-                'DiscordRepositoryGuildBanRepository',
-                'DiscordRepositoryGuildChannelRepository',
-                'DiscordRepositoryGuildEmojiRepository',
-                'DiscordRepositoryGuildInviteRepository',
-                'DiscordRepositoryGuildMemberRepository',
-                'DiscordRepositoryGuildRoleRepository',
-                'DiscordRepositoryGuildBanRepository',
-            ];
-
-            foreach ($repositories as $repository) {
-                if ($this->discord->repositories->has($repository)) {
-                    $repository = $this->discord->repositories->offsetGet($repository);
-                    if ($repository->has($guildPart->id)) {
-                        $repository->pull($guildPart->id);
-                    }
-                }
-            }
-            $this->discord->guilds->pull($guildPart->id);
+			$repositories = [
+				'DiscordRepositoryGuildBanRepository',
+				'DiscordRepositoryGuildChannelRepository',
+				'DiscordRepositoryGuildEmojiRepository',
+				'DiscordRepositoryGuildInviteRepository',
+				'DiscordRepositoryGuildMemberRepository',
+				'DiscordRepositoryGuildRoleRepository',
+			];
+			
+			foreach ($repositories as $repository)
+			{
+				if ($this->discord->repositories->has($repository))
+				{
+					$repository = $this->discord->repositories->offsetGet($repository);
+					if ($repository->has($guildPart->id))
+					{
+						$repository->pull($guildPart->id);
+					}
+				}
+			}
+			$this->discord->guilds->pull($guildPart->id);
         }
 
         $deferred->resolve($guildPart);
