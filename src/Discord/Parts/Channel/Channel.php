@@ -541,7 +541,7 @@ class Channel extends Part
                 $overwrite               = (array) $overwrite;
                 $overwrite['channel_id'] = $this->id;
 
-                $this->overwrites->push($overwrite);
+                $this->overwrites->offsetSet($overwrite['id'], $overwrite);
             }
         }
     }
