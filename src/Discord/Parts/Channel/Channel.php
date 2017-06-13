@@ -573,7 +573,7 @@ class Channel extends Part
             "channels/{$this->id}/messages/{$id}",
             [
                 'content' => $text,
-                'embed'   => $embed
+                'embed'   => $embed,
             ]
         )->then(
             function ($response) use ($deferred, $id) {
