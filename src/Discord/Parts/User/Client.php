@@ -87,13 +87,13 @@ class Client extends Part
      */
     public function setAvatar($filepath)
     {
-        if (! file_exists($filepath)) {
+        if (!file_exists($filepath)) {
             throw new FileNotFoundException("File does not exist at path {$filepath}.");
         }
 
         $extension = pathinfo($filepath, PATHINFO_EXTENSION);
-        $file      = file_get_contents($filepath);
-        $base64    = base64_encode($file);
+        $file = file_get_contents($filepath);
+        $base64 = base64_encode($file);
 
         $this->attributes['avatarhash'] = "data:image/{$extension};base64,{$base64}";
 
@@ -153,15 +153,15 @@ class Client extends Part
             $attributes['avatar'] = $this->attributes['avatarhash'];
         }
 
-        if (! $this->bot) {
+        if (!$this->bot) {
             if (empty($this->attributes['password'])) {
                 throw new PasswordEmptyException('You must enter your password to update your profile.');
             }
 
-            $attributes['email']    = $this->email;
+            $attributes['email'] = $this->email;
             $attributes['password'] = $this->attributes['password'];
 
-            if (! empty($this->attributes['new_password'])) {
+            if (!empty($this->attributes['new_password'])) {
                 $attributes['new_password'] = $this->attributes['new_password'];
             }
         }

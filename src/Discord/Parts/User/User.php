@@ -11,7 +11,6 @@
 
 namespace Discord\Parts\User;
 
-use Discord\Cache\Cache;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Channel\Message;
 use Discord\Parts\Embed\Embed;

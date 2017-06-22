@@ -23,12 +23,12 @@ class PresenceUpdate extends Event
     public function handle(Deferred $deferred, $data)
     {
         $presenceUpdate = $this->factory->create(PresenceUpdatePart::class, $data, true);
-        $old            = null;
+        $old = null;
 
-        $guild  = $this->discord->guilds->get('id', $presenceUpdate->guild_id);
+        $guild = $this->discord->guilds->get('id', $presenceUpdate->guild_id);
         $member = $guild->members->get('id', $presenceUpdate->user->id);
 
-        if (! is_null($member)) {
+        if (!is_null($member)) {
             $rawOld = array_merge([
                 'roles'  => [],
                 'status' => null,

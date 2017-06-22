@@ -26,7 +26,7 @@ class GuildMemberAdd extends Event
 
         $guild = $this->discord->guilds->get('id', $memberPart->guild_id);
 
-        if (! is_null($guild)) {
+        if (!is_null($guild)) {
             $guild->members->push($memberPart);
             ++$guild->member_count;
 

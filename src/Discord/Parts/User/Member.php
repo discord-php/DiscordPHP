@@ -59,11 +59,11 @@ class Member extends Part
     public function ban($daysToDeleteMessasges = null)
     {
         $deferred = new Deferred();
-        $content  = [];
+        $content = [];
 
         $url = $this->replaceWithVariables('guilds/:guild_id/bans/:id');
 
-        if (! is_null($daysToDeleteMessasges)) {
+        if (!is_null($daysToDeleteMessasges)) {
             $content['delete-message-days'] = $daysToDeleteMessasges;
         }
 
@@ -93,7 +93,7 @@ class Member extends Part
     {
         $deferred = new Deferred();
 
-        $nick    = $nick ?: '';
+        $nick = $nick ?: '';
         $payload = [
             'nick' => $nick,
         ];
@@ -195,7 +195,7 @@ class Member extends Part
      */
     public function getGameAttribute()
     {
-        if (! array_key_exists('game', $this->attributes)) {
+        if (!array_key_exists('game', $this->attributes)) {
             $this->attributes['game'] = [];
         }
 
