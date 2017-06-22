@@ -26,7 +26,7 @@ class GuildMemberRemove extends Event
 
         $guild = $this->discord->guilds->get('id', $memberPart->guild_id);
 
-        if (! is_null($guild)) {
+        if (!is_null($guild)) {
             $guild->members->pull($memberPart->id);
             --$guild->member_count;
 

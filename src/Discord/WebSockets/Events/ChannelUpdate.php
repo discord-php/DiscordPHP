@@ -29,7 +29,7 @@ class ChannelUpdate extends Event
             $this->discord->private_channels->push($channel);
         } else {
             $guild = $this->discord->guilds->get('id', $channel->guild_id);
-            $old   = $guild->channels->get('id', $channel->id);
+            $old = $guild->channels->get('id', $channel->id);
             $guild->channels->push($channel);
         }
 

@@ -13,12 +13,12 @@ namespace Discord\Repository;
 
 use ArrayAccess;
 use Countable;
-use IteratorAggregate;
 use Discord\Factory\Factory;
 use Discord\Helpers\Collection;
 use Discord\Http\Http;
 use Discord\Parts\Part;
 use Discord\Wrapper\CacheWrapper;
+use IteratorAggregate;
 use React\Promise\Deferred;
 
 /**
@@ -94,11 +94,11 @@ abstract class AbstractRepository implements RepositoryInterface, ArrayAccess, C
      */
     public function __construct(Http $http, CacheWrapper $cache, Factory $factory, $vars = [])
     {
-        $this->http       = $http;
-        $this->cache      = $cache;
-        $this->factory    = $factory;
+        $this->http = $http;
+        $this->cache = $cache;
+        $this->factory = $factory;
         $this->collection = new Collection([], $this->discrim);
-        $this->vars       = $vars;
+        $this->vars = $vars;
     }
 
     /**
@@ -108,7 +108,7 @@ abstract class AbstractRepository implements RepositoryInterface, ArrayAccess, C
      */
     public function freshen()
     {
-        if (! isset($this->endpoints['all'])) {
+        if (!isset($this->endpoints['all'])) {
             return \React\Promise\reject(new \Exception('You cannot freshen this repository.'));
         }
 
@@ -152,19 +152,19 @@ abstract class AbstractRepository implements RepositoryInterface, ArrayAccess, C
     public function save(Part &$part)
     {
         if ($part->created) {
-            $method     = 'patch';
-            $endpoint   = $part->replaceWithVariables($this->replaceWithVariables(@$this->endpoints['update']));
+            $method = 'patch';
+            $endpoint = $part->replaceWithVariables($this->replaceWithVariables(@$this->endpoints['update']));
             $attributes = $part->getUpdatableAttributes();
 
-            if (! isset($this->endpoints['update'])) {
+            if (!isset($this->endpoints['update'])) {
                 return \React\Promise\reject(new \Exception('You cannot update this part.'));
             }
         } else {
-            $method     = 'post';
-            $endpoint   = $part->replaceWithVariables($this->replaceWithVariables(@$this->endpoints['create']));
+            $method = 'post';
+            $endpoint = $part->replaceWithVariables($this->replaceWithVariables(@$this->endpoints['create']));
             $attributes = $part->getCreatableAttributes();
 
-            if (! isset($this->endpoints['create'])) {
+            if (!isset($this->endpoints['create'])) {
                 return \React\Promise\reject(new \Exception('You cannot create this part.'));
             }
         }
@@ -193,11 +193,11 @@ abstract class AbstractRepository implements RepositoryInterface, ArrayAccess, C
      */
     public function delete(Part &$part)
     {
-        if (! $part->created) {
+        if (!$part->created) {
             return \React\Promise\reject(new \Exception('You cannot delete a non-existant part.'));
         }
 
-        if (! isset($this->endpoints['delete'])) {
+        if (!isset($this->endpoints['delete'])) {
             return \React\Promise\reject(new \Exception('You cannot delete this part.'));
         }
 
@@ -225,11 +225,11 @@ abstract class AbstractRepository implements RepositoryInterface, ArrayAccess, C
      */
     public function fresh(Part &$part)
     {
-        if (! $part->created) {
+        if (!$part->created) {
             return \React\Promise\reject(new \Exception('You cannot get a non-existant part.'));
         }
 
-        if (! isset($this->endpoints['get'])) {
+        if (!isset($this->endpoints['get'])) {
             return \React\Promise\reject(new \Exception('You cannot get this part.'));
         }
 
@@ -261,7 +261,7 @@ abstract class AbstractRepository implements RepositoryInterface, ArrayAccess, C
             return \React\Promise\resolve($part);
         }
 
-        if (! isset($this->endpoints['get'])) {
+        if (!isset($this->endpoints['get'])) {
             return \React\Promise\reject(new \Exception('You cannot get this part.'));
         }
 

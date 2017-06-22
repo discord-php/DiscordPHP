@@ -40,6 +40,7 @@ class Factory
      * @var CacheWrapper Cache.
      */
     protected $cache;
+
     /**
      * Constructs a factory.
      *
@@ -50,8 +51,8 @@ class Factory
     public function __construct(Discord $discord, Http $http, CacheWrapper $cache)
     {
         $this->discord = $discord;
-        $this->http    = $http;
-        $this->cache   = $cache;
+        $this->http = $http;
+        $this->cache = $cache;
     }
 
     /**
@@ -65,7 +66,7 @@ class Factory
      */
     public function create($class, $data = [], $created = false)
     {
-        if (! is_array($data)) {
+        if (!is_array($data)) {
             $data = (array) $data;
         }
 

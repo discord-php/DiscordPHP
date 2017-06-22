@@ -82,11 +82,11 @@ class Guzzle extends GuzzleClient implements HttpDriver
     public function __construct(CacheWrapper $cache, LoopInterface $loop)
     {
         $this->cache = $cache;
-        $options     = ['http_errors' => false, 'allow_redirects' => true, 'base_uri' => Http::BASE_URL.'/v'.Discord::HTTP_API_VERSION];
+        $options = ['http_errors' => false, 'allow_redirects' => true, 'base_uri' => Http::BASE_URL.'/v'.Discord::HTTP_API_VERSION];
 
-        $this->async        = true;
-        $this->loop         = $loop;
-        $this->adapter      = new HttpClientAdapter($this->loop);
+        $this->async = true;
+        $this->loop = $loop;
+        $this->adapter = new HttpClientAdapter($this->loop);
         $options['handler'] = HandlerStack::create($this->adapter);
 
         return parent::__construct($options);
@@ -200,7 +200,7 @@ class Guzzle extends GuzzleClient implements HttpDriver
             ],
         ];
 
-        if (! is_null($content)) {
+        if (!is_null($content)) {
             $multipart[] = [
                 'name'     => 'content',
                 'contents' => $content,

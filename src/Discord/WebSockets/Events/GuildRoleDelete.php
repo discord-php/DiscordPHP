@@ -11,8 +11,8 @@
 
 namespace Discord\WebSockets\Events;
 
-use React\Promise\Deferred;
 use Discord\WebSockets\Event;
+use React\Promise\Deferred;
 
 class GuildRoleDelete extends Event
 {

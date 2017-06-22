@@ -18,9 +18,9 @@ use Discord\Exceptions\LibSodiumNotFoundException;
 use Discord\Exceptions\OutdatedDCAException;
 use Discord\Helpers\Collection;
 use Discord\Helpers\Process;
-use Discord\Wrapper\LoggerWrapper as Logger;
 use Discord\Parts\Channel\Channel;
 use Discord\WebSockets\Op;
+use Discord\Wrapper\LoggerWrapper as Logger;
 use Evenement\EventEmitter;
 use Ratchet\Client\Connector as WsFactory;
 use Ratchet\Client\WebSocket;
@@ -311,14 +311,14 @@ class VoiceClient extends EventEmitter
      */
     public function __construct(WebSocket $websocket, LoopInterface &$loop, Channel $channel, Logger $logger, $data)
     {
-        $this->loop           = $loop;
-        $this->mainWebsocket  = $websocket;
-        $this->channel        = $channel;
-        $this->logger         = $logger;
-        $this->data           = $data;
-        $this->deaf           = $data['deaf'];
-        $this->mute           = $data['mute'];
-        $this->endpoint       = str_replace([':80', ':443'], '', $data['endpoint']);
+        $this->loop = $loop;
+        $this->mainWebsocket = $websocket;
+        $this->channel = $channel;
+        $this->logger = $logger;
+        $this->data = $data;
+        $this->deaf = $data['deaf'];
+        $this->mute = $data['mute'];
+        $this->endpoint = str_replace([':80', ':443'], '', $data['endpoint']);
         $this->speakingStatus = new Collection([], 'ssrc');
     }
 
@@ -329,9 +329,9 @@ class VoiceClient extends EventEmitter
      */
     public function start()
     {
-        if (! $this->checkForFFmpeg() ||
-            ! $this->checkForDCA() ||
-            ! $this->checkForLibsodium()) {
+        if (!$this->checkForFFmpeg() ||
+            !$this->checkForDCA() ||
+            !$this->checkForLibsodium()) {
             return false;
         }
 
@@ -372,12 +372,12 @@ class VoiceClient extends EventEmitter
         $this->logger->debug('connected to voice websocket');
 
         $resolver = (new DNSFactory())->createCached('8.8.8.8', $this->loop);
-        $udpfac   = new DatagramFactory($this->loop, $resolver);
+        $udpfac = new DatagramFactory($this->loop, $resolver);
 
         $this->voiceWebsocket = $ws;
 
         $firstPack = true;
-        $ip        = $port        = '';
+        $ip = $port = '';
 
         $discoverUdp = function ($message) use (&$ws, &$discoverUdp, $udpfac, &$firstPack, &$ip, &$port) {
             $data = json_decode($message->getPayload());
@@ -385,9 +385,9 @@ class VoiceClient extends EventEmitter
             if ($data->op == Op::VOICE_READY) {
                 $ws->removeListener('message', $discoverUdp);
 
-                $this->udpPort            = $data->d->port;
+                $this->udpPort = $data->d->port;
                 $this->heartbeat_interval = $data->d->heartbeat_interval;
-                $this->ssrc               = $data->d->ssrc;
+                $this->ssrc = $data->d->ssrc;
 
                 $this->logger->debug('received voice ready packet', ['data' => json_decode(json_encode($data->d), true)]);
 
@@ -460,7 +460,7 @@ class VoiceClient extends EventEmitter
 
                         $client->removeListener('message', $decodeUDP);
 
-                        if (! $this->deaf) {
+                        if (!$this->deaf) {
                             $client->on('message', [$this, 'handleAudioData']);
                         }
                     };
@@ -506,7 +506,7 @@ class VoiceClient extends EventEmitter
 
                     $this->logger->debug('received description packet, vc ready', ['data' => json_decode(json_encode($data->d), true)]);
 
-                    if (! $this->reconnecting) {
+                    if (!$this->reconnecting) {
                         $this->emit('ready', [$this]);
                     } else {
                         $this->reconnecting = false;
@@ -532,7 +532,7 @@ class VoiceClient extends EventEmitter
             $this->emit('ws-close', [$op, $reason, $this]);
         });
 
-        if (! $this->sentLoginFrame) {
+        if (!$this->sentLoginFrame) {
             $payload = [
                 'op' => Op::VOICE_IDENTIFY,
                 'd'  => [
@@ -573,7 +573,7 @@ class VoiceClient extends EventEmitter
     public function handleVoiceServerChange(array $data = [])
     {
         $this->logger->debug('voice server has changed, dynamically changing servers in the background', ['data' => $data]);
-        $this->reconnecting   = true;
+        $this->reconnecting = true;
         $this->sentLoginFrame = false;
         $this->pause();
 
@@ -584,7 +584,7 @@ class VoiceClient extends EventEmitter
         $this->loop->cancelTimer($this->udpHeartbeat);
 
         $this->data['token'] = $data['token']; // set the token if it changed
-        $this->endpoint      = str_replace([':80', ':443'], '', $data['endpoint']);
+        $this->endpoint = str_replace([':80', ':443'], '', $data['endpoint']);
 
         $this->initSockets();
 
@@ -611,13 +611,13 @@ class VoiceClient extends EventEmitter
     {
         $deferred = new Deferred();
 
-        if (! file_exists($file)) {
+        if (!file_exists($file)) {
             $deferred->reject(new FileNotFoundException("Could not find the file \"{$file}\"."));
 
             return $deferred->promise();
         }
 
-        if (! $this->ready) {
+        if (!$this->ready) {
             $deferred->reject(new \Exception('Voice Client is not ready.'));
 
             return $deferred->promise();
@@ -643,13 +643,13 @@ class VoiceClient extends EventEmitter
     {
         $deferred = new Deferred();
 
-        if (! $this->ready) {
+        if (!$this->ready) {
             $deferred->reject(new \Exception('Voice Client is not ready.'));
 
             return $deferred->promise();
         }
 
-        if (! is_resource($stream) && ! $stream instanceof Stream) {
+        if (!is_resource($stream) && !$stream instanceof Stream) {
             $deferred->reject(new \RuntimeException('The stream passed to playRawStream was not an instance of resource or ReactPHP Stream.'));
 
             return $deferred->promise();
@@ -678,7 +678,7 @@ class VoiceClient extends EventEmitter
     {
         $deferred = new Deferred();
 
-        if (! $this->ready) {
+        if (!$this->ready) {
             $deferred->reject(new \Exception('Voice Client is not ready.'));
 
             return $deferred->promise();
@@ -705,14 +705,14 @@ class VoiceClient extends EventEmitter
             $stream = $stream->stream;
         }
 
-        if (! is_resource($stream)) {
+        if (!is_resource($stream)) {
             $deferred->reject(new \RuntimeException('The stream passed to playDCAStream was not an instance of resource, ReactPHP Process or ReactPHP Stream.'));
 
             return $deferred->promise();
         }
 
-        $count        = 0;
-        $noData       = false;
+        $count = 0;
+        $noData = false;
         $noDataHeader = false;
 
         $this->setSpeaking(true);
@@ -728,10 +728,10 @@ class VoiceClient extends EventEmitter
                 $this->setSpeaking(false);
                 fclose($stream);
 
-                $this->seq        = 0;
-                $this->timestamp  = 0;
+                $this->seq = 0;
+                $this->timestamp = 0;
                 $this->streamTime = 0;
-                $this->startTime  = null;
+                $this->startTime = null;
 
                 $this->stopAudio = false;
                 $deferred->resolve(true);
@@ -741,15 +741,15 @@ class VoiceClient extends EventEmitter
 
             $header = @fread($stream, 2);
 
-            if (! $header) {
+            if (!$header) {
                 if ($noDataHeader && $this->streamTime != 0) {
                     $this->setSpeaking(false);
                     fclose($stream);
 
-                    $this->seq        = 0;
-                    $this->timestamp  = 0;
+                    $this->seq = 0;
+                    $this->timestamp = 0;
                     $this->streamTime = 0;
-                    $this->startTime  = null;
+                    $this->startTime = null;
 
                     $deferred->resolve(false);
                 } else {
@@ -762,7 +762,7 @@ class VoiceClient extends EventEmitter
 
             $opusLength = unpack('v', $header);
             $opusLength = reset($opusLength);
-            $buffer     = fread($stream, $opusLength);
+            $buffer = fread($stream, $opusLength);
 
             if (strlen($buffer) !== $opusLength) {
                 $newbuff = new Buffer($opusLength);
@@ -792,13 +792,13 @@ class VoiceClient extends EventEmitter
         };
 
         $readMagicBytes = false;
-        $readJsonLeng   = false;
+        $readJsonLeng = false;
 
-        $jsonLen  = 0;
+        $jsonLen = 0;
         $jsonBuff = '';
 
         $this->loop->addReadStream($stream, function ($stream) use ($deferred, &$readMagicBytes, &$readJsonLeng, &$jsonLen, &$jsonBuff, $processff2opus) {
-            if (! $readMagicBytes) {
+            if (!$readMagicBytes) {
                 $magicBytes = fread($stream, 4);
 
                 if ($magicBytes !== self::DCA_VERSION) {
@@ -813,7 +813,7 @@ class VoiceClient extends EventEmitter
                 return;
             }
 
-            if (! $readJsonLeng) {
+            if (!$readJsonLeng) {
                 $len = fread($stream, 4);
                 $len = unpack('l', $len);
                 $jsonLen = reset($len);
@@ -835,7 +835,7 @@ class VoiceClient extends EventEmitter
 
             $json = json_decode($jsonBuff, true);
 
-            if (! is_null($json)) {
+            if (!is_null($json)) {
                 $this->frameSize = $json['opus']['frame_size'] / 48;
 
                 $deferred->notify($json);
@@ -859,7 +859,7 @@ class VoiceClient extends EventEmitter
      */
     public function sendBuffer($data)
     {
-        if (! $this->ready) {
+        if (!$this->ready) {
             return;
         }
 
@@ -888,7 +888,7 @@ class VoiceClient extends EventEmitter
             return $deferred->promise();
         }
 
-        if (! $this->ready) {
+        if (!$this->ready) {
             $deferred->reject(new \Exception('Voice Client is not ready.'));
 
             return $deferred->promise();
@@ -1110,7 +1110,7 @@ class VoiceClient extends EventEmitter
     {
         $deferred = new Deferred();
 
-        if (! $this->ready) {
+        if (!$this->ready) {
             $deferred->reject(new \Exception('The voice client must be ready before you can set mute or deaf.'));
 
             return $deferred->promise();
@@ -1131,7 +1131,7 @@ class VoiceClient extends EventEmitter
 
         $this->client->removeListener('message', [$this, 'handleAudioData']);
 
-        if (! $deaf) {
+        if (!$deaf) {
             $this->client->on('message', [$this, 'handleAudioData']);
         }
 
@@ -1149,7 +1149,7 @@ class VoiceClient extends EventEmitter
     {
         $deferred = new Deferred();
 
-        if (! $this->speaking) {
+        if (!$this->speaking) {
             $deferred->reject(new \Exception('Audio must be playing to pause it.'));
 
             return $deferred->promise();
@@ -1170,13 +1170,13 @@ class VoiceClient extends EventEmitter
     {
         $deferred = new Deferred();
 
-        if (! $this->speaking) {
+        if (!$this->speaking) {
             $deferred->reject(new \Exception('Audio must be playing to unpause it.'));
 
             return $deferred->promise();
         }
 
-        $this->isPaused  = false;
+        $this->isPaused = false;
         $this->timestamp = microtime(true) * 1000;
         $deferred->resolve();
 
@@ -1198,7 +1198,7 @@ class VoiceClient extends EventEmitter
             return $deferred->promise();
         }
 
-        if (! $this->speaking) {
+        if (!$this->speaking) {
             $deferred->reject(new \Exception('Audio must be playing to stop it.'));
 
             return $deferred->promise();
@@ -1220,7 +1220,7 @@ class VoiceClient extends EventEmitter
     {
         $deferred = new Deferred();
 
-        if (! $this->ready) {
+        if (!$this->ready) {
             $deferred->reject(new \Exception('Voice Client is not connected.'));
 
             return $deferred->promise();
@@ -1246,13 +1246,13 @@ class VoiceClient extends EventEmitter
         $this->heartbeat_interval = null;
         $this->loop->cancelTimer($this->heartbeat);
         $this->loop->cancelTimer($this->udpHeartbeat);
-        $this->heartbeat      = null;
-        $this->udpHeartbeat   = null;
-        $this->seq            = 0;
-        $this->timestamp      = 0;
+        $this->heartbeat = null;
+        $this->udpHeartbeat = null;
+        $this->seq = 0;
+        $this->timestamp = 0;
         $this->sentLoginFrame = false;
-        $this->startTime      = null;
-        $this->streamTime     = 0;
+        $this->startTime = null;
+        $this->streamTime = 0;
         $this->speakingStatus = new Collection([], 'ssrc');
 
         $this->emit('close');
@@ -1274,9 +1274,9 @@ class VoiceClient extends EventEmitter
         $ssrc = @$this->speakingStatus[$id];
         $user = $this->speakingStatus->get('user_id', $id);
 
-        if (is_null($ssrc) && ! is_null($user)) {
+        if (is_null($ssrc) && !is_null($user)) {
             return $user->speaking;
-        } elseif (is_null($user) && ! is_null($ssrc)) {
+        } elseif (is_null($user) && !is_null($ssrc)) {
             return $user->speaking;
         } elseif (is_null($user) && is_null($ssrc)) {
             return $user->speaking;
@@ -1359,7 +1359,7 @@ class VoiceClient extends EventEmitter
     protected function handleAudioData($message)
     {
         $voicePacket = VoicePacket::make($message);
-        $nonce       = new Buffer(24);
+        $nonce = new Buffer(24);
         $nonce->write($voicePacket->getHeader(), 0);
         $message = \Sodium\crypto_secretbox_open($voicePacket->getData(), (string) $nonce, $this->secret_key);
 
@@ -1370,8 +1370,8 @@ class VoiceClient extends EventEmitter
 
         $this->emit('raw', [$message, $this]);
 
-        $vp      = VoicePacket::make($voicePacket->getHeader().$message);
-        $ss      = $this->speakingStatus->get('ssrc', $vp->getSSRC());
+        $vp = VoicePacket::make($voicePacket->getHeader().$message);
+        $ss = $this->speakingStatus->get('ssrc', $vp->getSSRC());
         $decoder = @$this->voiceDecoders[$vp->getSSRC()];
 
         if (is_null($ss)) {
@@ -1381,7 +1381,7 @@ class VoiceClient extends EventEmitter
 
         if (is_null($decoder)) {
             // make a decoder
-            if (! isset($this->recieveStreams[$ss->ssrc])) {
+            if (!isset($this->recieveStreams[$ss->ssrc])) {
                 $this->recieveStreams[$ss->ssrc] = new RecieveStream();
 
                 $this->recieveStreams[$ss->ssrc]->on('pcm', function ($d) {
@@ -1452,7 +1452,7 @@ class VoiceClient extends EventEmitter
         foreach ($binaries as $binary) {
             $output = shell_exec("which {$binary}");
 
-            if (! empty($output)) {
+            if (!empty($output)) {
                 return true;
             }
         }
@@ -1502,7 +1502,7 @@ class VoiceClient extends EventEmitter
      */
     public function checkForLibsodium()
     {
-        if (! function_exists('\Sodium\crypto_secretbox')) {
+        if (!function_exists('\Sodium\crypto_secretbox')) {
             $this->emit('error', [new LibSodiumNotFoundException('libsodium-php could not be found.')]);
 
             return false;

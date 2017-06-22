@@ -151,7 +151,7 @@ class DiscordCommandClient extends Discord
         }
 
         list($commandInstance, $options) = $this->buildCommand($command, $callable, $options);
-        $this->commands[$command]        = $commandInstance;
+        $this->commands[$command] = $commandInstance;
 
         foreach ($options['aliases'] as $alias) {
             $this->registerAlias($alias, $command);
@@ -167,7 +167,7 @@ class DiscordCommandClient extends Discord
      */
     public function unregisterCommand($command)
     {
-        if (! array_key_exists($command, $this->commands)) {
+        if (!array_key_exists($command, $this->commands)) {
             throw new \Exception("A command with the name {$command} does not exist.");
         }
 
@@ -192,7 +192,7 @@ class DiscordCommandClient extends Discord
      */
     public function unregisterCommandAlias($alias)
     {
-        if (! array_key_exists($alias, $this->aliases)) {
+        if (!array_key_exists($alias, $this->aliases)) {
             throw new \Exception("A command alias with the name {$alias} does not exist.");
         }
 
@@ -233,13 +233,13 @@ class DiscordCommandClient extends Discord
             $callable = function ($message) use ($callable) {
                 return $callable;
             };
-        } elseif (is_array($callable) && ! is_callable($callable)) {
+        } elseif (is_array($callable) && !is_callable($callable)) {
             $callable = function ($message) use ($callable) {
                 return $callable[array_rand($callable)];
             };
         }
 
-        if (! is_callable($callable)) {
+        if (!is_callable($callable)) {
             throw new \Exception('The callable parameter must be a string, array or callable.');
         }
 
@@ -277,7 +277,7 @@ class DiscordCommandClient extends Discord
 
         $options = $resolver->resolve($options);
 
-        if (! empty($options['usage'])) {
+        if (!empty($options['usage'])) {
             $options['usage'] .= ' ';
         }
 

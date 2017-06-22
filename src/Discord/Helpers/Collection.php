@@ -82,8 +82,8 @@ class Collection extends BaseCollection
      */
     public function offsetSet($key, $value)
     {
-        if (! is_null($this->discrim)) {
-            if (! is_array($value)) {
+        if (!is_null($this->discrim)) {
+            if (!is_array($value)) {
                 $this->items[$value->{$this->discrim}] = $value;
             } else {
                 $this->items[$value[$this->discrim]] = $value;

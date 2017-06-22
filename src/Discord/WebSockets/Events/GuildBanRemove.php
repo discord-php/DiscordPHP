@@ -23,7 +23,7 @@ class GuildBanRemove extends Event
     public function handle(Deferred $deferred, $data)
     {
         $guild = $this->discord->guilds->get('id', $data->guild_id);
-        $ban   = $this->factory->create(Ban::class, [
+        $ban = $this->factory->create(Ban::class, [
             'guild' => $guild,
             'user'  => $data->user,
         ], true);

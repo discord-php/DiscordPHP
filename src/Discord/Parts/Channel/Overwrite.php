@@ -49,13 +49,13 @@ class Overwrite extends Part
      */
     public function setPermissionsAttribute($permissions)
     {
-        if (! ($permissions instanceof ChannelPermission)) {
+        if (!($permissions instanceof ChannelPermission)) {
             return;
         }
 
         list($allow, $deny) = $permissions->bitwise;
-        $this->allow        = $allow;
-        $this->deny         = $deny;
+        $this->allow = $allow;
+        $this->deny = $deny;
 
         $this->attributes['permissions'] = $permissions;
     }
