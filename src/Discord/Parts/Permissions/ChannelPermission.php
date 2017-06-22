@@ -17,6 +17,7 @@ namespace Discord\Parts\Permissions;
  * @property bool $create_instant_invite
  * @property bool $manage_channels
  * @property bool $manage_permissions
+ * @property bool $manage_webhooks
  * @property bool $read_messages
  * @property bool $send_messages
  * @property bool $send_tts_messages
@@ -25,6 +26,8 @@ namespace Discord\Parts\Permissions;
  * @property bool $attach_files
  * @property bool $read_message_history
  * @property bool $mention_everyone
+ * @property bool $use_external_emojis
+ * @property bool $add_reactions
  * @property bool $voice_connect
  * @property bool $voice_speak
  * @property bool $voice_mute_members
@@ -41,6 +44,7 @@ class ChannelPermission extends Permission
         'create_instant_invite' => 0,
         'manage_channels'       => 4,
         'manage_permissions'    => 28,
+        'manage_webhooks'       => 29,
 
         'read_messages'        => 10,
         'send_messages'        => 11,
@@ -48,8 +52,10 @@ class ChannelPermission extends Permission
         'manage_messages'      => 13,
         'embed_links'          => 14,
         'attach_files'         => 15,
-        'read_message_history' => 17,
-        'mention_everyone'     => 18,
+        'read_message_history' => 16,
+        'mention_everyone'     => 17,
+        'use_external_emojis'  => 18,
+        'add_reactions'        => 6,
 
         'voice_connect'        => 20,
         'voice_speak'          => 21,
