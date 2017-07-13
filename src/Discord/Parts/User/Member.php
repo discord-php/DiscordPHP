@@ -56,27 +56,23 @@ class Member extends Part
      *
      * @return \React\Promise\Promise
      */
-    public function ban($daysToDeleteMessasges = null, $reason = '')
+    public function ban($daysToDeleteMessasges = null)
     {
         $deferred = new Deferred();
-        $content = [];
+        $content  = [];
 
         $url = $this->replaceWithVariables('guilds/:guild_id/bans/:id');
 
-        if (!is_null($daysToDeleteMessasges)) {
+        if (! is_null($daysToDeleteMessasges)) {
             $content['delete-message-days'] = $daysToDeleteMessasges;
         }
 
         $this->http->put($url, $content)->then(
-            function () use ($deferred, $reason) {
+            function () use ($deferred) {
                 $ban = $this->factory->create(Ban::class, [
                     'user'  => $this->user,
                     'guild' => $this->discord->guilds->get('id', $this->guild_id),
                 ], true);
-
-                if (!empty($reason)) {
-                    $ban->reason = $reason;
-                }
 
                 $deferred->resolve($ban);
             },
@@ -97,7 +93,7 @@ class Member extends Part
     {
         $deferred = new Deferred();
 
-        $nick = $nick ?: '';
+        $nick    = $nick ?: '';
         $payload = [
             'nick' => $nick,
         ];
@@ -185,11 +181,9 @@ class Member extends Part
 
         if (false !== ($index = array_search($role, $this->attributes['roles']))) {
             unset($this->attributes['roles'][$index]);
-
-            return true;
         }
 
-        return false;
+        return true;
     }
 
     /**
@@ -199,7 +193,7 @@ class Member extends Part
      */
     public function getGameAttribute()
     {
-        if (!array_key_exists('game', $this->attributes)) {
+        if (! array_key_exists('game', $this->attributes)) {
             $this->attributes['game'] = [];
         }
 
