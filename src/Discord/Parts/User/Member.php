@@ -56,7 +56,7 @@ class Member extends Part
      *
      * @return \React\Promise\Promise
      */
-    public function ban($daysToDeleteMessasges = null)
+    public function ban($daysToDeleteMessasges = null, $reason = '')
     {
         $deferred = new Deferred();
         $content  = [];
@@ -68,11 +68,15 @@ class Member extends Part
         }
 
         $this->http->put($url, $content)->then(
-            function () use ($deferred) {
+            function () use ($deferred, $reason) {
                 $ban = $this->factory->create(Ban::class, [
                     'user'  => $this->user,
                     'guild' => $this->discord->guilds->get('id', $this->guild_id),
                 ], true);
+
+                if (!empty($reason)) {
+                    $ban->reason = $reason;
+                }
 
                 $deferred->resolve($ban);
             },
