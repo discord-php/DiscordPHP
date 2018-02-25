@@ -549,6 +549,44 @@ class Channel extends Part
 
         return $deferred->promise();
     }
+    
+    /**
+     * Sends a message to a specified channel ID
+     *
+     * @param string $text  The text to send in the message.
+     * @param bool   $tts   Whether the message should be sent with text to speech enabled.
+     * @param Embed  $embed An embed to send.
+     *
+     * @return \React\Promise\Promise
+     */
+    public function sendBoundMessage($id, $text, $tts = false, $embed = null)
+    {
+        $deferred = new Deferred();
+
+        if ($this->getChannelType() != 1) {
+            $deferred->reject(new \Exception('You cannot send a message to a voice channel.'));
+
+            return $deferred->promise();
+        }
+        $this->http->post(
+            "channels/{$id}/messages",
+            [
+                'content' => $text,
+                'tts'     => $tts,
+                'embed'   => $embed,
+            ]
+        )->then(
+            function ($response) use ($deferred) {
+                $message = $this->factory->create(Message::class, $response, true);
+                $this->messages->push($message);
+
+                $deferred->resolve($message);
+            },
+            \React\Partial\bind_right($this->reject, $deferred)
+        );
+
+        return $deferred->promise();
+    }
 
     /**
      * Sends a file to the channel if it is a text channel.
