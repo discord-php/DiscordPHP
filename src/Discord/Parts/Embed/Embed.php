@@ -89,7 +89,7 @@ class Embed extends Part
      */
     public function getVideoAttribute()
     {
-        return $this->attributeHelepr('video', Video::class);
+        return $this->attributeHelper('video', Video::class);
     }
 
     /**
