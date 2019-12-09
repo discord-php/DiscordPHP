@@ -212,4 +212,15 @@ class Message extends Part
             'mentions' => $this->mentions,
         ];
     }
+    
+    /**
+      * send message after delay
+      */
+    public function delayedReply($text, $delay)
+	{
+		$reply = function () use($text) {
+			$this->reply($text);
+		};
+		$this->discord->addTimer($delay, $reply);
+	}
 }
