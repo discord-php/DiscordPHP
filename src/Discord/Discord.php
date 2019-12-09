@@ -1358,4 +1358,12 @@ class Discord
 
         return $config;
     }
+    
+    /**
+     * @see https://reactphp.org/event-loop/#addtimer
+     */
+    public function addTimer($interval, callable $callback)
+	{
+		$this->loop->addTimer($interval, $callback);
+	}
 }
