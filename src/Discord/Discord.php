@@ -1366,4 +1366,12 @@ class Discord
 	{
 		$this->loop->addTimer($interval, $callback);
 	}
+    
+     /**
+     * @see https://reactphp.org/event-loop/#addPeriodicTimer
+     */
+    public function addPeriodicTimer($interval, callable $callback)
+	{
+		$this->loop->addPeriodicTimer($interval, $callback);
+	}
 }
