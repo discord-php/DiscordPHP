@@ -99,6 +99,23 @@ class Client extends Part
 
         return true;
     }
+    
+    /**
+     * Updates the clients presence.
+     *
+     * @param WebSocket   $ws       The WebSocket client.
+     * @param string|null $gamename The game that you are playing or null.
+     * @param bool        $idle     Whether you are set to idle.
+     *
+     * @return bool Whether the setting succeeded or failed.
+     */
+    public function updatePresence($ws, $gamename, $idle = false)
+    {
+    	$ws->updatePresence(new Game([
+    		'name' => $gamename,
+    	]), $idle);
+    	return true;
+    }
 
     /**
      * Returns the avatar URL for the client.

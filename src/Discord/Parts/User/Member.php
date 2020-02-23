@@ -18,7 +18,9 @@ use Discord\Parts\Guild\Ban;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Guild\Role;
 use Discord\Parts\Part;
+use Discord\Parts\Permissions\RolePermission as Permission;
 use React\Promise\Deferred;
+use Discord\Parts\User\Game;
 
 /**
  * A member is a relationship between a user and a guild. It contains user-to-guild specific data like roles.

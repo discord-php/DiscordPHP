@@ -156,6 +156,7 @@ class Http
 
         $headers = array_merge($headers, $extraHeaders);
 
+        $headers['Content-Length'] = 0;
         if (! is_null($content)) {
             $headers['Content-Type']   = 'application/json';
             $content                   = json_encode($content);

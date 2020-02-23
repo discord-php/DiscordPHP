@@ -346,7 +346,7 @@ class Channel extends Part
         $options = $resolver->resolve($options);
         if (isset($options['before'], $options['after']) ||
             isset($options['before'], $options['around']) ||
-            isset($options['around'], $options['around'])) {
+            isset($options['around'], $options['after'])) {
             $deferred->reject(new \Exception('Can only specify one of before, after and around.'));
 
             return $deferred->promise();
@@ -613,7 +613,7 @@ class Channel extends Part
             \React\Partial\bind_right($this->reject, $deferred)
         );
 
-        return $deferred->resolve();
+        return $deferred->promise();
     }
 
     /**

@@ -16,6 +16,7 @@ use Discord\Helpers\Collection;
 use Discord\Parts\Part;
 use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
+use React\Promise\Deferred;
 
 /**
  * A message which is posted to a Discord text channel.
@@ -78,6 +79,88 @@ class Message extends Part
     {
         return $this->channel->sendMessage("{$this->author}, {$text}");
     }
+    
+    /**
+     * React to a message.
+     *
+     * @param Emoji $emoticon  The emoticon to react with. (example: '👎', custom: ':michael:251127796439449631')
+     *
+     * @return \React\Promise\Promise
+     */
+    public function react($emoticon)
+    {
+    	$deferred = new Deferred();
+    	$this->http->put(
+    		"channels/{$this->channel->id}/messages/{$this->id}/reactions/{$emoticon}/@me"
+    	)->then(
+    		function ($response) use ($deferred) {
+    			$deferred->resolve($this);
+    		},
+    		\React\Partial\bind_right($this->reject, $deferred)
+    	);
+    	return $deferred->promise();
+    }
+    
+    /**
+     * Delete a reaction.
+     *
+     * @param array $settings  (id and emoticon)
+     *
+     * @return \React\Promise\Promise
+     */
+    public function deleteReaction($type, $emoticon = null, $id = null)
+    {
+    	$deferred = new Deferred();
+    	
+    	$types = ['all', 'me', 'id'];
+    	
+    	if (in_array($type, $types))
+    	{
+    		if ($type === 'all')
+    		{
+    			$url = "channels/{$this->channel->id}/messages/{$this->id}/reactions";
+    		}
+    		else
+    			if ($type === 'me')
+    			{
+    				$url = "channels/{$this->channel->id}/messages/{$this->id}/reactions/{$emoticon}/@me";
+    			}
+    		else
+    		{
+    			$url = "channels/{$this->channel->id}/messages/{$this->id}/reactions/{$emoticon}/{$id}";
+    		}
+    		
+    		$this->http->delete(
+    			$url, []
+    		)->then(
+    			function ($response) use ($deferred) {
+    				$deferred->resolve($this);
+    			},
+    			\React\Partial\bind_right($this->reject, $deferred)
+    		);
+    	}
+    	else
+    	{
+    		$deferred->reject();
+    	}
+    	return $deferred->promise();
+    }
+    
+    /**
+     * Deletes the message from the channel.
+     *
+     * @return \React\Promise\Promise
+     */
+    public function delete()
+    {
+        $deferred = new Deferred();
+        
+        $this->http->delete("channels/{$this->channel->id}/messages/{$this->id}")->then(
+            \React\Partial\bind_right($this->resolve, $deferred),
+            \React\Partial\bind_right($this->reject, $deferred)
+        );
+        return $deferred->promise();
+    }
 
     /**
      * Returns the channel attribute.
@@ -87,9 +170,10 @@ class Message extends Part
     public function getChannelAttribute()
     {
         foreach ($this->discord->guilds as $guild) {
-            if ($guild->channels->has($this->channel_id)) {
-                return $guild->channels->get('id', $this->channel_id);
-            }
+        	$channel = $guild->channels->get('id', $this->channel_id);
+        	if (!empty($channel)) {
+        		return $channel;
+        	}
         }
 
         if ($this->cache->has("pm_channels.{$this->channel_id}")) {

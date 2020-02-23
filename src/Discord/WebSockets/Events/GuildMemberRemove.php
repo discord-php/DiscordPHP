@@ -33,6 +33,7 @@ class GuildMemberRemove extends Event
             $this->discord->guilds->push($guild);
         }
 
+        $this->discord->emit('member-leave', [$memberPart->id, $memberPart->guild_id]);
         $deferred->resolve($memberPart);
     }
 }

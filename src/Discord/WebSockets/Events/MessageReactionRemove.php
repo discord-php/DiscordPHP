@@ -11,26 +11,18 @@
 
 namespace Discord\WebSockets\Events;
 
-use Discord\Parts\Channel\Channel;
+use Discord\Parts\Channel\Message;
+use Discord\Repository\Channel\MessageRepository;
 use Discord\WebSockets\Event;
 use React\Promise\Deferred;
 
-class ChannelDelete extends Event
+class MessageReactionRemove extends Event
 {
     /**
      * {@inheritdoc}
      */
     public function handle(Deferred $deferred, $data)
     {
-        $channel = $this->factory->create(Channel::class, $data);
-
-        if ($channel->is_private) {
-            $this->discord->private_channels->pull($channel->id);
-        } else {
-            $guild = $this->discord->guilds->get('id', $channel->guild_id);
-            $guild->channels->pull($channel->id);
-        }
-
-        $deferred->resolve($channel);
+    	$deferred->resolve($data);
     }
 }
