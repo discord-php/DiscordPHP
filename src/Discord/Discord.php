@@ -471,7 +471,7 @@ class Discord
         $count = 0;
 
         foreach ($members as $member) {
-            if (array_key_exists($member->user->id, $guild->members)) {
+            if (array_key_exists($member->user->id, (array)$guild->members)) {
                 continue;
             }
 

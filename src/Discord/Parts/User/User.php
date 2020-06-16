@@ -109,7 +109,7 @@ class User extends Part
             return;
         }
 
-        return "https://discordapp.com/api/users/{$this->id}/avatars/{$this->attributes['avatar']}.jpg";
+        return "https://discord.com/api/users/{$this->id}/avatars/{$this->attributes['avatar']}.jpg";
     }
 
     /**
