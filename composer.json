@@ -27,7 +27,7 @@
     "react/socket-client": "^0.5",
     "symfony/options-resolver": "^2.7|^3.0",
     "trafficcophp/bytebuffer": "^0.3",
-    "monolog/monolog": "^1.22|^2.0",
+    "monolog/monolog": "^1.22|^2.1",
     "wyrihaximus/react-guzzle-psr7": "^1.0",
     "react/partial": "^2.0"
   },
