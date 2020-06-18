@@ -4,16 +4,16 @@
   "license": "MIT",
   "authors": [
     {
+      "name": "Oliver Schlöbe",
+      "email": "github@schloebe.de"
+    },
+    {
       "name": "David Cole",
       "email": "david@team-reflex.com"
     },
     {
       "name": "Aaron Scherer",
       "email": "aequasi@gmail.com"
-    },
-    {
-      "name": "Oliver Schlöbe",
-      "email": "github@schloebe.de"
     }
   ],
   "require": {

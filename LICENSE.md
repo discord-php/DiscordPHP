@@ -1,6 +1,6 @@
 The MIT License (MIT)
 
-Copyright (c) 2015 David Cole <david@team-reflex.com>
+Copyright (c) 2015 David Cole <david@team-reflex.com>, 2020 Oliver Schlöbe <info@rocketmates.de>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
