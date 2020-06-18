@@ -1,7 +1,7 @@
 DiscordPHP
 ====
 
-A drop-in replacement wrapper for the DiscordPHP package originally by [teamreflex](https://github.com/teamreflex), improved and under development now by [RocketMates](https://github.com/rocketmates) to power their Discord Bot.
+A drop-in replacement wrapper for the DiscordPHP package originally by [teamreflex](https://github.com/teamreflex), improved and under active development now by [RocketMates](https://github.com/rocketmates).
 
 PHP 7.4 compatible.
 
