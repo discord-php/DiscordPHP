@@ -1,6 +1,6 @@
 {
   "name": "rocketmates/discord-php",
-  "description": "An unofficial API to interact with the voice and text service Discord.",
+  "description": "Discord PHP Library powering the RocketMates Discord Bot.",
   "license": "MIT",
   "authors": [
     {
