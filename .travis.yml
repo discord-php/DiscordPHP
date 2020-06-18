@@ -23,5 +23,5 @@ before_script:
   - mkdir -p build/logs
 
 script:
-  - ./vendor/bin/parallel-lint src test
+  - ./vendor/bin/parallel-lint src
   - ./vendor/bin/phpcs src --standard=psr2 -sp
