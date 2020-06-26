@@ -1,53 +1,53 @@
 {
-  "name": "rocketmates/discord-php",
-  "description": "Discord PHP Library powering the RocketMates Discord Bot.",
-  "license": "MIT",
-  "authors": [
-    {
-      "name": "Oliver Schlöbe",
-      "email": "github@schloebe.de"
-    },
-    {
-      "name": "David Cole",
-      "email": "david@team-reflex.com"
-    },
-    {
-      "name": "Aaron Scherer",
-      "email": "aequasi@gmail.com"
-    }
-  ],
-  "require": {
-    "php": ">=7.1",
-    "cache/array-adapter": "^0.4.0",
-    "guzzlehttp/guzzle": "^6.2",
-    "illuminate/support": "^5.5|^6.0",
-    "nesbot/carbon": "^1.21|^2.0",
-    "ratchet/pawl": "^0.2.2",
-    "react/datagram": "^1.1",
-    "react/socket-client": "^0.5",
-    "symfony/options-resolver": "^2.7|^3.0",
-    "trafficcophp/bytebuffer": "^0.3",
-    "monolog/monolog": "^1.25|^2.0",
-    "wyrihaximus/react-guzzle-psr7": "^1.0",
-    "react/partial": "^2.0"
-  },
-  "require-dev": {
-    "symfony/var-dumper": "^2.7|^3.0"
-  },
-  "autoload": {
-    "files": ["src/Discord/functions.php"],
-    "psr-4": {
-      "Discord\\": "src/Discord"
-    }
-  },
-  "suggest": {
-    "cache/apc-adapter": "Required to use the APC cache driver",
-    "cache/memcache-adapter": "Required to use the Memcache cache driver",
-    "cache/memcached-adapter": "Required to use the Memcached cache driver",
-    "cache/redis-adapter": "Required to use the Redis cache driver",
-    "ext-libevent": "For a faster, and more performant loop. Preferred",
-    "ext-libev": "For a faster, and more performant loop",
-    "ext-event": "For a faster, and more performant loop"
-  },
-  "scripts": {}
+	"name": "rocketmates/discord-php",
+	"description": "Discord PHP Library powering the RocketMates Discord Bot.",
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "Oliver Schlöbe",
+			"email": "github@schloebe.de"
+		},
+		{
+			"name": "David Cole",
+			"email": "david@team-reflex.com"
+		},
+		{
+			"name": "Aaron Scherer",
+			"email": "aequasi@gmail.com"
+		}
+	],
+	"require": {
+		"php": ">=7.1",
+		"cache/array-adapter": "^0.4.0",
+		"guzzlehttp/guzzle": "^6.2",
+		"illuminate/support": "^5.5|^6.0",
+		"nesbot/carbon": "^1.21|^2.0",
+		"ratchet/pawl": "^0.2.2",
+		"react/datagram": "^1.1",
+		"react/socket-client": "^0.5",
+		"symfony/options-resolver": "^2.7|^3.0",
+		"trafficcophp/bytebuffer": "^0.3",
+		"monolog/monolog": "^1.25|^2.0",
+		"wyrihaximus/react-guzzle-psr7": "^1.0",
+		"react/partial": "^2.0"
+	},
+	"require-dev": {
+		"symfony/var-dumper": "^2.7|^3.0"
+	},
+	"autoload": {
+		"files": ["src/Discord/functions.php"],
+		"psr-4": {
+			"Discord\\": "src/Discord"
+		}
+	},
+	"suggest": {
+		"cache/apc-adapter": "Required to use the APC cache driver",
+		"cache/memcache-adapter": "Required to use the Memcache cache driver",
+		"cache/memcached-adapter": "Required to use the Memcached cache driver",
+		"cache/redis-adapter": "Required to use the Redis cache driver",
+		"ext-libevent": "For a faster, and more performant loop. Preferred",
+		"ext-libev": "For a faster, and more performant loop",
+		"ext-event": "For a faster, and more performant loop"
+	},
+	"scripts": {}
 }
