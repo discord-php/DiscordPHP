@@ -551,6 +551,45 @@ class Channel extends Part
     }
 
     /**
+     * Edits a message in the channel if it is a text channel.
+     *
+     * @param string $id    The message snowflake of the message to edit.
+     * @param string $text  The updated text to set in the message.
+     * @param Embed  $embed An updated embed to set in the message.
+     *
+     * @return \React\Promise\Promise
+     */
+    public function editMessage($id, $text, $embed = null)
+    {
+        $deferred = new Deferred();
+
+        if ($this->getChannelType() != self::TYPE_TEXT) {
+            $deferred->reject(new \Exception('You cannot edit a message in a voice channel.'));
+
+            return $deferred->promise();
+        }
+
+        $this->http->patch(
+            "channels/{$this->id}/messages/{$id}",
+            [
+                'content' => $text,
+                'embed'   => $embed,
+            ]
+        )->then(
+            function ($response) use ($deferred, $id) {
+                $message = $this->factory->create(Message::class, $response, true);
+                $this->messages->forget($id);
+                $this->messages->push($message);
+
+                $deferred->resolve($message);
+            },
+            \React\Partial\bind_right($this->reject, $deferred)
+        );
+
+        return $deferred->promise();
+    }
+
+    /**
      * Sends a file to the channel if it is a text channel.
      *
      * @param string $filepath The path to the file to be sent.
