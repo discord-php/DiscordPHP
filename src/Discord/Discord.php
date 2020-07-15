@@ -67,7 +67,7 @@ class Discord
      *
      * @var string Version.
      */
-    const VERSION = 'v5.1.0';
+    const VERSION = 'v5.1.1';
 
     /**
      * The logger.
@@ -978,11 +978,13 @@ class Discord
         $payload = [
             'op' => Op::OP_PRESENCE_UPDATE,
             'd'  => [
-                'game'       => $game,
-                'idle_since' => $idle,
+                'game'      => $game,
+                'status'    => 'online',
+                'afk'       => $idle,
+                'since'     => 0
             ],
         ];
-
+        
         $this->send($payload);
     }
 
