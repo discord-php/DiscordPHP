@@ -49,7 +49,7 @@ class PresenceUpdate extends Event
             $member->fill([
                 'status' => $presenceAttributes['status'],
                 'roles'  => $presenceAttributes['roles'],
-                'nick'   => $presenceAttributes['nick'],
+                'nick'   => (isset($presenceAttributes['nick'])) ? $presenceAttributes['nick'] : '',
                 'game'   => $presenceAttributes['game'],
             ]);
 
