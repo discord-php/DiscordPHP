@@ -39,7 +39,7 @@ class DiscordCommandClient extends Discord
      * @var array Aliases.
      */
     protected $aliases = [];
-
+    
     /**
      * Constructs a new command client.
      *
@@ -244,10 +244,9 @@ class DiscordCommandClient extends Discord
         }
 
         $options = $this->resolveCommandOptions($options);
-
         $commandInstance = new Command(
             $this, $command, $callable,
-            $options['description'], $options['usage'], $options['aliases']);
+            $options['description'], $options['usage'], $options['cooldown']);
 
         return [$commandInstance, $options];
     }
@@ -268,11 +267,13 @@ class DiscordCommandClient extends Discord
                 'description',
                 'usage',
                 'aliases',
+                'cooldown'
             ])
             ->setDefaults([
                 'description' => 'No description provided.',
                 'usage'       => '',
                 'aliases'     => [],
+                'cooldown'     => 0
             ]);
 
         $options = $resolver->resolve($options);
