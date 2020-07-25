@@ -108,8 +108,8 @@ class User extends Part
         if (empty($this->attributes['avatar'])) {
             return;
         }
-
-        return "https://discord.com/api/users/{$this->id}/avatars/{$this->attributes['avatar']}.jpg";
+        
+        return "https://cdn.discordapp.com/avatars/{$this->id}/{$this->attributes['avatar']}.png";
     }
 
     /**
