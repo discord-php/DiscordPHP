@@ -41,6 +41,20 @@ class Command
     protected $usage;
 
     /**
+     * The cooldown of the command.
+     *
+     * @var int Command cooldown.
+     */
+    protected $cooldown;
+
+    /**
+     * An array of cooldowns for commands.
+     *
+     * @var array Cooldowns.
+     */
+    protected $cooldowns = [];
+
+    /**
      * A map of sub-commands.
      *
      * @var array Sub-Commands.
@@ -62,19 +76,23 @@ class Command
      * @param \Callable            $callable    The callable function.
      * @param string               $description The description of the command.
      * @param string               $usage       The usage of the command.
+     * @param int                  $cooldown    The usage of the command.
+
      */
     public function __construct(
         DiscordCommandClient $client,
         $command,
         callable $callable,
         $description,
-        $usage
+        $usage,
+        $cooldown
     ) {
         $this->client      = $client;
         $this->command     = $command;
         $this->callable    = $callable;
         $this->description = $description;
         $this->usage       = $usage;
+        $this->cooldown    = $cooldown;
     }
 
     /**
@@ -163,6 +181,16 @@ class Command
             array_unshift($args, $subCommand);
         }
 
+        $currentTime = time();
+        if (isset($this->cooldowns[$message->author->id])){
+            if($this->cooldowns[$message->author->id] < $currentTime)
+                $this->cooldowns[$message->author->id] = $currentTime + $this->cooldown;
+            else
+                return "please wait ".($this->cooldowns[$message->author->id] - $currentTime)." second(s) to use this command again.";
+        }
+        else
+            $this->cooldowns[$message->author->id] = $currentTime + $this->cooldown;
+
         return call_user_func_array($this->callable, [$message, $args]);
     }
 
@@ -197,7 +225,7 @@ class Command
      */
     public function __get($variable)
     {
-        $allowed = ['command', 'description', 'usage'];
+        $allowed = ['command', 'description', 'usage', 'cooldown'];
 
         if (array_search($variable, $allowed) !== false) {
             return $this->{$variable};
