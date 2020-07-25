@@ -41,7 +41,7 @@ class Command
     protected $usage;
 
     /**
-     * The cooldown of the command.
+     * The cooldown of the command in seconds.
      *
      * @var int Command cooldown.
      */
@@ -76,7 +76,7 @@ class Command
      * @param \Callable            $callable    The callable function.
      * @param string               $description The description of the command.
      * @param string               $usage       The usage of the command.
-     * @param int                  $cooldown    The usage of the command.
+     * @param int                  $cooldown    The cooldown of the command in seconds.
 
      */
     public function __construct(
