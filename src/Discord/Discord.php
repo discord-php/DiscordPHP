@@ -428,7 +428,7 @@ class Discord
             $event->handle($deferred, $guild);
         }
 
-        $this->logger->info('stored guilds', ['count' => $this->guilds->count()]);
+        $this->logger->info('stored guilds', ['count' => $this->guilds->count(), 'unavailable' => count($unavailable)]);
 
         if (count($unavailable) < 1) {
             return $this->ready();
