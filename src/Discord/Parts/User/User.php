@@ -65,12 +65,12 @@ class User extends Part
      *
      * @return \React\Promise\Promise
      */
-    public function sendMessage($message, $tts = false)
+    public function sendMessage($message, $tts = false, $embed = null)
     {
         $deferred = new Deferred();
 
-        $this->getPrivateChannel()->then(function ($channel) use ($message, $tts, $deferred) {
-            $channel->sendMessage($message, $tts)->then(function ($response) use ($deferred) {
+        $this->getPrivateChannel()->then(function ($channel) use ($message, $tts, $deferred, $embed) {
+            $channel->sendMessage($message, $tts, $embed)->then(function ($response) use ($deferred) {
                 $message = $this->factory->create(Message::class, $response, true);
                 $deferred->resolve($message);
             }, \React\Partial\bind_right($this->reject, $deferred));
