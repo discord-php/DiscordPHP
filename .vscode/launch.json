@@ -14,10 +14,10 @@
             "name": "Launch currently open script",
             "type": "php",
             "request": "launch",
-            "program": "${file}",
-            "cwd": "${fileDirname}",
+            "program": "${workspaceFolder}/test.php",
+            "cwd": "${workspaceFolder}",
             "port": 9000,
-            "runtimeExecutable": "php"
+            "runtimeExecutable": "/usr/bin/php"
         }
     ]
 }
