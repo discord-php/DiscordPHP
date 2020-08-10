@@ -325,6 +325,6 @@ class Http
      */
     public function getUserAgent()
     {
-        return 'DiscordPHP/'.$this->version.' DiscordBot (https://github.com/teamreflex/DiscordPHP, '.$this->version.')';
+        return 'DiscordBot (https://github.com/teamreflex/DiscordPHP, '.$this->version.')';
     }
 }
