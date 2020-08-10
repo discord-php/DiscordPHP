@@ -33,7 +33,7 @@ class Http
      *
      * @var string
      */
-    const BASE_URL = 'https://discordapp.com/api';
+    const BASE_URL = 'https://discord.com/api';
 
     /**
      * The length of time requests will be cached for.
