@@ -37,7 +37,7 @@ use Ratchet\Client\WebSocket;
 use Ratchet\RFC6455\Messaging\Message;
 use React\EventLoop\Factory as LoopFactory;
 use React\EventLoop\LoopInterface;
-use React\EventLoop\Timer\TimerInterface;
+use React\EventLoop\TimerInterface;
 use React\Promise\Deferred;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
