@@ -577,12 +577,12 @@ class Discord
         $this->connected = false;
 
         if (! is_null($this->heartbeatTimer)) {
-            $this->heartbeatTimer->cancel();
+            $this->loop->cancelTimer($this->heartbeatTimer);
             $this->heartbeatTimer = null;
         }
 
         if (! is_null($this->heartbeatAckTimer)) {
-            $this->heartbeatAckTimer->cancel();
+            $this->loop->cancelTimer($this->heartbeatAckTimer);
             $this->heartbeatAckTimer = null;
         }
 
@@ -736,7 +736,7 @@ class Discord
         $diff     = $received - $this->heartbeatTime;
         $time     = $diff * 1000;
 
-        $this->heartbeatAckTimer->cancel();
+        $this->loop->cancelTimer($this->heartbeatAckTimer);
         $this->emit('heartbeat-ack', [$time, $this]);
         $this->logger->debug('received heartbeat ack', ['response_time' => $time]);
     }
@@ -926,7 +926,7 @@ class Discord
     {
         $this->heartbeatInterval = $interval;
         if (isset($this->heartbeatTimer)) {
-            $this->heartbeatTimer->cancel();
+            $this->loop->cancelTimer($this->heartbeatTimer);
         }
 
         $interval             = $interval / 1000;

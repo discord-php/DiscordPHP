@@ -18,13 +18,12 @@
     "guzzlehttp/guzzle": "~5.3|~6.0",
     "illuminate/support": "^4.0|^5.0",
     "nesbot/carbon": "^1.18",
-    "ratchet/pawl": "0.2.*",
-    "react/datagram": "1.1.*",
-    "react/socket-client": "0.4.*",
+    "ratchet/pawl": "0.3.*",
+    "react/datagram": "1.5.*",
     "symfony/options-resolver": "^2.7|^3.0",
     "TrafficCophp/ByteBuffer": "^0.3",
     "monolog/monolog": "^1.19",
-    "wyrihaximus/react-guzzle-psr7": "^1.0",
+    "wyrihaximus/react-guzzle-psr7": "2.1.*",
     "react/partial": "^2.0"
   },
   "require-dev": {
