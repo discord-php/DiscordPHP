@@ -440,6 +440,7 @@ class Discord
         });
 
         $function = function ($guild) use (&$function, &$unavailable) {
+            $this->logger->debug('guild available', ['guild' => $guild->id]);
             if (array_key_exists($guild->id, $unavailable)) {
                 unset($unavailable[$guild->id]);
             }
