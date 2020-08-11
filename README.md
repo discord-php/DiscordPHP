@@ -1,5 +1,7 @@
 # DEAD
 
+Currently trying to revive the project. Please create an issue if you know of any issues with the library and I will try my best to get it to a stable state.
+
 Library is currently dead, doubt it works at all and if it does there are so many bugs that it needs another rewrite which I'm not wanting to do really, sorry. The fact that we even made a PHP library that interacts with the Discord gateway is kind of a miracle but it is time to say farewell. Thanks to everyone that helped out along the way, especially Aaron (@aequasi). Maybe one day someone can take over and do a rewrite. Much love,
 
 - David
