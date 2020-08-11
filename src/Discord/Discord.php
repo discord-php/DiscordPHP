@@ -43,6 +43,21 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * The Discord client class.
+ * 
+ * @property string                           $id            The unique identifier of the client.
+ * @property string                           $username      The username of the client.
+ * @property string                           $password      The password of the client (if they have provided it).
+ * @property string                           $email         The email of the client.
+ * @property bool                             $verified      Whether the client has verified their email.
+ * @property string                           $avatar        The avatar URL of the client.
+ * @property string                           $avatar_hash   The avatar hash of the client.
+ * @property string                           $discriminator The unique discriminator of the client.
+ * @property bool                             $bot           Whether the client is a bot.
+ * @property \Discord\Parts\User\User         $user          The user instance of the client.
+ * @property \Discord\Parts\OAuth\Application $application   The OAuth2 application of the bot.
+ * @property \Discord\Repository\GuildRepository          $guilds
+ * @property \Discord\Repository\PrivateChannelRepository $private_channels
+ * @property \Discord\Repository\UserRepository           $users
  */
 class Discord
 {

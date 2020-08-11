@@ -90,7 +90,7 @@ abstract class Event
     /**
      * The Discord client instance.
      *
-     * @var Discord Client.
+     * @var \Discord\Discord Client.
      */
     protected $discord;
 
