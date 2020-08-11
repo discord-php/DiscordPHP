@@ -49,7 +49,9 @@ class Embed extends Part
             return Carbon::now();
         }
 
-        return Carbon::parse($this->attributes['timestamp']);
+        if (! empty($this->attributes['timestamp'])) {
+            return Carbon::parse($this->attributes['timestamp']);
+        }
     }
 
     /**
@@ -89,7 +91,7 @@ class Embed extends Part
      */
     public function getVideoAttribute()
     {
-        return $this->attributeHelepr('video', Video::class);
+        return $this->attributeHelper('video', Video::class);
     }
 
     /**
@@ -105,18 +107,22 @@ class Embed extends Part
     /**
      * Gets the fields attribute.
      *
-     * @return Collection[Field] The fields attribute.
+     * @return array[Field] The fields attribute.
      */
     public function getFieldsAttribute()
     {
-        $fields = new Collection();
+        $fields = [];
+
+        if (! array_key_exists('fields', $this->attributes)) {
+            return $fields;
+        }
 
         foreach ($this->attributes['fields'] as $field) {
             if (! ($field instanceof Field)) {
                 $field = $this->discord->factory(Field::class, $field, true);
             }
 
-            $fields->push($field);
+            $fields[] = $field;
         }
 
         return $fields;
@@ -132,6 +138,10 @@ class Embed extends Part
      */
     protected function attributeHelper($key, $class)
     {
+        if (! array_key_exists($key, $this->attributes)) {
+            return $this->discord->factory($class, []);
+        }
+
         if ($this->attributes[$key] instanceof $class) {
             return $this->attributes[$key];
         }

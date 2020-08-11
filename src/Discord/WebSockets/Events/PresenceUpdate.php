@@ -46,13 +46,15 @@ class PresenceUpdate extends Event
             ], true);
 
             $presenceAttributes = $presenceUpdate->getRawAttributes();
-            $member->fill([
-                'status' => $presenceAttributes['status'],
-                'roles'  => $presenceAttributes['roles'],
-                'nick'   => $presenceAttributes['nick'],
-                'game'   => $presenceAttributes['game'],
-            ]);
+            $updatable = ['status', 'roles', 'nick', 'game'];
 
+            foreach ($presenceAttributes as $key => $value) {
+                if (! in_array($key, $updatable)) {
+                    unset($presenceAttributes[$key]);
+                }
+            }
+            
+            $member->fill($presenceAttributes);
             $guild->members->push($member);
         }
 

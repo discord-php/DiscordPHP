@@ -13,6 +13,7 @@ namespace Discord\Parts\User;
 
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Channel\Message;
+use Discord\Parts\Embed\Embed;
 use Discord\Parts\Part;
 use React\Promise\Deferred;
 
@@ -59,17 +60,18 @@ class User extends Part
     /**
      * Sends a message to the user.
      *
-     * @param string $text The text to send in the message.
-     * @param bool   $tts  Whether the message should be sent with text to speech enabled.
+     * @param string $text  The text to send in the message.
+     * @param bool   $tts   Whether the message should be sent with text to speech enabled.
+     * @param Embed  $embed An embed to send.
      *
      * @return \React\Promise\Promise
      */
-    public function sendMessage($message, $tts = false)
+    public function sendMessage($message, $tts = false, $embed = null)
     {
         $deferred = new Deferred();
 
-        $this->getPrivateChannel()->then(function ($channel) use ($message, $tts, $deferred) {
-            $channel->sendMessage($message, $tts)->then(function ($response) use ($deferred) {
+        $this->getPrivateChannel()->then(function ($channel) use ($message, $tts, $embed, $deferred) {
+            $channel->sendMessage($message, $tts, $embed)->then(function ($response) use ($deferred) {
                 $message = $this->factory->create(Message::class, $response, true);
                 $deferred->resolve($message);
             }, \React\Partial\bind_right($this->reject, $deferred));
@@ -100,15 +102,22 @@ class User extends Part
     /**
      * Returns the avatar URL for the client.
      *
+     * @param string $format The image format.
+     * @param int    $size   The size of the image.
+     *
      * @return string The URL to the clients avatar.
      */
-    public function getAvatarAttribute()
+    public function getAvatarAttribute($format = 'jpg', $size = 1024)
     {
         if (empty($this->attributes['avatar'])) {
             return;
         }
 
-        return "https://discordapp.com/api/users/{$this->id}/avatars/{$this->attributes['avatar']}.jpg";
+        if (false === array_search($format, ['png', 'jpg', 'webp'])) {
+            $format = 'jpg';
+        }
+
+        return "https://cdn.discordapp.com/avatars/{$this->id}/{$this->attributes['avatar']}.{$format}?size={$size}";
     }
 
     /**

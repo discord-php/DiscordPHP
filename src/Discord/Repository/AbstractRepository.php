@@ -118,7 +118,7 @@ abstract class AbstractRepository implements RepositoryInterface, ArrayAccess, C
             $this->replaceWithVariables(
                 $this->endpoints['all']
             )
-        )->then(function ($response) {
+        )->then(function ($response) use ($deferred) {
             $this->fill([]);
 
             foreach ($response as $value) {
@@ -127,9 +127,13 @@ abstract class AbstractRepository implements RepositoryInterface, ArrayAccess, C
 
                 $this->push($part);
             }
+
+            $deferred->resolve($this);
         }, function ($e) use ($deferred) {
             $deferred->reject($e);
         });
+
+        return $deferred->promise();
     }
 
     /**

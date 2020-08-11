@@ -13,6 +13,7 @@ namespace Discord\Parts\Channel;
 
 use Discord\Exceptions\FileNotFoundException;
 use Discord\Helpers\Collection;
+use Discord\Parts\Embed\Embed;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Guild\Invite;
 use Discord\Parts\Guild\Role;
@@ -346,7 +347,7 @@ class Channel extends Part
         $options = $resolver->resolve($options);
         if (isset($options['before'], $options['after']) ||
             isset($options['before'], $options['around']) ||
-            isset($options['around'], $options['around'])) {
+            isset($options['around'], $options['after'])) {
             $deferred->reject(new \Exception('Can only specify one of before, after and around.'));
 
             return $deferred->promise();

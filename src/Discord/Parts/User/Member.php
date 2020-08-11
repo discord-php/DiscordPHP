@@ -181,9 +181,11 @@ class Member extends Part
 
         if (false !== ($index = array_search($role, $this->attributes['roles']))) {
             unset($this->attributes['roles'][$index]);
+
+            return true;
         }
 
-        return true;
+        return false;
     }
 
     /**

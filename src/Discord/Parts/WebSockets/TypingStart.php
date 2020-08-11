@@ -61,8 +61,8 @@ class TypingStart extends Part
     public function getChannelAttribute()
     {
         foreach ($this->discord->guilds as $guild) {
-            if ($guild->channels->has($this->channel_id)) {
-                return $guild->channels->get('id', $this->channel_id);
+            if ($channel = $guild->channels->get('id', $this->channel_id)) {
+                return $channel;
             }
         }
     }

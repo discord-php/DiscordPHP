@@ -802,7 +802,8 @@ class VoiceClient extends EventEmitter
                 $magicBytes = fread($stream, 4);
 
                 if ($magicBytes !== self::DCA_VERSION) {
-                    $deferred->reject(new OutdatedDCAException('You are using an outdated version of DCA. Please make sure you have the latest version from https://github.com/bwmarrin/dca'));
+                    $content = fread($stream, 1024);
+                    $deferred->reject(new OutdatedDCAException('You are using an outdated version of DCA. Please make sure you have the latest version from https://github.com/bwmarrin/dca - Debugging: '.$magicBytes.$content));
 
                     return;
                 }

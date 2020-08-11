@@ -267,15 +267,22 @@ class Guild extends Part
     /**
      * Returns the guilds icon.
      *
+     * @param string $format The image format.
+     * @param int    $size   The size of the image.
+     *
      * @return string|null The URL to the guild icon or null.
      */
-    public function getIconAttribute()
+    public function getIconAttribute($format = 'jpg', $size = 1024)
     {
         if (is_null($this->attributes['icon'])) {
             return;
         }
 
-        return "https://cdn.discordapp.com/icons/{$this->attributes['id']}/{$this->attributes['icon']}.jpg";
+        if (false === array_search($format, ['png', 'jpg', 'webp'])) {
+            $format = 'jpg';
+        }
+
+        return "https://cdn.discordapp.com/icons/{$this->id}/{$this->attributes['icon']}.{$format}?size={$size}";
     }
 
     /**
@@ -291,15 +298,22 @@ class Guild extends Part
     /**
      * Returns the guild splash.
      *
+     * @param string $format The image format.
+     * @param int    $size   The size of the image.
+     *
      * @return string|null The URL to the guild splash or null.
      */
-    public function getSplashAttribute()
+    public function getSplashAttribute($format = 'jpg', $size = 2048)
     {
         if (is_null($this->attributes['splash'])) {
             return;
         }
 
-        return "https://cdn.discordapp.com/splash/{$this->attributes['id']}/{$this->attributes['icon']}.jpg";
+        if (false === array_search($format, ['png', 'jpg', 'webp'])) {
+            $format = 'jpg';
+        }
+
+        return "https://cdn.discordapp.com/slashes/{$this->id}/{$this->attributes['splash']}.{$format}?size={$size}";
     }
 
     /**

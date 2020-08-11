@@ -96,7 +96,7 @@ class Command
         $this->subCommands[$command]     = $commandInstance;
 
         foreach ($options['aliases'] as $alias) {
-            $this->addSubCommandAlias($alias, $command);
+            $this->registerSubCommandAlias($alias, $command);
         }
 
         return $commandInstance;

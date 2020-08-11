@@ -13,9 +13,11 @@ namespace Discord\Parts\Channel;
 
 use Carbon\Carbon;
 use Discord\Helpers\Collection;
+use Discord\Parts\Embed\Embed;
 use Discord\Parts\Part;
 use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
+use React\Promise\Deferred;
 
 /**
  * A message which is posted to a Discord text channel.
@@ -26,7 +28,7 @@ use Discord\Parts\User\User;
  * @property string                         $content          The content of the message if it is a normal message.
  * @property int                            $type             The type of message.
  * @property Collection[User]               $mentions         A collection of the users mentioned in the message.
- * @property \Discord\Parts\User\User       $author           The author of the message.
+ * @property \Discord\Parts\User\Member     $author           The author of the message.
  * @property bool                           $mention_everyone Whether the message contained an @everyone mention.
  * @property Carbon                         $timestamp        A timestamp of when the message was sent.
  * @property Carbon|null                    $edited_timestamp A timestamp of when the message was edited, or null.
@@ -45,6 +47,10 @@ class Message extends Part
     const TYPE_CALL                = 3;
     const TYPE_CHANNEL_NAME_CHANGE = 4;
     const TYPE_CHANNEL_ICON_CHANGE = 5;
+
+    const REACT_DELETE_ALL = 0;
+    const REACT_DELETE_ME  = 1;
+    const REACT_DELETE_ID  = 2;
 
     /**
      * {@inheritdoc}
@@ -80,6 +86,68 @@ class Message extends Part
     }
 
     /**
+     * Reacts to the message.
+     *
+     * @param string $emoticon The emoticon to react with. (custom: ':michael:251127796439449631')
+     *
+     * @return \React\Promise\Promise
+     */
+    public function react($emoticon)
+    {
+        $deferred = new Deferred();
+
+        $this->http->put(
+            "channels/{$this->channel->id}/messages/{$this->id}/reactions/{$emoticon}/@me"
+        )->then(
+            \React\Partial\bind_right($this->resolve, $deferred),
+            \React\Partial\bind_right($this->reject, $deferred)
+        );
+
+        return $deferred->promise();
+    }
+
+    /**
+     * Deletes a reaction.
+     *
+     * @param int    $type     The type of deletion to perform.
+     * @param string $emoticon The emoticon to delete (if not all).
+     * @param string $id       The user reaction to delete (if not all).
+     *
+     * @return \React\Promise\Promise
+     */
+    public function deleteReaction($type, $emoticon = null, $id = null)
+    {
+        $deferred = new Deferred();
+
+        $types = [self::REACT_DELETE_ALL, self::REACT_DELETE_ME, self::REACT_DELETE_ID];
+
+        if (in_array($type, $types)) {
+            switch ($type) {
+                case self::REACT_DELETE_ALL:
+                    $url = "channels/{$this->channel->id}/messages/{$this->id}/reactions";
+                    break;
+                case self::REACT_DELETE_ME:
+                    $url = "channels/{$this->channel->id}/messages/{$this->id}/reactions/{$emoticon}/@me";
+                    break;
+                case self::REACT_DELETE_ID:
+                    $url = "channels/{$this->channel->id}/messages/{$this->id}/reactions/{$emoticon}/{$id}";
+                    break;
+            }
+
+            $this->http->delete(
+                $url, []
+            )->then(
+                \React\Partial\bind_right($this->resolve, $deferred),
+                \React\Partial\bind_right($this->reject, $deferred)
+            );
+        } else {
+            $deferred->reject();
+        }
+
+        return $deferred->promise();
+    }
+
+    /**
      * Returns the channel attribute.
      *
      * @return Channel The channel the message was sent in.
@@ -87,8 +155,9 @@ class Message extends Part
     public function getChannelAttribute()
     {
         foreach ($this->discord->guilds as $guild) {
-            if ($guild->channels->has($this->channel_id)) {
-                return $guild->channels->get('id', $this->channel_id);
+            $channel = $guild->channels->get('id', $this->channel_id);
+            if (! empty($channel)) {
+                return $channel;
             }
         }
 

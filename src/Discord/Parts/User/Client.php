@@ -103,15 +103,14 @@ class Client extends Part
     /**
      * Returns the avatar URL for the client.
      *
-     * @return string The URL to the client's avatar.
+     * @param string $format The image format.
+     * @param int    $size   The size of the image.
+     *
+     * @return string The URL to the clients avatar.
      */
     public function getAvatarAttribute()
     {
-        if (empty($this->attributes['avatar'])) {
-            return;
-        }
-
-        return "https://discordapp.com/api/users/{$this->id}/avatars/{$this->attributes['avatar']}.jpg";
+        return call_user_func_array([$this->user, 'getAvatarAttribute'], func_get_args());
     }
 
     /**

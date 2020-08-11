@@ -37,12 +37,27 @@ use Ratchet\Client\WebSocket;
 use Ratchet\RFC6455\Messaging\Message;
 use React\EventLoop\Factory as LoopFactory;
 use React\EventLoop\LoopInterface;
-use React\EventLoop\Timer\TimerInterface;
+use React\EventLoop\TimerInterface;
 use React\Promise\Deferred;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * The Discord client class.
+ * 
+ * @property string                           $id            The unique identifier of the client.
+ * @property string                           $username      The username of the client.
+ * @property string                           $password      The password of the client (if they have provided it).
+ * @property string                           $email         The email of the client.
+ * @property bool                             $verified      Whether the client has verified their email.
+ * @property string                           $avatar        The avatar URL of the client.
+ * @property string                           $avatar_hash   The avatar hash of the client.
+ * @property string                           $discriminator The unique discriminator of the client.
+ * @property bool                             $bot           Whether the client is a bot.
+ * @property \Discord\Parts\User\User         $user          The user instance of the client.
+ * @property \Discord\Parts\OAuth\Application $application   The OAuth2 application of the bot.
+ * @property \Discord\Repository\GuildRepository          $guilds
+ * @property \Discord\Repository\PrivateChannelRepository $private_channels
+ * @property \Discord\Repository\UserRepository           $users
  */
 class Discord
 {
@@ -428,7 +443,7 @@ class Discord
             $event->handle($deferred, $guild);
         }
 
-        $this->logger->info('stored guilds', ['count' => $this->guilds->count()]);
+        $this->logger->info('stored guilds', ['count' => $this->guilds->count(), 'unavailable' => count($unavailable)]);
 
         if (count($unavailable) < 1) {
             return $this->ready();
@@ -440,6 +455,7 @@ class Discord
         });
 
         $function = function ($guild) use (&$function, &$unavailable) {
+            $this->logger->debug('guild available', ['guild' => $guild->id]);
             if (array_key_exists($guild->id, $unavailable)) {
                 unset($unavailable[$guild->id]);
             }
@@ -576,12 +592,12 @@ class Discord
         $this->connected = false;
 
         if (! is_null($this->heartbeatTimer)) {
-            $this->heartbeatTimer->cancel();
+            $this->loop->cancelTimer($this->heartbeatTimer);
             $this->heartbeatTimer = null;
         }
 
         if (! is_null($this->heartbeatAckTimer)) {
-            $this->heartbeatAckTimer->cancel();
+            $this->loop->cancelTimer($this->heartbeatAckTimer);
             $this->heartbeatAckTimer = null;
         }
 
@@ -598,10 +614,30 @@ class Discord
             return;
         }
 
-        ++$this->reconnectCount;
-        $this->reconnecting = true;
-        $this->logger->info('starting reconnect', ['reconnect_count' => $this->reconnectCount]);
-        $this->connectWs();
+        switch ($op) {
+            case Op::CLOSE_INVALID_TOKEN:
+                $this->emit('error', ['token is invalid', $this]);
+                $this->logger->error('the token you provided is invalid');
+
+                return;
+            case Op::CLOSE_INVALID_SHARD:
+                $this->emit('error', ['shard is invalid', $this]);
+                $this->logger->error('the shard you provided is invalid');
+
+                return;
+            case Op::CLOSE_SHARDING_REQUIRED:
+                $this->emit('error', ['sharding required', $this]);
+                $this->logger->error('due to the size of your bot sharding is required');
+
+                return;
+        }
+
+        $this->loop->addTimer(2, function () {
+            ++$this->reconnectCount;
+            $this->reconnecting = true;
+            $this->logger->info('starting reconnect', ['reconnect_count' => $this->reconnectCount]);
+            $this->connectWs();
+        });
     }
 
     /**
@@ -715,7 +751,7 @@ class Discord
         $diff     = $received - $this->heartbeatTime;
         $time     = $diff * 1000;
 
-        $this->heartbeatAckTimer->cancel();
+        $this->loop->cancelTimer($this->heartbeatAckTimer);
         $this->emit('heartbeat-ack', [$time, $this]);
         $this->logger->debug('received heartbeat ack', ['response_time' => $time]);
     }
@@ -905,7 +941,7 @@ class Discord
     {
         $this->heartbeatInterval = $interval;
         if (isset($this->heartbeatTimer)) {
-            $this->heartbeatTimer->cancel();
+            $this->loop->cancelTimer($this->heartbeatTimer);
         }
 
         $interval             = $interval / 1000;
@@ -1232,13 +1268,18 @@ class Discord
     /**
      * Closes the Discord client.
      *
+     * @param bool $closeLoop Whether to close the loop as well. Default true.
+     * 
      * @return void
      */
-    public function close()
+    public function close($closeLoop = true)
     {
         $this->closing = true;
         $this->ws->close(1000, 'discordphp closing...');
         $this->emit('closed', [$this]);
+        $this->logger->info('discord closed');
+        
+        if ($closeLoop) $this->loop->stop();
     }
 
     /**

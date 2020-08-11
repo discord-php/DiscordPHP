@@ -190,41 +190,6 @@ class Guzzle extends GuzzleClient implements HttpDriver
     /**
      * {@inheritdoc}
      */
-    public function sendFile(Http $http, Channel $channel, $filepath, $filename, $content, $tts, $token)
-    {
-        $multipart = [
-            [
-                'name'     => 'file',
-                'contents' => fopen($filepath, 'r'),
-                'filename' => $filename,
-            ],
-        ];
-
-        if (! is_null($content)) {
-            $multipart[] = [
-                'name'     => 'content',
-                'contents' => $content,
-            ];
-        }
-
-        if ($tts) {
-            $multipart[] = [
-                'name'     => 'tts',
-                'contents' => 'true',
-            ];
-        }
-
-        return $this->runRequest('POST', "channels/{$channel->id}/messages", [
-            'authorization' => $token,
-            'User-Agent'    => $http->getUserAgent(),
-        ], null, [
-            'multipart' => $multipart,
-        ]);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function blocking($method, $url, $headers, $body)
     {
         $request = new Request(

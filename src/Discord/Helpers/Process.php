@@ -13,7 +13,7 @@ namespace Discord\Helpers;
 
 use Evenement\EventEmitter;
 use React\EventLoop\LoopInterface;
-use React\EventLoop\Timer\Timer;
+use React\EventLoop\TimerInterface;
 use React\Stream\Stream;
 
 /**
@@ -123,10 +123,10 @@ class Process extends EventEmitter
             stream_set_blocking($pipe, 0);
         }
 
-        $loop->addPeriodicTimer($interval, function (Timer $timer) {
+        $loop->addPeriodicTimer($interval, function (TimerInterface $timer) use ($loop) {
             if (! $this->isRunning()) {
                 // $this->close();
-                $timer->cancel();
+                $loop->cancelTimer($timer);
                 $this->emit('exit', [$this->getExitCode(), $this->getTermSignal()]);
             }
         });
