@@ -30,4 +30,16 @@ interface HttpDriver
      * @return \React\Promise\Promise
      */
     public function runRequest($method, $url, $headers, $body, array $options = []);
+    
+    /**
+     * Runs a blocking HTTP request.
+     *
+     * @param string $method  The HTTP method to use.
+     * @param string $url     The endpoint that will be queried.
+     * @param array  $headers The headers to send in the request.
+     * @param string $body    The request content.
+     *
+     * @return \Psr\Http\Message\ResponseInterface
+     */
+    public function blocking($method, $url, $headers, $body);
 }
