@@ -72,12 +72,8 @@ class Http
      * @param string       $version
      * @param HttpDriver   $driver  The request driver.
      */
-    public function __construct(CacheWrapper $cache, $token, $version, $driver = null)
+    public function __construct(CacheWrapper $cache, $token, $version, $driver)
     {
-        if (is_null($driver)) {
-            $driver = new Guzzle($cache);
-        }
-
         $this->cache   = $cache;
         $this->token   = $token;
         $this->version = $version;
