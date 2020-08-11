@@ -1253,13 +1253,18 @@ class Discord
     /**
      * Closes the Discord client.
      *
+     * @param bool $closeLoop Whether to close the loop as well. Default true.
+     * 
      * @return void
      */
-    public function close()
+    public function close($closeLoop = true)
     {
         $this->closing = true;
         $this->ws->close(1000, 'discordphp closing...');
         $this->emit('closed', [$this]);
+        $this->logger->info('discord closed');
+        
+        if ($closeLoop) $this->loop->stop();
     }
 
     /**
