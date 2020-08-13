@@ -139,7 +139,7 @@ class Http
         $disable_json = false;
 
         $key = 'guzzle.'.sha1($url);
-        if ($method === 'get' && $this->cache->has($key)) {
+        if ($method === 'get' && $this->cache->has($key) && $cache !== false) {
             $deferred->resolve($this->cache->get($key));
 
             return $deferred->promise();
