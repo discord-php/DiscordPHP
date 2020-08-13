@@ -13,14 +13,14 @@
     }
   ],
   "require": {
-    "php": "^5.6|^7.0",
+    "php": "^7.0",
     "cache/array-adapter": "^0.4.2",
     "guzzlehttp/guzzle": "~5.3|~6.0",
     "illuminate/support": "^4.0|^5.0",
     "nesbot/carbon": "^1.18",
     "ratchet/pawl": "0.3.*",
     "react/datagram": "1.5.*",
-    "symfony/options-resolver": "^2.7|^3.0",
+    "symfony/options-resolver": "<=5.1.3",
     "TrafficCophp/ByteBuffer": "^0.3",
     "monolog/monolog": "^1.19",
     "wyrihaximus/react-guzzle-psr7": "2.1.*",
