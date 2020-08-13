@@ -4,8 +4,6 @@ namespace Discord\Parts\Channel;
 
 use Discord\Parts\Part;
 
-use function PHPSTORM_META\map;
-
 class Webhook extends Part
 {
     /**
