@@ -93,7 +93,7 @@ class Handlers
      *
      * @param string $event The WebSocket event name.
      *
-     * @return string|null The Event class name or null;
+     * @return array|null The Event class name or null;
      */
     public function getHandler($event)
     {
