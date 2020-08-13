@@ -24,6 +24,7 @@ use Discord\Parts\User\User;
 use Discord\Repository\Channel\MessageRepository;
 use Discord\Repository\Channel\OverwriteRepository;
 use Discord\Repository\Channel\VoiceMemberRepository as MemberRepository;
+use Discord\Repository\Channel\WebhookRepository;
 use React\Promise\Deferred;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Traversable;
@@ -46,6 +47,7 @@ use Traversable;
  * @property \Discord\Repository\Channel\VoiceMemberRepository $members
  * @property \Discord\Repository\Channel\MessageRepository     $messages
  * @property \Discord\Repository\Channel\OverwriteRepository   $overwrites
+ * @property \Discord\Repository\Channel\WebhookRepository     $webhooks
  */
 class Channel extends Part
 {
@@ -78,6 +80,7 @@ class Channel extends Part
         'members'    => MemberRepository::class,
         'messages'   => MessageRepository::class,
         'overwrites' => OverwriteRepository::class,
+        'webhooks'   => WebhookRepository::class
     ];
 
     /**
