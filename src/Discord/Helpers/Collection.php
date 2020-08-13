@@ -30,6 +30,18 @@ class Collection extends BaseCollection
     }
 
     /**
+     * Fills the collection with the given array.
+     * 
+     * @param array $items Items to fill.
+     * 
+     * @return null
+     */
+    public function fill($items = [])
+    {
+        $this->items = $items;
+    }
+
+    /**
      * Get an item from the collection with a key and value.
      *
      * @param mixed $key   The key to match with the value.
@@ -51,6 +63,29 @@ class Collection extends BaseCollection
             } elseif (is_object($item)) {
                 if ($item->{$key} == $value) {
                     return $item;
+                }
+            }
+        }
+    }
+
+    /**
+     * Gets the index of an item in the collection.
+     *
+     * @param mixed $key   The key to match with the value.
+     * @param mixed $value The value to match with the key.
+     *
+     * @return mixed The value or null.
+     */
+    public function getIndex($key, $value = null)
+    {
+        foreach ($this->items as $index => $item) {
+            if (is_array($item)) {
+                if ($item[$key] == $value) {
+                    return $index;
+                }
+            } elseif (is_object($item)) {
+                if ($item->{$key} == $value) {
+                    return $index;
                 }
             }
         }
