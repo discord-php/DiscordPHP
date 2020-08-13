@@ -30,7 +30,9 @@ use React\Datagram\Socket;
 use React\Dns\Resolver\Factory as DNSFactory;
 use React\EventLoop\LoopInterface;
 use React\Promise\Deferred;
-use React\Stream\Stream;
+use React\Stream\ReadableResourceStream as Stream;
+use React\EventLoop\TimerInterface;
+use React\Stream\ReadableStreamInterface;
 
 /**
  * The Discord voice client.
@@ -299,6 +301,13 @@ class VoiceClient extends EventEmitter
     protected $logger;
 
     /**
+     * The Discord voice gateway version.
+     * 
+     * @var int Voice version.
+     */
+    protected $version = 4;
+
+    /**
      * Constructs the Voice Client instance.
      *
      * @param WebSocket     $websocket The main WebSocket client.
@@ -354,7 +363,7 @@ class VoiceClient extends EventEmitter
     {
         $wsfac = new WsFactory($this->loop);
 
-        $wsfac("wss://{$this->endpoint}")->then(
+        $wsfac("wss://{$this->endpoint}?v={$this->version}")->then(
             [$this, 'handleWebSocketConnection'],
             [$this, 'handleWebSocketError']
         );
@@ -386,29 +395,14 @@ class VoiceClient extends EventEmitter
                 $ws->removeListener('message', $discoverUdp);
 
                 $this->udpPort            = $data->d->port;
-                $this->heartbeat_interval = $data->d->heartbeat_interval;
                 $this->ssrc               = $data->d->ssrc;
 
                 $this->logger->debug('received voice ready packet', ['data' => json_decode(json_encode($data->d), true)]);
 
-                $this->send([
-                    'op' => Op::VOICE_HEARTBEAT,
-                    'd'  => microtime(true),
-                ]);
-                $this->emit('ws-heartbeat', []);
-
-                $this->heartbeat = $this->loop->addPeriodicTimer($this->heartbeat_interval / 1000, function () {
-                    $this->send([
-                        'op' => Op::VOICE_HEARTBEAT,
-                        'd'  => microtime(true),
-                    ]);
-                    $this->emit('ws-heartbeat', []);
-                });
-
                 $buffer = new Buffer(70);
                 $buffer->writeUInt32BE($this->ssrc, 3);
 
-                $udpfac->createClient("{$this->endpoint}:{$this->udpPort}")->then(function (Socket $client) use (&$ws, &$firstPack, &$ip, &$port, $buffer) {
+                $udpfac->createClient("{$data->d->ip}:{$this->udpPort}")->then(function (Socket $client) use (&$ws, &$firstPack, &$ip, &$port, $buffer) {
                     $this->logger->debug('connected to voice UDP');
                     $this->client = $client;
 
@@ -518,6 +512,23 @@ class VoiceClient extends EventEmitter
                     $this->emit('speaking', [$data->d->speaking, $data->d->user_id, $this]);
                     $this->emit("speaking.{$data->d->user_id}", [$data->d->speaking, $this]);
                     $this->speakingStatus[$data->d->ssrc] = $data->d;
+                    break;
+                case Op::VOICE_HEARTBEAT_ACK:
+                    $this->emit('ws-heartbeat-ack', [$data]);
+                    break;
+                case Op::VOICE_HELLO:
+                    $this->heartbeat_interval = $data->d->heartbeat_interval;
+
+                    $sendHeartbeat = function () {
+                        $this->send([
+                            'op' => Op::VOICE_HEARTBEAT,
+                            'd'  => microtime(true),
+                        ]);
+                        $this->emit('ws-heartbeat', []);
+                    };
+                    
+                    $sendHeartbeat();
+                    $this->heartbeat = $this->loop->addPeriodicTimer($this->heartbeat_interval / 1000, $sendHeartbeat);
                     break;
             }
         });
@@ -693,14 +704,10 @@ class VoiceClient extends EventEmitter
                 $this->emit('stderr', [$d, $this]);
             });
 
-            $deferred->promise()->then(function () use ($stream) {
-                $stream->close();
-            });
-
             $stream = $stream->stdout;
         }
 
-        if ($stream instanceof Stream) {
+        if ($stream instanceof ReadableStreamInterface) {
             $stream->pause();
             $stream = $stream->stream;
         }
@@ -1276,10 +1283,10 @@ class VoiceClient extends EventEmitter
 
         if (is_null($ssrc) && ! is_null($user)) {
             return $user->speaking;
-        } elseif (is_null($user) && ! is_null($ssrc)) {
-            return $user->speaking;
-        } elseif (is_null($user) && is_null($ssrc)) {
-            return $user->speaking;
+        // } elseif (is_null($user) && ! is_null($ssrc)) {
+        //     return $user->speaking;
+        // } elseif (is_null($user) && is_null($ssrc)) {
+        //     return $user->speaking;
         } else {
             return false;
         }

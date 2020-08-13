@@ -57,6 +57,10 @@ class Op
     const VOICE_DESCRIPTION = 4;
     // Used to identify which users are speaking.
     const VOICE_SPEAKING = 5;
+    // Sent by the Discord servers to acknowledge heartbeat
+    const VOICE_HEARTBEAT_ACK = 6;
+    // Hello packet used to pass heartbeat interval
+    const VOICE_HELLO = 8;
 
     ///////////////////////////////////////
     ///////////////////////////////////////
