@@ -239,6 +239,8 @@ class Member extends Part
      */
     public function getUserAttribute()
     {
+        if ($user = $this->discord->users->get('id', $this->attributes['user']->id)) return $user;
+        
         return $this->factory->create(User::class, $this->attributes['user'], true);
     }
 
