@@ -117,9 +117,14 @@ abstract class AbstractRepository implements RepositoryInterface, ArrayAccess, C
         $this->http->get(
             $this->replaceWithVariables(
                 $this->endpoints['all']
-            )
+            ),
+            null,
+            [],
+            false
         )->then(function ($response) use ($deferred) {
             $this->fill([]);
+
+            dump($this->__debugInfo(), $response);
 
             foreach ($response as $value) {
                 $value = array_merge($this->vars, (array) $value);
@@ -176,6 +181,12 @@ abstract class AbstractRepository implements RepositoryInterface, ArrayAccess, C
             $attributes
         )->then(function ($response) use ($deferred, &$part, $method) {
             $part->fill((array) $response);
+
+            if ($index = $this->getIndex('id', $part->id)) {
+                $this->collection[$index] = $part;
+            } else {
+                $this->collection->push($part);
+            }
 
             $part->created = true;
             $part->deleted = false;
@@ -393,7 +404,7 @@ abstract class AbstractRepository implements RepositoryInterface, ArrayAccess, C
      */
     public function __debugInfo()
     {
-        return $this->all();
+        return $this->jsonSerialize();
     }
 
     /**
