@@ -25,8 +25,6 @@ class Handlers
 
     /**
      * Constructs the list of handlers.
-     *
-     * @return void
      */
     public function __construct()
     {
@@ -77,13 +75,11 @@ class Handlers
      * @param string $event        The WebSocket event name.
      * @param string $classname    The Event class name.
      * @param array  $alternatives Alternative event names for the handler.
-     *
-     * @return void
      */
     public function addHandler($event, $classname, array $alternatives = [])
     {
         $this->handlers[$event] = [
-            'class'        => $classname,
+            'class' => $classname,
             'alternatives' => $alternatives,
         ];
     }
@@ -126,8 +122,6 @@ class Handlers
      * Removes a handler.
      *
      * @param string $event The event handler to remove.
-     *
-     * @return void
      */
     public function removeHandler($event)
     {

@@ -22,7 +22,7 @@ class GuildRoleCreate extends Event
      */
     public function handle(Deferred $deferred, $data)
     {
-        $adata             = (array) $data->role;
+        $adata = (array) $data->role;
         $adata['guild_id'] = $data->guild_id;
 
         $rolePart = $this->factory->create(Role::class, $adata, true);

@@ -26,7 +26,7 @@ class MemberRepository extends AbstractRepository
      * {@inheritdoc}
      */
     protected $endpoints = [
-        'get'    => 'guilds/:guild_id/members/:id',
+        'get' => 'guilds/:guild_id/members/:id',
         'update' => 'guilds/:guild_id/members/:id',
         'delete' => 'guilds/:guild_id/members/:id',
     ];

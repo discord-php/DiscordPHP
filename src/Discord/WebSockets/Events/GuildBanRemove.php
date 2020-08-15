@@ -22,7 +22,7 @@ class GuildBanRemove extends Event
      */
     public function handle(Deferred $deferred, $data)
     {
-        $ban   = $this->factory->create(Ban::class, $data, true);
+        $ban = $this->factory->create(Ban::class, $data, true);
 
         if ($guild = $ban->guild) {
             $guild->bans->pull($ban->user->id);

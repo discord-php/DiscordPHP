@@ -49,7 +49,9 @@ class Emoji extends Part
      */
     public function getRolesAttribute()
     {
-        if (! $this->guild) return [];
+        if (! $this->guild) {
+            return [];
+        }
         
         return $this->guild->roles->filter(function ($role) {
             return array_search($role->id, $this->attributes['roles']) !== false;
@@ -58,12 +60,14 @@ class Emoji extends Part
 
     /**
      * Converts the emoji to a string.
-     * 
+     *
      * @return string
      */
     public function __toString()
     {
-        if ($this->id) return "<a:{$this->name}:{$this->id}>";
+        if ($this->id) {
+            return "<a:{$this->name}:{$this->id}>";
+        }
         
         return $this->name;
     }

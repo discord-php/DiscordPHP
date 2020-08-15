@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is apart of the DiscordPHP project.
+ *
+ * Copyright (c) 2016 David Cole <david@team-reflex.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the LICENSE.md file.
+ */
+
 namespace Discord\Parts\Channel;
 
 use Discord\Parts\Part;
@@ -17,13 +26,13 @@ class Webhook extends Part
         'user',
         'name',
         'avatar',
-        'token'
+        'token',
     ];
 
     /**
      * Gets the guild the webhook belongs to.
-     * 
-     * @return \Discord\Parts\Guild\Guild 
+     *
+     * @return \Discord\Parts\Guild\Guild
      */
     public function getGuildAttribute()
     {
@@ -32,8 +41,8 @@ class Webhook extends Part
 
     /**
      * Gets the channel the webhook belongs to.
-     * 
-     * @return  \Discord\Parts\Channel\Channel
+     *
+     * @return \Discord\Parts\Channel\Channel
      */
     public function getChannelAttribute()
     {
@@ -44,8 +53,8 @@ class Webhook extends Part
 
     /**
      * Returns the attributes needed to edit.
-     * 
-     * @return  array
+     *
+     * @return array
      */
     public function getUpdatableAttributes()
     {
@@ -58,14 +67,14 @@ class Webhook extends Part
 
     /**
      * Returns the attributes needed to create.
-     * 
-     * @return  array
+     *
+     * @return array
      */
     public function getCreatableAttributes()
     {
         return [
             'name' => $this->name,
-            'avatar' => $this->avatar
+            'avatar' => $this->avatar,
         ];
     }
 }

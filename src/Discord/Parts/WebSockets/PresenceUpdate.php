@@ -41,7 +41,7 @@ class PresenceUpdate extends Part
 
     /**
      * Gets the member attribute.
-     * 
+     *
      * @return \Discord\Parts\User\Member
      */
     public function getMemberAttribute()
@@ -67,7 +67,7 @@ class PresenceUpdate extends Part
 
     /**
      * Returns the users roles.
-     * 
+     *
      * @return Collection[Role]
      */
     public function getRolesAttribute()
@@ -102,19 +102,23 @@ class PresenceUpdate extends Part
      */
     public function getGameAttribute()
     {
-        if (! isset($this->attributes['game'])) return null;
+        if (! isset($this->attributes['game'])) {
+            return null;
+        }
 
         return $this->factory->create(Activity::class, (array) $this->attributes['game'], true);
     }
 
     /**
      * Gets the premium since timestamp.
-     * 
+     *
      * @return \Carbon\Carbon
      */
     public function getPremiumSinceAttribute()
     {
-        if (! isset($this->attributes['premium_since'])) return false;
+        if (! isset($this->attributes['premium_since'])) {
+            return false;
+        }
 
         return Carbon::parse($this->attributes['premium_since']);
     }

@@ -55,9 +55,9 @@ class Member extends Part
 
     /**
      * Updates the member from a new presence update object.
-     * 
+     *
      * @param PresenceUpdate $presence
-     * 
+     *
      * @return PresenceUpdate Old presence.
      */
     public function updateFromPresence(PresenceUpdate $presence)
@@ -80,7 +80,7 @@ class Member extends Part
     public function ban($daysToDeleteMessasges = null)
     {
         $deferred = new Deferred();
-        $content  = [];
+        $content = [];
 
         $url = $this->replaceWithVariables('guilds/:guild_id/bans/:id');
 
@@ -91,7 +91,7 @@ class Member extends Part
         $this->http->put($url, $content)->then(
             function () use ($deferred) {
                 $ban = $this->factory->create(Ban::class, [
-                    'user'  => $this->user,
+                    'user' => $this->user,
                     'guild' => $this->discord->guilds->get('id', $this->guild_id),
                 ], true);
 
@@ -114,7 +114,7 @@ class Member extends Part
     {
         $deferred = new Deferred();
 
-        $nick    = $nick ?: '';
+        $nick = $nick ?: '';
         $payload = [
             'nick' => $nick,
         ];
@@ -225,7 +225,7 @@ class Member extends Part
 
     /**
      * Gets the activities attribute.
-     * 
+     *
      * @return array[Activity]
      */
     public function getActivitiesAttribute()
@@ -280,7 +280,9 @@ class Member extends Part
      */
     public function getUserAttribute()
     {
-        if ($user = $this->discord->users->get('id', $this->attributes['user']->id)) return $user;
+        if ($user = $this->discord->users->get('id', $this->attributes['user']->id)) {
+            return $user;
+        }
         
         return $this->factory->create(User::class, $this->attributes['user'], true);
     }
@@ -335,12 +337,14 @@ class Member extends Part
 
     /**
      * Returns the premium since attribute.
-     * 
+     *
      * @return \Carbon\Carbon
      */
     public function getPremiumSinceAttribute()
     {
-        if (! isset($this->attributes['premium_since'])) return false;
+        if (! isset($this->attributes['premium_since'])) {
+            return false;
+        }
         
         return Carbon::parse($this->attributes['premium_since']);
     }

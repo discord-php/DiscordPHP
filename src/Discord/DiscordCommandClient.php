@@ -130,7 +130,7 @@ class DiscordCommandClient extends Discord
                 $message->channel->sendMessage($response);
             }, [
                 'description' => 'Provides a list of commands available.',
-                'usage'       => '[command]',
+                'usage' => '[command]',
             ]);
         }
     }
@@ -151,7 +151,7 @@ class DiscordCommandClient extends Discord
         }
 
         list($commandInstance, $options) = $this->buildCommand($command, $callable, $options);
-        $this->commands[$command]        = $commandInstance;
+        $this->commands[$command] = $commandInstance;
 
         foreach ($options['aliases'] as $alias) {
             $this->registerAlias($alias, $command);
@@ -271,8 +271,8 @@ class DiscordCommandClient extends Discord
             ])
             ->setDefaults([
                 'description' => 'No description provided.',
-                'usage'       => '',
-                'aliases'     => [],
+                'usage' => '',
+                'aliases' => [],
             ]);
 
         $options = $resolver->resolve($options);
@@ -307,11 +307,11 @@ class DiscordCommandClient extends Discord
                 'discordOptions',
             ])
             ->setDefaults([
-                'prefix'             => '@mention ',
-                'name'               => '<UsernamePlaceholder>',
-                'description'        => 'A bot made with DiscordPHP.',
+                'prefix' => '@mention ',
+                'name' => '<UsernamePlaceholder>',
+                'description' => 'A bot made with DiscordPHP.',
                 'defaultHelpCommand' => true,
-                'discordOptions'     => [],
+                'discordOptions' => [],
             ]);
 
         return $resolver->resolve($options);

@@ -38,8 +38,6 @@ class Role extends Part
 
     /**
      * Runs extra construction tasks.
-     *
-     * @return void
      */
     public function afterConstruct()
     {
@@ -62,8 +60,6 @@ class Role extends Part
      * Sets the permissions attribute.
      *
      * @param RolePermission|int $permission The permissions to set.
-     *
-     * @return void
      */
     public function setPermissionsAttribute($permission)
     {
@@ -119,9 +115,9 @@ class Role extends Part
     public function getUpdatableAttributes()
     {
         return [
-            'name'        => $this->name,
-            'hoist'       => $this->hoist,
-            'color'       => $this->color,
+            'name' => $this->name,
+            'hoist' => $this->hoist,
+            'color' => $this->color,
             'permissions' => $this->permissions->bitwise,
         ];
     }

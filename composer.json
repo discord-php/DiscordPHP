@@ -28,7 +28,8 @@
     "mollie/polyfill-libsodium": "^1.1"
   },
   "require-dev": {
-    "symfony/var-dumper": "*"
+    "symfony/var-dumper": "*",
+    "friendsofphp/php-cs-fixer": "^2.16"
   },
   "autoload": {
     "files": ["src/Discord/functions.php"],

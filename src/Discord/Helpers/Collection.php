@@ -43,16 +43,16 @@ class Collection extends BaseCollection
 
     /**
      * Fills the collection with the given array.
-     * 
+     *
      * @param array $items Items to fill.
-     * 
-     * @return null
      */
     public function fill($items = [])
     {
         $this->items = [];
 
-        foreach ($items as $item) $this->offsetSet(null, $item);
+        foreach ($items as $item) {
+            $this->offsetSet(null, $item);
+        }
 
         return $this;
     }
@@ -135,13 +135,14 @@ class Collection extends BaseCollection
     {
         if (! is_null($key)) {
             $this->items[$key] = $value;
+
             return $this;
         }
 
         if (! is_null($this->discrim)) {
             if (is_array($value)) {
                 $this->items[$value[$this->discrim]] = $value;
-            } else if (is_object($value)) {
+            } elseif (is_object($value)) {
                 $this->items[$value->{$this->discrim}] = $value;
             }
         } else {

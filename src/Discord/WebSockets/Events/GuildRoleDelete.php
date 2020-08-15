@@ -26,6 +26,8 @@ class GuildRoleDelete extends Event
             $this->discord->guilds->push($guild);
 
             $deferred->resolve($role);
-        } else $deferred->resolve($data);
+        } else {
+            $deferred->resolve($data);
+        }
     }
 }

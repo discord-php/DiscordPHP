@@ -60,7 +60,7 @@ class TypingStart extends Part
 
     /**
      * Gets the member attribute.
-     * 
+     *
      * @return Member
      */
     public function getMemberAttribute()
@@ -88,12 +88,14 @@ class TypingStart extends Part
 
     /**
      * Gets the guild attribute.
-     * 
+     *
      * @return Guild
      */
     public function getGuildAttribute()
     {
-        if (! isset($this->attributes['guild_id'])) return null;
+        if (! isset($this->attributes['guild_id'])) {
+            return null;
+        }
 
         return $this->discord->guilds->get('id', $this->attributes['guild_id']);
     }

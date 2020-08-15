@@ -47,9 +47,9 @@ class GuildCreate extends Event
         );
 
         foreach ($data->roles as $role) {
-            $role             = (array) $role;
+            $role = (array) $role;
             $role['guild_id'] = $guildPart->id;
-            $rolePart         = $this->factory->create(Role::class, $role, true);
+            $rolePart = $this->factory->create(Role::class, $role, true);
 
             $roles->push($rolePart);
         }
@@ -62,9 +62,9 @@ class GuildCreate extends Event
         );
 
         foreach ($data->channels as $channel) {
-            $channel             = (array) $channel;
+            $channel = (array) $channel;
             $channel['guild_id'] = $data->id;
-            $channelPart         = $this->factory->create(Channel::class, $channel, true);
+            $channelPart = $this->factory->create(Channel::class, $channel, true);
 
             $channels->push($channelPart);
         }
@@ -78,21 +78,21 @@ class GuildCreate extends Event
 
         foreach ($data->members as $member) {
             $memberPart = $this->factory->create(Member::class, [
-                'user'      => $member->user,
-                'roles'     => $member->roles,
-                'mute'      => $member->mute,
-                'deaf'      => $member->deaf,
+                'user' => $member->user,
+                'roles' => $member->roles,
+                'mute' => $member->mute,
+                'deaf' => $member->deaf,
                 'joined_at' => $member->joined_at,
-                'nick'      => (property_exists($member, 'nick')) ? $member->nick : null,
-                'guild_id'  => $data->id,
-                'status'    => 'offline',
-                'game'      => null,
+                'nick' => (property_exists($member, 'nick')) ? $member->nick : null,
+                'guild_id' => $data->id,
+                'status' => 'offline',
+                'game' => null,
             ], true);
 
             foreach ($data->presences as $presence) {
                 if ($presence->user->id == $member->user->id) {
                     $memberPart->status = $presence->status;
-                    $memberPart->game   = $presence->game;
+                    $memberPart->game = $presence->game;
                 }
             }
 
@@ -100,9 +100,9 @@ class GuildCreate extends Event
             $members->push($memberPart);
         }
 
-        $guildPart->roles    = $roles;
+        $guildPart->roles = $roles;
         $guildPart->channels = $channels;
-        $guildPart->members  = $members;
+        $guildPart->members = $members;
 
         foreach ($data->voice_states as $state) {
             if ($channel = $guildPart->channels->get('id', $state->channel_id)) {

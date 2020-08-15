@@ -35,10 +35,10 @@ use Discord\Parts\Part;
  */
 class Activity extends Part
 {
-    const TYPE_PLAYING   = 0; // Playing {$this->name}
+    const TYPE_PLAYING = 0; // Playing {$this->name}
     const TYPE_STREAMING = 1; // Streaming {$this->details}
     const TYPE_LISTENING = 2; // Listening to {$this->name}
-    const TYPE_CUSTOM    = 4; // {$this->emoji} {$this->name}
+    const TYPE_CUSTOM = 4; // {$this->emoji} {$this->name}
 
     /**
      * {@inheritdoc}
@@ -47,9 +47,9 @@ class Activity extends Part
         'name',
         'url',
         'type',
-        'created_at', 
-        'timestamps', 
-        'application_id', 
+        'created_at',
+        'timestamps',
+        'application_id',
         'details',
         'state',
         'emoji',
@@ -57,12 +57,12 @@ class Activity extends Part
         'assets',
         'secrets',
         'instance',
-        'flags'
+        'flags',
     ];
 
     /**
      * Gets the created at timestamp.
-     * 
+     *
      * @return \Carbon\Carbon
      */
     public function getCreatedAtAttribute()
@@ -72,7 +72,7 @@ class Activity extends Part
 
     /**
      * Gets the emoji object of the activity.
-     * 
+     *
      * @return \Discord\Parts\Guild\Emoji
      */
     public function getEmojiAttribute()
@@ -84,7 +84,7 @@ class Activity extends Part
 
     /**
      * Converts the activity to a string.
-     * 
+     *
      * @return string
      */
     public function __toString()

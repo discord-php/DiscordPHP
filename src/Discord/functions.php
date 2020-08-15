@@ -34,7 +34,7 @@ function mentioned($part, Message $message)
         return $message->mention_roles->has($part->id);
     } elseif ($part instanceof Channel) {
         return strpos($message->content, "<#{$part->id}>") !== false;
-    } else {
-        return strpos($message->content, $part) !== false;
     }
+
+    return strpos($message->content, $part) !== false;
 }

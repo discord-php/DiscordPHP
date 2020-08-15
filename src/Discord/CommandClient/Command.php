@@ -70,11 +70,11 @@ class Command
         $description,
         $usage
     ) {
-        $this->client      = $client;
-        $this->command     = $command;
-        $this->callable    = $callable;
+        $this->client = $client;
+        $this->command = $command;
+        $this->callable = $callable;
         $this->description = $description;
-        $this->usage       = $usage;
+        $this->usage = $usage;
     }
 
     /**
@@ -93,7 +93,7 @@ class Command
         }
 
         list($commandInstance, $options) = $this->client->buildCommand($command, $callable, $options);
-        $this->subCommands[$command]     = $commandInstance;
+        $this->subCommands[$command] = $commandInstance;
 
         foreach ($options['aliases'] as $alias) {
             $this->registerSubCommandAlias($alias, $command);
@@ -183,7 +183,7 @@ class Command
         }
 
         return [
-            'text'              => $helpString,
+            'text' => $helpString,
             'subCommandAliases' => $this->subCommandAliases,
         ];
     }

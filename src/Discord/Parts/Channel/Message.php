@@ -41,16 +41,16 @@ use React\Promise\Deferred;
  */
 class Message extends Part
 {
-    const TYPE_NORMAL              = 0;
-    const TYPE_USER_ADDED          = 1;
-    const TYPE_USER_REMOVED        = 2;
-    const TYPE_CALL                = 3;
+    const TYPE_NORMAL = 0;
+    const TYPE_USER_ADDED = 1;
+    const TYPE_USER_REMOVED = 2;
+    const TYPE_CALL = 3;
     const TYPE_CHANNEL_NAME_CHANGE = 4;
     const TYPE_CHANNEL_ICON_CHANGE = 5;
 
     const REACT_DELETE_ALL = 0;
-    const REACT_DELETE_ME  = 1;
-    const REACT_DELETE_ID  = 2;
+    const REACT_DELETE_ME = 1;
+    const REACT_DELETE_ID = 2;
 
     /**
      * {@inheritdoc}
@@ -165,7 +165,7 @@ class Message extends Part
         }
 
         return $this->factory->create(Channel::class, [
-            'id'   => $this->channel_id,
+            'id' => $this->channel_id,
             'type' => Channel::TYPE_DM,
         ], true);
     }
@@ -264,9 +264,9 @@ class Message extends Part
     public function getCreatableAttributes()
     {
         return [
-            'content'  => $this->content,
+            'content' => $this->content,
             'mentions' => $this->mentions,
-            'tts'      => $this->tts,
+            'tts' => $this->tts,
         ];
     }
 
@@ -276,7 +276,7 @@ class Message extends Part
     public function getUpdatableAttributes()
     {
         return [
-            'content'  => $this->content,
+            'content' => $this->content,
             'mentions' => $this->mentions,
         ];
     }

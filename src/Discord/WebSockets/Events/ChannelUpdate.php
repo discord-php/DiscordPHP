@@ -27,8 +27,8 @@ class ChannelUpdate extends Event
         if ($channel->is_private) {
             $old = $this->discord->private_channels->get('id', $channel->id);
             $this->discord->private_channels->push($channel);
-        } else if ($guild = $this->discord->guilds->get('id', $channel->guild_id)) {
-            $old   = $guild->channels->get('id', $channel->id);
+        } elseif ($guild = $this->discord->guilds->get('id', $channel->guild_id)) {
+            $old = $guild->channels->get('id', $channel->id);
             $guild->channels->push($channel);
             $this->discord->guilds->push($guild);
         }

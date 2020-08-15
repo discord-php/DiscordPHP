@@ -50,8 +50,8 @@ class Factory
     public function __construct(Discord $discord, Http $http, CacheWrapper $cache)
     {
         $this->discord = $discord;
-        $this->http    = $http;
-        $this->cache   = $cache;
+        $this->http = $http;
+        $this->cache = $cache;
     }
 
     /**

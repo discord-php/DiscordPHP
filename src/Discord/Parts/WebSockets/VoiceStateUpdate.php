@@ -51,7 +51,7 @@ class VoiceStateUpdate extends Part
         'self_mute',
         'self_stream',
         'self_video',
-        'suppress'
+        'suppress',
     ];
 
     /**
@@ -62,7 +62,9 @@ class VoiceStateUpdate extends Part
     public function getMemberAttribute()
     {
         if ($this->guild) {
-            if ($member = $this->guild->members->get('id', $this->user_id)) return $member;
+            if ($member = $this->guild->members->get('id', $this->user_id)) {
+                return $member;
+            }
         }
 
         return $this->factory->create(Member::class, $this->attributes, true);
@@ -75,18 +77,24 @@ class VoiceStateUpdate extends Part
      */
     public function getChannelAttribute()
     {
-        if ($this->guild) return $this->guild->channels->get('id', $this->channel_id);
+        if ($this->guild) {
+            return $this->guild->channels->get('id', $this->channel_id);
+        }
     }
 
     /**
      * Gets the user attribute.
-     * 
-     * @return  User|null The user attribute.
+     *
+     * @return User|null The user attribute.
      */
     public function getUserAttribute()
     {
-        if ($user = $this->discord->users->get('id', $this->user_id)) return $user;
-        if ($this->attributes['member']->user !== null) return $this->factory->create(User::class, $this->attributes['member']->user, true);
+        if ($user = $this->discord->users->get('id', $this->user_id)) {
+            return $user;
+        }
+        if ($this->attributes['member']->user !== null) {
+            return $this->factory->create(User::class, $this->attributes['member']->user, true);
+        }
     }
 
     /**

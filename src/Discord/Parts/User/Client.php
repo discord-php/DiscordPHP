@@ -49,23 +49,21 @@ class Client extends Part
      * {@inheritdoc}
      */
     protected $repositories = [
-        'guilds'           => GuildRepository::class,
+        'guilds' => GuildRepository::class,
         'private_channels' => PrivateChannelRepository::class,
-        'users'            => UserRepository::class,
+        'users' => UserRepository::class,
     ];
 
     /**
      * Runs any extra construction tasks.
-     *
-     * @return void
      */
     public function afterConstruct()
     {
         $this->user = $this->factory->create(User::class,
             [
-                'id'            => $this->id,
-                'username'      => $this->username,
-                'avatar'        => $this->attributes['avatar'],
+                'id' => $this->id,
+                'username' => $this->username,
+                'avatar' => $this->attributes['avatar'],
                 'discriminator' => $this->discriminator,
             ], true
         );
@@ -92,8 +90,8 @@ class Client extends Part
         }
 
         $extension = pathinfo($filepath, PATHINFO_EXTENSION);
-        $file      = file_get_contents($filepath);
-        $base64    = base64_encode($file);
+        $file = file_get_contents($filepath);
+        $base64 = base64_encode($file);
 
         $this->attributes['avatarhash'] = "data:image/{$extension};base64,{$base64}";
 
@@ -158,7 +156,7 @@ class Client extends Part
                 throw new PasswordEmptyException('You must enter your password to update your profile.');
             }
 
-            $attributes['email']    = $this->email;
+            $attributes['email'] = $this->email;
             $attributes['password'] = $this->attributes['password'];
 
             if (! empty($this->attributes['new_password'])) {

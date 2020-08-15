@@ -26,7 +26,7 @@ class EmojiRepository extends AbstractRepository
      * {@inheritdoc}
      */
     protected $endpoints = [
-        'all'    => 'guilds/:guild_id/emojis',
+        'all' => 'guilds/:guild_id/emojis',
         'create' => 'guilds/:guild_id/emojis',
         'delete' => 'guilds/:guild_id/emojis/:id',
         'update' => 'guilds/:guild_id/emojis/:id',

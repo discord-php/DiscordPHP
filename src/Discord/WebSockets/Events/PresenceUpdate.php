@@ -35,7 +35,7 @@ class PresenceUpdate extends Event
                 $this->discord->guilds->push($guild);
 
                 $deferred->resolve([$presence, $oldPresence]);
-            }           
+            }
         }
 
         $deferred->resolve($presence);

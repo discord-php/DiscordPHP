@@ -39,24 +39,24 @@ class ChannelPermission extends Permission
      */
     protected $bitwise = [
         'create_instant_invite' => 0,
-        'manage_channels'       => 4,
-        'manage_permissions'    => 28,
+        'manage_channels' => 4,
+        'manage_permissions' => 28,
 
-        'read_messages'        => 10,
-        'send_messages'        => 11,
-        'send_tts_messages'    => 12,
-        'manage_messages'      => 13,
-        'embed_links'          => 14,
-        'attach_files'         => 15,
+        'read_messages' => 10,
+        'send_messages' => 11,
+        'send_tts_messages' => 12,
+        'manage_messages' => 13,
+        'embed_links' => 14,
+        'attach_files' => 15,
         'read_message_history' => 17,
-        'mention_everyone'     => 18,
+        'mention_everyone' => 18,
 
-        'voice_connect'        => 20,
-        'voice_speak'          => 21,
-        'voice_mute_members'   => 22,
+        'voice_connect' => 20,
+        'voice_speak' => 21,
+        'voice_mute_members' => 22,
         'voice_deafen_members' => 23,
-        'voice_move_members'   => 24,
-        'voice_use_vad'        => 25,
+        'voice_move_members' => 24,
+        'voice_use_vad' => 25,
     ];
 
     /**
@@ -91,7 +91,7 @@ class ChannelPermission extends Permission
     public function getBitwiseAttribute()
     {
         $allow = 0;
-        $deny  = 0;
+        $deny = 0;
 
         foreach ($this->attributes as $key => $value) {
             if (true === $value) {

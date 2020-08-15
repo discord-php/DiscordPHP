@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is apart of the DiscordPHP project.
+ *
+ * Copyright (c) 2016 David Cole <david@team-reflex.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the LICENSE.md file.
+ */
+
 namespace Discord\Helpers;
 
 use Evenement\EventEmitter;
@@ -11,9 +20,9 @@ use React\Stream\WritableStreamInterface;
 
 /**
  * Apart of the react/stream package. Thanks to the ReactPHP guys.
- * 
+ *
  * Imported into DiscordPHP to change accessibility of the resource stream.
- * 
+ *
  * @see https://github.com/reactphp/stream
  */
 final class ReadableResourceStream extends EventEmitter implements ReadableStreamInterface
@@ -50,8 +59,8 @@ final class ReadableResourceStream extends EventEmitter implements ReadableStrea
 
     public function __construct($stream, LoopInterface $loop, $readChunkSize = null)
     {
-        if (!\is_resource($stream) || \get_resource_type($stream) !== "stream") {
-             throw new InvalidArgumentException('First parameter must be a valid stream resource');
+        if (! \is_resource($stream) || \get_resource_type($stream) !== 'stream') {
+            throw new InvalidArgumentException('First parameter must be a valid stream resource');
         }
 
         // ensure resource is opened for reading (fopen mode must contain "r" or "+")
@@ -74,20 +83,20 @@ final class ReadableResourceStream extends EventEmitter implements ReadableStrea
         // triggered), so we can ignore platforms not supporting this (HHVM).
         // Pipe streams (such as STDIN) do not seem to require this and legacy
         // PHP versions cause SEGFAULTs on unbuffered pipe streams, so skip this.
-        if (\function_exists('stream_set_read_buffer') && !$this->isLegacyPipe($stream)) {
+        if (\function_exists('stream_set_read_buffer') && ! $this->isLegacyPipe($stream)) {
             \stream_set_read_buffer($stream, 0);
         }
 
         $this->stream = $stream;
         $this->loop = $loop;
-        $this->bufferSize = ($readChunkSize === null) ? 65536 : (int)$readChunkSize;
+        $this->bufferSize = ($readChunkSize === null) ? 65536 : (int) $readChunkSize;
 
         $this->resume();
     }
 
     public function isReadable()
     {
-        return !$this->closed;
+        return ! $this->closed;
     }
 
     public function pause()
@@ -100,13 +109,13 @@ final class ReadableResourceStream extends EventEmitter implements ReadableStrea
 
     public function resume()
     {
-        if (!$this->listening && !$this->closed) {
-            $this->loop->addReadStream($this->stream, array($this, 'handleData'));
+        if (! $this->listening && ! $this->closed) {
+            $this->loop->addReadStream($this->stream, [$this, 'handleData']);
             $this->listening = true;
         }
     }
 
-    public function pipe(WritableStreamInterface $dest, array $options = array())
+    public function pipe(WritableStreamInterface $dest, array $options = [])
     {
         return Util::pipe($this, $dest, $options);
     }
@@ -147,13 +156,14 @@ final class ReadableResourceStream extends EventEmitter implements ReadableStrea
         \restore_error_handler();
 
         if ($error !== null) {
-            $this->emit('error', array(new \RuntimeException('Unable to read from stream: ' . $error->getMessage(), 0, $error)));
+            $this->emit('error', [new \RuntimeException('Unable to read from stream: '.$error->getMessage(), 0, $error)]);
             $this->close();
+
             return;
         }
 
         if ($data !== '') {
-            $this->emit('data', array($data));
+            $this->emit('data', [$data]);
         } elseif (\feof($this->stream)) {
             // no data read => we reached the end and close the stream
             $this->emit('end');
@@ -162,12 +172,12 @@ final class ReadableResourceStream extends EventEmitter implements ReadableStrea
     }
 
     /**
-     * Returns whether this is a pipe resource in a legacy environment
+     * Returns whether this is a pipe resource in a legacy environment.
      *
      * This works around a legacy PHP bug (#61019) that was fixed in PHP 5.4.28+
      * and PHP 5.5.12+ and newer.
      *
-     * @param resource $resource
+     * @param  resource $resource
      * @return bool
      * @link https://github.com/reactphp/child-process/issues/40
      *
@@ -182,6 +192,7 @@ final class ReadableResourceStream extends EventEmitter implements ReadableStrea
                 return true;
             }
         }
+
         return false;
     }
 }

@@ -30,7 +30,9 @@ class VoiceStateUpdate extends Event
 
             // Remove old member states
             foreach ($guild->channels as $channel) {
-                if ($channel->getChannelType() !== Channel::TYPE_VOICE) continue;
+                if ($channel->getChannelType() !== Channel::TYPE_VOICE) {
+                    continue;
+                }
 
                 foreach ($channel->members as $member) {
                     if ($member->user_id == $state->user_id) {
