@@ -22,17 +22,15 @@ class GuildMemberAdd extends Event
      */
     public function handle(Deferred $deferred, $data)
     {
-        $memberPart = $this->factory->create(Member::class, $data, true);
+        $member = $this->factory->create(Member::class, $data, true);
 
-        $guild = $this->discord->guilds->get('id', $memberPart->guild_id);
-
-        if (! is_null($guild)) {
-            $guild->members->push($memberPart);
+        if ($guild = $this->discord->guilds->get('id', $member->guild_id)) {
+            $guild->members->push($member);
             ++$guild->member_count;
 
             $this->discord->guilds->push($guild);
         }
 
-        $deferred->resolve($memberPart);
+        $deferred->resolve($member);
     }
 }

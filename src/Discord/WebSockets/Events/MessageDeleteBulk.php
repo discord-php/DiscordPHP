@@ -22,17 +22,19 @@ class MessageDeleteBulk extends Event
      */
     public function handle(Deferred $deferred, $data)
     {
-        $messages = $this->discord->getRepository(
-            MessageRepository::class,
-            $data->channel_id,
-            'messages',
-            ['channel_id' => $data->channel_id]
-        );
+        $promises = [];
 
-        foreach ($data->ids as $message) {
-            $messages->pull($message);
+        foreach ($data->ids as $id) {
+            $promise = new Deferred();
+            $event = new MessageDelete($this->http, $this->factory, $this->cache, $this->discord);
+            $event->handle($promise, (object) [ 'id' => $id, 'channel_id' => $data->channel_id, 'guild_id' => $data->guild_id ]);
+
+            $promises[] = $promise->promise();
         }
 
-        $deferred->resolve($data);
+        $allPromise = \React\Promise\all($promises);
+        $allPromise->then(function ($messages) use ($deferred) {
+            $deferred->resolve($messages);
+        });
     }
 }

@@ -17,8 +17,8 @@ use Discord\Http\Guzzle;
 use Discord\Http\Http;
 use Discord\Wrapper\LoggerWrapper as Logger;
 use Discord\Parts\Channel\Channel;
+use Discord\Parts\User\Activity;
 use Discord\Parts\User\Client;
-use Discord\Parts\User\Game;
 use Discord\Parts\User\Member;
 use Discord\Repository\GuildRepository;
 use Discord\Repository\PrivateChannelRepository;
@@ -1000,10 +1000,10 @@ class Discord
     /**
      * Updates the clients presence.
      *
-     * @param Game $game The game object.
+     * @param Activity $game The game object.
      * @param bool $idle Whether we are idle.
      */
-    public function updatePresence(Game $game = null, $idle = false)
+    public function updatePresence(Activity $game = null, $idle = false)
     {
         $idle = ($idle) ? $idle : null;
 

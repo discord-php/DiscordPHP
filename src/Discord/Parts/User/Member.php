@@ -18,36 +18,57 @@ use Discord\Parts\Guild\Ban;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Guild\Role;
 use Discord\Parts\Part;
+use Discord\Parts\WebSockets\PresenceUpdate;
 use React\Promise\Deferred;
 
 /**
  * A member is a relationship between a user and a guild. It contains user-to-guild specific data like roles.
  *
- * @property string                     $id            The unique identifier of the member.
- * @property string                     $username      The username of the member.
- * @property string                     $discriminator The discriminator of the member.
- * @property \Discord\Parts\Guild\User  $user          The user part of the member.
- * @property Collection[Role]           $roles         A collection of Roles that the member has.
- * @property bool                       $deaf          Whether the member is deaf.
- * @property bool                       $mute          Whether the member is mute.
- * @property Carbon                     $joined_at     A timestamp of when the member joined the guild.
- * @property \Discord\Parts\Guild\Guild $guild         The guild that the member belongs to.
- * @property string                     $guild_id      The unique identifier of the guild that the member belongs to.
- * @property string                     $status        The status of the member.
- * @property \Discord\Parts\User\Game   $game          The game the member is playing.
- * @property string|null                $nick          The nickname of the member.
+ * @property string                       $id            The unique identifier of the member.
+ * @property string                       $username      The username of the member.
+ * @property string                       $discriminator The discriminator of the member.
+ * @property \Discord\Parts\Guild\User    $user          The user part of the member.
+ * @property Collection[Role]             $roles         A collection of Roles that the member has.
+ * @property bool                         $deaf          Whether the member is deaf.
+ * @property bool                         $mute          Whether the member is mute.
+ * @property Carbon                       $joined_at     A timestamp of when the member joined the guild.
+ * @property \Discord\Parts\Guild\Guild   $guild         The guild that the member belongs to.
+ * @property string                       $guild_id      The unique identifier of the guild that the member belongs to.
+ * @property string                       $status        The status of the member.
+ * @property \Discord\Parts\User\Activity $game          The game the member is playing.
+ * @property string|null                  $nick          The nickname of the member.
+ * @property \Carbon\Carbon               $premium_since When the user started boosting the server.
+ * @property Collection[Activities]       $activities User's current activities.
+ * @property object                       $client_status Current client status
  */
 class Member extends Part
 {
     /**
      * {@inheritdoc}
      */
-    protected $fillable = ['user', 'roles', 'deaf', 'mute', 'joined_at', 'guild_id', 'status', 'game', 'nick'];
+    protected $fillable = ['user', 'roles', 'deaf', 'mute', 'joined_at', 'guild_id', 'status', 'game', 'nick', 'premium_since', 'activities', 'client_status'];
 
     /**
      * {@inheritdoc}
      */
     protected $fillAfterSave = false;
+
+    /**
+     * Updates the member from a new presence update object.
+     * 
+     * @param PresenceUpdate $presence
+     * 
+     * @return PresenceUpdate Old presence.
+     */
+    public function updateFromPresence(PresenceUpdate $presence)
+    {
+        $rawPresence = $presence->getRawAttributes();
+        $oldPresence = $this->factory->create(PresenceUpdate::class, $this->attributes, true);
+
+        $this->attributes = array_merge($this->attributes, $rawPresence);
+
+        return $oldPresence;
+    }
 
     /**
      * Bans the member.
@@ -191,7 +212,7 @@ class Member extends Part
     /**
      * Gets the game attribute.
      *
-     * @return Game The game attribute.
+     * @return Activity
      */
     public function getGameAttribute()
     {
@@ -199,7 +220,27 @@ class Member extends Part
             $this->attributes['game'] = [];
         }
 
-        return $this->factory->create(Game::class, (array) $this->attributes['game'], true);
+        return $this->factory->create(Activity::class, (array) $this->attributes['game'], true);
+    }
+
+    /**
+     * Gets the activities attribute.
+     * 
+     * @return array[Activity]
+     */
+    public function getActivitiesAttribute()
+    {
+        $activities = [];
+
+        if (! array_key_exists('activities', $this->attributes)) {
+            $this->attributes['activities'] = [];
+        }
+
+        foreach ($this->attributes['activities'] as $activity) {
+            $activities[] = $this->factory->create(Activity::class, (array) $activity, true);
+        }
+
+        return $activities;
     }
 
     /**
@@ -290,6 +331,18 @@ class Member extends Part
         return [
             'roles' => array_values($this->attributes['roles']),
         ];
+    }
+
+    /**
+     * Returns the premium since attribute.
+     * 
+     * @return \Carbon\Carbon
+     */
+    public function getPremiumSinceAttribute()
+    {
+        if (! isset($this->attributes['premium_since'])) return false;
+        
+        return Carbon::parse($this->attributes['premium_since']);
     }
 
     /**

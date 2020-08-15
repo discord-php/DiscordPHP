@@ -16,56 +16,46 @@ use Discord\Parts\User\User;
 
 /**
  * A Ban is a ban on a user specific to a guild. It is also IP based.
- *
- * @property \Discord\Parts\User\User   $user   The user that was banned.
- * @property \Discord\Parts\Guild\Guild $guild  The guild that the user was banned from.
- * @property string|null                $reason The reason the user was banned.
+ * 
+ * @property string $guild_id
+ * @property \Discord\Parts\User\User $user
  */
 class Ban extends Part
 {
     /**
      * {@inheritdoc}
      */
-    protected $fillable = ['user', 'guild', 'reason'];
+    protected $fillable = ['user', 'guild_id'];
 
     /**
-     * Returns the guild id attribute.
-     *
-     * @return int The Guild ID attribute.
-     */
-    public function getGuildIdAttribute()
-    {
-        return $this->guild->id;
-    }
-
-    /**
-     * Returns the user id attribute.
-     *
-     * @return int The User ID attribute.
+     * Returns the user id of the ban.
+     * 
+     * @return string
      */
     public function getUserIdAttribute()
     {
-        return $this->user->id;
+        if (isset($this->attributes['user']->id)) return $this->attributes['user']->id;
     }
 
-    /**
-     * Gets the user attribute.
-     *
-     * @return User The User that is banned.
-     */
-    public function getUserAttribute()
-    {
-        return $this->factory->create(User::class, (array) $this->attributes['user']);
-    }
-
-    /**
-     * Gets the guild attribute.
-     *
-     * @return Guild The guild that the user is banned from.
+    /** 
+     * Returns the guild attribute of the ban.
+     * 
+     * @return \Discord\Parts\Guild\Guild
      */
     public function getGuildAttribute()
     {
-        return $this->discord->guilds->get('id', $this->attributes['guild']->id);
+        return $this->discord->guilds->get('id', $this->guild_id);
+    }
+
+    /**
+     * Returns the user attribute of the ban.
+     * 
+     * @return \Discord\Parts\User\User
+     */
+    public function getUserAttribute()
+    {
+        if (isset($this->attributes['user']->id) && $user = $this->discord->users->get('id', $this->attributes['user']->id)) return $user;
+        if (isset($this->attributes['user']) && $user = $this->factory->create(User::class, $this->attributes['user'], true)) return $user;
     }
 
     /**

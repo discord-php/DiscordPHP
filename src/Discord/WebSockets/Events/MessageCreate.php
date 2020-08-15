@@ -23,18 +23,18 @@ class MessageCreate extends Event
      */
     public function handle(Deferred $deferred, $data)
     {
-        $messagePart = $this->factory->create(Message::class, $data, true);
+        $message = $this->factory->create(Message::class, $data, true);
 
         if ($this->discord->options['storeMessages']) {
-            $messages = $this->discord->getRepository(
-                MessageRepository::class,
-                $messagePart->channel_id,
-                'messages',
-                ['channel_id' => $messagePart->channel_id]
-            );
-            $messages->push($messagePart);
+            if ($channel = $message->channel) {
+                if ($guild = $channel->guild) {
+                    $channel->messages->push($message);
+                    $guild->channels->push($channel);
+                    $this->discord->guilds->push($guild);
+                }
+            }
         }
 
-        $deferred->resolve($messagePart);
+        $deferred->resolve($message);
     }
 }

@@ -30,6 +30,18 @@ class Collection extends BaseCollection
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function push(...$values)
+    {
+        foreach ($values as $value) {
+            $this->offsetSet(null, $value);
+        }
+
+        return $this;
+    }
+
+    /**
      * Fills the collection with the given array.
      * 
      * @param array $items Items to fill.
@@ -38,7 +50,11 @@ class Collection extends BaseCollection
      */
     public function fill($items = [])
     {
-        $this->items = $items;
+        $this->items = [];
+
+        foreach ($items as $item) $this->offsetSet(null, $item);
+
+        return $this;
     }
 
     /**
@@ -101,7 +117,7 @@ class Collection extends BaseCollection
      */
     public function getAll($key, $value = null)
     {
-        $collection = new self();
+        $collection = new self([], $this->discrim);
 
         foreach ($this->items as $item) {
             if ($item->{$key} == $value) {
@@ -117,21 +133,22 @@ class Collection extends BaseCollection
      */
     public function offsetSet($key, $value)
     {
-        if (! is_null($this->discrim)) {
-            if (! is_array($value)) {
-                $this->items[$value->{$this->discrim}] = $value;
-            } else {
-                $this->items[$value[$this->discrim]] = $value;
-            }
-
-            return;
-        }
-
-        if (is_null($key)) {
-            $this->items[] = $value;
-        } else {
+        if (! is_null($key)) {
             $this->items[$key] = $value;
+            return $this;
         }
+
+        if (! is_null($this->discrim)) {
+            if (is_array($value)) {
+                $this->items[$value[$this->discrim]] = $value;
+            } else if (is_object($value)) {
+                $this->items[$value->{$this->discrim}] = $value;
+            }
+        } else {
+            $this->items[] = $value;
+        }
+
+        return $this;
     }
 
     /**

@@ -155,8 +155,7 @@ class Message extends Part
     public function getChannelAttribute()
     {
         foreach ($this->discord->guilds as $guild) {
-            $channel = $guild->channels->get('id', $this->channel_id);
-            if (! empty($channel)) {
+            if ($channel = $channel = $guild->channels->get('id', $this->channel_id)) {
                 return $channel;
             }
         }

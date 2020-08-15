@@ -119,7 +119,7 @@ class Embed extends Part
 
         foreach ($this->attributes['fields'] as $field) {
             if (! ($field instanceof Field)) {
-                $field = $this->discord->factory(Field::class, $field, true);
+                $field = $this->factory->create(Field::class, $field, true);
             }
 
             $fields[] = $field;
@@ -139,13 +139,13 @@ class Embed extends Part
     protected function attributeHelper($key, $class)
     {
         if (! array_key_exists($key, $this->attributes)) {
-            return $this->discord->factory($class, []);
+            return $this->factory->create($class, []);
         }
 
         if ($this->attributes[$key] instanceof $class) {
             return $this->attributes[$key];
         }
 
-        return $this->discord->factory($class, $this->attributes[$key], true);
+        return $this->factory->create($class, $this->attributes[$key], true);
     }
 }

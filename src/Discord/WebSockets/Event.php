@@ -121,7 +121,12 @@ abstract class Event
      * Discord instance if necessary.
      *
      * @param Deferred $deferred The promise to use
-     * @param array    $data     The data that was sent with the WebSocket
+     * @param array|object    $data     The data that was sent with the WebSocket
      */
     abstract public function handle(Deferred $deferred, $data);
+
+    public function __debugInfo()
+    {
+        return [];
+    }
 }

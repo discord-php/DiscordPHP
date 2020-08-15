@@ -25,6 +25,11 @@ class VoiceMemberRepository extends AbstractRepository
     /**
      * {@inheritdoc}
      */
+    protected $discrim = 'user_id';
+    
+    /**
+     * {@inheritdoc}
+     */
     protected $endpoints = [];
 
     /**

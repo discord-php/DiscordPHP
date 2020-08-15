@@ -22,10 +22,10 @@ class GuildDelete extends Event
      */
     public function handle(Deferred $deferred, $data)
     {
-        $guildPart = $this->factory->create(Guild::class, $data, true);
+        $guild = $this->factory->create(Guild::class, $data, true);
 
-        $this->discord->guilds->pull($guildPart->id);
+        $this->discord->guilds->pull($guild->id);
 
-        $deferred->resolve($guildPart);
+        $deferred->resolve($guild);
     }
 }
