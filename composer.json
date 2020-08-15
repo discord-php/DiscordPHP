@@ -16,7 +16,7 @@
     "php": "^7.0",
     "cache/array-adapter": "^0.4.2",
     "guzzlehttp/guzzle": "~5.3|~6.0",
-    "illuminate/support": "^4.0|^5.0",
+    "illuminate/support": "^4.0|^5.0|^6.0|^7.0",
     "nesbot/carbon": "<=2.38",
     "ratchet/pawl": "0.3.*",
     "react/datagram": "1.5.*",
