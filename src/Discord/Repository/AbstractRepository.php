@@ -123,9 +123,7 @@ abstract class AbstractRepository implements RepositoryInterface, ArrayAccess, C
             false
         )->then(function ($response) use ($deferred) {
             $this->fill([]);
-
-            dump($this->__debugInfo(), $response);
-
+            
             foreach ($response as $value) {
                 $value = array_merge($this->vars, (array) $value);
                 $part = $this->factory->create($this->part, $value, true);
