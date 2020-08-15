@@ -991,23 +991,33 @@ class Discord
 
     /**
      * Updates the clients presence.
-     *
-     * @param Activity $game The game object.
-     * @param bool     $idle Whether we are idle.
+     * 
+     * @param Activity $activity The current client activity, or null.
+     * @param bool $idle Whether the client is idle.
+     * @param string $status The current status of the client.
+     *                       Must be one of the following:
+     *                       online, dnd, idle, invisible, offline
+     * @param bool $afk Whether the client is AFK.
      */
-    public function updatePresence(Activity $game = null, $idle = false)
+    public function updatePresence(Activity $activity = null, $idle = false, $status = 'online', $afk = false)
     {
-        $idle = ($idle) ? $idle : null;
+        $idle = $idle ? time() * 1000 : null;
 
-        if (! is_null($game)) {
-            $game = $game->getPublicAttributes();
+        if (! is_null($activity)) {
+            $activity = $activity->getRawAttributes();
+        }
+
+        if (! array_search($status, ['online', 'dnd', 'idle', 'invisible', 'offline'])) {
+            $status = 'online';
         }
 
         $payload = [
             'op' => Op::OP_PRESENCE_UPDATE,
             'd' => [
-                'game' => $game,
-                'idle_since' => $idle,
+                'since' => $idle,
+                'game' => $activity,
+                'status' => $status,
+                'afk' => $afk
             ],
         ];
 
