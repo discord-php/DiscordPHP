@@ -119,6 +119,7 @@ class Role extends Part
             'hoist' => $this->hoist,
             'color' => $this->color,
             'permissions' => $this->permissions->bitwise,
+            'mentionable' => $this->mentionable,
         ];
     }
 
