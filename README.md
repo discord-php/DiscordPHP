@@ -1,16 +1,8 @@
-# DEAD
-
-Currently trying to revive the project. Please create an issue if you know of any issues with the library and I will try my best to get it to a stable state.
-
-Library is currently dead, doubt it works at all and if it does there are so many bugs that it needs another rewrite which I'm not wanting to do really, sorry. The fact that we even made a PHP library that interacts with the Discord gateway is kind of a miracle but it is time to say farewell. Thanks to everyone that helped out along the way, especially Aaron (@aequasi). Maybe one day someone can take over and do a rewrite. Much love,
-
-- David
-
 DiscordPHP
 ====
 [![Build Status](https://travis-ci.org/teamreflex/DiscordPHP.svg?branch=master)](https://travis-ci.org/teamreflex/DiscordPHP) [![Discord Chat](https://img.shields.io/badge/chat-Discord%20API-blue.svg)](https://discord.gg/0SBTUU1wZTX4Mjwn) [![PHP Discorders](https://img.shields.io/badge/chat-PHP%20Discord-blue.svg)](https://discord.gg/0duG4FF1ElFGUFVq)
 
-A wrapper for the official [Discord](https://discordapp.com) REST, gateway and voice APIs.
+A wrapper for the official [Discord](https://discordapp.com) REST, gateway and voice APIs. Project is currently being revived so please check out any Github issues. The `develop` branch is the most stable at the moment.
 
 ## FAQ
 
