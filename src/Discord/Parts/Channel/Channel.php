@@ -633,16 +633,18 @@ class Channel extends Part
     {
         $deferred = new Deferred();
         $messages = new Collection();
+        $timer = null;
 
         $options = array_merge([
             'time' => false,
             'limit' => false,
         ], $options);
 
-        $eventHandler = function (Message $message) use (&$eventHandler, $filter, $options, &$messages, &$deferred) {
+        $eventHandler = function (Message $message) use (&$eventHandler, $filter, $options, &$messages, &$deferred, &$timer) {
             if ($message->channel_id != $this->id) {
                 return;
-            } // Reject messages not in this channel
+            }
+            // Reject messages not in this channel
             $filterResult = call_user_func_array($filter, [$message]);
 
             if ($filterResult) {
@@ -651,13 +653,17 @@ class Channel extends Part
                 if ($options['limit'] !== false && sizeof($messages) >= $options['limit']) {
                     $this->discord->removeListener(Event::MESSAGE_CREATE, $eventHandler);
                     $deferred->resolve($messages);
+
+                    if (! is_null($timer)) {
+                        $this->discord->getLoop()->cancelTimer($timer);
+                    }
                 }
             }
         };
         $this->discord->on(Event::MESSAGE_CREATE, $eventHandler);
 
         if ($options['time'] !== false) {
-            $this->discord->getLoop()->addTimer($options['time'] / 1000, function () use (&$eventHandler, &$messages, &$deferred) {
+            $timer = $this->discord->getLoop()->addTimer($options['time'] / 1000, function () use (&$eventHandler, &$messages, &$deferred) {
                 $this->discord->removeListener(Event::MESSAGE_CREATE, $eventHandler);
                 $deferred->resolve($messages);
             });
