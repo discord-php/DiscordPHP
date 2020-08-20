@@ -1328,6 +1328,16 @@ class Discord
     }
 
     /**
+     * Gets the loop being used by the client.
+     * 
+     * @return LoopInterface
+     */
+    public function getLoop()
+    {
+        return $this->loop;
+    }
+
+    /**
      * Handles dynamic get calls to the client.
      *
      * @param string $name Variable name.
