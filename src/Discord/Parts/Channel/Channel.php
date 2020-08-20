@@ -624,6 +624,8 @@ class Channel extends Part
      *
      * @param callable $filter  The filter function. Returns true or false.
      * @param array    $options
+     * @param int $options['time'] Time until the collector finishes or false.
+     * @param int $options['limit'] The amount of messages allowed or false.
      *
      * @return \React\Promise\Promise
      */
@@ -646,7 +648,7 @@ class Channel extends Part
             if ($filterResult) {
                 $messages->push($message);
 
-                if ($options['limit'] !== false && $options['limit'] >= sizeof($messages)) {
+                if ($options['limit'] !== false && sizeof($messages) >= $options['limit']) {
                     $this->discord->removeListener(Event::MESSAGE_CREATE, $eventHandler);
                     $deferred->resolve($messages);
                 }
