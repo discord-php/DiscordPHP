@@ -1329,7 +1329,7 @@ class Discord
 
     /**
      * Gets the loop being used by the client.
-     * 
+     *
      * @return LoopInterface
      */
     public function getLoop()

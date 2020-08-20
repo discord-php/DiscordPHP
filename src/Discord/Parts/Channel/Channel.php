@@ -25,6 +25,7 @@ use Discord\Repository\Channel\MessageRepository;
 use Discord\Repository\Channel\OverwriteRepository;
 use Discord\Repository\Channel\VoiceMemberRepository as MemberRepository;
 use Discord\Repository\Channel\WebhookRepository;
+use Discord\WebSockets\Event;
 use React\Promise\Deferred;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Traversable;
@@ -616,6 +617,51 @@ class Channel extends Part
         );
 
         return $deferred->resolve();
+    }
+
+    /**
+     * Creates a message collector for the channel.
+     *
+     * @param callable $filter  The filter function. Returns true or false.
+     * @param array    $options
+     *
+     * @return \React\Promise\Promise
+     */
+    public function createMessageCollector($filter, $options = [])
+    {
+        $deferred = new Deferred();
+        $messages = new Collection();
+
+        $options = array_merge([
+            'time' => false,
+            'limit' => false,
+        ], $options);
+
+        $eventHandler = function (Message $message) use (&$eventHandler, $filter, $options, &$messages, &$deferred) {
+            if ($message->channel_id != $this->id) {
+                return;
+            } // Reject messages not in this channel
+            $filterResult = call_user_func_array($filter, [$message]);
+
+            if ($filterResult) {
+                $messages->push($message);
+
+                if ($options['limit'] !== false && $options['limit'] >= sizeof($messages)) {
+                    $this->discord->removeListener(Event::MESSAGE_CREATE, $eventHandler);
+                    $deferred->resolve($messages);
+                }
+            }
+        };
+        $this->discord->on(Event::MESSAGE_CREATE, $eventHandler);
+
+        if ($options['time'] !== false) {
+            $this->discord->getLoop()->addTimer($options['time'] / 1000, function () use (&$eventHandler, &$messages, &$deferred) {
+                $this->discord->removeListener(Event::MESSAGE_CREATE, $eventHandler);
+                $deferred->resolve($messages);
+            });
+        }
+
+        return $deferred->promise();
     }
 
     /**
