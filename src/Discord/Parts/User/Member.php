@@ -307,9 +307,15 @@ class Member extends Part
     {
         $roles = new Collection();
 
-        foreach ($this->guild->roles as $role) {
-            if (array_search($role->id, $this->attributes['roles']) !== false) {
-                $roles->push($role);
+        if ($guild = $this->guild) {
+            foreach ($guild->roles as $role) {
+                if (array_search($role->id, $this->attributes['roles']) !== false) {
+                    $roles->push($role);
+                }
+            }
+        } else {
+            foreach ($this->attributes['roles'] as $role) {
+                $roles->push($this->factory->create(Role::class, $role, true));
             }
         }
 

@@ -24,13 +24,14 @@ use Discord\Parts\Part;
  * @property bool                       $managed        Whether this emoji is managed by a role.
  * @property bool                       $require_colons Whether the emoji requires colons to be triggered.
  * @property Collection[Role]           $roles          The roles that are allowed to use the emoji.
+ * @property bool                       $animated       Whether the emoji is animated.
  */
 class Emoji extends Part
 {
     /**
      * {@inheritdoc}
      */
-    protected $fillable = ['id', 'name', 'guild_id', 'managed', 'require_colons', 'roles'];
+    protected $fillable = ['id', 'name', 'guild_id', 'managed', 'require_colons', 'roles', 'animated'];
 
     /**
      * Returns the guild attribute.

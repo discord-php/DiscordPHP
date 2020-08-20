@@ -11,6 +11,7 @@
 
 namespace Discord\WebSockets\Events;
 
+use Discord\Parts\WebSockets\MessageReaction;
 use Discord\WebSockets\Event;
 use React\Promise\Deferred;
 
@@ -21,7 +22,7 @@ class MessageReactionRemove extends Event
      */
     public function handle(Deferred $deferred, $data)
     {
-        // todo
-        $deferred->resolve($data);
+        $reaction = $this->factory->create(MessageReaction::class, $data, true);
+        $deferred->resolve($reaction);
     }
 }

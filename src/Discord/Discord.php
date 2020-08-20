@@ -991,13 +991,13 @@ class Discord
 
     /**
      * Updates the clients presence.
-     * 
+     *
      * @param Activity $activity The current client activity, or null.
-     * @param bool $idle Whether the client is idle.
-     * @param string $status The current status of the client.
-     *                       Must be one of the following:
-     *                       online, dnd, idle, invisible, offline
-     * @param bool $afk Whether the client is AFK.
+     * @param bool     $idle     Whether the client is idle.
+     * @param string   $status   The current status of the client.
+     *                           Must be one of the following:
+     *                           online, dnd, idle, invisible, offline
+     * @param bool     $afk      Whether the client is AFK.
      */
     public function updatePresence(Activity $activity = null, $idle = false, $status = 'online', $afk = false)
     {
@@ -1017,7 +1017,7 @@ class Discord
                 'since' => $idle,
                 'game' => $activity,
                 'status' => $status,
-                'afk' => $afk
+                'afk' => $afk,
             ],
         ];
 

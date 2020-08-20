@@ -57,6 +57,7 @@ class Handlers
         $this->addHandler(Event::MESSAGE_REACTION_ADD, \Discord\WebSockets\Events\MessageReactionAdd::class);
         $this->addHandler(Event::MESSAGE_REACTION_REMOVE, \Discord\WebSockets\Events\MessageReactionRemove::class);
         $this->addHandler(Event::MESSAGE_REACTION_REMOVE_ALL, \Discord\WebSockets\Events\MessageReactionRemoveAll::class);
+        $this->addHandler(Event::MESSAGE_REACTION_REMOVE_EMOJI, \Discord\WebSockets\Events\MessageReactionRemoveEmoji::class);
 
         // New Member Event handlers
         $this->addHandler(Event::GUILD_MEMBER_ADD, \Discord\WebSockets\Events\GuildMemberAdd::class);

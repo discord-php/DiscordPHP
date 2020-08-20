@@ -67,7 +67,9 @@ class Activity extends Part
      */
     public function getCreatedAtAttribute()
     {
-        return Carbon::createFromTimestamp($this->attributes['created_at']);
+        if (isset($this->attributes['created_at'])) {
+            return Carbon::createFromTimestamp($this->attributes['created_at']);
+        }
     }
 
     /**

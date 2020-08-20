@@ -11,18 +11,16 @@
 
 namespace Discord\WebSockets\Events;
 
-use Discord\Parts\WebSockets\MessageReaction;
 use Discord\WebSockets\Event;
 use React\Promise\Deferred;
 
-class MessageReactionAdd extends Event
+class MessageReactionRemoveEmoji extends Event
 {
     /**
      * {@inheritdoc}
      */
     public function handle(Deferred $deferred, $data)
     {
-        $reaction = $this->factory->create(MessageReaction::class, $data, true);
-        $deferred->resolve($reaction);
+        $deferred->resolve($data);
     }
 }
