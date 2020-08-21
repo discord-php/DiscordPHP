@@ -1399,4 +1399,24 @@ class Discord
 
         return $config;
     }
+
+    /**
+     * @param float		$interval Interval after $callback will be invoked.
+     * @param callable	$callback Callback to be invoked once after the given interval.
+     * @see https://reactphp.org/event-loop/#addtimer
+     */
+    public function addTimer($interval, callable $callback)
+	{
+		$this->loop->addTimer($interval, $callback);
+	}
+
+     /**
+     * @param float		$interval Interval after $callback will be invoked.
+     * @param callable	$callback Callback to be invoked repeatedly after the given interval.
+     * @see https://reactphp.org/event-loop/#addPeriodicTimer
+     */
+    public function addPeriodicTimer($interval, callable $callback)
+	{
+		$this->loop->addPeriodicTimer($interval, $callback);
+	}
 }
