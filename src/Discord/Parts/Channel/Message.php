@@ -84,6 +84,20 @@ class Message extends Part
     {
         return $this->channel->sendMessage("{$this->author}, {$text}");
     }
+	
+	/**
+	  * Reply to message after delay.
+	  *
+	  * @param string $text   The text to reply with after delay.
+	  * @param float  $delay  Delay after reply will be sent.
+	  */
+    public function delayedReply($text, $delay)
+    {
+        $reply = function () use($text) {
+            $this->reply($text);
+        };
+        $this->discord->addTimer($delay, $reply);
+    }
 
     /**
      * Reacts to the message.
