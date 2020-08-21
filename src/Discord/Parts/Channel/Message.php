@@ -39,6 +39,18 @@ use React\Promise\Deferred;
  * @property string|null                    $nonce            A randomly generated string that provides verification for the client. Not required.
  * @property Collection[Role]               $mention_roles    A collection of roles that were mentioned in the message.
  * @property bool                           $pinned           Whether the message is pinned to the channel.
+ * @property Collection[Channel]            $mention_channels Collection of mentioned channels.
+ * @property Collection[Reaction]           $reactions        Collection of reactions on the message.
+ * @property string                         $webhook_id       ID of the webhook that made the message, if any.
+ * @property object                         $activity         Current message activity. Requires rich presence.
+ * @property object                         $application      Application of message. Requires rich presence.
+ * @property object                         $message_reference Message that is referenced by this message.
+ * @property int                            $flags             Message flags.
+ * @property bool                           $crossposted       Message has been crossposted.
+ * @property bool                           $is_crosspost      Message is a crosspost from another channel.
+ * @property bool                           $suppress_embeds   Do not include embeds when serializing message.
+ * @property bool                           $source_message_deleted Source message for this message has been deleted.
+ * @property bool                           $urgent            Message is urgent.
  */
 class Message extends Part
 {
@@ -48,6 +60,20 @@ class Message extends Part
     const TYPE_CALL = 3;
     const TYPE_CHANNEL_NAME_CHANGE = 4;
     const TYPE_CHANNEL_ICON_CHANGE = 5;
+    const CHANNEL_PINNED_MESSAGE = 6;
+    const GUILD_MEMBER_JOIN = 7;
+    const USER_PREMIUM_GUILD_SUBSCRIPTION = 8;
+    const USER_PREMIUM_GUILD_SUBSCRIPTION_TIER_1 = 9;
+    const USER_PREMIUM_GUILD_SUBSCRIPTION_TIER_2 = 10;
+    const USER_PREMIUM_GUILD_SUBSCRIPTION_TIER_3 = 11;
+    const CHANNEL_FOLLOW_ADD = 12;
+    const GUILD_DISCOVERY_DISQUALIFIED = 14;
+    const GUILD_DISCOVERY_REQUALIFIED = 15;
+
+    const ACTIVITY_JOIN = 1;
+    const ACTIVITY_SPECTATE = 2;
+    const ACTIVITY_LISTEN = 3;
+    const ACTIVITY_JOIN_REQUEST = 4;
 
     const REACT_DELETE_ALL = 0;
     const REACT_DELETE_ME = 1;
@@ -72,7 +98,100 @@ class Message extends Part
         'nonce',
         'mention_roles',
         'pinned',
+        'mention_channels',
+        'reactions',
+        'webhook_id',
+        'activity',
+        'application',
+        'message_reference',
+        'flags'
     ];
+
+    /**
+     * Gets the crossposted attribute.
+     * 
+     * @return bool
+     */
+    public function getCrosspostedAttribute()
+    {
+        return (bool) ($this->flags & (1 << 0));
+    }
+
+    /**
+     * Gets the is_crosspost attribute.
+     * 
+     * @return bool
+     */
+    public function getIsCrosspostAttribute()
+    {
+        return (bool) ($this->flags & (1 << 1));
+    }
+
+    /**
+     * Gets the suppress_embeds attribute.
+     * 
+     * @return bool
+     */
+    public function getSuppressEmbedsAttribute()
+    {
+        return (bool) ($this->flags & (1 << 2));
+    }
+
+    /**
+     * Gets the source_message_deleted attribute.
+     * 
+     * @return bool
+     */
+    public function getSourceMessageDeletedAttribute()
+    {
+        return (bool) ($this->flags & (1 << 3));
+    }
+
+    /**
+     * Gets the urgent attribute.
+     * 
+     * @return bool
+     */
+    public function getUrgentAttribute()
+    {
+        return (bool) ($this->flags & (1 << 4));
+    }
+
+    /**
+     * Gets the mention_channels attribute.
+     * 
+     * @return Collection[Channel]
+     */
+    public function getMentionChannelsAttribute()
+    {
+        $collection = new Collection();
+
+        if (isset($this->attributes['mention_channels'])) {
+            foreach ($this->attributes['mention_channels'] as $channel) {
+                $collection->push($this->factory->create(Channel::class, $channel, true));
+            }
+        }
+
+        return $collection;
+    }
+
+    /**
+     * Gets the reactions attribute.
+     * 
+     * @return Collection[Reaction]
+     */
+    public function getReactionsAttribute()
+    {
+        $collection = new Collection();
+
+        if (isset($this->attributes['reactions'])) {
+            foreach ($this->attributes['reactions'] as $reaction) {
+                $collection->push($this->factory->create(Reaction::class, $reaction, true));
+            }
+        }
+
+        return $collection;
+    }
 
     /**
      * Replies to the message.
