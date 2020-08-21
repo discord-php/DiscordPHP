@@ -11,6 +11,7 @@
 
 namespace Discord\Parts\Channel;
 
+use Carbon\Carbon;
 use Discord\Exceptions\FileNotFoundException;
 use Discord\Helpers\Collection;
 use Discord\Parts\Embed\Embed;
@@ -44,6 +45,14 @@ use Traversable;
  * @property int                        $bitrate         The bitrate of the channel. Only for voice channels.
  * @property \Discord\Parts\User\User   $recipient       The first recipient of the channel. Only for DM or group channels.
  * @property Collection[User]           $recipients      A collection of all the recipients in the channel. Only for DM or group channels.
+ * @property bool                       $nsfw            Whether the channel is NSFW.
+ * @property int                        $user_limit      The user limit of the channel.
+ * @property int                        $rate_limit_per_user Amount of seconds a user has to wait before sending a new message.
+ * @property string                     $icon            Icon hash.
+ * @property string                     $owner_id        The ID of the DM creator. Only for DM or group channels.
+ * @property string                     $application_id  ID of the group DM creator if it is a bot.
+ * @property string                     $parent_id       ID of the parent channel.
+ * @property \Carbon\Carbon             $last_pin_timestamp When the last message was pinned.
  * @property \Discord\Repository\Channel\VoiceMemberRepository $members
  * @property \Discord\Repository\Channel\MessageRepository     $messages
  * @property \Discord\Repository\Channel\OverwriteRepository   $overwrites
@@ -71,6 +80,14 @@ class Channel extends Part
         'permission_overwrites',
         'bitrate',
         'recipients',
+        'nsfw',
+        'user_limit',
+        'rate_limit_per_user',
+        'icon',
+        'owner_id',
+        'application_id',
+        'parent_id',
+        'last_pin_timestamp',
     ];
 
     /**
@@ -236,6 +253,18 @@ class Channel extends Part
     public function getGuildAttribute()
     {
         return $this->discord->guilds->get('id', $this->guild_id);
+    }
+
+    /**
+     * Gets the last pinned message timestamp.
+     * 
+     * @return Carbon
+     */
+    public function getLastPinTimestampAttribute()
+    {
+        if (isset($this->attributes['last_pin_timestamp'])) {
+            return Carbon::parse($this->attributes['last_pin_timestamp']);
+        }
     }
 
     /**
