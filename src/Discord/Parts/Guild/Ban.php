@@ -19,13 +19,14 @@ use Discord\Parts\User\User;
  *
  * @property string $guild_id
  * @property \Discord\Parts\User\User $user
+ * @property string $reason
  */
 class Ban extends Part
 {
     /**
      * {@inheritdoc}
      */
-    protected $fillable = ['user', 'guild_id'];
+    protected $fillable = ['user', 'guild_id', 'reason'];
 
     /**
      * Returns the user id of the ban.

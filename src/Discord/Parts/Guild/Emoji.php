@@ -60,6 +60,20 @@ class Emoji extends Part
     }
 
     /**
+     * Converts the emoji to the format required for creating a reaction.
+     *
+     * @return string
+     */
+    public function toReactionString()
+    {
+        if ($this->id) {
+            return ":{$this->name}:{$this->id}";
+        }
+
+        return $this->name;
+    }
+
+    /**
      * Converts the emoji to a string.
      *
      * @return string
