@@ -155,13 +155,13 @@ class Message extends Part
     public function getChannelAttribute()
     {
         foreach ($this->discord->guilds as $guild) {
-            if ($channel = $channel = $guild->channels->get('id', $this->channel_id)) {
+            if ($channel = $guild->channels->get('id', $this->channel_id)) {
                 return $channel;
             }
         }
 
-        if ($this->cache->has("pm_channels.{$this->channel_id}")) {
-            return $this->cache->get("pm_channels.{$this->channel_id}");
+        if ($channel = $this->discord->private_channels->get('id', $this->channel_id)) {
+            return $channel;
         }
 
         return $this->factory->create(Channel::class, [
