@@ -284,7 +284,7 @@ class Message extends Part
     {
         $deferred = new Deferred();
 
-        $this->http->delete("channels/{$this->channel->id}/messages/{$this->id}")->then(
+        $this->http->delete("channels/{$this->channel_id}/messages/{$this->id}")->then(
             \React\Partial\bind_right($this->resolve, $deferred),
             \React\Partial\bind_right($this->reject, $deferred)
         );
