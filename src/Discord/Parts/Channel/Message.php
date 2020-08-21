@@ -14,6 +14,7 @@ namespace Discord\Parts\Channel;
 use Carbon\Carbon;
 use Discord\Helpers\Collection;
 use Discord\Parts\Embed\Embed;
+use Discord\Parts\Guild\Emoji;
 use Discord\Parts\Part;
 use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
@@ -88,13 +89,17 @@ class Message extends Part
     /**
      * Reacts to the message.
      *
-     * @param string $emoticon The emoticon to react with. (custom: ':michael:251127796439449631')
+     * @param \Discord\Parts\Guild\Emoji|string $emoticon The emoticon to react with. (custom: ':michael:251127796439449631')
      *
      * @return \React\Promise\Promise
      */
     public function react($emoticon)
     {
         $deferred = new Deferred();
+
+        if ($emoticon instanceof Emoji) {
+            $emoticon = $emoticon->toReactionString();
+        }
 
         $this->http->put(
             "channels/{$this->channel->id}/messages/{$this->id}/reactions/{$emoticon}/@me"
