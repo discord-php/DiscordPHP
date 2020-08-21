@@ -19,6 +19,7 @@ use Discord\Parts\Part;
  * An embed object to be sent with a message.
  *
  * @property string            $title       The title of the embed.
+ * @property string            $type        The type of the embed.
  * @property string            $description A description of the embed.
  * @property string            $url         The URL of the embed.
  * @property Carbon|string     $timestamp   A timestamp of the embed.
