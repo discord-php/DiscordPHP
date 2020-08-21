@@ -96,7 +96,7 @@ class Message extends Part
         $reply = function () use($text) {
             $this->reply($text);
         };
-        $this->discord->addTimer($delay, $reply);
+        $this->discord->getLoop()->addTimer($delay, $reply);
     }
 
     /**
