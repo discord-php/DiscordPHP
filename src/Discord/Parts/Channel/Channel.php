@@ -257,7 +257,7 @@ class Channel extends Part
 
     /**
      * Gets the last pinned message timestamp.
-     * 
+     *
      * @return Carbon
      */
     public function getLastPinTimestampAttribute()

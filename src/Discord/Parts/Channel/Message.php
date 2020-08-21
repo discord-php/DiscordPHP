@@ -104,12 +104,12 @@ class Message extends Part
         'activity',
         'application',
         'message_reference',
-        'flags'
+        'flags',
     ];
 
     /**
      * Gets the crossposted attribute.
-     * 
+     *
      * @return bool
      */
     public function getCrosspostedAttribute()
@@ -119,7 +119,7 @@ class Message extends Part
 
     /**
      * Gets the is_crosspost attribute.
-     * 
+     *
      * @return bool
      */
     public function getIsCrosspostAttribute()
@@ -129,7 +129,7 @@ class Message extends Part
 
     /**
      * Gets the suppress_embeds attribute.
-     * 
+     *
      * @return bool
      */
     public function getSuppressEmbedsAttribute()
@@ -139,7 +139,7 @@ class Message extends Part
 
     /**
      * Gets the source_message_deleted attribute.
-     * 
+     *
      * @return bool
      */
     public function getSourceMessageDeletedAttribute()
@@ -149,7 +149,7 @@ class Message extends Part
 
     /**
      * Gets the urgent attribute.
-     * 
+     *
      * @return bool
      */
     public function getUrgentAttribute()
@@ -159,7 +159,7 @@ class Message extends Part
 
     /**
      * Gets the mention_channels attribute.
-     * 
+     *
      * @return Collection[Channel]
      */
     public function getMentionChannelsAttribute()
@@ -177,7 +177,7 @@ class Message extends Part
 
     /**
      * Gets the reactions attribute.
-     * 
+     *
      * @return Collection[Reaction]
      */
     public function getReactionsAttribute()
@@ -233,9 +233,9 @@ class Message extends Part
     /**
      * Deletes a reaction.
      *
-     * @param int    $type     The type of deletion to perform.
+     * @param int               $type     The type of deletion to perform.
      * @param Emoji|string|null $emoticon The emoticon to delete (if not all).
-     * @param string $id       The user reaction to delete (if not all).
+     * @param string            $id       The user reaction to delete (if not all).
      *
      * @return \React\Promise\Promise
      */

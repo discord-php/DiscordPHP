@@ -61,7 +61,7 @@ class Emoji extends Part
 
     /**
      * Converts the emoji to the format required for creating a reaction.
-     * 
+     *
      * @return string
      */
     public function toReactionString()

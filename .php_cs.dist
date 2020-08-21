@@ -64,7 +64,6 @@ $fixers = [
     'phpdoc_to_comment',
     'phpdoc_trim',
     'phpdoc_var_without_name',
-    'phpdoc_align',
     'no_leading_import_slash',
     'blank_line_before_return',
     'no_short_echo_tag',
@@ -90,6 +89,9 @@ $rules = [
     'binary_operator_spaces' => ['align_double_arrow' => true, 'align_equals' => true],
     'header_comment' => ['header' => $header],
     'indentation_type' => true,
+    'phpdoc_align' => [
+        'align' => 'vertical'
+    ]
 ];
 
 foreach ($fixers as $fix) {

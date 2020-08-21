@@ -128,7 +128,7 @@ class Guild extends Part
 
     /**
      * Gets the voice regions available.
-     * 
+     *
      * @return \React\Promise\Promise
      */
     public function getVoiceRegions()
@@ -370,7 +370,7 @@ class Guild extends Part
     {
         return [
             'name' => $this->name,
-            'region' => $this->region
+            'region' => $this->region,
         ];
     }
 
