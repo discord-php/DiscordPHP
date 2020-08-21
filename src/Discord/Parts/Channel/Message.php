@@ -86,18 +86,26 @@ class Message extends Part
     }
 	
 	/**
-	  * Reply to message after delay.
-	  *
-	  * @param string $text   The text to reply with after delay.
-	  * @param float  $delay  Delay after reply will be sent.
-	  */
-    public function delayedReply($text, $delay)
-    {
-        $reply = function () use($text) {
-            $this->reply($text);
-        };
-        $this->discord->getLoop()->addTimer($delay, $reply);
-    }
+	 * Send message after delay
+	 *
+	 * @param string $text   Text to send after delay.
+	 * @param int    $delay  Delay after text will be sent in milliseconds.
+	 *
+	 * @return \React\Promise\Promise
+	 */
+	public function delayedReply($text, $delay)
+	{
+		$deferred = new Deferred();
+
+        $this->discord->getLoop()->addTimer($delay / 1000, function () use($text, $deferred) {
+			$this->reply($text)->then(
+				\React\Partial\bind_right($this->resolve, $deferred),
+				\React\Partial\bind_right($this->reject, $deferred)
+			);
+		});
+
+        return $deferred->promise();
+	}
 
     /**
      * Reacts to the message.
