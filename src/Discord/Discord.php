@@ -1225,7 +1225,7 @@ class Discord
                 'disabledEvents' => [],
                 'pmChannels' => false,
                 'storeMessages' => false,
-                'retrieveBans' => true,
+                'retrieveBans' => false,
             ])
             ->setAllowedTypes('bot', 'bool')
             ->setAllowedTypes('loop', LoopInterface::class)
