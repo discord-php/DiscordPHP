@@ -432,11 +432,11 @@ class Message extends Part
      */
     public function getAuthorAttribute()
     {
-        if ($this->channel->type != Channel::TYPE_TEXT) {
-            return $this->factory->create(User::class, $this->attributes['author'], true);
+        if ($this->channel->type != Channel::TYPE_TEXT && $author = $this->channel->guild->members->get('id', $this->attributes['author']->id)) {
+            return $author;
         }
 
-        return $this->channel->guild->members->get('id', $this->attributes['author']->id);
+        return $this->factory->create(User::class, $this->attributes['author'], true);
     }
 
     /**
