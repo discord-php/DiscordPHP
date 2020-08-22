@@ -446,7 +446,7 @@ class Message extends Part
      */
     public function getEmbedsAttribute()
     {
-        $embeds = new Collection();
+        $embeds = new Collection([], null);
 
         foreach ($this->attributes['embeds'] as $embed) {
             $embeds->push($this->factory->create(Embed::class, $embed, true));
@@ -480,15 +480,32 @@ class Message extends Part
     }
 
     /**
+     * Adds an embed to the message.
+     * 
+     * @param Embed $embed
+     * 
+     * @return \React\Promise\Promise
+     */
+    public function addEmbed(Embed $embed)
+    {
+        $deferred = new Deferred();
+
+        $this->http->patch("channels/{$this->channel_id}/messages/{$this->id}", [
+            'embed' => $embed->getRawAttributes()
+        ])->then(function ($data) use ($deferred) {
+            $this->fill($data);
+            $deferred->resolve($this);
+        },\React\Partial\bind_right($this->reject, $deferred));
+
+        return $deferred->promise();
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function getCreatableAttributes()
     {
-        return [
-            'content' => $this->content,
-            'mentions' => $this->mentions,
-            'tts' => $this->tts,
-        ];
+        return [];
     }
 
     /**
@@ -498,7 +515,7 @@ class Message extends Part
     {
         return [
             'content' => $this->content,
-            'mentions' => $this->mentions,
+            'flags' => $this->flags,
         ];
     }
 }
