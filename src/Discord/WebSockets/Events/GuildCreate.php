@@ -76,28 +76,30 @@ class GuildCreate extends Event
             $guildPart->getRepositoryAttributes()
         );
 
-        foreach ($data->members as $member) {
-            $memberPart = $this->factory->create(Member::class, [
-                'user' => $member->user,
-                'roles' => $member->roles,
-                'mute' => $member->mute,
-                'deaf' => $member->deaf,
-                'joined_at' => $member->joined_at,
-                'nick' => (property_exists($member, 'nick')) ? $member->nick : null,
-                'guild_id' => $data->id,
-                'status' => 'offline',
-                'game' => null,
-            ], true);
-
-            foreach ($data->presences as $presence) {
-                if ($presence->user->id == $member->user->id) {
-                    $memberPart->status = $presence->status;
-                    $memberPart->game = $presence->game;
+        if ($this->discord->options['loadAllMembers']) {
+            foreach ($data->members as $member) {
+                $memberPart = $this->factory->create(Member::class, [
+                    'user' => $member->user,
+                    'roles' => $member->roles,
+                    'mute' => $member->mute,
+                    'deaf' => $member->deaf,
+                    'joined_at' => $member->joined_at,
+                    'nick' => (property_exists($member, 'nick')) ? $member->nick : null,
+                    'guild_id' => $data->id,
+                    'status' => 'offline',
+                    'game' => null,
+                ], true);
+    
+                foreach ($data->presences as $presence) {
+                    if ($presence->user->id == $member->user->id) {
+                        $memberPart->status = $presence->status;
+                        $memberPart->game = $presence->game;
+                    }
                 }
+    
+                $this->discord->users->push($memberPart->user);
+                $members->push($memberPart);
             }
-
-            $this->discord->users->push($memberPart->user);
-            $members->push($memberPart);
         }
 
         $guildPart->roles = $roles;
