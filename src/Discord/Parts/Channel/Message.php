@@ -18,6 +18,8 @@ use Discord\Parts\Guild\Emoji;
 use Discord\Parts\Part;
 use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
+use Discord\Parts\WebSockets\MessageReaction;
+use Discord\WebSockets\Event;
 use React\Promise\Deferred;
 
 /**
@@ -310,6 +312,58 @@ class Message extends Part
             \React\Partial\bind_right($this->resolve, $deferred),
             \React\Partial\bind_right($this->reject, $deferred)
         );
+
+        return $deferred->promise();
+    }
+
+    /**
+     * Creates a reaction collector for the message.
+     * 
+     * @param callable $filter The filter function. Returns true or false.
+     * @param int      $options['time']  Time in milliseconds until the collector finishes or false.
+     * @param int      $options['limit'] The amount of reactions allowed or false.
+     *
+     * @return \React\Promise\Promise
+     */
+    public function createReactionCollector(callable $filter, $options = [])
+    {
+        $deferred = new Deferred();
+        $reactions = new \Illuminate\Support\Collection();
+        $timer = null;
+
+        $options = array_merge([
+            'time' => false,
+            'limit' => false,
+        ], $options);
+
+        $eventHandler = function (MessageReaction $reaction) use (&$eventHandler, $filter, $options, &$reactions, &$deferred, &$timer) {
+            if ($reaction->message_id != $this->id) {
+                return;
+            }
+
+            $filterResult = call_user_func_array($filter, [$reaction]);
+
+            if ($filterResult) {
+                $reactions->push($reaction);
+
+                if ($options['limit'] !== false && sizeof($reactions) >= $options['limit']) {
+                    $this->discord->removeListener(Event::MESSAGE_REACTION_ADD, $eventHandler);
+                    $deferred->resolve($reactions);
+
+                    if (! is_null($timer)) {
+                        $this->discord->getLoop()->cancelTimer($timer);
+                    }
+                }
+            }
+        };
+        $this->discord->on(Event::MESSAGE_REACTION_ADD, $eventHandler);
+
+        if ($options['time'] !== false) {
+            $timer = $this->discord->getLoop()->addTimer($options['time'] / 1000, function () use (&$eventHandler, &$reactions, &$deferred) {
+                $this->discord->removeListener(Event::MESSAGE_REACTION_ADD, $eventHandler);
+                $deferred->resolve($reactions);
+            });
+        }
 
         return $deferred->promise();
     }

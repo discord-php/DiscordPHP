@@ -653,7 +653,7 @@ class Channel extends Part
      *
      * @param callable $filter           The filter function. Returns true or false.
      * @param array    $options
-     * @param int      $options['time']  Time until the collector finishes or false.
+     * @param int      $options['time']  Time in milliseconds until the collector finishes or false.
      * @param int      $options['limit'] The amount of messages allowed or false.
      *
      * @return \React\Promise\Promise
