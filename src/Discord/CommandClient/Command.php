@@ -41,7 +41,7 @@ class Command
     protected $usage;
 
     /**
-     * The cooldown of the command.
+     * The cooldown of the command in milliseconds.
      *
      * @var int Command cooldown.
      */
@@ -83,7 +83,7 @@ class Command
      * @param \Callable            $callable         The callable function.
      * @param string               $description      The description of the command.
      * @param string               $usage            The usage of the command.
-     * @param int                  $cooldown         The cooldown of the command in seconds.
+     * @param int                  $cooldown         The cooldown of the command in milliseconds.
      * @param int                  $cooldownMessage  The cooldown message to show when a cooldown is in effect.
      */
     public function __construct(
@@ -189,15 +189,15 @@ class Command
             array_unshift($args, $subCommand);
         }
 
-        $currentTime = time();
+        $currentTime = round(microtime(true));
         if (isset($this->cooldowns[$message->author->id])) {
             if ($this->cooldowns[$message->author->id] < $currentTime) {
-                $this->cooldowns[$message->author->id] = $currentTime + $this->cooldown;
+                $this->cooldowns[$message->author->id] = $currentTime + ($this->cooldown / 1000);
             } else {
                 return sprintf($this->cooldownMessage, ($this->cooldowns[$message->author->id] - $currentTime));
             }
         } else {
-            $this->cooldowns[$message->author->id] = $currentTime + $this->cooldown;
+            $this->cooldowns[$message->author->id] = $currentTime + ($this->cooldown / 1000);
         }
 
         return call_user_func_array($this->callable, [$message, $args]);
