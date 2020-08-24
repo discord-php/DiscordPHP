@@ -3,7 +3,7 @@
 /*
  * This file is apart of the DiscordPHP project.
  *
- * Copyright (c) 2016 David Cole <david@team-reflex.com>
+ * Copyright (c) 2016-2020 David Cole <david.cole1340@gmail.com>
  *
  * This source file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -11,6 +11,7 @@
 
 namespace Discord\Parts\Channel;
 
+use Carbon\Carbon;
 use Discord\Exceptions\FileNotFoundException;
 use Discord\Helpers\Collection;
 use Discord\Parts\Embed\Embed;
@@ -24,6 +25,8 @@ use Discord\Parts\User\User;
 use Discord\Repository\Channel\MessageRepository;
 use Discord\Repository\Channel\OverwriteRepository;
 use Discord\Repository\Channel\VoiceMemberRepository as MemberRepository;
+use Discord\Repository\Channel\WebhookRepository;
+use Discord\WebSockets\Event;
 use React\Promise\Deferred;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Traversable;
@@ -43,14 +46,23 @@ use Traversable;
  * @property int                        $bitrate         The bitrate of the channel. Only for voice channels.
  * @property \Discord\Parts\User\User   $recipient       The first recipient of the channel. Only for DM or group channels.
  * @property Collection[User]           $recipients      A collection of all the recipients in the channel. Only for DM or group channels.
+ * @property bool                       $nsfw            Whether the channel is NSFW.
+ * @property int                        $user_limit      The user limit of the channel.
+ * @property int                        $rate_limit_per_user Amount of seconds a user has to wait before sending a new message.
+ * @property string                     $icon            Icon hash.
+ * @property string                     $owner_id        The ID of the DM creator. Only for DM or group channels.
+ * @property string                     $application_id  ID of the group DM creator if it is a bot.
+ * @property string                     $parent_id       ID of the parent channel.
+ * @property \Carbon\Carbon             $last_pin_timestamp When the last message was pinned.
  * @property \Discord\Repository\Channel\VoiceMemberRepository $members
  * @property \Discord\Repository\Channel\MessageRepository     $messages
  * @property \Discord\Repository\Channel\OverwriteRepository   $overwrites
+ * @property \Discord\Repository\Channel\WebhookRepository     $webhooks
  */
 class Channel extends Part
 {
-    const TYPE_TEXT  = 0;
-    const TYPE_DM    = 1;
+    const TYPE_TEXT = 0;
+    const TYPE_DM = 1;
     const TYPE_VOICE = 2;
     const TYPE_GROUP = 3;
 
@@ -69,15 +81,24 @@ class Channel extends Part
         'permission_overwrites',
         'bitrate',
         'recipients',
+        'nsfw',
+        'user_limit',
+        'rate_limit_per_user',
+        'icon',
+        'owner_id',
+        'application_id',
+        'parent_id',
+        'last_pin_timestamp',
     ];
 
     /**
      * {@inheritdoc}
      */
     protected $repositories = [
-        'members'    => MemberRepository::class,
-        'messages'   => MessageRepository::class,
+        'members' => MemberRepository::class,
+        'messages' => MessageRepository::class,
         'overwrites' => OverwriteRepository::class,
+        'webhooks' => WebhookRepository::class,
     ];
 
     /**
@@ -157,10 +178,10 @@ class Channel extends Part
         list($allow, $deny) = $permissions->bitwise;
 
         $payload = [
-            'id'    => $part->id,
-            'type'  => $type,
+            'id' => $part->id,
+            'type' => $type,
             'allow' => $allow,
-            'deny'  => $deny,
+            'deny' => $deny,
         ];
 
         if (! $this->created) {
@@ -236,6 +257,18 @@ class Channel extends Part
     }
 
     /**
+     * Gets the last pinned message timestamp.
+     *
+     * @return Carbon
+     */
+    public function getLastPinTimestampAttribute()
+    {
+        if (isset($this->attributes['last_pin_timestamp'])) {
+            return Carbon::parse($this->attributes['last_pin_timestamp']);
+        }
+    }
+
+    /**
      * Creates an invite for the channel.
      *
      * @param int  $max_age   The time that the invite will be valid in seconds.
@@ -254,10 +287,10 @@ class Channel extends Part
             [
                 'validate' => null,
 
-                'max_age'   => $max_age,
-                'max_uses'  => $max_uses,
+                'max_age' => $max_age,
+                'max_uses' => $max_uses,
                 'temporary' => $temporary,
-                'xkcdpass'  => $xkcd,
+                'xkcdpass' => $xkcd,
             ]
         )->then(
             function ($response) use ($deferred) {
@@ -495,8 +528,6 @@ class Channel extends Part
 
     /**
      * Sets the permission overwrites attribute.
-     *
-     * @return void
      */
     public function setPermissionOverwritesAttribute($overwrites)
     {
@@ -504,7 +535,7 @@ class Channel extends Part
 
         if (! is_null($overwrites)) {
             foreach ($overwrites as $overwrite) {
-                $overwrite               = (array) $overwrite;
+                $overwrite = (array) $overwrite;
                 $overwrite['channel_id'] = $this->id;
 
                 $this->overwrites->push($overwrite);
@@ -535,8 +566,8 @@ class Channel extends Part
             "channels/{$this->id}/messages",
             [
                 'content' => $text,
-                'tts'     => $tts,
-                'embed'   => $embed,
+                'tts' => $tts,
+                'embed' => $embed,
             ]
         )->then(
             function ($response) use ($deferred) {
@@ -618,6 +649,59 @@ class Channel extends Part
     }
 
     /**
+     * Creates a message collector for the channel.
+     *
+     * @param callable $filter           The filter function. Returns true or false.
+     * @param array    $options
+     * @param int      $options['time']  Time in milliseconds until the collector finishes or false.
+     * @param int      $options['limit'] The amount of messages allowed or false.
+     *
+     * @return \React\Promise\Promise
+     */
+    public function createMessageCollector($filter, $options = [])
+    {
+        $deferred = new Deferred();
+        $messages = new Collection();
+        $timer = null;
+
+        $options = array_merge([
+            'time' => false,
+            'limit' => false,
+        ], $options);
+
+        $eventHandler = function (Message $message) use (&$eventHandler, $filter, $options, &$messages, &$deferred, &$timer) {
+            if ($message->channel_id != $this->id) {
+                return;
+            }
+            // Reject messages not in this channel
+            $filterResult = call_user_func_array($filter, [$message]);
+
+            if ($filterResult) {
+                $messages->push($message);
+
+                if ($options['limit'] !== false && sizeof($messages) >= $options['limit']) {
+                    $this->discord->removeListener(Event::MESSAGE_CREATE, $eventHandler);
+                    $deferred->resolve($messages);
+
+                    if (! is_null($timer)) {
+                        $this->discord->getLoop()->cancelTimer($timer);
+                    }
+                }
+            }
+        };
+        $this->discord->on(Event::MESSAGE_CREATE, $eventHandler);
+
+        if ($options['time'] !== false) {
+            $timer = $this->discord->getLoop()->addTimer($options['time'] / 1000, function () use (&$eventHandler, &$messages, &$deferred) {
+                $this->discord->removeListener(Event::MESSAGE_CREATE, $eventHandler);
+                $deferred->resolve($messages);
+            });
+        }
+
+        return $deferred->promise();
+    }
+
+    /**
      * Returns the channel type.
      *
      * @return string Either 'text' or 'voice'.
@@ -643,9 +727,9 @@ class Channel extends Part
     public function getCreatableAttributes()
     {
         return [
-            'name'                  => $this->name,
-            'type'                  => $this->getChannelType(),
-            'bitrate'               => $this->bitrate,
+            'name' => $this->name,
+            'type' => $this->getChannelType(),
+            'bitrate' => $this->bitrate,
             'permission_overwrites' => $this->permission_overwrites,
         ];
     }
@@ -658,8 +742,8 @@ class Channel extends Part
     public function getUpdatableAttributes()
     {
         return [
-            'name'     => $this->name,
-            'topic'    => $this->topic,
+            'name' => $this->name,
+            'topic' => $this->topic,
             'position' => $this->position,
         ];
     }

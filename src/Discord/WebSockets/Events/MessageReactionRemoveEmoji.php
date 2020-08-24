@@ -11,23 +11,16 @@
 
 namespace Discord\WebSockets\Events;
 
-use React\Promise\Deferred;
 use Discord\WebSockets\Event;
+use React\Promise\Deferred;
 
-class GuildRoleDelete extends Event
+class MessageReactionRemoveEmoji extends Event
 {
     /**
      * {@inheritdoc}
      */
     public function handle(Deferred $deferred, $data)
     {
-        if ($guild = $this->discord->guilds->get('id', $data->guild_id)) {
-            $role = $guild->roles->pull($data->role_id);
-            $this->discord->guilds->push($guild);
-
-            $deferred->resolve($role);
-        } else {
-            $deferred->resolve($data);
-        }
+        $deferred->resolve($data);
     }
 }

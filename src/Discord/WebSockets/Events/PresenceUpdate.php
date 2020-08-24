@@ -3,7 +3,7 @@
 /*
  * This file is apart of the DiscordPHP project.
  *
- * Copyright (c) 2016 David Cole <david@team-reflex.com>
+ * Copyright (c) 2016-2020 David Cole <david.cole1340@gmail.com>
  *
  * This source file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -22,42 +22,22 @@ class PresenceUpdate extends Event
      */
     public function handle(Deferred $deferred, $data)
     {
-        $presenceUpdate = $this->factory->create(PresenceUpdatePart::class, $data, true);
-        $old            = null;
+        /**
+         * @var PresenceUpdatePart
+         */
+        $presence = $this->factory->create(PresenceUpdatePart::class, $data, true);
 
-        $guild  = $this->discord->guilds->get('id', $presenceUpdate->guild_id);
-        $member = $guild->members->get('id', $presenceUpdate->user->id);
+        if ($guild = $presence->guild) {
+            if ($member = $presence->member) {
+                $oldPresence = $member->updateFromPresence($presence);
 
-        if (! is_null($member)) {
-            $rawOld = array_merge([
-                'roles'  => [],
-                'status' => null,
-                'game'   => null,
-                'nick'   => null,
-            ], $member->getRawAttributes());
+                $guild->members->push($member);
+                $this->discord->guilds->push($guild);
 
-            $old = $this->factory->create(PresenceUpdatePart::class, [
-                'user'     => $this->discord->users->get('id', $presenceUpdate->user->id),
-                'roles'    => $rawOld['roles'],
-                'guild_id' => $presenceUpdate->guild_id,
-                'status'   => $rawOld['status'],
-                'game'     => $rawOld['game'],
-                'nick'     => $rawOld['nick'],
-            ], true);
-
-            $presenceAttributes = $presenceUpdate->getRawAttributes();
-            $updatable = ['status', 'roles', 'nick', 'game'];
-
-            foreach ($presenceAttributes as $key => $value) {
-                if (! in_array($key, $updatable)) {
-                    unset($presenceAttributes[$key]);
-                }
+                $deferred->resolve([$presence, $oldPresence]);
             }
-            
-            $member->fill($presenceAttributes);
-            $guild->members->push($member);
         }
 
-        $deferred->resolve([$presenceUpdate, $old]);
+        $deferred->resolve($presence);
     }
 }

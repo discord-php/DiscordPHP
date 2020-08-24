@@ -3,7 +3,7 @@
 /*
  * This file is apart of the DiscordPHP project.
  *
- * Copyright (c) 2016 David Cole <david@team-reflex.com>
+ * Copyright (c) 2016-2020 David Cole <david.cole1340@gmail.com>
  *
  * This source file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -13,7 +13,6 @@ namespace Discord\Http;
 
 use Carbon\Carbon;
 use Discord\Discord;
-use Discord\Parts\Channel\Channel;
 use Discord\Wrapper\CacheWrapper;
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\HandlerStack;
@@ -76,17 +75,15 @@ class Guzzle extends GuzzleClient implements HttpDriver
      *
      * @param CacheWrapper       $cache The cache wrapper.
      * @param LoopInterface|null $loop  The ReactPHP event loop.
-     *
-     * @return void
      */
     public function __construct(CacheWrapper $cache, LoopInterface $loop)
     {
         $this->cache = $cache;
-        $options     = ['http_errors' => false, 'allow_redirects' => true, 'base_uri' => Http::BASE_URL.'/v'.Discord::HTTP_API_VERSION];
+        $options = ['http_errors' => false, 'allow_redirects' => true, 'base_uri' => Http::BASE_URL.'/v'.Discord::HTTP_API_VERSION];
 
-        $this->async        = true;
-        $this->loop         = $loop;
-        $this->adapter      = new HttpClientAdapter($this->loop);
+        $this->async = true;
+        $this->loop = $loop;
+        $this->adapter = new HttpClientAdapter($this->loop);
         $options['handler'] = HandlerStack::create($this->adapter);
 
         return parent::__construct($options);

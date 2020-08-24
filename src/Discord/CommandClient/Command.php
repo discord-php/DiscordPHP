@@ -3,7 +3,7 @@
 /*
  * This file is apart of the DiscordPHP project.
  *
- * Copyright (c) 2016 David Cole <david@team-reflex.com>
+ * Copyright (c) 2016-2020 David Cole <david.cole1340@gmail.com>
  *
  * This source file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -119,7 +119,7 @@ class Command
         }
 
         list($commandInstance, $options) = $this->client->buildCommand($command, $callable, $options);
-        $this->subCommands[$command]     = $commandInstance;
+        $this->subCommands[$command] = $commandInstance;
 
         foreach ($options['aliases'] as $alias) {
             $this->registerSubCommandAlias($alias, $command);
@@ -220,7 +220,7 @@ class Command
         }
 
         return [
-            'text'              => $helpString,
+            'text' => $helpString,
             'subCommandAliases' => $this->subCommandAliases,
         ];
     }

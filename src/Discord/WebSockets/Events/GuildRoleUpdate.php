@@ -3,7 +3,7 @@
 /*
  * This file is apart of the DiscordPHP project.
  *
- * Copyright (c) 2016 David Cole <david@team-reflex.com>
+ * Copyright (c) 2016-2020 David Cole <david.cole1340@gmail.com>
  *
  * This source file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -22,14 +22,19 @@ class GuildRoleUpdate extends Event
      */
     public function handle(Deferred $deferred, $data)
     {
-        $adata             = (array) $data->role;
+        $adata = (array) $data->role;
         $adata['guild_id'] = $data->guild_id;
 
         $rolePart = $this->factory->create(Role::class, $adata, true);
 
-        $guild = $this->discord->guilds->get('id', $rolePart->guild_id);
-        $old   = $guild->roles->get('id', $rolePart->id);
-        $guild->roles->push($rolePart);
+        if ($guild = $this->discord->guilds->get('id', $rolePart->guild_id)) {
+            $old = $guild->roles->get('id', $rolePart->id);
+            $guild->roles->push($rolePart);
+
+            $this->discord->guilds->push($guild);
+        } else {
+            $old = null;
+        }
 
         $deferred->resolve([$rolePart, $old]);
     }

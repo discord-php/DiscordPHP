@@ -11,29 +11,26 @@
 
 namespace Discord\Repository\Channel;
 
-use Discord\Parts\WebSockets\VoiceStateUpdate;
+use Discord\Parts\Channel\Webhook;
 use Discord\Repository\AbstractRepository;
 
 /**
- * Contains voice states for users in the voice channel.
- *
- * @see Discord\Parts\WebSockets\VoiceStateUpdate
- * @see Discord\Parts\Channel\Channel
+ * {@inheritdoc}
  */
-class VoiceMemberRepository extends AbstractRepository
+class WebhookRepository extends AbstractRepository
 {
     /**
      * {@inheritdoc}
      */
-    protected $discrim = 'user_id';
-    
-    /**
-     * {@inheritdoc}
-     */
-    protected $endpoints = [];
+    protected $endpoints = [
+        'all' => 'channels/:channel_id/webhooks',
+        'create' => 'channels/:channel_id/webhooks',
+        'delete' => 'webhooks/:id',
+        'update' => 'webhooks/:id',
+    ];
 
     /**
      * {@inheritdoc}
      */
-    protected $class = VoiceStateUpdate::class;
+    protected $part = Webhook::class;
 }

@@ -3,7 +3,7 @@
 /*
  * This file is apart of the DiscordPHP project.
  *
- * Copyright (c) 2016 David Cole <david@team-reflex.com>
+ * Copyright (c) 2016-2020 David Cole <david.cole1340@gmail.com>
  *
  * This source file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -14,9 +14,12 @@ namespace Discord\Parts\Channel;
 use Carbon\Carbon;
 use Discord\Helpers\Collection;
 use Discord\Parts\Embed\Embed;
+use Discord\Parts\Guild\Emoji;
 use Discord\Parts\Part;
 use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
+use Discord\Parts\WebSockets\MessageReaction;
+use Discord\WebSockets\Event;
 use React\Promise\Deferred;
 
 /**
@@ -38,19 +41,45 @@ use React\Promise\Deferred;
  * @property string|null                    $nonce            A randomly generated string that provides verification for the client. Not required.
  * @property Collection[Role]               $mention_roles    A collection of roles that were mentioned in the message.
  * @property bool                           $pinned           Whether the message is pinned to the channel.
+ * @property Collection[Channel]            $mention_channels Collection of mentioned channels.
+ * @property Collection[Reaction]           $reactions        Collection of reactions on the message.
+ * @property string                         $webhook_id       ID of the webhook that made the message, if any.
+ * @property object                         $activity         Current message activity. Requires rich presence.
+ * @property object                         $application      Application of message. Requires rich presence.
+ * @property object                         $message_reference Message that is referenced by this message.
+ * @property int                            $flags             Message flags.
+ * @property bool                           $crossposted       Message has been crossposted.
+ * @property bool                           $is_crosspost      Message is a crosspost from another channel.
+ * @property bool                           $suppress_embeds   Do not include embeds when serializing message.
+ * @property bool                           $source_message_deleted Source message for this message has been deleted.
+ * @property bool                           $urgent            Message is urgent.
  */
 class Message extends Part
 {
-    const TYPE_NORMAL              = 0;
-    const TYPE_USER_ADDED          = 1;
-    const TYPE_USER_REMOVED        = 2;
-    const TYPE_CALL                = 3;
+    const TYPE_NORMAL = 0;
+    const TYPE_USER_ADDED = 1;
+    const TYPE_USER_REMOVED = 2;
+    const TYPE_CALL = 3;
     const TYPE_CHANNEL_NAME_CHANGE = 4;
     const TYPE_CHANNEL_ICON_CHANGE = 5;
+    const CHANNEL_PINNED_MESSAGE = 6;
+    const GUILD_MEMBER_JOIN = 7;
+    const USER_PREMIUM_GUILD_SUBSCRIPTION = 8;
+    const USER_PREMIUM_GUILD_SUBSCRIPTION_TIER_1 = 9;
+    const USER_PREMIUM_GUILD_SUBSCRIPTION_TIER_2 = 10;
+    const USER_PREMIUM_GUILD_SUBSCRIPTION_TIER_3 = 11;
+    const CHANNEL_FOLLOW_ADD = 12;
+    const GUILD_DISCOVERY_DISQUALIFIED = 14;
+    const GUILD_DISCOVERY_REQUALIFIED = 15;
+
+    const ACTIVITY_JOIN = 1;
+    const ACTIVITY_SPECTATE = 2;
+    const ACTIVITY_LISTEN = 3;
+    const ACTIVITY_JOIN_REQUEST = 4;
 
     const REACT_DELETE_ALL = 0;
-    const REACT_DELETE_ME  = 1;
-    const REACT_DELETE_ID  = 2;
+    const REACT_DELETE_ME = 1;
+    const REACT_DELETE_ID = 2;
 
     /**
      * {@inheritdoc}
@@ -71,7 +100,100 @@ class Message extends Part
         'nonce',
         'mention_roles',
         'pinned',
+        'mention_channels',
+        'reactions',
+        'webhook_id',
+        'activity',
+        'application',
+        'message_reference',
+        'flags',
     ];
+
+    /**
+     * Gets the crossposted attribute.
+     *
+     * @return bool
+     */
+    public function getCrosspostedAttribute()
+    {
+        return (bool) ($this->flags & (1 << 0));
+    }
+
+    /**
+     * Gets the is_crosspost attribute.
+     *
+     * @return bool
+     */
+    public function getIsCrosspostAttribute()
+    {
+        return (bool) ($this->flags & (1 << 1));
+    }
+
+    /**
+     * Gets the suppress_embeds attribute.
+     *
+     * @return bool
+     */
+    public function getSuppressEmbedsAttribute()
+    {
+        return (bool) ($this->flags & (1 << 2));
+    }
+
+    /**
+     * Gets the source_message_deleted attribute.
+     *
+     * @return bool
+     */
+    public function getSourceMessageDeletedAttribute()
+    {
+        return (bool) ($this->flags & (1 << 3));
+    }
+
+    /**
+     * Gets the urgent attribute.
+     *
+     * @return bool
+     */
+    public function getUrgentAttribute()
+    {
+        return (bool) ($this->flags & (1 << 4));
+    }
+
+    /**
+     * Gets the mention_channels attribute.
+     *
+     * @return Collection[Channel]
+     */
+    public function getMentionChannelsAttribute()
+    {
+        $collection = new Collection();
+
+        if (isset($this->attributes['mention_channels'])) {
+            foreach ($this->attributes['mention_channels'] as $channel) {
+                $collection->push($this->factory->create(Channel::class, $channel, true));
+            }
+        }
+
+        return $collection;
+    }
+
+    /**
+     * Gets the reactions attribute.
+     *
+     * @return Collection[Reaction]
+     */
+    public function getReactionsAttribute()
+    {
+        $collection = new Collection();
+
+        if (isset($this->attributes['reactions'])) {
+            foreach ($this->attributes['reactions'] as $reaction) {
+                $collection->push($this->factory->create(Reaction::class, $reaction, true));
+            }
+        }
+
+        return $collection;
+    }
 
     /**
      * Replies to the message.
@@ -84,17 +206,43 @@ class Message extends Part
     {
         return $this->channel->sendMessage("{$this->author}, {$text}");
     }
+    
+    /**
+     * Send message after delay.
+     *
+     * @param string $text  Text to send after delay.
+     * @param int    $delay Delay after text will be sent in milliseconds.
+     *
+     * @return \React\Promise\Promise
+     */
+    public function delayedReply($text, $delay)
+    {
+        $deferred = new Deferred();
+
+        $this->discord->getLoop()->addTimer($delay / 1000, function () use ($text, $deferred) {
+            $this->reply($text)->then(
+                \React\Partial\bind_right($this->resolve, $deferred),
+                \React\Partial\bind_right($this->reject, $deferred)
+            );
+        });
+
+        return $deferred->promise();
+    }
 
     /**
      * Reacts to the message.
      *
-     * @param string $emoticon The emoticon to react with. (custom: ':michael:251127796439449631')
+     * @param Emoji|string $emoticon The emoticon to react with. (custom: ':michael:251127796439449631')
      *
      * @return \React\Promise\Promise
      */
     public function react($emoticon)
     {
         $deferred = new Deferred();
+
+        if ($emoticon instanceof Emoji) {
+            $emoticon = $emoticon->toReactionString();
+        }
 
         $this->http->put(
             "channels/{$this->channel->id}/messages/{$this->id}/reactions/{$emoticon}/@me"
@@ -109,9 +257,9 @@ class Message extends Part
     /**
      * Deletes a reaction.
      *
-     * @param int    $type     The type of deletion to perform.
-     * @param string $emoticon The emoticon to delete (if not all).
-     * @param string $id       The user reaction to delete (if not all).
+     * @param int               $type     The type of deletion to perform.
+     * @param Emoji|string|null $emoticon The emoticon to delete (if not all).
+     * @param string            $id       The user reaction to delete (if not all).
      *
      * @return \React\Promise\Promise
      */
@@ -120,6 +268,10 @@ class Message extends Part
         $deferred = new Deferred();
 
         $types = [self::REACT_DELETE_ALL, self::REACT_DELETE_ME, self::REACT_DELETE_ID];
+
+        if ($emoticon instanceof Emoji) {
+            $emoticon = $emoticon->toReactionString();
+        }
 
         if (in_array($type, $types)) {
             switch ($type) {
@@ -148,6 +300,75 @@ class Message extends Part
     }
 
     /**
+     * Deletes the message from the channel.
+     *
+     * @return \React\Promise\Promise
+     */
+    public function delete()
+    {
+        $deferred = new Deferred();
+
+        $this->http->delete("channels/{$this->channel_id}/messages/{$this->id}")->then(
+            \React\Partial\bind_right($this->resolve, $deferred),
+            \React\Partial\bind_right($this->reject, $deferred)
+        );
+
+        return $deferred->promise();
+    }
+
+    /**
+     * Creates a reaction collector for the message.
+     * 
+     * @param callable $filter The filter function. Returns true or false.
+     * @param int      $options['time']  Time in milliseconds until the collector finishes or false.
+     * @param int      $options['limit'] The amount of reactions allowed or false.
+     *
+     * @return \React\Promise\Promise
+     */
+    public function createReactionCollector(callable $filter, $options = [])
+    {
+        $deferred = new Deferred();
+        $reactions = new \Illuminate\Support\Collection();
+        $timer = null;
+
+        $options = array_merge([
+            'time' => false,
+            'limit' => false,
+        ], $options);
+
+        $eventHandler = function (MessageReaction $reaction) use (&$eventHandler, $filter, $options, &$reactions, &$deferred, &$timer) {
+            if ($reaction->message_id != $this->id) {
+                return;
+            }
+
+            $filterResult = call_user_func_array($filter, [$reaction]);
+
+            if ($filterResult) {
+                $reactions->push($reaction);
+
+                if ($options['limit'] !== false && sizeof($reactions) >= $options['limit']) {
+                    $this->discord->removeListener(Event::MESSAGE_REACTION_ADD, $eventHandler);
+                    $deferred->resolve($reactions);
+
+                    if (! is_null($timer)) {
+                        $this->discord->getLoop()->cancelTimer($timer);
+                    }
+                }
+            }
+        };
+        $this->discord->on(Event::MESSAGE_REACTION_ADD, $eventHandler);
+
+        if ($options['time'] !== false) {
+            $timer = $this->discord->getLoop()->addTimer($options['time'] / 1000, function () use (&$eventHandler, &$reactions, &$deferred) {
+                $this->discord->removeListener(Event::MESSAGE_REACTION_ADD, $eventHandler);
+                $deferred->resolve($reactions);
+            });
+        }
+
+        return $deferred->promise();
+    }
+
+    /**
      * Returns the channel attribute.
      *
      * @return Channel The channel the message was sent in.
@@ -155,18 +376,17 @@ class Message extends Part
     public function getChannelAttribute()
     {
         foreach ($this->discord->guilds as $guild) {
-            $channel = $guild->channels->get('id', $this->channel_id);
-            if (! empty($channel)) {
+            if ($channel = $guild->channels->get('id', $this->channel_id)) {
                 return $channel;
             }
         }
 
-        if ($this->cache->has("pm_channels.{$this->channel_id}")) {
-            return $this->cache->get("pm_channels.{$this->channel_id}");
+        if ($channel = $this->discord->private_channels->get('id', $this->channel_id)) {
+            return $channel;
         }
 
         return $this->factory->create(Channel::class, [
-            'id'   => $this->channel_id,
+            'id' => $this->channel_id,
             'type' => Channel::TYPE_DM,
         ], true);
     }
@@ -212,11 +432,11 @@ class Message extends Part
      */
     public function getAuthorAttribute()
     {
-        if ($this->channel->type != Channel::TYPE_TEXT) {
-            return $this->factory->create(User::class, $this->attributes['author'], true);
+        if ($this->channel->type != Channel::TYPE_TEXT && $author = $this->channel->guild->members->get('id', $this->attributes['author']->id)) {
+            return $author;
         }
 
-        return $this->channel->guild->members->get('id', $this->attributes['author']->id);
+        return $this->factory->create(User::class, $this->attributes['author'], true);
     }
 
     /**
@@ -226,7 +446,7 @@ class Message extends Part
      */
     public function getEmbedsAttribute()
     {
-        $embeds = new Collection();
+        $embeds = new Collection([], null);
 
         foreach ($this->attributes['embeds'] as $embed) {
             $embeds->push($this->factory->create(Embed::class, $embed, true));
@@ -260,15 +480,32 @@ class Message extends Part
     }
 
     /**
+     * Adds an embed to the message.
+     * 
+     * @param Embed $embed
+     * 
+     * @return \React\Promise\Promise
+     */
+    public function addEmbed(Embed $embed)
+    {
+        $deferred = new Deferred();
+
+        $this->http->patch("channels/{$this->channel_id}/messages/{$this->id}", [
+            'embed' => $embed->getRawAttributes()
+        ])->then(function ($data) use ($deferred) {
+            $this->fill($data);
+            $deferred->resolve($this);
+        },\React\Partial\bind_right($this->reject, $deferred));
+
+        return $deferred->promise();
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function getCreatableAttributes()
     {
-        return [
-            'content'  => $this->content,
-            'mentions' => $this->mentions,
-            'tts'      => $this->tts,
-        ];
+        return [];
     }
 
     /**
@@ -277,8 +514,8 @@ class Message extends Part
     public function getUpdatableAttributes()
     {
         return [
-            'content'  => $this->content,
-            'mentions' => $this->mentions,
+            'content' => $this->content,
+            'flags' => $this->flags,
         ];
     }
 }

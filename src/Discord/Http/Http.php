@@ -3,7 +3,7 @@
 /*
  * This file is apart of the DiscordPHP project.
  *
- * Copyright (c) 2016 David Cole <david@team-reflex.com>
+ * Copyright (c) 2016-2020 David Cole <david.cole1340@gmail.com>
  *
  * This source file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -74,18 +74,16 @@ class Http
      */
     public function __construct(CacheWrapper $cache, $token, $version, $driver)
     {
-        $this->cache   = $cache;
-        $this->token   = $token;
+        $this->cache = $cache;
+        $this->token = $token;
         $this->version = $version;
-        $this->driver  = $driver;
+        $this->driver = $driver;
     }
 
     /**
      * Sets the HTTP driver.
      *
      * @param HttpDriver $driver
-     *
-     * @return void
      */
     public function setDriver(HttpDriver $driver)
     {
@@ -104,12 +102,12 @@ class Http
      */
     public function __call($name, $params)
     {
-        $url      = $params[0];
-        $content  = (isset($params[1])) ? $params[1] : null;
-        $headers  = (isset($params[2])) ? $params[2] : [];
-        $cache    = (isset($params[3])) ? $params[3] : null;
+        $url = $params[0];
+        $content = (isset($params[1])) ? $params[1] : null;
+        $headers = (isset($params[2])) ? $params[2] : [];
+        $cache = (isset($params[3])) ? $params[3] : null;
         $blocking = (isset($params[4])) ? $params[4] : false;
-        $options  = (isset($params[5])) ? $params[5] : [];
+        $options = (isset($params[5])) ? $params[5] : [];
 
         return $this->runRequest(strtolower($name), $url, $content, $headers, $cache, $blocking, $options);
     }
@@ -135,11 +133,11 @@ class Http
      */
     private function runRequest($method, $url, $content, $extraHeaders, $cache, $blocking, $options)
     {
-        $deferred     = new Deferred();
+        $deferred = new Deferred();
         $disable_json = false;
 
         $key = 'guzzle.'.sha1($url);
-        if ($method === 'get' && $this->cache->has($key)) {
+        if ($method === 'get' && $this->cache->has($key) && $cache !== false) {
             $deferred->resolve($this->cache->get($key));
 
             return $deferred->promise();
@@ -158,8 +156,8 @@ class Http
         $headers = array_merge($headers, $extraHeaders);
 
         if (! is_null($content)) {
-            $headers['Content-Type']   = 'application/json';
-            $content                   = json_encode($content);
+            $headers['Content-Type'] = 'application/json';
+            $content = json_encode($content);
             $headers['Content-Length'] = strlen($content);
         }
 
@@ -232,16 +230,16 @@ class Http
     {
         $multipart = [
             [
-                'name'     => 'file',
+                'name' => 'file',
                 'contents' => fopen($filepath, 'r'),
                 'filename' => $filename,
             ],
             [
-                'name'     => 'tts',
+                'name' => 'tts',
                 'contents' => ($tts ? 'true' : 'false'),
             ],
             [
-                'name'     => 'content',
+                'name' => 'content',
                 'contents' => (string) $content,
             ],
         ];

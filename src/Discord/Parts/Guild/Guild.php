@@ -3,7 +3,7 @@
 /*
  * This file is apart of the DiscordPHP project.
  *
- * Copyright (c) 2016 David Cole <david@team-reflex.com>
+ * Copyright (c) 2016-2020 David Cole <david.cole1340@gmail.com>
  *
  * This source file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -12,10 +12,10 @@
 namespace Discord\Parts\Guild;
 
 use Carbon\Carbon;
-use Discord\Helpers\Collection;
 use Discord\Parts\Part;
 use Discord\Parts\User\Member;
 use Discord\Repository\Guild as Repository;
+use Illuminate\Support\Collection;
 use React\Promise\Deferred;
 
 /**
@@ -48,18 +48,7 @@ use React\Promise\Deferred;
  */
 class Guild extends Part
 {
-    const REGION_DEFAULT = self::REGION_US_WEST;
-
-    const REGION_US_WEST    = 'us-west';
-    const REGION_US_SOUTH   = 'us-south';
-    const REGION_US_EAST    = 'us-east';
-    const REGION_US_CENTRAL = 'us-central';
-    const REGION_SINGAPORE  = 'singapore';
-    const REGION_LONDON     = 'london';
-    const REGION_SYDNEY     = 'sydney';
-    const REGION_FRANKFURT  = 'frankfurt';
-    const REGION_AMSTERDAM  = 'amsterdam';
-    const REGION_BRAZIL     = 'brazil';
+    const REGION_DEFAULT = 'us_west';
 
     /**
      * The 'off' verification level.
@@ -122,31 +111,39 @@ class Guild extends Part
      * {@inheritdoc}
      */
     protected $repositories = [
-        'members'  => Repository\MemberRepository::class,
-        'roles'    => Repository\RoleRepository::class,
+        'members' => Repository\MemberRepository::class,
+        'roles' => Repository\RoleRepository::class,
         'channels' => Repository\ChannelRepository::class,
-        'bans'     => Repository\BanRepository::class,
-        'invites'  => Repository\InviteRepository::class,
-        'emojis'   => Repository\EmojiRepository::class,
+        'bans' => Repository\BanRepository::class,
+        'invites' => Repository\InviteRepository::class,
+        'emojis' => Repository\EmojiRepository::class,
     ];
 
     /**
      * An array of valid regions.
      *
-     * @var array Array of valid regions.
+     * @var Collection|null
      */
-    protected $regions = [
-        self::REGION_US_WEST,
-        self::REGION_US_SOUTH,
-        self::REGION_US_EAST,
-        self::REGION_US_CENTRAL,
-        self::REGION_LONDON,
-        self::REGION_SINGAPORE,
-        self::REGION_SYDNEY,
-        self::REGION_FRANKFURT,
-        self::REGION_AMSTERDAM,
-        self::REGION_BRAZIL,
-    ];
+    protected $regions;
+
+    /**
+     * Gets the voice regions available.
+     *
+     * @return \React\Promise\Promise
+     */
+    public function getVoiceRegions()
+    {
+        $deferred = new Deferred();
+
+        $this->http->get('voice/regions')->then(function ($regions) use ($deferred) {
+            $regions = new Collection($regions);
+
+            $this->regions = $regions;
+            $deferred->resolve($regions);
+        }, \React\Partial\bind([$deferred, 'reject']));
+
+        return $deferred->promise();
+    }
 
     /**
      * Creates a role.
@@ -329,17 +326,33 @@ class Guild extends Part
     /**
      * Validates the specified region.
      *
-     * @return string Returns the region if it is valid or default.
+     * @return \React\Promise\Promise
      *
      * @see self::REGION_DEFAULT The default region.
      */
     public function validateRegion()
     {
-        if (! in_array($this->region, $this->regions)) {
-            return self::REGION_DEFUALT;
+        $deferred = new Deferred();
+
+        $validate = function () use ($deferred) {
+            $regions = $this->regions->map(function ($region) {
+                return $region->id;
+            })->toArray();
+            
+            if (! in_array($this->region, $regions)) {
+                $deferred->resolve(self::REGION_DEFAULT);
+            } else {
+                $deferred->resolve($this->region);
+            }
+        };
+
+        if (! is_null($this->regions)) {
+            $validate();
+        } else {
+            $this->getVoiceRegions()->then($validate, \React\Partial\bind([$deferred, 'reject']));
         }
 
-        return $this->region;
+        return $deferred->promise();
     }
 
     /**
@@ -356,8 +369,8 @@ class Guild extends Part
     public function getCreatableAttributes()
     {
         return [
-            'name'   => $this->name,
-            'region' => $this->validateRegion(),
+            'name' => $this->name,
+            'region' => $this->region,
         ];
     }
 
@@ -367,13 +380,13 @@ class Guild extends Part
     public function getUpdatableAttributes()
     {
         return [
-            'name'               => $this->name,
-            'region'             => $this->region,
-            'logo'               => $this->logo,
-            'splash'             => $this->splash,
+            'name' => $this->name,
+            'region' => $this->region,
+            'logo' => $this->logo,
+            'splash' => $this->splash,
             'verification_level' => $this->verification_level,
-            'afk_channel_id'     => $this->afk_channel_id,
-            'afk_timeout'        => $this->afk_timeout,
+            'afk_channel_id' => $this->afk_channel_id,
+            'afk_timeout' => $this->afk_timeout,
         ];
     }
 

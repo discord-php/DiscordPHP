@@ -3,7 +3,7 @@
 /*
  * This file is apart of the DiscordPHP project.
  *
- * Copyright (c) 2016 David Cole <david@team-reflex.com>
+ * Copyright (c) 2016-2020 David Cole <david.cole1340@gmail.com>
  *
  * This source file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -25,8 +25,6 @@ class Handlers
 
     /**
      * Constructs the list of handlers.
-     *
-     * @return void
      */
     public function __construct()
     {
@@ -59,6 +57,7 @@ class Handlers
         $this->addHandler(Event::MESSAGE_REACTION_ADD, \Discord\WebSockets\Events\MessageReactionAdd::class);
         $this->addHandler(Event::MESSAGE_REACTION_REMOVE, \Discord\WebSockets\Events\MessageReactionRemove::class);
         $this->addHandler(Event::MESSAGE_REACTION_REMOVE_ALL, \Discord\WebSockets\Events\MessageReactionRemoveAll::class);
+        $this->addHandler(Event::MESSAGE_REACTION_REMOVE_EMOJI, \Discord\WebSockets\Events\MessageReactionRemoveEmoji::class);
 
         // New Member Event handlers
         $this->addHandler(Event::GUILD_MEMBER_ADD, \Discord\WebSockets\Events\GuildMemberAdd::class);
@@ -77,13 +76,11 @@ class Handlers
      * @param string $event        The WebSocket event name.
      * @param string $classname    The Event class name.
      * @param array  $alternatives Alternative event names for the handler.
-     *
-     * @return void
      */
     public function addHandler($event, $classname, array $alternatives = [])
     {
         $this->handlers[$event] = [
-            'class'        => $classname,
+            'class' => $classname,
             'alternatives' => $alternatives,
         ];
     }
@@ -93,7 +90,7 @@ class Handlers
      *
      * @param string $event The WebSocket event name.
      *
-     * @return string|null The Event class name or null;
+     * @return array|null The Event class name or null;
      */
     public function getHandler($event)
     {
@@ -126,8 +123,6 @@ class Handlers
      * Removes a handler.
      *
      * @param string $event The event handler to remove.
-     *
-     * @return void
      */
     public function removeHandler($event)
     {

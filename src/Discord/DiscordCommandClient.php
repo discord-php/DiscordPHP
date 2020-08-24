@@ -3,7 +3,7 @@
 /*
  * This file is apart of the DiscordPHP project.
  *
- * Copyright (c) 2016 David Cole <david@team-reflex.com>
+ * Copyright (c) 2016-2020 David Cole <david.cole1340@gmail.com>
  *
  * This source file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -130,7 +130,7 @@ class DiscordCommandClient extends Discord
                 $message->channel->sendMessage($response);
             }, [
                 'description' => 'Provides a list of commands available.',
-                'usage'       => '[command]',
+                'usage' => '[command]',
             ]);
         }
     }
@@ -151,7 +151,7 @@ class DiscordCommandClient extends Discord
         }
 
         list($commandInstance, $options) = $this->buildCommand($command, $callable, $options);
-        $this->commands[$command]        = $commandInstance;
+        $this->commands[$command] = $commandInstance;
 
         foreach ($options['aliases'] as $alias) {
             $this->registerAlias($alias, $command);
@@ -311,11 +311,11 @@ class DiscordCommandClient extends Discord
                 'discordOptions',
             ])
             ->setDefaults([
-                'prefix'             => '@mention ',
-                'name'               => '<UsernamePlaceholder>',
-                'description'        => 'A bot made with DiscordPHP.',
+                'prefix' => '@mention ',
+                'name' => '<UsernamePlaceholder>',
+                'description' => 'A bot made with DiscordPHP.',
                 'defaultHelpCommand' => true,
-                'discordOptions'     => [],
+                'discordOptions' => [],
             ]);
 
         return $resolver->resolve($options);

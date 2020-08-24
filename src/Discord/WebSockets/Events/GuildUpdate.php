@@ -3,7 +3,7 @@
 /*
  * This file is apart of the DiscordPHP project.
  *
- * Copyright (c) 2016 David Cole <david@team-reflex.com>
+ * Copyright (c) 2016-2020 David Cole <david.cole1340@gmail.com>
  *
  * This source file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -39,9 +39,9 @@ class GuildUpdate extends Event
         );
 
         foreach ($data->roles as $role) {
-            $role             = (array) $role;
+            $role = (array) $role;
             $role['guild_id'] = $guildPart->id;
-            $rolePart         = $this->factory->create(Role::class, $role, true);
+            $rolePart = $this->factory->create(Role::class, $role, true);
 
             $roles->push($rolePart);
         }

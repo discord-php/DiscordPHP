@@ -3,7 +3,7 @@
 /*
  * This file is apart of the DiscordPHP project.
  *
- * Copyright (c) 2016 David Cole <david@team-reflex.com>
+ * Copyright (c) 2016-2020 David Cole <david.cole1340@gmail.com>
  *
  * This source file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -135,8 +135,6 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
      * @param CacheWrapper $cache      The cache.
      * @param array        $attributes An array of attributes to build the part.
      * @param bool         $created    Whether the part has already been created.
-     *
-     * @return void
      */
     public function __construct(
         Factory $factory,
@@ -148,8 +146,8 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
     ) {
         $this->factory = $factory;
         $this->discord = $discord;
-        $this->http    = $http;
-        $this->cache   = $cache;
+        $this->http = $http;
+        $this->cache = $cache;
 
         $this->created = $created;
         $this->fill($attributes);
@@ -175,8 +173,6 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
      * Fills the parts attributes from an array.
      *
      * @param array $attributes An array of attributes to build the part.
-     *
-     * @return void
      */
     public function fill($attributes)
     {
@@ -231,7 +227,7 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
         $matcher = preg_match_all($this->regex, $string, $matches);
 
         $original = $matches[0];
-        $vars     = $matches[1];
+        $vars = $matches[1];
 
         foreach ($vars as $key => $variable) {
             if ($attribute = $this->getAttribute($variable)) {
@@ -260,7 +256,7 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
         $matcher = preg_match_all($this->regex, $string, $matches);
 
         $original = $matches[0];
-        $vars     = $matches[1];
+        $vars = $matches[1];
 
         foreach ($vars as $key => $variable) {
             if ($attribute = $params[$variable]) {
@@ -318,8 +314,6 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
      *
      * @param string $key   The key to the attribute.
      * @param mixed  $value The value of the attribute.
-     *
-     * @return void
      */
     public function setAttribute($key, $value)
     {
@@ -354,8 +348,6 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
      *
      * @param string $key   The cache key.
      * @param mixed  $value The cache value.
-     *
-     * @return void
      */
     public function setCache($key, $value)
     {
@@ -406,7 +398,6 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
      * @param string $key   The attribute key.
      * @param mixed  $value The attribute value.
      *
-     * @return void
      *
      * @see self::setAttribute() This function forwards onto setAttribute.
      */
@@ -419,8 +410,6 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
      * Unsets an attribute via key. Used for ArrayAccess.
      *
      * @param string $key The attribute key.
-     *
-     * @return void
      */
     public function offsetUnset($key)
     {
@@ -560,7 +549,6 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
      * @param string $key   The attributes key.
      * @param mixed  $value The attributes value.
      *
-     * @return void
      *
      * @see self::setAttribute() This function forwards onto setAttribute.
      */

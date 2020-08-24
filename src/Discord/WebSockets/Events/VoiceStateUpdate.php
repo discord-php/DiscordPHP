@@ -3,7 +3,7 @@
 /*
  * This file is apart of the DiscordPHP project.
  *
- * Copyright (c) 2016 David Cole <david@team-reflex.com>
+ * Copyright (c) 2016-2020 David Cole <david.cole1340@gmail.com>
  *
  * This source file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -11,6 +11,7 @@
 
 namespace Discord\WebSockets\Events;
 
+use Discord\Parts\Channel\Channel;
 use Discord\Parts\WebSockets\VoiceStateUpdate as VoiceStateUpdatePart;
 use Discord\WebSockets\Event;
 use React\Promise\Deferred;
@@ -24,24 +25,32 @@ class VoiceStateUpdate extends Event
     {
         $state = $this->factory->create(VoiceStateUpdatePart::class, $data, true);
 
-        foreach ($this->discord->guilds as $index => $guild) {
-            if ($guild->id == $state->guild_id) {
-                foreach ($guild->channels as $cindex => $channel) {
-                    $channel->members->pull($state->id);
+        if ($state->guild) {
+            $guild = $state->guild;
 
-                    if ($channel->id == $state->channel_id) {
-                        $channel->members->push($state);
+            // Remove old member states
+            foreach ($guild->channels as $channel) {
+                if ($channel->getChannelType() !== Channel::TYPE_VOICE) {
+                    continue;
+                }
+
+                foreach ($channel->members as $member) {
+                    if ($member->user_id == $state->user_id) {
+                        $channel->members->pull($member->user_id);
                     }
                 }
-            } else {
-                $user = $this->discord->users->get('id', $state->id);
 
-                foreach ($guild->channels as $cindex => $channel) {
-                    if (! (isset($user) && $user->bot)) {
-                        $channel->members->pull($state->id);
-                    }
-                }
+                $guild->channels->push($channel);
             }
+
+            // Add member state to new channel
+            if ($state->channel_id && $channel = $guild->channels->get('id', $state->channel_id)) {
+                $channel->members->push($state);
+
+                $guild->channels->push($channel);
+            }
+
+            $this->discord->guilds->push($state->guild);
         }
 
         $deferred->resolve($state);
