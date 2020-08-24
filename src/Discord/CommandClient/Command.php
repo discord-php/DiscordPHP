@@ -91,6 +91,7 @@ class Command
         $command,
         callable $callable,
         $description,
+        $usage,
         $cooldown,
         $cooldownMessage
     ) {
