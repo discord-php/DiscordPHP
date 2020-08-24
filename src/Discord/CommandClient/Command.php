@@ -41,6 +41,27 @@ class Command
     protected $usage;
 
     /**
+     * The cooldown of the command in milliseconds.
+     *
+     * @var int Command cooldown.
+     */
+    protected $cooldown;
+
+    /**
+     * The cooldown message to show when a cooldown is in effect.
+     *
+     * @var string Command cooldown message.
+     */
+    protected $cooldownMessage;
+
+    /**
+     * An array of cooldowns for commands.
+     *
+     * @var array Cooldowns.
+     */
+    protected $cooldowns = [];
+
+    /**
      * A map of sub-commands.
      *
      * @var array Sub-Commands.
@@ -57,24 +78,30 @@ class Command
     /**
      * Creates a command instance.
      *
-     * @param DiscordCommandClient $client      The Discord Command Client.
-     * @param string               $command     The command trigger.
-     * @param \Callable            $callable    The callable function.
-     * @param string               $description The description of the command.
-     * @param string               $usage       The usage of the command.
+     * @param DiscordCommandClient $client           The Discord Command Client.
+     * @param string               $command          The command trigger.
+     * @param \Callable            $callable         The callable function.
+     * @param string               $description      The description of the command.
+     * @param string               $usage            The usage of the command.
+     * @param int                  $cooldown         The cooldown of the command in milliseconds.
+     * @param int                  $cooldownMessage  The cooldown message to show when a cooldown is in effect.
      */
     public function __construct(
         DiscordCommandClient $client,
         $command,
         callable $callable,
         $description,
-        $usage
+        $usage,
+        $cooldown,
+        $cooldownMessage
     ) {
-        $this->client = $client;
-        $this->command = $command;
-        $this->callable = $callable;
-        $this->description = $description;
-        $this->usage = $usage;
+        $this->client           = $client;
+        $this->command          = $command;
+        $this->callable         = $callable;
+        $this->description      = $description;
+        $this->usage            = $usage;
+        $this->cooldown         = $cooldown;
+        $this->cooldownMessage  = $cooldownMessage;
     }
 
     /**
@@ -163,6 +190,17 @@ class Command
             array_unshift($args, $subCommand);
         }
 
+        $currentTime = round(microtime(true) * 1000);
+        if (isset($this->cooldowns[$message->author->id])) {
+            if ($this->cooldowns[$message->author->id] < $currentTime) {
+                $this->cooldowns[$message->author->id] = $currentTime + $this->cooldown;
+            } else {
+                return sprintf($this->cooldownMessage, (($this->cooldowns[$message->author->id] - $currentTime) / 1000));
+            }
+        } else {
+            $this->cooldowns[$message->author->id] = $currentTime + $this->cooldown;
+        }
+
         return call_user_func_array($this->callable, [$message, $args]);
     }
 
@@ -197,7 +235,7 @@ class Command
      */
     public function __get($variable)
     {
-        $allowed = ['command', 'description', 'usage'];
+        $allowed = ['command', 'description', 'usage', 'cooldown', 'cooldownMessage'];
 
         if (array_search($variable, $allowed) !== false) {
             return $this->{$variable};

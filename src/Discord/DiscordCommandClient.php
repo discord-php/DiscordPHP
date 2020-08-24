@@ -247,7 +247,7 @@ class DiscordCommandClient extends Discord
 
         $commandInstance = new Command(
             $this, $command, $callable,
-            $options['description'], $options['usage'], $options['aliases']);
+            $options['description'], $options['usage'], $options['cooldown'], $options['cooldownMessage']);
 
         return [$commandInstance, $options];
     }
@@ -268,11 +268,15 @@ class DiscordCommandClient extends Discord
                 'description',
                 'usage',
                 'aliases',
+                'cooldown',
+                'cooldownMessage',
             ])
             ->setDefaults([
-                'description' => 'No description provided.',
-                'usage' => '',
-                'aliases' => [],
+                'description'     => 'No description provided.',
+                'usage'           => '',
+                'aliases'         => [],
+                'cooldown'        => 0,
+                'cooldownMessage' => 'please wait %d second(s) to use this command again.',
             ]);
 
         $options = $resolver->resolve($options);
