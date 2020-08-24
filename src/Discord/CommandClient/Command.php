@@ -190,15 +190,15 @@ class Command
             array_unshift($args, $subCommand);
         }
 
-        $currentTime = round(microtime(true));
+        $currentTime = round(microtime(true) * 1000);
         if (isset($this->cooldowns[$message->author->id])) {
             if ($this->cooldowns[$message->author->id] < $currentTime) {
-                $this->cooldowns[$message->author->id] = $currentTime + ($this->cooldown / 1000);
+                $this->cooldowns[$message->author->id] = $currentTime + $this->cooldown;
             } else {
-                return sprintf($this->cooldownMessage, ($this->cooldowns[$message->author->id] - $currentTime));
+                return sprintf($this->cooldownMessage, (($this->cooldowns[$message->author->id] - $currentTime) / 1000));
             }
         } else {
-            $this->cooldowns[$message->author->id] = $currentTime + ($this->cooldown / 1000);
+            $this->cooldowns[$message->author->id] = $currentTime + $this->cooldown;
         }
 
         return call_user_func_array($this->callable, [$message, $args]);
