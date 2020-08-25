@@ -271,28 +271,19 @@ class Channel extends Part
     /**
      * Creates an invite for the channel.
      *
-     * @param int  $max_age   The time that the invite will be valid in seconds.
-     * @param int  $max_uses  The amount of times the invite can be used.
-     * @param bool $temporary Whether the invite is for temporary membership.
-     * @param bool $unique    Whether the invite code should be unique (useful for creating many unique one time use invites).
+     * @param array $options             An array of options. All fields are optional.
+     * @param int  $options['max_age']   The time that the invite will be valid in seconds.
+     * @param int  $options['max_uses']  The amount of times the invite can be used.
+     * @param bool $options['temporary']  Whether the invite is for temporary membership.
+     * @param bool $options['unique']    Whether the invite code should be unique (useful for creating many unique one time use invites).
      *
      * @return \React\Promise\Promise
      */
-    public function createInvite($max_age = 3600, $max_uses = 0, $temporary = false, $unique = false)
+    public function createInvite($options = [])
     {
         $deferred = new Deferred();
 
-        $this->http->post(
-            $this->replaceWithVariables('channels/:id/invites'),
-            [
-                'validate' => null,
-
-                'max_age'   => $max_age,
-                'max_uses'  => $max_uses,
-                'temporary' => $temporary,
-                'unique'    => $unique,
-            ]
-        )->then(
+        $this->http->post($this->replaceWithVariables('channels/:id/invites'), $options)->then(
             function ($response) use ($deferred) {
                 $invite = $this->factory->create(Invite::class, $response, true);
 
