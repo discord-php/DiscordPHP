@@ -274,11 +274,11 @@ class Channel extends Part
      * @param int  $max_age   The time that the invite will be valid in seconds.
      * @param int  $max_uses  The amount of times the invite can be used.
      * @param bool $temporary Whether the invite is for temporary membership.
-     * @param bool $xkcd      Whether to generate an XKCD invite.
+     * @param bool $unique    Whether the invite code should be unique (useful for creating many unique one time use invites).
      *
      * @return \React\Promise\Promise
      */
-    public function createInvite($max_age = 3600, $max_uses = 0, $temporary = false, $xkcd = false)
+    public function createInvite($max_age = 3600, $max_uses = 0, $temporary = false, $unique = false)
     {
         $deferred = new Deferred();
 
@@ -287,10 +287,10 @@ class Channel extends Part
             [
                 'validate' => null,
 
-                'max_age' => $max_age,
-                'max_uses' => $max_uses,
+                'max_age'   => $max_age,
+                'max_uses'  => $max_uses,
                 'temporary' => $temporary,
-                'xkcdpass' => $xkcd,
+                'unique'    => $unique,
             ]
         )->then(
             function ($response) use ($deferred) {
