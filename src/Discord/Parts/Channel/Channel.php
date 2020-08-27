@@ -274,11 +274,11 @@ class Channel extends Part
     /**
      * Creates an invite for the channel.
      *
-     * @param array $options             An array of options. All fields are optional.
-     * @param int  $options['max_age']   The time that the invite will be valid in seconds.
-     * @param int  $options['max_uses']  The amount of times the invite can be used.
-     * @param bool $options['temporary']  Whether the invite is for temporary membership.
-     * @param bool $options['unique']    Whether the invite code should be unique (useful for creating many unique one time use invites).
+     * @param array $options              An array of options. All fields are optional.
+     * @param int   $options['max_age']   The time that the invite will be valid in seconds.
+     * @param int   $options['max_uses']  The amount of times the invite can be used.
+     * @param bool  $options['temporary'] Whether the invite is for temporary membership.
+     * @param bool  $options['unique']    Whether the invite code should be unique (useful for creating many unique one time use invites).
      *
      * @return \React\Promise\Promise
      */

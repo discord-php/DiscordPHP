@@ -272,10 +272,10 @@ class DiscordCommandClient extends Discord
                 'cooldownMessage',
             ])
             ->setDefaults([
-                'description'     => 'No description provided.',
-                'usage'           => '',
-                'aliases'         => [],
-                'cooldown'        => 0,
+                'description' => 'No description provided.',
+                'usage' => '',
+                'aliases' => [],
+                'cooldown' => 0,
                 'cooldownMessage' => 'please wait %d second(s) to use this command again.',
             ]);
 

@@ -78,13 +78,13 @@ class Command
     /**
      * Creates a command instance.
      *
-     * @param DiscordCommandClient $client           The Discord Command Client.
-     * @param string               $command          The command trigger.
-     * @param \Callable            $callable         The callable function.
-     * @param string               $description      The description of the command.
-     * @param string               $usage            The usage of the command.
-     * @param int                  $cooldown         The cooldown of the command in milliseconds.
-     * @param int                  $cooldownMessage  The cooldown message to show when a cooldown is in effect.
+     * @param DiscordCommandClient $client          The Discord Command Client.
+     * @param string               $command         The command trigger.
+     * @param \Callable            $callable        The callable function.
+     * @param string               $description     The description of the command.
+     * @param string               $usage           The usage of the command.
+     * @param int                  $cooldown        The cooldown of the command in milliseconds.
+     * @param int                  $cooldownMessage The cooldown message to show when a cooldown is in effect.
      */
     public function __construct(
         DiscordCommandClient $client,
@@ -95,13 +95,13 @@ class Command
         $cooldown,
         $cooldownMessage
     ) {
-        $this->client           = $client;
-        $this->command          = $command;
-        $this->callable         = $callable;
-        $this->description      = $description;
-        $this->usage            = $usage;
-        $this->cooldown         = $cooldown;
-        $this->cooldownMessage  = $cooldownMessage;
+        $this->client = $client;
+        $this->command = $command;
+        $this->callable = $callable;
+        $this->description = $description;
+        $this->usage = $usage;
+        $this->cooldown = $cooldown;
+        $this->cooldownMessage = $cooldownMessage;
     }
 
     /**

@@ -319,7 +319,7 @@ class Message extends Part
     /**
      * Creates a reaction collector for the message.
      *
-     * @param callable $filter The filter function. Returns true or false.
+     * @param callable $filter           The filter function. Returns true or false.
      * @param int      $options['time']  Time in milliseconds until the collector finishes or false.
      * @param int      $options['limit'] The amount of reactions allowed or false.
      *
@@ -495,11 +495,11 @@ class Message extends Part
         $deferred = new Deferred();
 
         $this->http->patch("channels/{$this->channel_id}/messages/{$this->id}", [
-            'embed' => $embed->getRawAttributes()
+            'embed' => $embed->getRawAttributes(),
         ])->then(function ($data) use ($deferred) {
             $this->fill($data);
             $deferred->resolve($this);
-        },\React\Partial\bind_right($this->reject, $deferred));
+        }, \React\Partial\bind_right($this->reject, $deferred));
 
         return $deferred->promise();
     }
