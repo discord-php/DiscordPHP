@@ -65,6 +65,9 @@ class Channel extends Part
     const TYPE_DM = 1;
     const TYPE_VOICE = 2;
     const TYPE_GROUP = 3;
+    const TYPE_CATEGORY = 4;
+    const TYPE_NEWS = 5;
+    const TYPE_GAME_STORE = 6;
 
     /**
      * {@inheritdoc}
