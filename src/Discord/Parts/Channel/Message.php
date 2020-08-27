@@ -400,13 +400,11 @@ class Message extends Part
     {
         $roles = new Collection([], 'id');
 
-        if(!isset($this->channel->guild->roles)) {
-            return $roles;
-        }
-
-        foreach ($this->channel->guild->roles as $role) {
-            if (array_search($role->id, $this->attributes['mention_roles']) !== false) {
-                $roles->push($role);
+        if (isset($this->channel->guild->roles)) {
+            foreach ($this->channel->guild->roles as $role) {
+                if (array_search($role->id, $this->attributes['mention_roles']) !== false) {
+                    $roles->push($role);
+                }
             }
         }
 
@@ -436,14 +434,10 @@ class Message extends Part
      */
     public function getAuthorAttribute()
     {
-        if (
-            $this->channel->type != Channel::TYPE_TEXT &&
-            (
-                isset($this->channel->guild->members) and
-                $author = $this->channel->guild->members->get('id', $this->attributes['author']->id)
-            )
-        ) {
-            return $author;
+        if ($this->channel->type == Channel::TYPE_TEXT) {
+            if ($author = $this->channel->guild->members->get('id', $this->attributes['author']->id)) {
+                return $author;
+            }
         }
 
         return $this->factory->create(User::class, $this->attributes['author'], true);
