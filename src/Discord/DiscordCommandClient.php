@@ -152,6 +152,8 @@ class DiscordCommandClient extends Discord
                     }
 
                     $message->channel->sendMessage('', false, $embed);
+                    
+                    return;
                 }
 
                 $embed = [
