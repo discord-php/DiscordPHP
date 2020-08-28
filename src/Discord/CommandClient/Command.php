@@ -104,14 +104,14 @@ class Command
         $cooldown,
         $cooldownMessage
     ) {
-        $this->client           = $client;
-        $this->command          = $command;
-        $this->callable         = $callable;
-        $this->description      = $description;
-        $this->longDescription  = $longDescription;
-        $this->usage            = $usage;
-        $this->cooldown         = $cooldown;
-        $this->cooldownMessage  = $cooldownMessage;
+        $this->client = $client;
+        $this->command = $command;
+        $this->callable = $callable;
+        $this->description = $description;
+        $this->longDescription = $longDescription;
+        $this->usage = $usage;
+        $this->cooldown = $cooldown;
+        $this->cooldownMessage = $cooldownMessage;
     }
 
     /**
@@ -230,10 +230,10 @@ class Command
         }
 
         return [
-            'command'         => $prefix.$this->command,
-            'description'     => $this->description,
+            'command' => $prefix.$this->command,
+            'description' => $this->description,
             'longDescription' => $this->longDescription,
-            'usage'           => $this->usage,
+            'usage' => $this->usage,
             'subCommandsHelp' => $subCommandsHelp,
         ];
     }

@@ -104,28 +104,26 @@ class DiscordCommandClient extends Discord
                     $embed = [
                         'author' => [
                             'name' => $this->commandClientOptions['name'],
-                            'icon_url' => $this->client->user->avatar
+                            'icon_url' => $this->client->user->avatar,
                         ],
-                        "title" => $help['command'].'\'s Help',
-                        "description" => !empty($help['longDescription'])?$help['longDescription']:$help['description'],
+                        'title' => $help['command'].'\'s Help',
+                        'description' => ! empty($help['longDescription']) ? $help['longDescription'] : $help['description'],
                         'fields' => [],
-                        'footer' => array(
-                            'text'  => $this->commandClientOptions['name'],
-                        ),
+                        'footer' => [
+                            'text' => $this->commandClientOptions['name'],
+                        ],
                     ];
 
-                    if (!empty($help['usage']))
-                    {
-                        $embed['fields'][] = array(
+                    if (! empty($help['usage'])) {
+                        $embed['fields'][] = [
                             'name' => 'Usage',
-                            'value' => "``".$help['usage']."``",
-                            'inline' => true
-                        );
+                            'value' => '``'.$help['usage'].'``',
+                            'inline' => true,
+                        ];
                     }
 
-                    if (!empty($this->aliases))
-                    {
-                        $aliasesString = "";
+                    if (! empty($this->aliases)) {
+                        $aliasesString = '';
                         foreach ($this->aliases as $alias => $command) {
                             if ($command != $commandString) {
                                 continue;
@@ -133,21 +131,20 @@ class DiscordCommandClient extends Discord
     
                             $aliasesString .= "{$alias}\r\n";
                         }
-                        $embed['fields'][] = array(
+                        $embed['fields'][] = [
                             'name' => 'Aliases',
                             'value' => $aliasesString,
-                            'inline' => true
-                        );
+                            'inline' => true,
+                        ];
                     }
 
-                    if (!empty($help['subCommandsHelp']))
-                    {
+                    if (! empty($help['subCommandsHelp'])) {
                         foreach ($help['subCommandsHelp'] as $subCommandHelp) {
-                            $embed['fields'][] = array(
+                            $embed['fields'][] = [
                                 'name' => $subCommandHelp['command'],
                                 'value' => $subCommandHelp['description'],
-                                'inline' => true
-                            );
+                                'inline' => true,
+                            ];
                         }
                     }
 
@@ -159,33 +156,30 @@ class DiscordCommandClient extends Discord
                 $embed = [
                     'author' => [
                         'name' => $this->commandClientOptions['name'],
-                        'icon_url' => $this->client->avatar
+                        'icon_url' => $this->client->avatar,
                     ],
-                    "title" => $this->commandClientOptions['name'].'\'s Help',
-                    "description" => $this->commandClientOptions['description']."\n\nRun `{$prefix}help` command to get more information about a specific command.\n----------------------------",
+                    'title' => $this->commandClientOptions['name'].'\'s Help',
+                    'description' => $this->commandClientOptions['description']."\n\nRun `{$prefix}help` command to get more information about a specific command.\n----------------------------",
                     'fields' => [],
-                    'footer' => array(
-                        'text'  => $this->commandClientOptions['name'],
-                    ),
+                    'footer' => [
+                        'text' => $this->commandClientOptions['name'],
+                    ],
                 ];
 
                 // Fallback in case commands count reaches the fields limit
-                if (count($this->commands) > 20)
-                {
+                if (count($this->commands) > 20) {
                     foreach ($this->commands as $command) {
                         $help = $command->getHelp($prefix);
                         $embed['description'] .= "\n\n`".$help['command']."`\n".$help['description'];
                     }
-                }
-                else
-                {
+                } else {
                     foreach ($this->commands as $command) {
                         $help = $command->getHelp($prefix);
-                        $embed['fields'][] = array(
+                        $embed['fields'][] = [
                             'name' => $help['command'],
                             'value' => $help['description'],
-                            'inline' => true
-                        );
+                            'inline' => true,
+                        ];
                     }
                 }
 
