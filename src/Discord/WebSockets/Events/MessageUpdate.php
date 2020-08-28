@@ -24,24 +24,18 @@ class MessageUpdate extends Event
     public function handle(Deferred $deferred, $data)
     {
         $messagePart = $this->factory->create(Message::class, $data, true);
+        $channel = $messagePart->channel;
+        $oldMessage = $channel->messages->get('id', $messagePart->id);
 
-        $messages = $this->discord->getRepository(
-            MessageRepository::class,
-            $messagePart->channel_id,
-            'messages',
-            ['channel_id' => $messagePart->channel_id]
-        );
-        $message = $messages->get('id', $messagePart->id);
-
-        if (is_null($message)) {
+        if (is_null($oldMessage)) {
             $newMessage = $messagePart;
         } else {
-            $newMessage = $this->factory->create(Message::class, array_merge($message->getRawAttributes(), $messagePart->getRawAttributes()), true);
+            $newMessage = $this->factory->create(Message::class, array_merge($oldMessage->getRawAttributes(), $messagePart->getRawAttributes()), true);
         }
 
-        $old = $messages->get('id', $messagePart->id);
-        $messages->push($newMessage);
+        $channel->messages->push($newMessage);
+        $this->discord->guilds->get('id', $channel->guild_id)->channels->push($channel);
 
-        $deferred->resolve([$messagePart, $old]);
+        $deferred->resolve([$messagePart, $oldMessage]);
     }
 }
