@@ -97,7 +97,7 @@ abstract class AbstractRepository implements RepositoryInterface, ArrayAccess, C
         $this->http = $http;
         $this->cache = $cache;
         $this->factory = $factory;
-        $this->collection = new Collection([], $this->discrim);
+        $this->collection = new Collection([], $this->discrim, $this->part);
         $this->vars = $vars;
     }
 
