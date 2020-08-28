@@ -100,34 +100,96 @@ class DiscordCommandClient extends Discord
                     }
 
                     $help = $command->getHelp($prefix);
-                    $response = "```\r\n{$this->commandClientOptions['name']} - {$this->commandClientOptions['description']}\r\n\r\n{$help['text']}Aliases:\r\n";
+                    
+                    $embed = [
+                        'author' => [
+                            'name' => $this->commandClientOptions['name'],
+                            'icon_url' => $this->client->user->avatar
+                        ],
+                        "title" => $help['command'].'\'s Help',
+                        "description" => !empty($help['longDescription'])?$help['longDescription']:$help['description'],
+                        'fields' => [],
+                        'footer' => array(
+                            'text'  => $this->commandClientOptions['name'],
+                        ),
+                    ];
 
-                    foreach ($this->aliases as $alias => $command) {
-                        if ($command != $commandString) {
-                            continue;
-                        }
-
-                        $response .= "- {$alias}\r\n";
+                    if (!empty($help['usage']))
+                    {
+                        $embed['fields'][] = array(
+                            'name' => 'Usage',
+                            'value' => "``".$help['usage']."``",
+                            'inline' => true
+                        );
                     }
 
-                    $response .= '```';
+                    if (!empty($this->aliases))
+                    {
+                        $aliasesString = "";
+                        foreach ($this->aliases as $alias => $command) {
+                            if ($command != $commandString) {
+                                continue;
+                            }
+    
+                            $aliasesString .= "{$alias}\r\n";
+                        }
+                        $embed['fields'][] = array(
+                            'name' => 'Aliases',
+                            'value' => $aliasesString,
+                            'inline' => true
+                        );
+                    }
 
-                    $message->channel->sendMessage($response);
+                    if (!empty($help['subCommandsHelp']))
+                    {
+                        foreach ($help['subCommandsHelp'] as $subCommandHelp) {
+                            $embed['fields'][] = array(
+                                'name' => $subCommandHelp['command'],
+                                'value' => $subCommandHelp['description'],
+                                'inline' => true
+                            );
+                        }
+                    }
 
+                    $message->channel->sendMessage('', false, $embed);
+                    
                     return;
                 }
 
-                $response = "```\r\n{$this->commandClientOptions['name']} - {$this->commandClientOptions['description']}\r\n\r\n";
+                $embed = [
+                    'author' => [
+                        'name' => $this->commandClientOptions['name'],
+                        'icon_url' => $this->client->avatar
+                    ],
+                    "title" => $this->commandClientOptions['name'].'\'s Help',
+                    "description" => $this->commandClientOptions['description']."\n\nRun `{$prefix}help` command to get more information about a specific command.\n----------------------------",
+                    'fields' => [],
+                    'footer' => array(
+                        'text'  => $this->commandClientOptions['name'],
+                    ),
+                ];
 
-                foreach ($this->commands as $command) {
-                    $help = $command->getHelp($prefix);
-                    $response .= $help['text'];
+                // Fallback in case commands count reaches the fields limit
+                if (count($this->commands) > 20)
+                {
+                    foreach ($this->commands as $command) {
+                        $help = $command->getHelp($prefix);
+                        $embed['description'] .= "\n\n`".$help['command']."`\n".$help['description'];
+                    }
+                }
+                else
+                {
+                    foreach ($this->commands as $command) {
+                        $help = $command->getHelp($prefix);
+                        $embed['fields'][] = array(
+                            'name' => $help['command'],
+                            'value' => $help['description'],
+                            'inline' => true
+                        );
+                    }
                 }
 
-                $response .= "Run {$prefix}help command to get more information about a specific function.\r\n";
-                $response .= '```';
-
-                $message->channel->sendMessage($response);
+                $message->channel->sendMessage('', false, $embed);
             }, [
                 'description' => 'Provides a list of commands available.',
                 'usage' => '[command]',
@@ -247,7 +309,7 @@ class DiscordCommandClient extends Discord
 
         $commandInstance = new Command(
             $this, $command, $callable,
-            $options['description'], $options['usage'], $options['cooldown'], $options['cooldownMessage']);
+            $options['description'], $options['longDescription'], $options['usage'], $options['cooldown'], $options['cooldownMessage']);
 
         return [$commandInstance, $options];
     }
@@ -266,6 +328,7 @@ class DiscordCommandClient extends Discord
         $resolver
             ->setDefined([
                 'description',
+                'longDescription',
                 'usage',
                 'aliases',
                 'cooldown',
@@ -273,6 +336,7 @@ class DiscordCommandClient extends Discord
             ])
             ->setDefaults([
                 'description' => 'No description provided.',
+                'longDescription' => '',
                 'usage' => '',
                 'aliases' => [],
                 'cooldown' => 0,

@@ -27,11 +27,18 @@ class Command
     protected $command;
 
     /**
-     * The description of the command.
+     * The short description of the command.
      *
      * @var string Description.
      */
     protected $description;
+
+    /**
+     * The long description of the command.
+     *
+     * @var string Long description.
+     */
+    protected $longDescription;
 
     /**
      * The usage of the command.
@@ -81,7 +88,8 @@ class Command
      * @param DiscordCommandClient $client          The Discord Command Client.
      * @param string               $command         The command trigger.
      * @param \Callable            $callable        The callable function.
-     * @param string               $description     The description of the command.
+     * @param string               $description     The short description of the command.
+     * @param string               $longDescription The long description of the command.
      * @param string               $usage           The usage of the command.
      * @param int                  $cooldown        The cooldown of the command in milliseconds.
      * @param int                  $cooldownMessage The cooldown message to show when a cooldown is in effect.
@@ -91,17 +99,19 @@ class Command
         $command,
         callable $callable,
         $description,
+        $longDescription,
         $usage,
         $cooldown,
         $cooldownMessage
     ) {
-        $this->client = $client;
-        $this->command = $command;
-        $this->callable = $callable;
-        $this->description = $description;
-        $this->usage = $usage;
-        $this->cooldown = $cooldown;
-        $this->cooldownMessage = $cooldownMessage;
+        $this->client           = $client;
+        $this->command          = $command;
+        $this->callable         = $callable;
+        $this->description      = $description;
+        $this->longDescription  = $longDescription;
+        $this->usage            = $usage;
+        $this->cooldown         = $cooldown;
+        $this->cooldownMessage  = $cooldownMessage;
     }
 
     /**
@@ -213,16 +223,18 @@ class Command
      */
     public function getHelp($prefix)
     {
-        $helpString = "{$prefix}{$this->command} {$this->usage}- {$this->description}\r\n";
+        $subCommandsHelp = [];
 
         foreach ($this->subCommands as $command) {
-            $help = $command->getHelp($prefix.$this->command.' ');
-            $helpString .= "    {$help['text']}\r\n";
+            $subCommandsHelp[] = $command->getHelp($prefix.$this->command.' ');
         }
 
         return [
-            'text' => $helpString,
-            'subCommandAliases' => $this->subCommandAliases,
+            'command'         => $prefix.$this->command,
+            'description'     => $this->description,
+            'longDescription' => $this->longDescription,
+            'usage'           => $this->usage,
+            'subCommandsHelp' => $subCommandsHelp,
         ];
     }
 
@@ -235,7 +247,7 @@ class Command
      */
     public function __get($variable)
     {
-        $allowed = ['command', 'description', 'usage', 'cooldown', 'cooldownMessage'];
+        $allowed = ['command', 'description', 'longDescription', 'usage', 'cooldown', 'cooldownMessage'];
 
         if (array_search($variable, $allowed) !== false) {
             return $this->{$variable};
