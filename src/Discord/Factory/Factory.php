@@ -34,12 +34,6 @@ class Factory
     protected $http;
 
     /**
-     * The cache.
-     *
-     * @var CacheWrapper Cache.
-     */
-    protected $cache;
-    /**
      * Constructs a factory.
      *
      * @param Discord      $discord The Discord client.
