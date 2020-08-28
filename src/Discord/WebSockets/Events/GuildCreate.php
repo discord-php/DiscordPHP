@@ -17,10 +17,6 @@ use Discord\Parts\Guild\Guild;
 use Discord\Parts\Guild\Role;
 use Discord\Parts\User\Member;
 use Discord\Parts\WebSockets\VoiceStateUpdate as VoiceStateUpdatePart;
-use Discord\Repository\Guild\BanRepository;
-use Discord\Repository\Guild\ChannelRepository;
-use Discord\Repository\Guild\MemberRepository;
-use Discord\Repository\Guild\RoleRepository;
 use Discord\WebSockets\Event;
 use React\Promise\Deferred;
 
@@ -38,77 +34,44 @@ class GuildCreate extends Event
         }
 
         $guildPart = $this->factory->create(Guild::class, $data, true);
-
-        $roles = new RoleRepository(
-            $this->http,
-            $this->cache,
-            $this->factory,
-            $guildPart->getRepositoryAttributes()
-        );
-
         foreach ($data->roles as $role) {
             $role = (array) $role;
             $role['guild_id'] = $guildPart->id;
             $rolePart = $this->factory->create(Role::class, $role, true);
 
-            $roles->push($rolePart);
+            $guildPart->roles->push($rolePart);
         }
-
-        $channels = new ChannelRepository(
-            $this->http,
-            $this->cache,
-            $this->factory,
-            $guildPart->getRepositoryAttributes()
-        );
 
         foreach ($data->channels as $channel) {
             $channel = (array) $channel;
             $channel['guild_id'] = $data->id;
             $channelPart = $this->factory->create(Channel::class, $channel, true);
 
-            $channels->push($channelPart);
+            $guildPart->channels->push($channelPart);
         }
-
-        $members = new MemberRepository(
-            $this->http,
-            $this->cache,
-            $this->factory,
-            $guildPart->getRepositoryAttributes()
-        );
 
         if ($this->discord->options['loadAllMembers']) {
             foreach ($data->members as $member) {
-                $memberPart = $this->factory->create(Member::class, [
-                    'user' => $member->user,
-                    'roles' => $member->roles,
-                    'mute' => $member->mute,
-                    'deaf' => $member->deaf,
-                    'joined_at' => $member->joined_at,
-                    'nick' => (property_exists($member, 'nick')) ? $member->nick : null,
-                    'guild_id' => $data->id,
-                    'status' => 'offline',
-                    'game' => null,
-                ], true);
-    
-                foreach ($data->presences as $presence) {
-                    if ($presence->user->id == $member->user->id) {
-                        $memberPart->status = $presence->status;
-                        $memberPart->game = $presence->game;
-                    }
-                }
-    
+                $member = (array) $member;
+                $member['guild_id'] = $data->id;
+                $memberPart = $this->factory->create(Member::class, $member, true);
+
                 $this->discord->users->push($memberPart->user);
-                $members->push($memberPart);
+                $guildPart->members->push($memberPart);
+            }
+
+            foreach ($data->presences as $presence) {
+                if ($member = $guildPart->members->get('id', $presence->user->id)) {
+                    $member->fill($presence);
+                    $guildPart->members->push($member);
+                }
             }
         }
-
-        $guildPart->roles = $roles;
-        $guildPart->channels = $channels;
-        $guildPart->members = $members;
 
         foreach ($data->voice_states as $state) {
             if ($channel = $guildPart->channels->get('id', $state->channel_id)) {
                 $channel->members->push($this->factory->create(VoiceStateUpdatePart::class, (array) $state, true));
+                $guildPart->channels->push($channel);
             }
         }
 
@@ -124,23 +87,15 @@ class GuildCreate extends Event
 
         if ($this->discord->options['retrieveBans']) {
             $this->http->get("guilds/{$guildPart->id}/bans")->then(function ($rawBans) use (&$guildPart, $resolve) {
-                $bans = new BanRepository(
-                    $this->http,
-                    $this->cache,
-                    $this->factory,
-                    $guildPart->getRepositoryAttributes()
-                );
-
                 foreach ($rawBans as $ban) {
                     $ban = (array) $ban;
                     $ban['guild'] = $guildPart;
 
                     $banPart = $this->factory->create(Ban::class, $ban, true);
 
-                    $bans->push($banPart);
+                    $guildPart->bans->push($banPart);
                 }
 
-                $guildPart->bans = $bans;
                 $resolve();
             }, $resolve);
         } else {
