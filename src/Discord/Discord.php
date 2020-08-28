@@ -394,25 +394,16 @@ class Discord
         $this->logger->debug('client created and session id stored', ['session_id' => $content->session_id, 'user' => $this->client->user->getPublicAttributes()]);
 
         // Private Channels
-        $private_channels = new PrivateChannelRepository(
-            $this->http,
-            $this->cache,
-            $this->factory
-        );
-
         if ($this->options['pmChannels']) {
             foreach ($content->private_channels as $channel) {
                 $channelPart = $this->factory->create(Channel::class, $channel, true);
-                $this->cache->set("pm_channels.{$channelPart->recipient->id}", $channelPart);
-                $private_channels->push($channelPart);
+                $this->private_channels->push($channelPart);
             }
 
-            $this->logger->info('stored private channels', ['count' => $private_channels->count()]);
+            $this->logger->info('stored private channels', ['count' => $this->private_channels->count()]);
         } else {
             $this->logger->info('did not parse private channels');
         }
-
-        $this->private_channels = $private_channels;
 
         // Guilds
         $this->guilds = new GuildRepository(

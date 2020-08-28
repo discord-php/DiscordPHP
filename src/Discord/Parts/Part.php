@@ -92,6 +92,13 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
     protected $repositories = [];
 
     /**
+     * An array of repositories.
+     * 
+     * @var array
+     */
+    protected $repositories_cache = [];
+
+    /**
      * Is the part already created in the Discord servers?
      *
      * @var bool Whether the part has been created.
@@ -277,23 +284,11 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
     public function getAttribute($key)
     {
         if (isset($this->repositories[$key])) {
-            $className = str_replace('\\', '', $this->repositories[$key]);
-
-            if ($repository = $this->cache->get("repositories.{$className}.{$this->id}.{$key}")) {
-                return $repository;
+            if (! isset($this->repositories_cache[$key])) {
+                $this->repositories_cache[$key] = $this->factory->create($this->repositories[$key], $this->getRepositoryAttributes());
             }
 
-            $class = $this->repositories[$key];
-
-            return $this->cache->set(
-                "repositories.{$className}.{$this->id}.{$key}",
-                new $class(
-                    $this->http,
-                    $this->cache,
-                    $this->factory,
-                    $this->getRepositoryAttributes()
-                )
-            );
+            return $this->repositories_cache[$key];
         }
 
         if ($str = $this->checkForMutator($key, 'get')) {
@@ -317,21 +312,6 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
      */
     public function setAttribute($key, $value)
     {
-        if (isset($this->repositories[$key])) {
-            if (! ($value instanceof $this->repositories[$key])) {
-                return;
-            }
-
-            $className = str_replace('\\', '', $this->repositories[$key]);
-
-            $this->cache->set(
-                "repositories.{$className}.{$this->id}.{$key}",
-                $value
-            );
-
-            return;
-        }
-
         if ($str = $this->checkForMutator($key, 'set')) {
             $this->{$str}($value);
 
