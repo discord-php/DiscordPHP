@@ -358,14 +358,6 @@ class Guild extends Part
     /**
      * {@inheritdoc}
      */
-    public function setCache($key, $value)
-    {
-        $this->cache->set("guild.{$this->id}.{$key}", $value);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function getCreatableAttributes()
     {
         return [

@@ -11,7 +11,6 @@
 
 namespace Discord;
 
-use Cache\Adapter\PHPArray\ArrayCachePool;
 use Discord\Factory\Factory;
 use Discord\Http\Guzzle;
 use Discord\Http\Http;
@@ -20,18 +19,14 @@ use Discord\Parts\Channel\Channel;
 use Discord\Parts\User\Activity;
 use Discord\Parts\User\Client;
 use Discord\Parts\User\Member;
-use Discord\Repository\GuildRepository;
-use Discord\Repository\PrivateChannelRepository;
 use Discord\Voice\VoiceClient;
 use Discord\WebSockets\Event;
 use Discord\WebSockets\Events\GuildCreate;
 use Discord\WebSockets\Handlers;
 use Discord\WebSockets\Op;
-use Discord\Wrapper\CacheWrapper;
 use Evenement\EventEmitterTrait;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger as Monolog;
-use Psr\Cache\CacheItemPoolInterface;
 use Ratchet\Client\Connector;
 use Ratchet\Client\WebSocket;
 use Ratchet\RFC6455\Messaging\Message;
@@ -276,20 +271,6 @@ class Discord
     protected $factory;
 
     /**
-     * The cache wrapper.
-     *
-     * @var CacheWrapper Cache.
-     */
-    protected $cache;
-
-    /**
-     * The cache pool that is in use.
-     *
-     * @var CacheItemPoolInterface Cache pool.
-     */
-    protected $cachePool;
-
-    /**
      * The Client class.
      *
      * @var Client Discord client.
@@ -310,7 +291,6 @@ class Discord
         $this->logger = new Logger($options['logger'], $options['logging']);
         $this->wsFactory = new Connector($this->loop);
         $this->handlers = new Handlers();
-        $this->cachePool = $options['cachePool'];
 
         $this->on('ready', function () {
             $this->emittedReady = true;
@@ -322,14 +302,12 @@ class Discord
 
         $this->options = $options;
 
-        $this->cache = new CacheWrapper($this->cachePool); // todo cache pool
         $this->http = new Http(
-            $this->cache,
             ($options['bot'] ? 'Bot ' : '').$this->token,
             self::VERSION,
-            new Guzzle($this->cache, $this->loop)
+            new Guzzle($this->loop)
         );
-        $this->factory = new Factory($this, $this->http, $this->cache);
+        $this->factory = new Factory($this, $this->http);
 
         $this->setGateway()->then(function ($g) {
             $this->connectWs();
@@ -406,15 +384,9 @@ class Discord
         }
 
         // Guilds
-        $this->guilds = new GuildRepository(
-            $this->http,
-            $this->cache,
-            $this->factory
-        );
         $event = new GuildCreate(
             $this->http,
             $this->factory,
-            $this->cache,
             $this
         );
 
@@ -660,7 +632,6 @@ class Discord
             $handler = new $hData['class'](
                 $this->http,
                 $this->factory,
-                $this->cache,
                 $this
             );
 
@@ -1198,7 +1169,6 @@ class Discord
                 'logger',
                 'loggerLevel',
                 'logging',
-                'cachePool',
                 'loadAllMembers',
                 'disabledEvents',
                 'pmChannels',
@@ -1211,7 +1181,6 @@ class Discord
                 'logger' => null,
                 'loggerLevel' => Monolog::INFO,
                 'logging' => true,
-                'cachePool' => new ArrayCachePool(),
                 'loadAllMembers' => false,
                 'disabledEvents' => [],
                 'pmChannels' => false,
@@ -1221,7 +1190,6 @@ class Discord
             ->setAllowedTypes('bot', 'bool')
             ->setAllowedTypes('loop', LoopInterface::class)
             ->setAllowedTypes('logging', 'bool')
-            ->setAllowedTypes('cachePool', CacheItemPoolInterface::class)
             ->setAllowedTypes('loadAllMembers', 'bool')
             ->setAllowedTypes('disabledEvents', 'array')
             ->setAllowedTypes('pmChannels', 'bool')
@@ -1285,37 +1253,6 @@ class Discord
     public function factory()
     {
         return call_user_func_array([$this->factory, 'create'], func_get_args());
-    }
-
-    /**
-     * Attempts to get a repository from the cache.
-     *
-     * @param string $class The repository to look for.
-     * @param string $id    The snowflake to look for.
-     * @param string $key   The key to look for.
-     * @param array  $vars  An array of args to pass to the repository.
-     *
-     * @return AbstractRepository
-     */
-    public function getRepository($class, $id, $key, $vars = [])
-    {
-        $classKey = str_replace('\\', '', $class);
-        $cacheKey = "repositories.{$classKey}.{$id}.{$key}";
-
-        if ($object = $this->cache->get($cacheKey)) {
-            return $object;
-        }
-
-        $repository = new $class(
-            $this->http,
-            $this->cache,
-            $this->factory,
-            $vars
-        );
-
-        $this->cache->set($cacheKey, $repository);
-
-        return $repository;
     }
 
     /**
@@ -1396,7 +1333,7 @@ class Discord
         $replace = array_intersect_key($secrets, $this->options);
         $config = $replace + $this->options;
 
-        unset($config['loop'], $config['cachePool'], $config['logger']);
+        unset($config['loop'], $config['logger']);
 
         return $config;
     }

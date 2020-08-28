@@ -13,7 +13,6 @@ namespace Discord\Http;
 
 use Carbon\Carbon;
 use Discord\Discord;
-use Discord\Wrapper\CacheWrapper;
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Request;
@@ -34,14 +33,7 @@ class Guzzle extends GuzzleClient implements HttpDriver
      * @var bool Async.
      */
     protected $async = false;
-
-    /**
-     * The cache wrapper.
-     *
-     * @var CacheWrapper Wrapper.
-     */
-    protected $cache;
-
+    
     /**
      * The ReactPHP event loop.
      *
@@ -73,12 +65,10 @@ class Guzzle extends GuzzleClient implements HttpDriver
     /**
      * Constructs a Guzzle driver.
      *
-     * @param CacheWrapper       $cache The cache wrapper.
      * @param LoopInterface|null $loop  The ReactPHP event loop.
      */
-    public function __construct(CacheWrapper $cache, LoopInterface $loop)
+    public function __construct(LoopInterface $loop)
     {
-        $this->cache = $cache;
         $options = ['http_errors' => false, 'allow_redirects' => true, 'base_uri' => Http::BASE_URL.'/v'.Discord::HTTP_API_VERSION];
 
         $this->async = true;

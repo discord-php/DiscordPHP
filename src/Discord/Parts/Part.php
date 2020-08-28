@@ -16,10 +16,8 @@ use Carbon\Carbon;
 use Discord\Discord;
 use Discord\Factory\Factory;
 use Discord\Http\Http;
-use Discord\Wrapper\CacheWrapper;
 use Illuminate\Support\Str;
 use JsonSerializable;
-use React\Promise\Promise;
 use Serializable;
 
 /**
@@ -41,13 +39,6 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
      * @var Factory Factory.
      */
     protected $factory;
-
-    /**
-     * The cache wrapper.
-     *
-     * @var CacheWrapper Cache.
-     */
-    protected $cache;
 
     /**
      * The Discord client.
@@ -139,7 +130,6 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
      * @param Factory      $factory    The factory.
      * @param Discord      $discord    The Discord client.
      * @param Http         $http       The HTTP client.
-     * @param CacheWrapper $cache      The cache.
      * @param array        $attributes An array of attributes to build the part.
      * @param bool         $created    Whether the part has already been created.
      */
@@ -147,14 +137,12 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
         Factory $factory,
         Discord $discord,
         Http $http,
-        CacheWrapper $cache,
         array $attributes = [],
         $created = false
     ) {
         $this->factory = $factory;
         $this->discord = $discord;
         $this->http = $http;
-        $this->cache = $cache;
 
         $this->created = $created;
         $this->fill($attributes);

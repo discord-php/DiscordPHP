@@ -11,14 +11,11 @@
 
 namespace Discord\Http;
 
-use Discord\Cache\Cache;
 use Discord\Exceptions\DiscordRequestFailedException;
 use Discord\Exceptions\Rest\ContentTooLongException;
 use Discord\Exceptions\Rest\NoPermissionsException;
 use Discord\Exceptions\Rest\NotFoundException;
 use Discord\Parts\Channel\Channel;
-use Discord\Wrapper\CacheWrapper;
-use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use Illuminate\Support\Str;
 use React\Promise\Deferred;
@@ -43,11 +40,6 @@ class Http
     const CACHE_TTL = 300;
 
     /**
-     * @var CacheWrapper
-     */
-    private $cache;
-
-    /**
      * @var string
      */
     private $token;
@@ -67,14 +59,12 @@ class Http
     /**
      * Guzzle constructor.
      *
-     * @param CacheWrapper $cache
      * @param string       $token
      * @param string       $version
      * @param HttpDriver   $driver  The request driver.
      */
-    public function __construct(CacheWrapper $cache, $token, $version, $driver)
+    public function __construct($token, $version, $driver)
     {
-        $this->cache = $cache;
         $this->token = $token;
         $this->version = $version;
         $this->driver = $driver;
@@ -136,13 +126,6 @@ class Http
         $deferred = new Deferred();
         $disable_json = false;
 
-        $key = 'guzzle.'.sha1($url);
-        if ($method === 'get' && $this->cache->has($key) && $cache !== false) {
-            $deferred->resolve($this->cache->get($key));
-
-            return $deferred->promise();
-        }
-
         $headers = [
             'User-Agent' => $this->getUserAgent(),
         ];
@@ -173,16 +156,12 @@ class Http
         }
 
         $this->driver->runRequest($method, $url, $headers, $content, $options)->then(
-            function ($response) use ($method, $cache, $key, $deferred, $disable_json) {
+            function ($response) use ($method, $cache, $deferred, $disable_json) {
                 if ($disable_json) {
                     return $deferred->resolve($response->getBody());
                 }
 
                 $json = json_decode($response->getBody());
-
-                if ($method === 'get' && $cache !== false) {
-                    $this->cache->set($key, $json, $cache === null ? static::CACHE_TTL : (int) $cache);
-                }
 
                 $deferred->resolve($json);
             },

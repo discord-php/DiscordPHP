@@ -25,7 +25,7 @@ class MessageDeleteBulk extends Event
 
         foreach ($data->ids as $id) {
             $promise = new Deferred();
-            $event = new MessageDelete($this->http, $this->factory, $this->cache, $this->discord);
+            $event = new MessageDelete($this->http, $this->factory, $this->discord);
             $event->handle($promise, (object) ['id' => $id, 'channel_id' => $data->channel_id, 'guild_id' => $data->guild_id]);
 
             $promises[] = $promise->promise();

@@ -167,6 +167,16 @@ class Collection implements ArrayAccess, Serializable, JsonSerializable, Iterato
     }
 
     /**
+     * Clears the collection.
+     * 
+     * @return this
+     */
+    public function clear()
+    {
+        $this->items = [];
+    }
+
+    /**
      * Runs a callback over the collection and creates a new collection.
      * 
      * @param callable $callback

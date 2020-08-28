@@ -14,7 +14,6 @@ namespace Discord\WebSockets;
 use Discord\Discord;
 use Discord\Factory\Factory;
 use Discord\Http\Http;
-use Discord\Wrapper\CacheWrapper;
 use Evenement\EventEmitterTrait;
 use React\Promise\Deferred;
 
@@ -82,13 +81,6 @@ abstract class Event
     protected $factory;
 
     /**
-     * The cache.
-     *
-     * @var CacheWrapper Cache.
-     */
-    protected $cache;
-
-    /**
      * The Discord client instance.
      *
      * @var \Discord\Discord Client.
@@ -100,18 +92,11 @@ abstract class Event
      *
      * @param Http         $http    The HTTP client.
      * @param Factory      $factory The factory.
-     * @param CacheWrapper $cache   The cache.
      * @param Discord      $discord The Discord client.
      */
-    public function __construct(
-        Http $http,
-        Factory $factory,
-        CacheWrapper $cache,
-        Discord $discord
-    ) {
+    public function __construct(Http $http, Factory $factory, Discord $discord) {
         $this->http = $http;
         $this->factory = $factory;
-        $this->cache = $cache;
         $this->discord = $discord;
     }
 

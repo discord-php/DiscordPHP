@@ -18,7 +18,6 @@ use Discord\Factory\Factory;
 use Discord\Helpers\Collection;
 use Discord\Http\Http;
 use Discord\Parts\Part;
-use Discord\Wrapper\CacheWrapper;
 use React\Promise\Deferred;
 
 /**
@@ -41,13 +40,6 @@ abstract class AbstractRepository implements RepositoryInterface, ArrayAccess, C
      * @var Http Client.
      */
     protected $http;
-
-    /**
-     * The Cache wrapper.
-     *
-     * @var CacheWrapper Cache.
-     */
-    protected $cache;
 
     /**
      * The parts factory.
@@ -88,14 +80,12 @@ abstract class AbstractRepository implements RepositoryInterface, ArrayAccess, C
      * AbstractRepository constructor.
      *
      * @param Http         $http    The HTTP client.
-     * @param CacheWrapper $cache   The cache wrapper.
      * @param Factory      $factory The parts factory.
      * @param array        $vars    An array of variables used for the endpoint.
      */
-    public function __construct(Http $http, CacheWrapper $cache, Factory $factory, $vars = [])
+    public function __construct(Http $http, Factory $factory, $vars = [])
     {
         $this->http = $http;
-        $this->cache = $cache;
         $this->factory = $factory;
         $this->collection = new Collection([], $this->discrim, $this->part);
         $this->vars = $vars;

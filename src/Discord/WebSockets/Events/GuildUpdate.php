@@ -32,21 +32,13 @@ class GuildUpdate extends Event
 
         $guildPart = $this->factory->create(Guild::class, $data, true);
 
-        $roles = new RoleRepository(
-            $this->http,
-            $this->cache,
-            $this->factory
-        );
-
         foreach ($data->roles as $role) {
             $role = (array) $role;
             $role['guild_id'] = $guildPart->id;
             $rolePart = $this->factory->create(Role::class, $role, true);
 
-            $roles->push($rolePart);
+            $guildParts->roles->push($rolePart);
         }
-
-        $guildPart->roles = $roles;
 
         if ($guildPart->large) {
             $this->discord->addLargeGuild($guildPart);

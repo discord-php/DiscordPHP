@@ -15,7 +15,6 @@ use Discord\Discord;
 use Discord\Factory\Factory;
 use Discord\Http\Http;
 use Discord\Parts\Part;
-use Discord\Wrapper\CacheWrapper;
 
 /**
  * The permissions object of a role or channel.
@@ -29,7 +28,6 @@ class Permission extends Part
         Factory $factory,
         Discord $discord,
         Http $http,
-        CacheWrapper $cache,
         array $attributes = [],
         $created = false
     ) {
@@ -44,7 +42,7 @@ class Permission extends Part
 
         $default = array_merge($default, $this->getDefault());
 
-        parent::__construct($factory, $discord, $http, $cache, $default, $created);
+        parent::__construct($factory, $discord, $http, $default, $created);
         $this->fill($attributes);
     }
 
