@@ -65,7 +65,7 @@ class Guzzle extends GuzzleClient implements HttpDriver
     /**
      * Constructs a Guzzle driver.
      *
-     * @param LoopInterface|null $loop  The ReactPHP event loop.
+     * @param LoopInterface|null $loop The ReactPHP event loop.
      */
     public function __construct(LoopInterface $loop)
     {

@@ -84,7 +84,7 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
 
     /**
      * An array of repositories.
-     * 
+     *
      * @var array
      */
     protected $repositories_cache = [];
@@ -127,11 +127,11 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
     /**
      * Create a new part instance.
      *
-     * @param Factory      $factory    The factory.
-     * @param Discord      $discord    The Discord client.
-     * @param Http         $http       The HTTP client.
-     * @param array        $attributes An array of attributes to build the part.
-     * @param bool         $created    Whether the part has already been created.
+     * @param Factory $factory    The factory.
+     * @param Discord $discord    The Discord client.
+     * @param Http    $http       The HTTP client.
+     * @param array   $attributes An array of attributes to build the part.
+     * @param bool    $created    Whether the part has already been created.
      */
     public function __construct(
         Factory $factory,

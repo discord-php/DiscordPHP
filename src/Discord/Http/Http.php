@@ -59,9 +59,9 @@ class Http
     /**
      * Guzzle constructor.
      *
-     * @param string       $token
-     * @param string       $version
-     * @param HttpDriver   $driver  The request driver.
+     * @param string     $token
+     * @param string     $version
+     * @param HttpDriver $driver  The request driver.
      */
     public function __construct($token, $version, $driver)
     {

@@ -36,8 +36,8 @@ class Factory
     /**
      * Constructs a factory.
      *
-     * @param Discord      $discord The Discord client.
-     * @param Http         $http    The HTTP client.
+     * @param Discord $discord The Discord client.
+     * @param Http    $http    The HTTP client.
      */
     public function __construct(Discord $discord, Http $http)
     {

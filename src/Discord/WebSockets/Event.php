@@ -90,11 +90,12 @@ abstract class Event
     /**
      * Constructs an event.
      *
-     * @param Http         $http    The HTTP client.
-     * @param Factory      $factory The factory.
-     * @param Discord      $discord The Discord client.
+     * @param Http    $http    The HTTP client.
+     * @param Factory $factory The factory.
+     * @param Discord $discord The Discord client.
      */
-    public function __construct(Http $http, Factory $factory, Discord $discord) {
+    public function __construct(Http $http, Factory $factory, Discord $discord)
+    {
         $this->http = $http;
         $this->factory = $factory;
         $this->discord = $discord;

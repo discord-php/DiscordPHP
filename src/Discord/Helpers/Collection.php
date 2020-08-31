@@ -25,21 +25,21 @@ class Collection implements ArrayAccess, Serializable, JsonSerializable, Iterato
 {
     /**
      * The collection discriminator.
-     * 
+     *
      * @var string
      */
     private $discrim;
 
     /**
      * The items contained in the collection.
-     * 
+     *
      * @var array
      */
     private $items;
 
     /**
      * Class type allowed into the collection.
-     * 
+     *
      * @var string
      */
     private $class;
@@ -50,8 +50,6 @@ class Collection implements ArrayAccess, Serializable, JsonSerializable, Iterato
      * @param mixed  $items
      * @param string $discrim
      * @param string $class
-     * 
-     * @return void
      */
     public function __construct($items = [], $discrim = 'id', $class = null)
     {
@@ -62,10 +60,10 @@ class Collection implements ArrayAccess, Serializable, JsonSerializable, Iterato
 
     /**
      * Gets an item from the collection.
-     * 
+     *
      * @param string $discrim
      * @param string $key
-     * 
+     *
      * @return mixed
      */
     public function get($discrim, $key)
@@ -77,7 +75,7 @@ class Collection implements ArrayAccess, Serializable, JsonSerializable, Iterato
         foreach ($this->items as $item) {
             if (is_array($item) && isset($item[$discrim]) && $item[$discrim] == $key) {
                 return $item;
-            } else if (is_object($item) && property_exists($item, $discrim) && $item->{$discrim} == $key) {
+            } elseif (is_object($item) && property_exists($item, $discrim) && $item->{$discrim} == $key) {
                 return $item;
             }
         }
@@ -85,10 +83,10 @@ class Collection implements ArrayAccess, Serializable, JsonSerializable, Iterato
 
     /**
      * Pulls an item from the collection.
-     * 
+     *
      * @param mixed $key
      * @param mixed $default
-     * 
+     *
      * @return mixed
      */
     public function pull($key, $default = null)
@@ -98,9 +96,9 @@ class Collection implements ArrayAccess, Serializable, JsonSerializable, Iterato
 
     /**
      * Fills an array of items into the collection.
-     * 
+     *
      * @param array $items
-     * 
+     *
      * @return this
      */
     public function fill($items)
@@ -114,9 +112,9 @@ class Collection implements ArrayAccess, Serializable, JsonSerializable, Iterato
 
     /**
      * Pushes items to the collection.
-     * 
+     *
      * @param mixed ...$items
-     * 
+     *
      * @return this
      */
     public function push(...$items)
@@ -129,10 +127,10 @@ class Collection implements ArrayAccess, Serializable, JsonSerializable, Iterato
     }
 
     /**
-     * Pushes a single item to the collection
-     * 
+     * Pushes a single item to the collection.
+     *
      * @param mixed $item
-     * 
+     *
      * @return this
      */
     public function pushItem($item)
@@ -143,11 +141,13 @@ class Collection implements ArrayAccess, Serializable, JsonSerializable, Iterato
             return $this;
         }
         
-        if (! is_null($this->class) && ! ($item instanceof $this->class)) return $this;
+        if (! is_null($this->class) && ! ($item instanceof $this->class)) {
+            return $this;
+        }
         
         if (is_array($item)) {
             $this->items[$item[$this->discrim]] = $item;
-        } else if (is_object($item)) {
+        } elseif (is_object($item)) {
             $this->items[$item->{$this->discrim}] = $item;
         }
 
@@ -156,7 +156,7 @@ class Collection implements ArrayAccess, Serializable, JsonSerializable, Iterato
 
     /**
      * Counts the amount of objects in the collection.
-     * 
+     *
      * @return int
      */
     public function count()
@@ -166,15 +166,17 @@ class Collection implements ArrayAccess, Serializable, JsonSerializable, Iterato
 
     /**
      * Checks if the array has an object.
-     * 
+     *
      * @param array ...$keys
-     * 
+     *
      * @return bool
      */
     public function has(...$keys)
     {
         foreach ($keys as $key) {
-            if (! isset($this->items[$key])) return false;
+            if (! isset($this->items[$key])) {
+                return false;
+            }
         }
         
         return true;
@@ -182,7 +184,7 @@ class Collection implements ArrayAccess, Serializable, JsonSerializable, Iterato
 
     /**
      * Clears the collection.
-     * 
+     *
      * @return this
      */
     public function clear()
@@ -192,9 +194,9 @@ class Collection implements ArrayAccess, Serializable, JsonSerializable, Iterato
 
     /**
      * Runs a callback over the collection and creates a new collection.
-     * 
+     *
      * @param callable $callback
-     * 
+     *
      * @return Collection
      */
     public function map(callable $callback)
@@ -207,9 +209,9 @@ class Collection implements ArrayAccess, Serializable, JsonSerializable, Iterato
 
     /**
      * If the collection has an offset.
-     * 
+     *
      * @param mixed $offset
-     * 
+     *
      * @return bool
      */
     public function offsetExists($offset)
@@ -219,9 +221,9 @@ class Collection implements ArrayAccess, Serializable, JsonSerializable, Iterato
 
     /**
      * Gets an item from the collection.
-     * 
+     *
      * @param mixed $offset
-     * 
+     *
      * @return mixed
      */
     public function offsetGet($offset)
@@ -231,7 +233,7 @@ class Collection implements ArrayAccess, Serializable, JsonSerializable, Iterato
 
     /**
      * Sets an item into the collection.
-     * 
+     *
      * @param mixed $offset
      * @param mixed $value
      */
@@ -242,7 +244,7 @@ class Collection implements ArrayAccess, Serializable, JsonSerializable, Iterato
     
     /**
      * Unsets an index from the collection.
-     * 
+     *
      * @param mixed offset
      */
     public function offsetUnset($offset)
@@ -252,7 +254,7 @@ class Collection implements ArrayAccess, Serializable, JsonSerializable, Iterato
 
     /**
      * Returns the string representation of the collection.
-     * 
+     *
      * @return string
      */
     public function serialize()
@@ -262,7 +264,7 @@ class Collection implements ArrayAccess, Serializable, JsonSerializable, Iterato
 
     /**
      * Unserializes the collection.
-     * 
+     *
      * @param string $serialized
      */
     public function unserialize($serialized)
@@ -272,7 +274,7 @@ class Collection implements ArrayAccess, Serializable, JsonSerializable, Iterato
 
     /**
      * Serializes the object to a value that can be serialized natively by json_encode().
-     * 
+     *
      * @return array
      */
     public function jsonSerialize()
@@ -282,7 +284,7 @@ class Collection implements ArrayAccess, Serializable, JsonSerializable, Iterato
 
     /**
      * Returns an iterator for the collection.
-     * 
+     *
      * @return Traversable
      */
     public function getIterator()
@@ -292,7 +294,7 @@ class Collection implements ArrayAccess, Serializable, JsonSerializable, Iterato
 
     /**
      * Returns an item that will be displayed for debugging.
-     * 
+     *
      * @return array
      */
     public function __debugInfo()

@@ -13,7 +13,6 @@ namespace Discord\WebSockets\Events;
 
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Guild\Role;
-use Discord\Repository\Guild\RoleRepository;
 use Discord\WebSockets\Event;
 use React\Promise\Deferred;
 

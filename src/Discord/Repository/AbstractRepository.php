@@ -79,9 +79,9 @@ abstract class AbstractRepository implements RepositoryInterface, ArrayAccess, C
     /**
      * AbstractRepository constructor.
      *
-     * @param Http         $http    The HTTP client.
-     * @param Factory      $factory The parts factory.
-     * @param array        $vars    An array of variables used for the endpoint.
+     * @param Http    $http    The HTTP client.
+     * @param Factory $factory The parts factory.
+     * @param array   $vars    An array of variables used for the endpoint.
      */
     public function __construct(Http $http, Factory $factory, $vars = [])
     {
