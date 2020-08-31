@@ -19,6 +19,7 @@ use Discord\Parts\Channel\Channel;
 use Discord\Parts\User\Activity;
 use Discord\Parts\User\Client;
 use Discord\Parts\User\Member;
+use Discord\Parts\User\User;
 use Discord\Voice\VoiceClient;
 use Discord\WebSockets\Event;
 use Discord\WebSockets\Events\GuildCreate;
@@ -442,15 +443,15 @@ class Discord
      */
     protected function handleGuildMembersChunk($data)
     {
-        $guild = $this->guilds->get('id', $data->d->guild_id);
+        $guild = $this->guilds->offsetGet($data->d->guild_id);
         $members = $data->d->members;
 
-        $this->logger->debug('received guild member chunk', ['guild_id' => $guild->id, 'guild_name' => $guild->name, 'member_count' => count($members)]);
+        $this->logger->debug('received guild member chunk', ['guild_id' => $guild->id, 'guild_name' => $guild->name, 'chunk_count' => count($members), 'member_collection' => $guild->members->count(), 'member_count' => $guild->member_count]);
 
         $count = 0;
 
         foreach ($members as $member) {
-            if ($guild->members->has($member->user->id)) {
+            if ($guild->members->offsetExists($member->user->id)) {
                 continue;
             }
 
@@ -460,8 +461,11 @@ class Discord
             $member['game'] = null;
 
             $memberPart = $this->factory->create(Member::class, $member, true);
-            $guild->members->push($memberPart);
-            $this->users->push($memberPart->user);
+            $userPart = $this->factory->create(User::class, $member['user'], true);
+
+            $guild->members->offsetSet($memberPart->id, $memberPart);
+            $this->users->offsetSet($userPart->id, $userPart);
+
             ++$count;
         }
 
@@ -473,6 +477,7 @@ class Discord
             }
 
             $this->logger->debug('all users have been loaded', ['guild' => $guild->id, 'member_collection' => $guild->members->count(), 'member_count' => $guild->member_count]);
+            $this->guilds->offsetSet($guild->id, $guild);
         }
 
         if (count($this->largeSent) < 1) {

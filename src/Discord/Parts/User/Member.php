@@ -92,8 +92,8 @@ class Member extends Part
         $this->http->put($url, $content)->then(
             function () use ($deferred) {
                 $ban = $this->factory->create(Ban::class, [
-                    'user' => $this->user,
-                    'guild' => $this->discord->guilds->get('id', $this->guild_id),
+                    'user' => $this->attributes['user'],
+                    'guild' => $this->guild,
                 ], true);
 
                 $deferred->resolve($ban);
@@ -121,10 +121,10 @@ class Member extends Part
         ];
 
         // jake plz
-        if ($this->discord->id == $this->user->id) {
+        if ($this->discord->id == $this->id) {
             $promise = $this->http->patch("guilds/{$this->guild_id}/members/@me/nick", $payload);
         } else {
-            $promise = $this->http->patch("guilds/{$this->guild_id}/members/{$this->user->id}", $payload);
+            $promise = $this->http->patch("guilds/{$this->guild_id}/members/{$this->id}", $payload);
         }
 
         $promise->then(
@@ -251,7 +251,7 @@ class Member extends Part
      */
     public function getIdAttribute()
     {
-        return $this->user->id;
+        return $this->attributes['user']->id;
     }
 
     /**
@@ -261,7 +261,7 @@ class Member extends Part
      */
     public function getUsernameAttribute()
     {
-        return $this->user->username;
+        return $this->attributes['user']->username;
     }
 
     /**
@@ -271,7 +271,7 @@ class Member extends Part
      */
     public function getDiscriminatorAttribute()
     {
-        return $this->user->discriminator;
+        return $this->attributes['user']->discriminator;
     }
 
     /**
@@ -364,9 +364,9 @@ class Member extends Part
     public function __toString()
     {
         if ($this->nick) {
-            return "<@!{$this->user->id}>";
+            return "<@!{$this->id}>";
         }
 
-        return "<@{$this->user->id}>";
+        return "<@{$this->id}>";
     }
 }
