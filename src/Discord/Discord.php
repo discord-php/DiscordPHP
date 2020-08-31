@@ -11,6 +11,7 @@
 
 namespace Discord;
 
+use Discord\Exceptions\IntentException;
 use Discord\Factory\Factory;
 use Discord\Http\Guzzle;
 use Discord\Http\Http;
@@ -24,6 +25,7 @@ use Discord\Voice\VoiceClient;
 use Discord\WebSockets\Event;
 use Discord\WebSockets\Events\GuildCreate;
 use Discord\WebSockets\Handlers;
+use Discord\WebSockets\Intents;
 use Discord\WebSockets\Op;
 use Evenement\EventEmitterTrait;
 use Monolog\Handler\StreamHandler;
@@ -1219,6 +1221,16 @@ class Discord
         if (is_null($options['logger'])) {
             $logger->pushHandler(new StreamHandler('php://stdout', $options['loggerLevel']));
             $options['logger'] = $logger;
+        }
+
+        if ($options['intents'] !== false) {
+            $validIntents = Intents::getValidIntents();
+
+            foreach ($options['intents'] as $intent) {
+                if (! in_array($intent, $validIntents)) {
+                    throw new IntentException('Given intent is not valid: '.$intent);
+                }
+            }
         }
 
         return $options;
