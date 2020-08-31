@@ -13,6 +13,7 @@ namespace Discord\Helpers;
 
 use ArrayAccess;
 use ArrayIterator;
+use Illuminate\Support\Arr;
 use IteratorAggregate;
 use JsonSerializable;
 use Serializable;
@@ -83,6 +84,19 @@ class Collection implements ArrayAccess, Serializable, JsonSerializable, Iterato
     }
 
     /**
+     * Pulls an item from the collection.
+     * 
+     * @param mixed $key
+     * @param mixed $default
+     * 
+     * @return mixed
+     */
+    public function pull($key, $default = null)
+    {
+        return Arr::pull($this->items, $key, $default);
+    }
+
+    /**
      * Fills an array of items into the collection.
      * 
      * @param array $items
@@ -92,7 +106,7 @@ class Collection implements ArrayAccess, Serializable, JsonSerializable, Iterato
     public function fill($items)
     {
         foreach ($items as $item) {
-            $this->pushItem($items);
+            $this->pushItem($item);
         }
 
         return $this;
