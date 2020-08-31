@@ -800,6 +800,16 @@ class Discord
                 ],
             ];
 
+            if ($this->options['intents'] !== false) {
+                $intents = 0;
+
+                foreach ($this->options['intents'] as $intent) {
+                    $intents |= $intent;
+                }
+
+                $payload['d']['intents'] = $intents;
+            }
+
             if (array_key_exists('shardId', $this->options) &&
                 array_key_exists('shardCount', $this->options)) {
                 $payload['d']['shard'] = [
@@ -1179,6 +1189,7 @@ class Discord
                 'pmChannels',
                 'storeMessages',
                 'retrieveBans',
+                'intents',
             ])
             ->setDefaults([
                 'loop' => LoopFactory::create(),
@@ -1191,6 +1202,7 @@ class Discord
                 'pmChannels' => false,
                 'storeMessages' => false,
                 'retrieveBans' => false,
+                'intents' => false,
             ])
             ->setAllowedTypes('bot', 'bool')
             ->setAllowedTypes('loop', LoopInterface::class)
@@ -1199,7 +1211,8 @@ class Discord
             ->setAllowedTypes('disabledEvents', 'array')
             ->setAllowedTypes('pmChannels', 'bool')
             ->setAllowedTypes('storeMessages', 'bool')
-            ->setAllowedTypes('retrieveBans', 'bool');
+            ->setAllowedTypes('retrieveBans', 'bool')
+            ->setAllowedTypes('intents', ['bool', 'array']);
 
         $options = $resolver->resolve($options);
 
