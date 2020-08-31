@@ -577,37 +577,18 @@ class Discord
 
         $this->logger->warning('websocket closed', ['op' => $op, 'reason' => $reason]);
 
-        if ($op == Op::CLOSE_INVALID_TOKEN) {
-            $this->emit('error', ['token is invalid', $this]);
-            $this->logger->error('the token you provided is invalid');
-
-            return;
+        if (in_array($op, Op::getCriticalCloseCodes())) {
+            $this->logger->error('not reconnecting - critical op code', ['op' => $op, 'reason' => $reason]);
+        } else {
+            $this->logger->warning('reconnecting in 2 seconds');
+            
+            $this->loop->addTimer(2, function () {
+                ++$this->reconnectCount;
+                $this->reconnecting = true;
+                $this->logger->info('starting reconnect', ['reconnect_count' => $this->reconnectCount]);
+                $this->connectWs();
+            });
         }
-
-        switch ($op) {
-            case Op::CLOSE_INVALID_TOKEN:
-                $this->emit('error', ['token is invalid', $this]);
-                $this->logger->error('the token you provided is invalid');
-
-                return;
-            case Op::CLOSE_INVALID_SHARD:
-                $this->emit('error', ['shard is invalid', $this]);
-                $this->logger->error('the shard you provided is invalid');
-
-                return;
-            case Op::CLOSE_SHARDING_REQUIRED:
-                $this->emit('error', ['sharding required', $this]);
-                $this->logger->error('due to the size of your bot sharding is required');
-
-                return;
-        }
-
-        $this->loop->addTimer(2, function () {
-            ++$this->reconnectCount;
-            $this->reconnecting = true;
-            $this->logger->info('starting reconnect', ['reconnect_count' => $this->reconnectCount]);
-            $this->connectWs();
-        });
     }
 
     /**
