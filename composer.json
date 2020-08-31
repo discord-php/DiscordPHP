@@ -14,7 +14,6 @@
   ],
   "require": {
     "php": "^7.0",
-    "cache/array-adapter": "^0.4.2",
     "guzzlehttp/guzzle": "~5.3|~6.0",
     "illuminate/support": "^4.0|^5.0|^6.0|^7.0",
     "nesbot/carbon": "<=2.38",
@@ -38,11 +37,8 @@
     }
   },
   "suggest": {
-    "cache/apc-adapter": "Required to use the APC cache driver",
-    "cache/memcache-adapter": "Required to use the Memcache cache driver",
-    "cache/memcached-adapter": "Required to use the Memcached cache driver",
-    "cache/redis-adapter": "Required to use the Redis cache driver",
-    "ext-libevent": "For a faster, and more performant loop. Preferred",
+    "ext-uv": "For a faster, and more performant loop. PHP >=7 only. Preferred.",
+    "ext-libevent": "For a faster, and more performant loop. PHP 5 only.",
     "ext-libev": "For a faster, and more performant loop",
     "ext-event": "For a faster, and more performant loop"
   },
