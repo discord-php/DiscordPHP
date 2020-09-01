@@ -147,9 +147,7 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
         $this->created = $created;
         $this->fill($attributes);
 
-        if (is_callable([$this, 'afterConstruct'])) {
-            $this->afterConstruct();
-        }
+        $this->afterConstruct();
 
         $this->resolve = function ($response, $deferred) {
             if (is_null($response)) {
@@ -162,6 +160,13 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
         $this->reject = function ($e, $deferred) {
             $deferred->reject($e);
         };
+    }
+
+    /**
+     * Called after the part has been constructed.
+     */
+    protected function afterConstruct()
+    {
     }
 
     /**

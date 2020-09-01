@@ -13,6 +13,7 @@ namespace Discord\Parts\Channel;
 
 use Carbon\Carbon;
 use Discord\Exceptions\FileNotFoundException;
+use Discord\Exceptions\InvalidOverwriteException;
 use Discord\Helpers\Collection;
 use Discord\Parts\Embed\Embed;
 use Discord\Parts\Guild\Guild;
@@ -20,6 +21,7 @@ use Discord\Parts\Guild\Invite;
 use Discord\Parts\Guild\Role;
 use Discord\Parts\Part;
 use Discord\Parts\Permissions\ChannelPermission;
+use Discord\Parts\Permissions\Permission;
 use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
 use Discord\Repository\Channel\MessageRepository;
@@ -109,9 +111,7 @@ class Channel extends Part
      */
     public function afterConstruct()
     {
-        if (! array_key_exists('bitrate', $this->attributes) &&
-            $this->type != self::TYPE_TEXT
-        ) {
+        if (! array_key_exists('bitrate', $this->attributes) && $this->type != self::TYPE_TEXT) {
             $this->bitrate = 64000;
         }
     }
@@ -155,14 +155,15 @@ class Channel extends Part
     }
 
     /**
-     * Sets a permission value to the channel.
-     *
-     * @param Member|Role       $part        Either a Member or Role, permissions will be set on it.
-     * @param ChannelPermission $permissions The permissions that define what the Member/Role can and cannot do.
-     *
+     * Sets permissions in a channel.
+     * 
+     * @param Part $part A role or member.
+     * @param array $allow An array of permissions to allow.
+     * @param array $deny An array of permissions to deny.
+     * 
      * @return \React\Promise\Promise
      */
-    public function setPermissions(Part $part, ChannelPermission $permissions = null)
+    public function setPermissions(Part $part, array $allow = [], array $deny = [])
     {
         $deferred = new Deferred();
 
@@ -171,20 +172,57 @@ class Channel extends Part
         } elseif ($part instanceof Role) {
             $type = 'role';
         } else {
-            return false;
+            return \React\Promise\reject(new InvalidOverwriteException('Given part was not one of member or role.'));
         }
 
-        if (is_null($permissions)) {
-            $permissions = $this->factory->create(ChannelPermission::class);
-        }
+        $allow = array_fill_keys($allow, true);
+        $deny = array_fill_keys($deny, true);
 
-        list($allow, $deny) = $permissions->bitwise;
+        $allowPart = $this->factory->create(ChannelPermission::class, $allow);
+        $denyPart = $this->factory->create(ChannelPermission::class, $deny);
+
+        $overwrite = $this->factory->create(Overwrite::class, [
+            'id' => $part->id,
+            'channel_id' => $this->id,
+            'type' => $type,
+            'allow' => $allowPart->bitwise,
+            'deny' => $denyPart->bitwise,
+        ]);
+
+        var_dump($overwrite);
+
+        $this->setOverwrite($part, $overwrite)->then(
+            \React\Partial\bind_right($this->resolve, $deferred),
+            \React\Partial\bind_right($this->reject, $deferred)
+        );
+
+        return $deferred->promise();
+    }
+
+    /**
+     * Sets an overwrite to the channel.
+     *
+     * @param Part $part A role or member.
+     * @param Overwrite $overwrite An overwrite object.
+     *
+     * @return \React\Promise\Promise
+     */
+    public function setOverwrite(Part $part, Overwrite $overwrite)
+    {
+        $deferred = new Deferred();
+
+        if ($part instanceof Member) {
+            $type = 'member';
+        } elseif ($part instanceof Role) {
+            $type = 'role';
+        } else {
+            return \React\Promise\reject(new InvalidOverwriteException('Given part was not one of member or role.'));
+        }
 
         $payload = [
-            'id' => $part->id,
             'type' => $type,
-            'allow' => $allow,
-            'deny' => $deny,
+            'allow' => (string) $overwrite->allow->bitwise,
+            'deny' => (string) $overwrite->deny->bitwise,
         ];
 
         if (! $this->created) {
@@ -233,12 +271,7 @@ class Channel extends Part
             $member = $member->id;
         }
 
-        $this->http->patch(
-            "guilds/{$this->guild_id}/members/{$member}",
-            [
-                'channel_id' => $this->id,
-            ]
-        )->then(
+        $this->http->patch("guilds/{$this->guild_id}/members/{$member}", ['channel_id' => $this->id,])->then(
             \React\Partial\bind_right($this->resolve, $deferred),
             \React\Partial\bind_right($this->reject, $deferred)
         );
