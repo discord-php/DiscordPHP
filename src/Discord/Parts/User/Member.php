@@ -261,7 +261,7 @@ class Member extends Part
      */
     public function getUsernameAttribute()
     {
-        return $this->attributes['user']->username;
+        return $this->user->username;
     }
 
     /**
@@ -271,7 +271,7 @@ class Member extends Part
      */
     public function getDiscriminatorAttribute()
     {
-        return $this->attributes['user']->discriminator;
+        return $this->user->discriminator;
     }
 
     /**
