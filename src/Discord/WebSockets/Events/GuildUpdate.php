@@ -36,7 +36,7 @@ class GuildUpdate extends Event
             $role['guild_id'] = $guildPart->id;
             $rolePart = $this->factory->create(Role::class, $role, true);
 
-            $guildParts->roles->push($rolePart);
+            $guildPart->roles->push($rolePart);
         }
 
         if ($guildPart->large) {
