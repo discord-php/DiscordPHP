@@ -1277,6 +1277,16 @@ class Discord
     }
 
     /**
+     * Gets the logger being used.
+     * 
+     * @return LoggerWrapper
+     */
+    public function getLogger()
+    {
+        return $this->logger;
+    }
+
+    /**
      * Handles dynamic get calls to the client.
      *
      * @param string $name Variable name.
