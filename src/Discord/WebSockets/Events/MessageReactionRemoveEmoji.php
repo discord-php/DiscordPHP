@@ -19,7 +19,7 @@ class MessageReactionRemoveEmoji extends Event
     /**
      * {@inheritdoc}
      */
-    public function handle(Deferred $deferred, $data)
+    public function handle(Deferred &$deferred, $data)
     {
         $deferred->resolve($data);
     }

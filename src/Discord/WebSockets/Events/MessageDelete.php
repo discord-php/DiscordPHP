@@ -19,7 +19,7 @@ class MessageDelete extends Event
     /**
      * {@inheritdoc}
      */
-    public function handle(Deferred $deferred, $data)
+    public function handle(Deferred &$deferred, $data)
     {
         if ($guild = $this->discord->guilds->get('id', $data->guild_id)) {
             if ($channel = $guild->channels->get('id', $data->channel_id)) {

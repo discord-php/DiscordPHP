@@ -20,7 +20,7 @@ class GuildDelete extends Event
     /**
      * {@inheritdoc}
      */
-    public function handle(Deferred $deferred, $data)
+    public function handle(Deferred &$deferred, $data)
     {
         $guild = $this->factory->create(Guild::class, $data, true);
 

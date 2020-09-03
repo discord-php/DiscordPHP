@@ -20,7 +20,7 @@ class GuildMemberRemove extends Event
     /**
      * {@inheritdoc}
      */
-    public function handle(Deferred $deferred, $data)
+    public function handle(Deferred &$deferred, $data)
     {
         $member = $this->factory->create(Member::class, $data, true);
 

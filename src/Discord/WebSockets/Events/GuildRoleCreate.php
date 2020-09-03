@@ -20,7 +20,7 @@ class GuildRoleCreate extends Event
     /**
      * {@inheritdoc}
      */
-    public function handle(Deferred $deferred, $data)
+    public function handle(Deferred &$deferred, $data)
     {
         $adata = (array) $data->role;
         $adata['guild_id'] = $data->guild_id;

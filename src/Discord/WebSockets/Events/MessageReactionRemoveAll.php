@@ -20,7 +20,7 @@ class MessageReactionRemoveAll extends Event
     /**
      * {@inheritdoc}
      */
-    public function handle(Deferred $deferred, $data)
+    public function handle(Deferred &$deferred, $data)
     {
         $reaction = $this->factory->create(MessageReaction::class, $data, true);
         $deferred->resolve($reaction);

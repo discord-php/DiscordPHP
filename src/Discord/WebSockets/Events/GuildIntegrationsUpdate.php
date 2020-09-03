@@ -19,7 +19,7 @@ class GuildIntegrationsUpdate extends Event
     /**
      * {@inheritdoc}
      */
-    public function handle(Deferred $deferred, $data)
+    public function handle(Deferred &$deferred, $data)
     {
         $deferred->resolve($this->discord->guilds->get('id', $data->guild_id));
     }
