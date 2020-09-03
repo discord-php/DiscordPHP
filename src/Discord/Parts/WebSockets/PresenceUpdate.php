@@ -14,7 +14,6 @@ namespace Discord\Parts\WebSockets;
 use Carbon\Carbon;
 use Discord\Helpers\Collection;
 use Discord\Parts\Guild\Guild;
-use Discord\Parts\Guild\Role;
 use Discord\Parts\Part;
 use Discord\Parts\User\Activity;
 use Discord\Parts\User\User;
@@ -46,8 +45,8 @@ class PresenceUpdate extends Part
      */
     public function getMemberAttribute()
     {
-        if ($this->user && $this->guild) {
-            return $this->guild->members->get('id', $this->user->id);
+        if (isset($this->attributes['user']) && $this->guild) {
+            return $this->guild->members->get('id', $this->attributes['user']->id);
         }
     }
 
