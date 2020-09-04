@@ -155,4 +155,20 @@ class Intents
 
         return array_values($reflect->getConstants());
     }
+
+    /**
+     * Returns an integer value that represents all intents.
+     * 
+     * @return int
+     */
+    public static function getAllIntents()
+    {
+        $intentVal = 0;
+
+        foreach (self::getValidIntents() as $intent) {
+            $intentVal |= $intent;
+        }
+
+        return $intentVal;
+    }
 }

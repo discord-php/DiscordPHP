@@ -784,13 +784,7 @@ class Discord
             ];
 
             if ($this->options['intents'] !== false) {
-                $intents = 0;
-
-                foreach ($this->options['intents'] as $intent) {
-                    $intents |= $intent;
-                }
-
-                $payload['d']['intents'] = $intents;
+                $payload['d']['intents'] = $this->options['intents'];
             }
 
             if (array_key_exists('shardId', $this->options) &&
@@ -1195,7 +1189,7 @@ class Discord
             ->setAllowedTypes('pmChannels', 'bool')
             ->setAllowedTypes('storeMessages', 'bool')
             ->setAllowedTypes('retrieveBans', 'bool')
-            ->setAllowedTypes('intents', ['bool', 'array']);
+            ->setAllowedTypes('intents', ['bool', 'array', 'int']);
 
         $options = $resolver->resolve($options);
 
@@ -1205,12 +1199,19 @@ class Discord
         }
 
         if ($options['intents'] !== false) {
-            $validIntents = Intents::getValidIntents();
+            if (is_array($options['intents'])) {
+                $intentVal = 0;
+                $validIntents = Intents::getValidIntents();
 
-            foreach ($options['intents'] as $intent) {
-                if (! in_array($intent, $validIntents)) {
-                    throw new IntentException('Given intent is not valid: '.$intent);
+                foreach ($options['intents'] as $intent) {
+                    if (! in_array($intent, $validIntents)) {
+                        throw new IntentException('Given intent is not valid: '.$intent);
+                    } else {
+                        $intentVal |= $intent;
+                    }
                 }
+
+                $options['intents'] = $intentVal;
             }
         }
 
