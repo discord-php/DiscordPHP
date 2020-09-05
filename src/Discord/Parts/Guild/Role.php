@@ -37,7 +37,7 @@ class Role extends Part
     protected $fillable = ['id', 'name', 'color', 'managed', 'hoist', 'position', 'permissions', 'mentionable', 'guild_id'];
 
     /**
-     * Runs extra construction tasks.
+     * {@inheritdoc}
      */
     public function afterConstruct()
     {
@@ -64,10 +64,7 @@ class Role extends Part
     public function setPermissionsAttribute($permission)
     {
         if (! ($permission instanceof RolePermission)) {
-            $permissionPart = $this->factory->create(RolePermission::class);
-            $permissionPart->decodeBitwise($permission);
-
-            $permission = $permissionPart;
+            $permission = $this->factory->create(RolePermission::class, ['bitwise' => $permission], true);
         }
 
         $this->attributes['permissions'] = $permission;

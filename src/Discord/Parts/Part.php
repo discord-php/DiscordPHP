@@ -133,9 +133,14 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
         $this->created = $created;
         $this->fill($attributes);
 
-        if (is_callable([$this, 'afterConstruct'])) {
-            $this->afterConstruct();
-        }
+        $this->afterConstruct();
+    }
+
+    /**
+     * Called after the part has been constructed.
+     */
+    protected function afterConstruct()
+    {
     }
 
     /**

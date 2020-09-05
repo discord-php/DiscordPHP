@@ -31,8 +31,8 @@ class PresenceUpdate extends Event
             if ($member = $presence->member) {
                 $oldPresence = $member->updateFromPresence($presence);
 
-                $guild->members->push($member);
-                $this->discord->guilds->push($guild);
+                $guild->members->offsetSet($member->id, $member);
+                $this->discord->guilds->offsetSet($guild->id, $guild);
 
                 $deferred->resolve([$presence, $oldPresence]);
             }
