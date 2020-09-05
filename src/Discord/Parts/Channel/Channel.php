@@ -192,8 +192,8 @@ class Channel extends Part
             $deferred->resolve();
         } else {
             $this->http->put("channels/{$this->id}/permissions/{$part->id}", $payload)->then(
-                \React\Partial\bind_right($this->resolve, $deferred),
-                \React\Partial\bind_right($this->reject, $deferred)
+                \React\Partial\bind([$deferred, 'resolve']),
+                \React\Partial\bind([$deferred, 'reject'])
             );
         }
 
@@ -239,8 +239,8 @@ class Channel extends Part
                 'channel_id' => $this->id,
             ]
         )->then(
-            \React\Partial\bind_right($this->resolve, $deferred),
-            \React\Partial\bind_right($this->reject, $deferred)
+            \React\Partial\bind([$deferred, 'resolve']),
+            \React\Partial\bind([$deferred, 'reject'])
         );
 
         // At the moment we are unable to check if the member
@@ -292,7 +292,7 @@ class Channel extends Part
 
                 $deferred->resolve($invite);
             },
-            \React\Partial\bind_right($this->reject, $deferred)
+            \React\Partial\bind([$deferred, 'reject'])
         );
 
         return $deferred->promise();
@@ -345,8 +345,8 @@ class Channel extends Part
                 'messages' => $messageID,
             ]
         )->then(
-            \React\Partial\bind_right($this->resolve, $deferred),
-            \React\Partial\bind_right($this->reject, $deferred)
+            \React\Partial\bind([$deferred, 'resolve']),
+            \React\Partial\bind([$deferred, 'reject'])
         );
 
         return $deferred->promise();
@@ -402,7 +402,7 @@ class Channel extends Part
 
                 $deferred->resolve($messages);
             },
-            \React\Partial\bind_right($this->reject, $deferred)
+            \React\Partial\bind([$deferred, 'reject'])
         );
 
         return $deferred->promise();
@@ -432,7 +432,7 @@ class Channel extends Part
                 $message->pinned = true;
                 $deferred->resolve($message);
             },
-            \React\Partial\bind_right($this->reject, $deferred)
+            \React\Partial\bind([$deferred, 'reject'])
         );
 
         return $deferred->promise();
@@ -462,7 +462,7 @@ class Channel extends Part
                 $message->pinned = false;
                 $deferred->resolve($message);
             },
-            \React\Partial\bind_right($this->reject, $deferred)
+            \React\Partial\bind([$deferred, 'reject'])
         );
 
         return $deferred->promise();
@@ -488,7 +488,7 @@ class Channel extends Part
 
                 $deferred->resolve($messages);
             },
-            \React\Partial\bind_right($this->reject, $deferred)
+            \React\Partial\bind([$deferred, 'reject'])
         );
 
         return $deferred->promise();
@@ -514,7 +514,7 @@ class Channel extends Part
 
                 $deferred->resolve($invites);
             },
-            \React\Partial\bind_right($this->reject, $deferred)
+            \React\Partial\bind([$deferred, 'reject'])
         );
 
         return $deferred->promise();
@@ -570,7 +570,7 @@ class Channel extends Part
 
                 $deferred->resolve($message);
             },
-            \React\Partial\bind_right($this->reject, $deferred)
+            \React\Partial\bind([$deferred, 'reject'])
         );
 
         return $deferred->promise();
@@ -613,7 +613,7 @@ class Channel extends Part
 
                 $deferred->resolve($message);
             },
-            \React\Partial\bind_right($this->reject, $deferred)
+            \React\Partial\bind([$deferred, 'reject'])
         );
 
         return $deferred->promise();
@@ -635,8 +635,8 @@ class Channel extends Part
         }
 
         $this->http->post("channels/{$this->id}/typing")->then(
-            \React\Partial\bind_right($this->resolve, $deferred),
-            \React\Partial\bind_right($this->reject, $deferred)
+            \React\Partial\bind([$deferred, 'resolve']),
+            \React\Partial\bind([$deferred, 'reject'])
         );
 
         return $deferred->resolve();

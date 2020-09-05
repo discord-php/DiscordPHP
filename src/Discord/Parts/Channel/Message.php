@@ -221,8 +221,8 @@ class Message extends Part
 
         $this->discord->getLoop()->addTimer($delay / 1000, function () use ($text, $deferred) {
             $this->reply($text)->then(
-                \React\Partial\bind_right($this->resolve, $deferred),
-                \React\Partial\bind_right($this->reject, $deferred)
+                \React\Partial\bind([$deferred, 'resolve']),
+                \React\Partial\bind([$deferred, 'reject'])
             );
         });
 
@@ -247,8 +247,8 @@ class Message extends Part
         $this->http->put(
             "channels/{$this->channel->id}/messages/{$this->id}/reactions/{$emoticon}/@me"
         )->then(
-            \React\Partial\bind_right($this->resolve, $deferred),
-            \React\Partial\bind_right($this->reject, $deferred)
+            \React\Partial\bind([$deferred, 'resolve']),
+            \React\Partial\bind([$deferred, 'reject'])
         );
 
         return $deferred->promise();
@@ -289,8 +289,8 @@ class Message extends Part
             $this->http->delete(
                 $url, []
             )->then(
-                \React\Partial\bind_right($this->resolve, $deferred),
-                \React\Partial\bind_right($this->reject, $deferred)
+                \React\Partial\bind([$deferred, 'resolve']),
+                \React\Partial\bind([$deferred, 'reject'])
             );
         } else {
             $deferred->reject();
@@ -309,8 +309,8 @@ class Message extends Part
         $deferred = new Deferred();
 
         $this->http->delete("channels/{$this->channel_id}/messages/{$this->id}")->then(
-            \React\Partial\bind_right($this->resolve, $deferred),
-            \React\Partial\bind_right($this->reject, $deferred)
+            \React\Partial\bind([$deferred, 'resolve']),
+            \React\Partial\bind([$deferred, 'reject'])
         );
 
         return $deferred->promise();
@@ -499,7 +499,7 @@ class Message extends Part
         ])->then(function ($data) use ($deferred) {
             $this->fill($data);
             $deferred->resolve($this);
-        }, \React\Partial\bind_right($this->reject, $deferred));
+        }, \React\Partial\bind([$deferred, 'reject']));
 
         return $deferred->promise();
     }

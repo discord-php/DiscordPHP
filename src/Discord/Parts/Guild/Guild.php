@@ -166,10 +166,10 @@ class Guild extends Part
                     function ($role) use ($deferred) {
                         $deferred->resolve($role);
                     },
-                    \React\Partial\bind_right($this->reject, $deferred)
+                    \React\Partial\bind([$deferred, 'reject'])
                 );
             },
-            \React\Partial\bind_right($this->reject, $deferred)
+            \React\Partial\bind([$deferred, 'reject'])
         );
 
         return $deferred->promise();
@@ -205,7 +205,7 @@ class Guild extends Part
                     $deferred->resolve();
                 }
             },
-            \React\Partial\bind_right($this->reject, $deferred)
+            \React\Partial\bind([$deferred, 'reject'])
         );
 
         return $deferred->promise();
@@ -231,7 +231,7 @@ class Guild extends Part
 
                 $deferred->resolve($invites);
             },
-            \React\Partial\bind_right($this->reject, $deferred)
+            \React\Partial\bind([$deferred, 'reject'])
         );
 
         return $deferred->promise();

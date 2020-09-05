@@ -98,7 +98,7 @@ class Member extends Part
 
                 $deferred->resolve($ban);
             },
-            \React\Partial\bind_right($this->reject, $deferred)
+            \React\Partial\bind([$deferred, 'reject'])
         );
 
         return $deferred->promise();
@@ -128,8 +128,8 @@ class Member extends Part
         }
 
         $promise->then(
-            \React\Partial\bind_right($this->resolve, $deferred),
-            \React\Partial\bind_right($this->reject, $deferred)
+            \React\Partial\bind([$deferred, 'resolve']),
+            \React\Partial\bind([$deferred, 'reject'])
         );
 
         return $deferred->promise();
@@ -157,7 +157,7 @@ class Member extends Part
             ]
         )->then(function () use ($deferred) {
             $deferred->resolve();
-        }, \React\Partial\bind_right($this->reject, $deferred));
+        }, \React\Partial\bind([$deferred, 'reject']));
 
         // At the moment we are unable to check if the member
         // was moved successfully.

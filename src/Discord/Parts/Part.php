@@ -111,20 +111,6 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
     protected $fillAfterSave = true;
 
     /**
-     * The promise resolve function.
-     *
-     * @var \Closure Resolve function.
-     */
-    public $resolve;
-
-    /**
-     * The promise reject function.
-     *
-     * @var \Closure Reject function.
-     */
-    public $reject;
-
-    /**
      * Create a new part instance.
      *
      * @param Factory $factory    The factory.
@@ -150,18 +136,6 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
         if (is_callable([$this, 'afterConstruct'])) {
             $this->afterConstruct();
         }
-
-        $this->resolve = function ($response, $deferred) {
-            if (is_null($response)) {
-                $response = true;
-            }
-
-            $deferred->resolve(true);
-        };
-
-        $this->reject = function ($e, $deferred) {
-            $deferred->reject($e);
-        };
     }
 
     /**

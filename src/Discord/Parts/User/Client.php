@@ -131,8 +131,8 @@ class Client extends Part
         $deferred = new Deferred();
 
         $this->http->patch('users/@me', $this->getUpdatableAttributes())->then(
-            \React\Partial\bind_right($this->resolve, $deferred),
-            \React\Partial\bind_right($this->reject, $deferred)
+            \React\Partial\bind([$deferred, 'resolve']),
+            \React\Partial\bind([$deferred, 'reject'])
         );
 
         return $deferred->promise();

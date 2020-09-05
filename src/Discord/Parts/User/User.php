@@ -51,7 +51,7 @@ class User extends Part
                 $this->discord->private_channels->push($channel);
 
                 $deferred->resolve($channel);
-            }, \React\Partial\bind_right($this->reject, $deferred));
+            }, \React\Partial\bind([$deferred, 'reject']));
         }
 
         return $deferred->promise();
@@ -74,8 +74,8 @@ class User extends Part
             $channel->sendMessage($message, $tts, $embed)->then(function ($response) use ($deferred) {
                 $message = $this->factory->create(Message::class, $response, true);
                 $deferred->resolve($message);
-            }, \React\Partial\bind_right($this->reject, $deferred));
-        }, \React\Partial\bind_right($this->reject, $deferred));
+            }, \React\Partial\bind([$deferred, 'reject']));
+        }, \React\Partial\bind([$deferred, 'reject']));
 
         return $deferred->promise();
     }
@@ -91,8 +91,8 @@ class User extends Part
 
         $this->getPrivateChannel()->then(function ($channel) use ($deferred) {
             $channel->broadcastTyping()->then(
-                \React\Partial\bind_right($this->resolve, $deferred),
-                \React\Partial\bind_right($this->reject, $deferred)
+                \React\Partial\bind([$deferred, 'resolve']),
+                \React\Partial\bind([$deferred, 'reject'])
             );
         });
 
