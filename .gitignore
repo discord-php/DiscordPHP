@@ -2,3 +2,5 @@
 composer.lock
 test*.php
 .idea
+.php_cs.cache
+.php_cs

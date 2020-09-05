@@ -3,7 +3,7 @@
 /*
  * This file is apart of the DiscordPHP project.
  *
- * Copyright (c) 2016 David Cole <david@team-reflex.com>
+ * Copyright (c) 2016-2020 David Cole <david.cole1340@gmail.com>
  *
  * This source file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -64,8 +64,6 @@ class RecieveStream extends EventEmitter implements DuplexStreamInterface
 
     /**
      * Constructs a stream.
-     *
-     * @return void
      */
     public function __construct()
     {
@@ -76,8 +74,6 @@ class RecieveStream extends EventEmitter implements DuplexStreamInterface
      * Writes PCM audio data.
      *
      * @param string $pcm PCM audio data.
-     *
-     * @return void
      */
     public function writePCM($pcm)
     {
@@ -100,8 +96,6 @@ class RecieveStream extends EventEmitter implements DuplexStreamInterface
      * Writes Opus audio data.
      *
      * @param string $opus Opus audio data.
-     *
-     * @return void
      */
     public function writeOpus($opus)
     {
@@ -225,8 +219,6 @@ class RecieveStream extends EventEmitter implements DuplexStreamInterface
      *
      * @param WritableStreamInterface $dest    The stream to pipe to.
      * @param array                   $options An array of options.
-     *
-     * @return void
      */
     public function pipePCM(WritableStreamInterface $dest, array $options = [])
     {
@@ -259,8 +251,6 @@ class RecieveStream extends EventEmitter implements DuplexStreamInterface
      *
      * @param WritableStreamInterface $dest    The stream to pipe to.
      * @param array                   $options An array of options.
-     *
-     * @return void
      */
     public function pipeOpus(WritableStreamInterface $dest, array $options = [])
     {

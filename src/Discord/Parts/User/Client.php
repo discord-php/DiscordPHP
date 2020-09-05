@@ -3,7 +3,7 @@
 /*
  * This file is apart of the DiscordPHP project.
  *
- * Copyright (c) 2016 David Cole <david@team-reflex.com>
+ * Copyright (c) 2016-2020 David Cole <david.cole1340@gmail.com>
  *
  * This source file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -49,23 +49,21 @@ class Client extends Part
      * {@inheritdoc}
      */
     protected $repositories = [
-        'guilds'           => GuildRepository::class,
+        'guilds' => GuildRepository::class,
         'private_channels' => PrivateChannelRepository::class,
-        'users'            => UserRepository::class,
+        'users' => UserRepository::class,
     ];
 
     /**
      * Runs any extra construction tasks.
-     *
-     * @return void
      */
     public function afterConstruct()
     {
         $this->user = $this->factory->create(User::class,
             [
-                'id'            => $this->id,
-                'username'      => $this->username,
-                'avatar'        => $this->attributes['avatar'],
+                'id' => $this->id,
+                'username' => $this->username,
+                'avatar' => $this->attributes['avatar'],
                 'discriminator' => $this->discriminator,
             ], true
         );
@@ -92,8 +90,8 @@ class Client extends Part
         }
 
         $extension = pathinfo($filepath, PATHINFO_EXTENSION);
-        $file      = file_get_contents($filepath);
-        $base64    = base64_encode($file);
+        $file = file_get_contents($filepath);
+        $base64 = base64_encode($file);
 
         $this->attributes['avatarhash'] = "data:image/{$extension};base64,{$base64}";
 
@@ -133,8 +131,8 @@ class Client extends Part
         $deferred = new Deferred();
 
         $this->http->patch('users/@me', $this->getUpdatableAttributes())->then(
-            \React\Partial\bind_right($this->resolve, $deferred),
-            \React\Partial\bind_right($this->reject, $deferred)
+            \React\Partial\bind([$deferred, 'resolve']),
+            \React\Partial\bind([$deferred, 'reject'])
         );
 
         return $deferred->promise();
@@ -158,7 +156,7 @@ class Client extends Part
                 throw new PasswordEmptyException('You must enter your password to update your profile.');
             }
 
-            $attributes['email']    = $this->email;
+            $attributes['email'] = $this->email;
             $attributes['password'] = $this->attributes['password'];
 
             if (! empty($this->attributes['new_password'])) {

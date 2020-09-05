@@ -3,7 +3,7 @@
 /*
  * This file is apart of the DiscordPHP project.
  *
- * Copyright (c) 2016 David Cole <david@team-reflex.com>
+ * Copyright (c) 2016-2020 David Cole <david.cole1340@gmail.com>
  *
  * This source file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -11,14 +11,11 @@
 
 namespace Discord\Http;
 
-use Discord\Cache\Cache;
 use Discord\Exceptions\DiscordRequestFailedException;
 use Discord\Exceptions\Rest\ContentTooLongException;
 use Discord\Exceptions\Rest\NoPermissionsException;
 use Discord\Exceptions\Rest\NotFoundException;
 use Discord\Parts\Channel\Channel;
-use Discord\Wrapper\CacheWrapper;
-use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
 use Illuminate\Support\Str;
 use React\Promise\Deferred;
@@ -43,11 +40,6 @@ class Http
     const CACHE_TTL = 300;
 
     /**
-     * @var CacheWrapper
-     */
-    private $cache;
-
-    /**
      * @var string
      */
     private $token;
@@ -67,25 +59,21 @@ class Http
     /**
      * Guzzle constructor.
      *
-     * @param CacheWrapper $cache
-     * @param string       $token
-     * @param string       $version
-     * @param HttpDriver   $driver  The request driver.
+     * @param string     $token
+     * @param string     $version
+     * @param HttpDriver $driver  The request driver.
      */
-    public function __construct(CacheWrapper $cache, $token, $version, $driver)
+    public function __construct($token, $version, $driver)
     {
-        $this->cache   = $cache;
-        $this->token   = $token;
+        $this->token = $token;
         $this->version = $version;
-        $this->driver  = $driver;
+        $this->driver = $driver;
     }
 
     /**
      * Sets the HTTP driver.
      *
      * @param HttpDriver $driver
-     *
-     * @return void
      */
     public function setDriver(HttpDriver $driver)
     {
@@ -104,12 +92,12 @@ class Http
      */
     public function __call($name, $params)
     {
-        $url      = $params[0];
-        $content  = (isset($params[1])) ? $params[1] : null;
-        $headers  = (isset($params[2])) ? $params[2] : [];
-        $cache    = (isset($params[3])) ? $params[3] : null;
+        $url = $params[0];
+        $content = (isset($params[1])) ? $params[1] : null;
+        $headers = (isset($params[2])) ? $params[2] : [];
+        $cache = (isset($params[3])) ? $params[3] : null;
         $blocking = (isset($params[4])) ? $params[4] : false;
-        $options  = (isset($params[5])) ? $params[5] : [];
+        $options = (isset($params[5])) ? $params[5] : [];
 
         return $this->runRequest(strtolower($name), $url, $content, $headers, $cache, $blocking, $options);
     }
@@ -135,15 +123,8 @@ class Http
      */
     private function runRequest($method, $url, $content, $extraHeaders, $cache, $blocking, $options)
     {
-        $deferred     = new Deferred();
+        $deferred = new Deferred();
         $disable_json = false;
-
-        $key = 'guzzle.'.sha1($url);
-        if ($method === 'get' && $this->cache->has($key)) {
-            $deferred->resolve($this->cache->get($key));
-
-            return $deferred->promise();
-        }
 
         $headers = [
             'User-Agent' => $this->getUserAgent(),
@@ -158,8 +139,8 @@ class Http
         $headers = array_merge($headers, $extraHeaders);
 
         if (! is_null($content)) {
-            $headers['Content-Type']   = 'application/json';
-            $content                   = json_encode($content);
+            $headers['Content-Type'] = 'application/json';
+            $content = json_encode($content);
             $headers['Content-Length'] = strlen($content);
         }
 
@@ -175,16 +156,12 @@ class Http
         }
 
         $this->driver->runRequest($method, $url, $headers, $content, $options)->then(
-            function ($response) use ($method, $cache, $key, $deferred, $disable_json) {
+            function ($response) use ($method, $cache, $deferred, $disable_json) {
                 if ($disable_json) {
                     return $deferred->resolve($response->getBody());
                 }
 
                 $json = json_decode($response->getBody());
-
-                if ($method === 'get' && $cache !== false) {
-                    $this->cache->set($key, $json, $cache === null ? static::CACHE_TTL : (int) $cache);
-                }
 
                 $deferred->resolve($json);
             },
@@ -232,16 +209,16 @@ class Http
     {
         $multipart = [
             [
-                'name'     => 'file',
+                'name' => 'file',
                 'contents' => fopen($filepath, 'r'),
                 'filename' => $filename,
             ],
             [
-                'name'     => 'tts',
+                'name' => 'tts',
                 'contents' => ($tts ? 'true' : 'false'),
             ],
             [
-                'name'     => 'content',
+                'name' => 'content',
                 'contents' => (string) $content,
             ],
         ];

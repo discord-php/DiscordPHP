@@ -3,7 +3,7 @@
 /*
  * This file is apart of the DiscordPHP project.
  *
- * Copyright (c) 2016 David Cole <david@team-reflex.com>
+ * Copyright (c) 2016-2020 David Cole <david.cole1340@gmail.com>
  *
  * This source file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -11,7 +11,9 @@
 
 namespace Discord\Parts\Channel;
 
+use Carbon\Carbon;
 use Discord\Exceptions\FileNotFoundException;
+use Discord\Exceptions\InvalidOverwriteException;
 use Discord\Helpers\Collection;
 use Discord\Parts\Embed\Embed;
 use Discord\Parts\Guild\Guild;
@@ -19,11 +21,14 @@ use Discord\Parts\Guild\Invite;
 use Discord\Parts\Guild\Role;
 use Discord\Parts\Part;
 use Discord\Parts\Permissions\ChannelPermission;
+use Discord\Parts\Permissions\Permission;
 use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
 use Discord\Repository\Channel\MessageRepository;
 use Discord\Repository\Channel\OverwriteRepository;
 use Discord\Repository\Channel\VoiceMemberRepository as MemberRepository;
+use Discord\Repository\Channel\WebhookRepository;
+use Discord\WebSockets\Event;
 use React\Promise\Deferred;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Traversable;
@@ -43,16 +48,28 @@ use Traversable;
  * @property int                        $bitrate         The bitrate of the channel. Only for voice channels.
  * @property \Discord\Parts\User\User   $recipient       The first recipient of the channel. Only for DM or group channels.
  * @property Collection[User]           $recipients      A collection of all the recipients in the channel. Only for DM or group channels.
+ * @property bool                       $nsfw            Whether the channel is NSFW.
+ * @property int                        $user_limit      The user limit of the channel.
+ * @property int                        $rate_limit_per_user Amount of seconds a user has to wait before sending a new message.
+ * @property string                     $icon            Icon hash.
+ * @property string                     $owner_id        The ID of the DM creator. Only for DM or group channels.
+ * @property string                     $application_id  ID of the group DM creator if it is a bot.
+ * @property string                     $parent_id       ID of the parent channel.
+ * @property \Carbon\Carbon             $last_pin_timestamp When the last message was pinned.
  * @property \Discord\Repository\Channel\VoiceMemberRepository $members
  * @property \Discord\Repository\Channel\MessageRepository     $messages
  * @property \Discord\Repository\Channel\OverwriteRepository   $overwrites
+ * @property \Discord\Repository\Channel\WebhookRepository     $webhooks
  */
 class Channel extends Part
 {
-    const TYPE_TEXT  = 0;
-    const TYPE_DM    = 1;
+    const TYPE_TEXT = 0;
+    const TYPE_DM = 1;
     const TYPE_VOICE = 2;
     const TYPE_GROUP = 3;
+    const TYPE_CATEGORY = 4;
+    const TYPE_NEWS = 5;
+    const TYPE_GAME_STORE = 6;
 
     /**
      * {@inheritdoc}
@@ -69,15 +86,24 @@ class Channel extends Part
         'permission_overwrites',
         'bitrate',
         'recipients',
+        'nsfw',
+        'user_limit',
+        'rate_limit_per_user',
+        'icon',
+        'owner_id',
+        'application_id',
+        'parent_id',
+        'last_pin_timestamp',
     ];
 
     /**
      * {@inheritdoc}
      */
     protected $repositories = [
-        'members'    => MemberRepository::class,
-        'messages'   => MessageRepository::class,
+        'members' => MemberRepository::class,
+        'messages' => MessageRepository::class,
         'overwrites' => OverwriteRepository::class,
+        'webhooks' => WebhookRepository::class,
     ];
 
     /**
@@ -85,9 +111,7 @@ class Channel extends Part
      */
     public function afterConstruct()
     {
-        if (! array_key_exists('bitrate', $this->attributes) &&
-            $this->type != self::TYPE_TEXT
-        ) {
+        if (! array_key_exists('bitrate', $this->attributes) && $this->type != self::TYPE_TEXT) {
             $this->bitrate = 64000;
         }
     }
@@ -131,14 +155,15 @@ class Channel extends Part
     }
 
     /**
-     * Sets a permission value to the channel.
-     *
-     * @param Member|Role       $part        Either a Member or Role, permissions will be set on it.
-     * @param ChannelPermission $permissions The permissions that define what the Member/Role can and cannot do.
-     *
+     * Sets permissions in a channel.
+     * 
+     * @param Part $part A role or member.
+     * @param array $allow An array of permissions to allow.
+     * @param array $deny An array of permissions to deny.
+     * 
      * @return \React\Promise\Promise
      */
-    public function setPermissions(Part $part, ChannelPermission $permissions = null)
+    public function setPermissions(Part $part, array $allow = [], array $deny = [])
     {
         $deferred = new Deferred();
 
@@ -147,20 +172,57 @@ class Channel extends Part
         } elseif ($part instanceof Role) {
             $type = 'role';
         } else {
-            return false;
+            return \React\Promise\reject(new InvalidOverwriteException('Given part was not one of member or role.'));
         }
 
-        if (is_null($permissions)) {
-            $permissions = $this->factory->create(ChannelPermission::class);
-        }
+        $allow = array_fill_keys($allow, true);
+        $deny = array_fill_keys($deny, true);
 
-        list($allow, $deny) = $permissions->bitwise;
+        $allowPart = $this->factory->create(ChannelPermission::class, $allow);
+        $denyPart = $this->factory->create(ChannelPermission::class, $deny);
+
+        $overwrite = $this->factory->create(Overwrite::class, [
+            'id' => $part->id,
+            'channel_id' => $this->id,
+            'type' => $type,
+            'allow' => $allowPart->bitwise,
+            'deny' => $denyPart->bitwise,
+        ]);
+
+        var_dump($overwrite);
+
+        $this->setOverwrite($part, $overwrite)->then(
+            \React\Partial\bind_right($this->resolve, $deferred),
+            \React\Partial\bind_right($this->reject, $deferred)
+        );
+
+        return $deferred->promise();
+    }
+
+    /**
+     * Sets an overwrite to the channel.
+     *
+     * @param Part $part A role or member.
+     * @param Overwrite $overwrite An overwrite object.
+     *
+     * @return \React\Promise\Promise
+     */
+    public function setOverwrite(Part $part, Overwrite $overwrite)
+    {
+        $deferred = new Deferred();
+
+        if ($part instanceof Member) {
+            $type = 'member';
+        } elseif ($part instanceof Role) {
+            $type = 'role';
+        } else {
+            return \React\Promise\reject(new InvalidOverwriteException('Given part was not one of member or role.'));
+        }
 
         $payload = [
-            'id'    => $part->id,
-            'type'  => $type,
-            'allow' => $allow,
-            'deny'  => $deny,
+            'type' => $type,
+            'allow' => (string) $overwrite->allow->bitwise,
+            'deny' => (string) $overwrite->deny->bitwise,
         ];
 
         if (! $this->created) {
@@ -168,8 +230,8 @@ class Channel extends Part
             $deferred->resolve();
         } else {
             $this->http->put("channels/{$this->id}/permissions/{$part->id}", $payload)->then(
-                \React\Partial\bind_right($this->resolve, $deferred),
-                \React\Partial\bind_right($this->reject, $deferred)
+                \React\Partial\bind([$deferred, 'resolve']),
+                \React\Partial\bind([$deferred, 'reject'])
             );
         }
 
@@ -209,14 +271,9 @@ class Channel extends Part
             $member = $member->id;
         }
 
-        $this->http->patch(
-            "guilds/{$this->guild_id}/members/{$member}",
-            [
-                'channel_id' => $this->id,
-            ]
-        )->then(
-            \React\Partial\bind_right($this->resolve, $deferred),
-            \React\Partial\bind_right($this->reject, $deferred)
+        $this->http->patch("guilds/{$this->guild_id}/members/{$member}", ['channel_id' => $this->id,])->then(
+            \React\Partial\bind([$deferred, 'resolve']),
+            \React\Partial\bind([$deferred, 'reject'])
         );
 
         // At the moment we are unable to check if the member
@@ -236,36 +293,39 @@ class Channel extends Part
     }
 
     /**
+     * Gets the last pinned message timestamp.
+     *
+     * @return Carbon
+     */
+    public function getLastPinTimestampAttribute()
+    {
+        if (isset($this->attributes['last_pin_timestamp'])) {
+            return Carbon::parse($this->attributes['last_pin_timestamp']);
+        }
+    }
+
+    /**
      * Creates an invite for the channel.
      *
-     * @param int  $max_age   The time that the invite will be valid in seconds.
-     * @param int  $max_uses  The amount of times the invite can be used.
-     * @param bool $temporary Whether the invite is for temporary membership.
-     * @param bool $xkcd      Whether to generate an XKCD invite.
+     * @param array $options              An array of options. All fields are optional.
+     * @param int   $options['max_age']   The time that the invite will be valid in seconds.
+     * @param int   $options['max_uses']  The amount of times the invite can be used.
+     * @param bool  $options['temporary'] Whether the invite is for temporary membership.
+     * @param bool  $options['unique']    Whether the invite code should be unique (useful for creating many unique one time use invites).
      *
      * @return \React\Promise\Promise
      */
-    public function createInvite($max_age = 3600, $max_uses = 0, $temporary = false, $xkcd = false)
+    public function createInvite($options = [])
     {
         $deferred = new Deferred();
 
-        $this->http->post(
-            $this->replaceWithVariables('channels/:id/invites'),
-            [
-                'validate' => null,
-
-                'max_age'   => $max_age,
-                'max_uses'  => $max_uses,
-                'temporary' => $temporary,
-                'xkcdpass'  => $xkcd,
-            ]
-        )->then(
+        $this->http->post($this->replaceWithVariables('channels/:id/invites'), $options)->then(
             function ($response) use ($deferred) {
                 $invite = $this->factory->create(Invite::class, $response, true);
 
                 $deferred->resolve($invite);
             },
-            \React\Partial\bind_right($this->reject, $deferred)
+            \React\Partial\bind([$deferred, 'reject'])
         );
 
         return $deferred->promise();
@@ -318,8 +378,8 @@ class Channel extends Part
                 'messages' => $messageID,
             ]
         )->then(
-            \React\Partial\bind_right($this->resolve, $deferred),
-            \React\Partial\bind_right($this->reject, $deferred)
+            \React\Partial\bind([$deferred, 'resolve']),
+            \React\Partial\bind([$deferred, 'reject'])
         );
 
         return $deferred->promise();
@@ -375,7 +435,7 @@ class Channel extends Part
 
                 $deferred->resolve($messages);
             },
-            \React\Partial\bind_right($this->reject, $deferred)
+            \React\Partial\bind([$deferred, 'reject'])
         );
 
         return $deferred->promise();
@@ -405,7 +465,7 @@ class Channel extends Part
                 $message->pinned = true;
                 $deferred->resolve($message);
             },
-            \React\Partial\bind_right($this->reject, $deferred)
+            \React\Partial\bind([$deferred, 'reject'])
         );
 
         return $deferred->promise();
@@ -435,7 +495,7 @@ class Channel extends Part
                 $message->pinned = false;
                 $deferred->resolve($message);
             },
-            \React\Partial\bind_right($this->reject, $deferred)
+            \React\Partial\bind([$deferred, 'reject'])
         );
 
         return $deferred->promise();
@@ -461,7 +521,7 @@ class Channel extends Part
 
                 $deferred->resolve($messages);
             },
-            \React\Partial\bind_right($this->reject, $deferred)
+            \React\Partial\bind([$deferred, 'reject'])
         );
 
         return $deferred->promise();
@@ -487,7 +547,7 @@ class Channel extends Part
 
                 $deferred->resolve($invites);
             },
-            \React\Partial\bind_right($this->reject, $deferred)
+            \React\Partial\bind([$deferred, 'reject'])
         );
 
         return $deferred->promise();
@@ -495,8 +555,6 @@ class Channel extends Part
 
     /**
      * Sets the permission overwrites attribute.
-     *
-     * @return void
      */
     public function setPermissionOverwritesAttribute($overwrites)
     {
@@ -504,7 +562,7 @@ class Channel extends Part
 
         if (! is_null($overwrites)) {
             foreach ($overwrites as $overwrite) {
-                $overwrite               = (array) $overwrite;
+                $overwrite = (array) $overwrite;
                 $overwrite['channel_id'] = $this->id;
 
                 $this->overwrites->push($overwrite);
@@ -535,8 +593,8 @@ class Channel extends Part
             "channels/{$this->id}/messages",
             [
                 'content' => $text,
-                'tts'     => $tts,
-                'embed'   => $embed,
+                'tts' => $tts,
+                'embed' => $embed,
             ]
         )->then(
             function ($response) use ($deferred) {
@@ -545,7 +603,7 @@ class Channel extends Part
 
                 $deferred->resolve($message);
             },
-            \React\Partial\bind_right($this->reject, $deferred)
+            \React\Partial\bind([$deferred, 'reject'])
         );
 
         return $deferred->promise();
@@ -588,7 +646,7 @@ class Channel extends Part
 
                 $deferred->resolve($message);
             },
-            \React\Partial\bind_right($this->reject, $deferred)
+            \React\Partial\bind([$deferred, 'reject'])
         );
 
         return $deferred->promise();
@@ -610,11 +668,64 @@ class Channel extends Part
         }
 
         $this->http->post("channels/{$this->id}/typing")->then(
-            \React\Partial\bind_right($this->resolve, $deferred),
-            \React\Partial\bind_right($this->reject, $deferred)
+            \React\Partial\bind([$deferred, 'resolve']),
+            \React\Partial\bind([$deferred, 'reject'])
         );
 
         return $deferred->resolve();
+    }
+
+    /**
+     * Creates a message collector for the channel.
+     *
+     * @param callable $filter           The filter function. Returns true or false.
+     * @param array    $options
+     * @param int      $options['time']  Time in milliseconds until the collector finishes or false.
+     * @param int      $options['limit'] The amount of messages allowed or false.
+     *
+     * @return \React\Promise\Promise
+     */
+    public function createMessageCollector($filter, $options = [])
+    {
+        $deferred = new Deferred();
+        $messages = new Collection();
+        $timer = null;
+
+        $options = array_merge([
+            'time' => false,
+            'limit' => false,
+        ], $options);
+
+        $eventHandler = function (Message $message) use (&$eventHandler, $filter, $options, &$messages, &$deferred, &$timer) {
+            if ($message->channel_id != $this->id) {
+                return;
+            }
+            // Reject messages not in this channel
+            $filterResult = call_user_func_array($filter, [$message]);
+
+            if ($filterResult) {
+                $messages->push($message);
+
+                if ($options['limit'] !== false && sizeof($messages) >= $options['limit']) {
+                    $this->discord->removeListener(Event::MESSAGE_CREATE, $eventHandler);
+                    $deferred->resolve($messages);
+
+                    if (! is_null($timer)) {
+                        $this->discord->getLoop()->cancelTimer($timer);
+                    }
+                }
+            }
+        };
+        $this->discord->on(Event::MESSAGE_CREATE, $eventHandler);
+
+        if ($options['time'] !== false) {
+            $timer = $this->discord->getLoop()->addTimer($options['time'] / 1000, function () use (&$eventHandler, &$messages, &$deferred) {
+                $this->discord->removeListener(Event::MESSAGE_CREATE, $eventHandler);
+                $deferred->resolve($messages);
+            });
+        }
+
+        return $deferred->promise();
     }
 
     /**
@@ -643,9 +754,9 @@ class Channel extends Part
     public function getCreatableAttributes()
     {
         return [
-            'name'                  => $this->name,
-            'type'                  => $this->getChannelType(),
-            'bitrate'               => $this->bitrate,
+            'name' => $this->name,
+            'type' => $this->getChannelType(),
+            'bitrate' => $this->bitrate,
             'permission_overwrites' => $this->permission_overwrites,
         ];
     }
@@ -658,8 +769,8 @@ class Channel extends Part
     public function getUpdatableAttributes()
     {
         return [
-            'name'     => $this->name,
-            'topic'    => $this->topic,
+            'name' => $this->name,
+            'topic' => $this->topic,
             'position' => $this->position,
         ];
     }

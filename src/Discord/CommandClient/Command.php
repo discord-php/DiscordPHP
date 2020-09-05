@@ -3,7 +3,7 @@
 /*
  * This file is apart of the DiscordPHP project.
  *
- * Copyright (c) 2016 David Cole <david@team-reflex.com>
+ * Copyright (c) 2016-2020 David Cole <david.cole1340@gmail.com>
  *
  * This source file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -27,11 +27,18 @@ class Command
     protected $command;
 
     /**
-     * The description of the command.
+     * The short description of the command.
      *
      * @var string Description.
      */
     protected $description;
+
+    /**
+     * The long description of the command.
+     *
+     * @var string Long description.
+     */
+    protected $longDescription;
 
     /**
      * The usage of the command.
@@ -39,6 +46,27 @@ class Command
      * @var string Command usage.
      */
     protected $usage;
+
+    /**
+     * The cooldown of the command in milliseconds.
+     *
+     * @var int Command cooldown.
+     */
+    protected $cooldown;
+
+    /**
+     * The cooldown message to show when a cooldown is in effect.
+     *
+     * @var string Command cooldown message.
+     */
+    protected $cooldownMessage;
+
+    /**
+     * An array of cooldowns for commands.
+     *
+     * @var array Cooldowns.
+     */
+    protected $cooldowns = [];
 
     /**
      * A map of sub-commands.
@@ -57,24 +85,33 @@ class Command
     /**
      * Creates a command instance.
      *
-     * @param DiscordCommandClient $client      The Discord Command Client.
-     * @param string               $command     The command trigger.
-     * @param \Callable            $callable    The callable function.
-     * @param string               $description The description of the command.
-     * @param string               $usage       The usage of the command.
+     * @param DiscordCommandClient $client          The Discord Command Client.
+     * @param string               $command         The command trigger.
+     * @param \Callable            $callable        The callable function.
+     * @param string               $description     The short description of the command.
+     * @param string               $longDescription The long description of the command.
+     * @param string               $usage           The usage of the command.
+     * @param int                  $cooldown        The cooldown of the command in milliseconds.
+     * @param int                  $cooldownMessage The cooldown message to show when a cooldown is in effect.
      */
     public function __construct(
         DiscordCommandClient $client,
         $command,
         callable $callable,
         $description,
-        $usage
+        $longDescription,
+        $usage,
+        $cooldown,
+        $cooldownMessage
     ) {
-        $this->client      = $client;
-        $this->command     = $command;
-        $this->callable    = $callable;
+        $this->client = $client;
+        $this->command = $command;
+        $this->callable = $callable;
         $this->description = $description;
-        $this->usage       = $usage;
+        $this->longDescription = $longDescription;
+        $this->usage = $usage;
+        $this->cooldown = $cooldown;
+        $this->cooldownMessage = $cooldownMessage;
     }
 
     /**
@@ -93,7 +130,7 @@ class Command
         }
 
         list($commandInstance, $options) = $this->client->buildCommand($command, $callable, $options);
-        $this->subCommands[$command]     = $commandInstance;
+        $this->subCommands[$command] = $commandInstance;
 
         foreach ($options['aliases'] as $alias) {
             $this->registerSubCommandAlias($alias, $command);
@@ -163,6 +200,17 @@ class Command
             array_unshift($args, $subCommand);
         }
 
+        $currentTime = round(microtime(true) * 1000);
+        if (isset($this->cooldowns[$message->author->id])) {
+            if ($this->cooldowns[$message->author->id] < $currentTime) {
+                $this->cooldowns[$message->author->id] = $currentTime + $this->cooldown;
+            } else {
+                return sprintf($this->cooldownMessage, (($this->cooldowns[$message->author->id] - $currentTime) / 1000));
+            }
+        } else {
+            $this->cooldowns[$message->author->id] = $currentTime + $this->cooldown;
+        }
+
         return call_user_func_array($this->callable, [$message, $args]);
     }
 
@@ -175,16 +223,18 @@ class Command
      */
     public function getHelp($prefix)
     {
-        $helpString = "{$prefix}{$this->command} {$this->usage}- {$this->description}\r\n";
+        $subCommandsHelp = [];
 
         foreach ($this->subCommands as $command) {
-            $help = $command->getHelp($prefix.$this->command.' ');
-            $helpString .= "    {$help['text']}\r\n";
+            $subCommandsHelp[] = $command->getHelp($prefix.$this->command.' ');
         }
 
         return [
-            'text'              => $helpString,
-            'subCommandAliases' => $this->subCommandAliases,
+            'command' => $prefix.$this->command,
+            'description' => $this->description,
+            'longDescription' => $this->longDescription,
+            'usage' => $this->usage,
+            'subCommandsHelp' => $subCommandsHelp,
         ];
     }
 
@@ -197,7 +247,7 @@ class Command
      */
     public function __get($variable)
     {
-        $allowed = ['command', 'description', 'usage'];
+        $allowed = ['command', 'description', 'longDescription', 'usage', 'cooldown', 'cooldownMessage'];
 
         if (array_search($variable, $allowed) !== false) {
             return $this->{$variable};

@@ -3,7 +3,7 @@
 /*
  * This file is apart of the DiscordPHP project.
  *
- * Copyright (c) 2016 David Cole <david@team-reflex.com>
+ * Copyright (c) 2016-2020 David Cole <david.cole1340@gmail.com>
  *
  * This source file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -43,15 +43,15 @@ class User extends Part
     {
         $deferred = new Deferred();
 
-        if ($this->cache->has("pm_channel.{$this->id}")) {
-            $deferred->resolve($this->cache->get("pm_channel.{$this->id}"));
+        if ($channel = $this->discord->private_channels->get('id', $this->id)) {
+            $deferred->resolve($channel);
         } else {
             $this->http->post('users/@me/channels', ['recipient_id' => $this->id])->then(function ($response) use ($deferred) {
                 $channel = $this->factory->create(Channel::class, $response, true);
-                $this->cache->set("pm_channel.{$this->id}", $channel);
+                $this->discord->private_channels->push($channel);
 
                 $deferred->resolve($channel);
-            }, \React\Partial\bind_right($this->reject, $deferred));
+            }, \React\Partial\bind([$deferred, 'reject']));
         }
 
         return $deferred->promise();
@@ -74,8 +74,8 @@ class User extends Part
             $channel->sendMessage($message, $tts, $embed)->then(function ($response) use ($deferred) {
                 $message = $this->factory->create(Message::class, $response, true);
                 $deferred->resolve($message);
-            }, \React\Partial\bind_right($this->reject, $deferred));
-        }, \React\Partial\bind_right($this->reject, $deferred));
+            }, \React\Partial\bind([$deferred, 'reject']));
+        }, \React\Partial\bind([$deferred, 'reject']));
 
         return $deferred->promise();
     }
@@ -91,8 +91,8 @@ class User extends Part
 
         $this->getPrivateChannel()->then(function ($channel) use ($deferred) {
             $channel->broadcastTyping()->then(
-                \React\Partial\bind_right($this->resolve, $deferred),
-                \React\Partial\bind_right($this->reject, $deferred)
+                \React\Partial\bind([$deferred, 'resolve']),
+                \React\Partial\bind([$deferred, 'reject'])
             );
         });
 

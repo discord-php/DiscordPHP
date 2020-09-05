@@ -3,7 +3,7 @@
 /*
  * This file is apart of the DiscordPHP project.
  *
- * Copyright (c) 2016 David Cole <david@team-reflex.com>
+ * Copyright (c) 2016-2020 David Cole <david.cole1340@gmail.com>
  *
  * This source file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -24,8 +24,6 @@ class Buffer extends BaseBuffer implements ArrayAccess
      *
      * @param int $value  The value that will be written.
      * @param int $offset The offset that the value will be written.
-     *
-     * @return void
      */
     public function writeUInt32BE($value, $offset)
     {
@@ -37,8 +35,6 @@ class Buffer extends BaseBuffer implements ArrayAccess
      *
      * @param int $value  The value that will be written.
      * @param int $offset The offset that the value will be written.
-     *
-     * @return void
      */
     public function writeUInt64LE($value, $offset)
     {
@@ -50,8 +46,6 @@ class Buffer extends BaseBuffer implements ArrayAccess
      *
      * @param int $value  The value that will be written.
      * @param int $offset The offset that the value will be written.
-     *
-     * @return void
      */
     public function writeInt($value, $offset)
     {
@@ -75,8 +69,6 @@ class Buffer extends BaseBuffer implements ArrayAccess
      *
      * @param short $value  The value that will be written.
      * @param int   $offset The offset that the value will be written.
-     *
-     * @return void
      */
     public function writeShort($value, $offset)
     {
@@ -112,8 +104,6 @@ class Buffer extends BaseBuffer implements ArrayAccess
      *
      * @param char $value  The value that will be written.
      * @param int  $offset The offset that the value will be written.
-     *
-     * @return void
      */
     public function writeChar($value, $offset)
     {
@@ -125,8 +115,6 @@ class Buffer extends BaseBuffer implements ArrayAccess
      *
      * @param binary $value  The value that will be written.
      * @param int    $offset The offset that the value will be written at.
-     *
-     * @return void
      */
     public function writeRaw($value, $offset)
     {
@@ -138,8 +126,6 @@ class Buffer extends BaseBuffer implements ArrayAccess
      *
      * @param string $value  The value that will be written.
      * @param int    $offset The offset that the value will be written at.
-     *
-     * @return void
      */
     public function writeRawString($value, $offset)
     {
@@ -177,8 +163,6 @@ class Buffer extends BaseBuffer implements ArrayAccess
      *
      * @param mixed $key   The attribute key.
      * @param mixed $value The attribute value.
-     *
-     * @return void
      */
     public function offsetSet($key, $value)
     {
@@ -189,8 +173,6 @@ class Buffer extends BaseBuffer implements ArrayAccess
      * Unsets an attribute via key. Used for ArrayAccess.
      *
      * @param string $key The attribute key.
-     *
-     * @return void
      */
     public function offsetUnset($key)
     {

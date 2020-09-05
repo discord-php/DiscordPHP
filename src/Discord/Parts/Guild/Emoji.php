@@ -3,7 +3,7 @@
 /*
  * This file is apart of the DiscordPHP project.
  *
- * Copyright (c) 2016 David Cole <david@team-reflex.com>
+ * Copyright (c) 2016-2020 David Cole <david.cole1340@gmail.com>
  *
  * This source file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -24,13 +24,14 @@ use Discord\Parts\Part;
  * @property bool                       $managed        Whether this emoji is managed by a role.
  * @property bool                       $require_colons Whether the emoji requires colons to be triggered.
  * @property Collection[Role]           $roles          The roles that are allowed to use the emoji.
+ * @property bool                       $animated       Whether the emoji is animated.
  */
 class Emoji extends Part
 {
     /**
      * {@inheritdoc}
      */
-    protected $fillable = ['id', 'name', 'guild_id', 'managed', 'require_colons', 'roles'];
+    protected $fillable = ['id', 'name', 'guild_id', 'managed', 'require_colons', 'roles', 'animated'];
 
     /**
      * Returns the guild attribute.
@@ -49,8 +50,40 @@ class Emoji extends Part
      */
     public function getRolesAttribute()
     {
+        if (! $this->guild) {
+            return [];
+        }
+        
         return $this->guild->roles->filter(function ($role) {
             return array_search($role->id, $this->attributes['roles']) !== false;
         });
+    }
+
+    /**
+     * Converts the emoji to the format required for creating a reaction.
+     *
+     * @return string
+     */
+    public function toReactionString()
+    {
+        if ($this->id) {
+            return ":{$this->name}:{$this->id}";
+        }
+
+        return $this->name;
+    }
+
+    /**
+     * Converts the emoji to a string.
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        if ($this->id) {
+            return "<a:{$this->name}:{$this->id}>";
+        }
+        
+        return $this->name;
     }
 }

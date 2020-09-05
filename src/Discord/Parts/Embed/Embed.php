@@ -3,7 +3,7 @@
 /*
  * This file is apart of the DiscordPHP project.
  *
- * Copyright (c) 2016 David Cole <david@team-reflex.com>
+ * Copyright (c) 2016-2020 David Cole <david.cole1340@gmail.com>
  *
  * This source file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -19,6 +19,7 @@ use Discord\Parts\Part;
  * An embed object to be sent with a message.
  *
  * @property string            $title       The title of the embed.
+ * @property string            $type        The type of the embed.
  * @property string            $description A description of the embed.
  * @property string            $url         The URL of the embed.
  * @property Carbon|string     $timestamp   A timestamp of the embed.
@@ -119,7 +120,7 @@ class Embed extends Part
 
         foreach ($this->attributes['fields'] as $field) {
             if (! ($field instanceof Field)) {
-                $field = $this->discord->factory(Field::class, $field, true);
+                $field = $this->factory->create(Field::class, $field, true);
             }
 
             $fields[] = $field;
@@ -139,13 +140,13 @@ class Embed extends Part
     protected function attributeHelper($key, $class)
     {
         if (! array_key_exists($key, $this->attributes)) {
-            return $this->discord->factory($class, []);
+            return $this->factory->create($class, []);
         }
 
         if ($this->attributes[$key] instanceof $class) {
             return $this->attributes[$key];
         }
 
-        return $this->discord->factory($class, $this->attributes[$key], true);
+        return $this->factory->create($class, $this->attributes[$key], true);
     }
 }

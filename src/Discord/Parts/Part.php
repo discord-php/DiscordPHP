@@ -3,7 +3,7 @@
 /*
  * This file is apart of the DiscordPHP project.
  *
- * Copyright (c) 2016 David Cole <david@team-reflex.com>
+ * Copyright (c) 2016-2020 David Cole <david.cole1340@gmail.com>
  *
  * This source file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -16,10 +16,8 @@ use Carbon\Carbon;
 use Discord\Discord;
 use Discord\Factory\Factory;
 use Discord\Http\Http;
-use Discord\Wrapper\CacheWrapper;
 use Illuminate\Support\Str;
 use JsonSerializable;
-use React\Promise\Promise;
 use Serializable;
 
 /**
@@ -41,13 +39,6 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
      * @var Factory Factory.
      */
     protected $factory;
-
-    /**
-     * The cache wrapper.
-     *
-     * @var CacheWrapper Cache.
-     */
-    protected $cache;
 
     /**
      * The Discord client.
@@ -92,6 +83,13 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
     protected $repositories = [];
 
     /**
+     * An array of repositories.
+     *
+     * @var array
+     */
+    protected $repositories_cache = [];
+
+    /**
      * Is the part already created in the Discord servers?
      *
      * @var bool Whether the part has been created.
@@ -113,70 +111,42 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
     protected $fillAfterSave = true;
 
     /**
-     * The promise resolve function.
-     *
-     * @var \Closure Resolve function.
-     */
-    public $resolve;
-
-    /**
-     * The promise reject function.
-     *
-     * @var \Closure Reject function.
-     */
-    public $reject;
-
-    /**
      * Create a new part instance.
      *
-     * @param Factory      $factory    The factory.
-     * @param Discord      $discord    The Discord client.
-     * @param Http         $http       The HTTP client.
-     * @param CacheWrapper $cache      The cache.
-     * @param array        $attributes An array of attributes to build the part.
-     * @param bool         $created    Whether the part has already been created.
-     *
-     * @return void
+     * @param Factory $factory    The factory.
+     * @param Discord $discord    The Discord client.
+     * @param Http    $http       The HTTP client.
+     * @param array   $attributes An array of attributes to build the part.
+     * @param bool    $created    Whether the part has already been created.
      */
     public function __construct(
         Factory $factory,
         Discord $discord,
         Http $http,
-        CacheWrapper $cache,
         array $attributes = [],
         $created = false
     ) {
         $this->factory = $factory;
         $this->discord = $discord;
-        $this->http    = $http;
-        $this->cache   = $cache;
+        $this->http = $http;
 
         $this->created = $created;
         $this->fill($attributes);
 
-        if (is_callable([$this, 'afterConstruct'])) {
-            $this->afterConstruct();
-        }
+        $this->afterConstruct();
+    }
 
-        $this->resolve = function ($response, $deferred) {
-            if (is_null($response)) {
-                $response = true;
-            }
-
-            $deferred->resolve(true);
-        };
-
-        $this->reject = function ($e, $deferred) {
-            $deferred->reject($e);
-        };
+    /**
+     * Called after the part has been constructed.
+     */
+    protected function afterConstruct()
+    {
     }
 
     /**
      * Fills the parts attributes from an array.
      *
      * @param array $attributes An array of attributes to build the part.
-     *
-     * @return void
      */
     public function fill($attributes)
     {
@@ -231,7 +201,7 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
         $matcher = preg_match_all($this->regex, $string, $matches);
 
         $original = $matches[0];
-        $vars     = $matches[1];
+        $vars = $matches[1];
 
         foreach ($vars as $key => $variable) {
             if ($attribute = $this->getAttribute($variable)) {
@@ -260,7 +230,7 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
         $matcher = preg_match_all($this->regex, $string, $matches);
 
         $original = $matches[0];
-        $vars     = $matches[1];
+        $vars = $matches[1];
 
         foreach ($vars as $key => $variable) {
             if ($attribute = $params[$variable]) {
@@ -281,23 +251,11 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
     public function getAttribute($key)
     {
         if (isset($this->repositories[$key])) {
-            $className = str_replace('\\', '', $this->repositories[$key]);
-
-            if ($repository = $this->cache->get("repositories.{$className}.{$this->id}.{$key}")) {
-                return $repository;
+            if (! isset($this->repositories_cache[$key])) {
+                $this->repositories_cache[$key] = $this->factory->create($this->repositories[$key], $this->getRepositoryAttributes());
             }
 
-            $class = $this->repositories[$key];
-
-            return $this->cache->set(
-                "repositories.{$className}.{$this->id}.{$key}",
-                new $class(
-                    $this->http,
-                    $this->cache,
-                    $this->factory,
-                    $this->getRepositoryAttributes()
-                )
-            );
+            return $this->repositories_cache[$key];
         }
 
         if ($str = $this->checkForMutator($key, 'get')) {
@@ -318,26 +276,9 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
      *
      * @param string $key   The key to the attribute.
      * @param mixed  $value The value of the attribute.
-     *
-     * @return void
      */
     public function setAttribute($key, $value)
     {
-        if (isset($this->repositories[$key])) {
-            if (! ($value instanceof $this->repositories[$key])) {
-                return;
-            }
-
-            $className = str_replace('\\', '', $this->repositories[$key]);
-
-            $this->cache->set(
-                "repositories.{$className}.{$this->id}.{$key}",
-                $value
-            );
-
-            return;
-        }
-
         if ($str = $this->checkForMutator($key, 'set')) {
             $this->{$str}($value);
 
@@ -354,8 +295,6 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
      *
      * @param string $key   The cache key.
      * @param mixed  $value The cache value.
-     *
-     * @return void
      */
     public function setCache($key, $value)
     {
@@ -406,7 +345,6 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
      * @param string $key   The attribute key.
      * @param mixed  $value The attribute value.
      *
-     * @return void
      *
      * @see self::setAttribute() This function forwards onto setAttribute.
      */
@@ -419,8 +357,6 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
      * Unsets an attribute via key. Used for ArrayAccess.
      *
      * @param string $key The attribute key.
-     *
-     * @return void
      */
     public function offsetUnset($key)
     {
@@ -560,7 +496,6 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
      * @param string $key   The attributes key.
      * @param mixed  $value The attributes value.
      *
-     * @return void
      *
      * @see self::setAttribute() This function forwards onto setAttribute.
      */

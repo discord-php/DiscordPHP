@@ -2,20 +2,22 @@ DiscordPHP
 ====
 [![Build Status](https://travis-ci.org/teamreflex/DiscordPHP.svg?branch=master)](https://travis-ci.org/teamreflex/DiscordPHP) [![Discord Chat](https://img.shields.io/badge/chat-Discord%20API-blue.svg)](https://discord.gg/0SBTUU1wZTX4Mjwn) [![PHP Discorders](https://img.shields.io/badge/chat-PHP%20Discord-blue.svg)](https://discord.gg/0duG4FF1ElFGUFVq)
 
-A wrapper for the official [Discord](https://discordapp.com) REST, gateway and voice APIs. Project is currently being revived so please check out any Github issues. The `develop` branch is the most stable at the moment.
+A wrapper for the official [Discord](https://discordapp.com) REST, gateway and voice APIs.
+
+Project is currently being revived so please check out any Github issues. The `develop` branch is the most stable at the moment.
 
 ## FAQ
 
 1. Can I run DiscordPHP on a webserver (e.g. Apache, nginx)?
     - No, DiscordPHP will only run in CLI. If you want to have an interface for your bot you can integrate [react/http](https://github.com/ReactPHP/http) with your bot and run it through CLI.
+2. PHP is running out of memory?
+	- Try increase your memory limit using `ini_set('memory_limit', '-1');`.
 
 ## Getting Started
 
 ### Installing DiscordPHP
 
-DiscordPHP is installed using [Composer](https://getcomposer.org). Make sure you have installed Composer and are used to how it operates. We require a minimum PHP version of PHP 5.5.9, however it is reccomended that you use PHP 7. PHP 5.x support **will** be removed in the future.
-
-This library has not been tested with HHVM.
+DiscordPHP is installed using [Composer](https://getcomposer.org). Make sure you have installed Composer and are used to how it operates. We require a minimum PHP version of PHP 7.0. PHP 7.1 will be required in the near future.
 
 1. Run `composer require team-reflex/discord-php`. This will install the lastest release.
 	- If you would like, you can also install the development branch by running `composer require team-reflex/discord-php dev-develop`.
@@ -48,18 +50,14 @@ $discord->on('ready', function ($discord) {
 $discord->run();
 ```
 
-## Notes
-
-- This library can use a lot of RAM and PHP may hit the memory limit. To increase the memory limit, use `ini_set('memory_limit', '200M')` to increase it to 200 mb. If you would like it to be unlimited, use `ini_set('memory_limit', '-1')`.
-
 ## Documentation
 
 Raw documentation can be found in-line in the code and on the [DiscordPHP Class Reference](http://teamreflex.github.io/DiscordPHP/). More user friendly and examples will soon be coming on the [DiscordPHP Wiki](https://discordphp.readme.io/).
 
 ## Contributing
 
-We are open to contributions. However, please make sure you follow our coding standards (PSR-4 autoloading and custom styling). We use StyleCI to format our code. Our StyleCI settings can be found [here](https://github.com/teamreflex/DiscordPHP/wiki/StyleCI).
+We are open to contributions. However, please make sure you follow our coding standards (PSR-4 autoloading and custom styling). Please run php-cs-fixer before opening a pull request by running `composer run-script cs`.
 
-## Library Comparison
+## License
 
-See [this chart](https://abal.moe/Discord/Libraries.html) for a feature comparison and list of other Discord API libraries.
+MIT License, &copy; David Cole and other contributers 2016--present.

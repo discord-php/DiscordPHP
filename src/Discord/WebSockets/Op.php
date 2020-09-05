@@ -3,7 +3,7 @@
 /*
  * This file is apart of the DiscordPHP project.
  *
- * Copyright (c) 2016 David Cole <david@team-reflex.com>
+ * Copyright (c) 2016-2020 David Cole <david.cole1340@gmail.com>
  *
  * This source file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -57,6 +57,10 @@ class Op
     const VOICE_DESCRIPTION = 4;
     // Used to identify which users are speaking.
     const VOICE_SPEAKING = 5;
+    // Sent by the Discord servers to acknowledge heartbeat
+    const VOICE_HEARTBEAT_ACK = 6;
+    // Hello packet used to pass heartbeat interval
+    const VOICE_HELLO = 8;
 
     ///////////////////////////////////////
     ///////////////////////////////////////
@@ -67,7 +71,7 @@ class Op
     // Abnormal close.
     const CLOSE_ABNORMAL = 1006;
     // Unknown error.
-    const CLOSE_UNKNOWN_ERROR = 1000;
+    const CLOSE_UNKNOWN_ERROR = 4000;
     // Unknown opcode was went.
     const CLOSE_INVALID_OPCODE = 4001;
     // Invalid message was sent.
@@ -90,4 +94,27 @@ class Op
     const CLOSE_INVALID_SHARD = 4010;
     // Sharding requred.
     const CLOSE_SHARDING_REQUIRED = 4011;
+    // Invalid API version.
+    const CLOSE_INVALID_VERSION = 4012;
+    // Invalid intents.
+    const CLOSE_INVALID_INTENTS = 4013;
+    // Disallowed intents.
+    const CLOSE_DISALLOWED_INTENTS = 4014;
+
+    /**
+     * Returns the critical event codes that we should not reconnect after.
+     * 
+     * @return array
+     */
+    public static function getCriticalCloseCodes()
+    {
+        return [
+            self::CLOSE_INVALID_TOKEN,
+            self::CLOSE_SHARDING_REQUIRED,
+            self::CLOSE_INVALID_SHARD,
+            self::CLOSE_INVALID_VERSION,
+            self::CLOSE_INVALID_INTENTS,
+            self::CLOSE_DISALLOWED_INTENTS
+        ];
+    }
 }

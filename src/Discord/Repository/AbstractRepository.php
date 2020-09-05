@@ -3,7 +3,7 @@
 /*
  * This file is apart of the DiscordPHP project.
  *
- * Copyright (c) 2016 David Cole <david@team-reflex.com>
+ * Copyright (c) 2016-2020 David Cole <david.cole1340@gmail.com>
  *
  * This source file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -18,7 +18,6 @@ use Discord\Factory\Factory;
 use Discord\Helpers\Collection;
 use Discord\Http\Http;
 use Discord\Parts\Part;
-use Discord\Wrapper\CacheWrapper;
 use React\Promise\Deferred;
 
 /**
@@ -41,13 +40,6 @@ abstract class AbstractRepository implements RepositoryInterface, ArrayAccess, C
      * @var Http Client.
      */
     protected $http;
-
-    /**
-     * The Cache wrapper.
-     *
-     * @var CacheWrapper Cache.
-     */
-    protected $cache;
 
     /**
      * The parts factory.
@@ -87,18 +79,16 @@ abstract class AbstractRepository implements RepositoryInterface, ArrayAccess, C
     /**
      * AbstractRepository constructor.
      *
-     * @param Http         $http    The HTTP client.
-     * @param CacheWrapper $cache   The cache wrapper.
-     * @param Factory      $factory The parts factory.
-     * @param array        $vars    An array of variables used for the endpoint.
+     * @param Http    $http    The HTTP client.
+     * @param Factory $factory The parts factory.
+     * @param array   $vars    An array of variables used for the endpoint.
      */
-    public function __construct(Http $http, CacheWrapper $cache, Factory $factory, $vars = [])
+    public function __construct(Http $http, Factory $factory, $vars = [])
     {
-        $this->http       = $http;
-        $this->cache      = $cache;
-        $this->factory    = $factory;
-        $this->collection = new Collection([], $this->discrim);
-        $this->vars       = $vars;
+        $this->http = $http;
+        $this->factory = $factory;
+        $this->collection = new Collection([], $this->discrim, $this->part);
+        $this->vars = $vars;
     }
 
     /**
@@ -117,10 +107,13 @@ abstract class AbstractRepository implements RepositoryInterface, ArrayAccess, C
         $this->http->get(
             $this->replaceWithVariables(
                 $this->endpoints['all']
-            )
+            ),
+            null,
+            [],
+            false
         )->then(function ($response) use ($deferred) {
             $this->fill([]);
-
+            
             foreach ($response as $value) {
                 $value = array_merge($this->vars, (array) $value);
                 $part = $this->factory->create($this->part, $value, true);
@@ -152,16 +145,16 @@ abstract class AbstractRepository implements RepositoryInterface, ArrayAccess, C
     public function save(Part &$part)
     {
         if ($part->created) {
-            $method     = 'patch';
-            $endpoint   = $part->replaceWithVariables($this->replaceWithVariables(@$this->endpoints['update']));
+            $method = 'patch';
+            $endpoint = $part->replaceWithVariables($this->replaceWithVariables(@$this->endpoints['update']));
             $attributes = $part->getUpdatableAttributes();
 
             if (! isset($this->endpoints['update'])) {
                 return \React\Promise\reject(new \Exception('You cannot update this part.'));
             }
         } else {
-            $method     = 'post';
-            $endpoint   = $part->replaceWithVariables($this->replaceWithVariables(@$this->endpoints['create']));
+            $method = 'post';
+            $endpoint = $part->replaceWithVariables($this->replaceWithVariables(@$this->endpoints['create']));
             $attributes = $part->getCreatableAttributes();
 
             if (! isset($this->endpoints['create'])) {
@@ -176,6 +169,12 @@ abstract class AbstractRepository implements RepositoryInterface, ArrayAccess, C
             $attributes
         )->then(function ($response) use ($deferred, &$part, $method) {
             $part->fill((array) $response);
+
+            if ($index = $this->getIndex('id', $part->id)) {
+                $this->collection[$index] = $part;
+            } else {
+                $this->collection->push($part);
+            }
 
             $part->created = true;
             $part->deleted = false;
@@ -356,8 +355,6 @@ abstract class AbstractRepository implements RepositoryInterface, ArrayAccess, C
      *
      * @param mixed $key
      * @param mixed $value
-     *
-     * @return void
      */
     public function offsetSet($key, $value)
     {
@@ -368,8 +365,6 @@ abstract class AbstractRepository implements RepositoryInterface, ArrayAccess, C
      * Unset the item at a given offset.
      *
      * @param string $key
-     *
-     * @return void
      */
     public function offsetUnset($key)
     {
@@ -393,7 +388,7 @@ abstract class AbstractRepository implements RepositoryInterface, ArrayAccess, C
      */
     public function __debugInfo()
     {
-        return $this->all();
+        return $this->jsonSerialize();
     }
 
     /**
