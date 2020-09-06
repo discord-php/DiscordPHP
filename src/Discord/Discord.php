@@ -306,7 +306,7 @@ class Discord
         $this->options = $options;
 
         $this->http = new Http(
-            ($options['bot'] ? 'Bot ' : '').$this->token,
+            'Bot '.$this->token,
             self::VERSION,
             new Guzzle($this->loop)
         );
@@ -1154,7 +1154,6 @@ class Discord
             ->setAllowedTypes('token', 'string')
             ->setDefined([
                 'token',
-                'bot',
                 'shardId',
                 'shardCount',
                 'loop',
@@ -1170,7 +1169,6 @@ class Discord
             ])
             ->setDefaults([
                 'loop' => LoopFactory::create(),
-                'bot' => true,
                 'logger' => null,
                 'loggerLevel' => Monolog::INFO,
                 'logging' => true,
@@ -1181,7 +1179,6 @@ class Discord
                 'retrieveBans' => false,
                 'intents' => false,
             ])
-            ->setAllowedTypes('bot', 'bool')
             ->setAllowedTypes('loop', LoopInterface::class)
             ->setAllowedTypes('logging', 'bool')
             ->setAllowedTypes('loadAllMembers', 'bool')
