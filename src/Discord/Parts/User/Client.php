@@ -25,7 +25,6 @@ use React\Promise\Deferred;
  *
  * @property string                           $id            The unique identifier of the client.
  * @property string                           $username      The username of the client.
- * @property string                           $password      The password of the client (if they have provided it).
  * @property string                           $email         The email of the client.
  * @property bool                             $verified      Whether the client has verified their email.
  * @property string                           $avatar        The avatar URL of the client.
@@ -43,7 +42,7 @@ class Client extends Part
     /**
      * {@inheritdoc}
      */
-    protected $fillable = ['id', 'username', 'password', 'email', 'verified', 'avatar', 'discriminator', 'bot', 'user', 'application'];
+    protected $fillable = ['id', 'username', 'email', 'verified', 'avatar', 'discriminator', 'bot', 'user', 'application'];
 
     /**
      * {@inheritdoc}
@@ -150,20 +149,7 @@ class Client extends Part
         if (isset($this->attributes['avatarhash'])) {
             $attributes['avatar'] = $this->attributes['avatarhash'];
         }
-
-        if (! $this->bot) {
-            if (empty($this->attributes['password'])) {
-                throw new PasswordEmptyException('You must enter your password to update your profile.');
-            }
-
-            $attributes['email'] = $this->email;
-            $attributes['password'] = $this->attributes['password'];
-
-            if (! empty($this->attributes['new_password'])) {
-                $attributes['new_password'] = $this->attributes['new_password'];
-            }
-        }
-
+        
         return $attributes;
     }
 
