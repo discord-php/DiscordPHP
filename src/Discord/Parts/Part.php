@@ -62,13 +62,6 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
     protected $attributes = [];
 
     /**
-     * The parts attributes cache.
-     *
-     * @var array Attributes which are cached such as parts that are retrieved over REST.
-     */
-    protected $attributes_cache = [];
-
-    /**
      * Attributes that are hidden from debug info.
      *
      * @var array Attributes that are hidden from public.
@@ -155,18 +148,6 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
                 $this->setAttribute($key, $value);
             }
         }
-    }
-
-    /**
-     * Clears the attribute cache.
-     *
-     * @return bool Whether the attempt to clear the cache succeeded or failed.
-     */
-    public function clearCache()
-    {
-        $this->attributes_cache = [];
-
-        return true;
     }
 
     /**
@@ -288,29 +269,6 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
         if (array_search($key, $this->fillable) !== false) {
             $this->attributes[$key] = $value;
         }
-    }
-
-    /**
-     * Sets a cache attribute on the part.
-     *
-     * @param string $key   The cache key.
-     * @param mixed  $value The cache value.
-     */
-    public function setCache($key, $value)
-    {
-        $this->attributes_cache[$key] = $value;
-    }
-
-    /**
-     * Checks if the cache has a specific key.
-     *
-     * @param string $key The key to check for.
-     *
-     * @return bool Whether the cache has the key.
-     */
-    public function cacheHas($key)
-    {
-        return isset($this->attributes_cache[$key]);
     }
 
     /**
