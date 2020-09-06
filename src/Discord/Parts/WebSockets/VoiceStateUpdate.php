@@ -59,7 +59,7 @@ class VoiceStateUpdate extends Part
      *
      * @return Member|null The member attribute.
      */
-    public function getMemberAttribute()
+    protected function getMemberAttribute()
     {
         if ($this->guild) {
             if ($member = $this->guild->members->get('id', $this->user_id)) {
@@ -75,7 +75,7 @@ class VoiceStateUpdate extends Part
      *
      * @return Channel|null The channel attribute.
      */
-    public function getChannelAttribute()
+    protected function getChannelAttribute()
     {
         if ($this->guild) {
             return $this->guild->channels->get('id', $this->channel_id);
@@ -87,7 +87,7 @@ class VoiceStateUpdate extends Part
      *
      * @return User|null The user attribute.
      */
-    public function getUserAttribute()
+    protected function getUserAttribute()
     {
         if ($user = $this->discord->users->get('id', $this->user_id)) {
             return $user;
@@ -102,7 +102,7 @@ class VoiceStateUpdate extends Part
      *
      * @return Guild|null The guild attribute.
      */
-    public function getGuildAttribute()
+    protected function getGuildAttribute()
     {
         return $this->discord->guilds->get('id', $this->guild_id);
     }

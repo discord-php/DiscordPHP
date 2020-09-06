@@ -127,6 +127,118 @@ class Guild extends Part
     protected $regions;
 
     /**
+     * Returns the channels invites.
+     *
+     * @return \React\Promise\Promise
+     */
+    public function getInvites()
+    {
+        $deferred = new Deferred();
+
+        $this->http->get($this->replaceWithVariables('guilds/:id/invites'))->then(
+            function ($response) use ($deferred) {
+                $invites = new Collection();
+
+                foreach ($response as $invite) {
+                    $invite = $this->factory->create(Invite::class, $invite, true);
+                    $invites->push($invite);
+                }
+
+                $deferred->resolve($invites);
+            },
+            \React\Partial\bind([$deferred, 'reject'])
+        );
+
+        return $deferred->promise();
+    }
+
+    /**
+     * Returns the owner.
+     *
+     * @return \React\Promise\Promise
+     */
+    protected function getOwnerAttribute()
+    {
+        return $this->discord->users->get('id', $this->owner_id);
+    }
+
+    /**
+     * Returns the joined_at attribute.
+     *
+     * @return Carbon|null The joined_at attribute.
+     */
+    protected function getJoinedAtAttribute()
+    {
+        if (! array_key_exists('joined_at', $this->attributes)) {
+            return;
+        }
+
+        return new Carbon($this->attributes['joined_at']);
+    }
+
+    /**
+     * Returns the guilds icon.
+     *
+     * @param string $format The image format.
+     * @param int    $size   The size of the image.
+     *
+     * @return string|null The URL to the guild icon or null.
+     */
+    public function getIconAttribute($format = 'jpg', $size = 1024)
+    {
+        if (is_null($this->attributes['icon'])) {
+            return;
+        }
+
+        if (false === array_search($format, ['png', 'jpg', 'webp'])) {
+            $format = 'jpg';
+        }
+
+        return "https://cdn.discordapp.com/icons/{$this->id}/{$this->attributes['icon']}.{$format}?size={$size}";
+    }
+
+    /**
+     * Returns the guild icon hash.
+     *
+     * @return string|null The guild icon hash or null.
+     */
+    protected function getIconHashAttribute()
+    {
+        return $this->attributes['icon'];
+    }
+
+    /**
+     * Returns the guild splash.
+     *
+     * @param string $format The image format.
+     * @param int    $size   The size of the image.
+     *
+     * @return string|null The URL to the guild splash or null.
+     */
+    public function getSplashAttribute($format = 'jpg', $size = 2048)
+    {
+        if (is_null($this->attributes['splash'])) {
+            return;
+        }
+
+        if (false === array_search($format, ['png', 'jpg', 'webp'])) {
+            $format = 'jpg';
+        }
+
+        return "https://cdn.discordapp.com/slashes/{$this->id}/{$this->attributes['splash']}.{$format}?size={$size}";
+    }
+
+    /**
+     * Returns the guild splash hash.
+     *
+     * @return string|null The guild splash hash or null.
+     */
+    protected function getSplashHashAttribute()
+    {
+        return $this->attributes['splash'];
+    }
+
+    /**
      * Gets the voice regions available.
      *
      * @return \React\Promise\Promise
@@ -212,118 +324,6 @@ class Guild extends Part
     }
 
     /**
-     * Returns the channels invites.
-     *
-     * @return \React\Promise\Promise
-     */
-    public function getInvites()
-    {
-        $deferred = new Deferred();
-
-        $this->http->get($this->replaceWithVariables('guilds/:id/invites'))->then(
-            function ($response) use ($deferred) {
-                $invites = new Collection();
-
-                foreach ($response as $invite) {
-                    $invite = $this->factory->create(Invite::class, $invite, true);
-                    $invites->push($invite);
-                }
-
-                $deferred->resolve($invites);
-            },
-            \React\Partial\bind([$deferred, 'reject'])
-        );
-
-        return $deferred->promise();
-    }
-
-    /**
-     * Returns the owner.
-     *
-     * @return \React\Promise\Promise
-     */
-    public function getOwnerAttribute()
-    {
-        return $this->discord->users->get('id', $this->owner_id);
-    }
-
-    /**
-     * Returns the joined_at attribute.
-     *
-     * @return Carbon|null The joined_at attribute.
-     */
-    public function getJoinedAtAttribute()
-    {
-        if (! array_key_exists('joined_at', $this->attributes)) {
-            return;
-        }
-
-        return new Carbon($this->attributes['joined_at']);
-    }
-
-    /**
-     * Returns the guilds icon.
-     *
-     * @param string $format The image format.
-     * @param int    $size   The size of the image.
-     *
-     * @return string|null The URL to the guild icon or null.
-     */
-    public function getIconAttribute($format = 'jpg', $size = 1024)
-    {
-        if (is_null($this->attributes['icon'])) {
-            return;
-        }
-
-        if (false === array_search($format, ['png', 'jpg', 'webp'])) {
-            $format = 'jpg';
-        }
-
-        return "https://cdn.discordapp.com/icons/{$this->id}/{$this->attributes['icon']}.{$format}?size={$size}";
-    }
-
-    /**
-     * Returns the guild icon hash.
-     *
-     * @return string|null The guild icon hash or null.
-     */
-    public function getIconHashAttribute()
-    {
-        return $this->attributes['icon'];
-    }
-
-    /**
-     * Returns the guild splash.
-     *
-     * @param string $format The image format.
-     * @param int    $size   The size of the image.
-     *
-     * @return string|null The URL to the guild splash or null.
-     */
-    public function getSplashAttribute($format = 'jpg', $size = 2048)
-    {
-        if (is_null($this->attributes['splash'])) {
-            return;
-        }
-
-        if (false === array_search($format, ['png', 'jpg', 'webp'])) {
-            $format = 'jpg';
-        }
-
-        return "https://cdn.discordapp.com/slashes/{$this->id}/{$this->attributes['splash']}.{$format}?size={$size}";
-    }
-
-    /**
-     * Returns the guild splash hash.
-     *
-     * @return string|null The guild splash hash or null.
-     */
-    public function getSplashHashAttribute()
-    {
-        return $this->attributes['splash'];
-    }
-
-    /**
      * Validates the specified region.
      *
      * @return \React\Promise\Promise
@@ -358,7 +358,7 @@ class Guild extends Part
     /**
      * {@inheritdoc}
      */
-    public function getCreatableAttributes()
+    protected function getCreatableAttributes()
     {
         return [
             'name' => $this->name,
@@ -369,7 +369,7 @@ class Guild extends Part
     /**
      * {@inheritdoc}
      */
-    public function getUpdatableAttributes()
+    protected function getUpdatableAttributes()
     {
         return [
             'name' => $this->name,

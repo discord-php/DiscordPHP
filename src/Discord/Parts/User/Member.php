@@ -215,7 +215,7 @@ class Member extends Part
      *
      * @return Activity
      */
-    public function getGameAttribute()
+    protected function getGameAttribute()
     {
         if (! array_key_exists('game', $this->attributes)) {
             $this->attributes['game'] = [];
@@ -229,7 +229,7 @@ class Member extends Part
      *
      * @return array[Activity]
      */
-    public function getActivitiesAttribute()
+    protected function getActivitiesAttribute()
     {
         $activities = [];
 
@@ -249,7 +249,7 @@ class Member extends Part
      *
      * @return int The user ID of the member.
      */
-    public function getIdAttribute()
+    protected function getIdAttribute()
     {
         return $this->attributes['user']->id;
     }
@@ -259,7 +259,7 @@ class Member extends Part
      *
      * @return string The username of the member.
      */
-    public function getUsernameAttribute()
+    protected function getUsernameAttribute()
     {
         return $this->user->username;
     }
@@ -269,7 +269,7 @@ class Member extends Part
      *
      * @return string The discriminator of the member.
      */
-    public function getDiscriminatorAttribute()
+    protected function getDiscriminatorAttribute()
     {
         return $this->user->discriminator;
     }
@@ -279,7 +279,7 @@ class Member extends Part
      *
      * @return User The user that owns the member.
      */
-    public function getUserAttribute()
+    protected function getUserAttribute()
     {
         if ($user = $this->discord->users->get('id', $this->attributes['user']->id)) {
             return $user;
@@ -293,7 +293,7 @@ class Member extends Part
      *
      * @return Guild The guild.
      */
-    public function getGuildAttribute()
+    protected function getGuildAttribute()
     {
         return $this->discord->guilds->get('id', $this->guild_id);
     }
@@ -303,7 +303,7 @@ class Member extends Part
      *
      * @return Collection A collection of roles the member is in.
      */
-    public function getRolesAttribute()
+    protected function getRolesAttribute()
     {
         $roles = new Collection();
 
@@ -327,7 +327,7 @@ class Member extends Part
      *
      * @return Carbon The timestamp from when the member joined.
      */
-    public function getJoinedAtAttribute()
+    protected function getJoinedAtAttribute()
     {
         return new Carbon($this->attributes['joined_at']);
     }
@@ -335,7 +335,7 @@ class Member extends Part
     /**
      * {@inheritdoc}
      */
-    public function getUpdatableAttributes()
+    protected function getUpdatableAttributes()
     {
         return [
             'roles' => array_values($this->attributes['roles']),
@@ -347,7 +347,7 @@ class Member extends Part
      *
      * @return \Carbon\Carbon
      */
-    public function getPremiumSinceAttribute()
+    protected function getPremiumSinceAttribute()
     {
         if (! isset($this->attributes['premium_since'])) {
             return false;

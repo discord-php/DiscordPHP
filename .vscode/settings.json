@@ -8,5 +8,6 @@
         "**/CVS": true,
         "**/.DS_Store": true,
         "**/.phpdoc": true
-    }
+    },
+    "php-docblocker.returnVoid": false
 }

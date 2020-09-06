@@ -43,7 +43,7 @@ class PresenceUpdate extends Part
      *
      * @return \Discord\Parts\User\Member
      */
-    public function getMemberAttribute()
+    protected function getMemberAttribute()
     {
         if (isset($this->attributes['user']) && $this->guild) {
             return $this->guild->members->get('id', $this->attributes['user']->id);
@@ -55,7 +55,7 @@ class PresenceUpdate extends Part
      *
      * @return User The user that had their presence updated.
      */
-    public function getUserAttribute()
+    protected function getUserAttribute()
     {
         if ($user = $this->discord->users->get('id', $this->attributes['user']->id)) {
             return $user;
@@ -69,7 +69,7 @@ class PresenceUpdate extends Part
      *
      * @return Collection[Role]
      */
-    public function getRolesAttribute()
+    protected function getRolesAttribute()
     {
         $roles = new Collection();
 
@@ -89,7 +89,7 @@ class PresenceUpdate extends Part
      *
      * @return Guild The guild that the user was in.
      */
-    public function getGuildAttribute()
+    protected function getGuildAttribute()
     {
         return $this->discord->guilds->get('id', $this->guild_id);
     }
@@ -99,7 +99,7 @@ class PresenceUpdate extends Part
      *
      * @return Game The game attribute.
      */
-    public function getGameAttribute()
+    protected function getGameAttribute()
     {
         if (! isset($this->attributes['game'])) {
             return null;
@@ -113,7 +113,7 @@ class PresenceUpdate extends Part
      *
      * @return \Carbon\Carbon
      */
-    public function getPremiumSinceAttribute()
+    protected function getPremiumSinceAttribute()
     {
         if (! isset($this->attributes['premium_since'])) {
             return false;

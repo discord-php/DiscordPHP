@@ -42,7 +42,7 @@ class MessageReaction extends Part
      *
      * @return \Discord\Parts\User\User
      */
-    public function getUserAttribute()
+    protected function getUserAttribute()
     {
         if ($member = $this->member) {
             return $member->user;
@@ -59,7 +59,7 @@ class MessageReaction extends Part
      *
      * @return \Discord\Parts\Channel\Message
      */
-    public function getMessageAttribute()
+    protected function getMessageAttribute()
     {
         if ($channel = $this->channel) {
             if ($message = $channel->messages->get('id', $this->attributes['message_id'])) {
@@ -75,7 +75,7 @@ class MessageReaction extends Part
      *
      * @return \Discord\Parts\User\Member
      */
-    public function getMemberAttribute()
+    protected function getMemberAttribute()
     {
         if (isset($this->attributes['user_id']) && $guild = $this->guild) {
             if ($member = $guild->members->get('id', $this->attributes['user_id'])) {
@@ -91,7 +91,7 @@ class MessageReaction extends Part
      *
      * @return \Discord\Parts\Guild\Emoji
      */
-    public function getEmojiAttribute()
+    protected function getEmojiAttribute()
     {
         if (isset($this->attributes['emoji'])) {
             return $this->factory->create(Emoji::class, $this->attributes['emoji'], true);
@@ -103,7 +103,7 @@ class MessageReaction extends Part
      *
      * @return \Discord\Parts\Channel\Channel
      */
-    public function getChannelAttribute()
+    protected function getChannelAttribute()
     {
         if ($guild = $this->guild) {
             return $guild->channels->get('id', $this->attributes['channel_id']);
@@ -117,7 +117,7 @@ class MessageReaction extends Part
      *
      * @return \Discord\Parts\Guild\Guild
      */
-    public function getGuildAttribute()
+    protected function getGuildAttribute()
     {
         if (isset($this->attributes['guild_id'])) {
             return $this->discord->guilds->get('id', $this->attributes['guild_id']);

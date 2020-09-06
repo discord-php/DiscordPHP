@@ -38,7 +38,7 @@ class Emoji extends Part
      *
      * @return Guild The guild the emoji belongs to.
      */
-    public function getGuildAttribute()
+    protected function getGuildAttribute()
     {
         return $this->discord->guilds->get('id', $this->guild_id);
     }
@@ -48,7 +48,7 @@ class Emoji extends Part
      *
      * @return Collection A collection of roles for the emoji.
      */
-    public function getRolesAttribute()
+    protected function getRolesAttribute()
     {
         if (! $this->guild) {
             return [];

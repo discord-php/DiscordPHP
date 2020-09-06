@@ -34,7 +34,7 @@ class VoiceServerUpdate extends Part
      *
      * @return Guild The guild attribute.
      */
-    public function getGuildAttribute()
+    protected function getGuildAttribute()
     {
         return $this->discord->guilds->get('id', $this->guild_id);
     }

@@ -43,7 +43,7 @@ class TypingStart extends Part
      *
      * @return User The user that started typing.
      */
-    public function getUserAttribute()
+    protected function getUserAttribute()
     {
         return $this->discord->users->get('id', $this->user_id);
     }
@@ -53,7 +53,7 @@ class TypingStart extends Part
      *
      * @return Carbon The time that the user started typing.
      */
-    public function getTimestampAttribute()
+    protected function getTimestampAttribute()
     {
         return new Carbon(gmdate('r', $this->attributes['timestamp']));
     }
@@ -63,7 +63,7 @@ class TypingStart extends Part
      *
      * @return Member
      */
-    public function getMemberAttribute()
+    protected function getMemberAttribute()
     {
         if ($this->guild && $member = $this->guild->members->get('id', $this->user_id)) {
             return $member;
@@ -77,7 +77,7 @@ class TypingStart extends Part
      *
      * @return Channel The channel that the user started typing in.
      */
-    public function getChannelAttribute()
+    protected function getChannelAttribute()
     {
         if ($this->guild) {
             return $this->guild->channels->get('id', $this->attributes['channel_id']);
@@ -91,7 +91,7 @@ class TypingStart extends Part
      *
      * @return Guild
      */
-    public function getGuildAttribute()
+    protected function getGuildAttribute()
     {
         if (! isset($this->attributes['guild_id'])) {
             return null;

@@ -83,7 +83,7 @@ class Invite extends Part
      *
      * @return string The id attribute.
      */
-    public function getIdAttribute()
+    protected function getIdAttribute()
     {
         return $this->code;
     }
@@ -93,7 +93,7 @@ class Invite extends Part
      *
      * @return string The URL to the invite.
      */
-    public function getInviteUrlAttribute()
+    protected function getInviteUrlAttribute()
     {
         return "https://discord.gg/{$this->code}";
     }
@@ -103,7 +103,7 @@ class Invite extends Part
      *
      * @return Guild The Guild that you have been invited to.
      */
-    public function getGuildAttribute()
+    protected function getGuildAttribute()
     {
         return $this->factory->create(Guild::class, (array) $this->attributes['guild'], true);
     }
@@ -113,7 +113,7 @@ class Invite extends Part
      *
      * @return Channel The Channel that you have been invited to.
      */
-    public function getChannelAttribute()
+    protected function getChannelAttribute()
     {
         return $this->factory->create(Channel::class, (array) $this->attributes['channel'], true);
     }
@@ -123,7 +123,7 @@ class Invite extends Part
      *
      * @return int The Channel ID that you have been invited to.
      */
-    public function getChannelIdAttribute()
+    protected function getChannelIdAttribute()
     {
         return $this->channel->id;
     }
@@ -133,7 +133,7 @@ class Invite extends Part
      *
      * @return User The User that invited you.
      */
-    public function getInviterAttribute()
+    protected function getInviterAttribute()
     {
         return $this->factory->create(User::class, (array) $this->attributes['inviter'], true);
     }
@@ -143,7 +143,7 @@ class Invite extends Part
      *
      * @return Carbon The time that the invite was created.
      */
-    public function getCreatedAtAttribute()
+    protected function getCreatedAtAttribute()
     {
         return new Carbon($this->attributes['created_at']);
     }
@@ -151,7 +151,7 @@ class Invite extends Part
     /**
      * {@inheritdoc}
      */
-    public function getCreatableAttributes()
+    protected function getCreatableAttributes()
     {
         return [];
     }

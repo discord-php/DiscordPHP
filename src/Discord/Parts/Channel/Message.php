@@ -114,7 +114,7 @@ class Message extends Part
      *
      * @return bool
      */
-    public function getCrosspostedAttribute()
+    protected function getCrosspostedAttribute()
     {
         return (bool) ($this->flags & (1 << 0));
     }
@@ -124,7 +124,7 @@ class Message extends Part
      *
      * @return bool
      */
-    public function getIsCrosspostAttribute()
+    protected function getIsCrosspostAttribute()
     {
         return (bool) ($this->flags & (1 << 1));
     }
@@ -134,7 +134,7 @@ class Message extends Part
      *
      * @return bool
      */
-    public function getSuppressEmbedsAttribute()
+    protected function getSuppressEmbedsAttribute()
     {
         return (bool) ($this->flags & (1 << 2));
     }
@@ -144,7 +144,7 @@ class Message extends Part
      *
      * @return bool
      */
-    public function getSourceMessageDeletedAttribute()
+    protected function getSourceMessageDeletedAttribute()
     {
         return (bool) ($this->flags & (1 << 3));
     }
@@ -154,7 +154,7 @@ class Message extends Part
      *
      * @return bool
      */
-    public function getUrgentAttribute()
+    protected function getUrgentAttribute()
     {
         return (bool) ($this->flags & (1 << 4));
     }
@@ -164,7 +164,7 @@ class Message extends Part
      *
      * @return Collection[Channel]
      */
-    public function getMentionChannelsAttribute()
+    protected function getMentionChannelsAttribute()
     {
         $collection = new Collection();
 
@@ -182,7 +182,7 @@ class Message extends Part
      *
      * @return Collection[Reaction]
      */
-    public function getReactionsAttribute()
+    protected function getReactionsAttribute()
     {
         $collection = new Collection();
 
@@ -193,6 +193,121 @@ class Message extends Part
         }
 
         return $collection;
+    }
+
+    /**
+     * Returns the channel attribute.
+     *
+     * @return Channel The channel the message was sent in.
+     */
+    protected function getChannelAttribute()
+    {
+        foreach ($this->discord->guilds as $guild) {
+            if ($channel = $guild->channels->get('id', $this->channel_id)) {
+                return $channel;
+            }
+        }
+
+        if ($channel = $this->discord->private_channels->get('id', $this->channel_id)) {
+            return $channel;
+        }
+
+        return $this->factory->create(Channel::class, [
+            'id' => $this->channel_id,
+            'type' => Channel::TYPE_DM,
+        ], true);
+    }
+
+    /**
+     * Returns the mention_roles attribute.
+     *
+     * @return Collection The roles that were mentioned.
+     */
+    protected function getMentionRolesAttribute()
+    {
+        $roles = new Collection([], 'id');
+
+        if (isset($this->channel->guild->roles)) {
+            foreach ($this->channel->guild->roles as $role) {
+                if (array_search($role->id, $this->attributes['mention_roles']) !== false) {
+                    $roles->push($role);
+                }
+            }
+        }
+
+        return $roles;
+    }
+
+    /**
+     * Returns the mention attribute.
+     *
+     * @return Collection The users that were mentioned.
+     */
+    protected function getMentionsAttribute()
+    {
+        $users = new Collection([], 'id');
+
+        foreach ($this->attributes['mentions'] as $mention) {
+            $users->push($this->factory->create(User::class, $mention, true));
+        }
+
+        return $users;
+    }
+
+    /**
+     * Returns the author attribute.
+     *
+     * @return Member|User The member that sent the message. Will return a User object if it is a PM.
+     */
+    protected function getAuthorAttribute()
+    {
+        if ($this->channel->type == Channel::TYPE_TEXT) {
+            if ($author = $this->channel->guild->members->get('id', $this->attributes['author']->id)) {
+                return $author;
+            }
+        }
+
+        return $this->factory->create(User::class, $this->attributes['author'], true);
+    }
+
+    /**
+     * Returns the embed attribute.
+     *
+     * @return Collection A collection of embeds.
+     */
+    protected function getEmbedsAttribute()
+    {
+        $embeds = new Collection([], null);
+
+        foreach ($this->attributes['embeds'] as $embed) {
+            $embeds->push($this->factory->create(Embed::class, $embed, true));
+        }
+
+        return $embeds;
+    }
+
+    /**
+     * Returns the timestamp attribute.
+     *
+     * @return Carbon The time that the message was sent.
+     */
+    protected function getTimestampAttribute()
+    {
+        return new Carbon($this->attributes['timestamp']);
+    }
+
+    /**
+     * Returns the edited_timestamp attribute.
+     *
+     * @return Carbon|null The time that the message was edited.
+     */
+    protected function getEditedTimestampAttribute()
+    {
+        if (! $this->attributes['edited_timestamp']) {
+            return;
+        }
+
+        return new Carbon($this->attributes['edited_timestamp']);
     }
 
     /**
@@ -369,121 +484,6 @@ class Message extends Part
     }
 
     /**
-     * Returns the channel attribute.
-     *
-     * @return Channel The channel the message was sent in.
-     */
-    public function getChannelAttribute()
-    {
-        foreach ($this->discord->guilds as $guild) {
-            if ($channel = $guild->channels->get('id', $this->channel_id)) {
-                return $channel;
-            }
-        }
-
-        if ($channel = $this->discord->private_channels->get('id', $this->channel_id)) {
-            return $channel;
-        }
-
-        return $this->factory->create(Channel::class, [
-            'id' => $this->channel_id,
-            'type' => Channel::TYPE_DM,
-        ], true);
-    }
-
-    /**
-     * Returns the mention_roles attribute.
-     *
-     * @return Collection The roles that were mentioned.
-     */
-    public function getMentionRolesAttribute()
-    {
-        $roles = new Collection([], 'id');
-
-        if (isset($this->channel->guild->roles)) {
-            foreach ($this->channel->guild->roles as $role) {
-                if (array_search($role->id, $this->attributes['mention_roles']) !== false) {
-                    $roles->push($role);
-                }
-            }
-        }
-
-        return $roles;
-    }
-
-    /**
-     * Returns the mention attribute.
-     *
-     * @return Collection The users that were mentioned.
-     */
-    public function getMentionsAttribute()
-    {
-        $users = new Collection([], 'id');
-
-        foreach ($this->attributes['mentions'] as $mention) {
-            $users->push($this->factory->create(User::class, $mention, true));
-        }
-
-        return $users;
-    }
-
-    /**
-     * Returns the author attribute.
-     *
-     * @return Member|User The member that sent the message. Will return a User object if it is a PM.
-     */
-    public function getAuthorAttribute()
-    {
-        if ($this->channel->type == Channel::TYPE_TEXT) {
-            if ($author = $this->channel->guild->members->get('id', $this->attributes['author']->id)) {
-                return $author;
-            }
-        }
-
-        return $this->factory->create(User::class, $this->attributes['author'], true);
-    }
-
-    /**
-     * Returns the embed attribute.
-     *
-     * @return Collection A collection of embeds.
-     */
-    public function getEmbedsAttribute()
-    {
-        $embeds = new Collection([], null);
-
-        foreach ($this->attributes['embeds'] as $embed) {
-            $embeds->push($this->factory->create(Embed::class, $embed, true));
-        }
-
-        return $embeds;
-    }
-
-    /**
-     * Returns the timestamp attribute.
-     *
-     * @return Carbon The time that the message was sent.
-     */
-    public function getTimestampAttribute()
-    {
-        return new Carbon($this->attributes['timestamp']);
-    }
-
-    /**
-     * Returns the edited_timestamp attribute.
-     *
-     * @return Carbon|null The time that the message was edited.
-     */
-    public function getEditedTimestampAttribute()
-    {
-        if (! $this->attributes['edited_timestamp']) {
-            return;
-        }
-
-        return new Carbon($this->attributes['edited_timestamp']);
-    }
-
-    /**
      * Adds an embed to the message.
      *
      * @param Embed $embed
@@ -507,7 +507,7 @@ class Message extends Part
     /**
      * {@inheritdoc}
      */
-    public function getCreatableAttributes()
+    protected function getCreatableAttributes()
     {
         return [];
     }
@@ -515,7 +515,7 @@ class Message extends Part
     /**
      * {@inheritdoc}
      */
-    public function getUpdatableAttributes()
+    protected function getUpdatableAttributes()
     {
         return [
             'content' => $this->content,

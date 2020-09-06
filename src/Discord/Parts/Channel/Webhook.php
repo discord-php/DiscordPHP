@@ -12,9 +12,25 @@
 namespace Discord\Parts\Channel;
 
 use Discord\Parts\Part;
+use Discord\Parts\User\User;
 
+/**
+ * Webhooks are a low-effort way to post messages to channels in Discord. They do not require a bot user or authentication to use.
+ * 
+ * @property string $id The id of the webhook.
+ * @property int $type The type of webhook.
+ * @property string $guild_id The guild ID this is for.
+ * @property string $channel_id The channel ID this is for.
+ * @property \Discord\Parts\User\User $user The user that created the webhook.
+ * @property string $name The name of the webhook.
+ * @property string $avatar The avatar of the webhook.
+ * @property string $token The token of the webhook.
+ */
 class Webhook extends Part
 {
+    const TYPE_INCOMING = 1;
+    const TYPE_CHANNEL_FOLLOWER = 2;
+
     /**
      * {@inheritdoc}
      */
@@ -34,7 +50,7 @@ class Webhook extends Part
      *
      * @return \Discord\Parts\Guild\Guild
      */
-    public function getGuildAttribute()
+    protected function getGuildAttribute()
     {
         return $this->discord->guilds->get('id', $this->guild_id);
     }
@@ -44,19 +60,33 @@ class Webhook extends Part
      *
      * @return \Discord\Parts\Channel\Channel
      */
-    public function getChannelAttribute()
+    protected function getChannelAttribute()
     {
-        if ($guild = $this->getGuildAttribute()) {
+        if ($guild = $this->guild) {
             return $guild->channels->get('id', $this->channel_id);
         }
     }
 
     /**
-     * Returns the attributes needed to edit.
-     *
-     * @return array
+     * Gets the user that created the webhook.
+     * 
+     * @return User
      */
-    public function getUpdatableAttributes()
+    protected function getUserAttribute()
+    {
+        if (! isset($this->attributes['user'])) return;
+
+        if ($user = $this->discord->users->get('id', $this->attributes['user']->id)) {
+            return $user;
+        }
+
+        return $this->factory->part(User::class, $this->attributes['user'], true);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function getUpdatableAttributes()
     {
         return [
             'name' => $this->name,
@@ -64,13 +94,11 @@ class Webhook extends Part
             'channel_id' => $this->channel_id,
         ];
     }
-
+    
     /**
-     * Returns the attributes needed to create.
-     *
-     * @return array
+     * {@inheritdoc}
      */
-    public function getCreatableAttributes()
+    protected function getCreatableAttributes()
     {
         return [
             'name' => $this->name,

@@ -106,7 +106,7 @@ class Client extends Part
      *
      * @return string The URL to the clients avatar.
      */
-    public function getAvatarAttribute()
+    protected function getAvatarAttribute()
     {
         return call_user_func_array([$this->user, 'getAvatarAttribute'], func_get_args());
     }
@@ -116,7 +116,7 @@ class Client extends Part
      *
      * @return string The avatar hash for the client.
      */
-    public function getAvatarHashAttribute()
+    protected function getAvatarHashAttribute()
     {
         return $this->attributes['avatar'];
     }
@@ -141,7 +141,7 @@ class Client extends Part
     /**
      * {@inheritdoc}
      */
-    public function getUpdatableAttributes()
+    protected function getUpdatableAttributes()
     {
         $attributes = [
             'username' => $this->attributes['username'],
