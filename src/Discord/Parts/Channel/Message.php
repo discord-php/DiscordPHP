@@ -184,7 +184,7 @@ class Message extends Part
      */
     protected function getReactionsAttribute()
     {
-        $collection = new Collection();
+        $collection = new Collection([], null);
 
         if (isset($this->attributes['reactions'])) {
             foreach ($this->attributes['reactions'] as $reaction) {
