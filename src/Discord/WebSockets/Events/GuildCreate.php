@@ -51,22 +51,20 @@ class GuildCreate extends Event
             $guildPart->channels->offsetSet($channelPart->id, $channelPart);
         }
 
-        if ($this->discord->options['loadAllMembers']) {
-            foreach ($data->members as $member) {
-                $member = (array) $member;
-                $member['guild_id'] = $data->id;
-                $memberPart = $this->factory->create(Member::class, $member, true);
-                $userPart = $this->factory->create(User::class, $member['user'], true);
+        foreach ($data->members as $member) {
+            $member = (array) $member;
+            $member['guild_id'] = $data->id;
+            $memberPart = $this->factory->create(Member::class, $member, true);
+            $userPart = $this->factory->create(User::class, $member['user'], true);
 
-                $this->discord->users->offsetSet($userPart->id, $userPart);
-                $guildPart->members->offsetSet($memberPart->id, $memberPart);
-            }
+            $this->discord->users->offsetSet($userPart->id, $userPart);
+            $guildPart->members->offsetSet($memberPart->id, $memberPart);
+        }
 
-            foreach ($data->presences as $presence) {
-                if ($member = $guildPart->members->offsetGet($presence->user->id)) {
-                    $member->fill($presence);
-                    $guildPart->members->offsetSet($member->id, $member);
-                }
+        foreach ($data->presences as $presence) {
+            if ($member = $guildPart->members->offsetGet($presence->user->id)) {
+                $member->fill($presence);
+                $guildPart->members->offsetSet($member->id, $member);
             }
         }
 
