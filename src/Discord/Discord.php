@@ -1047,6 +1047,7 @@ class Discord
 
             if (is_null($monolog)) {
                 $monolog = new Monolog('Voice-'.$channel->guild_id);
+                $monolog->pushHandler(new StreamHandler('php://stdout', $this->options['loggerLevel']));
             }
 
             $logger = new Logger($monolog, $this->options['logging']);
