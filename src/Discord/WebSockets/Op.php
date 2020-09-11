@@ -101,6 +101,21 @@ class Op
     // Disallowed intents.
     const CLOSE_DISALLOWED_INTENTS = 4014;
 
+    ///////////////////////////////////////
+    ///////////////////////////////////////
+    ///////////////////////////////////////
+
+    // Can't find the server.
+    const CLOSE_VOICE_SERVER_NOT_FOUND = 4011;
+    // Unknown protocol.
+    const CLOSE_VOICE_UNKNOWN_PROTO = 4012;
+    // Disconnected from channel.
+    const CLOSE_VOICE_DISCONNECTED = 4014;
+    // Voice server crashed.
+    const CLOSE_VOICE_SERVER_CRASH = 4015;
+    // Unknown encryption mode.
+    const CLOSE_VOICE_UNKNOWN_ENCRYPT = 4016;
+
     /**
      * Returns the critical event codes that we should not reconnect after.
      * 
@@ -115,6 +130,22 @@ class Op
             self::CLOSE_INVALID_VERSION,
             self::CLOSE_INVALID_INTENTS,
             self::CLOSE_DISALLOWED_INTENTS
+        ];
+    }
+
+    /**
+     * Returns the critical event codes for a voice websocket.
+     * 
+     * @return array
+     */
+    public static function getCriticalVoiceCloseCodes()
+    {
+        return [
+            self::CLOSE_INVALID_SESSION,
+            self::CLOSE_INVALID_TOKEN,
+            self::CLOSE_VOICE_SERVER_NOT_FOUND,
+            self::CLOSE_VOICE_UNKNOWN_PROTO,
+            self::CLOSE_VOICE_UNKNOWN_ENCRYPT,
         ];
     }
 }
