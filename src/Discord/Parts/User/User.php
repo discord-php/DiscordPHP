@@ -97,8 +97,7 @@ class User extends Part
         $deferred = new Deferred();
 
         $this->getPrivateChannel()->then(function ($channel) use ($message, $tts, $embed, $deferred) {
-            $channel->sendMessage($message, $tts, $embed)->then(function ($response) use ($deferred) {
-                $message = $this->factory->create(Message::class, $response, true);
+            $channel->sendMessage($message, $tts, $embed)->then(function ($message) use ($deferred) {
                 $deferred->resolve($message);
             }, \React\Partial\bind([$deferred, 'reject']));
         }, \React\Partial\bind([$deferred, 'reject']));
