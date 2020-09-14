@@ -225,9 +225,9 @@ class Message extends Part
      */
     protected function getMentionRolesAttribute()
     {
-        $roles = new Collection([], 'id');
+        $roles = new Collection();
 
-        if (isset($this->channel->guild->roles)) {
+        if ($this->channel->guild) {
             foreach ($this->channel->guild->roles as $role) {
                 if (array_search($role->id, $this->attributes['mention_roles']) !== false) {
                     $roles->push($role);
