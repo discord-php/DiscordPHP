@@ -1,0 +1,1879 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+    <meta charset="utf-8"/>
+    <title>Documentation</title>
+    <meta name="author" content=""/>
+    <meta name="description" content=""/>
+
+    <link href="../css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
+    <link href="../css/font-awesome.min.css" rel="stylesheet">
+    <link href="../css/prism.css" rel="stylesheet" media="all"/>
+    <link href="../css/template.css" rel="stylesheet" media="all"/>
+    
+    <!--[if lt IE 9]>
+    <script src="../js/html5.js"></script>
+    <![endif]-->
+    <script src="../js/jquery-1.11.0.min.js"></script>
+    <script src="../js/ui/1.10.4/jquery-ui.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/jquery.smooth-scroll.js"></script>
+    <script src="../js/prism.min.js"></script>
+    <!-- TODO: Add http://jscrollpane.kelvinluck.com/ to style the scrollbars for browsers not using webkit-->
+    <script type="text/javascript">
+    function loadExternalCodeSnippets() {
+        Array.prototype.slice.call(document.querySelectorAll('pre[data-src]')).forEach(function (pre) {
+            var src = pre.getAttribute('data-src').replace( /\\/g, '/');
+            var extension = (src.match(/\.(\w+)$/) || [, ''])[1];
+            var language = 'php';
+
+            var code = document.createElement('code');
+            code.className = 'language-' + language;
+
+            pre.textContent = '';
+
+            code.textContent = 'Loading…';
+
+            pre.appendChild(code);
+
+            var xhr = new XMLHttpRequest();
+
+            xhr.open('GET', src, true);
+
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4) {
+
+                    if (xhr.status < 400 && xhr.responseText) {
+                        code.textContent = xhr.responseText;
+
+                        Prism.highlightElement(code);
+                    }
+                    else if (xhr.status >= 400) {
+                        code.textContent = '✖ Error ' + xhr.status + ' while fetching file: ' + xhr.statusText;
+                    }
+                    else {
+                        code.textContent = '✖ Error: File does not exist, is empty or trying to view from localhost';
+                    }
+                }
+            };
+
+            xhr.send(null);
+        });
+    }
+
+    $(document).ready(function(){
+        loadExternalCodeSnippets();
+    });
+    $('#source-view').on('shown', function () {
+        loadExternalCodeSnippets();
+    })
+</script>
+
+    <link rel="shortcut icon" href="../images/favicon.ico"/>
+    <link rel="apple-touch-icon" href="../images/apple-touch-icon.png"/>
+    <link rel="apple-touch-icon" sizes="72x72" href="../images/apple-touch-icon-72x72.png"/>
+    <link rel="apple-touch-icon" sizes="114x114" href="../images/apple-touch-icon-114x114.png"/>
+</head>
+<body>
+
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <i class="icon-ellipsis-vertical"></i>
+            </a>
+            <a class="brand" href="../index.html">Documentation</a>
+
+            <div class="nav-collapse">
+                <ul class="nav pull-right">
+                                        <li class="dropdown">
+                        <a href="../index.html" class="dropdown-toggle" data-toggle="dropdown">
+                            API Documentation <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                                                        <li><a href="../namespaces/discord.html"><abbr title="\Discord">normal</abbr></a></li>
+                                                    </ul>
+                    </li>
+                                        <li class="dropdown" id="charts-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Charts <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="../graphs/class.html">
+                                    <i class="icon-list-alt"></i>&#160;Class hierarchy diagram
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown" id="reports-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Reports <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="../reports/errors.html">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">19</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="../reports/markers.html">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <i class="icon-list-alt"></i>&#160;Markers <span class="label label-info pull-right">0</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="../reports/deprecated.html">
+                                                                                                            <i class="icon-list-alt"></i>&#160;Deprecated <span class="label label-info pull-right">0</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!--<div class="go_to_top">-->
+    <!--<a href="#___" style="color: inherit">Back to top&#160;&#160;<i class="icon-upload icon-white"></i></a>-->
+    <!--</div>-->
+</div>
+
+<div id="___" class="container-fluid">
+        <section class="row-fluid">
+        <div class="span2 sidebar">
+                                <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-1318909705"></a>
+                                <a href="../namespaces/default.html" style="margin-left: 30px; padding-left: 0">\</a>
+            </div>
+            <div id="namespace-1318909705" class="accordion-body collapse in">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-696279144"></a>
+                                <a href="../namespaces/discord.html" style="margin-left: 30px; padding-left: 0">Discord</a>
+            </div>
+            <div id="namespace-696279144" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1499928010"></a>
+                                <a href="../namespaces/discord-commandclient.html" style="margin-left: 30px; padding-left: 0">CommandClient</a>
+            </div>
+            <div id="namespace-1499928010" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Discord-CommandClient-Command.html"><abbr title="\Discord\CommandClient\Command">Command</abbr></a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1946589998"></a>
+                                <a href="../namespaces/discord-exceptions.html" style="margin-left: 30px; padding-left: 0">Exceptions</a>
+            </div>
+            <div id="namespace-1946589998" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-69641059"></a>
+                                <a href="../namespaces/discord-exceptions-rest.html" style="margin-left: 30px; padding-left: 0">Rest</a>
+            </div>
+            <div id="namespace-69641059" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Discord-Exceptions-Rest-ContentTooLongException.html"><abbr title="\Discord\Exceptions\Rest\ContentTooLongException">ContentTooLongException</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-Exceptions-Rest-NoPermissionsException.html"><abbr title="\Discord\Exceptions\Rest\NoPermissionsException">NoPermissionsException</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-Exceptions-Rest-NotFoundException.html"><abbr title="\Discord\Exceptions\Rest\NotFoundException">NotFoundException</abbr></a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Discord-Exceptions-ContentTooLongException.html"><abbr title="\Discord\Exceptions\ContentTooLongException">ContentTooLongException</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-Exceptions-DCANotFoundException.html"><abbr title="\Discord\Exceptions\DCANotFoundException">DCANotFoundException</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-Exceptions-DiscordRequestFailedException.html"><abbr title="\Discord\Exceptions\DiscordRequestFailedException">DiscordRequestFailedException</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-Exceptions-FFmpegNotFoundException.html"><abbr title="\Discord\Exceptions\FFmpegNotFoundException">FFmpegNotFoundException</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-Exceptions-FileNotFoundException.html"><abbr title="\Discord\Exceptions\FileNotFoundException">FileNotFoundException</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-Exceptions-IntentException.html"><abbr title="\Discord\Exceptions\IntentException">IntentException</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-Exceptions-InvalidOverwriteException.html"><abbr title="\Discord\Exceptions\InvalidOverwriteException">InvalidOverwriteException</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-Exceptions-InviteInvalidException.html"><abbr title="\Discord\Exceptions\InviteInvalidException">InviteInvalidException</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-Exceptions-LibSodiumNotFoundException.html"><abbr title="\Discord\Exceptions\LibSodiumNotFoundException">LibSodiumNotFoundException</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-Exceptions-LoginFailedException.html"><abbr title="\Discord\Exceptions\LoginFailedException">LoginFailedException</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-Exceptions-OpusNotFoundException.html"><abbr title="\Discord\Exceptions\OpusNotFoundException">OpusNotFoundException</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-Exceptions-OutdatedDCAException.html"><abbr title="\Discord\Exceptions\OutdatedDCAException">OutdatedDCAException</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-Exceptions-PartRequestFailedException.html"><abbr title="\Discord\Exceptions\PartRequestFailedException">PartRequestFailedException</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-Exceptions-PasswordEmptyException.html"><abbr title="\Discord\Exceptions\PasswordEmptyException">PasswordEmptyException</abbr></a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1606938489"></a>
+                                <a href="../namespaces/discord-factory.html" style="margin-left: 30px; padding-left: 0">Factory</a>
+            </div>
+            <div id="namespace-1606938489" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Discord-Factory-Factory.html"><abbr title="\Discord\Factory\Factory">Factory</abbr></a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-955229456"></a>
+                                <a href="../namespaces/discord-helpers.html" style="margin-left: 30px; padding-left: 0">Helpers</a>
+            </div>
+            <div id="namespace-955229456" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Discord-Helpers-Collection.html"><abbr title="\Discord\Helpers\Collection">Collection</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-Helpers-Process.html"><abbr title="\Discord\Helpers\Process">Process</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-Helpers-ReadableResourceStream.html"><abbr title="\Discord\Helpers\ReadableResourceStream">ReadableResourceStream</abbr></a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-500435635"></a>
+                                <a href="../namespaces/discord-http.html" style="margin-left: 30px; padding-left: 0">Http</a>
+            </div>
+            <div id="namespace-500435635" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                    <li class="interface"><a href="../classes/Discord-Http-HttpDriver.html"><abbr title="\Discord\Http\HttpDriver">HttpDriver</abbr></a></li>
+                                                                                                    <li class="class"><a href="../classes/Discord-Http-Guzzle.html"><abbr title="\Discord\Http\Guzzle">Guzzle</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-Http-Http.html"><abbr title="\Discord\Http\Http">Http</abbr></a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1969026707"></a>
+                                <a href="../namespaces/discord-parts.html" style="margin-left: 30px; padding-left: 0">Parts</a>
+            </div>
+            <div id="namespace-1969026707" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-65254083"></a>
+                                <a href="../namespaces/discord-parts-channel.html" style="margin-left: 30px; padding-left: 0">Channel</a>
+            </div>
+            <div id="namespace-65254083" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Discord-Parts-Channel-Channel.html"><abbr title="\Discord\Parts\Channel\Channel">Channel</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-Parts-Channel-Message.html"><abbr title="\Discord\Parts\Channel\Message">Message</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-Parts-Channel-Overwrite.html"><abbr title="\Discord\Parts\Channel\Overwrite">Overwrite</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-Parts-Channel-Reaction.html"><abbr title="\Discord\Parts\Channel\Reaction">Reaction</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-Parts-Channel-Webhook.html"><abbr title="\Discord\Parts\Channel\Webhook">Webhook</abbr></a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1137980407"></a>
+                                <a href="../namespaces/discord-parts-embed.html" style="margin-left: 30px; padding-left: 0">Embed</a>
+            </div>
+            <div id="namespace-1137980407" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Discord-Parts-Embed-Author.html"><abbr title="\Discord\Parts\Embed\Author">Author</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-Parts-Embed-Embed.html"><abbr title="\Discord\Parts\Embed\Embed">Embed</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-Parts-Embed-Field.html"><abbr title="\Discord\Parts\Embed\Field">Field</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-Parts-Embed-Footer.html"><abbr title="\Discord\Parts\Embed\Footer">Footer</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-Parts-Embed-Image.html"><abbr title="\Discord\Parts\Embed\Image">Image</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-Parts-Embed-Video.html"><abbr title="\Discord\Parts\Embed\Video">Video</abbr></a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-373210897"></a>
+                                <a href="../namespaces/discord-parts-guild.html" style="margin-left: 30px; padding-left: 0">Guild</a>
+            </div>
+            <div id="namespace-373210897" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Discord-Parts-Guild-Ban.html"><abbr title="\Discord\Parts\Guild\Ban">Ban</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-Parts-Guild-Emoji.html"><abbr title="\Discord\Parts\Guild\Emoji">Emoji</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-Parts-Guild-Guild.html"><abbr title="\Discord\Parts\Guild\Guild">Guild</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-Parts-Guild-Invite.html"><abbr title="\Discord\Parts\Guild\Invite">Invite</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-Parts-Guild-Role.html"><abbr title="\Discord\Parts\Guild\Role">Role</abbr></a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-666829191"></a>
+                                <a href="../namespaces/discord-parts-oauth.html" style="margin-left: 30px; padding-left: 0">OAuth</a>
+            </div>
+            <div id="namespace-666829191" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Discord-Parts-OAuth-Application.html"><abbr title="\Discord\Parts\OAuth\Application">Application</abbr></a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-199696561"></a>
+                                <a href="../namespaces/discord-parts-permissions.html" style="margin-left: 30px; padding-left: 0">Permissions</a>
+            </div>
+            <div id="namespace-199696561" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Discord-Parts-Permissions-ChannelPermission.html"><abbr title="\Discord\Parts\Permissions\ChannelPermission">ChannelPermission</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-Parts-Permissions-Permission.html"><abbr title="\Discord\Parts\Permissions\Permission">Permission</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-Parts-Permissions-RolePermission.html"><abbr title="\Discord\Parts\Permissions\RolePermission">RolePermission</abbr></a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1506510538"></a>
+                                <a href="../namespaces/discord-parts-user.html" style="margin-left: 30px; padding-left: 0">User</a>
+            </div>
+            <div id="namespace-1506510538" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Discord-Parts-User-Activity.html"><abbr title="\Discord\Parts\User\Activity">Activity</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-Parts-User-Client.html"><abbr title="\Discord\Parts\User\Client">Client</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-Parts-User-Member.html"><abbr title="\Discord\Parts\User\Member">Member</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-Parts-User-User.html"><abbr title="\Discord\Parts\User\User">User</abbr></a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1935499588"></a>
+                                <a href="../namespaces/discord-parts-websockets.html" style="margin-left: 30px; padding-left: 0">WebSockets</a>
+            </div>
+            <div id="namespace-1935499588" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Discord-Parts-WebSockets-MessageReaction.html"><abbr title="\Discord\Parts\WebSockets\MessageReaction">MessageReaction</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-Parts-WebSockets-PresenceUpdate.html"><abbr title="\Discord\Parts\WebSockets\PresenceUpdate">PresenceUpdate</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-Parts-WebSockets-TypingStart.html"><abbr title="\Discord\Parts\WebSockets\TypingStart">TypingStart</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-Parts-WebSockets-VoiceServerUpdate.html"><abbr title="\Discord\Parts\WebSockets\VoiceServerUpdate">VoiceServerUpdate</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-Parts-WebSockets-VoiceStateUpdate.html"><abbr title="\Discord\Parts\WebSockets\VoiceStateUpdate">VoiceStateUpdate</abbr></a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Discord-Parts-Part.html"><abbr title="\Discord\Parts\Part">Part</abbr></a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-669146903"></a>
+                                <a href="../namespaces/discord-repository.html" style="margin-left: 30px; padding-left: 0">Repository</a>
+            </div>
+            <div id="namespace-669146903" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1061898979"></a>
+                                <a href="../namespaces/discord-repository-channel.html" style="margin-left: 30px; padding-left: 0">Channel</a>
+            </div>
+            <div id="namespace-1061898979" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Discord-Repository-Channel-InviteRepository.html"><abbr title="\Discord\Repository\Channel\InviteRepository">InviteRepository</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-Repository-Channel-MessageRepository.html"><abbr title="\Discord\Repository\Channel\MessageRepository">MessageRepository</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-Repository-Channel-OverwriteRepository.html"><abbr title="\Discord\Repository\Channel\OverwriteRepository">OverwriteRepository</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-Repository-Channel-VoiceMemberRepository.html"><abbr title="\Discord\Repository\Channel\VoiceMemberRepository">VoiceMemberRepository</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-Repository-Channel-WebhookRepository.html"><abbr title="\Discord\Repository\Channel\WebhookRepository">WebhookRepository</abbr></a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-704345910"></a>
+                                <a href="../namespaces/discord-repository-guild.html" style="margin-left: 30px; padding-left: 0">Guild</a>
+            </div>
+            <div id="namespace-704345910" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Discord-Repository-Guild-BanRepository.html"><abbr title="\Discord\Repository\Guild\BanRepository">BanRepository</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-Repository-Guild-ChannelRepository.html"><abbr title="\Discord\Repository\Guild\ChannelRepository">ChannelRepository</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-Repository-Guild-EmojiRepository.html"><abbr title="\Discord\Repository\Guild\EmojiRepository">EmojiRepository</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-Repository-Guild-InviteRepository.html"><abbr title="\Discord\Repository\Guild\InviteRepository">InviteRepository</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-Repository-Guild-MemberRepository.html"><abbr title="\Discord\Repository\Guild\MemberRepository">MemberRepository</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-Repository-Guild-RoleRepository.html"><abbr title="\Discord\Repository\Guild\RoleRepository">RoleRepository</abbr></a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                    <li class="interface"><a href="../classes/Discord-Repository-RepositoryInterface.html"><abbr title="\Discord\Repository\RepositoryInterface">RepositoryInterface</abbr></a></li>
+                                                                                                    <li class="class"><a href="../classes/Discord-Repository-AbstractRepository.html"><abbr title="\Discord\Repository\AbstractRepository">AbstractRepository</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-Repository-GuildRepository.html"><abbr title="\Discord\Repository\GuildRepository">GuildRepository</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-Repository-PrivateChannelRepository.html"><abbr title="\Discord\Repository\PrivateChannelRepository">PrivateChannelRepository</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-Repository-UserRepository.html"><abbr title="\Discord\Repository\UserRepository">UserRepository</abbr></a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1840571781"></a>
+                                <a href="../namespaces/discord-voice.html" style="margin-left: 30px; padding-left: 0">Voice</a>
+            </div>
+            <div id="namespace-1840571781" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Discord-Voice-Buffer.html"><abbr title="\Discord\Voice\Buffer">Buffer</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-Voice-RecieveStream.html"><abbr title="\Discord\Voice\RecieveStream">RecieveStream</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-Voice-VoiceClient.html"><abbr title="\Discord\Voice\VoiceClient">VoiceClient</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-Voice-VoicePacket.html"><abbr title="\Discord\Voice\VoicePacket">VoicePacket</abbr></a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1894569703"></a>
+                                <a href="../namespaces/discord-websockets.html" style="margin-left: 30px; padding-left: 0">WebSockets</a>
+            </div>
+            <div id="namespace-1894569703" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1708135941"></a>
+                                <a href="../namespaces/discord-websockets-events.html" style="margin-left: 30px; padding-left: 0">Events</a>
+            </div>
+            <div id="namespace-1708135941" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-ChannelCreate.html"><abbr title="\Discord\WebSockets\Events\ChannelCreate">ChannelCreate</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-ChannelDelete.html"><abbr title="\Discord\WebSockets\Events\ChannelDelete">ChannelDelete</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-ChannelPinsUpdate.html"><abbr title="\Discord\WebSockets\Events\ChannelPinsUpdate">ChannelPinsUpdate</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-ChannelUpdate.html"><abbr title="\Discord\WebSockets\Events\ChannelUpdate">ChannelUpdate</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-GuildBanAdd.html"><abbr title="\Discord\WebSockets\Events\GuildBanAdd">GuildBanAdd</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-GuildBanRemove.html"><abbr title="\Discord\WebSockets\Events\GuildBanRemove">GuildBanRemove</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-GuildCreate.html"><abbr title="\Discord\WebSockets\Events\GuildCreate">GuildCreate</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-GuildDelete.html"><abbr title="\Discord\WebSockets\Events\GuildDelete">GuildDelete</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-GuildIntegrationsUpdate.html"><abbr title="\Discord\WebSockets\Events\GuildIntegrationsUpdate">GuildIntegrationsUpdate</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-GuildMemberAdd.html"><abbr title="\Discord\WebSockets\Events\GuildMemberAdd">GuildMemberAdd</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-GuildMemberRemove.html"><abbr title="\Discord\WebSockets\Events\GuildMemberRemove">GuildMemberRemove</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-GuildMemberUpdate.html"><abbr title="\Discord\WebSockets\Events\GuildMemberUpdate">GuildMemberUpdate</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-GuildRoleCreate.html"><abbr title="\Discord\WebSockets\Events\GuildRoleCreate">GuildRoleCreate</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-GuildRoleDelete.html"><abbr title="\Discord\WebSockets\Events\GuildRoleDelete">GuildRoleDelete</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-GuildRoleUpdate.html"><abbr title="\Discord\WebSockets\Events\GuildRoleUpdate">GuildRoleUpdate</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-GuildUpdate.html"><abbr title="\Discord\WebSockets\Events\GuildUpdate">GuildUpdate</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-InviteCreate.html"><abbr title="\Discord\WebSockets\Events\InviteCreate">InviteCreate</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-InviteDelete.html"><abbr title="\Discord\WebSockets\Events\InviteDelete">InviteDelete</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-MessageCreate.html"><abbr title="\Discord\WebSockets\Events\MessageCreate">MessageCreate</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-MessageDelete.html"><abbr title="\Discord\WebSockets\Events\MessageDelete">MessageDelete</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-MessageDeleteBulk.html"><abbr title="\Discord\WebSockets\Events\MessageDeleteBulk">MessageDeleteBulk</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-MessageReactionAdd.html"><abbr title="\Discord\WebSockets\Events\MessageReactionAdd">MessageReactionAdd</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-MessageReactionRemove.html"><abbr title="\Discord\WebSockets\Events\MessageReactionRemove">MessageReactionRemove</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-MessageReactionRemoveAll.html"><abbr title="\Discord\WebSockets\Events\MessageReactionRemoveAll">MessageReactionRemoveAll</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-MessageReactionRemoveEmoji.html"><abbr title="\Discord\WebSockets\Events\MessageReactionRemoveEmoji">MessageReactionRemoveEmoji</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-MessageUpdate.html"><abbr title="\Discord\WebSockets\Events\MessageUpdate">MessageUpdate</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-PresenceUpdate.html"><abbr title="\Discord\WebSockets\Events\PresenceUpdate">PresenceUpdate</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-TypingStart.html"><abbr title="\Discord\WebSockets\Events\TypingStart">TypingStart</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-VoiceServerUpdate.html"><abbr title="\Discord\WebSockets\Events\VoiceServerUpdate">VoiceServerUpdate</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-VoiceStateUpdate.html"><abbr title="\Discord\WebSockets\Events\VoiceStateUpdate">VoiceStateUpdate</abbr></a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Discord-WebSockets-Event.html"><abbr title="\Discord\WebSockets\Event">Event</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-WebSockets-Handlers.html"><abbr title="\Discord\WebSockets\Handlers">Handlers</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-WebSockets-Intents.html"><abbr title="\Discord\WebSockets\Intents">Intents</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-WebSockets-Op.html"><abbr title="\Discord\WebSockets\Op">Op</abbr></a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-740213496"></a>
+                                <a href="../namespaces/discord-wrapper.html" style="margin-left: 30px; padding-left: 0">Wrapper</a>
+            </div>
+            <div id="namespace-740213496" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Discord-Wrapper-LoggerWrapper.html"><abbr title="\Discord\Wrapper\LoggerWrapper">LoggerWrapper</abbr></a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Discord-Discord.html"><abbr title="\Discord\Discord">Discord</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-DiscordCommandClient.html"><abbr title="\Discord\DiscordCommandClient">DiscordCommandClient</abbr></a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        </div>
+    </section>
+    <section class="row-fluid">
+        <div class="span10 offset2">
+            <div class="row-fluid">
+                <div class="span8 content class">
+                    <nav>
+                                                <a href="../namespaces/discord-websockets.html"><abbr title="\Discord\WebSockets">normal</abbr></a> <i class="icon-level-up"></i>
+                                            </nav>
+                    
+                    <h1><small>\Discord\WebSockets</small>Op</h1>
+                    <p><em>Contains constants used in websockets.</em></p>
+                    
+                    
+                                        
+                    <section id="summary">
+                        <h2>Summary</h2>
+                        <section class="row-fluid heading">
+                            <section class="span4">
+                                <a href="#methods">Methods</a>
+                            </section>
+                            <section class="span4">
+                                <a href="#properties">Properties</a>
+                            </section>
+                            <section class="span4">
+                                <a href="#constants">Constants</a>
+                            </section>
+                        </section>
+                        <section class="row-fluid public">
+                            <section class="span4">
+                                                                    <a href="../classes/Discord-WebSockets-Op.html#method_getCriticalCloseCodes" class="">getCriticalCloseCodes()</a><br />
+                                                                    <a href="../classes/Discord-WebSockets-Op.html#method_getCriticalVoiceCloseCodes" class="">getCriticalVoiceCloseCodes()</a><br />
+                                                            </section>
+                            <section class="span4">
+                                                                    <em>No public properties found</em>
+                                                            </section>
+                            <section class="span4">
+                                                                    <a href="../classes/Discord-WebSockets-Op.html#constant_OP_DISPATCH" class="">OP_DISPATCH</a><br />
+                                                                    <a href="../classes/Discord-WebSockets-Op.html#constant_OP_HEARTBEAT" class="">OP_HEARTBEAT</a><br />
+                                                                    <a href="../classes/Discord-WebSockets-Op.html#constant_OP_IDENTIFY" class="">OP_IDENTIFY</a><br />
+                                                                    <a href="../classes/Discord-WebSockets-Op.html#constant_OP_PRESENCE_UPDATE" class="">OP_PRESENCE_UPDATE</a><br />
+                                                                    <a href="../classes/Discord-WebSockets-Op.html#constant_OP_VOICE_STATE_UPDATE" class="">OP_VOICE_STATE_UPDATE</a><br />
+                                                                    <a href="../classes/Discord-WebSockets-Op.html#constant_OP_VOICE_SERVER_PING" class="">OP_VOICE_SERVER_PING</a><br />
+                                                                    <a href="../classes/Discord-WebSockets-Op.html#constant_OP_RESUME" class="">OP_RESUME</a><br />
+                                                                    <a href="../classes/Discord-WebSockets-Op.html#constant_OP_RECONNECT" class="">OP_RECONNECT</a><br />
+                                                                    <a href="../classes/Discord-WebSockets-Op.html#constant_OP_GUILD_MEMBER_CHUNK" class="">OP_GUILD_MEMBER_CHUNK</a><br />
+                                                                    <a href="../classes/Discord-WebSockets-Op.html#constant_OP_INVALID_SESSION" class="">OP_INVALID_SESSION</a><br />
+                                                                    <a href="../classes/Discord-WebSockets-Op.html#constant_OP_HELLO" class="">OP_HELLO</a><br />
+                                                                    <a href="../classes/Discord-WebSockets-Op.html#constant_OP_HEARTBEAT_ACK" class="">OP_HEARTBEAT_ACK</a><br />
+                                                                    <a href="../classes/Discord-WebSockets-Op.html#constant_VOICE_IDENTIFY" class="">VOICE_IDENTIFY</a><br />
+                                                                    <a href="../classes/Discord-WebSockets-Op.html#constant_VOICE_SELECT_PROTO" class="">VOICE_SELECT_PROTO</a><br />
+                                                                    <a href="../classes/Discord-WebSockets-Op.html#constant_VOICE_READY" class="">VOICE_READY</a><br />
+                                                                    <a href="../classes/Discord-WebSockets-Op.html#constant_VOICE_HEARTBEAT" class="">VOICE_HEARTBEAT</a><br />
+                                                                    <a href="../classes/Discord-WebSockets-Op.html#constant_VOICE_DESCRIPTION" class="">VOICE_DESCRIPTION</a><br />
+                                                                    <a href="../classes/Discord-WebSockets-Op.html#constant_VOICE_SPEAKING" class="">VOICE_SPEAKING</a><br />
+                                                                    <a href="../classes/Discord-WebSockets-Op.html#constant_VOICE_HEARTBEAT_ACK" class="">VOICE_HEARTBEAT_ACK</a><br />
+                                                                    <a href="../classes/Discord-WebSockets-Op.html#constant_VOICE_HELLO" class="">VOICE_HELLO</a><br />
+                                                                    <a href="../classes/Discord-WebSockets-Op.html#constant_CLOSE_NORMAL" class="">CLOSE_NORMAL</a><br />
+                                                                    <a href="../classes/Discord-WebSockets-Op.html#constant_CLOSE_ABNORMAL" class="">CLOSE_ABNORMAL</a><br />
+                                                                    <a href="../classes/Discord-WebSockets-Op.html#constant_CLOSE_UNKNOWN_ERROR" class="">CLOSE_UNKNOWN_ERROR</a><br />
+                                                                    <a href="../classes/Discord-WebSockets-Op.html#constant_CLOSE_INVALID_OPCODE" class="">CLOSE_INVALID_OPCODE</a><br />
+                                                                    <a href="../classes/Discord-WebSockets-Op.html#constant_CLOSE_INVALID_MESSAGE" class="">CLOSE_INVALID_MESSAGE</a><br />
+                                                                    <a href="../classes/Discord-WebSockets-Op.html#constant_CLOSE_NOT_AUTHENTICATED" class="">CLOSE_NOT_AUTHENTICATED</a><br />
+                                                                    <a href="../classes/Discord-WebSockets-Op.html#constant_CLOSE_INVALID_TOKEN" class="">CLOSE_INVALID_TOKEN</a><br />
+                                                                    <a href="../classes/Discord-WebSockets-Op.html#constant_CONST_ALREADY_AUTHD" class="">CONST_ALREADY_AUTHD</a><br />
+                                                                    <a href="../classes/Discord-WebSockets-Op.html#constant_CLOSE_INVALID_SESSION" class="">CLOSE_INVALID_SESSION</a><br />
+                                                                    <a href="../classes/Discord-WebSockets-Op.html#constant_CLOSE_INVALID_SEQ" class="">CLOSE_INVALID_SEQ</a><br />
+                                                                    <a href="../classes/Discord-WebSockets-Op.html#constant_CLOSE_TOO_MANY_MSG" class="">CLOSE_TOO_MANY_MSG</a><br />
+                                                                    <a href="../classes/Discord-WebSockets-Op.html#constant_CLOSE_SESSION_TIMEOUT" class="">CLOSE_SESSION_TIMEOUT</a><br />
+                                                                    <a href="../classes/Discord-WebSockets-Op.html#constant_CLOSE_INVALID_SHARD" class="">CLOSE_INVALID_SHARD</a><br />
+                                                                    <a href="../classes/Discord-WebSockets-Op.html#constant_CLOSE_SHARDING_REQUIRED" class="">CLOSE_SHARDING_REQUIRED</a><br />
+                                                                    <a href="../classes/Discord-WebSockets-Op.html#constant_CLOSE_INVALID_VERSION" class="">CLOSE_INVALID_VERSION</a><br />
+                                                                    <a href="../classes/Discord-WebSockets-Op.html#constant_CLOSE_INVALID_INTENTS" class="">CLOSE_INVALID_INTENTS</a><br />
+                                                                    <a href="../classes/Discord-WebSockets-Op.html#constant_CLOSE_DISALLOWED_INTENTS" class="">CLOSE_DISALLOWED_INTENTS</a><br />
+                                                                    <a href="../classes/Discord-WebSockets-Op.html#constant_CLOSE_VOICE_SERVER_NOT_FOUND" class="">CLOSE_VOICE_SERVER_NOT_FOUND</a><br />
+                                                                    <a href="../classes/Discord-WebSockets-Op.html#constant_CLOSE_VOICE_UNKNOWN_PROTO" class="">CLOSE_VOICE_UNKNOWN_PROTO</a><br />
+                                                                    <a href="../classes/Discord-WebSockets-Op.html#constant_CLOSE_VOICE_DISCONNECTED" class="">CLOSE_VOICE_DISCONNECTED</a><br />
+                                                                    <a href="../classes/Discord-WebSockets-Op.html#constant_CLOSE_VOICE_SERVER_CRASH" class="">CLOSE_VOICE_SERVER_CRASH</a><br />
+                                                                    <a href="../classes/Discord-WebSockets-Op.html#constant_CLOSE_VOICE_UNKNOWN_ENCRYPT" class="">CLOSE_VOICE_UNKNOWN_ENCRYPT</a><br />
+                                                            </section>
+                        </section>
+                        <section class="row-fluid protected">
+                            <section class="span4">
+                                                                    <em>No protected methods found</em>
+                                                            </section>
+                            <section class="span4">
+                                                                    <em>No protected properties found</em>
+                                                            </section>
+                            <section class="span4">
+                                <em>N/A</em>
+                            </section>
+                        </section>
+                        <section class="row-fluid private">
+                            <section class="span4">
+                                                                    <em>No private methods found</em>
+                                                            </section>
+                            <section class="span4">
+                                                                    <em>No private properties found</em>
+                                                            </section>
+                            <section class="span4">
+                                <em>N/A</em>
+                            </section>
+                        </section>
+                    </section>
+                </div>
+                <aside class="span4 detailsbar">
+                                        
+                    
+                    <dl>
+                        <dt>File</dt>
+                            <dd><a href="../files/src-discord-websockets-op.html"><div class="path-wrapper">src/Discord/WebSockets/Op.php</div></a></dd>
+                                                <dt>Package</dt>
+                            <dd><div class="namespace-wrapper">Default</div></dd>
+                                                <dt>Class hierarchy</dt>
+                            <dd class="hierarchy">
+                                                                                                                                                                    <div class="namespace-wrapper">\Discord\WebSockets\Op</div>
+                            </dd>
+
+                        
+                        
+                        
+                                                
+                                                                        </dl>
+                    <h2>Tags</h2>
+                    <table class="table table-condensed">
+                                            <tr><td colspan="2"><em>None found</em></td></tr>
+                                        </table>
+                </aside>
+            </div>
+
+                                    <a id="constants" name="constants"></a>
+            <div class="row-fluid">
+                <div class="span8 content class">
+                    <h2>Constants</h2>
+                </div>
+                <aside class="span4 detailsbar"></aside>
+            </div>
+
+                                <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_OP_DISPATCH" name="constant_OP_DISPATCH" class="anchor"></a>
+            <article id="constant_OP_DISPATCH" class="constant">
+                <h3 class="">OP_DISPATCH</h3>
+                <pre class="signature">OP_DISPATCH = 0</pre>
+                <p><em></em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                <dt>File</dt>
+                <dd><a href="../files/src-discord-websockets-op.html"><div class="path-wrapper">src/Discord/WebSockets/Op.php</div></a></dd>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_OP_HEARTBEAT" name="constant_OP_HEARTBEAT" class="anchor"></a>
+            <article id="constant_OP_HEARTBEAT" class="constant">
+                <h3 class="">OP_HEARTBEAT</h3>
+                <pre class="signature">OP_HEARTBEAT = 1</pre>
+                <p><em></em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                <dt>File</dt>
+                <dd><a href="../files/src-discord-websockets-op.html"><div class="path-wrapper">src/Discord/WebSockets/Op.php</div></a></dd>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_OP_IDENTIFY" name="constant_OP_IDENTIFY" class="anchor"></a>
+            <article id="constant_OP_IDENTIFY" class="constant">
+                <h3 class="">OP_IDENTIFY</h3>
+                <pre class="signature">OP_IDENTIFY = 2</pre>
+                <p><em></em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                <dt>File</dt>
+                <dd><a href="../files/src-discord-websockets-op.html"><div class="path-wrapper">src/Discord/WebSockets/Op.php</div></a></dd>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_OP_PRESENCE_UPDATE" name="constant_OP_PRESENCE_UPDATE" class="anchor"></a>
+            <article id="constant_OP_PRESENCE_UPDATE" class="constant">
+                <h3 class="">OP_PRESENCE_UPDATE</h3>
+                <pre class="signature">OP_PRESENCE_UPDATE = 3</pre>
+                <p><em></em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                <dt>File</dt>
+                <dd><a href="../files/src-discord-websockets-op.html"><div class="path-wrapper">src/Discord/WebSockets/Op.php</div></a></dd>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_OP_VOICE_STATE_UPDATE" name="constant_OP_VOICE_STATE_UPDATE" class="anchor"></a>
+            <article id="constant_OP_VOICE_STATE_UPDATE" class="constant">
+                <h3 class="">OP_VOICE_STATE_UPDATE</h3>
+                <pre class="signature">OP_VOICE_STATE_UPDATE = 4</pre>
+                <p><em></em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                <dt>File</dt>
+                <dd><a href="../files/src-discord-websockets-op.html"><div class="path-wrapper">src/Discord/WebSockets/Op.php</div></a></dd>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_OP_VOICE_SERVER_PING" name="constant_OP_VOICE_SERVER_PING" class="anchor"></a>
+            <article id="constant_OP_VOICE_SERVER_PING" class="constant">
+                <h3 class="">OP_VOICE_SERVER_PING</h3>
+                <pre class="signature">OP_VOICE_SERVER_PING = 5</pre>
+                <p><em></em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                <dt>File</dt>
+                <dd><a href="../files/src-discord-websockets-op.html"><div class="path-wrapper">src/Discord/WebSockets/Op.php</div></a></dd>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_OP_RESUME" name="constant_OP_RESUME" class="anchor"></a>
+            <article id="constant_OP_RESUME" class="constant">
+                <h3 class="">OP_RESUME</h3>
+                <pre class="signature">OP_RESUME = 6</pre>
+                <p><em></em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                <dt>File</dt>
+                <dd><a href="../files/src-discord-websockets-op.html"><div class="path-wrapper">src/Discord/WebSockets/Op.php</div></a></dd>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_OP_RECONNECT" name="constant_OP_RECONNECT" class="anchor"></a>
+            <article id="constant_OP_RECONNECT" class="constant">
+                <h3 class="">OP_RECONNECT</h3>
+                <pre class="signature">OP_RECONNECT = 7</pre>
+                <p><em></em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                <dt>File</dt>
+                <dd><a href="../files/src-discord-websockets-op.html"><div class="path-wrapper">src/Discord/WebSockets/Op.php</div></a></dd>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_OP_GUILD_MEMBER_CHUNK" name="constant_OP_GUILD_MEMBER_CHUNK" class="anchor"></a>
+            <article id="constant_OP_GUILD_MEMBER_CHUNK" class="constant">
+                <h3 class="">OP_GUILD_MEMBER_CHUNK</h3>
+                <pre class="signature">OP_GUILD_MEMBER_CHUNK = 8</pre>
+                <p><em></em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                <dt>File</dt>
+                <dd><a href="../files/src-discord-websockets-op.html"><div class="path-wrapper">src/Discord/WebSockets/Op.php</div></a></dd>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_OP_INVALID_SESSION" name="constant_OP_INVALID_SESSION" class="anchor"></a>
+            <article id="constant_OP_INVALID_SESSION" class="constant">
+                <h3 class="">OP_INVALID_SESSION</h3>
+                <pre class="signature">OP_INVALID_SESSION = 9</pre>
+                <p><em></em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                <dt>File</dt>
+                <dd><a href="../files/src-discord-websockets-op.html"><div class="path-wrapper">src/Discord/WebSockets/Op.php</div></a></dd>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_OP_HELLO" name="constant_OP_HELLO" class="anchor"></a>
+            <article id="constant_OP_HELLO" class="constant">
+                <h3 class="">OP_HELLO</h3>
+                <pre class="signature">OP_HELLO = 10</pre>
+                <p><em></em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                <dt>File</dt>
+                <dd><a href="../files/src-discord-websockets-op.html"><div class="path-wrapper">src/Discord/WebSockets/Op.php</div></a></dd>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_OP_HEARTBEAT_ACK" name="constant_OP_HEARTBEAT_ACK" class="anchor"></a>
+            <article id="constant_OP_HEARTBEAT_ACK" class="constant">
+                <h3 class="">OP_HEARTBEAT_ACK</h3>
+                <pre class="signature">OP_HEARTBEAT_ACK = 11</pre>
+                <p><em></em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                <dt>File</dt>
+                <dd><a href="../files/src-discord-websockets-op.html"><div class="path-wrapper">src/Discord/WebSockets/Op.php</div></a></dd>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_VOICE_IDENTIFY" name="constant_VOICE_IDENTIFY" class="anchor"></a>
+            <article id="constant_VOICE_IDENTIFY" class="constant">
+                <h3 class="">VOICE_IDENTIFY</h3>
+                <pre class="signature">VOICE_IDENTIFY = 0</pre>
+                <p><em></em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                <dt>File</dt>
+                <dd><a href="../files/src-discord-websockets-op.html"><div class="path-wrapper">src/Discord/WebSockets/Op.php</div></a></dd>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_VOICE_SELECT_PROTO" name="constant_VOICE_SELECT_PROTO" class="anchor"></a>
+            <article id="constant_VOICE_SELECT_PROTO" class="constant">
+                <h3 class="">VOICE_SELECT_PROTO</h3>
+                <pre class="signature">VOICE_SELECT_PROTO = 1</pre>
+                <p><em></em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                <dt>File</dt>
+                <dd><a href="../files/src-discord-websockets-op.html"><div class="path-wrapper">src/Discord/WebSockets/Op.php</div></a></dd>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_VOICE_READY" name="constant_VOICE_READY" class="anchor"></a>
+            <article id="constant_VOICE_READY" class="constant">
+                <h3 class="">VOICE_READY</h3>
+                <pre class="signature">VOICE_READY = 2</pre>
+                <p><em></em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                <dt>File</dt>
+                <dd><a href="../files/src-discord-websockets-op.html"><div class="path-wrapper">src/Discord/WebSockets/Op.php</div></a></dd>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_VOICE_HEARTBEAT" name="constant_VOICE_HEARTBEAT" class="anchor"></a>
+            <article id="constant_VOICE_HEARTBEAT" class="constant">
+                <h3 class="">VOICE_HEARTBEAT</h3>
+                <pre class="signature">VOICE_HEARTBEAT = 3</pre>
+                <p><em></em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                <dt>File</dt>
+                <dd><a href="../files/src-discord-websockets-op.html"><div class="path-wrapper">src/Discord/WebSockets/Op.php</div></a></dd>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_VOICE_DESCRIPTION" name="constant_VOICE_DESCRIPTION" class="anchor"></a>
+            <article id="constant_VOICE_DESCRIPTION" class="constant">
+                <h3 class="">VOICE_DESCRIPTION</h3>
+                <pre class="signature">VOICE_DESCRIPTION = 4</pre>
+                <p><em></em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                <dt>File</dt>
+                <dd><a href="../files/src-discord-websockets-op.html"><div class="path-wrapper">src/Discord/WebSockets/Op.php</div></a></dd>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_VOICE_SPEAKING" name="constant_VOICE_SPEAKING" class="anchor"></a>
+            <article id="constant_VOICE_SPEAKING" class="constant">
+                <h3 class="">VOICE_SPEAKING</h3>
+                <pre class="signature">VOICE_SPEAKING = 5</pre>
+                <p><em></em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                <dt>File</dt>
+                <dd><a href="../files/src-discord-websockets-op.html"><div class="path-wrapper">src/Discord/WebSockets/Op.php</div></a></dd>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_VOICE_HEARTBEAT_ACK" name="constant_VOICE_HEARTBEAT_ACK" class="anchor"></a>
+            <article id="constant_VOICE_HEARTBEAT_ACK" class="constant">
+                <h3 class="">VOICE_HEARTBEAT_ACK</h3>
+                <pre class="signature">VOICE_HEARTBEAT_ACK = 6</pre>
+                <p><em></em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                <dt>File</dt>
+                <dd><a href="../files/src-discord-websockets-op.html"><div class="path-wrapper">src/Discord/WebSockets/Op.php</div></a></dd>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_VOICE_HELLO" name="constant_VOICE_HELLO" class="anchor"></a>
+            <article id="constant_VOICE_HELLO" class="constant">
+                <h3 class="">VOICE_HELLO</h3>
+                <pre class="signature">VOICE_HELLO = 8</pre>
+                <p><em></em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                <dt>File</dt>
+                <dd><a href="../files/src-discord-websockets-op.html"><div class="path-wrapper">src/Discord/WebSockets/Op.php</div></a></dd>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_CLOSE_NORMAL" name="constant_CLOSE_NORMAL" class="anchor"></a>
+            <article id="constant_CLOSE_NORMAL" class="constant">
+                <h3 class="">CLOSE_NORMAL</h3>
+                <pre class="signature">CLOSE_NORMAL = 1000</pre>
+                <p><em></em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                <dt>File</dt>
+                <dd><a href="../files/src-discord-websockets-op.html"><div class="path-wrapper">src/Discord/WebSockets/Op.php</div></a></dd>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_CLOSE_ABNORMAL" name="constant_CLOSE_ABNORMAL" class="anchor"></a>
+            <article id="constant_CLOSE_ABNORMAL" class="constant">
+                <h3 class="">CLOSE_ABNORMAL</h3>
+                <pre class="signature">CLOSE_ABNORMAL = 1006</pre>
+                <p><em></em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                <dt>File</dt>
+                <dd><a href="../files/src-discord-websockets-op.html"><div class="path-wrapper">src/Discord/WebSockets/Op.php</div></a></dd>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_CLOSE_UNKNOWN_ERROR" name="constant_CLOSE_UNKNOWN_ERROR" class="anchor"></a>
+            <article id="constant_CLOSE_UNKNOWN_ERROR" class="constant">
+                <h3 class="">CLOSE_UNKNOWN_ERROR</h3>
+                <pre class="signature">CLOSE_UNKNOWN_ERROR = 4000</pre>
+                <p><em></em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                <dt>File</dt>
+                <dd><a href="../files/src-discord-websockets-op.html"><div class="path-wrapper">src/Discord/WebSockets/Op.php</div></a></dd>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_CLOSE_INVALID_OPCODE" name="constant_CLOSE_INVALID_OPCODE" class="anchor"></a>
+            <article id="constant_CLOSE_INVALID_OPCODE" class="constant">
+                <h3 class="">CLOSE_INVALID_OPCODE</h3>
+                <pre class="signature">CLOSE_INVALID_OPCODE = 4001</pre>
+                <p><em></em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                <dt>File</dt>
+                <dd><a href="../files/src-discord-websockets-op.html"><div class="path-wrapper">src/Discord/WebSockets/Op.php</div></a></dd>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_CLOSE_INVALID_MESSAGE" name="constant_CLOSE_INVALID_MESSAGE" class="anchor"></a>
+            <article id="constant_CLOSE_INVALID_MESSAGE" class="constant">
+                <h3 class="">CLOSE_INVALID_MESSAGE</h3>
+                <pre class="signature">CLOSE_INVALID_MESSAGE = 4002</pre>
+                <p><em></em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                <dt>File</dt>
+                <dd><a href="../files/src-discord-websockets-op.html"><div class="path-wrapper">src/Discord/WebSockets/Op.php</div></a></dd>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_CLOSE_NOT_AUTHENTICATED" name="constant_CLOSE_NOT_AUTHENTICATED" class="anchor"></a>
+            <article id="constant_CLOSE_NOT_AUTHENTICATED" class="constant">
+                <h3 class="">CLOSE_NOT_AUTHENTICATED</h3>
+                <pre class="signature">CLOSE_NOT_AUTHENTICATED = 4003</pre>
+                <p><em></em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                <dt>File</dt>
+                <dd><a href="../files/src-discord-websockets-op.html"><div class="path-wrapper">src/Discord/WebSockets/Op.php</div></a></dd>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_CLOSE_INVALID_TOKEN" name="constant_CLOSE_INVALID_TOKEN" class="anchor"></a>
+            <article id="constant_CLOSE_INVALID_TOKEN" class="constant">
+                <h3 class="">CLOSE_INVALID_TOKEN</h3>
+                <pre class="signature">CLOSE_INVALID_TOKEN = 4004</pre>
+                <p><em></em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                <dt>File</dt>
+                <dd><a href="../files/src-discord-websockets-op.html"><div class="path-wrapper">src/Discord/WebSockets/Op.php</div></a></dd>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_CONST_ALREADY_AUTHD" name="constant_CONST_ALREADY_AUTHD" class="anchor"></a>
+            <article id="constant_CONST_ALREADY_AUTHD" class="constant">
+                <h3 class="">CONST_ALREADY_AUTHD</h3>
+                <pre class="signature">CONST_ALREADY_AUTHD = 4005</pre>
+                <p><em></em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                <dt>File</dt>
+                <dd><a href="../files/src-discord-websockets-op.html"><div class="path-wrapper">src/Discord/WebSockets/Op.php</div></a></dd>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_CLOSE_INVALID_SESSION" name="constant_CLOSE_INVALID_SESSION" class="anchor"></a>
+            <article id="constant_CLOSE_INVALID_SESSION" class="constant">
+                <h3 class="">CLOSE_INVALID_SESSION</h3>
+                <pre class="signature">CLOSE_INVALID_SESSION = 4006</pre>
+                <p><em></em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                <dt>File</dt>
+                <dd><a href="../files/src-discord-websockets-op.html"><div class="path-wrapper">src/Discord/WebSockets/Op.php</div></a></dd>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_CLOSE_INVALID_SEQ" name="constant_CLOSE_INVALID_SEQ" class="anchor"></a>
+            <article id="constant_CLOSE_INVALID_SEQ" class="constant">
+                <h3 class="">CLOSE_INVALID_SEQ</h3>
+                <pre class="signature">CLOSE_INVALID_SEQ = 4007</pre>
+                <p><em></em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                <dt>File</dt>
+                <dd><a href="../files/src-discord-websockets-op.html"><div class="path-wrapper">src/Discord/WebSockets/Op.php</div></a></dd>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_CLOSE_TOO_MANY_MSG" name="constant_CLOSE_TOO_MANY_MSG" class="anchor"></a>
+            <article id="constant_CLOSE_TOO_MANY_MSG" class="constant">
+                <h3 class="">CLOSE_TOO_MANY_MSG</h3>
+                <pre class="signature">CLOSE_TOO_MANY_MSG = 4008</pre>
+                <p><em></em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                <dt>File</dt>
+                <dd><a href="../files/src-discord-websockets-op.html"><div class="path-wrapper">src/Discord/WebSockets/Op.php</div></a></dd>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_CLOSE_SESSION_TIMEOUT" name="constant_CLOSE_SESSION_TIMEOUT" class="anchor"></a>
+            <article id="constant_CLOSE_SESSION_TIMEOUT" class="constant">
+                <h3 class="">CLOSE_SESSION_TIMEOUT</h3>
+                <pre class="signature">CLOSE_SESSION_TIMEOUT = 4009</pre>
+                <p><em></em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                <dt>File</dt>
+                <dd><a href="../files/src-discord-websockets-op.html"><div class="path-wrapper">src/Discord/WebSockets/Op.php</div></a></dd>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_CLOSE_INVALID_SHARD" name="constant_CLOSE_INVALID_SHARD" class="anchor"></a>
+            <article id="constant_CLOSE_INVALID_SHARD" class="constant">
+                <h3 class="">CLOSE_INVALID_SHARD</h3>
+                <pre class="signature">CLOSE_INVALID_SHARD = 4010</pre>
+                <p><em></em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                <dt>File</dt>
+                <dd><a href="../files/src-discord-websockets-op.html"><div class="path-wrapper">src/Discord/WebSockets/Op.php</div></a></dd>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_CLOSE_SHARDING_REQUIRED" name="constant_CLOSE_SHARDING_REQUIRED" class="anchor"></a>
+            <article id="constant_CLOSE_SHARDING_REQUIRED" class="constant">
+                <h3 class="">CLOSE_SHARDING_REQUIRED</h3>
+                <pre class="signature">CLOSE_SHARDING_REQUIRED = 4011</pre>
+                <p><em></em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                <dt>File</dt>
+                <dd><a href="../files/src-discord-websockets-op.html"><div class="path-wrapper">src/Discord/WebSockets/Op.php</div></a></dd>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_CLOSE_INVALID_VERSION" name="constant_CLOSE_INVALID_VERSION" class="anchor"></a>
+            <article id="constant_CLOSE_INVALID_VERSION" class="constant">
+                <h3 class="">CLOSE_INVALID_VERSION</h3>
+                <pre class="signature">CLOSE_INVALID_VERSION = 4012</pre>
+                <p><em></em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                <dt>File</dt>
+                <dd><a href="../files/src-discord-websockets-op.html"><div class="path-wrapper">src/Discord/WebSockets/Op.php</div></a></dd>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_CLOSE_INVALID_INTENTS" name="constant_CLOSE_INVALID_INTENTS" class="anchor"></a>
+            <article id="constant_CLOSE_INVALID_INTENTS" class="constant">
+                <h3 class="">CLOSE_INVALID_INTENTS</h3>
+                <pre class="signature">CLOSE_INVALID_INTENTS = 4013</pre>
+                <p><em></em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                <dt>File</dt>
+                <dd><a href="../files/src-discord-websockets-op.html"><div class="path-wrapper">src/Discord/WebSockets/Op.php</div></a></dd>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_CLOSE_DISALLOWED_INTENTS" name="constant_CLOSE_DISALLOWED_INTENTS" class="anchor"></a>
+            <article id="constant_CLOSE_DISALLOWED_INTENTS" class="constant">
+                <h3 class="">CLOSE_DISALLOWED_INTENTS</h3>
+                <pre class="signature">CLOSE_DISALLOWED_INTENTS = 4014</pre>
+                <p><em></em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                <dt>File</dt>
+                <dd><a href="../files/src-discord-websockets-op.html"><div class="path-wrapper">src/Discord/WebSockets/Op.php</div></a></dd>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_CLOSE_VOICE_SERVER_NOT_FOUND" name="constant_CLOSE_VOICE_SERVER_NOT_FOUND" class="anchor"></a>
+            <article id="constant_CLOSE_VOICE_SERVER_NOT_FOUND" class="constant">
+                <h3 class="">CLOSE_VOICE_SERVER_NOT_FOUND</h3>
+                <pre class="signature">CLOSE_VOICE_SERVER_NOT_FOUND = 4011</pre>
+                <p><em></em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                <dt>File</dt>
+                <dd><a href="../files/src-discord-websockets-op.html"><div class="path-wrapper">src/Discord/WebSockets/Op.php</div></a></dd>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_CLOSE_VOICE_UNKNOWN_PROTO" name="constant_CLOSE_VOICE_UNKNOWN_PROTO" class="anchor"></a>
+            <article id="constant_CLOSE_VOICE_UNKNOWN_PROTO" class="constant">
+                <h3 class="">CLOSE_VOICE_UNKNOWN_PROTO</h3>
+                <pre class="signature">CLOSE_VOICE_UNKNOWN_PROTO = 4012</pre>
+                <p><em></em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                <dt>File</dt>
+                <dd><a href="../files/src-discord-websockets-op.html"><div class="path-wrapper">src/Discord/WebSockets/Op.php</div></a></dd>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_CLOSE_VOICE_DISCONNECTED" name="constant_CLOSE_VOICE_DISCONNECTED" class="anchor"></a>
+            <article id="constant_CLOSE_VOICE_DISCONNECTED" class="constant">
+                <h3 class="">CLOSE_VOICE_DISCONNECTED</h3>
+                <pre class="signature">CLOSE_VOICE_DISCONNECTED = 4014</pre>
+                <p><em></em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                <dt>File</dt>
+                <dd><a href="../files/src-discord-websockets-op.html"><div class="path-wrapper">src/Discord/WebSockets/Op.php</div></a></dd>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_CLOSE_VOICE_SERVER_CRASH" name="constant_CLOSE_VOICE_SERVER_CRASH" class="anchor"></a>
+            <article id="constant_CLOSE_VOICE_SERVER_CRASH" class="constant">
+                <h3 class="">CLOSE_VOICE_SERVER_CRASH</h3>
+                <pre class="signature">CLOSE_VOICE_SERVER_CRASH = 4015</pre>
+                <p><em></em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                <dt>File</dt>
+                <dd><a href="../files/src-discord-websockets-op.html"><div class="path-wrapper">src/Discord/WebSockets/Op.php</div></a></dd>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_CLOSE_VOICE_UNKNOWN_ENCRYPT" name="constant_CLOSE_VOICE_UNKNOWN_ENCRYPT" class="anchor"></a>
+            <article id="constant_CLOSE_VOICE_UNKNOWN_ENCRYPT" class="constant">
+                <h3 class="">CLOSE_VOICE_UNKNOWN_ENCRYPT</h3>
+                <pre class="signature">CLOSE_VOICE_UNKNOWN_ENCRYPT = 4016</pre>
+                <p><em></em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                <dt>File</dt>
+                <dd><a href="../files/src-discord-websockets-op.html"><div class="path-wrapper">src/Discord/WebSockets/Op.php</div></a></dd>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                            
+                        
+                                    <a id="methods" name="methods"></a>
+            <div class="row-fluid">
+                <div class="span8 content class"><h2>Methods</h2></div>
+                <aside class="span4 detailsbar"></aside>
+            </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getCriticalCloseCodes" name="method_getCriticalCloseCodes" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getCriticalCloseCodes()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getCriticalCloseCodes() : array</pre>
+                <p><em>Returns the critical event codes that we should not reconnect after.</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    array
+                                    
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                            <span class="label label-info">static</span>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/Discord-WebSockets-Op.html"><div class="path-wrapper">\Discord\WebSockets\Op</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getCriticalVoiceCloseCodes" name="method_getCriticalVoiceCloseCodes" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getCriticalVoiceCloseCodes()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getCriticalVoiceCloseCodes() : array</pre>
+                <p><em>Returns the critical event codes for a voice websocket.</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    array
+                                    
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                            <span class="label label-info">static</span>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/Discord-WebSockets-Op.html"><div class="path-wrapper">\Discord\WebSockets\Op</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                                                    </div>
+    </section>
+
+    <div id="source-view" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="source-view-label" aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="source-view-label">Op.php</h3>
+        </div>
+        <div class="modal-body">
+            <pre data-src="../files/src/Discord/WebSockets/Op.php.txt" class="language-php line-numbers"></pre>
+        </div>
+    </div>
+
+    <footer class="row-fluid">
+        <section class="span10 offset2">
+            <section class="row-fluid">
+                <section class="span10 offset1">
+                    <section class="row-fluid footer-sections">
+                        <section class="span4">
+                                                        <h1><i class="icon-code"></i></h1>
+                            <div>
+                                <ul>
+                                                                            <li><a href="../namespaces/discord.html"><abbr title="\Discord">normal</abbr></a></li>
+                                                                    </ul>
+                            </div>
+                        </section>
+                        <section class="span4">
+                                                        <h1><i class="icon-bar-chart"></i></h1>
+                            <div>
+                                <ul>
+                                    <li><a href="../graphs/class.html">Class Hierarchy Diagram</a></li>
+                                </ul>
+                            </div>
+                        </section>
+                        <section class="span4">
+                                                        <h1><i class="icon-pushpin"></i></h1>
+                            <div>
+                                <ul>
+                                    <li><a href="../reports/errors.html">Errors</a></li>
+                                    <li><a href="../reports/markers.html">Markers</a></li>
+                                </ul>
+                            </div>
+                        </section>
+                    </section>
+                </section>
+            </section>
+            <section class="row-fluid">
+                <section class="span10 offset1">
+                    <hr />
+                    Documentation is powered by <a href="https://www.phpdoc.org/">phpDocumentor </a> and authored
+                    on September 15th, 2020 at 02:39.
+                </section>
+            </section>
+        </section>
+    </footer>
+</div>
+
+</body>
+</html>

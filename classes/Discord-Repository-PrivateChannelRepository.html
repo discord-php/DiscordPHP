@@ -1,0 +1,1642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+    <meta charset="utf-8"/>
+    <title>Documentation</title>
+    <meta name="author" content=""/>
+    <meta name="description" content=""/>
+
+    <link href="../css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
+    <link href="../css/font-awesome.min.css" rel="stylesheet">
+    <link href="../css/prism.css" rel="stylesheet" media="all"/>
+    <link href="../css/template.css" rel="stylesheet" media="all"/>
+    
+    <!--[if lt IE 9]>
+    <script src="../js/html5.js"></script>
+    <![endif]-->
+    <script src="../js/jquery-1.11.0.min.js"></script>
+    <script src="../js/ui/1.10.4/jquery-ui.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/jquery.smooth-scroll.js"></script>
+    <script src="../js/prism.min.js"></script>
+    <!-- TODO: Add http://jscrollpane.kelvinluck.com/ to style the scrollbars for browsers not using webkit-->
+    <script type="text/javascript">
+    function loadExternalCodeSnippets() {
+        Array.prototype.slice.call(document.querySelectorAll('pre[data-src]')).forEach(function (pre) {
+            var src = pre.getAttribute('data-src').replace( /\\/g, '/');
+            var extension = (src.match(/\.(\w+)$/) || [, ''])[1];
+            var language = 'php';
+
+            var code = document.createElement('code');
+            code.className = 'language-' + language;
+
+            pre.textContent = '';
+
+            code.textContent = 'Loading…';
+
+            pre.appendChild(code);
+
+            var xhr = new XMLHttpRequest();
+
+            xhr.open('GET', src, true);
+
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4) {
+
+                    if (xhr.status < 400 && xhr.responseText) {
+                        code.textContent = xhr.responseText;
+
+                        Prism.highlightElement(code);
+                    }
+                    else if (xhr.status >= 400) {
+                        code.textContent = '✖ Error ' + xhr.status + ' while fetching file: ' + xhr.statusText;
+                    }
+                    else {
+                        code.textContent = '✖ Error: File does not exist, is empty or trying to view from localhost';
+                    }
+                }
+            };
+
+            xhr.send(null);
+        });
+    }
+
+    $(document).ready(function(){
+        loadExternalCodeSnippets();
+    });
+    $('#source-view').on('shown', function () {
+        loadExternalCodeSnippets();
+    })
+</script>
+
+    <link rel="shortcut icon" href="../images/favicon.ico"/>
+    <link rel="apple-touch-icon" href="../images/apple-touch-icon.png"/>
+    <link rel="apple-touch-icon" sizes="72x72" href="../images/apple-touch-icon-72x72.png"/>
+    <link rel="apple-touch-icon" sizes="114x114" href="../images/apple-touch-icon-114x114.png"/>
+</head>
+<body>
+
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <i class="icon-ellipsis-vertical"></i>
+            </a>
+            <a class="brand" href="../index.html">Documentation</a>
+
+            <div class="nav-collapse">
+                <ul class="nav pull-right">
+                                        <li class="dropdown">
+                        <a href="../index.html" class="dropdown-toggle" data-toggle="dropdown">
+                            API Documentation <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                                                        <li><a href="../namespaces/discord.html"><abbr title="\Discord">normal</abbr></a></li>
+                                                    </ul>
+                    </li>
+                                        <li class="dropdown" id="charts-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Charts <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="../graphs/class.html">
+                                    <i class="icon-list-alt"></i>&#160;Class hierarchy diagram
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown" id="reports-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Reports <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="../reports/errors.html">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">19</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="../reports/markers.html">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <i class="icon-list-alt"></i>&#160;Markers <span class="label label-info pull-right">0</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="../reports/deprecated.html">
+                                                                                                            <i class="icon-list-alt"></i>&#160;Deprecated <span class="label label-info pull-right">0</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!--<div class="go_to_top">-->
+    <!--<a href="#___" style="color: inherit">Back to top&#160;&#160;<i class="icon-upload icon-white"></i></a>-->
+    <!--</div>-->
+</div>
+
+<div id="___" class="container-fluid">
+        <section class="row-fluid">
+        <div class="span2 sidebar">
+                                <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-1994395540"></a>
+                                <a href="../namespaces/default.html" style="margin-left: 30px; padding-left: 0">\</a>
+            </div>
+            <div id="namespace-1994395540" class="accordion-body collapse in">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-2119133198"></a>
+                                <a href="../namespaces/discord.html" style="margin-left: 30px; padding-left: 0">Discord</a>
+            </div>
+            <div id="namespace-2119133198" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-331930721"></a>
+                                <a href="../namespaces/discord-commandclient.html" style="margin-left: 30px; padding-left: 0">CommandClient</a>
+            </div>
+            <div id="namespace-331930721" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Discord-CommandClient-Command.html"><abbr title="\Discord\CommandClient\Command">Command</abbr></a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-829846442"></a>
+                                <a href="../namespaces/discord-exceptions.html" style="margin-left: 30px; padding-left: 0">Exceptions</a>
+            </div>
+            <div id="namespace-829846442" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1541811169"></a>
+                                <a href="../namespaces/discord-exceptions-rest.html" style="margin-left: 30px; padding-left: 0">Rest</a>
+            </div>
+            <div id="namespace-1541811169" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Discord-Exceptions-Rest-ContentTooLongException.html"><abbr title="\Discord\Exceptions\Rest\ContentTooLongException">ContentTooLongException</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-Exceptions-Rest-NoPermissionsException.html"><abbr title="\Discord\Exceptions\Rest\NoPermissionsException">NoPermissionsException</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-Exceptions-Rest-NotFoundException.html"><abbr title="\Discord\Exceptions\Rest\NotFoundException">NotFoundException</abbr></a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Discord-Exceptions-ContentTooLongException.html"><abbr title="\Discord\Exceptions\ContentTooLongException">ContentTooLongException</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-Exceptions-DCANotFoundException.html"><abbr title="\Discord\Exceptions\DCANotFoundException">DCANotFoundException</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-Exceptions-DiscordRequestFailedException.html"><abbr title="\Discord\Exceptions\DiscordRequestFailedException">DiscordRequestFailedException</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-Exceptions-FFmpegNotFoundException.html"><abbr title="\Discord\Exceptions\FFmpegNotFoundException">FFmpegNotFoundException</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-Exceptions-FileNotFoundException.html"><abbr title="\Discord\Exceptions\FileNotFoundException">FileNotFoundException</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-Exceptions-IntentException.html"><abbr title="\Discord\Exceptions\IntentException">IntentException</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-Exceptions-InvalidOverwriteException.html"><abbr title="\Discord\Exceptions\InvalidOverwriteException">InvalidOverwriteException</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-Exceptions-InviteInvalidException.html"><abbr title="\Discord\Exceptions\InviteInvalidException">InviteInvalidException</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-Exceptions-LibSodiumNotFoundException.html"><abbr title="\Discord\Exceptions\LibSodiumNotFoundException">LibSodiumNotFoundException</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-Exceptions-LoginFailedException.html"><abbr title="\Discord\Exceptions\LoginFailedException">LoginFailedException</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-Exceptions-OpusNotFoundException.html"><abbr title="\Discord\Exceptions\OpusNotFoundException">OpusNotFoundException</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-Exceptions-OutdatedDCAException.html"><abbr title="\Discord\Exceptions\OutdatedDCAException">OutdatedDCAException</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-Exceptions-PartRequestFailedException.html"><abbr title="\Discord\Exceptions\PartRequestFailedException">PartRequestFailedException</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-Exceptions-PasswordEmptyException.html"><abbr title="\Discord\Exceptions\PasswordEmptyException">PasswordEmptyException</abbr></a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-213206853"></a>
+                                <a href="../namespaces/discord-factory.html" style="margin-left: 30px; padding-left: 0">Factory</a>
+            </div>
+            <div id="namespace-213206853" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Discord-Factory-Factory.html"><abbr title="\Discord\Factory\Factory">Factory</abbr></a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1565681111"></a>
+                                <a href="../namespaces/discord-helpers.html" style="margin-left: 30px; padding-left: 0">Helpers</a>
+            </div>
+            <div id="namespace-1565681111" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Discord-Helpers-Collection.html"><abbr title="\Discord\Helpers\Collection">Collection</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-Helpers-Process.html"><abbr title="\Discord\Helpers\Process">Process</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-Helpers-ReadableResourceStream.html"><abbr title="\Discord\Helpers\ReadableResourceStream">ReadableResourceStream</abbr></a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-424328521"></a>
+                                <a href="../namespaces/discord-http.html" style="margin-left: 30px; padding-left: 0">Http</a>
+            </div>
+            <div id="namespace-424328521" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                    <li class="interface"><a href="../classes/Discord-Http-HttpDriver.html"><abbr title="\Discord\Http\HttpDriver">HttpDriver</abbr></a></li>
+                                                                                                    <li class="class"><a href="../classes/Discord-Http-Guzzle.html"><abbr title="\Discord\Http\Guzzle">Guzzle</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-Http-Http.html"><abbr title="\Discord\Http\Http">Http</abbr></a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-397579490"></a>
+                                <a href="../namespaces/discord-parts.html" style="margin-left: 30px; padding-left: 0">Parts</a>
+            </div>
+            <div id="namespace-397579490" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-348866571"></a>
+                                <a href="../namespaces/discord-parts-channel.html" style="margin-left: 30px; padding-left: 0">Channel</a>
+            </div>
+            <div id="namespace-348866571" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Discord-Parts-Channel-Channel.html"><abbr title="\Discord\Parts\Channel\Channel">Channel</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-Parts-Channel-Message.html"><abbr title="\Discord\Parts\Channel\Message">Message</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-Parts-Channel-Overwrite.html"><abbr title="\Discord\Parts\Channel\Overwrite">Overwrite</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-Parts-Channel-Reaction.html"><abbr title="\Discord\Parts\Channel\Reaction">Reaction</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-Parts-Channel-Webhook.html"><abbr title="\Discord\Parts\Channel\Webhook">Webhook</abbr></a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-529817716"></a>
+                                <a href="../namespaces/discord-parts-embed.html" style="margin-left: 30px; padding-left: 0">Embed</a>
+            </div>
+            <div id="namespace-529817716" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Discord-Parts-Embed-Author.html"><abbr title="\Discord\Parts\Embed\Author">Author</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-Parts-Embed-Embed.html"><abbr title="\Discord\Parts\Embed\Embed">Embed</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-Parts-Embed-Field.html"><abbr title="\Discord\Parts\Embed\Field">Field</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-Parts-Embed-Footer.html"><abbr title="\Discord\Parts\Embed\Footer">Footer</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-Parts-Embed-Image.html"><abbr title="\Discord\Parts\Embed\Image">Image</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-Parts-Embed-Video.html"><abbr title="\Discord\Parts\Embed\Video">Video</abbr></a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-623524735"></a>
+                                <a href="../namespaces/discord-parts-guild.html" style="margin-left: 30px; padding-left: 0">Guild</a>
+            </div>
+            <div id="namespace-623524735" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Discord-Parts-Guild-Ban.html"><abbr title="\Discord\Parts\Guild\Ban">Ban</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-Parts-Guild-Emoji.html"><abbr title="\Discord\Parts\Guild\Emoji">Emoji</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-Parts-Guild-Guild.html"><abbr title="\Discord\Parts\Guild\Guild">Guild</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-Parts-Guild-Invite.html"><abbr title="\Discord\Parts\Guild\Invite">Invite</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-Parts-Guild-Role.html"><abbr title="\Discord\Parts\Guild\Role">Role</abbr></a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-342367071"></a>
+                                <a href="../namespaces/discord-parts-oauth.html" style="margin-left: 30px; padding-left: 0">OAuth</a>
+            </div>
+            <div id="namespace-342367071" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Discord-Parts-OAuth-Application.html"><abbr title="\Discord\Parts\OAuth\Application">Application</abbr></a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1912049250"></a>
+                                <a href="../namespaces/discord-parts-permissions.html" style="margin-left: 30px; padding-left: 0">Permissions</a>
+            </div>
+            <div id="namespace-1912049250" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Discord-Parts-Permissions-ChannelPermission.html"><abbr title="\Discord\Parts\Permissions\ChannelPermission">ChannelPermission</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-Parts-Permissions-Permission.html"><abbr title="\Discord\Parts\Permissions\Permission">Permission</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-Parts-Permissions-RolePermission.html"><abbr title="\Discord\Parts\Permissions\RolePermission">RolePermission</abbr></a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-374539442"></a>
+                                <a href="../namespaces/discord-parts-user.html" style="margin-left: 30px; padding-left: 0">User</a>
+            </div>
+            <div id="namespace-374539442" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Discord-Parts-User-Activity.html"><abbr title="\Discord\Parts\User\Activity">Activity</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-Parts-User-Client.html"><abbr title="\Discord\Parts\User\Client">Client</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-Parts-User-Member.html"><abbr title="\Discord\Parts\User\Member">Member</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-Parts-User-User.html"><abbr title="\Discord\Parts\User\User">User</abbr></a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1619935910"></a>
+                                <a href="../namespaces/discord-parts-websockets.html" style="margin-left: 30px; padding-left: 0">WebSockets</a>
+            </div>
+            <div id="namespace-1619935910" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Discord-Parts-WebSockets-MessageReaction.html"><abbr title="\Discord\Parts\WebSockets\MessageReaction">MessageReaction</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-Parts-WebSockets-PresenceUpdate.html"><abbr title="\Discord\Parts\WebSockets\PresenceUpdate">PresenceUpdate</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-Parts-WebSockets-TypingStart.html"><abbr title="\Discord\Parts\WebSockets\TypingStart">TypingStart</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-Parts-WebSockets-VoiceServerUpdate.html"><abbr title="\Discord\Parts\WebSockets\VoiceServerUpdate">VoiceServerUpdate</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-Parts-WebSockets-VoiceStateUpdate.html"><abbr title="\Discord\Parts\WebSockets\VoiceStateUpdate">VoiceStateUpdate</abbr></a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Discord-Parts-Part.html"><abbr title="\Discord\Parts\Part">Part</abbr></a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-350593948"></a>
+                                <a href="../namespaces/discord-repository.html" style="margin-left: 30px; padding-left: 0">Repository</a>
+            </div>
+            <div id="namespace-350593948" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1994524574"></a>
+                                <a href="../namespaces/discord-repository-channel.html" style="margin-left: 30px; padding-left: 0">Channel</a>
+            </div>
+            <div id="namespace-1994524574" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Discord-Repository-Channel-InviteRepository.html"><abbr title="\Discord\Repository\Channel\InviteRepository">InviteRepository</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-Repository-Channel-MessageRepository.html"><abbr title="\Discord\Repository\Channel\MessageRepository">MessageRepository</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-Repository-Channel-OverwriteRepository.html"><abbr title="\Discord\Repository\Channel\OverwriteRepository">OverwriteRepository</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-Repository-Channel-VoiceMemberRepository.html"><abbr title="\Discord\Repository\Channel\VoiceMemberRepository">VoiceMemberRepository</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-Repository-Channel-WebhookRepository.html"><abbr title="\Discord\Repository\Channel\WebhookRepository">WebhookRepository</abbr></a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1624640153"></a>
+                                <a href="../namespaces/discord-repository-guild.html" style="margin-left: 30px; padding-left: 0">Guild</a>
+            </div>
+            <div id="namespace-1624640153" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Discord-Repository-Guild-BanRepository.html"><abbr title="\Discord\Repository\Guild\BanRepository">BanRepository</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-Repository-Guild-ChannelRepository.html"><abbr title="\Discord\Repository\Guild\ChannelRepository">ChannelRepository</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-Repository-Guild-EmojiRepository.html"><abbr title="\Discord\Repository\Guild\EmojiRepository">EmojiRepository</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-Repository-Guild-InviteRepository.html"><abbr title="\Discord\Repository\Guild\InviteRepository">InviteRepository</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-Repository-Guild-MemberRepository.html"><abbr title="\Discord\Repository\Guild\MemberRepository">MemberRepository</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-Repository-Guild-RoleRepository.html"><abbr title="\Discord\Repository\Guild\RoleRepository">RoleRepository</abbr></a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                    <li class="interface"><a href="../classes/Discord-Repository-RepositoryInterface.html"><abbr title="\Discord\Repository\RepositoryInterface">RepositoryInterface</abbr></a></li>
+                                                                                                    <li class="class"><a href="../classes/Discord-Repository-AbstractRepository.html"><abbr title="\Discord\Repository\AbstractRepository">AbstractRepository</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-Repository-GuildRepository.html"><abbr title="\Discord\Repository\GuildRepository">GuildRepository</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-Repository-PrivateChannelRepository.html"><abbr title="\Discord\Repository\PrivateChannelRepository">PrivateChannelRepository</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-Repository-UserRepository.html"><abbr title="\Discord\Repository\UserRepository">UserRepository</abbr></a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-674915924"></a>
+                                <a href="../namespaces/discord-voice.html" style="margin-left: 30px; padding-left: 0">Voice</a>
+            </div>
+            <div id="namespace-674915924" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Discord-Voice-Buffer.html"><abbr title="\Discord\Voice\Buffer">Buffer</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-Voice-RecieveStream.html"><abbr title="\Discord\Voice\RecieveStream">RecieveStream</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-Voice-VoiceClient.html"><abbr title="\Discord\Voice\VoiceClient">VoiceClient</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-Voice-VoicePacket.html"><abbr title="\Discord\Voice\VoicePacket">VoicePacket</abbr></a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1505005080"></a>
+                                <a href="../namespaces/discord-websockets.html" style="margin-left: 30px; padding-left: 0">WebSockets</a>
+            </div>
+            <div id="namespace-1505005080" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-619496596"></a>
+                                <a href="../namespaces/discord-websockets-events.html" style="margin-left: 30px; padding-left: 0">Events</a>
+            </div>
+            <div id="namespace-619496596" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-ChannelCreate.html"><abbr title="\Discord\WebSockets\Events\ChannelCreate">ChannelCreate</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-ChannelDelete.html"><abbr title="\Discord\WebSockets\Events\ChannelDelete">ChannelDelete</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-ChannelPinsUpdate.html"><abbr title="\Discord\WebSockets\Events\ChannelPinsUpdate">ChannelPinsUpdate</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-ChannelUpdate.html"><abbr title="\Discord\WebSockets\Events\ChannelUpdate">ChannelUpdate</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-GuildBanAdd.html"><abbr title="\Discord\WebSockets\Events\GuildBanAdd">GuildBanAdd</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-GuildBanRemove.html"><abbr title="\Discord\WebSockets\Events\GuildBanRemove">GuildBanRemove</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-GuildCreate.html"><abbr title="\Discord\WebSockets\Events\GuildCreate">GuildCreate</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-GuildDelete.html"><abbr title="\Discord\WebSockets\Events\GuildDelete">GuildDelete</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-GuildIntegrationsUpdate.html"><abbr title="\Discord\WebSockets\Events\GuildIntegrationsUpdate">GuildIntegrationsUpdate</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-GuildMemberAdd.html"><abbr title="\Discord\WebSockets\Events\GuildMemberAdd">GuildMemberAdd</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-GuildMemberRemove.html"><abbr title="\Discord\WebSockets\Events\GuildMemberRemove">GuildMemberRemove</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-GuildMemberUpdate.html"><abbr title="\Discord\WebSockets\Events\GuildMemberUpdate">GuildMemberUpdate</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-GuildRoleCreate.html"><abbr title="\Discord\WebSockets\Events\GuildRoleCreate">GuildRoleCreate</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-GuildRoleDelete.html"><abbr title="\Discord\WebSockets\Events\GuildRoleDelete">GuildRoleDelete</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-GuildRoleUpdate.html"><abbr title="\Discord\WebSockets\Events\GuildRoleUpdate">GuildRoleUpdate</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-GuildUpdate.html"><abbr title="\Discord\WebSockets\Events\GuildUpdate">GuildUpdate</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-InviteCreate.html"><abbr title="\Discord\WebSockets\Events\InviteCreate">InviteCreate</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-InviteDelete.html"><abbr title="\Discord\WebSockets\Events\InviteDelete">InviteDelete</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-MessageCreate.html"><abbr title="\Discord\WebSockets\Events\MessageCreate">MessageCreate</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-MessageDelete.html"><abbr title="\Discord\WebSockets\Events\MessageDelete">MessageDelete</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-MessageDeleteBulk.html"><abbr title="\Discord\WebSockets\Events\MessageDeleteBulk">MessageDeleteBulk</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-MessageReactionAdd.html"><abbr title="\Discord\WebSockets\Events\MessageReactionAdd">MessageReactionAdd</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-MessageReactionRemove.html"><abbr title="\Discord\WebSockets\Events\MessageReactionRemove">MessageReactionRemove</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-MessageReactionRemoveAll.html"><abbr title="\Discord\WebSockets\Events\MessageReactionRemoveAll">MessageReactionRemoveAll</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-MessageReactionRemoveEmoji.html"><abbr title="\Discord\WebSockets\Events\MessageReactionRemoveEmoji">MessageReactionRemoveEmoji</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-MessageUpdate.html"><abbr title="\Discord\WebSockets\Events\MessageUpdate">MessageUpdate</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-PresenceUpdate.html"><abbr title="\Discord\WebSockets\Events\PresenceUpdate">PresenceUpdate</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-TypingStart.html"><abbr title="\Discord\WebSockets\Events\TypingStart">TypingStart</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-VoiceServerUpdate.html"><abbr title="\Discord\WebSockets\Events\VoiceServerUpdate">VoiceServerUpdate</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-VoiceStateUpdate.html"><abbr title="\Discord\WebSockets\Events\VoiceStateUpdate">VoiceStateUpdate</abbr></a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Discord-WebSockets-Event.html"><abbr title="\Discord\WebSockets\Event">Event</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-WebSockets-Handlers.html"><abbr title="\Discord\WebSockets\Handlers">Handlers</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-WebSockets-Intents.html"><abbr title="\Discord\WebSockets\Intents">Intents</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-WebSockets-Op.html"><abbr title="\Discord\WebSockets\Op">Op</abbr></a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-2101821132"></a>
+                                <a href="../namespaces/discord-wrapper.html" style="margin-left: 30px; padding-left: 0">Wrapper</a>
+            </div>
+            <div id="namespace-2101821132" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Discord-Wrapper-LoggerWrapper.html"><abbr title="\Discord\Wrapper\LoggerWrapper">LoggerWrapper</abbr></a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/Discord-Discord.html"><abbr title="\Discord\Discord">Discord</abbr></a></li>
+                                                    <li class="class"><a href="../classes/Discord-DiscordCommandClient.html"><abbr title="\Discord\DiscordCommandClient">DiscordCommandClient</abbr></a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        </div>
+    </section>
+    <section class="row-fluid">
+        <div class="span10 offset2">
+            <div class="row-fluid">
+                <div class="span8 content class">
+                    <nav>
+                                                <a href="../namespaces/discord-repository.html"><abbr title="\Discord\Repository">normal</abbr></a> <i class="icon-level-up"></i>
+                                            </nav>
+                    
+                    <h1><small>\Discord\Repository</small>PrivateChannelRepository</h1>
+                    <p><em>Contains private channels and groups that the user has access to.</em></p>
+                    
+                    
+                                        
+                    <section id="summary">
+                        <h2>Summary</h2>
+                        <section class="row-fluid heading">
+                            <section class="span4">
+                                <a href="#methods">Methods</a>
+                            </section>
+                            <section class="span4">
+                                <a href="#properties">Properties</a>
+                            </section>
+                            <section class="span4">
+                                <a href="#constants">Constants</a>
+                            </section>
+                        </section>
+                        <section class="row-fluid public">
+                            <section class="span4">
+                                                                    <a href="../classes/Discord-Repository-AbstractRepository.html#method___construct" class="">__construct()</a><br />
+                                                                    <a href="../classes/Discord-Repository-AbstractRepository.html#method_freshen" class="">freshen()</a><br />
+                                                                    <a href="../classes/Discord-Repository-AbstractRepository.html#method_create" class="">create()</a><br />
+                                                                    <a href="../classes/Discord-Repository-AbstractRepository.html#method_save" class="">save()</a><br />
+                                                                    <a href="../classes/Discord-Repository-AbstractRepository.html#method_delete" class="">delete()</a><br />
+                                                                    <a href="../classes/Discord-Repository-AbstractRepository.html#method_fresh" class="">fresh()</a><br />
+                                                                    <a href="../classes/Discord-Repository-AbstractRepository.html#method_fetch" class="">fetch()</a><br />
+                                                                    <a href="../classes/Discord-Repository-AbstractRepository.html#method_count" class="">count()</a><br />
+                                                                    <a href="../classes/Discord-Repository-AbstractRepository.html#method_getIterator" class="">getIterator()</a><br />
+                                                                    <a href="../classes/Discord-Repository-AbstractRepository.html#method_offsetExists" class="">offsetExists()</a><br />
+                                                                    <a href="../classes/Discord-Repository-AbstractRepository.html#method_offsetGet" class="">offsetGet()</a><br />
+                                                                    <a href="../classes/Discord-Repository-AbstractRepository.html#method_offsetSet" class="">offsetSet()</a><br />
+                                                                    <a href="../classes/Discord-Repository-AbstractRepository.html#method_offsetUnset" class="">offsetUnset()</a><br />
+                                                                    <a href="../classes/Discord-Repository-AbstractRepository.html#method_jsonSerialize" class="">jsonSerialize()</a><br />
+                                                                    <a href="../classes/Discord-Repository-AbstractRepository.html#method___debugInfo" class="">__debugInfo()</a><br />
+                                                                    <a href="../classes/Discord-Repository-AbstractRepository.html#method___call" class="">__call()</a><br />
+                                                            </section>
+                            <section class="span4">
+                                                                    <em>No public properties found</em>
+                                                            </section>
+                            <section class="span4">
+                                                                    <em>No constants found</em>
+                                                            </section>
+                        </section>
+                        <section class="row-fluid protected">
+                            <section class="span4">
+                                                                    <a href="../classes/Discord-Repository-AbstractRepository.html#method_replaceWithVariables" class="">replaceWithVariables()</a><br />
+                                                            </section>
+                            <section class="span4">
+                                                                    <a href="../classes/Discord-Repository-AbstractRepository.html#property_discrim" class="">$discrim</a><br />
+                                                                    <a href="../classes/Discord-Repository-AbstractRepository.html#property_http" class="">$http</a><br />
+                                                                    <a href="../classes/Discord-Repository-AbstractRepository.html#property_factory" class="">$factory</a><br />
+                                                                    <a href="../classes/Discord-Repository-AbstractRepository.html#property_collection" class="">$collection</a><br />
+                                                                    <a href="../classes/Discord-Repository-PrivateChannelRepository.html#property_endpoints" class="">$endpoints</a><br />
+                                                                    <a href="../classes/Discord-Repository-PrivateChannelRepository.html#property_part" class="">$part</a><br />
+                                                                    <a href="../classes/Discord-Repository-AbstractRepository.html#property_vars" class="">$vars</a><br />
+                                                            </section>
+                            <section class="span4">
+                                <em>N/A</em>
+                            </section>
+                        </section>
+                        <section class="row-fluid private">
+                            <section class="span4">
+                                                                    <em>No private methods found</em>
+                                                            </section>
+                            <section class="span4">
+                                                                    <em>No private properties found</em>
+                                                            </section>
+                            <section class="span4">
+                                <em>N/A</em>
+                            </section>
+                        </section>
+                    </section>
+                </div>
+                <aside class="span4 detailsbar">
+                                        
+                    
+                    <dl>
+                        <dt>File</dt>
+                            <dd><a href="../files/src-discord-repository-privatechannelrepository.html"><div class="path-wrapper">src/Discord/Repository/PrivateChannelRepository.php</div></a></dd>
+                                                <dt>Package</dt>
+                            <dd><div class="namespace-wrapper">Default</div></dd>
+                                                <dt>Class hierarchy</dt>
+                            <dd class="hierarchy">
+                                                                                                                                                                                                                                                                                                
+                                        <div class="namespace-wrapper"><a href="../classes/Discord-Repository-AbstractRepository.html"><abbr title="\Discord\Repository\AbstractRepository">normal</abbr></a></div>
+                                                                                                    <div class="namespace-wrapper">\Discord\Repository\PrivateChannelRepository</div>
+                            </dd>
+
+                        
+                        
+                        
+                                                                            <dt>See also</dt>
+                                                                                        <dd><a href="\Discord\Repository\Discord\Parts\Channel\Channel"><span class="namespace-wrapper">\Discord\Repository\Discord\Parts\Channel\Channel</span></a></dd>
+                                                                            
+                                                                        </dl>
+                    <h2>Tags</h2>
+                    <table class="table table-condensed">
+                                            <tr><td colspan="2"><em>None found</em></td></tr>
+                                        </table>
+                </aside>
+            </div>
+
+                        
+                                    <a id="properties" name="properties"></a>
+            <div class="row-fluid">
+                <div class="span8 content class">
+                    <h2>Properties</h2>
+                </div>
+                <aside class="span4 detailsbar"></aside>
+            </div>
+
+                                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_discrim" name="property_discrim" class="anchor"></a>
+            <article class="property">
+                <h3 class="protected ">$discrim</h3>
+                <pre class="signature">$discrim : string</pre>
+                <p><em>The discriminator.</em></p>
+                
+
+                                <h4>Type</h4>
+                <a href="../string"><abbr title="string">normal</abbr></a>
+                &mdash; Discriminator.                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/Discord-Repository-AbstractRepository.html"><div class="path-wrapper">\Discord\Repository\AbstractRepository</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_http" name="property_http" class="anchor"></a>
+            <article class="property">
+                <h3 class="protected ">$http</h3>
+                <pre class="signature">$http : \Discord\Http\Http</pre>
+                <p><em>The HTTP client.</em></p>
+                
+
+                                <h4>Type</h4>
+                <a href="../classes/Discord-Http-Http.html"><abbr title="\Discord\Http\Http">normal</abbr></a>
+                &mdash; Client.                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/Discord-Repository-AbstractRepository.html"><div class="path-wrapper">\Discord\Repository\AbstractRepository</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_factory" name="property_factory" class="anchor"></a>
+            <article class="property">
+                <h3 class="protected ">$factory</h3>
+                <pre class="signature">$factory : \Discord\Factory\Factory</pre>
+                <p><em>The parts factory.</em></p>
+                
+
+                                <h4>Type</h4>
+                <a href="../classes/Discord-Factory-Factory.html"><abbr title="\Discord\Factory\Factory">normal</abbr></a>
+                &mdash; Parts factory.                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/Discord-Repository-AbstractRepository.html"><div class="path-wrapper">\Discord\Repository\AbstractRepository</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_collection" name="property_collection" class="anchor"></a>
+            <article class="property">
+                <h3 class="protected ">$collection</h3>
+                <pre class="signature">$collection : \Discord\Helpers\Collection</pre>
+                <p><em>The collection of items.</em></p>
+                
+
+                                <h4>Type</h4>
+                <a href="../classes/Discord-Helpers-Collection.html"><abbr title="\Discord\Helpers\Collection">normal</abbr></a>
+                &mdash; Items.                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/Discord-Repository-AbstractRepository.html"><div class="path-wrapper">\Discord\Repository\AbstractRepository</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_endpoints" name="property_endpoints" class="anchor"></a>
+            <article class="property">
+                <h3 class="protected ">$endpoints</h3>
+                <pre class="signature">$endpoints : array</pre>
+                <p><em>Endpoints for interacting with the Discord servers.</em></p>
+                
+
+                                <h4>Type</h4>
+                <a href="../array"><abbr title="array">normal</abbr></a>
+                &mdash; Endpoints.                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_part" name="property_part" class="anchor"></a>
+            <article class="property">
+                <h3 class="protected ">$part</h3>
+                <pre class="signature">$part : string</pre>
+                <p><em>The part that the repository serves.</em></p>
+                
+
+                                <h4>Type</h4>
+                <a href="../string"><abbr title="string">normal</abbr></a>
+                &mdash; The part that the repository serves.                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_vars" name="property_vars" class="anchor"></a>
+            <article class="property">
+                <h3 class="protected ">$vars</h3>
+                <pre class="signature">$vars : array</pre>
+                <p><em>Variables that are related to the repository.</em></p>
+                
+
+                                <h4>Type</h4>
+                <a href="../array"><abbr title="array">normal</abbr></a>
+                &mdash; Variables.                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/Discord-Repository-AbstractRepository.html"><div class="path-wrapper">\Discord\Repository\AbstractRepository</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                            
+                                    <a id="methods" name="methods"></a>
+            <div class="row-fluid">
+                <div class="span8 content class"><h2>Methods</h2></div>
+                <aside class="span4 detailsbar"></aside>
+            </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method___construct" name="method___construct" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">__construct()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">__construct(\Discord\Http\Http  <span class="argument">$http</span>, \Discord\Factory\Factory  <span class="argument">$factory</span>, array  <span class="argument">$vars = []</span>) : mixed</pre>
+                <p><em>AbstractRepository constructor.</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>\Discord\Http\Http</td>
+                                <td>$http </td>
+                                <td><p>The HTTP client.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>\Discord\Factory\Factory</td>
+                                <td>$factory </td>
+                                <td><p>The parts factory.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>array</td>
+                                <td>$vars </td>
+                                <td><p>An array of variables used for the endpoint.</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    mixed
+                                    
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/Discord-Repository-AbstractRepository.html"><div class="path-wrapper">\Discord\Repository\AbstractRepository</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_freshen" name="method_freshen" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">freshen()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">freshen() : \React\Promise\Promise</pre>
+                <p><em>Freshens the repository collection.</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    \React\Promise\Promise
+                                    
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/Discord-Repository-AbstractRepository.html"><div class="path-wrapper">\Discord\Repository\AbstractRepository</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_create" name="method_create" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">create()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">create(array  <span class="argument">$attributes = []</span>) : \Discord\Parts\Part</pre>
+                <p><em>Builds a new, empty part.</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>array</td>
+                                <td>$attributes </td>
+                                <td><p>The attributes for the new part.</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    \Discord\Parts\Part
+                                            &mdash; <p>The new part.</p>
+                                    
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/Discord-Repository-AbstractRepository.html"><div class="path-wrapper">\Discord\Repository\AbstractRepository</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_save" name="method_save" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">save()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">save(\Discord\Parts\Part  <span class="argument">$part</span>) : \React\Promise\PromiseInterface</pre>
+                <p><em>Attempts to save a part to the Discord servers.</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>\Discord\Parts\Part</td>
+                                <td>$part </td>
+                                <td><p>The part to save.</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    \React\Promise\PromiseInterface
+                                    
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/Discord-Repository-AbstractRepository.html"><div class="path-wrapper">\Discord\Repository\AbstractRepository</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_delete" name="method_delete" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">delete()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">delete(\Discord\Parts\Part  <span class="argument">$part</span>) : \React\Promise\PromiseInterface</pre>
+                <p><em>Attempts to delete a part on the Discord servers.</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>\Discord\Parts\Part</td>
+                                <td>$part </td>
+                                <td><p>The part to delete.</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    \React\Promise\PromiseInterface
+                                    
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/Discord-Repository-AbstractRepository.html"><div class="path-wrapper">\Discord\Repository\AbstractRepository</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_fresh" name="method_fresh" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">fresh()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">fresh(\Discord\Parts\Part  <span class="argument">$part</span>) : \React\Promise\PromiseInterface</pre>
+                <p><em>Returns a part with fresh values.</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>\Discord\Parts\Part</td>
+                                <td>$part </td>
+                                <td><p>The part to get fresh values.</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    \React\Promise\PromiseInterface
+                                    
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/Discord-Repository-AbstractRepository.html"><div class="path-wrapper">\Discord\Repository\AbstractRepository</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_fetch" name="method_fetch" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">fetch()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">fetch(mixed  <span class="argument">$id</span>) : \React\Promise\PromiseInterface</pre>
+                <p><em>Force gets a part from the Discord servers.</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>mixed</td>
+                                <td>$id </td>
+                                <td><p>The ID to search for.</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    \React\Promise\PromiseInterface
+                                    
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/Discord-Repository-AbstractRepository.html"><div class="path-wrapper">\Discord\Repository\AbstractRepository</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_count" name="method_count" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">count()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">count() : int</pre>
+                <p><em>Returns how many items are in the repository.</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    int
+                                            &mdash; <p>Count.</p>
+                                    
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/Discord-Repository-AbstractRepository.html"><div class="path-wrapper">\Discord\Repository\AbstractRepository</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getIterator" name="method_getIterator" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getIterator()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getIterator() : \ArrayIterator</pre>
+                <p><em>Get an iterator for the items.</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    \ArrayIterator
+                                    
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/Discord-Repository-AbstractRepository.html"><div class="path-wrapper">\Discord\Repository\AbstractRepository</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_offsetExists" name="method_offsetExists" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">offsetExists()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">offsetExists(mixed  <span class="argument">$key</span>) : bool</pre>
+                <p><em>Determine if an item exists at an offset.</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>mixed</td>
+                                <td>$key </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    bool
+                                    
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/Discord-Repository-AbstractRepository.html"><div class="path-wrapper">\Discord\Repository\AbstractRepository</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_offsetGet" name="method_offsetGet" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">offsetGet()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">offsetGet(mixed  <span class="argument">$key</span>) : mixed</pre>
+                <p><em>Get an item at a given offset.</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>mixed</td>
+                                <td>$key </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    mixed
+                                    
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/Discord-Repository-AbstractRepository.html"><div class="path-wrapper">\Discord\Repository\AbstractRepository</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_offsetSet" name="method_offsetSet" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">offsetSet()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">offsetSet(mixed  <span class="argument">$key</span>, mixed  <span class="argument">$value</span>) : mixed</pre>
+                <p><em>Set the item at a given offset.</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>mixed</td>
+                                <td>$key </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td>mixed</td>
+                                <td>$value </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    mixed
+                                    
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/Discord-Repository-AbstractRepository.html"><div class="path-wrapper">\Discord\Repository\AbstractRepository</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_offsetUnset" name="method_offsetUnset" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">offsetUnset()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">offsetUnset(string  <span class="argument">$key</span>) : mixed</pre>
+                <p><em>Unset the item at a given offset.</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$key </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    mixed
+                                    
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/Discord-Repository-AbstractRepository.html"><div class="path-wrapper">\Discord\Repository\AbstractRepository</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_jsonSerialize" name="method_jsonSerialize" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">jsonSerialize()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">jsonSerialize() : array</pre>
+                <p><em>Convert the object into something JSON serializable.</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    array
+                                    
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/Discord-Repository-AbstractRepository.html"><div class="path-wrapper">\Discord\Repository\AbstractRepository</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method___debugInfo" name="method___debugInfo" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">__debugInfo()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">__debugInfo() : array</pre>
+                <p><em>Handles debug calls from var_dump and similar functions.</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    array
+                                            &mdash; <p>An array of attributes.</p>
+                                    
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/Discord-Repository-AbstractRepository.html"><div class="path-wrapper">\Discord\Repository\AbstractRepository</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method___call" name="method___call" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">__call()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">__call(string  <span class="argument">$function</span>, array  <span class="argument">$params</span>) : mixed</pre>
+                <p><em>Handles dynamic calls to the repository.</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$function </td>
+                                <td><p>The function called.</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>array</td>
+                                <td>$params </td>
+                                <td><p>Array of parameters.</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    mixed
+                                    
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/Discord-Repository-AbstractRepository.html"><div class="path-wrapper">\Discord\Repository\AbstractRepository</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_replaceWithVariables" name="method_replaceWithVariables" class="anchor"></a>
+            <article class="method">
+                <h3 class="protected ">replaceWithVariables()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">replaceWithVariables(string  <span class="argument">$string</span>) : string</pre>
+                <p><em>Replaces variables in string with syntax :{varname}.</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$string </td>
+                                <td><p>A string with placeholders.</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    string
+                                            &mdash; <p>A string with placeholders replaced.</p>
+                                    
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/Discord-Repository-AbstractRepository.html"><div class="path-wrapper">\Discord\Repository\AbstractRepository</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                                    </div>
+    </section>
+
+    <div id="source-view" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="source-view-label" aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="source-view-label">PrivateChannelRepository.php</h3>
+        </div>
+        <div class="modal-body">
+            <pre data-src="../files/src/Discord/Repository/PrivateChannelRepository.php.txt" class="language-php line-numbers"></pre>
+        </div>
+    </div>
+
+    <footer class="row-fluid">
+        <section class="span10 offset2">
+            <section class="row-fluid">
+                <section class="span10 offset1">
+                    <section class="row-fluid footer-sections">
+                        <section class="span4">
+                                                        <h1><i class="icon-code"></i></h1>
+                            <div>
+                                <ul>
+                                                                            <li><a href="../namespaces/discord.html"><abbr title="\Discord">normal</abbr></a></li>
+                                                                    </ul>
+                            </div>
+                        </section>
+                        <section class="span4">
+                                                        <h1><i class="icon-bar-chart"></i></h1>
+                            <div>
+                                <ul>
+                                    <li><a href="../graphs/class.html">Class Hierarchy Diagram</a></li>
+                                </ul>
+                            </div>
+                        </section>
+                        <section class="span4">
+                                                        <h1><i class="icon-pushpin"></i></h1>
+                            <div>
+                                <ul>
+                                    <li><a href="../reports/errors.html">Errors</a></li>
+                                    <li><a href="../reports/markers.html">Markers</a></li>
+                                </ul>
+                            </div>
+                        </section>
+                    </section>
+                </section>
+            </section>
+            <section class="row-fluid">
+                <section class="span10 offset1">
+                    <hr />
+                    Documentation is powered by <a href="https://www.phpdoc.org/">phpDocumentor </a> and authored
+                    on September 15th, 2020 at 02:39.
+                </section>
+            </section>
+        </section>
+    </footer>
+</div>
+
+</body>
+</html>
