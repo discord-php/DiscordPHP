@@ -1,5 +1,21 @@
 # Changelog
 
+## Version 5.0.1
+
+- Removed option for `bot = false`. This option wouldn't have worked anyway so I am not classing it as a breaking change.
+- Converted all getter and setter functions in parts to protected. Again, shouldn't be a breaking change as these function aren't meant to be used outside of the library.
+- Webhooks:
+    - Added phpdoc to webhook part.
+    - Added webhook type constants
+- Guilds:
+    - Added [new guild attributes.](https://github.com/teamreflex/DiscordPHP/compare/develop#diff-4a22d1c34b22f50e90b71244aac252cdR43-R64)
+- Removed unused attributes cache from part.
+- Removed `password` attribute from `Client`.
+- Added [new user attributes](https://github.com/teamreflex/DiscordPHP/compare/develop#diff-3d3aea0229e2bfd3b386726702468115R29-R36) and flags.
+- Voice client now handles websocket closes better.
+- Client will now load online users regardless of `loadAllMembers` option. This option will now cause the client to initiate guild member chunking offline members.
+
+
 ## Version 5.0.0
 
 First release for many years. Contains many bug fixes and stability patches so this is the most important update since.
