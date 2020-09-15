@@ -26,13 +26,39 @@ use React\Promise\Deferred;
  * @property string $avatar_hash   The avatar hash of the user.
  * @property string $discriminator The discriminator of the user.
  * @property bool   $bot           Whether the user is a bot.
+ * @property bool $system Whether the user is a Discord system user.
+ * @property bool $mfa_enabled Whether MFA is enabled.
+ * @property string $locale User locale.
+ * @property bool $verified Whether the user is verified.
+ * @property string $email User email.
+ * @property int $flags User flags.
+ * @property int $premium_type Type of nitro subscription.
+ * @property int $public_flags Public flags on the user.
  */
 class User extends Part
 {
+    const FLAG_DISCORD_EMPLOYEE = (1 << 0);
+    const FLAG_DISCORD_PARTNER = (1 << 1);
+    const FLAG_HYPESQUAD_EVENTS = (1 << 2);
+    const FLAG_BUG_HUNTER_LEVEL_1 = (1 << 3);
+    const FLAG_HOUSE_BRAVERY = (1 << 6);
+    const FLAG_HOUSE_BRILLIANCE = (1 << 7);
+    const FLAG_HOUSE_BALANCE = (1 << 8);
+    const FLAG_EARLY_SUPPORTER = (1 << 9);
+    const FLAG_TEAM_USER = (1 << 10);
+    const FLAG_SYSTEM = (1 << 12);
+    const FLAG_BUG_HUNTER_LEVEL_2 = (1 << 14);
+    const FLAG_VERIFIED_BOT = (1 << 16);
+    const FLAG_VERIFIED_BOT_DEVELOPER = (1 << 17);
+
+    const PREMIUM_NONE = 0;
+    const PREMIUM_NITRO_CLASSIC = 1;
+    const PREMIUM_NITRO = 2;
+
     /**
      * {@inheritdoc}
      */
-    protected $fillable = ['id', 'username', 'avatar', 'discriminator', 'bot'];
+    protected $fillable = ['id', 'username', 'avatar', 'discriminator', 'bot', 'system', 'mfa_enabled', 'locale', 'verified', 'email', 'flags', 'premium_type', 'public_flags'];
 
     /**
      * Gets the private channel for the user.
@@ -71,8 +97,7 @@ class User extends Part
         $deferred = new Deferred();
 
         $this->getPrivateChannel()->then(function ($channel) use ($message, $tts, $embed, $deferred) {
-            $channel->sendMessage($message, $tts, $embed)->then(function ($response) use ($deferred) {
-                $message = $this->factory->create(Message::class, $response, true);
+            $channel->sendMessage($message, $tts, $embed)->then(function ($message) use ($deferred) {
                 $deferred->resolve($message);
             }, \React\Partial\bind([$deferred, 'reject']));
         }, \React\Partial\bind([$deferred, 'reject']));
@@ -125,7 +150,7 @@ class User extends Part
      *
      * @return string The client avatar's hash.
      */
-    public function getAvatarHashAttribute()
+    protected function getAvatarHashAttribute()
     {
         return $this->attributes['avatar'];
     }

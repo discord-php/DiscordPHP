@@ -80,7 +80,7 @@ class Discord
      *
      * @var string Version.
      */
-    const VERSION = 'v5.0.0';
+    const VERSION = 'v5.0.1';
 
     /**
      * The logger.
@@ -306,7 +306,7 @@ class Discord
         $this->options = $options;
 
         $this->http = new Http(
-            ($options['bot'] ? 'Bot ' : '').$this->token,
+            'Bot '.$this->token,
             self::VERSION,
             new Guzzle($this->loop)
         );
@@ -1047,6 +1047,7 @@ class Discord
 
             if (is_null($monolog)) {
                 $monolog = new Monolog('Voice-'.$channel->guild_id);
+                $monolog->pushHandler(new StreamHandler('php://stdout', $this->options['loggerLevel']));
             }
 
             $logger = new Logger($monolog, $this->options['logging']);
@@ -1154,7 +1155,6 @@ class Discord
             ->setAllowedTypes('token', 'string')
             ->setDefined([
                 'token',
-                'bot',
                 'shardId',
                 'shardCount',
                 'loop',
@@ -1170,7 +1170,6 @@ class Discord
             ])
             ->setDefaults([
                 'loop' => LoopFactory::create(),
-                'bot' => true,
                 'logger' => null,
                 'loggerLevel' => Monolog::INFO,
                 'logging' => true,
@@ -1181,7 +1180,6 @@ class Discord
                 'retrieveBans' => false,
                 'intents' => false,
             ])
-            ->setAllowedTypes('bot', 'bool')
             ->setAllowedTypes('loop', LoopInterface::class)
             ->setAllowedTypes('logging', 'bool')
             ->setAllowedTypes('loadAllMembers', 'bool')

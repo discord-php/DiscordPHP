@@ -12,7 +12,6 @@
 namespace Discord\Parts\Embed;
 
 use Carbon\Carbon;
-use Discord\Helpers\Collection;
 use Discord\Parts\Part;
 
 /**
@@ -30,7 +29,7 @@ use Discord\Parts\Part;
  * @property Video             $video       The video of the embed.
  * @property array             $provider    The provider of the embed.
  * @property Author            $author      The author of the embed.
- * @property Collection[Field] $fields      A collection of embed fields.
+ * @property Field[]           $fields      A collection of embed fields.
  */
 class Embed extends Part
 {
@@ -44,7 +43,7 @@ class Embed extends Part
      *
      * @return Carbon The timestamp attribute.
      */
-    public function getTimestampAttribute()
+    protected function getTimestampAttribute()
     {
         if (! array_key_exists('timestamp', $this->attributes)) {
             return Carbon::now();
@@ -60,7 +59,7 @@ class Embed extends Part
      *
      * @return Footer The footer attribute.
      */
-    public function getFooterAttribute()
+    protected function getFooterAttribute()
     {
         return $this->attributeHelper('footer', Footer::class);
     }
@@ -70,7 +69,7 @@ class Embed extends Part
      *
      * @return Image The image attribute.
      */
-    public function getImageAttribute()
+    protected function getImageAttribute()
     {
         return $this->attributeHelper('image', Image::class);
     }
@@ -80,7 +79,7 @@ class Embed extends Part
      *
      * @return Thumbnail The thumbnail attribute.
      */
-    public function getThumbnailAttribute()
+    protected function getThumbnailAttribute()
     {
         return $this->attributeHelper('thumbnail', Image::class);
     }
@@ -90,7 +89,7 @@ class Embed extends Part
      *
      * @return Video The video attribute.
      */
-    public function getVideoAttribute()
+    protected function getVideoAttribute()
     {
         return $this->attributeHelper('video', Video::class);
     }
@@ -100,7 +99,7 @@ class Embed extends Part
      *
      * @return Author The author attribute.
      */
-    public function getAuthorAttribute()
+    protected function getAuthorAttribute()
     {
         return $this->attributeHelper('author', Author::class);
     }
@@ -110,7 +109,7 @@ class Embed extends Part
      *
      * @return array[Field] The fields attribute.
      */
-    public function getFieldsAttribute()
+    protected function getFieldsAttribute()
     {
         $fields = [];
 
@@ -137,7 +136,7 @@ class Embed extends Part
      *
      * @return mixed
      */
-    protected function attributeHelper($key, $class)
+    private function attributeHelper($key, $class)
     {
         if (! array_key_exists($key, $this->attributes)) {
             return $this->factory->create($class, []);

@@ -62,13 +62,6 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
     protected $attributes = [];
 
     /**
-     * The parts attributes cache.
-     *
-     * @var array Attributes which are cached such as parts that are retrieved over REST.
-     */
-    protected $attributes_cache = [];
-
-    /**
      * Attributes that are hidden from debug info.
      *
      * @var array Attributes that are hidden from public.
@@ -158,18 +151,6 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
     }
 
     /**
-     * Clears the attribute cache.
-     *
-     * @return bool Whether the attempt to clear the cache succeeded or failed.
-     */
-    public function clearCache()
-    {
-        $this->attributes_cache = [];
-
-        return true;
-    }
-
-    /**
      * Checks if there is a mutator present.
      *
      * @param string $key  The attribute name to check.
@@ -177,7 +158,7 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
      *
      * @return mixed Either a string if it is callable or false.
      */
-    public function checkForMutator($key, $type)
+    private function checkForMutator($key, $type)
     {
         $str = $type.Str::studly($key).'Attribute';
 
@@ -198,7 +179,7 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
     public function replaceWithVariables($string)
     {
         $matches = null;
-        $matcher = preg_match_all($this->regex, $string, $matches);
+        preg_match_all($this->regex, $string, $matches);
 
         $original = $matches[0];
         $vars = $matches[1];
@@ -213,42 +194,13 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
     }
 
     /**
-     * Replaces variables in one of the URIs.
-     *
-     * @param string $key    A key from URIs.
-     * @param array  $params Parameters to replace placeholders with.
-     *
-     * @return string A string with placeholders replaced.
-     *
-     * @see self::$uris The URIs that can be replaced.
-     */
-    public function uriReplace($key, $params)
-    {
-        $string = $this->uris[$key];
-
-        $matches = null;
-        $matcher = preg_match_all($this->regex, $string, $matches);
-
-        $original = $matches[0];
-        $vars = $matches[1];
-
-        foreach ($vars as $key => $variable) {
-            if ($attribute = $params[$variable]) {
-                $string = str_replace($original[$key], $attribute, $string);
-            }
-        }
-
-        return $string;
-    }
-
-    /**
      * Gets an attribute on the part.
      *
      * @param string $key The key to the attribute.
      *
      * @return mixed Either the attribute if it exists or void.
      */
-    public function getAttribute($key)
+    private function getAttribute($key)
     {
         if (isset($this->repositories[$key])) {
             if (! isset($this->repositories_cache[$key])) {
@@ -277,7 +229,7 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
      * @param string $key   The key to the attribute.
      * @param mixed  $value The value of the attribute.
      */
-    public function setAttribute($key, $value)
+    private function setAttribute($key, $value)
     {
         if ($str = $this->checkForMutator($key, 'set')) {
             $this->{$str}($value);
@@ -288,29 +240,6 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
         if (array_search($key, $this->fillable) !== false) {
             $this->attributes[$key] = $value;
         }
-    }
-
-    /**
-     * Sets a cache attribute on the part.
-     *
-     * @param string $key   The cache key.
-     * @param mixed  $value The cache value.
-     */
-    public function setCache($key, $value)
-    {
-        $this->attributes_cache[$key] = $value;
-    }
-
-    /**
-     * Checks if the cache has a specific key.
-     *
-     * @param string $key The key to check for.
-     *
-     * @return bool Whether the cache has the key.
-     */
-    public function cacheHas($key)
-    {
-        return isset($this->attributes_cache[$key]);
     }
 
     /**
@@ -453,6 +382,26 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
     }
 
     /**
+     * Returns the attributes needed to create.
+     * 
+     * @return array
+     */
+    protected function getCreatableAttributes()
+    {
+        return [];
+    }
+
+    /**
+     * Returns the updatable attributes.
+     * 
+     * @return array
+     */
+    protected function getUpdatableAttributes()
+    {
+        return [];
+    }
+
+    /**
      * Converts the part to a string.
      *
      * @return string A JSON string of attributes.
@@ -495,7 +444,6 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
      *
      * @param string $key   The attributes key.
      * @param mixed  $value The attributes value.
-     *
      *
      * @see self::setAttribute() This function forwards onto setAttribute.
      */

@@ -39,7 +39,7 @@ class Role extends Part
     /**
      * {@inheritdoc}
      */
-    public function afterConstruct()
+    protected function afterConstruct()
     {
         if (! isset($this->attributes['permissions'])) {
             $this->permissions = $this->factory->create(RolePermission::class);
@@ -51,7 +51,7 @@ class Role extends Part
      *
      * @return Guild The guild attribute.
      */
-    public function getGuildAttribute()
+    protected function getGuildAttribute()
     {
         return $this->discord->guilds->get('id', $this->guild_id);
     }
@@ -61,7 +61,7 @@ class Role extends Part
      *
      * @param RolePermission|int $permission The permissions to set.
      */
-    public function setPermissionsAttribute($permission)
+    protected function setPermissionsAttribute($permission)
     {
         if (! ($permission instanceof RolePermission)) {
             $permission = $this->factory->create(RolePermission::class, ['bitwise' => $permission], true);
@@ -84,14 +84,14 @@ class Role extends Part
         $deferred = new Deferred();
 
         if (is_null($red)) {
-            $this->setAttribute('color', 0);
+            $this->color = 0;
 
             $deferred->resolve();
 
             return $deferred->promise();
         }
 
-        $this->setAttribute('color', $red * 16 ** 4 + $green * 16 ** 2 + $blue);
+        $this->color = ($red * 16 ** 4 + $green * 16 ** 2 + $blue);
 
         $deferred->resolve();
 
@@ -101,7 +101,7 @@ class Role extends Part
     /**
      * {@inheritdoc}
      */
-    public function getCreatableAttributes()
+    protected function getCreatableAttributes()
     {
         return [];
     }
@@ -109,7 +109,7 @@ class Role extends Part
     /**
      * {@inheritdoc}
      */
-    public function getUpdatableAttributes()
+    protected function getUpdatableAttributes()
     {
         return [
             'name' => $this->name,

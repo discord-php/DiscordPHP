@@ -65,7 +65,7 @@ class Activity extends Part
      *
      * @return \Carbon\Carbon
      */
-    public function getCreatedAtAttribute()
+    protected function getCreatedAtAttribute()
     {
         if (isset($this->attributes['created_at'])) {
             return Carbon::createFromTimestamp($this->attributes['created_at']);
@@ -77,7 +77,7 @@ class Activity extends Part
      *
      * @return \Discord\Parts\Guild\Emoji
      */
-    public function getEmojiAttribute()
+    protected function getEmojiAttribute()
     {
         if (isset($this->attributes['emoji'])) {
             return $this->factory->create(Emoji::class, $this->attributes['emoji'], true);

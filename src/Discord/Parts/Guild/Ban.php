@@ -33,7 +33,7 @@ class Ban extends Part
      *
      * @return string
      */
-    public function getUserIdAttribute()
+    protected function getUserIdAttribute()
     {
         if (isset($this->attributes['user']->id)) {
             return $this->attributes['user']->id;
@@ -45,7 +45,7 @@ class Ban extends Part
      *
      * @return \Discord\Parts\Guild\Guild
      */
-    public function getGuildAttribute()
+    protected function getGuildAttribute()
     {
         return $this->discord->guilds->get('id', $this->guild_id);
     }
@@ -55,20 +55,21 @@ class Ban extends Part
      *
      * @return \Discord\Parts\User\User
      */
-    public function getUserAttribute()
+    protected function getUserAttribute()
     {
-        if (isset($this->attributes['user']->id) && $user = $this->discord->users->get('id', $this->attributes['user']->id)) {
+        if (! isset($this->attributes['user'])) return;
+
+        if ($user = $this->discord->users->get('id', $this->attributes['user']->id)) {
             return $user;
         }
-        if (isset($this->attributes['user']) && $user = $this->factory->create(User::class, $this->attributes['user'], true)) {
-            return $user;
-        }
+
+        return $this->factory->part(User::class, $this->attributes['user'], true);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getCreatableAttributes()
+    protected function getCreatableAttributes()
     {
         return [];
     }
@@ -76,7 +77,7 @@ class Ban extends Part
     /**
      * {@inheritdoc}
      */
-    public function getUpdatableAttributes()
+    protected function getUpdatableAttributes()
     {
         return [];
     }

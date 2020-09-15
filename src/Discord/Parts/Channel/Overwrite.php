@@ -61,20 +61,4 @@ class Overwrite extends Part
 
         $this->attributes['deny'] = $deny;
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getCreatableAttributes()
-    {
-        return [];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getUpdatableAttributes()
-    {
-        return [];
-    }
 }

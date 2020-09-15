@@ -12,6 +12,7 @@
 namespace Discord\Parts\OAuth;
 
 use Discord\Parts\Part;
+use Discord\Parts\Permissions\Permission;
 use Discord\Parts\User\User;
 
 /**
@@ -38,7 +39,7 @@ class Application extends Part
      *
      * @return User Owner of the application.
      */
-    public function getOwnerAttribute()
+    protected function getOwnerAttribute()
     {
         return $this->factory->create(User::class, $this->attributes['owner'], true);
     }
@@ -46,12 +47,16 @@ class Application extends Part
     /**
      * Returns the invite URL for the application.
      *
-     * @param int $permissions Permissions to set.
+     * @param Permission|int $permissions Permissions to set.
      *
      * @return string Invite URL.
      */
     public function getInviteURLAttribute($permissions = 0)
     {
+        if ($permissions instanceof Permission) {
+            $permissions = $permissions->bitwise;
+        }
+        
         return "https://discordapp.com/oauth2/authorize?client_id={$this->id}&scope=bot&permissions={$permissions}";
     }
 }

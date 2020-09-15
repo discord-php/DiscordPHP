@@ -109,7 +109,7 @@ class Channel extends Part
     /**
      * {@inheritdoc}
      */
-    public function afterConstruct()
+    protected function afterConstruct()
     {
         if (! array_key_exists('bitrate', $this->attributes) && $this->type != self::TYPE_TEXT) {
             $this->bitrate = 64000;
@@ -121,7 +121,7 @@ class Channel extends Part
      *
      * @return bool Whether the channel is private.
      */
-    public function getIsPrivateAttribute()
+    protected function getIsPrivateAttribute()
     {
         return array_search($this->type, [self::TYPE_DM, self::TYPE_GROUP]) !== false;
     }
@@ -131,7 +131,7 @@ class Channel extends Part
      *
      * @return User The recipient.
      */
-    public function getRecipientAttribute()
+    protected function getRecipientAttribute()
     {
         return $this->recipients->first();
     }
@@ -141,7 +141,7 @@ class Channel extends Part
      *
      * @return Collection A collection of recepients.
      */
-    public function getRecipientsAttribute()
+    protected function getRecipientsAttribute()
     {
         $recipients = new Collection();
 
@@ -152,6 +152,54 @@ class Channel extends Part
         }
 
         return $recipients;
+    }
+    
+    /**
+     * Returns the guild attribute.
+     *
+     * @return Guild The guild attribute.
+     */
+    protected function getGuildAttribute()
+    {
+        return $this->discord->guilds->get('id', $this->guild_id);
+    }
+
+    /**
+     * Gets the last pinned message timestamp.
+     *
+     * @return Carbon
+     */
+    protected function getLastPinTimestampAttribute()
+    {
+        if (isset($this->attributes['last_pin_timestamp'])) {
+            return Carbon::parse($this->attributes['last_pin_timestamp']);
+        }
+    }
+
+        /**
+     * Returns the channels pinned messages.
+     *
+     * @return \React\Promise\Promise
+     */
+    protected function getPinnedMessages()
+    {
+        $deferred = new Deferred();
+
+        $this->http->get($this->replaceWithVariables('channels/:id/pins'))->then(
+            function ($response) use ($deferred) {
+                $messages = new Collection();
+
+                foreach ($response as $message) {
+                    $message = $this->factory->create(Message::class, $message, true);
+                    $messages->push($message);
+                }
+
+                $deferred->resolve($messages);
+            },
+            \React\Partial\bind([$deferred, 'reject'])
+        );
+
+        return $deferred->promise();
     }
 
     /**
@@ -280,28 +328,6 @@ class Channel extends Part
         // was moved successfully.
 
         return $deferred->promise();
-    }
-
-    /**
-     * Returns the guild attribute.
-     *
-     * @return Guild The guild attribute.
-     */
-    public function getGuildAttribute()
-    {
-        return $this->discord->guilds->get('id', $this->guild_id);
-    }
-
-    /**
-     * Gets the last pinned message timestamp.
-     *
-     * @return Carbon
-     */
-    public function getLastPinTimestampAttribute()
-    {
-        if (isset($this->attributes['last_pin_timestamp'])) {
-            return Carbon::parse($this->attributes['last_pin_timestamp']);
-        }
     }
 
     /**
@@ -502,32 +528,6 @@ class Channel extends Part
     }
 
     /**
-     * Returns the channels pinned messages.
-     *
-     * @return \React\Promise\Promise
-     */
-    public function getPinnedMessages()
-    {
-        $deferred = new Deferred();
-
-        $this->http->get($this->replaceWithVariables('channels/:id/pins'))->then(
-            function ($response) use ($deferred) {
-                $messages = new Collection();
-
-                foreach ($response as $message) {
-                    $message = $this->factory->create(Message::class, $message, true);
-                    $messages->push($message);
-                }
-
-                $deferred->resolve($messages);
-            },
-            \React\Partial\bind([$deferred, 'reject'])
-        );
-
-        return $deferred->promise();
-    }
-
-    /**
      * Returns the channels invites.
      *
      * @return \React\Promise\Promise
@@ -555,8 +555,10 @@ class Channel extends Part
 
     /**
      * Sets the permission overwrites attribute.
+     * 
+     * @param array $overwrites
      */
-    public function setPermissionOverwritesAttribute($overwrites)
+    protected function setPermissionOverwritesAttribute($overwrites)
     {
         $this->attributes['permission_overwrites'] = $overwrites;
 
@@ -747,11 +749,9 @@ class Channel extends Part
     }
 
     /**
-     * Returns the attributes needed to create.
-     *
-     * @return array The attributes that will be sent when this part is created.
+     * {@inheritdoc}
      */
-    public function getCreatableAttributes()
+    protected function getCreatableAttributes()
     {
         return [
             'name' => $this->name,
@@ -762,11 +762,9 @@ class Channel extends Part
     }
 
     /**
-     * Returns the attributes needed to edit.
-     *
-     * @return array The attributes that will be sent when this part is updated.
+     * {@inheritdoc}
      */
-    public function getUpdatableAttributes()
+    protected function getUpdatableAttributes()
     {
         return [
             'name' => $this->name,

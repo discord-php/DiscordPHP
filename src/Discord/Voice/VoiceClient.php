@@ -530,10 +530,7 @@ class VoiceClient extends EventEmitter
             $this->emit('ws-error', [$e]);
         });
 
-        $ws->on('close', function ($op, $reason) {
-            $this->logger->warning('voice websocket closed', ['op' => $op, 'reason' => $reason]);
-            $this->emit('ws-close', [$op, $reason, $this]);
-        });
+        $ws->on('close', [$this, 'handleWebSocketClose']);
 
         if (! $this->sentLoginFrame) {
             $payload = [
@@ -562,6 +559,50 @@ class VoiceClient extends EventEmitter
     {
         $this->logger->error('error with voice websocket', ['e' => $e->getMessage()]);
         $this->emit('error', [$e]);
+    }
+
+    /**
+     * Handles a WebSocket close.
+     * 
+     * @param int $op
+     * @param string $reason
+     */
+    public function handleWebSocketClose($op, $reason)
+    {
+        $this->logger->warning('voice websocket closed', ['op' => $op, 'reason' => $reason]);
+        $this->emit('ws-close', [$op, $reason, $this]);
+
+        // Cancel heartbeat timers
+        if (! is_null($this->heartbeat)) {
+            $this->loop->cancelTimer($this->heartbeat);
+            $this->heartbeat = null;
+        }
+
+        if (! is_null($this->udpHeartbeat)) {
+            $this->loop->cancelTimer($this->udpHeartbeat);
+            $this->udpHeartbeat = null;
+        }
+
+        // Close UDP socket.
+        if ($this->client) {
+            $this->client->close();
+        }
+        
+        // Don't reconnect on a critical opcode.
+        if (in_array($op, Op::getCriticalVoiceCloseCodes())) {
+            $this->logger->warning('received critical opcode - not reconnecting', ['op' => $op, 'reason' => $reason]);
+            $this->emit('close');
+        } else {
+            $this->logger->warning('reconnecting in 2 seconds');
+
+            // Retry connect after 2 seconds
+            $this->loop->addTimer(2, function () {
+                $this->reconnecting = true;
+                $this->sentLoginFrame = false;
+
+                $this->initSockets();
+            });
+        }
     }
 
     /**
