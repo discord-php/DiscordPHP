@@ -386,7 +386,7 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
      * 
      * @return array
      */
-    protected function getCreatableAttributes()
+    public function getCreatableAttributes()
     {
         return [];
     }
@@ -396,7 +396,7 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
      * 
      * @return array
      */
-    protected function getUpdatableAttributes()
+    public function getUpdatableAttributes()
     {
         return [];
     }

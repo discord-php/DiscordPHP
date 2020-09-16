@@ -69,7 +69,7 @@ class Ban extends Part
     /**
      * {@inheritdoc}
      */
-    protected function getCreatableAttributes()
+    public function getCreatableAttributes()
     {
         return [];
     }
@@ -77,7 +77,7 @@ class Ban extends Part
     /**
      * {@inheritdoc}
      */
-    protected function getUpdatableAttributes()
+    public function getUpdatableAttributes()
     {
         return [];
     }

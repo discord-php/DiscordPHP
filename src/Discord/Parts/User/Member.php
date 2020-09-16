@@ -335,7 +335,7 @@ class Member extends Part
     /**
      * {@inheritdoc}
      */
-    protected function getUpdatableAttributes()
+    public function getUpdatableAttributes()
     {
         return [
             'roles' => array_values($this->attributes['roles']),

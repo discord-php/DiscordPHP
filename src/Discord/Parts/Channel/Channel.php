@@ -751,25 +751,32 @@ class Channel extends Part
     /**
      * {@inheritdoc}
      */
-    protected function getCreatableAttributes()
+    public function getCreatableAttributes()
     {
         return [
             'name' => $this->name,
             'type' => $this->getChannelType(),
             'bitrate' => $this->bitrate,
             'permission_overwrites' => $this->permission_overwrites,
+            'topic' => $this->topic,
+            'user_limit' => $this->user_limit,
+            'rate_limit_per_user' => $this->rate_limit_per_user,
+            'position' => $this->position,
+            'parent_id' => $this->parent_id,
+            'nsfw' => $this->nsfw,
         ];
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function getUpdatableAttributes()
+    public function getUpdatableAttributes()
     {
         return [
             'name' => $this->name,
             'topic' => $this->topic,
             'position' => $this->position,
+            'parent_id' => $this->parent_id,
         ];
     }
 

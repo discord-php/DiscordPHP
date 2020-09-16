@@ -151,7 +151,7 @@ class Invite extends Part
     /**
      * {@inheritdoc}
      */
-    protected function getCreatableAttributes()
+    public function getCreatableAttributes()
     {
         return [];
     }

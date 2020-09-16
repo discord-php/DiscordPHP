@@ -86,7 +86,7 @@ class Webhook extends Part
     /**
      * {@inheritdoc}
      */
-    protected function getUpdatableAttributes()
+    public function getUpdatableAttributes()
     {
         return [
             'name' => $this->name,
@@ -98,7 +98,7 @@ class Webhook extends Part
     /**
      * {@inheritdoc}
      */
-    protected function getCreatableAttributes()
+    public function getCreatableAttributes()
     {
         return [
             'name' => $this->name,
