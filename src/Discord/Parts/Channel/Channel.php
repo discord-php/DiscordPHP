@@ -266,6 +266,7 @@ class Channel extends Part
         }
 
         $payload = [
+            'id' => $part->id,
             'type' => $type,
             'allow' => (string) $overwrite->allow->bitwise,
             'deny' => (string) $overwrite->deny->bitwise,
