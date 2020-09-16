@@ -169,16 +169,10 @@ abstract class AbstractRepository implements RepositoryInterface, ArrayAccess, C
             $attributes
         )->then(function ($response) use ($deferred, &$part, $method) {
             $part->fill((array) $response);
-
-            if ($index = $this->getIndex('id', $part->id)) {
-                $this->collection[$index] = $part;
-            } else {
-                $this->collection->push($part);
-            }
-
             $part->created = true;
             $part->deleted = false;
 
+            $this->collection->push($part);
             $deferred->resolve($part);
         }, function ($e) use ($deferred) {
             $deferred->reject($e);
