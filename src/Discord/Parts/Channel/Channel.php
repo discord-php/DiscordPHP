@@ -237,8 +237,6 @@ class Channel extends Part
             'deny' => $denyPart->bitwise,
         ]);
 
-        var_dump($overwrite);
-
         $this->setOverwrite($part, $overwrite)->then(
             \React\Partial\bind_right($this->resolve, $deferred),
             \React\Partial\bind_right($this->reject, $deferred)
