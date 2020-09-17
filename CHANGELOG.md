@@ -1,5 +1,13 @@
 # Changelog
 
+## Version 5.0.2
+
+- Fixed updating and creating parts.
+- Fixed repository saving.
+- Removed debugging statement.
+- Removed `bind_right` statement that was left over.
+- Fixed setting overwrites.
+
 ## Version 5.0.1
 
 - Removed option for `bot = false`. This option wouldn't have worked anyway so I am not classing it as a breaking change.
