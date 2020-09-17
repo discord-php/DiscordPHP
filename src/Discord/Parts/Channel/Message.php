@@ -507,7 +507,7 @@ class Message extends Part
     /**
      * {@inheritdoc}
      */
-    protected function getCreatableAttributes()
+    public function getCreatableAttributes()
     {
         return [];
     }
@@ -515,7 +515,7 @@ class Message extends Part
     /**
      * {@inheritdoc}
      */
-    protected function getUpdatableAttributes()
+    public function getUpdatableAttributes()
     {
         return [
             'content' => $this->content,

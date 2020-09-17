@@ -237,11 +237,9 @@ class Channel extends Part
             'deny' => $denyPart->bitwise,
         ]);
 
-        var_dump($overwrite);
-
         $this->setOverwrite($part, $overwrite)->then(
-            \React\Partial\bind_right($this->resolve, $deferred),
-            \React\Partial\bind_right($this->reject, $deferred)
+            \React\Partial\bind([$deferred, 'resolve']),
+            \React\Partial\bind([$deferred, 'reject'])
         );
 
         return $deferred->promise();
@@ -268,6 +266,7 @@ class Channel extends Part
         }
 
         $payload = [
+            'id' => $part->id,
             'type' => $type,
             'allow' => (string) $overwrite->allow->bitwise,
             'deny' => (string) $overwrite->deny->bitwise,
@@ -751,25 +750,32 @@ class Channel extends Part
     /**
      * {@inheritdoc}
      */
-    protected function getCreatableAttributes()
+    public function getCreatableAttributes()
     {
         return [
             'name' => $this->name,
             'type' => $this->getChannelType(),
             'bitrate' => $this->bitrate,
             'permission_overwrites' => $this->permission_overwrites,
+            'topic' => $this->topic,
+            'user_limit' => $this->user_limit,
+            'rate_limit_per_user' => $this->rate_limit_per_user,
+            'position' => $this->position,
+            'parent_id' => $this->parent_id,
+            'nsfw' => $this->nsfw,
         ];
     }
 
     /**
      * {@inheritdoc}
      */
-    protected function getUpdatableAttributes()
+    public function getUpdatableAttributes()
     {
         return [
             'name' => $this->name,
             'topic' => $this->topic,
             'position' => $this->position,
+            'parent_id' => $this->parent_id,
         ];
     }
 

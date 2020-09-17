@@ -140,7 +140,7 @@ class Client extends Part
     /**
      * {@inheritdoc}
      */
-    protected function getUpdatableAttributes()
+    public function getUpdatableAttributes()
     {
         $attributes = [
             'username' => $this->attributes['username'],
