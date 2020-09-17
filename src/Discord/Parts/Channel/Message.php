@@ -359,6 +359,8 @@ class Message extends Part
             $emoticon = $emoticon->toReactionString();
         }
 
+        $emoticon = urlencode($emoticon);
+
         $this->http->put(
             "channels/{$this->channel->id}/messages/{$this->id}/reactions/{$emoticon}/@me"
         )->then(
