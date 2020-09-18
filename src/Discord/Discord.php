@@ -947,6 +947,7 @@ class Discord
      * Updates the clients presence.
      *
      * @param Activity $activity The current client activity, or null.
+     *                           Note: The activity type _cannot_ be custom, and the only valid fields are `name`, `type` and `url`.
      * @param bool     $idle     Whether the client is idle.
      * @param string   $status   The current status of the client.
      *                           Must be one of the following:
@@ -959,6 +960,12 @@ class Discord
 
         if (! is_null($activity)) {
             $activity = $activity->getRawAttributes();
+
+            if (! in_array($activity['type'], [Activity::TYPE_PLAYING, Activity::TYPE_STREAMING, Activity::TYPE_LISTENING])) {
+                throw new \Exception("The given activity type ({$activity['type']}) is invalid.");
+
+                return;
+            }
         }
 
         if (! array_search($status, ['online', 'dnd', 'idle', 'invisible', 'offline'])) {
