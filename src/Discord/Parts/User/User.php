@@ -135,7 +135,9 @@ class User extends Part
     public function getAvatarAttribute($format = 'jpg', $size = 1024)
     {
         if (empty($this->attributes['avatar'])) {
-            return;
+            $avatarDiscrim = (int) $this->discriminator % 5;
+            
+            return "https://cdn.discordapp.com/embed/avatars/{$avatarDiscrim}.png?size={$size}";
         }
 
         if (false === array_search($format, ['png', 'jpg', 'webp'])) {
