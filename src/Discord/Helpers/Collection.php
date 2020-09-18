@@ -87,12 +87,12 @@ class Collection implements ArrayAccess, Serializable, JsonSerializable, Iterato
      * @param mixed $offset
      * @param mixed $value
      */
-    public function set($offest, $value)
+    public function set($offset, $value)
     {
         // Don't insert elements that are not of type class.
         if (! is_null($this->class) && ! ($value instanceof $this->class)) return;
 
-        $this->offsetSet($offest, $value);
+        $this->offsetSet($offset, $value);
     }
 
     /**
