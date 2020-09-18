@@ -129,6 +129,24 @@ class Embed extends Part
     }
 
     /**
+     * Sets the fields attribute.
+     * 
+     * @param array[Field] $fields
+     */
+    protected function setFieldsAttribute($fields)
+    {
+        $this->attributes['fields'] = [];
+
+        foreach ($fields as $field) {
+            if ($field instanceof Field) {
+                $field = $field->getRawAttributes();
+            }
+
+            $this->attributes['fields'][] = $field;
+        }
+    }
+
+    /**
      * Helps with getting embed attributes.
      *
      * @param string $key   The attribute key.
