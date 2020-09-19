@@ -170,19 +170,18 @@ class Member extends Part
      *
      * @param Role|int $role The role to add to the member.
      *
-     * @return bool returns whether role was added successfully
+     * @return \React\Promise\Promise
      */
     public function addRole($role)
     {
-
+        $deferred = new Deferred();
         if ($role instanceof Role) {
             $role = $role->id;
         }
 
         // We don't want a double up on roles
         if (false !== array_search($role, (array) $this->attributes['roles'])) {
-
-            return false;
+            return $deferred->reject();
         }
 
         $this->attributes['roles'][] = $role;
@@ -190,13 +189,11 @@ class Member extends Part
 
         $this->http->put(
             "guilds/{$this->guild_id}/members/{$this->id}/roles/{$role}"
-        )->then(function ()  {
-        });
+        )->then(function ($resp) use ($deferred) {
+           $deferred->resolve($resp);
+        }, \React\Partial\bind([$deferred, 'reject']));
 
-        // At the moment we are unable to check if the member
-        // was moved successfully.
-
-        return true;
+        return $deferred->promise();
     }
 
     /**
@@ -208,6 +205,7 @@ class Member extends Part
      */
     public function removeRole($role)
     {
+        $deferred = new Deferred();
 
         if ($role instanceof Role) {
             $role = $role->id;
@@ -219,14 +217,14 @@ class Member extends Part
 
             $this->http->delete(
                 "guilds/{$this->guild_id}/members/{$this->id}/roles/{$role}"
-            )->then(function () {
-            });
-
+            )->then(function ($resp) use ($deferred) {
+           $deferred->resolve($resp);
+        }, \React\Partial\bind([$deferred, 'reject']));
             // At the moment we are unable to check if the member
             // was moved successfully.
-            return true;
+            return  $deferred->promise();
         } 
-        return false;
+        return  $deferred->reject();
     }
 
     /**
