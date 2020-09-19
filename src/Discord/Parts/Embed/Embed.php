@@ -147,6 +147,20 @@ class Embed extends Part
     }
 
     /**
+     * Adds a field to the embed.
+     * 
+     * @param Field $field
+     */
+    public function addField(Field $field)
+    {
+        if (! isset($this->attributes['fields'])) {
+            $this->attributes['fields'] = [];
+        }
+        
+        $this->attributes['fields'][] = $field->getRawAttributes();
+    }
+
+    /**
      * Helps with getting embed attributes.
      *
      * @param string $key   The attribute key.
