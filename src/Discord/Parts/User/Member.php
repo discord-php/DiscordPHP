@@ -170,7 +170,7 @@ class Member extends Part
      *
      * @param Role|int $role The role to add to the member.
      *
-     * @return bool
+     * @return bool returns whether role was added successfully
      */
     public function addRole($role)
     {
@@ -182,7 +182,7 @@ class Member extends Part
         // We don't want a double up on roles
         if (false !== array_search($role, (array) $this->attributes['roles'])) {
 
-            return true;
+            return false;
         }
 
         $this->attributes['roles'][] = $role;
@@ -191,7 +191,6 @@ class Member extends Part
         $this->http->put(
             "guilds/{$this->guild_id}/members/{$this->id}/roles/{$role}"
         )->then(function ()  {
-            return true;
         });
 
         // At the moment we are unable to check if the member
@@ -205,7 +204,7 @@ class Member extends Part
      *
      * @param Role|int $role The role to remove from the member.
      *
-     * @return true
+     * @return bool returns whether role was removed successfully
      */
     public function removeRole($role)
     {
@@ -221,14 +220,13 @@ class Member extends Part
             $this->http->delete(
                 "guilds/{$this->guild_id}/members/{$this->id}/roles/{$role}"
             )->then(function () {
-                return true;
             });
 
             // At the moment we are unable to check if the member
             // was moved successfully.
-
-        }
-        return true;
+            return true;
+        } 
+        return false;
     }
 
     /**
