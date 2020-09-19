@@ -181,7 +181,8 @@ class Member extends Part
 
         // We don't want a double up on roles
         if (false !== array_search($role, (array) $this->attributes['roles'])) {
-            return $deferred->reject();
+            $deferred->reject();
+            return $deferred->promise();
         }
 
         $this->attributes['roles'][] = $role;
@@ -190,7 +191,7 @@ class Member extends Part
         $this->http->put(
             "guilds/{$this->guild_id}/members/{$this->id}/roles/{$role}"
         )->then(function ($resp) use ($deferred) {
-           $deferred->resolve($resp);
+            $deferred->resolve($resp);
         }, \React\Partial\bind([$deferred, 'reject']));
 
         return $deferred->promise();
@@ -201,7 +202,7 @@ class Member extends Part
      *
      * @param Role|int $role The role to remove from the member.
      *
-     * @return bool returns whether role was removed successfully
+     * @return \React\Promise\Promise
      */
     public function removeRole($role)
     {
@@ -218,13 +219,14 @@ class Member extends Part
             $this->http->delete(
                 "guilds/{$this->guild_id}/members/{$this->id}/roles/{$role}"
             )->then(function ($resp) use ($deferred) {
-           $deferred->resolve($resp);
-        }, \React\Partial\bind([$deferred, 'reject']));
+                $deferred->resolve($resp);
+            }, \React\Partial\bind([$deferred, 'reject']));
             // At the moment we are unable to check if the member
             // was moved successfully.
             return  $deferred->promise();
-        } 
-        return  $deferred->reject();
+        }
+        $deferred->reject();
+        return  $deferred->promise();
     }
 
     /**
