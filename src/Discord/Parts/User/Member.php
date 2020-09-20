@@ -170,22 +170,31 @@ class Member extends Part
      *
      * @param Role|int $role The role to add to the member.
      *
-     * @return bool Whether adding the role succeeded.
+     * @return \React\Promise\Promise
      */
     public function addRole($role)
     {
+        $deferred = new Deferred();
         if ($role instanceof Role) {
             $role = $role->id;
         }
 
         // We don't want a double up on roles
         if (false !== array_search($role, (array) $this->attributes['roles'])) {
-            return false;
+            $deferred->reject();
+            return $deferred->promise();
         }
 
         $this->attributes['roles'][] = $role;
 
-        return true;
+
+        $this->http->put(
+            "guilds/{$this->guild_id}/members/{$this->id}/roles/{$role}"
+        )->then(function ($resp) use ($deferred) {
+            $deferred->resolve($resp);
+        }, \React\Partial\bind([$deferred, 'reject']));
+
+        return $deferred->promise();
     }
 
     /**
@@ -193,10 +202,12 @@ class Member extends Part
      *
      * @param Role|int $role The role to remove from the member.
      *
-     * @return bool Whether removing the role succeeded.
+     * @return \React\Promise\Promise
      */
     public function removeRole($role)
     {
+        $deferred = new Deferred();
+
         if ($role instanceof Role) {
             $role = $role->id;
         }
@@ -204,10 +215,18 @@ class Member extends Part
         if (false !== ($index = array_search($role, $this->attributes['roles']))) {
             unset($this->attributes['roles'][$index]);
 
-            return true;
-        }
 
-        return false;
+            $this->http->delete(
+                "guilds/{$this->guild_id}/members/{$this->id}/roles/{$role}"
+            )->then(function ($resp) use ($deferred) {
+                $deferred->resolve($resp);
+            }, \React\Partial\bind([$deferred, 'reject']));
+            // At the moment we are unable to check if the member
+            // was moved successfully.
+            return  $deferred->promise();
+        }
+        $deferred->reject();
+        return  $deferred->promise();
     }
 
     /**
@@ -284,7 +303,7 @@ class Member extends Part
         if ($user = $this->discord->users->get('id', $this->attributes['user']->id)) {
             return $user;
         }
-        
+
         return $this->factory->create(User::class, $this->attributes['user'], true);
     }
 
@@ -352,7 +371,7 @@ class Member extends Part
         if (! isset($this->attributes['premium_since'])) {
             return false;
         }
-        
+
         return Carbon::parse($this->attributes['premium_since']);
     }
 
