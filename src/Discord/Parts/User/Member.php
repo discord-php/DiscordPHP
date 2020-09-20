@@ -175,24 +175,22 @@ class Member extends Part
     public function addRole($role)
     {
         $deferred = new Deferred();
+
         if ($role instanceof Role) {
             $role = $role->id;
         }
 
         // We don't want a double up on roles
         if (false !== array_search($role, (array) $this->attributes['roles'])) {
-            $deferred->reject();
-            return $deferred->promise();
+            $deferred->reject(new \Exception('User already has role.'));
+        } else {
+            $this->http->put(
+                "guilds/{$this->guild_id}/members/{$this->id}/roles/{$role}"
+            )->then(function () use ($role, $deferred) {
+                $this->attributes['roles'][] = $role;
+                $deferred->resolve();
+            }, \React\Partial\bind([$deferred, 'reject']));
         }
-
-        $this->attributes['roles'][] = $role;
-
-
-        $this->http->put(
-            "guilds/{$this->guild_id}/members/{$this->id}/roles/{$role}"
-        )->then(function ($resp) use ($deferred) {
-            $deferred->resolve($resp);
-        }, \React\Partial\bind([$deferred, 'reject']));
 
         return $deferred->promise();
     }
@@ -213,20 +211,17 @@ class Member extends Part
         }
 
         if (false !== ($index = array_search($role, $this->attributes['roles']))) {
-            unset($this->attributes['roles'][$index]);
-
-
             $this->http->delete(
                 "guilds/{$this->guild_id}/members/{$this->id}/roles/{$role}"
-            )->then(function ($resp) use ($deferred) {
-                $deferred->resolve($resp);
+            )->then(function () use ($index, $deferred) {
+                unset($this->attributes['roles'][$index]);
+                $deferred->resolve();
             }, \React\Partial\bind([$deferred, 'reject']));
-            // At the moment we are unable to check if the member
-            // was moved successfully.
-            return  $deferred->promise();
+        } else {
+            $deferred->reject(new \Exception('User does not have role.'));
         }
-        $deferred->reject();
-        return  $deferred->promise();
+
+        return $deferred->promise();
     }
 
     /**
