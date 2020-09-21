@@ -611,6 +611,33 @@ class Channel extends Part
     }
 
     /**
+     * Sends an embed to the channel if it is a text channel.
+     * 
+     * @param Embed $embed
+     * 
+     * @return \React\Promise\Promise
+     */
+    public function sendEmbed(Embed $embed)
+    {
+        $deferred = new Deferred();
+
+        if ($this->getChannelType() != self::TYPE_TEXT) {
+            $deferred->reject(new \Exception('You cannot send an embed to a voice channel.'));
+
+            return $deferred->promise();
+        }
+
+        $this->http->post("channels/{$this->id}/messages", ['embed' => $embed->getRawAttributes()])->then(function ($response) use ($deferred) {
+            $message = $this->factory->create(Message::class, $response, true);
+            $this->messages->push($message);
+
+            $deferred->resolve($message);
+        }, \React\Partial\bind([$deferred, 'reject']));
+
+        return $deferred->promise();
+    }
+
+    /**
      * Sends a file to the channel if it is a text channel.
      *
      * @param string $filepath The path to the file to be sent.
