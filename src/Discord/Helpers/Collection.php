@@ -179,6 +179,18 @@ class Collection implements ArrayAccess, Serializable, JsonSerializable, Iterato
     }
 
     /**
+     * If the collection has an offset.
+     * 
+     * @param mixed $offset
+     * 
+     * @return bool
+     */
+    public function isset($offset)
+    {
+        return $this->offsetExists($offset);
+    }
+
+    /**
      * Checks if the array has an object.
      *
      * @param array ...$keys
