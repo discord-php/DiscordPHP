@@ -13,8 +13,8 @@ namespace Discord;
 
 use Discord\Exceptions\IntentException;
 use Discord\Factory\Factory;
-use Discord\Http\Guzzle;
 use Discord\Http\Http;
+use Discord\Http\ReactDriver;
 use Discord\Wrapper\LoggerWrapper as Logger;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\User\Activity;
@@ -308,7 +308,7 @@ class Discord
         $this->http = new Http(
             'Bot '.$this->token,
             self::VERSION,
-            new Guzzle($this->loop)
+            new ReactDriver($this->loop)
         );
         $this->factory = new Factory($this, $this->http);
 
