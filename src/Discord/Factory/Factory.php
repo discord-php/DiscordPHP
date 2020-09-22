@@ -90,8 +90,8 @@ class Factory
     /**
      * Creates a repository.
      *
-     * @param string $class   The class to build.
-     * @param array  $data    Data to create the object.
+     * @param string $class The class to build.
+     * @param array  $data  Data to create the object.
      *
      * @return AbstractRepository The repository.
      */

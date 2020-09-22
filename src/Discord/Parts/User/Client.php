@@ -12,7 +12,6 @@
 namespace Discord\Parts\User;
 
 use Discord\Exceptions\FileNotFoundException;
-use Discord\Exceptions\PasswordEmptyException;
 use Discord\Parts\OAuth\Application;
 use Discord\Parts\Part;
 use Discord\Repository\GuildRepository;

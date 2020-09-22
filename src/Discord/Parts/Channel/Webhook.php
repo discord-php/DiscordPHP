@@ -16,7 +16,7 @@ use Discord\Parts\User\User;
 
 /**
  * Webhooks are a low-effort way to post messages to channels in Discord. They do not require a bot user or authentication to use.
- * 
+ *
  * @property string $id The id of the webhook.
  * @property int $type The type of webhook.
  * @property string $guild_id The guild ID this is for.
@@ -69,12 +69,14 @@ class Webhook extends Part
 
     /**
      * Gets the user that created the webhook.
-     * 
+     *
      * @return User
      */
     protected function getUserAttribute()
     {
-        if (! isset($this->attributes['user'])) return;
+        if (! isset($this->attributes['user'])) {
+            return;
+        }
 
         if ($user = $this->discord->users->get('id', $this->attributes['user']->id)) {
             return $user;

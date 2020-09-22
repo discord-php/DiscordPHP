@@ -563,8 +563,8 @@ class VoiceClient extends EventEmitter
 
     /**
      * Handles a WebSocket close.
-     * 
-     * @param int $op
+     *
+     * @param int    $op
      * @param string $reason
      */
     public function handleWebSocketClose($op, $reason)

@@ -130,7 +130,7 @@ class Embed extends Part
 
     /**
      * Sets the fields attribute.
-     * 
+     *
      * @param array[Field] $fields
      */
     protected function setFieldsAttribute($fields)
@@ -148,7 +148,7 @@ class Embed extends Part
 
     /**
      * Adds a field to the embed.
-     * 
+     *
      * @param Field $field
      */
     public function addField(Field $field)

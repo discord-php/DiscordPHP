@@ -118,7 +118,7 @@ class Op
 
     /**
      * Returns the critical event codes that we should not reconnect after.
-     * 
+     *
      * @return array
      */
     public static function getCriticalCloseCodes()
@@ -129,13 +129,13 @@ class Op
             self::CLOSE_INVALID_SHARD,
             self::CLOSE_INVALID_VERSION,
             self::CLOSE_INVALID_INTENTS,
-            self::CLOSE_DISALLOWED_INTENTS
+            self::CLOSE_DISALLOWED_INTENTS,
         ];
     }
 
     /**
      * Returns the critical event codes for a voice websocket.
-     * 
+     *
      * @return array
      */
     public static function getCriticalVoiceCloseCodes()

@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is apart of the DiscordPHP project.
+ *
+ * Copyright (c) 2016-2020 David Cole <david.cole1340@gmail.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the LICENSE.md file.
+ */
+
 namespace Discord\Parts\Permissions;
 
 use Discord\Discord;
@@ -9,7 +18,7 @@ use Discord\Parts\Part;
 
 /**
  * Permission represents a set of permissions for a given role or overwrite.
- * 
+ *
  * @property int $bitwise
  * @property bool $create_instant_invite
  * @property bool $manage_channels
@@ -21,7 +30,7 @@ abstract class Permission extends Part
 {
     /**
      * Array of permissions that only apply to voice channels.
-     * 
+     *
      * @var array
      */
     const VOICE_PERMISSIONS = [
@@ -37,7 +46,7 @@ abstract class Permission extends Part
 
     /**
      * Array of permissions that only apply to text channels.
-     * 
+     *
      * @var array
      */
     const TEXT_PERMISSIONS = [
@@ -54,7 +63,7 @@ abstract class Permission extends Part
 
     /**
      * Array of permissions that can only be applied to roles.
-     * 
+     *
      * @var array
      */
     const ROLE_PERMISSIONS = [
@@ -71,7 +80,7 @@ abstract class Permission extends Part
 
     /**
      * Array of permissions for all roles.
-     * 
+     *
      * @var array
      */
     const ALL_PERMISSIONS = [
@@ -84,7 +93,7 @@ abstract class Permission extends Part
 
     /**
      * Array of permissions.
-     * 
+     *
      * @var array
      */
     private $permissions = [];
@@ -109,14 +118,14 @@ abstract class Permission extends Part
 
     /**
      * Returns an array of extra permissions.
-     * 
+     *
      * @return array
      */
     abstract public static function getPermissions();
     
     /**
      * Gets the bitwise attribute of the permission.
-     * 
+     *
      * @return int
      */
     protected function getBitwiseAttribute()
@@ -134,7 +143,7 @@ abstract class Permission extends Part
 
     /**
      * Sets the bitwise attribute of the permission.
-     * 
+     *
      * @param int|string $bitwise
      */
     protected function setBitwiseAttribute($bitwise)

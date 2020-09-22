@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is apart of the DiscordPHP project.
+ *
+ * Copyright (c) 2016-2020 David Cole <david.cole1340@gmail.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the LICENSE.md file.
+ */
+
 namespace Discord\Http;
 
 use Carbon\Carbon;
@@ -13,7 +22,7 @@ use React\Socket\ConnectorInterface;
 
 /**
  * react/http driver.
- * 
+ *
  * @author David Cole <david.cole1340@gmail.com>
  */
 class ReactDriver extends Browser implements HttpDriver
@@ -39,7 +48,7 @@ class ReactDriver extends Browser implements HttpDriver
     protected $rateLimits = [];
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function __construct(LoopInterface $loop, ConnectorInterface $connector = null)
     {
@@ -48,7 +57,7 @@ class ReactDriver extends Browser implements HttpDriver
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function runRequest($method, $url, $headers, $body, array $options = [])
     {
@@ -125,9 +134,9 @@ class ReactDriver extends Browser implements HttpDriver
 
     /**
      * Makes a FSDN from a given endpoint.
-     * 
+     *
      * @param string $endpoint
-     * 
+     *
      * @return string
      */
     private function makeUrl($endpoint)

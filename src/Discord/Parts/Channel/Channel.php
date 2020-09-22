@@ -176,7 +176,7 @@ class Channel extends Part
         }
     }
 
-        /**
+    /**
      * Returns the channels pinned messages.
      *
      * @return \React\Promise\Promise
@@ -204,11 +204,11 @@ class Channel extends Part
 
     /**
      * Sets permissions in a channel.
-     * 
-     * @param Part $part A role or member.
+     *
+     * @param Part  $part  A role or member.
      * @param array $allow An array of permissions to allow.
-     * @param array $deny An array of permissions to deny.
-     * 
+     * @param array $deny  An array of permissions to deny.
+     *
      * @return \React\Promise\Promise
      */
     public function setPermissions(Part $part, array $allow = [], array $deny = [])
@@ -248,7 +248,7 @@ class Channel extends Part
     /**
      * Sets an overwrite to the channel.
      *
-     * @param Part $part A role or member.
+     * @param Part      $part      A role or member.
      * @param Overwrite $overwrite An overwrite object.
      *
      * @return \React\Promise\Promise
@@ -318,7 +318,7 @@ class Channel extends Part
             $member = $member->id;
         }
 
-        $this->http->patch("guilds/{$this->guild_id}/members/{$member}", ['channel_id' => $this->id,])->then(
+        $this->http->patch("guilds/{$this->guild_id}/members/{$member}", ['channel_id' => $this->id])->then(
             \React\Partial\bind([$deferred, 'resolve']),
             \React\Partial\bind([$deferred, 'reject'])
         );
@@ -554,7 +554,7 @@ class Channel extends Part
 
     /**
      * Sets the permission overwrites attribute.
-     * 
+     *
      * @param array $overwrites
      */
     protected function setPermissionOverwritesAttribute($overwrites)
@@ -612,9 +612,9 @@ class Channel extends Part
 
     /**
      * Sends an embed to the channel if it is a text channel.
-     * 
+     *
      * @param Embed $embed
-     * 
+     *
      * @return \React\Promise\Promise
      */
     public function sendEmbed(Embed $embed)

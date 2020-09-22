@@ -158,7 +158,7 @@ class Intents
 
     /**
      * Returns an integer value that represents all intents.
-     * 
+     *
      * @return int
      */
     public static function getAllIntents()

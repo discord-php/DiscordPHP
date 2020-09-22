@@ -57,7 +57,9 @@ class Ban extends Part
      */
     protected function getUserAttribute()
     {
-        if (! isset($this->attributes['user'])) return;
+        if (! isset($this->attributes['user'])) {
+            return;
+        }
 
         if ($user = $this->discord->users->get('id', $this->attributes['user']->id)) {
             return $user;

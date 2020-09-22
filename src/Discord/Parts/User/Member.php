@@ -227,15 +227,15 @@ class Member extends Part
 
     /**
      * Gets the total permissions of the member.
-     * 
+     *
      * Note that Discord permissions are complex and YOU
      * need to account for the fact that you cannot edit
      * a role higher than your own.
-     * 
+     *
      * @see https://discord.com/developers/docs/topics/permissions
-     * 
+     *
      * @param Channel|null $channel
-     * 
+     *
      * @return RolePermission
      */
     public function getPermissions(Channel $channel = null)
@@ -245,13 +245,13 @@ class Member extends Part
         if ($this->guild->owner_id == $this->id) {
             $bitwise |= 0x8; // Add administrator permission
         } else {
-            /** @var Role */
+            /* @var Role */
             foreach ($this->roles as $role) {
                 $bitwise |= $role->permissions->bitwise;
             }
 
             if ($channel) {
-                /** @var \Discord\Parts\Channel\Overwrite */
+                /* @var \Discord\Parts\Channel\Overwrite */
                 foreach ($channel->overwrites as $overwrite) {
                     $bitwise |= $overwrite->allow->bitwise;
                     $bitwise &= ~($overwrite->deny->bitwise);

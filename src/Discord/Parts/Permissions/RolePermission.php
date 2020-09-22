@@ -1,10 +1,19 @@
 <?php
 
+/*
+ * This file is apart of the DiscordPHP project.
+ *
+ * Copyright (c) 2016-2020 David Cole <david.cole1340@gmail.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the LICENSE.md file.
+ */
+
 namespace Discord\Parts\Permissions;
 
 /**
  * {@inheritdoc}
- * 
+ *
  * @property bool $priority_speaker
  * @property bool $stream
  * @property bool $connect
@@ -13,7 +22,7 @@ namespace Discord\Parts\Permissions;
  * @property bool $deafen_members
  * @property bool $move_members
  * @property bool $use_vad
- * 
+ *
  * @property bool $add_reactions
  * @property bool $send_messages
  * @property bool $send_tts_messages
@@ -23,7 +32,7 @@ namespace Discord\Parts\Permissions;
  * @property bool $read_message_history
  * @property bool $mention_everyone
  * @property bool $use_external_emojis
- * 
+ *
  * @property bool $kick_members
  * @property bool $ban_members
  * @property bool $administrator

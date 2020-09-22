@@ -1211,9 +1211,8 @@ class Discord
                 foreach ($options['intents'] as $intent) {
                     if (! in_array($intent, $validIntents)) {
                         throw new IntentException('Given intent is not valid: '.$intent);
-                    } else {
-                        $intentVal |= $intent;
                     }
+                    $intentVal |= $intent;
                 }
 
                 $options['intents'] = $intentVal;
@@ -1284,7 +1283,7 @@ class Discord
 
     /**
      * Gets the logger being used.
-     * 
+     *
      * @return LoggerWrapper
      */
     public function getLogger()

@@ -11,7 +11,6 @@
 
 namespace Discord\Parts\Channel;
 
-use Discord\Exceptions\InvalidOverwriteException;
 use Discord\Parts\Part;
 use Discord\Parts\Permissions\ChannelPermission;
 
@@ -36,7 +35,7 @@ class Overwrite extends Part
 
     /**
      * Sets the allow attribute of the role.
-     * 
+     *
      * @param ChannelPermission|int $allow
      */
     protected function setAllowAttribute($allow)
@@ -50,7 +49,7 @@ class Overwrite extends Part
 
     /**
      * Sets the deny attribute of the role.
-     * 
+     *
      * @param ChannelPermission|int $allow
      */
     protected function setDenyAttribute($deny)
