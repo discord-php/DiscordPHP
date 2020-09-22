@@ -40,6 +40,11 @@ class Activity extends Part
     const TYPE_LISTENING = 2; // Listening to {$this->name}
     const TYPE_CUSTOM = 4; // {$this->emoji} {$this->name}
 
+    const STATUS_ONLINE = 'online';
+    const STATUS_IDLE = 'idle';
+    const STATUS_DND = 'dnd';
+    const STATUS_INVISIBLE = 'invisible';
+
     /**
      * {@inheritdoc}
      */
