@@ -96,10 +96,9 @@ class Http
         $content = (isset($params[1])) ? $params[1] : null;
         $headers = (isset($params[2])) ? $params[2] : [];
         $cache = (isset($params[3])) ? $params[3] : null;
-        $blocking = (isset($params[4])) ? $params[4] : false;
         $options = (isset($params[5])) ? $params[5] : [];
 
-        return $this->runRequest(strtolower($name), $url, $content, $headers, $cache, $blocking, $options);
+        return $this->runRequest(strtolower($name), $url, $content, $headers, $cache, $options);
     }
 
     /**
@@ -111,7 +110,6 @@ class Http
      * @param array         $extraHeaders Extra headers to send with the request.
      * @param bool|int|null $cache        If an integer is passed, used as cache TTL, if null is passed, default TTL is
      *                                    used, if false, cache is disabled
-     * @param bool          $blocking     Whether the request should be sent as blocking.
      * @param array         $options      Array of options to pass to Guzzle.
      *
      * @throws ContentTooLongException
@@ -121,7 +119,7 @@ class Http
      *
      * @return \React\Promise\Promise
      */
-    private function runRequest($method, $url, $content, $extraHeaders, $cache, $blocking, $options)
+    private function runRequest($method, $url, $content, $extraHeaders, $cache, $options)
     {
         $deferred = new Deferred();
         $disable_json = false;
@@ -142,12 +140,6 @@ class Http
             $headers['Content-Type'] = 'application/json';
             $content = json_encode($content);
             $headers['Content-Length'] = strlen($content);
-        }
-
-        if ($blocking) {
-            $response = $this->driver->blocking($method, $url, $headers, $content);
-
-            return json_decode($response->getBody());
         }
 
         if (array_key_exists('disable_json', $options)) {
