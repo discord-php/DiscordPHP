@@ -70,24 +70,31 @@ abstract class Permission extends Part
     ];
 
     /**
-     * Array of permissions.
+     * Array of permissions for all roles.
      * 
      * @var array
      */
-    private $permissions = [
+    const ALL_PERMISSIONS = [
         'create_instant_invite' => 0x1,
         'manage_channels' => 0x10,
         'view_channel' => 0x400,
         'manage_roles' => 0x10000000,
         'manage_webhooks' => 0x20000000,
     ];
+
+    /**
+     * Array of permissions.
+     * 
+     * @var array
+     */
+    private $permissions = [];
     
     /**
      * {@inheritdoc}
      */
     public function __construct(Factory $factory, Discord $discord, Http $http, array $attributes = [], $created = false)
     {
-        $this->permissions = array_merge($this->permissions, $this->getPermissions());
+        $this->permissions = $this->getPermissions();
         $this->fillable = array_keys($this->permissions);
         $this->fillable[] = 'bitwise';
 
@@ -105,7 +112,7 @@ abstract class Permission extends Part
      * 
      * @return array
      */
-    abstract protected function getPermissions();
+    abstract public static function getPermissions();
     
     /**
      * Gets the bitwise attribute of the permission.

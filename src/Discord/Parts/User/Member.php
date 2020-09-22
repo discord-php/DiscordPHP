@@ -18,6 +18,7 @@ use Discord\Parts\Guild\Ban;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Guild\Role;
 use Discord\Parts\Part;
+use Discord\Parts\Permissions\RolePermission;
 use Discord\Parts\WebSockets\PresenceUpdate;
 use React\Promise\Deferred;
 
@@ -222,6 +223,52 @@ class Member extends Part
         }
 
         return $deferred->promise();
+    }
+
+    /**
+     * Gets the total permissions of the member.
+     * 
+     * Note that Discord permissions are complex and YOU
+     * need to account for the fact that you cannot edit
+     * a role higher than your own.
+     * 
+     * @see https://discord.com/developers/docs/topics/permissions
+     * 
+     * @param Channel|null $channel
+     * 
+     * @return RolePermission
+     */
+    public function getPermissions(Channel $channel = null)
+    {
+        $bitwise = $this->guild->roles->get('id', $this->guild_id)->permissions->bitwise;
+
+        if ($this->guild->owner_id == $this->id) {
+            $bitwise |= 0x8; // Add administrator permission
+        } else {
+            /** @var Role */
+            foreach ($this->roles as $role) {
+                $bitwise |= $role->permissions->bitwise;
+            }
+
+            if ($channel) {
+                /** @var \Discord\Parts\Channel\Overwrite */
+                foreach ($channel->overwrites as $overwrite) {
+                    $bitwise |= $overwrite->allow->bitwise;
+                    $bitwise &= ~($overwrite->deny->bitwise);
+                }
+            }
+        }
+
+        /** @var RolePermission */
+        $newPermission = $this->factory->part(RolePermission::class, ['bitwise' => $bitwise]);
+
+        if ($newPermission->administrator) {
+            foreach (RolePermission::getPermissions() as $permission => $_) {
+                $newPermission->{$permission} = true;
+            }
+        }
+
+        return $newPermission;
     }
 
     /**

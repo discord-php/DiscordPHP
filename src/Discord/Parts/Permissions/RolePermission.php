@@ -39,8 +39,8 @@ class RolePermission extends Permission
     /**
      * {@inheritdoc}
      */
-    protected function getPermissions()
+    public static function getPermissions()
     {
-        return array_merge(parent::TEXT_PERMISSIONS, parent::VOICE_PERMISSIONS, parent::ROLE_PERMISSIONS);
+        return array_merge(parent::ALL_PERMISSIONS, parent::TEXT_PERMISSIONS, parent::VOICE_PERMISSIONS, parent::ROLE_PERMISSIONS);
     }
 }
