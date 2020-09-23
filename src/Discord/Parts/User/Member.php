@@ -28,7 +28,7 @@ use React\Promise\Deferred;
  * @property string                       $id            The unique identifier of the member.
  * @property string                       $username      The username of the member.
  * @property string                       $discriminator The discriminator of the member.
- * @property \Discord\Parts\Guild\User    $user          The user part of the member.
+ * @property \Discord\Parts\User\User     $user          The user part of the member.
  * @property Collection[Role]             $roles         A collection of Roles that the member has.
  * @property bool                         $deaf          Whether the member is deaf.
  * @property bool                         $mute          Whether the member is mute.
