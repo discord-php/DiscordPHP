@@ -1,5 +1,24 @@
 # Changelog
 
+## Version 5.0.3
+
+- Development of the library will now continue on the `master` branch. The `develop` branch will be removed and you should checkout the latest tag for the most stable version.
+- Removed dependency of decepreated package `wyrihaximus/react-guzzle-psr7`, replaced with `react/http`.
+    - Rewrote HTTP client to remove dependency of Guzzle.
+- Client will prevent updating presence with an invalid activity type.
+- Collections:
+    - Added `Collection::set($offset, $value)`.
+    - Added `Collection::isset($offset)`.
+- Added `Message::sendEmbed(Embed $embed)` as a shortcut to sending embeds.
+- Fixed an issue on Windows where emoticons were not URL encoded.
+- Added `Embed::addField(Field $field)` to add fields to an embed.
+- Added user activity statuses constants to `Activity`.
+- `Member::addRole(Role $role)` and `Member::removeRole(Role $role)` now modifies the member on Discord's end.
+    - You no longer need to run `$guild->members->save($member)`.
+    - The function now returns a promise.
+- Added `Member::getPermissions(Channel? $channel)` to get the total permissions of the member for a guild or channel.
+- The avatar attribute of a user will return their default avatar when it is null.
+
 ## Version 5.0.2
 
 - Fixed updating and creating parts.
