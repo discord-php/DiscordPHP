@@ -19,13 +19,14 @@ use Discord\Helpers\Collection;
 use Discord\Http\Http;
 use Discord\Parts\Part;
 use React\Promise\Deferred;
+use React\Promise\PromiseInterface;
 
 /**
  * Repositories provide a way to store and update parts on the Discord server.
  *
- * @author Aaron Scherer <aequasi@gmail.com>
+ * @author Aaron Scherer <aequasi@gmail.com>, David Cole <david.cole1340@gmail.com>
  */
-abstract class AbstractRepository implements RepositoryInterface, ArrayAccess, Countable, IteratorAggregate
+abstract class AbstractRepository implements ArrayAccess, Countable, IteratorAggregate
 {
     /**
      * The discriminator.
@@ -130,7 +131,11 @@ abstract class AbstractRepository implements RepositoryInterface, ArrayAccess, C
     }
 
     /**
-     * {@inheritdoc}
+     * Builds a new, empty part.
+     *
+     * @param array $attributes The attributes for the new part.
+     *
+     * @return Part The new part.
      */
     public function create(array $attributes = [])
     {
@@ -140,9 +145,13 @@ abstract class AbstractRepository implements RepositoryInterface, ArrayAccess, C
     }
 
     /**
-     * {@inheritdoc}
+     * Attempts to save a part to the Discord servers.
+     *
+     * @param Part $part The part to save.
+     *
+     * @return PromiseInterface
      */
-    public function save(Part &$part)
+    public function save(Part $part)
     {
         if ($part->created) {
             $method = 'patch';
@@ -182,9 +191,13 @@ abstract class AbstractRepository implements RepositoryInterface, ArrayAccess, C
     }
 
     /**
-     * {@inheritdoc}
+     * Attempts to delete a part on the Discord servers.
+     *
+     * @param Part|snowflake $part The part to delete.
+     *
+     * @return PromiseInterface
      */
-    public function delete(Part &$part)
+    public function delete($part)
     {
         if (! $part->created) {
             return \React\Promise\reject(new \Exception('You cannot delete a non-existant part.'));
@@ -214,9 +227,13 @@ abstract class AbstractRepository implements RepositoryInterface, ArrayAccess, C
     }
 
     /**
-     * {@inheritdoc}
+     * Returns a part with fresh values.
+     *
+     * @param Part $part The part to get fresh values.
+     *
+     * @return PromiseInterface
      */
-    public function fresh(Part &$part)
+    public function fresh(Part $part)
     {
         if (! $part->created) {
             return \React\Promise\reject(new \Exception('You cannot get a non-existant part.'));
@@ -246,7 +263,11 @@ abstract class AbstractRepository implements RepositoryInterface, ArrayAccess, C
     }
 
     /**
-     * {@inheritdoc}
+     * Force gets a part from the Discord servers.
+     *
+     * @param string $id The ID to search for.
+     *
+     * @return PromiseInterface
      */
     public function fetch($id)
     {
