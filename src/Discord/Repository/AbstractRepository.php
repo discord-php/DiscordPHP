@@ -114,7 +114,7 @@ abstract class AbstractRepository implements ArrayAccess, Countable, IteratorAgg
             false
         )->then(function ($response) use ($deferred) {
             $this->fill([]);
-            
+
             foreach ($response as $value) {
                 $value = array_merge($this->vars, (array) $value);
                 $part = $this->factory->create($this->part, $value, true);
@@ -199,6 +199,10 @@ abstract class AbstractRepository implements ArrayAccess, Countable, IteratorAgg
      */
     public function delete($part)
     {
+        if (! ($part instanceof Part)) {
+            $part = $this->factory->part($this->part, ['id' => $part], true);
+        }
+
         if (! $part->created) {
             return \React\Promise\reject(new \Exception('You cannot delete a non-existant part.'));
         }
