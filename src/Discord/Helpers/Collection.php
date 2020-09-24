@@ -153,14 +153,14 @@ class Collection implements ArrayAccess, Serializable, JsonSerializable, Iterato
     {
         if (is_null($this->discrim)) {
             $this->items[] = $item;
-            
+
             return $this;
         }
-        
+
         if (! is_null($this->class) && ! ($item instanceof $this->class)) {
             return $this;
         }
-        
+
         if (is_array($item)) {
             $this->items[$item[$this->discrim]] = $item;
         } elseif (is_object($item)) {
@@ -178,6 +178,18 @@ class Collection implements ArrayAccess, Serializable, JsonSerializable, Iterato
     public function count()
     {
         return count($this->items);
+    }
+
+    /**
+     * Returns the first element of the collection.
+     *
+     * @return mixed
+     */
+    public function first()
+    {
+        foreach ($this->items as $item) {
+            return $item;
+        }
     }
 
     /**
@@ -206,7 +218,7 @@ class Collection implements ArrayAccess, Serializable, JsonSerializable, Iterato
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -269,7 +281,7 @@ class Collection implements ArrayAccess, Serializable, JsonSerializable, Iterato
     {
         $this->items[$offset] = $value;
     }
-    
+
     /**
      * Unsets an index from the collection.
      *
