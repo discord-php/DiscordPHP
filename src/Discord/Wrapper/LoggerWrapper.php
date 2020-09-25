@@ -11,7 +11,7 @@
 
 namespace Discord\Wrapper;
 
-use Monolog\Logger as Monolog;
+use Psr\Log\LoggerInterface;
 
 /**
  * Provides an easy to use wrapper for the logger.
@@ -19,9 +19,9 @@ use Monolog\Logger as Monolog;
 class LoggerWrapper
 {
     /**
-     * The monolog logger.
+     * The logger.
      *
-     * @var Monolog Logger.
+     * @var LoggerInterface Logger.
      */
     protected $logger;
 
@@ -35,10 +35,10 @@ class LoggerWrapper
     /**
      * Constructs the logger.
      *
-     * @param Monolog $logger  The Monolog logger.
-     * @param bool    $enabled Whether logging is enabled.
+     * @param LoggerInterface $logger  The Monolog logger.
+     * @param bool            $enabled Whether logging is enabled.
      */
-    public function __construct(Monolog $logger, $enabled = true)
+    public function __construct(LoggerInterface $logger, $enabled = true)
     {
         $this->logger = $logger;
         $this->enabled = $enabled;
