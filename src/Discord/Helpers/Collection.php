@@ -223,6 +223,28 @@ class Collection implements ArrayAccess, Serializable, JsonSerializable, Iterato
     }
 
     /**
+     * Runs a filter callback over the collection and
+     * returns a new collection based on the response
+     * of the callback.
+     * 
+     * @param callable $callback
+     * 
+     * @return Collection
+     */
+    public function filter(callable $callback)
+    {
+        $collection = new Collection([], $this->discrim, $this->class);
+
+        foreach ($this->items as $item) {
+            if ($callback($item)) {
+                $collection->push($item);
+            }
+        }
+
+        return $collection;
+    }
+
+    /**
      * Clears the collection.
      *
      * @return this
