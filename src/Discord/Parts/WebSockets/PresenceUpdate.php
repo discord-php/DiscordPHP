@@ -15,6 +15,7 @@ use Carbon\Carbon;
 use Discord\Helpers\Collection;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Part;
+use Discord\Parts\User\Member;
 use Discord\Parts\User\Activity;
 use Discord\Parts\User\User;
 
@@ -22,14 +23,14 @@ use Discord\Parts\User\User;
  * A PresenceUpdate part is used when the `PRESENCE_UPDATE` event is fired on the WebSocket. It contains
  * information about the users presence suck as their status (online/away) and their current game.
  *
- * @property \Discord\Parts\User\Member   $member The member that the presence update affects.
- * @property \Discord\Parts\User\User     $user The user that the presence update affects.
- * @property Collection[Role]             $roles The roles that the user has.
- * @property \Discord\Parts\Guild\Guild   $guild The guild that the presence update affects.
+ * @property Member                       $member The member that the presence update affects.
+ * @property User                         $user The user that the presence update affects.
+ * @property Collection|Role[]            $roles The roles that the user has.
+ * @property Guild                        $guild The guild that the presence update affects.
  * @property string                       $guild_id The unique identifier of the guild that the presence update affects.
  * @property string                       $status The updated status of the user.
- * @property \Discord\Parts\User\Activity $game The updated game of the user.
- * @property \Carbon\Carbon               $premium_since Time since user started boosting guild.
+ * @property Activity                     $game The updated game of the user.
+ * @property Carbon                       $premium_since Time since user started boosting guild.
  */
 class PresenceUpdate extends Part
 {
@@ -67,7 +68,7 @@ class PresenceUpdate extends Part
     /**
      * Returns the users roles.
      *
-     * @return Collection[Role]
+     * @return Collection|Role[]
      */
     protected function getRolesAttribute()
     {

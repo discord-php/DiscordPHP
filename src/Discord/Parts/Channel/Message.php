@@ -18,6 +18,7 @@ use Discord\Parts\Guild\Emoji;
 use Discord\Parts\Part;
 use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
+use Discord\Parts\Channel\Channel;
 use Discord\Parts\WebSockets\MessageReaction;
 use Discord\WebSockets\Event;
 use React\Promise\Deferred;
@@ -26,23 +27,23 @@ use React\Promise\Deferred;
  * A message which is posted to a Discord text channel.
  *
  * @property string                         $id               The unique identifier of the message.
- * @property \Discord\Parts\Channel\Channel $channel          The channel that the message was sent in.
+ * @property Channel                        $channel          The channel that the message was sent in.
  * @property string                         $channel_id       The unique identifier of the channel that the message was went in.
  * @property string                         $content          The content of the message if it is a normal message.
  * @property int                            $type             The type of message.
- * @property Collection[User]               $mentions         A collection of the users mentioned in the message.
- * @property \Discord\Parts\User\Member     $author           The author of the message.
+ * @property Collection|User[]              $mentions         A collection of the users mentioned in the message.
+ * @property Member                         $author           The author of the message.
  * @property bool                           $mention_everyone Whether the message contained an @everyone mention.
  * @property Carbon                         $timestamp        A timestamp of when the message was sent.
  * @property Carbon|null                    $edited_timestamp A timestamp of when the message was edited, or null.
  * @property bool                           $tts              Whether the message was sent as a text-to-speech message.
  * @property array                          $attachments      An array of attachment objects.
- * @property Collection[Embed]              $embeds           A collection of embed objects.
+ * @property Collection|Embed[]             $embeds           A collection of embed objects.
  * @property string|null                    $nonce            A randomly generated string that provides verification for the client. Not required.
- * @property Collection[Role]               $mention_roles    A collection of roles that were mentioned in the message.
+ * @property Collection|Role[]              $mention_roles    A collection of roles that were mentioned in the message.
  * @property bool                           $pinned           Whether the message is pinned to the channel.
- * @property Collection[Channel]            $mention_channels Collection of mentioned channels.
- * @property Collection[Reaction]           $reactions        Collection of reactions on the message.
+ * @property Collection|Channel[]           $mention_channels Collection of mentioned channels.
+ * @property Collection|Reaction[]          $reactions        Collection of reactions on the message.
  * @property string                         $webhook_id       ID of the webhook that made the message, if any.
  * @property object                         $activity         Current message activity. Requires rich presence.
  * @property object                         $application      Application of message. Requires rich presence.
@@ -162,7 +163,7 @@ class Message extends Part
     /**
      * Gets the mention_channels attribute.
      *
-     * @return Collection[Channel]
+     * @return Collection|Channel[]
      */
     protected function getMentionChannelsAttribute()
     {
@@ -180,7 +181,7 @@ class Message extends Part
     /**
      * Gets the reactions attribute.
      *
-     * @return Collection[Reaction]
+     * @return Collection|Reaction[]
      */
     protected function getReactionsAttribute()
     {

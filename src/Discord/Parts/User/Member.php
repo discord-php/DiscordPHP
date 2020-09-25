@@ -17,6 +17,7 @@ use Discord\Parts\Channel\Channel;
 use Discord\Parts\Guild\Ban;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Guild\Role;
+use Discord\Parts\User\Activity;
 use Discord\Parts\Part;
 use Discord\Parts\Permissions\RolePermission;
 use Discord\Parts\WebSockets\PresenceUpdate;
@@ -28,18 +29,18 @@ use React\Promise\Deferred;
  * @property string                       $id            The unique identifier of the member.
  * @property string                       $username      The username of the member.
  * @property string                       $discriminator The discriminator of the member.
- * @property \Discord\Parts\User\User     $user          The user part of the member.
- * @property Collection[Role]             $roles         A collection of Roles that the member has.
+ * @property User                         $user          The user part of the member.
+ * @property Collection|Role[]            $roles         A collection of Roles that the member has.
  * @property bool                         $deaf          Whether the member is deaf.
  * @property bool                         $mute          Whether the member is mute.
  * @property Carbon                       $joined_at     A timestamp of when the member joined the guild.
- * @property \Discord\Parts\Guild\Guild   $guild         The guild that the member belongs to.
+ * @property Guild                        $guild         The guild that the member belongs to.
  * @property string                       $guild_id      The unique identifier of the guild that the member belongs to.
  * @property string                       $status        The status of the member.
- * @property \Discord\Parts\User\Activity $game          The game the member is playing.
+ * @property Activity                     $game          The game the member is playing.
  * @property string|null                  $nick          The nickname of the member.
- * @property \Carbon\Carbon               $premium_since When the user started boosting the server.
- * @property Collection[Activities]       $activities User's current activities.
+ * @property Carbon                       $premium_since When the user started boosting the server.
+ * @property Collection|Activity[]        $activities User's current activities.
  * @property object                       $client_status Current client status
  */
 class Member extends Part

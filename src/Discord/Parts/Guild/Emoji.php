@@ -19,11 +19,11 @@ use Discord\Parts\Part;
  *
  * @property string                     $id             The identifier for the emoji.
  * @property string                     $name           The name of the emoji.
- * @property \Discord\Parts\Guild\Guild $guild          The guild that owns the emoji.
+ * @property Guild                      $guild          The guild that owns the emoji.
  * @property string                     $guild_id       The identifier of the guild that owns the emoji.
  * @property bool                       $managed        Whether this emoji is managed by a role.
  * @property bool                       $require_colons Whether the emoji requires colons to be triggered.
- * @property Collection[Role]           $roles          The roles that are allowed to use the emoji.
+ * @property Collection|Role[]          $roles          The roles that are allowed to use the emoji.
  * @property bool                       $animated       Whether the emoji is animated.
  */
 class Emoji extends Part
