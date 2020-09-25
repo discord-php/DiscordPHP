@@ -13,6 +13,7 @@ namespace Discord\Parts\Channel;
 
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
+use React\Promise\Deferred;
 
 /**
  * Webhooks are a low-effort way to post messages to channels in Discord. They do not require a bot user or authentication to use.
@@ -44,6 +45,27 @@ class Webhook extends Part
         'avatar',
         'token',
     ];
+
+    /**
+     * Executes the webhook with an array of data.
+     * 
+     * @see https://discord.com/developers/docs/resources/webhook#execute-webhook-jsonform-params
+     * 
+     * @param array $data
+     * 
+     * @return \React\Promise\Promise
+     */
+    public function execute($data)
+    {
+        $deferred = new Deferred();
+
+        $this->http->post("webhooks/{$this->id}/{$this->token}", $data)->then(
+            \React\Partial\bind([$deferred, 'resolve']),
+            \React\Partial\bind([$deferred, 'reject'])
+        );
+
+        return $deferred->promise();
+    }
 
     /**
      * Gets the guild the webhook belongs to.
