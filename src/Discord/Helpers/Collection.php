@@ -75,7 +75,7 @@ class Collection implements ArrayAccess, Serializable, JsonSerializable, Iterato
         foreach ($this->items as $item) {
             if (is_array($item) && isset($item[$discrim]) && $item[$discrim] == $key) {
                 return $item;
-            } elseif (is_object($item) && property_exists($item, $discrim) && $item->{$discrim} == $key) {
+            } elseif (is_object($item) && $item->{$discrim} == $key) {
                 return $item;
             }
         }
