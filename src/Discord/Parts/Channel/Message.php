@@ -323,6 +323,23 @@ class Message extends Part
     }
 
     /**
+     * Crossposts the message to any following channels.
+     * 
+     * @return \React\Promise\Promise
+     */
+    public function crosspost()
+    {
+        $deferred = new Deferred();
+
+        $this->http->post("channels/{$this->channel_id}/messages/{$this->id}/crosspost")->then(function ($response) use ($deferred) {
+            $message = $this->factory->part(Message::class, $response, true);
+            $deferred->resolve($message);
+        }, \React\Partial\bind([$deferred, 'reject']));
+
+        return $deferred->promise();
+    }
+
+    /**
      * Send message after delay.
      *
      * @param string $text  Text to send after delay.
