@@ -15,12 +15,33 @@ For testing and stability it would be greatly appreciated if you were able to ad
 
 ## Getting Started
 
+### Requirements
+
+- PHP 7.3
+	- Technically the library can run on some versions of PHP 7.2, however, no support will be given for any version lower than 7.3.
+	- The requirement will be increased to PHP 7.4 so you should develop for the latest version of PHP.
+- Composer
+- `ext-json`
+- `ext-curl`
+- `ext-zlib`
+
+#### Recommended Extensions
+
+- The latest PHP version.
+- One of `ext-uv` (preferred), `ext-libev` or `evt-event` for a faster, and more performant event loop.
+
+#### Voice Requirements
+
+- 64-bit Linux or Darwin based OS. Voice does not run on Windows.
+- `ext-sodium`
+- FFmpeg
+
 ### Installing DiscordPHP
 
-DiscordPHP is installed using [Composer](https://getcomposer.org). Make sure you have installed Composer and are used to how it operates. We require a minimum PHP version of PHP 7.0. PHP 7.1 will be required in the near future.
+DiscordPHP is installed using [Composer](https://getcomposer.org).
 
 1. Run `composer require team-reflex/discord-php`. This will install the lastest release.
-	- If you would like, you can also install the development branch by running `composer require team-reflex/discord-php dev-develop`.
+	- If you would like, you can also install the development branch by running `composer require team-reflex/discord-php dev-master`.
 2. Include the Composer autoload file at the top of your main file:
 	- `include __DIR__.'/vendor/autoload.php';`
 3. Make a bot!
