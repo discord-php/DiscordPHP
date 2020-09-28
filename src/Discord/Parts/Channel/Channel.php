@@ -308,7 +308,7 @@ class Channel extends Part
     {
         $deferred = new Deferred();
 
-        if ($this->getChannelType() != self::TYPE_VOICE) {
+        if (! $this->allowVoice()) {
             $deferred->reject(new \Exception('You cannot move a member in a text channel.'));
 
             return $deferred->promise();
@@ -325,6 +325,80 @@ class Channel extends Part
 
         // At the moment we are unable to check if the member
         // was moved successfully.
+
+        return $deferred->promise();
+    }
+
+    /**
+     * Mutes a member on a voice channel.
+     *
+     * @param Member|int The member to mute. (either a Member part or the member ID)
+     *
+     * @return \React\Promise\Promise
+     */
+    public function muteMember($member)
+    {
+        $deferred = new Deferred();
+
+        if (! $this->allowVoice()) {
+            $deferred->reject(new \Exception('You cannot mute a member in a text channel.'));
+
+            return $deferred->promise();
+        }
+
+        if ($member instanceof Member) {
+            $member = $member->id;
+        }
+
+        $this->http->patch(
+            "guilds/{$this->guild_id}/members/{$member}",
+            [
+                'mute' => true,
+            ]
+        )->then(
+            \React\Partial\bind_right($this->resolve, $deferred),
+            \React\Partial\bind_right($this->reject, $deferred)
+        );
+
+        // At the moment we are unable to check if the member
+        // was muted successfully.
+
+        return $deferred->promise();
+    }
+
+    /**
+     * Unmutes a member on a voice channel.
+     *
+     * @param Member|int The member to unmute. (either a Member part or the member ID)
+     *
+     * @return \React\Promise\Promise
+     */
+    public function unmuteMember($member)
+    {
+        $deferred = new Deferred();
+
+        if (! $this->allowVoice()) {
+            $deferred->reject(new \Exception('You cannot unmute a member in a text channel.'));
+
+            return $deferred->promise();
+        }
+
+        if ($member instanceof Member) {
+            $member = $member->id;
+        }
+
+        $this->http->patch(
+            "guilds/{$this->guild_id}/members/{$member}",
+            [
+                'mute' => false,
+            ]
+        )->then(
+            \React\Partial\bind_right($this->resolve, $deferred),
+            \React\Partial\bind_right($this->reject, $deferred)
+        );
+
+        // At the moment we are unable to check if the member
+        // was unmuted successfully.
 
         return $deferred->promise();
     }
@@ -350,6 +424,35 @@ class Channel extends Part
 
                 $deferred->resolve($invite);
             },
+            \React\Partial\bind([$deferred, 'reject'])
+        );
+
+        return $deferred->promise();
+    }
+
+    /**
+     * Deletes a message.
+     *
+     * @param message|Message or id to delete.
+     *
+     * @return \React\Promise\Promise
+     */
+    public function deleteMessage($message)
+    {
+        $deferred = new Deferred();
+
+        if (empty($message)) {
+            $deferred->reject(new \Exception('$message must be a message or  its id.'));
+
+            return $deferred->promise();
+        } elseif ($message instanceof Message) {
+            $messageID = $message->id;
+        } else {
+            $messageID = $message;
+        }
+
+        $this->http->delete("channels/{$this->id}/messages/{$messageID}")->then(
+            \React\Partial\bind([$deferred, 'resolve']),
             \React\Partial\bind([$deferred, 'reject'])
         );
 
@@ -584,8 +687,8 @@ class Channel extends Part
     {
         $deferred = new Deferred();
 
-        if ($this->getChannelType() != self::TYPE_TEXT) {
-            $deferred->reject(new \Exception('You cannot send a message to a voice channel.'));
+        if (! $this->allowText()) {
+            $deferred->reject(new \Exception('You can only send text messages to a text enabled channel.'));
 
             return $deferred->promise();
         }
@@ -621,7 +724,7 @@ class Channel extends Part
     {
         $deferred = new Deferred();
 
-        if ($this->getChannelType() != self::TYPE_TEXT) {
+        if (! $this->allowText()) {
             $deferred->reject(new \Exception('You cannot send an embed to a voice channel.'));
 
             return $deferred->promise();
@@ -651,7 +754,7 @@ class Channel extends Part
     {
         $deferred = new Deferred();
 
-        if ($this->getChannelType() != self::TYPE_TEXT) {
+        if (! $this->allowText()) {
             $deferred->reject(new \Exception('You cannot send a file to a voice channel.'));
 
             return $deferred->promise();
@@ -689,7 +792,7 @@ class Channel extends Part
     {
         $deferred = new Deferred();
 
-        if ($this->getChannelType() != self::TYPE_TEXT) {
+        if (! $this->allowText()) {
             $deferred->reject(new \Exception('You cannot broadcast typing to a voice channel.'));
 
             return $deferred->promise();
@@ -772,6 +875,26 @@ class Channel extends Part
                 return self::TYPE_TEXT;
                 break;
         }
+    }
+
+    /**
+     * Returns if allow text.
+     *
+     * @return bool if we can send text or not.
+     */
+    public function allowText()
+    {
+        return in_array($this->type, [self::TYPE_TEXT, self::TYPE_DM, self::TYPE_GROUP, self::TYPE_NEWS]);
+    }
+
+    /**
+     * Returns if allow voice.
+     *
+     * @return bool if we can send voice or not.
+     */
+    public function allowVoice()
+    {
+        return ($this->type == self::TYPE_VOICE);
     }
 
     /**
