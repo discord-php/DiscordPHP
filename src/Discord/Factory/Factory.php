@@ -57,8 +57,12 @@ class Factory
      * @return Part|AbstractRepository The object.
      * @throws \Exception
      */
-    public function create(string $class, array $data = [], bool $created = false)
+    public function create(string $class, $data = [], bool $created = false)
     {
+        if (! is_array($data)) {
+            $data = (array) $data;
+        }
+        
         if (strpos($class, 'Discord\\Parts') !== false) {
             $object = $this->part($class, $data, $created);
         } elseif (strpos($class, 'Discord\\Repository') !== false) {
