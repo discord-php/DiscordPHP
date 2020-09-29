@@ -80,6 +80,8 @@ class Collection implements ArrayAccess, Serializable, JsonSerializable, Iterato
                 return $item;
             }
         }
+
+        return null;
     }
 
     /**
@@ -267,7 +269,7 @@ class Collection implements ArrayAccess, Serializable, JsonSerializable, Iterato
         $keys = array_keys($this->items);
         $values = array_map($callback, array_values($this->items));
 
-        return new Collection(array_combine($keys, $values), $this->discrim);
+        return new Collection(array_combine($keys, $values), $this->discrim, $this->class);
     }
 
     /**
