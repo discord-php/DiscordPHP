@@ -1284,7 +1284,7 @@ class Discord
      * @param string $class   The class to build.
      * @param array  $data    Data to create the object.
      * @param bool   $created Whether the object is created (if part).
-     * 
+     *
      * @return Part|AbstractRepository
      *
      * @see Factory::create()

@@ -63,7 +63,7 @@ class Collection implements ArrayAccess, Serializable, JsonSerializable, Iterato
      * Gets an item from the collection.
      *
      * @param string $discrim
-     * @param mixed $key
+     * @param mixed  $key
      *
      * @return mixed
      */

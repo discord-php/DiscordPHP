@@ -13,7 +13,6 @@ namespace Discord\Http;
 
 use Carbon\Carbon;
 use Discord\Discord;
-use Exception;
 use Psr\Http\Message\ResponseInterface;
 use React\EventLoop\LoopInterface;
 use React\Http\Browser;
