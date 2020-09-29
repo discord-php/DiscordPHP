@@ -583,13 +583,16 @@ class Channel extends Part
      *
      * @param string     $text  The text to send in the message.
      * @param bool       $tts   Whether the message should be sent with text to speech enabled.
-     * @param array|null $embed An embed to send.
+     * @param Embed|array|null $embed An embed to send.
      *
      * @return PromiseInterface
      * @throws \Exception
      */
-    public function sendMessage(string $text, bool $tts = false, ?array $embed = null): PromiseInterface
+    public function sendMessage(string $text, bool $tts = false, $embed = null): PromiseInterface
     {
+        if ($embed instanceof Embed) {
+            $embed = (array) $embed;
+        }
         $deferred = new Deferred();
 
         if ($this->getChannelType() != self::TYPE_TEXT) {

@@ -102,6 +102,9 @@ class DiscordCommandClient extends Discord
 
                     $help = $command->getHelp($prefix);
 
+                    /**
+                     * @todo Use internal Embed::class
+                     */
                     $embed = [
                         'author' => [
                             'name' => $this->commandClientOptions['name'],
@@ -154,6 +157,9 @@ class DiscordCommandClient extends Discord
                     return;
                 }
 
+                /**
+                 * @todo Use internal Embed::class
+                 */
                 $embed = [
                     'author' => [
                         'name' => $this->commandClientOptions['name'],
