@@ -63,11 +63,11 @@ class Collection implements ArrayAccess, Serializable, JsonSerializable, Iterato
      * Gets an item from the collection.
      *
      * @param string $discrim
-     * @param string $key
+     * @param mixed $key
      *
      * @return mixed
      */
-    public function get(string $discrim, string $key)
+    public function get(string $discrim, $key)
     {
         if ($discrim == $this->discrim && isset($this->items[$key])) {
             return $this->items[$key];
