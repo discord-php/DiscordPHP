@@ -52,7 +52,7 @@ class Collection implements ArrayAccess, Serializable, JsonSerializable, Iterato
      * @param string      $discrim
      * @param string|null $class
      */
-    public function __construct(array $items = [], string $discrim = 'id', ?string $class = null)
+    public function __construct(array $items = [], ?string $discrim = 'id', ?string $class = null)
     {
         $this->items = $items;
         $this->discrim = $discrim;
