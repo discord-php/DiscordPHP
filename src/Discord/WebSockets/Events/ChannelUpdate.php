@@ -20,7 +20,7 @@ class ChannelUpdate extends Event
     /**
      * {@inheritdoc}
      */
-    public function handle(Deferred &$deferred, $data)
+    public function handle(Deferred &$deferred, $data): void
     {
         $channel = $this->factory->create(Channel::class, $data, true);
 

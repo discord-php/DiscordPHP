@@ -18,23 +18,25 @@ use Discord\Repository\GuildRepository;
 use Discord\Repository\PrivateChannelRepository;
 use Discord\Repository\UserRepository;
 use React\Promise\Deferred;
+use React\Promise\PromiseInterface;
+use function React\Partial\bind as Bind;
 
 /**
  * The client is the main interface for the client. Most calls on the main class are forwarded here.
  *
- * @property string                           $id            The unique identifier of the client.
- * @property string                           $username      The username of the client.
- * @property string                           $email         The email of the client.
- * @property bool                             $verified      Whether the client has verified their email.
- * @property string                           $avatar        The avatar URL of the client.
- * @property string                           $avatar_hash   The avatar hash of the client.
- * @property string                           $discriminator The unique discriminator of the client.
- * @property bool                             $bot           Whether the client is a bot.
- * @property \Discord\Parts\User\User         $user          The user instance of the client.
- * @property \Discord\Parts\OAuth\Application $application   The OAuth2 application of the bot.
- * @property \Discord\Repository\GuildRepository          $guilds
- * @property \Discord\Repository\PrivateChannelRepository $private_channels
- * @property \Discord\Repository\UserRepository           $users
+ * @property string                     $id            The unique identifier of the client.
+ * @property string                     $username      The username of the client.
+ * @property string                     $email         The email of the client.
+ * @property bool                       $verified      Whether the client has verified their email.
+ * @property string                     $avatar        The avatar URL of the client.
+ * @property string                     $avatar_hash   The avatar hash of the client.
+ * @property string                     $discriminator The unique discriminator of the client.
+ * @property bool                       $bot           Whether the client is a bot.
+ * @property User                       $user          The user instance of the client.
+ * @property Application                $application   The OAuth2 application of the bot.
+ * @property GuildRepository            $guilds
+ * @property PrivateChannelRepository   $private_channels
+ * @property UserRepository             $users
  */
 class Client extends Part
 {
@@ -55,7 +57,7 @@ class Client extends Part
     /**
      * Runs any extra construction tasks.
      */
-    public function afterConstruct()
+    public function afterConstruct(): void
     {
         $this->user = $this->factory->create(User::class,
             [
@@ -77,11 +79,11 @@ class Client extends Part
      *
      * @param string $filepath The path to the file.
      *
-     * @throws \Discord\Exceptions\FileNotFoundException Thrown when the file does not exist.
+     * @throws FileNotFoundException Thrown when the file does not exist.
      *
      * @return bool Whether the setting succeeded or failed.
      */
-    public function setAvatar($filepath)
+    public function setAvatar(string $filepath): bool
     {
         if (! file_exists($filepath)) {
             throw new FileNotFoundException("File does not exist at path {$filepath}.");
@@ -97,24 +99,17 @@ class Client extends Part
     }
 
     /**
-     * Returns the avatar URL for the client.
-     *
-     * @param string $format The image format.
-     * @param int    $size   The size of the image.
-     *
      * @return string The URL to the clients avatar.
      */
-    protected function getAvatarAttribute()
+    protected function getAvatarAttribute(): string
     {
         return call_user_func_array([$this->user, 'getAvatarAttribute'], func_get_args());
     }
 
     /**
-     * Returns the avatar hash for the client.
-     *
      * @return string The avatar hash for the client.
      */
-    protected function getAvatarHashAttribute()
+    protected function getAvatarHashAttribute(): string
     {
         return $this->attributes['avatar'];
     }
@@ -122,15 +117,15 @@ class Client extends Part
     /**
      * Saves the client instance.
      *
-     * @return \React\Promise\Promise
+     * @return PromiseInterface
      */
-    public function save()
+    public function save(): PromiseInterface
     {
         $deferred = new Deferred();
 
         $this->http->patch('users/@me', $this->getUpdatableAttributes())->then(
-            \React\Partial\bind([$deferred, 'resolve']),
-            \React\Partial\bind([$deferred, 'reject'])
+            Bind([$deferred, 'resolve']),
+            Bind([$deferred, 'reject'])
         );
 
         return $deferred->promise();
@@ -139,7 +134,7 @@ class Client extends Part
     /**
      * {@inheritdoc}
      */
-    public function getUpdatableAttributes()
+    public function getUpdatableAttributes(): array
     {
         $attributes = [
             'username' => $this->attributes['username'],
@@ -148,14 +143,14 @@ class Client extends Part
         if (isset($this->attributes['avatarhash'])) {
             $attributes['avatar'] = $this->attributes['avatarhash'];
         }
-        
+
         return $attributes;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getRepositoryAttributes()
+    public function getRepositoryAttributes(): array
     {
         return [];
     }

@@ -18,6 +18,7 @@ use Psr\Http\Message\ResponseInterface;
 use React\EventLoop\LoopInterface;
 use React\Http\Browser;
 use React\Promise\Deferred;
+use React\Promise\PromiseInterface;
 use React\Socket\ConnectorInterface;
 
 /**
@@ -59,18 +60,18 @@ class ReactDriver extends Browser implements HttpDriver
     /**
      * {@inheritdoc}
      */
-    public function runRequest($method, $url, $headers, $body, array $options = [])
+    public function runRequest(string $method, string $url, array $headers, string $body, array $options = []): PromiseInterface
     {
         $deferred = new Deferred();
         $count = 0;
 
         $sendRequest = function () use ($method, $url, $headers, $body, $options, $deferred, &$sendRequest, &$count) {
             $this->{$method}($this->makeUrl($url), $headers, $body)->then(function (ResponseInterface $response) use ($deferred, &$sendRequest, &$count) {
-                if ($response->getStatusCode() !== 429 && $response->getHeader('X-RateLimit-Remaining') == 0) {
+                if ($response->getStatusCode() !== 429 && (int) $response->getHeader('X-RateLimit-Remaining')[0] == 0) {
                     $this->rateLimited = true;
 
-                    $limitEnd = Carbon::createFromTimestamp($response->getHeader('X-RateLimit-Reset'));
-                    
+                    $limitEnd = Carbon::createFromTimestamp((int) $response->getHeader('X-RateLimit-Reset')[0]);
+
                     $this->loop->addTimer(Carbon::now()->diffInSeconds($limitEnd), function () {
                         foreach ($this->rateLimits as $i => $d) {
                             $d->resolve();
@@ -133,13 +134,13 @@ class ReactDriver extends Browser implements HttpDriver
     }
 
     /**
-     * Makes a FSDN from a given endpoint.
+     * Makes a FQDN from a given endpoint.
      *
      * @param string $endpoint
      *
      * @return string
      */
-    private function makeUrl($endpoint)
+    private function makeUrl(string $endpoint): string
     {
         return Http::BASE_URL.'/v'.Discord::HTTP_API_VERSION.'/'.$endpoint;
     }

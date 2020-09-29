@@ -121,7 +121,7 @@ class Op
      *
      * @return array
      */
-    public static function getCriticalCloseCodes()
+    public static function getCriticalCloseCodes(): array
     {
         return [
             self::CLOSE_INVALID_TOKEN,
@@ -138,7 +138,7 @@ class Op
      *
      * @return array
      */
-    public static function getCriticalVoiceCloseCodes()
+    public static function getCriticalVoiceCloseCodes(): array
     {
         return [
             self::CLOSE_INVALID_SESSION,

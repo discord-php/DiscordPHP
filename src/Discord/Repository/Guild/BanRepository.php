@@ -17,8 +17,8 @@ use Discord\Repository\AbstractRepository;
 /**
  * Contains bans on users.
  *
- * @see Discord\Parts\Guild\Ban
- * @see Discord\Parts\Guild\Guild
+ * @see \Discord\Parts\Guild\Ban
+ * @see \Discord\Parts\Guild\Guild
  */
 class BanRepository extends AbstractRepository
 {

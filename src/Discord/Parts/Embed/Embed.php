@@ -43,7 +43,7 @@ class Embed extends Part
      *
      * @return Carbon The timestamp attribute.
      */
-    protected function getTimestampAttribute()
+    protected function getTimestampAttribute(): Carbon
     {
         if (! array_key_exists('timestamp', $this->attributes)) {
             return Carbon::now();
@@ -59,7 +59,7 @@ class Embed extends Part
      *
      * @return Footer The footer attribute.
      */
-    protected function getFooterAttribute()
+    protected function getFooterAttribute(): Footer
     {
         return $this->attributeHelper('footer', Footer::class);
     }
@@ -69,7 +69,7 @@ class Embed extends Part
      *
      * @return Image The image attribute.
      */
-    protected function getImageAttribute()
+    protected function getImageAttribute(): Image
     {
         return $this->attributeHelper('image', Image::class);
     }
@@ -77,9 +77,9 @@ class Embed extends Part
     /**
      * Gets the thumbnail attribute.
      *
-     * @return Thumbnail The thumbnail attribute.
+     * @return Image The thumbnail attribute.
      */
-    protected function getThumbnailAttribute()
+    protected function getThumbnailAttribute(): Image
     {
         return $this->attributeHelper('thumbnail', Image::class);
     }
@@ -156,7 +156,7 @@ class Embed extends Part
         if (! isset($this->attributes['fields'])) {
             $this->attributes['fields'] = [];
         }
-        
+
         $this->attributes['fields'][] = $field->getRawAttributes();
     }
 
@@ -167,6 +167,7 @@ class Embed extends Part
      * @param string $class The attribute class.
      *
      * @return mixed
+     * @throws \Exception
      */
     private function attributeHelper($key, $class)
     {

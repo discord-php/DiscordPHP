@@ -11,24 +11,27 @@
 
 namespace Discord\Parts\WebSockets;
 
+use Discord\Parts\Channel\Channel;
 use Discord\Parts\Channel\Message;
 use Discord\Parts\Guild\Emoji;
+use Discord\Parts\Guild\Guild;
 use Discord\Parts\Part;
 use Discord\Parts\User\Member;
+use Discord\Parts\User\User;
 
 /**
  * Part that defines a message reaction.
  *
- * @property string $user_id
- * @property string $message_id
- * @property Member $member
- * @property Emoji  $emoji
- * @property string $channel_id
- * @property string $guild_id
- * @property \Discord\Parts\Channel\Channel $channel
- * @property \Discord\Parts\Guild\Guild $guild
- * @property \Discord\Parts\User\User $user
- * @property \Discord\Parts\Channel\Message $message
+ * @property string  $user_id
+ * @property string  $message_id
+ * @property Member  $member
+ * @property Emoji   $emoji
+ * @property string  $channel_id
+ * @property string  $guild_id
+ * @property Channel $channel
+ * @property Guild   $guild
+ * @property User    $user
+ * @property Message $message
  */
 class MessageReaction extends Part
 {
@@ -40,9 +43,9 @@ class MessageReaction extends Part
     /**
      * Gets the user attribute.
      *
-     * @return \Discord\Parts\User\User
+     * @return User
      */
-    protected function getUserAttribute()
+    protected function getUserAttribute(): User
     {
         if ($member = $this->member) {
             return $member->user;
@@ -57,9 +60,10 @@ class MessageReaction extends Part
      * to get the full message, otherwise the message
      * object only contains the ID.
      *
-     * @return \Discord\Parts\Channel\Message
+     * @return Message
+     * @throws \Exception
      */
-    protected function getMessageAttribute()
+    protected function getMessageAttribute(): Part
     {
         if ($channel = $this->channel) {
             if ($message = $channel->messages->get('id', $this->attributes['message_id'])) {
@@ -73,9 +77,10 @@ class MessageReaction extends Part
     /**
      * Gets the member attribute.
      *
-     * @return \Discord\Parts\User\Member
+     * @return Member
+     * @throws \Exception
      */
-    protected function getMemberAttribute()
+    protected function getMemberAttribute(): Part
     {
         if (isset($this->attributes['user_id']) && $guild = $this->guild) {
             if ($member = $guild->members->get('id', $this->attributes['user_id'])) {
@@ -89,9 +94,10 @@ class MessageReaction extends Part
     /**
      * Gets the emoji attribute.
      *
-     * @return \Discord\Parts\Guild\Emoji
+     * @return Emoji
+     * @throws \Exception
      */
-    protected function getEmojiAttribute()
+    protected function getEmojiAttribute(): Part
     {
         if (isset($this->attributes['emoji'])) {
             return $this->factory->create(Emoji::class, $this->attributes['emoji'], true);
@@ -101,9 +107,9 @@ class MessageReaction extends Part
     /**
      * Gets the channel attribute.
      *
-     * @return \Discord\Parts\Channel\Channel
+     * @return Channel
      */
-    protected function getChannelAttribute()
+    protected function getChannelAttribute(): Channel
     {
         if ($guild = $this->guild) {
             return $guild->channels->get('id', $this->attributes['channel_id']);
@@ -115,9 +121,9 @@ class MessageReaction extends Part
     /**
      * Gets the guild attribute.
      *
-     * @return \Discord\Parts\Guild\Guild
+     * @return Guild
      */
-    protected function getGuildAttribute()
+    protected function getGuildAttribute(): Guild
     {
         if (isset($this->attributes['guild_id'])) {
             return $this->discord->guilds->get('id', $this->attributes['guild_id']);

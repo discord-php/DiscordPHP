@@ -17,8 +17,8 @@ use Discord\Repository\AbstractRepository;
 /**
  * Contains invites to guilds.
  *
- * @see Discord\Parts\Guild\Invite
- * @see Discord\Parts\Guild\Guild
+ * @see \Discord\Parts\Guild\Invite
+ * @see \Discord\Parts\Guild\Guild
  */
 class InviteRepository extends AbstractRepository
 {

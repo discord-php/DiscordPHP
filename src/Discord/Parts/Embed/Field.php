@@ -32,7 +32,7 @@ class Field extends Part
      *
      * @return bool The inline attribute.
      */
-    protected function getInlineAttribute()
+    protected function getInlineAttribute(): bool
     {
         if (! array_key_exists('inline', $this->attributes)) {
             return false;

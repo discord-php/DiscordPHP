@@ -21,7 +21,6 @@ use Discord\Parts\Guild\Invite;
 use Discord\Parts\Guild\Role;
 use Discord\Parts\Part;
 use Discord\Parts\Permissions\ChannelPermission;
-use Discord\Parts\Permissions\Permission;
 use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
 use Discord\Repository\Channel\MessageRepository;
@@ -30,8 +29,11 @@ use Discord\Repository\Channel\VoiceMemberRepository as MemberRepository;
 use Discord\Repository\Channel\WebhookRepository;
 use Discord\WebSockets\Event;
 use React\Promise\Deferred;
+use React\Promise\PromiseInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Traversable;
+use function React\Partial\bind as Bind;
+use function React\Promise\reject as Reject;
 
 /**
  * A Channel can be either a text or voice channel on a Discord guild.
@@ -109,7 +111,7 @@ class Channel extends Part
     /**
      * {@inheritdoc}
      */
-    protected function afterConstruct()
+    protected function afterConstruct(): void
     {
         if (! array_key_exists('bitrate', $this->attributes) && $this->type != self::TYPE_TEXT) {
             $this->bitrate = 64000;
@@ -121,7 +123,7 @@ class Channel extends Part
      *
      * @return bool Whether the channel is private.
      */
-    protected function getIsPrivateAttribute()
+    protected function getIsPrivateAttribute(): bool
     {
         return array_search($this->type, [self::TYPE_DM, self::TYPE_GROUP]) !== false;
     }
@@ -131,7 +133,7 @@ class Channel extends Part
      *
      * @return User The recipient.
      */
-    protected function getRecipientAttribute()
+    protected function getRecipientAttribute(): User
     {
         return $this->recipients->first();
     }
@@ -140,8 +142,9 @@ class Channel extends Part
      * Gets the recipients attribute.
      *
      * @return Collection A collection of recepients.
+     * @throws \Exception
      */
-    protected function getRecipientsAttribute()
+    protected function getRecipientsAttribute(): Collection
     {
         $recipients = new Collection();
 
@@ -153,13 +156,13 @@ class Channel extends Part
 
         return $recipients;
     }
-    
+
     /**
      * Returns the guild attribute.
      *
      * @return Guild The guild attribute.
      */
-    protected function getGuildAttribute()
+    protected function getGuildAttribute(): Guild
     {
         return $this->discord->guilds->get('id', $this->guild_id);
     }
@@ -169,7 +172,7 @@ class Channel extends Part
      *
      * @return Carbon
      */
-    protected function getLastPinTimestampAttribute()
+    protected function getLastPinTimestampAttribute(): Carbon
     {
         if (isset($this->attributes['last_pin_timestamp'])) {
             return Carbon::parse($this->attributes['last_pin_timestamp']);
@@ -179,9 +182,10 @@ class Channel extends Part
     /**
      * Returns the channels pinned messages.
      *
-     * @return \React\Promise\Promise
+     * @return PromiseInterface
+     * @throws \Exception
      */
-    protected function getPinnedMessages()
+    protected function getPinnedMessages(): PromiseInterface
     {
         $deferred = new Deferred();
 
@@ -196,7 +200,7 @@ class Channel extends Part
 
                 $deferred->resolve($messages);
             },
-            \React\Partial\bind([$deferred, 'reject'])
+            Bind([$deferred, 'reject'])
         );
 
         return $deferred->promise();
@@ -209,9 +213,10 @@ class Channel extends Part
      * @param array $allow An array of permissions to allow.
      * @param array $deny  An array of permissions to deny.
      *
-     * @return \React\Promise\Promise
+     * @return PromiseInterface
+     * @throws \Exception
      */
-    public function setPermissions(Part $part, array $allow = [], array $deny = [])
+    public function setPermissions(Part $part, array $allow = [], array $deny = []): PromiseInterface
     {
         $deferred = new Deferred();
 
@@ -220,7 +225,7 @@ class Channel extends Part
         } elseif ($part instanceof Role) {
             $type = 'role';
         } else {
-            return \React\Promise\reject(new InvalidOverwriteException('Given part was not one of member or role.'));
+            return Reject(new InvalidOverwriteException('Given part was not one of member or role.'));
         }
 
         $allow = array_fill_keys($allow, true);
@@ -238,8 +243,8 @@ class Channel extends Part
         ]);
 
         $this->setOverwrite($part, $overwrite)->then(
-            \React\Partial\bind([$deferred, 'resolve']),
-            \React\Partial\bind([$deferred, 'reject'])
+            Bind([$deferred, 'resolve']),
+            Bind([$deferred, 'reject'])
         );
 
         return $deferred->promise();
@@ -251,9 +256,9 @@ class Channel extends Part
      * @param Part      $part      A role or member.
      * @param Overwrite $overwrite An overwrite object.
      *
-     * @return \React\Promise\Promise
+     * @return PromiseInterface
      */
-    public function setOverwrite(Part $part, Overwrite $overwrite)
+    public function setOverwrite(Part $part, Overwrite $overwrite): PromiseInterface
     {
         $deferred = new Deferred();
 
@@ -262,7 +267,7 @@ class Channel extends Part
         } elseif ($part instanceof Role) {
             $type = 'role';
         } else {
-            return \React\Promise\reject(new InvalidOverwriteException('Given part was not one of member or role.'));
+            return Reject(new InvalidOverwriteException('Given part was not one of member or role.'));
         }
 
         $payload = [
@@ -277,8 +282,8 @@ class Channel extends Part
             $deferred->resolve();
         } else {
             $this->http->put("channels/{$this->id}/permissions/{$part->id}", $payload)->then(
-                \React\Partial\bind([$deferred, 'resolve']),
-                \React\Partial\bind([$deferred, 'reject'])
+                Bind([$deferred, 'resolve']),
+                Bind([$deferred, 'reject'])
             );
         }
 
@@ -290,9 +295,9 @@ class Channel extends Part
      *
      * @param string $id The message snowflake.
      *
-     * @return \React\Promise\Promise
+     * @return PromiseInterface
      */
-    public function getMessage($id)
+    public function getMessage(string $id): PromiseInterface
     {
         return $this->messages->fetch($id);
     }
@@ -302,9 +307,9 @@ class Channel extends Part
      *
      * @param Member|int The member to move. (either a Member part or the member ID)
      *
-     * @return \React\Promise\Promise
+     * @return PromiseInterface
      */
-    public function moveMember($member)
+    public function moveMember($member): PromiseInterface
     {
         $deferred = new Deferred();
 
@@ -319,8 +324,8 @@ class Channel extends Part
         }
 
         $this->http->patch("guilds/{$this->guild_id}/members/{$member}", ['channel_id' => $this->id])->then(
-            \React\Partial\bind([$deferred, 'resolve']),
-            \React\Partial\bind([$deferred, 'reject'])
+            Bind([$deferred, 'resolve']),
+            Bind([$deferred, 'reject'])
         );
 
         // At the moment we are unable to check if the member
@@ -332,15 +337,16 @@ class Channel extends Part
     /**
      * Creates an invite for the channel.
      *
-     * @param array $options              An array of options. All fields are optional.
-     * @param int   $options['max_age']   The time that the invite will be valid in seconds.
-     * @param int   $options['max_uses']  The amount of times the invite can be used.
-     * @param bool  $options['temporary'] Whether the invite is for temporary membership.
-     * @param bool  $options['unique']    Whether the invite code should be unique (useful for creating many unique one time use invites).
+     * @param array $options An array of options. All fields are optional.
+     * @param int   $options ['max_age']   The time that the invite will be valid in seconds.
+     * @param int   $options ['max_uses']  The amount of times the invite can be used.
+     * @param bool  $options ['temporary'] Whether the invite is for temporary membership.
+     * @param bool  $options ['unique']    Whether the invite code should be unique (useful for creating many unique one time use invites).
      *
-     * @return \React\Promise\Promise
+     * @return PromiseInterface
+     * @throws \Exception
      */
-    public function createInvite($options = [])
+    public function createInvite($options = []): PromiseInterface
     {
         $deferred = new Deferred();
 
@@ -350,7 +356,7 @@ class Channel extends Part
 
                 $deferred->resolve($invite);
             },
-            \React\Partial\bind([$deferred, 'reject'])
+            Bind([$deferred, 'reject'])
         );
 
         return $deferred->promise();
@@ -361,9 +367,9 @@ class Channel extends Part
      *
      * @param array|Traversable $messages An array of messages to delete.
      *
-     * @return \React\Promise\Promise
+     * @return PromiseInterface
      */
-    public function deleteMessages($messages)
+    public function deleteMessages($messages): PromiseInterface
     {
         $deferred = new Deferred();
 
@@ -403,8 +409,8 @@ class Channel extends Part
                 'messages' => $messageID,
             ]
         )->then(
-            \React\Partial\bind([$deferred, 'resolve']),
-            \React\Partial\bind([$deferred, 'reject'])
+            Bind([$deferred, 'resolve']),
+            Bind([$deferred, 'reject'])
         );
 
         return $deferred->promise();
@@ -415,9 +421,9 @@ class Channel extends Part
      *
      * @param array $options
      *
-     * @return \React\Promise\Promise
+     * @return PromiseInterface
      */
-    public function getMessageHistory(array $options)
+    public function getMessageHistory(array $options): PromiseInterface
     {
         $deferred = new Deferred();
 
@@ -460,7 +466,7 @@ class Channel extends Part
 
                 $deferred->resolve($messages);
             },
-            \React\Partial\bind([$deferred, 'reject'])
+            Bind([$deferred, 'reject'])
         );
 
         return $deferred->promise();
@@ -471,18 +477,18 @@ class Channel extends Part
      *
      * @param Message $message The message to pin.
      *
-     * @return \React\Promise\Promise
+     * @return PromiseInterface
      */
-    public function pinMessage(Message $message)
+    public function pinMessage(Message $message): PromiseInterface
     {
         $deferred = new Deferred();
 
         if ($message->pinned) {
-            return \React\Promise\reject(new \Exception('This message is already pinned.'));
+            return Reject(new \Exception('This message is already pinned.'));
         }
 
         if ($message->channel_id != $this->id) {
-            return \React\Promise\reject(new \Exception('You cannot pin a message to a different channel.'));
+            return Reject(new \Exception('You cannot pin a message to a different channel.'));
         }
 
         $this->http->put("channels/{$this->id}/pins/{$message->id}")->then(
@@ -490,7 +496,7 @@ class Channel extends Part
                 $message->pinned = true;
                 $deferred->resolve($message);
             },
-            \React\Partial\bind([$deferred, 'reject'])
+            Bind([$deferred, 'reject'])
         );
 
         return $deferred->promise();
@@ -501,18 +507,18 @@ class Channel extends Part
      *
      * @param Message $message The message to un-pin.
      *
-     * @return \React\Promise\Promise
+     * @return PromiseInterface
      */
-    public function unpinMessage(Message $message)
+    public function unpinMessage(Message $message): PromiseInterface
     {
         $deferred = new Deferred();
 
         if (! $message->pinned) {
-            return \React\Promise\reject(new \Exception('This message is not pinned.'));
+            return Reject(new \Exception('This message is not pinned.'));
         }
 
         if ($message->channel_id != $this->id) {
-            return \React\Promise\reject(new \Exception('You cannot un-pin a message from a different channel.'));
+            return Reject(new \Exception('You cannot un-pin a message from a different channel.'));
         }
 
         $this->http->delete("channels/{$this->id}/pins/{$message->id}")->then(
@@ -520,7 +526,7 @@ class Channel extends Part
                 $message->pinned = false;
                 $deferred->resolve($message);
             },
-            \React\Partial\bind([$deferred, 'reject'])
+            Bind([$deferred, 'reject'])
         );
 
         return $deferred->promise();
@@ -529,9 +535,10 @@ class Channel extends Part
     /**
      * Returns the channels invites.
      *
-     * @return \React\Promise\Promise
+     * @return PromiseInterface
+     * @throws \Exception
      */
-    public function getInvites()
+    public function getInvites(): PromiseInterface
     {
         $deferred = new Deferred();
 
@@ -546,7 +553,7 @@ class Channel extends Part
 
                 $deferred->resolve($invites);
             },
-            \React\Partial\bind([$deferred, 'reject'])
+            Bind([$deferred, 'reject'])
         );
 
         return $deferred->promise();
@@ -557,7 +564,7 @@ class Channel extends Part
      *
      * @param array $overwrites
      */
-    protected function setPermissionOverwritesAttribute($overwrites)
+    protected function setPermissionOverwritesAttribute(array $overwrites): void
     {
         $this->attributes['permission_overwrites'] = $overwrites;
 
@@ -574,13 +581,14 @@ class Channel extends Part
     /**
      * Sends a message to the channel if it is a text channel.
      *
-     * @param string $text  The text to send in the message.
-     * @param bool   $tts   Whether the message should be sent with text to speech enabled.
-     * @param Embed  $embed An embed to send.
+     * @param string     $text  The text to send in the message.
+     * @param bool       $tts   Whether the message should be sent with text to speech enabled.
+     * @param array|null $embed An embed to send.
      *
-     * @return \React\Promise\Promise
+     * @return PromiseInterface
+     * @throws \Exception
      */
-    public function sendMessage($text, $tts = false, $embed = null)
+    public function sendMessage(string $text, bool $tts = false, ?array $embed = null): PromiseInterface
     {
         $deferred = new Deferred();
 
@@ -604,7 +612,7 @@ class Channel extends Part
 
                 $deferred->resolve($message);
             },
-            \React\Partial\bind([$deferred, 'reject'])
+            Bind([$deferred, 'reject'])
         );
 
         return $deferred->promise();
@@ -615,9 +623,10 @@ class Channel extends Part
      *
      * @param Embed $embed
      *
-     * @return \React\Promise\Promise
+     * @return PromiseInterface
+     * @throws \Exception
      */
-    public function sendEmbed(Embed $embed)
+    public function sendEmbed(Embed $embed): PromiseInterface
     {
         $deferred = new Deferred();
 
@@ -632,7 +641,7 @@ class Channel extends Part
             $this->messages->push($message);
 
             $deferred->resolve($message);
-        }, \React\Partial\bind([$deferred, 'reject']));
+        }, Bind([$deferred, 'reject']));
 
         return $deferred->promise();
     }
@@ -640,14 +649,14 @@ class Channel extends Part
     /**
      * Sends a file to the channel if it is a text channel.
      *
-     * @param string $filepath The path to the file to be sent.
-     * @param string $filename The name to send the file as.
-     * @param string $content  Message content to send with the file.
-     * @param bool   $tts      Whether to send the message with TTS.
+     * @param string      $filepath The path to the file to be sent.
+     * @param string|null $filename The name to send the file as.
+     * @param string|null $content  Message content to send with the file.
+     * @param bool        $tts      Whether to send the message with TTS.
      *
-     * @return \React\Promise\Promise
+     * @return PromiseInterface
      */
-    public function sendFile($filepath, $filename = null, $content = null, $tts = false)
+    public function sendFile(string $filepath, ?string $filename = null, ?string $content = null, $tts = false): PromiseInterface
     {
         $deferred = new Deferred();
 
@@ -674,7 +683,7 @@ class Channel extends Part
 
                 $deferred->resolve($message);
             },
-            \React\Partial\bind([$deferred, 'reject'])
+            Bind([$deferred, 'reject'])
         );
 
         return $deferred->promise();
@@ -683,7 +692,7 @@ class Channel extends Part
     /**
      * Broadcasts that you are typing to the channel. Lasts for 5 seconds.
      *
-     * @return bool Whether the request succeeded or failed.
+     * @return void|PromiseInterface Whether the request succeeded or failed.
      */
     public function broadcastTyping()
     {
@@ -696,8 +705,8 @@ class Channel extends Part
         }
 
         $this->http->post("channels/{$this->id}/typing")->then(
-            \React\Partial\bind([$deferred, 'resolve']),
-            \React\Partial\bind([$deferred, 'reject'])
+            Bind([$deferred, 'resolve']),
+            Bind([$deferred, 'reject'])
         );
 
         return $deferred->resolve();
@@ -711,9 +720,9 @@ class Channel extends Part
      * @param int      $options['time']  Time in milliseconds until the collector finishes or false.
      * @param int      $options['limit'] The amount of messages allowed or false.
      *
-     * @return \React\Promise\Promise
+     * @return PromiseInterface
      */
-    public function createMessageCollector($filter, $options = [])
+    public function createMessageCollector(callable $filter, array $options = []): PromiseInterface
     {
         $deferred = new Deferred();
         $messages = new Collection();
@@ -761,7 +770,7 @@ class Channel extends Part
      *
      * @return string Either 'text' or 'voice'.
      */
-    public function getChannelType()
+    public function getChannelType(): string
     {
         switch ($this->type) {
             case self::TYPE_TEXT:
@@ -777,7 +786,7 @@ class Channel extends Part
     /**
      * {@inheritdoc}
      */
-    public function getCreatableAttributes()
+    public function getCreatableAttributes(): array
     {
         return [
             'name' => $this->name,
@@ -796,7 +805,7 @@ class Channel extends Part
     /**
      * {@inheritdoc}
      */
-    public function getUpdatableAttributes()
+    public function getUpdatableAttributes(): array
     {
         return [
             'name' => $this->name,
@@ -809,7 +818,7 @@ class Channel extends Part
     /**
      * {@inheritdoc}
      */
-    public function getRepositoryAttributes()
+    public function getRepositoryAttributes(): array
     {
         return [
             'channel_id' => $this->id,

@@ -18,7 +18,7 @@ use Discord\Parts\User\User;
  * A Ban is a ban on a user specific to a guild. It is also IP based.
  *
  * @property string $guild_id
- * @property \Discord\Parts\User\User $user
+ * @property User $user
  * @property string $reason
  */
 class Ban extends Part
@@ -33,7 +33,7 @@ class Ban extends Part
      *
      * @return string
      */
-    protected function getUserIdAttribute()
+    protected function getUserIdAttribute(): string
     {
         if (isset($this->attributes['user']->id)) {
             return $this->attributes['user']->id;
@@ -43,9 +43,9 @@ class Ban extends Part
     /**
      * Returns the guild attribute of the ban.
      *
-     * @return \Discord\Parts\Guild\Guild
+     * @return Guild
      */
-    protected function getGuildAttribute()
+    protected function getGuildAttribute(): Guild
     {
         return $this->discord->guilds->get('id', $this->guild_id);
     }
@@ -53,9 +53,9 @@ class Ban extends Part
     /**
      * Returns the user attribute of the ban.
      *
-     * @return \Discord\Parts\User\User
+     * @return User
      */
-    protected function getUserAttribute()
+    protected function getUserAttribute(): Part
     {
         if (! isset($this->attributes['user'])) {
             return;
@@ -71,7 +71,7 @@ class Ban extends Part
     /**
      * {@inheritdoc}
      */
-    public function getCreatableAttributes()
+    public function getCreatableAttributes(): array
     {
         return [];
     }
@@ -79,7 +79,7 @@ class Ban extends Part
     /**
      * {@inheritdoc}
      */
-    public function getUpdatableAttributes()
+    public function getUpdatableAttributes(): array
     {
         return [];
     }

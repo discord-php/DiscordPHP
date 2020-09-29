@@ -21,7 +21,7 @@ class VoiceStateUpdate extends Event
     /**
      * {@inheritdoc}
      */
-    public function handle(Deferred &$deferred, $data)
+    public function handle(Deferred &$deferred, $data): void
     {
         $state = $this->factory->create(VoiceStateUpdatePart::class, $data, true);
 

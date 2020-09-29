@@ -11,6 +11,8 @@
 
 namespace Discord\Http;
 
+use React\Promise\PromiseInterface;
+
 /**
  * Interface for HTTP drivers.
  *
@@ -27,7 +29,7 @@ interface HttpDriver
      * @param string $body    The request content.
      * @param array  $options An array of Guzzle options.
      *
-     * @return \React\Promise\Promise
+     * @return PromiseInterface
      */
-    public function runRequest($method, $url, $headers, $body, array $options = []);
+    public function runRequest(string $method, string $url, array $headers, string $body, array $options = []): PromiseInterface;
 }

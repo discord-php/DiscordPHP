@@ -12,10 +12,11 @@
 namespace Discord\Parts\User;
 
 use Discord\Parts\Channel\Channel;
-use Discord\Parts\Channel\Message;
 use Discord\Parts\Embed\Embed;
 use Discord\Parts\Part;
 use React\Promise\Deferred;
+use React\Promise\PromiseInterface;
+use function React\Partial\bind as Bind;
 
 /**
  * A user is a general user that is not attached to a guild.
@@ -63,9 +64,10 @@ class User extends Part
     /**
      * Gets the private channel for the user.
      *
-     * @return \React\Promise\Promise
+     * @return PromiseInterface
+     * @throws \Exception
      */
-    public function getPrivateChannel()
+    public function getPrivateChannel(): PromiseInterface
     {
         $deferred = new Deferred();
 
@@ -77,7 +79,7 @@ class User extends Part
                 $this->discord->private_channels->push($channel);
 
                 $deferred->resolve($channel);
-            }, \React\Partial\bind([$deferred, 'reject']));
+            }, Bind([$deferred, 'reject']));
         }
 
         return $deferred->promise();
@@ -86,21 +88,22 @@ class User extends Part
     /**
      * Sends a message to the user.
      *
-     * @param string $text  The text to send in the message.
-     * @param bool   $tts   Whether the message should be sent with text to speech enabled.
-     * @param Embed  $embed An embed to send.
+     * @param string     $message The text to send in the message.
+     * @param bool       $tts     Whether the message should be sent with text to speech enabled.
+     * @param Embed|null $embed   An embed to send.
      *
-     * @return \React\Promise\Promise
+     * @return PromiseInterface
+     * @throws \Exception
      */
-    public function sendMessage($message, $tts = false, $embed = null)
+    public function sendMessage(string $message, bool $tts = false, ?Embed $embed = null): PromiseInterface
     {
         $deferred = new Deferred();
 
         $this->getPrivateChannel()->then(function ($channel) use ($message, $tts, $embed, $deferred) {
             $channel->sendMessage($message, $tts, $embed)->then(function ($message) use ($deferred) {
                 $deferred->resolve($message);
-            }, \React\Partial\bind([$deferred, 'reject']));
-        }, \React\Partial\bind([$deferred, 'reject']));
+            }, Bind([$deferred, 'reject']));
+        }, Bind([$deferred, 'reject']));
 
         return $deferred->promise();
     }
@@ -108,16 +111,17 @@ class User extends Part
     /**
      * Broadcasts that you are typing to the channel. Lasts for 5 seconds.
      *
-     * @return \React\Promise\Promise
+     * @return PromiseInterface
+     * @throws \Exception
      */
-    public function broadcastTyping()
+    public function broadcastTyping(): PromiseInterface
     {
         $deferred = new Deferred();
 
         $this->getPrivateChannel()->then(function ($channel) use ($deferred) {
             $channel->broadcastTyping()->then(
-                \React\Partial\bind([$deferred, 'resolve']),
-                \React\Partial\bind([$deferred, 'reject'])
+                Bind([$deferred, 'resolve']),
+                Bind([$deferred, 'reject'])
             );
         });
 
@@ -132,11 +136,11 @@ class User extends Part
      *
      * @return string The URL to the clients avatar.
      */
-    public function getAvatarAttribute($format = 'jpg', $size = 1024)
+    public function getAvatarAttribute(string $format = 'jpg', int $size = 1024): string
     {
         if (empty($this->attributes['avatar'])) {
             $avatarDiscrim = (int) $this->discriminator % 5;
-            
+
             return "https://cdn.discordapp.com/embed/avatars/{$avatarDiscrim}.png?size={$size}";
         }
 
@@ -152,7 +156,7 @@ class User extends Part
      *
      * @return string The client avatar's hash.
      */
-    protected function getAvatarHashAttribute()
+    protected function getAvatarHashAttribute(): string
     {
         return $this->attributes['avatar'];
     }

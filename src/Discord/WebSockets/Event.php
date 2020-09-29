@@ -16,6 +16,7 @@ use Discord\Factory\Factory;
 use Discord\Http\Http;
 use Evenement\EventEmitterTrait;
 use React\Promise\Deferred;
+use React\Promise\PromiseInterface;
 
 /**
  * Contains constants for WebSocket events as well as handlers
@@ -90,7 +91,7 @@ abstract class Event
     /**
      * The Discord client instance.
      *
-     * @var \Discord\Discord Client.
+     * @var Discord Client.
      */
     protected $discord;
 
@@ -114,10 +115,12 @@ abstract class Event
      *
      * @param Deferred     $deferred The promise to use
      * @param array|object $data     The data that was sent with the WebSocket
+     *
+     * @return void|PromiseInterface
      */
     abstract public function handle(Deferred &$deferred, $data);
 
-    public function __debugInfo()
+    public function __debugInfo(): array
     {
         return [];
     }

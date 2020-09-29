@@ -14,6 +14,7 @@ namespace Discord\Parts\WebSockets;
 use Carbon\Carbon;
 use Discord\Helpers\Collection;
 use Discord\Parts\Guild\Guild;
+use Discord\Parts\Guild\Role;
 use Discord\Parts\Part;
 use Discord\Parts\User\Member;
 use Discord\Parts\User\Activity;
@@ -42,9 +43,9 @@ class PresenceUpdate extends Part
     /**
      * Gets the member attribute.
      *
-     * @return \Discord\Parts\User\Member
+     * @return Member
      */
-    protected function getMemberAttribute()
+    protected function getMemberAttribute(): Member
     {
         if (isset($this->attributes['user']) && $this->guild) {
             return $this->guild->members->get('id', $this->attributes['user']->id);
@@ -54,9 +55,10 @@ class PresenceUpdate extends Part
     /**
      * Gets the user attribute.
      *
-     * @return User The user that had their presence updated.
+     * @return User       The user that had their presence updated.
+     * @throws \Exception
      */
-    protected function getUserAttribute()
+    protected function getUserAttribute(): Part
     {
         if ($user = $this->discord->users->get('id', $this->attributes['user']->id)) {
             return $user;
@@ -90,7 +92,7 @@ class PresenceUpdate extends Part
      *
      * @return Guild The guild that the user was in.
      */
-    protected function getGuildAttribute()
+    protected function getGuildAttribute(): Guild
     {
         return $this->discord->guilds->get('id', $this->guild_id);
     }
@@ -98,9 +100,9 @@ class PresenceUpdate extends Part
     /**
      * Gets the game attribute.
      *
-     * @return Game The game attribute.
+     * @return ?Activity The game attribute.
      */
-    protected function getGameAttribute()
+    protected function getGameAttribute(): ?Part
     {
         if (! isset($this->attributes['game'])) {
             return null;
@@ -112,7 +114,7 @@ class PresenceUpdate extends Part
     /**
      * Gets the premium since timestamp.
      *
-     * @return \Carbon\Carbon
+     * @return Carbon|false
      */
     protected function getPremiumSinceAttribute()
     {

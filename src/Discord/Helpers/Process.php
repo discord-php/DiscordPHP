@@ -95,19 +95,52 @@ class Process extends EventEmitter
      */
     public $pipes = [];
 
+    /**
+     * @var string
+     */
     private $cmd;
+    /**
+     * @var string|null
+     */
     private $cwd;
+    /**
+     * @var array
+     */
     private $env;
+    /**
+     * @var array|string[][]|null
+     */
     private $fds;
 
+    /**
+     * @var bool
+     */
     private $enhanceSigchildCompatibility;
     private $sigchildPipe;
 
+    /**
+     * @var false|resource
+     */
     private $process;
+    /**
+     * @var array
+     */
     private $status;
+    /**
+     * @var null|int
+     */
     private $exitCode;
+    /**
+     * @var null|int
+     */
     private $fallbackExitCode;
+    /**
+     * @var null|int
+     */
     private $stopSignal;
+    /**
+     * @var null|int
+     */
     private $termSignal;
 
     private static $sigchild;
@@ -121,7 +154,7 @@ class Process extends EventEmitter
      * @param  null|array      $fds File descriptors to allocate for this process (or null = default STDIO streams)
      * @throws \LogicException On windows or when proc_open() is not installed
      */
-    public function __construct($cmd, $cwd = null, array $env = null, array $fds = null)
+    public function __construct(string $cmd, $cwd = null, array $env = null, array $fds = null)
     {
         if (! \function_exists('proc_open')) {
             throw new \LogicException('The Process class relies on proc_open(), which is not available on your PHP installation.');
@@ -167,7 +200,7 @@ class Process extends EventEmitter
      * @param  float             $interval Interval to periodically monitor process state (seconds)
      * @throws \RuntimeException If the process is already running or fails to start
      */
-    public function start(LoopInterface $loop, $interval = 0.1)
+    public function start(LoopInterface $loop, float $interval = 0.1): void
     {
         if ($this->isRunning()) {
             throw new \RuntimeException('Process is already running');
@@ -268,7 +301,7 @@ class Process extends EventEmitter
      * This method should only be invoked via the periodic timer that monitors
      * the process state.
      */
-    public function close()
+    public function close(): void
     {
         if ($this->process === null) {
             return;
@@ -303,10 +336,10 @@ class Process extends EventEmitter
     /**
      * Terminate the process with an optional signal.
      *
-     * @param  int  $signal Optional signal (default: SIGTERM)
-     * @return bool Whether the signal was sent successfully
+     * @param  int|null $signal Optional signal (default: SIGTERM)
+     * @return bool     Whether the signal was sent successfully
      */
-    public function terminate($signal = null)
+    public function terminate($signal = null): bool
     {
         if ($this->process === null) {
             return false;
@@ -324,7 +357,7 @@ class Process extends EventEmitter
      *
      * @return string
      */
-    public function getCommand()
+    public function getCommand(): string
     {
         return $this->cmd;
     }
@@ -388,7 +421,7 @@ class Process extends EventEmitter
      *
      * @return bool
      */
-    public function isRunning()
+    public function isRunning(): bool
     {
         if ($this->process === null) {
             return false;
@@ -404,7 +437,7 @@ class Process extends EventEmitter
      *
      * @return bool
      */
-    public function isStopped()
+    public function isStopped(): bool
     {
         $status = $this->getFreshStatus();
 
@@ -416,7 +449,7 @@ class Process extends EventEmitter
      *
      * @return bool
      */
-    public function isTerminated()
+    public function isTerminated(): bool
     {
         $status = $this->getFreshStatus();
 
@@ -429,7 +462,7 @@ class Process extends EventEmitter
      * @see \Symfony\Component\Process\Process::isSigchildEnabled()
      * @return bool
      */
-    final public static function isSigchildEnabled()
+    final public static function isSigchildEnabled(): bool
     {
         if (null !== self::$sigchild) {
             return self::$sigchild;
@@ -450,7 +483,7 @@ class Process extends EventEmitter
      *
      * @param bool $sigchild
      */
-    final public static function setSigchildEnabled($sigchild)
+    final public static function setSigchildEnabled(bool $sigchild): void
     {
         self::$sigchild = (bool) $sigchild;
     }
@@ -460,7 +493,7 @@ class Process extends EventEmitter
      *
      * This should only be used if --enable-sigchild compatibility was enabled.
      */
-    private function pollExitCodePipe()
+    private function pollExitCodePipe(): void
     {
         if ($this->sigchildPipe === null) {
             return;
@@ -487,7 +520,7 @@ class Process extends EventEmitter
      *
      * This should only be used if --enable-sigchild compatibility was enabled.
      */
-    private function closeExitCodePipe()
+    private function closeExitCodePipe(): void
     {
         if ($this->sigchildPipe === null) {
             return;
@@ -502,7 +535,7 @@ class Process extends EventEmitter
      *
      * @return array
      */
-    private function getCachedStatus()
+    private function getCachedStatus(): array
     {
         if ($this->status === null) {
             $this->updateStatus();
@@ -516,7 +549,7 @@ class Process extends EventEmitter
      *
      * @return array
      */
-    private function getFreshStatus()
+    private function getFreshStatus(): array
     {
         $this->updateStatus();
 
@@ -530,7 +563,7 @@ class Process extends EventEmitter
      * signaled, respectively. Otherwise, signal values will remain as-is so the
      * corresponding getter methods may be used at a later point in time.
      */
-    private function updateStatus()
+    private function updateStatus(): void
     {
         if ($this->process === null) {
             return;

@@ -16,7 +16,7 @@ use Discord\Parts\Channel\Channel;
 /**
  * Contains private channels and groups that the user has access to.
  *
- * @see Discord\Parts\Channel\Channel
+ * @see \Discord\Parts\Channel\Channel
  */
 class PrivateChannelRepository extends AbstractRepository
 {

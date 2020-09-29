@@ -32,6 +32,9 @@ final class ReadableResourceStream extends EventEmitter implements ReadableStrea
      */
     public $stream;
 
+    /**
+     * @var LoopInterface
+     */
     private $loop;
 
     /**
@@ -54,9 +57,21 @@ final class ReadableResourceStream extends EventEmitter implements ReadableStrea
      */
     private $bufferSize;
 
+    /**
+     * @var bool
+     */
     private $closed = false;
+    /**
+     * @var bool
+     */
     private $listening = false;
 
+    /**
+     * ReadableResourceStream constructor.
+     * @param mixed         $stream
+     * @param LoopInterface $loop
+     * @param null|int      $readChunkSize
+     */
     public function __construct($stream, LoopInterface $loop, $readChunkSize = null)
     {
         if (! \is_resource($stream) || \get_resource_type($stream) !== 'stream') {
@@ -94,12 +109,12 @@ final class ReadableResourceStream extends EventEmitter implements ReadableStrea
         $this->resume();
     }
 
-    public function isReadable()
+    public function isReadable(): bool
     {
         return ! $this->closed;
     }
 
-    public function pause()
+    public function pause(): void
     {
         if ($this->listening) {
             $this->loop->removeReadStream($this->stream);
@@ -107,7 +122,7 @@ final class ReadableResourceStream extends EventEmitter implements ReadableStrea
         }
     }
 
-    public function resume()
+    public function resume(): void
     {
         if (! $this->listening && ! $this->closed) {
             $this->loop->addReadStream($this->stream, [$this, 'handleData']);
@@ -115,12 +130,12 @@ final class ReadableResourceStream extends EventEmitter implements ReadableStrea
         }
     }
 
-    public function pipe(WritableStreamInterface $dest, array $options = [])
+    public function pipe(WritableStreamInterface $dest, array $options = []): WritableStreamInterface
     {
         return Util::pipe($this, $dest, $options);
     }
 
-    public function close()
+    public function close(): void
     {
         if ($this->closed) {
             return;
@@ -138,7 +153,7 @@ final class ReadableResourceStream extends EventEmitter implements ReadableStrea
     }
 
     /** @internal */
-    public function handleData()
+    private function handleData(): void
     {
         $error = null;
         \set_error_handler(function ($errno, $errstr, $errfile, $errline) use (&$error) {
@@ -183,7 +198,7 @@ final class ReadableResourceStream extends EventEmitter implements ReadableStrea
      *
      * @codeCoverageIgnore
      */
-    private function isLegacyPipe($resource)
+    private function isLegacyPipe($resource): bool
     {
         if (\PHP_VERSION_ID < 50428 || (\PHP_VERSION_ID >= 50500 && \PHP_VERSION_ID < 50512)) {
             $meta = \stream_get_meta_data($resource);

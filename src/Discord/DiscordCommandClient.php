@@ -43,7 +43,8 @@ class DiscordCommandClient extends Discord
     /**
      * Constructs a new command client.
      *
-     * @param array $options An array of options.
+     * @param  array      $options An array of options.
+     * @throws \Exception
      */
     public function __construct(array $options = [])
     {
@@ -100,7 +101,7 @@ class DiscordCommandClient extends Discord
                     }
 
                     $help = $command->getHelp($prefix);
-                    
+
                     $embed = [
                         'author' => [
                             'name' => $this->commandClientOptions['name'],
@@ -128,7 +129,7 @@ class DiscordCommandClient extends Discord
                             if ($command != $commandString) {
                                 continue;
                             }
-    
+
                             $aliasesString .= "{$alias}\r\n";
                         }
                         $embed['fields'][] = [
@@ -149,7 +150,7 @@ class DiscordCommandClient extends Discord
                     }
 
                     $message->channel->sendMessage('', false, $embed);
-                    
+
                     return;
                 }
 
@@ -198,9 +199,10 @@ class DiscordCommandClient extends Discord
      * @param \Callable|string $callable The function called when the command is executed.
      * @param array            $options  An array of options.
      *
-     * @return Command The command instance.
+     * @return Command    The command instance.
+     * @throws \Exception
      */
-    public function registerCommand($command, $callable, array $options = [])
+    public function registerCommand(string $command, $callable, array $options = []): Command
     {
         if (array_key_exists($command, $this->commands)) {
             throw new \Exception("A command with the name {$command} already exists.");
@@ -219,9 +221,10 @@ class DiscordCommandClient extends Discord
     /**
      * Unregisters a command.
      *
-     * @param string $command The command name.
+     * @param  string     $command The command name.
+     * @throws \Exception
      */
-    public function unregisterCommand($command)
+    public function unregisterCommand(string $command): void
     {
         if (! array_key_exists($command, $this->commands)) {
             throw new \Exception("A command with the name {$command} does not exist.");
@@ -236,7 +239,7 @@ class DiscordCommandClient extends Discord
      * @param string $alias   The alias to add.
      * @param string $command The command.
      */
-    public function registerAlias($alias, $command)
+    public function registerAlias(string $alias, string $command): void
     {
         $this->aliases[$alias] = $command;
     }
@@ -244,9 +247,10 @@ class DiscordCommandClient extends Discord
     /**
      * Unregisters a command alias.
      *
-     * @param string $alias The alias name.
+     * @param  string     $alias The alias name.
+     * @throws \Exception
      */
-    public function unregisterCommandAlias($alias)
+    public function unregisterCommandAlias(string $alias): void
     {
         if (! array_key_exists($alias, $this->aliases)) {
             throw new \Exception("A command alias with the name {$alias} does not exist.");
@@ -263,7 +267,7 @@ class DiscordCommandClient extends Discord
      *
      * @return Command|null The command.
      */
-    public function getCommand($command, $aliases = true)
+    public function getCommand(string $command, bool $aliases = true): ?Command
     {
         if (array_key_exists($command, $this->commands)) {
             return $this->commands[$command];
@@ -282,8 +286,9 @@ class DiscordCommandClient extends Discord
      * @param array            $options  An array of options.
      *
      * @return array[Command, array] The command instance and options.
+     * @throws \Exception
      */
-    public function buildCommand($command, $callable, array $options = [])
+    public function buildCommand(string $command, $callable, array $options = []): array
     {
         if (is_string($callable)) {
             $callable = function ($message) use ($callable) {
@@ -315,7 +320,7 @@ class DiscordCommandClient extends Discord
      *
      * @return array Options.
      */
-    protected function resolveCommandOptions(array $options)
+    protected function resolveCommandOptions(array $options): array
     {
         $resolver = new OptionsResolver();
 
@@ -353,7 +358,7 @@ class DiscordCommandClient extends Discord
      *
      * @return array Options.
      */
-    protected function resolveCommandClientOptions(array $options)
+    protected function resolveCommandClientOptions(array $options): array
     {
         $resolver = new OptionsResolver();
 
@@ -386,7 +391,7 @@ class DiscordCommandClient extends Discord
      *
      * @return mixed
      */
-    public function __get($name)
+    public function __get(string $name)
     {
         $allowed = ['commands', 'aliases'];
 

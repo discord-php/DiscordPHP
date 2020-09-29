@@ -17,8 +17,8 @@ use Discord\Repository\AbstractRepository;
 /**
  * Contains invites for channels.
  *
- * @see Discord\Parts\Guild\Invite
- * @see Discord\Parts\Channel\Channel
+ * @see \Discord\Parts\Guild\Invite
+ * @see \Discord\Parts\Channel\Channel
  */
 class InviteRepository extends AbstractRepository
 {

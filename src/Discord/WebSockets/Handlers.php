@@ -82,7 +82,7 @@ class Handlers
      * @param string $classname    The Event class name.
      * @param array  $alternatives Alternative event names for the handler.
      */
-    public function addHandler($event, $classname, array $alternatives = [])
+    public function addHandler(string $event, string $classname, array $alternatives = []): void
     {
         $this->handlers[$event] = [
             'class' => $classname,
@@ -97,11 +97,13 @@ class Handlers
      *
      * @return array|null The Event class name or null;
      */
-    public function getHandler($event)
+    public function getHandler(string $event): ?array
     {
         if (isset($this->handlers[$event])) {
             return $this->handlers[$event];
         }
+
+        return null;
     }
 
     /**
@@ -109,7 +111,7 @@ class Handlers
      *
      * @return array Array of handlers.
      */
-    public function getHandlers()
+    public function getHandlers(): array
     {
         return $this->handlers;
     }
@@ -119,7 +121,7 @@ class Handlers
      *
      * @return array Array of handler events.
      */
-    public function getHandlerKeys()
+    public function getHandlerKeys(): array
     {
         return array_keys($this->handlers);
     }
@@ -129,7 +131,7 @@ class Handlers
      *
      * @param string $event The event handler to remove.
      */
-    public function removeHandler($event)
+    public function removeHandler(string $event): void
     {
         unset($this->handlers[$event]);
     }

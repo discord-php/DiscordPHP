@@ -21,12 +21,12 @@ use Discord\Parts\Part;
  * @property string $name
  * @property int $type
  * @property string $url
- * @property \Carbon\Carbon $created_at
+ * @property Carbon $created_at
  * @property array $timestamps
  * @property string $application_id
  * @property string $details
  * @property string $state
- * @property \Discord\Parts\Guild\Emoji $emoji
+ * @property Emoji $emoji
  * @property object $party
  * @property object $assets
  * @property object $secrets
@@ -68,9 +68,9 @@ class Activity extends Part
     /**
      * Gets the created at timestamp.
      *
-     * @return \Carbon\Carbon
+     * @return Carbon
      */
-    protected function getCreatedAtAttribute()
+    protected function getCreatedAtAttribute(): Carbon
     {
         if (isset($this->attributes['created_at'])) {
             return Carbon::createFromTimestamp($this->attributes['created_at']);
@@ -80,9 +80,9 @@ class Activity extends Part
     /**
      * Gets the emoji object of the activity.
      *
-     * @return \Discord\Parts\Guild\Emoji
+     * @return Emoji
      */
-    protected function getEmojiAttribute()
+    protected function getEmojiAttribute(): Emoji
     {
         if (isset($this->attributes['emoji'])) {
             return $this->factory->create(Emoji::class, $this->attributes['emoji'], true);
