@@ -263,7 +263,7 @@ abstract class AbstractRepository implements ArrayAccess, Countable, IteratorAgg
                 )
             )
         )->then(function ($response) use ($deferred, &$part) {
-            $part->fill($response);
+            $part->fill((array) $response);
 
             $deferred->resolve($part);
         }, function ($e) use ($deferred) {
@@ -298,7 +298,7 @@ abstract class AbstractRepository implements ArrayAccess, Countable, IteratorAgg
                 str_replace(':id', $id, $this->endpoints['get'])
             )
         )->then(function ($response) use ($deferred) {
-            $part = $this->factory->create($this->part, $response, true);
+            $part = $this->factory->create($this->part, (array) $response, true);
 
             $deferred->resolve($part);
         }, function ($e) use ($deferred) {

@@ -22,7 +22,7 @@ class VoiceServerUpdate extends Event
      */
     public function handle(Deferred &$deferred, $data): void
     {
-        $part = $this->factory->create(VoiceServerUpdatePart::class, $data, true);
+        $part = $this->factory->create(VoiceServerUpdatePart::class, (array) $data, true);
 
         $deferred->resolve($part);
     }

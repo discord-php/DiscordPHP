@@ -174,7 +174,7 @@ class Message extends Part
 
         if (isset($this->attributes['mention_channels'])) {
             foreach ($this->attributes['mention_channels'] as $channel) {
-                $collection->push($this->factory->create(Channel::class, $channel, true));
+                $collection->push($this->factory->create(Channel::class, (array) $channel, true));
             }
         }
 
@@ -193,7 +193,7 @@ class Message extends Part
 
         if (isset($this->attributes['reactions'])) {
             foreach ($this->attributes['reactions'] as $reaction) {
-                $collection->push($this->factory->create(Reaction::class, $reaction, true));
+                $collection->push($this->factory->create(Reaction::class, (array) $reaction, true));
             }
         }
 
@@ -255,7 +255,7 @@ class Message extends Part
         $users = new Collection([], 'id');
 
         foreach ($this->attributes['mentions'] as $mention) {
-            $users->push($this->factory->create(User::class, $mention, true));
+            $users->push($this->factory->create(User::class, (array) $mention, true));
         }
 
         return $users;
@@ -289,7 +289,7 @@ class Message extends Part
         $embeds = new Collection([], null);
 
         foreach ($this->attributes['embeds'] as $embed) {
-            $embeds->push($this->factory->create(Embed::class, $embed, true));
+            $embeds->push($this->factory->create(Embed::class, (array) $embed, true));
         }
 
         return $embeds;
@@ -528,7 +528,7 @@ class Message extends Part
         $this->http->patch("channels/{$this->channel_id}/messages/{$this->id}", [
             'embed' => $embed->getRawAttributes(),
         ])->then(function ($data) use ($deferred) {
-            $this->fill($data);
+            $this->fill((array) $data);
             $deferred->resolve($this);
         }, Bind([$deferred, 'reject']));
 

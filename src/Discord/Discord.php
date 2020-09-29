@@ -17,6 +17,7 @@ use Discord\Http\Http;
 use Discord\Http\ReactDriver;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\OAuth\Application;
+use Discord\Parts\Part;
 use Discord\Repository\GuildRepository;
 use Discord\Repository\PrivateChannelRepository;
 use Discord\Repository\UserRepository;
@@ -381,7 +382,7 @@ class Discord
         $this->logger->debug('discord trace received', ['trace' => $content->_trace]);
 
         // Setup the user account
-        $this->client = $this->factory->create(Client::class, $content->user, true);
+        $this->client = $this->factory->create(Client::class, (array) $content->user, true);
         $this->sessionId = $content->session_id;
 
         $this->logger->debug('client created and session id stored', ['session_id' => $content->session_id, 'user' => $this->client->user->getPublicAttributes()]);
@@ -389,7 +390,7 @@ class Discord
         // Private Channels
         if ($this->options['pmChannels']) {
             foreach ($content->private_channels as $channel) {
-                $channelPart = $this->factory->create(Channel::class, $channel, true);
+                $channelPart = $this->factory->create(Channel::class, (array) $channel, true);
                 $this->private_channels->push($channelPart);
             }
 
@@ -476,7 +477,7 @@ class Discord
             $member['game'] = null;
 
             $memberPart = $this->factory->create(Member::class, $member, true);
-            $userPart = $this->factory->create(User::class, $member['user'], true);
+            $userPart = $this->factory->create(User::class, (array) $member['user'], true);
 
             $guild->members->offsetSet($memberPart->id, $memberPart);
             $this->users->offsetSet($userPart->id, $userPart);
@@ -1246,7 +1247,7 @@ class Discord
      *
      * @param Guild $guild The guild.
      */
-    public function addLargeGuild(Guild $guild): void
+    public function addLargeGuild(Part $guild): void
     {
         $this->largeGuilds[] = $guild->id;
     }

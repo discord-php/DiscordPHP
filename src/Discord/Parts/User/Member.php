@@ -385,7 +385,7 @@ class Member extends Part
             }
         } else {
             foreach ($this->attributes['roles'] as $role) {
-                $roles->push($this->factory->create(Role::class, $role, true));
+                $roles->push($this->factory->create(Role::class, (array) $role, true));
             }
         }
 

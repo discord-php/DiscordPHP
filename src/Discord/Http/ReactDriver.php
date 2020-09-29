@@ -60,7 +60,7 @@ class ReactDriver extends Browser implements HttpDriver
     /**
      * {@inheritdoc}
      */
-    public function runRequest(string $method, string $url, array $headers, string $body, array $options = []): PromiseInterface
+    public function runRequest(string $method, string $url, array $headers, ?string $body, array $options = []): PromiseInterface
     {
         $deferred = new Deferred();
         $count = 0;

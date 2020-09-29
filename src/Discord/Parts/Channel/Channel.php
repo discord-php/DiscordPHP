@@ -150,7 +150,7 @@ class Channel extends Part
 
         if (array_key_exists('recipients', $this->attributes)) {
             foreach ((array) $this->attributes['recipients'] as $recipient) {
-                $recipients->push($this->factory->create(User::class, $recipient, true));
+                $recipients->push($this->factory->create(User::class, (array) $recipient, true));
             }
         }
 
@@ -194,7 +194,7 @@ class Channel extends Part
                 $messages = new Collection();
 
                 foreach ($response as $message) {
-                    $message = $this->factory->create(Message::class, $message, true);
+                    $message = $this->factory->create(Message::class, (array) $message, true);
                     $messages->push($message);
                 }
 
@@ -352,7 +352,7 @@ class Channel extends Part
 
         $this->http->post($this->replaceWithVariables('channels/:id/invites'), $options)->then(
             function ($response) use ($deferred) {
-                $invite = $this->factory->create(Invite::class, $response, true);
+                $invite = $this->factory->create(Invite::class, (array) $response, true);
 
                 $deferred->resolve($invite);
             },
@@ -460,7 +460,7 @@ class Channel extends Part
                 $messages = new Collection();
 
                 foreach ($response as $message) {
-                    $message = $this->factory->create(Message::class, $message, true);
+                    $message = $this->factory->create(Message::class, (array) $message, true);
                     $messages->push($message);
                 }
 
@@ -547,7 +547,7 @@ class Channel extends Part
                 $invites = new Collection();
 
                 foreach ($response as $invite) {
-                    $invite = $this->factory->create(Invite::class, $invite, true);
+                    $invite = $this->factory->create(Invite::class, (array) $invite, true);
                     $invites->push($invite);
                 }
 
@@ -607,7 +607,7 @@ class Channel extends Part
             ]
         )->then(
             function ($response) use ($deferred) {
-                $message = $this->factory->create(Message::class, $response, true);
+                $message = $this->factory->create(Message::class, (array) $response, true);
                 $this->messages->push($message);
 
                 $deferred->resolve($message);
@@ -637,7 +637,7 @@ class Channel extends Part
         }
 
         $this->http->post("channels/{$this->id}/messages", ['embed' => $embed->getRawAttributes()])->then(function ($response) use ($deferred) {
-            $message = $this->factory->create(Message::class, $response, true);
+            $message = $this->factory->create(Message::class, (array) $response, true);
             $this->messages->push($message);
 
             $deferred->resolve($message);
@@ -678,7 +678,7 @@ class Channel extends Part
 
         $this->http->sendFile($this, $filepath, $filename, $content, $tts)->then(
             function ($response) use ($deferred) {
-                $message = $this->factory->create(Message::class, $response, true);
+                $message = $this->factory->create(Message::class, (array) $response, true);
                 $this->messages->push($message);
 
                 $deferred->resolve($message);

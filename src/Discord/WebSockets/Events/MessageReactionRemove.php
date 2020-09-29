@@ -22,7 +22,7 @@ class MessageReactionRemove extends Event
      */
     public function handle(Deferred &$deferred, $data): void
     {
-        $reaction = $this->factory->create(MessageReaction::class, $data, true);
+        $reaction = $this->factory->create(MessageReaction::class, (array) $data, true);
         $deferred->resolve($reaction);
     }
 }

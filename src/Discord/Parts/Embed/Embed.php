@@ -119,7 +119,7 @@ class Embed extends Part
 
         foreach ($this->attributes['fields'] as $field) {
             if (! ($field instanceof Field)) {
-                $field = $this->factory->create(Field::class, $field, true);
+                $field = $this->factory->create(Field::class, (array) $field, true);
             }
 
             $fields[] = $field;

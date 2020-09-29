@@ -170,7 +170,7 @@ class Guild extends Part
                 $invites = new Collection();
 
                 foreach ($response as $invite) {
-                    $invite = $this->factory->create(Invite::class, $invite, true);
+                    $invite = $this->factory->create(Invite::class, (array) $invite, true);
                     $invites->push($invite);
                 }
 
@@ -304,7 +304,7 @@ class Guild extends Part
 
         $this->roles->save($rolePart)->then(
             function ($role) use ($deferred, $data) {
-                $role->fill($data);
+                $role->fill((array) $data);
 
                 $this->roles->save($role)->then(
                     function ($role) use ($deferred) {

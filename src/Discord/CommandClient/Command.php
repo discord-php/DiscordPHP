@@ -100,7 +100,7 @@ class Command
      * @param string               $longDescription The long description of the command.
      * @param string               $usage           The usage of the command.
      * @param int                  $cooldown        The cooldown of the command in milliseconds.
-     * @param int                  $cooldownMessage The cooldown message to show when a cooldown is in effect.
+     * @param string               $cooldownMessage The cooldown message to show when a cooldown is in effect.
      */
     public function __construct(
         DiscordCommandClient $client,
@@ -110,7 +110,7 @@ class Command
         string $longDescription,
         string $usage,
         int $cooldown,
-        int $cooldownMessage
+        string $cooldownMessage
     ) {
         $this->client = $client;
         $this->command = $command;

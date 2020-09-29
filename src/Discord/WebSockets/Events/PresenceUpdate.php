@@ -25,7 +25,7 @@ class PresenceUpdate extends Event
         /**
          * @var PresenceUpdatePart
          */
-        $presence = $this->factory->create(PresenceUpdatePart::class, $data, true);
+        $presence = $this->factory->create(PresenceUpdatePart::class, (array) $data, true);
 
         if ($guild = $presence->guild) {
             if ($member = $presence->member) {
