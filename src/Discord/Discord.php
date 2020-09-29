@@ -18,6 +18,7 @@ use Discord\Http\ReactDriver;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\OAuth\Application;
 use Discord\Parts\Part;
+use Discord\Repository\AbstractRepository;
 use Discord\Repository\GuildRepository;
 use Discord\Repository\PrivateChannelRepository;
 use Discord\Repository\UserRepository;
@@ -1280,14 +1281,17 @@ class Discord
     /**
      * Allows access to the part/repository factory.
      *
-     * @param  mixed ...$arguments
-     * @return mixed
+     * @param string $class   The class to build.
+     * @param array  $data    Data to create the object.
+     * @param bool   $created Whether the object is created (if part).
+     * 
+     * @return Part|AbstractRepository
      *
      * @see Factory::create()
      */
-    public function factory(...$arguments)
+    public function factory(string $class, array $data = [], bool $created = false)
     {
-        return call_user_func_array([$this->factory, 'create'], func_get_args());
+        return $this->factory->create($class, $data, $created);
     }
 
     /**
