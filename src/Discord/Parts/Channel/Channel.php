@@ -38,30 +38,30 @@ use function React\Promise\reject as Reject;
 /**
  * A Channel can be either a text or voice channel on a Discord guild.
  *
- * @property string                     $id              The unique identifier of the Channel.
- * @property string                     $name            The name of the channel.
- * @property int                        $type            The type of the channel.
- * @property string                     $topic           The topic of the channel.
- * @property Guild                      $guild           The guild that the channel belongs to. Only for text or voice channels.
- * @property string|null                $guild_id        The unique identifier of the guild that the channel belongs to. Only for text or voice channels.
- * @property int                        $position        The position of the channel on the sidebar.
- * @property bool                       $is_private      Whether the channel is a private channel.
- * @property string                     $last_message_id The unique identifier of the last message sent in the channel.
- * @property int                        $bitrate         The bitrate of the channel. Only for voice channels.
- * @property User                       $recipient       The first recipient of the channel. Only for DM or group channels.
- * @property Collection|User[]          $recipients      A collection of all the recipients in the channel. Only for DM or group channels.
- * @property bool                       $nsfw            Whether the channel is NSFW.
- * @property int                        $user_limit      The user limit of the channel.
- * @property int                        $rate_limit_per_user Amount of seconds a user has to wait before sending a new message.
- * @property string                     $icon            Icon hash.
- * @property string                     $owner_id        The ID of the DM creator. Only for DM or group channels.
- * @property string                     $application_id  ID of the group DM creator if it is a bot.
- * @property string                     $parent_id       ID of the parent channel.
- * @property Carbon                     $last_pin_timestamp When the last message was pinned.
- * @property MemberRepository           $members
- * @property MessageRepository          $messages
- * @property OverwriteRepository        $overwrites
- * @property WebhookRepository          $webhooks
+ * @property string $id              The unique identifier of the Channel.
+ * @property string $name            The name of the channel.
+ * @property int $type            The type of the channel.
+ * @property string $topic           The topic of the channel.
+ * @property Guild $guild           The guild that the channel belongs to. Only for text or voice channels.
+ * @property string|null $guild_id        The unique identifier of the guild that the channel belongs to. Only for text or voice channels.
+ * @property int $position        The position of the channel on the sidebar.
+ * @property bool $is_private      Whether the channel is a private channel.
+ * @property string $last_message_id The unique identifier of the last message sent in the channel.
+ * @property int $bitrate         The bitrate of the channel. Only for voice channels.
+ * @property User $recipient       The first recipient of the channel. Only for DM or group channels.
+ * @property Collection|User[] $recipients      A collection of all the recipients in the channel. Only for DM or group channels.
+ * @property bool $nsfw            Whether the channel is NSFW.
+ * @property int $user_limit      The user limit of the channel.
+ * @property int $rate_limit_per_user Amount of seconds a user has to wait before sending a new message.
+ * @property string $icon            Icon hash.
+ * @property string $owner_id        The ID of the DM creator. Only for DM or group channels.
+ * @property string $application_id  ID of the group DM creator if it is a bot.
+ * @property string $parent_id       ID of the parent channel.
+ * @property Carbon $last_pin_timestamp When the last message was pinned.
+ * @property MemberRepository $members
+ * @property MessageRepository $messages
+ * @property OverwriteRepository $overwrites
+ * @property WebhookRepository $webhooks
  */
 class Channel extends Part
 {
@@ -315,7 +315,7 @@ class Channel extends Part
     {
         $deferred = new Deferred();
 
-        if ($this->getChannelType() != self::TYPE_VOICE) {
+        if (! $this->allowVoice()) {
             $deferred->reject(new \Exception('You cannot move a member in a text channel.'));
 
             return $deferred->promise();
@@ -332,6 +332,80 @@ class Channel extends Part
 
         // At the moment we are unable to check if the member
         // was moved successfully.
+
+        return $deferred->promise();
+    }
+
+    /**
+     * Mutes a member on a voice channel.
+     *
+     * @param Member|int The member to mute. (either a Member part or the member ID)
+     *
+     * @return \React\Promise\Promise
+     */
+    public function muteMember($member)
+    {
+        $deferred = new Deferred();
+
+        if (! $this->allowVoice()) {
+            $deferred->reject(new \Exception('You cannot mute a member in a text channel.'));
+
+            return $deferred->promise();
+        }
+
+        if ($member instanceof Member) {
+            $member = $member->id;
+        }
+
+        $this->http->patch(
+            "guilds/{$this->guild_id}/members/{$member}",
+            [
+                'mute' => true,
+            ]
+        )->then(
+            \React\Partial\bind([$deferred, 'resolve']),
+            \React\Partial\bind([$deferred, 'reject'])
+        );
+
+        // At the moment we are unable to check if the member
+        // was muted successfully.
+
+        return $deferred->promise();
+    }
+
+    /**
+     * Unmutes a member on a voice channel.
+     *
+     * @param Member|int The member to unmute. (either a Member part or the member ID)
+     *
+     * @return \React\Promise\Promise
+     */
+    public function unmuteMember($member)
+    {
+        $deferred = new Deferred();
+
+        if (! $this->allowVoice()) {
+            $deferred->reject(new \Exception('You cannot unmute a member in a text channel.'));
+
+            return $deferred->promise();
+        }
+
+        if ($member instanceof Member) {
+            $member = $member->id;
+        }
+
+        $this->http->patch(
+            "guilds/{$this->guild_id}/members/{$member}",
+            [
+                'mute' => false,
+            ]
+        )->then(
+            \React\Partial\bind([$deferred, 'resolve']),
+            \React\Partial\bind([$deferred, 'reject'])
+        );
+
+        // At the moment we are unable to check if the member
+        // was unmuted successfully.
 
         return $deferred->promise();
     }
@@ -597,8 +671,8 @@ class Channel extends Part
         }
         $deferred = new Deferred();
 
-        if ($this->getChannelType() != self::TYPE_TEXT) {
-            $deferred->reject(new \Exception('You cannot send a message to a voice channel.'));
+        if (! $this->allowText()) {
+            $deferred->reject(new \Exception('You can only send text messages to a text enabled channel.'));
 
             return $deferred->promise();
         }
@@ -635,7 +709,7 @@ class Channel extends Part
     {
         $deferred = new Deferred();
 
-        if ($this->getChannelType() != self::TYPE_TEXT) {
+        if (! $this->allowText()) {
             $deferred->reject(new \Exception('You cannot send an embed to a voice channel.'));
 
             return $deferred->promise();
@@ -665,7 +739,7 @@ class Channel extends Part
     {
         $deferred = new Deferred();
 
-        if ($this->getChannelType() != self::TYPE_TEXT) {
+        if (! $this->allowText()) {
             $deferred->reject(new \Exception('You cannot send a file to a voice channel.'));
 
             return $deferred->promise();
@@ -703,7 +777,7 @@ class Channel extends Part
     {
         $deferred = new Deferred();
 
-        if ($this->getChannelType() != self::TYPE_TEXT) {
+        if (! $this->allowText()) {
             $deferred->reject(new \Exception('You cannot broadcast typing to a voice channel.'));
 
             return $deferred->promise();
@@ -720,10 +794,10 @@ class Channel extends Part
     /**
      * Creates a message collector for the channel.
      *
-     * @param callable $filter           The filter function. Returns true or false.
+     * @param callable $filter  The filter function. Returns true or false.
      * @param array    $options
-     * @param int      $options['time']  Time in milliseconds until the collector finishes or false.
-     * @param int      $options['limit'] The amount of messages allowed or false.
+     * @param int      $options ['time']  Time in milliseconds until the collector finishes or false.
+     * @param int      $options ['limit'] The amount of messages allowed or false.
      *
      * @return PromiseInterface
      */
@@ -786,6 +860,26 @@ class Channel extends Part
                 return self::TYPE_TEXT;
                 break;
         }
+    }
+
+    /**
+     * Returns if allow text.
+     *
+     * @return bool if we can send text or not.
+     */
+    public function allowText()
+    {
+        return in_array($this->type, [self::TYPE_TEXT, self::TYPE_DM, self::TYPE_GROUP, self::TYPE_NEWS]);
+    }
+
+    /**
+     * Returns if allow voice.
+     *
+     * @return bool if we can send voice or not.
+     */
+    public function allowVoice()
+    {
+        return ($this->type == self::TYPE_VOICE);
     }
 
     /**
