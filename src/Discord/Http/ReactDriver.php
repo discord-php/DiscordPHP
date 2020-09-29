@@ -67,7 +67,8 @@ class ReactDriver extends Browser implements HttpDriver
 
         $sendRequest = function () use ($method, $url, $headers, $body, $options, $deferred, &$sendRequest, &$count) {
             $this->{$method}($this->makeUrl($url), $headers, $body)->then(function (ResponseInterface $response) use ($deferred, &$sendRequest, &$count) {
-                if ($response->getStatusCode() !== 429 && (int) $response->getHeader('X-RateLimit-Remaining')[0] == 0) {
+                $xRateRemaining = $response->getHeader('X-RateLimit-Remaining');
+                if ($response->getStatusCode() !== 429 && sizeof($xRateRemaining) !== 0 && (int) $xRateRemaining[0] == 0) {
                     $this->rateLimited = true;
 
                     $limitEnd = Carbon::createFromTimestamp((int) $response->getHeader('X-RateLimit-Reset')[0]);
