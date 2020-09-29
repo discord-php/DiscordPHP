@@ -36,30 +36,30 @@ use Traversable;
 /**
  * A Channel can be either a text or voice channel on a Discord guild.
  *
- * @property string                     $id              The unique identifier of the Channel.
- * @property string                     $name            The name of the channel.
- * @property int                        $type            The type of the channel.
- * @property string                     $topic           The topic of the channel.
- * @property Guild                      $guild           The guild that the channel belongs to. Only for text or voice channels.
- * @property string|null                $guild_id        The unique identifier of the guild that the channel belongs to. Only for text or voice channels.
- * @property int                        $position        The position of the channel on the sidebar.
- * @property bool                       $is_private      Whether the channel is a private channel.
- * @property string                     $last_message_id The unique identifier of the last message sent in the channel.
- * @property int                        $bitrate         The bitrate of the channel. Only for voice channels.
- * @property User                       $recipient       The first recipient of the channel. Only for DM or group channels.
- * @property Collection|User[]          $recipients      A collection of all the recipients in the channel. Only for DM or group channels.
- * @property bool                       $nsfw            Whether the channel is NSFW.
- * @property int                        $user_limit      The user limit of the channel.
- * @property int                        $rate_limit_per_user Amount of seconds a user has to wait before sending a new message.
- * @property string                     $icon            Icon hash.
- * @property string                     $owner_id        The ID of the DM creator. Only for DM or group channels.
- * @property string                     $application_id  ID of the group DM creator if it is a bot.
- * @property string                     $parent_id       ID of the parent channel.
- * @property Carbon                     $last_pin_timestamp When the last message was pinned.
- * @property MemberRepository           $members
- * @property MessageRepository          $messages
- * @property OverwriteRepository        $overwrites
- * @property WebhookRepository          $webhooks
+ * @property string $id              The unique identifier of the Channel.
+ * @property string $name            The name of the channel.
+ * @property int $type            The type of the channel.
+ * @property string $topic           The topic of the channel.
+ * @property Guild $guild           The guild that the channel belongs to. Only for text or voice channels.
+ * @property string|null $guild_id        The unique identifier of the guild that the channel belongs to. Only for text or voice channels.
+ * @property int $position        The position of the channel on the sidebar.
+ * @property bool $is_private      Whether the channel is a private channel.
+ * @property string $last_message_id The unique identifier of the last message sent in the channel.
+ * @property int $bitrate         The bitrate of the channel. Only for voice channels.
+ * @property User $recipient       The first recipient of the channel. Only for DM or group channels.
+ * @property Collection|User[] $recipients      A collection of all the recipients in the channel. Only for DM or group channels.
+ * @property bool $nsfw            Whether the channel is NSFW.
+ * @property int $user_limit      The user limit of the channel.
+ * @property int $rate_limit_per_user Amount of seconds a user has to wait before sending a new message.
+ * @property string $icon            Icon hash.
+ * @property string $owner_id        The ID of the DM creator. Only for DM or group channels.
+ * @property string $application_id  ID of the group DM creator if it is a bot.
+ * @property string $parent_id       ID of the parent channel.
+ * @property Carbon $last_pin_timestamp When the last message was pinned.
+ * @property MemberRepository $members
+ * @property MessageRepository $messages
+ * @property OverwriteRepository $overwrites
+ * @property WebhookRepository $webhooks
  */
 class Channel extends Part
 {
@@ -153,7 +153,7 @@ class Channel extends Part
 
         return $recipients;
     }
-    
+
     /**
      * Returns the guild attribute.
      *
@@ -356,8 +356,8 @@ class Channel extends Part
                 'mute' => true,
             ]
         )->then(
-            \React\Partial\bind_right($this->resolve, $deferred),
-            \React\Partial\bind_right($this->reject, $deferred)
+            \React\Partial\bind([$deferred, 'resolve']),
+            \React\Partial\bind([$deferred, 'reject'])
         );
 
         // At the moment we are unable to check if the member
@@ -393,8 +393,8 @@ class Channel extends Part
                 'mute' => false,
             ]
         )->then(
-            \React\Partial\bind_right($this->resolve, $deferred),
-            \React\Partial\bind_right($this->reject, $deferred)
+            \React\Partial\bind([$deferred, 'resolve']),
+            \React\Partial\bind([$deferred, 'reject'])
         );
 
         // At the moment we are unable to check if the member
@@ -406,11 +406,11 @@ class Channel extends Part
     /**
      * Creates an invite for the channel.
      *
-     * @param array $options              An array of options. All fields are optional.
-     * @param int   $options['max_age']   The time that the invite will be valid in seconds.
-     * @param int   $options['max_uses']  The amount of times the invite can be used.
-     * @param bool  $options['temporary'] Whether the invite is for temporary membership.
-     * @param bool  $options['unique']    Whether the invite code should be unique (useful for creating many unique one time use invites).
+     * @param array $options An array of options. All fields are optional.
+     * @param int   $options ['max_age']   The time that the invite will be valid in seconds.
+     * @param int   $options ['max_uses']  The amount of times the invite can be used.
+     * @param bool  $options ['temporary'] Whether the invite is for temporary membership.
+     * @param bool  $options ['unique']    Whether the invite code should be unique (useful for creating many unique one time use invites).
      *
      * @return \React\Promise\Promise
      */
@@ -424,35 +424,6 @@ class Channel extends Part
 
                 $deferred->resolve($invite);
             },
-            \React\Partial\bind([$deferred, 'reject'])
-        );
-
-        return $deferred->promise();
-    }
-
-    /**
-     * Deletes a message.
-     *
-     * @param message|Message or id to delete.
-     *
-     * @return \React\Promise\Promise
-     */
-    public function deleteMessage($message)
-    {
-        $deferred = new Deferred();
-
-        if (empty($message)) {
-            $deferred->reject(new \Exception('$message must be a message or  its id.'));
-
-            return $deferred->promise();
-        } elseif ($message instanceof Message) {
-            $messageID = $message->id;
-        } else {
-            $messageID = $message;
-        }
-
-        $this->http->delete("channels/{$this->id}/messages/{$messageID}")->then(
-            \React\Partial\bind([$deferred, 'resolve']),
             \React\Partial\bind([$deferred, 'reject'])
         );
 
@@ -809,10 +780,10 @@ class Channel extends Part
     /**
      * Creates a message collector for the channel.
      *
-     * @param callable $filter           The filter function. Returns true or false.
+     * @param callable $filter  The filter function. Returns true or false.
      * @param array    $options
-     * @param int      $options['time']  Time in milliseconds until the collector finishes or false.
-     * @param int      $options['limit'] The amount of messages allowed or false.
+     * @param int      $options ['time']  Time in milliseconds until the collector finishes or false.
+     * @param int      $options ['limit'] The amount of messages allowed or false.
      *
      * @return \React\Promise\Promise
      */
