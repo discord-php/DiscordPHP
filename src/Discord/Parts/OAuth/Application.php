@@ -40,9 +40,13 @@ class Application extends Part
      * @return User       Owner of the application.
      * @throws \Exception
      */
-    protected function getOwnerAttribute(): Part
+    protected function getOwnerAttribute(): ?User
     {
-        return $this->factory->create(User::class, $this->attributes['owner'], true);
+        if (isset($this->attributes['owner'])) {
+            return $this->factory->create(User::class, $this->attributes['owner'], true);
+        }
+        
+        return null;
     }
 
     /**

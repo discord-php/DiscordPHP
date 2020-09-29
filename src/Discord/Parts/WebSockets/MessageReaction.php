@@ -45,13 +45,15 @@ class MessageReaction extends Part
      *
      * @return User
      */
-    protected function getUserAttribute(): User
+    protected function getUserAttribute(): ?User
     {
         if ($member = $this->member) {
             return $member->user;
         } elseif ($user = $this->discord->users->get('id', $this->attributes['user_id'])) {
             return $user;
         }
+
+        return null;
     }
 
     /**
@@ -63,7 +65,7 @@ class MessageReaction extends Part
      * @return Message
      * @throws \Exception
      */
-    protected function getMessageAttribute(): Part
+    protected function getMessageAttribute(): Message
     {
         if ($channel = $this->channel) {
             if ($message = $channel->messages->get('id', $this->attributes['message_id'])) {
@@ -80,7 +82,7 @@ class MessageReaction extends Part
      * @return Member
      * @throws \Exception
      */
-    protected function getMemberAttribute(): Part
+    protected function getMemberAttribute(): ?Member
     {
         if (isset($this->attributes['user_id']) && $guild = $this->guild) {
             if ($member = $guild->members->get('id', $this->attributes['user_id'])) {
@@ -89,6 +91,8 @@ class MessageReaction extends Part
         } elseif (isset($this->attributes['member'])) {
             return $this->factory->create(Member::class, $this->attributes['member'], true);
         }
+
+        return null;
     }
 
     /**
@@ -97,11 +101,13 @@ class MessageReaction extends Part
      * @return Emoji
      * @throws \Exception
      */
-    protected function getEmojiAttribute(): Part
+    protected function getEmojiAttribute(): ?Emoji
     {
         if (isset($this->attributes['emoji'])) {
             return $this->factory->create(Emoji::class, $this->attributes['emoji'], true);
         }
+
+        return null;
     }
 
     /**
@@ -109,7 +115,7 @@ class MessageReaction extends Part
      *
      * @return Channel
      */
-    protected function getChannelAttribute(): Channel
+    protected function getChannelAttribute(): ?Channel
     {
         if ($guild = $this->guild) {
             return $guild->channels->get('id', $this->attributes['channel_id']);
@@ -123,10 +129,12 @@ class MessageReaction extends Part
      *
      * @return Guild
      */
-    protected function getGuildAttribute(): Guild
+    protected function getGuildAttribute(): ?Guild
     {
         if (isset($this->attributes['guild_id'])) {
             return $this->discord->guilds->get('id', $this->attributes['guild_id']);
         }
+
+        return null;
     }
 }

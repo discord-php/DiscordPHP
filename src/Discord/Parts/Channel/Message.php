@@ -168,7 +168,7 @@ class Message extends Part
      * @return Collection|Channel[]
      * @throws \Exception
      */
-    protected function getMentionChannelsAttribute()
+    protected function getMentionChannelsAttribute(): Collection
     {
         $collection = new Collection();
 
@@ -187,9 +187,9 @@ class Message extends Part
      * @return Collection|Reaction[]
      * @throws \Exception
      */
-    protected function getReactionsAttribute()
+    protected function getReactionsAttribute(): Collection
     {
-        $collection = new Collection([], null);
+        $collection = new Collection([], null, Reaction::class);
 
         if (isset($this->attributes['reactions'])) {
             foreach ($this->attributes['reactions'] as $reaction) {
@@ -206,7 +206,7 @@ class Message extends Part
      * @return Channel    The channel the message was sent in.
      * @throws \Exception
      */
-    protected function getChannelAttribute(): Part
+    protected function getChannelAttribute(): Channel
     {
         foreach ($this->discord->guilds as $guild) {
             if ($channel = $guild->channels->get('id', $this->channel_id)) {
@@ -275,7 +275,7 @@ class Message extends Part
             }
         }
 
-        return $this->factory->create(User::class, $this->attributes['author'], true);
+        return $this->factory->create(User::class, (array) $this->attributes['author'], true);
     }
 
     /**
@@ -312,7 +312,7 @@ class Message extends Part
      * @return Carbon|null The time that the message was edited.
      * @throws \Exception
      */
-    protected function getEditedTimestampAttribute()
+    protected function getEditedTimestampAttribute(): ?Carbon
     {
         if (! $this->attributes['edited_timestamp']) {
             return null;
@@ -359,7 +359,7 @@ class Message extends Part
      *
      * @return PromiseInterface
      */
-    public function delayedReply(string $text, int $delay)
+    public function delayedReply(string $text, int $delay): PromiseInterface
     {
         $deferred = new Deferred();
 
@@ -521,7 +521,7 @@ class Message extends Part
      *
      * @return PromiseInterface
      */
-    public function addEmbed(Embed $embed)
+    public function addEmbed(Embed $embed): PromiseInterface
     {
         $deferred = new Deferred();
 

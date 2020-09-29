@@ -133,7 +133,7 @@ class Channel extends Part
      *
      * @return User The recipient.
      */
-    protected function getRecipientAttribute(): User
+    protected function getRecipientAttribute(): ?User
     {
         return $this->recipients->first();
     }
@@ -172,11 +172,13 @@ class Channel extends Part
      *
      * @return Carbon
      */
-    protected function getLastPinTimestampAttribute(): Carbon
+    protected function getLastPinTimestampAttribute(): ?Carbon
     {
         if (isset($this->attributes['last_pin_timestamp'])) {
             return Carbon::parse($this->attributes['last_pin_timestamp']);
         }
+
+        return null;
     }
 
     /**
@@ -695,9 +697,9 @@ class Channel extends Part
     /**
      * Broadcasts that you are typing to the channel. Lasts for 5 seconds.
      *
-     * @return void|PromiseInterface Whether the request succeeded or failed.
+     * @return PromiseInterface
      */
-    public function broadcastTyping()
+    public function broadcastTyping(): PromiseInterface
     {
         $deferred = new Deferred();
 
@@ -712,7 +714,7 @@ class Channel extends Part
             Bind([$deferred, 'reject'])
         );
 
-        return $deferred->resolve();
+        return $deferred->promise();
     }
 
     /**

@@ -50,6 +50,8 @@ class PresenceUpdate extends Part
         if (isset($this->attributes['user']) && $this->guild) {
             return $this->guild->members->get('id', $this->attributes['user']->id);
         }
+
+        return null;
     }
 
     /**
@@ -58,7 +60,7 @@ class PresenceUpdate extends Part
      * @return User       The user that had their presence updated.
      * @throws \Exception
      */
-    protected function getUserAttribute(): Part
+    protected function getUserAttribute(): ?User
     {
         if ($user = $this->discord->users->get('id', $this->attributes['user']->id)) {
             return $user;
@@ -72,7 +74,7 @@ class PresenceUpdate extends Part
      *
      * @return Collection|Role[]
      */
-    protected function getRolesAttribute()
+    protected function getRolesAttribute(): Collection
     {
         $roles = new Collection();
 
@@ -114,12 +116,12 @@ class PresenceUpdate extends Part
     /**
      * Gets the premium since timestamp.
      *
-     * @return Carbon|false
+     * @return Carbon|null
      */
-    protected function getPremiumSinceAttribute()
+    protected function getPremiumSinceAttribute(): ?Carbon
     {
         if (! isset($this->attributes['premium_since'])) {
-            return false;
+            return null;
         }
 
         return Carbon::parse($this->attributes['premium_since']);

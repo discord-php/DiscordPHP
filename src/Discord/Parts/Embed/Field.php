@@ -38,6 +38,6 @@ class Field extends Part
             return false;
         }
 
-        return $this->attributes['inline'];
+        return (bool) $this->attributes['inline'];
     }
 }

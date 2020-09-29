@@ -243,7 +243,7 @@ class Member extends Part
      *
      * @return RolePermission
      */
-    public function getPermissions(?Channel $channel = null): Part
+    public function getPermissions(?Channel $channel = null): RolePermission
     {
         $bitwise = $this->guild->roles->get('id', $this->guild_id)->permissions->bitwise;
 
@@ -294,19 +294,19 @@ class Member extends Part
     /**
      * Gets the activities attribute.
      *
-     * @return Activity[]
+     * @return Collection|Activity[]
      * @throws \Exception
      */
-    protected function getActivitiesAttribute(): array
+    protected function getActivitiesAttribute(): Collection
     {
-        $activities = [];
+        $activities = new Collection([], null);
 
         if (! array_key_exists('activities', $this->attributes)) {
             $this->attributes['activities'] = [];
         }
 
         foreach ($this->attributes['activities'] as $activity) {
-            $activities[] = $this->factory->create(Activity::class, (array) $activity, true);
+            $activities->push($this->factory->create(Activity::class, (array) $activity, true));
         }
 
         return $activities;
@@ -315,9 +315,9 @@ class Member extends Part
     /**
      * Returns the id attribute.
      *
-     * @return int The user ID of the member.
+     * @return string The user ID of the member.
      */
-    protected function getIdAttribute(): int
+    protected function getIdAttribute(): string
     {
         return $this->attributes['user']->id;
     }
@@ -348,7 +348,7 @@ class Member extends Part
      * @return User       The user that owns the member.
      * @throws \Exception
      */
-    protected function getUserAttribute(): Part
+    protected function getUserAttribute(): User
     {
         if ($user = $this->discord->users->get('id', $this->attributes['user']->id)) {
             return $user;
@@ -416,12 +416,12 @@ class Member extends Part
     /**
      * Returns the premium since attribute.
      *
-     * @return Carbon|false
+     * @return Carbon|null
      */
-    protected function getPremiumSinceAttribute()
+    protected function getPremiumSinceAttribute(): ?Carbon
     {
         if (! isset($this->attributes['premium_since'])) {
-            return false;
+            return null;
         }
 
         return Carbon::parse($this->attributes['premium_since']);

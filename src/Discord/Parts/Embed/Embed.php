@@ -12,6 +12,7 @@
 namespace Discord\Parts\Embed;
 
 use Carbon\Carbon;
+use Discord\Helpers\Collection;
 use Discord\Parts\Part;
 
 /**
@@ -89,7 +90,7 @@ class Embed extends Part
      *
      * @return Video The video attribute.
      */
-    protected function getVideoAttribute()
+    protected function getVideoAttribute(): Video
     {
         return $this->attributeHelper('video', Video::class);
     }
@@ -99,7 +100,7 @@ class Embed extends Part
      *
      * @return Author The author attribute.
      */
-    protected function getAuthorAttribute()
+    protected function getAuthorAttribute(): Author
     {
         return $this->attributeHelper('author', Author::class);
     }
@@ -107,11 +108,11 @@ class Embed extends Part
     /**
      * Gets the fields attribute.
      *
-     * @return array[Field] The fields attribute.
+     * @return Collection|Field[]
      */
-    protected function getFieldsAttribute()
+    protected function getFieldsAttribute(): Collection
     {
-        $fields = [];
+        $fields = new Collection([], 'name', Field::class);
 
         if (! array_key_exists('fields', $this->attributes)) {
             return $fields;
@@ -122,7 +123,7 @@ class Embed extends Part
                 $field = $this->factory->create(Field::class, (array) $field, true);
             }
 
-            $fields[] = $field;
+            $fields->push($field);
         }
 
         return $fields;

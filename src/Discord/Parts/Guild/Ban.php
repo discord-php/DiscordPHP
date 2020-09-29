@@ -31,13 +31,15 @@ class Ban extends Part
     /**
      * Returns the user id of the ban.
      *
-     * @return string
+     * @return string|null
      */
-    protected function getUserIdAttribute(): string
+    protected function getUserIdAttribute(): ?string
     {
         if (isset($this->attributes['user']->id)) {
             return $this->attributes['user']->id;
         }
+
+        return null;
     }
 
     /**
@@ -55,17 +57,17 @@ class Ban extends Part
      *
      * @return User
      */
-    protected function getUserAttribute(): Part
+    protected function getUserAttribute(): ?Part
     {
         if (! isset($this->attributes['user'])) {
-            return;
+            return null;
         }
 
         if ($user = $this->discord->users->get('id', $this->attributes['user']->id)) {
             return $user;
         }
 
-        return $this->factory->part(User::class, $this->attributes['user'], true);
+        return $this->factory->part(User::class, (array) $this->attributes['user'], true);
     }
 
     /**

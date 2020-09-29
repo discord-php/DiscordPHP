@@ -43,7 +43,7 @@ class TypingStart extends Part
      *
      * @return User The user that started typing.
      */
-    protected function getUserAttribute(): User
+    protected function getUserAttribute(): ?User
     {
         return $this->discord->users->get('id', $this->user_id);
     }
@@ -79,7 +79,7 @@ class TypingStart extends Part
      *
      * @return Channel The channel that the user started typing in.
      */
-    protected function getChannelAttribute(): Channel
+    protected function getChannelAttribute(): ?Channel
     {
         if ($this->guild) {
             return $this->guild->channels->get('id', $this->attributes['channel_id']);

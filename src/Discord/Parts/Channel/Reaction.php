@@ -34,10 +34,12 @@ class Reaction extends Part
      * @return Emoji
      * @throws \Exception
      */
-    protected function getEmojiAttribute(): Part
+    protected function getEmojiAttribute(): ?Part
     {
         if (isset($this->attributes['emoji'])) {
             return $this->factory->create(Emoji::class, $this->attributes['emoji'], true);
         }
+
+        return null;
     }
 }

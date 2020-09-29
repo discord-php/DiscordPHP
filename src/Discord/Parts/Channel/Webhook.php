@@ -95,12 +95,12 @@ class Webhook extends Part
     /**
      * Gets the user that created the webhook.
      *
-     * @return User
+     * @return User|null
      */
-    protected function getUserAttribute(): Part
+    protected function getUserAttribute(): ?Part
     {
         if (! isset($this->attributes['user'])) {
-            return;
+            return null;
         }
 
         if ($user = $this->discord->users->get('id', $this->attributes['user']->id)) {
