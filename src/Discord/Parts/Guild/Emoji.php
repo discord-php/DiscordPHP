@@ -38,7 +38,7 @@ class Emoji extends Part
      *
      * @return Guild The guild the emoji belongs to.
      */
-    protected function getGuildAttribute()
+    protected function getGuildAttribute(): ?Guild
     {
         return $this->discord->guilds->get('id', $this->guild_id);
     }
@@ -48,12 +48,12 @@ class Emoji extends Part
      *
      * @return Collection A collection of roles for the emoji.
      */
-    protected function getRolesAttribute()
+    protected function getRolesAttribute(): Collection
     {
         if (! $this->guild) {
-            return [];
+            return new Collection();
         }
-        
+
         return $this->guild->roles->filter(function ($role) {
             return array_search($role->id, $this->attributes['roles']) !== false;
         });
@@ -64,7 +64,7 @@ class Emoji extends Part
      *
      * @return string
      */
-    public function toReactionString()
+    public function toReactionString(): string
     {
         if ($this->id) {
             return ":{$this->name}:{$this->id}";
@@ -81,9 +81,9 @@ class Emoji extends Part
     public function __toString()
     {
         if ($this->id) {
-            return "<a:{$this->name}:{$this->id}>";
+            return '<'.($this->animated ? 'a' : '').$this->toReactionString().'>';
         }
-        
+
         return $this->name;
     }
 }

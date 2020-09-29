@@ -126,7 +126,7 @@ class Intents
      * - CHANNEL_PINS_UPDATE
      */
     const DIRECT_MESSAGES = (1 << 12);
-    
+
     /**
      * Direct message reaction events:.
      *
@@ -149,7 +149,7 @@ class Intents
      *
      * @return array
      */
-    public static function getValidIntents()
+    public static function getValidIntents(): array
     {
         $reflect = new \ReflectionClass(__CLASS__);
 
@@ -161,7 +161,7 @@ class Intents
      *
      * @return int
      */
-    public static function getAllIntents()
+    public static function getAllIntents(): int
     {
         $intentVal = 0;
 

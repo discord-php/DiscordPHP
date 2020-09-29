@@ -20,9 +20,9 @@ class InviteCreate extends Event
     /**
      * {@inheritdoc}
      */
-    public function handle(Deferred &$deferred, $data)
+    public function handle(Deferred &$deferred, $data): void
     {
-        $invite = $this->factory->create(Invite::class, $data, true);
+        $invite = $this->factory->create(Invite::class, (array) $data, true);
 
         $deferred->resolve($invite);
     }

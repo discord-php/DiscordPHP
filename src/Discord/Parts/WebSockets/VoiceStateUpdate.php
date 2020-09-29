@@ -11,6 +11,8 @@
 
 namespace Discord\Parts\WebSockets;
 
+use Discord\Parts\Channel\Channel;
+use Discord\Parts\Guild\Guild;
 use Discord\Parts\Part;
 use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
@@ -21,10 +23,10 @@ use Discord\Parts\User\User;
  * @property string $guild_id
  * @property string $channel_id
  * @property string $user_id
- * @property \Discord\Parts\User\Member $member
- * @property \Discord\Parts\Guild\Guild $guild
- * @property \Discord\Parts\Channel\Channel $channel
- * @property \Discord\Parts\User\User $user
+ * @property Member $member
+ * @property Guild $guild
+ * @property Channel $channel
+ * @property User $user
  * @property string $session_id
  * @property bool $deaf
  * @property bool $mute
@@ -57,9 +59,10 @@ class VoiceStateUpdate extends Part
     /**
      * Gets the member attribute.
      *
-     * @return Member|null The member attribute.
+     * @return ?Member    The member attribute.
+     * @throws \Exception
      */
-    protected function getMemberAttribute()
+    protected function getMemberAttribute(): ?Part
     {
         if ($this->guild) {
             if ($member = $this->guild->members->get('id', $this->user_id)) {
@@ -73,9 +76,9 @@ class VoiceStateUpdate extends Part
     /**
      * Gets the channel attribute.
      *
-     * @return Channel|null The channel attribute.
+     * @return ?Channel The channel attribute.
      */
-    protected function getChannelAttribute()
+    protected function getChannelAttribute(): ?Part
     {
         if ($this->guild) {
             return $this->guild->channels->get('id', $this->channel_id);
@@ -85,9 +88,10 @@ class VoiceStateUpdate extends Part
     /**
      * Gets the user attribute.
      *
-     * @return User|null The user attribute.
+     * @return ?User      The user attribute.
+     * @throws \Exception
      */
-    protected function getUserAttribute()
+    protected function getUserAttribute(): ?Part
     {
         if ($user = $this->discord->users->get('id', $this->user_id)) {
             return $user;
@@ -100,9 +104,9 @@ class VoiceStateUpdate extends Part
     /**
      * Gets the guild attribute.
      *
-     * @return Guild|null The guild attribute.
+     * @return ?Guild The guild attribute.
      */
-    protected function getGuildAttribute()
+    protected function getGuildAttribute(): ?Guild
     {
         return $this->discord->guilds->get('id', $this->guild_id);
     }

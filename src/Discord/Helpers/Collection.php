@@ -17,6 +17,7 @@ use Illuminate\Support\Arr;
 use IteratorAggregate;
 use JsonSerializable;
 use Serializable;
+use Traversable;
 
 /**
  * Collection of items. Inspired by Laravel Collections.
@@ -47,11 +48,11 @@ class Collection implements ArrayAccess, Serializable, JsonSerializable, Iterato
     /**
      * Create a new collection.
      *
-     * @param mixed  $items
-     * @param string $discrim
-     * @param string $class
+     * @param mixed       $items
+     * @param string      $discrim
+     * @param string|null $class
      */
-    public function __construct($items = [], $discrim = 'id', $class = null)
+    public function __construct(array $items = [], ?string $discrim = 'id', ?string $class = null)
     {
         $this->items = $items;
         $this->discrim = $discrim;
@@ -62,11 +63,11 @@ class Collection implements ArrayAccess, Serializable, JsonSerializable, Iterato
      * Gets an item from the collection.
      *
      * @param string $discrim
-     * @param string $key
+     * @param mixed  $key
      *
      * @return mixed
      */
-    public function get($discrim, $key)
+    public function get(string $discrim, $key)
     {
         if ($discrim == $this->discrim && isset($this->items[$key])) {
             return $this->items[$key];
@@ -79,6 +80,8 @@ class Collection implements ArrayAccess, Serializable, JsonSerializable, Iterato
                 return $item;
             }
         }
+
+        return null;
     }
 
     /**
@@ -115,9 +118,9 @@ class Collection implements ArrayAccess, Serializable, JsonSerializable, Iterato
      *
      * @param array $items
      *
-     * @return this
+     * @return Collection
      */
-    public function fill($items)
+    public function fill(array $items): Collection
     {
         foreach ($items as $item) {
             $this->pushItem($item);
@@ -131,9 +134,9 @@ class Collection implements ArrayAccess, Serializable, JsonSerializable, Iterato
      *
      * @param mixed ...$items
      *
-     * @return this
+     * @return Collection
      */
-    public function push(...$items)
+    public function push(...$items): Collection
     {
         foreach ($items as $item) {
             $this->pushItem($item);
@@ -147,9 +150,9 @@ class Collection implements ArrayAccess, Serializable, JsonSerializable, Iterato
      *
      * @param mixed $item
      *
-     * @return this
+     * @return Collection
      */
-    public function pushItem($item)
+    public function pushItem($item): Collection
     {
         if (is_null($this->discrim)) {
             $this->items[] = $item;
@@ -175,7 +178,7 @@ class Collection implements ArrayAccess, Serializable, JsonSerializable, Iterato
      *
      * @return int
      */
-    public function count()
+    public function count(): int
     {
         return count($this->items);
     }
@@ -190,6 +193,8 @@ class Collection implements ArrayAccess, Serializable, JsonSerializable, Iterato
         foreach ($this->items as $item) {
             return $item;
         }
+        
+        return null;
     }
 
     /**
@@ -199,7 +204,7 @@ class Collection implements ArrayAccess, Serializable, JsonSerializable, Iterato
      *
      * @return bool
      */
-    public function isset($offset)
+    public function isset($offset): bool
     {
         return $this->offsetExists($offset);
     }
@@ -211,7 +216,7 @@ class Collection implements ArrayAccess, Serializable, JsonSerializable, Iterato
      *
      * @return bool
      */
-    public function has(...$keys)
+    public function has(...$keys): bool
     {
         foreach ($keys as $key) {
             if (! isset($this->items[$key])) {
@@ -226,12 +231,12 @@ class Collection implements ArrayAccess, Serializable, JsonSerializable, Iterato
      * Runs a filter callback over the collection and
      * returns a new collection based on the response
      * of the callback.
-     * 
+     *
      * @param callable $callback
-     * 
+     *
      * @return Collection
      */
-    public function filter(callable $callback)
+    public function filter(callable $callback): Collection
     {
         $collection = new Collection([], $this->discrim, $this->class);
 
@@ -246,10 +251,8 @@ class Collection implements ArrayAccess, Serializable, JsonSerializable, Iterato
 
     /**
      * Clears the collection.
-     *
-     * @return this
      */
-    public function clear()
+    public function clear(): void
     {
         $this->items = [];
     }
@@ -261,12 +264,12 @@ class Collection implements ArrayAccess, Serializable, JsonSerializable, Iterato
      *
      * @return Collection
      */
-    public function map(callable $callback)
+    public function map(callable $callback): Collection
     {
         $keys = array_keys($this->items);
         $values = array_map($callback, array_values($this->items));
 
-        return new Collection(array_combine($keys, $values), $this->discrim);
+        return new Collection(array_combine($keys, $values), $this->discrim, $this->class);
     }
 
     /**
@@ -276,7 +279,7 @@ class Collection implements ArrayAccess, Serializable, JsonSerializable, Iterato
      *
      * @return bool
      */
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         return isset($this->items[$offset]);
     }
@@ -299,7 +302,7 @@ class Collection implements ArrayAccess, Serializable, JsonSerializable, Iterato
      * @param mixed $offset
      * @param mixed $value
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         $this->items[$offset] = $value;
     }
@@ -309,7 +312,7 @@ class Collection implements ArrayAccess, Serializable, JsonSerializable, Iterato
      *
      * @param mixed offset
      */
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): void
     {
         unset($this->items[$offset]);
     }
@@ -319,7 +322,7 @@ class Collection implements ArrayAccess, Serializable, JsonSerializable, Iterato
      *
      * @return string
      */
-    public function serialize()
+    public function serialize(): string
     {
         return json_encode($this->items);
     }
@@ -329,7 +332,7 @@ class Collection implements ArrayAccess, Serializable, JsonSerializable, Iterato
      *
      * @param string $serialized
      */
-    public function unserialize($serialized)
+    public function unserialize($serialized): void
     {
         $this->items = json_decode($serialized);
     }
@@ -339,7 +342,7 @@ class Collection implements ArrayAccess, Serializable, JsonSerializable, Iterato
      *
      * @return array
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): array
     {
         return $this->items;
     }
@@ -349,7 +352,7 @@ class Collection implements ArrayAccess, Serializable, JsonSerializable, Iterato
      *
      * @return Traversable
      */
-    public function getIterator()
+    public function getIterator(): Traversable
     {
         return new ArrayIterator($this->items);
     }
@@ -359,7 +362,7 @@ class Collection implements ArrayAccess, Serializable, JsonSerializable, Iterato
      *
      * @return array
      */
-    public function __debugInfo()
+    public function __debugInfo(): array
     {
         return $this->items;
     }

@@ -20,9 +20,9 @@ class TypingStart extends Event
     /**
      * {@inheritdoc}
      */
-    public function handle(Deferred &$deferred, $data)
+    public function handle(Deferred &$deferred, $data): void
     {
-        $typing = $this->factory->create(TypingStartPart::class, $data, true);
+        $typing = $this->factory->create(TypingStartPart::class, (array) $data, true);
 
         $deferred->resolve($typing);
     }

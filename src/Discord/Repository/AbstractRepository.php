@@ -20,6 +20,8 @@ use Discord\Http\Http;
 use Discord\Parts\Part;
 use React\Promise\Deferred;
 use React\Promise\PromiseInterface;
+use function React\Promise\reject as Reject;
+use function React\Promise\resolve as Resolve;
 
 /**
  * Repositories provide a way to store and update parts on the Discord server.
@@ -84,7 +86,7 @@ abstract class AbstractRepository implements ArrayAccess, Countable, IteratorAgg
      * @param Factory $factory The parts factory.
      * @param array   $vars    An array of variables used for the endpoint.
      */
-    public function __construct(Http $http, Factory $factory, $vars = [])
+    public function __construct(Http $http, Factory $factory, array $vars = [])
     {
         $this->http = $http;
         $this->factory = $factory;
@@ -95,12 +97,13 @@ abstract class AbstractRepository implements ArrayAccess, Countable, IteratorAgg
     /**
      * Freshens the repository collection.
      *
-     * @return \React\Promise\Promise
+     * @return PromiseInterface
+     * @throws \Exception
      */
-    public function freshen()
+    public function freshen(): PromiseInterface
     {
         if (! isset($this->endpoints['all'])) {
-            return \React\Promise\reject(new \Exception('You cannot freshen this repository.'));
+            return Reject(new \Exception('You cannot freshen this repository.'));
         }
 
         $deferred = new Deferred();
@@ -135,9 +138,10 @@ abstract class AbstractRepository implements ArrayAccess, Countable, IteratorAgg
      *
      * @param array $attributes The attributes for the new part.
      *
-     * @return Part The new part.
+     * @return Part       The new part.
+     * @throws \Exception
      */
-    public function create(array $attributes = [])
+    public function create(array $attributes = []): Part
     {
         $attributes = array_merge($attributes, $this->vars);
 
@@ -150,8 +154,9 @@ abstract class AbstractRepository implements ArrayAccess, Countable, IteratorAgg
      * @param Part $part The part to save.
      *
      * @return PromiseInterface
+     * @throws \Exception
      */
-    public function save(Part $part)
+    public function save(Part $part): PromiseInterface
     {
         if ($part->created) {
             $method = 'patch';
@@ -159,7 +164,7 @@ abstract class AbstractRepository implements ArrayAccess, Countable, IteratorAgg
             $attributes = $part->getUpdatableAttributes();
 
             if (! isset($this->endpoints['update'])) {
-                return \React\Promise\reject(new \Exception('You cannot update this part.'));
+                return Reject(new \Exception('You cannot update this part.'));
             }
         } else {
             $method = 'post';
@@ -167,7 +172,7 @@ abstract class AbstractRepository implements ArrayAccess, Countable, IteratorAgg
             $attributes = $part->getCreatableAttributes();
 
             if (! isset($this->endpoints['create'])) {
-                return \React\Promise\reject(new \Exception('You cannot create this part.'));
+                return Reject(new \Exception('You cannot create this part.'));
             }
         }
 
@@ -196,19 +201,20 @@ abstract class AbstractRepository implements ArrayAccess, Countable, IteratorAgg
      * @param Part|snowflake $part The part to delete.
      *
      * @return PromiseInterface
+     * @throws \Exception
      */
-    public function delete($part)
+    public function delete($part): PromiseInterface
     {
         if (! ($part instanceof Part)) {
             $part = $this->factory->part($this->part, ['id' => $part], true);
         }
 
         if (! $part->created) {
-            return \React\Promise\reject(new \Exception('You cannot delete a non-existant part.'));
+            return Reject(new \Exception('You cannot delete a non-existant part.'));
         }
 
         if (! isset($this->endpoints['delete'])) {
-            return \React\Promise\reject(new \Exception('You cannot delete this part.'));
+            return Reject(new \Exception('You cannot delete this part.'));
         }
 
         $deferred = new Deferred();
@@ -236,15 +242,16 @@ abstract class AbstractRepository implements ArrayAccess, Countable, IteratorAgg
      * @param Part $part The part to get fresh values.
      *
      * @return PromiseInterface
+     * @throws \Exception
      */
-    public function fresh(Part $part)
+    public function fresh(Part $part): PromiseInterface
     {
         if (! $part->created) {
-            return \React\Promise\reject(new \Exception('You cannot get a non-existant part.'));
+            return Reject(new \Exception('You cannot get a non-existant part.'));
         }
 
         if (! isset($this->endpoints['get'])) {
-            return \React\Promise\reject(new \Exception('You cannot get this part.'));
+            return Reject(new \Exception('You cannot get this part.'));
         }
 
         $deferred = new Deferred();
@@ -256,7 +263,7 @@ abstract class AbstractRepository implements ArrayAccess, Countable, IteratorAgg
                 )
             )
         )->then(function ($response) use ($deferred, &$part) {
-            $part->fill($response);
+            $part->fill((array) $response);
 
             $deferred->resolve($part);
         }, function ($e) use ($deferred) {
@@ -272,15 +279,16 @@ abstract class AbstractRepository implements ArrayAccess, Countable, IteratorAgg
      * @param string $id The ID to search for.
      *
      * @return PromiseInterface
+     * @throws \Exception
      */
-    public function fetch($id)
+    public function fetch(string $id): PromiseInterface
     {
         if ($part = $this->get('id', $id)) {
-            return \React\Promise\resolve($part);
+            return Resolve($part);
         }
 
         if (! isset($this->endpoints['get'])) {
-            return \React\Promise\reject(new \Exception('You cannot get this part.'));
+            return Reject(new \Exception('You cannot get this part.'));
         }
 
         $deferred = new Deferred();
@@ -290,7 +298,7 @@ abstract class AbstractRepository implements ArrayAccess, Countable, IteratorAgg
                 str_replace(':id', $id, $this->endpoints['get'])
             )
         )->then(function ($response) use ($deferred) {
-            $part = $this->factory->create($this->part, $response, true);
+            $part = $this->factory->create($this->part, (array) $response, true);
 
             $deferred->resolve($part);
         }, function ($e) use ($deferred) {
@@ -307,7 +315,7 @@ abstract class AbstractRepository implements ArrayAccess, Countable, IteratorAgg
      *
      * @return string A string with placeholders replaced.
      */
-    protected function replaceWithVariables($string)
+    protected function replaceWithVariables(string $string): string
     {
         if (preg_match_all('/:([a-z_]+)/', $string, $matches)) {
             list(
@@ -338,7 +346,7 @@ abstract class AbstractRepository implements ArrayAccess, Countable, IteratorAgg
     /**
      * Get an iterator for the items.
      *
-     * @return \ArrayIterator
+     * @return \Traversable
      */
     public function getIterator()
     {
@@ -395,7 +403,7 @@ abstract class AbstractRepository implements ArrayAccess, Countable, IteratorAgg
      *
      * @return array
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): array
     {
         return $this->collection->jsonSerialize();
     }
@@ -405,7 +413,7 @@ abstract class AbstractRepository implements ArrayAccess, Countable, IteratorAgg
      *
      * @return array An array of attributes.
      */
-    public function __debugInfo()
+    public function __debugInfo(): array
     {
         return $this->jsonSerialize();
     }
@@ -418,7 +426,7 @@ abstract class AbstractRepository implements ArrayAccess, Countable, IteratorAgg
      *
      * @return mixed
      */
-    public function __call($function, array $params)
+    public function __call(string $function, array $params)
     {
         return call_user_func_array([$this->collection, $function], $params);
     }

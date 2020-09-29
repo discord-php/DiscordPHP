@@ -20,9 +20,9 @@ class MessageCreate extends Event
     /**
      * {@inheritdoc}
      */
-    public function handle(Deferred &$deferred, $data)
+    public function handle(Deferred &$deferred, $data): void
     {
-        $message = $this->factory->create(Message::class, $data, true);
+        $message = $this->factory->create(Message::class, (array) $data, true);
 
         if ($this->discord->options['storeMessages']) {
             if ($channel = $message->channel) {

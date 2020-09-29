@@ -81,6 +81,14 @@ class Command
      * @var array Sub-Command aliases.
      */
     protected $subCommandAliases = [];
+    /**
+     * @var DiscordCommandClient
+     */
+    protected $client;
+    /**
+     * @var Callable
+     */
+    protected $callable;
 
     /**
      * Creates a command instance.
@@ -92,17 +100,17 @@ class Command
      * @param string               $longDescription The long description of the command.
      * @param string               $usage           The usage of the command.
      * @param int                  $cooldown        The cooldown of the command in milliseconds.
-     * @param int                  $cooldownMessage The cooldown message to show when a cooldown is in effect.
+     * @param string               $cooldownMessage The cooldown message to show when a cooldown is in effect.
      */
     public function __construct(
         DiscordCommandClient $client,
-        $command,
+        string $command,
         callable $callable,
-        $description,
-        $longDescription,
-        $usage,
-        $cooldown,
-        $cooldownMessage
+        string $description,
+        string $longDescription,
+        string $usage,
+        int $cooldown,
+        string $cooldownMessage
     ) {
         $this->client = $client;
         $this->command = $command;
@@ -121,9 +129,10 @@ class Command
      * @param \Callable|string $callable The function called when the command is executed.
      * @param array            $options  An array of options.
      *
-     * @return Command The command instance.
+     * @return Command    The command instance.
+     * @throws \Exception
      */
-    public function registerSubCommand($command, $callable, array $options = [])
+    public function registerSubCommand(string $command, $callable, array $options = []): Command
     {
         if (array_key_exists($command, $this->subCommands)) {
             throw new \Exception("A sub-command with the name {$command} already exists.");
@@ -142,9 +151,10 @@ class Command
     /**
      * Unregisters a sub-command.
      *
-     * @param string $command The command name.
+     * @param  string     $command The command name.
+     * @throws \Exception
      */
-    public function unregisterSubCommand($command)
+    public function unregisterSubCommand(string $command): void
     {
         if (! array_key_exists($command, $this->subCommands)) {
             throw new \Exception("A sub-command with the name {$command} does not exist.");
@@ -159,7 +169,7 @@ class Command
      * @param string $alias   The alias to add.
      * @param string $command The command.
      */
-    public function registerSubCommandAlias($alias, $command)
+    public function registerSubCommandAlias(string $alias, string $command): void
     {
         $this->subCommandAliases[$alias] = $command;
     }
@@ -167,9 +177,10 @@ class Command
     /**
      * Unregisters a sub-command alias.
      *
-     * @param string $alias The alias name.
+     * @param  string     $alias The alias name.
+     * @throws \Exception
      */
-    public function unregisterSubCommandAlias($alias)
+    public function unregisterSubCommandAlias(string $alias): void
     {
         if (! array_key_exists($alias, $this->subCommandAliases)) {
             throw new \Exception("A sub-command alias with the name {$alias} does not exist.");
@@ -219,9 +230,9 @@ class Command
      *
      * @param string $prefix The prefix of the bot.
      *
-     * @return string The help.
+     * @return array The help.
      */
-    public function getHelp($prefix)
+    public function getHelp(string $prefix): array
     {
         $subCommandsHelp = [];
 
@@ -243,14 +254,16 @@ class Command
      *
      * @param string $variable The variable to get.
      *
-     * @return mixed The value.
+     * @return string|int|false The value.
      */
-    public function __get($variable)
+    public function __get(string $variable)
     {
         $allowed = ['command', 'description', 'longDescription', 'usage', 'cooldown', 'cooldownMessage'];
 
         if (array_search($variable, $allowed) !== false) {
             return $this->{$variable};
         }
+
+        return false;
     }
 }

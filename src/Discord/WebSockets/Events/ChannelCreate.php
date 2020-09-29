@@ -20,9 +20,9 @@ class ChannelCreate extends Event
     /**
      * {@inheritdoc}
      */
-    public function handle(Deferred &$deferred, $data)
+    public function handle(Deferred &$deferred, $data): void
     {
-        $channel = $this->factory->create(Channel::class, $data, true);
+        $channel = $this->factory->create(Channel::class, (array) $data, true);
 
         if (array_search($channel->type, [Channel::TYPE_TEXT, Channel::TYPE_VOICE]) === false) {
             $this->discord->private_channels->push($channel);

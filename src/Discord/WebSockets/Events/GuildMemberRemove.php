@@ -20,9 +20,9 @@ class GuildMemberRemove extends Event
     /**
      * {@inheritdoc}
      */
-    public function handle(Deferred &$deferred, $data)
+    public function handle(Deferred &$deferred, $data): void
     {
-        $member = $this->factory->create(Member::class, $data, true);
+        $member = $this->factory->create(Member::class, (array) $data, true);
 
         if ($guild = $this->discord->guilds->get('id', $member->guild_id)) {
             $guild->members->pull($member->user->id);

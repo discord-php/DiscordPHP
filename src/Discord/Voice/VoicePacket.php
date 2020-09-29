@@ -11,6 +11,8 @@
 
 namespace Discord\Voice;
 
+use function Sodium\crypto_secretbox;
+
 /**
  * A voice packet received from Discord.
  */
@@ -38,7 +40,7 @@ class VoicePacket
     /**
      * The voice packet buffer.
      *
-     * @var \Discord\Voice\Buffer
+     * @var Buffer
      */
     protected $buffer;
 
@@ -73,7 +75,7 @@ class VoicePacket
      * @param bool        $encryption Whether the packet should be encrypted.
      * @param string|null $key        The encryption key.
      */
-    public function __construct($data, $ssrc, $seq, $timestamp, $encryption = false, $key = null)
+    public function __construct(string $data, int $ssrc, int $seq, int $timestamp, bool $encryption = false, ?string $key = null)
     {
         $this->ssrc = $ssrc;
         $this->seq = $seq;
@@ -91,7 +93,7 @@ class VoicePacket
      *
      * @param string $data The Opus data to encode.
      */
-    protected function initBufferNoEncryption($data)
+    protected function initBufferNoEncryption(string $data): void
     {
         $data = (binary) $data;
         $header = $this->buildHeader();
@@ -109,14 +111,14 @@ class VoicePacket
      * @param string $data The Opus data to encode.
      * @param string $key  The encryption key.
      */
-    protected function initBufferEncryption($data, $key)
+    protected function initBufferEncryption(string $data, string $key): void
     {
         $data = (binary) $data;
         $header = $this->buildHeader();
         $nonce = new Buffer(24);
         $nonce->write((string) $header, 0);
 
-        $data = \Sodium\crypto_secretbox($data, (string) $nonce, $key);
+        $data = crypto_secretbox($data, (string) $nonce, $key);
 
         $this->buffer = new Buffer(strlen((string) $header) + strlen($data));
         $this->buffer->write((string) $header, 0);
@@ -126,9 +128,9 @@ class VoicePacket
     /**
      * Builds the header.
      *
-     * @return string The header,
+     * @return Buffer The header,
      */
-    protected function buildHeader()
+    protected function buildHeader(): Buffer
     {
         $header = new Buffer(self::RTP_HEADER_BYTE_LENGTH);
         $header[self::RTP_VERSION_PAD_EXTEND_INDEX] = pack('c', self::RTP_VERSION_PAD_EXTEND);
@@ -145,7 +147,7 @@ class VoicePacket
      *
      * @return int The packet sequence.
      */
-    public function getSequence()
+    public function getSequence(): int
     {
         return $this->seq;
     }
@@ -155,7 +157,7 @@ class VoicePacket
      *
      * @return int The packet timestamp.
      */
-    public function getTimestamp()
+    public function getTimestamp(): int
     {
         return $this->timestamp;
     }
@@ -165,7 +167,7 @@ class VoicePacket
      *
      * @return int The packet SSRC.
      */
-    public function getSSRC()
+    public function getSSRC(): int
     {
         return $this->ssrc;
     }
@@ -175,7 +177,7 @@ class VoicePacket
      *
      * @return string The packet header.
      */
-    public function getHeader()
+    public function getHeader(): string
     {
         return $this->buffer->read(0, self::RTP_HEADER_BYTE_LENGTH);
     }
@@ -185,7 +187,7 @@ class VoicePacket
      *
      * @return string The packet data.
      */
-    public function getData()
+    public function getData(): string
     {
         return $this->buffer->read(self::RTP_HEADER_BYTE_LENGTH, strlen((string) $this->buffer) - self::RTP_HEADER_BYTE_LENGTH);
     }
@@ -197,7 +199,7 @@ class VoicePacket
      *
      * @return self A voice packet.
      */
-    public static function make($data)
+    public static function make(string $data): VoicePacket
     {
         $n = new self('', 0, 0, 0);
         $buff = new Buffer($data);
@@ -213,7 +215,7 @@ class VoicePacket
      *
      * @return self
      */
-    public function setBuffer($buffer)
+    public function setBuffer(Buffer $buffer): VoicePacket
     {
         $this->buffer = $buffer;
 

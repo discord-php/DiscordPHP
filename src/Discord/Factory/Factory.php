@@ -54,14 +54,15 @@ class Factory
      * @param array  $data    Data to create the object.
      * @param bool   $created Whether the object is created (if part).
      *
-     * @return mixed The object.
+     * @return Part|AbstractRepository The object.
+     * @throws \Exception
      */
-    public function create($class, $data = [], $created = false)
+    public function create(string $class, $data = [], bool $created = false)
     {
         if (! is_array($data)) {
             $data = (array) $data;
         }
-
+        
         if (strpos($class, 'Discord\\Parts') !== false) {
             $object = $this->part($class, $data, $created);
         } elseif (strpos($class, 'Discord\\Repository') !== false) {
@@ -82,9 +83,9 @@ class Factory
      *
      * @return Part The part.
      */
-    public function part($class, $data = [], $created = false)
+    public function part(string $class, array $data = [], bool $created = false): Part
     {
-        return new $class($this, $this->discord, $this->http, (array) $data, $created);
+        return new $class($this, $this->discord, $this->http, $data, $created);
     }
 
     /**
@@ -95,7 +96,7 @@ class Factory
      *
      * @return AbstractRepository The repository.
      */
-    public function repository($class, $data = [])
+    public function repository(string $class, array $data = []): AbstractRepository
     {
         return new $class($this->http, $this, $data);
     }

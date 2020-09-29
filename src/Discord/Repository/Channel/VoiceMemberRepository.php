@@ -17,8 +17,8 @@ use Discord\Repository\AbstractRepository;
 /**
  * Contains voice states for users in the voice channel.
  *
- * @see Discord\Parts\WebSockets\VoiceStateUpdate
- * @see Discord\Parts\Channel\Channel
+ * @see \Discord\Parts\WebSockets\VoiceStateUpdate
+ * @see \Discord\Parts\Channel\Channel
  */
 class VoiceMemberRepository extends AbstractRepository
 {
@@ -26,7 +26,7 @@ class VoiceMemberRepository extends AbstractRepository
      * {@inheritdoc}
      */
     protected $discrim = 'user_id';
-    
+
     /**
      * {@inheritdoc}
      */

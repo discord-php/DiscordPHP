@@ -38,7 +38,7 @@ class LoggerWrapper
      * @param LoggerInterface $logger  The Monolog logger.
      * @param bool            $enabled Whether logging is enabled.
      */
-    public function __construct(LoggerInterface $logger, $enabled = true)
+    public function __construct(LoggerInterface $logger, bool $enabled = true)
     {
         $this->logger = $logger;
         $this->enabled = $enabled;
@@ -52,7 +52,7 @@ class LoggerWrapper
      *
      * @return mixed
      */
-    public function __call($function, $params)
+    public function __call(string $function, array $params)
     {
         if (! $this->enabled) {
             return false;
