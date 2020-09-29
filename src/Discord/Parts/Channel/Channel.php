@@ -591,7 +591,7 @@ class Channel extends Part
     public function sendMessage(string $text, bool $tts = false, $embed = null): PromiseInterface
     {
         if ($embed instanceof Embed) {
-            $embed = (array) $embed;
+            $embed = $embed->getRawAttributes();
         }
         $deferred = new Deferred();
 
