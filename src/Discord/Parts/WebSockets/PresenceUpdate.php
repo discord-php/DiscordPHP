@@ -80,7 +80,7 @@ class PresenceUpdate extends Part
             $roles->fill($this->attributes['roles']);
         } else {
             foreach ($this->attributes['roles'] as $role) {
-                $roles->push($this->guild->roles->get('id', $role->id));
+                $roles->push($this->guild->roles->get('id', $role));
             }
         }
 
