@@ -45,7 +45,7 @@ class PresenceUpdate extends Part
      *
      * @return Member
      */
-    protected function getMemberAttribute(): Member
+    protected function getMemberAttribute(): ?Member
     {
         if (isset($this->attributes['user']) && $this->guild) {
             return $this->guild->members->get('id', $this->attributes['user']->id);
