@@ -82,11 +82,13 @@ class Activity extends Part
      *
      * @return Emoji
      */
-    protected function getEmojiAttribute(): Emoji
+    protected function getEmojiAttribute(): ?Emoji
     {
         if (isset($this->attributes['emoji'])) {
-            return $this->factory->create(Emoji::class, $this->attributes['emoji'], true);
+            return $this->factory->create(Emoji::class, (array) $this->attributes['emoji'], true);
         }
+
+        return null;
     }
 
     /**
