@@ -17,6 +17,7 @@ use Exception;
 use Psr\Http\Message\ResponseInterface;
 use React\EventLoop\LoopInterface;
 use React\Http\Browser;
+use React\Http\Message\ResponseException;
 use React\Promise\Deferred;
 use React\Promise\PromiseInterface;
 use React\Socket\ConnectorInterface;
@@ -66,7 +67,7 @@ class ReactDriver extends Browser implements HttpDriver
         $count = 0;
 
         $sendRequest = function () use ($method, $url, $headers, $body, $options, $deferred, &$sendRequest, &$count) {
-            $this->{$method}($this->makeUrl($url), $headers, $body)->then(function (ResponseInterface $response) use ($deferred, &$sendRequest, &$count) {
+            $handleResponse = function (ResponseInterface $response) use ($deferred, &$sendRequest, &$count) {
                 $xRateRemaining = $response->getHeader('X-RateLimit-Remaining');
                 if ($response->getStatusCode() !== 429 && sizeof($xRateRemaining) !== 0 && (int) $xRateRemaining[0] == 0) {
                     $this->rateLimited = true;
@@ -124,8 +125,10 @@ class ReactDriver extends Browser implements HttpDriver
                 else {
                     $deferred->resolve($response);
                 }
-            })->otherwise(function (Exception $e) use ($deferred) {
-                $deferred->reject($e);
+            };
+
+            $this->{$method}($this->makeUrl($url), $headers, $body)->then($handleResponse)->otherwise(function (ResponseException $e) use ($handleResponse) {
+                $handleResponse($e->getResponse());
             });
         };
 
