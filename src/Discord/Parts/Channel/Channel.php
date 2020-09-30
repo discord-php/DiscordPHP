@@ -460,34 +460,35 @@ class Channel extends Part
         $count = count($messages);
 
         if ($count == 0) {
-            $deferred->reject(new \Exception('You cannot delete 0 messages.'));
-
-            return $deferred->promise();
+            $deferred->resolve();
         } elseif ($count == 1) {
-            $deferred->reject(new \Exception('You cannot delete 1 message.'));
+            $message = $messages[0];
 
-            return $deferred->promise();
-        }
+            $this->http->delete("channels/{$this->id}/messages/{$message}")->then(
+                Bind([$deferred, 'resolve']),
+                Bind([$deferred, 'reject'])
+            );
+        } else {
+            $messageID = [];
 
-        $messageID = [];
-
-        foreach ($messages as $message) {
-            if ($message instanceof Message) {
-                $messageID[] = $message->id;
-            } else {
-                $messageID[] = $message;
+            foreach ($messages as $message) {
+                if ($message instanceof Message) {
+                    $messageID[] = $message->id;
+                } else {
+                    $messageID[] = $message;
+                }
             }
-        }
 
-        $this->http->post(
-            "channels/{$this->id}/messages/bulk_delete",
-            [
-                'messages' => $messageID,
-            ]
-        )->then(
-            Bind([$deferred, 'resolve']),
-            Bind([$deferred, 'reject'])
-        );
+            $this->http->post(
+                "channels/{$this->id}/messages/bulk_delete",
+                [
+                    'messages' => $messageID,
+                ]
+            )->then(
+                Bind([$deferred, 'resolve']),
+                Bind([$deferred, 'reject'])
+            );
+        }
 
         return $deferred->promise();
     }
