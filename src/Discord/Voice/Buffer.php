@@ -25,7 +25,7 @@ class Buffer extends BaseBuffer implements ArrayAccess
      * @param int $value  The value that will be written.
      * @param int $offset The offset that the value will be written.
      */
-    public function writeUInt32BE($value, $offset)
+    public function writeUInt32BE(int $value, int $offset): void
     {
         $this->insert('I', $value, $offset, 3);
     }
@@ -36,7 +36,7 @@ class Buffer extends BaseBuffer implements ArrayAccess
      * @param int $value  The value that will be written.
      * @param int $offset The offset that the value will be written.
      */
-    public function writeUInt64LE($value, $offset)
+    public function writeUInt64LE(int $value, int $offset): void
     {
         $this->insert('P', $value, $offset, 8);
     }
@@ -47,7 +47,7 @@ class Buffer extends BaseBuffer implements ArrayAccess
      * @param int $value  The value that will be written.
      * @param int $offset The offset that the value will be written.
      */
-    public function writeInt($value, $offset)
+    public function writeInt(int $value, int $offset): void
     {
         $this->insert('N', $value, $offset, 4);
     }
@@ -59,7 +59,7 @@ class Buffer extends BaseBuffer implements ArrayAccess
      *
      * @return int The data read.
      */
-    public function readInt($offset)
+    public function readInt(int $offset): int
     {
         return $this->extract('N', $offset, 4);
     }
@@ -67,10 +67,10 @@ class Buffer extends BaseBuffer implements ArrayAccess
     /**
      * Writes an unsigned big endian short.
      *
-     * @param short $value  The value that will be written.
-     * @param int   $offset The offset that the value will be written.
+     * @param int $value  The value that will be written.
+     * @param int $offset The offset that the value will be written.
      */
-    public function writeShort($value, $offset)
+    public function writeShort(int $value, int $offset): void
     {
         $this->insert('n', $value, $offset, 2);
     }
@@ -82,7 +82,7 @@ class Buffer extends BaseBuffer implements ArrayAccess
      *
      * @return int The data read.
      */
-    public function readShort($offset)
+    public function readShort(int $offset): int
     {
         return $this->extract('n', $offset, 4);
     }
@@ -94,7 +94,7 @@ class Buffer extends BaseBuffer implements ArrayAccess
      *
      * @return int The value that is at the specified offset.
      */
-    public function readUIntLE($offset)
+    public function readUIntLE(int $offset): int
     {
         return $this->extract('I', $offset, 3);
     }
@@ -102,10 +102,10 @@ class Buffer extends BaseBuffer implements ArrayAccess
     /**
      * Writes a char.
      *
-     * @param char $value  The value that will be written.
-     * @param int  $offset The offset that the value will be written.
+     * @param string $value  The value that will be written.
+     * @param int    $offset The offset that the value will be written.
      */
-    public function writeChar($value, $offset)
+    public function writeChar(string $value, int $offset): void
     {
         $this->insert('c', $value, $offset, $this->lengthMap->getLengthFor('c'));
     }
@@ -113,10 +113,10 @@ class Buffer extends BaseBuffer implements ArrayAccess
     /**
      * Writes raw binary to the buffer.
      *
-     * @param binary $value  The value that will be written.
-     * @param int    $offset The offset that the value will be written at.
+     * @param int $value  The value that will be written.
+     * @param int $offset The offset that the value will be written at.
      */
-    public function writeRaw($value, $offset)
+    public function writeRaw(int $value, int $offset): void
     {
         $this->buffer[$offset] = $value;
     }
@@ -127,7 +127,7 @@ class Buffer extends BaseBuffer implements ArrayAccess
      * @param string $value  The value that will be written.
      * @param int    $offset The offset that the value will be written at.
      */
-    public function writeRawString($value, $offset)
+    public function writeRawString(string $value, int $offset): void
     {
         for ($i = 0; $i < strlen($value); ++$i) {
             $this->buffer[$offset++] = $value[$i];
@@ -153,7 +153,7 @@ class Buffer extends BaseBuffer implements ArrayAccess
      *
      * @return bool Whether the offset exists.
      */
-    public function offsetExists($key)
+    public function offsetExists($key): bool
     {
         return isset($this->buffer[$key]);
     }
@@ -164,7 +164,7 @@ class Buffer extends BaseBuffer implements ArrayAccess
      * @param mixed $key   The attribute key.
      * @param mixed $value The attribute value.
      */
-    public function offsetSet($key, $value)
+    public function offsetSet($key, $value): void
     {
         $this->buffer[$key] = $value;
     }
@@ -174,7 +174,7 @@ class Buffer extends BaseBuffer implements ArrayAccess
      *
      * @param string $key The attribute key.
      */
-    public function offsetUnset($key)
+    public function offsetUnset($key): void
     {
         if (isset($this->buffer[$key])) {
             unset($this->buffer[$key]);

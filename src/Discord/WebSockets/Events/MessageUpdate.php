@@ -20,9 +20,9 @@ class MessageUpdate extends Event
     /**
      * {@inheritdoc}
      */
-    public function handle(Deferred &$deferred, $data)
+    public function handle(Deferred &$deferred, $data): void
     {
-        $messagePart = $this->factory->create(Message::class, $data, true);
+        $messagePart = $this->factory->create(Message::class, (array) $data, true);
         $oldMessage = null;
 
         if ($channel = $messagePart->channel) {

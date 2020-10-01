@@ -20,9 +20,9 @@ class GuildBanRemove extends Event
     /**
      * {@inheritdoc}
      */
-    public function handle(Deferred &$deferred, $data)
+    public function handle(Deferred &$deferred, $data): void
     {
-        $ban = $this->factory->create(Ban::class, $data, true);
+        $ban = $this->factory->create(Ban::class, (array) $data, true);
 
         if ($guild = $ban->guild) {
             $guild->bans->pull($ban->user->id);

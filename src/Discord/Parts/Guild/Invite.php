@@ -16,20 +16,22 @@ use Discord\Parts\Channel\Channel;
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
 use React\Promise\Deferred;
+use React\Promise\PromiseInterface;
+use function React\Partial\bind as Bind;
 
 /**
  * An invite to a Channel and Guild.
  *
- * @property string                         $code       The invite code.
- * @property int                            $max_age    How many seconds the invite will be alive.
- * @property \Discord\Parts\Guild\Guild     $guild      The guild that the invite is for.
- * @property bool                           $revoked    Whether the invite has been revoked.
- * @property Carbon                         $created_at A timestamp of when the invite was created.
- * @property bool                           $temporary  Whether the invite is for temporary membership.
- * @property int                            $uses       How many times the invite has been used.
- * @property int                            $max_uses   How many times the invite can be used.
- * @property \Discord\Parts\User\User       $inviter    The user that created the invite.
- * @property \Discord\Parts\Channel\Channel $channel    The channel that the invite is for.
+ * @property string     $code       The invite code.
+ * @property int        $max_age    How many seconds the invite will be alive.
+ * @property Guild      $guild      The guild that the invite is for.
+ * @property bool       $revoked    Whether the invite has been revoked.
+ * @property Carbon     $created_at A timestamp of when the invite was created.
+ * @property bool       $temporary  Whether the invite is for temporary membership.
+ * @property int        $uses       How many times the invite has been used.
+ * @property int        $max_uses   How many times the invite can be used.
+ * @property User       $inviter    The user that created the invite.
+ * @property Channel    $channel    The channel that the invite is for.
  */
 class Invite extends Part
 {
@@ -52,9 +54,9 @@ class Invite extends Part
     /**
      * Accepts the invite.
      *
-     * @return \React\Promise\Promise
+     * @return PromiseInterface
      */
-    public function accept()
+    public function accept(): PromiseInterface
     {
         $deferred = new Deferred();
 
@@ -71,8 +73,8 @@ class Invite extends Part
         }
 
         $this->http->post("invite/{$this->code}")->then(
-            \React\Partial\bind([$deferred, 'resolve']),
-            \React\Partial\bind([$deferred, 'reject'])
+            Bind([$deferred, 'resolve']),
+            Bind([$deferred, 'reject'])
         );
 
         return $deferred->promise();
@@ -83,7 +85,7 @@ class Invite extends Part
      *
      * @return string The id attribute.
      */
-    protected function getIdAttribute()
+    protected function getIdAttribute(): string
     {
         return $this->code;
     }
@@ -93,7 +95,7 @@ class Invite extends Part
      *
      * @return string The URL to the invite.
      */
-    protected function getInviteUrlAttribute()
+    protected function getInviteUrlAttribute(): string
     {
         return "https://discord.gg/{$this->code}";
     }
@@ -101,9 +103,10 @@ class Invite extends Part
     /**
      * Returns the guild attribute.
      *
-     * @return Guild The Guild that you have been invited to.
+     * @return Guild      The Guild that you have been invited to.
+     * @throws \Exception
      */
-    protected function getGuildAttribute()
+    protected function getGuildAttribute(): Part
     {
         return $this->factory->create(Guild::class, (array) $this->attributes['guild'], true);
     }
@@ -111,9 +114,10 @@ class Invite extends Part
     /**
      * Returns the channel attribute.
      *
-     * @return Channel The Channel that you have been invited to.
+     * @return Channel    The Channel that you have been invited to.
+     * @throws \Exception
      */
-    protected function getChannelAttribute()
+    protected function getChannelAttribute(): Part
     {
         return $this->factory->create(Channel::class, (array) $this->attributes['channel'], true);
     }
@@ -123,7 +127,7 @@ class Invite extends Part
      *
      * @return int The Channel ID that you have been invited to.
      */
-    protected function getChannelIdAttribute()
+    protected function getChannelIdAttribute(): int
     {
         return $this->channel->id;
     }
@@ -131,9 +135,10 @@ class Invite extends Part
     /**
      * Returns the inviter attribute.
      *
-     * @return User The User that invited you.
+     * @return User       The User that invited you.
+     * @throws \Exception
      */
-    protected function getInviterAttribute()
+    protected function getInviterAttribute(): Part
     {
         return $this->factory->create(User::class, (array) $this->attributes['inviter'], true);
     }
@@ -141,9 +146,10 @@ class Invite extends Part
     /**
      * Returns the created at attribute.
      *
-     * @return Carbon The time that the invite was created.
+     * @return Carbon     The time that the invite was created.
+     * @throws \Exception
      */
-    protected function getCreatedAtAttribute()
+    protected function getCreatedAtAttribute(): Carbon
     {
         return new Carbon($this->attributes['created_at']);
     }
@@ -151,7 +157,7 @@ class Invite extends Part
     /**
      * {@inheritdoc}
      */
-    public function getCreatableAttributes()
+    public function getCreatableAttributes(): array
     {
         return [];
     }

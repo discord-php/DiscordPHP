@@ -24,12 +24,12 @@ use Discord\WebSockets\Op;
 use Evenement\EventEmitter;
 use Ratchet\Client\Connector as WsFactory;
 use Ratchet\Client\WebSocket;
-use Ratchet\WebSocket\Version\RFC6455\Frame;
 use React\Datagram\Factory as DatagramFactory;
 use React\Datagram\Socket;
 use React\Dns\Resolver\Factory as DNSFactory;
 use React\EventLoop\LoopInterface;
 use React\Promise\Deferred;
+use React\Promise\PromiseInterface;
 use React\Stream\ReadableResourceStream as Stream;
 use React\EventLoop\TimerInterface;
 use React\Stream\ReadableStreamInterface;
@@ -224,7 +224,7 @@ class VoiceClient extends EventEmitter
     /**
      * The time we started sending packets.
      *
-     * @var epoch The time we started sending packets.
+     * @var int The time we started sending packets.
      */
     protected $startTime;
 
@@ -316,7 +316,7 @@ class VoiceClient extends EventEmitter
      * @param Logger        $logger    The logger.
      * @param array         $data      More information related to the voice client.
      */
-    public function __construct(WebSocket $websocket, LoopInterface &$loop, Channel $channel, Logger $logger, $data)
+    public function __construct(WebSocket $websocket, LoopInterface &$loop, Channel $channel, Logger $logger, array $data)
     {
         $this->loop = $loop;
         $this->mainWebsocket = $websocket;
@@ -331,6 +331,7 @@ class VoiceClient extends EventEmitter
 
     /**
      * Starts the voice client.
+     * @return void|bool
      */
     public function start()
     {
@@ -353,7 +354,7 @@ class VoiceClient extends EventEmitter
     /**
      * Initilizes the WebSocket and UDP socket.
      */
-    public function initSockets()
+    public function initSockets(): void
     {
         $wsfac = new WsFactory($this->loop);
 
@@ -368,7 +369,7 @@ class VoiceClient extends EventEmitter
      *
      * @param WebSocket $ws The WebSocket instance.
      */
-    public function handleWebSocketConnection(WebSocket $ws)
+    public function handleWebSocketConnection(WebSocket $ws): void
     {
         $this->logger->debug('connected to voice websocket');
 
@@ -518,7 +519,7 @@ class VoiceClient extends EventEmitter
                         ]);
                         $this->emit('ws-heartbeat', []);
                     };
-                    
+
                     $sendHeartbeat();
                     $this->heartbeat = $this->loop->addPeriodicTimer($this->heartbeat_interval / 1000, $sendHeartbeat);
                     break;
@@ -555,7 +556,7 @@ class VoiceClient extends EventEmitter
      *
      * @param \Exception $e The error.
      */
-    public function handleWebSocketError($e)
+    public function handleWebSocketError(\Exception $e): void
     {
         $this->logger->error('error with voice websocket', ['e' => $e->getMessage()]);
         $this->emit('error', [$e]);
@@ -567,7 +568,7 @@ class VoiceClient extends EventEmitter
      * @param int    $op
      * @param string $reason
      */
-    public function handleWebSocketClose($op, $reason)
+    public function handleWebSocketClose(int $op, string $reason): void
     {
         $this->logger->warning('voice websocket closed', ['op' => $op, 'reason' => $reason]);
         $this->emit('ws-close', [$op, $reason, $this]);
@@ -587,7 +588,7 @@ class VoiceClient extends EventEmitter
         if ($this->client) {
             $this->client->close();
         }
-        
+
         // Don't reconnect on a critical opcode.
         if (in_array($op, Op::getCriticalVoiceCloseCodes())) {
             $this->logger->warning('received critical opcode - not reconnecting', ['op' => $op, 'reason' => $reason]);
@@ -610,7 +611,7 @@ class VoiceClient extends EventEmitter
      *
      * @param array $data New voice server information.
      */
-    public function handleVoiceServerChange(array $data = [])
+    public function handleVoiceServerChange(array $data = []): void
     {
         $this->logger->debug('voice server has changed, dynamically changing servers in the background', ['data' => $data]);
         $this->reconnecting = true;
@@ -643,11 +644,9 @@ class VoiceClient extends EventEmitter
      * @param string $file     The file to play.
      * @param int    $channels How many audio channels to encode with.
      *
-     * @throws FileNotFoundException Thrown when the file specified could not be found.
-     *
-     * @return \React\Promise\Promise
+     * @return PromiseInterface
      */
-    public function playFile($file, $channels = 2)
+    public function playFile(string $file, int $channels = 2): PromiseInterface
     {
         $deferred = new Deferred();
 
@@ -675,11 +674,10 @@ class VoiceClient extends EventEmitter
      * @param resource|Stream $stream   The stream to be encoded and sent.
      * @param int             $channels How many audio channels to encode with.
      *
+     * @return PromiseInterface
      * @throws \RuntimeException Thrown when the stream passed to playRawStream is not a valid resource.
-     *
-     * @return \React\Promise\Promise
      */
-    public function playRawStream($stream, $channels = 2)
+    public function playRawStream($stream, int $channels = 2): PromiseInterface
     {
         $deferred = new Deferred();
 
@@ -712,9 +710,10 @@ class VoiceClient extends EventEmitter
      *
      * @param resource|Process|Stream $stream The DCA stream to be sent.
      *
-     * @return \React\Promise\Promise
+     * @return PromiseInterface
+     * @throws \Exception
      */
-    public function playDCAStream($stream)
+    public function playDCAStream($stream): PromiseInterface
     {
         $deferred = new Deferred();
 
@@ -738,6 +737,10 @@ class VoiceClient extends EventEmitter
 
         if ($stream instanceof ReadableStreamInterface) {
             $stream->pause();
+            /**
+             * @todo $stream->stream has private access
+             *       see https://github.com/reactphp/stream/blob/ff5e01d6bddd549b3ddea86cceb7efd41eab78f6/src/ReadableResourceStream.php#L14
+             */
             $stream = $stream->stream;
         }
 
@@ -891,7 +894,7 @@ class VoiceClient extends EventEmitter
      *
      * @param string $data The data to send to the UDP server.
      */
-    public function sendBuffer($data)
+    public function sendBuffer(string $data): void
     {
         if (! $this->ready) {
             return;
@@ -910,9 +913,9 @@ class VoiceClient extends EventEmitter
      *
      * @param bool $speaking Whether the client is speaking or not.
      *
-     * @return bool Whether the client is speaking or not.
+     * @return PromiseInterface Whether the client is speaking or not.
      */
-    public function setSpeaking($speaking = true)
+    public function setSpeaking(bool $speaking = true): PromiseInterface
     {
         $deferred = new Deferred();
 
@@ -948,9 +951,9 @@ class VoiceClient extends EventEmitter
      *
      * @param Channel $channel The channel to switch to.
      *
-     * @return \React\Promise\Promise
+     * @return PromiseInterface
      */
-    public function switchChannel(Channel $channel)
+    public function switchChannel(Channel $channel): PromiseInterface
     {
         $deferred = new Deferred();
 
@@ -987,9 +990,9 @@ class VoiceClient extends EventEmitter
      *
      * @param int $fs The frame size to set.
      *
-     * @return \React\Promise\Promise
+     * @return PromiseInterface
      */
-    public function setFrameSize($fs)
+    public function setFrameSize(int $fs): PromiseInterface
     {
         $deferred = new Deferred();
 
@@ -1019,9 +1022,9 @@ class VoiceClient extends EventEmitter
      *
      * @param int $bitrate The bitrate to set.
      *
-     * @return \React\Promise\Promise
+     * @return PromiseInterface
      */
-    public function setBitrate($bitrate)
+    public function setBitrate(int $bitrate): PromiseInterface
     {
         $deferred = new Deferred();
 
@@ -1049,9 +1052,9 @@ class VoiceClient extends EventEmitter
      *
      * @param int $volume The volume to set.
      *
-     * @return \React\Promise\Promise
+     * @return PromiseInterface
      */
-    public function setVolume($volume)
+    public function setVolume(int $volume): PromiseInterface
     {
         $deferred = new Deferred();
 
@@ -1079,9 +1082,9 @@ class VoiceClient extends EventEmitter
      *
      * @param string $app The audio application to set.
      *
-     * @return \React\Promise\Promise
+     * @return PromiseInterface
      */
-    public function setAudioApplication($app)
+    public function setAudioApplication(string $app): PromiseInterface
     {
         $deferred = new Deferred();
 
@@ -1111,7 +1114,7 @@ class VoiceClient extends EventEmitter
      *
      * @param array $data The data to send to the voice WebSocket.
      */
-    public function send(array $data)
+    public function send(array $data): void
     {
         $json = json_encode($data);
         $this->voiceWebsocket->send($json);
@@ -1122,7 +1125,7 @@ class VoiceClient extends EventEmitter
      *
      * @param array $data The data to send to the main WebSocket.
      */
-    public function mainSend(array $data)
+    public function mainSend(array $data): void
     {
         $json = json_encode($data);
         $this->mainWebsocket->send($json);
@@ -1131,10 +1134,11 @@ class VoiceClient extends EventEmitter
     /**
      * Changes your mute and deaf value.
      *
-     * @param bool $mute Whether you should be muted.
-     * @param bool $deaf Whether you should be deaf.
+     * @param  bool             $mute Whether you should be muted.
+     * @param  bool             $deaf Whether you should be deaf.
+     * @return PromiseInterface
      */
-    public function setMuteDeaf($mute, $deaf)
+    public function setMuteDeaf(bool $mute, bool $deaf): PromiseInterface
     {
         $deferred = new Deferred();
 
@@ -1171,9 +1175,9 @@ class VoiceClient extends EventEmitter
     /**
      * Pauses the current sound.
      *
-     * @return \React\Promise\Promise
+     * @return PromiseInterface
      */
-    public function pause()
+    public function pause(): PromiseInterface
     {
         $deferred = new Deferred();
 
@@ -1192,9 +1196,9 @@ class VoiceClient extends EventEmitter
     /**
      * Unpauses the current sound.
      *
-     * @return \React\Promise\Promise
+     * @return PromiseInterface
      */
-    public function unpause()
+    public function unpause(): PromiseInterface
     {
         $deferred = new Deferred();
 
@@ -1214,9 +1218,9 @@ class VoiceClient extends EventEmitter
     /**
      * Stops the current sound.
      *
-     * @return \React\Promise\Promise
+     * @return PromiseInterface
      */
-    public function stop()
+    public function stop(): PromiseInterface
     {
         $deferred = new Deferred();
 
@@ -1242,9 +1246,9 @@ class VoiceClient extends EventEmitter
     /**
      * Closes the voice client.
      *
-     * @return \React\Promise\Promise
+     * @return PromiseInterface
      */
-    public function close()
+    public function close(): PromiseInterface
     {
         $deferred = new Deferred();
 
@@ -1297,7 +1301,7 @@ class VoiceClient extends EventEmitter
      *
      * @return bool Whether the user is speaking.
      */
-    public function isSpeaking($id)
+    public function isSpeaking(int $id): bool
     {
         $ssrc = @$this->speakingStatus[$id];
         $user = $this->speakingStatus->get('user_id', $id);
@@ -1318,7 +1322,7 @@ class VoiceClient extends EventEmitter
      *
      * @param object $data The WebSocket data.
      */
-    public function handleVoiceStateUpdate($data)
+    public function handleVoiceStateUpdate(object $data): void
     {
         $removeDecoder = function ($ss) {
             $decoder = @$this->voiceDecoders[$ss->ssrc];
@@ -1350,9 +1354,9 @@ class VoiceClient extends EventEmitter
      *
      * @param int|string $id Either a SSRC or User ID.
      *
-     * @return React\Promise\Promise
+     * @return PromiseInterface
      */
-    public function getRecieveStream($id)
+    public function getRecieveStream($id): PromiseInterface
     {
         $deferred = new Deferred();
 
@@ -1380,7 +1384,7 @@ class VoiceClient extends EventEmitter
      *
      * @param string $message The data from the UDP server.
      */
-    protected function handleAudioData($message)
+    protected function handleAudioData(string $message): void
     {
         $voicePacket = VoicePacket::make($message);
         $nonce = new Buffer(24);
@@ -1455,7 +1459,7 @@ class VoiceClient extends EventEmitter
      *
      * @return bool Whether the voice client is ready.
      */
-    public function isReady()
+    public function isReady(): bool
     {
         return $this->ready;
     }
@@ -1463,11 +1467,9 @@ class VoiceClient extends EventEmitter
     /**
      * Checks if FFmpeg is installed.
      *
-     * @throws \Discord\Exceptions\FFmpegNotFoundException Thrown when FFmpeg is not found.
-     *
      * @return bool Whether FFmpeg is installed or not.
      */
-    public function checkForFFmpeg()
+    public function checkForFFmpeg(): bool
     {
         $binaries = [
             'ffmpeg',
@@ -1489,11 +1491,9 @@ class VoiceClient extends EventEmitter
     /**
      * Checks if DCA is installed.
      *
-     * @throws \Discord\Exceptions\DCANotFoundException Thrown when DCA is not found.
-     *
      * @return bool Whether DCA is installed or not.
      */
-    public function checkForDCA()
+    public function checkForDCA(): bool
     {
         $binaries = [
             'Darwin' => [
@@ -1522,9 +1522,9 @@ class VoiceClient extends EventEmitter
     /**
      * Checks if libsodium-php is installed.
      *
-     * @throws \Discord\Exceptions\LibSodiumNotFoundException Thrown when libsodium-php is not found.
+     * @return bool
      */
-    public function checkForLibsodium()
+    public function checkForLibsodium(): bool
     {
         if (! function_exists('\Sodium\crypto_secretbox')) {
             $this->emit('error', [new LibSodiumNotFoundException('libsodium-php could not be found.')]);
@@ -1543,7 +1543,7 @@ class VoiceClient extends EventEmitter
      *
      * @return Process A ReactPHP Child Process
      */
-    public function dcaEncode($filename = '', $channels = 2)
+    public function dcaEncode(string $filename = '', int $channels = 2): Process
     {
         // if (! empty($filename) && ! file_exists($filename)) {
         //     return;
@@ -1566,12 +1566,12 @@ class VoiceClient extends EventEmitter
     /**
      * Decodes a file from Opus with DCA.
      *
-     * @param int $channels  How many audio channels to decode with.
-     * @param int $frameSize The Opus packet frame size.
+     * @param int      $channels  How many audio channels to decode with.
+     * @param int|null $frameSize The Opus packet frame size.
      *
      * @return Process A ReactPHP Child Process
      */
-    public function dcaDecode($channels = 2, $frameSize = null)
+    public function dcaDecode(int $channels = 2, ?int $frameSize = null): Process
     {
         if (is_null($frameSize)) {
             $frameSize = round($this->frameSize * 48);
@@ -1594,7 +1594,7 @@ class VoiceClient extends EventEmitter
      *
      * @return Channel The connected channel.
      */
-    public function getChannel()
+    public function getChannel(): Channel
     {
         return $this->channel;
     }

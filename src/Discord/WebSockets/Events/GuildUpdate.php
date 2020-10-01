@@ -21,7 +21,7 @@ class GuildUpdate extends Event
     /**
      * {@inheritdoc}
      */
-    public function handle(Deferred &$deferred, $data)
+    public function handle(Deferred &$deferred, $data): void
     {
         if (isset($data->unavailable) && $data->unavailable) {
             $deferred->notify('Guild is unavailable.');
@@ -29,12 +29,15 @@ class GuildUpdate extends Event
             return;
         }
 
-        $guildPart = $this->factory->create(Guild::class, $data, true);
+        /**
+         * @var $guildPart Guild
+         */
+        $guildPart = $this->factory->create(Guild::class, (array) $data, true);
 
         foreach ($data->roles as $role) {
             $role = (array) $role;
             $role['guild_id'] = $guildPart->id;
-            $rolePart = $this->factory->create(Role::class, $role, true);
+            $rolePart = $this->factory->create(Role::class, (array) $role, true);
 
             $guildPart->roles->push($rolePart);
         }

@@ -13,12 +13,13 @@ namespace Discord\Repository\Guild;
 
 use Discord\Parts\User\Member;
 use Discord\Repository\AbstractRepository;
+use React\Promise\PromiseInterface;
 
 /**
  * Contains members of a guild.
  *
- * @see Discord\Parts\User\Member
- * @see Discord\Parts\Guild\Guild
+ * @see \Discord\Parts\User\Member
+ * @see \Discord\Parts\Guild\Guild
  */
 class MemberRepository extends AbstractRepository
 {
@@ -42,11 +43,11 @@ class MemberRepository extends AbstractRepository
      *
      * @param Member $member The member to kick.
      *
-     * @return \React\Promise\Promise
+     * @return PromiseInterface
      *
      * @see self::delete()
      */
-    public function kick($member)
+    public function kick(Member $member): PromiseInterface
     {
         return $this->delete($member);
     }

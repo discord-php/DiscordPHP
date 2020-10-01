@@ -20,9 +20,9 @@ class ChannelUpdate extends Event
     /**
      * {@inheritdoc}
      */
-    public function handle(Deferred &$deferred, $data)
+    public function handle(Deferred &$deferred, $data): void
     {
-        $channel = $this->factory->create(Channel::class, $data, true);
+        $channel = $this->factory->create(Channel::class, (array) $data, true);
 
         if ($channel->is_private) {
             $old = $this->discord->private_channels->get('id', $channel->id);

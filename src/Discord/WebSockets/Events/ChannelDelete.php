@@ -20,9 +20,9 @@ class ChannelDelete extends Event
     /**
      * {@inheritdoc}
      */
-    public function handle(Deferred &$deferred, $data)
+    public function handle(Deferred &$deferred, $data): void
     {
-        $channel = $this->factory->create(Channel::class, $data);
+        $channel = $this->factory->create(Channel::class, (array) $data);
 
         if ($guild = $channel->guild) {
             $guild->channels->pull($channel->id);

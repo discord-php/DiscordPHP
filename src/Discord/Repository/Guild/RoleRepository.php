@@ -17,8 +17,8 @@ use Discord\Repository\AbstractRepository;
 /**
  * Contains roles that belong to the guild.
  *
- * @see Discord\Parts\Guild\Role
- * @see Discord\Parts\Guild\Guild
+ * @see \Discord\Parts\Guild\Role
+ * @see \Discord\Parts\Guild\Guild
  */
 class RoleRepository extends AbstractRepository
 {

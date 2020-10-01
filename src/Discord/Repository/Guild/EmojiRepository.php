@@ -17,8 +17,8 @@ use Discord\Repository\AbstractRepository;
 /**
  * Contains emojis that belong to guilds.
  *
- * @see Discord\Parts\Guild\Emoji
- * @see Discord\Parts\Guild\Guild
+ * @see \Discord\Parts\Guild\Emoji
+ * @see \Discord\Parts\Guild\Guild
  */
 class EmojiRepository extends AbstractRepository
 {

@@ -19,6 +19,7 @@ use Discord\Parts\Channel\Channel;
 use GuzzleHttp\Psr7\Response;
 use Illuminate\Support\Str;
 use React\Promise\Deferred;
+use React\Promise\PromiseInterface;
 
 /**
  * Provides an easy wrapper for HTTP requests, allows for interchangable connectors.
@@ -45,7 +46,7 @@ class Http
     private $token;
 
     /**
-     * @var
+     * @var string
      */
     private $version;
 
@@ -63,7 +64,7 @@ class Http
      * @param string     $version
      * @param HttpDriver $driver  The request driver.
      */
-    public function __construct($token, $version, $driver)
+    public function __construct(string $token, string $version, HttpDriver $driver)
     {
         $this->token = $token;
         $this->version = $version;
@@ -75,7 +76,7 @@ class Http
      *
      * @param HttpDriver $driver
      */
-    public function setDriver(HttpDriver $driver)
+    public function setDriver(HttpDriver $driver): void
     {
         $this->driver = $driver;
     }
@@ -86,11 +87,11 @@ class Http
      * @param string $name   The endpoint that will be queried.
      * @param array  $params Parameters that will be encoded into JSON and sent with the request.
      *
-     * @return \React\Promise\Promise
+     * @return PromiseInterface
      *
      * @see \Discord\Helpers\Guzzle::runRequest() This function will be forwareded onto runRequest.
      */
-    public function __call($name, $params)
+    public function __call(string $name, array $params): PromiseInterface
     {
         $url = $params[0];
         $content = (isset($params[1])) ? $params[1] : null;
@@ -106,27 +107,20 @@ class Http
      *
      * @param string        $method       The request method.
      * @param string        $url          The endpoint that will be queried.
-     * @param array         $content      Parameters that will be encoded into JSON and sent with the request.
+     * @param array|null    $content      Parameters that will be encoded into JSON and sent with the request.
      * @param array         $extraHeaders Extra headers to send with the request.
      * @param bool|int|null $cache        If an integer is passed, used as cache TTL, if null is passed, default TTL is
      *                                    used, if false, cache is disabled
      * @param array         $options      Array of options to pass to Guzzle.
      *
-     * @throws ContentTooLongException
-     * @throws DiscordRequestFailedException
-     * @throws NoPermissionsException
-     * @throws NotFoundException
-     *
-     * @return \React\Promise\Promise
+     * @return PromiseInterface
      */
-    private function runRequest($method, $url, $content, $extraHeaders, $cache, $options)
+    private function runRequest(string $method, string $url, ?array $content, array $extraHeaders, $cache, array $options): PromiseInterface
     {
         $deferred = new Deferred();
         $disable_json = false;
 
-        $headers = [
-            'User-Agent' => $this->getUserAgent(),
-        ];
+        $header['User-Agent'] = $this->getUserAgent();
 
         if (! isset($options['multipart'])) {
             $headers['Content-Length'] = 0;
@@ -189,15 +183,15 @@ class Http
     /**
      * Uploads a file to a channel.
      *
-     * @param Channel $channel  The channel to send to.
-     * @param string  $filepath The path to the file.
-     * @param string  $filename The name to upload the file as.
-     * @param string  $content  Extra text content to go with the file.
-     * @param bool    $tts      Whether the message should be TTS.
+     * @param Channel     $channel  The channel to send to.
+     * @param string      $filepath The path to the file.
+     * @param string      $filename The name to upload the file as.
+     * @param string|null $content  Extra text content to go with the file.
+     * @param bool        $tts      Whether the message should be TTS.
      *
-     * @return \React\Promise\Promise
+     * @return PromiseInterface
      */
-    public function sendFile(Channel $channel, $filepath, $filename, $content, $tts)
+    public function sendFile(Channel $channel, string $filepath, string $filename, ?string $content, bool $tts = false): PromiseInterface
     {
         $multipart = [
             [
@@ -211,7 +205,7 @@ class Http
             ],
             [
                 'name' => 'content',
-                'contents' => (string) $content,
+                'contents' => $content,
             ],
         ];
 
@@ -220,7 +214,6 @@ class Http
             "channels/{$channel->id}/messages",
             null,
             [],
-            false,
             false,
             ['multipart' => $multipart]
         );
@@ -234,14 +227,9 @@ class Http
      * @param string          $content   The HTTP response content.
      * @param string          $url       The HTTP url.
      *
-     * @return \Discord\Exceptions\DiscordRequestFailedException Returned when the request fails.
-     * @return \Discord\Exceptions\Rest\ContentTooLongException  Returned when the content is longer than 2000
-     *                                                           characters.
-     * @return \Discord\Exceptions\Rest\NotFoundException        Returned when the server returns 404 Not Found.
-     * @return \Discord\Exceptions\Rest\NoPermissionsException   Returned when you do not have permissions to do
-     *                                                           something.
+     * @return DiscordRequestFailedException Returned when the request fails.
      */
-    public function handleError($errorCode, $message, $content, $url)
+    public function handleError(int $errorCode, $message, string $content, string $url): DiscordRequestFailedException
     {
         if (! is_string($message)) {
             $message = $message->getReasonPhrase();
@@ -288,7 +276,7 @@ class Http
      *
      * @return string
      */
-    public function getUserAgent()
+    public function getUserAgent(): string
     {
         return 'DiscordBot (https://github.com/teamreflex/DiscordPHP, '.$this->version.')';
     }

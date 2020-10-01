@@ -36,9 +36,10 @@ class Overwrite extends Part
     /**
      * Sets the allow attribute of the role.
      *
-     * @param ChannelPermission|int $allow
+     * @param  ChannelPermission|int $allow
+     * @throws \Exception
      */
-    protected function setAllowAttribute($allow)
+    protected function setAllowAttribute($allow): void
     {
         if (! ($allow instanceof ChannelPermission)) {
             $allow = $this->factory->create(ChannelPermission::class, ['bitwise' => $allow], true);
@@ -50,9 +51,10 @@ class Overwrite extends Part
     /**
      * Sets the deny attribute of the role.
      *
-     * @param ChannelPermission|int $allow
+     * @param  ChannelPermission|int $deny
+     * @throws \Exception
      */
-    protected function setDenyAttribute($deny)
+    protected function setDenyAttribute($deny): void
     {
         if (! ($deny instanceof ChannelPermission)) {
             $deny = $this->factory->create(ChannelPermission::class, ['bitwise' => $deny], true);

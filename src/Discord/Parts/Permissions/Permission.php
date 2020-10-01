@@ -97,11 +97,11 @@ abstract class Permission extends Part
      * @var array
      */
     private $permissions = [];
-    
+
     /**
      * {@inheritdoc}
      */
-    public function __construct(Factory $factory, Discord $discord, Http $http, array $attributes = [], $created = false)
+    public function __construct(Factory $factory, Discord $discord, Http $http, array $attributes = [], bool $created = false)
     {
         $this->permissions = $this->getPermissions();
         $this->fillable = array_keys($this->permissions);
@@ -121,14 +121,14 @@ abstract class Permission extends Part
      *
      * @return array
      */
-    abstract public static function getPermissions();
-    
+    abstract public static function getPermissions(): array;
+
     /**
      * Gets the bitwise attribute of the permission.
      *
      * @return int
      */
-    protected function getBitwiseAttribute()
+    protected function getBitwiseAttribute(): int
     {
         $bitwise = 0;
 

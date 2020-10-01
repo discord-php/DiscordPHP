@@ -75,7 +75,7 @@ class RecieveStream extends EventEmitter implements DuplexStreamInterface
      *
      * @param string $pcm PCM audio data.
      */
-    public function writePCM($pcm)
+    public function writePCM(string $pcm): void
     {
         if ($this->isClosed) {
             return;
@@ -97,7 +97,7 @@ class RecieveStream extends EventEmitter implements DuplexStreamInterface
      *
      * @param string $opus Opus audio data.
      */
-    public function writeOpus($opus)
+    public function writeOpus(string $opus): void
     {
         if ($this->isClosed) {
             return;
@@ -220,7 +220,7 @@ class RecieveStream extends EventEmitter implements DuplexStreamInterface
      * @param WritableStreamInterface $dest    The stream to pipe to.
      * @param array                   $options An array of options.
      */
-    public function pipePCM(WritableStreamInterface $dest, array $options = [])
+    public function pipePCM(WritableStreamInterface $dest, array $options = []): void
     {
         if ($this->isClosed) {
             return;
@@ -252,7 +252,7 @@ class RecieveStream extends EventEmitter implements DuplexStreamInterface
      * @param WritableStreamInterface $dest    The stream to pipe to.
      * @param array                   $options An array of options.
      */
-    public function pipeOpus(WritableStreamInterface $dest, array $options = [])
+    public function pipeOpus(WritableStreamInterface $dest, array $options = []): void
     {
         if ($this->isClosed) {
             return;

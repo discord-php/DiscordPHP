@@ -38,7 +38,7 @@ class ChannelPermission extends Permission
     /**
      * {@inheritdoc}
      */
-    public static function getPermissions()
+    public static function getPermissions(): array
     {
         return array_merge(parent::ALL_PERMISSIONS, parent::TEXT_PERMISSIONS, parent::VOICE_PERMISSIONS);
     }

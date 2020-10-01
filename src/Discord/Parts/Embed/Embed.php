@@ -12,6 +12,7 @@
 namespace Discord\Parts\Embed;
 
 use Carbon\Carbon;
+use Discord\Helpers\Collection;
 use Discord\Parts\Part;
 
 /**
@@ -43,7 +44,7 @@ class Embed extends Part
      *
      * @return Carbon The timestamp attribute.
      */
-    protected function getTimestampAttribute()
+    protected function getTimestampAttribute(): Carbon
     {
         if (! array_key_exists('timestamp', $this->attributes)) {
             return Carbon::now();
@@ -59,7 +60,7 @@ class Embed extends Part
      *
      * @return Footer The footer attribute.
      */
-    protected function getFooterAttribute()
+    protected function getFooterAttribute(): Footer
     {
         return $this->attributeHelper('footer', Footer::class);
     }
@@ -69,7 +70,7 @@ class Embed extends Part
      *
      * @return Image The image attribute.
      */
-    protected function getImageAttribute()
+    protected function getImageAttribute(): Image
     {
         return $this->attributeHelper('image', Image::class);
     }
@@ -77,9 +78,9 @@ class Embed extends Part
     /**
      * Gets the thumbnail attribute.
      *
-     * @return Thumbnail The thumbnail attribute.
+     * @return Image The thumbnail attribute.
      */
-    protected function getThumbnailAttribute()
+    protected function getThumbnailAttribute(): Image
     {
         return $this->attributeHelper('thumbnail', Image::class);
     }
@@ -89,7 +90,7 @@ class Embed extends Part
      *
      * @return Video The video attribute.
      */
-    protected function getVideoAttribute()
+    protected function getVideoAttribute(): Video
     {
         return $this->attributeHelper('video', Video::class);
     }
@@ -99,7 +100,7 @@ class Embed extends Part
      *
      * @return Author The author attribute.
      */
-    protected function getAuthorAttribute()
+    protected function getAuthorAttribute(): Author
     {
         return $this->attributeHelper('author', Author::class);
     }
@@ -107,11 +108,11 @@ class Embed extends Part
     /**
      * Gets the fields attribute.
      *
-     * @return array[Field] The fields attribute.
+     * @return Collection|Field[]
      */
-    protected function getFieldsAttribute()
+    protected function getFieldsAttribute(): Collection
     {
-        $fields = [];
+        $fields = new Collection([], 'name', Field::class);
 
         if (! array_key_exists('fields', $this->attributes)) {
             return $fields;
@@ -119,10 +120,10 @@ class Embed extends Part
 
         foreach ($this->attributes['fields'] as $field) {
             if (! ($field instanceof Field)) {
-                $field = $this->factory->create(Field::class, $field, true);
+                $field = $this->factory->create(Field::class, (array) $field, true);
             }
 
-            $fields[] = $field;
+            $fields->push($field);
         }
 
         return $fields;
@@ -156,7 +157,7 @@ class Embed extends Part
         if (! isset($this->attributes['fields'])) {
             $this->attributes['fields'] = [];
         }
-        
+
         $this->attributes['fields'][] = $field->getRawAttributes();
     }
 
@@ -167,6 +168,7 @@ class Embed extends Part
      * @param string $class The attribute class.
      *
      * @return mixed
+     * @throws \Exception
      */
     private function attributeHelper($key, $class)
     {

@@ -26,7 +26,7 @@ use Discord\Parts\User\User;
  *
  * @return bool Whether the part was mentioned.
  */
-function mentioned($part, Message $message)
+function mentioned($part, Message $message): bool
 {
     if ($part instanceof User || $part instanceof Member) {
         return $message->mentions->has($part->id);
