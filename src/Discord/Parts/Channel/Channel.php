@@ -464,6 +464,10 @@ class Channel extends Part
         } elseif ($count == 1) {
             $message = $messages[0];
 
+            if ($message instanceof Message) {
+                $message = $message->id;
+            }
+
             $this->http->delete("channels/{$this->id}/messages/{$message}")->then(
                 Bind([$deferred, 'resolve']),
                 Bind([$deferred, 'reject'])
