@@ -21,6 +21,7 @@ class MessageDelete extends Event
      */
     public function handle(Deferred &$deferred, $data): void
     {
+        $message = null;
         if ($guild = $this->discord->guilds->get('id', $data->guild_id)) {
             if ($channel = $guild->channels->get('id', $data->channel_id)) {
                 $message = $channel->messages->pull($data->id);
