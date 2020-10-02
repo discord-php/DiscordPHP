@@ -22,7 +22,6 @@ For testing and stability it would be greatly appreciated if you were able to ad
 	- The requirement will be increased to PHP 7.4 so you should develop for the latest version of PHP.
 - Composer
 - `ext-json`
-- `ext-curl`
 - `ext-zlib`
 
 #### Recommended Extensions
