@@ -96,7 +96,7 @@ class Discord
     /**
      * The logger.
      *
-     * @var LoggerInterface Logger.
+     * @var LoggerWrapper Logger.
      */
     protected $logger;
 
@@ -232,7 +232,7 @@ class Discord
      *
      * @var TimerInterface Timer.
      */
-    protected $heatbeatTimer;
+    protected $heartbeatTimer;
 
     /**
      * The timer that resends the heartbeat packet if
