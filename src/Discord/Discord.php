@@ -37,7 +37,6 @@ use Discord\WebSockets\Op;
 use Evenement\EventEmitterTrait;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger as Monolog;
-use Psr\Log\LoggerInterface;
 use Ratchet\Client\Connector;
 use Ratchet\Client\WebSocket;
 use Ratchet\RFC6455\Messaging\Message;
