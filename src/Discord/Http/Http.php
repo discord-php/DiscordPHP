@@ -16,6 +16,7 @@ use Discord\Exceptions\Rest\ContentTooLongException;
 use Discord\Exceptions\Rest\NoPermissionsException;
 use Discord\Exceptions\Rest\NotFoundException;
 use Discord\Parts\Channel\Channel;
+use Exception;
 use GuzzleHttp\Psr7\Response;
 use Illuminate\Support\Str;
 use React\Promise\Deferred;
@@ -46,7 +47,7 @@ class Http
     private $token;
 
     /**
-     * @var string
+     * @var
      */
     private $version;
 
@@ -107,20 +108,27 @@ class Http
      *
      * @param string        $method       The request method.
      * @param string        $url          The endpoint that will be queried.
-     * @param array|null    $content      Parameters that will be encoded into JSON and sent with the request.
+     * @param array         $content      Parameters that will be encoded into JSON and sent with the request.
      * @param array         $extraHeaders Extra headers to send with the request.
      * @param bool|int|null $cache        If an integer is passed, used as cache TTL, if null is passed, default TTL is
      *                                    used, if false, cache is disabled
      * @param array         $options      Array of options to pass to Guzzle.
      *
+     * @throws ContentTooLongException
+     * @throws DiscordRequestFailedException
+     * @throws NoPermissionsException
+     * @throws NotFoundException
+     *
      * @return PromiseInterface
      */
-    private function runRequest(string $method, string $url, ?array $content, array $extraHeaders, $cache, array $options): PromiseInterface
+    private function runRequest($method, $url, $content, $extraHeaders, $cache, $options): PromiseInterface
     {
         $deferred = new Deferred();
         $disable_json = false;
 
-        $header['User-Agent'] = $this->getUserAgent();
+        $headers = [
+            'User-Agent' => $this->getUserAgent(),
+        ];
 
         if (! isset($options['multipart'])) {
             $headers['Content-Length'] = 0;
@@ -183,20 +191,24 @@ class Http
     /**
      * Uploads a file to a channel.
      *
-     * @param Channel     $channel  The channel to send to.
-     * @param string      $filepath The path to the file.
-     * @param string      $filename The name to upload the file as.
-     * @param string|null $content  Extra text content to go with the file.
-     * @param bool        $tts      Whether the message should be TTS.
+     * @param Channel $channel  The channel to send to.
+     * @param string  $filepath The path to the file.
+     * @param string  $filename The name to upload the file as.
+     * @param string  $content  Extra text content to go with the file.
+     * @param bool    $tts      Whether the message should be TTS.
      *
      * @return PromiseInterface
      */
-    public function sendFile(Channel $channel, string $filepath, string $filename, ?string $content, bool $tts = false): PromiseInterface
+    public function sendFile(Channel $channel, $filepath, $filename, $content, $tts): PromiseInterface
     {
+        $deferred = new Deferred();
+
+        $boundary = '----DiscordPHPSendFileBoundary';
+        $body = '';
         $multipart = [
             [
                 'name' => 'file',
-                'contents' => fopen($filepath, 'r'),
+                'contents' => file_get_contents($filepath),
                 'filename' => $filename,
             ],
             [
@@ -205,18 +217,88 @@ class Http
             ],
             [
                 'name' => 'content',
-                'contents' => $content,
+                'contents' => (string) $content,
             ],
         ];
 
-        return $this->runRequest(
+        $body = $this->arrayToMultipart($multipart, $boundary);
+        $headers = [
+            'Content-Type' => 'multipart/form-data; boundary='.substr($boundary, 2),
+            'Content-Length' => strlen($body),
+            'authorization' => $this->token,
+            'User-Agent' => $this->getUserAgent(),
+        ];
+
+        $this->driver->runRequest(
             'POST',
             "channels/{$channel->id}/messages",
-            null,
-            [],
-            false,
-            ['multipart' => $multipart]
+            $headers,
+            $body
+        )->then(
+            function ($response) use ($deferred) {
+                $json = json_decode($response->getBody());
+                $deferred->resolve($json);
+            },
+            function ($e) use ($deferred, $channel) {
+                if (! ($e instanceof \Exception)) {
+                    if (is_callable([$e, 'getStatusCode'])) {
+                        $e = $this->handleError(
+                            $e->getStatusCode(),
+                            $e->getReasonPhrase(),
+                            $e->getBody(),
+                            "channels/{$channel->id}/messages"
+                        );
+                    } else {
+                        $e = $this->handleError(
+                            0,
+                            'unknown',
+                            'unknown',
+                            "channels/{$channel->id}/messages"
+                        );
+                    }
+                }
+
+                $deferred->reject($e);
+            }
         );
+
+        return $deferred->promise();
+    }
+
+    /**
+     * Converts an array of key => value to a multipart body.
+     *
+     * @param array  $multipart
+     * @param string $boundary
+     *
+     * @return string
+     */
+    private function arrayToMultipart(array $multipart, string $boundary): string
+    {
+        $body = '';
+
+        foreach ($multipart as $part) {
+            $body .= $boundary."\n";
+            $body .= 'Content-Disposition: form-data; name="'.$part['name'].'"';
+            
+            if (isset($part['filename'])) {
+                $body .= '; filename="'.$part['filename'].'"';
+            }
+
+            $body .= "\n";
+
+            if (isset($part['headers'])) {
+                foreach ($part['headers'] as $header => $val) {
+                    $body .= $header.': '.$val."\n";
+                }
+            }
+    
+            $body .= "\n".$part['contents']."\n";
+        }
+
+        $body .= $boundary."--\n";
+
+        return $body;
     }
 
     /**
@@ -227,9 +309,14 @@ class Http
      * @param string          $content   The HTTP response content.
      * @param string          $url       The HTTP url.
      *
-     * @return DiscordRequestFailedException Returned when the request fails.
+     * @return \Discord\Exceptions\DiscordRequestFailedException Returned when the request fails.
+     * @return \Discord\Exceptions\Rest\ContentTooLongException  Returned when the content is longer than 2000
+     *                                                           characters.
+     * @return \Discord\Exceptions\Rest\NotFoundException        Returned when the server returns 404 Not Found.
+     * @return \Discord\Exceptions\Rest\NoPermissionsException   Returned when you do not have permissions to do
+     *                                                           something.
      */
-    public function handleError(int $errorCode, $message, string $content, string $url): DiscordRequestFailedException
+    public function handleError($errorCode, $message, $content, $url): Exception
     {
         if (! is_string($message)) {
             $message = $message->getReasonPhrase();
