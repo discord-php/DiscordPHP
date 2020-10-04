@@ -620,8 +620,6 @@ class Discord
 
         $this->logger->error('websocket error', ['e' => $e->getMessage()]);
         $this->emit('error', [$e, $this]);
-
-        $this->handleWsClose(0, 'websocket error');
     }
 
     /**
