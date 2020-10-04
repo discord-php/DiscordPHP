@@ -15,6 +15,16 @@ use Psr\Log\LoggerInterface;
 
 /**
  * Provides an easy to use wrapper for the logger.
+ *
+ * @method LoggerInterface emergency(string $message, array $context = [])
+ * @method LoggerInterface alert(string $message, array $context = [])
+ * @method LoggerInterface critical(string $message, array $context = [])
+ * @method LoggerInterface error(string $message, array $context = [])
+ * @method LoggerInterface warning(string $message, array $context = [])
+ * @method LoggerInterface notice(string $message, array $context = [])
+ * @method LoggerInterface info(string $message, array $context = [])
+ * @method LoggerInterface debug(string $message, array $context = [])
+ * @method LoggerInterface log(string $level, string $message, array $context = [])
  */
 class LoggerWrapper
 {
