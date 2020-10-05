@@ -121,7 +121,7 @@ class Http
      *
      * @return PromiseInterface
      */
-    private function runRequest($method, $url, $content, $extraHeaders, $cache, $options): PromiseInterface
+    private function runRequest(string $method, string $url, ?array $content, ?array $extraHeaders, $cache, ?array $options): PromiseInterface
     {
         $deferred = new Deferred();
         $disable_json = false;
@@ -199,7 +199,7 @@ class Http
      *
      * @return PromiseInterface
      */
-    public function sendFile(Channel $channel, $filepath, $filename, $content, $tts): PromiseInterface
+    public function sendFile(Channel $channel, string $filepath, ?string $filename, ?string $content, ?bool $tts): PromiseInterface
     {
         $deferred = new Deferred();
 
@@ -280,7 +280,7 @@ class Http
         foreach ($multipart as $part) {
             $body .= $boundary."\n";
             $body .= 'Content-Disposition: form-data; name="'.$part['name'].'"';
-            
+
             if (isset($part['filename'])) {
                 $body .= '; filename="'.$part['filename'].'"';
             }
@@ -292,7 +292,7 @@ class Http
                     $body .= $header.': '.$val."\n";
                 }
             }
-    
+
             $body .= "\n".$part['contents']."\n";
         }
 
@@ -316,7 +316,7 @@ class Http
      * @return \Discord\Exceptions\Rest\NoPermissionsException   Returned when you do not have permissions to do
      *                                                           something.
      */
-    public function handleError($errorCode, $message, $content, $url): Exception
+    public function handleError(int $errorCode, $message, string $content, string $url): Exception
     {
         if (! is_string($message)) {
             $message = $message->getReasonPhrase();
