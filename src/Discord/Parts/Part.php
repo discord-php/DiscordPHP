@@ -27,7 +27,7 @@ use Serializable;
 abstract class Part implements ArrayAccess, Serializable, JsonSerializable
 {
     /**
-     * THe HTTP client.
+     * The HTTP client.
      *
      * @var Http Client.
      */
