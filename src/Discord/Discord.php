@@ -714,7 +714,11 @@ class Discord
         $diff = $received - $this->heartbeatTime;
         $time = $diff * 1000;
 
-        $this->loop->cancelTimer($this->heartbeatAckTimer);
+        if (! is_null($this->heartbeatAckTimer)) {
+            $this->loop->cancelTimer($this->heartbeatAckTimer);
+            $this->heartbeatAckTimer = null;
+        }
+
         $this->emit('heartbeat-ack', [$time, $this]);
         $this->logger->debug('received heartbeat ack', ['response_time' => $time]);
     }
