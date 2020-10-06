@@ -1,5 +1,22 @@
 # Changelog
 
+## Version 5.0.10
+
+- The PHP composer dependency has been updated to PHP 7.2. The library was not working on anything less in previous versions so I'm not deeming this a breaking change, just a formality.
+- Added PHP 7.2 typehinting to functions.
+- Added `Collection::first()` to get the first element of the collection.
+- Added the ability to call `AbstractRepository::delete()` with a string ID instead of solely a part.
+- Any custom logger now may be passed to the Discord client as long as it implementes `LoggerInterface` from PSR.
+- Fixed phpdocs for collections, typehinting will now work when accessing it as an array.
+- Fixed bug with `Collection::get()` when not searching by discriminator.
+- Added `Webhook::execute()`.
+- Added support for `illuminate/support` 8.0.
+- `Channel::deleteMessages()` will no longer fail if 0 or 1 messages is given. The promise will instantly resolve when given 0, and will delete the one message then resolve for 1 message.
+- Fixed error when handling message deletes.
+- Websocket will no longer close when an error is seen, as Pawl's errors do not always cause closure of the websocket.
+- Fixed bug with rate limiting after changing to `react/http`.
+- Fixed bug with sending files after changing to `react/http`.
+
 ## Version 5.0.3
 
 - Development of the library will now continue on the `master` branch. The `develop` branch will be removed and you should checkout the latest tag for the most stable version.
