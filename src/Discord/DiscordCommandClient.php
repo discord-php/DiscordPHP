@@ -282,6 +282,7 @@ class DiscordCommandClient extends Discord
         if (array_key_exists($command, $this->aliases) && $aliases) {
             return $this->commands[$this->aliases[$command]];
         }
+
         return null;
     }
 
