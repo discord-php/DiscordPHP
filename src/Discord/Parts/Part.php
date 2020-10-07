@@ -48,6 +48,14 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
     protected $discord;
 
     /**
+     * Custom script data.
+     * Used for storing custom information, used by end products.
+     *
+     * @var mixed
+     */
+    public $scriptData;
+
+    /**
      * The parts fillable attributes.
      *
      * @var array The array of attributes that can be mass-assigned.
