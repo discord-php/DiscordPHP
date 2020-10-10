@@ -374,6 +374,7 @@ class Discord
         if ($this->reconnecting) {
             $this->reconnecting = false;
             $this->logger->debug('websocket reconnected to discord through identify');
+            $this->emit('reconnected', [$this]);
 
             return;
         }
