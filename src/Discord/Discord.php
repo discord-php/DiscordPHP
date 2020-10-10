@@ -943,7 +943,6 @@ class Discord
      */
     protected function send(array $data): void
     {
-        dump($data);
         $json = json_encode($data);
 
         $this->ws->send($json);
