@@ -760,12 +760,8 @@ class Discord
     protected function handleHello(object $data): void
     {
         $this->logger->info('received hello');
-
-        $resume = $this->identify();
-
-        if (! $resume) {
-            $this->setupHeartbeat($data->d->heartbeat_interval);
-        }
+        $this->setupHeartbeat($data->d->heartbeat_interval);
+        $this->identify();
     }
 
     /**
