@@ -733,7 +733,7 @@ class Discord
         $this->logger->warning('received opcode 7 for reconnect');
 
         $this->ws->close(
-            Op::CLOSE_NORMAL,
+            Op::CLOSE_UNKNOWN_ERROR,
             'gateway redirecting - opcode 7'
         );
     }
@@ -745,9 +745,11 @@ class Discord
      */
     protected function handleInvalidSession(object $data): void
     {
-        $this->logger->warning('invalid session, re-identifying');
+        $this->logger->warning('invalid session, re-identifying', ['resumable' => $data->d]);
 
-        $this->identify(false);
+        $this->loop->addTimer(2, function () use ($data) {
+            $this->identify($data->d);
+        });
     }
 
     /**
@@ -941,6 +943,7 @@ class Discord
      */
     protected function send(array $data): void
     {
+        dump($data);
         $json = json_encode($data);
 
         $this->ws->send($json);
@@ -1271,7 +1274,7 @@ class Discord
     public function close(bool $closeLoop = true): void
     {
         $this->closing = true;
-        $this->ws->close(1000, 'discordphp closing...');
+        $this->ws->close(Op::CLOSE_UNKNOWN_ERROR, 'discordphp closing...');
         $this->emit('closed', [$this]);
         $this->logger->info('discord closed');
 
