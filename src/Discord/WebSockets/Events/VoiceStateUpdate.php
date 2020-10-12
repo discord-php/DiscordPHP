@@ -28,24 +28,20 @@ class VoiceStateUpdate extends Event
         if ($state->guild) {
             $guild = $state->guild;
 
-            // Remove old member states
             foreach ($guild->channels as $channel) {
-                if ($channel->getChannelType() !== Channel::TYPE_VOICE) {
+                if (! $channel->allowVoice()) {
                     continue;
                 }
 
-                foreach ($channel->members as $member) {
-                    if ($member->user_id == $state->user_id) {
-                        $channel->members->pull($member->user_id);
-                    }
+                // Remove old member states
+                if ($channel->members->has($state->user_id)) {
+                    $channel->members->pull($state->user_id);
                 }
 
-                $guild->channels->push($channel);
-            }
-
-            // Add member state to new channel
-            if ($state->channel_id && $channel = $guild->channels->get('id', $state->channel_id)) {
-                $channel->members->push($state);
+                // Add member state to new channel
+                if ($channel->id == $state->channel_id) {
+                    $channel->members->push($state);
+                }
 
                 $guild->channels->push($channel);
             }
