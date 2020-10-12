@@ -703,6 +703,45 @@ class Channel extends Part
     }
 
     /**
+     * Edit a message in the channel.
+     *
+     * @param Message $message  The message to edit.
+     * @param string  $text     The text to of the message.
+     * @param bool    $tts      Whether the message should be sent with text to speech enabled.
+     * @param Embed|array|null $embed An embed to send.
+     *
+     * @return PromiseInterface
+     * @throws \Exception
+     */
+    public function editMessage(Message $message, string $text, bool $tts = false, $embed = null): PromiseInterface
+    {
+        if ($embed instanceof Embed) {
+            $embed = $embed->getRawAttributes();
+        }
+        $deferred = new Deferred();
+
+        $this->http->patch(
+            "channels/{$this->id}/messages/{$message->id}",
+            [
+                'content' => $text,
+                'tts' => $tts,
+                'embed' => $embed,
+            ]
+        )->then(
+            function ($response) use ($deferred) {
+                $message = $this->factory->create(Message::class, (array) $response, true);
+                $this->messages->push($message);
+
+                $deferred->resolve($message);
+            },
+            Bind([$deferred, 'reject'])
+        );
+
+        return $deferred->promise();
+    }
+
+
+    /**
      * Sends an embed to the channel if it is a text channel.
      *
      * @param Embed $embed
