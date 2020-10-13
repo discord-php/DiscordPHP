@@ -269,7 +269,7 @@ class Message extends Part
      */
     protected function getAuthorAttribute(): Part
     {
-        if ($this->channel->type == Channel::TYPE_TEXT) {
+        if (array_search($this->channel->type, [Channel::TYPE_TEXT, Channel::TYPE_NEWS]) !== false) {
             if ($author = $this->channel->guild->members->get('id', $this->attributes['author']->id)) {
                 return $author;
             }
