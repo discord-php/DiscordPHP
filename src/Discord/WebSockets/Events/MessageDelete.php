@@ -24,7 +24,7 @@ class MessageDelete extends Event
         $message = null;
 
         if (! isset($data->guild_id)) {
-			if ($channel = $this->discord->private_channels->get('id', $data->channel_id)) {
+            if ($channel = $this->discord->private_channels->get('id', $data->channel_id)) {
                 $message = $channel->messages->pull($data->id);
                 $this->discord->private_channels->push($channel);
             }
