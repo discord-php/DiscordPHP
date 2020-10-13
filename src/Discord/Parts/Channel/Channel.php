@@ -164,7 +164,11 @@ class Channel extends Part
      */
     protected function getGuildAttribute(): Guild
     {
-        return $this->discord->guilds->get('id', $this->guild_id);
+        if (isset($this->attributes['guild_id'])) {
+            return $this->discord->guilds->get('id', $this->guild_id);
+        }
+
+        return null;
     }
 
     /**
