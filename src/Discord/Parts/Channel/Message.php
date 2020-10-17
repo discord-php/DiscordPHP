@@ -264,15 +264,16 @@ class Message extends Part
     /**
      * Returns the author attribute.
      *
-     * @return User       The member that sent the message. Will return a User object if it is a PM.
+     * @return User|Member The member that sent the message. Will return a User object if it is a PM.
      * @throws \Exception
      */
-    protected function getAuthorAttribute(): Part
+    protected function getAuthorAttribute(): ?Part
     {
-        if (array_search($this->channel->type, [Channel::TYPE_TEXT, Channel::TYPE_NEWS]) !== false) {
-            if ($author = $this->channel->guild->members->get('id', $this->attributes['author']->id)) {
-                return $author;
-            }
+        if ($this->channel->guild &&
+            isset($this->attributes['author']) &&
+            $author = $this->channel->guild->members->get('id', $this->attributes['author']->id)
+        ) {
+            return $author;
         }
 
         return $this->factory->create(User::class, (array) $this->attributes['author'], true);
