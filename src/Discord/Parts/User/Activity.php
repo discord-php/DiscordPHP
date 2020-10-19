@@ -38,7 +38,9 @@ class Activity extends Part
     const TYPE_PLAYING = 0; // Playing {$this->name}
     const TYPE_STREAMING = 1; // Streaming {$this->details}
     const TYPE_LISTENING = 2; // Listening to {$this->name}
+    const TYPE_WATCHING = 3; // Watching {$this->name}
     const TYPE_CUSTOM = 4; // {$this->emoji} {$this->name}
+    const TYPE_COMPETING = 5; // Competing in {$this->name}
 
     const STATUS_ONLINE = 'online';
     const STATUS_IDLE = 'idle';
@@ -110,8 +112,14 @@ class Activity extends Part
             case self::TYPE_LISTENING:
                 return "Listening to {$this->name}";
                 break;
+            case self::TYPE_WATCHING:
+                return "Watching {$this->name}";
+                break;
             case self::TYPE_CUSTOM:
                 return "{$this->emoji} {$this->name}";
+                break;
+            case self::TYPE_COMPETING:
+                return "Competing in {$this->name}";
                 break;
         }
     }
