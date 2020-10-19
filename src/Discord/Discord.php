@@ -1366,12 +1366,16 @@ class Discord
      *
      * @return Channel
      */
-    public function channelGet($channel_id): ?Channel
+    public function getChannel($channel_id): ?Channel
     {
         foreach ($this->guilds as $guild) {
             if ($channel = $guild->channels->get('id', $channel_id)) {
                 return $channel;
             }
+        }
+
+        if ($channel = $this->private_channels->get('id', $channel_id)) {
+            return $channel;
         }
 
         return null;
