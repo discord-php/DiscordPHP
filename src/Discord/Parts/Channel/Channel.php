@@ -461,17 +461,17 @@ class Channel extends Part
 
         if ($count == 0) {
             $deferred->resolve();
-        } elseif ($count == 1) {
-            $message = $messages[0];
-
-            if ($message instanceof Message) {
-                $message = $message->id;
+        } elseif ($count == 1 || $this->is_private) {
+            foreach ($messages as $message) {
+                if ($message instanceof Message) {
+                    $message->delete();
+                } else {
+                    $this->http->delete("channels/{$this->id}/messages/{$message}")->then(
+                        Bind([$deferred, 'resolve']),
+                        Bind([$deferred, 'reject'])
+                    );
+                }
             }
-
-            $this->http->delete("channels/{$this->id}/messages/{$message}")->then(
-                Bind([$deferred, 'resolve']),
-                Bind([$deferred, 'reject'])
-            );
         } else {
             $messageID = [];
 
