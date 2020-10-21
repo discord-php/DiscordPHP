@@ -1,5 +1,21 @@
 # Changelog
 
+## Version 5.0.11
+
+- Added dependabot to update composer dependencies.
+- Upgraded `react/partial` to `^3.0`.
+- `Discord` will now emit `reconnected` when the client reconnects via identify OR resume.
+- Fixed issue with resumes not working due to closing with opcode `1000`.
+- Client will now attempt to resume after an invalid session if it is still resumable.
+- Exceptions inside the `ready` handler will now be caught, emitted via `exception` and logged.
+    - Temporary fix until `react/promise ^3.0` is released, as any uncaught exceptions inside promises are dismissed.
+- Added `Discord::getChannel(id)` which searches through all guilds and private channels to find a channel.
+- `Channel::deleteMessages()` now works for private channels by looping through all messages and deleting.
+- Added `Channel::editMessage()`.
+- Added new activity types `Activity::TYPE_WATCHING` and `Activity::TYPE_COMPETING`.
+- Fixed issue with `MESSAGE_DELETE` events not working correctly.
+- Fixed issie with `VOICE_STATE_UPDATE` where members were not removed from their old channels.
+
 ## Version 5.0.10
 
 - The PHP composer dependency has been updated to PHP 7.2. The library was not working on anything less in previous versions so I'm not deeming this a breaking change, just a formality.
