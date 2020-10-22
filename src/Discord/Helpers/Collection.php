@@ -13,6 +13,7 @@ namespace Discord\Helpers;
 
 use ArrayAccess;
 use ArrayIterator;
+use Countable;
 use Illuminate\Support\Arr;
 use IteratorAggregate;
 use JsonSerializable;
@@ -22,7 +23,7 @@ use Traversable;
 /**
  * Collection of items. Inspired by Laravel Collections.
  */
-class Collection implements ArrayAccess, Serializable, JsonSerializable, IteratorAggregate
+class Collection implements ArrayAccess, Serializable, JsonSerializable, IteratorAggregate, Countable
 {
     /**
      * The collection discriminator.
