@@ -323,13 +323,11 @@ class Discord
         );
         $this->factory = new Factory($this, $this->http);
 
-        $this->setGateway()->then(function ($g) {
-            $this->connectWs();
-        });
-
         if (php_sapi_name() !== 'cli') {
             trigger_error('DiscordPHP will not run on a webserver. Please use PHP CLI to run a DiscordPHP bot.', E_USER_ERROR);
         }
+
+        $this->connectWs();
     }
 
     /**
@@ -925,12 +923,25 @@ class Discord
      */
     protected function connectWs(): void
     {
-        $this->logger->info('starting connection to websocket', ['gateway' => $this->gateway]);
+        $this->setGateway()->then(function ($gateway) {
+            if (isset($gateway['session']) && $session = $gateway['session']) {
+                if ($session['remaining'] < 2) {
+                    $this->logger->error('exceeded number of reconnects allowed, waiting before attempting reconnect', $session);
+                    $this->loop->addTimer($session['reset_after'] / 1000, function () {
+                        $this->connectWs();
+                    });
 
-        $this->wsFactory->__invoke($this->gateway)->then(
-            [$this, 'handleWsConnection'],
-            [$this, 'handleWsError']
-        );
+                    return;
+                }
+            }
+
+            $this->logger->info('starting connection to websocket', ['gateway' => $this->gateway]);
+
+            $this->wsFactory->__invoke($this->gateway)->then(
+                [$this, 'handleWsConnection'],
+                [$this, 'handleWsError']
+            );
+        });
     }
 
     /**
@@ -1140,7 +1151,7 @@ class Discord
     {
         $deferred = new Deferred();
 
-        $buildParams = function ($gateway) use ($deferred) {
+        $buildParams = function ($gateway, $response = null) use ($deferred) {
             $params = [
                 'v' => self::GATEWAY_VERSION,
                 'encoding' => $this->encoding,
@@ -1149,12 +1160,12 @@ class Discord
             $query = http_build_query($params);
             $this->gateway = trim($gateway, '/').'/?'.$query;
 
-            $deferred->resolve($this->gateway);
+            $deferred->resolve(['gateway' => $this->gateway, 'session' => (array) $response->session_start_limit]);
         };
 
         if (is_null($gateway)) {
-            $this->http->get('gateway')->then(function ($response) use ($buildParams) {
-                $buildParams($response->url);
+            $this->http->get('gateway/bot')->then(function ($response) use ($buildParams) {
+                $buildParams($response->url, $response);
             }, function ($e) use ($buildParams) {
                 // Can't access the API server so we will use the default gateway.
                 $buildParams('wss://gateway.discord.gg');
@@ -1164,7 +1175,7 @@ class Discord
         }
 
         $deferred->promise()->then(function ($gateway) {
-            $this->logger->info('gateway retrieved and set', ['gateway' => $gateway]);
+            $this->logger->info('gateway retrieved and set', $gateway);
         }, function ($e) {
             $this->logger->error('error obtaining gateway', ['e' => $e->getMessage()]);
         });
