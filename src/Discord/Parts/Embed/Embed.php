@@ -115,6 +115,26 @@ class Embed extends Part
             }
         }
     }
+    /**
+     * {@inheritdoc}
+     * @return mixed
+     * @throws \Exception
+     * @throws \RuntimeException
+     * @internal
+     */
+    function __get($name) {
+        if (\property_exists($this, $name)) {
+            return $this->$name;
+        }
+        
+        switch ($name) {
+            case 'datetime':
+                return (new \DateTime('@'.$this->timestamp));
+            break;
+        }
+        
+        return parent::__get($name);
+    }
     
     /**
      * Gets the timestamp attribute.
