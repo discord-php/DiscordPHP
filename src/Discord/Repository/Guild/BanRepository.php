@@ -39,5 +39,5 @@ class BanRepository extends AbstractRepository
     /**
      * {@inheritdoc}
      */
-    protected $part = Ban::class;
+    protected $class = Ban::class;
 }

@@ -32,5 +32,5 @@ class WebhookRepository extends AbstractRepository
     /**
      * {@inheritdoc}
      */
-    protected $part = Webhook::class;
+    protected $class = Webhook::class;
 }

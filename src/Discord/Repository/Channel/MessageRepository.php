@@ -34,5 +34,5 @@ class MessageRepository extends AbstractRepository
     /**
      * {@inheritdoc}
      */
-    protected $part = Message::class;
+    protected $class = Message::class;
 }

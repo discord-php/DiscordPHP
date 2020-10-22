@@ -35,5 +35,5 @@ class InviteRepository extends AbstractRepository
     /**
      * {@inheritdoc}
      */
-    protected $part = Invite::class;
+    protected $class = Invite::class;
 }

@@ -35,5 +35,5 @@ class GuildRepository extends AbstractRepository
     /**
      * {@inheritdoc}
      */
-    protected $part = Guild::class;
+    protected $class = Guild::class;
 }
