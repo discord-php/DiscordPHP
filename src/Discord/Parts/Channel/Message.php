@@ -34,7 +34,7 @@ use function React\Partial\bind as Bind;
  * @property string                         $content          The content of the message if it is a normal message.
  * @property int                            $type             The type of message.
  * @property Collection|User[]              $mentions         A collection of the users mentioned in the message.
- * @property Member                         $author           The author of the message.
+ * @property Member|User                    $author           The author of the message.
  * @property bool                           $mention_everyone Whether the message contained an @everyone mention.
  * @property Carbon                         $timestamp        A timestamp of when the message was sent.
  * @property Carbon|null                    $edited_timestamp A timestamp of when the message was edited, or null.
