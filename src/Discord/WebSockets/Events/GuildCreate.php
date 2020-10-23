@@ -55,7 +55,7 @@ class GuildCreate extends Event
             $member = (array) $member;
             $member['guild_id'] = $data->id;
 
-            if (! $userPart = $this->discord->users->get('id', $member['user']->id)) {
+            if (! $this->discord->users->has($member['user']->id)) {
                 $userPart = $this->factory->create(User::class, $member['user'], true);
                 $this->discord->users->offsetSet($userPart->id, $userPart);
             }
