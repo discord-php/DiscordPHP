@@ -173,8 +173,11 @@ class Message extends Part
         $collection = new Collection();
 
         if (isset($this->attributes['mention_channels'])) {
-            foreach ($this->attributes['mention_channels'] as $channel) {
-                $collection->push($this->factory->create(Channel::class, (array) $channel, true));
+            foreach ($this->attributes['mention_channels'] as $mention_channel) {
+                if (! $channel = $this->discord->getChannel($mention_channel->id)) {
+                    $channel = $this->factory->create(Channel::class, (array) $channel, true);
+                }
+                $collection->push($channel);
             }
         }
 
@@ -208,13 +211,9 @@ class Message extends Part
      */
     protected function getChannelAttribute(): Channel
     {
-        foreach ($this->discord->guilds as $guild) {
-            if ($channel = $guild->channels->get('id', $this->channel_id)) {
-                return $channel;
-            }
-        }
-
-        if ($channel = $this->discord->private_channels->get('id', $this->channel_id)) {
+        if ($channel = $this->discord->getChannel($this->channel_id) ||
+            $channel = $this->discord->private_channels->get('id', $this->channel_id)
+        ) {
             return $channel;
         }
 
@@ -252,10 +251,13 @@ class Message extends Part
      */
     protected function getMentionsAttribute(): Collection
     {
-        $users = new Collection([], 'id');
+        $users = new Collection();
 
         foreach ($this->attributes['mentions'] as $mention) {
-            $users->push($this->factory->create(User::class, (array) $mention, true));
+            if (! $user = $this->discord->users->get('id', $mention->id)) {
+                $user = $this->factory->create(User::class, (array) $mention, true);
+            }
+            $users->push($user);
         }
 
         return $users;

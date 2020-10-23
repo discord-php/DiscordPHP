@@ -150,7 +150,10 @@ class Channel extends Part
 
         if (array_key_exists('recipients', $this->attributes)) {
             foreach ((array) $this->attributes['recipients'] as $recipient) {
-                $recipients->push($this->factory->create(User::class, (array) $recipient, true));
+                if (! $user = $this->discord->users->get('id', $receipient->id)) {
+                    $user = $this->factory->create(User::class, (array) $recipient, true);
+                }
+                $receipients->push($user);
             }
         }
 
@@ -192,11 +195,13 @@ class Channel extends Part
         $deferred = new Deferred();
 
         $this->http->get($this->replaceWithVariables('channels/:id/pins'))->then(
-            function ($response) use ($deferred) {
+            function ($responses) use ($deferred) {
                 $messages = new Collection();
 
-                foreach ($response as $message) {
-                    $message = $this->factory->create(Message::class, (array) $message, true);
+                foreach ($responses as $response) {
+                    if (! $message = $this->messages->get('id', $response->id)) {
+                        $message = $this->factory->create(Message::class, (array) $response, true);
+                    }
                     $messages->push($message);
                 }
 
@@ -343,7 +348,7 @@ class Channel extends Part
      *
      * @return \React\Promise\Promise
      */
-    public function muteMember($member)
+    public function muteMember($member): PromiseInterface
     {
         $deferred = new Deferred();
 
@@ -363,8 +368,8 @@ class Channel extends Part
                 'mute' => true,
             ]
         )->then(
-            \React\Partial\bind([$deferred, 'resolve']),
-            \React\Partial\bind([$deferred, 'reject'])
+            Bind([$deferred, 'resolve']),
+            Bind([$deferred, 'reject'])
         );
 
         // At the moment we are unable to check if the member
@@ -380,7 +385,7 @@ class Channel extends Part
      *
      * @return \React\Promise\Promise
      */
-    public function unmuteMember($member)
+    public function unmuteMember($member): PromiseInterface
     {
         $deferred = new Deferred();
 
@@ -400,8 +405,8 @@ class Channel extends Part
                 'mute' => false,
             ]
         )->then(
-            \React\Partial\bind([$deferred, 'resolve']),
-            \React\Partial\bind([$deferred, 'reject'])
+            Bind([$deferred, 'resolve']),
+            Bind([$deferred, 'reject'])
         );
 
         // At the moment we are unable to check if the member
@@ -463,7 +468,9 @@ class Channel extends Part
             $deferred->resolve();
         } elseif ($count == 1 || $this->is_private) {
             foreach ($messages as $message) {
-                if ($message instanceof Message) {
+                if ($message instanceof Message ||
+                    $message = $this->messages->get('id', $message)
+                ) {
                     $message->delete();
                 } else {
                     $this->http->delete("channels/{$this->id}/messages/{$message}")->then(
@@ -483,15 +490,18 @@ class Channel extends Part
                 }
             }
 
-            $this->http->post(
-                "channels/{$this->id}/messages/bulk_delete",
-                [
-                    'messages' => $messageID,
-                ]
-            )->then(
-                Bind([$deferred, 'resolve']),
-                Bind([$deferred, 'reject'])
-            );
+            while (!empty($messageID)) {
+                $this->http->post(
+                    "channels/{$this->id}/messages/bulk_delete",
+                    [
+                        'messages' => array_slice($messageID, 0, 100)
+                    ]
+                )->then(
+                    Bind([$deferred, 'resolve']),
+                    Bind([$deferred, 'reject'])
+                );
+                $messageID = array_slice($messageID, 100);
+            }
         }
 
         return $deferred->promise();
@@ -537,11 +547,13 @@ class Channel extends Part
         }
 
         $this->http->get($url, null, [], $options['cache'] ? null : 0)->then(
-            function ($response) use ($deferred) {
+            function ($responses) use ($deferred) {
                 $messages = new Collection();
 
-                foreach ($response as $message) {
-                    $message = $this->factory->create(Message::class, (array) $message, true);
+                foreach ($responses as $response) {
+                    if (! $message = $this->messages->get('id', $response->id)) {
+                        $message = $this->factory->create(Message::class, (array) $response, true);
+                    }
                     $messages->push($message);
                 }
 
@@ -923,7 +935,7 @@ class Channel extends Part
      */
     public function allowVoice()
     {
-        return ($this->type == self::TYPE_VOICE);
+        return in_array($this->type, [self::TYPE_VOICE]);
     }
 
     /**
