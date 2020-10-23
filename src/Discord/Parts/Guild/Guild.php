@@ -170,7 +170,7 @@ class Guild extends Part
                 $invites = new Collection();
 
                 foreach ($response as $invite) {
-                    $invite = $this->factory->create(Invite::class, (array) $invite, true);
+                    $invite = $this->factory->create(Invite::class, $invite, true);
                     $invites->push($invite);
                 }
 

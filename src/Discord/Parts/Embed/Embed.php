@@ -120,7 +120,7 @@ class Embed extends Part
 
         foreach ($this->attributes['fields'] as $field) {
             if (! ($field instanceof Field)) {
-                $field = $this->factory->create(Field::class, (array) $field, true);
+                $field = $this->factory->create(Field::class, $field, true);
             }
 
             $fields->push($field);
@@ -173,7 +173,7 @@ class Embed extends Part
     private function attributeHelper($key, $class)
     {
         if (! array_key_exists($key, $this->attributes)) {
-            return $this->factory->create($class, []);
+            return $this->factory->create($class);
         }
 
         if ($this->attributes[$key] instanceof $class) {

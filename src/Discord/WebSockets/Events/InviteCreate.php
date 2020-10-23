@@ -22,7 +22,7 @@ class InviteCreate extends Event
      */
     public function handle(Deferred &$deferred, $data): void
     {
-        $invite = $this->factory->create(Invite::class, (array) $data, true);
+        $invite = $this->factory->create(Invite::class, $data, true);
 
         $deferred->resolve($invite);
     }

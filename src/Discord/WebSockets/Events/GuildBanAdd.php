@@ -22,7 +22,7 @@ class GuildBanAdd extends Event
      */
     public function handle(Deferred &$deferred, $data): void
     {
-        $ban = $this->factory->create(Ban::class, (array) $data, true);
+        $ban = $this->factory->create(Ban::class, $data, true);
 
         if ($guild = $ban->guild) {
             $guild->bans->push($ban);

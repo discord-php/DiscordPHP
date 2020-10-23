@@ -384,7 +384,7 @@ class Discord
         $this->logger->debug('discord trace received', ['trace' => $content->_trace]);
 
         // Setup the user account
-        $this->client = $this->factory->create(Client::class, (array) $content->user, true);
+        $this->client = $this->factory->create(Client::class, $content->user, true);
         $this->sessionId = $content->session_id;
 
         $this->logger->debug('client created and session id stored', ['session_id' => $content->session_id, 'user' => $this->client->user->getPublicAttributes()]);
@@ -392,7 +392,7 @@ class Discord
         // Private Channels
         if ($this->options['pmChannels']) {
             foreach ($content->private_channels as $channel) {
-                $channelPart = $this->factory->create(Channel::class, (array) $channel, true);
+                $channelPart = $this->factory->create(Channel::class, $channel, true);
                 $this->private_channels->push($channelPart);
             }
 
@@ -479,7 +479,7 @@ class Discord
             $member['game'] = null;
 
             if (! $this->users->has($member['user']->id)) {
-                $userPart = $this->factory->create(User::class, (array) $member['user'], true);
+                $userPart = $this->factory->create(User::class, $member['user'], true);
                 $this->users->offsetSet($userPart->id, $userPart);
             }
 
@@ -1304,14 +1304,14 @@ class Discord
      * Allows access to the part/repository factory.
      *
      * @param string $class   The class to build.
-     * @param array  $data    Data to create the object.
+     * @param mixed  $data    Data to create the object.
      * @param bool   $created Whether the object is created (if part).
      *
      * @return Part|AbstractRepository
      *
      * @see Factory::create()
      */
-    public function factory(string $class, array $data = [], bool $created = false)
+    public function factory(string $class, $data = [], bool $created = false)
     {
         return $this->factory->create($class, $data, $created);
     }

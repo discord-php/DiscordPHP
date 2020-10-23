@@ -151,7 +151,7 @@ class Channel extends Part
         if (array_key_exists('recipients', $this->attributes)) {
             foreach ((array) $this->attributes['recipients'] as $recipient) {
                 if (! $user = $this->discord->users->get('id', $recipient->id)) {
-                    $user = $this->factory->create(User::class, (array) $recipient, true);
+                    $user = $this->factory->create(User::class, $recipient, true);
                 }
                 $recipients->push($user);
             }
@@ -200,7 +200,7 @@ class Channel extends Part
 
                 foreach ($responses as $response) {
                     if (! $message = $this->messages->get('id', $response->id)) {
-                        $message = $this->factory->create(Message::class, (array) $response, true);
+                        $message = $this->factory->create(Message::class, $response, true);
                     }
                     $messages->push($message);
                 }
@@ -433,7 +433,7 @@ class Channel extends Part
 
         $this->http->post($this->replaceWithVariables('channels/:id/invites'), $options)->then(
             function ($response) use ($deferred) {
-                $invite = $this->factory->create(Invite::class, (array) $response, true);
+                $invite = $this->factory->create(Invite::class, $response, true);
 
                 $deferred->resolve($invite);
             },
@@ -552,7 +552,7 @@ class Channel extends Part
 
                 foreach ($responses as $response) {
                     if (! $message = $this->messages->get('id', $response->id)) {
-                        $message = $this->factory->create(Message::class, (array) $response, true);
+                        $message = $this->factory->create(Message::class, $response, true);
                     }
                     $messages->push($message);
                 }
@@ -640,7 +640,7 @@ class Channel extends Part
                 $invites = new Collection();
 
                 foreach ($response as $invite) {
-                    $invite = $this->factory->create(Invite::class, (array) $invite, true);
+                    $invite = $this->factory->create(Invite::class, $invite, true);
                     $invites->push($invite);
                 }
 
@@ -703,7 +703,7 @@ class Channel extends Part
             ]
         )->then(
             function ($response) use ($deferred) {
-                $message = $this->factory->create(Message::class, (array) $response, true);
+                $message = $this->factory->create(Message::class, $response, true);
                 $this->messages->push($message);
 
                 $deferred->resolve($message);
@@ -741,7 +741,7 @@ class Channel extends Part
             ]
         )->then(
             function ($response) use ($deferred) {
-                $message = $this->factory->create(Message::class, (array) $response, true);
+                $message = $this->factory->create(Message::class, $response, true);
                 $this->messages->push($message);
 
                 $deferred->resolve($message);
@@ -772,7 +772,7 @@ class Channel extends Part
         }
 
         $this->http->post("channels/{$this->id}/messages", ['embed' => $embed->getRawAttributes()])->then(function ($response) use ($deferred) {
-            $message = $this->factory->create(Message::class, (array) $response, true);
+            $message = $this->factory->create(Message::class, $response, true);
             $this->messages->push($message);
 
             $deferred->resolve($message);
@@ -813,7 +813,7 @@ class Channel extends Part
 
         $this->http->sendFile($this, $filepath, $filename, $content, $tts)->then(
             function ($response) use ($deferred) {
-                $message = $this->factory->create(Message::class, (array) $response, true);
+                $message = $this->factory->create(Message::class, $response, true);
                 $this->messages->push($message);
 
                 $deferred->resolve($message);

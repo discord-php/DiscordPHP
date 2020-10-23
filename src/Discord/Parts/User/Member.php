@@ -288,7 +288,7 @@ class Member extends Part
             $this->attributes['game'] = [];
         }
 
-        return $this->factory->create(Activity::class, (array) $this->attributes['game'], true);
+        return $this->factory->create(Activity::class, $this->attributes['game'], true);
     }
 
     /**
@@ -306,7 +306,7 @@ class Member extends Part
         }
 
         foreach ($this->attributes['activities'] as $activity) {
-            $activities->push($this->factory->create(Activity::class, (array) $activity, true));
+            $activities->push($this->factory->create(Activity::class, $activity, true));
         }
 
         return $activities;
@@ -385,7 +385,7 @@ class Member extends Part
             }
         } else {
             foreach ($this->attributes['roles'] as $role) {
-                $roles->push($this->factory->create(Role::class, (array) $role, true));
+                $roles->push($this->factory->create(Role::class, $role, true));
             }
         }
 

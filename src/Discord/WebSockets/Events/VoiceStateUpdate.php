@@ -23,7 +23,7 @@ class VoiceStateUpdate extends Event
      */
     public function handle(Deferred &$deferred, $data): void
     {
-        $state = $this->factory->create(VoiceStateUpdatePart::class, (array) $data, true);
+        $state = $this->factory->create(VoiceStateUpdatePart::class, $data, true);
 
         if ($state->guild) {
             $guild = $state->guild;

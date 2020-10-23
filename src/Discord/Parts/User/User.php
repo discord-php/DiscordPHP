@@ -75,7 +75,7 @@ class User extends Part
             $deferred->resolve($channel);
         } else {
             $this->http->post('users/@me/channels', ['recipient_id' => $this->id])->then(function ($response) use ($deferred) {
-                $channel = $this->factory->create(Channel::class, (array) $response, true);
+                $channel = $this->factory->create(Channel::class, $response, true);
                 $this->discord->private_channels->push($channel);
 
                 $deferred->resolve($channel);

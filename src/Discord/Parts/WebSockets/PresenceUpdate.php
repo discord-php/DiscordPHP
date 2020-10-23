@@ -66,7 +66,7 @@ class PresenceUpdate extends Part
             return $user;
         }
 
-        return $this->factory->create(User::class, (array) $this->attributes['user'], true);
+        return $this->factory->create(User::class, $this->attributes['user'], true);
     }
 
     /**
@@ -110,7 +110,7 @@ class PresenceUpdate extends Part
             return null;
         }
 
-        return $this->factory->create(Activity::class, (array) $this->attributes['game'], true);
+        return $this->factory->create(Activity::class, $this->attributes['game'], true);
     }
 
     /**
