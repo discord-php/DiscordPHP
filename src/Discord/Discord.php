@@ -298,23 +298,29 @@ class Discord
      */
     public function __construct(array $options = [])
     {
+        if (php_sapi_name() !== 'cli') {
+            trigger_error('DiscordPHP will not run on a webserver. Please use PHP CLI to run a DiscordPHP bot.', E_USER_ERROR);
+        }
+
         $options = $this->resolveOptions($options);
 
+        $this->options = $options;
         $this->token = $options['token'];
         $this->loop = $options['loop'];
         $this->logger = new LoggerWrapper($options['logger'], $options['logging']);
         $this->wsFactory = new Connector($this->loop);
         $this->handlers = new Handlers();
 
-        $this->on('ready', function () {
-            $this->emittedReady = true;
-        });
-
         foreach ($options['disabledEvents'] as $event) {
             $this->handlers->removeHandler($event);
         }
 
-        $this->options = $options;
+        $function = function () use (&$function) {
+            $this->emittedReady = true;
+            $this->removeListener('ready', $function);
+        }
+
+        $this->on('ready', $function);
 
         $this->http = new Http(
             'Bot '.$this->token,
@@ -322,10 +328,6 @@ class Discord
             new ReactDriver($this->loop)
         );
         $this->factory = new Factory($this, $this->http);
-
-        if (php_sapi_name() !== 'cli') {
-            trigger_error('DiscordPHP will not run on a webserver. Please use PHP CLI to run a DiscordPHP bot.', E_USER_ERROR);
-        }
 
         $this->connectWs();
     }
@@ -476,11 +478,13 @@ class Discord
             $member['status'] = 'offline';
             $member['game'] = null;
 
-            $memberPart = $this->factory->create(Member::class, $member, true);
-            $userPart = $this->factory->create(User::class, (array) $member['user'], true);
+            if (! $this->users->has($member['user']->id)) {
+                $userPart = $this->factory->create(User::class, (array) $member['user'], true);
+                $this->users->offsetSet($userPart->id, $userPart);
+            }
 
+            $memberPart = $this->factory->create(Member::class, $member, true);
             $guild->members->offsetSet($memberPart->id, $memberPart);
-            $this->users->offsetSet($userPart->id, $userPart);
 
             ++$count;
         }
