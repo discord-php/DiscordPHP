@@ -150,10 +150,10 @@ class Channel extends Part
 
         if (array_key_exists('recipients', $this->attributes)) {
             foreach ((array) $this->attributes['recipients'] as $recipient) {
-                if (! $user = $this->discord->users->get('id', $receipient->id)) {
+                if (! $user = $this->discord->users->get('id', $recipient->id)) {
                     $user = $this->factory->create(User::class, (array) $recipient, true);
                 }
-                $receipients->push($user);
+                $recipients->push($user);
             }
         }
 
