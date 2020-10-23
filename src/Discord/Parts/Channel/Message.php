@@ -211,9 +211,7 @@ class Message extends Part
      */
     protected function getChannelAttribute(): Channel
     {
-        if ($channel = $this->discord->getChannel($this->channel_id) ||
-            $channel = $this->discord->private_channels->get('id', $this->channel_id)
-        ) {
+        if ($channel = $this->discord->getChannel($this->channel_id)) {
             return $channel;
         }
 
