@@ -295,7 +295,7 @@ class Discord
      *
      * @array HTML Color Table.
      */
-    protected $colorTable = [
+    public $colorTable = [
         'indianred' => 'cd5c5c', 'lightcoral' => 'f08080', 'salmon' => 'fa8072', 'darksalmon' => 'e9967a',
         'lightsalmon' => 'ffa07a', 'crimson' => 'dc143c', 'red' => 'ff0000', 'firebrick' => 'b22222',
         'darkred' => '8b0000', 'pink' => 'ffc0cb', 'lightpink' => 'ffb6c1', 'hotpink' => 'ff69b4',
