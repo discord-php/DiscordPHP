@@ -318,7 +318,7 @@ class Discord
         $function = function () use (&$function) {
             $this->emittedReady = true;
             $this->removeListener('ready', $function);
-        }
+        };
 
         $this->on('ready', $function);
 
