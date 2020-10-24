@@ -298,23 +298,29 @@ class Discord
      */
     public function __construct(array $options = [])
     {
+        if (php_sapi_name() !== 'cli') {
+            trigger_error('DiscordPHP will not run on a webserver. Please use PHP CLI to run a DiscordPHP bot.', E_USER_ERROR);
+        }
+
         $options = $this->resolveOptions($options);
 
+        $this->options = $options;
         $this->token = $options['token'];
         $this->loop = $options['loop'];
         $this->logger = new LoggerWrapper($options['logger'], $options['logging']);
         $this->wsFactory = new Connector($this->loop);
         $this->handlers = new Handlers();
 
-        $this->on('ready', function () {
-            $this->emittedReady = true;
-        });
-
         foreach ($options['disabledEvents'] as $event) {
             $this->handlers->removeHandler($event);
         }
 
-        $this->options = $options;
+        $function = function () use (&$function) {
+            $this->emittedReady = true;
+            $this->removeListener('ready', $function);
+        };
+
+        $this->on('ready', $function);
 
         $this->http = new Http(
             'Bot '.$this->token,
@@ -322,10 +328,6 @@ class Discord
             new ReactDriver($this->loop)
         );
         $this->factory = new Factory($this, $this->http);
-
-        if (php_sapi_name() !== 'cli') {
-            trigger_error('DiscordPHP will not run on a webserver. Please use PHP CLI to run a DiscordPHP bot.', E_USER_ERROR);
-        }
 
         $this->connectWs();
     }
@@ -382,7 +384,7 @@ class Discord
         $this->logger->debug('discord trace received', ['trace' => $content->_trace]);
 
         // Setup the user account
-        $this->client = $this->factory->create(Client::class, (array) $content->user, true);
+        $this->client = $this->factory->create(Client::class, $content->user, true);
         $this->sessionId = $content->session_id;
 
         $this->logger->debug('client created and session id stored', ['session_id' => $content->session_id, 'user' => $this->client->user->getPublicAttributes()]);
@@ -390,7 +392,7 @@ class Discord
         // Private Channels
         if ($this->options['pmChannels']) {
             foreach ($content->private_channels as $channel) {
-                $channelPart = $this->factory->create(Channel::class, (array) $channel, true);
+                $channelPart = $this->factory->create(Channel::class, $channel, true);
                 $this->private_channels->push($channelPart);
             }
 
@@ -476,11 +478,13 @@ class Discord
             $member['status'] = 'offline';
             $member['game'] = null;
 
-            $memberPart = $this->factory->create(Member::class, $member, true);
-            $userPart = $this->factory->create(User::class, (array) $member['user'], true);
+            if (! $this->users->has($member['user']->id)) {
+                $userPart = $this->factory->create(User::class, $member['user'], true);
+                $this->users->offsetSet($userPart->id, $userPart);
+            }
 
+            $memberPart = $this->factory->create(Member::class, $member, true);
             $guild->members->offsetSet($memberPart->id, $memberPart);
-            $this->users->offsetSet($userPart->id, $userPart);
 
             ++$count;
         }
@@ -1300,14 +1304,14 @@ class Discord
      * Allows access to the part/repository factory.
      *
      * @param string $class   The class to build.
-     * @param array  $data    Data to create the object.
+     * @param mixed  $data    Data to create the object.
      * @param bool   $created Whether the object is created (if part).
      *
      * @return Part|AbstractRepository
      *
      * @see Factory::create()
      */
-    public function factory(string $class, array $data = [], bool $created = false)
+    public function factory(string $class, $data = [], bool $created = false)
     {
         return $this->factory->create($class, $data, $created);
     }
