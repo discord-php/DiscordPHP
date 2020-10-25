@@ -273,8 +273,9 @@ class Message extends Part
             return null;
         }
 
-        if ($this->channel->guild &&
-            $author = $this->channel->guild->members->get('id', $this->attributes['author']->id)
+        if (($this->channel->guild &&
+	     $author = $this->channel->guild->members->get('id', $this->attributes['author']->id)) ||
+             $author = $this->discord->users->get('id', $this->attributes['author']->id)
         ) {
             return $author;
         }
