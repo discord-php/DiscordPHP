@@ -19,12 +19,32 @@ use React\Promise\Deferred;
 use React\Promise\PromiseInterface;
 
 /**
+ * Wraps try/catch around emit.
+ */
+trait EventEmitterTraitDebug
+{
+    use EventEmitterTrait {
+        EventEmitterTrait::emit as parentEmit;
+    }
+
+    public function emit($event, array $arguments = []) {
+        try
+        {
+            $this->parentEmit($event, $arguments);
+        } catch (\Throwable $e) {
+            $this->parentEmit('exception', [$e, $this]);
+            $this->logger->error('exception caught in callback', ['event' => $event, 'type' => get_class($e), 'message' => $e->getMessage() . " in file " . $e->getFile() . " on line " . $e->getLine()]);
+        }
+    }
+}
+
+/**
  * Contains constants for WebSocket events as well as handlers
  * for the events.
  */
 abstract class Event
 {
-    use EventEmitterTrait;
+    use EventEmitterTraitDebug;
 
     // General
     const READY = 'READY';

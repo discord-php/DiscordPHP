@@ -971,13 +971,7 @@ class Discord
         }
 
         $this->logger->info('client is ready');
-
-        try {
-            $this->emit('ready', [$this]);
-        } catch (\Throwable $e) {
-            $this->emit('exception', [$e, $this]);
-            $this->logger->error('exception caught in ready callback', ['type' => get_class($e), 'message' => $e->getMessage() . " in file " . $e->getFile() . " on line " . $e->getLine()]);
-        }
+        $this->emit('ready', [$this]);
 
         foreach ($this->unparsedPackets as $parser) {
             $parser();
