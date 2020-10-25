@@ -269,9 +269,13 @@ class Message extends Part
      */
     protected function getAuthorAttribute(): ?Part
     {
-        if ($this->channel->guild &&
-            isset($this->attributes['author']) &&
-            $author = $this->channel->guild->members->get('id', $this->attributes['author']->id)
+        if (! isset($this->attributes['author'])) {
+            return null;
+        }
+
+        if (($this->channel->guild &&
+	     $author = $this->channel->guild->members->get('id', $this->attributes['author']->id)) ||
+             $author = $this->discord->users->get('id', $this->attributes['author']->id)
         ) {
             return $author;
         }
