@@ -13,30 +13,10 @@ namespace Discord\WebSockets;
 
 use Discord\Discord;
 use Discord\Factory\Factory;
+use Discord\Helpers\EventEmitterTraitDebug;
 use Discord\Http\Http;
-use Evenement\EventEmitterTrait;
 use React\Promise\Deferred;
 use React\Promise\PromiseInterface;
-
-/**
- * Wraps try/catch around emit.
- */
-trait EventEmitterTraitDebug
-{
-    use EventEmitterTrait {
-        EventEmitterTrait::emit as parentEmit;
-    }
-
-    public function emit($event, array $arguments = []) {
-        try
-        {
-            $this->parentEmit($event, $arguments);
-        } catch (\Throwable $e) {
-            $this->parentEmit('exception', [$e, $this]);
-            $this->logger->error('exception caught in callback', ['event' => $event, 'type' => get_class($e), 'message' => $e->getMessage() . " in file " . $e->getFile() . " on line " . $e->getLine()]);
-        }
-    }
-}
 
 /**
  * Contains constants for WebSocket events as well as handlers
