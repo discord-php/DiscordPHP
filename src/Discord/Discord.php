@@ -467,9 +467,10 @@ class Discord
         $this->logger->debug('received guild member chunk', ['guild_id' => $guild->id, 'guild_name' => $guild->name, 'chunk_count' => count($members), 'member_collection' => $guild->members->count(), 'member_count' => $guild->member_count]);
 
         $count = 0;
-
+        $skipped = 0;
         foreach ($members as $member) {
-            if ($guild->members->offsetExists($member->user->id)) {
+            if ($guild->members->has($member->user->id)) {
+                ++$skipped;
                 continue;
             }
 
@@ -489,7 +490,7 @@ class Discord
             ++$count;
         }
 
-        $this->logger->debug('parsed '.$count.' members', ['repository_count' => $guild->members->count(), 'actual_count' => $guild->member_count]);
+        $this->logger->debug('parsed '.$count.' members (skipped '.$skipped.')', ['repository_count' => $guild->members->count(), 'actual_count' => $guild->member_count]);
 
         if ($guild->members->count() >= $guild->member_count) {
             if (($key = array_search($guild->id, $this->largeSent)) !== false) {
