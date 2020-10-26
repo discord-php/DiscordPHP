@@ -47,6 +47,7 @@ class Webhook extends Part
         'name',
         'avatar',
         'token',
+        'application_id',
     ];
 
     /**
