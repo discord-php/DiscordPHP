@@ -270,6 +270,21 @@ class Discord
     protected $encoding = 'json';
 
     /**
+     * Tracks the number of payloads the client
+     * has sent in the past 60 seconds.
+     * 
+     * @var int
+     */
+    protected $payloadCount = 0;
+
+    /**
+     * Payload count reset timer.
+     * 
+     * @var TimerInterface
+     */
+    protected $payloadTimer;
+
+    /**
      * The HTTP client.
      *
      * @var Http Client.
@@ -530,6 +545,13 @@ class Discord
         $this->connected = true;
 
         $this->logger->info('websocket connection has been created');
+        
+        $this->payloadCount = 0;
+        $this->payloadTimer = $this->loop->addPeriodicTimer(60, function () {
+            $this->logger->debug('resetting payload count', ['count' => $this->payloadCount]);
+            $this->payloadCount = 0;
+            $this->emit('payload_count_reset');
+        });
 
         $ws->on('message', [$this, 'handleWsMessage']);
         $ws->on('close', [$this, 'handleWsClose']);
@@ -588,6 +610,11 @@ class Discord
         if (! is_null($this->heartbeatAckTimer)) {
             $this->loop->cancelTimer($this->heartbeatAckTimer);
             $this->heartbeatAckTimer = null;
+        }
+
+        if (! is_null($this->payloadTimer)) {
+            $this->loop->cancelTimer($this->payloadTimer);
+            $this->payloadTimer = null;
         }
 
         if ($this->closing) {
@@ -956,9 +983,17 @@ class Discord
      */
     protected function send(array $data): void
     {
-        $json = json_encode($data);
-
-        $this->ws->send($json);
+        // Wait until payload count has been reset
+        if ($this->payloadCount >= 120) {
+            $this->logger->debug('payload not sent, waiting', ['payload' => $data]);
+            $this->once('payload_count_reset', function () use ($data) {
+                $this->send($data);
+            });
+        } else {
+            ++$this->payloadCount;
+            $data = json_encode($data);
+            $this->ws->send($data);
+        }
     }
 
     /**
