@@ -493,9 +493,7 @@ class Discord
         $this->logger->debug('parsed '.$count.' members (skipped '.$skipped.')', ['repository_count' => $guild->members->count(), 'actual_count' => $guild->member_count]);
 
         if ($guild->members->count() >= $guild->member_count) {
-            if (($key = array_search($guild->id, $this->largeSent)) !== false) {
-                unset($this->largeSent[$key]);
-            }
+            $this->largeSent = array_diff($this->largeSent, [$guild->id]);
 
             $this->logger->debug('all users have been loaded', ['guild' => $guild->id, 'member_collection' => $guild->members->count(), 'member_count' => $guild->member_count]);
             $this->guilds->offsetSet($guild->id, $guild);
@@ -869,6 +867,11 @@ class Discord
                 return;
             }
 
+            if (count($this->largeGuilds) < 1) {
+                $this->logger->debug('unprocessed chunks', $this->largeSent);
+                return;
+            }
+
             $chunks = array_chunk($this->largeGuilds, 50);
             $this->logger->debug('sending '.count($chunks).' chunks with '.count($this->largeGuilds).' large guilds overall');
             $this->largeSent = array_merge($this->largeGuilds, $this->largeSent);
@@ -883,16 +886,18 @@ class Discord
 
                 $this->logger->debug('sending chunk with '.count($chunk).' large guilds');
 
-                $payload = [
-                    'op' => Op::OP_GUILD_MEMBER_CHUNK,
-                    'd' => [
-                        'guild_id' => $chunk,
-                        'query' => '',
-                        'limit' => 0,
-                    ],
-                ];
+                foreach ($chunk as $guild_id) {
+                    $payload = [
+                        'op' => Op::OP_GUILD_MEMBER_CHUNK,
+                        'd' => [
+                            'guild_id' => $guild_id,
+                            'query' => '',
+                            'limit' => 0,
+                        ],
+                    ];
 
-                $this->send($payload);
+                    $this->send($payload);
+                }
                 $this->loop->addTimer(1, $sendChunks);
             };
 
