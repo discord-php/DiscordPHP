@@ -860,7 +860,7 @@ class Discord
             'd' => $this->seq,
         ];
 
-        $this->send($payload);
+        $this->send($payload, true);
         $this->heartbeatTime = microtime(true);
         $this->emit('heartbeat', [$this->seq, $this]);
 
@@ -986,10 +986,11 @@ class Discord
      *
      * @param array $data Packet data.
      */
-    protected function send(array $data): void
+    protected function send(array $data, bool $force = false): void
     {
         // Wait until payload count has been reset
-        if ($this->payloadCount >= 120) {
+        // Keep 5 payloads for heartbeats as required
+        if ($this->payloadCount >= 115 && ! $force) {
             $this->logger->debug('payload not sent, waiting', ['payload' => $data]);
             $this->once('payload_count_reset', function () use ($data) {
                 $this->send($data);
