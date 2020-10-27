@@ -13,6 +13,7 @@ namespace Discord;
 
 use Discord\Exceptions\IntentException;
 use Discord\Factory\Factory;
+use Discord\Helpers\EventEmitterTraitDebug;
 use Discord\Http\Http;
 use Discord\Http\ReactDriver;
 use Discord\Parts\Guild\Guild;
@@ -34,7 +35,6 @@ use Discord\WebSockets\Events\GuildCreate;
 use Discord\WebSockets\Handlers;
 use Discord\WebSockets\Intents;
 use Discord\WebSockets\Op;
-use Evenement\EventEmitterTrait;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger as Monolog;
 use Ratchet\Client\Connector;
@@ -69,7 +69,7 @@ use function React\Promise\resolve as Resolve;
  */
 class Discord
 {
-    use EventEmitterTrait;
+    use EventEmitterTraitDebug;
 
     /**
      * The gateway version the client uses.
