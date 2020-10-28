@@ -39,6 +39,7 @@ class Handlers
         $this->addHandler(Event::GUILD_DELETE, \Discord\WebSockets\Events\GuildDelete::class);
         $this->addHandler(Event::GUILD_UPDATE, \Discord\WebSockets\Events\GuildUpdate::class);
         $this->addHandler(Event::GUILD_INTEGRATIONS_UPDATE, \Discord\WebSockets\Events\GuildIntegrationsUpdate::class);
+        $this->addHandler(Event::GUILD_MEMBER_LIST_UPDATE, \Discord\WebSockets\Events\GuildMemberListUpdate::class);
 
         // Invite handlers
         $this->addHandler(Event::INVITE_CREATE, \Discord\WebSockets\Events\InviteCreate::class);

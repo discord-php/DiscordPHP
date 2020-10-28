@@ -40,6 +40,8 @@ class Op
     const OP_HELLO = 10;
     // Used to acknowledge heartbeats.
     const OP_HEARTBEAT_ACK = 11;
+    // Request for lazy guilds
+    const OP_GUILD_MEMBER_LIST_UPDATE = 14;
 
     ///////////////////////////////////////
     ///////////////////////////////////////
