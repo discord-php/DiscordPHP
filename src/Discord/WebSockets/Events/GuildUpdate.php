@@ -47,7 +47,7 @@ class GuildUpdate extends Event
         }
 
         $old = $this->discord->guilds->get('id', $guildPart->id);
-        $this->discord->guilds->offsetSet($guildPart->id, $guildPart);
+        $this->discord->guilds->push($guildPart);
 
         $deferred->resolve([$guildPart, $old]);
     }

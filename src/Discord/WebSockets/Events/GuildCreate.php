@@ -40,7 +40,7 @@ class GuildCreate extends Event
             $role['guild_id'] = $guildPart->id;
             $rolePart = $this->factory->create(Role::class, $role, true);
 
-            $guildPart->roles->offsetSet($rolePart->id, $rolePart);
+            $guildPart->roles->push($rolePart);
         }
 
         foreach ($data->channels as $channel) {
@@ -48,7 +48,7 @@ class GuildCreate extends Event
             $channel['guild_id'] = $data->id;
             $channelPart = $this->factory->create(Channel::class, $channel, true);
 
-            $guildPart->channels->offsetSet($channelPart->id, $channelPart);
+            $guildPart->channels->push($channelPart);
         }
 
         foreach ($data->members as $member) {
@@ -57,26 +57,26 @@ class GuildCreate extends Event
 
             if (! $this->discord->users->has($member['user']->id)) {
                 $userPart = $this->factory->create(User::class, $member['user'], true);
-                $this->discord->users->offsetSet($userPart->id, $userPart);
+                $this->discord->users->push($userPart);
             }
 
             $memberPart = $this->factory->create(Member::class, $member, true);
-            $guildPart->members->offsetSet($memberPart->id, $memberPart);
+            $guildPart->members->push($memberPart);
         }
 
         foreach ($data->presences as $presence) {
-            if ($member = $guildPart->members->offsetGet($presence->user->id)) {
+            if ($member = $guildPart->members->get('id', $presence->user->id)) {
                 $member->fill((array) $presence);
-                $guildPart->members->offsetSet($member->id, $member);
+                $guildPart->members->push($member);
             }
         }
 
         foreach ($data->voice_states as $state) {
-            if ($channel = $guildPart->channels->offsetGet($state->channel_id)) {
+            if ($channel = $guildPart->channels->get('id', $state->channel_id)) {
                 $stateUpdate = $this->factory->create(VoiceStateUpdatePart::class, $state, true);
 
-                $channel->members->offsetSet($stateUpdate->user_id, $stateUpdate);
-                $guildPart->channels->offsetSet($channel->id, $channel);
+                $channel->members->push($stateUpdate);
+                $guildPart->channels->push($channel);
             }
         }
 
@@ -85,20 +85,20 @@ class GuildCreate extends Event
                 $this->discord->addLargeGuild($guildPart);
             }
 
-            $this->discord->guilds->offsetSet($guildPart->id, $guildPart);
+            $this->discord->guilds->push($guildPart);
 
             $deferred->resolve($guildPart);
         };
 
         if ($this->discord->options['retrieveBans']) {
-            $this->http->get("guilds/{$guildPart->id}/bans")->then(function ($rawBans) use (&$guildPart, $resolve) {
+            $this->http->get("guilds/{$guildPart->id}/bans")->done(function ($rawBans) use (&$guildPart, $resolve) {
                 foreach ($rawBans as $ban) {
                     $ban = (array) $ban;
                     $ban['guild'] = $guildPart;
 
                     $banPart = $this->factory->create(Ban::class, $ban, true);
 
-                    $guildPart->bans->offsetSet($banPart->id, $banPart);
+                    $guildPart->bans->push($banPart);
                 }
 
                 $resolve();

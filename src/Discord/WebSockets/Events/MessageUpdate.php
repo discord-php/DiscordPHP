@@ -30,11 +30,11 @@ class MessageUpdate extends Event
                 $messagePart = $this->factory->create(Message::class, array_merge($oldMessage->getRawAttributes(), $messagePart->getRawAttributes()), true);
             }
 
-            $channel->messages->offsetSet($messagePart->id, $messagePart);
+            $channel->messages->push($messagePart);
 
             if ($guild = $this->discord->guilds->get('id', $channel->guild_id)) {
-                $guild->channels->offsetSet($channel->id, $channel);
-                $this->discord->guilds->offsetSet($guild->id, $guild);
+                $guild->channels->push($channel);
+                $this->discord->guilds->push($guild);
             }
         }
 

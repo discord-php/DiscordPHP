@@ -476,7 +476,7 @@ class Discord
      */
     protected function handleGuildMembersChunk(object $data): void
     {
-        $guild = $this->guilds->offsetGet($data->d->guild_id);
+        $guild = $this->guilds->get('id', $data->d->guild_id);
         $members = $data->d->members;
 
         $this->logger->debug('received guild member chunk', ['guild_id' => $guild->id, 'guild_name' => $guild->name, 'chunk_count' => count($members), 'member_collection' => $guild->members->count(), 'member_count' => $guild->member_count]);
@@ -496,22 +496,22 @@ class Discord
 
             if (! $this->users->has($member['user']->id)) {
                 $userPart = $this->factory->create(User::class, $member['user'], true);
-                $this->users->offsetSet($userPart->id, $userPart);
+                $this->users->push($userPart);
             }
 
             $memberPart = $this->factory->create(Member::class, $member, true);
-            $guild->members->offsetSet($memberPart->id, $memberPart);
+            $guild->members->push($memberPart);
 
             ++$count;
-        }
+	}
 
+        $this->guilds->push($guild);
         $this->logger->debug('parsed '.$count.' members (skipped '.$skipped.')', ['repository_count' => $guild->members->count(), 'actual_count' => $guild->member_count]);
 
         if ($guild->members->count() >= $guild->member_count) {
             $this->largeSent = array_diff($this->largeSent, [$guild->id]);
 
             $this->logger->debug('all users have been loaded', ['guild' => $guild->id, 'member_collection' => $guild->members->count(), 'member_count' => $guild->member_count]);
-            $this->guilds->offsetSet($guild->id, $guild);
         }
 
         if (count($this->largeSent) < 1) {
@@ -666,7 +666,7 @@ class Discord
             );
 
             $deferred = new Deferred();
-            $deferred->promise()->then(function ($d) use ($data, $hData) {
+            $deferred->promise()->done(function ($d) use ($data, $hData) {
                 if (is_array($d) && count($d) == 2) {
                     list($new, $old) = $d;
                 } else {
@@ -960,7 +960,7 @@ class Discord
      */
     protected function connectWs(): void
     {
-        $this->setGateway()->then(function ($gateway) {
+        $this->setGateway()->done(function ($gateway) {
             if (isset($gateway['session']) && $session = $gateway['session']) {
                 if ($session['remaining'] < 2) {
                     $this->logger->error('exceeded number of reconnects allowed, waiting before attempting reconnect', $session);
@@ -974,7 +974,7 @@ class Discord
 
             $this->logger->info('starting connection to websocket', ['gateway' => $this->gateway]);
 
-            $this->wsFactory->__invoke($this->gateway)->then(
+            $this->wsFactory->__invoke($this->gateway)->done(
                 [$this, 'handleWsConnection'],
                 [$this, 'handleWsError']
             );
@@ -1204,7 +1204,7 @@ class Discord
         };
 
         if (is_null($gateway)) {
-            $this->http->get('gateway/bot')->then(function ($response) use ($buildParams) {
+            $this->http->get('gateway/bot')->done(function ($response) use ($buildParams) {
                 $buildParams($response->url, $response);
             }, function ($e) use ($buildParams) {
                 // Can't access the API server so we will use the default gateway.
