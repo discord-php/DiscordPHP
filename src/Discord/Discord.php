@@ -503,7 +503,7 @@ class Discord
             $guild->members->push($memberPart);
 
             ++$count;
-	}
+        }
 
         $this->guilds->push($guild);
         $this->logger->debug('parsed '.$count.' members (skipped '.$skipped.')', ['repository_count' => $guild->members->count(), 'actual_count' => $guild->member_count]);
