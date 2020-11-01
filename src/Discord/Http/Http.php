@@ -11,6 +11,7 @@
 
 namespace Discord\Http;
 
+use Discord\Discord;
 use Discord\Exceptions\DiscordRequestFailedException;
 use Discord\Exceptions\Rest\ContentTooLongException;
 use Discord\Exceptions\Rest\NoPermissionsException;
