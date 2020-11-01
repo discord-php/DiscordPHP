@@ -110,3 +110,41 @@ function getColor($color = 0): int
 
 	return 0;
 }
+
+/**
+ * Replacement for Illuminate\Support\Str::contains.
+ *
+ * @param string $string The string to check.
+ * @param array $matches Array containing one or more phrases to match.
+ *
+ * @return bool
+ */
+function contains(string $string, array $matches): bool
+{
+    foreeach($matches as $match) {
+        if (strpos($string, $match) !== false) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+/**
+ * Replacement for Illuminate\Support\Str::studly.
+ *
+ * @param string $string The string to convert.
+ *
+ * @return string
+ */
+function studly(string $string): string
+{
+    $ret = '';
+    preg_match_all('/([a-z0-9]+)/ui', $string, $matches);
+
+    foreach($matches[0] as $match) {
+        $ret .= ucfirst(strtolower($match));
+    }
+
+    return $ret;
+}

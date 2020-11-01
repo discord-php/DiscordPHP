@@ -479,7 +479,7 @@ class Message extends Part
     public function createReactionCollector(callable $filter, array $options = []): PromiseInterface
     {
         $deferred = new Deferred();
-        $reactions = new \Illuminate\Support\Collection();
+        $reactions = new Collection();
         $timer = null;
 
         $options = array_merge([
