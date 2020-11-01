@@ -27,9 +27,9 @@ class GuildRoleCreate extends Event
 
         $rolePart = $this->factory->create(Role::class, $adata, true);
 
-        if ($guild = $this->discord->guilds->get('id', $rolePart->guild_id)) {
-            $guild->roles->push($rolePart);
-            $this->discord->guilds->push($guild);
+        if ($guild = $this->discord->guilds->offsetGet($rolePart->guild_id)) {
+            $guild->roles->offsetSet($rolePart->id, $rolePart);
+            $this->discord->guilds->offsetSet($guild->id, $guild);
         }
 
         $deferred->resolve($rolePart);

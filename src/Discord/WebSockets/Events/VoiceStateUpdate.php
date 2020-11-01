@@ -40,13 +40,13 @@ class VoiceStateUpdate extends Event
 
                 // Add member state to new channel
                 if ($channel->id == $state->channel_id) {
-                    $channel->members->push($state);
+                    $channel->members->offsetSet($state->id, $state);
                 }
 
-                $guild->channels->push($channel);
+                $guild->channels->offsetSet($channel->id, $channel);
             }
 
-            $this->discord->guilds->push($state->guild);
+            $this->discord->guilds->offsetSet($state->id, $state->guild);
         }
 
         $deferred->resolve($state);

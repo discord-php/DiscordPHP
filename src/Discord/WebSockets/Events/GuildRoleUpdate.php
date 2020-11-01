@@ -27,11 +27,11 @@ class GuildRoleUpdate extends Event
 
         $rolePart = $this->factory->create(Role::class, $adata, true);
 
-        if ($guild = $this->discord->guilds->get('id', $rolePart->guild_id)) {
-            $old = $guild->roles->get('id', $rolePart->id);
-            $guild->roles->push($rolePart);
+        if ($guild = $this->discord->guilds->offsetGet($rolePart->guild_id)) {
+            $old = $guild->roles->offsetGet($rolePart->id);
+            $guild->roles->offsetSet($rolePart->id, $rolePart);
 
-            $this->discord->guilds->push($guild);
+            $this->discord->guilds->offsetSet($guild->id, $guild);
         } else {
             $old = null;
         }

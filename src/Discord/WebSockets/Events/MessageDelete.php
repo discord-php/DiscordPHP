@@ -24,16 +24,16 @@ class MessageDelete extends Event
         $message = null;
 
         if (! isset($data->guild_id)) {
-            if ($channel = $this->discord->private_channels->get('id', $data->channel_id)) {
+            if ($channel = $this->discord->private_channels->offsetGet($data->channel_id)) {
                 $message = $channel->messages->pull($data->id);
-                $this->discord->private_channels->push($channel);
+                $this->discord->private_channels->offsetSet($channel->id, $channel);
             }
         } else {
-            if ($guild = $this->discord->guilds->get('id', $data->guild_id)) {
-                if ($channel = $guild->channels->get('id', $data->channel_id)) {
+            if ($guild = $this->discord->guilds->offsetGet($data->guild_id)) {
+                if ($channel = $guild->channels->offsetGet($data->channel_id)) {
                     $message = $channel->messages->pull($data->id);
-                    $guild->channels->push($channel);
-                    $this->discord->guilds->push($guild);
+                    $guild->channels->offsetSet($channel->id, $channel);
+                    $this->discord->guilds->offsetSet($guild->id, $guild);
                 }
             }
         }

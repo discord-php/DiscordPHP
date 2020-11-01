@@ -21,6 +21,6 @@ class GuildIntegrationsUpdate extends Event
      */
     public function handle(Deferred &$deferred, $data): void
     {
-        $deferred->resolve($this->discord->guilds->get('id', $data->guild_id));
+        $deferred->resolve($this->discord->guilds->offsetGet($data->guild_id));
     }
 }

@@ -123,7 +123,7 @@ class Embed extends Part
                 $field = $this->factory->create(Field::class, $field, true);
             }
 
-            $fields->push($field);
+            $fields->offsetSet($field->id, $field);
         }
 
         return $fields;

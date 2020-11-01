@@ -24,11 +24,11 @@ class GuildMemberAdd extends Event
     {
         $member = $this->factory->create(Member::class, $data, true);
 
-        if ($guild = $this->discord->guilds->get('id', $member->guild_id)) {
-            $guild->members->push($member);
+        if ($guild = $this->discord->guilds->offsetGet($member->guild_id)) {
+            $guild->members->offsetSet($member->id, $member);
             ++$guild->member_count;
 
-            $this->discord->guilds->push($guild);
+            $this->discord->guilds->offsetSet($guild->id, $guild);
         }
 
         $deferred->resolve($member);

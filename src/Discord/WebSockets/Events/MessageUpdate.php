@@ -26,15 +26,15 @@ class MessageUpdate extends Event
         $oldMessage = null;
 
         if ($channel = $messagePart->channel) {
-            if ($oldMessage = $channel->messages->get('id', $messagePart->id)) {
+            if ($oldMessage = $channel->messages->offsetGet($messagePart->id)) {
                 $messagePart = $this->factory->create(Message::class, array_merge($oldMessage->getRawAttributes(), $messagePart->getRawAttributes()), true);
             }
 
-            $channel->messages->push($messagePart);
+            $channel->messages->offsetSet($messagePart->id, $messagePart);
 
-            if ($guild = $this->discord->guilds->get('id', $channel->guild_id)) {
-                $guild->channels->push($channel);
-                $this->discord->guilds->push($guild);
+            if ($guild = $this->discord->guilds->offsetGet($channel->guild_id)) {
+                $guild->channels->offsetSet($channel->id, $channel);
+                $this->discord->guilds->offsetSet($guild->id, $guild);
             }
         }
 

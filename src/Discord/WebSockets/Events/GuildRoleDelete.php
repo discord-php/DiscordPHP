@@ -21,9 +21,9 @@ class GuildRoleDelete extends Event
      */
     public function handle(Deferred &$deferred, $data): void
     {
-        if ($guild = $this->discord->guilds->get('id', $data->guild_id)) {
+        if ($guild = $this->discord->guilds->offsetGet($data->guild_id)) {
             $role = $guild->roles->pull($data->role_id);
-            $this->discord->guilds->push($guild);
+            $this->discord->guilds->offsetSet($guild->id, $guild);
 
             $deferred->resolve($role);
         } else {

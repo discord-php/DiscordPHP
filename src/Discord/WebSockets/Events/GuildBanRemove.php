@@ -26,7 +26,7 @@ class GuildBanRemove extends Event
 
         if ($guild = $ban->guild) {
             $guild->bans->pull($ban->user->id);
-            $this->discord->guilds->push($guild);
+            $this->discord->guilds->offsetSet($guild->id, $guild);
         }
 
         $deferred->resolve($ban);

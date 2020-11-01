@@ -408,7 +408,7 @@ class Discord
         if ($this->options['pmChannels']) {
             foreach ($content->private_channels as $channel) {
                 $channelPart = $this->factory->create(Channel::class, $channel, true);
-                $this->private_channels->push($channelPart);
+                $this->private_channels->offsetSet($channelPart->id, $channelPart);
             }
 
             $this->logger->info('stored private channels', ['count' => $this->private_channels->count()]);
@@ -476,7 +476,7 @@ class Discord
      */
     protected function handleGuildMembersChunk(object $data): void
     {
-        $guild = $this->guilds->get('id', $data->d->guild_id);
+        $guild = $this->guilds->offsetGet($data->d->guild_id);
         $members = $data->d->members;
 
         $this->logger->debug('received guild member chunk', ['guild_id' => $guild->id, 'guild_name' => $guild->name, 'chunk_count' => count($members), 'member_collection' => $guild->members->count(), 'member_count' => $guild->member_count]);
@@ -496,16 +496,16 @@ class Discord
 
             if (! $this->users->has($member['user']->id)) {
                 $userPart = $this->factory->create(User::class, $member['user'], true);
-                $this->users->push($userPart);
+                $this->users->offsetSet($userPart->id, $userPart);
             }
 
             $memberPart = $this->factory->create(Member::class, $member, true);
-            $guild->members->push($memberPart);
+            $guild->members->offsetSet($memberPart->id, $memberPart);
 
             ++$count;
         }
 
-        $this->guilds->push($guild);
+        $this->guilds->offsetSet($guild->id, $guild);
         $this->logger->debug('parsed '.$count.' members (skipped '.$skipped.')', ['repository_count' => $guild->members->count(), 'actual_count' => $guild->member_count]);
 
         if ($guild->members->count() >= $guild->member_count) {
