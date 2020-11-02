@@ -13,8 +13,6 @@ namespace Discord;
 
 use Discord\Exceptions\IntentException;
 use Discord\Factory\Factory;
-use Discord\Helpers\EventEmitterTraitDebug;
-use Discord\Helpers\ExtendedPromisorInterface;
 use Discord\Http\Http;
 use Discord\Http\ReactDriver;
 use Discord\Parts\Guild\Guild;
@@ -45,6 +43,7 @@ use React\EventLoop\Factory as LoopFactory;
 use React\EventLoop\LoopInterface;
 use React\EventLoop\TimerInterface;
 use Discord\Helpers\Deferred;
+use Evenement\EventEmitterTrait;
 use React\Promise\ExtendedPromiseInterface;
 use React\Promise\PromiseInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -71,7 +70,7 @@ use function React\Promise\resolve as Resolve;
  */
 class Discord
 {
-    use EventEmitterTraitDebug;
+    use EventEmitterTrait;
 
     /**
      * The gateway version the client uses.

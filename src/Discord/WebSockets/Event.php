@@ -13,9 +13,9 @@ namespace Discord\WebSockets;
 
 use Discord\Discord;
 use Discord\Factory\Factory;
-use Discord\Helpers\EventEmitterTraitDebug;
 use Discord\Http\Http;
 use Discord\Helpers\Deferred;
+use Evenement\EventEmitterTrait;
 use React\Promise\PromiseInterface;
 
 /**
@@ -24,7 +24,7 @@ use React\Promise\PromiseInterface;
  */
 abstract class Event
 {
-    use EventEmitterTraitDebug;
+    use EventEmitterTrait;
 
     // General
     const READY = 'READY';
