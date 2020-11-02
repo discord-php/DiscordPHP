@@ -16,7 +16,6 @@ use Carbon\Carbon;
 use Discord\Discord;
 use Discord\Factory\Factory;
 use Discord\Http\Http;
-use Illuminate\Support\Str;
 use JsonSerializable;
 use Serializable;
 
@@ -168,7 +167,7 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
      */
     private function checkForMutator(string $key, string $type)
     {
-        $str = $type.Str::studly($key).'Attribute';
+        $str = $type.\Discord\studly($key).'Attribute';
 
         if (is_callable([$this, $str])) {
             return $str;
