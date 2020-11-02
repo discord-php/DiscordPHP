@@ -11,7 +11,6 @@
 
 namespace Discord\Http;
 
-use Discord\Discord;
 use Discord\Exceptions\DiscordRequestFailedException;
 use Discord\Exceptions\Rest\ContentTooLongException;
 use Discord\Exceptions\Rest\NoPermissionsException;
@@ -335,7 +334,7 @@ class Http
                 return new NotFoundException("Error code 404: This resource does not exist. {$message}");
                 break;
             case 500:
-                if (Discord::contains(strtolower($content), ['longer than 2000 characters', 'string value is too long'])) {
+                if (\Discord\contains(strtolower($content), ['longer than 2000 characters', 'string value is too long'])) {
                     // Discord has set a restriction with content sent over REST,
                     // if it is more than 2000 characters long it will not be
                     // sent and will return a 500 error.
