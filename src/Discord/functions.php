@@ -121,7 +121,7 @@ function getColor($color = 0): int
  */
 function contains(string $string, array $matches): bool
 {
-    foreeach($matches as $match) {
+    foreach($matches as $match) {
         if (strpos($string, $match) !== false) {
             return true;
         }
