@@ -28,8 +28,8 @@ use Discord\Repository\Channel\OverwriteRepository;
 use Discord\Repository\Channel\VoiceMemberRepository as MemberRepository;
 use Discord\Repository\Channel\WebhookRepository;
 use Discord\WebSockets\Event;
-use React\Promise\Deferred;
-use React\Promise\PromiseInterface;
+use Discord\Helpers\Deferred;
+use React\Promise\ExtendedPromiseInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Traversable;
 use function React\Partial\bind as Bind;
@@ -187,14 +187,14 @@ class Channel extends Part
     /**
      * Returns the channels pinned messages.
      *
-     * @return PromiseInterface
+     * @return ExtendedPromiseInterface
      * @throws \Exception
      */
-    protected function getPinnedMessages(): PromiseInterface
+    protected function getPinnedMessages(): ExtendedPromiseInterface
     {
         $deferred = new Deferred();
 
-        $this->http->get($this->replaceWithVariables('channels/:id/pins'))->then(
+        $this->http->get($this->replaceWithVariables('channels/:id/pins'))->done(
             function ($responses) use ($deferred) {
                 $messages = new Collection();
 
@@ -220,10 +220,10 @@ class Channel extends Part
      * @param array $allow An array of permissions to allow.
      * @param array $deny  An array of permissions to deny.
      *
-     * @return PromiseInterface
+     * @return ExtendedPromiseInterface
      * @throws \Exception
      */
-    public function setPermissions(Part $part, array $allow = [], array $deny = []): PromiseInterface
+    public function setPermissions(Part $part, array $allow = [], array $deny = []): ExtendedPromiseInterface
     {
         $deferred = new Deferred();
 
@@ -249,7 +249,7 @@ class Channel extends Part
             'deny' => $denyPart->bitwise,
         ]);
 
-        $this->setOverwrite($part, $overwrite)->then(
+        $this->setOverwrite($part, $overwrite)->done(
             Bind([$deferred, 'resolve']),
             Bind([$deferred, 'reject'])
         );
@@ -263,9 +263,9 @@ class Channel extends Part
      * @param Part      $part      A role or member.
      * @param Overwrite $overwrite An overwrite object.
      *
-     * @return PromiseInterface
+     * @return ExtendedPromiseInterface
      */
-    public function setOverwrite(Part $part, Overwrite $overwrite): PromiseInterface
+    public function setOverwrite(Part $part, Overwrite $overwrite): ExtendedPromiseInterface
     {
         $deferred = new Deferred();
 
@@ -288,7 +288,7 @@ class Channel extends Part
             $this->attributes['permission_overwrites'][] = $payload;
             $deferred->resolve();
         } else {
-            $this->http->put("channels/{$this->id}/permissions/{$part->id}", $payload)->then(
+            $this->http->put("channels/{$this->id}/permissions/{$part->id}", $payload)->done(
                 Bind([$deferred, 'resolve']),
                 Bind([$deferred, 'reject'])
             );
@@ -302,9 +302,9 @@ class Channel extends Part
      *
      * @param string $id The message snowflake.
      *
-     * @return PromiseInterface
+     * @return ExtendedPromiseInterface
      */
-    public function getMessage(string $id): PromiseInterface
+    public function getMessage(string $id): ExtendedPromiseInterface
     {
         return $this->messages->fetch($id);
     }
@@ -314,9 +314,9 @@ class Channel extends Part
      *
      * @param Member|int The member to move. (either a Member part or the member ID)
      *
-     * @return PromiseInterface
+     * @return ExtendedPromiseInterface
      */
-    public function moveMember($member): PromiseInterface
+    public function moveMember($member): ExtendedPromiseInterface
     {
         $deferred = new Deferred();
 
@@ -330,7 +330,7 @@ class Channel extends Part
             $member = $member->id;
         }
 
-        $this->http->patch("guilds/{$this->guild_id}/members/{$member}", ['channel_id' => $this->id])->then(
+        $this->http->patch("guilds/{$this->guild_id}/members/{$member}", ['channel_id' => $this->id])->done(
             Bind([$deferred, 'resolve']),
             Bind([$deferred, 'reject'])
         );
@@ -348,7 +348,7 @@ class Channel extends Part
      *
      * @return \React\Promise\Promise
      */
-    public function muteMember($member): PromiseInterface
+    public function muteMember($member): ExtendedPromiseInterface
     {
         $deferred = new Deferred();
 
@@ -367,7 +367,7 @@ class Channel extends Part
             [
                 'mute' => true,
             ]
-        )->then(
+        )->done(
             Bind([$deferred, 'resolve']),
             Bind([$deferred, 'reject'])
         );
@@ -385,7 +385,7 @@ class Channel extends Part
      *
      * @return \React\Promise\Promise
      */
-    public function unmuteMember($member): PromiseInterface
+    public function unmuteMember($member): ExtendedPromiseInterface
     {
         $deferred = new Deferred();
 
@@ -404,7 +404,7 @@ class Channel extends Part
             [
                 'mute' => false,
             ]
-        )->then(
+        )->done(
             Bind([$deferred, 'resolve']),
             Bind([$deferred, 'reject'])
         );
@@ -424,14 +424,14 @@ class Channel extends Part
      * @param bool  $options ['temporary'] Whether the invite is for temporary membership.
      * @param bool  $options ['unique']    Whether the invite code should be unique (useful for creating many unique one time use invites).
      *
-     * @return PromiseInterface
+     * @return ExtendedPromiseInterface
      * @throws \Exception
      */
-    public function createInvite($options = []): PromiseInterface
+    public function createInvite($options = []): ExtendedPromiseInterface
     {
         $deferred = new Deferred();
 
-        $this->http->post($this->replaceWithVariables('channels/:id/invites'), $options)->then(
+        $this->http->post($this->replaceWithVariables('channels/:id/invites'), $options)->done(
             function ($response) use ($deferred) {
                 $invite = $this->factory->create(Invite::class, $response, true);
 
@@ -448,9 +448,9 @@ class Channel extends Part
      *
      * @param array|Traversable $messages An array of messages to delete.
      *
-     * @return PromiseInterface
+     * @return ExtendedPromiseInterface
      */
-    public function deleteMessages($messages): PromiseInterface
+    public function deleteMessages($messages): ExtendedPromiseInterface
     {
         $deferred = new Deferred();
 
@@ -473,7 +473,7 @@ class Channel extends Part
                 ) {
                     $message->delete();
                 } else {
-                    $this->http->delete("channels/{$this->id}/messages/{$message}")->then(
+                    $this->http->delete("channels/{$this->id}/messages/{$message}")->done(
                         Bind([$deferred, 'resolve']),
                         Bind([$deferred, 'reject'])
                     );
@@ -496,7 +496,7 @@ class Channel extends Part
                     [
                         'messages' => array_slice($messageID, 0, 100)
                     ]
-                )->then(
+                )->done(
                     Bind([$deferred, 'resolve']),
                     Bind([$deferred, 'reject'])
                 );
@@ -512,9 +512,9 @@ class Channel extends Part
      *
      * @param array $options
      *
-     * @return PromiseInterface
+     * @return ExtendedPromiseInterface
      */
-    public function getMessageHistory(array $options): PromiseInterface
+    public function getMessageHistory(array $options): ExtendedPromiseInterface
     {
         $deferred = new Deferred();
 
@@ -546,7 +546,7 @@ class Channel extends Part
             $url .= '&around='.($options['around'] instanceof Message ? $options['around']->id : $options['around']);
         }
 
-        $this->http->get($url, null, [], $options['cache'] ? null : 0)->then(
+        $this->http->get($url, null, [], $options['cache'] ? null : 0)->done(
             function ($responses) use ($deferred) {
                 $messages = new Collection();
 
@@ -570,9 +570,9 @@ class Channel extends Part
      *
      * @param Message $message The message to pin.
      *
-     * @return PromiseInterface
+     * @return ExtendedPromiseInterface
      */
-    public function pinMessage(Message $message): PromiseInterface
+    public function pinMessage(Message $message): ExtendedPromiseInterface
     {
         $deferred = new Deferred();
 
@@ -584,7 +584,7 @@ class Channel extends Part
             return Reject(new \Exception('You cannot pin a message to a different channel.'));
         }
 
-        $this->http->put("channels/{$this->id}/pins/{$message->id}")->then(
+        $this->http->put("channels/{$this->id}/pins/{$message->id}")->done(
             function () use (&$message, $deferred) {
                 $message->pinned = true;
                 $deferred->resolve($message);
@@ -600,9 +600,9 @@ class Channel extends Part
      *
      * @param Message $message The message to un-pin.
      *
-     * @return PromiseInterface
+     * @return ExtendedPromiseInterface
      */
-    public function unpinMessage(Message $message): PromiseInterface
+    public function unpinMessage(Message $message): ExtendedPromiseInterface
     {
         $deferred = new Deferred();
 
@@ -614,7 +614,7 @@ class Channel extends Part
             return Reject(new \Exception('You cannot un-pin a message from a different channel.'));
         }
 
-        $this->http->delete("channels/{$this->id}/pins/{$message->id}")->then(
+        $this->http->delete("channels/{$this->id}/pins/{$message->id}")->done(
             function () use (&$message, $deferred) {
                 $message->pinned = false;
                 $deferred->resolve($message);
@@ -628,14 +628,14 @@ class Channel extends Part
     /**
      * Returns the channels invites.
      *
-     * @return PromiseInterface
+     * @return ExtendedPromiseInterface
      * @throws \Exception
      */
-    public function getInvites(): PromiseInterface
+    public function getInvites(): ExtendedPromiseInterface
     {
         $deferred = new Deferred();
 
-        $this->http->get($this->replaceWithVariables('channels/:id/invites'))->then(
+        $this->http->get($this->replaceWithVariables('channels/:id/invites'))->done(
             function ($response) use ($deferred) {
                 $invites = new Collection();
 
@@ -678,10 +678,10 @@ class Channel extends Part
      * @param bool             $tts   Whether the message should be sent with text to speech enabled.
      * @param Embed|array|null $embed An embed to send.
      *
-     * @return PromiseInterface
+     * @return ExtendedPromiseInterface
      * @throws \Exception
      */
-    public function sendMessage(string $text, bool $tts = false, $embed = null): PromiseInterface
+    public function sendMessage(string $text, bool $tts = false, $embed = null): ExtendedPromiseInterface
     {
         if ($embed instanceof Embed) {
             $embed = $embed->getRawAttributes();
@@ -701,7 +701,7 @@ class Channel extends Part
                 'tts' => $tts,
                 'embed' => $embed,
             ]
-        )->then(
+        )->done(
             function ($response) use ($deferred) {
                 $message = $this->factory->create(Message::class, $response, true);
                 $this->messages->push($message);
@@ -722,10 +722,10 @@ class Channel extends Part
      * @param bool    $tts      Whether the message should be sent with text to speech enabled.
      * @param Embed|array|null $embed An embed to send.
      *
-     * @return PromiseInterface
+     * @return ExtendedPromiseInterface
      * @throws \Exception
      */
-    public function editMessage(Message $message, string $text, bool $tts = false, $embed = null): PromiseInterface
+    public function editMessage(Message $message, string $text, bool $tts = false, $embed = null): ExtendedPromiseInterface
     {
         if ($embed instanceof Embed) {
             $embed = $embed->getRawAttributes();
@@ -739,7 +739,7 @@ class Channel extends Part
                 'tts' => $tts,
                 'embed' => $embed,
             ]
-        )->then(
+        )->done(
             function ($response) use ($deferred) {
                 $message = $this->factory->create(Message::class, $response, true);
                 $this->messages->push($message);
@@ -758,10 +758,10 @@ class Channel extends Part
      *
      * @param Embed $embed
      *
-     * @return PromiseInterface
+     * @return ExtendedPromiseInterface
      * @throws \Exception
      */
-    public function sendEmbed(Embed $embed): PromiseInterface
+    public function sendEmbed(Embed $embed): ExtendedPromiseInterface
     {
         $deferred = new Deferred();
 
@@ -771,7 +771,7 @@ class Channel extends Part
             return $deferred->promise();
         }
 
-        $this->http->post("channels/{$this->id}/messages", ['embed' => $embed->getRawAttributes()])->then(function ($response) use ($deferred) {
+        $this->http->post("channels/{$this->id}/messages", ['embed' => $embed->getRawAttributes()])->done(function ($response) use ($deferred) {
             $message = $this->factory->create(Message::class, $response, true);
             $this->messages->push($message);
 
@@ -789,9 +789,9 @@ class Channel extends Part
      * @param string|null $content  Message content to send with the file.
      * @param bool        $tts      Whether to send the message with TTS.
      *
-     * @return PromiseInterface
+     * @return ExtendedPromiseInterface
      */
-    public function sendFile(string $filepath, ?string $filename = null, ?string $content = null, $tts = false): PromiseInterface
+    public function sendFile(string $filepath, ?string $filename = null, ?string $content = null, $tts = false): ExtendedPromiseInterface
     {
         $deferred = new Deferred();
 
@@ -811,7 +811,7 @@ class Channel extends Part
             $filename = basename($filepath);
         }
 
-        $this->http->sendFile($this, $filepath, $filename, $content, $tts)->then(
+        $this->http->sendFile($this, $filepath, $filename, $content, $tts)->done(
             function ($response) use ($deferred) {
                 $message = $this->factory->create(Message::class, $response, true);
                 $this->messages->push($message);
@@ -827,9 +827,9 @@ class Channel extends Part
     /**
      * Broadcasts that you are typing to the channel. Lasts for 5 seconds.
      *
-     * @return PromiseInterface
+     * @return ExtendedPromiseInterface
      */
-    public function broadcastTyping(): PromiseInterface
+    public function broadcastTyping(): ExtendedPromiseInterface
     {
         $deferred = new Deferred();
 
@@ -839,7 +839,7 @@ class Channel extends Part
             return $deferred->promise();
         }
 
-        $this->http->post("channels/{$this->id}/typing")->then(
+        $this->http->post("channels/{$this->id}/typing")->done(
             Bind([$deferred, 'resolve']),
             Bind([$deferred, 'reject'])
         );
@@ -855,9 +855,9 @@ class Channel extends Part
      * @param int      $options ['time']  Time in milliseconds until the collector finishes or false.
      * @param int      $options ['limit'] The amount of messages allowed or false.
      *
-     * @return PromiseInterface
+     * @return ExtendedPromiseInterface
      */
-    public function createMessageCollector(callable $filter, array $options = []): PromiseInterface
+    public function createMessageCollector(callable $filter, array $options = []): ExtendedPromiseInterface
     {
         $deferred = new Deferred();
         $messages = new Collection();

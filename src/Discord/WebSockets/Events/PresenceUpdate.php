@@ -13,7 +13,7 @@ namespace Discord\WebSockets\Events;
 
 use Discord\Parts\WebSockets\PresenceUpdate as PresenceUpdatePart;
 use Discord\WebSockets\Event;
-use React\Promise\Deferred;
+use Discord\Helpers\Deferred;
 
 class PresenceUpdate extends Event
 {

@@ -15,7 +15,7 @@ use Discord\Discord;
 use Discord\Factory\Factory;
 use Discord\Helpers\EventEmitterTraitDebug;
 use Discord\Http\Http;
-use React\Promise\Deferred;
+use Discord\Helpers\Deferred;
 use React\Promise\PromiseInterface;
 
 /**

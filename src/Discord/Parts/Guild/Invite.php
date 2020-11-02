@@ -15,8 +15,8 @@ use Carbon\Carbon;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
-use React\Promise\Deferred;
-use React\Promise\PromiseInterface;
+use Discord\Helpers\Deferred;
+use React\Promise\ExtendedPromiseInterface;
 use function React\Partial\bind as Bind;
 
 /**
@@ -54,9 +54,9 @@ class Invite extends Part
     /**
      * Accepts the invite.
      *
-     * @return PromiseInterface
+     * @return ExtendedPromiseInterface
      */
-    public function accept(): PromiseInterface
+    public function accept(): ExtendedPromiseInterface
     {
         $deferred = new Deferred();
 
@@ -72,7 +72,7 @@ class Invite extends Part
             return $deferred->promise();
         }
 
-        $this->http->post("invite/{$this->code}")->then(
+        $this->http->post("invite/{$this->code}")->done(
             Bind([$deferred, 'resolve']),
             Bind([$deferred, 'reject'])
         );

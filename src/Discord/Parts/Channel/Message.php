@@ -21,8 +21,8 @@ use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
 use Discord\Parts\WebSockets\MessageReaction;
 use Discord\WebSockets\Event;
-use React\Promise\Deferred;
-use React\Promise\PromiseInterface;
+use Discord\Helpers\Deferred;
+use React\Promise\ExtendedPromiseInterface;
 use function React\Partial\bind as Bind;
 
 /**
@@ -331,10 +331,10 @@ class Message extends Part
      *
      * @param string $text The text to reply with.
      *
-     * @return PromiseInterface
+     * @return ExtendedPromiseInterface
      * @throws \Exception
      */
-    public function reply(string $text): PromiseInterface
+    public function reply(string $text): ExtendedPromiseInterface
     {
         return $this->channel->sendMessage("{$this->author}, {$text}");
     }
@@ -342,13 +342,13 @@ class Message extends Part
     /**
      * Crossposts the message to any following channels.
      *
-     * @return PromiseInterface
+     * @return ExtendedPromiseInterface
      */
-    public function crosspost(): PromiseInterface
+    public function crosspost(): ExtendedPromiseInterface
     {
         $deferred = new Deferred();
 
-        $this->http->post("channels/{$this->channel_id}/messages/{$this->id}/crosspost")->then(function ($response) use ($deferred) {
+        $this->http->post("channels/{$this->channel_id}/messages/{$this->id}/crosspost")->done(function ($response) use ($deferred) {
             $message = $this->factory->part(Message::class, $response, true);
             $deferred->resolve($message);
         }, Bind([$deferred, 'reject']));
@@ -362,14 +362,14 @@ class Message extends Part
      * @param string $text  Text to send after delay.
      * @param int    $delay Delay after text will be sent in milliseconds.
      *
-     * @return PromiseInterface
+     * @return ExtendedPromiseInterface
      */
-    public function delayedReply(string $text, int $delay): PromiseInterface
+    public function delayedReply(string $text, int $delay): ExtendedPromiseInterface
     {
         $deferred = new Deferred();
 
         $this->discord->getLoop()->addTimer($delay / 1000, function () use ($text, $deferred) {
-            $this->reply($text)->then(
+            $this->reply($text)->done(
                 Bind([$deferred, 'resolve']),
                 Bind([$deferred, 'reject'])
             );
@@ -383,9 +383,9 @@ class Message extends Part
      *
      * @param Emoji|string $emoticon The emoticon to react with. (custom: ':michael:251127796439449631')
      *
-     * @return PromiseInterface
+     * @return ExtendedPromiseInterface
      */
-    public function react($emoticon): PromiseInterface
+    public function react($emoticon): ExtendedPromiseInterface
     {
         $deferred = new Deferred();
 
@@ -397,7 +397,7 @@ class Message extends Part
 
         $this->http->put(
             "channels/{$this->channel->id}/messages/{$this->id}/reactions/{$emoticon}/@me"
-        )->then(
+        )->done(
             Bind([$deferred, 'resolve']),
             Bind([$deferred, 'reject'])
         );
@@ -412,9 +412,9 @@ class Message extends Part
      * @param Emoji|string|null $emoticon The emoticon to delete (if not all).
      * @param string|null       $id       The user reaction to delete (if not all).
      *
-     * @return PromiseInterface
+     * @return ExtendedPromiseInterface
      */
-    public function deleteReaction(int $type, $emoticon = null, ?string $id = null): PromiseInterface
+    public function deleteReaction(int $type, $emoticon = null, ?string $id = null): ExtendedPromiseInterface
     {
         $deferred = new Deferred();
 
@@ -439,7 +439,7 @@ class Message extends Part
 
             $this->http->delete(
                 $url, []
-            )->then(
+            )->done(
                 Bind([$deferred, 'resolve']),
                 Bind([$deferred, 'reject'])
             );
@@ -453,13 +453,13 @@ class Message extends Part
     /**
      * Deletes the message from the channel.
      *
-     * @return PromiseInterface
+     * @return ExtendedPromiseInterface
      */
-    public function delete(): PromiseInterface
+    public function delete(): ExtendedPromiseInterface
     {
         $deferred = new Deferred();
 
-        $this->http->delete("channels/{$this->channel_id}/messages/{$this->id}")->then(
+        $this->http->delete("channels/{$this->channel_id}/messages/{$this->id}")->done(
             Bind([$deferred, 'resolve']),
             Bind([$deferred, 'reject'])
         );
@@ -474,9 +474,9 @@ class Message extends Part
      * @param int      $options['time']  Time in milliseconds until the collector finishes or false.
      * @param int      $options['limit'] The amount of reactions allowed or false.
      *
-     * @return PromiseInterface
+     * @return ExtendedPromiseInterface
      */
-    public function createReactionCollector(callable $filter, array $options = []): PromiseInterface
+    public function createReactionCollector(callable $filter, array $options = []): ExtendedPromiseInterface
     {
         $deferred = new Deferred();
         $reactions = new Collection();
@@ -524,15 +524,15 @@ class Message extends Part
      *
      * @param Embed $embed
      *
-     * @return PromiseInterface
+     * @return ExtendedPromiseInterface
      */
-    public function addEmbed(Embed $embed): PromiseInterface
+    public function addEmbed(Embed $embed): ExtendedPromiseInterface
     {
         $deferred = new Deferred();
 
         $this->http->patch("channels/{$this->channel_id}/messages/{$this->id}", [
             'embed' => $embed->getRawAttributes(),
-        ])->then(function ($data) use ($deferred) {
+        ])->done(function ($data) use ($deferred) {
             $this->fill((array) $data);
             $deferred->resolve($this);
         }, Bind([$deferred, 'reject']));

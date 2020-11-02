@@ -13,7 +13,7 @@ namespace Discord\WebSockets\Events;
 
 use Discord\Parts\WebSockets\TypingStart as TypingStartPart;
 use Discord\WebSockets\Event;
-use React\Promise\Deferred;
+use Discord\Helpers\Deferred;
 
 class TypingStart extends Event
 {
