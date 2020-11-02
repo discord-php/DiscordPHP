@@ -57,7 +57,7 @@ class GuildCreate extends Event
 
             if (! $this->discord->users->has($member['user']->id)) {
                 $userPart = $this->factory->create(User::class, $member['user'], true);
-                $this->discord->users->offsetSet($userpart->id, $userPart);
+                $this->discord->users->offsetSet($userPart->id, $userPart);
             }
 
             $memberPart = $this->factory->create(Member::class, $member, true);
@@ -75,8 +75,8 @@ class GuildCreate extends Event
             if ($channel = $guildPart->channels->offsetGet($state->channel_id)) {
                 $stateUpdate = $this->factory->create(VoiceStateUpdatePart::class, $state, true);
 
-                $channel->members->offsetSet($channel->id, $stateUpdate);
-		$guildPart->channels->offsetSet($channel->id, $channel);
+                $channel->members->offsetSet($stateUpdate->user_id, $stateUpdate);
+                $guildPart->channels->offsetSet($channel->id, $channel);
             }
         }
 
