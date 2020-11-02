@@ -110,3 +110,41 @@ function getColor($color = 0): int
 
 	return 0;
 }
+
+/**
+ * Checks if a string contains an array of phrases.
+ *
+ * @param string $string The string to check.
+ * @param array $matches Array containing one or more phrases to match.
+ *
+ * @return bool
+ */
+function contains(string $string, array $matches): bool
+{
+    foreach($matches as $match) {
+        if (strpos($string, $match) !== false) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+/**
+ * Converts a string to studlyCase.
+ *
+ * @param string $string The string to convert.
+ *
+ * @return string
+ */
+function studly(string $string): string
+{
+    $ret = '';
+    preg_match_all('/([a-z0-9]+)/ui', $string, $matches);
+
+    foreach($matches[0] as $match) {
+        $ret .= ucfirst(strtolower($match));
+    }
+
+    return $ret;
+}
