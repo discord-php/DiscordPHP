@@ -78,7 +78,7 @@ class Webhook extends Part
      */
     protected function getGuildAttribute(): Guild
     {
-        return $this->discord->guilds->get('id', $this->guild_id);
+        return $this->discord->guilds->offsetGet($this->guild_id);
     }
 
     /**
@@ -89,7 +89,7 @@ class Webhook extends Part
     protected function getChannelAttribute(): Channel
     {
         if ($guild = $this->guild) {
-            return $guild->channels->get('id', $this->channel_id);
+            return $guild->channels->offsetGet($this->channel_id);
         }
     }
 
@@ -104,7 +104,7 @@ class Webhook extends Part
             return null;
         }
 
-        if ($user = $this->discord->users->get('id', $this->attributes['user']->id)) {
+        if ($user = $this->discord->users->offsetGet($this->attributes['user']->id)) {
             return $user;
         }
 

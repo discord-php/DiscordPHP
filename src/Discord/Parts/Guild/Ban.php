@@ -49,7 +49,7 @@ class Ban extends Part
      */
     protected function getGuildAttribute(): Guild
     {
-        return $this->discord->guilds->get('id', $this->guild_id);
+        return $this->discord->guilds->offsetGet($this->guild_id);
     }
 
     /**
@@ -63,7 +63,7 @@ class Ban extends Part
             return null;
         }
 
-        if ($user = $this->discord->users->get('id', $this->attributes['user']->id)) {
+        if ($user = $this->discord->users->offsetGet($this->attributes['user']->id)) {
             return $user;
         }
 

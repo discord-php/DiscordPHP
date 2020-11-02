@@ -150,7 +150,7 @@ class Channel extends Part
 
         if (array_key_exists('recipients', $this->attributes)) {
             foreach ((array) $this->attributes['recipients'] as $recipient) {
-                if (! $user = $this->discord->users->get('id', $recipient->id)) {
+                if (! $user = $this->discord->users->offsetGet($recipient->id)) {
                     $user = $this->factory->create(User::class, $recipient, true);
                 }
                 $recipients->offsetSet($user->id, $user);
@@ -167,7 +167,7 @@ class Channel extends Part
      */
     protected function getGuildAttribute(): ?Guild
     {
-        return $this->discord->guilds->get('id', $this->guild_id);
+        return $this->discord->guilds->offsetGet($this->guild_id);
     }
 
     /**
@@ -199,7 +199,7 @@ class Channel extends Part
                 $messages = new Collection();
 
                 foreach ($responses as $response) {
-                    if (! $message = $this->messages->get('id', $response->id)) {
+                    if (! $message = $this->messages->offsetGet($response->id)) {
                         $message = $this->factory->create(Message::class, $response, true);
                     }
                     $messages->offsetSet($message->id, $message);
@@ -469,7 +469,7 @@ class Channel extends Part
         } elseif ($count == 1 || $this->is_private) {
             foreach ($messages as $message) {
                 if ($message instanceof Message ||
-                    $message = $this->messages->get('id', $message)
+                    $message = $this->messages->offsetGet($message)
                 ) {
                     $message->delete();
                 } else {
@@ -551,7 +551,7 @@ class Channel extends Part
                 $messages = new Collection();
 
                 foreach ($responses as $response) {
-                    if (! $message = $this->messages->get('id', $response->id)) {
+                    if (! $message = $this->messages->offsetGet($response->id)) {
                         $message = $this->factory->create(Message::class, $response, true);
                     }
                     $messages->offsetSet($message->id, $message);

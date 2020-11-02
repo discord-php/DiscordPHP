@@ -177,7 +177,7 @@ class Message extends Part
                 if (! $channel = $this->discord->getChannel($mention_channel->id)) {
                     $channel = $this->factory->create(Channel::class, $channel, true);
                 }
-                $collection->push($channel);
+                $collection->offsetSet($channel->id, $channel);
             }
         }
 
@@ -233,7 +233,7 @@ class Message extends Part
         if ($this->channel->guild) {
             foreach ($this->channel->guild->roles as $role) {
                 if (array_search($role->id, $this->attributes['mention_roles']) !== false) {
-                    $roles->push($role);
+                    $roles->offsetSet($role->id, $role);
                 }
             }
         }
@@ -252,10 +252,10 @@ class Message extends Part
         $users = new Collection();
 
         foreach ($this->attributes['mentions'] as $mention) {
-            if (! $user = $this->discord->users->get('id', $mention->id)) {
+            if (! $user = $this->discord->users->offsetGet($mention->id)) {
                 $user = $this->factory->create(User::class, $mention, true);
             }
-            $users->push($user);
+            $users->offsetSet($user->id, $user);
         }
 
         return $users;
@@ -274,8 +274,8 @@ class Message extends Part
         }
 
         if (($this->channel->guild &&
-	     $author = $this->channel->guild->members->get('id', $this->attributes['author']->id)) ||
-             $author = $this->discord->users->get('id', $this->attributes['author']->id)
+	     $author = $this->channel->guild->members->offsetGet($this->attributes['author']->id)) ||
+             $author = $this->discord->users->offsetGet($this->attributes['author']->id)
         ) {
             return $author;
         }
