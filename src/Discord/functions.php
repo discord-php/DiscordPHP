@@ -112,7 +112,7 @@ function getColor($color = 0): int
 }
 
 /**
- * Replacement for Illuminate\Support\Str::contains.
+ * Checks if a string contains an array of phrases.
  *
  * @param string $string The string to check.
  * @param array $matches Array containing one or more phrases to match.
@@ -131,7 +131,7 @@ function contains(string $string, array $matches): bool
 }
 
 /**
- * Replacement for Illuminate\Support\Str::studly.
+ * Converts a string to studlyCase.
  *
  * @param string $string The string to convert.
  *
