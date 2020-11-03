@@ -45,6 +45,7 @@ class Embed extends Part
      * @throws \Throwable
      */
     function __construct(array $embed = array()) {
+        parent::__construct();
         if (!empty($embed)) {
             $this->type = $embed['type'] ?? 'rich';
             
