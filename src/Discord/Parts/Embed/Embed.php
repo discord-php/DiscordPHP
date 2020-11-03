@@ -66,7 +66,7 @@ class Embed extends Part
             }
             
             $this->url = $embed['url'] ?? null;
-            $this->timestamp = (!empty($embed['timestamp']) ? (new \DateTime($embed['timestamp']))->getTimestamp() : null);
+            $this->timestamp = (!empty($embed['timestamp']) ? (new \Carbon($embed['timestamp']))->getTimestamp() : null);
             $this->color = $embed['color'] ?? null;
             
             if (!empty($embed['footer'])) {
@@ -131,6 +131,8 @@ class Embed extends Part
         switch ($name) {
             case 'datetime':
                 return (new \DateTime('@'.$this->timestamp));
+            case 'carbon':
+                return (new \Carbon('@'.$this->timestamp));
             break;
         }
         
@@ -460,7 +462,7 @@ class Embed extends Part
      * @throws \Exception
      */
     function setTimestamp(?int $timestamp = null) {
-        $this->timestamp = (new \DateTime(($timestamp !== null ? '@'.$timestamp : 'now')))->format('c');
+        $this->timestamp = (new \Carbon(($timestamp !== null ? '@'.$timestamp : 'now')))->format('c');
         return $this;
     }
     
