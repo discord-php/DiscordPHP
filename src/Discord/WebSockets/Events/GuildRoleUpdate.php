@@ -31,7 +31,7 @@ class GuildRoleUpdate extends Event
             $old = $guild->roles->offsetGet($rolePart->id);
             $guild->roles->push($rolePart);
 
-            $this->discord->guilds->push($guild);
+            $this->discord->guilds->offsetSet($guild->id, $guild);
         } else {
             $old = null;
         }

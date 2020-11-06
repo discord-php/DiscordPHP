@@ -26,7 +26,7 @@ class GuildBanAdd extends Event
 
         if ($guild = $ban->guild) {
             $guild->bans->push($ban);
-            $this->discord->guilds->push($guild);
+            $this->discord->guilds->offsetSet($guild->id, $guild);
         }
 
         $deferred->resolve($ban);
