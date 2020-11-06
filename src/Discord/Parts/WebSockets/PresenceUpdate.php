@@ -48,7 +48,7 @@ class PresenceUpdate extends Part
     protected function getMemberAttribute(): ?Member
     {
         if (isset($this->attributes['user']) && $this->guild) {
-            return $this->guild->members->get('id', $this->attributes['user']->id);
+            return $this->guild->members->offsetGet($this->attributes['user']->id);
         }
 
         return null;
@@ -62,7 +62,7 @@ class PresenceUpdate extends Part
      */
     protected function getUserAttribute(): ?User
     {
-        if ($user = $this->discord->users->get('id', $this->attributes['user']->id)) {
+        if ($user = $this->discord->users->offsetGet($this->attributes['user']->id)) {
             return $user;
         }
 
@@ -82,7 +82,7 @@ class PresenceUpdate extends Part
             $roles->fill($this->attributes['roles']);
         } else {
             foreach ($this->attributes['roles'] as $role) {
-                $roles->push($this->guild->roles->get('id', $role));
+                $roles->push($this->guild->roles->offsetGet($role));
             }
         }
 
@@ -96,7 +96,7 @@ class PresenceUpdate extends Part
      */
     protected function getGuildAttribute(): Guild
     {
-        return $this->discord->guilds->get('id', $this->guild_id);
+        return $this->discord->guilds->offsetGet($this->guild_id);
     }
 
     /**

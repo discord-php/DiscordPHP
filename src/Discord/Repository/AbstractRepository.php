@@ -267,7 +267,7 @@ abstract class AbstractRepository extends Collection
      */
     public function fetch(string $id): ExtendedPromiseInterface
     {
-        if ($part = $this->get('id', $id)) {
+        if ($part = $this->offsetGet($id)) {
             return Resolve($part);
         }
 

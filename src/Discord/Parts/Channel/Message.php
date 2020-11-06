@@ -252,7 +252,7 @@ class Message extends Part
         $users = new Collection();
 
         foreach ($this->attributes['mentions'] as $mention) {
-            if (! $user = $this->discord->users->get('id', $mention->id)) {
+            if (! $user = $this->discord->users->offsetGet($mention->id)) {
                 $user = $this->factory->create(User::class, $mention, true);
             }
             $users->push($user);
@@ -274,8 +274,8 @@ class Message extends Part
         }
 
         if (($this->channel->guild &&
-            $author = $this->channel->guild->members->get('id', $this->attributes['author']->id)) ||
-            $author = $this->discord->users->get('id', $this->attributes['author']->id)
+            $author = $this->channel->guild->members->offsetGet($this->attributes['author']->id)) ||
+            $author = $this->discord->users->offsetGet($this->attributes['author']->id)
         ) {
             return $author;
         }

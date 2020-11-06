@@ -189,7 +189,7 @@ class Guild extends Part
      */
     protected function getOwnerAttribute()
     {
-        return $this->discord->users->get('id', $this->owner_id);
+        return $this->discord->users->offsetGet($this->owner_id);
     }
 
     /**

@@ -1423,12 +1423,12 @@ class Discord
     public function getChannel($channel_id): ?Channel
     {
         foreach ($this->guilds as $guild) {
-            if ($channel = $guild->channels->get('id', $channel_id)) {
+            if ($channel = $guild->channels->offsetGet($channel_id)) {
                 return $channel;
             }
         }
 
-        if ($channel = $this->private_channels->get('id', $channel_id)) {
+        if ($channel = $this->private_channels->offsetGet($channel_id)) {
             return $channel;
         }
 

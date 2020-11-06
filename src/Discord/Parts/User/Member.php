@@ -245,7 +245,7 @@ class Member extends Part
      */
     public function getPermissions(?Channel $channel = null): RolePermission
     {
-        $bitwise = $this->guild->roles->get('id', $this->guild_id)->permissions->bitwise;
+        $bitwise = $this->guild->roles->offsetGet($this->guild_id)->permissions->bitwise;
 
         if ($this->guild->owner_id == $this->id) {
             $bitwise |= 0x8; // Add administrator permission
@@ -350,7 +350,7 @@ class Member extends Part
      */
     protected function getUserAttribute(): User
     {
-        if ($user = $this->discord->users->get('id', $this->attributes['user']->id)) {
+        if ($user = $this->discord->users->offsetGet($this->attributes['user']->id)) {
             return $user;
         }
 
@@ -364,7 +364,7 @@ class Member extends Part
      */
     protected function getGuildAttribute(): ?Guild
     {
-        return $this->discord->guilds->get('id', $this->guild_id);
+        return $this->discord->guilds->offsetGet($this->guild_id);
     }
 
     /**

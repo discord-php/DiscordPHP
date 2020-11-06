@@ -27,7 +27,7 @@ class ChannelCreate extends Event
         if (isset($data->attributes['recipients'])) {
             $this->discord->private_channels->push($channel);
         } else {
-            if ($guild = $this->discord->guilds->get('id', $channel->guild_id)) {
+            if ($guild = $this->discord->guilds->offsetGet($channel->guild_id)) {
                 $guild->channels->push($channel);
                 $this->discord->guilds->push($guild);
             }

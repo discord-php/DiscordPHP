@@ -45,7 +45,7 @@ class TypingStart extends Part
      */
     protected function getUserAttribute(): ?User
     {
-        return $this->discord->users->get('id', $this->user_id);
+        return $this->discord->users->offsetGet($this->user_id);
     }
 
     /**
@@ -67,7 +67,7 @@ class TypingStart extends Part
      */
     protected function getMemberAttribute(): Part
     {
-        if ($this->guild && $member = $this->guild->members->get('id', $this->user_id)) {
+        if ($this->guild && $member = $this->guild->members->offsetGet($this->user_id)) {
             return $member;
         }
 
@@ -82,10 +82,10 @@ class TypingStart extends Part
     protected function getChannelAttribute(): ?Channel
     {
         if ($this->guild) {
-            return $this->guild->channels->get('id', $this->attributes['channel_id']);
+            return $this->guild->channels->offsetGet($this->attributes['channel_id']);
         }
 
-        return $this->discord->private_channels->get('id', $this->attributes['channel_id']);
+        return $this->discord->private_channels->offsetGet($this->attributes['channel_id']);
     }
 
     /**
@@ -99,6 +99,6 @@ class TypingStart extends Part
             return null;
         }
 
-        return $this->discord->guilds->get('id', $this->attributes['guild_id']);
+        return $this->discord->guilds->offsetGet($this->attributes['guild_id']);
     }
 }

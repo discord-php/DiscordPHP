@@ -65,7 +65,7 @@ class VoiceStateUpdate extends Part
     protected function getMemberAttribute(): ?Part
     {
         if ($this->guild) {
-            if ($member = $this->guild->members->get('id', $this->user_id)) {
+            if ($member = $this->guild->members->offsetGet($this->user_id)) {
                 return $member;
             }
         }
@@ -81,7 +81,7 @@ class VoiceStateUpdate extends Part
     protected function getChannelAttribute(): ?Part
     {
         if ($this->guild) {
-            return $this->guild->channels->get('id', $this->channel_id);
+            return $this->guild->channels->offsetGet($this->channel_id);
         }
     }
 
@@ -93,7 +93,7 @@ class VoiceStateUpdate extends Part
      */
     protected function getUserAttribute(): ?Part
     {
-        if ($user = $this->discord->users->get('id', $this->user_id)) {
+        if ($user = $this->discord->users->offsetGet($this->user_id)) {
             return $user;
         }
         if ($this->attributes['member']->user !== null) {
@@ -108,6 +108,6 @@ class VoiceStateUpdate extends Part
      */
     protected function getGuildAttribute(): ?Guild
     {
-        return $this->discord->guilds->get('id', $this->guild_id);
+        return $this->discord->guilds->offsetGet($this->guild_id);
     }
 }

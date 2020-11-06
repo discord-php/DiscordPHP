@@ -49,7 +49,7 @@ class MessageReaction extends Part
     {
         if ($member = $this->member) {
             return $member->user;
-        } elseif ($user = $this->discord->users->get('id', $this->attributes['user_id'])) {
+        } elseif ($user = $this->discord->users->offsetGet($this->attributes['user_id'])) {
             return $user;
         }
 
@@ -68,7 +68,7 @@ class MessageReaction extends Part
     protected function getMessageAttribute(): Message
     {
         if ($channel = $this->channel) {
-            if ($message = $channel->messages->get('id', $this->attributes['message_id'])) {
+            if ($message = $channel->messages->offsetGet($this->attributes['message_id'])) {
                 return $message;
             }
         }
@@ -85,7 +85,7 @@ class MessageReaction extends Part
     protected function getMemberAttribute(): ?Member
     {
         if (isset($this->attributes['user_id']) && $guild = $this->guild) {
-            if ($member = $guild->members->get('id', $this->attributes['user_id'])) {
+            if ($member = $guild->members->offsetGet($this->attributes['user_id'])) {
                 return $member;
             }
         } elseif (isset($this->attributes['member'])) {
@@ -118,10 +118,10 @@ class MessageReaction extends Part
     protected function getChannelAttribute(): ?Channel
     {
         if ($guild = $this->guild) {
-            return $guild->channels->get('id', $this->attributes['channel_id']);
+            return $guild->channels->offsetGet($this->attributes['channel_id']);
         }
 
-        return $this->discord->private_channels->get('id', $this->attributes['channel_id']);
+        return $this->discord->private_channels->offsetGet($this->attributes['channel_id']);
     }
 
     /**
@@ -132,7 +132,7 @@ class MessageReaction extends Part
     protected function getGuildAttribute(): ?Guild
     {
         if (isset($this->attributes['guild_id'])) {
-            return $this->discord->guilds->get('id', $this->attributes['guild_id']);
+            return $this->discord->guilds->offsetGet($this->attributes['guild_id']);
         }
 
         return null;
