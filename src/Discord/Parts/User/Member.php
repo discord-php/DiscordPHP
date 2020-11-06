@@ -360,9 +360,9 @@ class Member extends Part
     /**
      * Returns the guild attribute.
      *
-     * @return Guild The guild.
+     * @return null|Guild The guild.
      */
-    protected function getGuildAttribute(): Guild
+    protected function getGuildAttribute(): ?Guild
     {
         return $this->discord->guilds->get('id', $this->guild_id);
     }
