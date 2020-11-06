@@ -27,9 +27,9 @@ class MessageCreate extends Event
         if ($this->discord->options['storeMessages']) {
             if ($channel = $message->channel) {
                 if ($guild = $channel->guild) {
-                    $channel->messages->push($message);
-                    $guild->channels->push($channel);
-                    $this->discord->guilds->push($guild);
+                    $channel->messages->offsetSet($message->id, $message);
+                    $guild->channels->offsetSet($channel->id, $channel);
+                    $this->discord->guilds->offsetSet($guild->id, $guild);
                 }
             }
         }

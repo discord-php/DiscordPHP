@@ -25,11 +25,11 @@ class ChannelCreate extends Event
         $channel = $this->factory->create(Channel::class, $data, true);
 
         if (isset($data->attributes['recipients'])) {
-            $this->discord->private_channels->push($channel);
+            $this->discord->private_channels->offsetSet($channel->id, $channel);
         } else {
             if ($guild = $this->discord->guilds->offsetGet($channel->guild_id)) {
-                $guild->channels->push($channel);
-                $this->discord->guilds->push($guild);
+                $guild->channels->offsetSet($channel->id, $channel);
+                $this->discord->guilds->offsetSet($guild->id, $guild);
             }
         }
 

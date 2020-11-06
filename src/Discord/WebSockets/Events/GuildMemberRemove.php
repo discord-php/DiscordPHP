@@ -28,7 +28,7 @@ class GuildMemberRemove extends Event
             $guild->members->pull($member->user->id);
             --$guild->member_count;
 
-            $this->discord->guilds->push($guild);
+            $this->discord->guilds->offsetSet($guild->id, $guild);
         }
 
         $deferred->resolve($member);

@@ -177,7 +177,7 @@ class Message extends Part
                 if (! $channel = $this->discord->getChannel($mention_channel->id)) {
                     $channel = $this->factory->create(Channel::class, $mention_channel, true);
                 }
-                $collection->push($channel);
+                $collection->offsetSet($channel->id, $channel);
             }
         }
 
@@ -255,7 +255,7 @@ class Message extends Part
             if (! $user = $this->discord->users->offsetGet($mention->id)) {
                 $user = $this->factory->create(User::class, $mention, true);
             }
-            $users->push($user);
+            $users->offsetSet($user->id, $user);
         }
 
         return $users;

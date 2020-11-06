@@ -29,7 +29,7 @@ class GuildRoleCreate extends Event
 
         if ($guild = $this->discord->guilds->offsetGet($rolePart->guild_id)) {
             $guild->roles->push($rolePart);
-            $this->discord->guilds->push($guild);
+            $this->discord->guilds->offsetSet($guild->id, $guild);
         }
 
         $deferred->resolve($rolePart);

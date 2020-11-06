@@ -153,7 +153,7 @@ class Channel extends Part
                 if (! $user = $this->discord->users->offsetGet($recipient->id)) {
                     $user = $this->factory->create(User::class, $recipient, true);
                 }
-                $recipients->push($user);
+                $recipients->offsetSet($user->id, $user);
             }
         }
 
@@ -202,7 +202,7 @@ class Channel extends Part
                     if (! $message = $this->messages->offsetGet($response->id)) {
                         $message = $this->factory->create(Message::class, $response, true);
                     }
-                    $messages->push($message);
+                    $messages->offsetSet($message->id, $message);
                 }
 
                 $deferred->resolve($messages);
@@ -554,7 +554,7 @@ class Channel extends Part
                     if (! $message = $this->messages->offsetGet($response->id)) {
                         $message = $this->factory->create(Message::class, $response, true);
                     }
-                    $messages->push($message);
+                    $messages->offsetSet($message->id, $message);
                 }
 
                 $deferred->resolve($messages);
@@ -704,7 +704,7 @@ class Channel extends Part
         )->done(
             function ($response) use ($deferred) {
                 $message = $this->factory->create(Message::class, $response, true);
-                $this->messages->push($message);
+                $this->messages->offsetSet($message->id, $message);
 
                 $deferred->resolve($message);
             },
@@ -742,7 +742,7 @@ class Channel extends Part
         )->done(
             function ($response) use ($deferred) {
                 $message = $this->factory->create(Message::class, $response, true);
-                $this->messages->push($message);
+                $this->messages->offsetSet($message->id, $message);
 
                 $deferred->resolve($message);
             },
@@ -773,7 +773,7 @@ class Channel extends Part
 
         $this->http->post("channels/{$this->id}/messages", ['embed' => $embed->getRawAttributes()])->done(function ($response) use ($deferred) {
             $message = $this->factory->create(Message::class, $response, true);
-            $this->messages->push($message);
+            $this->messages->offsetSet($message->id, $message);
 
             $deferred->resolve($message);
         }, Bind([$deferred, 'reject']));
@@ -814,7 +814,7 @@ class Channel extends Part
         $this->http->sendFile($this, $filepath, $filename, $content, $tts)->done(
             function ($response) use ($deferred) {
                 $message = $this->factory->create(Message::class, $response, true);
-                $this->messages->push($message);
+                $this->messages->offsetSet($message->id, $message);
 
                 $deferred->resolve($message);
             },
@@ -876,7 +876,7 @@ class Channel extends Part
             $filterResult = call_user_func_array($filter, [$message]);
 
             if ($filterResult) {
-                $messages->push($message);
+                $messages->offsetSet($message->id, $message);
 
                 if ($options['limit'] !== false && sizeof($messages) >= $options['limit']) {
                     $this->discord->removeListener(Event::MESSAGE_CREATE, $eventHandler);

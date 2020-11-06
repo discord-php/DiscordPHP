@@ -27,7 +27,7 @@ class ChannelDelete extends Event
         if ($guild = $channel->guild) {
             $guild->channels->pull($channel->id);
 
-            $this->discord->guilds->push($guild);
+            $this->discord->guilds->offsetSet($guild->id, $guild);
         }
 
         $deferred->resolve($channel);

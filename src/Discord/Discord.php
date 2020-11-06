@@ -409,7 +409,7 @@ class Discord
         if ($this->options['pmChannels']) {
             foreach ($content->private_channels as $channel) {
                 $channelPart = $this->factory->create(Channel::class, $channel, true);
-                $this->private_channels->push($channelPart);
+                $this->private_channels->offsetSet($channelPart->id, $channelPart);
             }
 
             $this->logger->info('stored private channels', ['count' => $this->private_channels->count()]);

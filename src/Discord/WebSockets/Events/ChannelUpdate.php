@@ -26,11 +26,11 @@ class ChannelUpdate extends Event
 
         if ($channel->is_private) {
             $old = $this->discord->private_channels->offsetGet($channel->id);
-            $this->discord->private_channels->push($channel);
+            $this->discord->private_channels->offsetSet($channel->id, $channel);
         } elseif ($guild = $this->discord->guilds->offsetGet($channel->guild_id)) {
             $old = $guild->channels->offsetGet($channel->id);
-            $guild->channels->push($channel);
-            $this->discord->guilds->push($guild);
+            $guild->channels->offsetSet($channel->id, $channel);
+            $this->discord->guilds->offsetSet($guild->id, $guild);
         }
 
         $deferred->resolve([$channel, $old]);
