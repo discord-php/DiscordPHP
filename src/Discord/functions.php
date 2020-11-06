@@ -38,3 +38,21 @@ function mentioned($part, Message $message): bool
 
     return strpos($message->content, $part) !== false;
 }
+
+
+/**
+ * Polyfill to check if mbstring is installed.
+ *
+ * @param string $str
+ *
+ * @return int
+ */
+function poly_strlen($str)
+{
+    // If mbstring is installed, use it.
+    if (function_exists('mb_strlen')) {
+        return mb_strlen($str);
+    } else {
+        return strlen($str);
+    }
+}
