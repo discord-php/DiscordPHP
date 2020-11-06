@@ -175,7 +175,7 @@ class Message extends Part
         if (isset($this->attributes['mention_channels'])) {
             foreach ($this->attributes['mention_channels'] as $mention_channel) {
                 if (! $channel = $this->discord->getChannel($mention_channel->id)) {
-                    $channel = $this->factory->create(Channel::class, $channel, true);
+                    $channel = $this->factory->create(Channel::class, $mention_channel, true);
                 }
                 $collection->push($channel);
             }
@@ -198,8 +198,8 @@ class Message extends Part
             foreach ($this->attributes['reactions'] as $reaction) {
                 $collection->push($this->factory->create(Reaction::class, $reaction, true));
             }
-        }
 
+        }
         return $collection;
     }
 
@@ -274,8 +274,8 @@ class Message extends Part
         }
 
         if (($this->channel->guild &&
-	     $author = $this->channel->guild->members->get('id', $this->attributes['author']->id)) ||
-             $author = $this->discord->users->get('id', $this->attributes['author']->id)
+            $author = $this->channel->guild->members->get('id', $this->attributes['author']->id)) ||
+            $author = $this->discord->users->get('id', $this->attributes['author']->id)
         ) {
             return $author;
         }
