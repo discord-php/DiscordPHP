@@ -298,6 +298,9 @@ class Collection implements ArrayAccess, Serializable, JsonSerializable, Iterato
      */
     public function offsetGet($offset)
     {
+        if (!isset($this->items[$offset])) {
+            return null;
+        }
         return $this->items[$offset];
     }
 
