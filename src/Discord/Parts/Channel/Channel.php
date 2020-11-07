@@ -978,4 +978,13 @@ class Channel extends Part
             'channel_id' => $this->id,
         ];
     }
+    
+    public function bulkDelete(integer $value)
+    {
+      $that = $this;
+      $this->getMessageHistory(['limit' => $value])->then(function ($messages) use ($that)
+      {
+        $that->deleteMessages($messages);
+      });
+    }
 }
