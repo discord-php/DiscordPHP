@@ -148,3 +148,20 @@ function studly(string $string): string
 
     return $ret;
 }
+
+/**
+ * Polyfill to check if mbstring is installed.
+ *
+ * @param string $str
+ *
+ * @return int
+ */
+function poly_strlen($str)
+{
+    // If mbstring is installed, use it.
+    if (function_exists('mb_strlen')) {
+        return mb_strlen($str);
+    } else {
+        return strlen($str);
+    }
+}
