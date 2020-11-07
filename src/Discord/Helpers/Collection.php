@@ -198,7 +198,7 @@ class Collection implements ArrayAccess, Serializable, JsonSerializable, Iterato
         foreach ($this->items as $item) {
             return $item;
         }
-        
+
         return null;
     }
 

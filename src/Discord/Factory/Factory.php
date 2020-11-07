@@ -62,7 +62,7 @@ class Factory
         if (! is_array($data)) {
             $data = (array) $data;
         }
-        
+
         if (strpos($class, 'Discord\\Parts') !== false) {
             $object = $this->part($class, $data, $created);
         } elseif (strpos($class, 'Discord\\Repository') !== false) {
@@ -85,7 +85,7 @@ class Factory
      */
     public function part(string $class, array $data = [], bool $created = false): Part
     {
-        return new $class($this, $this->discord, $this->http, $data, $created);
+        return new $class($this->discord, $data, $created);
     }
 
     /**

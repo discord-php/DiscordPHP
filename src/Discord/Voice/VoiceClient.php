@@ -679,7 +679,7 @@ class VoiceClient extends EventEmitter
      * @param int             $channels How many audio channels to encode with.
      *
      * @return ExtendedPromiseInterface
-     * @throws \RuntimeException Thrown when the stream passed to playRawStream is not a valid resource.
+     * @throws \RuntimeException        Thrown when the stream passed to playRawStream is not a valid resource.
      */
     public function playRawStream($stream, int $channels = 2): ExtendedPromiseInterface
     {
@@ -1138,8 +1138,8 @@ class VoiceClient extends EventEmitter
     /**
      * Changes your mute and deaf value.
      *
-     * @param  bool             $mute Whether you should be muted.
-     * @param  bool             $deaf Whether you should be deaf.
+     * @param  bool                     $mute Whether you should be muted.
+     * @param  bool                     $deaf Whether you should be deaf.
      * @return ExtendedPromiseInterface
      */
     public function setMuteDeaf(bool $mute, bool $deaf): ExtendedPromiseInterface

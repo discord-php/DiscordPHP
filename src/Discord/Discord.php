@@ -897,6 +897,7 @@ class Discord
 
             if (count($this->largeGuilds) < 1) {
                 $this->logger->debug('unprocessed chunks', $this->largeSent);
+
                 return;
             }
 
@@ -1356,6 +1357,26 @@ class Discord
     }
 
     /**
+     * Gets the factory.
+     *
+     * @return Factory
+     */
+    public function getFactory(): Factory
+    {
+        return $this->factory;
+    }
+
+    /**
+     * Gets the HTTP client.
+     *
+     * @return Http
+     */
+    public function getHttpClient(): Http
+    {
+        return $this->http;
+    }
+
+    /**
      * Gets the loop being used by the client.
      *
      * @return LoopInterface
@@ -1413,7 +1434,6 @@ class Discord
     }
 
     /**
-     *
      * Gets a channel.
      *
      * @param string|int $channel_id Id of the channel.

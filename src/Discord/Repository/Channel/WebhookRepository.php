@@ -25,7 +25,7 @@ class WebhookRepository extends AbstractRepository
     protected $endpoints = [
         'all' => 'channels/:channel_id/webhooks',
         'create' => 'channels/:channel_id/webhooks',
-        'get'    => 'webhooks/:id',
+        'get' => 'webhooks/:id',
         'delete' => 'webhooks/:id',
         'update' => 'webhooks/:id',
     ];
