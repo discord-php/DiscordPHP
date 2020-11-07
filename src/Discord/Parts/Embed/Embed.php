@@ -236,6 +236,34 @@ class Embed extends Part
     }
 
     /**
+     * Sets the description of the embed.
+     *
+     * @param string $description
+     *
+     * @return $this
+     */
+    public function setDescription(string $description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Sets the color of the embed.
+     *
+     * @param mixed $color
+     *
+     * @return $this
+     */
+    public function setColor($color)
+    {
+        $this->color = $color;
+
+        return $this;
+    }
+
+    /**
      * Adds a field to the embed.
      *
      * @param Field|array $field
