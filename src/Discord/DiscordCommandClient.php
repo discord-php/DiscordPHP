@@ -384,7 +384,7 @@ class DiscordCommandClient extends Discord
             ->setDefaults([
                 'prefix' => '@mention ',
                 'name' => '<UsernamePlaceholder>',
-                'description' => 'A bot made with DiscordPHP ' . self::VERSION . '.',
+                'description' => 'A bot made with DiscordPHP '.self::VERSION.'.',
                 'defaultHelpCommand' => true,
                 'discordOptions' => [],
             ]);

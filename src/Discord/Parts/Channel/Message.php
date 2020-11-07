@@ -198,8 +198,8 @@ class Message extends Part
             foreach ($this->attributes['reactions'] as $reaction) {
                 $collection->push($this->factory->create(Reaction::class, $reaction, true));
             }
-
         }
+
         return $collection;
     }
 
@@ -479,7 +479,7 @@ class Message extends Part
     public function createReactionCollector(callable $filter, array $options = []): ExtendedPromiseInterface
     {
         $deferred = new Deferred();
-        $reactions = new Collection();
+        $reactions = new Collection([], null, null);
         $timer = null;
 
         $options = array_merge([

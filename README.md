@@ -28,6 +28,7 @@ For testing and stability it would be greatly appreciated if you were able to ad
 
 - The latest PHP version.
 - One of `ext-uv` (preferred), `ext-libev` or `evt-event` for a faster, and more performant event loop.
+- `ext-mbstring` if handling non-english characters.
 
 #### Voice Requirements
 

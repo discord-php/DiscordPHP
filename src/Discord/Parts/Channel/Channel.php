@@ -490,11 +490,11 @@ class Channel extends Part
                 }
             }
 
-            while (!empty($messageID)) {
+            while (! empty($messageID)) {
                 $this->http->post(
                     "channels/{$this->id}/messages/bulk_delete",
                     [
-                        'messages' => array_slice($messageID, 0, 100)
+                        'messages' => array_slice($messageID, 0, 100),
                     ]
                 )->done(
                     Bind([$deferred, 'resolve']),
@@ -717,10 +717,10 @@ class Channel extends Part
     /**
      * Edit a message in the channel.
      *
-     * @param Message $message  The message to edit.
-     * @param string  $text     The text to of the message.
-     * @param bool    $tts      Whether the message should be sent with text to speech enabled.
-     * @param Embed|array|null $embed An embed to send.
+     * @param Message          $message The message to edit.
+     * @param string           $text    The text to of the message.
+     * @param bool             $tts     Whether the message should be sent with text to speech enabled.
+     * @param Embed|array|null $embed   An embed to send.
      *
      * @return ExtendedPromiseInterface
      * @throws \Exception
@@ -751,7 +751,6 @@ class Channel extends Part
 
         return $deferred->promise();
     }
-
 
     /**
      * Sends an embed to the channel if it is a text channel.
@@ -860,7 +859,7 @@ class Channel extends Part
     public function createMessageCollector(callable $filter, array $options = []): ExtendedPromiseInterface
     {
         $deferred = new Deferred();
-        $messages = new Collection();
+        $messages = new Collection([], null, null);
         $timer = null;
 
         $options = array_merge([
