@@ -13,7 +13,7 @@ namespace Discord\WebSockets\Events;
 
 use Discord\Parts\User\Member;
 use Discord\WebSockets\Event;
-use React\Promise\Deferred;
+use Discord\Helpers\Deferred;
 
 class GuildMemberUpdate extends Event
 {
@@ -22,7 +22,7 @@ class GuildMemberUpdate extends Event
      */
     public function handle(Deferred &$deferred, $data): void
     {
-        $memberPart = $this->factory->create(Member::class, (array) $data, true);
+        $memberPart = $this->factory->create(Member::class, $data, true);
         $old = null;
 
         if ($guild = $this->discord->guilds->get('id', $memberPart->guild_id)) {

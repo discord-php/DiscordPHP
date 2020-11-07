@@ -13,7 +13,7 @@ namespace Discord\WebSockets\Events;
 
 use Discord\Parts\WebSockets\PresenceUpdate as PresenceUpdatePart;
 use Discord\WebSockets\Event;
-use React\Promise\Deferred;
+use Discord\Helpers\Deferred;
 
 class PresenceUpdate extends Event
 {
@@ -25,7 +25,7 @@ class PresenceUpdate extends Event
         /**
          * @var PresenceUpdatePart
          */
-        $presence = $this->factory->create(PresenceUpdatePart::class, (array) $data, true);
+        $presence = $this->factory->create(PresenceUpdatePart::class, $data, true);
 
         if ($guild = $presence->guild) {
             if ($member = $presence->member) {

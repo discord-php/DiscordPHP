@@ -13,7 +13,7 @@ namespace Discord\WebSockets\Events;
 
 use Discord\Parts\Guild\Invite;
 use Discord\WebSockets\Event;
-use React\Promise\Deferred;
+use Discord\Helpers\Deferred;
 
 class InviteCreate extends Event
 {
@@ -22,7 +22,7 @@ class InviteCreate extends Event
      */
     public function handle(Deferred &$deferred, $data): void
     {
-        $invite = $this->factory->create(Invite::class, (array) $data, true);
+        $invite = $this->factory->create(Invite::class, $data, true);
 
         $deferred->resolve($invite);
     }

@@ -13,7 +13,7 @@ namespace Discord\WebSockets\Events;
 
 use Discord\Parts\Channel\Channel;
 use Discord\WebSockets\Event;
-use React\Promise\Deferred;
+use Discord\Helpers\Deferred;
 
 class ChannelUpdate extends Event
 {
@@ -22,7 +22,7 @@ class ChannelUpdate extends Event
      */
     public function handle(Deferred &$deferred, $data): void
     {
-        $channel = $this->factory->create(Channel::class, (array) $data, true);
+        $channel = $this->factory->create(Channel::class, $data, true);
 
         if ($channel->is_private) {
             $old = $this->discord->private_channels->get('id', $channel->id);

@@ -13,7 +13,7 @@ namespace Discord\WebSockets\Events;
 
 use Discord\Parts\WebSockets\VoiceServerUpdate as VoiceServerUpdatePart;
 use Discord\WebSockets\Event;
-use React\Promise\Deferred;
+use Discord\Helpers\Deferred;
 
 class VoiceServerUpdate extends Event
 {
@@ -22,7 +22,7 @@ class VoiceServerUpdate extends Event
      */
     public function handle(Deferred &$deferred, $data): void
     {
-        $part = $this->factory->create(VoiceServerUpdatePart::class, (array) $data, true);
+        $part = $this->factory->create(VoiceServerUpdatePart::class, $data, true);
 
         $deferred->resolve($part);
     }

@@ -14,7 +14,7 @@ namespace Discord\WebSockets\Events;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Guild\Role;
 use Discord\WebSockets\Event;
-use React\Promise\Deferred;
+use Discord\Helpers\Deferred;
 
 class GuildUpdate extends Event
 {
@@ -32,12 +32,12 @@ class GuildUpdate extends Event
         /**
          * @var $guildPart Guild
          */
-        $guildPart = $this->factory->create(Guild::class, (array) $data, true);
+        $guildPart = $this->factory->create(Guild::class, $data, true);
 
         foreach ($data->roles as $role) {
             $role = (array) $role;
             $role['guild_id'] = $guildPart->id;
-            $rolePart = $this->factory->create(Role::class, (array) $role, true);
+            $rolePart = $this->factory->create(Role::class, $role, true);
 
             $guildPart->roles->push($rolePart);
         }

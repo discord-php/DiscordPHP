@@ -11,15 +11,12 @@
 
 namespace Discord\Repository;
 
-use ArrayAccess;
-use Countable;
-use IteratorAggregate;
 use Discord\Factory\Factory;
 use Discord\Helpers\Collection;
 use Discord\Http\Http;
 use Discord\Parts\Part;
-use React\Promise\Deferred;
-use React\Promise\PromiseInterface;
+use Discord\Helpers\Deferred;
+use React\Promise\ExtendedPromiseInterface;
 use function React\Promise\reject as Reject;
 use function React\Promise\resolve as Resolve;
 
@@ -28,7 +25,7 @@ use function React\Promise\resolve as Resolve;
  *
  * @author Aaron Scherer <aequasi@gmail.com>, David Cole <david.cole1340@gmail.com>
  */
-abstract class AbstractRepository implements ArrayAccess, Countable, IteratorAggregate
+abstract class AbstractRepository extends Collection
 {
     /**
      * The discriminator.
@@ -52,25 +49,11 @@ abstract class AbstractRepository implements ArrayAccess, Countable, IteratorAgg
     protected $factory;
 
     /**
-     * The collection of items.
-     *
-     * @var Collection Items.
-     */
-    protected $collection;
-
-    /**
      * Endpoints for interacting with the Discord servers.
      *
      * @var array Endpoints.
      */
     protected $endpoints = [];
-
-    /**
-     * The part that the repository serves.
-     *
-     * @var string The part that the repository serves.
-     */
-    protected $part;
 
     /**
      * Variables that are related to the repository.
@@ -90,17 +73,18 @@ abstract class AbstractRepository implements ArrayAccess, Countable, IteratorAgg
     {
         $this->http = $http;
         $this->factory = $factory;
-        $this->collection = new Collection([], $this->discrim, $this->part);
         $this->vars = $vars;
+
+        parent::__construct();
     }
 
     /**
      * Freshens the repository collection.
      *
-     * @return PromiseInterface
+     * @return ExtendedPromiseInterface
      * @throws \Exception
      */
-    public function freshen(): PromiseInterface
+    public function freshen(): ExtendedPromiseInterface
     {
         if (! isset($this->endpoints['all'])) {
             return Reject(new \Exception('You cannot freshen this repository.'));
@@ -115,12 +99,12 @@ abstract class AbstractRepository implements ArrayAccess, Countable, IteratorAgg
             null,
             [],
             false
-        )->then(function ($response) use ($deferred) {
+        )->done(function ($response) use ($deferred) {
             $this->fill([]);
 
             foreach ($response as $value) {
                 $value = array_merge($this->vars, (array) $value);
-                $part = $this->factory->create($this->part, $value, true);
+                $part = $this->factory->create($this->class, $value, true);
 
                 $this->push($part);
             }
@@ -145,7 +129,7 @@ abstract class AbstractRepository implements ArrayAccess, Countable, IteratorAgg
     {
         $attributes = array_merge($attributes, $this->vars);
 
-        return $this->factory->create($this->part, $attributes);
+        return $this->factory->create($this->class, $attributes);
     }
 
     /**
@@ -153,10 +137,10 @@ abstract class AbstractRepository implements ArrayAccess, Countable, IteratorAgg
      *
      * @param Part $part The part to save.
      *
-     * @return PromiseInterface
+     * @return ExtendedPromiseInterface
      * @throws \Exception
      */
-    public function save(Part $part): PromiseInterface
+    public function save(Part $part): ExtendedPromiseInterface
     {
         if ($part->created) {
             $method = 'patch';
@@ -181,12 +165,12 @@ abstract class AbstractRepository implements ArrayAccess, Countable, IteratorAgg
         $this->http->{$method}(
             $endpoint,
             $attributes
-        )->then(function ($response) use ($deferred, &$part, $method) {
+        )->done(function ($response) use ($deferred, &$part, $method) {
             $part->fill((array) $response);
             $part->created = true;
             $part->deleted = false;
 
-            $this->collection->push($part);
+            $this->push($part);
             $deferred->resolve($part);
         }, function ($e) use ($deferred) {
             $deferred->reject($e);
@@ -200,13 +184,13 @@ abstract class AbstractRepository implements ArrayAccess, Countable, IteratorAgg
      *
      * @param Part|snowflake $part The part to delete.
      *
-     * @return PromiseInterface
+     * @return ExtendedPromiseInterface
      * @throws \Exception
      */
-    public function delete($part): PromiseInterface
+    public function delete($part): ExtendedPromiseInterface
     {
         if (! ($part instanceof Part)) {
-            $part = $this->factory->part($this->part, ['id' => $part], true);
+            $part = $this->factory->part($this->class, ['id' => $part], true);
         }
 
         if (! $part->created) {
@@ -225,7 +209,7 @@ abstract class AbstractRepository implements ArrayAccess, Countable, IteratorAgg
                     $this->endpoints['delete']
                 )
             )
-        )->then(function ($response) use ($deferred, &$part) {
+        )->done(function ($response) use ($deferred, &$part) {
             $part->created = false;
 
             $deferred->resolve($part);
@@ -241,10 +225,10 @@ abstract class AbstractRepository implements ArrayAccess, Countable, IteratorAgg
      *
      * @param Part $part The part to get fresh values.
      *
-     * @return PromiseInterface
+     * @return ExtendedPromiseInterface
      * @throws \Exception
      */
-    public function fresh(Part $part): PromiseInterface
+    public function fresh(Part $part): ExtendedPromiseInterface
     {
         if (! $part->created) {
             return Reject(new \Exception('You cannot get a non-existant part.'));
@@ -262,7 +246,7 @@ abstract class AbstractRepository implements ArrayAccess, Countable, IteratorAgg
                     $this->endpoints['get']
                 )
             )
-        )->then(function ($response) use ($deferred, &$part) {
+        )->done(function ($response) use ($deferred, &$part) {
             $part->fill((array) $response);
 
             $deferred->resolve($part);
@@ -278,10 +262,10 @@ abstract class AbstractRepository implements ArrayAccess, Countable, IteratorAgg
      *
      * @param string $id The ID to search for.
      *
-     * @return PromiseInterface
+     * @return ExtendedPromiseInterface
      * @throws \Exception
      */
-    public function fetch(string $id): PromiseInterface
+    public function fetch(string $id): ExtendedPromiseInterface
     {
         if ($part = $this->get('id', $id)) {
             return Resolve($part);
@@ -297,8 +281,8 @@ abstract class AbstractRepository implements ArrayAccess, Countable, IteratorAgg
             $this->replaceWithVariables(
                 str_replace(':id', $id, $this->endpoints['get'])
             )
-        )->then(function ($response) use ($deferred) {
-            $part = $this->factory->create($this->part, (array) $response, true);
+        )->done(function ($response) use ($deferred) {
+            $part = $this->factory->create($this->class, $response, true);
 
             $deferred->resolve($part);
         }, function ($e) use ($deferred) {
@@ -334,81 +318,6 @@ abstract class AbstractRepository implements ArrayAccess, Countable, IteratorAgg
     }
 
     /**
-     * Returns how many items are in the repository.
-     *
-     * @return int Count.
-     */
-    public function count()
-    {
-        return $this->collection->count();
-    }
-
-    /**
-     * Get an iterator for the items.
-     *
-     * @return \Traversable
-     */
-    public function getIterator()
-    {
-        return $this->collection->getIterator();
-    }
-
-    /**
-     * Determine if an item exists at an offset.
-     *
-     * @param mixed $key
-     *
-     * @return bool
-     */
-    public function offsetExists($key)
-    {
-        return $this->collection->offsetExists($key);
-    }
-
-    /**
-     * Get an item at a given offset.
-     *
-     * @param mixed $key
-     *
-     * @return mixed
-     */
-    public function offsetGet($key)
-    {
-        return $this->collection->offsetGet($key);
-    }
-
-    /**
-     * Set the item at a given offset.
-     *
-     * @param mixed $key
-     * @param mixed $value
-     */
-    public function offsetSet($key, $value)
-    {
-        $this->collection->offsetSet($key, $value);
-    }
-
-    /**
-     * Unset the item at a given offset.
-     *
-     * @param string $key
-     */
-    public function offsetUnset($key)
-    {
-        $this->collection->offsetUnset($key);
-    }
-
-    /**
-     * Convert the object into something JSON serializable.
-     *
-     * @return array
-     */
-    public function jsonSerialize(): array
-    {
-        return $this->collection->jsonSerialize();
-    }
-
-    /**
      * Handles debug calls from var_dump and similar functions.
      *
      * @return array An array of attributes.
@@ -416,18 +325,5 @@ abstract class AbstractRepository implements ArrayAccess, Countable, IteratorAgg
     public function __debugInfo(): array
     {
         return $this->jsonSerialize();
-    }
-
-    /**
-     * Handles dynamic calls to the repository.
-     *
-     * @param string $function The function called.
-     * @param array  $params   Array of parameters.
-     *
-     * @return mixed
-     */
-    public function __call(string $function, array $params)
-    {
-        return call_user_func_array([$this->collection, $function], $params);
     }
 }

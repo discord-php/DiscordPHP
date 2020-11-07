@@ -13,7 +13,7 @@ namespace Discord\WebSockets\Events;
 
 use Discord\Parts\Channel\Message;
 use Discord\WebSockets\Event;
-use React\Promise\Deferred;
+use Discord\Helpers\Deferred;
 
 class MessageCreate extends Event
 {
@@ -22,7 +22,7 @@ class MessageCreate extends Event
      */
     public function handle(Deferred &$deferred, $data): void
     {
-        $message = $this->factory->create(Message::class, (array) $data, true);
+        $message = $this->factory->create(Message::class, $data, true);
 
         if ($this->discord->options['storeMessages']) {
             if ($channel = $message->channel) {

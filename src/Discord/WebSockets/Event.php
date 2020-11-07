@@ -14,8 +14,8 @@ namespace Discord\WebSockets;
 use Discord\Discord;
 use Discord\Factory\Factory;
 use Discord\Http\Http;
+use Discord\Helpers\Deferred;
 use Evenement\EventEmitterTrait;
-use React\Promise\Deferred;
 use React\Promise\PromiseInterface;
 
 /**

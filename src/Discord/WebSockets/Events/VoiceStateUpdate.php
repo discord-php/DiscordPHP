@@ -14,7 +14,7 @@ namespace Discord\WebSockets\Events;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\WebSockets\VoiceStateUpdate as VoiceStateUpdatePart;
 use Discord\WebSockets\Event;
-use React\Promise\Deferred;
+use Discord\Helpers\Deferred;
 
 class VoiceStateUpdate extends Event
 {
@@ -23,7 +23,7 @@ class VoiceStateUpdate extends Event
      */
     public function handle(Deferred &$deferred, $data): void
     {
-        $state = $this->factory->create(VoiceStateUpdatePart::class, (array) $data, true);
+        $state = $this->factory->create(VoiceStateUpdatePart::class, $data, true);
 
         if ($state->guild) {
             $guild = $state->guild;

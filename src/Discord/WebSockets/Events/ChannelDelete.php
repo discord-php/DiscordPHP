@@ -13,7 +13,7 @@ namespace Discord\WebSockets\Events;
 
 use Discord\Parts\Channel\Channel;
 use Discord\WebSockets\Event;
-use React\Promise\Deferred;
+use Discord\Helpers\Deferred;
 
 class ChannelDelete extends Event
 {
@@ -22,7 +22,7 @@ class ChannelDelete extends Event
      */
     public function handle(Deferred &$deferred, $data): void
     {
-        $channel = $this->factory->create(Channel::class, (array) $data);
+        $channel = $this->factory->create(Channel::class, $data);
 
         if ($guild = $channel->guild) {
             $guild->channels->pull($channel->id);

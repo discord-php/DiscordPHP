@@ -14,7 +14,7 @@ namespace Discord\Parts\Channel;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
-use React\Promise\Deferred;
+use Discord\Helpers\Deferred;
 use React\Promise\PromiseInterface;
 use function React\Partial\bind as Bind;
 
@@ -47,6 +47,7 @@ class Webhook extends Part
         'name',
         'avatar',
         'token',
+        'application_id',
     ];
 
     /**
@@ -62,7 +63,7 @@ class Webhook extends Part
     {
         $deferred = new Deferred();
 
-        $this->http->post("webhooks/{$this->id}/{$this->token}", $data)->then(
+        $this->http->post("webhooks/{$this->id}/{$this->token}", $data)->done(
             Bind([$deferred, 'resolve']),
             Bind([$deferred, 'reject'])
         );

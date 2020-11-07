@@ -17,8 +17,8 @@ use Discord\Parts\Part;
 use Discord\Repository\GuildRepository;
 use Discord\Repository\PrivateChannelRepository;
 use Discord\Repository\UserRepository;
-use React\Promise\Deferred;
-use React\Promise\PromiseInterface;
+use Discord\Helpers\Deferred;
+use React\Promise\ExtendedPromiseInterface;
 use function React\Partial\bind as Bind;
 
 /**
@@ -69,7 +69,7 @@ class Client extends Part
         );
         $this->application = $this->factory->create(Application::class, [], true);
 
-        $this->http->get('oauth2/applications/@me')->then(function ($response) {
+        $this->http->get('oauth2/applications/@me')->done(function ($response) {
             $this->application->fill((array) $response);
         });
     }
@@ -117,13 +117,13 @@ class Client extends Part
     /**
      * Saves the client instance.
      *
-     * @return PromiseInterface
+     * @return ExtendedPromiseInterface
      */
-    public function save(): PromiseInterface
+    public function save(): ExtendedPromiseInterface
     {
         $deferred = new Deferred();
 
-        $this->http->patch('users/@me', $this->getUpdatableAttributes())->then(
+        $this->http->patch('users/@me', $this->getUpdatableAttributes())->done(
             Bind([$deferred, 'resolve']),
             Bind([$deferred, 'reject'])
         );

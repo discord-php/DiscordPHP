@@ -30,5 +30,5 @@ class UserRepository extends AbstractRepository
     /**
      * {@inheritdoc}
      */
-    protected $part = User::class;
+    protected $class = User::class;
 }

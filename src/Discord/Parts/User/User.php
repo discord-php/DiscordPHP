@@ -14,8 +14,8 @@ namespace Discord\Parts\User;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Embed\Embed;
 use Discord\Parts\Part;
-use React\Promise\Deferred;
-use React\Promise\PromiseInterface;
+use Discord\Helpers\Deferred;
+use React\Promise\ExtendedPromiseInterface;
 use function React\Partial\bind as Bind;
 
 /**
@@ -64,18 +64,18 @@ class User extends Part
     /**
      * Gets the private channel for the user.
      *
-     * @return PromiseInterface
+     * @return ExtendedPromiseInterface
      * @throws \Exception
      */
-    public function getPrivateChannel(): PromiseInterface
+    public function getPrivateChannel(): ExtendedPromiseInterface
     {
         $deferred = new Deferred();
 
         if ($channel = $this->discord->private_channels->get('id', $this->id)) {
             $deferred->resolve($channel);
         } else {
-            $this->http->post('users/@me/channels', ['recipient_id' => $this->id])->then(function ($response) use ($deferred) {
-                $channel = $this->factory->create(Channel::class, (array) $response, true);
+            $this->http->post('users/@me/channels', ['recipient_id' => $this->id])->done(function ($response) use ($deferred) {
+                $channel = $this->factory->create(Channel::class, $response, true);
                 $this->discord->private_channels->push($channel);
 
                 $deferred->resolve($channel);
@@ -92,15 +92,15 @@ class User extends Part
      * @param bool       $tts     Whether the message should be sent with text to speech enabled.
      * @param Embed|null $embed   An embed to send.
      *
-     * @return PromiseInterface
+     * @return ExtendedPromiseInterface
      * @throws \Exception
      */
-    public function sendMessage(string $message, bool $tts = false, ?Embed $embed = null): PromiseInterface
+    public function sendMessage(string $message, bool $tts = false, ?Embed $embed = null): ExtendedPromiseInterface
     {
         $deferred = new Deferred();
 
-        $this->getPrivateChannel()->then(function ($channel) use ($message, $tts, $embed, $deferred) {
-            $channel->sendMessage($message, $tts, $embed)->then(function ($message) use ($deferred) {
+        $this->getPrivateChannel()->done(function ($channel) use ($message, $tts, $embed, $deferred) {
+            $channel->sendMessage($message, $tts, $embed)->done(function ($message) use ($deferred) {
                 $deferred->resolve($message);
             }, Bind([$deferred, 'reject']));
         }, Bind([$deferred, 'reject']));
@@ -111,15 +111,15 @@ class User extends Part
     /**
      * Broadcasts that you are typing to the channel. Lasts for 5 seconds.
      *
-     * @return PromiseInterface
+     * @return ExtendedPromiseInterface
      * @throws \Exception
      */
-    public function broadcastTyping(): PromiseInterface
+    public function broadcastTyping(): ExtendedPromiseInterface
     {
         $deferred = new Deferred();
 
-        $this->getPrivateChannel()->then(function ($channel) use ($deferred) {
-            $channel->broadcastTyping()->then(
+        $this->getPrivateChannel()->done(function ($channel) use ($deferred) {
+            $channel->broadcastTyping()->done(
                 Bind([$deferred, 'resolve']),
                 Bind([$deferred, 'reject'])
             );
@@ -159,6 +159,35 @@ class User extends Part
     protected function getAvatarHashAttribute(): string
     {
         return $this->attributes['avatar'];
+    }
+
+    /**
+     * Returns a timestamp for when a user's account was created.
+     *
+     * @return float
+     */
+    public function createdTimestamp()
+    {
+        if (\PHP_INT_SIZE === 4) { //x86
+            $binary = \str_pad(\base_convert($this->id, 10, 2), 64, 0, \STR_PAD_LEFT);
+            $time = \base_convert(\substr($binary, 0, 42), 2, 10);
+            $timestamp = (float) ((((int) \substr($time, 0, -3)) + 1420070400).'.'.\substr($time, -3));
+            $workerID = (int) \base_convert(\substr($binary, 42, 5), 2, 10);
+            $processID = (int) \base_convert(\substr($binary, 47, 5), 2, 10);
+            $increment = (int) \base_convert(\substr($binary, 52, 12), 2, 10);
+        } else { //x64
+            $snowflake = (int) $this->id;
+            $time = (string) ($snowflake >> 22);
+            $timestamp = (float) ((((int) \substr($time, 0, -3)) + 1420070400).'.'.\substr($time, -3));
+            $workerID = ($snowflake & 0x3E0000) >> 17;
+            $processID = ($snowflake & 0x1F000) >> 12;
+            $increment = ($snowflake & 0xFFF);
+        }
+        if ($timestamp < 1420070400 || $workerID < 0 || $workerID >= 32 || $processID < 0 || $processID >= 32 || $increment < 0 || $increment >= 4096) {
+            return null;
+        }
+
+        return $timestamp;
     }
 
     /**

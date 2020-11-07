@@ -13,7 +13,7 @@ namespace Discord\WebSockets\Events;
 
 use Discord\Parts\WebSockets\TypingStart as TypingStartPart;
 use Discord\WebSockets\Event;
-use React\Promise\Deferred;
+use Discord\Helpers\Deferred;
 
 class TypingStart extends Event
 {
@@ -22,7 +22,7 @@ class TypingStart extends Event
      */
     public function handle(Deferred &$deferred, $data): void
     {
-        $typing = $this->factory->create(TypingStartPart::class, (array) $data, true);
+        $typing = $this->factory->create(TypingStartPart::class, $data, true);
 
         $deferred->resolve($typing);
     }

@@ -14,7 +14,6 @@ namespace Discord\Helpers;
 use ArrayAccess;
 use ArrayIterator;
 use Countable;
-use Illuminate\Support\Arr;
 use IteratorAggregate;
 use JsonSerializable;
 use Serializable;
@@ -111,7 +110,12 @@ class Collection implements ArrayAccess, Serializable, JsonSerializable, Iterato
      */
     public function pull($key, $default = null)
     {
-        return Arr::pull($this->items, $key, $default);
+        if (isset($this->items[$key])) {
+            $default = $this->items[$key];
+            unset($this->items[$key]);
+        }
+
+        return $default;
     }
 
     /**

@@ -12,6 +12,7 @@
 namespace Discord\Parts\Guild;
 
 use Carbon\Carbon;
+use Discord\Helpers\Collection;
 use Discord\Parts\Part;
 use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
@@ -21,9 +22,8 @@ use Discord\Repository\Guild\EmojiRepository;
 use Discord\Repository\Guild\InviteRepository;
 use Discord\Repository\Guild\MemberRepository;
 use Discord\Repository\Guild\RoleRepository;
-use Illuminate\Support\Collection;
-use React\Promise\Deferred;
-use React\Promise\PromiseInterface;
+use Discord\Helpers\Deferred;
+use React\Promise\ExtendedPromiseInterface;
 use function React\Partial\bind as Bind;
 
 /**
@@ -158,19 +158,19 @@ class Guild extends Part
     /**
      * Returns the channels invites.
      *
-     * @return PromiseInterface
+     * @return ExtendedPromiseInterface
      * @throws \Exception
      */
-    public function getInvites(): PromiseInterface
+    public function getInvites(): ExtendedPromiseInterface
     {
         $deferred = new Deferred();
 
-        $this->http->get($this->replaceWithVariables('guilds/:id/invites'))->then(
+        $this->http->get($this->replaceWithVariables('guilds/:id/invites'))->done(
             function ($response) use ($deferred) {
                 $invites = new Collection();
 
                 foreach ($response as $invite) {
-                    $invite = $this->factory->create(Invite::class, (array) $invite, true);
+                    $invite = $this->factory->create(Invite::class, $invite, true);
                     $invites->push($invite);
                 }
 
@@ -185,7 +185,7 @@ class Guild extends Part
     /**
      * Returns the owner.
      *
-     * @return PromiseInterface
+     * @return ExtendedPromiseInterface
      */
     protected function getOwnerAttribute()
     {
@@ -272,13 +272,13 @@ class Guild extends Part
     /**
      * Gets the voice regions available.
      *
-     * @return PromiseInterface
+     * @return ExtendedPromiseInterface
      */
-    public function getVoiceRegions(): PromiseInterface
+    public function getVoiceRegions(): ExtendedPromiseInterface
     {
         $deferred = new Deferred();
 
-        $this->http->get('voice/regions')->then(function ($regions) use ($deferred) {
+        $this->http->get('voice/regions')->done(function ($regions) use ($deferred) {
             $regions = new Collection($regions);
 
             $this->regions = $regions;
@@ -293,20 +293,20 @@ class Guild extends Part
      *
      * @param array $data The data to fill the role with.
      *
-     * @return PromiseInterface
+     * @return ExtendedPromiseInterface
      * @throws \Exception
      */
-    public function createRole(array $data = []): PromiseInterface
+    public function createRole(array $data = []): ExtendedPromiseInterface
     {
         $deferred = new Deferred();
 
         $rolePart = $this->factory->create(Role::class);
 
-        $this->roles->save($rolePart)->then(
+        $this->roles->save($rolePart)->done(
             function ($role) use ($deferred, $data) {
                 $role->fill((array) $data);
 
-                $this->roles->save($role)->then(
+                $this->roles->save($role)->done(
                     function ($role) use ($deferred) {
                         $deferred->resolve($role);
                     },
@@ -325,9 +325,9 @@ class Guild extends Part
      *
      * @param Member|int $member The member to transfer ownership to.
      *
-     * @return PromiseInterface
+     * @return ExtendedPromiseInterface
      */
-    public function transferOwnership($member): PromiseInterface
+    public function transferOwnership($member): ExtendedPromiseInterface
     {
         $deferred = new Deferred();
 
@@ -340,7 +340,7 @@ class Guild extends Part
             [
                 'owner_id' => $member,
             ]
-        )->then(
+        )->done(
             function ($response) use ($member, $deferred) {
                 if ($response->owner_id != $member) {
                     $deferred->reject(new \Exception('Ownership was not transferred correctly.'));
@@ -358,11 +358,11 @@ class Guild extends Part
     /**
      * Validates the specified region.
      *
-     * @return PromiseInterface
+     * @return ExtendedPromiseInterface
      *
      * @see self::REGION_DEFAULT The default region.
      */
-    public function validateRegion(): PromiseInterface
+    public function validateRegion(): ExtendedPromiseInterface
     {
         $deferred = new Deferred();
 
@@ -381,7 +381,7 @@ class Guild extends Part
         if (! is_null($this->regions)) {
             $validate();
         } else {
-            $this->getVoiceRegions()->then($validate, Bind([$deferred, 'reject']));
+            $this->getVoiceRegions()->done($validate, Bind([$deferred, 'reject']));
         }
 
         return $deferred->promise();

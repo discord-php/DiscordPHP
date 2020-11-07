@@ -36,5 +36,5 @@ class ChannelRepository extends AbstractRepository
     /**
      * {@inheritdoc}
      */
-    protected $part = Channel::class;
+    protected $class = Channel::class;
 }

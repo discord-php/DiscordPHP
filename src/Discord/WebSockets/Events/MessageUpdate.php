@@ -13,7 +13,7 @@ namespace Discord\WebSockets\Events;
 
 use Discord\Parts\Channel\Message;
 use Discord\WebSockets\Event;
-use React\Promise\Deferred;
+use Discord\Helpers\Deferred;
 
 class MessageUpdate extends Event
 {
@@ -22,7 +22,7 @@ class MessageUpdate extends Event
      */
     public function handle(Deferred &$deferred, $data): void
     {
-        $messagePart = $this->factory->create(Message::class, (array) $data, true);
+        $messagePart = $this->factory->create(Message::class, $data, true);
         $oldMessage = null;
 
         if ($channel = $messagePart->channel) {

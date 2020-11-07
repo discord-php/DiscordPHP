@@ -32,5 +32,5 @@ class OverwriteRepository extends AbstractRepository
     /**
      * {@inheritdoc}
      */
-    protected $part = Overwrite::class;
+    protected $class = Overwrite::class;
 }

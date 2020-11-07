@@ -21,8 +21,8 @@ use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
 use Discord\Parts\WebSockets\MessageReaction;
 use Discord\WebSockets\Event;
-use React\Promise\Deferred;
-use React\Promise\PromiseInterface;
+use Discord\Helpers\Deferred;
+use React\Promise\ExtendedPromiseInterface;
 use function React\Partial\bind as Bind;
 
 /**
@@ -34,7 +34,7 @@ use function React\Partial\bind as Bind;
  * @property string                         $content          The content of the message if it is a normal message.
  * @property int                            $type             The type of message.
  * @property Collection|User[]              $mentions         A collection of the users mentioned in the message.
- * @property Member                         $author           The author of the message.
+ * @property Member|User                    $author           The author of the message.
  * @property bool                           $mention_everyone Whether the message contained an @everyone mention.
  * @property Carbon                         $timestamp        A timestamp of when the message was sent.
  * @property Carbon|null                    $edited_timestamp A timestamp of when the message was edited, or null.
@@ -173,8 +173,11 @@ class Message extends Part
         $collection = new Collection();
 
         if (isset($this->attributes['mention_channels'])) {
-            foreach ($this->attributes['mention_channels'] as $channel) {
-                $collection->push($this->factory->create(Channel::class, (array) $channel, true));
+            foreach ($this->attributes['mention_channels'] as $mention_channel) {
+                if (! $channel = $this->discord->getChannel($mention_channel->id)) {
+                    $channel = $this->factory->create(Channel::class, $mention_channel, true);
+                }
+                $collection->push($channel);
             }
         }
 
@@ -193,10 +196,10 @@ class Message extends Part
 
         if (isset($this->attributes['reactions'])) {
             foreach ($this->attributes['reactions'] as $reaction) {
-                $collection->push($this->factory->create(Reaction::class, (array) $reaction, true));
+                $collection->push($this->factory->create(Reaction::class, $reaction, true));
             }
-        }
 
+        }
         return $collection;
     }
 
@@ -208,13 +211,7 @@ class Message extends Part
      */
     protected function getChannelAttribute(): Channel
     {
-        foreach ($this->discord->guilds as $guild) {
-            if ($channel = $guild->channels->get('id', $this->channel_id)) {
-                return $channel;
-            }
-        }
-
-        if ($channel = $this->discord->private_channels->get('id', $this->channel_id)) {
+        if ($channel = $this->discord->getChannel($this->channel_id)) {
             return $channel;
         }
 
@@ -252,10 +249,13 @@ class Message extends Part
      */
     protected function getMentionsAttribute(): Collection
     {
-        $users = new Collection([], 'id');
+        $users = new Collection();
 
         foreach ($this->attributes['mentions'] as $mention) {
-            $users->push($this->factory->create(User::class, (array) $mention, true));
+            if (! $user = $this->discord->users->get('id', $mention->id)) {
+                $user = $this->factory->create(User::class, $mention, true);
+            }
+            $users->push($user);
         }
 
         return $users;
@@ -269,14 +269,18 @@ class Message extends Part
      */
     protected function getAuthorAttribute(): ?Part
     {
-        if ($this->channel->guild &&
-            isset($this->attributes['author']) &&
-            $author = $this->channel->guild->members->get('id', $this->attributes['author']->id)
+        if (! isset($this->attributes['author'])) {
+            return null;
+        }
+
+        if (($this->channel->guild &&
+            $author = $this->channel->guild->members->get('id', $this->attributes['author']->id)) ||
+            $author = $this->discord->users->get('id', $this->attributes['author']->id)
         ) {
             return $author;
         }
 
-        return $this->factory->create(User::class, (array) $this->attributes['author'], true);
+        return $this->factory->create(User::class, $this->attributes['author'], true);
     }
 
     /**
@@ -290,7 +294,7 @@ class Message extends Part
         $embeds = new Collection([], null);
 
         foreach ($this->attributes['embeds'] as $embed) {
-            $embeds->push($this->factory->create(Embed::class, (array) $embed, true));
+            $embeds->push($this->factory->create(Embed::class, $embed, true));
         }
 
         return $embeds;
@@ -327,10 +331,10 @@ class Message extends Part
      *
      * @param string $text The text to reply with.
      *
-     * @return PromiseInterface
+     * @return ExtendedPromiseInterface
      * @throws \Exception
      */
-    public function reply(string $text): PromiseInterface
+    public function reply(string $text): ExtendedPromiseInterface
     {
         return $this->channel->sendMessage("{$this->author}, {$text}");
     }
@@ -338,13 +342,13 @@ class Message extends Part
     /**
      * Crossposts the message to any following channels.
      *
-     * @return PromiseInterface
+     * @return ExtendedPromiseInterface
      */
-    public function crosspost(): PromiseInterface
+    public function crosspost(): ExtendedPromiseInterface
     {
         $deferred = new Deferred();
 
-        $this->http->post("channels/{$this->channel_id}/messages/{$this->id}/crosspost")->then(function ($response) use ($deferred) {
+        $this->http->post("channels/{$this->channel_id}/messages/{$this->id}/crosspost")->done(function ($response) use ($deferred) {
             $message = $this->factory->part(Message::class, $response, true);
             $deferred->resolve($message);
         }, Bind([$deferred, 'reject']));
@@ -358,14 +362,14 @@ class Message extends Part
      * @param string $text  Text to send after delay.
      * @param int    $delay Delay after text will be sent in milliseconds.
      *
-     * @return PromiseInterface
+     * @return ExtendedPromiseInterface
      */
-    public function delayedReply(string $text, int $delay): PromiseInterface
+    public function delayedReply(string $text, int $delay): ExtendedPromiseInterface
     {
         $deferred = new Deferred();
 
         $this->discord->getLoop()->addTimer($delay / 1000, function () use ($text, $deferred) {
-            $this->reply($text)->then(
+            $this->reply($text)->done(
                 Bind([$deferred, 'resolve']),
                 Bind([$deferred, 'reject'])
             );
@@ -379,9 +383,9 @@ class Message extends Part
      *
      * @param Emoji|string $emoticon The emoticon to react with. (custom: ':michael:251127796439449631')
      *
-     * @return PromiseInterface
+     * @return ExtendedPromiseInterface
      */
-    public function react($emoticon): PromiseInterface
+    public function react($emoticon): ExtendedPromiseInterface
     {
         $deferred = new Deferred();
 
@@ -393,7 +397,7 @@ class Message extends Part
 
         $this->http->put(
             "channels/{$this->channel->id}/messages/{$this->id}/reactions/{$emoticon}/@me"
-        )->then(
+        )->done(
             Bind([$deferred, 'resolve']),
             Bind([$deferred, 'reject'])
         );
@@ -408,9 +412,9 @@ class Message extends Part
      * @param Emoji|string|null $emoticon The emoticon to delete (if not all).
      * @param string|null       $id       The user reaction to delete (if not all).
      *
-     * @return PromiseInterface
+     * @return ExtendedPromiseInterface
      */
-    public function deleteReaction(int $type, $emoticon = null, ?string $id = null): PromiseInterface
+    public function deleteReaction(int $type, $emoticon = null, ?string $id = null): ExtendedPromiseInterface
     {
         $deferred = new Deferred();
 
@@ -435,7 +439,7 @@ class Message extends Part
 
             $this->http->delete(
                 $url, []
-            )->then(
+            )->done(
                 Bind([$deferred, 'resolve']),
                 Bind([$deferred, 'reject'])
             );
@@ -449,13 +453,13 @@ class Message extends Part
     /**
      * Deletes the message from the channel.
      *
-     * @return PromiseInterface
+     * @return ExtendedPromiseInterface
      */
-    public function delete(): PromiseInterface
+    public function delete(): ExtendedPromiseInterface
     {
         $deferred = new Deferred();
 
-        $this->http->delete("channels/{$this->channel_id}/messages/{$this->id}")->then(
+        $this->http->delete("channels/{$this->channel_id}/messages/{$this->id}")->done(
             Bind([$deferred, 'resolve']),
             Bind([$deferred, 'reject'])
         );
@@ -470,12 +474,12 @@ class Message extends Part
      * @param int      $options['time']  Time in milliseconds until the collector finishes or false.
      * @param int      $options['limit'] The amount of reactions allowed or false.
      *
-     * @return PromiseInterface
+     * @return ExtendedPromiseInterface
      */
-    public function createReactionCollector(callable $filter, array $options = []): PromiseInterface
+    public function createReactionCollector(callable $filter, array $options = []): ExtendedPromiseInterface
     {
         $deferred = new Deferred();
-        $reactions = new \Illuminate\Support\Collection();
+        $reactions = new Collection();
         $timer = null;
 
         $options = array_merge([
@@ -520,15 +524,15 @@ class Message extends Part
      *
      * @param Embed $embed
      *
-     * @return PromiseInterface
+     * @return ExtendedPromiseInterface
      */
-    public function addEmbed(Embed $embed): PromiseInterface
+    public function addEmbed(Embed $embed): ExtendedPromiseInterface
     {
         $deferred = new Deferred();
 
         $this->http->patch("channels/{$this->channel_id}/messages/{$this->id}", [
             'embed' => $embed->getRawAttributes(),
-        ])->then(function ($data) use ($deferred) {
+        ])->done(function ($data) use ($deferred) {
             $this->fill((array) $data);
             $deferred->resolve($this);
         }, Bind([$deferred, 'reject']));

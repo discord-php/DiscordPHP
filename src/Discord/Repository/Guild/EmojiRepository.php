@@ -35,5 +35,5 @@ class EmojiRepository extends AbstractRepository
     /**
      * {@inheritdoc}
      */
-    protected $part = Emoji::class;
+    protected $class = Emoji::class;
 }

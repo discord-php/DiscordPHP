@@ -15,8 +15,8 @@ use Carbon\Carbon;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
-use React\Promise\Deferred;
-use React\Promise\PromiseInterface;
+use Discord\Helpers\Deferred;
+use React\Promise\ExtendedPromiseInterface;
 use function React\Partial\bind as Bind;
 
 /**
@@ -54,9 +54,9 @@ class Invite extends Part
     /**
      * Accepts the invite.
      *
-     * @return PromiseInterface
+     * @return ExtendedPromiseInterface
      */
-    public function accept(): PromiseInterface
+    public function accept(): ExtendedPromiseInterface
     {
         $deferred = new Deferred();
 
@@ -72,7 +72,7 @@ class Invite extends Part
             return $deferred->promise();
         }
 
-        $this->http->post("invite/{$this->code}")->then(
+        $this->http->post("invite/{$this->code}")->done(
             Bind([$deferred, 'resolve']),
             Bind([$deferred, 'reject'])
         );
@@ -108,7 +108,7 @@ class Invite extends Part
      */
     protected function getGuildAttribute(): Part
     {
-        return $this->factory->create(Guild::class, (array) $this->attributes['guild'], true);
+        return $this->factory->create(Guild::class, $this->attributes['guild'], true);
     }
 
     /**
@@ -119,7 +119,7 @@ class Invite extends Part
      */
     protected function getChannelAttribute(): Part
     {
-        return $this->factory->create(Channel::class, (array) $this->attributes['channel'], true);
+        return $this->factory->create(Channel::class, $this->attributes['channel'], true);
     }
 
     /**
@@ -140,7 +140,7 @@ class Invite extends Part
      */
     protected function getInviterAttribute(): Part
     {
-        return $this->factory->create(User::class, (array) $this->attributes['inviter'], true);
+        return $this->factory->create(User::class, $this->attributes['inviter'], true);
     }
 
     /**
