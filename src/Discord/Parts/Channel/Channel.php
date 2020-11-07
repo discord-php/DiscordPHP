@@ -859,7 +859,7 @@ class Channel extends Part
     public function createMessageCollector(callable $filter, array $options = []): ExtendedPromiseInterface
     {
         $deferred = new Deferred();
-        $messages = new Collection();
+        $messages = new Collection([], null, null);
         $timer = null;
 
         $options = array_merge([
