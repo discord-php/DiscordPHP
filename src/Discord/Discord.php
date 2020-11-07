@@ -1356,6 +1356,26 @@ class Discord
     }
 
     /**
+     * Gets the factory.
+     *
+     * @return Factory
+     */
+    public function getFactory(): Factory
+    {
+        return $this->factory;
+    }
+
+    /**
+     * Gets the HTTP client.
+     *
+     * @return Http
+     */
+    public function getHttpClient(): Http
+    {
+        return $this->http;
+    }
+
+    /**
      * Gets the loop being used by the client.
      *
      * @return LoopInterface
