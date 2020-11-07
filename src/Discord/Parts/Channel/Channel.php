@@ -979,7 +979,7 @@ class Channel extends Part
         ];
     }
     
-    public function bulkDelete(integer $value)
+    public function bulkDelete(int $value)
     {
       $that = $this;
       $this->getMessageHistory(['limit' => $value])->then(function ($messages) use ($that)
