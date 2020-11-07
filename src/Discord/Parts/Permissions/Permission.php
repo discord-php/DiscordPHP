@@ -12,8 +12,6 @@
 namespace Discord\Parts\Permissions;
 
 use Discord\Discord;
-use Discord\Factory\Factory;
-use Discord\Http\Http;
 use Discord\Parts\Part;
 
 /**

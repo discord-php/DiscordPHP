@@ -897,6 +897,7 @@ class Discord
 
             if (count($this->largeGuilds) < 1) {
                 $this->logger->debug('unprocessed chunks', $this->largeSent);
+
                 return;
             }
 
@@ -1433,7 +1434,6 @@ class Discord
     }
 
     /**
-     *
      * Gets a channel.
      *
      * @param string|int $channel_id Id of the channel.

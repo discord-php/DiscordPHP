@@ -198,8 +198,8 @@ class Message extends Part
             foreach ($this->attributes['reactions'] as $reaction) {
                 $collection->push($this->factory->create(Reaction::class, $reaction, true));
             }
-
         }
+
         return $collection;
     }
 
