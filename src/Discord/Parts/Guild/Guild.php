@@ -320,6 +320,16 @@ class Guild extends Part
     }
 
     /**
+     * Leaves the guild.
+     *
+     * @return ExtendedPromiseInterface
+     */
+    public function leave(): ExtendedPromiseInterface
+    {
+        return $this->discord->guilds->leave($this->id);
+    }
+
+    /**
      * Transfers ownership of the guild to
      * another member.
      *
