@@ -508,6 +508,24 @@ class Channel extends Part
     }
 
     /**
+     * Deletes a given number of messages, in order of time sent.
+     *
+     * @param int $value
+     *
+     * @return ExtendedPromiseInterface
+     */
+    public function limitDelete(int $value): ExtendedPromiseInterface
+    {
+        $deferred = new Deferred();
+
+        $this->getMessageHistory(['limit' => $value])->done(function ($messages) use ($deferred) {
+            $this->deleteMessages($messages)->done([$deferred, 'resolve'], [$deferred, 'reject']);
+        }, [$deferred, 'reject']);
+
+        return $deferred->promise();
+    }
+
+    /**
      * Fetches message history.
      *
      * @param array $options
@@ -977,16 +995,5 @@ class Channel extends Part
         return [
             'channel_id' => $this->id,
         ];
-    }
-    
-    public function bulkDelete(int $value)
-    {
-      if ($value) > 100) //https://discord.com/developers/docs/resources/channel#bulk-delete-messages
-          throw new \RangeException('Cannot bulk delete more than 100 messages at a time.');
-      $that = $this;
-      $this->getMessageHistory(['limit' => $value])->then(function ($messages) use ($that)
-      {
-        $that->deleteMessages($messages);
-      });
     }
 }
