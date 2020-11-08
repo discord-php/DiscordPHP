@@ -126,8 +126,13 @@ class ReactDriver extends Browser implements HttpDriver
                 }
             };
 
-            $this->{$method}($this->makeUrl($url), $headers, $body)->done($handleResponse, function (ResponseException $e) use ($handleResponse) {
-                $handleResponse($e->getResponse());
+            $this->{$method}($this->makeUrl($url), $headers, $body)->done($handleResponse, function (\Throwable $e) use ($handleResponse, $deferred) {
+                // Handle rate limits
+                if ($e instanceof ResponseException) {
+                    $handleResponse($e->getResponse());
+                } else {
+                    $deferred->reject($e);
+                }
             });
         };
 
