@@ -981,6 +981,8 @@ class Channel extends Part
     
     public function bulkDelete(int $value)
     {
+      if ($value) > 100) //https://discord.com/developers/docs/resources/channel#bulk-delete-messages
+          throw new \RangeException('Cannot bulk delete more than 100 messages at a time.');
       $that = $this;
       $this->getMessageHistory(['limit' => $value])->then(function ($messages) use ($that)
       {
