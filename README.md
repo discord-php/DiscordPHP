@@ -6,6 +6,9 @@ A wrapper for the official [Discord](https://discordapp.com) REST, gateway and v
 
 For testing and stability it would be greatly appreciated if you were able to add our test bot to your server. We don't store any data - the bot simply idles and does not interact with anyone and is used to test stability with large numbers of guilds. You can invite the bot [here.](https://discord.com/oauth2/authorize?client_id=157746770539970560&scope=bot)
 
+# Before you start
+Before you start using this Library, you **need** to know how PHP works, you need to know the language and you need to know how Event Loops and Promises work. This is a fundamental requirement before you start. Without this knowledge, you will only suffer.
+
 ## FAQ
 
 1. Can I run DiscordPHP on a webserver (e.g. Apache, nginx)?
@@ -28,6 +31,7 @@ For testing and stability it would be greatly appreciated if you were able to ad
 
 - The latest PHP version.
 - One of `ext-uv` (preferred), `ext-libev` or `evt-event` for a faster, and more performant event loop.
+- `ext-mbstring` if handling non-english characters.
 
 #### Voice Requirements
 

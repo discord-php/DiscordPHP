@@ -157,7 +157,7 @@ class Embed extends Part
      */
     protected function setColorAttribute($color)
     {
-        $this->color = $this->resolveColor($color);
+        $this->attributes['color'] = $this->resolveColor($color);
     }
 
     /**
@@ -170,7 +170,7 @@ class Embed extends Part
     protected function setDescriptionAttribute($description)
     {
         if (poly_strlen($description) === 0) {
-            $this->description = null;
+            $this->attributes['description'] = null;
         } elseif (poly_strlen($description) > 2048) {
             throw new \InvalidArgumentException('Embed description can not be longer than 2048 characters');
         } else {
@@ -178,7 +178,7 @@ class Embed extends Part
                 throw new \InvalidArgumentException('Embed text values collectively can not exceed than 6000 characters');
             }
 
-            $this->description = $description;
+            $this->attributes['description'] = $description;
         }
     }
 
@@ -194,7 +194,8 @@ class Embed extends Part
         if (! in_array($type, $this->getEmbedTypes())) {
             throw new \InvalidArgumentException('Given type "'.$type.'" is not a valid embed type.');
         }
-        $this->type = $type;
+
+        $this->attributes['type'] = $type;
     }
 
     /**
@@ -209,13 +210,13 @@ class Embed extends Part
     public function setTitle(string $title)
     {
         if (poly_strlen($title) == 0) {
-            $this->title = null;
+            $this->attributes['title'] = null;
         } elseif (poly_strlen($title) > 256) {
             throw new \InvalidArgumentException('Embed title can not be longer than 256 characters');
         } elseif ($this->exceedsOverallLimit(poly_strlen($title))) {
             throw new \InvalidArgumentException('Embed text values collectively can not exceed than 6000 characters');
         } else {
-            $this->title = $title;
+            $this->attributes['title'] = $title;
         }
 
         return $this;
@@ -231,6 +232,34 @@ class Embed extends Part
     public function setType(string $type)
     {
         $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * Sets the description of the embed.
+     *
+     * @param string $description
+     *
+     * @return $this
+     */
+    public function setDescription(string $description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Sets the color of the embed.
+     *
+     * @param mixed $color
+     *
+     * @return $this
+     */
+    public function setColor($color)
+    {
+        $this->color = $color;
 
         return $this;
     }

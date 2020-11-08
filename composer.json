@@ -41,7 +41,8 @@
     "suggest": {
         "ext-uv": "For a faster, and more performant loop. PHP >=7 only. Preferred.",
         "ext-libev": "For a faster, and more performant loop",
-        "ext-event": "For a faster, and more performant loop"
+        "ext-event": "For a faster, and more performant loop",
+        "ext-mbstring": "For accurate calculations of string length when handling non-english characters."
     },
     "scripts": {
         "cs": [
