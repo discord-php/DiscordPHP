@@ -508,6 +508,24 @@ class Channel extends Part
     }
 
     /**
+     * Deletes a given number of messages, in order of time sent.
+     *
+     * @param int $value
+     *
+     * @return ExtendedPromiseInterface
+     */
+    public function limitDelete(int $value): ExtendedPromiseInterface
+    {
+        $deferred = new Deferred();
+
+        $this->getMessageHistory(['limit' => $value])->done(function ($messages) use ($deferred) {
+            $this->deleteMessages($messages)->done([$deferred, 'resolve'], [$deferred, 'reject']);
+        }, [$deferred, 'reject']);
+
+        return $deferred->promise();
+    }
+
+    /**
      * Fetches message history.
      *
      * @param array $options
