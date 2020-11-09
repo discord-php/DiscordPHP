@@ -17,8 +17,8 @@ use Psr\Http\Message\ResponseInterface;
 use React\EventLoop\LoopInterface;
 use React\Http\Browser;
 use React\Http\Message\ResponseException;
-use React\Promise\Deferred;
-use React\Promise\PromiseInterface;
+use Discord\Helpers\Deferred;
+use React\Promise\ExtendedPromiseInterface;
 use React\Socket\ConnectorInterface;
 
 /**
@@ -60,7 +60,7 @@ class ReactDriver extends Browser implements HttpDriver
     /**
      * {@inheritdoc}
      */
-    public function runRequest(string $method, string $url, array $headers, ?string $body, array $options = []): PromiseInterface
+    public function runRequest(string $method, string $url, array $headers, ?string $body, array $options = []): ExtendedPromiseInterface
     {
         $deferred = new Deferred();
         $count = 0;
@@ -89,7 +89,7 @@ class ReactDriver extends Browser implements HttpDriver
                     $this->rateLimited = true;
 
                     $deferred = new Deferred();
-                    $deferred->promise()->then($sendRequest);
+                    $deferred->promise()->done($sendRequest);
 
                     $this->rateLimits[] = $deferred;
 
@@ -126,8 +126,13 @@ class ReactDriver extends Browser implements HttpDriver
                 }
             };
 
-            $this->{$method}($this->makeUrl($url), $headers, $body)->then($handleResponse)->otherwise(function (ResponseException $e) use ($handleResponse) {
-                $handleResponse($e->getResponse());
+            $this->{$method}($this->makeUrl($url), $headers, $body)->done($handleResponse, function (\Throwable $e) use ($handleResponse, $deferred) {
+                // Handle rate limits
+                if ($e instanceof ResponseException) {
+                    $handleResponse($e->getResponse());
+                } else {
+                    $deferred->reject($e);
+                }
             });
         };
 

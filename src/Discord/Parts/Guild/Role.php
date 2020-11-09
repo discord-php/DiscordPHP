@@ -13,7 +13,7 @@ namespace Discord\Parts\Guild;
 
 use Discord\Parts\Part;
 use Discord\Parts\Permissions\RolePermission;
-use React\Promise\Deferred;
+use Discord\Helpers\Deferred;
 use React\Promise\PromiseInterface;
 
 /**

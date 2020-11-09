@@ -13,7 +13,6 @@ namespace Discord;
 
 use Discord\Exceptions\IntentException;
 use Discord\Factory\Factory;
-use Discord\Helpers\EventEmitterTraitDebug;
 use Discord\Http\Http;
 use Discord\Http\ReactDriver;
 use Discord\Parts\Guild\Guild;
@@ -43,7 +42,9 @@ use Ratchet\RFC6455\Messaging\Message;
 use React\EventLoop\Factory as LoopFactory;
 use React\EventLoop\LoopInterface;
 use React\EventLoop\TimerInterface;
-use React\Promise\Deferred;
+use Discord\Helpers\Deferred;
+use Evenement\EventEmitterTrait;
+use React\Promise\ExtendedPromiseInterface;
 use React\Promise\PromiseInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use function React\Promise\reject as Reject;
@@ -69,7 +70,7 @@ use function React\Promise\resolve as Resolve;
  */
 class Discord
 {
-    use EventEmitterTraitDebug;
+    use EventEmitterTrait;
 
     /**
      * The gateway version the client uses.
@@ -272,14 +273,14 @@ class Discord
     /**
      * Tracks the number of payloads the client
      * has sent in the past 60 seconds.
-     * 
+     *
      * @var int
      */
     protected $payloadCount = 0;
 
     /**
      * Payload count reset timer.
-     * 
+     *
      * @var TimerInterface
      */
     protected $payloadTimer;
@@ -428,7 +429,7 @@ class Discord
         foreach ($content->guilds as $guild) {
             $deferred = new Deferred();
 
-            $deferred->promise()->then(null, function ($d) use (&$unavailable) {
+            $deferred->promise()->done(null, function ($d) use (&$unavailable) {
                 list($status, $data) = $d;
 
                 if ($status == 'unavailable') {
@@ -543,7 +544,7 @@ class Discord
         $this->connected = true;
 
         $this->logger->info('websocket connection has been created');
-        
+
         $this->payloadCount = 0;
         $this->payloadTimer = $this->loop->addPeriodicTimer(60, function () {
             $this->logger->debug('resetting payload count', ['count' => $this->payloadCount]);
@@ -666,7 +667,7 @@ class Discord
             );
 
             $deferred = new Deferred();
-            $deferred->promise()->then(function ($d) use ($data, $hData) {
+            $deferred->promise()->done(function ($d) use ($data, $hData) {
                 if (is_array($d) && count($d) == 2) {
                     list($new, $old) = $d;
                 } else {
@@ -896,6 +897,7 @@ class Discord
 
             if (count($this->largeGuilds) < 1) {
                 $this->logger->debug('unprocessed chunks', $this->largeSent);
+
                 return;
             }
 
@@ -960,7 +962,7 @@ class Discord
      */
     protected function connectWs(): void
     {
-        $this->setGateway()->then(function ($gateway) {
+        $this->setGateway()->done(function ($gateway) {
             if (isset($gateway['session']) && $session = $gateway['session']) {
                 if ($session['remaining'] < 2) {
                     $this->logger->error('exceeded number of reconnects allowed, waiting before attempting reconnect', $session);
@@ -974,7 +976,9 @@ class Discord
 
             $this->logger->info('starting connection to websocket', ['gateway' => $this->gateway]);
 
-            $this->wsFactory->__invoke($this->gateway)->then(
+            /** @var ExtendedPromiseInterface */
+            $promise = ($this->wsFactory)($this->gateway);
+            $promise->done(
                 [$this, 'handleWsConnection'],
                 [$this, 'handleWsError']
             );
@@ -1142,7 +1146,7 @@ class Discord
                 $logger->info('voice client is ready');
                 $this->voiceClients[$channel->guild_id] = $vc;
 
-                $vc->setBitrate($channel->bitrate)->then(function () use ($vc, $deferred, $logger, $channel) {
+                $vc->setBitrate($channel->bitrate)->done(function () use ($vc, $deferred, $logger, $channel) {
                     $logger->info('set voice client bitrate', ['bitrate' => $channel->bitrate]);
                     $deferred->resolve($vc);
                 });
@@ -1185,9 +1189,9 @@ class Discord
      *
      * @param string|null $gateway Gateway URL to set.
      *
-     * @return PromiseInterface
+     * @return ExtendedPromiseInterface
      */
-    protected function setGateway(?string $gateway = null): PromiseInterface
+    protected function setGateway(?string $gateway = null): ExtendedPromiseInterface
     {
         $deferred = new Deferred();
 
@@ -1204,7 +1208,7 @@ class Discord
         };
 
         if (is_null($gateway)) {
-            $this->http->get('gateway/bot')->then(function ($response) use ($buildParams) {
+            $this->http->get('gateway/bot')->done(function ($response) use ($buildParams) {
                 $buildParams($response->url, $response);
             }, function ($e) use ($buildParams) {
                 // Can't access the API server so we will use the default gateway.
@@ -1214,7 +1218,7 @@ class Discord
             $buildParams($gateway);
         }
 
-        $deferred->promise()->then(function ($gateway) {
+        $deferred->promise()->done(function ($gateway) {
             $this->logger->info('gateway retrieved and set', $gateway);
         }, function ($e) {
             $this->logger->error('error obtaining gateway', ['e' => $e->getMessage()]);
@@ -1353,6 +1357,26 @@ class Discord
     }
 
     /**
+     * Gets the factory.
+     *
+     * @return Factory
+     */
+    public function getFactory(): Factory
+    {
+        return $this->factory;
+    }
+
+    /**
+     * Gets the HTTP client.
+     *
+     * @return Http
+     */
+    public function getHttpClient(): Http
+    {
+        return $this->http;
+    }
+
+    /**
      * Gets the loop being used by the client.
      *
      * @return LoopInterface
@@ -1410,7 +1434,6 @@ class Discord
     }
 
     /**
-     *
      * Gets a channel.
      *
      * @param string|int $channel_id Id of the channel.

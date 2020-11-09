@@ -14,7 +14,6 @@
     ],
     "require": {
         "php": "^7.2",
-        "illuminate/support": "^4.0|^5.0|^6.0|^7.0|^8.0",
         "nesbot/carbon": "^2.38",
         "ratchet/pawl": "0.3.*",
         "react/datagram": "1.5.*",
@@ -42,7 +41,8 @@
     "suggest": {
         "ext-uv": "For a faster, and more performant loop. PHP >=7 only. Preferred.",
         "ext-libev": "For a faster, and more performant loop",
-        "ext-event": "For a faster, and more performant loop"
+        "ext-event": "For a faster, and more performant loop",
+        "ext-mbstring": "For accurate calculations of string length when handling non-english characters."
     },
     "scripts": {
         "cs": [

@@ -13,7 +13,7 @@ namespace Discord\WebSockets\Events;
 
 use Discord\Parts\WebSockets\MessageReaction;
 use Discord\WebSockets\Event;
-use React\Promise\Deferred;
+use Discord\Helpers\Deferred;
 
 class MessageReactionRemoveAll extends Event
 {

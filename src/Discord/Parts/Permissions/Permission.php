@@ -12,8 +12,6 @@
 namespace Discord\Parts\Permissions;
 
 use Discord\Discord;
-use Discord\Factory\Factory;
-use Discord\Http\Http;
 use Discord\Parts\Part;
 
 /**
@@ -101,13 +99,13 @@ abstract class Permission extends Part
     /**
      * {@inheritdoc}
      */
-    public function __construct(Factory $factory, Discord $discord, Http $http, array $attributes = [], bool $created = false)
+    public function __construct(Discord $discord, array $attributes = [], bool $created = false)
     {
         $this->permissions = $this->getPermissions();
         $this->fillable = array_keys($this->permissions);
         $this->fillable[] = 'bitwise';
 
-        parent::__construct($factory, $discord, $http, $attributes, $created);
+        parent::__construct($discord, $attributes, $created);
 
         foreach ($this->fillable as $permission) {
             if (! isset($this->attributes[$permission])) {

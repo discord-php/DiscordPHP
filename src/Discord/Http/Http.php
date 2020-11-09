@@ -18,12 +18,17 @@ use Discord\Exceptions\Rest\NotFoundException;
 use Discord\Parts\Channel\Channel;
 use Exception;
 use GuzzleHttp\Psr7\Response;
-use Illuminate\Support\Str;
-use React\Promise\Deferred;
-use React\Promise\PromiseInterface;
+use Discord\Helpers\Deferred;
+use React\Promise\ExtendedPromiseInterface;
 
 /**
  * Provides an easy wrapper for HTTP requests, allows for interchangable connectors.
+ *
+ * @method ExtendedPromiseInterface get($url, $content, $headers)
+ * @method ExtendedPromiseInterface post($url, $content, $headers)
+ * @method ExtendedPromiseInterface put($url, $content, $headers)
+ * @method ExtendedPromiseInterface patch($url, $content, $headers)
+ * @method ExtendedPromiseInterface delete($url, $content, $headers)
  */
 class Http
 {
@@ -88,11 +93,11 @@ class Http
      * @param string $name   The endpoint that will be queried.
      * @param array  $params Parameters that will be encoded into JSON and sent with the request.
      *
-     * @return PromiseInterface
+     * @return ExtendedPromiseInterface
      *
      * @see \Discord\Helpers\Guzzle::runRequest() This function will be forwareded onto runRequest.
      */
-    public function __call(string $name, array $params): PromiseInterface
+    public function __call(string $name, array $params): ExtendedPromiseInterface
     {
         $url = $params[0];
         $content = (isset($params[1])) ? $params[1] : null;
@@ -119,9 +124,9 @@ class Http
      * @throws NoPermissionsException
      * @throws NotFoundException
      *
-     * @return PromiseInterface
+     * @return ExtendedPromiseInterface
      */
-    private function runRequest(string $method, string $url, ?array $content, ?array $extraHeaders, $cache, ?array $options): PromiseInterface
+    private function runRequest(string $method, string $url, ?array $content, ?array $extraHeaders, $cache, ?array $options): ExtendedPromiseInterface
     {
         $deferred = new Deferred();
         $disable_json = false;
@@ -149,7 +154,7 @@ class Http
             unset($options['disable_json']);
         }
 
-        $this->driver->runRequest($method, $url, $headers, $content, $options)->then(
+        $this->driver->runRequest($method, $url, $headers, $content, $options)->done(
             function ($response) use ($method, $cache, $deferred, $disable_json) {
                 if ($disable_json) {
                     return $deferred->resolve($response->getBody());
@@ -197,9 +202,9 @@ class Http
      * @param string  $content  Extra text content to go with the file.
      * @param bool    $tts      Whether the message should be TTS.
      *
-     * @return PromiseInterface
+     * @return ExtendedPromiseInterface
      */
-    public function sendFile(Channel $channel, string $filepath, ?string $filename, ?string $content, ?bool $tts): PromiseInterface
+    public function sendFile(Channel $channel, string $filepath, ?string $filename, ?string $content, ?bool $tts): ExtendedPromiseInterface
     {
         $deferred = new Deferred();
 
@@ -234,7 +239,7 @@ class Http
             "channels/{$channel->id}/messages",
             $headers,
             $body
-        )->then(
+        )->done(
             function ($response) use ($deferred) {
                 $json = json_decode($response->getBody());
                 $deferred->resolve($json);
@@ -335,7 +340,7 @@ class Http
                 return new NotFoundException("Error code 404: This resource does not exist. {$message}");
                 break;
             case 500:
-                if (Str::contains(strtolower($content), ['longer than 2000 characters', 'string value is too long'])) {
+                if (\Discord\contains(strtolower($content), ['longer than 2000 characters', 'string value is too long'])) {
                     // Discord has set a restriction with content sent over REST,
                     // if it is more than 2000 characters long it will not be
                     // sent and will return a 500 error.

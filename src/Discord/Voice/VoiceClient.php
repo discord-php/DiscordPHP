@@ -28,8 +28,8 @@ use React\Datagram\Factory as DatagramFactory;
 use React\Datagram\Socket;
 use React\Dns\Resolver\Factory as DNSFactory;
 use React\EventLoop\LoopInterface;
-use React\Promise\Deferred;
-use React\Promise\PromiseInterface;
+use Discord\Helpers\Deferred;
+use React\Promise\ExtendedPromiseInterface;
 use React\Stream\ReadableResourceStream as Stream;
 use React\EventLoop\TimerInterface;
 use React\Stream\ReadableStreamInterface;
@@ -357,8 +357,10 @@ class VoiceClient extends EventEmitter
     public function initSockets(): void
     {
         $wsfac = new WsFactory($this->loop);
+        /** @var ExtendedPromiseInterface */
+        $promise = $wsfac("wss://{$this->endpoint}?v={$this->version}");
 
-        $wsfac("wss://{$this->endpoint}?v={$this->version}")->then(
+        $promise->done(
             [$this, 'handleWebSocketConnection'],
             [$this, 'handleWebSocketError']
         );
@@ -394,8 +396,10 @@ class VoiceClient extends EventEmitter
 
                 $buffer = new Buffer(70);
                 $buffer->writeUInt32BE($this->ssrc, 3);
+                /** @var ExtendedPromiseInterface */
+                $promise = $udpfac->createClient("{$data->d->ip}:{$this->udpPort}");
 
-                $udpfac->createClient("{$data->d->ip}:{$this->udpPort}")->then(function (Socket $client) use (&$ws, &$firstPack, &$ip, &$port, $buffer) {
+                $promise->done(function (Socket $client) use (&$ws, &$firstPack, &$ip, &$port, $buffer) {
                     $this->logger->debug('connected to voice UDP');
                     $this->client = $client;
 
@@ -631,7 +635,7 @@ class VoiceClient extends EventEmitter
 
         $this->on('resumed', function () {
             $this->logger->debug('voice client resumed');
-            $this->unpause()->then(function () {
+            $this->unpause()->done(function () {
                 $this->speaking = false;
                 $this->setSpeaking(true);
             });
@@ -644,9 +648,9 @@ class VoiceClient extends EventEmitter
      * @param string $file     The file to play.
      * @param int    $channels How many audio channels to encode with.
      *
-     * @return PromiseInterface
+     * @return ExtendedPromiseInterface
      */
-    public function playFile(string $file, int $channels = 2): PromiseInterface
+    public function playFile(string $file, int $channels = 2): ExtendedPromiseInterface
     {
         $deferred = new Deferred();
 
@@ -674,10 +678,10 @@ class VoiceClient extends EventEmitter
      * @param resource|Stream $stream   The stream to be encoded and sent.
      * @param int             $channels How many audio channels to encode with.
      *
-     * @return PromiseInterface
-     * @throws \RuntimeException Thrown when the stream passed to playRawStream is not a valid resource.
+     * @return ExtendedPromiseInterface
+     * @throws \RuntimeException        Thrown when the stream passed to playRawStream is not a valid resource.
      */
-    public function playRawStream($stream, int $channels = 2): PromiseInterface
+    public function playRawStream($stream, int $channels = 2): ExtendedPromiseInterface
     {
         $deferred = new Deferred();
 
@@ -710,10 +714,10 @@ class VoiceClient extends EventEmitter
      *
      * @param resource|Process|Stream $stream The DCA stream to be sent.
      *
-     * @return PromiseInterface
+     * @return ExtendedPromiseInterface
      * @throws \Exception
      */
-    public function playDCAStream($stream): PromiseInterface
+    public function playDCAStream($stream): ExtendedPromiseInterface
     {
         $deferred = new Deferred();
 
@@ -913,9 +917,9 @@ class VoiceClient extends EventEmitter
      *
      * @param bool $speaking Whether the client is speaking or not.
      *
-     * @return PromiseInterface Whether the client is speaking or not.
+     * @return ExtendedPromiseInterface Whether the client is speaking or not.
      */
-    public function setSpeaking(bool $speaking = true): PromiseInterface
+    public function setSpeaking(bool $speaking = true): ExtendedPromiseInterface
     {
         $deferred = new Deferred();
 
@@ -951,9 +955,9 @@ class VoiceClient extends EventEmitter
      *
      * @param Channel $channel The channel to switch to.
      *
-     * @return PromiseInterface
+     * @return ExtendedPromiseInterface
      */
-    public function switchChannel(Channel $channel): PromiseInterface
+    public function switchChannel(Channel $channel): ExtendedPromiseInterface
     {
         $deferred = new Deferred();
 
@@ -990,9 +994,9 @@ class VoiceClient extends EventEmitter
      *
      * @param int $fs The frame size to set.
      *
-     * @return PromiseInterface
+     * @return ExtendedPromiseInterface
      */
-    public function setFrameSize(int $fs): PromiseInterface
+    public function setFrameSize(int $fs): ExtendedPromiseInterface
     {
         $deferred = new Deferred();
 
@@ -1022,9 +1026,9 @@ class VoiceClient extends EventEmitter
      *
      * @param int $bitrate The bitrate to set.
      *
-     * @return PromiseInterface
+     * @return ExtendedPromiseInterface
      */
-    public function setBitrate(int $bitrate): PromiseInterface
+    public function setBitrate(int $bitrate): ExtendedPromiseInterface
     {
         $deferred = new Deferred();
 
@@ -1052,9 +1056,9 @@ class VoiceClient extends EventEmitter
      *
      * @param int $volume The volume to set.
      *
-     * @return PromiseInterface
+     * @return ExtendedPromiseInterface
      */
-    public function setVolume(int $volume): PromiseInterface
+    public function setVolume(int $volume): ExtendedPromiseInterface
     {
         $deferred = new Deferred();
 
@@ -1082,9 +1086,9 @@ class VoiceClient extends EventEmitter
      *
      * @param string $app The audio application to set.
      *
-     * @return PromiseInterface
+     * @return ExtendedPromiseInterface
      */
-    public function setAudioApplication(string $app): PromiseInterface
+    public function setAudioApplication(string $app): ExtendedPromiseInterface
     {
         $deferred = new Deferred();
 
@@ -1134,11 +1138,11 @@ class VoiceClient extends EventEmitter
     /**
      * Changes your mute and deaf value.
      *
-     * @param  bool             $mute Whether you should be muted.
-     * @param  bool             $deaf Whether you should be deaf.
-     * @return PromiseInterface
+     * @param  bool                     $mute Whether you should be muted.
+     * @param  bool                     $deaf Whether you should be deaf.
+     * @return ExtendedPromiseInterface
      */
-    public function setMuteDeaf(bool $mute, bool $deaf): PromiseInterface
+    public function setMuteDeaf(bool $mute, bool $deaf): ExtendedPromiseInterface
     {
         $deferred = new Deferred();
 
@@ -1175,9 +1179,9 @@ class VoiceClient extends EventEmitter
     /**
      * Pauses the current sound.
      *
-     * @return PromiseInterface
+     * @return ExtendedPromiseInterface
      */
-    public function pause(): PromiseInterface
+    public function pause(): ExtendedPromiseInterface
     {
         $deferred = new Deferred();
 
@@ -1196,9 +1200,9 @@ class VoiceClient extends EventEmitter
     /**
      * Unpauses the current sound.
      *
-     * @return PromiseInterface
+     * @return ExtendedPromiseInterface
      */
-    public function unpause(): PromiseInterface
+    public function unpause(): ExtendedPromiseInterface
     {
         $deferred = new Deferred();
 
@@ -1218,9 +1222,9 @@ class VoiceClient extends EventEmitter
     /**
      * Stops the current sound.
      *
-     * @return PromiseInterface
+     * @return ExtendedPromiseInterface
      */
-    public function stop(): PromiseInterface
+    public function stop(): ExtendedPromiseInterface
     {
         $deferred = new Deferred();
 
@@ -1246,9 +1250,9 @@ class VoiceClient extends EventEmitter
     /**
      * Closes the voice client.
      *
-     * @return PromiseInterface
+     * @return ExtendedPromiseInterface
      */
-    public function close(): PromiseInterface
+    public function close(): ExtendedPromiseInterface
     {
         $deferred = new Deferred();
 
@@ -1354,9 +1358,9 @@ class VoiceClient extends EventEmitter
      *
      * @param int|string $id Either a SSRC or User ID.
      *
-     * @return PromiseInterface
+     * @return ExtendedPromiseInterface
      */
-    public function getRecieveStream($id): PromiseInterface
+    public function getRecieveStream($id): ExtendedPromiseInterface
     {
         $deferred = new Deferred();
 
