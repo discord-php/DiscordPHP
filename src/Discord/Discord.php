@@ -43,6 +43,7 @@ use React\EventLoop\Factory as LoopFactory;
 use React\EventLoop\LoopInterface;
 use React\EventLoop\TimerInterface;
 use Discord\Helpers\Deferred;
+use Discord\Http\Drivers\React;
 use Evenement\EventEmitterTrait;
 use React\Promise\ExtendedPromiseInterface;
 use React\Promise\PromiseInterface;
@@ -340,9 +341,9 @@ class Discord
 
         $this->http = new Http(
             'Bot '.$this->token,
-            self::VERSION,
-            new ReactDriver($this->loop)
+            new React($this->loop)
         );
+
         $this->factory = new Factory($this, $this->http);
 
         $this->connectWs();
