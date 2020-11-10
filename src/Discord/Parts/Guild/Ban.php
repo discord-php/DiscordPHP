@@ -18,6 +18,8 @@ use Discord\Parts\User\User;
  * A Ban is a ban on a user specific to a guild. It is also IP based.
  *
  * @property string $guild_id
+ * @property Guild $guild
+ * @property string $user_id
  * @property User $user
  * @property string $reason
  */
@@ -47,7 +49,7 @@ class Ban extends Part
      *
      * @return Guild
      */
-    protected function getGuildAttribute(): Guild
+    protected function getGuildAttribute(): ?Guild
     {
         return $this->discord->guilds->get('id', $this->guild_id);
     }
