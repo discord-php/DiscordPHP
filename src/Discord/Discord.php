@@ -960,7 +960,7 @@ class Discord
     }
 
     /**
-     * Initilizes the connection with the Discord gateway.
+     * Initializes the connection with the Discord gateway.
      */
     protected function connectWs(): void
     {
