@@ -341,6 +341,7 @@ class Discord
 
         $this->http = new Http(
             'Bot '.$this->token,
+            $this->loop,
             new React($this->loop)
         );
 

@@ -9,12 +9,9 @@ interface DriverInterface
     /**
      * Runs a request.
      *
-     * @param string $method
-     * @param string $url
-     * @param string $content
-     * @param array $headers
+     * @param Request $request
      *
      * @return ExtendedPromiseInterface
      */
-    public function runRequest(string $method, string $url, string $content, array $headers): ExtendedPromiseInterface;
+    public function runRequest(Request $request): ExtendedPromiseInterface;
 }

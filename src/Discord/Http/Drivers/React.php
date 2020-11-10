@@ -4,6 +4,7 @@ namespace Discord\Http\Drivers;
 
 use Discord\Helpers\Deferred;
 use Discord\Http\DriverInterface;
+use Discord\Http\Request;
 use Exception;
 use React\EventLoop\LoopInterface;
 use React\Http\Browser;
@@ -36,21 +37,18 @@ class React implements DriverInterface
     public function __construct(LoopInterface $loop, array $options = [])
     {
         $this->loop = $loop;
-        $this->browser = new Browser($loop, new Connector($loop, $options));
+
+        // Allow 400 and 500 HTTP requests to be resolved rather than rejected.
+        $browser = new Browser($loop, new Connector($loop, $options));
+        $this->browser = $browser->withRejectErrorResponse(false);
     }
 
-    public function runRequest(string $method, string $url, string $content, array $headers): ExtendedPromiseInterface
+    public function runRequest(Request $request): ExtendedPromiseInterface
     {
-        $deferred = new Deferred();
-
-        $this->browser->{$method}($url, $headers, $content ?? '')->done([$deferred, 'resolve'], function (Exception $e) use ($deferred) {
-            if ($e instanceof ResponseException) {
-                $deferred->resolve($e->getResponse());
-            } else {
-                $deferred->reject($e);
-            }
-        });
-
-        return $deferred->promise();
+        return $this->browser->{$request->getMethod()}(
+            $request->getUrl(),
+            $request->getHeaders(),
+            $request->getContent()
+        );
     }
 }

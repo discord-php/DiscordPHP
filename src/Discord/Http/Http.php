@@ -10,6 +10,7 @@ use Discord\Exceptions\Rest\NoPermissionsException;
 use Discord\Exceptions\Rest\NotFoundException;
 use Discord\Helpers\Deferred;
 use Psr\Http\Message\ResponseInterface;
+use React\EventLoop\LoopInterface;
 use React\Promise\ExtendedPromiseInterface;
 use Throwable;
 
@@ -44,14 +45,44 @@ class Http
     protected $driver;
 
     /**
+     * ReactPHP event loop.
+     *
+     * @var LoopInterface
+     */
+    protected $loop;
+
+    /**
+     * Array of request buckets.
+     *
+     * @var Bucket[]
+     */
+    protected $buckets = [];
+
+    /**
+     * The current rate-limit.
+     *
+     * @var RateLimit
+     */
+    protected $rateLimit;
+
+    /**
+     * Timer that resets the current global rate-limit.
+     *
+     * @var TimerInterface
+     */
+    protected $rateLimitReset;
+
+    /**
      * Http wrapper constructor.
      *
      * @param string $token
+     * @param LoopInterface $loop
      * @param DriverInterface|null $driver
      */
-    public function __construct(string $token, DriverInterface $driver = null)
+    public function __construct(string $token, LoopInterface $loop, DriverInterface $driver = null)
     {
         $this->token = $token;
+        $this->loop = $loop;
         $this->driver = $driver;
     }
 
@@ -76,7 +107,7 @@ class Http
      */
     public function get(string $url, $content = null, array $headers = []): ExtendedPromiseInterface
     {
-        return $this->runRequest('get', $url, $content, $headers);
+        return $this->queueRequest('get', $url, $content, $headers);
     }
 
     /**
@@ -90,7 +121,7 @@ class Http
      */
     public function post(string $url, $content = null, array $headers = []): ExtendedPromiseInterface
     {
-        return $this->runRequest('post', $url, $content, $headers);
+        return $this->queueRequest('post', $url, $content, $headers);
     }
 
     /**
@@ -104,7 +135,7 @@ class Http
      */
     public function put(string $url, $content = null, array $headers = []): ExtendedPromiseInterface
     {
-        return $this->runRequest('put', $url, $content, $headers);
+        return $this->queueRequest('put', $url, $content, $headers);
     }
 
     /**
@@ -118,7 +149,7 @@ class Http
      */
     public function patch(string $url, $content = null, array $headers = []): ExtendedPromiseInterface
     {
-        return $this->runRequest('patch', $url, $content, $headers);
+        return $this->queueRequest('patch', $url, $content, $headers);
     }
 
     /**
@@ -132,11 +163,11 @@ class Http
      */
     public function delete(string $url, $content = null, array $headers = []): ExtendedPromiseInterface
     {
-        return $this->runRequest('delete', $url, $content, $headers);
+        return $this->queueRequest('delete', $url, $content, $headers);
     }
 
     /**
-     * Runs a request.
+     * Builds and queues a request.
      *
      * @param string $method
      * @param string $url
@@ -145,7 +176,7 @@ class Http
      *
      * @return ExtendedPromiseInterface
      */
-    protected function runRequest(string $method, string $url, $content, array $headers = []): ExtendedPromiseInterface
+    protected function queueRequest(string $method, string $url, $content, array $headers = []): ExtendedPromiseInterface
     {
         $deferred = new Deferred();
 
@@ -171,15 +202,101 @@ class Http
 
         $fullUrl = self::BASE_URL.'/'.$url;
 
-        $sendRequest = function () use ($method, $fullUrl, $content, $headers, $deferred) {
-            $this->driver->runRequest($method, $fullUrl, $content, $headers)->done(function (ResponseInterface $response) use ($fullUrl, $deferred) {
-                // ...
-            });
-        };
-
-        $sendRequest();
+        $request = new Request($deferred, $method, $fullUrl, $content, $headers);
+        $this->sortIntoBucket($request);
 
         return $deferred->promise();
+    }
+
+    /**
+     * Executes a request.
+     *
+     * @param Request $request
+     *
+     * @return ExtendedPromiseInterface
+     */
+    protected function executeRequest(Request $request): ExtendedPromiseInterface
+    {
+        $deferred = new Deferred();
+
+        if ($this->rateLimit) {
+            $deferred->reject($this->rateLimit);
+
+            return $deferred->promise();
+        }
+
+        $this->driver->runRequest($request)->done(function (ResponseInterface $response) use ($request, $deferred) {
+            $data = json_decode((string) $response->getBody());
+            $statusCode = $response->getStatusCode();
+
+            // Discord Rate-limit
+            if ($statusCode == 429) {
+                $rateLimit = new RateLimit($data->global, $data->retry_after);
+
+                if ($rateLimit->isGlobal() && ! $this->rateLimit) {
+                    $this->rateLimit = $rateLimit;
+                    $this->rateLimitReset = $this->loop->addTimer($rateLimit->getRetryAfter(), function () {
+                        $this->rateLimitReset = null;
+
+                        // Loop through all buckets and check for requests
+                        foreach ($this->buckets as $bucket) {
+                            $bucket->checkQueue();
+                        }
+                    });
+                }
+
+                $deferred->reject($rateLimit);
+            }
+            // Bad Gateway
+            // Cloudflare SSL Handshake error
+            // Push to the back of the bucket to be retried.
+            else if ($statusCode == 502 || $statusCode == 525) {
+                $this->sortIntoBucket($request);
+            }
+            // Any other unsuccessful status codes
+            else if ($statusCode < 200 || $statusCode >= 300) {
+                $error = $this->handleError($response);
+                $request->getDeferred()->reject($error);
+            }
+            // All is well
+            else {
+                $deferred->resolve($response);
+                $request->getDeferred()->resolve($data);
+            }
+        });
+
+        return $deferred->promise();
+    }
+
+    /**
+     * Sorts a request into a bucket.
+     *
+     * @param Request $request
+     */
+    protected function sortIntoBucket(Request $request): void
+    {
+        $bucket = $this->getBucket($request->getBucketID());
+        $bucket->enqueue($request);
+    }
+
+    /**
+     * Gets a bucket.
+     *
+     * @param string $key
+     *
+     * @return Bucket
+     */
+    protected function getBucket(string $key): Bucket
+    {
+        if (! isset($this->buckets[$key])) {
+            $bucket = new Bucket($key, $this->loop, function (Request $request) {
+                return $this->executeRequest($request);
+            });
+
+            $this->buckets[$key] = $bucket;
+        }
+
+        return $this->buckets[$key];
     }
 
     /**
