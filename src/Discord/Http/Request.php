@@ -133,6 +133,6 @@ class Request
      */
     public function __toString()
     {
-        return strtoupper($this->method).' '.$this->url;
+        return 'REQ '.strtoupper($this->method).' '.$this->url;
     }
 }

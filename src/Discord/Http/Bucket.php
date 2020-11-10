@@ -3,7 +3,9 @@
 namespace Discord\Http;
 
 use Psr\Http\Message\ResponseInterface;
+use Psr\Log\LoggerInterface;
 use React\EventLoop\LoopInterface;
+use React\EventLoop\TimerInterface;
 use SplQueue;
 
 /**
@@ -35,6 +37,13 @@ class Bucket
     protected $loop;
 
     /**
+     * HTTP logger.
+     *
+     * @var LoggerInterface
+     */
+    protected $logger;
+
+    /**
      * Callback for when a request is ready.
      *
      * @var callable
@@ -49,16 +58,38 @@ class Bucket
     protected $checkerRunning = false;
 
     /**
+     * Number of requests allowed before reset.
+     *
+     * @var int
+     */
+    protected $requestLimit;
+
+    /**
+     * Number of remaining requests before reset.
+     *
+     * @var int
+     */
+    protected $requestRemaining;
+
+    /**
+     * Timer to reset the bucket.
+     *
+     * @var TimerInterface
+     */
+    protected $resetTimer;
+
+    /**
      * Bucket constructor.
      *
      * @param string $name
      * @param callable $runRequest
      */
-    public function __construct(string $name, LoopInterface $loop, callable $runRequest)
+    public function __construct(string $name, LoopInterface $loop, LoggerInterface $logger, callable $runRequest)
     {
         $this->queue = new SplQueue;
         $this->name = $name;
         $this->loop = $loop;
+        $this->logger = $logger;
         $this->runRequest = $runRequest;
     }
 
@@ -84,6 +115,13 @@ class Bucket
         }
 
         $checkQueue = function () use (&$checkQueue) {
+            // Check for rate-limits
+            if ($this->requestRemaining < 1 && ! is_null($this->requestRemaining)) {
+                $this->logger->info($this.' expecting rate limit, timer interval '.(($this->resetTimer->getInterval() ?? 0) * 1000).' ms');
+                $this->checkerRunning = false;
+                return;
+            }
+
             // Queue is empty, job done.
             if ($this->queue->isEmpty()) {
                 $this->checkerRunning = false;
@@ -93,13 +131,37 @@ class Bucket
             $request = $this->queue->dequeue();
 
             ($this->runRequest)($request)->done(function (ResponseInterface $response) use (&$checkQueue) {
-                // TODO Handle rate-limit headers
+                $resetAfter = (float) $response->getHeaderLine('X-Ratelimit-Reset-After');
+                $limit = $response->getHeaderLine('X-Ratelimit-Limit');
+                $remaining = $response->getHeaderLine('X-Ratelimit-Remaining');
+
+                if ($resetAfter) {
+                    $resetAfter = (float) $resetAfter;
+
+                    if ($this->resetTimer) {
+                        $this->loop->cancelTimer($this->resetTimer);
+                    }
+
+                    $this->resetTimer = $this->loop->addTimer($resetAfter, function () {
+                        // Reset requests remaining and check queue
+                        $this->requestRemaining = $this->requestLimit;
+                        $this->resetTimer = null;
+                        $this->checkQueue();
+                    });
+                }
+
+                // Check if rate-limit headers are present and store
+                if (is_numeric($limit)) {
+                    $this->requestLimit = (int) $limit;
+                }
+
+                if (is_numeric($remaining)) {
+                    $this->requestRemaining = (int) $remaining;
+                }
 
                 // Check for more requests
                 $checkQueue();
             }, function (RateLimit $rateLimit) use (&$checkQueue, $request) {
-                // Handle meeting rate-limit(s)
-
                 // Bucket-specific rate-limit
                 // Re-queue the request and wait the retry after time
                 if (! $rateLimit->isGlobal()) {
@@ -116,5 +178,15 @@ class Bucket
 
         $this->checkerRunning = true;
         $checkQueue();
+    }
+
+    /**
+     * Converts a bucket to a user-readable string.
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return 'BUCKET '.$this->name;
     }
 }

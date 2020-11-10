@@ -309,7 +309,7 @@ class Http
     protected function getBucket(string $key): Bucket
     {
         if (! isset($this->buckets[$key])) {
-            $bucket = new Bucket($key, $this->loop, function (Request $request) {
+            $bucket = new Bucket($key, $this->loop, $this->logger, function (Request $request) {
                 return $this->executeRequest($request);
             });
 
