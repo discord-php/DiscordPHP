@@ -135,11 +135,14 @@ class DiscordCommandClient extends Discord
 
                             $aliasesString .= "{$alias}\r\n";
                         }
-                        $embed['fields'][] = [
-                            'name' => 'Aliases',
-                            'value' => $aliasesString,
-                            'inline' => true,
-                        ];
+
+                        if (! empty($aliasesString)) {
+                            $embed['fields'][] = [
+                                'name' => 'Aliases',
+                                'value' => $aliasesString,
+                                'inline' => true,
+                            ];
+                        }
                     }
 
                     if (! empty($help['subCommandsHelp'])) {
