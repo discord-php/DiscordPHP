@@ -10,6 +10,7 @@ use Discord\Exceptions\Rest\NoPermissionsException;
 use Discord\Exceptions\Rest\NotFoundException;
 use Discord\Helpers\Deferred;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Log\LoggerInterface;
 use React\EventLoop\LoopInterface;
 use React\Promise\ExtendedPromiseInterface;
 use Throwable;
@@ -36,6 +37,13 @@ class Http
      * @var string
      */
     private $token;
+
+    /**
+     * Logger for HTTP requests.
+     *
+     * @var LoggerInterface
+     */
+    protected $logger;
 
     /**
      * HTTP driver.
@@ -79,10 +87,11 @@ class Http
      * @param LoopInterface $loop
      * @param DriverInterface|null $driver
      */
-    public function __construct(string $token, LoopInterface $loop, DriverInterface $driver = null)
+    public function __construct(string $token, LoopInterface $loop, LoggerInterface $logger, DriverInterface $driver = null)
     {
         $this->token = $token;
         $this->loop = $loop;
+        $this->logger = $logger;
         $this->driver = $driver;
     }
 
@@ -189,6 +198,7 @@ class Http
         $headers = array_merge($headers, [
             'User-Agent' => $this->getUserAgent(),
             'Authorization' => $this->token,
+            'X-Ratelimit-Precision' => 'millisecond',
         ]);
 
         if (! is_null($content)) {
@@ -204,6 +214,8 @@ class Http
 
         $request = new Request($deferred, $method, $fullUrl, $content, $headers);
         $this->sortIntoBucket($request);
+
+        $this->logger->debug($request.' queued');
 
         return $deferred->promise();
     }
@@ -232,11 +244,13 @@ class Http
             // Discord Rate-limit
             if ($statusCode == 429) {
                 $rateLimit = new RateLimit($data->global, $data->retry_after);
+                $this->logger->warning($request.' hit rate-limit: '.$rateLimit);
 
                 if ($rateLimit->isGlobal() && ! $this->rateLimit) {
                     $this->rateLimit = $rateLimit;
                     $this->rateLimitReset = $this->loop->addTimer($rateLimit->getRetryAfter(), function () {
                         $this->rateLimitReset = null;
+                        $this->logger->info('global rate-limit reset');
 
                         // Loop through all buckets and check for requests
                         foreach ($this->buckets as $bucket) {
@@ -251,15 +265,21 @@ class Http
             // Cloudflare SSL Handshake error
             // Push to the back of the bucket to be retried.
             else if ($statusCode == 502 || $statusCode == 525) {
+                $this->logger->warning($request.' 502/525 - sorting to back of bucket');
+
                 $this->sortIntoBucket($request);
             }
             // Any other unsuccessful status codes
             else if ($statusCode < 200 || $statusCode >= 300) {
                 $error = $this->handleError($response);
+                $this->logger->warning($request.' failed: '.$error);
+
                 $request->getDeferred()->reject($error);
             }
             // All is well
             else {
+                $this->logger->debug($request.' successful');
+
                 $deferred->resolve($response);
                 $request->getDeferred()->resolve($data);
             }

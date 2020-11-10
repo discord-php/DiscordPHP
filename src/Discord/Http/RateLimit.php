@@ -54,4 +54,14 @@ class RateLimit
     {
         return $this->retry_after;
     }
+
+    /**
+     * Converts a rate-limit to a user-readable string.
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return ($this->global ? 'Global' : 'Non-global').' rate-limit, retry after '.$this->retry_after.' ms';
+    }
 }

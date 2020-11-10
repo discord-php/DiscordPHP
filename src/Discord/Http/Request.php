@@ -125,4 +125,14 @@ class Request
         // Extract major parameters and method?
         return $this->method.$this->url;
     }
+
+    /**
+     * Converts the request to a user-readable string.
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return strtoupper($this->method).' '.$this->url;
+    }
 }

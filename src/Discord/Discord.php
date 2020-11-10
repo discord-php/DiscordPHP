@@ -45,6 +45,8 @@ use React\EventLoop\TimerInterface;
 use Discord\Helpers\Deferred;
 use Discord\Http\Drivers\React;
 use Evenement\EventEmitterTrait;
+use Psr\Log\LoggerInterface;
+use Psr\Log\NullLogger;
 use React\Promise\ExtendedPromiseInterface;
 use React\Promise\PromiseInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -342,6 +344,7 @@ class Discord
         $this->http = new Http(
             'Bot '.$this->token,
             $this->loop,
+            $this->options['httpLogger'],
             new React($this->loop)
         );
 
@@ -1259,6 +1262,7 @@ class Discord
                 'storeMessages',
                 'retrieveBans',
                 'intents',
+                'httpLogger',
             ])
             ->setDefaults([
                 'loop' => LoopFactory::create(),
@@ -1271,6 +1275,7 @@ class Discord
                 'storeMessages' => false,
                 'retrieveBans' => false,
                 'intents' => false,
+                'httpLogger' => new NullLogger(),
             ])
             ->setAllowedTypes('loop', LoopInterface::class)
             ->setAllowedTypes('logging', 'bool')
@@ -1279,7 +1284,8 @@ class Discord
             ->setAllowedTypes('pmChannels', 'bool')
             ->setAllowedTypes('storeMessages', 'bool')
             ->setAllowedTypes('retrieveBans', 'bool')
-            ->setAllowedTypes('intents', ['bool', 'array', 'int']);
+            ->setAllowedTypes('intents', ['bool', 'array', 'int'])
+            ->setAllowedTypes('httpLogger', LoggerInterface::class);
 
         $options = $resolver->resolve($options);
 
