@@ -12,6 +12,11 @@ use React\Http\Message\ResponseException;
 use React\Promise\ExtendedPromiseInterface;
 use React\Socket\Connector;
 
+/**
+ * react/http driver for Discord HTTP client.
+ *
+ * @author David Cole <david.cole1340@gmail.com>
+ */
 class React implements DriverInterface
 {
     /**
