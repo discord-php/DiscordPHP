@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is apart of the DiscordPHP project.
+ *
+ * Copyright (c) 2016-2020 David Cole <david.cole1340@gmail.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the LICENSE.md file.
+ */
+
 namespace Discord\Http;
 
 use Psr\Http\Message\ResponseInterface;
@@ -53,7 +62,7 @@ class Bucket
     /**
      * Whether we are checking the queue.
      *
-     * @var boolean
+     * @var bool
      */
     protected $checkerRunning = false;
 
@@ -81,7 +90,7 @@ class Bucket
     /**
      * Bucket constructor.
      *
-     * @param string $name
+     * @param string   $name
      * @param callable $runRequest
      */
     public function __construct(string $name, LoopInterface $loop, LoggerInterface $logger, callable $runRequest)
@@ -119,12 +128,14 @@ class Bucket
             if ($this->requestRemaining < 1 && ! is_null($this->requestRemaining)) {
                 $this->logger->info($this.' expecting rate limit, timer interval '.(($this->resetTimer->getInterval() ?? 0) * 1000).' ms');
                 $this->checkerRunning = false;
+
                 return;
             }
 
             // Queue is empty, job done.
             if ($this->queue->isEmpty()) {
                 $this->checkerRunning = false;
+
                 return;
             }
 

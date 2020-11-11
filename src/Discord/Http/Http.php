@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is apart of the DiscordPHP project.
+ *
+ * Copyright (c) 2016-2020 David Cole <david.cole1340@gmail.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the LICENSE.md file.
+ */
+
 namespace Discord\Http;
 
 use Discord\Discord;
@@ -83,8 +92,8 @@ class Http
     /**
      * Http wrapper constructor.
      *
-     * @param string $token
-     * @param LoopInterface $loop
+     * @param string               $token
+     * @param LoopInterface        $loop
      * @param DriverInterface|null $driver
      */
     public function __construct(string $token, LoopInterface $loop, LoggerInterface $logger, DriverInterface $driver = null)
@@ -109,8 +118,8 @@ class Http
      * Runs a GET request.
      *
      * @param string $url
-     * @param mixed $content
-     * @param array $headers
+     * @param mixed  $content
+     * @param array  $headers
      *
      * @return ExtendedPromiseInterface
      */
@@ -123,8 +132,8 @@ class Http
      * Runs a POST request.
      *
      * @param string $url
-     * @param mixed $content
-     * @param array $headers
+     * @param mixed  $content
+     * @param array  $headers
      *
      * @return ExtendedPromiseInterface
      */
@@ -137,8 +146,8 @@ class Http
      * Runs a PUT request.
      *
      * @param string $url
-     * @param mixed $content
-     * @param array $headers
+     * @param mixed  $content
+     * @param array  $headers
      *
      * @return ExtendedPromiseInterface
      */
@@ -151,8 +160,8 @@ class Http
      * Runs a PATCH request.
      *
      * @param string $url
-     * @param mixed $content
-     * @param array $headers
+     * @param mixed  $content
+     * @param array  $headers
      *
      * @return ExtendedPromiseInterface
      */
@@ -165,8 +174,8 @@ class Http
      * Runs a DELETE request.
      *
      * @param string $url
-     * @param mixed $content
-     * @param array $headers
+     * @param mixed  $content
+     * @param array  $headers
      *
      * @return ExtendedPromiseInterface
      */
@@ -180,8 +189,8 @@ class Http
      *
      * @param string $method
      * @param string $url
-     * @param mixed $content
-     * @param array $headers
+     * @param mixed  $content
+     * @param array  $headers
      *
      * @return ExtendedPromiseInterface
      */
@@ -264,13 +273,13 @@ class Http
             // Bad Gateway
             // Cloudflare SSL Handshake error
             // Push to the back of the bucket to be retried.
-            else if ($statusCode == 502 || $statusCode == 525) {
+            elseif ($statusCode == 502 || $statusCode == 525) {
                 $this->logger->warning($request.' 502/525 - sorting to back of bucket');
 
                 $this->sortIntoBucket($request);
             }
             // Any other unsuccessful status codes
-            else if ($statusCode < 200 || $statusCode >= 300) {
+            elseif ($statusCode < 200 || $statusCode >= 300) {
                 $error = $this->handleError($response);
                 $this->logger->warning($request.' failed: '.$error);
 

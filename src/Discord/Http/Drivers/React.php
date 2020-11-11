@@ -1,14 +1,20 @@
 <?php
 
+/*
+ * This file is apart of the DiscordPHP project.
+ *
+ * Copyright (c) 2016-2020 David Cole <david.cole1340@gmail.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the LICENSE.md file.
+ */
+
 namespace Discord\Http\Drivers;
 
-use Discord\Helpers\Deferred;
 use Discord\Http\DriverInterface;
 use Discord\Http\Request;
-use Exception;
 use React\EventLoop\LoopInterface;
 use React\Http\Browser;
-use React\Http\Message\ResponseException;
 use React\Promise\ExtendedPromiseInterface;
 use React\Socket\Connector;
 
@@ -37,7 +43,7 @@ class React implements DriverInterface
      * Constructs the Guzzle driver.
      *
      * @param LoopInterface $loop
-     * @param array $options
+     * @param array         $options
      */
     public function __construct(LoopInterface $loop, array $options = [])
     {

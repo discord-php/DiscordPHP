@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is apart of the DiscordPHP project.
+ *
+ * Copyright (c) 2016-2020 David Cole <david.cole1340@gmail.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the LICENSE.md file.
+ */
+
 namespace Discord\Http;
 
 /**
@@ -12,7 +21,7 @@ class RateLimit
     /**
      * Whether the rate-limit is global.
      *
-     * @var boolean
+     * @var bool
      */
     protected $global;
 
@@ -26,7 +35,7 @@ class RateLimit
     /**
      * Rate limit constructor.
      *
-     * @param bool $global
+     * @param bool  $global
      * @param float $retry_after
      */
     public function __construct(bool $global, float $retry_after)
@@ -38,7 +47,7 @@ class RateLimit
     /**
      * Gets the global parameter.
      *
-     * @return boolean
+     * @return bool
      */
     public function isGlobal(): bool
     {

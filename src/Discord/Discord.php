@@ -14,7 +14,6 @@ namespace Discord;
 use Discord\Exceptions\IntentException;
 use Discord\Factory\Factory;
 use Discord\Http\Http;
-use Discord\Http\ReactDriver;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\OAuth\Application;
 use Discord\Parts\Part;
