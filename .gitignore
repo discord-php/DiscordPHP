@@ -6,3 +6,4 @@ test*.php
 .php_cs
 .phpdoc
 .env
+.phpunit*

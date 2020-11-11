@@ -1,6 +1,7 @@
 <?php declare(strict_types=1);
 
 use Discord\Discord;
+use Discord\Parts\Channel\Channel;
 use Discord\Parts\Channel\Message;
 use PHPUnit\Framework\TestCase;
 
@@ -9,9 +10,9 @@ final class MessageTest extends TestCase
     /**
      * @depends DiscordTest::testCanGetChannel
      */
-    public function testCanSendMessage(Discord $discord)
+    public function testCanSendMessage(Channel $channel)
     {
-        return wait($discord, function (Discord $discord, $channel, $resolve) {
+        return wait(function (Discord $discord, $resolve) use ($channel) {
             $content = 'Hello, world! From PHPunit';
 
             $channel->sendMessage($content)->done(function (Message $message) use ($resolve, $content) {
@@ -24,9 +25,9 @@ final class MessageTest extends TestCase
     /**
      * @depends testCanSendMessage
      */
-    public function testCanEditMessage(Discord $discord)
+    public function testCanEditMessage(Message $message)
     {
-        return wait($discord, function (Discord $discord, Message $message, $resolve) {
+        return wait(function (Discord $discord, $resolve) use ($message) {
             $content = 'Message edit with PHPunit';
 
             $message->content = $content;
@@ -40,9 +41,9 @@ final class MessageTest extends TestCase
     /**
      * @depends testCanSendMessage
      */
-    public function testCanDeleteMessage(Discord $discord)
+    public function testCanDeleteMessage(Message $message)
     {
-        return wait($discord, function (Discord $discord, Message $message, $resolve) {
+        return wait(function (Discord $discord, $resolve) use ($message) {
             $message->channel->messages->delete($message)->done(function (Message $message) use ($resolve) {
                 $this->assertFalse($message->created);
                 $resolve();

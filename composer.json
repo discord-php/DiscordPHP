@@ -47,6 +47,6 @@
     },
     "scripts": {
         "cs": ["./vendor/bin/php-cs-fixer fix"],
-        "unit": ["./vendor/bin/phpunit --bootstrap tests/bootstrap.php tests"]
+        "unit": ["./vendor/bin/phpunit"]
     }
 }

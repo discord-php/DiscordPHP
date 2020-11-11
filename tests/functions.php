@@ -25,17 +25,20 @@ function cancelTimeout(string $name, LoopInterface $loop)
     }
 }
 
-function wait(Discord $discord, callable $callback)
+function wait(callable $callback)
 {
-    $discord->getLoop()->futureTick(function () use ($callback, $discord) {
-        $resolve = function ($x = null) use ($discord) {
-            $GLOBALS['next'] = $x;
+    $discord = DiscordSingleton::get();
+
+    $result = null;
+    $discord->getLoop()->futureTick(function () use ($callback, $discord, &$result) {
+        $resolve = function ($x = null) use ($discord, &$result) {
+            $result = $x;
             $discord->getLoop()->stop();
         };
 
-        $callback($discord, $GLOBALS['next'] ?? null, $resolve);
+        $callback($discord, $resolve);
     });
 
     $discord->getLoop()->run();
-    return $discord;
+    return $result;
 }
