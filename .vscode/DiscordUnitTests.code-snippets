@@ -1,0 +1,17 @@
+{
+    "Unit Test": {
+        "scope": "php",
+        "prefix": "unit",
+        "body": [
+            "/**",
+            " * @depends $1",
+            " */",
+            "public function $2(Discord \\$discord)",
+            "{",
+            "    return wait(\\$discord, function (Discord \\$discord, $3 \\$${4:prev}, \\$resolve) {",
+            "        $0",
+            "    });",
+            "}"
+        ]
+    }
+}

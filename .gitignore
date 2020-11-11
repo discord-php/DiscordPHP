@@ -5,3 +5,4 @@ test*.php
 .php_cs.cache
 .php_cs
 .phpdoc
+.env

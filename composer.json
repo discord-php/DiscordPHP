@@ -28,7 +28,8 @@
     },
     "require-dev": {
         "symfony/var-dumper": "*",
-        "friendsofphp/php-cs-fixer": "^2.16"
+        "friendsofphp/php-cs-fixer": "^2.16",
+        "phpunit/phpunit": "^9.4"
     },
     "autoload": {
         "files": [
@@ -45,8 +46,7 @@
         "ext-mbstring": "For accurate calculations of string length when handling non-english characters."
     },
     "scripts": {
-        "cs": [
-            "./vendor/bin/php-cs-fixer fix"
-        ]
+        "cs": ["./vendor/bin/php-cs-fixer fix"],
+        "unit": ["./vendor/bin/phpunit --bootstrap tests/bootstrap.php tests"]
     }
 }
