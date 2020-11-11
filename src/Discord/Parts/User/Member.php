@@ -80,11 +80,12 @@ class Member extends Part
      * Bans the member.
      *
      * @param int|null $daysToDeleteMessasges The amount of days to delete messages from.
+     * @param string|null $reason
      *
      * @return ExtendedPromiseInterface
      * @throws \Exception
      */
-    public function ban(?int $daysToDeleteMessasges = null): ExtendedPromiseInterface
+    public function ban(?int $daysToDeleteMessasges = null, ?string $reason = null): ExtendedPromiseInterface
     {
         $deferred = new Deferred();
         $content = [];
@@ -93,6 +94,10 @@ class Member extends Part
 
         if (! is_null($daysToDeleteMessasges)) {
             $content['delete-message-days'] = $daysToDeleteMessasges;
+        }
+
+        if (! is_null($reason)) {
+            $content['reason'] = $reason;
         }
 
         $this->http->put($url, $content)->done(
