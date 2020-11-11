@@ -201,6 +201,10 @@ class Command
     {
         $subCommand = array_shift($args);
 
+        if ($this->client->getCommandClientOptions()['caseInsensitiveCommands']) {
+            $subCommand = strtolower($subCommand);
+        }
+
         if (array_key_exists($subCommand, $this->subCommands)) {
             return $this->subCommands[$subCommand]->handle($message, $args);
         } elseif (array_key_exists($subCommand, $this->subCommandAliases)) {
