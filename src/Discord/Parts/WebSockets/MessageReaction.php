@@ -73,7 +73,10 @@ class MessageReaction extends Part
             }
         }
 
-        return $this->factory->create(Message::class, ['id' => $this->attributes['message_id']], true);
+        return $this->factory->create(Message::class, [
+            'id' => $this->attributes['message_id'],
+            'channel_id' => $this->attributes['channel_id'],
+        ], true);
     }
 
     /**

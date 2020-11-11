@@ -70,6 +70,10 @@ class DiscordCommandClient extends Discord
                     $args = str_getcsv($withoutPrefix, ' ');
                     $command = array_shift($args);
 
+                    if ($this->commandClientOptions['caseInsensitiveCommands']) {
+                        $command = strtolower($command);
+                    }
+
                     if (array_key_exists($command, $this->commands)) {
                         $command = $this->commands[$command];
                     } elseif (array_key_exists($command, $this->aliases)) {
@@ -213,6 +217,9 @@ class DiscordCommandClient extends Discord
      */
     public function registerCommand(string $command, $callable, array $options = []): Command
     {
+        if ($this->commandClientOptions['caseInsensitiveCommands']) {
+            $command = strtolower($command);
+        }
         if (array_key_exists($command, $this->commands)) {
             throw new \Exception("A command with the name {$command} already exists.");
         }
@@ -221,6 +228,9 @@ class DiscordCommandClient extends Discord
         $this->commands[$command] = $commandInstance;
 
         foreach ($options['aliases'] as $alias) {
+            if ($this->commandClientOptions['caseInsensitiveCommands']) {
+                $alias = strtolower($alias);
+            }
             $this->registerAlias($alias, $command);
         }
 
@@ -383,6 +393,7 @@ class DiscordCommandClient extends Discord
                 'description',
                 'defaultHelpCommand',
                 'discordOptions',
+                'caseInsensitiveCommands',
             ])
             ->setDefaults([
                 'prefix' => '@mention ',
@@ -390,6 +401,7 @@ class DiscordCommandClient extends Discord
                 'description' => 'A bot made with DiscordPHP '.self::VERSION.'.',
                 'defaultHelpCommand' => true,
                 'discordOptions' => [],
+                'caseInsensitiveCommands' => false,
             ]);
 
         return $resolver->resolve($options);

@@ -1,5 +1,38 @@
 # Changelog
 
+## Version 5.0.12
+
+- Converted `PromiseInterface` to `ExtendedPromiseInterface` to allow `->done()` typehinting.
+- Converted most `->then()` to `->done()` for better error handling.
+- Fixed issue with member chunking not working correctly due to changes in Discord's gateway.
+- Implemented gateway payload rate-limiting.
+- Removed `illuminate/support` dependency.
+- Fixed errors in HTTP going into the response handler function and causing errors.
+- Added `Channel::limitDelete(n)` to delete the last n messages.
+- Added setter functions to embeds. Now much easier to set, and more reliable.
+- Added `$guild->leave()` as a shortcut to `$discord->guilds->leave($guild)`.
+- Parts are now constructable without factory:
+
+Old:
+```php
+$message = $discord->factory(Message::class);
+```
+
+New:
+```php
+$message = new Message($message);
+```
+
+Both methods are still valid.
+
+- `AbstractRepository` now extends `Collection` rather than having magic functions to handle calls.
+- Added `WebhookRepository::get()`.
+- Added support functions:
+    - `getColor(int $color);`
+    - `contains(string $key, array $matches);`
+    - `studly(string $string)`
+    - `poly_strlen(string $string)`
+
 ## Version 5.0.11
 
 - Added dependabot to update composer dependencies.
