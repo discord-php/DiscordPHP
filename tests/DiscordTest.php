@@ -10,19 +10,12 @@ final class DiscordTest extends TestCase
 {
     public function testCanConnect()
     {
-        $discord = DiscordSingleton::get();
-
-        timeout('waitForReady', 5, $discord->getLoop())->done(function () {
-            $this->fail('Ready event did not trigger within 5s');
+        return wait(function (Discord $discord, $resolve) {
+            $discord->on('ready', function () use ($resolve) {
+                $this->assertTrue(true);
+                $resolve();
+            });
         });
-
-        $discord->on('ready', function (Discord $discord) {
-            cancelTimeout('waitForReady', $discord->getLoop());
-            $this->assertTrue(true);
-            $discord->getLoop()->stop();
-        });
-
-        $discord->getLoop()->run();
     }
 
     public function testCanGetChannel()
