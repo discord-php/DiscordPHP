@@ -1,4 +1,4 @@
-on: [push]
+on: [push, pull_request_target]
 jobs:
  ci:
     runs-on: ubuntu-latest
