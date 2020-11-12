@@ -100,7 +100,7 @@ class Member extends Part
             $content['reason'] = $reason;
         }
 
-        $this->http->put($url, $content)->done(
+        $this->http->put($url, empty($content) ? null : $content)->done(
             function () use ($deferred) {
                 $ban = $this->factory->create(Ban::class, [
                     'user' => $this->attributes['user'],

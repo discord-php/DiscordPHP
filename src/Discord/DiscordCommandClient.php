@@ -408,6 +408,16 @@ class DiscordCommandClient extends Discord
     }
 
     /**
+     * Returns the command client options.
+     *
+     * @return array
+     */
+    public function getCommandClientOptions()
+    {
+        return $this->commandClientOptions;
+    }
+
+    /**
      * Handles dynamic get calls to the command client.
      *
      * @param string $name Variable name.
