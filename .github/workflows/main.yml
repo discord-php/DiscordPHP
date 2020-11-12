@@ -1,8 +1,12 @@
-on: [push, pull_request]
+name: Unit Tests
+on:
+  push:
+  repository_dispatch:
+    types: [ok-to-test-command]
 jobs:
- ci:
+  ci-master:
     runs-on: ubuntu-latest
-    name: PHPUnit Test Cases
+    if: github.event_name == 'push'
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -18,6 +22,23 @@ jobs:
           TEST_CHANNEL_NAME: ${{ secrets.TEST_CHANNEL_NAME }}
       - name: PHP 7.3
         uses: ./.github/actions/php7.3
+        env:
+          DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
+          TEST_CHANNEL: ${{ secrets.TEST_CHANNEL }}
+          TEST_CHANNEL_NAME: ${{ secrets.TEST_CHANNEL_NAME }}
+  ci-fork:
+    runs-on: ubuntu-latest
+    if:
+      github.event_name == 'repository_dispatch' &&
+      github.event.client_payload.slash_command.sha != '' &&
+      contains(github.event.client_payload.pull_request.head.sha, github.event.client_payload.slash_command.sha)
+    steps:
+      - name: Checkout PR
+        uses: actions/checkout@v2
+        with:
+          ref: 'refs/pull/${{ github.event.client_payload.pull_request.number }}/merge'
+      - name: PHP 7.4
+        uses: ./.github/actions/php7.4
         env:
           DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
           TEST_CHANNEL: ${{ secrets.TEST_CHANNEL }}
