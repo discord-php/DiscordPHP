@@ -5,6 +5,7 @@ use Discord\Discord;
 use Discord\Helpers\Collection;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Channel\Message;
+use Discord\Parts\Embed\Embed;
 use Discord\Parts\User\Member;
 use PHPUnit\Framework\TestCase;
 
@@ -152,6 +153,35 @@ final class EmptyMessageTest extends TestCase
         return wait(function (Discord $discord, $resolve) use ($message) {
             $message->react('😀')->done(function () use ($resolve) {
                 $this->assertTrue(true);
+                $resolve();
+            });
+        });
+    }
+
+    /**
+     * @depends testCanSendMessage
+     */
+    public function testCanAddEmbed(Message $message)
+    {
+        return wait(function (Discord $discord, $resolve) use ($message) {
+            $embed = new Embed($discord);
+            $embed->setTitle('Test embed')
+                ->addFieldValues('Field name', 'Field value', true);
+
+            $message->addEmbed($embed)->done(function (Message $message) use ($resolve) {
+                $this->assertEquals(1, $message->embeds->count());
+
+                /** @var Embed */
+                $embed = $message->embeds->first();
+                $this->assertEquals('Test embed', $embed->title);
+                $this->assertEquals(1, $embed->fields->count());
+
+                /** @var \Discord\Parts\Embed\Field */
+                $field = $embed->fields->first();
+                $this->assertEquals('Field name', $field->name);
+                $this->assertEquals('Field value', $field->value);
+                $this->assertEquals(true, $field->inline);
+
                 $resolve();
             });
         });
