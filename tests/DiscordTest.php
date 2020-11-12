@@ -12,7 +12,7 @@ final class DiscordTest extends TestCase
     {
         return wait(function (Discord $discord, $resolve) {
             $discord->on('ready', function () use ($resolve) {
-                $this->assertTrue(true);
+                $this->assertTrue(false);
                 $resolve();
             });
         });
