@@ -8,6 +8,16 @@ use React\EventLoop\LoopInterface;
 
 final class DiscordTest extends TestCase
 {
+    public function testCheckEnvVariablesPresent()
+    {
+        $this->assertNotFalse(getenv('DISCORD_TOKEN'), 'Discord token is missing');
+        $this->assertNotFalse(getenv('TEST_CHANNEL'), 'Test channel ID is missing');
+        $this->assertNotFalse(getenv('TEST_CHANNEL_NAME'), 'Test channel name is missing');
+    }
+
+    /**
+     * @depends testCheckEnvVariablesPresent
+     */
     public function testCanConnect()
     {
         return wait(function (Discord $discord, $resolve) {
