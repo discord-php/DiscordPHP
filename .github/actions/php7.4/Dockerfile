@@ -9,6 +9,6 @@ RUN php composer-setup.php
 RUN chmod +x composer.phar
 RUN mv composer.phar /usr/local/bin/composer
 
-COPY ../entrypoint.sh /entrypoint.sh
+COPY entrypoint.sh /entrypoint.sh
 
 ENTRYPOINT [ "/entrypoint.sh" ]
