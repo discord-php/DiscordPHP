@@ -8,17 +8,17 @@ jobs:
         uses: actions/checkout@v2
         env:
           DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
-          TEST_CHANNEL: ${{ secrets.DISCORD_TOKEN }}
-          TEST_CHANNEL_NAME: ${{ secrets.DISCORD_TOKEN }}
+          TEST_CHANNEL: ${{ secrets.TEST_CHANNEL }}
+          TEST_CHANNEL_NAME: ${{ secrets.TEST_CHANNEL_NAME }}
       - name: PHP 7.4
         uses: ./.github/actions/php7.4
         env:
           DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
-          TEST_CHANNEL: ${{ secrets.DISCORD_TOKEN }}
-          TEST_CHANNEL_NAME: ${{ secrets.DISCORD_TOKEN }}
+          TEST_CHANNEL: ${{ secrets.TEST_CHANNEL }}
+          TEST_CHANNEL_NAME: ${{ secrets.TEST_CHANNEL_NAME }}
       - name: PHP 7.3
         uses: ./.github/actions/php7.3
         env:
           DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
-          TEST_CHANNEL: ${{ secrets.DISCORD_TOKEN }}
-          TEST_CHANNEL_NAME: ${{ secrets.DISCORD_TOKEN }}
+          TEST_CHANNEL: ${{ secrets.TEST_CHANNEL }}
+          TEST_CHANNEL_NAME: ${{ secrets.TEST_CHANNEL_NAME }}
