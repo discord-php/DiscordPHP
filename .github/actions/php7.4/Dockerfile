@@ -9,6 +9,6 @@ RUN php composer-setup.php
 RUN chmod +x composer.phar
 RUN mv composer.phar /usr/local/bin/composer
 
-RUN composer install
+COPY ../entrypoint.sh /entrypoint.sh
 
-ENTRYPOINT [ "./vendor/bin/phpunit" ]
+ENTRYPOINT [ "/entrypoint.sh" ]
