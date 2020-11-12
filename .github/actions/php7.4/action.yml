@@ -1,0 +1,5 @@
+name: 'PHPUnit - PHP 7.4'
+description: 'Runs PHPUnit test suite on PHP 7.4'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
