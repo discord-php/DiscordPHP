@@ -9,4 +9,8 @@
             <directory>tests</directory>
         </testsuite>
     </testsuites>
+    <php>
+        <env name="TEST_CHANNEL" value="776205696567083009" />
+        <env name="TEST_CHANNEL_NAME" value="phpunit" />
+    </php>
 </phpunit>

@@ -5,6 +5,8 @@ use Discord\Helpers\Deferred;
 use React\EventLoop\LoopInterface;
 use React\Promise\ExtendedPromiseInterface;
 
+const TIMEOUT = 5;
+
 function timeout(string $name, int $timeout, LoopInterface $loop): ExtendedPromiseInterface
 {
     $deferred = new Deferred();
@@ -25,7 +27,7 @@ function cancelTimeout(string $name, LoopInterface $loop)
     }
 }
 
-function wait(callable $callback)
+function wait(callable $callback, float $timeout = TIMEOUT)
 {
     $discord = DiscordSingleton::get();
 
@@ -39,6 +41,13 @@ function wait(callable $callback)
         $callback($discord, $resolve);
     });
 
+    $timeout = $discord->getLoop()->addTimer($timeout, function () use ($discord, &$timedOut) {
+        throw new \Exception('Timed out');
+        $discord->getLoop()->stop();
+    });
+
     $discord->getLoop()->run();
+    $discord->getLoop()->cancelTimer($timeout);
+
     return $result;
 }

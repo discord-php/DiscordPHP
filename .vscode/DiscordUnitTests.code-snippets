@@ -6,9 +6,9 @@
             "/**",
             " * @depends $1",
             " */",
-            "public function $2(Discord \\$discord)",
+            "public function $2($3)",
             "{",
-            "    return wait(\\$discord, function (Discord \\$discord, $3 \\$${4:prev}, \\$resolve) {",
+            "    return wait(function (Discord \\$discord, \\$resolve) {",
             "        $0",
             "    });",
             "}"
