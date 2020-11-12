@@ -25,7 +25,7 @@ class ChannelDelete extends Event
         $channel = $this->factory->create(Channel::class, $data);
 
         if ($guild = $channel->guild) {
-            $guild->channels->pull($channel->id);
+            $guild->channels->offsetUnset($channel->id);
 
             $this->discord->guilds->offsetSet($guild->id, $guild);
         }

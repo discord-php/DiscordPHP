@@ -25,7 +25,7 @@ class GuildMemberRemove extends Event
         $member = $this->factory->create(Member::class, $data, true);
 
         if ($guild = $this->discord->guilds->offsetGet($member->guild_id)) {
-            $guild->members->pull($member->user->id);
+            $guild->members->offserUnset($member->user->id);
             --$guild->member_count;
 
             $this->discord->guilds->offsetSet($guild->id, $guild);

@@ -35,7 +35,7 @@ class VoiceStateUpdate extends Event
 
                 // Remove old member states
                 if ($channel->members->has($state->user_id)) {
-                    $channel->members->pull($state->user_id);
+                    $channel->members->offsetUnset($state->user_id);
                 }
 
                 // Add member state to new channel

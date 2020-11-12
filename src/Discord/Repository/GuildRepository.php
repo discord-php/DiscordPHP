@@ -55,7 +55,7 @@ class GuildRepository extends AbstractRepository
         }
 
         $this->http->delete("users/@me/guilds/{$guild}")->done(function () use ($guild, $deferred) {
-            $this->pull('id', $guild);
+            $this->offsetUnset($guild);
             $deferred->resolve();
         }, \React\Partial\bind([$deferred, 'reject']));
 

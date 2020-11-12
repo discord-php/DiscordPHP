@@ -25,7 +25,7 @@ class GuildBanRemove extends Event
         $ban = $this->factory->create(Ban::class, $data, true);
 
         if ($guild = $ban->guild) {
-            $guild->bans->pull($ban->user->id);
+            $guild->bans->offsetUnset($ban->user->id);
             $this->discord->guilds->offsetSet($guild->id, $guild);
         }
 
