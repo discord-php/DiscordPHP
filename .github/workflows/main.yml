@@ -26,6 +26,14 @@ jobs:
           DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
           TEST_CHANNEL: ${{ secrets.TEST_CHANNEL }}
           TEST_CHANNEL_NAME: ${{ secrets.TEST_CHANNEL_NAME }}
+  dump_test:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'repository_dispatch'
+    steps:
+    - name: Dump
+      env:
+        CONTENT: ${{ toJson(github.event.client_payload) }}
+      run: echo "$CONTENT"
   ci-fork:
     runs-on: ubuntu-latest
     if:
