@@ -1,1557 +1,1201 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
-    <meta charset="utf-8"/>
+    <meta charset="utf-8">
     <title>Documentation</title>
-    <meta name="author" content=""/>
-    <meta name="description" content=""/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base href="../">
+    <link rel="icon" href="images/favicon.ico"/>
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/base.css">
+            <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="css/template.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0/css/all.min.css" integrity="sha256-ybRkN9dBjhcS2qrW1z+hfCxq+1aBdwyQM5wlQoQVt/0=" crossorigin="anonymous" />
+                <script src="https://cdn.jsdelivr.net/npm/fuse.js@3.4.6"></script>
+        <script src="https://cdn.jsdelivr.net/npm/css-vars-ponyfill@2"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0/js/all.min.js" integrity="sha256-0vuk8LXoyrmCjp1f0O300qo1M75ZQyhH9X3J6d+scmk=" crossorigin="anonymous"></script>
+        <script src="js/search.js"></script>
+        <script defer src="js/searchIndex.js"></script>
+    </head>
+<body id="top">
+    <header class="phpdocumentor-header phpdocumentor-section">
+    <h1 class="phpdocumentor-title"><a href="" class="phpdocumentor-title__link">Documentation</a></h1>
+    <input class="phpdocumentor-header__menu-button" type="checkbox" id="menu-button" name="menu-button" />
+    <label class="phpdocumentor-header__menu-icon" for="menu-button">
+        <i class="fas fa-bars"></i>
+    </label>
+    <section data-search-form class="phpdocumentor-search">
+    <label>
+        <span class="visually-hidden">Search for</span>
+        <svg class="phpdocumentor-search__icon" width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="7.5" cy="7.5" r="6.5" stroke="currentColor" stroke-width="2"/>
+            <line x1="12.4892" y1="12.2727" x2="19.1559" y2="18.9393" stroke="currentColor" stroke-width="3"/>
+        </svg>
+        <input type="search" class="phpdocumentor-field phpdocumentor-search__field" placeholder="Loading .." disabled />
+    </label>
+</section>
 
-    <link href="../css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
-    <link href="../css/font-awesome.min.css" rel="stylesheet">
-    <link href="../css/prism.css" rel="stylesheet" media="all"/>
-    <link href="../css/template.css" rel="stylesheet" media="all"/>
+    <nav class="phpdocumentor-topnav">
+    <ul class="phpdocumentor-topnav__menu">
+        </ul>
+</nav>
+</header>
+
+    <main class="phpdocumentor">
+        <div class="phpdocumentor-section">
+            <input class="phpdocumentor-sidebar__menu-button" type="checkbox" id="sidebar-button" name="sidebar-button" />
+<label class="phpdocumentor-sidebar__menu-icon" for="sidebar-button">
+    Menu
+</label>
+<aside class="phpdocumentor-column -four phpdocumentor-sidebar">
     
-    <!--[if lt IE 9]>
-    <script src="../js/html5.js"></script>
-    <![endif]-->
-    <script src="../js/jquery-1.11.0.min.js"></script>
-    <script src="../js/ui/1.10.4/jquery-ui.min.js"></script>
-    <script src="../js/bootstrap.min.js"></script>
-    <script src="../js/jquery.smooth-scroll.js"></script>
-    <script src="../js/prism.min.js"></script>
-    <!-- TODO: Add http://jscrollpane.kelvinluck.com/ to style the scrollbars for browsers not using webkit-->
-    <script type="text/javascript">
-    function loadExternalCodeSnippets() {
-        Array.prototype.slice.call(document.querySelectorAll('pre[data-src]')).forEach(function (pre) {
-            var src = pre.getAttribute('data-src').replace( /\\/g, '/');
-            var extension = (src.match(/\.(\w+)$/) || [, ''])[1];
-            var language = 'php';
-
-            var code = document.createElement('code');
-            code.className = 'language-' + language;
-
-            pre.textContent = '';
-
-            code.textContent = 'Loading…';
-
-            pre.appendChild(code);
-
-            var xhr = new XMLHttpRequest();
-
-            xhr.open('GET', src, true);
-
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState == 4) {
-
-                    if (xhr.status < 400 && xhr.responseText) {
-                        code.textContent = xhr.responseText;
-
-                        Prism.highlightElement(code);
-                    }
-                    else if (xhr.status >= 400) {
-                        code.textContent = '✖ Error ' + xhr.status + ' while fetching file: ' + xhr.statusText;
-                    }
-                    else {
-                        code.textContent = '✖ Error: File does not exist, is empty or trying to view from localhost';
-                    }
-                }
-            };
-
-            xhr.send(null);
-        });
-    }
-
-    $(document).ready(function(){
-        loadExternalCodeSnippets();
-    });
-    $('#source-view').on('shown', function () {
-        loadExternalCodeSnippets();
-    })
-</script>
-
-    <link rel="shortcut icon" href="../images/favicon.ico"/>
-    <link rel="apple-touch-icon" href="../images/apple-touch-icon.png"/>
-    <link rel="apple-touch-icon" sizes="72x72" href="../images/apple-touch-icon-72x72.png"/>
-    <link rel="apple-touch-icon" sizes="114x114" href="../images/apple-touch-icon-114x114.png"/>
-</head>
-<body>
-
-<div class="navbar navbar-fixed-top">
-    <div class="navbar-inner">
-        <div class="container">
-            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-                <i class="icon-ellipsis-vertical"></i>
-            </a>
-            <a class="brand" href="../index.html">Documentation</a>
-
-            <div class="nav-collapse">
-                <ul class="nav pull-right">
-                                        <li class="dropdown">
-                        <a href="../index.html" class="dropdown-toggle" data-toggle="dropdown">
-                            API Documentation <b class="caret"></b>
-                        </a>
-                        <ul class="dropdown-menu">
-                                                        <li><a href="../namespaces/discord.html"><abbr title="\Discord">normal</abbr></a></li>
-                                                    </ul>
-                    </li>
-                                        <li class="dropdown" id="charts-menu">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            Charts <b class="caret"></b>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a href="../graphs/class.html">
-                                    <i class="icon-list-alt"></i>&#160;Class hierarchy diagram
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="dropdown" id="reports-menu">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            Reports <b class="caret"></b>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a href="../reports/errors.html">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">19</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="../reports/markers.html">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <i class="icon-list-alt"></i>&#160;Markers <span class="label label-info pull-right">0</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="../reports/deprecated.html">
-                                                                                                            <i class="icon-list-alt"></i>&#160;Deprecated <span class="label label-info pull-right">0</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    <!--<div class="go_to_top">-->
-    <!--<a href="#___" style="color: inherit">Back to top&#160;&#160;<i class="icon-upload icon-white"></i></a>-->
-    <!--</div>-->
-</div>
-
-<div id="___" class="container-fluid">
-        <section class="row-fluid">
-        <div class="span2 sidebar">
-                                <div class="accordion" style="margin-bottom: 0">
-        <div class="accordion-group">
-            <div class="accordion-heading">
-                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-1953368730"></a>
-                                <a href="../namespaces/default.html" style="margin-left: 30px; padding-left: 0">\</a>
-            </div>
-            <div id="namespace-1953368730" class="accordion-body collapse in">
-                <div class="accordion-inner">
-
-                                                    <div class="accordion" style="margin-bottom: 0">
-        <div class="accordion-group">
-            <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-122248000"></a>
-                                <a href="../namespaces/discord.html" style="margin-left: 30px; padding-left: 0">Discord</a>
-            </div>
-            <div id="namespace-122248000" class="accordion-body collapse ">
-                <div class="accordion-inner">
-
-                                                    <div class="accordion" style="margin-bottom: 0">
-        <div class="accordion-group">
-            <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-96003937"></a>
-                                <a href="../namespaces/discord-commandclient.html" style="margin-left: 30px; padding-left: 0">CommandClient</a>
-            </div>
-            <div id="namespace-96003937" class="accordion-body collapse ">
-                <div class="accordion-inner">
-
-                    
-                    <ul>
-                                                                                                    <li class="class"><a href="../classes/Discord-CommandClient-Command.html"><abbr title="\Discord\CommandClient\Command">Command</abbr></a></li>
-                                            </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-                                                    <div class="accordion" style="margin-bottom: 0">
-        <div class="accordion-group">
-            <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-688681334"></a>
-                                <a href="../namespaces/discord-exceptions.html" style="margin-left: 30px; padding-left: 0">Exceptions</a>
-            </div>
-            <div id="namespace-688681334" class="accordion-body collapse ">
-                <div class="accordion-inner">
-
-                                                    <div class="accordion" style="margin-bottom: 0">
-        <div class="accordion-group">
-            <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1181251642"></a>
-                                <a href="../namespaces/discord-exceptions-rest.html" style="margin-left: 30px; padding-left: 0">Rest</a>
-            </div>
-            <div id="namespace-1181251642" class="accordion-body collapse ">
-                <div class="accordion-inner">
-
-                    
-                    <ul>
-                                                                                                    <li class="class"><a href="../classes/Discord-Exceptions-Rest-ContentTooLongException.html"><abbr title="\Discord\Exceptions\Rest\ContentTooLongException">ContentTooLongException</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-Exceptions-Rest-NoPermissionsException.html"><abbr title="\Discord\Exceptions\Rest\NoPermissionsException">NoPermissionsException</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-Exceptions-Rest-NotFoundException.html"><abbr title="\Discord\Exceptions\Rest\NotFoundException">NotFoundException</abbr></a></li>
-                                            </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-                    
-                    <ul>
-                                                                                                    <li class="class"><a href="../classes/Discord-Exceptions-ContentTooLongException.html"><abbr title="\Discord\Exceptions\ContentTooLongException">ContentTooLongException</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-Exceptions-DCANotFoundException.html"><abbr title="\Discord\Exceptions\DCANotFoundException">DCANotFoundException</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-Exceptions-DiscordRequestFailedException.html"><abbr title="\Discord\Exceptions\DiscordRequestFailedException">DiscordRequestFailedException</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-Exceptions-FFmpegNotFoundException.html"><abbr title="\Discord\Exceptions\FFmpegNotFoundException">FFmpegNotFoundException</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-Exceptions-FileNotFoundException.html"><abbr title="\Discord\Exceptions\FileNotFoundException">FileNotFoundException</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-Exceptions-IntentException.html"><abbr title="\Discord\Exceptions\IntentException">IntentException</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-Exceptions-InvalidOverwriteException.html"><abbr title="\Discord\Exceptions\InvalidOverwriteException">InvalidOverwriteException</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-Exceptions-InviteInvalidException.html"><abbr title="\Discord\Exceptions\InviteInvalidException">InviteInvalidException</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-Exceptions-LibSodiumNotFoundException.html"><abbr title="\Discord\Exceptions\LibSodiumNotFoundException">LibSodiumNotFoundException</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-Exceptions-LoginFailedException.html"><abbr title="\Discord\Exceptions\LoginFailedException">LoginFailedException</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-Exceptions-OpusNotFoundException.html"><abbr title="\Discord\Exceptions\OpusNotFoundException">OpusNotFoundException</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-Exceptions-OutdatedDCAException.html"><abbr title="\Discord\Exceptions\OutdatedDCAException">OutdatedDCAException</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-Exceptions-PartRequestFailedException.html"><abbr title="\Discord\Exceptions\PartRequestFailedException">PartRequestFailedException</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-Exceptions-PasswordEmptyException.html"><abbr title="\Discord\Exceptions\PasswordEmptyException">PasswordEmptyException</abbr></a></li>
-                                            </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-                                                    <div class="accordion" style="margin-bottom: 0">
-        <div class="accordion-group">
-            <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1855959112"></a>
-                                <a href="../namespaces/discord-factory.html" style="margin-left: 30px; padding-left: 0">Factory</a>
-            </div>
-            <div id="namespace-1855959112" class="accordion-body collapse ">
-                <div class="accordion-inner">
-
-                    
-                    <ul>
-                                                                                                    <li class="class"><a href="../classes/Discord-Factory-Factory.html"><abbr title="\Discord\Factory\Factory">Factory</abbr></a></li>
-                                            </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-                                                    <div class="accordion" style="margin-bottom: 0">
-        <div class="accordion-group">
-            <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1733413059"></a>
-                                <a href="../namespaces/discord-helpers.html" style="margin-left: 30px; padding-left: 0">Helpers</a>
-            </div>
-            <div id="namespace-1733413059" class="accordion-body collapse ">
-                <div class="accordion-inner">
-
-                    
-                    <ul>
-                                                                                                    <li class="class"><a href="../classes/Discord-Helpers-Collection.html"><abbr title="\Discord\Helpers\Collection">Collection</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-Helpers-Process.html"><abbr title="\Discord\Helpers\Process">Process</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-Helpers-ReadableResourceStream.html"><abbr title="\Discord\Helpers\ReadableResourceStream">ReadableResourceStream</abbr></a></li>
-                                            </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-                                                    <div class="accordion" style="margin-bottom: 0">
-        <div class="accordion-group">
-            <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-816165153"></a>
-                                <a href="../namespaces/discord-http.html" style="margin-left: 30px; padding-left: 0">Http</a>
-            </div>
-            <div id="namespace-816165153" class="accordion-body collapse ">
-                <div class="accordion-inner">
-
-                    
-                    <ul>
-                                                    <li class="interface"><a href="../classes/Discord-Http-HttpDriver.html"><abbr title="\Discord\Http\HttpDriver">HttpDriver</abbr></a></li>
-                                                                                                    <li class="class"><a href="../classes/Discord-Http-Guzzle.html"><abbr title="\Discord\Http\Guzzle">Guzzle</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-Http-Http.html"><abbr title="\Discord\Http\Http">Http</abbr></a></li>
-                                            </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-                                                    <div class="accordion" style="margin-bottom: 0">
-        <div class="accordion-group">
-            <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1855015127"></a>
-                                <a href="../namespaces/discord-parts.html" style="margin-left: 30px; padding-left: 0">Parts</a>
-            </div>
-            <div id="namespace-1855015127" class="accordion-body collapse ">
-                <div class="accordion-inner">
-
-                                                    <div class="accordion" style="margin-bottom: 0">
-        <div class="accordion-group">
-            <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-912485276"></a>
-                                <a href="../namespaces/discord-parts-channel.html" style="margin-left: 30px; padding-left: 0">Channel</a>
-            </div>
-            <div id="namespace-912485276" class="accordion-body collapse ">
-                <div class="accordion-inner">
-
-                    
-                    <ul>
-                                                                                                    <li class="class"><a href="../classes/Discord-Parts-Channel-Channel.html"><abbr title="\Discord\Parts\Channel\Channel">Channel</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-Parts-Channel-Message.html"><abbr title="\Discord\Parts\Channel\Message">Message</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-Parts-Channel-Overwrite.html"><abbr title="\Discord\Parts\Channel\Overwrite">Overwrite</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-Parts-Channel-Reaction.html"><abbr title="\Discord\Parts\Channel\Reaction">Reaction</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-Parts-Channel-Webhook.html"><abbr title="\Discord\Parts\Channel\Webhook">Webhook</abbr></a></li>
-                                            </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-                                                    <div class="accordion" style="margin-bottom: 0">
-        <div class="accordion-group">
-            <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1657980384"></a>
-                                <a href="../namespaces/discord-parts-embed.html" style="margin-left: 30px; padding-left: 0">Embed</a>
-            </div>
-            <div id="namespace-1657980384" class="accordion-body collapse ">
-                <div class="accordion-inner">
-
-                    
-                    <ul>
-                                                                                                    <li class="class"><a href="../classes/Discord-Parts-Embed-Author.html"><abbr title="\Discord\Parts\Embed\Author">Author</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-Parts-Embed-Embed.html"><abbr title="\Discord\Parts\Embed\Embed">Embed</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-Parts-Embed-Field.html"><abbr title="\Discord\Parts\Embed\Field">Field</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-Parts-Embed-Footer.html"><abbr title="\Discord\Parts\Embed\Footer">Footer</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-Parts-Embed-Image.html"><abbr title="\Discord\Parts\Embed\Image">Image</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-Parts-Embed-Video.html"><abbr title="\Discord\Parts\Embed\Video">Video</abbr></a></li>
-                                            </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-                                                    <div class="accordion" style="margin-bottom: 0">
-        <div class="accordion-group">
-            <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1314106529"></a>
-                                <a href="../namespaces/discord-parts-guild.html" style="margin-left: 30px; padding-left: 0">Guild</a>
-            </div>
-            <div id="namespace-1314106529" class="accordion-body collapse ">
-                <div class="accordion-inner">
-
-                    
-                    <ul>
-                                                                                                    <li class="class"><a href="../classes/Discord-Parts-Guild-Ban.html"><abbr title="\Discord\Parts\Guild\Ban">Ban</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-Parts-Guild-Emoji.html"><abbr title="\Discord\Parts\Guild\Emoji">Emoji</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-Parts-Guild-Guild.html"><abbr title="\Discord\Parts\Guild\Guild">Guild</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-Parts-Guild-Invite.html"><abbr title="\Discord\Parts\Guild\Invite">Invite</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-Parts-Guild-Role.html"><abbr title="\Discord\Parts\Guild\Role">Role</abbr></a></li>
-                                            </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-                                                    <div class="accordion" style="margin-bottom: 0">
-        <div class="accordion-group">
-            <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-2130950838"></a>
-                                <a href="../namespaces/discord-parts-oauth.html" style="margin-left: 30px; padding-left: 0">OAuth</a>
-            </div>
-            <div id="namespace-2130950838" class="accordion-body collapse ">
-                <div class="accordion-inner">
-
-                    
-                    <ul>
-                                                                                                    <li class="class"><a href="../classes/Discord-Parts-OAuth-Application.html"><abbr title="\Discord\Parts\OAuth\Application">Application</abbr></a></li>
-                                            </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-                                                    <div class="accordion" style="margin-bottom: 0">
-        <div class="accordion-group">
-            <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1376880952"></a>
-                                <a href="../namespaces/discord-parts-permissions.html" style="margin-left: 30px; padding-left: 0">Permissions</a>
-            </div>
-            <div id="namespace-1376880952" class="accordion-body collapse ">
-                <div class="accordion-inner">
-
-                    
-                    <ul>
-                                                                                                    <li class="class"><a href="../classes/Discord-Parts-Permissions-ChannelPermission.html"><abbr title="\Discord\Parts\Permissions\ChannelPermission">ChannelPermission</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-Parts-Permissions-Permission.html"><abbr title="\Discord\Parts\Permissions\Permission">Permission</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-Parts-Permissions-RolePermission.html"><abbr title="\Discord\Parts\Permissions\RolePermission">RolePermission</abbr></a></li>
-                                            </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-                                                    <div class="accordion" style="margin-bottom: 0">
-        <div class="accordion-group">
-            <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-2068227757"></a>
-                                <a href="../namespaces/discord-parts-user.html" style="margin-left: 30px; padding-left: 0">User</a>
-            </div>
-            <div id="namespace-2068227757" class="accordion-body collapse ">
-                <div class="accordion-inner">
-
-                    
-                    <ul>
-                                                                                                    <li class="class"><a href="../classes/Discord-Parts-User-Activity.html"><abbr title="\Discord\Parts\User\Activity">Activity</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-Parts-User-Client.html"><abbr title="\Discord\Parts\User\Client">Client</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-Parts-User-Member.html"><abbr title="\Discord\Parts\User\Member">Member</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-Parts-User-User.html"><abbr title="\Discord\Parts\User\User">User</abbr></a></li>
-                                            </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-                                                    <div class="accordion" style="margin-bottom: 0">
-        <div class="accordion-group">
-            <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-362314055"></a>
-                                <a href="../namespaces/discord-parts-websockets.html" style="margin-left: 30px; padding-left: 0">WebSockets</a>
-            </div>
-            <div id="namespace-362314055" class="accordion-body collapse ">
-                <div class="accordion-inner">
-
-                    
-                    <ul>
-                                                                                                    <li class="class"><a href="../classes/Discord-Parts-WebSockets-MessageReaction.html"><abbr title="\Discord\Parts\WebSockets\MessageReaction">MessageReaction</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-Parts-WebSockets-PresenceUpdate.html"><abbr title="\Discord\Parts\WebSockets\PresenceUpdate">PresenceUpdate</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-Parts-WebSockets-TypingStart.html"><abbr title="\Discord\Parts\WebSockets\TypingStart">TypingStart</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-Parts-WebSockets-VoiceServerUpdate.html"><abbr title="\Discord\Parts\WebSockets\VoiceServerUpdate">VoiceServerUpdate</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-Parts-WebSockets-VoiceStateUpdate.html"><abbr title="\Discord\Parts\WebSockets\VoiceStateUpdate">VoiceStateUpdate</abbr></a></li>
-                                            </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-                    
-                    <ul>
-                                                                                                    <li class="class"><a href="../classes/Discord-Parts-Part.html"><abbr title="\Discord\Parts\Part">Part</abbr></a></li>
-                                            </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-                                                    <div class="accordion" style="margin-bottom: 0">
-        <div class="accordion-group">
-            <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1383325497"></a>
-                                <a href="../namespaces/discord-repository.html" style="margin-left: 30px; padding-left: 0">Repository</a>
-            </div>
-            <div id="namespace-1383325497" class="accordion-body collapse ">
-                <div class="accordion-inner">
-
-                                                    <div class="accordion" style="margin-bottom: 0">
-        <div class="accordion-group">
-            <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1374270965"></a>
-                                <a href="../namespaces/discord-repository-channel.html" style="margin-left: 30px; padding-left: 0">Channel</a>
-            </div>
-            <div id="namespace-1374270965" class="accordion-body collapse ">
-                <div class="accordion-inner">
-
-                    
-                    <ul>
-                                                                                                    <li class="class"><a href="../classes/Discord-Repository-Channel-InviteRepository.html"><abbr title="\Discord\Repository\Channel\InviteRepository">InviteRepository</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-Repository-Channel-MessageRepository.html"><abbr title="\Discord\Repository\Channel\MessageRepository">MessageRepository</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-Repository-Channel-OverwriteRepository.html"><abbr title="\Discord\Repository\Channel\OverwriteRepository">OverwriteRepository</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-Repository-Channel-VoiceMemberRepository.html"><abbr title="\Discord\Repository\Channel\VoiceMemberRepository">VoiceMemberRepository</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-Repository-Channel-WebhookRepository.html"><abbr title="\Discord\Repository\Channel\WebhookRepository">WebhookRepository</abbr></a></li>
-                                            </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-                                                    <div class="accordion" style="margin-bottom: 0">
-        <div class="accordion-group">
-            <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1742171262"></a>
-                                <a href="../namespaces/discord-repository-guild.html" style="margin-left: 30px; padding-left: 0">Guild</a>
-            </div>
-            <div id="namespace-1742171262" class="accordion-body collapse ">
-                <div class="accordion-inner">
-
-                    
-                    <ul>
-                                                                                                    <li class="class"><a href="../classes/Discord-Repository-Guild-BanRepository.html"><abbr title="\Discord\Repository\Guild\BanRepository">BanRepository</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-Repository-Guild-ChannelRepository.html"><abbr title="\Discord\Repository\Guild\ChannelRepository">ChannelRepository</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-Repository-Guild-EmojiRepository.html"><abbr title="\Discord\Repository\Guild\EmojiRepository">EmojiRepository</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-Repository-Guild-InviteRepository.html"><abbr title="\Discord\Repository\Guild\InviteRepository">InviteRepository</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-Repository-Guild-MemberRepository.html"><abbr title="\Discord\Repository\Guild\MemberRepository">MemberRepository</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-Repository-Guild-RoleRepository.html"><abbr title="\Discord\Repository\Guild\RoleRepository">RoleRepository</abbr></a></li>
-                                            </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-                    
-                    <ul>
-                                                    <li class="interface"><a href="../classes/Discord-Repository-RepositoryInterface.html"><abbr title="\Discord\Repository\RepositoryInterface">RepositoryInterface</abbr></a></li>
-                                                                                                    <li class="class"><a href="../classes/Discord-Repository-AbstractRepository.html"><abbr title="\Discord\Repository\AbstractRepository">AbstractRepository</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-Repository-GuildRepository.html"><abbr title="\Discord\Repository\GuildRepository">GuildRepository</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-Repository-PrivateChannelRepository.html"><abbr title="\Discord\Repository\PrivateChannelRepository">PrivateChannelRepository</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-Repository-UserRepository.html"><abbr title="\Discord\Repository\UserRepository">UserRepository</abbr></a></li>
-                                            </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-                                                    <div class="accordion" style="margin-bottom: 0">
-        <div class="accordion-group">
-            <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1818432221"></a>
-                                <a href="../namespaces/discord-voice.html" style="margin-left: 30px; padding-left: 0">Voice</a>
-            </div>
-            <div id="namespace-1818432221" class="accordion-body collapse ">
-                <div class="accordion-inner">
-
-                    
-                    <ul>
-                                                                                                    <li class="class"><a href="../classes/Discord-Voice-Buffer.html"><abbr title="\Discord\Voice\Buffer">Buffer</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-Voice-RecieveStream.html"><abbr title="\Discord\Voice\RecieveStream">RecieveStream</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-Voice-VoiceClient.html"><abbr title="\Discord\Voice\VoiceClient">VoiceClient</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-Voice-VoicePacket.html"><abbr title="\Discord\Voice\VoicePacket">VoicePacket</abbr></a></li>
-                                            </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-                                                    <div class="accordion" style="margin-bottom: 0">
-        <div class="accordion-group">
-            <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1149589278"></a>
-                                <a href="../namespaces/discord-websockets.html" style="margin-left: 30px; padding-left: 0">WebSockets</a>
-            </div>
-            <div id="namespace-1149589278" class="accordion-body collapse ">
-                <div class="accordion-inner">
-
-                                                    <div class="accordion" style="margin-bottom: 0">
-        <div class="accordion-group">
-            <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-127176445"></a>
-                                <a href="../namespaces/discord-websockets-events.html" style="margin-left: 30px; padding-left: 0">Events</a>
-            </div>
-            <div id="namespace-127176445" class="accordion-body collapse ">
-                <div class="accordion-inner">
-
-                    
-                    <ul>
-                                                                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-ChannelCreate.html"><abbr title="\Discord\WebSockets\Events\ChannelCreate">ChannelCreate</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-ChannelDelete.html"><abbr title="\Discord\WebSockets\Events\ChannelDelete">ChannelDelete</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-ChannelPinsUpdate.html"><abbr title="\Discord\WebSockets\Events\ChannelPinsUpdate">ChannelPinsUpdate</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-ChannelUpdate.html"><abbr title="\Discord\WebSockets\Events\ChannelUpdate">ChannelUpdate</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-GuildBanAdd.html"><abbr title="\Discord\WebSockets\Events\GuildBanAdd">GuildBanAdd</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-GuildBanRemove.html"><abbr title="\Discord\WebSockets\Events\GuildBanRemove">GuildBanRemove</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-GuildCreate.html"><abbr title="\Discord\WebSockets\Events\GuildCreate">GuildCreate</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-GuildDelete.html"><abbr title="\Discord\WebSockets\Events\GuildDelete">GuildDelete</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-GuildIntegrationsUpdate.html"><abbr title="\Discord\WebSockets\Events\GuildIntegrationsUpdate">GuildIntegrationsUpdate</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-GuildMemberAdd.html"><abbr title="\Discord\WebSockets\Events\GuildMemberAdd">GuildMemberAdd</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-GuildMemberRemove.html"><abbr title="\Discord\WebSockets\Events\GuildMemberRemove">GuildMemberRemove</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-GuildMemberUpdate.html"><abbr title="\Discord\WebSockets\Events\GuildMemberUpdate">GuildMemberUpdate</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-GuildRoleCreate.html"><abbr title="\Discord\WebSockets\Events\GuildRoleCreate">GuildRoleCreate</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-GuildRoleDelete.html"><abbr title="\Discord\WebSockets\Events\GuildRoleDelete">GuildRoleDelete</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-GuildRoleUpdate.html"><abbr title="\Discord\WebSockets\Events\GuildRoleUpdate">GuildRoleUpdate</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-GuildUpdate.html"><abbr title="\Discord\WebSockets\Events\GuildUpdate">GuildUpdate</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-InviteCreate.html"><abbr title="\Discord\WebSockets\Events\InviteCreate">InviteCreate</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-InviteDelete.html"><abbr title="\Discord\WebSockets\Events\InviteDelete">InviteDelete</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-MessageCreate.html"><abbr title="\Discord\WebSockets\Events\MessageCreate">MessageCreate</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-MessageDelete.html"><abbr title="\Discord\WebSockets\Events\MessageDelete">MessageDelete</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-MessageDeleteBulk.html"><abbr title="\Discord\WebSockets\Events\MessageDeleteBulk">MessageDeleteBulk</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-MessageReactionAdd.html"><abbr title="\Discord\WebSockets\Events\MessageReactionAdd">MessageReactionAdd</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-MessageReactionRemove.html"><abbr title="\Discord\WebSockets\Events\MessageReactionRemove">MessageReactionRemove</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-MessageReactionRemoveAll.html"><abbr title="\Discord\WebSockets\Events\MessageReactionRemoveAll">MessageReactionRemoveAll</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-MessageReactionRemoveEmoji.html"><abbr title="\Discord\WebSockets\Events\MessageReactionRemoveEmoji">MessageReactionRemoveEmoji</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-MessageUpdate.html"><abbr title="\Discord\WebSockets\Events\MessageUpdate">MessageUpdate</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-PresenceUpdate.html"><abbr title="\Discord\WebSockets\Events\PresenceUpdate">PresenceUpdate</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-TypingStart.html"><abbr title="\Discord\WebSockets\Events\TypingStart">TypingStart</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-VoiceServerUpdate.html"><abbr title="\Discord\WebSockets\Events\VoiceServerUpdate">VoiceServerUpdate</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-VoiceStateUpdate.html"><abbr title="\Discord\WebSockets\Events\VoiceStateUpdate">VoiceStateUpdate</abbr></a></li>
-                                            </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-                    
-                    <ul>
-                                                                                                    <li class="class"><a href="../classes/Discord-WebSockets-Event.html"><abbr title="\Discord\WebSockets\Event">Event</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-WebSockets-Handlers.html"><abbr title="\Discord\WebSockets\Handlers">Handlers</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-WebSockets-Intents.html"><abbr title="\Discord\WebSockets\Intents">Intents</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-WebSockets-Op.html"><abbr title="\Discord\WebSockets\Op">Op</abbr></a></li>
-                                            </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-                                                    <div class="accordion" style="margin-bottom: 0">
-        <div class="accordion-group">
-            <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-561107149"></a>
-                                <a href="../namespaces/discord-wrapper.html" style="margin-left: 30px; padding-left: 0">Wrapper</a>
-            </div>
-            <div id="namespace-561107149" class="accordion-body collapse ">
-                <div class="accordion-inner">
-
-                    
-                    <ul>
-                                                                                                    <li class="class"><a href="../classes/Discord-Wrapper-LoggerWrapper.html"><abbr title="\Discord\Wrapper\LoggerWrapper">LoggerWrapper</abbr></a></li>
-                                            </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-                    
-                    <ul>
-                                                                                                    <li class="class"><a href="../classes/Discord-Discord.html"><abbr title="\Discord\Discord">Discord</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-DiscordCommandClient.html"><abbr title="\Discord\DiscordCommandClient">DiscordCommandClient</abbr></a></li>
-                                            </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-                    
-                    <ul>
-                                                                                            </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-        </div>
-    </section>
-    <section class="row-fluid">
-        <div class="span10 offset2">
-            <div class="row-fluid">
-                <div class="span8 content class">
-                    <nav>
-                                                <a href="../namespaces/discord-voice.html"><abbr title="\Discord\Voice">normal</abbr></a> <i class="icon-level-up"></i>
-                                            </nav>
-                    
-                    <h1><small>\Discord\Voice</small>VoicePacket</h1>
-                    <p><em>A voice packet received from Discord.</em></p>
-                    
-                    
-                                        
-                    <section id="summary">
-                        <h2>Summary</h2>
-                        <section class="row-fluid heading">
-                            <section class="span4">
-                                <a href="#methods">Methods</a>
-                            </section>
-                            <section class="span4">
-                                <a href="#properties">Properties</a>
-                            </section>
-                            <section class="span4">
-                                <a href="#constants">Constants</a>
-                            </section>
+    <section class="phpdocumentor-sidebar__category">
+        <h2 class="phpdocumentor-sidebar__category-header">Namespaces</h2>
+                                                <h4 class="phpdocumentor-sidebar__root-namespace"><a href="namespaces/discord.html"><abbr title="\Discord">Discord</abbr></a></h4>
+                <ul class="phpdocumentor-list">
+                                            <li><a href="namespaces/discord-commandclient.html"><abbr title="\Discord\CommandClient">CommandClient</abbr></a></li>
+                                            <li><a href="namespaces/discord-exceptions.html"><abbr title="\Discord\Exceptions">Exceptions</abbr></a></li>
+                                            <li><a href="namespaces/discord-factory.html"><abbr title="\Discord\Factory">Factory</abbr></a></li>
+                                            <li><a href="namespaces/discord-helpers.html"><abbr title="\Discord\Helpers">Helpers</abbr></a></li>
+                                            <li><a href="namespaces/discord-http.html"><abbr title="\Discord\Http">Http</abbr></a></li>
+                                            <li><a href="namespaces/discord-parts.html"><abbr title="\Discord\Parts">Parts</abbr></a></li>
+                                            <li><a href="namespaces/discord-repository.html"><abbr title="\Discord\Repository">Repository</abbr></a></li>
+                                            <li><a href="namespaces/discord-voice.html"><abbr title="\Discord\Voice">Voice</abbr></a></li>
+                                            <li><a href="namespaces/discord-websockets.html"><abbr title="\Discord\WebSockets">WebSockets</abbr></a></li>
+                                            <li><a href="namespaces/discord-wrapper.html"><abbr title="\Discord\Wrapper">Wrapper</abbr></a></li>
+                                    </ul>
                         </section>
-                        <section class="row-fluid public">
-                            <section class="span4">
-                                                                    <a href="../classes/Discord-Voice-VoicePacket.html#method___construct" class="">__construct()</a><br />
-                                                                    <a href="../classes/Discord-Voice-VoicePacket.html#method_getSequence" class="">getSequence()</a><br />
-                                                                    <a href="../classes/Discord-Voice-VoicePacket.html#method_getTimestamp" class="">getTimestamp()</a><br />
-                                                                    <a href="../classes/Discord-Voice-VoicePacket.html#method_getSSRC" class="">getSSRC()</a><br />
-                                                                    <a href="../classes/Discord-Voice-VoicePacket.html#method_getHeader" class="">getHeader()</a><br />
-                                                                    <a href="../classes/Discord-Voice-VoicePacket.html#method_getData" class="">getData()</a><br />
-                                                                    <a href="../classes/Discord-Voice-VoicePacket.html#method_make" class="">make()</a><br />
-                                                                    <a href="../classes/Discord-Voice-VoicePacket.html#method_setBuffer" class="">setBuffer()</a><br />
-                                                                    <a href="../classes/Discord-Voice-VoicePacket.html#method___toString" class="">__toString()</a><br />
-                                                            </section>
-                            <section class="span4">
-                                                                    <em>No public properties found</em>
-                                                            </section>
-                            <section class="span4">
-                                                                    <a href="../classes/Discord-Voice-VoicePacket.html#constant_RTP_HEADER_BYTE_LENGTH" class="">RTP_HEADER_BYTE_LENGTH</a><br />
-                                                                    <a href="../classes/Discord-Voice-VoicePacket.html#constant_RTP_VERSION_PAD_EXTEND_INDEX" class="">RTP_VERSION_PAD_EXTEND_INDEX</a><br />
-                                                                    <a href="../classes/Discord-Voice-VoicePacket.html#constant_RTP_VERSION_PAD_EXTEND" class="">RTP_VERSION_PAD_EXTEND</a><br />
-                                                                    <a href="../classes/Discord-Voice-VoicePacket.html#constant_RTP_PAYLOAD_INDEX" class="">RTP_PAYLOAD_INDEX</a><br />
-                                                                    <a href="../classes/Discord-Voice-VoicePacket.html#constant_RTP_PAYLOAD_TYPE" class="">RTP_PAYLOAD_TYPE</a><br />
-                                                                    <a href="../classes/Discord-Voice-VoicePacket.html#constant_SEQ_INDEX" class="">SEQ_INDEX</a><br />
-                                                                    <a href="../classes/Discord-Voice-VoicePacket.html#constant_TIMESTAMP_INDEX" class="">TIMESTAMP_INDEX</a><br />
-                                                                    <a href="../classes/Discord-Voice-VoicePacket.html#constant_SSRC_INDEX" class="">SSRC_INDEX</a><br />
-                                                            </section>
-                        </section>
-                        <section class="row-fluid protected">
-                            <section class="span4">
-                                                                    <a href="../classes/Discord-Voice-VoicePacket.html#method_initBufferNoEncryption" class="">initBufferNoEncryption()</a><br />
-                                                                    <a href="../classes/Discord-Voice-VoicePacket.html#method_initBufferEncryption" class="">initBufferEncryption()</a><br />
-                                                                    <a href="../classes/Discord-Voice-VoicePacket.html#method_buildHeader" class="">buildHeader()</a><br />
-                                                            </section>
-                            <section class="span4">
-                                                                    <a href="../classes/Discord-Voice-VoicePacket.html#property_buffer" class="">$buffer</a><br />
-                                                                    <a href="../classes/Discord-Voice-VoicePacket.html#property_ssrc" class="">$ssrc</a><br />
-                                                                    <a href="../classes/Discord-Voice-VoicePacket.html#property_seq" class="">$seq</a><br />
-                                                                    <a href="../classes/Discord-Voice-VoicePacket.html#property_timestamp" class="">$timestamp</a><br />
-                                                            </section>
-                            <section class="span4">
-                                <em>N/A</em>
-                            </section>
-                        </section>
-                        <section class="row-fluid private">
-                            <section class="span4">
-                                                                    <em>No private methods found</em>
-                                                            </section>
-                            <section class="span4">
-                                                                    <em>No private properties found</em>
-                                                            </section>
-                            <section class="span4">
-                                <em>N/A</em>
-                            </section>
-                        </section>
-                    </section>
-                </div>
-                <aside class="span4 detailsbar">
-                                        
-                    
-                    <dl>
-                        <dt>File</dt>
-                            <dd><a href="../files/src-discord-voice-voicepacket.html"><div class="path-wrapper">src/Discord/Voice/VoicePacket.php</div></a></dd>
-                                                <dt>Package</dt>
-                            <dd><div class="namespace-wrapper">Default</div></dd>
-                                                <dt>Class hierarchy</dt>
-                            <dd class="hierarchy">
-                                                                                                                                                                    <div class="namespace-wrapper">\Discord\Voice\VoicePacket</div>
-                            </dd>
 
-                        
-                        
-                        
-                                                
-                                                                        </dl>
-                    <h2>Tags</h2>
-                    <table class="table table-condensed">
-                                            <tr><td colspan="2"><em>None found</em></td></tr>
-                                        </table>
-                </aside>
-            </div>
-
-                                    <a id="constants" name="constants"></a>
-            <div class="row-fluid">
-                <div class="span8 content class">
-                    <h2>Constants</h2>
-                </div>
-                <aside class="span4 detailsbar"></aside>
-            </div>
-
-                                <div class="row-fluid">
-        <div class="span8 content class">
-            <a id="constant_RTP_HEADER_BYTE_LENGTH" name="constant_RTP_HEADER_BYTE_LENGTH" class="anchor"></a>
-            <article id="constant_RTP_HEADER_BYTE_LENGTH" class="constant">
-                <h3 class="">RTP_HEADER_BYTE_LENGTH</h3>
-                <pre class="signature">RTP_HEADER_BYTE_LENGTH = 12</pre>
-                <p><em>Huge thanks to Austin and Michael from JDA for these constants
-and audio packets.</em></p>
-                <p>Check out their repo:
-<a href="https://github.com/DV8FromTheWorld/JDA">https://github.com/DV8FromTheWorld/JDA</a></p>
-            </article>
-        </div>
-        <aside class="span4 detailsbar">
-            <h1><i class="icon-arrow-down"></i></h1>
-                        <dl>
-                                <dt>File</dt>
-                <dd><a href="../files/src-discord-voice-voicepacket.html"><div class="path-wrapper">src/Discord/Voice/VoicePacket.php</div></a></dd>
-                                                                            </dl>
-            <h2>Tags</h2>
-            <table class="table table-condensed">
-                                    <tr><td colspan="2"><em>None found</em></td></tr>
-                            </table>
-        </aside>
-    </div>
-
-                                    <div class="row-fluid">
-        <div class="span8 content class">
-            <a id="constant_RTP_VERSION_PAD_EXTEND_INDEX" name="constant_RTP_VERSION_PAD_EXTEND_INDEX" class="anchor"></a>
-            <article id="constant_RTP_VERSION_PAD_EXTEND_INDEX" class="constant">
-                <h3 class="">RTP_VERSION_PAD_EXTEND_INDEX</h3>
-                <pre class="signature">RTP_VERSION_PAD_EXTEND_INDEX = 0</pre>
-                <p><em></em></p>
-                
-            </article>
-        </div>
-        <aside class="span4 detailsbar">
-            <h1><i class="icon-arrow-down"></i></h1>
-                        <dl>
-                                <dt>File</dt>
-                <dd><a href="../files/src-discord-voice-voicepacket.html"><div class="path-wrapper">src/Discord/Voice/VoicePacket.php</div></a></dd>
-                                                                            </dl>
-            <h2>Tags</h2>
-            <table class="table table-condensed">
-                                    <tr><td colspan="2"><em>None found</em></td></tr>
-                            </table>
-        </aside>
-    </div>
-
-                                    <div class="row-fluid">
-        <div class="span8 content class">
-            <a id="constant_RTP_VERSION_PAD_EXTEND" name="constant_RTP_VERSION_PAD_EXTEND" class="anchor"></a>
-            <article id="constant_RTP_VERSION_PAD_EXTEND" class="constant">
-                <h3 class="">RTP_VERSION_PAD_EXTEND</h3>
-                <pre class="signature">RTP_VERSION_PAD_EXTEND = 0x80</pre>
-                <p><em></em></p>
-                
-            </article>
-        </div>
-        <aside class="span4 detailsbar">
-            <h1><i class="icon-arrow-down"></i></h1>
-                        <dl>
-                                <dt>File</dt>
-                <dd><a href="../files/src-discord-voice-voicepacket.html"><div class="path-wrapper">src/Discord/Voice/VoicePacket.php</div></a></dd>
-                                                                            </dl>
-            <h2>Tags</h2>
-            <table class="table table-condensed">
-                                    <tr><td colspan="2"><em>None found</em></td></tr>
-                            </table>
-        </aside>
-    </div>
-
-                                    <div class="row-fluid">
-        <div class="span8 content class">
-            <a id="constant_RTP_PAYLOAD_INDEX" name="constant_RTP_PAYLOAD_INDEX" class="anchor"></a>
-            <article id="constant_RTP_PAYLOAD_INDEX" class="constant">
-                <h3 class="">RTP_PAYLOAD_INDEX</h3>
-                <pre class="signature">RTP_PAYLOAD_INDEX = 1</pre>
-                <p><em></em></p>
-                
-            </article>
-        </div>
-        <aside class="span4 detailsbar">
-            <h1><i class="icon-arrow-down"></i></h1>
-                        <dl>
-                                <dt>File</dt>
-                <dd><a href="../files/src-discord-voice-voicepacket.html"><div class="path-wrapper">src/Discord/Voice/VoicePacket.php</div></a></dd>
-                                                                            </dl>
-            <h2>Tags</h2>
-            <table class="table table-condensed">
-                                    <tr><td colspan="2"><em>None found</em></td></tr>
-                            </table>
-        </aside>
-    </div>
-
-                                    <div class="row-fluid">
-        <div class="span8 content class">
-            <a id="constant_RTP_PAYLOAD_TYPE" name="constant_RTP_PAYLOAD_TYPE" class="anchor"></a>
-            <article id="constant_RTP_PAYLOAD_TYPE" class="constant">
-                <h3 class="">RTP_PAYLOAD_TYPE</h3>
-                <pre class="signature">RTP_PAYLOAD_TYPE = 0x78</pre>
-                <p><em></em></p>
-                
-            </article>
-        </div>
-        <aside class="span4 detailsbar">
-            <h1><i class="icon-arrow-down"></i></h1>
-                        <dl>
-                                <dt>File</dt>
-                <dd><a href="../files/src-discord-voice-voicepacket.html"><div class="path-wrapper">src/Discord/Voice/VoicePacket.php</div></a></dd>
-                                                                            </dl>
-            <h2>Tags</h2>
-            <table class="table table-condensed">
-                                    <tr><td colspan="2"><em>None found</em></td></tr>
-                            </table>
-        </aside>
-    </div>
-
-                                    <div class="row-fluid">
-        <div class="span8 content class">
-            <a id="constant_SEQ_INDEX" name="constant_SEQ_INDEX" class="anchor"></a>
-            <article id="constant_SEQ_INDEX" class="constant">
-                <h3 class="">SEQ_INDEX</h3>
-                <pre class="signature">SEQ_INDEX = 2</pre>
-                <p><em></em></p>
-                
-            </article>
-        </div>
-        <aside class="span4 detailsbar">
-            <h1><i class="icon-arrow-down"></i></h1>
-                        <dl>
-                                <dt>File</dt>
-                <dd><a href="../files/src-discord-voice-voicepacket.html"><div class="path-wrapper">src/Discord/Voice/VoicePacket.php</div></a></dd>
-                                                                            </dl>
-            <h2>Tags</h2>
-            <table class="table table-condensed">
-                                    <tr><td colspan="2"><em>None found</em></td></tr>
-                            </table>
-        </aside>
-    </div>
-
-                                    <div class="row-fluid">
-        <div class="span8 content class">
-            <a id="constant_TIMESTAMP_INDEX" name="constant_TIMESTAMP_INDEX" class="anchor"></a>
-            <article id="constant_TIMESTAMP_INDEX" class="constant">
-                <h3 class="">TIMESTAMP_INDEX</h3>
-                <pre class="signature">TIMESTAMP_INDEX = 4</pre>
-                <p><em></em></p>
-                
-            </article>
-        </div>
-        <aside class="span4 detailsbar">
-            <h1><i class="icon-arrow-down"></i></h1>
-                        <dl>
-                                <dt>File</dt>
-                <dd><a href="../files/src-discord-voice-voicepacket.html"><div class="path-wrapper">src/Discord/Voice/VoicePacket.php</div></a></dd>
-                                                                            </dl>
-            <h2>Tags</h2>
-            <table class="table table-condensed">
-                                    <tr><td colspan="2"><em>None found</em></td></tr>
-                            </table>
-        </aside>
-    </div>
-
-                                    <div class="row-fluid">
-        <div class="span8 content class">
-            <a id="constant_SSRC_INDEX" name="constant_SSRC_INDEX" class="anchor"></a>
-            <article id="constant_SSRC_INDEX" class="constant">
-                <h3 class="">SSRC_INDEX</h3>
-                <pre class="signature">SSRC_INDEX = 8</pre>
-                <p><em></em></p>
-                
-            </article>
-        </div>
-        <aside class="span4 detailsbar">
-            <h1><i class="icon-arrow-down"></i></h1>
-                        <dl>
-                                <dt>File</dt>
-                <dd><a href="../files/src-discord-voice-voicepacket.html"><div class="path-wrapper">src/Discord/Voice/VoicePacket.php</div></a></dd>
-                                                                            </dl>
-            <h2>Tags</h2>
-            <table class="table table-condensed">
-                                    <tr><td colspan="2"><em>None found</em></td></tr>
-                            </table>
-        </aside>
-    </div>
-
-                            
-                                    <a id="properties" name="properties"></a>
-            <div class="row-fluid">
-                <div class="span8 content class">
-                    <h2>Properties</h2>
-                </div>
-                <aside class="span4 detailsbar"></aside>
-            </div>
-
-                                                    <div class="row-fluid">
-        <div class="span8 content class">
-            <a id="property_buffer" name="property_buffer" class="anchor"></a>
-            <article class="property">
-                <h3 class="protected ">$buffer</h3>
-                <pre class="signature">$buffer : \Discord\Voice\Buffer</pre>
-                <p><em>The voice packet buffer.</em></p>
-                
-
-                                <h4>Type</h4>
-                <a href="../classes/Discord-Voice-Buffer.html"><abbr title="\Discord\Voice\Buffer">normal</abbr></a>
-                                            </article>
-        </div>
-        <aside class="span4 detailsbar">
-            <h1><i class="icon-arrow-down"></i></h1>
-                        <dl>
-                                                            </dl>
-            <h2>Tags</h2>
-            <table class="table table-condensed">
-                                    <tr><td colspan="2"><em>None found</em></td></tr>
-                            </table>
-        </aside>
-    </div>
-
-                                    <div class="row-fluid">
-        <div class="span8 content class">
-            <a id="property_ssrc" name="property_ssrc" class="anchor"></a>
-            <article class="property">
-                <h3 class="protected ">$ssrc</h3>
-                <pre class="signature">$ssrc : int</pre>
-                <p><em>The client SSRC.</em></p>
-                
-
-                                <h4>Type</h4>
-                <a href="../int"><abbr title="int">normal</abbr></a>
-                &mdash; The client SSRC.                            </article>
-        </div>
-        <aside class="span4 detailsbar">
-            <h1><i class="icon-arrow-down"></i></h1>
-                        <dl>
-                                                            </dl>
-            <h2>Tags</h2>
-            <table class="table table-condensed">
-                                    <tr><td colspan="2"><em>None found</em></td></tr>
-                            </table>
-        </aside>
-    </div>
-
-                                    <div class="row-fluid">
-        <div class="span8 content class">
-            <a id="property_seq" name="property_seq" class="anchor"></a>
-            <article class="property">
-                <h3 class="protected ">$seq</h3>
-                <pre class="signature">$seq : int</pre>
-                <p><em>The packet sequence.</em></p>
-                
-
-                                <h4>Type</h4>
-                <a href="../int"><abbr title="int">normal</abbr></a>
-                &mdash; The packet sequence.                            </article>
-        </div>
-        <aside class="span4 detailsbar">
-            <h1><i class="icon-arrow-down"></i></h1>
-                        <dl>
-                                                            </dl>
-            <h2>Tags</h2>
-            <table class="table table-condensed">
-                                    <tr><td colspan="2"><em>None found</em></td></tr>
-                            </table>
-        </aside>
-    </div>
-
-                                    <div class="row-fluid">
-        <div class="span8 content class">
-            <a id="property_timestamp" name="property_timestamp" class="anchor"></a>
-            <article class="property">
-                <h3 class="protected ">$timestamp</h3>
-                <pre class="signature">$timestamp : int</pre>
-                <p><em>The packet timestamp.</em></p>
-                
-
-                                <h4>Type</h4>
-                <a href="../int"><abbr title="int">normal</abbr></a>
-                &mdash; The packet timestamp.                            </article>
-        </div>
-        <aside class="span4 detailsbar">
-            <h1><i class="icon-arrow-down"></i></h1>
-                        <dl>
-                                                            </dl>
-            <h2>Tags</h2>
-            <table class="table table-condensed">
-                                    <tr><td colspan="2"><em>None found</em></td></tr>
-                            </table>
-        </aside>
-    </div>
-
-                                            
-                                    <a id="methods" name="methods"></a>
-            <div class="row-fluid">
-                <div class="span8 content class"><h2>Methods</h2></div>
-                <aside class="span4 detailsbar"></aside>
-            </div>
-
-                                    <div class="row-fluid">
-        <div class="span8 content class">
-            <a id="method___construct" name="method___construct" class="anchor"></a>
-            <article class="method">
-                <h3 class="public ">__construct()</h3>
-                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">__construct(string  <span class="argument">$data</span>, int  <span class="argument">$ssrc</span>, int  <span class="argument">$seq</span>, int  <span class="argument">$timestamp</span>, bool  <span class="argument">$encryption = false</span>, string|null  <span class="argument">$key = null</span>) : mixed</pre>
-                <p><em>Constructs the voice packet.</em></p>
-                
-
-                                    <h4>Parameters</h4>
-                    <table class="table table-condensed table-hover">
-                                                    <tr>
-                                <td>string</td>
-                                <td>$data </td>
-                                <td><p>The Opus data to encode.</p></td>
-                            </tr>
-                                                    <tr>
-                                <td>int</td>
-                                <td>$ssrc </td>
-                                <td><p>The client SSRC value.</p></td>
-                            </tr>
-                                                    <tr>
-                                <td>int</td>
-                                <td>$seq </td>
-                                <td><p>The packet sequence.</p></td>
-                            </tr>
-                                                    <tr>
-                                <td>int</td>
-                                <td>$timestamp </td>
-                                <td><p>The packet timestamp.</p></td>
-                            </tr>
-                                                    <tr>
-                                <td>bool</td>
-                                <td>$encryption </td>
-                                <td><p>Whether the packet should be encrypted.</p></td>
-                            </tr>
-                                                    <tr>
-                                <td>string|null</td>
-                                <td>$key </td>
-                                <td><p>The encryption key.</p></td>
-                            </tr>
-                                            </table>
-                
-                
-                                    <h4>Returns</h4>
-                    mixed
-                                    
-                            </article>
-        </div>
-        <aside class="span4 detailsbar">
-            <h1><i class="icon-arrow-down"></i></h1>
-                                                            <dl>
-                                                    <dt>Inherited from</dt>
-                    <dd><a href="../classes/Discord-Voice-VoicePacket.html"><div class="path-wrapper">\Discord\Voice\VoicePacket</div></a></dd>
-                                                            </dl>
-            <h2>Tags</h2>
-            <table class="table table-condensed">
-                                    <tr><td colspan="2"><em>None found</em></td></tr>
-                            </table>
-        </aside>
-    </div>
-
-                                    <div class="row-fluid">
-        <div class="span8 content class">
-            <a id="method_getSequence" name="method_getSequence" class="anchor"></a>
-            <article class="method">
-                <h3 class="public ">getSequence()</h3>
-                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">getSequence() : int</pre>
-                <p><em>Returns the sequence.</em></p>
-                
-
-                
-                
-                                    <h4>Returns</h4>
-                    int
-                                            &mdash; <p>The packet sequence.</p>
-                                    
-                            </article>
-        </div>
-        <aside class="span4 detailsbar">
-            <h1><i class="icon-arrow-down"></i></h1>
-                                                            <dl>
-                                                    <dt>Inherited from</dt>
-                    <dd><a href="../classes/Discord-Voice-VoicePacket.html"><div class="path-wrapper">\Discord\Voice\VoicePacket</div></a></dd>
-                                                            </dl>
-            <h2>Tags</h2>
-            <table class="table table-condensed">
-                                    <tr><td colspan="2"><em>None found</em></td></tr>
-                            </table>
-        </aside>
-    </div>
-
-                                    <div class="row-fluid">
-        <div class="span8 content class">
-            <a id="method_getTimestamp" name="method_getTimestamp" class="anchor"></a>
-            <article class="method">
-                <h3 class="public ">getTimestamp()</h3>
-                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">getTimestamp() : int</pre>
-                <p><em>Returns the timestamp.</em></p>
-                
-
-                
-                
-                                    <h4>Returns</h4>
-                    int
-                                            &mdash; <p>The packet timestamp.</p>
-                                    
-                            </article>
-        </div>
-        <aside class="span4 detailsbar">
-            <h1><i class="icon-arrow-down"></i></h1>
-                                                            <dl>
-                                                    <dt>Inherited from</dt>
-                    <dd><a href="../classes/Discord-Voice-VoicePacket.html"><div class="path-wrapper">\Discord\Voice\VoicePacket</div></a></dd>
-                                                            </dl>
-            <h2>Tags</h2>
-            <table class="table table-condensed">
-                                    <tr><td colspan="2"><em>None found</em></td></tr>
-                            </table>
-        </aside>
-    </div>
-
-                                    <div class="row-fluid">
-        <div class="span8 content class">
-            <a id="method_getSSRC" name="method_getSSRC" class="anchor"></a>
-            <article class="method">
-                <h3 class="public ">getSSRC()</h3>
-                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">getSSRC() : int</pre>
-                <p><em>Returns the SSRC.</em></p>
-                
-
-                
-                
-                                    <h4>Returns</h4>
-                    int
-                                            &mdash; <p>The packet SSRC.</p>
-                                    
-                            </article>
-        </div>
-        <aside class="span4 detailsbar">
-            <h1><i class="icon-arrow-down"></i></h1>
-                                                            <dl>
-                                                    <dt>Inherited from</dt>
-                    <dd><a href="../classes/Discord-Voice-VoicePacket.html"><div class="path-wrapper">\Discord\Voice\VoicePacket</div></a></dd>
-                                                            </dl>
-            <h2>Tags</h2>
-            <table class="table table-condensed">
-                                    <tr><td colspan="2"><em>None found</em></td></tr>
-                            </table>
-        </aside>
-    </div>
-
-                                    <div class="row-fluid">
-        <div class="span8 content class">
-            <a id="method_getHeader" name="method_getHeader" class="anchor"></a>
-            <article class="method">
-                <h3 class="public ">getHeader()</h3>
-                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">getHeader() : string</pre>
-                <p><em>Returns the header.</em></p>
-                
-
-                
-                
-                                    <h4>Returns</h4>
-                    string
-                                            &mdash; <p>The packet header.</p>
-                                    
-                            </article>
-        </div>
-        <aside class="span4 detailsbar">
-            <h1><i class="icon-arrow-down"></i></h1>
-                                                            <dl>
-                                                    <dt>Inherited from</dt>
-                    <dd><a href="../classes/Discord-Voice-VoicePacket.html"><div class="path-wrapper">\Discord\Voice\VoicePacket</div></a></dd>
-                                                            </dl>
-            <h2>Tags</h2>
-            <table class="table table-condensed">
-                                    <tr><td colspan="2"><em>None found</em></td></tr>
-                            </table>
-        </aside>
-    </div>
-
-                                    <div class="row-fluid">
-        <div class="span8 content class">
-            <a id="method_getData" name="method_getData" class="anchor"></a>
-            <article class="method">
-                <h3 class="public ">getData()</h3>
-                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">getData() : string</pre>
-                <p><em>Returns the data.</em></p>
-                
-
-                
-                
-                                    <h4>Returns</h4>
-                    string
-                                            &mdash; <p>The packet data.</p>
-                                    
-                            </article>
-        </div>
-        <aside class="span4 detailsbar">
-            <h1><i class="icon-arrow-down"></i></h1>
-                                                            <dl>
-                                                    <dt>Inherited from</dt>
-                    <dd><a href="../classes/Discord-Voice-VoicePacket.html"><div class="path-wrapper">\Discord\Voice\VoicePacket</div></a></dd>
-                                                            </dl>
-            <h2>Tags</h2>
-            <table class="table table-condensed">
-                                    <tr><td colspan="2"><em>None found</em></td></tr>
-                            </table>
-        </aside>
-    </div>
-
-                                    <div class="row-fluid">
-        <div class="span8 content class">
-            <a id="method_make" name="method_make" class="anchor"></a>
-            <article class="method">
-                <h3 class="public ">make()</h3>
-                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">make(string  <span class="argument">$data</span>) : self</pre>
-                <p><em>Creates a voice packet from data sent from Discord.</em></p>
-                
-
-                                    <h4>Parameters</h4>
-                    <table class="table table-condensed table-hover">
-                                                    <tr>
-                                <td>string</td>
-                                <td>$data </td>
-                                <td><p>Data from Discord.</p></td>
-                            </tr>
-                                            </table>
-                
-                
-                                    <h4>Returns</h4>
-                    self
-                                            &mdash; <p>A voice packet.</p>
-                                    
-                            </article>
-        </div>
-        <aside class="span4 detailsbar">
-            <h1><i class="icon-arrow-down"></i></h1>
-                            <span class="label label-info">static</span>
-                                                            <dl>
-                                                    <dt>Inherited from</dt>
-                    <dd><a href="../classes/Discord-Voice-VoicePacket.html"><div class="path-wrapper">\Discord\Voice\VoicePacket</div></a></dd>
-                                                            </dl>
-            <h2>Tags</h2>
-            <table class="table table-condensed">
-                                    <tr><td colspan="2"><em>None found</em></td></tr>
-                            </table>
-        </aside>
-    </div>
-
-                                    <div class="row-fluid">
-        <div class="span8 content class">
-            <a id="method_setBuffer" name="method_setBuffer" class="anchor"></a>
-            <article class="method">
-                <h3 class="public ">setBuffer()</h3>
-                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">setBuffer(\Discord\Voice\Buffer  <span class="argument">$buffer</span>) : self</pre>
-                <p><em>Sets the buffer.</em></p>
-                
-
-                                    <h4>Parameters</h4>
-                    <table class="table table-condensed table-hover">
-                                                    <tr>
-                                <td>\Discord\Voice\Buffer</td>
-                                <td>$buffer </td>
-                                <td><p>The buffer to set.</p></td>
-                            </tr>
-                                            </table>
-                
-                
-                                    <h4>Returns</h4>
-                    self
-                                    
-                            </article>
-        </div>
-        <aside class="span4 detailsbar">
-            <h1><i class="icon-arrow-down"></i></h1>
-                                                            <dl>
-                                                    <dt>Inherited from</dt>
-                    <dd><a href="../classes/Discord-Voice-VoicePacket.html"><div class="path-wrapper">\Discord\Voice\VoicePacket</div></a></dd>
-                                                            </dl>
-            <h2>Tags</h2>
-            <table class="table table-condensed">
-                                    <tr><td colspan="2"><em>None found</em></td></tr>
-                            </table>
-        </aside>
-    </div>
-
-                                    <div class="row-fluid">
-        <div class="span8 content class">
-            <a id="method___toString" name="method___toString" class="anchor"></a>
-            <article class="method">
-                <h3 class="public ">__toString()</h3>
-                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">__toString() : string</pre>
-                <p><em>Handles to string casting of object.</em></p>
-                
-
-                
-                
-                                    <h4>Returns</h4>
-                    string
-                                    
-                            </article>
-        </div>
-        <aside class="span4 detailsbar">
-            <h1><i class="icon-arrow-down"></i></h1>
-                                                            <dl>
-                                                    <dt>Inherited from</dt>
-                    <dd><a href="../classes/Discord-Voice-VoicePacket.html"><div class="path-wrapper">\Discord\Voice\VoicePacket</div></a></dd>
-                                                            </dl>
-            <h2>Tags</h2>
-            <table class="table table-condensed">
-                                    <tr><td colspan="2"><em>None found</em></td></tr>
-                            </table>
-        </aside>
-    </div>
-
-                                                    <div class="row-fluid">
-        <div class="span8 content class">
-            <a id="method_initBufferNoEncryption" name="method_initBufferNoEncryption" class="anchor"></a>
-            <article class="method">
-                <h3 class="protected ">initBufferNoEncryption()</h3>
-                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">initBufferNoEncryption(string  <span class="argument">$data</span>) : mixed</pre>
-                <p><em>Initilizes the buffer with no encryption.</em></p>
-                
-
-                                    <h4>Parameters</h4>
-                    <table class="table table-condensed table-hover">
-                                                    <tr>
-                                <td>string</td>
-                                <td>$data </td>
-                                <td><p>The Opus data to encode.</p></td>
-                            </tr>
-                                            </table>
-                
-                
-                                    <h4>Returns</h4>
-                    mixed
-                                    
-                            </article>
-        </div>
-        <aside class="span4 detailsbar">
-            <h1><i class="icon-arrow-down"></i></h1>
-                                                            <dl>
-                                                    <dt>Inherited from</dt>
-                    <dd><a href="../classes/Discord-Voice-VoicePacket.html"><div class="path-wrapper">\Discord\Voice\VoicePacket</div></a></dd>
-                                                            </dl>
-            <h2>Tags</h2>
-            <table class="table table-condensed">
-                                    <tr><td colspan="2"><em>None found</em></td></tr>
-                            </table>
-        </aside>
-    </div>
-
-                                    <div class="row-fluid">
-        <div class="span8 content class">
-            <a id="method_initBufferEncryption" name="method_initBufferEncryption" class="anchor"></a>
-            <article class="method">
-                <h3 class="protected ">initBufferEncryption()</h3>
-                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">initBufferEncryption(string  <span class="argument">$data</span>, string  <span class="argument">$key</span>) : mixed</pre>
-                <p><em>Initilizes the buffer with encryption.</em></p>
-                
-
-                                    <h4>Parameters</h4>
-                    <table class="table table-condensed table-hover">
-                                                    <tr>
-                                <td>string</td>
-                                <td>$data </td>
-                                <td><p>The Opus data to encode.</p></td>
-                            </tr>
-                                                    <tr>
-                                <td>string</td>
-                                <td>$key </td>
-                                <td><p>The encryption key.</p></td>
-                            </tr>
-                                            </table>
-                
-                
-                                    <h4>Returns</h4>
-                    mixed
-                                    
-                            </article>
-        </div>
-        <aside class="span4 detailsbar">
-            <h1><i class="icon-arrow-down"></i></h1>
-                                                            <dl>
-                                                    <dt>Inherited from</dt>
-                    <dd><a href="../classes/Discord-Voice-VoicePacket.html"><div class="path-wrapper">\Discord\Voice\VoicePacket</div></a></dd>
-                                                            </dl>
-            <h2>Tags</h2>
-            <table class="table table-condensed">
-                                    <tr><td colspan="2"><em>None found</em></td></tr>
-                            </table>
-        </aside>
-    </div>
-
-                                    <div class="row-fluid">
-        <div class="span8 content class">
-            <a id="method_buildHeader" name="method_buildHeader" class="anchor"></a>
-            <article class="method">
-                <h3 class="protected ">buildHeader()</h3>
-                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">buildHeader() : string</pre>
-                <p><em>Builds the header.</em></p>
-                
-
-                
-                
-                                    <h4>Returns</h4>
-                    string
-                                            &mdash; <p>The header,</p>
-                                    
-                            </article>
-        </div>
-        <aside class="span4 detailsbar">
-            <h1><i class="icon-arrow-down"></i></h1>
-                                                            <dl>
-                                                    <dt>Inherited from</dt>
-                    <dd><a href="../classes/Discord-Voice-VoicePacket.html"><div class="path-wrapper">\Discord\Voice\VoicePacket</div></a></dd>
-                                                            </dl>
-            <h2>Tags</h2>
-            <table class="table table-condensed">
-                                    <tr><td colspan="2"><em>None found</em></td></tr>
-                            </table>
-        </aside>
-    </div>
-
-                                                    </div>
+    
+    <section class="phpdocumentor-sidebar__category">
+        <h2 class="phpdocumentor-sidebar__category-header">Reports</h2>
+                <h3 class="phpdocumentor-sidebar__root-package"><a href="reports/deprecated.html">Deprecated</a></h3>
+        <h3 class="phpdocumentor-sidebar__root-package"><a href="reports/errors.html">Errors</a></h3>
+        <h3 class="phpdocumentor-sidebar__root-package"><a href="reports/markers.html">Markers</a></h3>
     </section>
 
-    <div id="source-view" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="source-view-label" aria-hidden="true">
-        <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-            <h3 id="source-view-label">VoicePacket.php</h3>
-        </div>
-        <div class="modal-body">
-            <pre data-src="../files/src/Discord/Voice/VoicePacket.php.txt" class="language-php line-numbers"></pre>
-        </div>
-    </div>
+    <section class="phpdocumentor-sidebar__category">
+        <h2 class="phpdocumentor-sidebar__category-header">Indices</h2>
+        <h3 class="phpdocumentor-sidebar__root-package"><a href="indices/files.html">Files</a></h3>
+    </section>
+</aside>
 
-    <footer class="row-fluid">
-        <section class="span10 offset2">
-            <section class="row-fluid">
-                <section class="span10 offset1">
-                    <section class="row-fluid footer-sections">
-                        <section class="span4">
-                                                        <h1><i class="icon-code"></i></h1>
-                            <div>
-                                <ul>
-                                                                            <li><a href="../namespaces/discord.html"><abbr title="\Discord">normal</abbr></a></li>
-                                                                    </ul>
-                            </div>
-                        </section>
-                        <section class="span4">
-                                                        <h1><i class="icon-bar-chart"></i></h1>
-                            <div>
-                                <ul>
-                                    <li><a href="../graphs/class.html">Class Hierarchy Diagram</a></li>
-                                </ul>
-                            </div>
-                        </section>
-                        <section class="span4">
-                                                        <h1><i class="icon-pushpin"></i></h1>
-                            <div>
-                                <ul>
-                                    <li><a href="../reports/errors.html">Errors</a></li>
-                                    <li><a href="../reports/markers.html">Markers</a></li>
-                                </ul>
-                            </div>
-                        </section>
-                    </section>
-                </section>
+            <div class="phpdocumentor-column -eight phpdocumentor-content">
+                    <ul class="phpdocumentor-breadcrumbs">
+            <li class="phpdocumentor-breadcrumb"><a href="namespaces/discord.html">Discord</a></li>
+            <li class="phpdocumentor-breadcrumb"><a href="namespaces/discord-voice.html">Voice</a></li>
+    </ul>
+
+    <article class="phpdocumentor-element -class">
+        <h2 class="phpdocumentor-content__title">
+    VoicePacket
+
+    
+    
+    
+    </h2>
+
+        <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoicePacket.php"><a href="files/src-discord-voice-voicepacket.html"><abbr title="src/Discord/Voice/VoicePacket.php">VoicePacket.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">19</span>
+</aside>
+
+            <p class="phpdocumentor-summary">A voice packet received from Discord.</p>
+
+    <section class="phpdocumentor-description"></section>
+
+
+
+
+
+
+
+
+<h3 id="toc">
+    Table of Contents
+    <a href="#toc" class="headerlink"><i class="fas fa-link"></i></a>
+</h3>
+
+<dl class="phpdocumentor-table-of-contents">
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a href="classes/Discord-Voice-VoicePacket.html#constant_RTP_HEADER_BYTE_LENGTH">RTP_HEADER_BYTE_LENGTH</a>
+    <span>
+        &nbsp;= 12                    </span>
+</dt>
+<dd>Huge thanks to Austin and Michael from JDA for these constants
+and audio packets.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a href="classes/Discord-Voice-VoicePacket.html#constant_RTP_PAYLOAD_INDEX">RTP_PAYLOAD_INDEX</a>
+    <span>
+        &nbsp;= 1                    </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a href="classes/Discord-Voice-VoicePacket.html#constant_RTP_PAYLOAD_TYPE">RTP_PAYLOAD_TYPE</a>
+    <span>
+        &nbsp;= 0x78                    </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a href="classes/Discord-Voice-VoicePacket.html#constant_RTP_VERSION_PAD_EXTEND">RTP_VERSION_PAD_EXTEND</a>
+    <span>
+        &nbsp;= 0x80                    </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a href="classes/Discord-Voice-VoicePacket.html#constant_RTP_VERSION_PAD_EXTEND_INDEX">RTP_VERSION_PAD_EXTEND_INDEX</a>
+    <span>
+        &nbsp;= 0                    </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a href="classes/Discord-Voice-VoicePacket.html#constant_SEQ_INDEX">SEQ_INDEX</a>
+    <span>
+        &nbsp;= 2                    </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a href="classes/Discord-Voice-VoicePacket.html#constant_SSRC_INDEX">SSRC_INDEX</a>
+    <span>
+        &nbsp;= 8                    </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a href="classes/Discord-Voice-VoicePacket.html#constant_TIMESTAMP_INDEX">TIMESTAMP_INDEX</a>
+    <span>
+        &nbsp;= 4                    </span>
+</dt>
+<dd></dd>
+
+                <dt class="phpdocumentor-table-of-contents__entry -property -protected">
+    <a href="classes/Discord-Voice-VoicePacket.html#property_buffer">$buffer</a>
+    <span>
+                &nbsp;: <a href="classes/Discord-Voice-Buffer.html"><abbr title="\Discord\Voice\Buffer">Buffer</abbr></a>            </span>
+</dt>
+<dd>The voice packet buffer.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
+    <a href="classes/Discord-Voice-VoicePacket.html#property_seq">$seq</a>
+    <span>
+                &nbsp;: int            </span>
+</dt>
+<dd>The packet sequence.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
+    <a href="classes/Discord-Voice-VoicePacket.html#property_ssrc">$ssrc</a>
+    <span>
+                &nbsp;: int            </span>
+</dt>
+<dd>The client SSRC.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
+    <a href="classes/Discord-Voice-VoicePacket.html#property_timestamp">$timestamp</a>
+    <span>
+                &nbsp;: int            </span>
+</dt>
+<dd>The packet timestamp.</dd>
+
+                <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/Discord-Voice-VoicePacket.html#method___construct">__construct()</a>
+    <span>
+                        &nbsp;: mixed    </span>
+</dt>
+<dd>Constructs the voice packet.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/Discord-Voice-VoicePacket.html#method___toString">__toString()</a>
+    <span>
+                        &nbsp;: string    </span>
+</dt>
+<dd>Handles to string casting of object.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/Discord-Voice-VoicePacket.html#method_getData">getData()</a>
+    <span>
+                        &nbsp;: string    </span>
+</dt>
+<dd>Returns the data.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/Discord-Voice-VoicePacket.html#method_getHeader">getHeader()</a>
+    <span>
+                        &nbsp;: string    </span>
+</dt>
+<dd>Returns the header.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/Discord-Voice-VoicePacket.html#method_getSequence">getSequence()</a>
+    <span>
+                        &nbsp;: int    </span>
+</dt>
+<dd>Returns the sequence.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/Discord-Voice-VoicePacket.html#method_getSSRC">getSSRC()</a>
+    <span>
+                        &nbsp;: int    </span>
+</dt>
+<dd>Returns the SSRC.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/Discord-Voice-VoicePacket.html#method_getTimestamp">getTimestamp()</a>
+    <span>
+                        &nbsp;: int    </span>
+</dt>
+<dd>Returns the timestamp.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/Discord-Voice-VoicePacket.html#method_make">make()</a>
+    <span>
+                        &nbsp;: self    </span>
+</dt>
+<dd>Creates a voice packet from data sent from Discord.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/Discord-Voice-VoicePacket.html#method_setBuffer">setBuffer()</a>
+    <span>
+                        &nbsp;: self    </span>
+</dt>
+<dd>Sets the buffer.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -protected">
+    <a href="classes/Discord-Voice-VoicePacket.html#method_buildHeader">buildHeader()</a>
+    <span>
+                        &nbsp;: <a href="classes/Discord-Voice-Buffer.html"><abbr title="\Discord\Voice\Buffer">Buffer</abbr></a>    </span>
+</dt>
+<dd>Builds the header.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -protected">
+    <a href="classes/Discord-Voice-VoicePacket.html#method_initBufferEncryption">initBufferEncryption()</a>
+    <span>
+                        &nbsp;: void    </span>
+</dt>
+<dd>Initilizes the buffer with encryption.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -protected">
+    <a href="classes/Discord-Voice-VoicePacket.html#method_initBufferNoEncryption">initBufferNoEncryption()</a>
+    <span>
+                        &nbsp;: void    </span>
+</dt>
+<dd>Initilizes the buffer with no encryption.</dd>
+
+        </dl>
+
+
+
+        
+    <section class="phpdocumentor-constants">
+        <h3 class="phpdocumentor-elements__header" id="constants">
+            Constants
+            <a href="classes/Discord-Voice-VoicePacket.html#constants" class="headerlink"><i class="fas fa-link"></i></a>
+        </h3>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_RTP_HEADER_BYTE_LENGTH">
+        RTP_HEADER_BYTE_LENGTH
+        <a href="classes/Discord-Voice-VoicePacket.html#constant_RTP_HEADER_BYTE_LENGTH" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoicePacket.php"><a href="files/src-discord-voice-voicepacket.html"><abbr title="src/Discord/Voice/VoicePacket.php">VoicePacket.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">28</span>
+</aside>
+
+        <p class="phpdocumentor-summary">Huge thanks to Austin and Michael from JDA for these constants
+and audio packets.</p>
+
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+    <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">RTP_HEADER_BYTE_LENGTH</span>
+    = <span class="phpdocumentor-signature__default-value">12</span>
+</code>
+
+
+        <section class="phpdocumentor-description"><p>Check out their repo:
+https://github.com/DV8FromTheWorld/JDA</p>
+</section>
+
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_RTP_PAYLOAD_INDEX">
+        RTP_PAYLOAD_INDEX
+        <a href="classes/Discord-Voice-VoicePacket.html#constant_RTP_PAYLOAD_INDEX" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoicePacket.php"><a href="files/src-discord-voice-voicepacket.html"><abbr title="src/Discord/Voice/VoicePacket.php">VoicePacket.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">33</span>
+</aside>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+    <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">RTP_PAYLOAD_INDEX</span>
+    = <span class="phpdocumentor-signature__default-value">1</span>
+</code>
+
+
+    
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_RTP_PAYLOAD_TYPE">
+        RTP_PAYLOAD_TYPE
+        <a href="classes/Discord-Voice-VoicePacket.html#constant_RTP_PAYLOAD_TYPE" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoicePacket.php"><a href="files/src-discord-voice-voicepacket.html"><abbr title="src/Discord/Voice/VoicePacket.php">VoicePacket.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">34</span>
+</aside>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+    <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">RTP_PAYLOAD_TYPE</span>
+    = <span class="phpdocumentor-signature__default-value">0x78</span>
+</code>
+
+
+    
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_RTP_VERSION_PAD_EXTEND">
+        RTP_VERSION_PAD_EXTEND
+        <a href="classes/Discord-Voice-VoicePacket.html#constant_RTP_VERSION_PAD_EXTEND" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoicePacket.php"><a href="files/src-discord-voice-voicepacket.html"><abbr title="src/Discord/Voice/VoicePacket.php">VoicePacket.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">31</span>
+</aside>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+    <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">RTP_VERSION_PAD_EXTEND</span>
+    = <span class="phpdocumentor-signature__default-value">0x80</span>
+</code>
+
+
+    
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_RTP_VERSION_PAD_EXTEND_INDEX">
+        RTP_VERSION_PAD_EXTEND_INDEX
+        <a href="classes/Discord-Voice-VoicePacket.html#constant_RTP_VERSION_PAD_EXTEND_INDEX" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoicePacket.php"><a href="files/src-discord-voice-voicepacket.html"><abbr title="src/Discord/Voice/VoicePacket.php">VoicePacket.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">30</span>
+</aside>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+    <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">RTP_VERSION_PAD_EXTEND_INDEX</span>
+    = <span class="phpdocumentor-signature__default-value">""</span>
+</code>
+
+
+    
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_SEQ_INDEX">
+        SEQ_INDEX
+        <a href="classes/Discord-Voice-VoicePacket.html#constant_SEQ_INDEX" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoicePacket.php"><a href="files/src-discord-voice-voicepacket.html"><abbr title="src/Discord/Voice/VoicePacket.php">VoicePacket.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">36</span>
+</aside>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+    <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">SEQ_INDEX</span>
+    = <span class="phpdocumentor-signature__default-value">2</span>
+</code>
+
+
+    
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_SSRC_INDEX">
+        SSRC_INDEX
+        <a href="classes/Discord-Voice-VoicePacket.html#constant_SSRC_INDEX" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoicePacket.php"><a href="files/src-discord-voice-voicepacket.html"><abbr title="src/Discord/Voice/VoicePacket.php">VoicePacket.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">38</span>
+</aside>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+    <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">SSRC_INDEX</span>
+    = <span class="phpdocumentor-signature__default-value">8</span>
+</code>
+
+
+    
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_TIMESTAMP_INDEX">
+        TIMESTAMP_INDEX
+        <a href="classes/Discord-Voice-VoicePacket.html#constant_TIMESTAMP_INDEX" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoicePacket.php"><a href="files/src-discord-voice-voicepacket.html"><abbr title="src/Discord/Voice/VoicePacket.php">VoicePacket.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">37</span>
+</aside>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+    <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">TIMESTAMP_INDEX</span>
+    = <span class="phpdocumentor-signature__default-value">4</span>
+</code>
+
+
+    
+    
+
+</article>
             </section>
-            <section class="row-fluid">
-                <section class="span10 offset1">
-                    <hr />
-                    Documentation is powered by <a href="https://www.phpdoc.org/">phpDocumentor </a> and authored
-                    on September 15th, 2020 at 02:39.
-                </section>
+
+        
+    <section class="phpdocumentor-properties">
+        <h3 class="phpdocumentor-elements__header" id="properties">
+            Properties
+            <a href="classes/Discord-Voice-VoicePacket.html#properties" class="headerlink"><i class="fas fa-link"></i></a>
+        </h3>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -protected
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="property_buffer">
+        $buffer
+        <a href="classes/Discord-Voice-VoicePacket.html#property_buffer" class="headerlink"><i class="fas fa-link"></i></a>
+        <span class="phpdocumentor-element__modifiers">
+                                </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoicePacket.php"><a href="files/src-discord-voice-voicepacket.html"><abbr title="src/Discord/Voice/VoicePacket.php">VoicePacket.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">45</span>
+</aside>
+
+        <p class="phpdocumentor-summary">The voice packet buffer.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">protected</span>
+        <span class="phpdocumentor-signature__type"><a href="classes/Discord-Voice-Buffer.html"><abbr title="\Discord\Voice\Buffer">Buffer</abbr></a></span>
+    <span class="phpdocumentor-signature__name">$buffer</span>
+    </code>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -protected
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="property_seq">
+        $seq
+        <a href="classes/Discord-Voice-VoicePacket.html#property_seq" class="headerlink"><i class="fas fa-link"></i></a>
+        <span class="phpdocumentor-element__modifiers">
+                                </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoicePacket.php"><a href="files/src-discord-voice-voicepacket.html"><abbr title="src/Discord/Voice/VoicePacket.php">VoicePacket.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">59</span>
+</aside>
+
+        <p class="phpdocumentor-summary">The packet sequence.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">protected</span>
+        <span class="phpdocumentor-signature__type">int</span>
+    <span class="phpdocumentor-signature__name">$seq</span>
+    </code>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -protected
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="property_ssrc">
+        $ssrc
+        <a href="classes/Discord-Voice-VoicePacket.html#property_ssrc" class="headerlink"><i class="fas fa-link"></i></a>
+        <span class="phpdocumentor-element__modifiers">
+                                </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoicePacket.php"><a href="files/src-discord-voice-voicepacket.html"><abbr title="src/Discord/Voice/VoicePacket.php">VoicePacket.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">52</span>
+</aside>
+
+        <p class="phpdocumentor-summary">The client SSRC.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">protected</span>
+        <span class="phpdocumentor-signature__type">int</span>
+    <span class="phpdocumentor-signature__name">$ssrc</span>
+    </code>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -protected
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="property_timestamp">
+        $timestamp
+        <a href="classes/Discord-Voice-VoicePacket.html#property_timestamp" class="headerlink"><i class="fas fa-link"></i></a>
+        <span class="phpdocumentor-element__modifiers">
+                                </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoicePacket.php"><a href="files/src-discord-voice-voicepacket.html"><abbr title="src/Discord/Voice/VoicePacket.php">VoicePacket.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">66</span>
+</aside>
+
+        <p class="phpdocumentor-summary">The packet timestamp.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">protected</span>
+        <span class="phpdocumentor-signature__type">int</span>
+    <span class="phpdocumentor-signature__name">$timestamp</span>
+    </code>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
             </section>
+
+            <section class="phpdocumentor-methods">
+        <h3 class="phpdocumentor-elements__header" id="methods">
+            Methods
+            <a href="classes/Discord-Voice-VoicePacket.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
+        </h3>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method___construct">
+        __construct()
+        <a href="classes/Discord-Voice-VoicePacket.html#method___construct" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoicePacket.php"><a href="files/src-discord-voice-voicepacket.html"><abbr title="src/Discord/Voice/VoicePacket.php">VoicePacket.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">78</span>
+</aside>
+
+        <p class="phpdocumentor-summary">Constructs the voice packet.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                <span class="phpdocumentor-signature__name">__construct</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$data</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$ssrc</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$seq</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$timestamp</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">bool&nbsp;</span><span class="phpdocumentor-signature__argument__name">$encryption</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">false</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$key</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+
+        <section class="phpdocumentor-description"></section>
+
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$data</span>
+                : <span class="phpdocumentor-signature__argument__return-type">string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>The Opus data to encode.</p>
+</section>
+
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$ssrc</span>
+                : <span class="phpdocumentor-signature__argument__return-type">int</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>The client SSRC value.</p>
+</section>
+
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$seq</span>
+                : <span class="phpdocumentor-signature__argument__return-type">int</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>The packet sequence.</p>
+</section>
+
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$timestamp</span>
+                : <span class="phpdocumentor-signature__argument__return-type">int</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>The packet timestamp.</p>
+</section>
+
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$encryption</span>
+                : <span class="phpdocumentor-signature__argument__return-type">bool</span>
+                 = <span class="phpdocumentor-signature__argument__default-value">false</span>            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>Whether the packet should be encrypted.</p>
+</section>
+
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$key</span>
+                : <span class="phpdocumentor-signature__argument__return-type">string|null</span>
+                 = <span class="phpdocumentor-signature__argument__default-value">null</span>            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>The encryption key.</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type">mixed</span>
+            &mdash;
+            <section class="phpdocumentor-description"></section>
+
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method___toString">
+        __toString()
+        <a href="classes/Discord-Voice-VoicePacket.html#method___toString" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoicePacket.php"><a href="files/src-discord-voice-voicepacket.html"><abbr title="src/Discord/Voice/VoicePacket.php">VoicePacket.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">234</span>
+</aside>
+
+        <p class="phpdocumentor-summary">Handles to string casting of object.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                <span class="phpdocumentor-signature__name">__toString</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+    
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type">string</span>
+            &mdash;
+            <section class="phpdocumentor-description"></section>
+
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_getData">
+        getData()
+        <a href="classes/Discord-Voice-VoicePacket.html#method_getData" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoicePacket.php"><a href="files/src-discord-voice-voicepacket.html"><abbr title="src/Discord/Voice/VoicePacket.php">VoicePacket.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">190</span>
+</aside>
+
+        <p class="phpdocumentor-summary">Returns the data.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                <span class="phpdocumentor-signature__name">getData</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+    
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type">string</span>
+            &mdash;
+            <section class="phpdocumentor-description"><p>The packet data.</p>
+</section>
+
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_getHeader">
+        getHeader()
+        <a href="classes/Discord-Voice-VoicePacket.html#method_getHeader" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoicePacket.php"><a href="files/src-discord-voice-voicepacket.html"><abbr title="src/Discord/Voice/VoicePacket.php">VoicePacket.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">180</span>
+</aside>
+
+        <p class="phpdocumentor-summary">Returns the header.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                <span class="phpdocumentor-signature__name">getHeader</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+    
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type">string</span>
+            &mdash;
+            <section class="phpdocumentor-description"><p>The packet header.</p>
+</section>
+
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_getSequence">
+        getSequence()
+        <a href="classes/Discord-Voice-VoicePacket.html#method_getSequence" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoicePacket.php"><a href="files/src-discord-voice-voicepacket.html"><abbr title="src/Discord/Voice/VoicePacket.php">VoicePacket.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">150</span>
+</aside>
+
+        <p class="phpdocumentor-summary">Returns the sequence.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                <span class="phpdocumentor-signature__name">getSequence</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">int</span></code>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+    
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type">int</span>
+            &mdash;
+            <section class="phpdocumentor-description"><p>The packet sequence.</p>
+</section>
+
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_getSSRC">
+        getSSRC()
+        <a href="classes/Discord-Voice-VoicePacket.html#method_getSSRC" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoicePacket.php"><a href="files/src-discord-voice-voicepacket.html"><abbr title="src/Discord/Voice/VoicePacket.php">VoicePacket.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">170</span>
+</aside>
+
+        <p class="phpdocumentor-summary">Returns the SSRC.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                <span class="phpdocumentor-signature__name">getSSRC</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">int</span></code>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+    
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type">int</span>
+            &mdash;
+            <section class="phpdocumentor-description"><p>The packet SSRC.</p>
+</section>
+
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_getTimestamp">
+        getTimestamp()
+        <a href="classes/Discord-Voice-VoicePacket.html#method_getTimestamp" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoicePacket.php"><a href="files/src-discord-voice-voicepacket.html"><abbr title="src/Discord/Voice/VoicePacket.php">VoicePacket.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">160</span>
+</aside>
+
+        <p class="phpdocumentor-summary">Returns the timestamp.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                <span class="phpdocumentor-signature__name">getTimestamp</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">int</span></code>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+    
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type">int</span>
+            &mdash;
+            <section class="phpdocumentor-description"><p>The packet timestamp.</p>
+</section>
+
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                    -static                    "
+>
+    <h4 class="phpdocumentor-element__name" id="method_make">
+        make()
+        <a href="classes/Discord-Voice-VoicePacket.html#method_make" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoicePacket.php"><a href="files/src-discord-voice-voicepacket.html"><abbr title="src/Discord/Voice/VoicePacket.php">VoicePacket.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">202</span>
+</aside>
+
+        <p class="phpdocumentor-summary">Creates a voice packet from data sent from Discord.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__static">static</span>    <span class="phpdocumentor-signature__name">make</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$data</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">self</span></code>
+
+        <section class="phpdocumentor-description"></section>
+
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$data</span>
+                : <span class="phpdocumentor-signature__argument__return-type">string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>Data from Discord.</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type">self</span>
+            &mdash;
+            <section class="phpdocumentor-description"><p>A voice packet.</p>
+</section>
+
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_setBuffer">
+        setBuffer()
+        <a href="classes/Discord-Voice-VoicePacket.html#method_setBuffer" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoicePacket.php"><a href="files/src-discord-voice-voicepacket.html"><abbr title="src/Discord/Voice/VoicePacket.php">VoicePacket.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">218</span>
+</aside>
+
+        <p class="phpdocumentor-summary">Sets the buffer.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                <span class="phpdocumentor-signature__name">setBuffer</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Discord-Voice-Buffer.html"><abbr title="\Discord\Voice\Buffer">Buffer</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$buffer</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">self</span></code>
+
+        <section class="phpdocumentor-description"></section>
+
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$buffer</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Discord-Voice-Buffer.html"><abbr title="\Discord\Voice\Buffer">Buffer</abbr></a></span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>The buffer to set.</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type">self</span>
+            &mdash;
+            <section class="phpdocumentor-description"></section>
+
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -protected
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_buildHeader">
+        buildHeader()
+        <a href="classes/Discord-Voice-VoicePacket.html#method_buildHeader" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoicePacket.php"><a href="files/src-discord-voice-voicepacket.html"><abbr title="src/Discord/Voice/VoicePacket.php">VoicePacket.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">133</span>
+</aside>
+
+        <p class="phpdocumentor-summary">Builds the header.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">protected</span>
+                <span class="phpdocumentor-signature__name">buildHeader</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Voice-Buffer.html"><abbr title="\Discord\Voice\Buffer">Buffer</abbr></a></span></code>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+    
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Voice-Buffer.html"><abbr title="\Discord\Voice\Buffer">Buffer</abbr></a></span>
+            &mdash;
+            <section class="phpdocumentor-description"><p>The header,</p>
+</section>
+
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -protected
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_initBufferEncryption">
+        initBufferEncryption()
+        <a href="classes/Discord-Voice-VoicePacket.html#method_initBufferEncryption" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoicePacket.php"><a href="files/src-discord-voice-voicepacket.html"><abbr title="src/Discord/Voice/VoicePacket.php">VoicePacket.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">114</span>
+</aside>
+
+        <p class="phpdocumentor-summary">Initilizes the buffer with encryption.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">protected</span>
+                <span class="phpdocumentor-signature__name">initBufferEncryption</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$data</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$key</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+
+        <section class="phpdocumentor-description"></section>
+
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$data</span>
+                : <span class="phpdocumentor-signature__argument__return-type">string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>The Opus data to encode.</p>
+</section>
+
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$key</span>
+                : <span class="phpdocumentor-signature__argument__return-type">string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>The encryption key.</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type">void</span>
+            &mdash;
+            <section class="phpdocumentor-description"></section>
+
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -protected
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_initBufferNoEncryption">
+        initBufferNoEncryption()
+        <a href="classes/Discord-Voice-VoicePacket.html#method_initBufferNoEncryption" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Voice/VoicePacket.php"><a href="files/src-discord-voice-voicepacket.html"><abbr title="src/Discord/Voice/VoicePacket.php">VoicePacket.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">96</span>
+</aside>
+
+        <p class="phpdocumentor-summary">Initilizes the buffer with no encryption.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">protected</span>
+                <span class="phpdocumentor-signature__name">initBufferNoEncryption</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$data</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void</span></code>
+
+        <section class="phpdocumentor-description"></section>
+
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$data</span>
+                : <span class="phpdocumentor-signature__argument__return-type">string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>The Opus data to encode.</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type">void</span>
+            &mdash;
+            <section class="phpdocumentor-description"></section>
+
+    
+</article>
+            </section>
+
+    </article>
+                <section data-search-results class="phpdocumentor-search-results phpdocumentor-search-results--hidden">
+    <section class="phpdocumentor-search-results__dialog">
+        <header class="phpdocumentor-search-results__header">
+            <h2 class="phpdocumentor-search-results__title">Search results</h2>
+            <button class="phpdocumentor-search-results__close"><i class="fas fa-times"></i></button>
+        </header>
+        <section class="phpdocumentor-search-results__body">
+            <ul class="phpdocumentor-search-results__entries"></ul>
         </section>
-    </footer>
-</div>
+    </section>
+</section>
+            </div>
+        </div>
+        <a href="classes/Discord-Voice-VoicePacket.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
 
+    </main>
+
+    <script>
+        cssVars({});
+    </script>
 </body>
 </html>

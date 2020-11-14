@@ -1,779 +1,450 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
-    <meta charset="utf-8"/>
+    <meta charset="utf-8">
     <title>Documentation</title>
-    <meta name="author" content=""/>
-    <meta name="description" content=""/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base href="../">
+    <link rel="icon" href="images/favicon.ico"/>
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/base.css">
+            <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="css/template.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0/css/all.min.css" integrity="sha256-ybRkN9dBjhcS2qrW1z+hfCxq+1aBdwyQM5wlQoQVt/0=" crossorigin="anonymous" />
+                <script src="https://cdn.jsdelivr.net/npm/fuse.js@3.4.6"></script>
+        <script src="https://cdn.jsdelivr.net/npm/css-vars-ponyfill@2"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0/js/all.min.js" integrity="sha256-0vuk8LXoyrmCjp1f0O300qo1M75ZQyhH9X3J6d+scmk=" crossorigin="anonymous"></script>
+        <script src="js/search.js"></script>
+        <script defer src="js/searchIndex.js"></script>
+    </head>
+<body id="top">
+    <header class="phpdocumentor-header phpdocumentor-section">
+    <h1 class="phpdocumentor-title"><a href="" class="phpdocumentor-title__link">Documentation</a></h1>
+    <input class="phpdocumentor-header__menu-button" type="checkbox" id="menu-button" name="menu-button" />
+    <label class="phpdocumentor-header__menu-icon" for="menu-button">
+        <i class="fas fa-bars"></i>
+    </label>
+    <section data-search-form class="phpdocumentor-search">
+    <label>
+        <span class="visually-hidden">Search for</span>
+        <svg class="phpdocumentor-search__icon" width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="7.5" cy="7.5" r="6.5" stroke="currentColor" stroke-width="2"/>
+            <line x1="12.4892" y1="12.2727" x2="19.1559" y2="18.9393" stroke="currentColor" stroke-width="3"/>
+        </svg>
+        <input type="search" class="phpdocumentor-field phpdocumentor-search__field" placeholder="Loading .." disabled />
+    </label>
+</section>
 
-    <link href="../css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
-    <link href="../css/font-awesome.min.css" rel="stylesheet">
-    <link href="../css/prism.css" rel="stylesheet" media="all"/>
-    <link href="../css/template.css" rel="stylesheet" media="all"/>
+    <nav class="phpdocumentor-topnav">
+    <ul class="phpdocumentor-topnav__menu">
+        </ul>
+</nav>
+</header>
+
+    <main class="phpdocumentor">
+        <div class="phpdocumentor-section">
+            <input class="phpdocumentor-sidebar__menu-button" type="checkbox" id="sidebar-button" name="sidebar-button" />
+<label class="phpdocumentor-sidebar__menu-icon" for="sidebar-button">
+    Menu
+</label>
+<aside class="phpdocumentor-column -four phpdocumentor-sidebar">
     
-    <!--[if lt IE 9]>
-    <script src="../js/html5.js"></script>
-    <![endif]-->
-    <script src="../js/jquery-1.11.0.min.js"></script>
-    <script src="../js/ui/1.10.4/jquery-ui.min.js"></script>
-    <script src="../js/bootstrap.min.js"></script>
-    <script src="../js/jquery.smooth-scroll.js"></script>
-    <script src="../js/prism.min.js"></script>
-    <!-- TODO: Add http://jscrollpane.kelvinluck.com/ to style the scrollbars for browsers not using webkit-->
+    <section class="phpdocumentor-sidebar__category">
+        <h2 class="phpdocumentor-sidebar__category-header">Namespaces</h2>
+                                                <h4 class="phpdocumentor-sidebar__root-namespace"><a href="namespaces/discord.html"><abbr title="\Discord">Discord</abbr></a></h4>
+                <ul class="phpdocumentor-list">
+                                            <li><a href="namespaces/discord-commandclient.html"><abbr title="\Discord\CommandClient">CommandClient</abbr></a></li>
+                                            <li><a href="namespaces/discord-exceptions.html"><abbr title="\Discord\Exceptions">Exceptions</abbr></a></li>
+                                            <li><a href="namespaces/discord-factory.html"><abbr title="\Discord\Factory">Factory</abbr></a></li>
+                                            <li><a href="namespaces/discord-helpers.html"><abbr title="\Discord\Helpers">Helpers</abbr></a></li>
+                                            <li><a href="namespaces/discord-http.html"><abbr title="\Discord\Http">Http</abbr></a></li>
+                                            <li><a href="namespaces/discord-parts.html"><abbr title="\Discord\Parts">Parts</abbr></a></li>
+                                            <li><a href="namespaces/discord-repository.html"><abbr title="\Discord\Repository">Repository</abbr></a></li>
+                                            <li><a href="namespaces/discord-voice.html"><abbr title="\Discord\Voice">Voice</abbr></a></li>
+                                            <li><a href="namespaces/discord-websockets.html"><abbr title="\Discord\WebSockets">WebSockets</abbr></a></li>
+                                            <li><a href="namespaces/discord-wrapper.html"><abbr title="\Discord\Wrapper">Wrapper</abbr></a></li>
+                                    </ul>
+                        </section>
+
     
-    <link rel="shortcut icon" href="../images/favicon.ico"/>
-    <link rel="apple-touch-icon" href="../images/apple-touch-icon.png"/>
-    <link rel="apple-touch-icon" sizes="72x72" href="../images/apple-touch-icon-72x72.png"/>
-    <link rel="apple-touch-icon" sizes="114x114" href="../images/apple-touch-icon-114x114.png"/>
-</head>
-<body>
-
-<div class="navbar navbar-fixed-top">
-    <div class="navbar-inner">
-        <div class="container">
-            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-                <i class="icon-ellipsis-vertical"></i>
-            </a>
-            <a class="brand" href="../index.html">Documentation</a>
-
-            <div class="nav-collapse">
-                <ul class="nav pull-right">
-                                        <li class="dropdown">
-                        <a href="../index.html" class="dropdown-toggle" data-toggle="dropdown">
-                            API Documentation <b class="caret"></b>
-                        </a>
-                        <ul class="dropdown-menu">
-                                                        <li><a href="../namespaces/discord.html"><abbr title="\Discord">normal</abbr></a></li>
-                                                    </ul>
-                    </li>
-                                        <li class="dropdown" id="charts-menu">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            Charts <b class="caret"></b>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a href="../graphs/class.html">
-                                    <i class="icon-list-alt"></i>&#160;Class hierarchy diagram
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="dropdown" id="reports-menu">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            Reports <b class="caret"></b>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a href="../reports/errors.html">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">19</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="../reports/markers.html">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <i class="icon-list-alt"></i>&#160;Markers <span class="label label-info pull-right">0</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="../reports/deprecated.html">
-                                                                                                            <i class="icon-list-alt"></i>&#160;Deprecated <span class="label label-info pull-right">0</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    <!--<div class="go_to_top">-->
-    <!--<a href="#___" style="color: inherit">Back to top&#160;&#160;<i class="icon-upload icon-white"></i></a>-->
-    <!--</div>-->
-</div>
-
-<div id="___" class="container-fluid">
-        <section class="row-fluid">
-        <div class="span2 sidebar">
-                                <div class="accordion" style="margin-bottom: 0">
-        <div class="accordion-group">
-            <div class="accordion-heading">
-                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-2024737079"></a>
-                                <a href="../namespaces/default.html" style="margin-left: 30px; padding-left: 0">\</a>
-            </div>
-            <div id="namespace-2024737079" class="accordion-body collapse in">
-                <div class="accordion-inner">
-
-                                                    <div class="accordion" style="margin-bottom: 0">
-        <div class="accordion-group">
-            <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-579450314"></a>
-                                <a href="../namespaces/discord.html" style="margin-left: 30px; padding-left: 0">Discord</a>
-            </div>
-            <div id="namespace-579450314" class="accordion-body collapse ">
-                <div class="accordion-inner">
-
-                                                    <div class="accordion" style="margin-bottom: 0">
-        <div class="accordion-group">
-            <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-937218726"></a>
-                                <a href="../namespaces/discord-commandclient.html" style="margin-left: 30px; padding-left: 0">CommandClient</a>
-            </div>
-            <div id="namespace-937218726" class="accordion-body collapse ">
-                <div class="accordion-inner">
-
-                    
-                    <ul>
-                                                                                                    <li class="class"><a href="../classes/Discord-CommandClient-Command.html"><abbr title="\Discord\CommandClient\Command">Command</abbr></a></li>
-                                            </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-                                                    <div class="accordion" style="margin-bottom: 0">
-        <div class="accordion-group">
-            <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1560719597"></a>
-                                <a href="../namespaces/discord-exceptions.html" style="margin-left: 30px; padding-left: 0">Exceptions</a>
-            </div>
-            <div id="namespace-1560719597" class="accordion-body collapse ">
-                <div class="accordion-inner">
-
-                                                    <div class="accordion" style="margin-bottom: 0">
-        <div class="accordion-group">
-            <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1992057557"></a>
-                                <a href="../namespaces/discord-exceptions-rest.html" style="margin-left: 30px; padding-left: 0">Rest</a>
-            </div>
-            <div id="namespace-1992057557" class="accordion-body collapse ">
-                <div class="accordion-inner">
-
-                    
-                    <ul>
-                                                                                                    <li class="class"><a href="../classes/Discord-Exceptions-Rest-ContentTooLongException.html"><abbr title="\Discord\Exceptions\Rest\ContentTooLongException">ContentTooLongException</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-Exceptions-Rest-NoPermissionsException.html"><abbr title="\Discord\Exceptions\Rest\NoPermissionsException">NoPermissionsException</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-Exceptions-Rest-NotFoundException.html"><abbr title="\Discord\Exceptions\Rest\NotFoundException">NotFoundException</abbr></a></li>
-                                            </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-                    
-                    <ul>
-                                                                                                    <li class="class"><a href="../classes/Discord-Exceptions-ContentTooLongException.html"><abbr title="\Discord\Exceptions\ContentTooLongException">ContentTooLongException</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-Exceptions-DCANotFoundException.html"><abbr title="\Discord\Exceptions\DCANotFoundException">DCANotFoundException</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-Exceptions-DiscordRequestFailedException.html"><abbr title="\Discord\Exceptions\DiscordRequestFailedException">DiscordRequestFailedException</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-Exceptions-FFmpegNotFoundException.html"><abbr title="\Discord\Exceptions\FFmpegNotFoundException">FFmpegNotFoundException</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-Exceptions-FileNotFoundException.html"><abbr title="\Discord\Exceptions\FileNotFoundException">FileNotFoundException</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-Exceptions-IntentException.html"><abbr title="\Discord\Exceptions\IntentException">IntentException</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-Exceptions-InvalidOverwriteException.html"><abbr title="\Discord\Exceptions\InvalidOverwriteException">InvalidOverwriteException</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-Exceptions-InviteInvalidException.html"><abbr title="\Discord\Exceptions\InviteInvalidException">InviteInvalidException</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-Exceptions-LibSodiumNotFoundException.html"><abbr title="\Discord\Exceptions\LibSodiumNotFoundException">LibSodiumNotFoundException</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-Exceptions-LoginFailedException.html"><abbr title="\Discord\Exceptions\LoginFailedException">LoginFailedException</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-Exceptions-OpusNotFoundException.html"><abbr title="\Discord\Exceptions\OpusNotFoundException">OpusNotFoundException</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-Exceptions-OutdatedDCAException.html"><abbr title="\Discord\Exceptions\OutdatedDCAException">OutdatedDCAException</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-Exceptions-PartRequestFailedException.html"><abbr title="\Discord\Exceptions\PartRequestFailedException">PartRequestFailedException</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-Exceptions-PasswordEmptyException.html"><abbr title="\Discord\Exceptions\PasswordEmptyException">PasswordEmptyException</abbr></a></li>
-                                            </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-                                                    <div class="accordion" style="margin-bottom: 0">
-        <div class="accordion-group">
-            <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1597195929"></a>
-                                <a href="../namespaces/discord-factory.html" style="margin-left: 30px; padding-left: 0">Factory</a>
-            </div>
-            <div id="namespace-1597195929" class="accordion-body collapse ">
-                <div class="accordion-inner">
-
-                    
-                    <ul>
-                                                                                                    <li class="class"><a href="../classes/Discord-Factory-Factory.html"><abbr title="\Discord\Factory\Factory">Factory</abbr></a></li>
-                                            </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-                                                    <div class="accordion" style="margin-bottom: 0">
-        <div class="accordion-group">
-            <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-310768764"></a>
-                                <a href="../namespaces/discord-helpers.html" style="margin-left: 30px; padding-left: 0">Helpers</a>
-            </div>
-            <div id="namespace-310768764" class="accordion-body collapse ">
-                <div class="accordion-inner">
-
-                    
-                    <ul>
-                                                                                                    <li class="class"><a href="../classes/Discord-Helpers-Collection.html"><abbr title="\Discord\Helpers\Collection">Collection</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-Helpers-Process.html"><abbr title="\Discord\Helpers\Process">Process</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-Helpers-ReadableResourceStream.html"><abbr title="\Discord\Helpers\ReadableResourceStream">ReadableResourceStream</abbr></a></li>
-                                            </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-                                                    <div class="accordion" style="margin-bottom: 0">
-        <div class="accordion-group">
-            <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1984994809"></a>
-                                <a href="../namespaces/discord-http.html" style="margin-left: 30px; padding-left: 0">Http</a>
-            </div>
-            <div id="namespace-1984994809" class="accordion-body collapse ">
-                <div class="accordion-inner">
-
-                    
-                    <ul>
-                                                    <li class="interface"><a href="../classes/Discord-Http-HttpDriver.html"><abbr title="\Discord\Http\HttpDriver">HttpDriver</abbr></a></li>
-                                                                                                    <li class="class"><a href="../classes/Discord-Http-Guzzle.html"><abbr title="\Discord\Http\Guzzle">Guzzle</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-Http-Http.html"><abbr title="\Discord\Http\Http">Http</abbr></a></li>
-                                            </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-                                                    <div class="accordion" style="margin-bottom: 0">
-        <div class="accordion-group">
-            <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-337062739"></a>
-                                <a href="../namespaces/discord-parts.html" style="margin-left: 30px; padding-left: 0">Parts</a>
-            </div>
-            <div id="namespace-337062739" class="accordion-body collapse ">
-                <div class="accordion-inner">
-
-                                                    <div class="accordion" style="margin-bottom: 0">
-        <div class="accordion-group">
-            <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1031526735"></a>
-                                <a href="../namespaces/discord-parts-channel.html" style="margin-left: 30px; padding-left: 0">Channel</a>
-            </div>
-            <div id="namespace-1031526735" class="accordion-body collapse ">
-                <div class="accordion-inner">
-
-                    
-                    <ul>
-                                                                                                    <li class="class"><a href="../classes/Discord-Parts-Channel-Channel.html"><abbr title="\Discord\Parts\Channel\Channel">Channel</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-Parts-Channel-Message.html"><abbr title="\Discord\Parts\Channel\Message">Message</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-Parts-Channel-Overwrite.html"><abbr title="\Discord\Parts\Channel\Overwrite">Overwrite</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-Parts-Channel-Reaction.html"><abbr title="\Discord\Parts\Channel\Reaction">Reaction</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-Parts-Channel-Webhook.html"><abbr title="\Discord\Parts\Channel\Webhook">Webhook</abbr></a></li>
-                                            </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-                                                    <div class="accordion" style="margin-bottom: 0">
-        <div class="accordion-group">
-            <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-115787353"></a>
-                                <a href="../namespaces/discord-parts-embed.html" style="margin-left: 30px; padding-left: 0">Embed</a>
-            </div>
-            <div id="namespace-115787353" class="accordion-body collapse ">
-                <div class="accordion-inner">
-
-                    
-                    <ul>
-                                                                                                    <li class="class"><a href="../classes/Discord-Parts-Embed-Author.html"><abbr title="\Discord\Parts\Embed\Author">Author</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-Parts-Embed-Embed.html"><abbr title="\Discord\Parts\Embed\Embed">Embed</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-Parts-Embed-Field.html"><abbr title="\Discord\Parts\Embed\Field">Field</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-Parts-Embed-Footer.html"><abbr title="\Discord\Parts\Embed\Footer">Footer</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-Parts-Embed-Image.html"><abbr title="\Discord\Parts\Embed\Image">Image</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-Parts-Embed-Video.html"><abbr title="\Discord\Parts\Embed\Video">Video</abbr></a></li>
-                                            </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-                                                    <div class="accordion" style="margin-bottom: 0">
-        <div class="accordion-group">
-            <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1194447500"></a>
-                                <a href="../namespaces/discord-parts-guild.html" style="margin-left: 30px; padding-left: 0">Guild</a>
-            </div>
-            <div id="namespace-1194447500" class="accordion-body collapse ">
-                <div class="accordion-inner">
-
-                    
-                    <ul>
-                                                                                                    <li class="class"><a href="../classes/Discord-Parts-Guild-Ban.html"><abbr title="\Discord\Parts\Guild\Ban">Ban</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-Parts-Guild-Emoji.html"><abbr title="\Discord\Parts\Guild\Emoji">Emoji</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-Parts-Guild-Guild.html"><abbr title="\Discord\Parts\Guild\Guild">Guild</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-Parts-Guild-Invite.html"><abbr title="\Discord\Parts\Guild\Invite">Invite</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-Parts-Guild-Role.html"><abbr title="\Discord\Parts\Guild\Role">Role</abbr></a></li>
-                                            </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-                                                    <div class="accordion" style="margin-bottom: 0">
-        <div class="accordion-group">
-            <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1807854537"></a>
-                                <a href="../namespaces/discord-parts-oauth.html" style="margin-left: 30px; padding-left: 0">OAuth</a>
-            </div>
-            <div id="namespace-1807854537" class="accordion-body collapse ">
-                <div class="accordion-inner">
-
-                    
-                    <ul>
-                                                                                                    <li class="class"><a href="../classes/Discord-Parts-OAuth-Application.html"><abbr title="\Discord\Parts\OAuth\Application">Application</abbr></a></li>
-                                            </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-                                                    <div class="accordion" style="margin-bottom: 0">
-        <div class="accordion-group">
-            <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-773776992"></a>
-                                <a href="../namespaces/discord-parts-permissions.html" style="margin-left: 30px; padding-left: 0">Permissions</a>
-            </div>
-            <div id="namespace-773776992" class="accordion-body collapse ">
-                <div class="accordion-inner">
-
-                    
-                    <ul>
-                                                                                                    <li class="class"><a href="../classes/Discord-Parts-Permissions-ChannelPermission.html"><abbr title="\Discord\Parts\Permissions\ChannelPermission">ChannelPermission</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-Parts-Permissions-Permission.html"><abbr title="\Discord\Parts\Permissions\Permission">Permission</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-Parts-Permissions-RolePermission.html"><abbr title="\Discord\Parts\Permissions\RolePermission">RolePermission</abbr></a></li>
-                                            </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-                                                    <div class="accordion" style="margin-bottom: 0">
-        <div class="accordion-group">
-            <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1220281326"></a>
-                                <a href="../namespaces/discord-parts-user.html" style="margin-left: 30px; padding-left: 0">User</a>
-            </div>
-            <div id="namespace-1220281326" class="accordion-body collapse ">
-                <div class="accordion-inner">
-
-                    
-                    <ul>
-                                                                                                    <li class="class"><a href="../classes/Discord-Parts-User-Activity.html"><abbr title="\Discord\Parts\User\Activity">Activity</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-Parts-User-Client.html"><abbr title="\Discord\Parts\User\Client">Client</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-Parts-User-Member.html"><abbr title="\Discord\Parts\User\Member">Member</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-Parts-User-User.html"><abbr title="\Discord\Parts\User\User">User</abbr></a></li>
-                                            </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-                                                    <div class="accordion" style="margin-bottom: 0">
-        <div class="accordion-group">
-            <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1659670505"></a>
-                                <a href="../namespaces/discord-parts-websockets.html" style="margin-left: 30px; padding-left: 0">WebSockets</a>
-            </div>
-            <div id="namespace-1659670505" class="accordion-body collapse ">
-                <div class="accordion-inner">
-
-                    
-                    <ul>
-                                                                                                    <li class="class"><a href="../classes/Discord-Parts-WebSockets-MessageReaction.html"><abbr title="\Discord\Parts\WebSockets\MessageReaction">MessageReaction</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-Parts-WebSockets-PresenceUpdate.html"><abbr title="\Discord\Parts\WebSockets\PresenceUpdate">PresenceUpdate</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-Parts-WebSockets-TypingStart.html"><abbr title="\Discord\Parts\WebSockets\TypingStart">TypingStart</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-Parts-WebSockets-VoiceServerUpdate.html"><abbr title="\Discord\Parts\WebSockets\VoiceServerUpdate">VoiceServerUpdate</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-Parts-WebSockets-VoiceStateUpdate.html"><abbr title="\Discord\Parts\WebSockets\VoiceStateUpdate">VoiceStateUpdate</abbr></a></li>
-                                            </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-                    
-                    <ul>
-                                                                                                    <li class="class"><a href="../classes/Discord-Parts-Part.html"><abbr title="\Discord\Parts\Part">Part</abbr></a></li>
-                                            </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-                                                    <div class="accordion" style="margin-bottom: 0">
-        <div class="accordion-group">
-            <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1287569902"></a>
-                                <a href="../namespaces/discord-repository.html" style="margin-left: 30px; padding-left: 0">Repository</a>
-            </div>
-            <div id="namespace-1287569902" class="accordion-body collapse ">
-                <div class="accordion-inner">
-
-                                                    <div class="accordion" style="margin-bottom: 0">
-        <div class="accordion-group">
-            <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1625304053"></a>
-                                <a href="../namespaces/discord-repository-channel.html" style="margin-left: 30px; padding-left: 0">Channel</a>
-            </div>
-            <div id="namespace-1625304053" class="accordion-body collapse ">
-                <div class="accordion-inner">
-
-                    
-                    <ul>
-                                                                                                    <li class="class"><a href="../classes/Discord-Repository-Channel-InviteRepository.html"><abbr title="\Discord\Repository\Channel\InviteRepository">InviteRepository</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-Repository-Channel-MessageRepository.html"><abbr title="\Discord\Repository\Channel\MessageRepository">MessageRepository</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-Repository-Channel-OverwriteRepository.html"><abbr title="\Discord\Repository\Channel\OverwriteRepository">OverwriteRepository</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-Repository-Channel-VoiceMemberRepository.html"><abbr title="\Discord\Repository\Channel\VoiceMemberRepository">VoiceMemberRepository</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-Repository-Channel-WebhookRepository.html"><abbr title="\Discord\Repository\Channel\WebhookRepository">WebhookRepository</abbr></a></li>
-                                            </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-                                                    <div class="accordion" style="margin-bottom: 0">
-        <div class="accordion-group">
-            <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-296048832"></a>
-                                <a href="../namespaces/discord-repository-guild.html" style="margin-left: 30px; padding-left: 0">Guild</a>
-            </div>
-            <div id="namespace-296048832" class="accordion-body collapse ">
-                <div class="accordion-inner">
-
-                    
-                    <ul>
-                                                                                                    <li class="class"><a href="../classes/Discord-Repository-Guild-BanRepository.html"><abbr title="\Discord\Repository\Guild\BanRepository">BanRepository</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-Repository-Guild-ChannelRepository.html"><abbr title="\Discord\Repository\Guild\ChannelRepository">ChannelRepository</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-Repository-Guild-EmojiRepository.html"><abbr title="\Discord\Repository\Guild\EmojiRepository">EmojiRepository</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-Repository-Guild-InviteRepository.html"><abbr title="\Discord\Repository\Guild\InviteRepository">InviteRepository</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-Repository-Guild-MemberRepository.html"><abbr title="\Discord\Repository\Guild\MemberRepository">MemberRepository</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-Repository-Guild-RoleRepository.html"><abbr title="\Discord\Repository\Guild\RoleRepository">RoleRepository</abbr></a></li>
-                                            </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-                    
-                    <ul>
-                                                    <li class="interface"><a href="../classes/Discord-Repository-RepositoryInterface.html"><abbr title="\Discord\Repository\RepositoryInterface">RepositoryInterface</abbr></a></li>
-                                                                                                    <li class="class"><a href="../classes/Discord-Repository-AbstractRepository.html"><abbr title="\Discord\Repository\AbstractRepository">AbstractRepository</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-Repository-GuildRepository.html"><abbr title="\Discord\Repository\GuildRepository">GuildRepository</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-Repository-PrivateChannelRepository.html"><abbr title="\Discord\Repository\PrivateChannelRepository">PrivateChannelRepository</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-Repository-UserRepository.html"><abbr title="\Discord\Repository\UserRepository">UserRepository</abbr></a></li>
-                                            </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-                                                    <div class="accordion" style="margin-bottom: 0">
-        <div class="accordion-group">
-            <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1356147176"></a>
-                                <a href="../namespaces/discord-voice.html" style="margin-left: 30px; padding-left: 0">Voice</a>
-            </div>
-            <div id="namespace-1356147176" class="accordion-body collapse ">
-                <div class="accordion-inner">
-
-                    
-                    <ul>
-                                                                                                    <li class="class"><a href="../classes/Discord-Voice-Buffer.html"><abbr title="\Discord\Voice\Buffer">Buffer</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-Voice-RecieveStream.html"><abbr title="\Discord\Voice\RecieveStream">RecieveStream</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-Voice-VoiceClient.html"><abbr title="\Discord\Voice\VoiceClient">VoiceClient</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-Voice-VoicePacket.html"><abbr title="\Discord\Voice\VoicePacket">VoicePacket</abbr></a></li>
-                                            </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-                                                    <div class="accordion" style="margin-bottom: 0">
-        <div class="accordion-group">
-            <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-531924417"></a>
-                                <a href="../namespaces/discord-websockets.html" style="margin-left: 30px; padding-left: 0">WebSockets</a>
-            </div>
-            <div id="namespace-531924417" class="accordion-body collapse ">
-                <div class="accordion-inner">
-
-                                                    <div class="accordion" style="margin-bottom: 0">
-        <div class="accordion-group">
-            <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1606419715"></a>
-                                <a href="../namespaces/discord-websockets-events.html" style="margin-left: 30px; padding-left: 0">Events</a>
-            </div>
-            <div id="namespace-1606419715" class="accordion-body collapse ">
-                <div class="accordion-inner">
-
-                    
-                    <ul>
-                                                                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-ChannelCreate.html"><abbr title="\Discord\WebSockets\Events\ChannelCreate">ChannelCreate</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-ChannelDelete.html"><abbr title="\Discord\WebSockets\Events\ChannelDelete">ChannelDelete</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-ChannelPinsUpdate.html"><abbr title="\Discord\WebSockets\Events\ChannelPinsUpdate">ChannelPinsUpdate</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-ChannelUpdate.html"><abbr title="\Discord\WebSockets\Events\ChannelUpdate">ChannelUpdate</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-GuildBanAdd.html"><abbr title="\Discord\WebSockets\Events\GuildBanAdd">GuildBanAdd</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-GuildBanRemove.html"><abbr title="\Discord\WebSockets\Events\GuildBanRemove">GuildBanRemove</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-GuildCreate.html"><abbr title="\Discord\WebSockets\Events\GuildCreate">GuildCreate</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-GuildDelete.html"><abbr title="\Discord\WebSockets\Events\GuildDelete">GuildDelete</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-GuildIntegrationsUpdate.html"><abbr title="\Discord\WebSockets\Events\GuildIntegrationsUpdate">GuildIntegrationsUpdate</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-GuildMemberAdd.html"><abbr title="\Discord\WebSockets\Events\GuildMemberAdd">GuildMemberAdd</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-GuildMemberRemove.html"><abbr title="\Discord\WebSockets\Events\GuildMemberRemove">GuildMemberRemove</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-GuildMemberUpdate.html"><abbr title="\Discord\WebSockets\Events\GuildMemberUpdate">GuildMemberUpdate</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-GuildRoleCreate.html"><abbr title="\Discord\WebSockets\Events\GuildRoleCreate">GuildRoleCreate</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-GuildRoleDelete.html"><abbr title="\Discord\WebSockets\Events\GuildRoleDelete">GuildRoleDelete</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-GuildRoleUpdate.html"><abbr title="\Discord\WebSockets\Events\GuildRoleUpdate">GuildRoleUpdate</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-GuildUpdate.html"><abbr title="\Discord\WebSockets\Events\GuildUpdate">GuildUpdate</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-InviteCreate.html"><abbr title="\Discord\WebSockets\Events\InviteCreate">InviteCreate</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-InviteDelete.html"><abbr title="\Discord\WebSockets\Events\InviteDelete">InviteDelete</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-MessageCreate.html"><abbr title="\Discord\WebSockets\Events\MessageCreate">MessageCreate</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-MessageDelete.html"><abbr title="\Discord\WebSockets\Events\MessageDelete">MessageDelete</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-MessageDeleteBulk.html"><abbr title="\Discord\WebSockets\Events\MessageDeleteBulk">MessageDeleteBulk</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-MessageReactionAdd.html"><abbr title="\Discord\WebSockets\Events\MessageReactionAdd">MessageReactionAdd</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-MessageReactionRemove.html"><abbr title="\Discord\WebSockets\Events\MessageReactionRemove">MessageReactionRemove</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-MessageReactionRemoveAll.html"><abbr title="\Discord\WebSockets\Events\MessageReactionRemoveAll">MessageReactionRemoveAll</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-MessageReactionRemoveEmoji.html"><abbr title="\Discord\WebSockets\Events\MessageReactionRemoveEmoji">MessageReactionRemoveEmoji</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-MessageUpdate.html"><abbr title="\Discord\WebSockets\Events\MessageUpdate">MessageUpdate</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-PresenceUpdate.html"><abbr title="\Discord\WebSockets\Events\PresenceUpdate">PresenceUpdate</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-TypingStart.html"><abbr title="\Discord\WebSockets\Events\TypingStart">TypingStart</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-VoiceServerUpdate.html"><abbr title="\Discord\WebSockets\Events\VoiceServerUpdate">VoiceServerUpdate</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-WebSockets-Events-VoiceStateUpdate.html"><abbr title="\Discord\WebSockets\Events\VoiceStateUpdate">VoiceStateUpdate</abbr></a></li>
-                                            </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-                    
-                    <ul>
-                                                                                                    <li class="class"><a href="../classes/Discord-WebSockets-Event.html"><abbr title="\Discord\WebSockets\Event">Event</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-WebSockets-Handlers.html"><abbr title="\Discord\WebSockets\Handlers">Handlers</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-WebSockets-Intents.html"><abbr title="\Discord\WebSockets\Intents">Intents</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-WebSockets-Op.html"><abbr title="\Discord\WebSockets\Op">Op</abbr></a></li>
-                                            </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-                                                    <div class="accordion" style="margin-bottom: 0">
-        <div class="accordion-group">
-            <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-850292530"></a>
-                                <a href="../namespaces/discord-wrapper.html" style="margin-left: 30px; padding-left: 0">Wrapper</a>
-            </div>
-            <div id="namespace-850292530" class="accordion-body collapse ">
-                <div class="accordion-inner">
-
-                    
-                    <ul>
-                                                                                                    <li class="class"><a href="../classes/Discord-Wrapper-LoggerWrapper.html"><abbr title="\Discord\Wrapper\LoggerWrapper">LoggerWrapper</abbr></a></li>
-                                            </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-                    
-                    <ul>
-                                                                                                    <li class="class"><a href="../classes/Discord-Discord.html"><abbr title="\Discord\Discord">Discord</abbr></a></li>
-                                                    <li class="class"><a href="../classes/Discord-DiscordCommandClient.html"><abbr title="\Discord\DiscordCommandClient">DiscordCommandClient</abbr></a></li>
-                                            </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-                    
-                    <ul>
-                                                                                            </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
-        </div>
-    </section>
-    <section class="row-fluid">
-        <div class="span10 offset2">
-            <div class="row-fluid">
-                <div class="span8 content namespace">
-                    <nav>
-                                                <a href="../namespaces/default.html"><abbr title="\">normal</abbr></a>
-                                            </nav>
-                    <h1><small>\</small>Discord</h1>
-
-                                        <h2>Namespaces</h2>
-                    <table class="table table-hover">
-                                                    <tr>
-                                <td><a href="../namespaces/discord-commandclient.html"><abbr title="\Discord\CommandClient">CommandClient</abbr></a></td>
-                            </tr>
-                                                    <tr>
-                                <td><a href="../namespaces/discord-exceptions.html"><abbr title="\Discord\Exceptions">Exceptions</abbr></a></td>
-                            </tr>
-                                                    <tr>
-                                <td><a href="../namespaces/discord-factory.html"><abbr title="\Discord\Factory">Factory</abbr></a></td>
-                            </tr>
-                                                    <tr>
-                                <td><a href="../namespaces/discord-helpers.html"><abbr title="\Discord\Helpers">Helpers</abbr></a></td>
-                            </tr>
-                                                    <tr>
-                                <td><a href="../namespaces/discord-http.html"><abbr title="\Discord\Http">Http</abbr></a></td>
-                            </tr>
-                                                    <tr>
-                                <td><a href="../namespaces/discord-parts.html"><abbr title="\Discord\Parts">Parts</abbr></a></td>
-                            </tr>
-                                                    <tr>
-                                <td><a href="../namespaces/discord-repository.html"><abbr title="\Discord\Repository">Repository</abbr></a></td>
-                            </tr>
-                                                    <tr>
-                                <td><a href="../namespaces/discord-voice.html"><abbr title="\Discord\Voice">Voice</abbr></a></td>
-                            </tr>
-                                                    <tr>
-                                <td><a href="../namespaces/discord-websockets.html"><abbr title="\Discord\WebSockets">WebSockets</abbr></a></td>
-                            </tr>
-                                                    <tr>
-                                <td><a href="../namespaces/discord-wrapper.html"><abbr title="\Discord\Wrapper">Wrapper</abbr></a></td>
-                            </tr>
-                                            </table>
-                    
-                    
-                    
-                                        <h2>Classes</h2>
-                    <table class="table table-hover">
-                                            <tr>
-                            <td><a href="../classes/Discord-Discord.html"><abbr title="\Discord\Discord">Discord</abbr></a></td>
-                            <td><em>The Discord client class.</em></td>
-                        </tr>
-                                            <tr>
-                            <td><a href="../classes/Discord-DiscordCommandClient.html"><abbr title="\Discord\DiscordCommandClient">DiscordCommandClient</abbr></a></td>
-                            <td><em>Provides an easy way to have triggerable commands.</em></td>
-                        </tr>
-                                        </table>
-                                    </div>
-
-                <aside class="span4 detailsbar">
-                    <dl>
-                        <dt>Namespace hierarchy</dt>
-                        <dd class="hierarchy">
-                                                                                                                                                                                                                                                                
-                                    <div class="namespace-wrapper"><a href="../namespaces/default.html"><abbr title="\">normal</abbr></a></div>
-                                                                                        <div class="namespace-wrapper">\Discord</div>
-                        </dd>
-                    </dl>
-                </aside>
-            </div>
-
-            
-                        <div class="row-fluid">
-                <section class="span8 content namespace">
-                    <h2>Functions</h2>
-                </section>
-                <aside class="span4 detailsbar"></aside>
-            </div>
-
-                                        <div class="row-fluid">
-        <div class="span8 content class">
-            <a id="method_mentioned" name="method_mentioned" class="anchor"></a>
-            <article class="method">
-                <h3 class=" ">mentioned()</h3>
-                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
-                <pre class="signature" style="margin-right: 54px;">mentioned(\Discord\Parts\Part|string  <span class="argument">$part</span>, \Discord\Parts\Channel\Message  <span class="argument">$message</span>) : bool</pre>
-                <p><em>Checks to see if a part has been mentioned.</em></p>
-                
-
-                                    <h4>Parameters</h4>
-                    <table class="table table-condensed table-hover">
-                                                    <tr>
-                                <td>\Discord\Parts\Part|string</td>
-                                <td>$part </td>
-                                <td><p>The part or mention to look for.</p></td>
-                            </tr>
-                                                    <tr>
-                                <td>\Discord\Parts\Channel\Message</td>
-                                <td>$message </td>
-                                <td><p>The message to check.</p></td>
-                            </tr>
-                                            </table>
-                
-                
-                                    <h4>Returns</h4>
-                    bool
-                                            &mdash; <p>Whether the part was mentioned.</p>
-                                    
-                            </article>
-        </div>
-        <aside class="span4 detailsbar">
-            <h1><i class="icon-arrow-down"></i></h1>
-                                                            <dl>
-                                    <dt>File</dt>
-                    <dd><a href="../files/src-discord-functions.html"><div class="path-wrapper">src/Discord/functions.php</div></a></dd>
-                                                                            </dl>
-            <h2>Tags</h2>
-            <table class="table table-condensed">
-                                    <tr>
-                        <th>
-                            package
-                        </th>
-                        <td>
-                                                                                            
-                                                    </td>
-                    </tr>
-                            </table>
-        </aside>
-    </div>
-
-                            
-        </div>
+    <section class="phpdocumentor-sidebar__category">
+        <h2 class="phpdocumentor-sidebar__category-header">Reports</h2>
+                <h3 class="phpdocumentor-sidebar__root-package"><a href="reports/deprecated.html">Deprecated</a></h3>
+        <h3 class="phpdocumentor-sidebar__root-package"><a href="reports/errors.html">Errors</a></h3>
+        <h3 class="phpdocumentor-sidebar__root-package"><a href="reports/markers.html">Markers</a></h3>
     </section>
 
-    <footer class="row-fluid">
-        <section class="span10 offset2">
-            <section class="row-fluid">
-                <section class="span10 offset1">
-                    <section class="row-fluid footer-sections">
-                        <section class="span4">
-                                                        <h1><i class="icon-code"></i></h1>
-                            <div>
-                                <ul>
-                                                                            <li><a href="../namespaces/discord.html"><abbr title="\Discord">normal</abbr></a></li>
-                                                                    </ul>
-                            </div>
-                        </section>
-                        <section class="span4">
-                                                        <h1><i class="icon-bar-chart"></i></h1>
-                            <div>
-                                <ul>
-                                    <li><a href="../graphs/class.html">Class Hierarchy Diagram</a></li>
-                                </ul>
-                            </div>
-                        </section>
-                        <section class="span4">
-                                                        <h1><i class="icon-pushpin"></i></h1>
-                            <div>
-                                <ul>
-                                    <li><a href="../reports/errors.html">Errors</a></li>
-                                    <li><a href="../reports/markers.html">Markers</a></li>
-                                </ul>
-                            </div>
-                        </section>
-                    </section>
-                </section>
+    <section class="phpdocumentor-sidebar__category">
+        <h2 class="phpdocumentor-sidebar__category-header">Indices</h2>
+        <h3 class="phpdocumentor-sidebar__root-package"><a href="indices/files.html">Files</a></h3>
+    </section>
+</aside>
+
+            <div class="phpdocumentor-column -eight phpdocumentor-content">
+                    <ul class="phpdocumentor-breadcrumbs">
+    </ul>
+
+    <article class="phpdocumentor-element -namespace">
+        <h2 class="phpdocumentor-content__title">Discord</h2>
+
+        
+<h3 id="namespaces">
+    Namespaces
+    <a href="#namespaces" class="headerlink"><i class="fas fa-link"></i></a>
+</h3>
+
+<dl class="phpdocumentor-table-of-contents">
+            <dt class="phpdocumentor-table-of-contents__entry -namespace"><a href="namespaces/discord-commandclient.html"><abbr title="\Discord\CommandClient">CommandClient</abbr></a></dt>
+            <dt class="phpdocumentor-table-of-contents__entry -namespace"><a href="namespaces/discord-exceptions.html"><abbr title="\Discord\Exceptions">Exceptions</abbr></a></dt>
+            <dt class="phpdocumentor-table-of-contents__entry -namespace"><a href="namespaces/discord-factory.html"><abbr title="\Discord\Factory">Factory</abbr></a></dt>
+            <dt class="phpdocumentor-table-of-contents__entry -namespace"><a href="namespaces/discord-helpers.html"><abbr title="\Discord\Helpers">Helpers</abbr></a></dt>
+            <dt class="phpdocumentor-table-of-contents__entry -namespace"><a href="namespaces/discord-http.html"><abbr title="\Discord\Http">Http</abbr></a></dt>
+            <dt class="phpdocumentor-table-of-contents__entry -namespace"><a href="namespaces/discord-parts.html"><abbr title="\Discord\Parts">Parts</abbr></a></dt>
+            <dt class="phpdocumentor-table-of-contents__entry -namespace"><a href="namespaces/discord-repository.html"><abbr title="\Discord\Repository">Repository</abbr></a></dt>
+            <dt class="phpdocumentor-table-of-contents__entry -namespace"><a href="namespaces/discord-voice.html"><abbr title="\Discord\Voice">Voice</abbr></a></dt>
+            <dt class="phpdocumentor-table-of-contents__entry -namespace"><a href="namespaces/discord-websockets.html"><abbr title="\Discord\WebSockets">WebSockets</abbr></a></dt>
+            <dt class="phpdocumentor-table-of-contents__entry -namespace"><a href="namespaces/discord-wrapper.html"><abbr title="\Discord\Wrapper">Wrapper</abbr></a></dt>
+    </dl>
+
+<h3 id="interfaces_class_traits">
+    Interfaces, Classes and Traits
+    <a href="#interfaces_class_traits" class="headerlink"><i class="fas fa-link"></i></a>
+</h3>
+
+<dl class="phpdocumentor-table-of-contents">
+    
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Discord-Discord.html"><abbr title="\Discord\Discord">Discord</abbr></a></dt>
+        <dd>The Discord client class.</dd>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Discord-DiscordCommandClient.html"><abbr title="\Discord\DiscordCommandClient">DiscordCommandClient</abbr></a></dt>
+        <dd>Provides an easy way to have triggerable commands.</dd>
+    
+    </dl>
+
+
+<h3 id="toc">
+    Table of Contents
+    <a href="#toc" class="headerlink"><i class="fas fa-link"></i></a>
+</h3>
+
+<dl class="phpdocumentor-table-of-contents">
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a href="namespaces/discord.html#constant_COLORTABLE">COLORTABLE</a>
+    <span>
+        &nbsp;= [&#039;indianred&#039; =&gt; 0xcd5c5c, &#039;lightcoral&#039; =&gt; 0xf08080, &#039;salmon&#039; =&gt; 0xfa8072, &#039;darksalmon&#039; =&gt; 0xe9967a, &#039;lightsalmon&#039; =&gt; 0xffa07a, &#039;crimson&#039; =&gt; 0xdc143c, &#039;red&#039; =&gt; 0xff0000, &#039;firebrick&#039; =&gt; 0xb22222, &#039;darkred&#039; =&gt; 0x8b0000, &#039;pink&#039; =&gt; 0xffc0cb, &#039;lightpink&#039; =&gt; 0xffb6c1, &#039;hotpink&#039; =&gt; 0xff69b4, &#039;deeppink&#039; =&gt; 0xff1493, &#039;mediumvioletred&#039; =&gt; 0xc71585, &#039;palevioletred&#039; =&gt; 0xdb7093, &#039;lightsalmon&#039; =&gt; 0xffa07a, &#039;coral&#039; =&gt; 0xff7f50, &#039;tomato&#039; =&gt; 0xff6347, &#039;orangered&#039; =&gt; 0xff4500, &#039;darkorange&#039; =&gt; 0xff8c00, &#039;orange&#039; =&gt; 0xffa500, &#039;gold&#039; =&gt; 0xffd700, &#039;yellow&#039; =&gt; 0xffff00, &#039;lightyellow&#039; =&gt; 0xffffe0, &#039;lemonchiffon&#039; =&gt; 0xfffacd, &#039;lightgoldenrodyellow&#039; =&gt; 0xfafad2, &#039;papayawhip&#039; =&gt; 0xffefd5, &#039;moccasin&#039; =&gt; 0xffe4b5, &#039;peachpuff&#039; =&gt; 0xffdab9, &#039;palegoldenrod&#039; =&gt; 0xeee8aa, &#039;khaki&#039; =&gt; 0xf0e68c, &#039;darkkhaki&#039; =&gt; 0xbdb76b, &#039;lavender&#039; =&gt; 0xe6e6fa, &#039;thistle&#039; =&gt; 0xd8bfd8, &#039;plum&#039; =&gt; 0xdda0dd, &#039;violet&#039; =&gt; 0xee82ee, &#039;orchid&#039; =&gt; 0xda70d6, &#039;fuchsia&#039; =&gt; 0xff00ff, &#039;magenta&#039; =&gt; 0xff00ff, &#039;mediumorchid&#039; =&gt; 0xba55d3, &#039;mediumpurple&#039; =&gt; 0x9370db, &#039;rebeccapurple&#039; =&gt; 0x663399, &#039;blueviolet&#039; =&gt; 0x8a2be2, &#039;darkviolet&#039; =&gt; 0x9400d3, &#039;darkorchid&#039; =&gt; 0x9932cc, &#039;darkmagenta&#039; =&gt; 0x8b008b, &#039;purple&#039; =&gt; 0x800080, &#039;indigo&#039; =&gt; 0x4b0082, &#039;slateblue&#039; =&gt; 0x6a5acd, &#039;darkslateblue&#039; =&gt; 0x483d8b, &#039;mediumslateblue&#039; =&gt; 0x7b68ee, &#039;greenyellow&#039; =&gt; 0xadff2f, &#039;chartreuse&#039; =&gt; 0x7fff00, &#039;lawngreen&#039; =&gt; 0x7cfc00, &#039;lime&#039; =&gt; 0xff00, &#039;limegreen&#039; =&gt; 0x32cd32, &#039;palegreen&#039; =&gt; 0x98fb98, &#039;lightgreen&#039; =&gt; 0x90ee90, &#039;mediumspringgreen&#039; =&gt; 0xfa9a, &#039;springgreen&#039; =&gt; 0xff7f, &#039;mediumseagreen&#039; =&gt; 0x3cb371, &#039;seagreen&#039; =&gt; 0x2e8b57, &#039;forestgreen&#039; =&gt; 0x228b22, &#039;green&#039; =&gt; 0x8000, &#039;darkgreen&#039; =&gt; 0x6400, &#039;yellowgreen&#039; =&gt; 0x9acd32, &#039;olivedrab&#039; =&gt; 0x6b8e23, &#039;olive&#039; =&gt; 0x808000, &#039;darkolivegreen&#039; =&gt; 0x556b2f, &#039;mediumaquamarine&#039; =&gt; 0x66cdaa, &#039;darkseagreen&#039; =&gt; 0x8fbc8b, &#039;lightseagreen&#039; =&gt; 0x20b2aa, &#039;darkcyan&#039; =&gt; 0x8b8b, &#039;teal&#039; =&gt; 0x8080, &#039;aqua&#039; =&gt; 0xffff, &#039;cyan&#039; =&gt; 0xffff, &#039;lightcyan&#039; =&gt; 0xe0ffff, &#039;paleturquoise&#039; =&gt; 0xafeeee, &#039;aquamarine&#039; =&gt; 0x7fffd4, &#039;turquoise&#039; =&gt; 0x40e0d0, &#039;mediumturquoise&#039; =&gt; 0x48d1cc, &#039;darkturquoise&#039; =&gt; 0xced1, &#039;cadetblue&#039; =&gt; 0x5f9ea0, &#039;steelblue&#039; =&gt; 0x4682b4, &#039;lightsteelblue&#039; =&gt; 0xb0c4de, &#039;powderblue&#039; =&gt; 0xb0e0e6, &#039;lightblue&#039; =&gt; 0xadd8e6, &#039;skyblue&#039; =&gt; 0x87ceeb, &#039;lightskyblue&#039; =&gt; 0x87cefa, &#039;deepskyblue&#039; =&gt; 0xbfff, &#039;dodgerblue&#039; =&gt; 0x1e90ff, &#039;cornflowerblue&#039; =&gt; 0x6495ed, &#039;mediumslateblue&#039; =&gt; 0x7b68ee, &#039;royalblue&#039; =&gt; 0x4169e1, &#039;blue&#039; =&gt; 0xff, &#039;mediumblue&#039; =&gt; 0xcd, &#039;darkblue&#039; =&gt; 0x8b, &#039;navy&#039; =&gt; 0x80, &#039;midnightblue&#039; =&gt; 0x191970, &#039;cornsilk&#039; =&gt; 0xfff8dc, &#039;blanchedalmond&#039; =&gt; 0xffebcd, &#039;bisque&#039; =&gt; 0xffe4c4, &#039;navajowhite&#039; =&gt; 0xffdead, &#039;wheat&#039; =&gt; 0xf5deb3, &#039;burlywood&#039; =&gt; 0xdeb887, &#039;tan&#039; =&gt; 0xd2b48c, &#039;rosybrown&#039; =&gt; 0xbc8f8f, &#039;sandybrown&#039; =&gt; 0xf4a460, &#039;goldenrod&#039; =&gt; 0xdaa520, &#039;darkgoldenrod&#039; =&gt; 0xb8860b, &#039;peru&#039; =&gt; 0xcd853f, &#039;chocolate&#039; =&gt; 0xd2691e, &#039;saddlebrown&#039; =&gt; 0x8b4513, &#039;sienna&#039; =&gt; 0xa0522d, &#039;brown&#039; =&gt; 0xa52a2a, &#039;maroon&#039; =&gt; 0x800000, &#039;white&#039; =&gt; 0xffffff, &#039;snow&#039; =&gt; 0xfffafa, &#039;honeydew&#039; =&gt; 0xf0fff0, &#039;mintcream&#039; =&gt; 0xf5fffa, &#039;azure&#039; =&gt; 0xf0ffff, &#039;aliceblue&#039; =&gt; 0xf0f8ff, &#039;ghostwhite&#039; =&gt; 0xf8f8ff, &#039;whitesmoke&#039; =&gt; 0xf5f5f5, &#039;seashell&#039; =&gt; 0xfff5ee, &#039;beige&#039; =&gt; 0xf5f5dc, &#039;oldlace&#039; =&gt; 0xfdf5e6, &#039;floralwhite&#039; =&gt; 0xfffaf0, &#039;ivory&#039; =&gt; 0xfffff0, &#039;antiquewhite&#039; =&gt; 0xfaebd7, &#039;linen&#039; =&gt; 0xfaf0e6, &#039;lavenderblush&#039; =&gt; 0xfff0f5, &#039;mistyrose&#039; =&gt; 0xffe4e1, &#039;gainsboro&#039; =&gt; 0xdcdcdc, &#039;lightgray&#039; =&gt; 0xd3d3d3, &#039;silver&#039; =&gt; 0xc0c0c0, &#039;darkgray&#039; =&gt; 0xa9a9a9, &#039;gray&#039; =&gt; 0x808080, &#039;dimgray&#039; =&gt; 0x696969, &#039;lightslategray&#039; =&gt; 0x778899, &#039;slategray&#039; =&gt; 0x708090, &#039;darkslategray&#039; =&gt; 0x2f4f4f, &#039;black&#039; =&gt; 0x0]                    </span>
+</dt>
+<dd>The HTML Color Table.</dd>
+
+                        <dt class="phpdocumentor-table-of-contents__entry -function -">
+    <a href="namespaces/discord.html#function_mentioned">mentioned()</a>
+    <span>
+                        &nbsp;: bool    </span>
+</dt>
+<dd>Checks to see if a part has been mentioned.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -function -">
+    <a href="namespaces/discord.html#function_getColor">getColor()</a>
+    <span>
+                        &nbsp;: int    </span>
+</dt>
+<dd>Get int value for color.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -function -">
+    <a href="namespaces/discord.html#function_contains">contains()</a>
+    <span>
+                        &nbsp;: bool    </span>
+</dt>
+<dd>Checks if a string contains an array of phrases.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -function -">
+    <a href="namespaces/discord.html#function_studly">studly()</a>
+    <span>
+                        &nbsp;: string    </span>
+</dt>
+<dd>Converts a string to studlyCase.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -function -">
+    <a href="namespaces/discord.html#function_poly_strlen">poly_strlen()</a>
+    <span>
+                        &nbsp;: int    </span>
+</dt>
+<dd>Polyfill to check if mbstring is installed.</dd>
+
+    </dl>
+
+        
+    <section class="phpdocumentor-constants">
+        <h3 class="phpdocumentor-elements__header" id="constants">
+            Constants
+            <a href="namespaces/discord.html#constants" class="headerlink"><i class="fas fa-link"></i></a>
+        </h3>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_COLORTABLE">
+        COLORTABLE
+        <a href="namespaces/discord.html#constant_COLORTABLE" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/functions.php"><a href="files/src-discord-functions.html"><abbr title="src/Discord/functions.php">functions.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">26</span>
+</aside>
+
+        <p class="phpdocumentor-summary">The HTML Color Table.</p>
+
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+    <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">COLORTABLE</span>
+    = <span class="phpdocumentor-signature__default-value">[&#039;indianred&#039; =&gt; 0xcd5c5c, &#039;lightcoral&#039; =&gt; 0xf08080, &#039;salmon&#039; =&gt; 0xfa8072, &#039;darksalmon&#039; =&gt; 0xe9967a, &#039;lightsalmon&#039; =&gt; 0xffa07a, &#039;crimson&#039; =&gt; 0xdc143c, &#039;red&#039; =&gt; 0xff0000, &#039;firebrick&#039; =&gt; 0xb22222, &#039;darkred&#039; =&gt; 0x8b0000, &#039;pink&#039; =&gt; 0xffc0cb, &#039;lightpink&#039; =&gt; 0xffb6c1, &#039;hotpink&#039; =&gt; 0xff69b4, &#039;deeppink&#039; =&gt; 0xff1493, &#039;mediumvioletred&#039; =&gt; 0xc71585, &#039;palevioletred&#039; =&gt; 0xdb7093, &#039;lightsalmon&#039; =&gt; 0xffa07a, &#039;coral&#039; =&gt; 0xff7f50, &#039;tomato&#039; =&gt; 0xff6347, &#039;orangered&#039; =&gt; 0xff4500, &#039;darkorange&#039; =&gt; 0xff8c00, &#039;orange&#039; =&gt; 0xffa500, &#039;gold&#039; =&gt; 0xffd700, &#039;yellow&#039; =&gt; 0xffff00, &#039;lightyellow&#039; =&gt; 0xffffe0, &#039;lemonchiffon&#039; =&gt; 0xfffacd, &#039;lightgoldenrodyellow&#039; =&gt; 0xfafad2, &#039;papayawhip&#039; =&gt; 0xffefd5, &#039;moccasin&#039; =&gt; 0xffe4b5, &#039;peachpuff&#039; =&gt; 0xffdab9, &#039;palegoldenrod&#039; =&gt; 0xeee8aa, &#039;khaki&#039; =&gt; 0xf0e68c, &#039;darkkhaki&#039; =&gt; 0xbdb76b, &#039;lavender&#039; =&gt; 0xe6e6fa, &#039;thistle&#039; =&gt; 0xd8bfd8, &#039;plum&#039; =&gt; 0xdda0dd, &#039;violet&#039; =&gt; 0xee82ee, &#039;orchid&#039; =&gt; 0xda70d6, &#039;fuchsia&#039; =&gt; 0xff00ff, &#039;magenta&#039; =&gt; 0xff00ff, &#039;mediumorchid&#039; =&gt; 0xba55d3, &#039;mediumpurple&#039; =&gt; 0x9370db, &#039;rebeccapurple&#039; =&gt; 0x663399, &#039;blueviolet&#039; =&gt; 0x8a2be2, &#039;darkviolet&#039; =&gt; 0x9400d3, &#039;darkorchid&#039; =&gt; 0x9932cc, &#039;darkmagenta&#039; =&gt; 0x8b008b, &#039;purple&#039; =&gt; 0x800080, &#039;indigo&#039; =&gt; 0x4b0082, &#039;slateblue&#039; =&gt; 0x6a5acd, &#039;darkslateblue&#039; =&gt; 0x483d8b, &#039;mediumslateblue&#039; =&gt; 0x7b68ee, &#039;greenyellow&#039; =&gt; 0xadff2f, &#039;chartreuse&#039; =&gt; 0x7fff00, &#039;lawngreen&#039; =&gt; 0x7cfc00, &#039;lime&#039; =&gt; 0xff00, &#039;limegreen&#039; =&gt; 0x32cd32, &#039;palegreen&#039; =&gt; 0x98fb98, &#039;lightgreen&#039; =&gt; 0x90ee90, &#039;mediumspringgreen&#039; =&gt; 0xfa9a, &#039;springgreen&#039; =&gt; 0xff7f, &#039;mediumseagreen&#039; =&gt; 0x3cb371, &#039;seagreen&#039; =&gt; 0x2e8b57, &#039;forestgreen&#039; =&gt; 0x228b22, &#039;green&#039; =&gt; 0x8000, &#039;darkgreen&#039; =&gt; 0x6400, &#039;yellowgreen&#039; =&gt; 0x9acd32, &#039;olivedrab&#039; =&gt; 0x6b8e23, &#039;olive&#039; =&gt; 0x808000, &#039;darkolivegreen&#039; =&gt; 0x556b2f, &#039;mediumaquamarine&#039; =&gt; 0x66cdaa, &#039;darkseagreen&#039; =&gt; 0x8fbc8b, &#039;lightseagreen&#039; =&gt; 0x20b2aa, &#039;darkcyan&#039; =&gt; 0x8b8b, &#039;teal&#039; =&gt; 0x8080, &#039;aqua&#039; =&gt; 0xffff, &#039;cyan&#039; =&gt; 0xffff, &#039;lightcyan&#039; =&gt; 0xe0ffff, &#039;paleturquoise&#039; =&gt; 0xafeeee, &#039;aquamarine&#039; =&gt; 0x7fffd4, &#039;turquoise&#039; =&gt; 0x40e0d0, &#039;mediumturquoise&#039; =&gt; 0x48d1cc, &#039;darkturquoise&#039; =&gt; 0xced1, &#039;cadetblue&#039; =&gt; 0x5f9ea0, &#039;steelblue&#039; =&gt; 0x4682b4, &#039;lightsteelblue&#039; =&gt; 0xb0c4de, &#039;powderblue&#039; =&gt; 0xb0e0e6, &#039;lightblue&#039; =&gt; 0xadd8e6, &#039;skyblue&#039; =&gt; 0x87ceeb, &#039;lightskyblue&#039; =&gt; 0x87cefa, &#039;deepskyblue&#039; =&gt; 0xbfff, &#039;dodgerblue&#039; =&gt; 0x1e90ff, &#039;cornflowerblue&#039; =&gt; 0x6495ed, &#039;mediumslateblue&#039; =&gt; 0x7b68ee, &#039;royalblue&#039; =&gt; 0x4169e1, &#039;blue&#039; =&gt; 0xff, &#039;mediumblue&#039; =&gt; 0xcd, &#039;darkblue&#039; =&gt; 0x8b, &#039;navy&#039; =&gt; 0x80, &#039;midnightblue&#039; =&gt; 0x191970, &#039;cornsilk&#039; =&gt; 0xfff8dc, &#039;blanchedalmond&#039; =&gt; 0xffebcd, &#039;bisque&#039; =&gt; 0xffe4c4, &#039;navajowhite&#039; =&gt; 0xffdead, &#039;wheat&#039; =&gt; 0xf5deb3, &#039;burlywood&#039; =&gt; 0xdeb887, &#039;tan&#039; =&gt; 0xd2b48c, &#039;rosybrown&#039; =&gt; 0xbc8f8f, &#039;sandybrown&#039; =&gt; 0xf4a460, &#039;goldenrod&#039; =&gt; 0xdaa520, &#039;darkgoldenrod&#039; =&gt; 0xb8860b, &#039;peru&#039; =&gt; 0xcd853f, &#039;chocolate&#039; =&gt; 0xd2691e, &#039;saddlebrown&#039; =&gt; 0x8b4513, &#039;sienna&#039; =&gt; 0xa0522d, &#039;brown&#039; =&gt; 0xa52a2a, &#039;maroon&#039; =&gt; 0x800000, &#039;white&#039; =&gt; 0xffffff, &#039;snow&#039; =&gt; 0xfffafa, &#039;honeydew&#039; =&gt; 0xf0fff0, &#039;mintcream&#039; =&gt; 0xf5fffa, &#039;azure&#039; =&gt; 0xf0ffff, &#039;aliceblue&#039; =&gt; 0xf0f8ff, &#039;ghostwhite&#039; =&gt; 0xf8f8ff, &#039;whitesmoke&#039; =&gt; 0xf5f5f5, &#039;seashell&#039; =&gt; 0xfff5ee, &#039;beige&#039; =&gt; 0xf5f5dc, &#039;oldlace&#039; =&gt; 0xfdf5e6, &#039;floralwhite&#039; =&gt; 0xfffaf0, &#039;ivory&#039; =&gt; 0xfffff0, &#039;antiquewhite&#039; =&gt; 0xfaebd7, &#039;linen&#039; =&gt; 0xfaf0e6, &#039;lavenderblush&#039; =&gt; 0xfff0f5, &#039;mistyrose&#039; =&gt; 0xffe4e1, &#039;gainsboro&#039; =&gt; 0xdcdcdc, &#039;lightgray&#039; =&gt; 0xd3d3d3, &#039;silver&#039; =&gt; 0xc0c0c0, &#039;darkgray&#039; =&gt; 0xa9a9a9, &#039;gray&#039; =&gt; 0x808080, &#039;dimgray&#039; =&gt; 0x696969, &#039;lightslategray&#039; =&gt; 0x778899, &#039;slategray&#039; =&gt; 0x708090, &#039;darkslategray&#039; =&gt; 0x2f4f4f, &#039;black&#039; =&gt; 0x0]</span>
+</code>
+
+
+        <section class="phpdocumentor-description"></section>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">array</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>HTML Color Table.</p>
+</section>
+
+                                    </dd>
+                        </dl>
+
+</article>
             </section>
-            <section class="row-fluid">
-                <section class="span10 offset1">
-                    <hr />
-                    Documentation is powered by <a href="https://www.phpdoc.org/">phpDocumentor </a> and authored
-                    on September 15th, 2020 at 02:39.
-                </section>
+
+            <section class="phpdocumentor-functions">
+        <h3 class="phpdocumentor-elements__header" id="functions">
+            Functions
+            <a href="namespaces/discord.html#functions" class="headerlink"><i class="fas fa-link"></i></a>
+        </h3>
+                    <article class="phpdocumentor-element -function - ">
+    <h4 class="phpdocumentor-element__name" id="function_mentioned">
+        mentioned()
+        <a href="namespaces/discord.html#function_mentioned" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/functions.php"><a href="files/src-discord-functions.html"><abbr title="src/Discord/functions.php">functions.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">74</span>
+</aside>
+
+        <p class="phpdocumentor-summary">Checks to see if a part has been mentioned.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility"></span>
+                <span class="phpdocumentor-signature__name">mentioned</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Discord-Parts-Part.html"><abbr title="\Discord\Parts\Part">Part</abbr></a>|string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$part</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Discord-Parts-Channel-Message.html"><abbr title="\Discord\Parts\Channel\Message">Message</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$message</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
+
+        <section class="phpdocumentor-description"></section>
+
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$part</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Discord-Parts-Part.html"><abbr title="\Discord\Parts\Part">Part</abbr></a>|string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>The part or mention to look for.</p>
+</section>
+
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$message</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Discord-Parts-Channel-Message.html"><abbr title="\Discord\Parts\Channel\Message">Message</abbr></a></span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>The message to check.</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+
+    
+</article>
+                    <article class="phpdocumentor-element -function - ">
+    <h4 class="phpdocumentor-element__name" id="function_getColor">
+        getColor()
+        <a href="namespaces/discord.html#function_getColor" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/functions.php"><a href="files/src-discord-functions.html"><abbr title="src/Discord/functions.php">functions.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">94</span>
+</aside>
+
+        <p class="phpdocumentor-summary">Get int value for color.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility"></span>
+                <span class="phpdocumentor-signature__name">getColor</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">int|string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$color</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">int</span></code>
+
+        <section class="phpdocumentor-description"></section>
+
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$color</span>
+                : <span class="phpdocumentor-signature__argument__return-type">int|string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>The color's int, hexcode or htmlname.</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+
+    
+</article>
+                    <article class="phpdocumentor-element -function - ">
+    <h4 class="phpdocumentor-element__name" id="function_contains">
+        contains()
+        <a href="namespaces/discord.html#function_contains" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/functions.php"><a href="files/src-discord-functions.html"><abbr title="src/Discord/functions.php">functions.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">122</span>
+</aside>
+
+        <p class="phpdocumentor-summary">Checks if a string contains an array of phrases.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility"></span>
+                <span class="phpdocumentor-signature__name">contains</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$string</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$matches</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
+
+        <section class="phpdocumentor-description"></section>
+
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$string</span>
+                : <span class="phpdocumentor-signature__argument__return-type">string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>The string to check.</p>
+</section>
+
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$matches</span>
+                : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>Array containing one or more phrases to match.</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+
+    
+</article>
+                    <article class="phpdocumentor-element -function - ">
+    <h4 class="phpdocumentor-element__name" id="function_studly">
+        studly()
+        <a href="namespaces/discord.html#function_studly" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/functions.php"><a href="files/src-discord-functions.html"><abbr title="src/Discord/functions.php">functions.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">140</span>
+</aside>
+
+        <p class="phpdocumentor-summary">Converts a string to studlyCase.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility"></span>
+                <span class="phpdocumentor-signature__name">studly</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$string</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
+
+        <section class="phpdocumentor-description"></section>
+
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$string</span>
+                : <span class="phpdocumentor-signature__argument__return-type">string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>The string to convert.</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+
+    
+</article>
+                    <article class="phpdocumentor-element -function - ">
+    <h4 class="phpdocumentor-element__name" id="function_poly_strlen">
+        poly_strlen()
+        <a href="namespaces/discord.html#function_poly_strlen" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/functions.php"><a href="files/src-discord-functions.html"><abbr title="src/Discord/functions.php">functions.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">159</span>
+</aside>
+
+        <p class="phpdocumentor-summary">Polyfill to check if mbstring is installed.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility"></span>
+                <span class="phpdocumentor-signature__name">poly_strlen</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$str</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">int</span></code>
+
+        <section class="phpdocumentor-description"></section>
+
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$str</span>
+                : <span class="phpdocumentor-signature__argument__return-type">string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"></section>
+
+            </dd>
+            </dl>
+
+    
+
+    
+</article>
             </section>
+
+    </article>
+                <section data-search-results class="phpdocumentor-search-results phpdocumentor-search-results--hidden">
+    <section class="phpdocumentor-search-results__dialog">
+        <header class="phpdocumentor-search-results__header">
+            <h2 class="phpdocumentor-search-results__title">Search results</h2>
+            <button class="phpdocumentor-search-results__close"><i class="fas fa-times"></i></button>
+        </header>
+        <section class="phpdocumentor-search-results__body">
+            <ul class="phpdocumentor-search-results__entries"></ul>
         </section>
-    </footer>
-</div>
+    </section>
+</section>
+            </div>
+        </div>
+        <a href="namespaces/discord.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
 
+    </main>
+
+    <script>
+        cssVars({});
+    </script>
 </body>
 </html>
