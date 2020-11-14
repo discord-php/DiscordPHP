@@ -1,4 +1,5 @@
 /vendor
+/docs
 composer.lock
 test*.php
 .idea
