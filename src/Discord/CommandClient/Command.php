@@ -138,7 +138,7 @@ class Command
             throw new \Exception("A sub-command with the name {$command} already exists.");
         }
 
-        if ($this->client->getCommandClientOptions()['caseInsensitiveCommands']) {
+        if ($command !== null && $this->client->getCommandClientOptions()['caseInsensitiveCommands']) {
             $command = strtolower($command);
         }
 
@@ -175,7 +175,7 @@ class Command
      */
     public function registerSubCommandAlias(string $alias, string $command): void
     {
-        if ($this->client->getCommandClientOptions()['caseInsensitiveCommands']) {
+        if ($alias !== null && $this->client->getCommandClientOptions()['caseInsensitiveCommands']) {
             $alias = strtolower($alias);
         }
 
@@ -209,7 +209,7 @@ class Command
     {
         $subCommand = array_shift($args);
 
-        if ($this->client->getCommandClientOptions()['caseInsensitiveCommands']) {
+        if ($subCommand !== null && $this->client->getCommandClientOptions()['caseInsensitiveCommands']) {
             $subCommand = strtolower($subCommand);
         }
 
