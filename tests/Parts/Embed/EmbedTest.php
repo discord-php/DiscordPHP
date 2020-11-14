@@ -57,8 +57,7 @@ final class EmbedTest extends TestCase
             $url = 'https://discord.com/assets/94db9c3c1eba8a38a1fcf4f223294185.png';
             $handler = function (Message $message) use ($discord, $resolve, $url, &$handler) {
                 // ignore messages not created by self
-                if ($message->author->id != $discord->id) return;
-                $discord->removeListener(Event::MESSAGE_CREATE, $handler);
+                if ($message->author->id != $discord->id || $message->embeds->count() < 1) return;
 
                 $this->assertEquals(1, $message->embeds->count());
                 /** @var \Discord\Parts\Embed\Embed */
@@ -72,7 +71,13 @@ final class EmbedTest extends TestCase
             };
 
             $discord->on(Event::MESSAGE_CREATE, $handler);
+            $discord->on(Event::MESSAGE_UPDATE, $handler);
             $channel->sendMessage($url);
+
+            return function () use ($discord, $handler) {
+                $discord->removeListener(Event::MESSAGE_CREATE, $handler);
+                $discord->removeListener(Event::MESSAGE_UPDATE, $handler);
+            };
         }, 10);
     }
 }
