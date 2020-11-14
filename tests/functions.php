@@ -7,22 +7,33 @@ function wait(callable $callback, float $timeout = TIMEOUT)
     $discord = DiscordSingleton::get();
 
     $result = null;
-    $discord->getLoop()->futureTick(function () use ($callback, $discord, &$result) {
+    $finally = null;
+    $timedOut = false;
+
+    $discord->getLoop()->futureTick(function () use ($callback, $discord, &$result, &$finally) {
         $resolve = function ($x = null) use ($discord, &$result) {
             $result = $x;
             $discord->getLoop()->stop();
         };
 
-        $callback($discord, $resolve);
+        $finally = $callback($discord, $resolve);
     });
 
     $timeout = $discord->getLoop()->addTimer($timeout, function () use ($discord, &$timedOut) {
-        throw new \Exception('Timed out');
+        $timedOut = true;
         $discord->getLoop()->stop();
     });
 
     $discord->getLoop()->run();
     $discord->getLoop()->cancelTimer($timeout);
+
+    if (is_callable($finally)) {
+        $finally();
+    }
+
+    if ($timedOut) {
+        throw new \Exception('Timed out');
+    }
 
     return $result;
 }
