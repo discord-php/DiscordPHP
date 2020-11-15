@@ -1,5 +1,5 @@
-name: 'phpDocumentor Build'
-description: 'Runs phpDocumentor'
+name: 'Gatsby Documentation Build'
+description: 'Builds the documentation with Gatsby'
 runs:
   using: 'docker'
   image: 'Dockerfile'

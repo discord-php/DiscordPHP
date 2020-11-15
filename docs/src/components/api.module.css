@@ -1,0 +1,164 @@
+.container {
+  --description-background-color: white;
+  --code-background-color: #191a18;
+  --code-foreground-color: white;
+
+  padding: 1.25rem 1rem;
+}
+
+.table {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+main *[id]:before {
+  display: block;
+  content: " ";
+  margin-top: -5rem;
+  height: 5rem;
+  visibility: hidden;
+}
+
+main h2:first-child {
+  margin-top: 0;
+}
+
+.container pre {
+  background-color: var(--code-background-color);
+  color: var(--code-foreground-color);
+  padding: calc(1.45em / 2) 1.45em;
+  width: 100%;
+  overflow-x: auto;
+}
+
+@media (min-width: 55em) {
+  .container {
+    padding: 0;
+  }
+
+  main {
+    --description-background-color: white;
+    --code-background-color: #0a0b09;
+    --code-foreground-color: white;
+    background-image: linear-gradient(
+      90deg,
+      var(--description-background-color) 0%,
+      var(--description-background-color) 50%,
+      var(--code-background-color) 50%,
+      var(--code-background-color) 100%
+    );
+  }
+
+  .section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-column-gap: 2.9em;
+  }
+  .section > :not([data-language]) {
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    grid-column: 1/2;
+    padding-bottom: 0.11rem;
+  }
+
+  .section > [data-language] {
+    overflow-x: auto;
+    grid-column: 2/3;
+    background-color: var(--code-background-color);
+    color: var(--code-foreground-color);
+  }
+
+  .section > [data-language] pre {
+    margin: 0;
+    padding: 0;
+  }
+}
+
+.nav {
+  position: sticky;
+  top: 0rem;
+  background-color: #eee;
+  padding: 0;
+
+  /* Give the navigation a maximum height, so the “stickyness” will have an effect. */
+  max-height: calc(100vh);
+  overflow-y: auto;
+
+  /* TBD: Would it better to limit the navigation height so that all of the items
+          are visible when scrolled to the top of the page?
+  max-height: calc(100vh - var(--header-height-in-ems)); */
+
+  /* TBD: Is it useful to use em units here? (so that it will scale with the font size)
+          Are there other places where we’re using pixel values that make this moot?
+  --header-height-in-ems: calc(var(--header-height) / var(--font-size) * 1em); */
+
+  /* TBD: Should these value come from a custom property instead?
+  --header-height: 102.5;
+  --font-size: 20; */
+}
+
+.nav h1 {
+  display: inline;
+}
+
+.nav button {
+  display: block;
+  margin-bottom: 0.75em;
+}
+
+.nav a:not(:hover):not(:active):not(:focus) {
+  color: inherit;
+}
+.nav a {
+  text-shadow: none;
+  background-image: none;
+  text-decoration: none;
+  display: block;
+}
+
+.nav > ol {
+  padding: 1rem !important;
+}
+
+.nav ol,
+.nav li {
+  list-style: none;
+  margin-left: 0;
+  padding-left: 0;
+}
+.nav li li {
+  /* padding-left: 1.45rem; */
+  font-size: 0.875em;
+}
+
+.subhidden {
+  display: none !important;
+}
+
+.activelink {
+  position: sticky;
+  top: 0;
+  display: block;
+  background-color: white;
+  border-bottom: 1px solid hsla(0, 0%, 0%, 0.12); /* Copied from the table style in the main content area */
+}
+
+.activemenuitem {
+  font-weight: bold;
+}
+
+.deprecated {
+  background-color: #ffe7e8;
+  padding: 1.25rem;
+  border-radius: 0.25rem;
+  margin-bottom: 1rem;
+}
+
+/* Hide the navigation on small screens, until the toggle button is pressed */
+@media (max-width: 55em) {
+  /* --wide-enough-for-two-columns */
+  .hidden {
+    display: none !important;
+  }
+}

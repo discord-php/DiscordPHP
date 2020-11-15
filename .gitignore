@@ -1,5 +1,5 @@
 /vendor
-/docs
+/build
 composer.lock
 test*.php
 .idea
@@ -8,3 +8,4 @@ test*.php
 .phpdoc
 .env
 .phpunit*
+.DS_Store

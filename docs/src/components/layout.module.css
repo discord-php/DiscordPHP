@@ -1,0 +1,29 @@
+.container > header {
+  margin-bottom: 1.5rem;
+}
+
+.hidden {
+  opacity: 0;
+}
+
+@media (min-width: 55em) {
+  /* --wide-enough-for-two-columns */
+  .container {
+    display: grid;
+    grid-column-gap: 2.9em;
+    grid-template-columns: calc(1.45em * 9) 2fr;
+  }
+
+  .container > nav {
+    grid-column: 1/2;
+  }
+
+  .container > main {
+    grid-column: 2/3;
+  }
+}
+
+.versionDropdown {
+  display: flex;
+  align-items: flex-start;
+}
