@@ -12,7 +12,11 @@ jobs:
       - name: Build class reference
         uses: ./.github/actions/build-reference
       - name: Build documentation
-        uses: ./.github/actions/build-docs
+        run: |
+          cd ./docs
+          yarn install
+          yarn build
+          mv public/* ../build
       - name: Publish docs
         uses: JamesIves/github-pages-deploy-action@3.7.1
         with:
