@@ -126,8 +126,22 @@ All events take a callback which is called when the event is triggered, and the 
 ```
 <br>
 
-Finally, the event loop needs to be started:
+Finally, the event loop needs to be started. Treat this as an infinite loop.
 
 ```php
 $discord->run();
 ```
+
+<div>
+If you want to stop the bot you can run:
+
+```php
+$discord->close();
+```
+
+If you want to stop the bot without stopping the event loop, the close function takes a boolean:
+
+```php
+$discord->close(false);
+```
+</div>
