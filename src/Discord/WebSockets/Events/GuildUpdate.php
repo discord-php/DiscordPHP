@@ -29,9 +29,7 @@ class GuildUpdate extends Event
             return;
         }
 
-        /**
-         * @var $guildPart Guild
-         */
+        /** @var Guild */
         $guildPart = $this->factory->create(Guild::class, $data, true);
 
         foreach ($data->roles as $role) {
