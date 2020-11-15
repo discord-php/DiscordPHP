@@ -162,4 +162,46 @@ $discord->on(Event::CHANNEL_PINS_UPDATE, function ($pins, Discord $discord) {
     //     "last_pin_timestamp": ""
     // }
 });
+```
 
+### Guild Create
+
+Called with a `Guild` object in one of the following situations:
+
+1. When the bot is first starting and the guilds are becoming available.
+2. When a guild was unavailable and is now available due to an outage.
+3. When the bot joins a new guild.
+
+```php
+$discord->on(Event::GUILD_CREATE, function (Guild $guild, Discord $discord) {
+    // ...
+});
+```
+
+### Guild Update
+
+Called with two `Guild` object when a guild is updated.
+
+```php
+$discord->on(Event::GUILD_UPDATE, function (Guild $new, Discord $discord, Guild $old) {
+    // ...
+});
+```
+
+### Guild Delete
+
+Called with a `Guild` object in one of the following situations:
+
+1. The bot was removed from a guild.
+2. The guild is unavailable due to an outage.
+
+```php
+$discord->on(Event::GUILD_DELETE, function (Guild $guild, Discord $discord, bool $unavailable) {
+    // ...
+    if ($unavailable) {
+        // the guild is unavailabe due to an outage
+    } else {
+        // the bot has been kicked from the guild
+    }
+});
+```
