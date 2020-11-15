@@ -300,3 +300,32 @@ $discord->on(Event::INVITE_DELETE, function ($invite, Discord $discord) {
 });
 ```
 
+### Presence Update
+
+Called with a `PresenceUpdate` object when a members presence is updated.
+
+```php
+$discord->on(Event::PRESENCE_UPDATE, function (PresenceUpdate $presence, Discord $discord) {
+    // ...
+});
+```
+
+### Typing Start
+
+Called with a `TypingStart` object when a member starts typing in a channel.
+
+```php
+$discord->on(Event::TYPING_START, function (TypingStart $typing, Discord $discord) {
+    // ...
+});
+```
+
+### Voice State Update
+
+Called with a `VoiceStateUpdate` object when a member joins, leaves or moves between voice channels.
+
+```php
+$discord->on(Event::VOICE_STATE_UPDATE, function (VoiceStateUpdate $state, Discord $discord) {
+    // ...
+});
+```
