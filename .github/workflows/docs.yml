@@ -1,5 +1,6 @@
 name: Build Docs
 on:
+  push:
   release:
     types: [published]
 
@@ -16,7 +17,7 @@ jobs:
           cd ./docs
           yarn install
           yarn build
-          mv public/* ../build
+          sudo mv public/* ../build
       - name: Publish docs
         uses: JamesIves/github-pages-deploy-action@3.7.1
         with:
