@@ -236,3 +236,67 @@ $discord->on(Event::GUILD_MEMBER_REMOVE, function (Member $member, Discord $disc
 });
 ```
 
+### Guild Role Create
+
+Called with a `Role` object when a role is created in a guild.
+
+```php
+$discord->on(Event::GUILD_ROLE_CREATE, function (Role $role, Discord $discord) {
+    // ...
+});
+```
+
+### Guild Role Update
+
+Called with two `Role` objects when a role is updated in a guild.
+
+```php
+$discord->on(Event::GUILD_ROLE_UPDATE, function (Role $new, Discord $discord, Role $old) {
+    // ...
+});
+```
+
+### Guild Role Delete
+
+Called with a `Role` object when a role is deleted in a guild.
+
+```php
+$discord->on(Event::GUILD_ROLE_DELETE, function (Role $role, Discord $discord) {
+    // ...
+});
+```
+
+### Guild Integrations Update
+
+Called with a `Guild` object when a guild's integrations are updated.
+
+```php
+$discord->on(Event::GUILD_INTEGRATIONS_UPDATE, function (Guild $guild, Discord $discord) {
+    // ...
+});
+```
+
+### Invite Create
+
+Called with an `Invite` object when an invite is created.
+
+```php
+$discord->on(Event::INVITE_CREATE, function (Invite $invite, Discord $discord) {
+    // ...
+});
+```
+
+### Invite Delete
+
+Called with an object when an invite is created.
+
+```php
+$discord->on(Event::INVITE_DELETE, function ($invite, Discord $discord) {
+    // {
+    //     "channel_id": "",
+    //     "guild_id": "",
+    //     "code": "" // the unique invite code
+    // }
+});
+```
+
