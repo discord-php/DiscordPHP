@@ -205,3 +205,34 @@ $discord->on(Event::GUILD_DELETE, function (Guild $guild, Discord $discord, bool
     }
 });
 ```
+
+### Guild Member Add
+
+Called with a `Member` object when a member joins a guild.
+
+```php
+$discord->on(Event::GUILD_MEMBER_ADD, function (Member $member, Discord $discord) {
+    // ...
+});
+```
+
+### Guild Member Update
+
+Called with two `Member` objects when a member is updated in a guild. Note that the old version of the member _may_ be null if `loadAllMembers` is disabled.
+
+```php
+$discord->on(Event::GUILD_MEMBER_UPDATE, function (Member $new, Discord $discord, Member $old) {
+    // ...
+});
+```
+
+### Guild Member Remove
+
+Called with a `Member` object when a member leaves a guild (leave/kick/ban). Note the member object may be null if `loadAllMembers` is disabled.
+
+```php
+$discord->on(Event::GUILD_MEMBER_REMOVE, function (Member $member, Discord $discord) {
+    // ...
+});
+```
+
