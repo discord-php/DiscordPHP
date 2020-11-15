@@ -4,6 +4,8 @@ title: "Intro"
 
 DiscordPHP is a wrapper for the Discord REST, WebSocket and Voice APIs. Built on top of [ReactPHP](https://reactphp.org/) components.
 
+The class reference has moved. You can now access it [here](http://teamreflex.github.io/DiscordPHP/reference/).
+
 ### Requirements
 
 - PHP 7.3 CLI
