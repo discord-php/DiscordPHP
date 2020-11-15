@@ -2221,6 +2221,11 @@ Search.appendIndex(
             "summary": "Returns\u0020the\u0020guild\u0020attribute.",
             "url": "classes/Discord-Parts-Guild-Invite.html#method_getGuildAttribute"
         },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\Invite\u003A\u003AgetGuildIdAttribute\u0028\u0029",
+            "name": "getGuildIdAttribute",
+            "summary": "Returns\u0020the\u0020guild\u0020id\u0020attribute.",
+            "url": "classes/Discord-Parts-Guild-Invite.html#method_getGuildIdAttribute"
+        },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Invite\u003A\u003AgetChannelAttribute\u0028\u0029",
             "name": "getChannelAttribute",
             "summary": "Returns\u0020the\u0020channel\u0020attribute.",
