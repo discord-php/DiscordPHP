@@ -283,7 +283,7 @@ abstract class AbstractRepository extends Collection
                 str_replace(':id', $id, $this->endpoints['get'])
             )
         )->done(function ($response) use ($deferred) {
-            $part = $this->factory->create($this->class, $response, true);
+            $part = $this->factory->create($this->class, array_merge($this->vars, (array) $response), true);
 
             $deferred->resolve($part);
         }, function ($e) use ($deferred) {
