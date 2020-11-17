@@ -79,7 +79,7 @@ class Member extends Part
     /**
      * Bans the member.
      *
-     * @param int|null $daysToDeleteMessages The amount of days to delete messages from.
+     * @param int|null    $daysToDeleteMessages The amount of days to delete messages from.
      * @param string|null $reason
      *
      * @return ExtendedPromiseInterface

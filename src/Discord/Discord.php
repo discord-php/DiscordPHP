@@ -14,7 +14,6 @@ namespace Discord;
 use Discord\Exceptions\IntentException;
 use Discord\Factory\Factory;
 use Discord\Http\Http;
-use Discord\Http\ReactDriver;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\OAuth\Application;
 use Discord\Parts\Part;
@@ -43,7 +42,10 @@ use React\EventLoop\Factory as LoopFactory;
 use React\EventLoop\LoopInterface;
 use React\EventLoop\TimerInterface;
 use Discord\Helpers\Deferred;
+use Discord\Http\Drivers\React;
 use Evenement\EventEmitterTrait;
+use Psr\Log\LoggerInterface;
+use Psr\Log\NullLogger;
 use React\Promise\ExtendedPromiseInterface;
 use React\Promise\PromiseInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -340,9 +342,11 @@ class Discord
 
         $this->http = new Http(
             'Bot '.$this->token,
-            self::VERSION,
-            new ReactDriver($this->loop)
+            $this->loop,
+            $this->options['httpLogger'],
+            new React($this->loop)
         );
+
         $this->factory = new Factory($this, $this->http);
 
         $this->connectWs();
@@ -958,7 +962,7 @@ class Discord
     }
 
     /**
-     * Initilizes the connection with the Discord gateway.
+     * Initializes the connection with the Discord gateway.
      */
     protected function connectWs(): void
     {
@@ -1257,6 +1261,7 @@ class Discord
                 'storeMessages',
                 'retrieveBans',
                 'intents',
+                'httpLogger',
             ])
             ->setDefaults([
                 'loop' => LoopFactory::create(),
@@ -1269,6 +1274,7 @@ class Discord
                 'storeMessages' => false,
                 'retrieveBans' => false,
                 'intents' => false,
+                'httpLogger' => new NullLogger(),
             ])
             ->setAllowedTypes('loop', LoopInterface::class)
             ->setAllowedTypes('logging', 'bool')
@@ -1277,7 +1283,8 @@ class Discord
             ->setAllowedTypes('pmChannels', 'bool')
             ->setAllowedTypes('storeMessages', 'bool')
             ->setAllowedTypes('retrieveBans', 'bool')
-            ->setAllowedTypes('intents', ['bool', 'array', 'int']);
+            ->setAllowedTypes('intents', ['bool', 'array', 'int'])
+            ->setAllowedTypes('httpLogger', LoggerInterface::class);
 
         $options = $resolver->resolve($options);
 
