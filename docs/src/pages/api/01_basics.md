@@ -84,6 +84,13 @@ Useful if you want to use other React components. By default, a new loop is crea
 ```php
     'loggerLevel' => Logger::INFO,
 ```
+
+`httpLogger` is an instance of a logger for the HTTP client that implements PSR `LoggerInterface`.
+By default, a null logger is created, which supresses HTTP logs.
+
+```php
+    'httpLogger' => new Logger('HTTP Logger'),
+```
 <hr>
 
 The following options should only be used by large bots that require sharding. If you plan to use sharding, [read up](https://discord.com/developers/docs/topics/gateway#sharding) on how Discord implements it.
