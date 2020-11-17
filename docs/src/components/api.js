@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import apiStyles from "./api.module.css";
+import _ from 'lodash';
+import NodeList from "./NodeList";
 
 export default class Api extends Component {
   constructor(props) {
@@ -51,23 +53,45 @@ export default class Api extends Component {
     this.setActiveMenuItem(id);
   }
 
+  getNavigation() {
+    return _.groupBy(this.props.data.staticMethods.edges, ({ node }) => {
+      const slugs = node.fields.slug.slice(1, -1).split('/');
+
+      return slugs[0];
+    });
+  }
+
+  renderNavigation([ head, nodes ]) {
+    if (nodes.length > 1) {
+      return (
+        <NodeList
+          nodes={nodes.map(({ node }) => node)}
+          onTitleClick={(title) => this.setState({
+            activeSubMenu: title.fields.idName
+          })}
+          getCurrentTitle={() => this.state.activeSubMenu}
+        />
+      );
+    } else {
+      return (({ node }) => (
+        <li key={node.id}>
+          <a
+            href={`#${node.fields.idName}`}
+            onClick={() => this.setState({ activeSubMenu: undefined })}
+          >
+            {node.frontmatter.title}
+          </a>
+        </li>
+      ))(nodes[0]);
+    }
+  }
+
   render() {
     return (
       <React.Fragment>
         <nav className={apiStyles.nav}>
           <ol className={this.props.isMenuActive() ? "" : apiStyles.hidden}>
-            {this.props.data.staticMethods.edges.map(({ node }) => {
-              return (
-                <li key={node.id}>
-                  <a
-                    href={`#${node.fields.idName}`}
-                    onClick={this.props.onToggleMenu}
-                  >
-                    {node.frontmatter.title}
-                  </a>
-                </li>
-              );
-            })}
+            {Object.entries(this.getNavigation()).map(this.renderNavigation.bind(this))}
           </ol>
         </nav>
         <main className={apiStyles.container}>

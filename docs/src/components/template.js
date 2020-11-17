@@ -32,6 +32,7 @@ export const query = graphql`
           html
           fields {
             idName
+            slug
           }
         }
       }
