@@ -1,12 +1,13 @@
 DiscordPHP
 ====
-[![Build Status](https://travis-ci.org/teamreflex/DiscordPHP.svg?branch=master)](https://travis-ci.org/teamreflex/DiscordPHP) [![Discord Chat](https://img.shields.io/badge/chat-Discord%20API-blue.svg)](https://discord.gg/0SBTUU1wZTX4Mjwn) [![PHP Discorders](https://img.shields.io/badge/chat-PHP%20Discord-blue.svg)](https://discord.gg/0duG4FF1ElFGUFVq)
+[![PHP Discorders](https://img.shields.io/badge/chat-PHP%20Discord-blue.svg)](https://discord.gg/0duG4FF1ElFGUFVq)
 
-A wrapper for the official [Discord](https://discordapp.com) REST, gateway and voice APIs. Documentation is limited at the moment so feel free to join our Discord server [PHP Discorders](https://discord.gg/0duG4FF1ElFGUFVq) for any questions relating to the library.
+A wrapper for the official [Discord](https://discordapp.com) REST, gateway and voice APIs. Documentation is [available here](http://teamreflex.github.io/DiscordPHP), albeit limited at the moment, as well as a class reference. Feel free to ask questions in the Discord server above.
 
 For testing and stability it would be greatly appreciated if you were able to add our test bot to your server. We don't store any data - the bot simply idles and does not interact with anyone and is used to test stability with large numbers of guilds. You can invite the bot [here.](https://discord.com/oauth2/authorize?client_id=157746770539970560&scope=bot)
 
-# Before you start
+## Before you start
+
 Before you start using this Library, you **need** to know how PHP works, you need to know the language and you need to know how Event Loops and Promises work. This is a fundamental requirement before you start. Without this knowledge, you will only suffer.
 
 ## FAQ
@@ -76,7 +77,7 @@ $discord->run();
 
 ## Documentation
 
-Raw documentation can be found in-line in the code and on the [DiscordPHP Class Reference](http://teamreflex.github.io/DiscordPHP/). More user friendly and examples will soon be coming on the [DiscordPHP Wiki](https://discordphp.readme.io/).
+Documentation can be found [here](http://teamreflex.github.io/DiscordPHP). Raw documentation can be found in-line in the code and on the [DiscordPHP Class Reference](http://teamreflex.github.io/DiscordPHP/).
 
 ## Contributing
 
@@ -84,4 +85,4 @@ We are open to contributions. However, please make sure you follow our coding st
 
 ## License
 
-MIT License, &copy; David Cole and other contributers 2016--present.
+MIT License, &copy; David Cole and other contributers 2016-present.
