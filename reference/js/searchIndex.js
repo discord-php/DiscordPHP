@@ -208,7 +208,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Discord\u003A\u003AconnectWs\u0028\u0029",
             "name": "connectWs",
-            "summary": "Initilizes\u0020the\u0020connection\u0020with\u0020the\u0020Discord\u0020gateway.",
+            "summary": "Initializes\u0020the\u0020connection\u0020with\u0020the\u0020Discord\u0020gateway.",
             "url": "classes/Discord-Discord.html#method_connectWs"
         },                {
             "fqsen": "\\Discord\\Discord\u003A\u003Asend\u0028\u0029",
@@ -615,6 +615,11 @@ Search.appendIndex(
             "name": "ContentTooLongException",
             "summary": "Thrown\u0020when\u0020the\u0020Discord\u0020servers\u0020return\u0020\u0060content\u0020longer\u0020than\u00202000\u0020characters\u0060\u0020after\na\u0020REST\u0020request.\u0020The\u0020user\u0020must\u0020use\u0020WebSockets\u0020to\u0020obtain\u0020this\u0020data\u0020if\u0020they\u0020need\u0020it.",
             "url": "classes/Discord-Exceptions-Rest-ContentTooLongException.html"
+        },                {
+            "fqsen": "\\Discord\\Exceptions\\Rest\\InvalidTokenException",
+            "name": "InvalidTokenException",
+            "summary": "Thrown\u0020when\u0020an\u0020invalid\u0020token\u0020is\u0020provided\u0020to\u0020a\u0020Discord\u0020endpoint.",
+            "url": "classes/Discord-Exceptions-Rest-InvalidTokenException.html"
         },                {
             "fqsen": "\\Discord\\Exceptions\\Rest\\NoPermissionsException",
             "name": "NoPermissionsException",
@@ -1101,120 +1106,325 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Discord-Helpers-ReadableResourceStream.html#property_listening"
         },                {
+            "fqsen": "\\Discord\\Http\\Bucket",
+            "name": "Bucket",
+            "summary": "Represents\u0020a\u0020rate\u002Dlimit\u0020bucket.",
+            "url": "classes/Discord-Http-Bucket.html"
+        },                {
+            "fqsen": "\\Discord\\Http\\Bucket\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "Bucket\u0020constructor.",
+            "url": "classes/Discord-Http-Bucket.html#method___construct"
+        },                {
+            "fqsen": "\\Discord\\Http\\Bucket\u003A\u003Aenqueue\u0028\u0029",
+            "name": "enqueue",
+            "summary": "Enqueue\u0020a\u0020request.",
+            "url": "classes/Discord-Http-Bucket.html#method_enqueue"
+        },                {
+            "fqsen": "\\Discord\\Http\\Bucket\u003A\u003AcheckQueue\u0028\u0029",
+            "name": "checkQueue",
+            "summary": "Checks\u0020for\u0020requests\u0020in\u0020the\u0020bucket.",
+            "url": "classes/Discord-Http-Bucket.html#method_checkQueue"
+        },                {
+            "fqsen": "\\Discord\\Http\\Bucket\u003A\u003A__toString\u0028\u0029",
+            "name": "__toString",
+            "summary": "Converts\u0020a\u0020bucket\u0020to\u0020a\u0020user\u002Dreadable\u0020string.",
+            "url": "classes/Discord-Http-Bucket.html#method___toString"
+        },                {
+            "fqsen": "\\Discord\\Http\\Bucket\u003A\u003A\u0024queue",
+            "name": "queue",
+            "summary": "Request\u0020queue.",
+            "url": "classes/Discord-Http-Bucket.html#property_queue"
+        },                {
+            "fqsen": "\\Discord\\Http\\Bucket\u003A\u003A\u0024name",
+            "name": "name",
+            "summary": "Bucket\u0020name.",
+            "url": "classes/Discord-Http-Bucket.html#property_name"
+        },                {
+            "fqsen": "\\Discord\\Http\\Bucket\u003A\u003A\u0024loop",
+            "name": "loop",
+            "summary": "ReactPHP\u0020event\u0020loop.",
+            "url": "classes/Discord-Http-Bucket.html#property_loop"
+        },                {
+            "fqsen": "\\Discord\\Http\\Bucket\u003A\u003A\u0024logger",
+            "name": "logger",
+            "summary": "HTTP\u0020logger.",
+            "url": "classes/Discord-Http-Bucket.html#property_logger"
+        },                {
+            "fqsen": "\\Discord\\Http\\Bucket\u003A\u003A\u0024runRequest",
+            "name": "runRequest",
+            "summary": "Callback\u0020for\u0020when\u0020a\u0020request\u0020is\u0020ready.",
+            "url": "classes/Discord-Http-Bucket.html#property_runRequest"
+        },                {
+            "fqsen": "\\Discord\\Http\\Bucket\u003A\u003A\u0024checkerRunning",
+            "name": "checkerRunning",
+            "summary": "Whether\u0020we\u0020are\u0020checking\u0020the\u0020queue.",
+            "url": "classes/Discord-Http-Bucket.html#property_checkerRunning"
+        },                {
+            "fqsen": "\\Discord\\Http\\Bucket\u003A\u003A\u0024requestLimit",
+            "name": "requestLimit",
+            "summary": "Number\u0020of\u0020requests\u0020allowed\u0020before\u0020reset.",
+            "url": "classes/Discord-Http-Bucket.html#property_requestLimit"
+        },                {
+            "fqsen": "\\Discord\\Http\\Bucket\u003A\u003A\u0024requestRemaining",
+            "name": "requestRemaining",
+            "summary": "Number\u0020of\u0020remaining\u0020requests\u0020before\u0020reset.",
+            "url": "classes/Discord-Http-Bucket.html#property_requestRemaining"
+        },                {
+            "fqsen": "\\Discord\\Http\\Bucket\u003A\u003A\u0024resetTimer",
+            "name": "resetTimer",
+            "summary": "Timer\u0020to\u0020reset\u0020the\u0020bucket.",
+            "url": "classes/Discord-Http-Bucket.html#property_resetTimer"
+        },                {
+            "fqsen": "\\Discord\\Http\\DriverInterface",
+            "name": "DriverInterface",
+            "summary": "Interface\u0020for\u0020an\u0020HTTP\u0020driver.",
+            "url": "classes/Discord-Http-DriverInterface.html"
+        },                {
+            "fqsen": "\\Discord\\Http\\DriverInterface\u003A\u003ArunRequest\u0028\u0029",
+            "name": "runRequest",
+            "summary": "Runs\u0020a\u0020request.",
+            "url": "classes/Discord-Http-DriverInterface.html#method_runRequest"
+        },                {
+            "fqsen": "\\Discord\\Http\\Drivers\\React",
+            "name": "React",
+            "summary": "react\/http\u0020driver\u0020for\u0020Discord\u0020HTTP\u0020client.",
+            "url": "classes/Discord-Http-Drivers-React.html"
+        },                {
+            "fqsen": "\\Discord\\Http\\Drivers\\React\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "Constructs\u0020the\u0020Guzzle\u0020driver.",
+            "url": "classes/Discord-Http-Drivers-React.html#method___construct"
+        },                {
+            "fqsen": "\\Discord\\Http\\Drivers\\React\u003A\u003ArunRequest\u0028\u0029",
+            "name": "runRequest",
+            "summary": "Runs\u0020a\u0020request.",
+            "url": "classes/Discord-Http-Drivers-React.html#method_runRequest"
+        },                {
+            "fqsen": "\\Discord\\Http\\Drivers\\React\u003A\u003A\u0024loop",
+            "name": "loop",
+            "summary": "ReactPHP\u0020event\u0020loop.",
+            "url": "classes/Discord-Http-Drivers-React.html#property_loop"
+        },                {
+            "fqsen": "\\Discord\\Http\\Drivers\\React\u003A\u003A\u0024browser",
+            "name": "browser",
+            "summary": "ReactPHP\/HTTP\u0020browser.",
+            "url": "classes/Discord-Http-Drivers-React.html#property_browser"
+        },                {
             "fqsen": "\\Discord\\Http\\Http",
             "name": "Http",
-            "summary": "Provides\u0020an\u0020easy\u0020wrapper\u0020for\u0020HTTP\u0020requests,\u0020allows\u0020for\u0020interchangable\u0020connectors.",
+            "summary": "Discord\u0020HTTP\u0020client.",
             "url": "classes/Discord-Http-Http.html"
         },                {
             "fqsen": "\\Discord\\Http\\Http\u003A\u003A__construct\u0028\u0029",
             "name": "__construct",
-            "summary": "Guzzle\u0020constructor.",
+            "summary": "Http\u0020wrapper\u0020constructor.",
             "url": "classes/Discord-Http-Http.html#method___construct"
         },                {
             "fqsen": "\\Discord\\Http\\Http\u003A\u003AsetDriver\u0028\u0029",
             "name": "setDriver",
-            "summary": "Sets\u0020the\u0020HTTP\u0020driver.",
+            "summary": "Sets\u0020the\u0020driver\u0020of\u0020the\u0020HTTP\u0020client.",
             "url": "classes/Discord-Http-Http.html#method_setDriver"
         },                {
-            "fqsen": "\\Discord\\Http\\Http\u003A\u003A__call\u0028\u0029",
-            "name": "__call",
-            "summary": "Handles\u0020dynamic\u0020calls\u0020to\u0020the\u0020class.",
-            "url": "classes/Discord-Http-Http.html#method___call"
+            "fqsen": "\\Discord\\Http\\Http\u003A\u003Aget\u0028\u0029",
+            "name": "get",
+            "summary": "Runs\u0020a\u0020GET\u0020request.",
+            "url": "classes/Discord-Http-Http.html#method_get"
         },                {
-            "fqsen": "\\Discord\\Http\\Http\u003A\u003ArunRequest\u0028\u0029",
-            "name": "runRequest",
-            "summary": "Runs\u0020http\u0020calls.",
-            "url": "classes/Discord-Http-Http.html#method_runRequest"
+            "fqsen": "\\Discord\\Http\\Http\u003A\u003Apost\u0028\u0029",
+            "name": "post",
+            "summary": "Runs\u0020a\u0020POST\u0020request.",
+            "url": "classes/Discord-Http-Http.html#method_post"
         },                {
-            "fqsen": "\\Discord\\Http\\Http\u003A\u003AsendFile\u0028\u0029",
-            "name": "sendFile",
-            "summary": "Uploads\u0020a\u0020file\u0020to\u0020a\u0020channel.",
-            "url": "classes/Discord-Http-Http.html#method_sendFile"
+            "fqsen": "\\Discord\\Http\\Http\u003A\u003Aput\u0028\u0029",
+            "name": "put",
+            "summary": "Runs\u0020a\u0020PUT\u0020request.",
+            "url": "classes/Discord-Http-Http.html#method_put"
         },                {
-            "fqsen": "\\Discord\\Http\\Http\u003A\u003AarrayToMultipart\u0028\u0029",
-            "name": "arrayToMultipart",
-            "summary": "Converts\u0020an\u0020array\u0020of\u0020key\u0020\u003D\u003E\u0020value\u0020to\u0020a\u0020multipart\u0020body.",
-            "url": "classes/Discord-Http-Http.html#method_arrayToMultipart"
+            "fqsen": "\\Discord\\Http\\Http\u003A\u003Apatch\u0028\u0029",
+            "name": "patch",
+            "summary": "Runs\u0020a\u0020PATCH\u0020request.",
+            "url": "classes/Discord-Http-Http.html#method_patch"
+        },                {
+            "fqsen": "\\Discord\\Http\\Http\u003A\u003Adelete\u0028\u0029",
+            "name": "delete",
+            "summary": "Runs\u0020a\u0020DELETE\u0020request.",
+            "url": "classes/Discord-Http-Http.html#method_delete"
+        },                {
+            "fqsen": "\\Discord\\Http\\Http\u003A\u003AqueueRequest\u0028\u0029",
+            "name": "queueRequest",
+            "summary": "Builds\u0020and\u0020queues\u0020a\u0020request.",
+            "url": "classes/Discord-Http-Http.html#method_queueRequest"
+        },                {
+            "fqsen": "\\Discord\\Http\\Http\u003A\u003AexecuteRequest\u0028\u0029",
+            "name": "executeRequest",
+            "summary": "Executes\u0020a\u0020request.",
+            "url": "classes/Discord-Http-Http.html#method_executeRequest"
+        },                {
+            "fqsen": "\\Discord\\Http\\Http\u003A\u003AsortIntoBucket\u0028\u0029",
+            "name": "sortIntoBucket",
+            "summary": "Sorts\u0020a\u0020request\u0020into\u0020a\u0020bucket.",
+            "url": "classes/Discord-Http-Http.html#method_sortIntoBucket"
+        },                {
+            "fqsen": "\\Discord\\Http\\Http\u003A\u003AgetBucket\u0028\u0029",
+            "name": "getBucket",
+            "summary": "Gets\u0020a\u0020bucket.",
+            "url": "classes/Discord-Http-Http.html#method_getBucket"
         },                {
             "fqsen": "\\Discord\\Http\\Http\u003A\u003AhandleError\u0028\u0029",
             "name": "handleError",
-            "summary": "Handles\u0020an\u0020error\u0020code.",
+            "summary": "Returns\u0020an\u0020exception\u0020based\u0020on\u0020the\u0020request.",
             "url": "classes/Discord-Http-Http.html#method_handleError"
         },                {
             "fqsen": "\\Discord\\Http\\Http\u003A\u003AgetUserAgent\u0028\u0029",
             "name": "getUserAgent",
-            "summary": "Returns\u0020the\u0020User\u002DAgent\u0020of\u0020the\u0020API.",
+            "summary": "Returns\u0020the\u0020User\u002DAgent\u0020of\u0020the\u0020HTTP\u0020client.",
             "url": "classes/Discord-Http-Http.html#method_getUserAgent"
         },                {
             "fqsen": "\\Discord\\Http\\Http\u003A\u003ABASE_URL",
             "name": "BASE_URL",
-            "summary": "The\u0020Base\u0020URL\u0020of\u0020the\u0020API.",
+            "summary": "Discord\u0020API\u0020base\u0020URL.",
             "url": "classes/Discord-Http-Http.html#constant_BASE_URL"
-        },                {
-            "fqsen": "\\Discord\\Http\\Http\u003A\u003ACACHE_TTL",
-            "name": "CACHE_TTL",
-            "summary": "The\u0020length\u0020of\u0020time\u0020requests\u0020will\u0020be\u0020cached\u0020for.",
-            "url": "classes/Discord-Http-Http.html#constant_CACHE_TTL"
         },                {
             "fqsen": "\\Discord\\Http\\Http\u003A\u003A\u0024token",
             "name": "token",
-            "summary": "",
+            "summary": "Authentication\u0020token.",
             "url": "classes/Discord-Http-Http.html#property_token"
         },                {
-            "fqsen": "\\Discord\\Http\\Http\u003A\u003A\u0024version",
-            "name": "version",
-            "summary": "",
-            "url": "classes/Discord-Http-Http.html#property_version"
+            "fqsen": "\\Discord\\Http\\Http\u003A\u003A\u0024logger",
+            "name": "logger",
+            "summary": "Logger\u0020for\u0020HTTP\u0020requests.",
+            "url": "classes/Discord-Http-Http.html#property_logger"
         },                {
             "fqsen": "\\Discord\\Http\\Http\u003A\u003A\u0024driver",
             "name": "driver",
-            "summary": "The\u0020request\u0020driver.",
+            "summary": "HTTP\u0020driver.",
             "url": "classes/Discord-Http-Http.html#property_driver"
         },                {
-            "fqsen": "\\Discord\\Http\\HttpDriver",
-            "name": "HttpDriver",
-            "summary": "Interface\u0020for\u0020HTTP\u0020drivers.",
-            "url": "classes/Discord-Http-HttpDriver.html"
-        },                {
-            "fqsen": "\\Discord\\Http\\HttpDriver\u003A\u003ArunRequest\u0028\u0029",
-            "name": "runRequest",
-            "summary": "Runs\u0020an\u0020HTTP\u0020request.",
-            "url": "classes/Discord-Http-HttpDriver.html#method_runRequest"
-        },                {
-            "fqsen": "\\Discord\\Http\\ReactDriver",
-            "name": "ReactDriver",
-            "summary": "react\/http\u0020driver.",
-            "url": "classes/Discord-Http-ReactDriver.html"
-        },                {
-            "fqsen": "\\Discord\\Http\\ReactDriver\u003A\u003A__construct\u0028\u0029",
-            "name": "__construct",
-            "summary": "\u007B\u0040inheritdoc\u007D",
-            "url": "classes/Discord-Http-ReactDriver.html#method___construct"
-        },                {
-            "fqsen": "\\Discord\\Http\\ReactDriver\u003A\u003ArunRequest\u0028\u0029",
-            "name": "runRequest",
-            "summary": "Runs\u0020an\u0020HTTP\u0020request.",
-            "url": "classes/Discord-Http-ReactDriver.html#method_runRequest"
-        },                {
-            "fqsen": "\\Discord\\Http\\ReactDriver\u003A\u003AmakeUrl\u0028\u0029",
-            "name": "makeUrl",
-            "summary": "Makes\u0020a\u0020FQDN\u0020from\u0020a\u0020given\u0020endpoint.",
-            "url": "classes/Discord-Http-ReactDriver.html#method_makeUrl"
-        },                {
-            "fqsen": "\\Discord\\Http\\ReactDriver\u003A\u003A\u0024loop",
+            "fqsen": "\\Discord\\Http\\Http\u003A\u003A\u0024loop",
             "name": "loop",
-            "summary": "The\u0020react\u0020event\u0020loop.",
-            "url": "classes/Discord-Http-ReactDriver.html#property_loop"
+            "summary": "ReactPHP\u0020event\u0020loop.",
+            "url": "classes/Discord-Http-Http.html#property_loop"
         },                {
-            "fqsen": "\\Discord\\Http\\ReactDriver\u003A\u003A\u0024rateLimited",
-            "name": "rateLimited",
-            "summary": "Whether\u0020the\u0020HTTP\u0020client\u0020has\u0020been\u0020rate\u0020limited.",
-            "url": "classes/Discord-Http-ReactDriver.html#property_rateLimited"
+            "fqsen": "\\Discord\\Http\\Http\u003A\u003A\u0024buckets",
+            "name": "buckets",
+            "summary": "Array\u0020of\u0020request\u0020buckets.",
+            "url": "classes/Discord-Http-Http.html#property_buckets"
         },                {
-            "fqsen": "\\Discord\\Http\\ReactDriver\u003A\u003A\u0024rateLimits",
-            "name": "rateLimits",
-            "summary": "Array\u0020of\u0020rate\u0020limit\u0020promises.",
-            "url": "classes/Discord-Http-ReactDriver.html#property_rateLimits"
+            "fqsen": "\\Discord\\Http\\Http\u003A\u003A\u0024rateLimit",
+            "name": "rateLimit",
+            "summary": "The\u0020current\u0020rate\u002Dlimit.",
+            "url": "classes/Discord-Http-Http.html#property_rateLimit"
+        },                {
+            "fqsen": "\\Discord\\Http\\Http\u003A\u003A\u0024rateLimitReset",
+            "name": "rateLimitReset",
+            "summary": "Timer\u0020that\u0020resets\u0020the\u0020current\u0020global\u0020rate\u002Dlimit.",
+            "url": "classes/Discord-Http-Http.html#property_rateLimitReset"
+        },                {
+            "fqsen": "\\Discord\\Http\\RateLimit",
+            "name": "RateLimit",
+            "summary": "Represents\u0020a\u0020rate\u002Dlimit\u0020given\u0020by\u0020Discord.",
+            "url": "classes/Discord-Http-RateLimit.html"
+        },                {
+            "fqsen": "\\Discord\\Http\\RateLimit\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "Rate\u0020limit\u0020constructor.",
+            "url": "classes/Discord-Http-RateLimit.html#method___construct"
+        },                {
+            "fqsen": "\\Discord\\Http\\RateLimit\u003A\u003AisGlobal\u0028\u0029",
+            "name": "isGlobal",
+            "summary": "Gets\u0020the\u0020global\u0020parameter.",
+            "url": "classes/Discord-Http-RateLimit.html#method_isGlobal"
+        },                {
+            "fqsen": "\\Discord\\Http\\RateLimit\u003A\u003AgetRetryAfter\u0028\u0029",
+            "name": "getRetryAfter",
+            "summary": "Gets\u0020the\u0020retry\u0020after\u0020parameter.",
+            "url": "classes/Discord-Http-RateLimit.html#method_getRetryAfter"
+        },                {
+            "fqsen": "\\Discord\\Http\\RateLimit\u003A\u003A__toString\u0028\u0029",
+            "name": "__toString",
+            "summary": "Converts\u0020a\u0020rate\u002Dlimit\u0020to\u0020a\u0020user\u002Dreadable\u0020string.",
+            "url": "classes/Discord-Http-RateLimit.html#method___toString"
+        },                {
+            "fqsen": "\\Discord\\Http\\RateLimit\u003A\u003A\u0024global",
+            "name": "global",
+            "summary": "Whether\u0020the\u0020rate\u002Dlimit\u0020is\u0020global.",
+            "url": "classes/Discord-Http-RateLimit.html#property_global"
+        },                {
+            "fqsen": "\\Discord\\Http\\RateLimit\u003A\u003A\u0024retry_after",
+            "name": "retry_after",
+            "summary": "Time\u0020in\u0020seconds\u0020of\u0020when\u0020to\u0020retry\u0020after.",
+            "url": "classes/Discord-Http-RateLimit.html#property_retry_after"
+        },                {
+            "fqsen": "\\Discord\\Http\\Request",
+            "name": "Request",
+            "summary": "Represents\u0020an\u0020HTTP\u0020request.",
+            "url": "classes/Discord-Http-Request.html"
+        },                {
+            "fqsen": "\\Discord\\Http\\Request\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "Request\u0020constructor.",
+            "url": "classes/Discord-Http-Request.html#method___construct"
+        },                {
+            "fqsen": "\\Discord\\Http\\Request\u003A\u003AgetMethod\u0028\u0029",
+            "name": "getMethod",
+            "summary": "Gets\u0020the\u0020method.",
+            "url": "classes/Discord-Http-Request.html#method_getMethod"
+        },                {
+            "fqsen": "\\Discord\\Http\\Request\u003A\u003AgetUrl\u0028\u0029",
+            "name": "getUrl",
+            "summary": "Gets\u0020the\u0020url.",
+            "url": "classes/Discord-Http-Request.html#method_getUrl"
+        },                {
+            "fqsen": "\\Discord\\Http\\Request\u003A\u003AgetContent\u0028\u0029",
+            "name": "getContent",
+            "summary": "Gets\u0020the\u0020content.",
+            "url": "classes/Discord-Http-Request.html#method_getContent"
+        },                {
+            "fqsen": "\\Discord\\Http\\Request\u003A\u003AgetHeaders\u0028\u0029",
+            "name": "getHeaders",
+            "summary": "Gets\u0020the\u0020headers.",
+            "url": "classes/Discord-Http-Request.html#method_getHeaders"
+        },                {
+            "fqsen": "\\Discord\\Http\\Request\u003A\u003AgetDeferred\u0028\u0029",
+            "name": "getDeferred",
+            "summary": "Returns\u0020the\u0020deferred\u0020promise.",
+            "url": "classes/Discord-Http-Request.html#method_getDeferred"
+        },                {
+            "fqsen": "\\Discord\\Http\\Request\u003A\u003AgetBucketID\u0028\u0029",
+            "name": "getBucketID",
+            "summary": "Returns\u0020the\u0020bucket\u0020ID\u0020for\u0020the\u0020request.",
+            "url": "classes/Discord-Http-Request.html#method_getBucketID"
+        },                {
+            "fqsen": "\\Discord\\Http\\Request\u003A\u003A__toString\u0028\u0029",
+            "name": "__toString",
+            "summary": "Converts\u0020the\u0020request\u0020to\u0020a\u0020user\u002Dreadable\u0020string.",
+            "url": "classes/Discord-Http-Request.html#method___toString"
+        },                {
+            "fqsen": "\\Discord\\Http\\Request\u003A\u003A\u0024deferred",
+            "name": "deferred",
+            "summary": "Deferred\u0020promise.",
+            "url": "classes/Discord-Http-Request.html#property_deferred"
+        },                {
+            "fqsen": "\\Discord\\Http\\Request\u003A\u003A\u0024method",
+            "name": "method",
+            "summary": "Request\u0020method.",
+            "url": "classes/Discord-Http-Request.html#property_method"
+        },                {
+            "fqsen": "\\Discord\\Http\\Request\u003A\u003A\u0024url",
+            "name": "url",
+            "summary": "Request\u0020URL.",
+            "url": "classes/Discord-Http-Request.html#property_url"
+        },                {
+            "fqsen": "\\Discord\\Http\\Request\u003A\u003A\u0024content",
+            "name": "content",
+            "summary": "Request\u0020content.",
+            "url": "classes/Discord-Http-Request.html#property_content"
+        },                {
+            "fqsen": "\\Discord\\Http\\Request\u003A\u003A\u0024headers",
+            "name": "headers",
+            "summary": "Request\u0020headers.",
+            "url": "classes/Discord-Http-Request.html#property_headers"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Channel",
             "name": "Channel",
@@ -5000,6 +5210,11 @@ Search.appendIndex(
             "name": "Http",
             "summary": "",
             "url": "namespaces/discord-http.html"
+        },                {
+            "fqsen": "\\Discord\\Http\\Drivers",
+            "name": "Drivers",
+            "summary": "",
+            "url": "namespaces/discord-http-drivers.html"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel",
             "name": "Channel",

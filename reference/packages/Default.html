@@ -98,8 +98,8 @@
             <dt class="phpdocumentor-table-of-contents__entry -interface"><a href="classes/Discord-Helpers-ExtendedPromisorInterface.html"><abbr title="\Discord\Helpers\ExtendedPromisorInterface">ExtendedPromisorInterface</abbr></a></dt>
         <dd>Expands on the react/promise PromisorInterface
 by returning an extended promise.</dd>
-            <dt class="phpdocumentor-table-of-contents__entry -interface"><a href="classes/Discord-Http-HttpDriver.html"><abbr title="\Discord\Http\HttpDriver">HttpDriver</abbr></a></dt>
-        <dd>Interface for HTTP drivers.</dd>
+            <dt class="phpdocumentor-table-of-contents__entry -interface"><a href="classes/Discord-Http-DriverInterface.html"><abbr title="\Discord\Http\DriverInterface">DriverInterface</abbr></a></dt>
+        <dd>Interface for an HTTP driver.</dd>
     
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Discord-CommandClient-Command.html"><abbr title="\Discord\CommandClient\Command">Command</abbr></a></dt>
         <dd>A command that the Command Client will listen for.</dd>
@@ -138,6 +138,8 @@ was specified.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Discord-Exceptions-Rest-ContentTooLongException.html"><abbr title="\Discord\Exceptions\Rest\ContentTooLongException">ContentTooLongException</abbr></a></dt>
         <dd>Thrown when the Discord servers return `content longer than 2000 characters` after
 a REST request. The user must use WebSockets to obtain this data if they need it.</dd>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Discord-Exceptions-Rest-InvalidTokenException.html"><abbr title="\Discord\Exceptions\Rest\InvalidTokenException">InvalidTokenException</abbr></a></dt>
+        <dd>Thrown when an invalid token is provided to a Discord endpoint.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Discord-Exceptions-Rest-NoPermissionsException.html"><abbr title="\Discord\Exceptions\Rest\NoPermissionsException">NoPermissionsException</abbr></a></dt>
         <dd>Thrown when you do not have permissions to do something.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Discord-Exceptions-Rest-NotFoundException.html"><abbr title="\Discord\Exceptions\Rest\NotFoundException">NotFoundException</abbr></a></dt>
@@ -152,10 +154,16 @@ a REST request. The user must use WebSockets to obtain this data if they need it
         <dd>Process component.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Discord-Helpers-ReadableResourceStream.html"><abbr title="\Discord\Helpers\ReadableResourceStream">ReadableResourceStream</abbr></a></dt>
         <dd>Apart of the react/stream package. Thanks to the ReactPHP guys.</dd>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Discord-Http-Bucket.html"><abbr title="\Discord\Http\Bucket">Bucket</abbr></a></dt>
+        <dd>Represents a rate-limit bucket.</dd>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Discord-Http-Drivers-React.html"><abbr title="\Discord\Http\Drivers\React">React</abbr></a></dt>
+        <dd>react/http driver for Discord HTTP client.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Discord-Http-Http.html"><abbr title="\Discord\Http\Http">Http</abbr></a></dt>
-        <dd>Provides an easy wrapper for HTTP requests, allows for interchangable connectors.</dd>
-            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Discord-Http-ReactDriver.html"><abbr title="\Discord\Http\ReactDriver">ReactDriver</abbr></a></dt>
-        <dd>react/http driver.</dd>
+        <dd>Discord HTTP client.</dd>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Discord-Http-RateLimit.html"><abbr title="\Discord\Http\RateLimit">RateLimit</abbr></a></dt>
+        <dd>Represents a rate-limit given by Discord.</dd>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Discord-Http-Request.html"><abbr title="\Discord\Http\Request">Request</abbr></a></dt>
+        <dd>Represents an HTTP request.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Discord-Parts-Channel-Channel.html"><abbr title="\Discord\Parts\Channel\Channel">Channel</abbr></a></dt>
         <dd>A Channel can be either a text or voice channel on a Discord guild.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Discord-Parts-Channel-Message.html"><abbr title="\Discord\Parts\Channel\Message">Message</abbr></a></dt>
