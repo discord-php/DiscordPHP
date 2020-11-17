@@ -766,6 +766,11 @@ Search.appendIndex(
             "summary": "Runs\u0020a\u0020callback\u0020over\u0020the\u0020collection\u0020and\u0020creates\u0020a\u0020new\u0020collection.",
             "url": "classes/Discord-Helpers-Collection.html#method_map"
         },                {
+            "fqsen": "\\Discord\\Helpers\\Collection\u003A\u003AtoArray\u0028\u0029",
+            "name": "toArray",
+            "summary": "Converts\u0020the\u0020collection\u0020to\u0020an\u0020array.",
+            "url": "classes/Discord-Helpers-Collection.html#method_toArray"
+        },                {
             "fqsen": "\\Discord\\Helpers\\Collection\u003A\u003AoffsetExists\u0028\u0029",
             "name": "offsetExists",
             "summary": "If\u0020the\u0020collection\u0020has\u0020an\u0020offset.",
