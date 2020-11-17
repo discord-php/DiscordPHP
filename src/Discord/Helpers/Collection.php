@@ -278,6 +278,16 @@ class Collection implements ArrayAccess, Serializable, JsonSerializable, Iterato
     }
 
     /**
+     * Converts the collection to an array.
+     *
+     * @return array
+     */
+    public function toArray()
+    {
+        return $this->items;
+    }
+
+    /**
      * If the collection has an offset.
      *
      * @param mixed $offset
