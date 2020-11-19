@@ -11,365 +11,358 @@
 
 namespace Discord\Http;
 
+use Discord\Discord;
 use Discord\Exceptions\DiscordRequestFailedException;
 use Discord\Exceptions\Rest\ContentTooLongException;
+use Discord\Exceptions\Rest\InvalidTokenException;
 use Discord\Exceptions\Rest\NoPermissionsException;
 use Discord\Exceptions\Rest\NotFoundException;
-use Discord\Parts\Channel\Channel;
-use Exception;
-use GuzzleHttp\Psr7\Response;
 use Discord\Helpers\Deferred;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Log\LoggerInterface;
+use React\EventLoop\LoopInterface;
 use React\Promise\ExtendedPromiseInterface;
+use Throwable;
+
+use function Discord\contains;
 
 /**
- * Provides an easy wrapper for HTTP requests, allows for interchangable connectors.
+ * Discord HTTP client.
  *
- * @method ExtendedPromiseInterface get($url, $content, $headers)
- * @method ExtendedPromiseInterface post($url, $content, $headers)
- * @method ExtendedPromiseInterface put($url, $content, $headers)
- * @method ExtendedPromiseInterface patch($url, $content, $headers)
- * @method ExtendedPromiseInterface delete($url, $content, $headers)
+ * @author David Cole <david.cole1340@gmail.com>
  */
 class Http
 {
     /**
-     * The Base URL of the API.
+     * Discord API base URL.
      *
      * @var string
      */
-    const BASE_URL = 'https://discord.com/api';
+    const BASE_URL = 'https://discord.com/api/v'.Discord::HTTP_API_VERSION;
 
     /**
-     * The length of time requests will be cached for.
+     * Authentication token.
      *
-     * @var int Length of time to cache requests.
-     */
-    const CACHE_TTL = 300;
-
-    /**
      * @var string
      */
     private $token;
 
     /**
-     * @var
+     * Logger for HTTP requests.
+     *
+     * @var LoggerInterface
      */
-    private $version;
+    protected $logger;
 
     /**
-     * The request driver.
+     * HTTP driver.
      *
-     * @var HttpDriver
+     * @var DriverInterface
      */
     protected $driver;
 
     /**
-     * Guzzle constructor.
+     * ReactPHP event loop.
      *
-     * @param string     $token
-     * @param string     $version
-     * @param HttpDriver $driver  The request driver.
+     * @var LoopInterface
      */
-    public function __construct(string $token, string $version, HttpDriver $driver)
+    protected $loop;
+
+    /**
+     * Array of request buckets.
+     *
+     * @var Bucket[]
+     */
+    protected $buckets = [];
+
+    /**
+     * The current rate-limit.
+     *
+     * @var RateLimit
+     */
+    protected $rateLimit;
+
+    /**
+     * Timer that resets the current global rate-limit.
+     *
+     * @var TimerInterface
+     */
+    protected $rateLimitReset;
+
+    /**
+     * Http wrapper constructor.
+     *
+     * @param string               $token
+     * @param LoopInterface        $loop
+     * @param DriverInterface|null $driver
+     */
+    public function __construct(string $token, LoopInterface $loop, LoggerInterface $logger, DriverInterface $driver = null)
     {
         $this->token = $token;
-        $this->version = $version;
+        $this->loop = $loop;
+        $this->logger = $logger;
         $this->driver = $driver;
     }
 
     /**
-     * Sets the HTTP driver.
+     * Sets the driver of the HTTP client.
      *
-     * @param HttpDriver $driver
+     * @param DriverInterface $driver
      */
-    public function setDriver(HttpDriver $driver): void
+    public function setDriver(DriverInterface $driver): void
     {
         $this->driver = $driver;
     }
 
     /**
-     * Handles dynamic calls to the class.
+     * Runs a GET request.
      *
-     * @param string $name   The endpoint that will be queried.
-     * @param array  $params Parameters that will be encoded into JSON and sent with the request.
+     * @param string $url
+     * @param mixed  $content
+     * @param array  $headers
      *
      * @return ExtendedPromiseInterface
-     *
-     * @see \Discord\Helpers\Guzzle::runRequest() This function will be forwareded onto runRequest.
      */
-    public function __call(string $name, array $params): ExtendedPromiseInterface
+    public function get(string $url, $content = null, array $headers = []): ExtendedPromiseInterface
     {
-        $url = $params[0];
-        $content = (isset($params[1])) ? $params[1] : null;
-        $headers = (isset($params[2])) ? $params[2] : [];
-        $cache = (isset($params[3])) ? $params[3] : null;
-        $options = (isset($params[5])) ? $params[5] : [];
-
-        return $this->runRequest(strtolower($name), $url, $content, $headers, $cache, $options);
+        return $this->queueRequest('get', $url, $content, $headers);
     }
 
     /**
-     * Runs http calls.
+     * Runs a POST request.
      *
-     * @param string        $method       The request method.
-     * @param string        $url          The endpoint that will be queried.
-     * @param array         $content      Parameters that will be encoded into JSON and sent with the request.
-     * @param array         $extraHeaders Extra headers to send with the request.
-     * @param bool|int|null $cache        If an integer is passed, used as cache TTL, if null is passed, default TTL is
-     *                                    used, if false, cache is disabled
-     * @param array         $options      Array of options to pass to Guzzle.
-     *
-     * @throws ContentTooLongException
-     * @throws DiscordRequestFailedException
-     * @throws NoPermissionsException
-     * @throws NotFoundException
+     * @param string $url
+     * @param mixed  $content
+     * @param array  $headers
      *
      * @return ExtendedPromiseInterface
      */
-    private function runRequest(string $method, string $url, ?array $content, ?array $extraHeaders, $cache, ?array $options): ExtendedPromiseInterface
+    public function post(string $url, $content = null, array $headers = []): ExtendedPromiseInterface
+    {
+        return $this->queueRequest('post', $url, $content, $headers);
+    }
+
+    /**
+     * Runs a PUT request.
+     *
+     * @param string $url
+     * @param mixed  $content
+     * @param array  $headers
+     *
+     * @return ExtendedPromiseInterface
+     */
+    public function put(string $url, $content = null, array $headers = []): ExtendedPromiseInterface
+    {
+        return $this->queueRequest('put', $url, $content, $headers);
+    }
+
+    /**
+     * Runs a PATCH request.
+     *
+     * @param string $url
+     * @param mixed  $content
+     * @param array  $headers
+     *
+     * @return ExtendedPromiseInterface
+     */
+    public function patch(string $url, $content = null, array $headers = []): ExtendedPromiseInterface
+    {
+        return $this->queueRequest('patch', $url, $content, $headers);
+    }
+
+    /**
+     * Runs a DELETE request.
+     *
+     * @param string $url
+     * @param mixed  $content
+     * @param array  $headers
+     *
+     * @return ExtendedPromiseInterface
+     */
+    public function delete(string $url, $content = null, array $headers = []): ExtendedPromiseInterface
+    {
+        return $this->queueRequest('delete', $url, $content, $headers);
+    }
+
+    /**
+     * Builds and queues a request.
+     *
+     * @param string $method
+     * @param string $url
+     * @param mixed  $content
+     * @param array  $headers
+     *
+     * @return ExtendedPromiseInterface
+     */
+    protected function queueRequest(string $method, string $url, $content, array $headers = []): ExtendedPromiseInterface
     {
         $deferred = new Deferred();
-        $disable_json = false;
 
-        $headers = [
-            'User-Agent' => $this->getUserAgent(),
-        ];
+        if (is_null($this->driver)) {
+            $deferred->reject(new \Exception('HTTP driver is missing.'));
 
-        if (! isset($options['multipart'])) {
-            $headers['Content-Length'] = 0;
+            return $deferred->promise();
         }
 
-        $headers['authorization'] = $this->token;
-
-        $headers = array_merge($headers, $extraHeaders);
+        $headers = array_merge($headers, [
+            'User-Agent' => $this->getUserAgent(),
+            'Authorization' => $this->token,
+            'X-Ratelimit-Precision' => 'millisecond',
+        ]);
 
         if (! is_null($content)) {
-            $headers['Content-Type'] = 'application/json';
             $content = json_encode($content);
+
+            $headers['Content-Type'] = 'application/json';
             $headers['Content-Length'] = strlen($content);
+        } else {
+            $content = '';
         }
 
-        if (array_key_exists('disable_json', $options)) {
-            $disable_json = $options['disable_json'];
-            unset($options['disable_json']);
-        }
+        $fullUrl = self::BASE_URL.'/'.$url;
 
-        $this->driver->runRequest($method, $url, $headers, $content, $options)->done(
-            function ($response) use ($method, $cache, $deferred, $disable_json) {
-                if ($disable_json) {
-                    return $deferred->resolve($response->getBody());
-                }
+        $request = new Request($deferred, $method, $fullUrl, $content, $headers);
+        $this->sortIntoBucket($request);
 
-                $json = json_decode($response->getBody());
-
-                $deferred->resolve($json);
-            },
-            function ($e) use ($deferred, $url) {
-                if (! ($e instanceof \Exception)) {
-                    if (is_callable([$e, 'getStatusCode'])) {
-                        $e = $this->handleError(
-                            $e->getStatusCode(),
-                            $e->getReasonPhrase(),
-                            $e->getBody(),
-                            $url
-                        );
-                    } else {
-                        $e = $this->handleError(
-                            0,
-                            'unknown',
-                            'unknown',
-                            $url
-                        );
-                    }
-                }
-
-                $deferred->reject($e);
-            },
-            function ($content) use ($deferred) {
-                $deferred->notify($content);
-            }
-        );
+        $this->logger->debug($request.' queued');
 
         return $deferred->promise();
     }
 
     /**
-     * Uploads a file to a channel.
+     * Executes a request.
      *
-     * @param Channel $channel  The channel to send to.
-     * @param string  $filepath The path to the file.
-     * @param string  $filename The name to upload the file as.
-     * @param string  $content  Extra text content to go with the file.
-     * @param bool    $tts      Whether the message should be TTS.
+     * @param Request $request
      *
      * @return ExtendedPromiseInterface
      */
-    public function sendFile(Channel $channel, string $filepath, ?string $filename, ?string $content, ?bool $tts): ExtendedPromiseInterface
+    protected function executeRequest(Request $request): ExtendedPromiseInterface
     {
         $deferred = new Deferred();
 
-        $boundary = '----DiscordPHPSendFileBoundary';
-        $body = '';
-        $multipart = [
-            [
-                'name' => 'file',
-                'contents' => file_get_contents($filepath),
-                'filename' => $filename,
-            ],
-            [
-                'name' => 'tts',
-                'contents' => ($tts ? 'true' : 'false'),
-            ],
-            [
-                'name' => 'content',
-                'contents' => (string) $content,
-            ],
-        ];
+        if ($this->rateLimit) {
+            $deferred->reject($this->rateLimit);
 
-        $body = $this->arrayToMultipart($multipart, $boundary);
-        $headers = [
-            'Content-Type' => 'multipart/form-data; boundary='.substr($boundary, 2),
-            'Content-Length' => strlen($body),
-            'authorization' => $this->token,
-            'User-Agent' => $this->getUserAgent(),
-        ];
+            return $deferred->promise();
+        }
 
-        $this->driver->runRequest(
-            'POST',
-            "channels/{$channel->id}/messages",
-            $headers,
-            $body
-        )->done(
-            function ($response) use ($deferred) {
-                $json = json_decode($response->getBody());
-                $deferred->resolve($json);
-            },
-            function ($e) use ($deferred, $channel) {
-                if (! ($e instanceof \Exception)) {
-                    if (is_callable([$e, 'getStatusCode'])) {
-                        $e = $this->handleError(
-                            $e->getStatusCode(),
-                            $e->getReasonPhrase(),
-                            $e->getBody(),
-                            "channels/{$channel->id}/messages"
-                        );
-                    } else {
-                        $e = $this->handleError(
-                            0,
-                            'unknown',
-                            'unknown',
-                            "channels/{$channel->id}/messages"
-                        );
-                    }
+        $this->driver->runRequest($request)->done(function (ResponseInterface $response) use ($request, $deferred) {
+            $data = json_decode((string) $response->getBody());
+            $statusCode = $response->getStatusCode();
+
+            // Discord Rate-limit
+            if ($statusCode == 429) {
+                $rateLimit = new RateLimit($data->global, $data->retry_after);
+                $this->logger->warning($request.' hit rate-limit: '.$rateLimit);
+
+                if ($rateLimit->isGlobal() && ! $this->rateLimit) {
+                    $this->rateLimit = $rateLimit;
+                    $this->rateLimitReset = $this->loop->addTimer($rateLimit->getRetryAfter(), function () {
+                        $this->rateLimitReset = null;
+                        $this->logger->info('global rate-limit reset');
+
+                        // Loop through all buckets and check for requests
+                        foreach ($this->buckets as $bucket) {
+                            $bucket->checkQueue();
+                        }
+                    });
                 }
 
-                $deferred->reject($e);
+                $deferred->reject($rateLimit);
             }
-        );
+            // Bad Gateway
+            // Cloudflare SSL Handshake error
+            // Push to the back of the bucket to be retried.
+            elseif ($statusCode == 502 || $statusCode == 525) {
+                $this->logger->warning($request.' 502/525 - sorting to back of bucket');
+
+                $this->sortIntoBucket($request);
+            }
+            // Any other unsuccessful status codes
+            elseif ($statusCode < 200 || $statusCode >= 300) {
+                $error = $this->handleError($response);
+                $this->logger->warning($request.' failed: '.$error);
+
+                $request->getDeferred()->reject($error);
+            }
+            // All is well
+            else {
+                $this->logger->debug($request.' successful');
+
+                $deferred->resolve($response);
+                $request->getDeferred()->resolve($data);
+            }
+        });
 
         return $deferred->promise();
     }
 
     /**
-     * Converts an array of key => value to a multipart body.
+     * Sorts a request into a bucket.
      *
-     * @param array  $multipart
-     * @param string $boundary
-     *
-     * @return string
+     * @param Request $request
      */
-    private function arrayToMultipart(array $multipart, string $boundary): string
+    protected function sortIntoBucket(Request $request): void
     {
-        $body = '';
-
-        foreach ($multipart as $part) {
-            $body .= $boundary."\n";
-            $body .= 'Content-Disposition: form-data; name="'.$part['name'].'"';
-
-            if (isset($part['filename'])) {
-                $body .= '; filename="'.$part['filename'].'"';
-            }
-
-            $body .= "\n";
-
-            if (isset($part['headers'])) {
-                foreach ($part['headers'] as $header => $val) {
-                    $body .= $header.': '.$val."\n";
-                }
-            }
-
-            $body .= "\n".$part['contents']."\n";
-        }
-
-        $body .= $boundary."--\n";
-
-        return $body;
+        $bucket = $this->getBucket($request->getBucketID());
+        $bucket->enqueue($request);
     }
 
     /**
-     * Handles an error code.
+     * Gets a bucket.
      *
-     * @param int             $errorCode The HTTP status code.
-     * @param string|Response $message   The HTTP reason phrase.
-     * @param string          $content   The HTTP response content.
-     * @param string          $url       The HTTP url.
+     * @param string $key
      *
-     * @return \Discord\Exceptions\DiscordRequestFailedException Returned when the request fails.
-     * @return \Discord\Exceptions\Rest\ContentTooLongException  Returned when the content is longer than 2000
-     *                                                           characters.
-     * @return \Discord\Exceptions\Rest\NotFoundException        Returned when the server returns 404 Not Found.
-     * @return \Discord\Exceptions\Rest\NoPermissionsException   Returned when you do not have permissions to do
-     *                                                           something.
+     * @return Bucket
      */
-    public function handleError(int $errorCode, $message, string $content, string $url): Exception
+    protected function getBucket(string $key): Bucket
     {
-        if (! is_string($message)) {
-            $message = $message->getReasonPhrase();
+        if (! isset($this->buckets[$key])) {
+            $bucket = new Bucket($key, $this->loop, $this->logger, function (Request $request) {
+                return $this->executeRequest($request);
+            });
+
+            $this->buckets[$key] = $bucket;
         }
 
-        $message .= " - {$content} - {$url}";
+        return $this->buckets[$key];
+    }
 
-        switch ($errorCode) {
+    /**
+     * Returns an exception based on the request.
+     *
+     * @param ResponseInterface $response
+     *
+     * @return Throwable
+     */
+    public function handleError(ResponseInterface $response): Throwable
+    {
+        switch ($response->getStatusCode()) {
             case 400:
-                return new DiscordRequestFailedException("Error code 400: We sent a bad request. {$message}");
-                break;
+                return new DiscordRequestFailedException($response->getReasonPhrase());
+            case 401:
+                return new InvalidTokenException($response->getReasonPhrase());
             case 403:
-                return new NoPermissionsException("Error code 403: You do not have permission to do this. {$message}");
-                break;
+                return new NoPermissionsException($response->getReasonPhrase());
             case 404:
-                return new NotFoundException("Error code 404: This resource does not exist. {$message}");
-                break;
+                return new NotFoundException($response->getReasonPhrase());
             case 500:
-                if (\Discord\contains(strtolower($content), ['longer than 2000 characters', 'string value is too long'])) {
-                    // Discord has set a restriction with content sent over REST,
-                    // if it is more than 2000 characters long it will not be
-                    // sent and will return a 500 error.
-                    //
-                    // There is no way around this, you must use WebSockets.
-                    return new ContentTooLongException(
-                        'The expected content was more than 2000 characters. Use websockets if you need this content.'
-                    );
+                if (contains(strtolower((string) $response->getBody()), ['longer than 2000 characters', 'string value is too long'])) {
+                    // Response was longer than 2000 characters and was blocked by Discord.
+                    return new ContentTooLongException('Response was more than 2000 characters. Use another method to get this data.');
                 }
-
-                return new DiscordRequestFailedException(
-                    "Error code 500: This usually means something went wrong with Discord. {$message}"
-                );
-                break;
             default:
-                return new DiscordRequestFailedException(
-                    "Error code {$errorCode}: There was an error processing the request. {$message}"
-                );
-                break;
+                return new DiscordRequestFailedException($response->getReasonPhrase());
         }
     }
 
     /**
-     * Returns the User-Agent of the API.
+     * Returns the User-Agent of the HTTP client.
      *
      * @return string
      */
     public function getUserAgent(): string
     {
-        return 'DiscordBot (https://github.com/teamreflex/DiscordPHP, '.$this->version.')';
+        return 'DiscordBot (https://github.com/teamreflex/DiscordPHP, '.Discord::VERSION.')';
     }
 }

@@ -1,0 +1,28 @@
+name: Build Docs
+on:
+  push:
+  release:
+    types: [published]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'release' || contains(github.event.head_commit.message, 'build docs')
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Build class reference
+        uses: ./.github/actions/build-reference
+      - name: Build documentation
+        run: |
+          cd ./docs
+          yarn install
+          yarn build
+          sudo mv public/* ../build
+      - name: Publish docs
+        uses: JamesIves/github-pages-deploy-action@3.7.1
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH: gh-pages
+          FOLDER: build
+          CLEAN: true

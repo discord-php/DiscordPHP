@@ -261,13 +261,14 @@ abstract class AbstractRepository extends Collection
      * Force gets a part from the Discord servers.
      *
      * @param string $id The ID to search for.
+     * @param bool $fresh Whether we should skip checking the cache.
      *
      * @return ExtendedPromiseInterface
      * @throws \Exception
      */
-    public function fetch(string $id): ExtendedPromiseInterface
+    public function fetch(string $id, bool $fresh = false): ExtendedPromiseInterface
     {
-        if ($part = $this->offsetGet($id)) {
+        if (! $fresh && $part = $this->get('id', $id)) {
             return Resolve($part);
         }
 
@@ -282,7 +283,7 @@ abstract class AbstractRepository extends Collection
                 str_replace(':id', $id, $this->endpoints['get'])
             )
         )->done(function ($response) use ($deferred) {
-            $part = $this->factory->create($this->class, $response, true);
+            $part = $this->factory->create($this->class, array_merge($this->vars, (array) $response), true);
 
             $deferred->resolve($part);
         }, function ($e) use ($deferred) {

@@ -21,6 +21,7 @@ class ChannelPinsUpdate extends Event
      */
     public function handle(Deferred &$deferred, $data): void
     {
-        //wip
+        // TODO
+        $deferred->resolve($data);
     }
 }

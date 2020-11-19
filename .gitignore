@@ -1,7 +1,11 @@
 /vendor
+/build
 composer.lock
 test*.php
 .idea
 .php_cs.cache
 .php_cs
 .phpdoc
+.env
+.phpunit*
+.DS_Store

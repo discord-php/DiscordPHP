@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<phpdocumentor
+        configVersion="3"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="https://www.phpdoc.org"
+        xsi:noNamespaceSchemaLocation="https://docs.phpdoc.org/latest/phpdoc.xsd"
+>
+	<paths>
+		<output>build/reference</output>
+	</paths>
+	<version number="latest">
+		<api>
+			<source dsn=".">
+				<path>src</path>
+			</source>
+		</api>
+	</version>
+</phpdocumentor>
