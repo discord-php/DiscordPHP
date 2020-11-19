@@ -28,7 +28,7 @@ class Ban extends Part
     /**
      * {@inheritdoc}
      */
-    protected $fillable = ['user', 'guild_id', 'reason'];
+    protected $fillable = ['user_id', 'user', 'guild_id', 'reason'];
 
     /**
      * Returns the user id of the ban.
@@ -37,6 +37,10 @@ class Ban extends Part
      */
     protected function getUserIdAttribute(): ?string
     {
+        if (isset($this->attributes['user_id'])) {
+            return $this->attributes['user_id'];
+        }
+
         if (isset($this->attributes['user']->id)) {
             return $this->attributes['user']->id;
         }
@@ -61,15 +65,17 @@ class Ban extends Part
      */
     protected function getUserAttribute(): ?Part
     {
-        if (! isset($this->attributes['user'])) {
-            return null;
+        if (isset($this->attributes['user_id'])) {
+            return $this->discord->users->get('id', $this->attributes['user_id']);
+        } else if (isset($this->attributes['user'])) {
+            if ($user = $this->discord->users->get('id', $this->attributes['user']->id)) {
+                return $user;
+            } else {
+                return $this->factory->part(User::class, $this->attributes['user'], true);
+            }
         }
 
-        if ($user = $this->discord->users->get('id', $this->attributes['user']->id)) {
-            return $user;
-        }
-
-        return $this->factory->part(User::class, (array) $this->attributes['user'], true);
+        return null;
     }
 
     /**

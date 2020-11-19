@@ -11,8 +11,11 @@
 
 namespace Discord\Repository\Guild;
 
+use Discord\Helpers\Deferred;
 use Discord\Parts\Guild\Ban;
+use Discord\Parts\User\Member;
 use Discord\Repository\AbstractRepository;
+use React\Promise\ExtendedPromiseInterface;
 
 /**
  * Contains bans on users.
@@ -32,7 +35,6 @@ class BanRepository extends AbstractRepository
      */
     protected $endpoints = [
         'all' => 'guilds/:guild_id/bans',
-        'create' => 'guilds/:guild_id/bans/:user_id',
         'delete' => 'guilds/:guild_id/bans/:user_id',
     ];
 
@@ -40,4 +42,48 @@ class BanRepository extends AbstractRepository
      * {@inheritdoc}
      */
     protected $class = Ban::class;
+
+    /**
+     * Bans a member from the guild.
+     *
+     * @param Member|string $member
+     *
+     * @return ExtendedPromiseInterface
+     */
+    public function ban($member): ExtendedPromiseInterface
+    {
+        $deferred = new Deferred();
+
+        if ($member instanceof Member) {
+            $member = $member->id;
+        }
+
+        $this->http->put(
+            $this->replaceWithVariables('guilds/:guild_id/bans/').$member
+        )->done(function ($response) use ($deferred) {
+            $ban = $this->factory->create(Ban::class, $response, true);
+            $this->push($ban);
+            $deferred->resolve($ban);
+        }, [$deferred, 'reject']);
+
+        return $deferred->promise();
+    }
+
+    /**
+     * Unbans a member from the guild.
+     *
+     * @param Member|Ban|string $member
+     *
+     * @return ExtendedPromiseInterface
+     */
+    public function unban($member): ExtendedPromiseInterface
+    {
+        if ($member instanceof Member) {
+            $member = $member->id;
+        } else if ($member instanceof Ban) {
+            $member = $member->user_id;
+        }
+
+        return $this->delete($member);
+    }
 }
