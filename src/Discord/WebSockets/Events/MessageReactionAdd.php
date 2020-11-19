@@ -23,46 +23,40 @@ class MessageReactionAdd extends Event
     public function handle(Deferred &$deferred, $data): void
     {
         $reaction = new MessageReaction($this->discord, (array) $data, true);
-        $deferred->resolve($reaction);
 
-        if ($guild = $reaction->guild) {
-            if ($channel = $reaction->channel) {
-                if ($message = $channel->messages->offsetGet($reaction->message_id)) {
-                    $reactions = [];
-                    $rawReactions = $message->getRawAttributes()['reactions'] ?? [];
-                    $addedReaction = false;
+        if ($channel = $reaction->channel) {
+            if ($message = $channel->messages->offsetGet($reaction->message_id)) {
+                $reactions = [];
+                $rawReactions = $message->getRawAttributes()['reactions'] ?? [];
+                $addedReaction = false;
 
-                    foreach ($rawReactions as $react) {
-                        if ($react['emoji']['name'] == $reaction->emoji->name) {
-                            ++$react['count'];
+                foreach ($rawReactions as $react) {
+                    if ($react['emoji']['name'] == $reaction->emoji->name) {
+                        ++$react['count'];
 
-                            if ($reaction->user_id == $this->discord->id) {
-                                $react['me'] = true;
-                            }
-
-                            $addedReaction = true;
+                        if ($reaction->user_id == $this->discord->id) {
+                            $react['me'] = true;
                         }
 
-                        $reactions[] = $react;
+                        $addedReaction = true;
                     }
 
-                    // New reaction added
-                    if (! $addedReaction) {
-                        $reactions[] = [
-                            'count' => 1,
-                            'me' => $reaction->user_id == $this->discord->id,
-                            'emoji' => $reaction->emoji->getRawAttributes(),
-                        ];
-                    }
-
-                    $message->reactions = $reactions;
-                    $channel->messages->push($message);
+                    $reactions[] = $react;
                 }
 
-                $guild->channels->push($channel);
-            }
+                // New reaction added
+                if (! $addedReaction) {
+                    $reactions[] = [
+                        'count' => 1,
+                        'me' => $reaction->user_id == $this->discord->id,
+                        'emoji' => $reaction->emoji->getRawAttributes(),
+                    ];
+                }
 
-            $this->discord->guilds->push($guild);
+                $message->reactions = $reactions;
+            }
         }
+
+        $deferred->resolve($reaction);
     }
 }

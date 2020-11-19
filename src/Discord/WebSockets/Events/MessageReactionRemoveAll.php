@@ -23,19 +23,13 @@ class MessageReactionRemoveAll extends Event
     public function handle(Deferred &$deferred, $data): void
     {
         $reaction = new MessageReaction($this->discord, (array) $data, true);
-        $deferred->resolve($reaction);
 
-        if ($guild = $reaction->guild) {
-            if ($channel = $reaction->channel) {
-                if ($message = $channel->messages->offsetGet($reaction->message_id)) {
-                    $message->reactions = [];
-                    $channel->messages->push($message);
-                }
-
-                $guild->channels->push($channel);
+        if ($channel = $reaction->channel) {
+            if ($message = $channel->messages->offsetGet($reaction->message_id)) {
+                $message->reactions = [];
             }
-
-            $this->discord->guilds->push($guild);
         }
+
+        $deferred->resolve($reaction);
     }
 }

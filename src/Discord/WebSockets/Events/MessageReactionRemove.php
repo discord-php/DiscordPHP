@@ -23,36 +23,30 @@ class MessageReactionRemove extends Event
     public function handle(Deferred &$deferred, $data): void
     {
         $reaction = new MessageReaction($this->discord, (array) $data, true);
-        $deferred->resolve($reaction);
 
-        if ($guild = $reaction->guild) {
-            if ($channel = $reaction->channel) {
-                if ($message = $channel->messages->offsetGet($reaction->message_id)) {
-                    $reactions = [];
-                    $rawReactions = $message->getRawAttributes()['reactions'] ?? [];
+        if ($channel = $reaction->channel) {
+            if ($message = $channel->messages->offsetGet($reaction->message_id)) {
+                $reactions = [];
+                $rawReactions = $message->getRawAttributes()['reactions'] ?? [];
 
-                    foreach ($rawReactions as $react) {
-                        if ($react['emoji']['name'] == $reaction->emoji->name) {
-                            --$react['count'];
+                foreach ($rawReactions as $react) {
+                    if ($react['emoji']['name'] == $reaction->emoji->name) {
+                        --$react['count'];
 
-                            if ($reaction->user_id == $this->discord->id) {
-                                $react['me'] = false;
-                            }
-                        }
-
-                        if ($react['count'] > 0) {
-                            $reactions[] = $react;
+                        if ($reaction->user_id == $this->discord->id) {
+                            $react['me'] = false;
                         }
                     }
 
-                    $message->reactions = $reactions;
-                    $channel->messages->push($message);
+                    if ($react['count'] > 0) {
+                        $reactions[] = $react;
+                    }
                 }
 
-                $guild->channels->push($channel);
+                $message->reactions = $reactions;
             }
-
-            $this->discord->guilds->push($guild);
         }
+
+        $deferred->resolve($reaction);
     }
 }
