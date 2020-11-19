@@ -29,21 +29,21 @@ class Collection implements ArrayAccess, Serializable, JsonSerializable, Iterato
      *
      * @var string
      */
-    private $discrim;
+    protected $discrim;
 
     /**
      * The items contained in the collection.
      *
      * @var array
      */
-    private $items;
+    protected $items;
 
     /**
      * Class type allowed into the collection.
      *
      * @var string
      */
-    private $class;
+    protected $class;
 
     /**
      * Create a new collection.

@@ -75,7 +75,7 @@ abstract class AbstractRepository extends Collection
         $this->factory = $factory;
         $this->vars = $vars;
 
-        parent::__construct();
+        parent::__construct([], $this->discrim, $this->class);
     }
 
     /**
