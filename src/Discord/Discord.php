@@ -1089,10 +1089,10 @@ class Discord
     /**
      * Joins a voice channel.
      *
-     * @param Channel      $channel The channel to join.
-     * @param bool         $mute    Whether you should be mute when you join the channel.
-     * @param bool         $deaf    Whether you should be deaf when you join the channel.
-     * @param LoggerInterface|null $logger Voice client logger.
+     * @param Channel              $channel The channel to join.
+     * @param bool                 $mute    Whether you should be mute when you join the channel.
+     * @param bool                 $deaf    Whether you should be deaf when you join the channel.
+     * @param LoggerInterface|null $logger  Voice client logger.
      *
      * @return PromiseInterface
      */
@@ -1140,7 +1140,7 @@ class Discord
             if (is_null($logger) && $this->options['logging']) {
                 $logger = new Monolog('Voice-'.$channel->guild_id);
                 $logger->pushHandler(new StreamHandler('php://stdout', $this->options['loggerLevel']));
-            } else if (! $this->options['logging']) {
+            } elseif (! $this->options['logging']) {
                 $logger = new NullLogger();
             }
 
@@ -1291,7 +1291,7 @@ class Discord
             $logger = new Monolog('DiscordPHP');
             $logger->pushHandler(new StreamHandler('php://stdout', $options['loggerLevel']));
             $options['logger'] = $logger;
-        } else if (! $options['logging']) {
+        } elseif (! $options['logging']) {
             $options['logger'] = new NullLogger();
         }
 

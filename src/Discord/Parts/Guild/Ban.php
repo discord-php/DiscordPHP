@@ -67,12 +67,12 @@ class Ban extends Part
     {
         if (isset($this->attributes['user_id'])) {
             return $this->discord->users->get('id', $this->attributes['user_id']);
-        } else if (isset($this->attributes['user'])) {
+        } elseif (isset($this->attributes['user'])) {
             if ($user = $this->discord->users->get('id', $this->attributes['user']->id)) {
                 return $user;
-            } else {
-                return $this->factory->part(User::class, $this->attributes['user'], true);
             }
+
+            return $this->factory->part(User::class, $this->attributes['user'], true);
         }
 
         return null;

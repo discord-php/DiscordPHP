@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is apart of the DiscordPHP project.
+ *
+ * Copyright (c) 2016-2020 David Cole <david.cole1340@gmail.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the LICENSE.md file.
+ */
+
 use Discord\Discord;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Channel\Message;
@@ -24,7 +33,9 @@ final class EmbedTest extends TestCase
             $url = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ';
             $handler = function (Message $message) use ($discord, $resolve, $url, &$handler) {
                 // ignore messages not created by self
-                if ($message->author->id != $discord->id) return;
+                if ($message->author->id != $discord->id) {
+                    return;
+                }
                 $discord->removeListener(Event::MESSAGE_CREATE, $handler);
 
                 $this->assertEquals(1, $message->embeds->count());
@@ -57,7 +68,9 @@ final class EmbedTest extends TestCase
             $url = 'https://discord.com/assets/94db9c3c1eba8a38a1fcf4f223294185.png';
             $handler = function (Message $message) use ($discord, $resolve, $url, &$handler) {
                 // ignore messages not created by self
-                if ($message->author->id != $discord->id || $message->embeds->count() < 1) return;
+                if ($message->author->id != $discord->id || $message->embeds->count() < 1) {
+                    return;
+                }
 
                 $this->assertEquals(1, $message->embeds->count());
                 /** @var \Discord\Parts\Embed\Embed */

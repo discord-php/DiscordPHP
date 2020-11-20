@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is apart of the DiscordPHP project.
+ *
+ * Copyright (c) 2016-2020 David Cole <david.cole1340@gmail.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the LICENSE.md file.
+ */
+
 use PHPUnit\Framework\TestCase;
 
 use function Discord\contains;
@@ -32,7 +41,7 @@ final class FunctionsTest extends TestCase
             [0x00bfff, 'deepskyblue'],
             [0x00bfff, 0x00bfff],
             [0, 0],
-            [0x00bfff, '0x00bfff']
+            [0x00bfff, '0x00bfff'],
         ];
     }
 

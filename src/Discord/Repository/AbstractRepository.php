@@ -260,8 +260,8 @@ abstract class AbstractRepository extends Collection
     /**
      * Force gets a part from the Discord servers.
      *
-     * @param string $id The ID to search for.
-     * @param bool $fresh Whether we should skip checking the cache.
+     * @param string $id    The ID to search for.
+     * @param bool   $fresh Whether we should skip checking the cache.
      *
      * @return ExtendedPromiseInterface
      * @throws \Exception

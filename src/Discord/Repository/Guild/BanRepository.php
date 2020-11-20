@@ -80,7 +80,7 @@ class BanRepository extends AbstractRepository
     {
         if ($member instanceof Member) {
             $member = $member->id;
-        } else if ($member instanceof Ban) {
+        } elseif ($member instanceof Ban) {
             $member = $member->user_id;
         }
 

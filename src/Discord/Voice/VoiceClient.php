@@ -310,11 +310,11 @@ class VoiceClient extends EventEmitter
     /**
      * Constructs the Voice Client instance.
      *
-     * @param WebSocket     $websocket The main WebSocket client.
-     * @param LoopInterface $loop      The ReactPHP event loop.
-     * @param Channel       $channel   The channel we are connecting to.
-     * @param LoggerInterface        $logger    The logger.
-     * @param array         $data      More information related to the voice client.
+     * @param WebSocket       $websocket The main WebSocket client.
+     * @param LoopInterface   $loop      The ReactPHP event loop.
+     * @param Channel         $channel   The channel we are connecting to.
+     * @param LoggerInterface $logger    The logger.
+     * @param array           $data      More information related to the voice client.
      */
     public function __construct(WebSocket $websocket, LoopInterface &$loop, Channel $channel, LoggerInterface $logger, array $data)
     {
