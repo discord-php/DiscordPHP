@@ -29,6 +29,7 @@ use Discord\Repository\Channel\VoiceMemberRepository as MemberRepository;
 use Discord\Repository\Channel\WebhookRepository;
 use Discord\WebSockets\Event;
 use Discord\Helpers\Deferred;
+use Discord\Helpers\Multipart;
 use React\Promise\ExtendedPromiseInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Traversable;
@@ -808,7 +809,7 @@ class Channel extends Part
      *
      * @return ExtendedPromiseInterface
      */
-    public function sendFile(string $filepath, ?string $filename = null, ?string $content = null, $tts = false): ExtendedPromiseInterface
+    public function sendFile(string $filepath, ?string $filename = null, ?string $content = null, bool $tts = false): ExtendedPromiseInterface
     {
         $deferred = new Deferred();
 
@@ -828,15 +829,28 @@ class Channel extends Part
             $filename = basename($filepath);
         }
 
-        $this->http->sendFile($this, $filepath, $filename, $content, $tts)->done(
-            function ($response) use ($deferred) {
-                $message = $this->factory->create(Message::class, $response, true);
-                $this->messages->push($message);
+        $multipart = new Multipart([
+            [
+                'name' => 'file',
+                'content' => file_get_contents($filepath),
+                'filename' => $filename,
+            ],
+            [
+                'name' => 'tts',
+                'content' => $tts ? 'true' : 'false',
+            ],
+            [
+                'name' => 'content',
+                'content' => $content ?? '',
+            ],
+        ]);
 
-                $deferred->resolve($message);
-            },
-            Bind([$deferred, 'reject'])
-        );
+        $this->http->post("channels/{$this->id}/messages", (string) $multipart, $multipart->getHeaders())->done(function ($response) use ($deferred) {
+            $message = $this->factory->create(Message::class, $response, true);
+            $this->messages->push($message);
+
+            $deferred->resolve($message);
+        }, [$deferred, 'reject']);
 
         return $deferred->promise();
     }

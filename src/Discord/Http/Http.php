@@ -210,18 +210,26 @@ class Http
             'X-Ratelimit-Precision' => 'millisecond',
         ]);
 
-        if (! is_null($content)) {
+        $baseHeaders = [
+            'User-Agent' => $this->getUserAgent(),
+            'Authorization' => $this->token,
+            'X-Ratelimit-Precision' => 'millisecond',
+        ];
+
+        // If there is content and Content-Type is not set,
+        // assume it is JSON.
+        if (! is_null($content) && ! isset($headers['Content-Type'])) {
             $content = json_encode($content);
 
-            $headers['Content-Type'] = 'application/json';
-            $headers['Content-Length'] = strlen($content);
-        } else {
-            $content = '';
+            $baseHeaders['Content-Type'] = 'application/json';
+            $baseHeaders['Content-Length'] = strlen($content);
         }
+
+        $headers = array_merge($baseHeaders, $headers);
 
         $fullUrl = self::BASE_URL.'/'.$url;
 
-        $request = new Request($deferred, $method, $fullUrl, $content, $headers);
+        $request = new Request($deferred, $method, $fullUrl, $content ?? '', $headers);
         $this->sortIntoBucket($request);
 
         $this->logger->debug($request.' queued');
