@@ -183,19 +183,15 @@ class Guild extends Part
     }
 
     /**
-     * Unbans a member.
+     * Unbans a member. Alias for `$guild->bans->unban($user)`
      *
-     * @param User|string $user_id
+     * @param User|string $user
      *
      * @return ExtendedPromiseInterface
      */
-    public function unban($user_id): ExtendedPromiseInterface
+    public function unban($user): ExtendedPromiseInterface
     {
-        if ($user_id instanceof User) {
-            $user_id = $user_id->id;
-        }
-
-        return $this->http->delete("guilds/{$this->id}/bans/{$user_id}");
+        return $this->bans->unban($user);
     }
 
     /**

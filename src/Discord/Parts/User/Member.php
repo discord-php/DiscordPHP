@@ -77,7 +77,7 @@ class Member extends Part
     }
 
     /**
-     * Bans the member.
+     * Bans the member. Alias for `$guild->bans->ban()`.
      *
      * @param int|null    $daysToDeleteMessages The amount of days to delete messages from.
      * @param string|null $reason
@@ -87,32 +87,7 @@ class Member extends Part
      */
     public function ban(?int $daysToDeleteMessages = null, ?string $reason = null): ExtendedPromiseInterface
     {
-        $deferred = new Deferred();
-        $content = [];
-
-        $url = $this->replaceWithVariables('guilds/:guild_id/bans/:id');
-
-        if (! is_null($daysToDeleteMessages)) {
-            $content['delete-message-days'] = $daysToDeleteMessages;
-        }
-
-        if (! is_null($reason)) {
-            $content['reason'] = $reason;
-        }
-
-        $this->http->put($url, empty($content) ? null : $content)->done(
-            function () use ($deferred) {
-                $ban = $this->factory->create(Ban::class, [
-                    'user' => $this->attributes['user'],
-                    'guild' => $this->guild,
-                ], true);
-
-                $deferred->resolve($ban);
-            },
-            Bind([$deferred, 'reject'])
-        );
-
-        return $deferred->promise();
+        return $this->guild->bans->ban($this, $daysToDeleteMessages, $reason);
     }
 
     /**

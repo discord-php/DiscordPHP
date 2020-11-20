@@ -47,19 +47,31 @@ class BanRepository extends AbstractRepository
      * Bans a member from the guild.
      *
      * @param Member|string $member
+     * @param int|null $daysToDeleteMessages
+     * @param string|null $reason
      *
      * @return ExtendedPromiseInterface
      */
-    public function ban($member): ExtendedPromiseInterface
+    public function ban($member, ?int $daysToDeleteMessages = null, ?string $reason = null): ExtendedPromiseInterface
     {
         $deferred = new Deferred();
+        $content = [];
 
         if ($member instanceof Member) {
             $member = $member->id;
         }
 
+        if (! is_null($daysToDeleteMessages)) {
+            $content['delete-message-days'] = $daysToDeleteMessages;
+        }
+
+        if (! is_null($reason)) {
+            $content['reason'] = $reason;
+        }
+
         $this->http->put(
-            $this->replaceWithVariables('guilds/:guild_id/bans/').$member
+            $this->replaceWithVariables('guilds/:guild_id/bans/').$member,
+            empty($content) ? null : $content
         )->done(function ($response) use ($deferred) {
             $ban = $this->factory->create(Ban::class, $response, true);
             $this->push($ban);
