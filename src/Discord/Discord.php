@@ -21,7 +21,6 @@ use Discord\Repository\AbstractRepository;
 use Discord\Repository\GuildRepository;
 use Discord\Repository\PrivateChannelRepository;
 use Discord\Repository\UserRepository;
-use Discord\Wrapper\LoggerWrapper;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\User\Activity;
 use Discord\Parts\User\Client;
@@ -98,7 +97,7 @@ class Discord
     /**
      * The logger.
      *
-     * @var LoggerWrapper Logger.
+     * @var LoggerInterface Logger.
      */
     protected $logger;
 
@@ -325,7 +324,7 @@ class Discord
         $this->options = $options;
         $this->token = $options['token'];
         $this->loop = $options['loop'];
-        $this->logger = new LoggerWrapper($options['logger'], $options['logging']);
+        $this->logger = $options['logger'];
         $this->wsFactory = new Connector($this->loop);
         $this->handlers = new Handlers();
 
@@ -1093,11 +1092,11 @@ class Discord
      * @param Channel      $channel The channel to join.
      * @param bool         $mute    Whether you should be mute when you join the channel.
      * @param bool         $deaf    Whether you should be deaf when you join the channel.
-     * @param Monolog|null $monolog A Monolog logger to use.
+     * @param LoggerInterface|null $logger Voice client logger.
      *
      * @return PromiseInterface
      */
-    public function joinVoiceChannel(Channel $channel, $mute = false, $deaf = true, ?Monolog $monolog = null): PromiseInterface
+    public function joinVoiceChannel(Channel $channel, $mute = false, $deaf = true, ?LoggerInterface $logger = null): PromiseInterface
     {
         $deferred = new Deferred();
 
@@ -1129,7 +1128,7 @@ class Discord
             $this->removeListener(Event::VOICE_STATE_UPDATE, $voiceStateUpdate);
         };
 
-        $voiceServerUpdate = function ($vs, $discord) use ($channel, &$data, &$voiceServerUpdate, $deferred, $monolog) {
+        $voiceServerUpdate = function ($vs, $discord) use ($channel, &$data, &$voiceServerUpdate, $deferred, $logger) {
             if ($vs->guild_id != $channel->guild_id) {
                 return; // This voice server update isn't for our guild.
             }
@@ -1138,12 +1137,13 @@ class Discord
             $data['endpoint'] = $vs->endpoint;
             $this->logger->info('received token and endpoint for voice session', ['guild' => $channel->guild_id, 'token' => $vs->token, 'endpoint' => $vs->endpoint]);
 
-            if (is_null($monolog)) {
-                $monolog = new Monolog('Voice-'.$channel->guild_id);
-                $monolog->pushHandler(new StreamHandler('php://stdout', $this->options['loggerLevel']));
+            if (is_null($logger) && $this->options['logging']) {
+                $logger = new Monolog('Voice-'.$channel->guild_id);
+                $logger->pushHandler(new StreamHandler('php://stdout', $this->options['loggerLevel']));
+            } else if (! $this->options['logging']) {
+                $logger = new NullLogger();
             }
 
-            $logger = new LoggerWrapper($monolog, $this->options['logging']);
             $vc = new VoiceClient($this->ws, $this->loop, $channel, $logger, $data);
 
             $vc->once('ready', function () use ($vc, $deferred, $channel, $logger) {
@@ -1242,7 +1242,6 @@ class Discord
     protected function resolveOptions(array $options = []): array
     {
         $resolver = new OptionsResolver();
-        $logger = new Monolog('DiscordPHP');
 
         $resolver
             ->setRequired('token')
@@ -1288,9 +1287,12 @@ class Discord
 
         $options = $resolver->resolve($options);
 
-        if (is_null($options['logger'])) {
+        if (is_null($options['logger']) && $options['logging']) {
+            $logger = new Monolog('DiscordPHP');
             $logger->pushHandler(new StreamHandler('php://stdout', $options['loggerLevel']));
             $options['logger'] = $logger;
+        } else if (! $options['logging']) {
+            $options['logger'] = new NullLogger();
         }
 
         if ($options['intents'] !== false) {
@@ -1396,9 +1398,9 @@ class Discord
     /**
      * Gets the logger being used.
      *
-     * @return LoggerWrapper
+     * @return LoggerInterface
      */
-    public function getLogger(): LoggerWrapper
+    public function getLogger(): LoggerInterface
     {
         return $this->logger;
     }

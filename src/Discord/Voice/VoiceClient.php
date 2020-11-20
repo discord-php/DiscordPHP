@@ -18,7 +18,6 @@ use Discord\Exceptions\LibSodiumNotFoundException;
 use Discord\Exceptions\OutdatedDCAException;
 use Discord\Helpers\Collection;
 use Discord\Helpers\Process;
-use Discord\Wrapper\LoggerWrapper as Logger;
 use Discord\Parts\Channel\Channel;
 use Discord\WebSockets\Op;
 use Evenement\EventEmitter;
@@ -29,6 +28,7 @@ use React\Datagram\Socket;
 use React\Dns\Resolver\Factory as DNSFactory;
 use React\EventLoop\LoopInterface;
 use Discord\Helpers\Deferred;
+use Psr\Log\LoggerInterface;
 use React\Promise\ExtendedPromiseInterface;
 use React\Stream\ReadableResourceStream as Stream;
 use React\EventLoop\TimerInterface;
@@ -296,7 +296,7 @@ class VoiceClient extends EventEmitter
     /**
      * The logger.
      *
-     * @var Logger Logger.
+     * @var LoggerInterface Logger.
      */
     protected $logger;
 
@@ -313,10 +313,10 @@ class VoiceClient extends EventEmitter
      * @param WebSocket     $websocket The main WebSocket client.
      * @param LoopInterface $loop      The ReactPHP event loop.
      * @param Channel       $channel   The channel we are connecting to.
-     * @param Logger        $logger    The logger.
+     * @param LoggerInterface        $logger    The logger.
      * @param array         $data      More information related to the voice client.
      */
-    public function __construct(WebSocket $websocket, LoopInterface &$loop, Channel $channel, Logger $logger, array $data)
+    public function __construct(WebSocket $websocket, LoopInterface &$loop, Channel $channel, LoggerInterface $logger, array $data)
     {
         $this->loop = $loop;
         $this->mainWebsocket = $websocket;
