@@ -21,7 +21,7 @@ use PHPUnit\Framework\TestCase;
 
 use function Discord\getColor;
 
-final class EmbedMessageText extends TestCase
+final class EmbedMessageTest extends TestCase
 {
     /**
      * @depends DiscordTest::testCanGetChannel
