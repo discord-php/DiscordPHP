@@ -284,6 +284,7 @@ abstract class AbstractRepository extends Collection
             )
         )->done(function ($response) use ($deferred) {
             $part = $this->factory->create($this->class, array_merge($this->vars, (array) $response), true);
+            $this->push($part);
 
             $deferred->resolve($part);
         }, function ($e) use ($deferred) {
