@@ -34,17 +34,13 @@ class Reaction extends Part
     protected $fillable = ['count', 'me', 'emoji', 'message_id', 'channel_id'];
 
     /**
-     * Gets the emoji identifier, either the `id` or `name`.
+     * Gets the emoji identifier, combination of `id` and `name`.
      *
      * @return string
      */
     protected function getIdAttribute(): string
     {
-        if ($emoji = $this->emoji) {
-            return ":{$emoji->name}:{$emoji->id}";
-        }
-
-        return '';
+        return ":{$this->emoji->name}:{$this->emoji->id}";
     }
 
     /**
