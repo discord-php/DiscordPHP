@@ -15,7 +15,7 @@ use Discord\Parts\Guild\Emoji;
 use Discord\Parts\Part;
 
 /**
- * Defines the reaction object that a message contains.
+ * Represents a reaction to a message by members(s).
  *
  * @property int $count Number of reactions.
  * @property bool $me Whether the current bot has reacted.

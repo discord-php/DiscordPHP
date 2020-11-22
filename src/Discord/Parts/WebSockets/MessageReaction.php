@@ -20,7 +20,9 @@ use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
 
 /**
- * Part that defines a message reaction.
+ * Represents a specific reaction to a message by a specific user.
+ * Different from `Reaction` in the fact that `Reaction` represents a specific reaction
+ * to a message by _multiple_ members.
  *
  * @property string  $user_id
  * @property string  $message_id
