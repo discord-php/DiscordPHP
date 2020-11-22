@@ -653,6 +653,7 @@ class Discord
 
         $this->logger->error('websocket error', ['e' => $e->getMessage()]);
         $this->emit('error', [$e, $this]);
+        $this->ws->close(Op::CLOSE_ABNORMAL, $e->getMessage());
     }
 
     /**
