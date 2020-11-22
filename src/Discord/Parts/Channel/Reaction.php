@@ -11,8 +11,11 @@
 
 namespace Discord\Parts\Channel;
 
+use Discord\Helpers\Collection;
 use Discord\Parts\Guild\Emoji;
 use Discord\Parts\Part;
+use Discord\Parts\User\User;
+use React\Promise\ExtendedPromiseInterface;
 
 /**
  * Represents a reaction to a message by members(s).
@@ -41,6 +44,34 @@ class Reaction extends Part
     protected function getIdAttribute(): string
     {
         return ":{$this->emoji->name}:{$this->emoji->id}";
+    }
+
+    /**
+     * Gets the users that have used the reaction.
+     *
+     * @param array $options See https://discord.com/developers/docs/resources/channel#get-reactions
+     *
+     * @return ExtendedPromiseInterface<Collection|Users[]>
+     */
+    public function getUsers(array $options = []): ExtendedPromiseInterface
+    {
+        $content = http_build_query($options);
+        $query = "channels/{$this->channel_id}/messages/{$this->message_id}/reactions/".urlencode($this->id).(empty($content) ? null : "?{$content}");
+
+        return $this->http->get($query)
+        ->then(function ($response) {
+            $users = new Collection([], 'id', User::class);
+
+            foreach ((array) $response as $user) {
+                if ($user = $this->discord->users->get('id', $user->id)) {
+                    $users->push($user);
+                } else {
+                    $users->push(new User($this->discord, (array) $user, true));
+                }
+            }
+
+            return $users;
+        });
     }
 
     /**
