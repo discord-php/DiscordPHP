@@ -6,14 +6,14 @@ There are two types of permissions - channel permissions and role permissions. T
 
 ### Properties
 
-| name                  | type | description            |
-| --------------------- | ---- | ---------------------- |
-| bitwise               | int  | bitwise representation |
+| name                    | type | description            |
+| ----------------------- | ---- | ---------------------- |
+| bitwise                 | int  | bitwise representation |
 | create\_instant\_invite | bool |                        |
-| manage\_channels       | bool |                        |
-| view\_channel          | bool |                        |
-| manage\_roles          | bool |                        |
-| manage\_webhooks       | bool |                        |
+| manage\_channels        | bool |                        |
+| view\_channel           | bool |                        |
+| manage\_roles           | bool |                        |
+| manage\_webhooks        | bool |                        |
 
 The rest of the properties are listed under each permission type, all are type of `bool`.
 
