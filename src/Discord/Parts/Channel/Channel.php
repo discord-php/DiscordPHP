@@ -453,31 +453,24 @@ class Channel extends Part
      */
     public function deleteMessages($messages): ExtendedPromiseInterface
     {
-        $deferred = new Deferred();
-
         if (! is_array($messages) &&
             ! ($messages instanceof Traversable)
         ) {
-            $deferred->reject(new \Exception('$messages must be an array or implement Traversable.'));
-
-            return $deferred->promise();
+            return Reject(new \Exception('$messages must be an array or implement Traversable.'));
         }
 
         $count = count($messages);
 
         if ($count == 0) {
-            $deferred->resolve();
+            return \React\Promise\resolve();
         } elseif ($count == 1 || $this->is_private) {
             foreach ($messages as $message) {
                 if ($message instanceof Message ||
                     $message = $this->messages->get('id', $message)
                 ) {
-                    $message->delete();
+                    return $message->delete();
                 } else {
-                    $this->http->delete("channels/{$this->id}/messages/{$message}")->done(
-                        Bind([$deferred, 'resolve']),
-                        Bind([$deferred, 'reject'])
-                    );
+                    return $this->http->delete("channels/{$this->id}/messages/{$message}");
                 }
             }
         } else {
@@ -491,21 +484,15 @@ class Channel extends Part
                 }
             }
 
+            $promises = [];
+
             while (! empty($messageID)) {
-                $this->http->post(
-                    "channels/{$this->id}/messages/bulk_delete",
-                    [
-                        'messages' => array_slice($messageID, 0, 100),
-                    ]
-                )->done(
-                    Bind([$deferred, 'resolve']),
-                    Bind([$deferred, 'reject'])
-                );
+                $promises[] = $this->http->post("channels/{$this->id}/messages/bulk_delete", ['messages' => array_slice($messageID, 0, 100)]);
                 $messageID = array_slice($messageID, 100);
             }
-        }
 
-        return $deferred->promise();
+            return \React\Promise\all($promises);
+        }
     }
 
     /**
