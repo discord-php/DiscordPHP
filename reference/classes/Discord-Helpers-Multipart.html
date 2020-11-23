@@ -82,12 +82,12 @@
             <div class="phpdocumentor-column -eight phpdocumentor-content">
                     <ul class="phpdocumentor-breadcrumbs">
             <li class="phpdocumentor-breadcrumb"><a href="namespaces/discord.html">Discord</a></li>
-            <li class="phpdocumentor-breadcrumb"><a href="namespaces/discord-http.html">Http</a></li>
+            <li class="phpdocumentor-breadcrumb"><a href="namespaces/discord-helpers.html">Helpers</a></li>
     </ul>
 
     <article class="phpdocumentor-element -class">
         <h2 class="phpdocumentor-content__title">
-    RateLimit
+    Multipart
 
     
     
@@ -95,12 +95,12 @@
     </h2>
 
         <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Http/RateLimit.php"><a href="files/src-discord-http-ratelimit.html"><abbr title="src/Discord/Http/RateLimit.php">RateLimit.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/Multipart.php"><a href="files/src-discord-helpers-multipart.html"><abbr title="src/Discord/Helpers/Multipart.php">Multipart.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">19</span>
 </aside>
 
-            <p class="phpdocumentor-summary">Represents a rate-limit given by Discord.</p>
+            <p class="phpdocumentor-summary">Builds a multipart request.</p>
 
     <section class="phpdocumentor-description"></section>
 
@@ -132,59 +132,106 @@
 </h3>
 
 <dl class="phpdocumentor-table-of-contents">
-                <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a href="classes/Discord-Http-RateLimit.html#property_global">$global</a>
+            <dt class="phpdocumentor-table-of-contents__entry -constant -private">
+    <a href="classes/Discord-Helpers-Multipart.html#constant_BOUNDARY">BOUNDARY</a>
     <span>
-                &nbsp;: bool            </span>
+        &nbsp;= &#039;----DiscordPHPSendFileBoundary&#039;                    </span>
 </dt>
-<dd>Whether the rate-limit is global.</dd>
+<dd>The boundary seperating multipart sections.</dd>
+
+                <dt class="phpdocumentor-table-of-contents__entry -property -protected">
+    <a href="classes/Discord-Helpers-Multipart.html#property_boundary">$boundary</a>
+    <span>
+                &nbsp;: string            </span>
+</dt>
+<dd>Field boundary.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a href="classes/Discord-Http-RateLimit.html#property_retry_after">$retry_after</a>
+    <a href="classes/Discord-Helpers-Multipart.html#property_fields">$fields</a>
     <span>
-                &nbsp;: float            </span>
+                &nbsp;: array&lt;string|int, mixed&gt;            </span>
 </dt>
-<dd>Time in seconds of when to retry after.</dd>
+<dd>Fields part of the request.</dd>
 
                 <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Discord-Http-RateLimit.html#method___construct">__construct()</a>
+    <a href="classes/Discord-Helpers-Multipart.html#method___construct">__construct()</a>
     <span>
                         &nbsp;: mixed    </span>
 </dt>
-<dd>Rate limit constructor.</dd>
+<dd>Multipart constructor.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Discord-Http-RateLimit.html#method___toString">__toString()</a>
+    <a href="classes/Discord-Helpers-Multipart.html#method___toString">__toString()</a>
     <span>
                         &nbsp;: string    </span>
 </dt>
-<dd>Converts a rate-limit to a user-readable string.</dd>
+<dd>Converts the multipart request to string.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Discord-Http-RateLimit.html#method_getRetryAfter">getRetryAfter()</a>
+    <a href="classes/Discord-Helpers-Multipart.html#method_add">add()</a>
     <span>
-                        &nbsp;: float    </span>
+                        &nbsp;: $this    </span>
 </dt>
-<dd>Gets the retry after parameter.</dd>
+<dd>Adds a field to the request.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Discord-Http-RateLimit.html#method_isGlobal">isGlobal()</a>
+    <a href="classes/Discord-Helpers-Multipart.html#method_getContentType">getContentType()</a>
     <span>
-                        &nbsp;: bool    </span>
+                        &nbsp;: string    </span>
 </dt>
-<dd>Gets the global parameter.</dd>
+<dd>Gets the content type for the multipart request.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/Discord-Helpers-Multipart.html#method_getHeaders">getHeaders()</a>
+    <span>
+                        &nbsp;: array&lt;string|int, mixed&gt;    </span>
+</dt>
+<dd>Gets the headers for the given request.</dd>
 
         </dl>
 
 
 
         
+    <section class="phpdocumentor-constants">
+        <h3 class="phpdocumentor-elements__header" id="constants">
+            Constants
+            <a href="classes/Discord-Helpers-Multipart.html#constants" class="headerlink"><i class="fas fa-link"></i></a>
+        </h3>
+                    <article class="phpdocumentor-element -constant -private ">
+    <h4 class="phpdocumentor-element__name" id="constant_BOUNDARY">
+        BOUNDARY
+        <a href="classes/Discord-Helpers-Multipart.html#constant_BOUNDARY" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/Multipart.php"><a href="files/src-discord-helpers-multipart.html"><abbr title="src/Discord/Helpers/Multipart.php">Multipart.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">24</span>
+</aside>
+
+        <p class="phpdocumentor-summary">The boundary seperating multipart sections.</p>
+
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">private</span>
+    <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">BOUNDARY</span>
+    = <span class="phpdocumentor-signature__default-value">&#039;----DiscordPHPSendFileBoundary&#039;</span>
+</code>
+
+
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+            </section>
 
         
     <section class="phpdocumentor-properties">
         <h3 class="phpdocumentor-elements__header" id="properties">
             Properties
-            <a href="classes/Discord-Http-RateLimit.html#properties" class="headerlink"><i class="fas fa-link"></i></a>
+            <a href="classes/Discord-Helpers-Multipart.html#properties" class="headerlink"><i class="fas fa-link"></i></a>
         </h3>
                     <article
         class="
@@ -193,24 +240,24 @@
             -protected
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="property_global">
-        $global
-        <a href="classes/Discord-Http-RateLimit.html#property_global" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="property_boundary">
+        $boundary
+        <a href="classes/Discord-Helpers-Multipart.html#property_boundary" class="headerlink"><i class="fas fa-link"></i></a>
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Http/RateLimit.php"><a href="files/src-discord-http-ratelimit.html"><abbr title="src/Discord/Http/RateLimit.php">RateLimit.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/Multipart.php"><a href="files/src-discord-helpers-multipart.html"><abbr title="src/Discord/Helpers/Multipart.php">Multipart.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">26</span>
+    <span class="phpdocumentor-element-found-in__line">38</span>
 </aside>
 
-        <p class="phpdocumentor-summary">Whether the rate-limit is global.</p>
+        <p class="phpdocumentor-summary">Field boundary.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
-        <span class="phpdocumentor-signature__type">bool</span>
-    <span class="phpdocumentor-signature__name">$global</span>
+        <span class="phpdocumentor-signature__type">string</span>
+    <span class="phpdocumentor-signature__name">$boundary</span>
     </code>
 
         <section class="phpdocumentor-description"></section>
@@ -225,25 +272,25 @@
             -protected
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="property_retry_after">
-        $retry_after
-        <a href="classes/Discord-Http-RateLimit.html#property_retry_after" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="property_fields">
+        $fields
+        <a href="classes/Discord-Helpers-Multipart.html#property_fields" class="headerlink"><i class="fas fa-link"></i></a>
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Http/RateLimit.php"><a href="files/src-discord-http-ratelimit.html"><abbr title="src/Discord/Http/RateLimit.php">RateLimit.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/Multipart.php"><a href="files/src-discord-helpers-multipart.html"><abbr title="src/Discord/Helpers/Multipart.php">Multipart.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">33</span>
+    <span class="phpdocumentor-element-found-in__line">31</span>
 </aside>
 
-        <p class="phpdocumentor-summary">Time in seconds of when to retry after.</p>
+        <p class="phpdocumentor-summary">Fields part of the request.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
-        <span class="phpdocumentor-signature__type">float</span>
-    <span class="phpdocumentor-signature__name">$retry_after</span>
-    </code>
+        <span class="phpdocumentor-signature__type">array&lt;string|int, mixed&gt;</span>
+    <span class="phpdocumentor-signature__name">$fields</span>
+     = <span class="phpdocumentor-signature__default-value">[]</span></code>
 
         <section class="phpdocumentor-description"></section>
 
@@ -255,7 +302,7 @@
             <section class="phpdocumentor-methods">
         <h3 class="phpdocumentor-elements__header" id="methods">
             Methods
-            <a href="classes/Discord-Http-RateLimit.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
+            <a href="classes/Discord-Helpers-Multipart.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
         </h3>
                     <article
         class="phpdocumentor-element
@@ -265,39 +312,38 @@
 >
     <h4 class="phpdocumentor-element__name" id="method___construct">
         __construct()
-        <a href="classes/Discord-Http-RateLimit.html#method___construct" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Helpers-Multipart.html#method___construct" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Http/RateLimit.php"><a href="files/src-discord-http-ratelimit.html"><abbr title="src/Discord/Http/RateLimit.php">RateLimit.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/Multipart.php"><a href="files/src-discord-helpers-multipart.html"><abbr title="src/Discord/Helpers/Multipart.php">Multipart.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">41</span>
+    <span class="phpdocumentor-element-found-in__line">45</span>
 </aside>
 
-        <p class="phpdocumentor-summary">Rate limit constructor.</p>
+        <p class="phpdocumentor-summary">Multipart constructor.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                <span class="phpdocumentor-signature__name">__construct</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">bool&nbsp;</span><span class="phpdocumentor-signature__argument__name">$global</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">float&nbsp;</span><span class="phpdocumentor-signature__argument__name">$retry_after</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+                <span class="phpdocumentor-signature__name">__construct</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$fields</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">[]</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$boundary</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">self::BOUNDARY</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
 
         <section class="phpdocumentor-description"></section>
 
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$global</span>
-                : <span class="phpdocumentor-signature__argument__return-type">bool</span>
-                            </dt>
+                <span class="phpdocumentor-signature__argument__name">$fields</span>
+                : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;</span>
+                 = <span class="phpdocumentor-signature__argument__default-value">[]</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
                     <section class="phpdocumentor-description"></section>
 
             </dd>
                     <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$retry_after</span>
-                : <span class="phpdocumentor-signature__argument__return-type">float</span>
-                            </dt>
+                <span class="phpdocumentor-signature__argument__name">$boundary</span>
+                : <span class="phpdocumentor-signature__argument__return-type">string</span>
+                 = <span class="phpdocumentor-signature__argument__default-value">self::BOUNDARY</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
-
+                
             </dd>
             </dl>
 
@@ -318,15 +364,15 @@
 >
     <h4 class="phpdocumentor-element__name" id="method___toString">
         __toString()
-        <a href="classes/Discord-Http-RateLimit.html#method___toString" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Helpers-Multipart.html#method___toString" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Http/RateLimit.php"><a href="files/src-discord-http-ratelimit.html"><abbr title="src/Discord/Http/RateLimit.php">RateLimit.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/Multipart.php"><a href="files/src-discord-helpers-multipart.html"><abbr title="src/Discord/Helpers/Multipart.php">Multipart.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">72</span>
+    <span class="phpdocumentor-element-found-in__line">107</span>
 </aside>
 
-        <p class="phpdocumentor-summary">Converts a rate-limit to a user-readable string.</p>
+        <p class="phpdocumentor-summary">Converts the multipart request to string.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
@@ -350,29 +396,50 @@
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_getRetryAfter">
-        getRetryAfter()
-        <a href="classes/Discord-Http-RateLimit.html#method_getRetryAfter" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="method_add">
+        add()
+        <a href="classes/Discord-Helpers-Multipart.html#method_add" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Http/RateLimit.php"><a href="files/src-discord-http-ratelimit.html"><abbr title="src/Discord/Http/RateLimit.php">RateLimit.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/Multipart.php"><a href="files/src-discord-helpers-multipart.html"><abbr title="src/Discord/Helpers/Multipart.php">Multipart.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">62</span>
+    <span class="phpdocumentor-element-found-in__line">70</span>
 </aside>
 
-        <p class="phpdocumentor-summary">Gets the retry after parameter.</p>
+        <p class="phpdocumentor-summary">Adds a field to the request.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                <span class="phpdocumentor-signature__name">getRetryAfter</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">float</span></code>
+                <span class="phpdocumentor-signature__name">add</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__variadic-operator">...</span><span class="phpdocumentor-signature__argument__name">$fields</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">$this</span></code>
 
-        <section class="phpdocumentor-description"></section>
+        <section class="phpdocumentor-description"><pre class="prettyprint"><code class="language-php">$field = [
+    'name' =&gt; 'Field name',
+    'content' =&gt; 'Field content',
 
-    
+     // Optional
+    'filename' =&gt; 'File name',
+    'headers' =&gt; [
+        // ...
+    ],
+];
+</code></pre>
+</section>
+
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$fields</span>
+                : <span class="phpdocumentor-signature__argument__return-type">mixed</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+            </dl>
+
     
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">float</span>
+    <span class="phpdocumentor-signature__response_type">$this</span>
             &mdash;
             <section class="phpdocumentor-description"></section>
 
@@ -384,21 +451,21 @@
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_isGlobal">
-        isGlobal()
-        <a href="classes/Discord-Http-RateLimit.html#method_isGlobal" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="method_getContentType">
+        getContentType()
+        <a href="classes/Discord-Helpers-Multipart.html#method_getContentType" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Http/RateLimit.php"><a href="files/src-discord-http-ratelimit.html"><abbr title="src/Discord/Http/RateLimit.php">RateLimit.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/Multipart.php"><a href="files/src-discord-helpers-multipart.html"><abbr title="src/Discord/Helpers/Multipart.php">Multipart.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">52</span>
+    <span class="phpdocumentor-element-found-in__line">97</span>
 </aside>
 
-        <p class="phpdocumentor-summary">Gets the global parameter.</p>
+        <p class="phpdocumentor-summary">Gets the content type for the multipart request.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                <span class="phpdocumentor-signature__name">isGlobal</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">bool</span></code>
+                <span class="phpdocumentor-signature__name">getContentType</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
 
         <section class="phpdocumentor-description"></section>
 
@@ -406,7 +473,41 @@
     
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">bool</span>
+    <span class="phpdocumentor-signature__response_type">string</span>
+            &mdash;
+            <section class="phpdocumentor-description"></section>
+
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_getHeaders">
+        getHeaders()
+        <a href="classes/Discord-Helpers-Multipart.html#method_getHeaders" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/Multipart.php"><a href="files/src-discord-helpers-multipart.html"><abbr title="src/Discord/Helpers/Multipart.php">Multipart.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">84</span>
+</aside>
+
+        <p class="phpdocumentor-summary">Gets the headers for the given request.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                <span class="phpdocumentor-signature__name">getHeaders</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span></code>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+    
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span>
             &mdash;
             <section class="phpdocumentor-description"></section>
 
@@ -428,7 +529,7 @@
 </section>
             </div>
         </div>
-        <a href="classes/Discord-Http-RateLimit.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
+        <a href="classes/Discord-Helpers-Multipart.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
 
     </main>
 

@@ -856,6 +856,51 @@ Search.appendIndex(
             "summary": "Returns\u0020the\u0020promise\u0020of\u0020the\u0020deferred.",
             "url": "classes/Discord-Helpers-ExtendedPromisorInterface.html#method_promise"
         },                {
+            "fqsen": "\\Discord\\Helpers\\Multipart",
+            "name": "Multipart",
+            "summary": "Builds\u0020a\u0020multipart\u0020request.",
+            "url": "classes/Discord-Helpers-Multipart.html"
+        },                {
+            "fqsen": "\\Discord\\Helpers\\Multipart\u003A\u003A__construct\u0028\u0029",
+            "name": "__construct",
+            "summary": "Multipart\u0020constructor.",
+            "url": "classes/Discord-Helpers-Multipart.html#method___construct"
+        },                {
+            "fqsen": "\\Discord\\Helpers\\Multipart\u003A\u003Aadd\u0028\u0029",
+            "name": "add",
+            "summary": "Adds\u0020a\u0020field\u0020to\u0020the\u0020request.",
+            "url": "classes/Discord-Helpers-Multipart.html#method_add"
+        },                {
+            "fqsen": "\\Discord\\Helpers\\Multipart\u003A\u003AgetHeaders\u0028\u0029",
+            "name": "getHeaders",
+            "summary": "Gets\u0020the\u0020headers\u0020for\u0020the\u0020given\u0020request.",
+            "url": "classes/Discord-Helpers-Multipart.html#method_getHeaders"
+        },                {
+            "fqsen": "\\Discord\\Helpers\\Multipart\u003A\u003AgetContentType\u0028\u0029",
+            "name": "getContentType",
+            "summary": "Gets\u0020the\u0020content\u0020type\u0020for\u0020the\u0020multipart\u0020request.",
+            "url": "classes/Discord-Helpers-Multipart.html#method_getContentType"
+        },                {
+            "fqsen": "\\Discord\\Helpers\\Multipart\u003A\u003A__toString\u0028\u0029",
+            "name": "__toString",
+            "summary": "Converts\u0020the\u0020multipart\u0020request\u0020to\u0020string.",
+            "url": "classes/Discord-Helpers-Multipart.html#method___toString"
+        },                {
+            "fqsen": "\\Discord\\Helpers\\Multipart\u003A\u003ABOUNDARY",
+            "name": "BOUNDARY",
+            "summary": "The\u0020boundary\u0020seperating\u0020multipart\u0020sections.",
+            "url": "classes/Discord-Helpers-Multipart.html#constant_BOUNDARY"
+        },                {
+            "fqsen": "\\Discord\\Helpers\\Multipart\u003A\u003A\u0024fields",
+            "name": "fields",
+            "summary": "Fields\u0020part\u0020of\u0020the\u0020request.",
+            "url": "classes/Discord-Helpers-Multipart.html#property_fields"
+        },                {
+            "fqsen": "\\Discord\\Helpers\\Multipart\u003A\u003A\u0024boundary",
+            "name": "boundary",
+            "summary": "Field\u0020boundary.",
+            "url": "classes/Discord-Helpers-Multipart.html#property_boundary"
+        },                {
             "fqsen": "\\Discord\\Helpers\\Process",
             "name": "Process",
             "summary": "Process\u0020component.",
@@ -1913,7 +1958,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Reaction",
             "name": "Reaction",
-            "summary": "Defines\u0020the\u0020reaction\u0020object\u0020that\u0020a\u0020message\u0020contains.",
+            "summary": "Represents\u0020a\u0020reaction\u0020to\u0020a\u0020message\u0020by\u0020members\u0028s\u0029.",
             "url": "classes/Discord-Parts-Channel-Reaction.html"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Reaction\u003A\u003AgetEmojiAttribute\u0028\u0029",
@@ -2283,7 +2328,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003Aunban\u0028\u0029",
             "name": "unban",
-            "summary": "Unbans\u0020a\u0020member.",
+            "summary": "Unbans\u0020a\u0020member.\u0020Alias\u0020for\u0020\u0060\u0024guild\u002D\u003Ebans\u002D\u003Eunban\u0028\u0024user\u0029\u0060",
             "url": "classes/Discord-Parts-Guild-Guild.html#method_unban"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AgetOwnerAttribute\u0028\u0029",
@@ -2923,7 +2968,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Parts\\User\\Member\u003A\u003Aban\u0028\u0029",
             "name": "ban",
-            "summary": "Bans\u0020the\u0020member.",
+            "summary": "Bans\u0020the\u0020member.\u0020Alias\u0020for\u0020\u0060\u0024guild\u002D\u003Ebans\u002D\u003Eban\u0028\u0029\u0060.",
             "url": "classes/Discord-Parts-User-Member.html#method_ban"
         },                {
             "fqsen": "\\Discord\\Parts\\User\\Member\u003A\u003AsetNickname\u0028\u0029",
@@ -3148,7 +3193,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Parts\\WebSockets\\MessageReaction",
             "name": "MessageReaction",
-            "summary": "Part\u0020that\u0020defines\u0020a\u0020message\u0020reaction.",
+            "summary": "Represents\u0020a\u0020specific\u0020reaction\u0020to\u0020a\u0020message\u0020by\u0020a\u0020specific\u0020user.",
             "url": "classes/Discord-Parts-WebSockets-MessageReaction.html"
         },                {
             "fqsen": "\\Discord\\Parts\\WebSockets\\MessageReaction\u003A\u003AgetUserAttribute\u0028\u0029",
@@ -3465,6 +3510,16 @@ Search.appendIndex(
             "name": "BanRepository",
             "summary": "Contains\u0020bans\u0020on\u0020users.",
             "url": "classes/Discord-Repository-Guild-BanRepository.html"
+        },                {
+            "fqsen": "\\Discord\\Repository\\Guild\\BanRepository\u003A\u003Aban\u0028\u0029",
+            "name": "ban",
+            "summary": "Bans\u0020a\u0020member\u0020from\u0020the\u0020guild.",
+            "url": "classes/Discord-Repository-Guild-BanRepository.html#method_ban"
+        },                {
+            "fqsen": "\\Discord\\Repository\\Guild\\BanRepository\u003A\u003Aunban\u0028\u0029",
+            "name": "unban",
+            "summary": "Unbans\u0020a\u0020member\u0020from\u0020the\u0020guild.",
+            "url": "classes/Discord-Repository-Guild-BanRepository.html#method_unban"
         },                {
             "fqsen": "\\Discord\\Repository\\Guild\\BanRepository\u003A\u003A\u0024discrim",
             "name": "discrim",
@@ -5146,31 +5201,6 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Discord-WebSockets-Op.html#constant_CLOSE_VOICE_UNKNOWN_ENCRYPT"
         },                {
-            "fqsen": "\\Discord\\Wrapper\\LoggerWrapper",
-            "name": "LoggerWrapper",
-            "summary": "Provides\u0020an\u0020easy\u0020to\u0020use\u0020wrapper\u0020for\u0020the\u0020logger.",
-            "url": "classes/Discord-Wrapper-LoggerWrapper.html"
-        },                {
-            "fqsen": "\\Discord\\Wrapper\\LoggerWrapper\u003A\u003A__construct\u0028\u0029",
-            "name": "__construct",
-            "summary": "Constructs\u0020the\u0020logger.",
-            "url": "classes/Discord-Wrapper-LoggerWrapper.html#method___construct"
-        },                {
-            "fqsen": "\\Discord\\Wrapper\\LoggerWrapper\u003A\u003A__call\u0028\u0029",
-            "name": "__call",
-            "summary": "Handles\u0020dynamic\u0020calls\u0020to\u0020the\u0020class.",
-            "url": "classes/Discord-Wrapper-LoggerWrapper.html#method___call"
-        },                {
-            "fqsen": "\\Discord\\Wrapper\\LoggerWrapper\u003A\u003A\u0024logger",
-            "name": "logger",
-            "summary": "The\u0020logger.",
-            "url": "classes/Discord-Wrapper-LoggerWrapper.html#property_logger"
-        },                {
-            "fqsen": "\\Discord\\Wrapper\\LoggerWrapper\u003A\u003A\u0024enabled",
-            "name": "enabled",
-            "summary": "Whether\u0020logging\u0020is\u0020enabled.",
-            "url": "classes/Discord-Wrapper-LoggerWrapper.html#property_enabled"
-        },                {
             "fqsen": "\\",
             "name": "\\",
             "summary": "",
@@ -5285,10 +5315,5 @@ Search.appendIndex(
             "name": "Events",
             "summary": "",
             "url": "namespaces/discord-websockets-events.html"
-        },                {
-            "fqsen": "\\Discord\\Wrapper",
-            "name": "Wrapper",
-            "summary": "",
-            "url": "namespaces/discord-wrapper.html"
         }            ]
 );

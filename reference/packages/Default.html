@@ -62,7 +62,6 @@
                                             <li><a href="namespaces/discord-repository.html"><abbr title="\Discord\Repository">Repository</abbr></a></li>
                                             <li><a href="namespaces/discord-voice.html"><abbr title="\Discord\Voice">Voice</abbr></a></li>
                                             <li><a href="namespaces/discord-websockets.html"><abbr title="\Discord\WebSockets">WebSockets</abbr></a></li>
-                                            <li><a href="namespaces/discord-wrapper.html"><abbr title="\Discord\Wrapper">Wrapper</abbr></a></li>
                                     </ul>
                         </section>
 
@@ -150,6 +149,8 @@ a REST request. The user must use WebSockets to obtain this data if they need it
         <dd>Collection of items. Inspired by Laravel Collections.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Discord-Helpers-Deferred.html"><abbr title="\Discord\Helpers\Deferred">Deferred</abbr></a></dt>
         <dd>Wrapper for extended promisor interface. Work-around until react/promise v3.0.</dd>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Discord-Helpers-Multipart.html"><abbr title="\Discord\Helpers\Multipart">Multipart</abbr></a></dt>
+        <dd>Builds a multipart request.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Discord-Helpers-Process.html"><abbr title="\Discord\Helpers\Process">Process</abbr></a></dt>
         <dd>Process component.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Discord-Helpers-ReadableResourceStream.html"><abbr title="\Discord\Helpers\ReadableResourceStream">ReadableResourceStream</abbr></a></dt>
@@ -171,7 +172,7 @@ a REST request. The user must use WebSockets to obtain this data if they need it
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Discord-Parts-Channel-Overwrite.html"><abbr title="\Discord\Parts\Channel\Overwrite">Overwrite</abbr></a></dt>
         <dd>Overwrite Class.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Discord-Parts-Channel-Reaction.html"><abbr title="\Discord\Parts\Channel\Reaction">Reaction</abbr></a></dt>
-        <dd>Defines the reaction object that a message contains.</dd>
+        <dd>Represents a reaction to a message by members(s).</dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Discord-Parts-Channel-Webhook.html"><abbr title="\Discord\Parts\Channel\Webhook">Webhook</abbr></a></dt>
         <dd>Webhooks are a low-effort way to post messages to channels in Discord. They do not require a bot user or authentication to use.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Discord-Parts-Embed-Author.html"><abbr title="\Discord\Parts\Embed\Author">Author</abbr></a></dt>
@@ -216,7 +217,7 @@ base class.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Discord-Parts-User-User.html"><abbr title="\Discord\Parts\User\User">User</abbr></a></dt>
         <dd>A user is a general user that is not attached to a guild.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Discord-Parts-WebSockets-MessageReaction.html"><abbr title="\Discord\Parts\WebSockets\MessageReaction">MessageReaction</abbr></a></dt>
-        <dd>Part that defines a message reaction.</dd>
+        <dd>Represents a specific reaction to a message by a specific user.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Discord-Parts-WebSockets-PresenceUpdate.html"><abbr title="\Discord\Parts\WebSockets\PresenceUpdate">PresenceUpdate</abbr></a></dt>
         <dd>A PresenceUpdate part is used when the `PRESENCE_UPDATE` event is fired on the WebSocket. It contains
 information about the users presence suck as their status (online/away) and their current game.</dd>
@@ -364,8 +365,6 @@ for the events.</dd>
         <dd></dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Discord-WebSockets-Op.html"><abbr title="\Discord\WebSockets\Op">Op</abbr></a></dt>
         <dd>Contains constants used in websockets.</dd>
-            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Discord-Wrapper-LoggerWrapper.html"><abbr title="\Discord\Wrapper\LoggerWrapper">LoggerWrapper</abbr></a></dt>
-        <dd>Provides an easy to use wrapper for the logger.</dd>
     
     </dl>
 
