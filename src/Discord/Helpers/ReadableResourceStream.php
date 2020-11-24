@@ -153,7 +153,7 @@ final class ReadableResourceStream extends EventEmitter implements ReadableStrea
     }
 
     /** @internal */
-    private function handleData(): void
+    public function handleData(): void
     {
         $error = null;
         \set_error_handler(function ($errno, $errstr, $errfile, $errline) use (&$error) {
