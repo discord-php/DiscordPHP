@@ -1072,19 +1072,15 @@ class Discord
     }
 
     /**
-     * Gets a voice client from a guild ID.
+     * Gets a voice client from a guild ID. Returns null if there is no voice client.
      *
-     * @param int $id The guild ID to look up.
+     * @param string $guild_id The guild ID to look up.
      *
-     * @return PromiseInterface
+     * @return VoiceClient|null
      */
-    public function getVoiceClient(int $id): PromiseInterface
+    public function getVoiceClient(string $guild_id): ?VoiceClient
     {
-        if (isset($this->voiceClients[$id])) {
-            return Resolve($this->voiceClients[$id]);
-        }
-
-        return Reject(new \Exception('Could not find the voice client.'));
+        return $this->voiceClients[$guild_id] ?? null;
     }
 
     /**
@@ -1097,7 +1093,7 @@ class Discord
      *
      * @return PromiseInterface
      */
-    public function joinVoiceChannel(Channel $channel, $mute = false, $deaf = true, ?LoggerInterface $logger = null): PromiseInterface
+    public function joinVoiceChannel(Channel $channel, $mute = false, $deaf = true, ?LoggerInterface $logger = null): ExtendedPromiseInterface
     {
         $deferred = new Deferred();
 
