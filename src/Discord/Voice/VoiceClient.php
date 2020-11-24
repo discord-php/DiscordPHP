@@ -1280,10 +1280,17 @@ class VoiceClient extends EventEmitter
         $this->voiceWebsocket->close();
 
         $this->heartbeat_interval = null;
-        $this->loop->cancelTimer($this->heartbeat);
-        $this->loop->cancelTimer($this->udpHeartbeat);
-        $this->heartbeat = null;
-        $this->udpHeartbeat = null;
+
+        if (! is_null($this->heartbeat)) {
+            $this->loop->cancelTimer($this->heartbeat);
+            $this->heartbeat = null;
+        }
+
+        if (! is_null($this->udpHeartbeat)) {
+            $this->loop->cancelTimer($this->udpHeartbeat);
+            $this->udpHeartbeat = null;
+        }
+
         $this->seq = 0;
         $this->timestamp = 0;
         $this->sentLoginFrame = false;
