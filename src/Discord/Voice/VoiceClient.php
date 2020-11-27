@@ -1314,7 +1314,7 @@ class VoiceClient extends EventEmitter
      */
     public function isSpeaking(int $id): bool
     {
-        $ssrc = @$this->speakingStatus[$id];
+        $ssrc = $this->speakingStatus[$id] ?? null;
         $user = $this->speakingStatus->get('user_id', $id);
 
         if (is_null($ssrc) && ! is_null($user)) {
@@ -1336,7 +1336,7 @@ class VoiceClient extends EventEmitter
     public function handleVoiceStateUpdate(object $data): void
     {
         $removeDecoder = function ($ss) {
-            $decoder = @$this->voiceDecoders[$ss->ssrc];
+            $decoder = $this->voiceDecoders[$ss->ssrc] ?? null;
 
             if (is_null($decoder)) {
                 return; // no voice decoder to remove
@@ -1411,7 +1411,7 @@ class VoiceClient extends EventEmitter
 
         $vp = VoicePacket::make($voicePacket->getHeader().$message);
         $ss = $this->speakingStatus->get('ssrc', $vp->getSSRC());
-        $decoder = @$this->voiceDecoders[$vp->getSSRC()];
+        $decoder = $this->voiceDecoders[$vp->getSSRC()] ?? null;
 
         if (is_null($ss)) {
             // for some reason we don't have a speaking status
@@ -1455,7 +1455,7 @@ class VoiceClient extends EventEmitter
             };
 
             $createDecoder();
-            $decoder = @$this->voiceDecoders[$vp->getSSRC()];
+            $decoder = $this->voiceDecoders[$vp->getSSRC()] ?? null;
         }
 
         $buff = new Buffer(strlen($vp->getData()) + 2);
