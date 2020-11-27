@@ -14,6 +14,8 @@ namespace Discord\WebSockets\Events;
 use Discord\Parts\WebSockets\MessageReaction;
 use Discord\WebSockets\Event;
 use Discord\Helpers\Deferred;
+use Discord\Parts\Channel\Channel;
+use Discord\Parts\Channel\Reaction;
 
 class MessageReactionAdd extends Event
 {
@@ -26,34 +28,29 @@ class MessageReactionAdd extends Event
 
         if ($channel = $reaction->channel) {
             if ($message = $channel->messages->offsetGet($reaction->message_id)) {
-                $reactions = [];
-                $rawReactions = $message->getRawAttributes()['reactions'] ?? [];
                 $addedReaction = false;
 
-                foreach ($rawReactions as $react) {
-                    if ($react['emoji']['name'] == $reaction->emoji->name) {
-                        ++$react['count'];
+                foreach ($message->reactions as $react) {
+                    if ($react->id == $reaction->reaction_id) {
+                        ++$react->count;
 
                         if ($reaction->user_id == $this->discord->id) {
-                            $react['me'] = true;
+                            $react->me = true;
                         }
 
                         $addedReaction = true;
+                        break;
                     }
-
-                    $reactions[] = $react;
                 }
 
                 // New reaction added
                 if (! $addedReaction) {
-                    $reactions[] = [
+                    $message->reactions->push($message->reactions->create([
                         'count' => 1,
                         'me' => $reaction->user_id == $this->discord->id,
                         'emoji' => $reaction->emoji->getRawAttributes(),
-                    ];
+                    ], true));
                 }
-
-                $message->reactions = $reactions;
             }
         }
 

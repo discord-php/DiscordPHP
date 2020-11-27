@@ -26,7 +26,7 @@ class MessageReactionRemoveAll extends Event
 
         if ($channel = $reaction->channel) {
             if ($message = $channel->messages->offsetGet($reaction->message_id)) {
-                $message->reactions = [];
+                $message->reactions->clear();
             }
         }
 

@@ -26,24 +26,19 @@ class MessageReactionRemove extends Event
 
         if ($channel = $reaction->channel) {
             if ($message = $channel->messages->offsetGet($reaction->message_id)) {
-                $reactions = [];
-                $rawReactions = $message->getRawAttributes()['reactions'] ?? [];
-
-                foreach ($rawReactions as $react) {
-                    if ($react['emoji']['name'] == $reaction->emoji->name) {
-                        --$react['count'];
+                foreach ($message->reactions as $key => $react) {
+                    if ($react->id == $reaction->reaction_id) {
+                        --$react->count;
 
                         if ($reaction->user_id == $this->discord->id) {
-                            $react['me'] = false;
+                            $react->me = false;
                         }
                     }
 
-                    if ($react['count'] > 0) {
-                        $reactions[] = $react;
+                    if ($react->count < 1) {
+                        unset($message->reactions[$key]);
                     }
                 }
-
-                $message->reactions = $reactions;
             }
         }
 

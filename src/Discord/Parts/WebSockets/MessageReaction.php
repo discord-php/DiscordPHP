@@ -24,6 +24,7 @@ use Discord\Parts\User\User;
  * Different from `Reaction` in the fact that `Reaction` represents a specific reaction
  * to a message by _multiple_ members.
  *
+ * @property string $reaction_id
  * @property string  $user_id
  * @property string  $message_id
  * @property Member  $member
@@ -41,6 +42,16 @@ class MessageReaction extends Part
      * {@inheritdoc}
      */
     protected $fillable = ['user_id', 'message_id', 'member', 'emoji', 'channel_id', 'guild_id'];
+
+    /**
+     * Gets the ID of the reaction.
+     *
+     * @return string
+     */
+    protected function getReactionIdAttribute(): string
+    {
+        return ":{$this->emoji->name}:{$this->emoji->id}";
+    }
 
     /**
      * Gets the user attribute.

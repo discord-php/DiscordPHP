@@ -22,7 +22,9 @@ use Discord\Parts\User\User;
 use Discord\Parts\WebSockets\MessageReaction;
 use Discord\WebSockets\Event;
 use Discord\Helpers\Deferred;
+use Discord\Repository\Channel\ReactionRepository;
 use React\Promise\ExtendedPromiseInterface;
+
 use function React\Partial\bind as Bind;
 
 /**
@@ -45,7 +47,7 @@ use function React\Partial\bind as Bind;
  * @property Collection|Role[]              $mention_roles    A collection of roles that were mentioned in the message.
  * @property bool                           $pinned           Whether the message is pinned to the channel.
  * @property Collection|Channel[]           $mention_channels Collection of mentioned channels.
- * @property Collection|Reaction[]          $reactions        Collection of reactions on the message.
+ * @property ReactionRepository             $reactions        Collection of reactions on the message.
  * @property string                         $webhook_id       ID of the webhook that made the message, if any.
  * @property object                         $activity         Current message activity. Requires rich presence.
  * @property object                         $application      Application of message. Requires rich presence.
@@ -110,6 +112,13 @@ class Message extends Part
         'application',
         'message_reference',
         'flags',
+    ];
+
+    /**
+     * {@inheritdoc}
+     */
+    protected $repositories = [
+        'reactions' => ReactionRepository::class,
     ];
 
     /**
@@ -185,22 +194,17 @@ class Message extends Part
     }
 
     /**
-     * Gets the reactions attribute.
+     * Sets the reactions attriubte.
      *
-     * @return Collection|Reaction[]
-     * @throws \Exception
+     * @param iterable $reactions
      */
-    protected function getReactionsAttribute(): Collection
+    protected function setReactionsAttribute(iterable $reactions)
     {
-        $collection = new Collection([], null, Reaction::class);
+        $this->reactions->clear();
 
-        if (isset($this->attributes['reactions'])) {
-            foreach ($this->attributes['reactions'] as $reaction) {
-                $collection->push($this->factory->create(Reaction::class, $reaction, true));
-            }
+        foreach ($reactions as $reaction) {
+            $this->reactions->push($this->reactions->create((array) $reaction, true));
         }
-
-        return $collection;
     }
 
     /**
@@ -556,6 +560,17 @@ class Message extends Part
         return [
             'content' => $this->content,
             'flags' => $this->flags,
+        ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getRepositoryAttributes(): array
+    {
+        return [
+            'message_id' => $this->id,
+            'channel_id' => $this->channel_id,
         ];
     }
 }

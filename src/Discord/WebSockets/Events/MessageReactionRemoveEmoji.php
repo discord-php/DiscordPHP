@@ -23,24 +23,11 @@ class MessageReactionRemoveEmoji extends Event
     {
         if ($channel = $this->discord->getChannel($data->channel_id)) {
             if ($message = $channel->messages->offsetGet($data->message_id)) {
-                $reactions = [];
-                $rawReactions = $message->getRawAttributes()['reactions'] ?? [];
-
-                foreach ($rawReactions as $react) {
-                    if ($react['emoji']['name'] == $data->emoji->name) {
-                        --$react['count'];
-
-                        if ($data->user_id == $this->discord->id) {
-                            $react['me'] = false;
-                        }
-                    }
-
-                    if ($react['count'] > 0) {
-                        $reactions[] = $react;
+                foreach ($message->reactions as $key => $react) {
+                    if ($react->id == $data->id) {
+                        unset($message->reactions[$key]);
                     }
                 }
-
-                $message->reactions = $reactions;
             }
         }
 

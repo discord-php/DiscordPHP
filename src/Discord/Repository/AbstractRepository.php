@@ -121,15 +121,16 @@ abstract class AbstractRepository extends Collection
      * Builds a new, empty part.
      *
      * @param array $attributes The attributes for the new part.
+     * @param bool $created
      *
      * @return Part       The new part.
      * @throws \Exception
      */
-    public function create(array $attributes = []): Part
+    public function create(array $attributes = [], bool $created = false): Part
     {
         $attributes = array_merge($attributes, $this->vars);
 
-        return $this->factory->create($this->class, $attributes);
+        return $this->factory->create($this->class, $attributes, $created);
     }
 
     /**
