@@ -1195,8 +1195,15 @@ class Discord
     protected function setGateway(?string $gateway = null): ExtendedPromiseInterface
     {
         $deferred = new Deferred();
+        $defaultSession = [
+            'total' => 1000,
+            'remaining' => 1000,
+            'reset_after' => 0,
+            'max_concurrency' => 1,
+        ];
 
-        $buildParams = function ($gateway, $response = null) use ($deferred) {
+        $buildParams = function ($gateway, $session = null) use ($deferred, $defaultSession) {
+            $session = $session ?? $defaultSession;
             $params = [
                 'v' => self::GATEWAY_VERSION,
                 'encoding' => $this->encoding,
@@ -1205,21 +1212,22 @@ class Discord
             $query = http_build_query($params);
             $this->gateway = trim($gateway, '/').'/?'.$query;
 
-            $deferred->resolve(['gateway' => $this->gateway, 'session' => (array) $response->session_start_limit]);
+            $deferred->resolve(['gateway' => $this->gateway, 'session' => (array) $session]);
         };
 
         if (is_null($gateway)) {
             $this->http->get('gateway/bot')->done(function ($response) use ($buildParams) {
-                $buildParams($response->url, $response);
+                $buildParams($response->url, $response->session_start_limit);
             }, function ($e) use ($buildParams) {
                 // Can't access the API server so we will use the default gateway.
+                $this->logger->warning('could not retrieve gateway, using default');
                 $buildParams('wss://gateway.discord.gg');
             });
         } else {
             $buildParams($gateway);
         }
 
-        $deferred->promise()->done(function ($gateway) {
+        $deferred->promise()->then(function ($gateway) {
             $this->logger->info('gateway retrieved and set', $gateway);
         }, function ($e) {
             $this->logger->error('error obtaining gateway', ['e' => $e->getMessage()]);
