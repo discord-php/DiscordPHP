@@ -331,21 +331,26 @@ class VoiceClient extends EventEmitter
 
     /**
      * Starts the voice client.
+     * 
+     * @param bool $check
+     * 
      * @return void|bool
      */
-    public function start()
+    public function start(bool $check = true)
     {
-        if (! $this->checkForFFmpeg() ||
-            ! $this->checkForDCA() ||
-            ! $this->checkForLibsodium()) {
-            return false;
-        }
+        if ($check) {
+            if (! $this->checkForFFmpeg() ||
+                ! $this->checkForDCA() ||
+                ! $this->checkForLibsodium()) {
+                return false;
+            }
 
-        // temp
-        if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
-            $this->emit('error', [new \Exception('The voice client does not work on Windows operating systems at the moment.')]);
+            // temp
+            if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+                $this->emit('error', [new \Exception('The voice client does not work on Windows operating systems at the moment.')]);
 
-            return false;
+                return false;
+            }
         }
 
         $this->initSockets();
