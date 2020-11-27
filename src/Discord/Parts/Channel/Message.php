@@ -232,7 +232,7 @@ class Message extends Part
 
         if ($this->channel->guild) {
             foreach ($this->channel->guild->roles as $role) {
-                if (array_search($role->id, $this->attributes['mention_roles']) !== false) {
+                if (array_search($role->id, $this->attributes['mention_roles'] ?? []) !== false) {
                     $roles->push($role);
                 }
             }
