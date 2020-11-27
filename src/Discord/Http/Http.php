@@ -18,6 +18,7 @@ use Discord\Exceptions\Rest\InvalidTokenException;
 use Discord\Exceptions\Rest\NoPermissionsException;
 use Discord\Exceptions\Rest\NotFoundException;
 use Discord\Helpers\Deferred;
+use Exception;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Log\LoggerInterface;
 use React\EventLoop\LoopInterface;
@@ -300,6 +301,10 @@ class Http
                 $deferred->resolve($response);
                 $request->getDeferred()->resolve($data);
             }
+        }, function (Exception $e) use ($request) {
+            $this->logger->warning($request.' failed: '.$e->getMessage());
+
+            $request->getDeferred()->reject($e);
         });
 
         return $deferred->promise();
@@ -360,7 +365,7 @@ class Http
                     return new ContentTooLongException('Response was more than 2000 characters. Use another method to get this data.');
                 }
             default:
-                return new DiscordRequestFailedException($response->getReasonPhrase());
+            return new DiscordRequestFailedException($response->getReasonPhrase());
         }
     }
 
