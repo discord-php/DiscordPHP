@@ -60,6 +60,20 @@ class Collection implements ArrayAccess, Serializable, JsonSerializable, Iterato
     }
 
     /**
+     * Creates a collection from an array.
+     *
+     * @param array $items
+     * @param string $discrim
+     * @param string $class
+     *
+     * @return Collection
+     */
+    public static function from(array $items = [], ?string $discrim = 'id', ?string $class = null)
+    {
+        return new static($items, $discrim, $class);
+    }
+
+    /**
      * Gets an item from the collection.
      *
      * @param string $discrim
