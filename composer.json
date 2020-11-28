@@ -13,7 +13,7 @@
         }
     ],
     "require": {
-        "php": "^7.2",
+        "php": "^7.2|^8.0",
         "nesbot/carbon": "^2.38",
         "ratchet/pawl": "0.3.*",
         "react/datagram": "1.5.*",
