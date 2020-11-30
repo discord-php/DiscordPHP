@@ -181,13 +181,11 @@ class Message extends Part
     {
         $collection = new Collection();
 
-        if (isset($this->attributes['mention_channels'])) {
-            foreach ($this->attributes['mention_channels'] as $mention_channel) {
-                if (! $channel = $this->discord->getChannel($mention_channel->id)) {
-                    $channel = $this->factory->create(Channel::class, $mention_channel, true);
-                }
-                $collection->push($channel);
+        foreach ($this->attributes['mention_channels'] ?? [] as $mention_channel) {
+            if (! $channel = $this->discord->getChannel($mention_channel->id)) {
+                $channel = $this->factory->create(Channel::class, $mention_channel, true);
             }
+            $collection->push($channel);
         }
 
         return $collection;
@@ -235,7 +233,7 @@ class Message extends Part
         $roles = new Collection();
 
         if ($this->channel->guild) {
-            foreach ($this->channel->guild->roles as $role) {
+            foreach ($this->channel->guild->roles ?? [] as $role) {
                 if (array_search($role->id, $this->attributes['mention_roles'] ?? []) !== false) {
                     $roles->push($role);
                 }
@@ -255,7 +253,7 @@ class Message extends Part
     {
         $users = new Collection();
 
-        foreach ($this->attributes['mentions'] as $mention) {
+        foreach ($this->attributes['mentions'] ?? [] as $mention) {
             if (! $user = $this->discord->users->get('id', $mention->id)) {
                 $user = $this->factory->create(User::class, $mention, true);
             }
@@ -297,7 +295,7 @@ class Message extends Part
     {
         $embeds = new Collection([], null);
 
-        foreach ($this->attributes['embeds'] as $embed) {
+        foreach ($this->attributes['embeds'] ?? [] as $embed) {
             $embeds->push($this->factory->create(Embed::class, $embed, true));
         }
 
@@ -310,9 +308,13 @@ class Message extends Part
      * @return Carbon     The time that the message was sent.
      * @throws \Exception
      */
-    protected function getTimestampAttribute(): Carbon
+    protected function getTimestampAttribute(): ?Carbon
     {
-        return new Carbon($this->attributes['timestamp']);
+        if ($this->attributes['timestamp'] ?? null) {
+            return new Carbon($this->attributes['timestamp']);
+        }
+
+        return null;
     }
 
     /**
@@ -323,11 +325,11 @@ class Message extends Part
      */
     protected function getEditedTimestampAttribute(): ?Carbon
     {
-        if (! $this->attributes['edited_timestamp']) {
-            return null;
+        if ($this->attributes['edited_timestamp'] ?? null) {
+            return new Carbon($this->attributes['edited_timestamp']);
         }
 
-        return new Carbon($this->attributes['edited_timestamp']);
+        return null;
     }
 
     /**
