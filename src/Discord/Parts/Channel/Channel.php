@@ -680,14 +680,15 @@ class Channel extends Part
     /**
      * Sends a message to the channel if it is a text channel.
      *
-     * @param string           $text  The text to send in the message.
-     * @param bool             $tts   Whether the message should be sent with text to speech enabled.
-     * @param Embed|array|null $embed An embed to send.
+     * @param string           $text             The text to send in the message.
+     * @param bool             $tts              Whether the message should be sent with text to speech enabled.
+     * @param Embed|array|null $embed            An embed to send.
+     * @param array|null       $allowed_mentions Set mentions allowed in the message.
      *
      * @return ExtendedPromiseInterface
      * @throws \Exception
      */
-    public function sendMessage(string $text, bool $tts = false, $embed = null): ExtendedPromiseInterface
+    public function sendMessage(string $text, bool $tts = false, $embed = null, $allowed_mentions = null): ExtendedPromiseInterface
     {
         if ($embed instanceof Embed) {
             $embed = $embed->getRawAttributes();
@@ -706,6 +707,7 @@ class Channel extends Part
                 'content' => $text,
                 'tts' => $tts,
                 'embed' => $embed,
+                'allowed_mentions' => $allowed_mentions,
             ]
         )->done(
             function ($response) use ($deferred) {
