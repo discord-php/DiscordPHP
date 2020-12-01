@@ -231,7 +231,7 @@ class Member extends Part
             $bitwise |= 0x8; // Add administrator permission
         } else {
             /* @var Role */
-            foreach ($this->roles as $role) {
+            foreach ($this->roles ?? [] as $role) {
                 $bitwise |= $role->permissions->bitwise;
             }
 
@@ -264,11 +264,7 @@ class Member extends Part
      */
     protected function getGameAttribute(): Part
     {
-        if (! array_key_exists('game', $this->attributes)) {
-            $this->attributes['game'] = [];
-        }
-
-        return $this->factory->create(Activity::class, $this->attributes['game'], true);
+        return $this->factory->create(Activity::class, $this->attributes['game'] ?? [], true);
     }
 
     /**
@@ -281,11 +277,7 @@ class Member extends Part
     {
         $activities = new Collection([], null);
 
-        if (! array_key_exists('activities', $this->attributes)) {
-            $this->attributes['activities'] = [];
-        }
-
-        foreach ($this->attributes['activities'] as $activity) {
+        foreach ($this->attributes['activities'] ?? [] as $activity) {
             $activities->push($this->factory->create(Activity::class, $activity, true));
         }
 
@@ -359,12 +351,12 @@ class Member extends Part
 
         if ($guild = $this->guild) {
             foreach ($guild->roles as $role) {
-                if (array_search($role->id, $this->attributes['roles']) !== false) {
+                if (array_search($role->id, $this->attributes['roles'] ?? []) !== false) {
                     $roles->push($role);
                 }
             }
         } else {
-            foreach ($this->attributes['roles'] as $role) {
+            foreach ($this->attributes['roles'] ?? [] as $role) {
                 $roles->push($this->factory->create(Role::class, $role, true));
             }
         }
@@ -378,19 +370,13 @@ class Member extends Part
      * @return Carbon     The timestamp from when the member joined.
      * @throws \Exception
      */
-    protected function getJoinedAtAttribute(): Carbon
+    protected function getJoinedAtAttribute(): ?Carbon
     {
-        return new Carbon($this->attributes['joined_at']);
-    }
+        if (! isset($this->attributes['joined_at'])) {
+            return null;
+        }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getUpdatableAttributes(): array
-    {
-        return [
-            'roles' => array_values($this->attributes['roles']),
-        ];
+        return new Carbon($this->attributes['joined_at']);
     }
 
     /**
@@ -405,6 +391,16 @@ class Member extends Part
         }
 
         return Carbon::parse($this->attributes['premium_since']);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getUpdatableAttributes(): array
+    {
+        return [
+            'roles' => array_values($this->attributes['roles']),
+        ];
     }
 
     /**
