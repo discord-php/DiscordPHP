@@ -165,3 +165,27 @@ function poly_strlen($str)
 
     return strlen($str);
 }
+
+/**
+ * Converts a file to base64 representation.
+ *
+ * @param string $filepath
+ *
+ * @return string
+ */
+function imageToBase64(string $filepath): string
+{
+    if (! file_exists($filepath)) {
+        throw new \InvalidArgumentException('The given filepath does not exist.');
+    }
+
+    $mimetype = mime_content_type($filepath);
+
+    if (array_search($mimetype, ['image/jpeg', 'image/png', 'image/gif']) === false) {
+        throw new \InvalidArgumentException('The given filepath is not one of jpeg, png or gif.');
+    }
+
+    $contents = file_get_contents($filepath);
+
+    return "data:{$mimetype};base64,".base64_encode($contents);
+}
