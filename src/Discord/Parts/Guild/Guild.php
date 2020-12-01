@@ -428,11 +428,18 @@ class Guild extends Part
         return [
             'name' => $this->name,
             'region' => $this->region,
-            'logo' => $this->logo,
-            'splash' => $this->splash,
             'verification_level' => $this->verification_level,
+            'default_message_notifications' => $this->default_message_notifications,
+            'explicit_content_filter' => $this->explicit_content_filter,
             'afk_channel_id' => $this->afk_channel_id,
             'afk_timeout' => $this->afk_timeout,
+            'icon' => $this->icon,
+            'splash' => $this->splash,
+            'banner' => $this->banner,
+            'system_channel_id' => $this->system_channel_id,
+            'rules_channel_id' => $this->rules_channel_id,
+            'public_updates_channel_id' => $this->public_updates_channel_id,
+            'preferred_locale' => $this->preferred_locale,
         ];
     }
 
