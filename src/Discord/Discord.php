@@ -886,7 +886,7 @@ class Discord
      */
     protected function setupChunking()
     {
-        if (! $this->options['loadAllMembers']) {
+        if ($this->options['loadAllMembers'] === false) {
             $this->logger->info('loadAllMembers option is disabled, not setting chunking up');
 
             return $this->ready();
@@ -903,6 +903,15 @@ class Discord
                 $this->logger->debug('unprocessed chunks', $this->largeSent);
 
                 return;
+            }
+
+            if (is_array($this->options['loadAllMembers'])) {
+                foreach ($this->largeGuilds as $key => $guild) {
+                    if (array_search($guild, $this->options['loadAllMembers']) === false) {
+                        $this->logger->debug('not fetching members for guild ID '.$guild);
+                        unset($this->largeGuilds[$key]);
+                    }
+                }
             }
 
             $chunks = array_chunk($this->largeGuilds, 50);
@@ -1283,7 +1292,7 @@ class Discord
             ])
             ->setAllowedTypes('loop', LoopInterface::class)
             ->setAllowedTypes('logging', 'bool')
-            ->setAllowedTypes('loadAllMembers', 'bool')
+            ->setAllowedTypes('loadAllMembers', ['bool', 'array'])
             ->setAllowedTypes('disabledEvents', 'array')
             ->setAllowedTypes('pmChannels', 'bool')
             ->setAllowedTypes('storeMessages', 'bool')
