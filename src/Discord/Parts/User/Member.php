@@ -124,7 +124,7 @@ class Member extends Part
     /**
      * Moves the member to another voice channel.
      *
-     * @param Channel|int $channel The channel to move the member to.
+     * @param Channel|string $channel The channel to move the member to.
      *
      * @return ExtendedPromiseInterface
      */
@@ -154,7 +154,7 @@ class Member extends Part
     /**
      * Adds a role to the member.
      *
-     * @param Role|int $role The role to add to the member.
+     * @param Role|string $role The role to add to the member.
      *
      * @return ExtendedPromiseInterface
      */
@@ -184,7 +184,7 @@ class Member extends Part
     /**
      * Removes a role from the user.
      *
-     * @param Role|int $role The role to remove from the member.
+     * @param Role|string $role The role to remove from the member.
      *
      * @return ExtendedPromiseInterface
      */
