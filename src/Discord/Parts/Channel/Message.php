@@ -179,12 +179,21 @@ class Message extends Part
      */
     protected function getMentionChannelsAttribute(): Collection
     {
-        $collection = new Collection();
+        $collection = new Collection([], 'id', Channel::class);
+
+        if (preg_match_all('/<#([0-9]*)>/', $this->content, $matches)) {
+            foreach ($matches[1] as $channelId) {
+                if ($channel = $this->discord->getChannel($channelId)) {
+                    $collection->push($channel);
+                }
+            }
+        }
 
         foreach ($this->attributes['mention_channels'] ?? [] as $mention_channel) {
             if (! $channel = $this->discord->getChannel($mention_channel->id)) {
                 $channel = $this->factory->create(Channel::class, $mention_channel, true);
             }
+            
             $collection->push($channel);
         }
 
