@@ -37,6 +37,7 @@ use function React\Partial\bind as Bind;
  * @property int                            $type             The type of message.
  * @property Collection|User[]              $mentions         A collection of the users mentioned in the message.
  * @property Member|User                    $author           The author of the message.
+ * @property string                         $user_id          The user id of the author.
  * @property bool                           $mention_everyone Whether the message contained an @everyone mention.
  * @property Carbon                         $timestamp        A timestamp of when the message was sent.
  * @property Carbon|null                    $edited_timestamp A timestamp of when the message was edited, or null.
@@ -193,7 +194,7 @@ class Message extends Part
             if (! $channel = $this->discord->getChannel($mention_channel->id)) {
                 $channel = $this->factory->create(Channel::class, $mention_channel, true);
             }
-            
+
             $collection->push($channel);
         }
 
@@ -270,6 +271,16 @@ class Message extends Part
         }
 
         return $users;
+    }
+
+    /**
+     * Returns the `user_id` attribute.
+     *
+     * @return string
+     */
+    protected function getUserIdAttribute(): ?string
+    {
+        return $this->attributes['author']->id ?? null;
     }
 
     /**
