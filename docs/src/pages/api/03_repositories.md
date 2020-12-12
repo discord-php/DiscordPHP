@@ -70,23 +70,9 @@ $discord->guilds->delete($guild)->done(function (Guild $guild) {
 });
 ```
 
-#### Freshen a part
-
-Retrieves the latest data on a part from Discord servers and stores it in the repository. Takes a part and returns the updated part in a promise.
-
-| name | type | description         |
-| ---- | ---- | ------------------- |
-| part | Part | The part to freshen |
-
-```php
-$discord->guilds->freshen($guild)->done(function (Guild $guild) {
-
-});
-```
-
 #### Fetch a part
 
-Fetches a part from the repository. If the part is present in the cache, it returns the cached version, otherwise it retrieves the part from Discord servers. Takes a part ID and returns the part in a promise.
+Fetches/freshens a part from the repository. If the part is present in the cache, it returns the cached version, otherwise it retrieves the part from Discord servers. Takes a part ID and returns the part in a promise.
 
 | name  | type   | description                                                    |
 | ----- | ------ | -------------------------------------------------------------- |
