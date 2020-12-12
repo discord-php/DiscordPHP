@@ -331,9 +331,9 @@ class VoiceClient extends EventEmitter
 
     /**
      * Starts the voice client.
-     * 
+     *
      * @param bool $check
-     * 
+     *
      * @return void|bool
      */
     public function start(bool $check = true)

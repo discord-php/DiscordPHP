@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is apart of the DiscordPHP project.
+ *
+ * Copyright (c) 2016-2020 David Cole <david.cole1340@gmail.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the LICENSE.md file.
+ */
+
 namespace Discord\Parts\Guild\AuditLog;
 
 use Discord\Helpers\Collection;
@@ -12,7 +21,7 @@ use ReflectionClass;
 
 /**
  * Represents an audit log query from a guild.
- * 
+ *
  * @property string $guild_id
  * @property Guild $guild
  * @property Collection|Webhook[] $webhooks
@@ -23,7 +32,7 @@ use ReflectionClass;
 class AuditLog extends Part
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected $fillable = [
         'guild_id',
@@ -35,7 +44,7 @@ class AuditLog extends Part
 
     /**
      * Returns the guild the audit log belongs to.
-     * 
+     *
      * @return Guild|null
      */
     protected function getGuildAttribute(): ?Guild
@@ -45,7 +54,7 @@ class AuditLog extends Part
 
     /**
      * Returns a collection of webhooks found in the audit log.
-     * 
+     *
      * @return Collection|Webhook[]
      */
     protected function getWebhookAttribute(): Collection
@@ -61,7 +70,7 @@ class AuditLog extends Part
 
     /**
      * Returns a collection of users found in the audit log.
-     * 
+     *
      * @return Collection|User[]
      */
     protected function getUsersAttribute(): Collection
@@ -81,7 +90,7 @@ class AuditLog extends Part
 
     /**
      * Returns a collection of audit log entries.
-     * 
+     *
      * @return Collection|Entry[]
      */
     protected function getAuditLogEntriesAttribute(): Collection
@@ -97,7 +106,7 @@ class AuditLog extends Part
 
     /**
      * Returns a collection of integrations found in the audit log.
-     * 
+     *
      * @return Collection
      */
     protected function getIntegrationsAttribute(): Collection
@@ -107,9 +116,9 @@ class AuditLog extends Part
 
     /**
      * Searches the audit log entries with action type.
-     * 
+     *
      * @param int $action_type
-     * 
+     *
      * @return Collection|Entry[]
      */
     public function searchByType(int $action_type): Collection

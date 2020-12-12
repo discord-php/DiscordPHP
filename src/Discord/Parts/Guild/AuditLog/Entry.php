@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is apart of the DiscordPHP project.
+ *
+ * Copyright (c) 2016-2020 David Cole <david.cole1340@gmail.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the LICENSE.md file.
+ */
+
 namespace Discord\Parts\Guild\AuditLog;
 
 use Discord\Helpers\Collection;
@@ -8,7 +17,7 @@ use Discord\Parts\User\User;
 
 /**
  * Represents an entry in the audit log.
- * 
+ *
  * @property string     $id
  * @property string     $user_id
  * @property User       $user
@@ -59,7 +68,7 @@ class Entry extends Part
     // AUDIT LOG ENTRY TYPES
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     protected $fillable = [
         'id',
@@ -73,7 +82,7 @@ class Entry extends Part
 
     /**
      * Returns the user who made the changes.
-     * 
+     *
      * @return User
      */
     protected function getUserAttribute(): ?User
@@ -83,9 +92,9 @@ class Entry extends Part
 
     /**
      * Returns a collection of changes.
-     * 
+     *
      * @see https://discord.com/developers/docs/resources/audit-log#audit-log-change-object
-     * 
+     *
      * @return Collection
      */
     protected function getChangesAttribute(): Collection
@@ -95,7 +104,7 @@ class Entry extends Part
 
     /**
      * Returns the options of the entry.
-     * 
+     *
      * @return Options
      */
     protected function getOptionsAttribute(): Options

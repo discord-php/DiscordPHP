@@ -62,7 +62,7 @@ class Collection implements ArrayAccess, Serializable, JsonSerializable, Iterato
     /**
      * Creates a collection from an array.
      *
-     * @param array $items
+     * @param array  $items
      * @param string $discrim
      * @param string $class
      *
@@ -75,10 +75,10 @@ class Collection implements ArrayAccess, Serializable, JsonSerializable, Iterato
 
     /**
      * Creates a collection for a class.
-     * 
+     *
      * @param string $class
      * @param string $discrim
-     * 
+     *
      * @return Collection
      */
     public static function for(string $class, ?string $discrim = 'id')

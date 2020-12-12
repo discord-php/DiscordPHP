@@ -469,9 +469,9 @@ class Channel extends Part
                     $message = $this->messages->get('id', $message)
                 ) {
                     return $message->delete();
-                } else {
-                    return $this->http->delete("channels/{$this->id}/messages/{$message}");
                 }
+
+                return $this->http->delete("channels/{$this->id}/messages/{$message}");
             }
         } else {
             $messageID = [];

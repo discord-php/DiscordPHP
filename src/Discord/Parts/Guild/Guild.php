@@ -188,7 +188,7 @@ class Guild extends Part
     }
 
     /**
-     * Unbans a member. Alias for `$guild->bans->unban($user)`
+     * Unbans a member. Alias for `$guild->bans->unban($user)`.
      *
      * @param User|string $user
      *
@@ -416,13 +416,13 @@ class Guild extends Part
 
     /**
      * Returns an audit log object for the query.
-     * 
+     *
      * @param array $options An array of options.
      *                       user_id => filter the log for actions made by a user
      *                       action_type => the type of audit log event
      *                       before => filter the log before a certain entry id
      *                       limit => how many entries are returned (default 50, minimum 1, maximum 100)
-     * 
+     *
      * @return ExtendedPromiseInterface
      */
     public function getAuditLog(array $options = []): ExtendedPromiseInterface

@@ -48,8 +48,6 @@ use Psr\Log\NullLogger;
 use React\Promise\ExtendedPromiseInterface;
 use React\Promise\PromiseInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use function React\Promise\reject as Reject;
-use function React\Promise\resolve as Resolve;
 
 /**
  * The Discord client class.

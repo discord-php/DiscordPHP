@@ -47,8 +47,8 @@ class BanRepository extends AbstractRepository
      * Bans a member from the guild.
      *
      * @param Member|string $member
-     * @param int|null $daysToDeleteMessages
-     * @param string|null $reason
+     * @param int|null      $daysToDeleteMessages
+     * @param string|null   $reason
      *
      * @return ExtendedPromiseInterface
      */
