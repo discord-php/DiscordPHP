@@ -23,7 +23,12 @@ use Discord\Repository\Guild\InviteRepository;
 use Discord\Repository\Guild\MemberRepository;
 use Discord\Repository\Guild\RoleRepository;
 use Discord\Helpers\Deferred;
+use Discord\Parts\Guild\AuditLog\AuditLog;
+use Discord\Parts\Guild\AuditLog\Entry;
 use React\Promise\ExtendedPromiseInterface;
+use ReflectionClass;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+
 use function React\Partial\bind as Bind;
 
 /**
@@ -407,6 +412,44 @@ class Guild extends Part
         }
 
         return $deferred->promise();
+    }
+
+    /**
+     * Returns an audit log object for the query.
+     * 
+     * @param array $options An array of options.
+     *                       user_id => filter the log for actions made by a user
+     *                       action_type => the type of audit log event
+     *                       before => filter the log before a certain entry id
+     *                       limit => how many entries are returned (default 50, minimum 1, maximum 100)
+     * 
+     * @return ExtendedPromiseInterface
+     */
+    public function getAuditLog(array $options = []): ExtendedPromiseInterface
+    {
+        $resolver = new OptionsResolver();
+        $resolver->setDefined([
+            'user_id',
+            'action_type',
+            'before',
+            'limit',
+        ])
+        ->setAllowedTypes('user_id', ['string', 'int'])
+        ->setAllowedTypes('action_type', 'int')
+        ->setAllowedTypes('before', ['string', 'int'])
+        ->setAllowedTypes('limit', 'int')
+        ->setAllowedValues('action_type', array_values((new ReflectionClass(Entry::class))->getConstants()))
+        ->setAllowedValues('limit', range(1, 100));
+
+        $options = $resolver->resolve($options);
+        $endpoint = "guilds/{$this->id}/audit-logs";
+
+        return $this->http->get($endpoint)->then(function ($response) {
+            $response = (array) $response;
+            $response['guild_id'] = $this->id;
+
+            return $this->factory->create(AuditLog::class, $response, true);
+        });
     }
 
     /**
