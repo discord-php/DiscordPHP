@@ -187,6 +187,12 @@ a REST request. The user must use WebSockets to obtain this data if they need it
         <dd>An image for an embed.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Discord-Parts-Embed-Video.html"><abbr title="\Discord\Parts\Embed\Video">Video</abbr></a></dt>
         <dd>A video for an embed.</dd>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Discord-Parts-Guild-AuditLog-AuditLog.html"><abbr title="\Discord\Parts\Guild\AuditLog\AuditLog">AuditLog</abbr></a></dt>
+        <dd>Represents an audit log query from a guild.</dd>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Discord-Parts-Guild-AuditLog-Entry.html"><abbr title="\Discord\Parts\Guild\AuditLog\Entry">Entry</abbr></a></dt>
+        <dd>Represents an entry in the audit log.</dd>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Discord-Parts-Guild-AuditLog-Options.html"><abbr title="\Discord\Parts\Guild\AuditLog\Options">Options</abbr></a></dt>
+        <dd>Represents an object of options for different audit log action types.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Discord-Parts-Guild-Ban.html"><abbr title="\Discord\Parts\Guild\Ban">Ban</abbr></a></dt>
         <dd>A Ban is a ban on a user specific to a guild. It is also IP based.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Discord-Parts-Guild-Emoji.html"><abbr title="\Discord\Parts\Guild\Emoji">Emoji</abbr></a></dt>
@@ -220,7 +226,7 @@ base class.</dd>
         <dd>Represents a specific reaction to a message by a specific user.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Discord-Parts-WebSockets-PresenceUpdate.html"><abbr title="\Discord\Parts\WebSockets\PresenceUpdate">PresenceUpdate</abbr></a></dt>
         <dd>A PresenceUpdate part is used when the `PRESENCE_UPDATE` event is fired on the WebSocket. It contains
-information about the users presence suck as their status (online/away) and their current game.</dd>
+information about the users presence such as their status (online/away) and their current game.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Discord-Parts-WebSockets-TypingStart.html"><abbr title="\Discord\Parts\WebSockets\TypingStart">TypingStart</abbr></a></dt>
         <dd>A TypingStart part is used when the `TYPING_START` event is fired on the WebSocket. It contains
 information such as when the event was fired and then channel it was fired in.</dd>
@@ -236,6 +242,8 @@ information such as when the event was fired and then channel it was fired in.</
         <dd>Contains messages sent to channels.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Discord-Repository-Channel-OverwriteRepository.html"><abbr title="\Discord\Repository\Channel\OverwriteRepository">OverwriteRepository</abbr></a></dt>
         <dd>Contains permission overwrites for channels.</dd>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Discord-Repository-Channel-ReactionRepository.html"><abbr title="\Discord\Repository\Channel\ReactionRepository">ReactionRepository</abbr></a></dt>
+        <dd>Contains invites on a message.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Discord-Repository-Channel-VoiceMemberRepository.html"><abbr title="\Discord\Repository\Channel\VoiceMemberRepository">VoiceMemberRepository</abbr></a></dt>
         <dd>Contains voice states for users in the voice channel.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Discord-Repository-Channel-WebhookRepository.html"><abbr title="\Discord\Repository\Channel\WebhookRepository">WebhookRepository</abbr></a></dt>
@@ -416,6 +424,13 @@ for the events.</dd>
                         &nbsp;: int    </span>
 </dt>
 <dd>Polyfill to check if mbstring is installed.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -function -">
+    <a href="namespaces/discord.html#function_imageToBase64">imageToBase64()</a>
+    <span>
+                        &nbsp;: string    </span>
+</dt>
+<dd>Converts a file to base64 representation.</dd>
 
     </dl>
 
@@ -659,6 +674,41 @@ for the events.</dd>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$str</span>
+                : <span class="phpdocumentor-signature__argument__return-type">string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"></section>
+
+            </dd>
+            </dl>
+
+    
+
+    
+</article>
+                    <article class="phpdocumentor-element -function - ">
+    <h4 class="phpdocumentor-element__name" id="function_imageToBase64">
+        imageToBase64()
+        <a href="namespaces/discord.html#function_imageToBase64" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/functions.php"><a href="files/src-discord-functions.html"><abbr title="src/Discord/functions.php">functions.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">176</span>
+</aside>
+
+        <p class="phpdocumentor-summary">Converts a file to base64 representation.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility"></span>
+                <span class="phpdocumentor-signature__name">imageToBase64</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$filepath</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
+
+        <section class="phpdocumentor-description"></section>
+
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$filepath</span>
                 : <span class="phpdocumentor-signature__argument__return-type">string</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">

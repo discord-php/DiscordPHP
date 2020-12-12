@@ -88,7 +88,7 @@
 
     <article class="phpdocumentor-element -class">
         <h2 class="phpdocumentor-content__title">
-    VoiceMemberRepository
+    ReactionRepository
 
         <span class="phpdocumentor-element__extends">
         extends <a href="classes/Discord-Repository-AbstractRepository.html"><abbr title="\Discord\Repository\AbstractRepository">AbstractRepository</abbr></a>
@@ -99,12 +99,12 @@
     </h2>
 
         <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/Channel/VoiceMemberRepository.php"><a href="files/src-discord-repository-channel-voicememberrepository.html"><abbr title="src/Discord/Repository/Channel/VoiceMemberRepository.php">VoiceMemberRepository.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/Channel/ReactionRepository.php"><a href="files/src-discord-repository-channel-reactionrepository.html"><abbr title="src/Discord/Repository/Channel/ReactionRepository.php">ReactionRepository.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">23</span>
 </aside>
 
-            <p class="phpdocumentor-summary">Contains voice states for users in the voice channel.</p>
+            <p class="phpdocumentor-summary">Contains invites on a message.</p>
 
     <section class="phpdocumentor-description"></section>
 
@@ -118,7 +118,7 @@
                     <span class="phpdocumentor-tag__name">see</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
-                                                                                    <span class="phpdocumentor-tag-link"><a href="classes/Discord-Parts-WebSockets-VoiceStateUpdate.html"><abbr title="\Discord\Parts\WebSockets\VoiceStateUpdate">VoiceStateUpdate</abbr></a></span>
+                                                                                    <span class="phpdocumentor-tag-link"><a href="classes/Discord-Parts-Channel-Message.html"><abbr title="\Discord\Parts\Channel\Message">Message</abbr></a></span>
                                         
                                                  <section class="phpdocumentor-description"></section>
 
@@ -127,7 +127,7 @@
                     <span class="phpdocumentor-tag__name">see</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
-                                                                                    <span class="phpdocumentor-tag-link"><a href="classes/Discord-Parts-Channel-Channel.html"><abbr title="\Discord\Parts\Channel\Channel">Channel</abbr></a></span>
+                                                                                    <span class="phpdocumentor-tag-link"><a href="classes/Discord-Parts-Channel-Reaction.html"><abbr title="\Discord\Parts\Channel\Reaction">Reaction</abbr></a></span>
                                         
                                                  <section class="phpdocumentor-description"></section>
 
@@ -146,21 +146,21 @@
 
 <dl class="phpdocumentor-table-of-contents">
                 <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a href="classes/Discord-Repository-Channel-VoiceMemberRepository.html#property_class">$class</a>
+    <a href="classes/Discord-Repository-Channel-ReactionRepository.html#property_class">$class</a>
     <span>
                 &nbsp;: mixed            </span>
 </dt>
 <dd>{@inheritdoc}</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a href="classes/Discord-Repository-Channel-VoiceMemberRepository.html#property_discrim">$discrim</a>
+    <a href="classes/Discord-Helpers-Collection.html#property_discrim">$discrim</a>
     <span>
                 &nbsp;: string            </span>
 </dt>
-<dd>The discriminator.</dd>
+<dd>The collection discriminator.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a href="classes/Discord-Repository-Channel-VoiceMemberRepository.html#property_endpoints">$endpoints</a>
+    <a href="classes/Discord-Repository-Channel-ReactionRepository.html#property_endpoints">$endpoints</a>
     <span>
                 &nbsp;: array&lt;string|int, mixed&gt;            </span>
 </dt>
@@ -437,7 +437,7 @@ of the callback.</dd>
     <section class="phpdocumentor-properties">
         <h3 class="phpdocumentor-elements__header" id="properties">
             Properties
-            <a href="classes/Discord-Repository-Channel-VoiceMemberRepository.html#properties" class="headerlink"><i class="fas fa-link"></i></a>
+            <a href="classes/Discord-Repository-Channel-ReactionRepository.html#properties" class="headerlink"><i class="fas fa-link"></i></a>
         </h3>
                     <article
         class="
@@ -448,14 +448,14 @@ of the callback.</dd>
 >
     <h4 class="phpdocumentor-element__name" id="property_class">
         $class
-        <a href="classes/Discord-Repository-Channel-VoiceMemberRepository.html#property_class" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Repository-Channel-ReactionRepository.html#property_class" class="headerlink"><i class="fas fa-link"></i></a>
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/Channel/VoiceMemberRepository.php"><a href="files/src-discord-repository-channel-voicememberrepository.html"><abbr title="src/Discord/Repository/Channel/VoiceMemberRepository.php">VoiceMemberRepository.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/Channel/ReactionRepository.php"><a href="files/src-discord-repository-channel-reactionrepository.html"><abbr title="src/Discord/Repository/Channel/ReactionRepository.php">ReactionRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">38</span>
+    <span class="phpdocumentor-element-found-in__line">33</span>
 </aside>
 
         <p class="phpdocumentor-summary">{@inheritdoc}</p>
@@ -464,7 +464,7 @@ of the callback.</dd>
     <span class="phpdocumentor-signature__visibility">protected</span>
         <span class="phpdocumentor-signature__type">mixed</span>
     <span class="phpdocumentor-signature__name">$class</span>
-     = <span class="phpdocumentor-signature__default-value">DiscordPartsWebSocketsVoiceStateUpdate::class</span></code>
+     = <span class="phpdocumentor-signature__default-value">DiscordPartsChannelReaction::class</span></code>
 
         <section class="phpdocumentor-description"></section>
 
@@ -480,23 +480,23 @@ of the callback.</dd>
 >
     <h4 class="phpdocumentor-element__name" id="property_discrim">
         $discrim
-        <a href="classes/Discord-Repository-Channel-VoiceMemberRepository.html#property_discrim" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Helpers-Collection.html#property_discrim" class="headerlink"><i class="fas fa-link"></i></a>
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/Channel/VoiceMemberRepository.php"><a href="files/src-discord-repository-channel-voicememberrepository.html"><abbr title="src/Discord/Repository/Channel/VoiceMemberRepository.php">VoiceMemberRepository.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/Collection.php"><a href="files/src-discord-helpers-collection.html"><abbr title="src/Discord/Helpers/Collection.php">Collection.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">28</span>
+    <span class="phpdocumentor-element-found-in__line">32</span>
 </aside>
 
-        <p class="phpdocumentor-summary">The discriminator.</p>
+        <p class="phpdocumentor-summary">The collection discriminator.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
         <span class="phpdocumentor-signature__type">string</span>
     <span class="phpdocumentor-signature__name">$discrim</span>
-     = <span class="phpdocumentor-signature__default-value">&#039;user_id&#039;</span></code>
+    </code>
 
         <section class="phpdocumentor-description"></section>
 
@@ -512,14 +512,14 @@ of the callback.</dd>
 >
     <h4 class="phpdocumentor-element__name" id="property_endpoints">
         $endpoints
-        <a href="classes/Discord-Repository-Channel-VoiceMemberRepository.html#property_endpoints" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Repository-Channel-ReactionRepository.html#property_endpoints" class="headerlink"><i class="fas fa-link"></i></a>
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/Channel/VoiceMemberRepository.php"><a href="files/src-discord-repository-channel-voicememberrepository.html"><abbr title="src/Discord/Repository/Channel/VoiceMemberRepository.php">VoiceMemberRepository.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/Channel/ReactionRepository.php"><a href="files/src-discord-repository-channel-reactionrepository.html"><abbr title="src/Discord/Repository/Channel/ReactionRepository.php">ReactionRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">33</span>
+    <span class="phpdocumentor-element-found-in__line">28</span>
 </aside>
 
         <p class="phpdocumentor-summary">Endpoints for interacting with the Discord servers.</p>
@@ -668,7 +668,7 @@ of the callback.</dd>
             <section class="phpdocumentor-methods">
         <h3 class="phpdocumentor-elements__header" id="methods">
             Methods
-            <a href="classes/Discord-Repository-Channel-VoiceMemberRepository.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
+            <a href="classes/Discord-Repository-Channel-ReactionRepository.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
         </h3>
                     <article
         class="phpdocumentor-element
@@ -2260,7 +2260,7 @@ of the callback.</p>
 </section>
             </div>
         </div>
-        <a href="classes/Discord-Repository-Channel-VoiceMemberRepository.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
+        <a href="classes/Discord-Repository-Channel-ReactionRepository.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
 
     </main>
 

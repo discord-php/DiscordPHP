@@ -83,12 +83,13 @@
                     <ul class="phpdocumentor-breadcrumbs">
             <li class="phpdocumentor-breadcrumb"><a href="namespaces/discord.html">Discord</a></li>
             <li class="phpdocumentor-breadcrumb"><a href="namespaces/discord-parts.html">Parts</a></li>
-            <li class="phpdocumentor-breadcrumb"><a href="namespaces/discord-parts-websockets.html">WebSockets</a></li>
+            <li class="phpdocumentor-breadcrumb"><a href="namespaces/discord-parts-guild.html">Guild</a></li>
+            <li class="phpdocumentor-breadcrumb"><a href="namespaces/discord-parts-guild-auditlog.html">AuditLog</a></li>
     </ul>
 
     <article class="phpdocumentor-element -class">
         <h2 class="phpdocumentor-content__title">
-    MessageReaction
+    AuditLog
 
         <span class="phpdocumentor-element__extends">
         extends <a href="classes/Discord-Parts-Part.html"><abbr title="\Discord\Parts\Part">Part</abbr></a>
@@ -99,16 +100,14 @@
     </h2>
 
         <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/WebSockets/MessageReaction.php"><a href="files/src-discord-parts-websockets-messagereaction.html"><abbr title="src/Discord/Parts/WebSockets/MessageReaction.php">MessageReaction.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/AuditLog/AuditLog.php"><a href="files/src-discord-parts-guild-auditlog-auditlog.html"><abbr title="src/Discord/Parts/Guild/AuditLog/AuditLog.php">AuditLog.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">39</span>
+    <span class="phpdocumentor-element-found-in__line">32</span>
 </aside>
 
-            <p class="phpdocumentor-summary">Represents a specific reaction to a message by a specific user.</p>
+            <p class="phpdocumentor-summary">Represents an audit log query from a guild.</p>
 
-    <section class="phpdocumentor-description"><p>Different from <code class="prettyprint">Reaction</code> in the fact that <code class="prettyprint">Reaction</code> represents a specific reaction
-to a message by <em>multiple</em> members.</p>
-</section>
+    <section class="phpdocumentor-description"></section>
 
 
 
@@ -124,16 +123,9 @@ to a message by <em>multiple</em> members.</p>
 
 <dl class="phpdocumentor-table-of-contents">
                 <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a href="classes/Discord-Parts-WebSockets-MessageReaction.html#property_channel">$channel</a>
+    <a href="classes/Discord-Parts-Guild-AuditLog-AuditLog.html#property_audit_log_entries">$audit_log_entries</a>
     <span>
-                &nbsp;: <a href="classes/Discord-Parts-Channel-Channel.html"><abbr title="\Discord\Parts\Channel\Channel">Channel</abbr></a>            </span>
-</dt>
-<dd></dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a href="classes/Discord-Parts-WebSockets-MessageReaction.html#property_channel_id">$channel_id</a>
-    <span>
-                &nbsp;: string            </span>
+                &nbsp;: <a href="classes/Discord-Helpers-Collection.html"><abbr title="\Discord\Helpers\Collection">Collection</abbr></a>|array&lt;string|int, <a href="classes/Discord-Parts-Guild-AuditLog-Entry.html"><abbr title="\Discord\Parts\Guild\AuditLog\Entry">Entry</abbr></a>&gt;            </span>
 </dt>
 <dd></dd>
 
@@ -145,51 +137,23 @@ to a message by <em>multiple</em> members.</p>
 <dd>Is the part already created in the Discord servers?</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a href="classes/Discord-Parts-WebSockets-MessageReaction.html#property_emoji">$emoji</a>
-    <span>
-                &nbsp;: <a href="classes/Discord-Parts-Guild-Emoji.html"><abbr title="\Discord\Parts\Guild\Emoji">Emoji</abbr></a>            </span>
-</dt>
-<dd></dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a href="classes/Discord-Parts-WebSockets-MessageReaction.html#property_guild">$guild</a>
+    <a href="classes/Discord-Parts-Guild-AuditLog-AuditLog.html#property_guild">$guild</a>
     <span>
                 &nbsp;: <a href="classes/Discord-Parts-Guild-Guild.html"><abbr title="\Discord\Parts\Guild\Guild">Guild</abbr></a>            </span>
 </dt>
 <dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a href="classes/Discord-Parts-WebSockets-MessageReaction.html#property_guild_id">$guild_id</a>
+    <a href="classes/Discord-Parts-Guild-AuditLog-AuditLog.html#property_guild_id">$guild_id</a>
     <span>
                 &nbsp;: string            </span>
 </dt>
 <dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a href="classes/Discord-Parts-WebSockets-MessageReaction.html#property_member">$member</a>
+    <a href="classes/Discord-Parts-Guild-AuditLog-AuditLog.html#property_integrations">$integrations</a>
     <span>
-                &nbsp;: <a href="classes/Discord-Parts-User-Member.html"><abbr title="\Discord\Parts\User\Member">Member</abbr></a>            </span>
-</dt>
-<dd></dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a href="classes/Discord-Parts-WebSockets-MessageReaction.html#property_message">$message</a>
-    <span>
-                &nbsp;: <a href="classes/Discord-Parts-Channel-Message.html"><abbr title="\Discord\Parts\Channel\Message">Message</abbr></a>            </span>
-</dt>
-<dd></dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a href="classes/Discord-Parts-WebSockets-MessageReaction.html#property_message_id">$message_id</a>
-    <span>
-                &nbsp;: string            </span>
-</dt>
-<dd></dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a href="classes/Discord-Parts-WebSockets-MessageReaction.html#property_reaction_id">$reaction_id</a>
-    <span>
-                &nbsp;: string            </span>
+                &nbsp;: <a href="classes/Discord-Helpers-Collection.html"><abbr title="\Discord\Helpers\Collection">Collection</abbr></a>            </span>
 </dt>
 <dd></dd>
 
@@ -201,16 +165,16 @@ to a message by <em>multiple</em> members.</p>
 <dd>Custom script data.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a href="classes/Discord-Parts-WebSockets-MessageReaction.html#property_user">$user</a>
+    <a href="classes/Discord-Parts-Guild-AuditLog-AuditLog.html#property_users">$users</a>
     <span>
-                &nbsp;: <a href="classes/Discord-Parts-User-User.html"><abbr title="\Discord\Parts\User\User">User</abbr></a>            </span>
+                &nbsp;: <a href="classes/Discord-Helpers-Collection.html"><abbr title="\Discord\Helpers\Collection">Collection</abbr></a>|array&lt;string|int, <a href="classes/Discord-Parts-User-User.html"><abbr title="\Discord\Parts\User\User">User</abbr></a>&gt;            </span>
 </dt>
 <dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a href="classes/Discord-Parts-WebSockets-MessageReaction.html#property_user_id">$user_id</a>
+    <a href="classes/Discord-Parts-Guild-AuditLog-AuditLog.html#property_webhooks">$webhooks</a>
     <span>
-                &nbsp;: string            </span>
+                &nbsp;: <a href="classes/Discord-Helpers-Collection.html"><abbr title="\Discord\Helpers\Collection">Collection</abbr></a>|array&lt;string|int, <a href="classes/Discord-Parts-Channel-Webhook.html"><abbr title="\Discord\Parts\Channel\Webhook">Webhook</abbr></a>&gt;            </span>
 </dt>
 <dd></dd>
 
@@ -236,7 +200,7 @@ to a message by <em>multiple</em> members.</p>
 <dd>The factory.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a href="classes/Discord-Parts-WebSockets-MessageReaction.html#property_fillable">$fillable</a>
+    <a href="classes/Discord-Parts-Guild-AuditLog-AuditLog.html#property_fillable">$fillable</a>
     <span>
                 &nbsp;: array&lt;string|int, mixed&gt;            </span>
 </dt>
@@ -405,6 +369,13 @@ JSON. Used for JsonSerializable.</dd>
 <dd>Replaces variables in string with syntax :{varname}.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/Discord-Parts-Guild-AuditLog-AuditLog.html#method_searchByType">searchByType()</a>
+    <span>
+                        &nbsp;: <a href="classes/Discord-Helpers-Collection.html"><abbr title="\Discord\Helpers\Collection">Collection</abbr></a>|array&lt;string|int, <a href="classes/Discord-Parts-Guild-AuditLog-Entry.html"><abbr title="\Discord\Parts\Guild\AuditLog\Entry">Entry</abbr></a>&gt;    </span>
+</dt>
+<dd>Searches the audit log entries with action type.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Discord-Parts-Part.html#method_serialize">serialize()</a>
     <span>
                         &nbsp;: string    </span>
@@ -426,53 +397,39 @@ JSON. Used for JsonSerializable.</dd>
 <dd>Called after the part has been constructed.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
-    <a href="classes/Discord-Parts-WebSockets-MessageReaction.html#method_getChannelAttribute">getChannelAttribute()</a>
+    <a href="classes/Discord-Parts-Guild-AuditLog-AuditLog.html#method_getAuditLogEntriesAttribute">getAuditLogEntriesAttribute()</a>
     <span>
-                        &nbsp;: <a href="classes/Discord-Parts-Channel-Channel.html"><abbr title="\Discord\Parts\Channel\Channel">Channel</abbr></a>    </span>
+                        &nbsp;: <a href="classes/Discord-Helpers-Collection.html"><abbr title="\Discord\Helpers\Collection">Collection</abbr></a>|array&lt;string|int, <a href="classes/Discord-Parts-Guild-AuditLog-Entry.html"><abbr title="\Discord\Parts\Guild\AuditLog\Entry">Entry</abbr></a>&gt;    </span>
 </dt>
-<dd>Gets the channel attribute.</dd>
+<dd>Returns a collection of audit log entries.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
-    <a href="classes/Discord-Parts-WebSockets-MessageReaction.html#method_getEmojiAttribute">getEmojiAttribute()</a>
+    <a href="classes/Discord-Parts-Guild-AuditLog-AuditLog.html#method_getGuildAttribute">getGuildAttribute()</a>
     <span>
-                        &nbsp;: <a href="classes/Discord-Parts-Guild-Emoji.html"><abbr title="\Discord\Parts\Guild\Emoji">Emoji</abbr></a>    </span>
+                        &nbsp;: <a href="classes/Discord-Parts-Guild-Guild.html"><abbr title="\Discord\Parts\Guild\Guild">Guild</abbr></a>|null    </span>
 </dt>
-<dd>Gets the emoji attribute.</dd>
+<dd>Returns the guild the audit log belongs to.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
-    <a href="classes/Discord-Parts-WebSockets-MessageReaction.html#method_getGuildAttribute">getGuildAttribute()</a>
+    <a href="classes/Discord-Parts-Guild-AuditLog-AuditLog.html#method_getIntegrationsAttribute">getIntegrationsAttribute()</a>
     <span>
-                        &nbsp;: <a href="classes/Discord-Parts-Guild-Guild.html"><abbr title="\Discord\Parts\Guild\Guild">Guild</abbr></a>    </span>
+                        &nbsp;: <a href="classes/Discord-Helpers-Collection.html"><abbr title="\Discord\Helpers\Collection">Collection</abbr></a>    </span>
 </dt>
-<dd>Gets the guild attribute.</dd>
+<dd>Returns a collection of integrations found in the audit log.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
-    <a href="classes/Discord-Parts-WebSockets-MessageReaction.html#method_getMemberAttribute">getMemberAttribute()</a>
+    <a href="classes/Discord-Parts-Guild-AuditLog-AuditLog.html#method_getUsersAttribute">getUsersAttribute()</a>
     <span>
-                        &nbsp;: <a href="classes/Discord-Parts-User-Member.html"><abbr title="\Discord\Parts\User\Member">Member</abbr></a>    </span>
+                        &nbsp;: <a href="classes/Discord-Helpers-Collection.html"><abbr title="\Discord\Helpers\Collection">Collection</abbr></a>|array&lt;string|int, <a href="classes/Discord-Parts-User-User.html"><abbr title="\Discord\Parts\User\User">User</abbr></a>&gt;    </span>
 </dt>
-<dd>Gets the member attribute.</dd>
+<dd>Returns a collection of users found in the audit log.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
-    <a href="classes/Discord-Parts-WebSockets-MessageReaction.html#method_getMessageAttribute">getMessageAttribute()</a>
+    <a href="classes/Discord-Parts-Guild-AuditLog-AuditLog.html#method_getWebhookAttribute">getWebhookAttribute()</a>
     <span>
-                        &nbsp;: <a href="classes/Discord-Parts-Channel-Message.html"><abbr title="\Discord\Parts\Channel\Message">Message</abbr></a>    </span>
+                        &nbsp;: <a href="classes/Discord-Helpers-Collection.html"><abbr title="\Discord\Helpers\Collection">Collection</abbr></a>|array&lt;string|int, <a href="classes/Discord-Parts-Channel-Webhook.html"><abbr title="\Discord\Parts\Channel\Webhook">Webhook</abbr></a>&gt;    </span>
 </dt>
-<dd>Gets the message attribute.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -protected">
-    <a href="classes/Discord-Parts-WebSockets-MessageReaction.html#method_getReactionIdAttribute">getReactionIdAttribute()</a>
-    <span>
-                        &nbsp;: string    </span>
-</dt>
-<dd>Gets the ID of the reaction.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -protected">
-    <a href="classes/Discord-Parts-WebSockets-MessageReaction.html#method_getUserAttribute">getUserAttribute()</a>
-    <span>
-                        &nbsp;: <a href="classes/Discord-Parts-User-User.html"><abbr title="\Discord\Parts\User\User">User</abbr></a>    </span>
-</dt>
-<dd>Gets the user attribute.</dd>
+<dd>Returns a collection of webhooks found in the audit log.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -private">
     <a href="classes/Discord-Parts-Part.html#method_checkForMutator">checkForMutator()</a>
@@ -505,7 +462,7 @@ JSON. Used for JsonSerializable.</dd>
     <section class="phpdocumentor-properties">
         <h3 class="phpdocumentor-elements__header" id="properties">
             Properties
-            <a href="classes/Discord-Parts-WebSockets-MessageReaction.html#properties" class="headerlink"><i class="fas fa-link"></i></a>
+            <a href="classes/Discord-Parts-Guild-AuditLog-AuditLog.html#properties" class="headerlink"><i class="fas fa-link"></i></a>
         </h3>
                     <article
         class="
@@ -514,14 +471,14 @@ JSON. Used for JsonSerializable.</dd>
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="property_channel">
-        $channel
-        <a href="classes/Discord-Parts-WebSockets-MessageReaction.html#property_channel" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="property_audit_log_entries">
+        $audit_log_entries
+        <a href="classes/Discord-Parts-Guild-AuditLog-AuditLog.html#property_audit_log_entries" class="headerlink"><i class="fas fa-link"></i></a>
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/WebSockets/MessageReaction.php"><a href="files/src-discord-parts-websockets-messagereaction.html"><abbr title="src/Discord/Parts/WebSockets/MessageReaction.php">MessageReaction.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/AuditLog/AuditLog.php"><a href="files/src-discord-parts-guild-auditlog-auditlog.html"><abbr title="src/Discord/Parts/Guild/AuditLog/AuditLog.php">AuditLog.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">0</span>
 </aside>
@@ -529,39 +486,8 @@ JSON. Used for JsonSerializable.</dd>
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type"><a href="classes/Discord-Parts-Channel-Channel.html"><abbr title="\Discord\Parts\Channel\Channel">Channel</abbr></a></span>
-    <span class="phpdocumentor-signature__name">$channel</span>
-    </code>
-
-        <section class="phpdocumentor-description"></section>
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -public
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="property_channel_id">
-        $channel_id
-        <a href="classes/Discord-Parts-WebSockets-MessageReaction.html#property_channel_id" class="headerlink"><i class="fas fa-link"></i></a>
-        <span class="phpdocumentor-element__modifiers">
-                                </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/WebSockets/MessageReaction.php"><a href="files/src-discord-parts-websockets-messagereaction.html"><abbr title="src/Discord/Parts/WebSockets/MessageReaction.php">MessageReaction.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">0</span>
-</aside>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">string</span>
-    <span class="phpdocumentor-signature__name">$channel_id</span>
+        <span class="phpdocumentor-signature__type"><a href="classes/Discord-Helpers-Collection.html"><abbr title="\Discord\Helpers\Collection">Collection</abbr></a>|array&lt;string|int, <a href="classes/Discord-Parts-Guild-AuditLog-Entry.html"><abbr title="\Discord\Parts\Guild\AuditLog\Entry">Entry</abbr></a>&gt;</span>
+    <span class="phpdocumentor-signature__name">$audit_log_entries</span>
     </code>
 
         <section class="phpdocumentor-description"></section>
@@ -608,45 +534,14 @@ JSON. Used for JsonSerializable.</dd>
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="property_emoji">
-        $emoji
-        <a href="classes/Discord-Parts-WebSockets-MessageReaction.html#property_emoji" class="headerlink"><i class="fas fa-link"></i></a>
-        <span class="phpdocumentor-element__modifiers">
-                                </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/WebSockets/MessageReaction.php"><a href="files/src-discord-parts-websockets-messagereaction.html"><abbr title="src/Discord/Parts/WebSockets/MessageReaction.php">MessageReaction.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">0</span>
-</aside>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type"><a href="classes/Discord-Parts-Guild-Emoji.html"><abbr title="\Discord\Parts\Guild\Emoji">Emoji</abbr></a></span>
-    <span class="phpdocumentor-signature__name">$emoji</span>
-    </code>
-
-        <section class="phpdocumentor-description"></section>
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -public
-                                                        "
->
     <h4 class="phpdocumentor-element__name" id="property_guild">
         $guild
-        <a href="classes/Discord-Parts-WebSockets-MessageReaction.html#property_guild" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Parts-Guild-AuditLog-AuditLog.html#property_guild" class="headerlink"><i class="fas fa-link"></i></a>
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/WebSockets/MessageReaction.php"><a href="files/src-discord-parts-websockets-messagereaction.html"><abbr title="src/Discord/Parts/WebSockets/MessageReaction.php">MessageReaction.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/AuditLog/AuditLog.php"><a href="files/src-discord-parts-guild-auditlog-auditlog.html"><abbr title="src/Discord/Parts/Guild/AuditLog/AuditLog.php">AuditLog.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">0</span>
 </aside>
@@ -672,12 +567,12 @@ JSON. Used for JsonSerializable.</dd>
 >
     <h4 class="phpdocumentor-element__name" id="property_guild_id">
         $guild_id
-        <a href="classes/Discord-Parts-WebSockets-MessageReaction.html#property_guild_id" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Parts-Guild-AuditLog-AuditLog.html#property_guild_id" class="headerlink"><i class="fas fa-link"></i></a>
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/WebSockets/MessageReaction.php"><a href="files/src-discord-parts-websockets-messagereaction.html"><abbr title="src/Discord/Parts/WebSockets/MessageReaction.php">MessageReaction.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/AuditLog/AuditLog.php"><a href="files/src-discord-parts-guild-auditlog-auditlog.html"><abbr title="src/Discord/Parts/Guild/AuditLog/AuditLog.php">AuditLog.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">0</span>
 </aside>
@@ -701,14 +596,14 @@ JSON. Used for JsonSerializable.</dd>
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="property_member">
-        $member
-        <a href="classes/Discord-Parts-WebSockets-MessageReaction.html#property_member" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="property_integrations">
+        $integrations
+        <a href="classes/Discord-Parts-Guild-AuditLog-AuditLog.html#property_integrations" class="headerlink"><i class="fas fa-link"></i></a>
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/WebSockets/MessageReaction.php"><a href="files/src-discord-parts-websockets-messagereaction.html"><abbr title="src/Discord/Parts/WebSockets/MessageReaction.php">MessageReaction.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/AuditLog/AuditLog.php"><a href="files/src-discord-parts-guild-auditlog-auditlog.html"><abbr title="src/Discord/Parts/Guild/AuditLog/AuditLog.php">AuditLog.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">0</span>
 </aside>
@@ -716,101 +611,8 @@ JSON. Used for JsonSerializable.</dd>
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type"><a href="classes/Discord-Parts-User-Member.html"><abbr title="\Discord\Parts\User\Member">Member</abbr></a></span>
-    <span class="phpdocumentor-signature__name">$member</span>
-    </code>
-
-        <section class="phpdocumentor-description"></section>
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -public
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="property_message">
-        $message
-        <a href="classes/Discord-Parts-WebSockets-MessageReaction.html#property_message" class="headerlink"><i class="fas fa-link"></i></a>
-        <span class="phpdocumentor-element__modifiers">
-                                </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/WebSockets/MessageReaction.php"><a href="files/src-discord-parts-websockets-messagereaction.html"><abbr title="src/Discord/Parts/WebSockets/MessageReaction.php">MessageReaction.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">0</span>
-</aside>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type"><a href="classes/Discord-Parts-Channel-Message.html"><abbr title="\Discord\Parts\Channel\Message">Message</abbr></a></span>
-    <span class="phpdocumentor-signature__name">$message</span>
-    </code>
-
-        <section class="phpdocumentor-description"></section>
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -public
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="property_message_id">
-        $message_id
-        <a href="classes/Discord-Parts-WebSockets-MessageReaction.html#property_message_id" class="headerlink"><i class="fas fa-link"></i></a>
-        <span class="phpdocumentor-element__modifiers">
-                                </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/WebSockets/MessageReaction.php"><a href="files/src-discord-parts-websockets-messagereaction.html"><abbr title="src/Discord/Parts/WebSockets/MessageReaction.php">MessageReaction.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">0</span>
-</aside>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">string</span>
-    <span class="phpdocumentor-signature__name">$message_id</span>
-    </code>
-
-        <section class="phpdocumentor-description"></section>
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -public
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="property_reaction_id">
-        $reaction_id
-        <a href="classes/Discord-Parts-WebSockets-MessageReaction.html#property_reaction_id" class="headerlink"><i class="fas fa-link"></i></a>
-        <span class="phpdocumentor-element__modifiers">
-                                </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/WebSockets/MessageReaction.php"><a href="files/src-discord-parts-websockets-messagereaction.html"><abbr title="src/Discord/Parts/WebSockets/MessageReaction.php">MessageReaction.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">0</span>
-</aside>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">string</span>
-    <span class="phpdocumentor-signature__name">$reaction_id</span>
+        <span class="phpdocumentor-signature__type"><a href="classes/Discord-Helpers-Collection.html"><abbr title="\Discord\Helpers\Collection">Collection</abbr></a></span>
+    <span class="phpdocumentor-signature__name">$integrations</span>
     </code>
 
         <section class="phpdocumentor-description"></section>
@@ -858,14 +660,14 @@ JSON. Used for JsonSerializable.</dd>
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="property_user">
-        $user
-        <a href="classes/Discord-Parts-WebSockets-MessageReaction.html#property_user" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="property_users">
+        $users
+        <a href="classes/Discord-Parts-Guild-AuditLog-AuditLog.html#property_users" class="headerlink"><i class="fas fa-link"></i></a>
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/WebSockets/MessageReaction.php"><a href="files/src-discord-parts-websockets-messagereaction.html"><abbr title="src/Discord/Parts/WebSockets/MessageReaction.php">MessageReaction.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/AuditLog/AuditLog.php"><a href="files/src-discord-parts-guild-auditlog-auditlog.html"><abbr title="src/Discord/Parts/Guild/AuditLog/AuditLog.php">AuditLog.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">0</span>
 </aside>
@@ -873,8 +675,8 @@ JSON. Used for JsonSerializable.</dd>
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type"><a href="classes/Discord-Parts-User-User.html"><abbr title="\Discord\Parts\User\User">User</abbr></a></span>
-    <span class="phpdocumentor-signature__name">$user</span>
+        <span class="phpdocumentor-signature__type"><a href="classes/Discord-Helpers-Collection.html"><abbr title="\Discord\Helpers\Collection">Collection</abbr></a>|array&lt;string|int, <a href="classes/Discord-Parts-User-User.html"><abbr title="\Discord\Parts\User\User">User</abbr></a>&gt;</span>
+    <span class="phpdocumentor-signature__name">$users</span>
     </code>
 
         <section class="phpdocumentor-description"></section>
@@ -889,14 +691,14 @@ JSON. Used for JsonSerializable.</dd>
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="property_user_id">
-        $user_id
-        <a href="classes/Discord-Parts-WebSockets-MessageReaction.html#property_user_id" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="property_webhooks">
+        $webhooks
+        <a href="classes/Discord-Parts-Guild-AuditLog-AuditLog.html#property_webhooks" class="headerlink"><i class="fas fa-link"></i></a>
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/WebSockets/MessageReaction.php"><a href="files/src-discord-parts-websockets-messagereaction.html"><abbr title="src/Discord/Parts/WebSockets/MessageReaction.php">MessageReaction.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/AuditLog/AuditLog.php"><a href="files/src-discord-parts-guild-auditlog-auditlog.html"><abbr title="src/Discord/Parts/Guild/AuditLog/AuditLog.php">AuditLog.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">0</span>
 </aside>
@@ -904,8 +706,8 @@ JSON. Used for JsonSerializable.</dd>
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">string</span>
-    <span class="phpdocumentor-signature__name">$user_id</span>
+        <span class="phpdocumentor-signature__type"><a href="classes/Discord-Helpers-Collection.html"><abbr title="\Discord\Helpers\Collection">Collection</abbr></a>|array&lt;string|int, <a href="classes/Discord-Parts-Channel-Webhook.html"><abbr title="\Discord\Parts\Channel\Webhook">Webhook</abbr></a>&gt;</span>
+    <span class="phpdocumentor-signature__name">$webhooks</span>
     </code>
 
         <section class="phpdocumentor-description"></section>
@@ -1018,14 +820,14 @@ JSON. Used for JsonSerializable.</dd>
 >
     <h4 class="phpdocumentor-element__name" id="property_fillable">
         $fillable
-        <a href="classes/Discord-Parts-WebSockets-MessageReaction.html#property_fillable" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Parts-Guild-AuditLog-AuditLog.html#property_fillable" class="headerlink"><i class="fas fa-link"></i></a>
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/WebSockets/MessageReaction.php"><a href="files/src-discord-parts-websockets-messagereaction.html"><abbr title="src/Discord/Parts/WebSockets/MessageReaction.php">MessageReaction.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/AuditLog/AuditLog.php"><a href="files/src-discord-parts-guild-auditlog-auditlog.html"><abbr title="src/Discord/Parts/Guild/AuditLog/AuditLog.php">AuditLog.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">44</span>
+    <span class="phpdocumentor-element-found-in__line">37</span>
 </aside>
 
         <p class="phpdocumentor-summary">The parts fillable attributes.</p>
@@ -1034,7 +836,7 @@ JSON. Used for JsonSerializable.</dd>
     <span class="phpdocumentor-signature__visibility">protected</span>
         <span class="phpdocumentor-signature__type">array&lt;string|int, mixed&gt;</span>
     <span class="phpdocumentor-signature__name">$fillable</span>
-     = <span class="phpdocumentor-signature__default-value">[&#039;user_id&#039;, &#039;message_id&#039;, &#039;member&#039;, &#039;emoji&#039;, &#039;channel_id&#039;, &#039;guild_id&#039;]</span></code>
+     = <span class="phpdocumentor-signature__default-value">[&#039;guild_id&#039;, &#039;webhooks&#039;, &#039;users&#039;, &#039;audit_log_entries&#039;, &#039;integrations&#039;]</span></code>
 
         <section class="phpdocumentor-description"></section>
 
@@ -1238,7 +1040,7 @@ JSON. Used for JsonSerializable.</dd>
             <section class="phpdocumentor-methods">
         <h3 class="phpdocumentor-elements__header" id="methods">
             Methods
-            <a href="classes/Discord-Parts-WebSockets-MessageReaction.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
+            <a href="classes/Discord-Parts-Guild-AuditLog-AuditLog.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
         </h3>
                     <article
         class="phpdocumentor-element
@@ -2165,6 +1967,51 @@ JSON. Used for JsonSerializable.</p>
             -public
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_searchByType">
+        searchByType()
+        <a href="classes/Discord-Parts-Guild-AuditLog-AuditLog.html#method_searchByType" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/AuditLog/AuditLog.php"><a href="files/src-discord-parts-guild-auditlog-auditlog.html"><abbr title="src/Discord/Parts/Guild/AuditLog/AuditLog.php">AuditLog.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">124</span>
+</aside>
+
+        <p class="phpdocumentor-summary">Searches the audit log entries with action type.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                <span class="phpdocumentor-signature__name">searchByType</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$action_type</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Helpers-Collection.html"><abbr title="\Discord\Helpers\Collection">Collection</abbr></a>|array&lt;string|int, <a href="classes/Discord-Parts-Guild-AuditLog-Entry.html"><abbr title="\Discord\Parts\Guild\AuditLog\Entry">Entry</abbr></a>&gt;</span></code>
+
+        <section class="phpdocumentor-description"></section>
+
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$action_type</span>
+                : <span class="phpdocumentor-signature__argument__return-type">int</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"></section>
+
+            </dd>
+            </dl>
+
+    
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Helpers-Collection.html"><abbr title="\Discord\Helpers\Collection">Collection</abbr></a>|array&lt;string|int, <a href="classes/Discord-Parts-Guild-AuditLog-Entry.html"><abbr title="\Discord\Parts\Guild\AuditLog\Entry">Entry</abbr></a>&gt;</span>
+            &mdash;
+            <section class="phpdocumentor-description"></section>
+
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_serialize">
         serialize()
         <a href="classes/Discord-Parts-Part.html#method_serialize" class="headerlink"><i class="fas fa-link"></i></a>
@@ -2296,21 +2143,21 @@ JSON. Used for JsonSerializable.</p>
             -protected
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_getChannelAttribute">
-        getChannelAttribute()
-        <a href="classes/Discord-Parts-WebSockets-MessageReaction.html#method_getChannelAttribute" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="method_getAuditLogEntriesAttribute">
+        getAuditLogEntriesAttribute()
+        <a href="classes/Discord-Parts-Guild-AuditLog-AuditLog.html#method_getAuditLogEntriesAttribute" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/WebSockets/MessageReaction.php"><a href="files/src-discord-parts-websockets-messagereaction.html"><abbr title="src/Discord/Parts/WebSockets/MessageReaction.php">MessageReaction.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/AuditLog/AuditLog.php"><a href="files/src-discord-parts-guild-auditlog-auditlog.html"><abbr title="src/Discord/Parts/Guild/AuditLog/AuditLog.php">AuditLog.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">134</span>
+    <span class="phpdocumentor-element-found-in__line">96</span>
 </aside>
 
-        <p class="phpdocumentor-summary">Gets the channel attribute.</p>
+        <p class="phpdocumentor-summary">Returns a collection of audit log entries.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
-                <span class="phpdocumentor-signature__name">getChannelAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Channel-Channel.html"><abbr title="\Discord\Parts\Channel\Channel">Channel</abbr></a></span></code>
+                <span class="phpdocumentor-signature__name">getAuditLogEntriesAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Helpers-Collection.html"><abbr title="\Discord\Helpers\Collection">Collection</abbr></a>|array&lt;string|int, <a href="classes/Discord-Parts-Guild-AuditLog-Entry.html"><abbr title="\Discord\Parts\Guild\AuditLog\Entry">Entry</abbr></a>&gt;</span></code>
 
         <section class="phpdocumentor-description"></section>
 
@@ -2318,56 +2165,7 @@ JSON. Used for JsonSerializable.</p>
     
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Channel-Channel.html"><abbr title="\Discord\Parts\Channel\Channel">Channel</abbr></a></span>
-            &mdash;
-            <section class="phpdocumentor-description"></section>
-
-    
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -protected
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_getEmojiAttribute">
-        getEmojiAttribute()
-        <a href="classes/Discord-Parts-WebSockets-MessageReaction.html#method_getEmojiAttribute" class="headerlink"><i class="fas fa-link"></i></a>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/WebSockets/MessageReaction.php"><a href="files/src-discord-parts-websockets-messagereaction.html"><abbr title="src/Discord/Parts/WebSockets/MessageReaction.php">MessageReaction.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">120</span>
-</aside>
-
-        <p class="phpdocumentor-summary">Gets the emoji attribute.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">protected</span>
-                <span class="phpdocumentor-signature__name">getEmojiAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Guild-Emoji.html"><abbr title="\Discord\Parts\Guild\Emoji">Emoji</abbr></a></span></code>
-
-        <section class="phpdocumentor-description"></section>
-
-    
-    
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">throws</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                <span class="phpdocumentor-tag-link"><abbr title="\Exception">Exception</abbr></span>
-                                                            
-                                                 <section class="phpdocumentor-description"></section>
-
-                                    </dd>
-                        </dl>
-
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Guild-Emoji.html"><abbr title="\Discord\Parts\Guild\Emoji">Emoji</abbr></a></span>
+    <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Helpers-Collection.html"><abbr title="\Discord\Helpers\Collection">Collection</abbr></a>|array&lt;string|int, <a href="classes/Discord-Parts-Guild-AuditLog-Entry.html"><abbr title="\Discord\Parts\Guild\AuditLog\Entry">Entry</abbr></a>&gt;</span>
             &mdash;
             <section class="phpdocumentor-description"></section>
 
@@ -2381,19 +2179,19 @@ JSON. Used for JsonSerializable.</p>
 >
     <h4 class="phpdocumentor-element__name" id="method_getGuildAttribute">
         getGuildAttribute()
-        <a href="classes/Discord-Parts-WebSockets-MessageReaction.html#method_getGuildAttribute" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Parts-Guild-AuditLog-AuditLog.html#method_getGuildAttribute" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/WebSockets/MessageReaction.php"><a href="files/src-discord-parts-websockets-messagereaction.html"><abbr title="src/Discord/Parts/WebSockets/MessageReaction.php">MessageReaction.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/AuditLog/AuditLog.php"><a href="files/src-discord-parts-guild-auditlog-auditlog.html"><abbr title="src/Discord/Parts/Guild/AuditLog/AuditLog.php">AuditLog.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">148</span>
+    <span class="phpdocumentor-element-found-in__line">50</span>
 </aside>
 
-        <p class="phpdocumentor-summary">Gets the guild attribute.</p>
+        <p class="phpdocumentor-summary">Returns the guild the audit log belongs to.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
-                <span class="phpdocumentor-signature__name">getGuildAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Guild-Guild.html"><abbr title="\Discord\Parts\Guild\Guild">Guild</abbr></a></span></code>
+                <span class="phpdocumentor-signature__name">getGuildAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Guild-Guild.html"><abbr title="\Discord\Parts\Guild\Guild">Guild</abbr></a>|null</span></code>
 
         <section class="phpdocumentor-description"></section>
 
@@ -2401,7 +2199,7 @@ JSON. Used for JsonSerializable.</p>
     
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Guild-Guild.html"><abbr title="\Discord\Parts\Guild\Guild">Guild</abbr></a></span>
+    <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Guild-Guild.html"><abbr title="\Discord\Parts\Guild\Guild">Guild</abbr></a>|null</span>
             &mdash;
             <section class="phpdocumentor-description"></section>
 
@@ -2413,44 +2211,29 @@ JSON. Used for JsonSerializable.</p>
             -protected
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_getMemberAttribute">
-        getMemberAttribute()
-        <a href="classes/Discord-Parts-WebSockets-MessageReaction.html#method_getMemberAttribute" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="method_getIntegrationsAttribute">
+        getIntegrationsAttribute()
+        <a href="classes/Discord-Parts-Guild-AuditLog-AuditLog.html#method_getIntegrationsAttribute" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/WebSockets/MessageReaction.php"><a href="files/src-discord-parts-websockets-messagereaction.html"><abbr title="src/Discord/Parts/WebSockets/MessageReaction.php">MessageReaction.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/AuditLog/AuditLog.php"><a href="files/src-discord-parts-guild-auditlog-auditlog.html"><abbr title="src/Discord/Parts/Guild/AuditLog/AuditLog.php">AuditLog.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">101</span>
+    <span class="phpdocumentor-element-found-in__line">112</span>
 </aside>
 
-        <p class="phpdocumentor-summary">Gets the member attribute.</p>
+        <p class="phpdocumentor-summary">Returns a collection of integrations found in the audit log.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
-                <span class="phpdocumentor-signature__name">getMemberAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-User-Member.html"><abbr title="\Discord\Parts\User\Member">Member</abbr></a></span></code>
+                <span class="phpdocumentor-signature__name">getIntegrationsAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Helpers-Collection.html"><abbr title="\Discord\Helpers\Collection">Collection</abbr></a></span></code>
 
         <section class="phpdocumentor-description"></section>
 
     
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">throws</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                <span class="phpdocumentor-tag-link"><abbr title="\Exception">Exception</abbr></span>
-                                                            
-                                                 <section class="phpdocumentor-description"></section>
-
-                                    </dd>
-                        </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-User-Member.html"><abbr title="\Discord\Parts\User\Member">Member</abbr></a></span>
+    <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Helpers-Collection.html"><abbr title="\Discord\Helpers\Collection">Collection</abbr></a></span>
             &mdash;
             <section class="phpdocumentor-description"></section>
 
@@ -2462,47 +2245,29 @@ JSON. Used for JsonSerializable.</p>
             -protected
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_getMessageAttribute">
-        getMessageAttribute()
-        <a href="classes/Discord-Parts-WebSockets-MessageReaction.html#method_getMessageAttribute" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="method_getUsersAttribute">
+        getUsersAttribute()
+        <a href="classes/Discord-Parts-Guild-AuditLog-AuditLog.html#method_getUsersAttribute" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/WebSockets/MessageReaction.php"><a href="files/src-discord-parts-websockets-messagereaction.html"><abbr title="src/Discord/Parts/WebSockets/MessageReaction.php">MessageReaction.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/AuditLog/AuditLog.php"><a href="files/src-discord-parts-guild-auditlog-auditlog.html"><abbr title="src/Discord/Parts/Guild/AuditLog/AuditLog.php">AuditLog.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">81</span>
+    <span class="phpdocumentor-element-found-in__line">76</span>
 </aside>
 
-        <p class="phpdocumentor-summary">Gets the message attribute.</p>
+        <p class="phpdocumentor-summary">Returns a collection of users found in the audit log.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
-                <span class="phpdocumentor-signature__name">getMessageAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Channel-Message.html"><abbr title="\Discord\Parts\Channel\Message">Message</abbr></a></span></code>
+                <span class="phpdocumentor-signature__name">getUsersAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Helpers-Collection.html"><abbr title="\Discord\Helpers\Collection">Collection</abbr></a>|array&lt;string|int, <a href="classes/Discord-Parts-User-User.html"><abbr title="\Discord\Parts\User\User">User</abbr></a>&gt;</span></code>
 
-        <section class="phpdocumentor-description"><p>The bot needs to be set up to store messages
-to get the full message, otherwise the message
-object only contains the ID.</p>
-</section>
+        <section class="phpdocumentor-description"></section>
 
     
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">throws</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                <span class="phpdocumentor-tag-link"><abbr title="\Exception">Exception</abbr></span>
-                                                            
-                                                 <section class="phpdocumentor-description"></section>
-
-                                    </dd>
-                        </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Channel-Message.html"><abbr title="\Discord\Parts\Channel\Message">Message</abbr></a></span>
+    <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Helpers-Collection.html"><abbr title="\Discord\Helpers\Collection">Collection</abbr></a>|array&lt;string|int, <a href="classes/Discord-Parts-User-User.html"><abbr title="\Discord\Parts\User\User">User</abbr></a>&gt;</span>
             &mdash;
             <section class="phpdocumentor-description"></section>
 
@@ -2514,21 +2279,21 @@ object only contains the ID.</p>
             -protected
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_getReactionIdAttribute">
-        getReactionIdAttribute()
-        <a href="classes/Discord-Parts-WebSockets-MessageReaction.html#method_getReactionIdAttribute" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="method_getWebhookAttribute">
+        getWebhookAttribute()
+        <a href="classes/Discord-Parts-Guild-AuditLog-AuditLog.html#method_getWebhookAttribute" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/WebSockets/MessageReaction.php"><a href="files/src-discord-parts-websockets-messagereaction.html"><abbr title="src/Discord/Parts/WebSockets/MessageReaction.php">MessageReaction.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Guild/AuditLog/AuditLog.php"><a href="files/src-discord-parts-guild-auditlog-auditlog.html"><abbr title="src/Discord/Parts/Guild/AuditLog/AuditLog.php">AuditLog.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">51</span>
+    <span class="phpdocumentor-element-found-in__line">60</span>
 </aside>
 
-        <p class="phpdocumentor-summary">Gets the ID of the reaction.</p>
+        <p class="phpdocumentor-summary">Returns a collection of webhooks found in the audit log.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
-                <span class="phpdocumentor-signature__name">getReactionIdAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
+                <span class="phpdocumentor-signature__name">getWebhookAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Helpers-Collection.html"><abbr title="\Discord\Helpers\Collection">Collection</abbr></a>|array&lt;string|int, <a href="classes/Discord-Parts-Channel-Webhook.html"><abbr title="\Discord\Parts\Channel\Webhook">Webhook</abbr></a>&gt;</span></code>
 
         <section class="phpdocumentor-description"></section>
 
@@ -2536,41 +2301,7 @@ object only contains the ID.</p>
     
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">string</span>
-            &mdash;
-            <section class="phpdocumentor-description"></section>
-
-    
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -protected
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_getUserAttribute">
-        getUserAttribute()
-        <a href="classes/Discord-Parts-WebSockets-MessageReaction.html#method_getUserAttribute" class="headerlink"><i class="fas fa-link"></i></a>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/WebSockets/MessageReaction.php"><a href="files/src-discord-parts-websockets-messagereaction.html"><abbr title="src/Discord/Parts/WebSockets/MessageReaction.php">MessageReaction.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">61</span>
-</aside>
-
-        <p class="phpdocumentor-summary">Gets the user attribute.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">protected</span>
-                <span class="phpdocumentor-signature__name">getUserAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-User-User.html"><abbr title="\Discord\Parts\User\User">User</abbr></a></span></code>
-
-        <section class="phpdocumentor-description"></section>
-
-    
-    
-
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-User-User.html"><abbr title="\Discord\Parts\User\User">User</abbr></a></span>
+    <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Helpers-Collection.html"><abbr title="\Discord\Helpers\Collection">Collection</abbr></a>|array&lt;string|int, <a href="classes/Discord-Parts-Channel-Webhook.html"><abbr title="\Discord\Parts\Channel\Webhook">Webhook</abbr></a>&gt;</span>
             &mdash;
             <section class="phpdocumentor-description"></section>
 
@@ -2765,7 +2496,7 @@ object only contains the ID.</p>
 </section>
             </div>
         </div>
-        <a href="classes/Discord-Parts-WebSockets-MessageReaction.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
+        <a href="classes/Discord-Parts-Guild-AuditLog-AuditLog.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
 
     </main>
 
