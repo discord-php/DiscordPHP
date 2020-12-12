@@ -74,6 +74,19 @@ class Collection implements ArrayAccess, Serializable, JsonSerializable, Iterato
     }
 
     /**
+     * Creates a collection for a class.
+     * 
+     * @param string $class
+     * @param string $discrim
+     * 
+     * @return Collection
+     */
+    public static function for(string $class, ?string $discrim = 'id')
+    {
+        return new static([], $discrim, $class);
+    }
+
+    /**
      * Gets an item from the collection.
      *
      * @param string $discrim
