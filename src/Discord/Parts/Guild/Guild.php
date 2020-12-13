@@ -434,7 +434,8 @@ class Guild extends Part
             'before',
             'limit',
         ])
-        ->setAllowedTypes('user_id', ['string', 'int'])
+        ->setDefaults(['limit' => 100])
+        ->setAllowedTypes('user_id', [Member::class, User::class, 'string', 'int'])
         ->setAllowedTypes('action_type', 'int')
         ->setAllowedTypes('before', ['string', 'int'])
         ->setAllowedTypes('limit', 'int')
@@ -442,7 +443,24 @@ class Guild extends Part
         ->setAllowedValues('limit', range(1, 100));
 
         $options = $resolver->resolve($options);
-        $endpoint = "guilds/{$this->id}/audit-logs";
+        $endpoint = "guilds/{$this->id}/audit-logs?limit=".$options['limit'];
+        if (isset($options['user_id'])) {
+            $user_id = $options['user_id'];
+
+            if ($user_id instanceof User ||
+                $user_id instanceof Member
+            ) {
+                $user_id = $user_id->id;
+            }
+
+            $endpoint .= '&user_id='.$user_id;
+        }
+        if (isset($options['action_type'])) {
+            $endpoint .= '&action_type='.$options['action_type'];
+        }
+        if (isset($options['before'])) {
+            $endpoint .= '&before='.$options['before'];
+        }
 
         return $this->http->get($endpoint)->then(function ($response) {
             $response = (array) $response;
