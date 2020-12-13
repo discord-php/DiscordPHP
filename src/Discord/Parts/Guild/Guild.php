@@ -434,15 +434,24 @@ class Guild extends Part
             'before',
             'limit',
         ])
-        ->setAllowedTypes('user_id', ['string', 'int'])
+        ->setAllowedTypes('user_id', ['string', 'int', Member::class, User::class])
         ->setAllowedTypes('action_type', 'int')
-        ->setAllowedTypes('before', ['string', 'int'])
+        ->setAllowedTypes('before', ['string', 'int', AuditLog::class])
         ->setAllowedTypes('limit', 'int')
         ->setAllowedValues('action_type', array_values((new ReflectionClass(Entry::class))->getConstants()))
         ->setAllowedValues('limit', range(1, 100));
 
         $options = $resolver->resolve($options);
-        $endpoint = "guilds/{$this->id}/audit-logs";
+
+        if ($options['user_id'] ?? null instanceof Part) {
+            $options['user_id'] = $options['user_id']->id;
+        }
+
+        if ($options['before'] ?? null instanceof Part) {
+            $options['before'] = $options['before']->id;
+        }
+
+        $endpoint = "guilds/{$this->id}/audit-logs?".http_build_query($options);
 
         return $this->http->get($endpoint)->then(function ($response) {
             $response = (array) $response;
