@@ -123,6 +123,27 @@ class Command
     }
 
     /**
+     * Attempts to get a sub command.
+     *
+     * @param string $command The command to get.
+     * @param bool $aliases WHether to search aliases as well.
+     *
+     * @return Command|null
+     */
+    public function getCommand(string $command, bool $aliases = true): ?Command
+    {
+        if (array_key_exists($command, $this->subCommands)) {
+            return $this->subCommands[$command];
+        }
+
+        if (array_key_exists($command, $this->subCommandAliases) && $aliases) {
+            return $this->subCommands[$this->subCommandAliases[$command]];
+        }
+
+        return null;
+    }
+
+    /**
      * Registers a new command.
      *
      * @param string           $command  The command name.

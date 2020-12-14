@@ -95,13 +95,19 @@ class DiscordCommandClient extends Discord
         if ($this->commandClientOptions['defaultHelpCommand']) {
             $this->registerCommand('help', function ($message, $args) {
                 $prefix = str_replace((string) $this->user, '@'.$this->username, $this->commandClientOptions['prefix']);
+                $fullCommandString = implode(' ', $args);
 
                 if (count($args) > 0) {
-                    $commandString = implode(' ', $args);
-                    $command = $this->getCommand($commandString);
+                    $command = $this;
+                    while (count($args) > 0) {
+                        $commandString = array_shift($args);
+                        $newCommand = $command->getCommand($commandString);
 
-                    if (is_null($command)) {
-                        return "The command {$commandString} does not exist.";
+                        if (is_null($newCommand)) {
+                            return "The command {$commandString} does not exist.";
+                        }
+
+                        $command = $newCommand;
                     }
 
                     $help = $command->getHelp($prefix);
@@ -114,7 +120,7 @@ class DiscordCommandClient extends Discord
                             'name' => $this->commandClientOptions['name'],
                             'icon_url' => $this->client->user->avatar,
                         ],
-                        'title' => $help['command'].'\'s Help',
+                        'title' => $prefix.$fullCommandString.'\'s Help',
                         'description' => ! empty($help['longDescription']) ? $help['longDescription'] : $help['description'],
                         'fields' => [],
                         'footer' => [
@@ -185,6 +191,10 @@ class DiscordCommandClient extends Discord
                     foreach ($this->commands as $command) {
                         $help = $command->getHelp($prefix);
                         $embed['description'] .= "\n\n`".$help['command']."`\n".$help['description'];
+
+                        foreach ($help['subCommandsHelp'] as $subCommandHelp) {
+                            $embed['description'] .= "\n\n`".$subCommandHelp['command']."`\n".$subCommandHelp['description'];
+                        }
                     }
                 } else {
                     foreach ($this->commands as $command) {
@@ -194,6 +204,14 @@ class DiscordCommandClient extends Discord
                             'value' => $help['description'],
                             'inline' => true,
                         ];
+
+                        foreach ($help['subCommandsHelp'] as $subCommandHelp) {
+                            $embed['fields'][] = [
+                                'name' => $subCommandHelp['command'],
+                                'value' => $subCommandHelp['description'],
+                                'inline' => true,
+                            ];
+                        }
                     }
                 }
 
