@@ -39,30 +39,30 @@ use function React\Promise\reject as Reject;
 /**
  * A Channel can be either a text or voice channel on a Discord guild.
  *
- * @property string $id              The unique identifier of the Channel.
- * @property string $name            The name of the channel.
- * @property int $type            The type of the channel.
- * @property string $topic           The topic of the channel.
- * @property Guild $guild           The guild that the channel belongs to. Only for text or voice channels.
- * @property string|null $guild_id        The unique identifier of the guild that the channel belongs to. Only for text or voice channels.
- * @property int $position        The position of the channel on the sidebar.
- * @property bool $is_private      Whether the channel is a private channel.
- * @property string $last_message_id The unique identifier of the last message sent in the channel.
- * @property int $bitrate         The bitrate of the channel. Only for voice channels.
- * @property User $recipient       The first recipient of the channel. Only for DM or group channels.
+ * @property string $id                         The unique identifier of the Channel.
+ * @property string $name                       The name of the channel.
+ * @property int $type                          The type of the channel.
+ * @property string $topic                      The topic of the channel.
+ * @property Guild $guild                       The guild that the channel belongs to. Only for text or voice channels.
+ * @property string|null $guild_id              The unique identifier of the guild that the channel belongs to. Only for text or voice channels.
+ * @property int $position                      The position of the channel on the sidebar.
+ * @property bool $is_private                   Whether the channel is a private channel.
+ * @property string $last_message_id            The unique identifier of the last message sent in the channel.
+ * @property int $bitrate                       The bitrate of the channel. Only for voice channels.
+ * @property User $recipient                    The first recipient of the channel. Only for DM or group channels.
  * @property Collection|User[] $recipients      A collection of all the recipients in the channel. Only for DM or group channels.
- * @property bool $nsfw            Whether the channel is NSFW.
- * @property int $user_limit      The user limit of the channel.
- * @property int $rate_limit_per_user Amount of seconds a user has to wait before sending a new message.
- * @property string $icon            Icon hash.
- * @property string $owner_id        The ID of the DM creator. Only for DM or group channels.
- * @property string $application_id  ID of the group DM creator if it is a bot.
- * @property string $parent_id       ID of the parent channel.
- * @property Carbon $last_pin_timestamp When the last message was pinned.
- * @property MemberRepository $members
- * @property MessageRepository $messages
- * @property OverwriteRepository $overwrites
- * @property WebhookRepository $webhooks
+ * @property bool $nsfw                         Whether the channel is NSFW.
+ * @property int $user_limit                    The user limit of the channel.
+ * @property int $rate_limit_per_user           Amount of seconds a user has to wait before sending a new message.
+ * @property string $icon                       Icon hash.
+ * @property string $owner_id                   The ID of the DM creator. Only for DM or group channels.
+ * @property string $application_id             ID of the group DM creator if it is a bot.
+ * @property string $parent_id                  ID of the parent channel.
+ * @property Carbon $last_pin_timestamp         When the last message was pinned.
+ * @property MemberRepository $members          voice channel only - members in the channel
+ * @property MessageRepository $messages        text channel only - messages sent in the channel
+ * @property OverwriteRepository $overwrites    permission overwrites
+ * @property WebhookRepository $webhooks        webhooks in the channel
  */
 class Channel extends Part
 {
