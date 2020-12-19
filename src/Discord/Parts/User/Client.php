@@ -59,19 +59,21 @@ class Client extends Part
      */
     public function afterConstruct(): void
     {
-        $this->user = $this->factory->create(User::class,
-            [
-                'id' => $this->id,
-                'username' => $this->username,
-                'avatar' => $this->attributes['avatar'],
-                'discriminator' => $this->discriminator,
-            ], true
-        );
         $this->application = $this->factory->create(Application::class, [], true);
 
         $this->http->get('oauth2/applications/@me')->done(function ($response) {
             $this->application->fill((array) $response);
         });
+    }
+
+    /**
+     * Gets the user attribute.
+     * 
+     * @return User
+     */
+    protected function getUserAttribute()
+    {
+        return $this->factory->create(User::class, $this->attributes, true);
     }
 
     /**

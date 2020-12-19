@@ -345,6 +345,7 @@ class Discord
         );
 
         $this->factory = new Factory($this, $this->http);
+        $this->client = $this->factory->create(Client::class, [], true);
 
         $this->connectWs();
     }
@@ -401,7 +402,7 @@ class Discord
         $this->logger->debug('discord trace received', ['trace' => $content->_trace]);
 
         // Setup the user account
-        $this->client = $this->factory->create(Client::class, $content->user, true);
+        $this->client->fill((array) $content->user);
         $this->sessionId = $content->session_id;
 
         $this->logger->debug('client created and session id stored', ['session_id' => $content->session_id, 'user' => $this->client->user->getPublicAttributes()]);
