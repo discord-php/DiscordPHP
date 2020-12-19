@@ -241,8 +241,8 @@ class Member extends Part
 
         /** @var RolePermission */
         $newPermission = $this->factory->part(RolePermission::class, ['bitwise' => $bitwise]);
-        
-        if ($newPermission->administrator) {
+
+	if ($newPermission->administrator) {
             foreach (RolePermission::getPermissions() as $permission => $_) {
                 $newPermission->{$permission} = true;
             }
