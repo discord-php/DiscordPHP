@@ -237,18 +237,18 @@ class Member extends Part
                 $roles[] = $role->id;
                 $bitwise |= $role->permissions->bitwise;
             }
-	}
+        }
 
         /** @var RolePermission */
         $newPermission = $this->factory->part(RolePermission::class, ['bitwise' => $bitwise]);
 
-	if ($newPermission->administrator) {
+        if ($newPermission->administrator) {
             foreach (RolePermission::getPermissions() as $permission => $_) {
                 $newPermission->{$permission} = true;
             }
             
             return $newPermission;
-	}
+        }
 
         if ($channel) {
             /** @var Overwrite */
