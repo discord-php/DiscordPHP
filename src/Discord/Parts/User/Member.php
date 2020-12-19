@@ -237,8 +237,8 @@ class Member extends Part
                 $roles[] = $role->id;
                 $bitwise |= $role->permissions->bitwise;
             }
-        }
-        
+	}
+
         /** @var RolePermission */
         $newPermission = $this->factory->part(RolePermission::class, ['bitwise' => $bitwise]);
         
@@ -248,8 +248,8 @@ class Member extends Part
             }
             
             return $newPermission;
-        }
-        
+	}
+
         if ($channel) {
             /** @var Overwrite */
             if ($overwrite = $channel->overwrites->get('id', $this->guild->id)) {
