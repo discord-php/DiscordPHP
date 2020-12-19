@@ -230,13 +230,13 @@ class Member extends Part
         if ($this->guild->owner_id == $this->id) {
             $bitwise |= 0x8; // Add administrator permission
         } else {
-            /* @var Role */
+            /** @var Role */ 
             foreach ($this->roles ?? [] as $role) {
                 $bitwise |= $role->permissions->bitwise;
             }
 
             if ($channel) {
-                /* @var Overwrite */
+                /** @var Overwrite */
                 foreach ($channel->overwrites as $overwrite) {
                     $bitwise |= $overwrite->allow->bitwise;
                     $bitwise &= ~($overwrite->deny->bitwise);
