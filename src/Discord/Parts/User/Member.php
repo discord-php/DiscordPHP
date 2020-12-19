@@ -230,28 +230,52 @@ class Member extends Part
         if ($this->guild->owner_id == $this->id) {
             $bitwise |= 0x8; // Add administrator permission
         } else {
-            /** @var Role */ 
+            $roles = [];
+            
+            /** @var Role */
             foreach ($this->roles ?? [] as $role) {
+                $roles[] = $role->id;
                 $bitwise |= $role->permissions->bitwise;
             }
-
-            if ($channel) {
-                /** @var Overwrite */
-                foreach ($channel->overwrites as $overwrite) {
-                    $bitwise |= $overwrite->allow->bitwise;
-                    $bitwise &= ~($overwrite->deny->bitwise);
+        }
+        
+        /** @var RolePermission */
+        $newPermission = $this->factory->part(RolePermission::class, ['bitwise' => $bitwise]);
+        
+        if ($newPermission->administrator) {
+            foreach (RolePermission::getPermissions() as $permission => $_) {
+                $newPermission->{$permission} = true;
+            }
+            
+            return $newPermission;
+        }
+        
+        if ($channel) {
+            /** @var Overwrite */
+            if ($overwrite = $channel->overwrites->get('id', $this->guild->id)) {
+                $bitwise |= $overwrite->allow->bitwise;
+                $bitwise &= ~($overwrite->deny->bitwise);
+            }
+            
+            /** @var Overwrite */
+            foreach ($channel->overwrites as $overwrite) {
+                if ($overwrite->type !== 'role' || !in_array($overwrite->id, $roles)) {
+                    continue;
                 }
+
+                $bitwise |= $overwrite->allow->bitwise;
+                $bitwise &= ~($overwrite->deny->bitwise);
+            }
+
+            /** @var Overwrite */
+            if ($overwrite = $channel->overwrites->get('id', $this->id)) {
+                $bitwise |= $overwrite->allow->bitwise;
+                $bitwise &= ~($overwrite->deny->bitwise);
             }
         }
 
         /** @var RolePermission */
         $newPermission = $this->factory->part(RolePermission::class, ['bitwise' => $bitwise]);
-
-        if ($newPermission->administrator) {
-            foreach (RolePermission::getPermissions() as $permission => $_) {
-                $newPermission->{$permission} = true;
-            }
-        }
 
         return $newPermission;
     }
