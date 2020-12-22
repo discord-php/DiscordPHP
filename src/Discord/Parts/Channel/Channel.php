@@ -921,24 +921,6 @@ class Channel extends Part
     }
 
     /**
-     * Returns the channel type.
-     *
-     * @return string Either 'text' or 'voice'.
-     */
-    public function getChannelType(): string
-    {
-        switch ($this->type) {
-            case self::TYPE_TEXT:
-            case self::TYPE_VOICE:
-                return $this->type;
-                break;
-            default:
-                return self::TYPE_TEXT;
-                break;
-        }
-    }
-
-    /**
      * Returns if allow text.
      *
      * @return bool if we can send text or not.
@@ -965,7 +947,7 @@ class Channel extends Part
     {
         return [
             'name' => $this->name,
-            'type' => $this->getChannelType(),
+            'type' => $this->type,
             'bitrate' => $this->bitrate,
             'permission_overwrites' => $this->permission_overwrites,
             'topic' => $this->topic,
