@@ -14,6 +14,7 @@ namespace Discord\Parts\Channel;
 use Carbon\Carbon;
 use Discord\Exceptions\FileNotFoundException;
 use Discord\Exceptions\InvalidOverwriteException;
+use Discord\Exceptions\Rest\NoPermissionsException;
 use Discord\Helpers\Collection;
 use Discord\Parts\Embed\Embed;
 use Discord\Parts\Guild\Guild;
@@ -270,6 +271,17 @@ class Channel extends Part
     {
         $deferred = new Deferred();
 
+        if (! $this->is_private) {
+            $botperms = $this->guild->members->offsetGet($this->discord->id)->getPermissions($this);
+
+            if (! $botperms->manage_roles) {
+                $deferred->reject(new \NoPermissionsException('You do not have permission to edit roles in the specified channel.'));
+
+                return $deferred->promise();
+            }
+        }
+
+
         if ($part instanceof Member) {
             $type = 'member';
         } elseif ($part instanceof Role) {
@@ -327,6 +339,16 @@ class Channel extends Part
             return $deferred->promise();
         }
 
+        if (! $this->is_private) {
+            $botperms = $this->guild->members->offsetGet($this->discord->id)->getPermissions($this);
+
+            if (! $botperms->move_members) {
+                $deferred->reject(new NoPermissionsException('You do not have permission to move members in the specified channel.'));
+
+                return $deferred->promise();
+            }
+        }
+
         if ($member instanceof Member) {
             $member = $member->id;
         }
@@ -357,6 +379,16 @@ class Channel extends Part
             $deferred->reject(new \Exception('You cannot mute a member in a text channel.'));
 
             return $deferred->promise();
+        }
+
+        if (! $this->is_private) {
+            $botperms = $this->guild->members->offsetGet($this->discord->id)->getPermissions($this);
+
+            if (! $botperms->mute_members) {
+                $deferred->reject(new NoPermissionsException('You do not have permission to mute members in the specified channel.'));
+
+                return $deferred->promise();
+            }
         }
 
         if ($member instanceof Member) {
@@ -396,6 +428,16 @@ class Channel extends Part
             return $deferred->promise();
         }
 
+        if (! $this->is_private) {
+            $botperms = $this->guild->members->offsetGet($this->discord->id)->getPermissions($this);
+
+            if (! $botperms->mute_members) {
+                $deferred->reject(new NoPermissionsException('You do not have permission to unmute members in the specified channel.'));
+
+                return $deferred->promise();
+            }
+        }
+
         if ($member instanceof Member) {
             $member = $member->id;
         }
@@ -431,6 +473,16 @@ class Channel extends Part
     public function createInvite($options = []): ExtendedPromiseInterface
     {
         $deferred = new Deferred();
+
+        if (! $this->is_private) {
+            $botperms = $this->guild->members->offsetGet($this->discord->id)->getPermissions($this);
+
+            if (! $botperms->create_instant_invite) {
+                $deferred->reject(new \NoPermissionsException('You do not have permission to create an invite for the specified channel.'));
+
+                return $deferred->promise();
+            }
+        }
 
         $this->http->post($this->replaceWithVariables('channels/:id/invites'), $options)->done(
             function ($response) use ($deferred) {
@@ -524,6 +576,16 @@ class Channel extends Part
     {
         $deferred = new Deferred();
 
+        if (! $this->is_private) {
+            $botperms = $this->guild->members->offsetGet($this->discord->id)->getPermissions($this);
+
+            if (! $botperms->read_message_history) {
+                $deferred->reject(new NoPermissionsException('You do not have permission to read the specified channel\'s message history.'));
+
+                return $deferred->promise();
+            }
+        }
+
         $resolver = new OptionsResolver();
         $resolver->setDefaults(['limit' => 100, 'cache' => true]);
         $resolver->setDefined(['before', 'after', 'around']);
@@ -582,6 +644,16 @@ class Channel extends Part
     {
         $deferred = new Deferred();
 
+        if (! $this->is_private) {
+            $botperms = $this->guild->members->offsetGet($this->discord->id)->getPermissions($this);
+
+            if (! $botperms->manage_messages) {
+                $deferred->reject(new NoPermissionsException('You do not have permission to pin messages in the specified channel.'));
+
+                return $deferred->promise();
+            }
+        }
+
         if ($message->pinned) {
             return Reject(new \Exception('This message is already pinned.'));
         }
@@ -611,6 +683,16 @@ class Channel extends Part
     public function unpinMessage(Message $message): ExtendedPromiseInterface
     {
         $deferred = new Deferred();
+
+        if (! $this->is_private) {
+            $botperms = $this->guild->members->offsetGet($this->discord->id)->getPermissions($this);
+
+            if (! $botperms->manage_messages) {
+                $deferred->reject(new NoPermissionsException('You do not have permission to unpin messages in the specified channel.'));
+
+                return $deferred->promise();
+            }
+        }
 
         if (! $message->pinned) {
             return Reject(new \Exception('This message is not pinned.'));
@@ -701,6 +783,22 @@ class Channel extends Part
             return $deferred->promise();
         }
 
+        if (! $this->is_private) {
+            $botperms = $this->guild->members->offsetGet($this->discord->id)->getPermissions($this);
+
+            if (! $botperms->send_messages) {
+                $deferred->reject(new NoPermissionsException('You do not have permission to send messages in the specified channel.'));
+
+                return $deferred->promise();
+            }
+
+            if ($tts && ! $botperms->send_tts_messages) {
+                $deferred->reject(new NoPermissionsException('You do not have permission to send tts messages in the specified channel.'));
+
+                return $deferred->promise();
+            }
+        }
+
         $this->http->post(
             "channels/{$this->id}/messages",
             [
@@ -778,6 +876,16 @@ class Channel extends Part
             return $deferred->promise();
         }
 
+        if (! $this->is_private) {
+            $botperms = $this->guild->members->offsetGet($this->discord->id)->getPermissions($this);
+
+            if (! $botperms->send_messages) {
+                $deferred->reject(new NoPermissionsException('You do not have permission to send messages in the specified channel.'));
+
+                return $deferred->promise();
+            }
+        }
+
         $this->http->post("channels/{$this->id}/messages", ['embed' => $embed->getRawAttributes()])->done(function ($response) use ($deferred) {
             $message = $this->factory->create(Message::class, $response, true);
             $this->messages->push($message);
@@ -806,6 +914,16 @@ class Channel extends Part
             $deferred->reject(new \Exception('You cannot send a file to a voice channel.'));
 
             return $deferred->promise();
+        }
+
+        if (! $this->is_private) {
+            $botperms = $this->guild->members->offsetGet($this->discord->id)->getPermissions($this);
+
+            if (! $botperms->attach_files) {
+                $deferred->reject(new NoPermissionsException('You do not have permission to send files into the specified channel.'));
+
+                return $deferred->promise();
+            }
         }
 
         if (! file_exists($filepath)) {
