@@ -275,7 +275,7 @@ class Channel extends Part
             $botperms = $this->guild->members->offsetGet($this->discord->id)->getPermissions($this);
 
             if (! $botperms->manage_roles) {
-                $deferred->reject(new \NoPermissionsException('You do not have permission to edit roles in the specified channel.'));
+                $deferred->reject(new NoPermissionsException('You do not have permission to edit roles in the specified channel.'));
 
                 return $deferred->promise();
             }
@@ -478,7 +478,7 @@ class Channel extends Part
             $botperms = $this->guild->members->offsetGet($this->discord->id)->getPermissions($this);
 
             if (! $botperms->create_instant_invite) {
-                $deferred->reject(new \NoPermissionsException('You do not have permission to create an invite for the specified channel.'));
+                $deferred->reject(new NoPermissionsException('You do not have permission to create an invite for the specified channel.'));
 
                 return $deferred->promise();
             }
