@@ -1,5 +1,30 @@
 # Changelog
 
+## Version 5.1.0
+
+- Refactored and rebuilt the HTTP client.
+    - Implemented the concept of "buckets" - to be worked on as at the moment requests are grouped by the exact endpoint only.
+- Fixed guild member chunking with the gateway changes.
+- Fixed `Channel::deleteMessages()` not working for 0 or 1 messages.
+- Added the `allowed_mentions` option to `Channel::sendMessage()`.
+- Converted message reactions to a repository.
+- Changed `Message::mention_channels` to use a regular expression to find actual mentioned channels rather than relying on Discord to send them (which they don't).
+- Fixed varius errors where the attribute does not exist.
+- Added the `Reaction::getUsers()` method to retrieve users that have reacted with that reaction.
+- Implemented audit logs - see the class reference and Discord developer docs for more information.
+- Added new attributes to Guilds.
+- Fixed permissions not calculating correctly.
+- Fixed various errors with the voice client.
+- Added an option to skip FFmpeg/DCA checks when starting the voice client (for Windows compatibility).
+- Implemented `MESSAGE_REACTION_*` events.
+- Added `\Discord\imageToBase64()` to convert an image to base 64 to be uploaded to Discord.
+- Started documentation and tests.
+
+### Command Client
+
+- Added the `caseInsensitiveCommands` option to change whether commands should be case sensitive.
+- Added sub-commands to the various help menus.
+
 ## Version 5.0.12
 
 - Converted `PromiseInterface` to `ExtendedPromiseInterface` to allow `->done()` typehinting.
