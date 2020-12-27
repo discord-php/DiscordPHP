@@ -17,7 +17,6 @@ use Discord\Parts\Part;
 use Discord\Parts\User\User;
 use Discord\Helpers\Deferred;
 use React\Promise\ExtendedPromiseInterface;
-use function React\Partial\bind as Bind;
 
 /**
  * An invite to a Channel and Guild.
@@ -62,26 +61,15 @@ class Invite extends Part
      */
     public function accept(): ExtendedPromiseInterface
     {
-        $deferred = new Deferred();
-
         if ($this->revoked) {
-            $deferred->reject(new \Exception('This invite has been revoked.'));
-
-            return $deferred->promise();
+            return \React\Promise\reject(new \Exception('This invite has been revoked.'));
         }
 
         if ($this->uses >= $this->max_uses) {
-            $deferred->reject(new \Exception('This invite has been used the max times.'));
-
-            return $deferred->promise();
+            return \React\Promise\reject(new \Exception('This invite has been used the max times.'));
         }
 
-        $this->http->post("invite/{$this->code}")->done(
-            Bind([$deferred, 'resolve']),
-            Bind([$deferred, 'reject'])
-        );
-
-        return $deferred->promise();
+        return $this->http->post("invite/{$this->code}");
     }
 
     /**

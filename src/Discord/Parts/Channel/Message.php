@@ -25,8 +25,6 @@ use Discord\Helpers\Deferred;
 use Discord\Repository\Channel\ReactionRepository;
 use React\Promise\ExtendedPromiseInterface;
 
-use function React\Partial\bind as Bind;
-
 /**
  * A message which is posted to a Discord text channel.
  *
@@ -372,14 +370,9 @@ class Message extends Part
      */
     public function crosspost(): ExtendedPromiseInterface
     {
-        $deferred = new Deferred();
-
-        $this->http->post("channels/{$this->channel_id}/messages/{$this->id}/crosspost")->done(function ($response) use ($deferred) {
-            $message = $this->factory->part(Message::class, $response, true);
-            $deferred->resolve($message);
-        }, Bind([$deferred, 'reject']));
-
-        return $deferred->promise();
+        return $this->http->post("channels/{$this->channel_id}/messages/{$this->id}/crosspost")->then(function ($response) {
+            return $this->factory->part(Message::class, $response, true);
+        });
     }
 
     /**
@@ -395,10 +388,7 @@ class Message extends Part
         $deferred = new Deferred();
 
         $this->discord->getLoop()->addTimer($delay / 1000, function () use ($text, $deferred) {
-            $this->reply($text)->done(
-                Bind([$deferred, 'resolve']),
-                Bind([$deferred, 'reject'])
-            );
+            $this->reply($text)->done([$deferred, 'resolve'], [$deferred, 'reject']);
         });
 
         return $deferred->promise();
@@ -413,22 +403,13 @@ class Message extends Part
      */
     public function react($emoticon): ExtendedPromiseInterface
     {
-        $deferred = new Deferred();
-
         if ($emoticon instanceof Emoji) {
             $emoticon = $emoticon->toReactionString();
         }
 
         $emoticon = urlencode($emoticon);
 
-        $this->http->put(
-            "channels/{$this->channel->id}/messages/{$this->id}/reactions/{$emoticon}/@me"
-        )->done(
-            Bind([$deferred, 'resolve']),
-            Bind([$deferred, 'reject'])
-        );
-
-        return $deferred->promise();
+        return $this->http->put("channels/{$this->channel->id}/messages/{$this->id}/reactions/{$emoticon}/@me");
     }
 
     /**
@@ -442,8 +423,6 @@ class Message extends Part
      */
     public function deleteReaction(int $type, $emoticon = null, ?string $id = null): ExtendedPromiseInterface
     {
-        $deferred = new Deferred();
-
         $types = [self::REACT_DELETE_ALL, self::REACT_DELETE_ME, self::REACT_DELETE_ID];
 
         if ($emoticon instanceof Emoji) {
@@ -463,17 +442,10 @@ class Message extends Part
                     break;
             }
 
-            $this->http->delete(
-                $url, []
-            )->done(
-                Bind([$deferred, 'resolve']),
-                Bind([$deferred, 'reject'])
-            );
-        } else {
-            $deferred->reject();
+            return $this->http->delete($url, []);
         }
 
-        return $deferred->promise();
+        return \React\Promise\reject();
     }
 
     /**
@@ -483,14 +455,7 @@ class Message extends Part
      */
     public function delete(): ExtendedPromiseInterface
     {
-        $deferred = new Deferred();
-
-        $this->http->delete("channels/{$this->channel_id}/messages/{$this->id}")->done(
-            Bind([$deferred, 'resolve']),
-            Bind([$deferred, 'reject'])
-        );
-
-        return $deferred->promise();
+        return $this->http->delete("channels/{$this->channel_id}/messages/{$this->id}");
     }
 
     /**
@@ -554,16 +519,11 @@ class Message extends Part
      */
     public function addEmbed(Embed $embed): ExtendedPromiseInterface
     {
-        $deferred = new Deferred();
-
-        $this->http->patch("channels/{$this->channel_id}/messages/{$this->id}", [
+        return $this->http->patch("channels/{$this->channel_id}/messages/{$this->id}", [
             'embed' => $embed->getRawAttributes(),
-        ])->done(function ($data) use ($deferred) {
-            $this->fill((array) $data);
-            $deferred->resolve($this);
-        }, Bind([$deferred, 'reject']));
-
-        return $deferred->promise();
+        ])->then(function ($data) {
+            return $this->fill((array) $data);
+        });
     }
 
     /**

@@ -15,8 +15,8 @@ use Discord\Parts\Channel\Channel;
 use Discord\Parts\Embed\Embed;
 use Discord\Parts\Part;
 use Discord\Helpers\Deferred;
+use Discord\Parts\Channel\Message;
 use React\Promise\ExtendedPromiseInterface;
-use function React\Partial\bind as Bind;
 
 /**
  * A user is a general user that is not attached to a guild.
@@ -69,20 +69,16 @@ class User extends Part
      */
     public function getPrivateChannel(): ExtendedPromiseInterface
     {
-        $deferred = new Deferred();
-
         if ($channel = $this->discord->private_channels->get('id', $this->id)) {
-            $deferred->resolve($channel);
+            return \React\Promise\resolve($channel);
         } else {
-            $this->http->post('users/@me/channels', ['recipient_id' => $this->id])->done(function ($response) use ($deferred) {
+            return $this->http->post('users/@me/channels', ['recipient_id' => $this->id])->then(function ($response) {
                 $channel = $this->factory->create(Channel::class, $response, true);
                 $this->discord->private_channels->push($channel);
 
-                $deferred->resolve($channel);
-            }, Bind([$deferred, 'reject']));
+                return $channel;
+            });
         }
-
-        return $deferred->promise();
     }
 
     /**
@@ -97,15 +93,9 @@ class User extends Part
      */
     public function sendMessage(string $message, bool $tts = false, ?Embed $embed = null): ExtendedPromiseInterface
     {
-        $deferred = new Deferred();
-
-        $this->getPrivateChannel()->done(function ($channel) use ($message, $tts, $embed, $deferred) {
-            $channel->sendMessage($message, $tts, $embed)->done(function ($message) use ($deferred) {
-                $deferred->resolve($message);
-            }, Bind([$deferred, 'reject']));
-        }, Bind([$deferred, 'reject']));
-
-        return $deferred->promise();
+        return $this->getPrivateChannel()->then(function ($channel) use ($message, $tts, $embed) {
+            return $channel->sendMessage($message, $tts, $embed);
+        });
     }
 
     /**
@@ -116,16 +106,9 @@ class User extends Part
      */
     public function broadcastTyping(): ExtendedPromiseInterface
     {
-        $deferred = new Deferred();
-
-        $this->getPrivateChannel()->done(function ($channel) use ($deferred) {
-            $channel->broadcastTyping()->done(
-                Bind([$deferred, 'resolve']),
-                Bind([$deferred, 'reject'])
-            );
+        return $this->getPrivateChannel()->then(function ($channel) {
+            return $channel->broadcastTyping();
         });
-
-        return $deferred->promise();
     }
 
     /**
@@ -168,14 +151,14 @@ class User extends Part
      */
     public function createdTimestamp()
     {
-        if (\PHP_INT_SIZE === 4) { //x86
+        if (\PHP_INT_SIZE === 4) { // x86
             $binary = \str_pad(\base_convert($this->id, 10, 2), 64, 0, \STR_PAD_LEFT);
             $time = \base_convert(\substr($binary, 0, 42), 2, 10);
             $timestamp = (float) ((((int) \substr($time, 0, -3)) + 1420070400).'.'.\substr($time, -3));
             $workerID = (int) \base_convert(\substr($binary, 42, 5), 2, 10);
             $processID = (int) \base_convert(\substr($binary, 47, 5), 2, 10);
             $increment = (int) \base_convert(\substr($binary, 52, 12), 2, 10);
-        } else { //x64
+        } else { // x64
             $snowflake = (int) $this->id;
             $time = (string) ($snowflake >> 22);
             $timestamp = (float) ((((int) \substr($time, 0, -3)) + 1420070400).'.'.\substr($time, -3));
@@ -183,6 +166,7 @@ class User extends Part
             $processID = ($snowflake & 0x1F000) >> 12;
             $increment = ($snowflake & 0xFFF);
         }
+
         if ($timestamp < 1420070400 || $workerID < 0 || $workerID >= 32 || $processID < 0 || $processID >= 32 || $increment < 0 || $increment >= 4096) {
             return null;
         }

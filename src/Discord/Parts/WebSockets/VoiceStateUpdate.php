@@ -96,6 +96,7 @@ class VoiceStateUpdate extends Part
         if ($user = $this->discord->users->get('id', $this->user_id)) {
             return $user;
         }
+
         if ($this->attributes['member']->user !== null) {
             return $this->factory->create(User::class, $this->attributes['member']->user, true);
         }

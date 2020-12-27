@@ -123,14 +123,7 @@ class Client extends Part
      */
     public function save(): ExtendedPromiseInterface
     {
-        $deferred = new Deferred();
-
-        $this->http->patch('users/@me', $this->getUpdatableAttributes())->done(
-            Bind([$deferred, 'resolve']),
-            Bind([$deferred, 'reject'])
-        );
-
-        return $deferred->promise();
+        return $this->http->patch('users/@me', $this->getUpdatableAttributes());
     }
 
     /**

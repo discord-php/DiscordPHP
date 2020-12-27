@@ -33,8 +33,6 @@ use Discord\Helpers\Multipart;
 use React\Promise\ExtendedPromiseInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Traversable;
-use function React\Partial\bind as Bind;
-use function React\Promise\reject as Reject;
 
 /**
  * A Channel can be either a text or voice channel on a Discord guild.
@@ -191,27 +189,22 @@ class Channel extends Part
      * @return ExtendedPromiseInterface
      * @throws \Exception
      */
-    protected function getPinnedMessages(): ExtendedPromiseInterface
+    public function getPinnedMessages(): ExtendedPromiseInterface
     {
-        $deferred = new Deferred();
+        return $this->http->get($this->replaceWithVariables('channels/:id/pins'))
+        ->then(function ($responses) {
+            $messages = new Collection();
 
-        $this->http->get($this->replaceWithVariables('channels/:id/pins'))->done(
-            function ($responses) use ($deferred) {
-                $messages = new Collection();
-
-                foreach ($responses as $response) {
-                    if (! $message = $this->messages->get('id', $response->id)) {
-                        $message = $this->factory->create(Message::class, $response, true);
-                    }
-                    $messages->push($message);
+            foreach ($responses as $response) {
+                if (! $message = $this->messages->get('id', $response->id)) {
+                    $message = $this->factory->create(Message::class, $response, true);
                 }
 
-                $deferred->resolve($messages);
-            },
-            Bind([$deferred, 'reject'])
-        );
+                $messages->push($message);
+            }
 
-        return $deferred->promise();
+            return $messages;
+        });
     }
 
     /**
@@ -226,14 +219,12 @@ class Channel extends Part
      */
     public function setPermissions(Part $part, array $allow = [], array $deny = []): ExtendedPromiseInterface
     {
-        $deferred = new Deferred();
-
         if ($part instanceof Member) {
             $type = 'member';
         } elseif ($part instanceof Role) {
             $type = 'role';
         } else {
-            return Reject(new InvalidOverwriteException('Given part was not one of member or role.'));
+            return \React\Promise\reject(new InvalidOverwriteException('Given part was not one of member or role.'));
         }
 
         $allow = array_fill_keys($allow, true);
@@ -250,12 +241,7 @@ class Channel extends Part
             'deny' => $denyPart->bitwise,
         ]);
 
-        $this->setOverwrite($part, $overwrite)->done(
-            Bind([$deferred, 'resolve']),
-            Bind([$deferred, 'reject'])
-        );
-
-        return $deferred->promise();
+        return $this->setOverwrite($part, $overwrite);
     }
 
     /**
@@ -268,14 +254,12 @@ class Channel extends Part
      */
     public function setOverwrite(Part $part, Overwrite $overwrite): ExtendedPromiseInterface
     {
-        $deferred = new Deferred();
-
         if ($part instanceof Member) {
             $type = 'member';
         } elseif ($part instanceof Role) {
             $type = 'role';
         } else {
-            return Reject(new InvalidOverwriteException('Given part was not one of member or role.'));
+            return \React\Promise\reject(new InvalidOverwriteException('Given part was not one of member or role.'));
         }
 
         $payload = [
@@ -287,15 +271,11 @@ class Channel extends Part
 
         if (! $this->created) {
             $this->attributes['permission_overwrites'][] = $payload;
-            $deferred->resolve();
-        } else {
-            $this->http->put("channels/{$this->id}/permissions/{$part->id}", $payload)->done(
-                Bind([$deferred, 'resolve']),
-                Bind([$deferred, 'reject'])
-            );
+
+            return \React\Promise\resolve();
         }
 
-        return $deferred->promise();
+        return $this->http->put("channels/{$this->id}/permissions/{$part->id}", $payload);
     }
 
     /**
@@ -319,27 +299,15 @@ class Channel extends Part
      */
     public function moveMember($member): ExtendedPromiseInterface
     {
-        $deferred = new Deferred();
-
         if (! $this->allowVoice()) {
-            $deferred->reject(new \Exception('You cannot move a member in a text channel.'));
-
-            return $deferred->promise();
+            return \React\Promise\reject(new \Exception('You cannot move a member in a text channel.'));
         }
 
         if ($member instanceof Member) {
             $member = $member->id;
         }
 
-        $this->http->patch("guilds/{$this->guild_id}/members/{$member}", ['channel_id' => $this->id])->done(
-            Bind([$deferred, 'resolve']),
-            Bind([$deferred, 'reject'])
-        );
-
-        // At the moment we are unable to check if the member
-        // was moved successfully.
-
-        return $deferred->promise();
+        return $this->http->patch("guilds/{$this->guild_id}/members/{$member}", ['channel_id' => $this->id]);
     }
 
     /**
@@ -351,32 +319,15 @@ class Channel extends Part
      */
     public function muteMember($member): ExtendedPromiseInterface
     {
-        $deferred = new Deferred();
-
         if (! $this->allowVoice()) {
-            $deferred->reject(new \Exception('You cannot mute a member in a text channel.'));
-
-            return $deferred->promise();
+            return \React\Promise\reject(new \Exception('You cannot mute a member in a text channel.'));
         }
 
         if ($member instanceof Member) {
             $member = $member->id;
         }
 
-        $this->http->patch(
-            "guilds/{$this->guild_id}/members/{$member}",
-            [
-                'mute' => true,
-            ]
-        )->done(
-            Bind([$deferred, 'resolve']),
-            Bind([$deferred, 'reject'])
-        );
-
-        // At the moment we are unable to check if the member
-        // was muted successfully.
-
-        return $deferred->promise();
+        return $this->http->patch("guilds/{$this->guild_id}/members/{$member}", ['mute' => true]);
     }
 
     /**
@@ -388,32 +339,15 @@ class Channel extends Part
      */
     public function unmuteMember($member): ExtendedPromiseInterface
     {
-        $deferred = new Deferred();
-
         if (! $this->allowVoice()) {
-            $deferred->reject(new \Exception('You cannot unmute a member in a text channel.'));
-
-            return $deferred->promise();
+            return \React\Promise\reject(new \Exception('You cannot unmute a member in a text channel.'));
         }
 
         if ($member instanceof Member) {
             $member = $member->id;
         }
 
-        $this->http->patch(
-            "guilds/{$this->guild_id}/members/{$member}",
-            [
-                'mute' => false,
-            ]
-        )->done(
-            Bind([$deferred, 'resolve']),
-            Bind([$deferred, 'reject'])
-        );
-
-        // At the moment we are unable to check if the member
-        // was unmuted successfully.
-
-        return $deferred->promise();
+        return $this->http->patch("guilds/{$this->guild_id}/members/{$member}", ['mute' => false]);
     }
 
     /**
@@ -430,18 +364,10 @@ class Channel extends Part
      */
     public function createInvite($options = []): ExtendedPromiseInterface
     {
-        $deferred = new Deferred();
-
-        $this->http->post($this->replaceWithVariables('channels/:id/invites'), $options)->done(
-            function ($response) use ($deferred) {
-                $invite = $this->factory->create(Invite::class, $response, true);
-
-                $deferred->resolve($invite);
-            },
-            Bind([$deferred, 'reject'])
-        );
-
-        return $deferred->promise();
+        return $this->http->post($this->replaceWithVariables('channels/:id/invites'), $options)
+        ->then(function ($response) {
+            return $this->factory->create(Invite::class, $response, true);
+        });
     }
 
     /**
@@ -453,10 +379,8 @@ class Channel extends Part
      */
     public function deleteMessages($messages): ExtendedPromiseInterface
     {
-        if (! is_array($messages) &&
-            ! ($messages instanceof Traversable)
-        ) {
-            return Reject(new \Exception('$messages must be an array or implement Traversable.'));
+        if (! is_array($messages) && ! ($messages instanceof Traversable)) {
+            return \React\Promise\reject(new \Exception('$messages must be an array or implement Traversable.'));
         }
 
         $count = count($messages);
@@ -504,13 +428,9 @@ class Channel extends Part
      */
     public function limitDelete(int $value): ExtendedPromiseInterface
     {
-        $deferred = new Deferred();
-
-        $this->getMessageHistory(['limit' => $value])->done(function ($messages) use ($deferred) {
-            $this->deleteMessages($messages)->done([$deferred, 'resolve'], [$deferred, 'reject']);
-        }, [$deferred, 'reject']);
-
-        return $deferred->promise();
+        return $this->getMessageHistory(['limit' => $value])->then(function ($messages) {
+            return $this->deleteMessages($messages);
+        });
     }
 
     /**
@@ -522,8 +442,6 @@ class Channel extends Part
      */
     public function getMessageHistory(array $options): ExtendedPromiseInterface
     {
-        $deferred = new Deferred();
-
         $resolver = new OptionsResolver();
         $resolver->setDefaults(['limit' => 100, 'cache' => true]);
         $resolver->setDefined(['before', 'after', 'around']);
@@ -536,9 +454,7 @@ class Channel extends Part
         if (isset($options['before'], $options['after']) ||
             isset($options['before'], $options['around']) ||
             isset($options['around'], $options['after'])) {
-            $deferred->reject(new \Exception('Can only specify one of before, after and around.'));
-
-            return $deferred->promise();
+            return \React\Promise\reject(new \Exception('Can only specify one of before, after and around.'));
         }
 
         $url = "channels/{$this->id}/messages?limit={$options['limit']}";
@@ -552,23 +468,18 @@ class Channel extends Part
             $url .= '&around='.($options['around'] instanceof Message ? $options['around']->id : $options['around']);
         }
 
-        $this->http->get($url, null, [], $options['cache'] ? null : 0)->done(
-            function ($responses) use ($deferred) {
-                $messages = new Collection();
+        return $this->http->get($url, null, [], $options['cache'] ? null : 0)->then(function ($responses) {
+            $messages = new Collection();
 
-                foreach ($responses as $response) {
-                    if (! $message = $this->messages->get('id', $response->id)) {
-                        $message = $this->factory->create(Message::class, $response, true);
-                    }
-                    $messages->push($message);
+            foreach ($responses as $response) {
+                if (! $message = $this->messages->get('id', $response->id)) {
+                    $message = $this->factory->create(Message::class, $response, true);
                 }
+                $messages->push($message);
+            }
 
-                $deferred->resolve($messages);
-            },
-            Bind([$deferred, 'reject'])
-        );
-
-        return $deferred->promise();
+            return $messages;
+        });
     }
 
     /**
@@ -580,25 +491,18 @@ class Channel extends Part
      */
     public function pinMessage(Message $message): ExtendedPromiseInterface
     {
-        $deferred = new Deferred();
-
         if ($message->pinned) {
-            return Reject(new \Exception('This message is already pinned.'));
+            return \React\Promise\reject(new \Exception('This message is already pinned.'));
         }
 
         if ($message->channel_id != $this->id) {
-            return Reject(new \Exception('You cannot pin a message to a different channel.'));
+            return \React\Promise\reject(new \Exception('You cannot pin a message to a different channel.'));
         }
 
-        $this->http->put("channels/{$this->id}/pins/{$message->id}")->done(
-            function () use (&$message, $deferred) {
-                $message->pinned = true;
-                $deferred->resolve($message);
-            },
-            Bind([$deferred, 'reject'])
-        );
-
-        return $deferred->promise();
+        return $this->http->put("channels/{$this->id}/pins/{$message->id}")->then(function () use (&$message) {
+            $message->pinned = true;
+            return $message;
+        });
     }
 
     /**
@@ -610,25 +514,18 @@ class Channel extends Part
      */
     public function unpinMessage(Message $message): ExtendedPromiseInterface
     {
-        $deferred = new Deferred();
-
         if (! $message->pinned) {
-            return Reject(new \Exception('This message is not pinned.'));
+            return \React\Promise\reject(new \Exception('This message is not pinned.'));
         }
 
         if ($message->channel_id != $this->id) {
-            return Reject(new \Exception('You cannot un-pin a message from a different channel.'));
+            return \React\Promise\reject(new \Exception('You cannot un-pin a message from a different channel.'));
         }
 
-        $this->http->delete("channels/{$this->id}/pins/{$message->id}")->done(
-            function () use (&$message, $deferred) {
-                $message->pinned = false;
-                $deferred->resolve($message);
-            },
-            Bind([$deferred, 'reject'])
-        );
-
-        return $deferred->promise();
+        return $this->http->delete("channels/{$this->id}/pins/{$message->id}")->then(function () use (&$message) {
+            $message->pinned = false;
+            return $message;
+        });
     }
 
     /**
@@ -639,23 +536,16 @@ class Channel extends Part
      */
     public function getInvites(): ExtendedPromiseInterface
     {
-        $deferred = new Deferred();
+        return $this->http->get($this->replaceWithVariables('channels/:id/invites'))->then(function ($response) {
+            $invites = new Collection();
 
-        $this->http->get($this->replaceWithVariables('channels/:id/invites'))->done(
-            function ($response) use ($deferred) {
-                $invites = new Collection();
+            foreach ($response as $invite) {
+                $invite = $this->factory->create(Invite::class, $invite, true);
+                $invites->push($invite);
+            }
 
-                foreach ($response as $invite) {
-                    $invite = $this->factory->create(Invite::class, $invite, true);
-                    $invites->push($invite);
-                }
-
-                $deferred->resolve($invites);
-            },
-            Bind([$deferred, 'reject'])
-        );
-
-        return $deferred->promise();
+            return $invites;
+        });
     }
 
     /**
@@ -690,36 +580,27 @@ class Channel extends Part
      */
     public function sendMessage(string $text, bool $tts = false, $embed = null, $allowed_mentions = null): ExtendedPromiseInterface
     {
+        if (! $this->allowText()) {
+            return \React\Promise\reject(new \Exception('You can only send text messages to a text enabled channel.'));
+        }
+
         if ($embed instanceof Embed) {
             $embed = $embed->getRawAttributes();
         }
-        $deferred = new Deferred();
 
-        if (! $this->allowText()) {
-            $deferred->reject(new \Exception('You can only send text messages to a text enabled channel.'));
+        $content = [
+            'content' => $text,
+            'tts' => $tts,
+            'embed' => $embed,
+            'allowed_mentions' => $allowed_mentions,
+        ];
 
-            return $deferred->promise();
-        }
+        return $this->http->post("channels/{$this->id}/messages", $content)->then(function ($response) {
+            $message = $this->factory->create(Message::class, $response, true);
+            $this->messages->push($message);
 
-        $this->http->post(
-            "channels/{$this->id}/messages",
-            [
-                'content' => $text,
-                'tts' => $tts,
-                'embed' => $embed,
-                'allowed_mentions' => $allowed_mentions,
-            ]
-        )->done(
-            function ($response) use ($deferred) {
-                $message = $this->factory->create(Message::class, $response, true);
-                $this->messages->push($message);
-
-                $deferred->resolve($message);
-            },
-            Bind([$deferred, 'reject'])
-        );
-
-        return $deferred->promise();
+            return $message;
+        });
     }
 
     /**
@@ -738,26 +619,19 @@ class Channel extends Part
         if ($embed instanceof Embed) {
             $embed = $embed->getRawAttributes();
         }
-        $deferred = new Deferred();
+        
+        $content = [
+            'content' => $text,
+            'tts' => $tts,
+            'embed' => $embed,
+        ];
 
-        $this->http->patch(
-            "channels/{$this->id}/messages/{$message->id}",
-            [
-                'content' => $text,
-                'tts' => $tts,
-                'embed' => $embed,
-            ]
-        )->done(
-            function ($response) use ($deferred) {
-                $message = $this->factory->create(Message::class, $response, true);
-                $this->messages->push($message);
+        return $this->http->patch("channels/{$this->id}/messages/{$message->id}", $content)->then(function ($response) {
+            $message = $this->factory->create(Message::class, $response, true);
+            $this->messages->push($message);
 
-                $deferred->resolve($message);
-            },
-            Bind([$deferred, 'reject'])
-        );
-
-        return $deferred->promise();
+            return $message;
+        });
     }
 
     /**
@@ -770,22 +644,16 @@ class Channel extends Part
      */
     public function sendEmbed(Embed $embed): ExtendedPromiseInterface
     {
-        $deferred = new Deferred();
-
         if (! $this->allowText()) {
-            $deferred->reject(new \Exception('You cannot send an embed to a voice channel.'));
-
-            return $deferred->promise();
+            return \React\Promise\reject(new \Exception('You cannot send an embed to a voice channel.'));
         }
 
-        $this->http->post("channels/{$this->id}/messages", ['embed' => $embed->getRawAttributes()])->done(function ($response) use ($deferred) {
+        return $this->http->post("channels/{$this->id}/messages", ['embed' => $embed->getRawAttributes()])->then(function ($response) {
             $message = $this->factory->create(Message::class, $response, true);
             $this->messages->push($message);
 
-            $deferred->resolve($message);
-        }, Bind([$deferred, 'reject']));
-
-        return $deferred->promise();
+            return $message;
+        });
     }
 
     /**
@@ -800,18 +668,12 @@ class Channel extends Part
      */
     public function sendFile(string $filepath, ?string $filename = null, ?string $content = null, bool $tts = false): ExtendedPromiseInterface
     {
-        $deferred = new Deferred();
-
         if (! $this->allowText()) {
-            $deferred->reject(new \Exception('You cannot send a file to a voice channel.'));
-
-            return $deferred->promise();
+            return \React\Promise\reject(new \Exception('You cannot send a file to a voice channel.'));
         }
 
         if (! file_exists($filepath)) {
-            $deferred->reject(new FileNotFoundException("File does not exist at path {$filepath}."));
-
-            return $deferred->promise();
+            return \React\Promise\reject(new FileNotFoundException("File does not exist at path {$filepath}."));
         }
 
         if (is_null($filename)) {
@@ -834,14 +696,12 @@ class Channel extends Part
             ],
         ]);
 
-        $this->http->post("channels/{$this->id}/messages", (string) $multipart, $multipart->getHeaders())->done(function ($response) use ($deferred) {
+        return $this->http->post("channels/{$this->id}/messages", (string) $multipart, $multipart->getHeaders())->then(function ($response) {
             $message = $this->factory->create(Message::class, $response, true);
             $this->messages->push($message);
 
-            $deferred->resolve($message);
-        }, [$deferred, 'reject']);
-
-        return $deferred->promise();
+            return $message;
+        });
     }
 
     /**
@@ -851,20 +711,11 @@ class Channel extends Part
      */
     public function broadcastTyping(): ExtendedPromiseInterface
     {
-        $deferred = new Deferred();
-
         if (! $this->allowText()) {
-            $deferred->reject(new \Exception('You cannot broadcast typing to a voice channel.'));
-
-            return $deferred->promise();
+            return \React\Promise\reject(new \Exception('You cannot broadcast typing to a voice channel.'));
         }
 
-        $this->http->post("channels/{$this->id}/typing")->done(
-            Bind([$deferred, 'resolve']),
-            Bind([$deferred, 'reject'])
-        );
-
-        return $deferred->promise();
+        return $this->http->post("channels/{$this->id}/typing");
     }
 
     /**

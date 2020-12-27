@@ -25,6 +25,7 @@ use Discord\Repository\Guild\RoleRepository;
 use Discord\Helpers\Deferred;
 use Discord\Parts\Guild\AuditLog\AuditLog;
 use Discord\Parts\Guild\AuditLog\Entry;
+use Exception;
 use React\Promise\ExtendedPromiseInterface;
 use ReflectionClass;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -168,23 +169,16 @@ class Guild extends Part
      */
     public function getInvites(): ExtendedPromiseInterface
     {
-        $deferred = new Deferred();
+        return $this->http->get($this->replaceWithVariables('guilds/:id/invites'))->then(function ($response) {
+            $invites = new Collection();
 
-        $this->http->get($this->replaceWithVariables('guilds/:id/invites'))->done(
-            function ($response) use ($deferred) {
-                $invites = new Collection();
+            foreach ($response as $invite) {
+                $invite = $this->factory->create(Invite::class, $invite, true);
+                $invites->push($invite);
+            }
 
-                foreach ($response as $invite) {
-                    $invite = $this->factory->create(Invite::class, $invite, true);
-                    $invites->push($invite);
-                }
-
-                $deferred->resolve($invites);
-            },
-            Bind([$deferred, 'reject'])
-        );
-
-        return $deferred->promise();
+            return $invites;
+        });
     }
 
     /**
@@ -293,16 +287,16 @@ class Guild extends Part
      */
     public function getVoiceRegions(): ExtendedPromiseInterface
     {
-        $deferred = new Deferred();
+        if (! is_null($this->regions)) {
+            return \React\Promise\resolve($this->regions);
+        }
 
-        $this->http->get('voice/regions')->done(function ($regions) use ($deferred) {
+        return $this->http->get('voice/regions')->then(function ($regions) {
             $regions = new Collection($regions);
 
             $this->regions = $regions;
-            $deferred->resolve($regions);
-        }, Bind([$deferred, 'reject']));
-
-        return $deferred->promise();
+            return $regions;
+        });
     }
 
     /**
@@ -315,25 +309,13 @@ class Guild extends Part
      */
     public function createRole(array $data = []): ExtendedPromiseInterface
     {
-        $deferred = new Deferred();
-
         $rolePart = $this->factory->create(Role::class);
 
-        $this->roles->save($rolePart)->done(
-            function ($role) use ($deferred, $data) {
-                $role->fill((array) $data);
+        return $this->roles->save($rolePart)->then(function ($role) use ($data) {
+            $role->fill((array) $data);
 
-                $this->roles->save($role)->done(
-                    function ($role) use ($deferred) {
-                        $deferred->resolve($role);
-                    },
-                    Bind([$deferred, 'reject'])
-                );
-            },
-            Bind([$deferred, 'reject'])
-        );
-
-        return $deferred->promise();
+            return $this->roles->save($role);
+        });
     }
 
     /**
@@ -356,30 +338,19 @@ class Guild extends Part
      */
     public function transferOwnership($member): ExtendedPromiseInterface
     {
-        $deferred = new Deferred();
-
         if ($member instanceof Member) {
             $member = $member->id;
         }
 
-        $this->http->patch(
-            $this->replaceWithVariables('guilds/:id'),
-            [
-                'owner_id' => $member,
-            ]
-        )->done(
-            function ($response) use ($member, $deferred) {
-                if ($response->owner_id != $member) {
-                    $deferred->reject(new \Exception('Ownership was not transferred correctly.'));
-                    $this->fill((array) $response);
-                } else {
-                    $deferred->resolve();
-                }
-            },
-            Bind([$deferred, 'reject'])
-        );
+        return $this->http->patch($this->replaceWithVariables('guilds/:id'), ['owner_id' => $member])->then(function ($response) use ($member) {
+            $this->fill((array) $response);
 
-        return $deferred->promise();
+            if ($response->owner_id != $member) {
+                throw new Exception('Ownership was not transferred correctly.');
+            }
+
+            return $this;
+        });
     }
 
     /**
@@ -391,27 +362,17 @@ class Guild extends Part
      */
     public function validateRegion(): ExtendedPromiseInterface
     {
-        $deferred = new Deferred();
-
-        $validate = function () use ($deferred) {
+        return $this->getVoiceRegions()->then(function () {
             $regions = $this->regions->map(function ($region) {
                 return $region->id;
             })->toArray();
 
             if (! in_array($this->region, $regions)) {
-                $deferred->resolve(self::REGION_DEFAULT);
+                return self::REGION_DEFAULT;
             } else {
-                $deferred->resolve($this->region);
+                return $this->region;
             }
-        };
-
-        if (! is_null($this->regions)) {
-            $validate();
-        } else {
-            $this->getVoiceRegions()->done($validate, Bind([$deferred, 'reject']));
-        }
-
-        return $deferred->promise();
+        });
     }
 
     /**

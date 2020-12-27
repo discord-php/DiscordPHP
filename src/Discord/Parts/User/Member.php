@@ -99,26 +99,16 @@ class Member extends Part
      */
     public function setNickname(?string $nick = null): ExtendedPromiseInterface
     {
-        $deferred = new Deferred();
-
-        $nick = $nick ?: '';
         $payload = [
-            'nick' => $nick,
+            'nick' => $nick ?: '',
         ];
 
         // jake plz
         if ($this->discord->id == $this->id) {
-            $promise = $this->http->patch("guilds/{$this->guild_id}/members/@me/nick", $payload);
+            return $this->http->patch("guilds/{$this->guild_id}/members/@me/nick", $payload);
         } else {
-            $promise = $this->http->patch("guilds/{$this->guild_id}/members/{$this->id}", $payload);
+            return $this->http->patch("guilds/{$this->guild_id}/members/{$this->id}", $payload);
         }
-
-        $promise->done(
-            Bind([$deferred, 'resolve']),
-            Bind([$deferred, 'reject'])
-        );
-
-        return $deferred->promise();
     }
 
     /**
@@ -130,25 +120,11 @@ class Member extends Part
      */
     public function moveMember($channel): ExtendedPromiseInterface
     {
-        $deferred = new Deferred();
-
         if ($channel instanceof Channel) {
             $channel = $channel->id;
         }
 
-        $this->http->patch(
-            "guilds/{$this->guild_id}/members/{$this->id}",
-            [
-                'channel_id' => $channel,
-            ]
-        )->done(function () use ($deferred) {
-            $deferred->resolve();
-        }, Bind([$deferred, 'reject']));
-
-        // At the moment we are unable to check if the member
-        // was moved successfully.
-
-        return $deferred->promise();
+        return $this->http->patch("guilds/{$this->guild_id}/members/{$this->id}", ['channel_id' => $channel]);
     }
 
     /**
@@ -160,25 +136,19 @@ class Member extends Part
      */
     public function addRole($role): ExtendedPromiseInterface
     {
-        $deferred = new Deferred();
-
         if ($role instanceof Role) {
             $role = $role->id;
         }
 
         // We don't want a double up on roles
         if (false !== array_search($role, (array) $this->attributes['roles'])) {
-            $deferred->reject(new \Exception('User already has role.'));
+            return \React\Promise\reject(new \Exception('User already has role.'));
         } else {
-            $this->http->put(
-                "guilds/{$this->guild_id}/members/{$this->id}/roles/{$role}"
-            )->done(function () use ($role, $deferred) {
+            return $this->http->put("guilds/{$this->guild_id}/members/{$this->id}/roles/{$role}")->then(function () use ($role) {
                 $this->attributes['roles'][] = $role;
-                $deferred->resolve();
-            }, Bind([$deferred, 'reject']));
+                return $this;
+            });
         }
-
-        return $deferred->promise();
     }
 
     /**
@@ -190,24 +160,18 @@ class Member extends Part
      */
     public function removeRole($role): ExtendedPromiseInterface
     {
-        $deferred = new Deferred();
-
         if ($role instanceof Role) {
             $role = $role->id;
         }
 
         if (false !== ($index = array_search($role, $this->attributes['roles']))) {
-            $this->http->delete(
-                "guilds/{$this->guild_id}/members/{$this->id}/roles/{$role}"
-            )->done(function () use ($index, $deferred) {
+            return $this->http->delete("guilds/{$this->guild_id}/members/{$this->id}/roles/{$role}")->then(function () use ($index) {
                 unset($this->attributes['roles'][$index]);
-                $deferred->resolve();
-            }, Bind([$deferred, 'reject']));
+                return $this;
+            });
         } else {
-            $deferred->reject(new \Exception('User does not have role.'));
+            return \React\Promise\reject(new \Exception('User does not have role.'));
         }
-
-        return $deferred->promise();
     }
 
     /**

@@ -61,14 +61,7 @@ class Webhook extends Part
      */
     public function execute(array $data): PromiseInterface
     {
-        $deferred = new Deferred();
-
-        $this->http->post("webhooks/{$this->id}/{$this->token}", $data)->done(
-            Bind([$deferred, 'resolve']),
-            Bind([$deferred, 'reject'])
-        );
-
-        return $deferred->promise();
+        return $this->http->post("webhooks/{$this->id}/{$this->token}", $data);
     }
 
     /**

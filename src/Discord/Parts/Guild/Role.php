@@ -75,29 +75,13 @@ class Role extends Part
     /**
      * Sets the color for a role. RGB.
      *
-     * @param int|null $red   The red value in RGB.
-     * @param int|null $green The green value in RGB.
-     * @param int|null $blue  The blue value in RGB.
-     *
-     * @return PromiseInterface
+     * @param int $red   The red value in RGB.
+     * @param int $green The green value in RGB.
+     * @param int $blue  The blue value in RGB.
      */
-    public function setColor(?int $red = null, ?int $green = null, ?int $blue = null): PromiseInterface
+    public function setColor(int $red = 0, int $green = 0, int $blue = 0)
     {
-        $deferred = new Deferred();
-
-        if (is_null($red)) {
-            $this->color = 0;
-
-            $deferred->resolve();
-
-            return $deferred->promise();
-        }
-
         $this->color = ($red * 16 ** 4 + $green * 16 ** 2 + $blue);
-
-        $deferred->resolve();
-
-        return $deferred->promise();
     }
 
     /**
