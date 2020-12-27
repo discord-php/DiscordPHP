@@ -232,7 +232,7 @@ class Member extends Part
         } else {
             $roles = [];
             
-            /** @var Role */
+            /* @var Role */
             foreach ($this->roles ?? [] as $role) {
                 $roles[] = $role->id;
                 $bitwise |= $role->permissions->bitwise;
@@ -251,15 +251,15 @@ class Member extends Part
         }
 
         if ($channel) {
-            /** @var Overwrite */
+            /* @var Overwrite */
             if ($overwrite = $channel->overwrites->get('id', $this->guild->id)) {
                 $bitwise |= $overwrite->allow->bitwise;
                 $bitwise &= ~($overwrite->deny->bitwise);
             }
             
-            /** @var Overwrite */
+            /* @var Overwrite */
             foreach ($channel->overwrites as $overwrite) {
-                if ($overwrite->type !== 'role' || !in_array($overwrite->id, $roles)) {
+                if ($overwrite->type !== 'role' || ! in_array($overwrite->id, $roles)) {
                     continue;
                 }
 
@@ -267,7 +267,7 @@ class Member extends Part
                 $bitwise &= ~($overwrite->deny->bitwise);
             }
 
-            /** @var Overwrite */
+            /* @var Overwrite */
             if ($overwrite = $channel->overwrites->get('id', $this->id)) {
                 $bitwise |= $overwrite->allow->bitwise;
                 $bitwise &= ~($overwrite->deny->bitwise);

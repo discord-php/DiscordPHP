@@ -68,7 +68,7 @@ class Client extends Part
 
     /**
      * Gets the user attribute.
-     * 
+     *
      * @return User
      */
     protected function getUserAttribute()
