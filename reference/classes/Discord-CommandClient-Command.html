@@ -209,6 +209,13 @@
 <dd>Handles dynamic get calls to the class.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/Discord-CommandClient-Command.html#method_getCommand">getCommand()</a>
+    <span>
+                        &nbsp;: <a href="classes/Discord-CommandClient-Command.html"><abbr title="\Discord\CommandClient\Command">Command</abbr></a>|null    </span>
+</dt>
+<dd>Attempts to get a sub command.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Discord-CommandClient-Command.html#method_getHelp">getHelp()</a>
     <span>
                         &nbsp;: array&lt;string|int, mixed&gt;    </span>
@@ -741,7 +748,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/CommandClient/Command.php"><a href="files/src-discord-commandclient-command.html"><abbr title="src/Discord/CommandClient/Command.php">Command.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">271</span>
+    <span class="phpdocumentor-element-found-in__line">292</span>
 </aside>
 
         <p class="phpdocumentor-summary">Handles dynamic get calls to the class.</p>
@@ -781,6 +788,61 @@
             -public
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_getCommand">
+        getCommand()
+        <a href="classes/Discord-CommandClient-Command.html#method_getCommand" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/CommandClient/Command.php"><a href="files/src-discord-commandclient-command.html"><abbr title="src/Discord/CommandClient/Command.php">Command.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">133</span>
+</aside>
+
+        <p class="phpdocumentor-summary">Attempts to get a sub command.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                <span class="phpdocumentor-signature__name">getCommand</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$command</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">bool&nbsp;</span><span class="phpdocumentor-signature__argument__name">$aliases</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">true</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-CommandClient-Command.html"><abbr title="\Discord\CommandClient\Command">Command</abbr></a>|null</span></code>
+
+        <section class="phpdocumentor-description"></section>
+
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$command</span>
+                : <span class="phpdocumentor-signature__argument__return-type">string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>The command to get.</p>
+</section>
+
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$aliases</span>
+                : <span class="phpdocumentor-signature__argument__return-type">bool</span>
+                 = <span class="phpdocumentor-signature__argument__default-value">true</span>            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>WHether to search aliases as well.</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-CommandClient-Command.html"><abbr title="\Discord\CommandClient\Command">Command</abbr></a>|null</span>
+            &mdash;
+            <section class="phpdocumentor-description"></section>
+
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_getHelp">
         getHelp()
         <a href="classes/Discord-CommandClient-Command.html#method_getHelp" class="headerlink"><i class="fas fa-link"></i></a>
@@ -788,7 +850,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/CommandClient/Command.php"><a href="files/src-discord-commandclient-command.html"><abbr title="src/Discord/CommandClient/Command.php">Command.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">247</span>
+    <span class="phpdocumentor-element-found-in__line">268</span>
 </aside>
 
         <p class="phpdocumentor-summary">Gets help for the command.</p>
@@ -835,7 +897,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/CommandClient/Command.php"><a href="files/src-discord-commandclient-command.html"><abbr title="src/Discord/CommandClient/Command.php">Command.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">208</span>
+    <span class="phpdocumentor-element-found-in__line">229</span>
 </aside>
 
         <p class="phpdocumentor-summary">Executes the command.</p>
@@ -891,7 +953,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/CommandClient/Command.php"><a href="files/src-discord-commandclient-command.html"><abbr title="src/Discord/CommandClient/Command.php">Command.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">135</span>
+    <span class="phpdocumentor-element-found-in__line">156</span>
 </aside>
 
         <p class="phpdocumentor-summary">Registers a new command.</p>
@@ -971,7 +1033,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/CommandClient/Command.php"><a href="files/src-discord-commandclient-command.html"><abbr title="src/Discord/CommandClient/Command.php">Command.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">176</span>
+    <span class="phpdocumentor-element-found-in__line">197</span>
 </aside>
 
         <p class="phpdocumentor-summary">Registers a sub-command alias.</p>
@@ -1026,7 +1088,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/CommandClient/Command.php"><a href="files/src-discord-commandclient-command.html"><abbr title="src/Discord/CommandClient/Command.php">Command.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">161</span>
+    <span class="phpdocumentor-element-found-in__line">182</span>
 </aside>
 
         <p class="phpdocumentor-summary">Unregisters a sub-command.</p>
@@ -1087,7 +1149,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/CommandClient/Command.php"><a href="files/src-discord-commandclient-command.html"><abbr title="src/Discord/CommandClient/Command.php">Command.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">191</span>
+    <span class="phpdocumentor-element-found-in__line">212</span>
 </aside>
 
         <p class="phpdocumentor-summary">Unregisters a sub-command alias.</p>

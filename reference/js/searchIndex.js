@@ -11,6 +11,11 @@ Search.appendIndex(
             "summary": "Creates\u0020a\u0020command\u0020instance.",
             "url": "classes/Discord-CommandClient-Command.html#method___construct"
         },                {
+            "fqsen": "\\Discord\\CommandClient\\Command\u003A\u003AgetCommand\u0028\u0029",
+            "name": "getCommand",
+            "summary": "Attempts\u0020to\u0020get\u0020a\u0020sub\u0020command.",
+            "url": "classes/Discord-CommandClient-Command.html#method_getCommand"
+        },                {
             "fqsen": "\\Discord\\CommandClient\\Command\u003A\u003AregisterSubCommand\u0028\u0029",
             "name": "registerSubCommand",
             "summary": "Registers\u0020a\u0020new\u0020command.",
@@ -1626,11 +1631,6 @@ Search.appendIndex(
             "summary": "Creates\u0020a\u0020message\u0020collector\u0020for\u0020the\u0020channel.",
             "url": "classes/Discord-Parts-Channel-Channel.html#method_createMessageCollector"
         },                {
-            "fqsen": "\\Discord\\Parts\\Channel\\Channel\u003A\u003AgetChannelType\u0028\u0029",
-            "name": "getChannelType",
-            "summary": "Returns\u0020the\u0020channel\u0020type.",
-            "url": "classes/Discord-Parts-Channel-Channel.html#method_getChannelType"
-        },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Channel\u003A\u003AallowText\u0028\u0029",
             "name": "allowText",
             "summary": "Returns\u0020if\u0020allow\u0020text.",
@@ -3220,6 +3220,11 @@ Search.appendIndex(
             "name": "afterConstruct",
             "summary": "Runs\u0020any\u0020extra\u0020construction\u0020tasks.",
             "url": "classes/Discord-Parts-User-Client.html#method_afterConstruct"
+        },                {
+            "fqsen": "\\Discord\\Parts\\User\\Client\u003A\u003AgetUserAttribute\u0028\u0029",
+            "name": "getUserAttribute",
+            "summary": "Gets\u0020the\u0020user\u0020attribute.",
+            "url": "classes/Discord-Parts-User-Client.html#method_getUserAttribute"
         },                {
             "fqsen": "\\Discord\\Parts\\User\\Client\u003A\u003AsetAvatar\u0028\u0029",
             "name": "setAvatar",

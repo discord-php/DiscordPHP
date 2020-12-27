@@ -514,13 +514,6 @@
 <dd>Fills the parts attributes from an array.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Discord-Parts-Channel-Channel.html#method_getChannelType">getChannelType()</a>
-    <span>
-                        &nbsp;: string    </span>
-</dt>
-<dd>Returns the channel type.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Discord-Parts-Channel-Channel.html#method_getCreatableAttributes">getCreatableAttributes()</a>
     <span>
                         &nbsp;: array&lt;string|int, mixed&gt;    </span>
@@ -1326,7 +1319,8 @@ JSON. Used for JsonSerializable.</dd>
     <span class="phpdocumentor-signature__name">$members</span>
     </code>
 
-        <section class="phpdocumentor-description"></section>
+        <section class="phpdocumentor-description"><p>voice channel only - members in the channel</p>
+</section>
 
     
 
@@ -1357,7 +1351,8 @@ JSON. Used for JsonSerializable.</dd>
     <span class="phpdocumentor-signature__name">$messages</span>
     </code>
 
-        <section class="phpdocumentor-description"></section>
+        <section class="phpdocumentor-description"><p>text channel only - messages sent in the channel</p>
+</section>
 
     
 
@@ -1452,7 +1447,8 @@ JSON. Used for JsonSerializable.</dd>
     <span class="phpdocumentor-signature__name">$overwrites</span>
     </code>
 
-        <section class="phpdocumentor-description"></section>
+        <section class="phpdocumentor-description"><p>permission overwrites</p>
+</section>
 
     
 
@@ -1804,7 +1800,8 @@ JSON. Used for JsonSerializable.</dd>
     <span class="phpdocumentor-signature__name">$webhooks</span>
     </code>
 
-        <section class="phpdocumentor-description"></section>
+        <section class="phpdocumentor-description"><p>webhooks in the channel</p>
+</section>
 
     
 
@@ -2476,7 +2473,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">946</span>
+    <span class="phpdocumentor-element-found-in__line">928</span>
 </aside>
 
         <p class="phpdocumentor-summary">Returns if allow text.</p>
@@ -2511,7 +2508,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">956</span>
+    <span class="phpdocumentor-element-found-in__line">938</span>
 </aside>
 
         <p class="phpdocumentor-summary">Returns if allow voice.</p>
@@ -2869,41 +2866,6 @@ JSON. Used for JsonSerializable.</dd>
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_getChannelType">
-        getChannelType()
-        <a href="classes/Discord-Parts-Channel-Channel.html#method_getChannelType" class="headerlink"><i class="fas fa-link"></i></a>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">928</span>
-</aside>
-
-        <p class="phpdocumentor-summary">Returns the channel type.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                <span class="phpdocumentor-signature__name">getChannelType</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
-
-        <section class="phpdocumentor-description"></section>
-
-    
-    
-
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">string</span>
-            &mdash;
-            <section class="phpdocumentor-description"><p>Either 'text' or 'voice'.</p>
-</section>
-
-    
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                        "
->
     <h4 class="phpdocumentor-element__name" id="method_getCreatableAttributes">
         getCreatableAttributes()
         <a href="classes/Discord-Parts-Channel-Channel.html#method_getCreatableAttributes" class="headerlink"><i class="fas fa-link"></i></a>
@@ -2911,7 +2873,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">964</span>
+    <span class="phpdocumentor-element-found-in__line">946</span>
 </aside>
 
         <p class="phpdocumentor-summary">Returns the attributes needed to create.</p>
@@ -3170,7 +3132,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">996</span>
+    <span class="phpdocumentor-element-found-in__line">978</span>
 </aside>
 
         <p class="phpdocumentor-summary">Gets the attributes to pass to repositories.</p>
@@ -3205,7 +3167,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Channel.php"><a href="files/src-discord-parts-channel-channel.html"><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">983</span>
+    <span class="phpdocumentor-element-found-in__line">965</span>
 </aside>
 
         <p class="phpdocumentor-summary">Returns the updatable attributes.</p>
