@@ -26,19 +26,17 @@ use Discord\Parts\User\User;
  *
  * @property Member                       $member The member that the presence update affects.
  * @property User                         $user The user that the presence update affects.
- * @property Collection|Role[]            $roles The roles that the user has.
  * @property Guild                        $guild The guild that the presence update affects.
  * @property string                       $guild_id The unique identifier of the guild that the presence update affects.
  * @property string                       $status The updated status of the user.
  * @property Activity                     $game The updated game of the user.
- * @property Carbon                       $premium_since Time since user started boosting guild.
  */
 class PresenceUpdate extends Part
 {
     /**
      * {@inheritdoc}
      */
-    protected $fillable = ['user', 'roles', 'guild_id', 'status', 'activities', 'client_status', 'premium_since', 'nick'];
+    protected $fillable = ['user', 'guild_id', 'status', 'activities', 'client_status'];
 
     /**
      * Gets the member attribute.
