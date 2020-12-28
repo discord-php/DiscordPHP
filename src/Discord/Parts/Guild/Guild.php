@@ -42,8 +42,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * @property Carbon            $joined_at          A timestamp of when the current user joined the guild.
  * @property string            $afk_channel_id     The unique identifier of the AFK channel ID.
  * @property int               $afk_timeout        How long you will remain in the voice channel until you are moved into the AFK channel.
- * @property bool              $embed_enabled      Whether the embed is enabled.
- * @property string            $embed_channel_id   The unique identifier of the channel that will be used for the embed.
  * @property string[]          $features           An array of features that the guild has.
  * @property string            $splash             The URL to the guild splash.
  * @property string            $discovery_splash Discovery splash hash. Only for discoverable guilds.
@@ -106,8 +104,6 @@ class Guild extends Part
         'joined_at',
         'afk_channel_id',
         'afk_timeout',
-        'embed_enabled',
-        'embed_channel_id',
         'features',
         'splash',
         'discovery_splash',
