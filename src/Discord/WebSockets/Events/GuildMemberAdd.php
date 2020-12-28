@@ -14,6 +14,7 @@ namespace Discord\WebSockets\Events;
 use Discord\Parts\User\Member;
 use Discord\WebSockets\Event;
 use Discord\Helpers\Deferred;
+use Discord\Parts\User\User;
 
 class GuildMemberAdd extends Event
 {
@@ -22,15 +23,15 @@ class GuildMemberAdd extends Event
      */
     public function handle(Deferred &$deferred, $data): void
     {
+        /** @var \Discord\Parts\User\Member */
         $member = $this->factory->create(Member::class, $data, true);
 
         if ($guild = $this->discord->guilds->get('id', $member->guild_id)) {
             $guild->members->push($member);
             ++$guild->member_count;
-
-            $this->discord->guilds->push($guild);
         }
 
+        $this->discord->users->push($member->user);
         $deferred->resolve($member);
     }
 }
