@@ -14,6 +14,7 @@ namespace Discord\Parts\User;
 use Carbon\Carbon;
 use Discord\Helpers\Collection;
 use Discord\Parts\Channel\Channel;
+use Discord\Parts\Channel\Overwrite;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Guild\Role;
 use Discord\Parts\Part;
@@ -213,7 +214,7 @@ class Member extends Part
 
             /* @var Overwrite */
             foreach ($channel->overwrites as $overwrite) {
-                if ($overwrite->type !== 'role' || ! in_array($overwrite->id, $roles)) {
+                if ($overwrite->type !== Overwrite::TYPE_ROLE || ! in_array($overwrite->id, $roles)) {
                     continue;
                 }
 

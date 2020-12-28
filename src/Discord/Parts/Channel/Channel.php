@@ -220,9 +220,9 @@ class Channel extends Part
     public function setPermissions(Part $part, array $allow = [], array $deny = []): ExtendedPromiseInterface
     {
         if ($part instanceof Member) {
-            $type = 'member';
+            $type = Overwrite::TYPE_MEMBER;
         } elseif ($part instanceof Role) {
-            $type = 'role';
+            $type = Overwrite::TYPE_ROLE;
         } else {
             return \React\Promise\reject(new InvalidOverwriteException('Given part was not one of member or role.'));
         }
@@ -255,9 +255,9 @@ class Channel extends Part
     public function setOverwrite(Part $part, Overwrite $overwrite): ExtendedPromiseInterface
     {
         if ($part instanceof Member) {
-            $type = 'member';
+            $type = Overwrite::TYPE_MEMBER;
         } elseif ($part instanceof Role) {
-            $type = 'role';
+            $type = Overwrite::TYPE_ROLE;
         } else {
             return \React\Promise\reject(new InvalidOverwriteException('Given part was not one of member or role.'));
         }
