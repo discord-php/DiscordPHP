@@ -62,7 +62,7 @@ class BanRepository extends AbstractRepository
         }
 
         if (! is_null($daysToDeleteMessages)) {
-            $content['delete-message-days'] = $daysToDeleteMessages;
+            $content['delete_message_days'] = $daysToDeleteMessages;
         }
 
         if (! is_null($reason)) {
