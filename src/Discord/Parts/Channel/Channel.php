@@ -574,11 +574,12 @@ class Channel extends Part
      * @param bool             $tts              Whether the message should be sent with text to speech enabled.
      * @param Embed|array|null $embed            An embed to send.
      * @param array|null       $allowed_mentions Set mentions allowed in the message.
+     * @param Message|null     $replyTo          The message to reply to.
      *
      * @return ExtendedPromiseInterface
      * @throws \Exception
      */
-    public function sendMessage(string $text, bool $tts = false, $embed = null, $allowed_mentions = null): ExtendedPromiseInterface
+    public function sendMessage(string $text, bool $tts = false, $embed = null, $allowed_mentions = null, ?Message $replyTo = null): ExtendedPromiseInterface
     {
         if (! $this->allowText()) {
             return \React\Promise\reject(new \Exception('You can only send text messages to a text enabled channel.'));
@@ -594,6 +595,13 @@ class Channel extends Part
             'embed' => $embed,
             'allowed_mentions' => $allowed_mentions,
         ];
+
+        if (! is_null($replyTo)) {
+            $content['message_reference'] = [
+                'message_id' => $replyTo->id,
+                'channel_id' => $replyTo->channel_id,
+            ];
+        }
 
         return $this->http->post("channels/{$this->id}/messages", $content)->then(function ($response) {
             return $this->factory->create(Message::class, $response, true);

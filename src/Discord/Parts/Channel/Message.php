@@ -51,6 +51,7 @@ use React\Promise\ExtendedPromiseInterface;
  * @property object                         $activity         Current message activity. Requires rich presence.
  * @property object                         $application      Application of message. Requires rich presence.
  * @property object                         $message_reference Message that is referenced by this message.
+ * @property Message|null                   $referenced_message The message that is referenced in a reply.
  * @property int                            $flags             Message flags.
  * @property bool                           $crossposted       Message has been crossposted.
  * @property bool                           $is_crosspost      Message is a crosspost from another channel.
@@ -75,6 +76,7 @@ class Message extends Part
     const CHANNEL_FOLLOW_ADD = 12;
     const GUILD_DISCOVERY_DISQUALIFIED = 14;
     const GUILD_DISCOVERY_REQUALIFIED = 15;
+    const TYPE_REPLY = 19;
 
     const ACTIVITY_JOIN = 1;
     const ACTIVITY_SPECTATE = 2;
@@ -110,6 +112,7 @@ class Message extends Part
         'activity',
         'application',
         'message_reference',
+        'referenced_message',
         'flags',
     ];
 
@@ -321,6 +324,33 @@ class Message extends Part
     }
 
     /**
+     * Gets the referenced message attribute, if present.
+     *
+     * @return Message
+     */
+    protected function getReferencedMessageAttribute(): ?Message
+    {
+        // try get the message from the relevant repository
+        // otherwise, if message is present in payload, create it
+        // otherwise, return null
+        if (isset($this->attributes['message_reference'])) {
+            $reference = $this->attributes['message_reference'];
+
+            if ($channel = $this->discord->getChannel($reference->channel_id ?? null)) {
+                if ($message = $channel->messages->get('id', $reference->message_id ?? null)) {
+                    return $message;
+                }
+            }
+        }
+
+        if (isset($this->attributes['referenced_message'])) {
+            return $this->factory->create(Message::class, $this->attributes['referenced_message'] ?? [], true);
+        }
+
+        return null;
+    }
+
+    /**
      * Returns the timestamp attribute.
      *
      * @return Carbon     The time that the message was sent.
@@ -360,7 +390,7 @@ class Message extends Part
      */
     public function reply(string $text): ExtendedPromiseInterface
     {
-        return $this->channel->sendMessage("{$this->author}, {$text}");
+        return $this->channel->sendMessage($text, false, null, null, $this);
     }
 
     /**
