@@ -3,6 +3,7 @@
 ## Version 6.0.0
 
 - Removed unnecessary deferred promises from various parts and repositories.
+- `Message::reply()` now creates a "Discord reply" rather than the old way which was simply a mention with the content afterwards.
 
 ### Voice Client
 
