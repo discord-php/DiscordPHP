@@ -596,10 +596,7 @@ class Channel extends Part
         ];
 
         return $this->http->post("channels/{$this->id}/messages", $content)->then(function ($response) {
-            $message = $this->factory->create(Message::class, $response, true);
-            $this->messages->push($message);
-
-            return $message;
+            return $this->factory->create(Message::class, $response, true);
         });
     }
 
@@ -619,7 +616,7 @@ class Channel extends Part
         if ($embed instanceof Embed) {
             $embed = $embed->getRawAttributes();
         }
-        
+
         $content = [
             'content' => $text,
             'tts' => $tts,
@@ -627,10 +624,7 @@ class Channel extends Part
         ];
 
         return $this->http->patch("channels/{$this->id}/messages/{$message->id}", $content)->then(function ($response) {
-            $message = $this->factory->create(Message::class, $response, true);
-            $this->messages->push($message);
-
-            return $message;
+            return $this->factory->create(Message::class, $response, true);
         });
     }
 
@@ -649,10 +643,7 @@ class Channel extends Part
         }
 
         return $this->http->post("channels/{$this->id}/messages", ['embed' => $embed->getRawAttributes()])->then(function ($response) {
-            $message = $this->factory->create(Message::class, $response, true);
-            $this->messages->push($message);
-
-            return $message;
+            return $this->factory->create(Message::class, $response, true);
         });
     }
 
@@ -697,10 +688,7 @@ class Channel extends Part
         ]);
 
         return $this->http->post("channels/{$this->id}/messages", (string) $multipart, $multipart->getHeaders())->then(function ($response) {
-            $message = $this->factory->create(Message::class, $response, true);
-            $this->messages->push($message);
-
-            return $message;
+            return $this->factory->create(Message::class, $response, true);
         });
     }
 

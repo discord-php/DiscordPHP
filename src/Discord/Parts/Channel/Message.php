@@ -521,9 +521,7 @@ class Message extends Part
     {
         return $this->http->patch("channels/{$this->channel_id}/messages/{$this->id}", [
             'embed' => $embed->getRawAttributes(),
-        ])->then(function ($data) {
-            return $this->fill((array) $data);
-        });
+        ]);
     }
 
     /**

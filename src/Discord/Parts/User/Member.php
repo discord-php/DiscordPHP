@@ -140,10 +140,7 @@ class Member extends Part
         if (false !== array_search($role, (array) $this->attributes['roles'])) {
             return \React\Promise\reject(new \Exception('User already has role.'));
         } else {
-            return $this->http->put("guilds/{$this->guild_id}/members/{$this->id}/roles/{$role}")->then(function () use ($role) {
-                $this->attributes['roles'][] = $role;
-                return $this;
-            });
+            return $this->http->put("guilds/{$this->guild_id}/members/{$this->id}/roles/{$role}");
         }
     }
 
@@ -160,11 +157,8 @@ class Member extends Part
             $role = $role->id;
         }
 
-        if (false !== ($index = array_search($role, $this->attributes['roles']))) {
-            return $this->http->delete("guilds/{$this->guild_id}/members/{$this->id}/roles/{$role}")->then(function () use ($index) {
-                unset($this->attributes['roles'][$index]);
-                return $this;
-            });
+        if (false !== array_search($role, $this->attributes['roles'])) {
+            return $this->http->delete("guilds/{$this->guild_id}/members/{$this->id}/roles/{$role}");
         } else {
             return \React\Promise\reject(new \Exception('User does not have role.'));
         }

@@ -340,8 +340,6 @@ class Guild extends Part
         }
 
         return $this->http->patch($this->replaceWithVariables('guilds/:id'), ['owner_id' => $member])->then(function ($response) use ($member) {
-            $this->fill((array) $response);
-
             if ($response->owner_id != $member) {
                 throw new Exception('Ownership was not transferred correctly.');
             }
