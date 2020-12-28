@@ -1,5 +1,25 @@
 # Changelog
 
+## Version 6.0.0
+
+- Removed unnecessary deferred promises from various parts and repositories.
+
+### Voice Client
+
+- The following functions no longer return promises, rather they throw exceptions and will return void. This is because none of these functions actually did any async work, therefore promises were redundant in this situation.
+    - `setSpeaking()`
+    - `switchChannel()`
+    - `setFrameSize()`
+    - `setBitrate()`
+    - `setVolume()`
+    - `setAudioApplication()`
+    - `setMuteDeaf()`
+    - `pause()`
+    - `unpause()`
+    - `stop()`
+    - `close()`
+    - `getRecieveStream()`
+
 ## Version 5.1.0
 
 - Refactored and rebuilt the HTTP client.

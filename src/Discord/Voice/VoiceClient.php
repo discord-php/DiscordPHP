@@ -640,10 +640,9 @@ class VoiceClient extends EventEmitter
 
         $this->on('resumed', function () {
             $this->logger->debug('voice client resumed');
-            $this->unpause()->done(function () {
-                $this->speaking = false;
-                $this->setSpeaking(true);
-            });
+            $this->unpause();
+            $this->speaking = false;
+            $this->setSpeaking(true);
         });
     }
 
@@ -921,23 +920,15 @@ class VoiceClient extends EventEmitter
      * Sets the speaking value of the client.
      *
      * @param bool $speaking Whether the client is speaking or not.
-     *
-     * @return ExtendedPromiseInterface Whether the client is speaking or not.
      */
-    public function setSpeaking(bool $speaking = true): ExtendedPromiseInterface
+    public function setSpeaking(bool $speaking = true): void
     {
-        $deferred = new Deferred();
-
         if ($this->speaking == $speaking) {
-            $deferred->resolve();
-
-            return $deferred->promise();
+            return;
         }
 
         if (! $this->ready) {
-            $deferred->reject(new \Exception('Voice Client is not ready.'));
-
-            return $deferred->promise();
+            throw new \Exception('Voice Client is not ready.');
         }
 
         $this->send([
@@ -949,27 +940,17 @@ class VoiceClient extends EventEmitter
         ]);
 
         $this->speaking = $speaking;
-
-        $deferred->resolve();
-
-        return $deferred->promise();
     }
 
     /**
      * Switches voice channels.
      *
      * @param Channel $channel The channel to switch to.
-     *
-     * @return ExtendedPromiseInterface
      */
-    public function switchChannel(Channel $channel): ExtendedPromiseInterface
+    public function switchChannel(Channel $channel): void
     {
-        $deferred = new Deferred();
-
         if ($channel->type != Channel::TYPE_VOICE) {
-            $deferred->reject(new \InvalidArgumentException('Channel must be a voice chnanel to be able to switch'));
-
-            return $deferred->promise();
+            throw new \InvalidArgumentException('Channel must be a voice chnanel to be able to switch');
         }
 
         $this->mainSend([
@@ -983,10 +964,6 @@ class VoiceClient extends EventEmitter
         ]);
 
         $this->channel = $channel;
-
-        $deferred->resolve();
-
-        return $deferred->promise();
     }
 
     /**
@@ -998,124 +975,76 @@ class VoiceClient extends EventEmitter
      * - 60
      *
      * @param int $fs The frame size to set.
-     *
-     * @return ExtendedPromiseInterface
      */
-    public function setFrameSize(int $fs): ExtendedPromiseInterface
+    public function setFrameSize(int $fs): void
     {
-        $deferred = new Deferred();
-
         $legal = [20, 40, 60];
 
         if (false === array_search($fs, $legal)) {
-            $deferred->reject(new \InvalidArgumentException("{$fs} is not a valid option. Valid options are: ".trim(implode(', ', $legal), ', ')));
-
-            return $deferred->promise();
+            throw new \InvalidArgumentException("{$fs} is not a valid option. Valid options are: ".trim(implode(', ', $legal), ', '));
         }
 
         if ($this->speaking) {
-            $deferred->reject(new \Exception('Cannot change frame size while playing.'));
-
-            return $deferred->promise();
+            throw new \Exception('Cannot change frame size while playing.');
         }
 
         $this->frameSize = $fs;
-
-        $deferred->resolve();
-
-        return $deferred->promise();
     }
 
     /**
      * Sets the bitrate.
      *
      * @param int $bitrate The bitrate to set.
-     *
-     * @return ExtendedPromiseInterface
      */
-    public function setBitrate(int $bitrate): ExtendedPromiseInterface
+    public function setBitrate(int $bitrate): void
     {
-        $deferred = new Deferred();
-
         if ($bitrate > 128000 || $bitrate < 8000) {
-            $deferred->reject(new \InvalidArgumentException("{$bitrate} is not a valid option. The bitrate must be between 8,000bpm and 128,000bpm."));
-
-            return $deferred->promise();
+            throw new \InvalidArgumentException("{$bitrate} is not a valid option. The bitrate must be between 8,000bpm and 128,000bpm.");
         }
 
         if ($this->speaking) {
-            $deferred->reject(new \Exception('Cannot change bitrate while playing.'));
-
-            return $deferred->promise();
+            throw new \Exception('Cannot change bitrate while playing.');
         }
 
         $this->bitrate = $bitrate;
-
-        $deferred->resolve();
-
-        return $deferred->promise();
     }
 
     /**
      * Sets the volume.
      *
      * @param int $volume The volume to set.
-     *
-     * @return ExtendedPromiseInterface
      */
-    public function setVolume(int $volume): ExtendedPromiseInterface
+    public function setVolume(int $volume): void
     {
-        $deferred = new Deferred();
-
         if ($volume > 100 || $volume < 0) {
-            $deferred->reject(new \InvalidArgumentException("{$volume}% is not a valid option. The bitrate must be between 0% and 100%."));
-
-            return $deferred->promise();
+            throw new \InvalidArgumentException("{$volume}% is not a valid option. The bitrate must be between 0% and 100%.");
         }
 
         if ($this->speaking) {
-            $deferred->reject(new \Exception('Cannot change volume while playing.'));
-
-            return $deferred->promise();
+            throw new \Exception('Cannot change volume while playing.');
         }
 
         $this->volume = $volume;
-
-        $deferred->resolve();
-
-        return $deferred->promise();
     }
 
     /**
      * Sets the audio application.
      *
      * @param string $app The audio application to set.
-     *
-     * @return ExtendedPromiseInterface
      */
-    public function setAudioApplication(string $app): ExtendedPromiseInterface
+    public function setAudioApplication(string $app): void
     {
-        $deferred = new Deferred();
-
         $legal = ['voip', 'audio', 'lowdelay'];
 
         if (false === array_search($app, $legal)) {
-            $deferred->reject(new \InvalidArgumentException("{$app} is not a valid option. Valid options are: ".trim(implode(', ', $legal), ', ')));
-
-            return $deferred->promise();
+            throw new \InvalidArgumentException("{$app} is not a valid option. Valid options are: ".trim(implode(', ', $legal), ', '));
         }
 
         if ($this->speaking) {
-            $deferred->reject(new \Exception('Cannot change audio application while playing.'));
-
-            return $deferred->promise();
+            throw new \Exception('Cannot change audio application while playing.');
         }
 
         $this->audioApplication = $app;
-
-        $deferred->resolve();
-
-        return $deferred->promise();
     }
 
     /**
@@ -1145,16 +1074,11 @@ class VoiceClient extends EventEmitter
      *
      * @param  bool                     $mute Whether you should be muted.
      * @param  bool                     $deaf Whether you should be deaf.
-     * @return ExtendedPromiseInterface
      */
-    public function setMuteDeaf(bool $mute, bool $deaf): ExtendedPromiseInterface
+    public function setMuteDeaf(bool $mute, bool $deaf): void
     {
-        $deferred = new Deferred();
-
         if (! $this->ready) {
-            $deferred->reject(new \Exception('The voice client must be ready before you can set mute or deaf.'));
-
-            return $deferred->promise();
+            throw new \Exception('The voice client must be ready before you can set mute or deaf.');
         }
 
         $this->mute = $mute;
@@ -1175,96 +1099,56 @@ class VoiceClient extends EventEmitter
         if (! $deaf) {
             $this->client->on('message', [$this, 'handleAudioData']);
         }
-
-        $deferred->resolve();
-
-        return $deferred->promise();
     }
 
     /**
      * Pauses the current sound.
-     *
-     * @return ExtendedPromiseInterface
      */
-    public function pause(): ExtendedPromiseInterface
+    public function pause(): void
     {
-        $deferred = new Deferred();
-
         if (! $this->speaking) {
-            $deferred->reject(new \Exception('Audio must be playing to pause it.'));
-
-            return $deferred->promise();
+            throw new \Exception('Audio must be playing to pause it.');
         }
 
         $this->isPaused = true;
-        $deferred->resolve();
-
-        return $deferred->promise();
     }
 
     /**
      * Unpauses the current sound.
-     *
-     * @return ExtendedPromiseInterface
      */
-    public function unpause(): ExtendedPromiseInterface
+    public function unpause(): void
     {
-        $deferred = new Deferred();
-
         if (! $this->speaking) {
-            $deferred->reject(new \Exception('Audio must be playing to unpause it.'));
-
-            return $deferred->promise();
+            throw new \Exception('Audio must be playing to unpause it.');
         }
 
         $this->isPaused = false;
         $this->timestamp = microtime(true) * 1000;
-        $deferred->resolve();
-
-        return $deferred->promise();
     }
 
     /**
      * Stops the current sound.
-     *
-     * @return ExtendedPromiseInterface
      */
-    public function stop(): ExtendedPromiseInterface
+    public function stop(): void
     {
-        $deferred = new Deferred();
-
         if ($this->stopAudio) {
-            $deferred->reject(new \Exception('Audio is already being stopped.'));
-
-            return $deferred->promise();
+            throw new \Exception('Audio is already being stopped.');
         }
 
         if (! $this->speaking) {
-            $deferred->reject(new \Exception('Audio must be playing to stop it.'));
-
-            return $deferred->promise();
+            throw new \Exception('Audio must be playing to stop it.');
         }
 
         $this->stopAudio = true;
-
-        $deferred->resolve();
-
-        return $deferred->promise();
     }
 
     /**
      * Closes the voice client.
-     *
-     * @return ExtendedPromiseInterface
      */
-    public function close(): ExtendedPromiseInterface
+    public function close(): void
     {
-        $deferred = new Deferred();
-
         if (! $this->ready) {
-            $deferred->reject(new \Exception('Voice Client is not connected.'));
-
-            return $deferred->promise();
+            throw new \Exception('Voice Client is not connected.');
         }
 
         $this->stop();
@@ -1304,10 +1188,6 @@ class VoiceClient extends EventEmitter
         $this->speakingStatus = new Collection([], 'ssrc');
 
         $this->emit('close');
-
-        $deferred->resolve();
-
-        return $deferred->promise();
     }
 
     /**
@@ -1370,29 +1250,21 @@ class VoiceClient extends EventEmitter
      *
      * @param int|string $id Either a SSRC or User ID.
      *
-     * @return ExtendedPromiseInterface
+     * @return RecieveStream
      */
-    public function getRecieveStream($id): ExtendedPromiseInterface
+    public function getRecieveStream($id): RecieveStream
     {
-        $deferred = new Deferred();
-
         if (isset($this->recieveStreams[$id])) {
-            $deferred->resolve($this->recieveStreams[$id]);
-
-            return $deferred->promise();
+            return $this->recieveStreams[$id];
         }
 
         foreach ($this->speakingStatus as $status) {
             if ($status->user_id == $id) {
-                $deferred->resolve($this->recieveStreams[$status->ssrc]);
-
-                return $deferred->promise();
+                return $this->recieveStreams[$status->ssrc];
             }
         }
 
-        $deferred->reject(new \Exception("Could not find a recieve stream with the ID \"{$id}\"."));
-
-        return $deferred->promise();
+        return null;
     }
 
     /**
