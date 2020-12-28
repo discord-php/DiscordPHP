@@ -14,16 +14,12 @@ namespace Discord\Parts\User;
 use Carbon\Carbon;
 use Discord\Helpers\Collection;
 use Discord\Parts\Channel\Channel;
-use Discord\Parts\Channel\Overwrite;
-use Discord\Parts\Guild\Ban;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Guild\Role;
 use Discord\Parts\Part;
 use Discord\Parts\Permissions\RolePermission;
 use Discord\Parts\WebSockets\PresenceUpdate;
-use Discord\Helpers\Deferred;
 use React\Promise\ExtendedPromiseInterface;
-use function React\Partial\bind as Bind;
 
 /**
  * A member is a relationship between a user and a guild. It contains user-to-guild specific data like roles.
@@ -195,7 +191,7 @@ class Member extends Part
             $bitwise |= 0x8; // Add administrator permission
         } else {
             $roles = [];
-            
+
             /* @var Role */
             foreach ($this->roles ?? [] as $role) {
                 $roles[] = $role->id;
@@ -210,7 +206,7 @@ class Member extends Part
             foreach (RolePermission::getPermissions() as $permission => $_) {
                 $newPermission->{$permission} = true;
             }
-            
+
             return $newPermission;
         }
 
@@ -220,7 +216,7 @@ class Member extends Part
                 $bitwise |= $overwrite->allow->bitwise;
                 $bitwise &= ~($overwrite->deny->bitwise);
             }
-            
+
             /* @var Overwrite */
             foreach ($channel->overwrites as $overwrite) {
                 if ($overwrite->type !== 'role' || ! in_array($overwrite->id, $roles)) {

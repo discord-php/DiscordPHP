@@ -14,9 +14,7 @@ namespace Discord\Parts\Channel;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
-use Discord\Helpers\Deferred;
 use React\Promise\PromiseInterface;
-use function React\Partial\bind as Bind;
 
 /**
  * Webhooks are a low-effort way to post messages to channels in Discord. They do not require a bot user or authentication to use.

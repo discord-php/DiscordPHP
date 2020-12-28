@@ -48,17 +48,13 @@ class GuildRepository extends AbstractRepository
      */
     public function leave($guild): ExtendedPromiseInterface
     {
-        $deferred = new Deferred();
-
         if ($guild instanceof Guild) {
             $guild = $guild->id;
         }
 
-        $this->http->delete("users/@me/guilds/{$guild}")->done(function () use ($guild, $deferred) {
+        return $this->http->delete("users/@me/guilds/{$guild}")->then(function () use ($guild) {
             $this->pull('id', $guild);
-            $deferred->resolve();
-        }, \React\Partial\bind([$deferred, 'reject']));
-
-        return $deferred->promise();
+            return $this;
+        });
     }
 }
