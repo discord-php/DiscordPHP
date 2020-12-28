@@ -208,13 +208,11 @@ class Http
         $headers = array_merge($headers, [
             'User-Agent' => $this->getUserAgent(),
             'Authorization' => $this->token,
-            'X-Ratelimit-Precision' => 'millisecond',
         ]);
 
         $baseHeaders = [
             'User-Agent' => $this->getUserAgent(),
             'Authorization' => $this->token,
-            'X-Ratelimit-Precision' => 'millisecond',
         ];
 
         // If there is content and Content-Type is not set,
