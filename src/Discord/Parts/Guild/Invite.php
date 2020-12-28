@@ -69,7 +69,7 @@ class Invite extends Part
             return \React\Promise\reject(new \Exception('This invite has been used the max times.'));
         }
 
-        return $this->http->post("invite/{$this->code}");
+        return $this->http->post("invites/{$this->code}");
     }
 
     /**

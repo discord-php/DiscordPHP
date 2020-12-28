@@ -411,7 +411,7 @@ class Channel extends Part
             $promises = [];
 
             while (! empty($messageID)) {
-                $promises[] = $this->http->post("channels/{$this->id}/messages/bulk_delete", ['messages' => array_slice($messageID, 0, 100)]);
+                $promises[] = $this->http->post("channels/{$this->id}/messages/bulk-delete", ['messages' => array_slice($messageID, 0, 100)]);
                 $messageID = array_slice($messageID, 100);
             }
 
