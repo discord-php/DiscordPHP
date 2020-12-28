@@ -38,7 +38,7 @@ class PresenceUpdate extends Part
     /**
      * {@inheritdoc}
      */
-    protected $fillable = ['user', 'roles', 'game', 'guild_id', 'status', 'activities', 'client_status', 'premium_since', 'nick'];
+    protected $fillable = ['user', 'roles', 'guild_id', 'status', 'activities', 'client_status', 'premium_since', 'nick'];
 
     /**
      * Gets the member attribute.
@@ -106,11 +106,23 @@ class PresenceUpdate extends Part
      */
     protected function getGameAttribute(): ?Part
     {
-        if (! isset($this->attributes['game'])) {
-            return null;
+        return $this->activities->first();
+    }
+
+    /**
+     * Gets the activities attribute.
+     *
+     * @return Collection|Activity[]
+     */
+    protected function getActivitiesAttribute()
+    {
+        $collection = Collection::for(Activity::class, null);
+
+        foreach ($this->attributes['activities'] ?? [] as $activity) {
+            $collection->push($this->factory->create(Activity::class, $activity, true));
         }
 
-        return $this->factory->create(Activity::class, $this->attributes['game'], true);
+        return $collection;
     }
 
     /**

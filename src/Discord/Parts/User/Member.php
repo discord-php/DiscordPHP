@@ -46,7 +46,7 @@ class Member extends Part
     /**
      * {@inheritdoc}
      */
-    protected $fillable = ['user', 'roles', 'deaf', 'mute', 'joined_at', 'guild_id', 'status', 'game', 'nick', 'premium_since', 'activities', 'client_status'];
+    protected $fillable = ['user', 'roles', 'deaf', 'mute', 'joined_at', 'guild_id', 'status', 'nick', 'premium_since', 'activities', 'client_status'];
 
     /**
      * {@inheritdoc}
@@ -236,13 +236,13 @@ class Member extends Part
 
     /**
      * Gets the game attribute.
+     * Polyfill for the first activity.
      *
      * @return Activity
-     * @throws \Exception
      */
-    protected function getGameAttribute(): Part
+    protected function getGameAttribute(): ?Activity
     {
-        return $this->factory->create(Activity::class, $this->attributes['game'] ?? [], true);
+        return $this->activities->first();
     }
 
     /**

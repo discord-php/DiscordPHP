@@ -76,14 +76,14 @@ class Discord
      *
      * @var int Gateway version.
      */
-    const GATEWAY_VERSION = 6;
+    const GATEWAY_VERSION = 8;
 
     /**
      * The HTTP API version the client usees.
      *
      * @var int HTTP API version.
      */
-    const HTTP_API_VERSION = 6;
+    const HTTP_API_VERSION = 8;
 
     /**
      * The client version.
@@ -495,7 +495,6 @@ class Discord
             $member = (array) $member;
             $member['guild_id'] = $guild->id;
             $member['status'] = 'offline';
-            $member['game'] = null;
 
             if (! $this->users->has($member['user']->id)) {
                 $userPart = $this->factory->create(User::class, $member['user'], true);
@@ -829,12 +828,9 @@ class Discord
                         '$referring_domain' => 'https://github.com/teamreflex/DiscordPHP',
                     ],
                     'compress' => true,
+                    'intents' => $this->options['intents'],
                 ],
             ];
-
-            if ($this->options['intents'] !== false) {
-                $payload['d']['intents'] = $this->options['intents'];
-            }
 
             if (array_key_exists('shardId', $this->options) &&
                 array_key_exists('shardCount', $this->options)) {
@@ -1070,7 +1066,7 @@ class Discord
             'op' => Op::OP_PRESENCE_UPDATE,
             'd' => [
                 'since' => $idle,
-                'game' => $activity,
+                'activities' => [$activity],
                 'status' => $status,
                 'afk' => $afk,
             ],
@@ -1156,10 +1152,9 @@ class Discord
                 $logger->info('voice client is ready');
                 $this->voiceClients[$channel->guild_id] = $vc;
 
-                $vc->setBitrate($channel->bitrate)->done(function () use ($vc, $deferred, $logger, $channel) {
-                    $logger->info('set voice client bitrate', ['bitrate' => $channel->bitrate]);
-                    $deferred->resolve($vc);
-                });
+                $vc->setBitrate($channel->bitrate);
+                $logger->info('set voice client bitrate', ['bitrate' => $channel->bitrate]);
+                $deferred->resolve($vc);
             });
             $vc->once('error', function ($e) use ($deferred, $logger) {
                 $logger->error('error initilizing voice client', ['e' => $e->getMessage()]);
@@ -1288,6 +1283,7 @@ class Discord
                 'retrieveBans' => false,
                 'intents' => false,
                 'httpLogger' => new NullLogger(),
+                'intents' => Intents::getAllIntents(),
             ])
             ->setAllowedTypes('loop', LoopInterface::class)
             ->setAllowedTypes('logging', 'bool')
@@ -1307,22 +1303,6 @@ class Discord
             $options['logger'] = $logger;
         } elseif (! $options['logging']) {
             $options['logger'] = new NullLogger();
-        }
-
-        if ($options['intents'] !== false) {
-            if (is_array($options['intents'])) {
-                $intentVal = 0;
-                $validIntents = Intents::getValidIntents();
-
-                foreach ($options['intents'] as $intent) {
-                    if (! in_array($intent, $validIntents)) {
-                        throw new IntentException('Given intent is not valid: '.$intent);
-                    }
-                    $intentVal |= $intent;
-                }
-
-                $options['intents'] = $intentVal;
-            }
         }
 
         return $options;
