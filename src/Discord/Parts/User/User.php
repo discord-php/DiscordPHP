@@ -73,7 +73,10 @@ class User extends Part
             return \React\Promise\resolve($channel);
         } else {
             return $this->http->post('users/@me/channels', ['recipient_id' => $this->id])->then(function ($response) {
-                return $this->factory->create(Channel::class, $response, true);
+                $channel = $this->factory->create(Channel::class, $response, true);
+                $this->discord->private_channels->push($channel);
+
+                return $channel;
             });
         }
     }
