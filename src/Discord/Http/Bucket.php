@@ -173,10 +173,11 @@ class Bucket
                 // Check for more requests
                 $checkQueue();
             }, function (RateLimit $rateLimit) use (&$checkQueue, $request) {
+                $this->queue->enqueue($request);
+
                 // Bucket-specific rate-limit
                 // Re-queue the request and wait the retry after time
                 if (! $rateLimit->isGlobal()) {
-                    $this->queue->enqueue($request);
                     $this->loop->addTimer($rateLimit->getRetryAfter() / 1000, $checkQueue);
                 }
                 // Stop the queue checker for a global rate-limit.

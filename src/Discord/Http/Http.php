@@ -266,7 +266,8 @@ class Http
 
                 if ($rateLimit->isGlobal() && ! $this->rateLimit) {
                     $this->rateLimit = $rateLimit;
-                    $this->rateLimitReset = $this->loop->addTimer($rateLimit->getRetryAfter(), function () {
+                    $this->rateLimitReset = $this->loop->addTimer($rateLimit->getRetryAfter() / 1000, function () {
+                        $this->rateLimit = null;
                         $this->rateLimitReset = null;
                         $this->logger->info('global rate-limit reset');
 
@@ -277,7 +278,7 @@ class Http
                     });
                 }
 
-                $deferred->reject($rateLimit);
+                $deferred->reject($this->rateLimit);
             }
             // Bad Gateway
             // Cloudflare SSL Handshake error
