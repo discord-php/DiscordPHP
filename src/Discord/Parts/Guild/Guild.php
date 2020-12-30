@@ -511,4 +511,12 @@ class Guild extends Part
             'guild_id' => $this->id,
         ];
     }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function createdTimestamp()
+    {
+	    return ( ( (int) $this->id / 4194304 ) + 1420070400000 );
+    }
 }
