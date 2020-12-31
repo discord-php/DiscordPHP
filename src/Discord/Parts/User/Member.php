@@ -35,13 +35,13 @@ use function React\Partial\bind as Bind;
  * @property Collection|Role[]            $roles         A collection of Roles that the member has.
  * @property bool                         $deaf          Whether the member is deaf.
  * @property bool                         $mute          Whether the member is mute.
- * @property Carbon                       $joined_at     A timestamp of when the member joined the guild.
+ * @property Carbon|null                  $joined_at     A timestamp of when the member joined the guild.
  * @property Guild                        $guild         The guild that the member belongs to.
  * @property string                       $guild_id      The unique identifier of the guild that the member belongs to.
  * @property string                       $status        The status of the member.
  * @property Activity                     $game          The game the member is playing.
  * @property string|null                  $nick          The nickname of the member.
- * @property Carbon                       $premium_since When the user started boosting the server.
+ * @property Carbon|null                  $premium_since When the user started boosting the server.
  * @property Collection|Activity[]        $activities User's current activities.
  * @property object                       $client_status Current client status
  */
@@ -391,7 +391,7 @@ class Member extends Part
     /**
      * Returns the joined at attribute.
      *
-     * @return Carbon     The timestamp from when the member joined.
+     * @return Carbon|null     The timestamp from when the member joined.
      * @throws \Exception
      */
     protected function getJoinedAtAttribute(): ?Carbon
