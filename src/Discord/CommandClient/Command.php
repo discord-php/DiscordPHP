@@ -228,7 +228,7 @@ class Command
      */
     public function handle(Message $message, array $args)
     {
-        $subCommand = array_shift($args);
+        $subCommand = $originalSubCommand = array_shift($args);
 
         if ($subCommand !== null && $this->client->getCommandClientOptions()['caseInsensitiveCommands']) {
             $subCommand = strtolower($subCommand);
@@ -241,7 +241,7 @@ class Command
         }
 
         if (! is_null($subCommand)) {
-            array_unshift($args, $subCommand);
+            array_unshift($args, $originalSubCommand);
         }
 
         $currentTime = round(microtime(true) * 1000);
