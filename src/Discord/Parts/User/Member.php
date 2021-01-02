@@ -103,9 +103,9 @@ class Member extends Part
         // jake plz
         if ($this->discord->id == $this->id) {
             return $this->http->patch("guilds/{$this->guild_id}/members/@me/nick", $payload);
-        } else {
-            return $this->http->patch("guilds/{$this->guild_id}/members/{$this->id}", $payload);
         }
+
+        return $this->http->patch("guilds/{$this->guild_id}/members/{$this->id}", $payload);
     }
 
     /**
@@ -140,9 +140,9 @@ class Member extends Part
         // We don't want a double up on roles
         if (false !== array_search($role, (array) $this->attributes['roles'])) {
             return \React\Promise\reject(new \Exception('User already has role.'));
-        } else {
-            return $this->http->put("guilds/{$this->guild_id}/members/{$this->id}/roles/{$role}");
         }
+
+        return $this->http->put("guilds/{$this->guild_id}/members/{$this->id}/roles/{$role}");
     }
 
     /**
@@ -160,9 +160,9 @@ class Member extends Part
 
         if (false !== array_search($role, $this->attributes['roles'])) {
             return $this->http->delete("guilds/{$this->guild_id}/members/{$this->id}/roles/{$role}");
-        } else {
-            return \React\Promise\reject(new \Exception('User does not have role.'));
         }
+
+        return \React\Promise\reject(new \Exception('User does not have role.'));
     }
 
     /**
@@ -346,7 +346,7 @@ class Member extends Part
     /**
      * Returns the joined at attribute.
      *
-     * @return Carbon|null     The timestamp from when the member joined.
+     * @return Carbon|null The timestamp from when the member joined.
      * @throws \Exception
      */
     protected function getJoinedAtAttribute(): ?Carbon

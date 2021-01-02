@@ -14,7 +14,6 @@ namespace Discord\Parts\User;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Embed\Embed;
 use Discord\Parts\Part;
-use Discord\Helpers\Deferred;
 use Discord\Parts\Channel\Message;
 use React\Promise\ExtendedPromiseInterface;
 
@@ -71,14 +70,14 @@ class User extends Part
     {
         if ($channel = $this->discord->private_channels->get('id', $this->id)) {
             return \React\Promise\resolve($channel);
-        } else {
-            return $this->http->post('users/@me/channels', ['recipient_id' => $this->id])->then(function ($response) {
-                $channel = $this->factory->create(Channel::class, $response, true);
-                $this->discord->private_channels->push($channel);
-
-                return $channel;
-            });
         }
+
+        return $this->http->post('users/@me/channels', ['recipient_id' => $this->id])->then(function ($response) {
+            $channel = $this->factory->create(Channel::class, $response, true);
+            $this->discord->private_channels->push($channel);
+
+            return $channel;
+        });
     }
 
     /**
@@ -147,7 +146,7 @@ class User extends Part
     /**
      * Returns a timestamp for when a user's account was created.
      *
-     * @return float 
+     * @return float
      */
     public function createdTimestamp()
     {

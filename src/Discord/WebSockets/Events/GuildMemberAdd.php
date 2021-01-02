@@ -14,7 +14,6 @@ namespace Discord\WebSockets\Events;
 use Discord\Parts\User\Member;
 use Discord\WebSockets\Event;
 use Discord\Helpers\Deferred;
-use Discord\Parts\User\User;
 
 class GuildMemberAdd extends Event
 {

@@ -12,7 +12,6 @@
 namespace Discord\Repository;
 
 use Discord\Parts\Guild\Guild;
-use Discord\Helpers\Deferred;
 use React\Promise\ExtendedPromiseInterface;
 
 /**
@@ -54,6 +53,7 @@ class GuildRepository extends AbstractRepository
 
         return $this->http->delete("users/@me/guilds/{$guild}")->then(function () use ($guild) {
             $this->pull('id', $guild);
+
             return $this;
         });
     }

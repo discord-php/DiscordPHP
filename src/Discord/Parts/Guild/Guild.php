@@ -288,6 +288,7 @@ class Guild extends Part
             $regions = new Collection($regions);
 
             $this->regions = $regions;
+
             return $regions;
         });
     }
@@ -360,9 +361,9 @@ class Guild extends Part
 
             if (! in_array($this->region, $regions)) {
                 return self::REGION_DEFAULT;
-            } else {
-                return $this->region;
             }
+
+            return $this->region;
         });
     }
 
@@ -465,7 +466,7 @@ class Guild extends Part
     }
     
     /**
-     * Returns the timestamp of when the guild was created. 
+     * Returns the timestamp of when the guild was created.
      *
      * @return float
      */

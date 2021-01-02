@@ -151,6 +151,7 @@ abstract class AbstractRepository extends Collection
             $part->deleted = false;
 
             $this->push($part);
+
             return $part;
         });
     }

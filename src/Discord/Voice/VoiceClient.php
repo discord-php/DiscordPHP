@@ -1072,8 +1072,8 @@ class VoiceClient extends EventEmitter
     /**
      * Changes your mute and deaf value.
      *
-     * @param  bool                     $mute Whether you should be muted.
-     * @param  bool                     $deaf Whether you should be deaf.
+     * @param bool $mute Whether you should be muted.
+     * @param bool $deaf Whether you should be deaf.
      */
     public function setMuteDeaf(bool $mute, bool $deaf): void
     {

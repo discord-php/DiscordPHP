@@ -13,8 +13,6 @@ namespace Discord\Parts\Guild;
 
 use Discord\Parts\Part;
 use Discord\Parts\Permissions\RolePermission;
-use Discord\Helpers\Deferred;
-use React\Promise\PromiseInterface;
 
 /**
  * A role defines permissions for the guild. Members can be added to the role. The role belongs to a guild.

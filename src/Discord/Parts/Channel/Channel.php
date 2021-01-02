@@ -558,6 +558,7 @@ class Channel extends Part
 
         return $this->http->put("channels/{$this->id}/pins/{$message->id}")->then(function () use (&$message) {
             $message->pinned = true;
+
             return $message;
         });
     }
@@ -589,6 +590,7 @@ class Channel extends Part
 
         return $this->http->delete("channels/{$this->id}/pins/{$message->id}")->then(function () use (&$message) {
             $message->pinned = false;
+
             return $message;
         });
     }
