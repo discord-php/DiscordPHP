@@ -24,7 +24,8 @@
         "mollie/polyfill-libsodium": "^1.1",
         "react/http": "^1.1",
         "ext-json": "*",
-        "ext-zlib": "*"
+        "ext-zlib": "*",
+        "discord-php/http": "^8.0"
     },
     "require-dev": {
         "symfony/var-dumper": "*",
