@@ -1405,6 +1405,16 @@ class Discord
     }
 
     /**
+     * Gets the HTTP client.
+     *
+     * @return Http
+     */
+    public function getHttp(): Http
+    {
+        return $this->http;
+    }
+
+    /**
      * Handles dynamic get calls to the client.
      *
      * @param string $name Variable name.
