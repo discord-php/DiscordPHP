@@ -47,6 +47,7 @@ use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
 use React\Promise\ExtendedPromiseInterface;
 use React\Promise\PromiseInterface;
+use React\Socket\Connector as SocketConnector;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -323,7 +324,9 @@ class Discord
         $this->token = $options['token'];
         $this->loop = $options['loop'];
         $this->logger = $options['logger'];
-        $this->wsFactory = new Connector($this->loop);
+
+        $connector = new SocketConnector($this->loop, $options['socket_options']);
+        $this->wsFactory = new Connector($this->loop, $connector);
         $this->handlers = new Handlers();
 
         foreach ($options['disabledEvents'] as $event) {
@@ -341,7 +344,7 @@ class Discord
             'Bot '.$this->token,
             $this->loop,
             $this->options['httpLogger'],
-            new React($this->loop)
+            new React($this->loop, $options['socket_options'])
         );
 
         $this->factory = new Factory($this, $this->http);
@@ -824,8 +827,8 @@ class Discord
                         '$os' => PHP_OS,
                         '$browser' => $this->http->getUserAgent(),
                         '$device' => $this->http->getUserAgent(),
-                        '$referrer' => 'https://github.com/teamreflex/DiscordPHP',
-                        '$referring_domain' => 'https://github.com/teamreflex/DiscordPHP',
+                        '$referrer' => 'https://github.com/discord-php/DiscordPHP',
+                        '$referring_domain' => 'https://github.com/discord-php/DiscordPHP',
                     ],
                     'compress' => true,
                     'intents' => $this->options['intents'],
@@ -1270,6 +1273,7 @@ class Discord
                 'retrieveBans',
                 'intents',
                 'httpLogger',
+                'socket_options',
             ])
             ->setDefaults([
                 'loop' => LoopFactory::create(),
@@ -1284,6 +1288,7 @@ class Discord
                 'intents' => false,
                 'httpLogger' => new NullLogger(),
                 'intents' => Intents::getAllIntents(),
+                'socket_options' => [],
             ])
             ->setAllowedTypes('loop', LoopInterface::class)
             ->setAllowedTypes('logging', 'bool')

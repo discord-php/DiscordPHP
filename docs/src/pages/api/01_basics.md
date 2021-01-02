@@ -119,7 +119,7 @@ $discord->on('ready', function (Discord $discord) {
 ```
 
 To register an event we use the `$discord->on(...)` function, which registers a handler.
-A list of events is available [here](https://github.com/teamreflex/DiscordPHP/blob/master/src/Discord/WebSockets/Event.php#L30-L75). They are described in more detail in further sections of the documentation.
+A list of events is available [here](https://github.com/discord-php/DiscordPHP/blob/master/src/Discord/WebSockets/Event.php#L30-L75). They are described in more detail in further sections of the documentation.
 All events take a callback which is called when the event is triggered, and the callback is called with an object representing the content of the event and an instance of the `Discord` client.
 
 ```php

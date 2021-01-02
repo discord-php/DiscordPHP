@@ -2,9 +2,11 @@ DiscordPHP
 ====
 [![PHP Discorders](https://img.shields.io/badge/chat-PHP%20Discord-blue.svg)](https://discord.gg/0duG4FF1ElFGUFVq)
 
-A wrapper for the official [Discord](https://discordapp.com) REST, gateway and voice APIs. Documentation is [available here](http://teamreflex.github.io/DiscordPHP), albeit limited at the moment, as well as a class reference. Feel free to ask questions in the Discord server above.
+A wrapper for the official [Discord](https://discordapp.com) REST, gateway and voice APIs. Documentation is [available here](http://discord-php.github.io/DiscordPHP), albeit limited at the moment, as well as a class reference. Feel free to ask questions in the Discord server above.
 
 For testing and stability it would be greatly appreciated if you were able to add our test bot to your server. We don't store any data - the bot simply idles and does not interact with anyone and is used to test stability with large numbers of guilds. You can invite the bot [here.](https://discord.com/oauth2/authorize?client_id=157746770539970560&scope=bot)
+
+This library does not handle slash commands. See [DiscordPHP-Slash](https://github.com/discord-php/DiscordPHP-Slash) for a library to handle these interactions.
 
 ## Before you start
 
@@ -28,7 +30,8 @@ Before you start using this Library, you **need** to know how PHP works, you nee
 - `ext-json`
 - `ext-zlib`
 
-# Windows and SSL
+### Windows and SSL
+
 Unfortunately PHP on Windows does not have access to the Windows Certificate Store. This is an issue because TLS gets used and as such certificate verification gets applied (turning this off is **not** an option).
 
 You will notice this issue by your script exiting immediately after one loop turn without any errors. Unfortunately there is for some reason no error or exception.
@@ -85,7 +88,7 @@ $discord->run();
 
 ## Documentation
 
-Documentation can be found [here](http://teamreflex.github.io/DiscordPHP). Raw documentation can be found in-line in the code and on the [DiscordPHP Class Reference](http://teamreflex.github.io/DiscordPHP/).
+Documentation can be found [here](http://discord-php.github.io/DiscordPHP). Raw documentation can be found in-line in the code and on the [DiscordPHP Class Reference](http://discord-php.github.io/DiscordPHP/).
 
 ## Contributing
 

@@ -463,4 +463,14 @@ class Guild extends Part
             'guild_id' => $this->id,
         ];
     }
+    
+    /**
+     * Returns the timestamp of when the guild was created. 
+     *
+     * @return float
+     */
+    public function createdTimestamp()
+    {
+        return \Discord\getSnowflakeTimestamp($this->id);
+    }
 }
