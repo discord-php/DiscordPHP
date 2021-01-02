@@ -126,10 +126,10 @@ Both methods are still valid.
     - Added phpdoc to webhook part.
     - Added webhook type constants
 - Guilds:
-    - Added [new guild attributes.](https://github.com/teamreflex/DiscordPHP/compare/develop#diff-4a22d1c34b22f50e90b71244aac252cdR43-R64)
+    - Added [new guild attributes.](https://github.com/discord-php/DiscordPHP/compare/develop#diff-4a22d1c34b22f50e90b71244aac252cdR43-R64)
 - Removed unused attributes cache from part.
 - Removed `password` attribute from `Client`.
-- Added [new user attributes](https://github.com/teamreflex/DiscordPHP/compare/develop#diff-3d3aea0229e2bfd3b386726702468115R29-R36) and flags.
+- Added [new user attributes](https://github.com/discord-php/DiscordPHP/compare/develop#diff-3d3aea0229e2bfd3b386726702468115R29-R36) and flags.
 - Voice client now handles websocket closes better.
 - Client will now load online users regardless of `loadAllMembers` option. This option will now cause the client to initiate guild member chunking offline members.
 
@@ -158,7 +158,7 @@ First release for many years. Contains many bug fixes and stability patches so t
 - Overwrites:
     - The `allow` and `deny` parameters of an overwrite are an instance of `ChannelPermission` instead of `int`.
 - Guilds:
-    - Removed [old region constants](https://github.com/teamreflex/DiscordPHP/blob/ca05832fa0d5700d96f5ecee2fe32a3aa6125f41/src/Discord/Parts/Guild/Guild.php). Added the `Guild::getVoiceRegions()` function to get an array of valid regions.
+    - Removed [old region constants](https://github.com/discord-php/DiscordPHP/blob/ca05832fa0d5700d96f5ecee2fe32a3aa6125f41/src/Discord/Parts/Guild/Guild.php). Added the `Guild::getVoiceRegions()` function to get an array of valid regions.
     - `Guild::validateRegion()` now has to perform an async HTTP request to validate the region. Only use this if nessasary.
 - Removed the `Game` class. Renamed to `Activity` and new attributes added.
 - `Discord::updatePresence()` now takes an `Activity` object as well as options `idle`, `status` and `afk`.
@@ -169,10 +169,10 @@ First release for many years. Contains many bug fixes and stability patches so t
 - Collectors:
     - Channels now have message collectors. See the phpdoc of `Channel::createMessageColletor()` for more information.
     - Messages now have reaction collectors. See the phpdoc of `Message::createReactionCollector()` for more information.
-- Added the [`Reaction`](https://github.com/teamreflex/DiscordPHP/blob/ca05832fa0d5700d96f5ecee2fe32a3aa6125f41/src/Discord/Parts/Channel/Reaction.php) class.
-- Added the [`Webhook`](https://github.com/teamreflex/DiscordPHP/blob/ca05832fa0d5700d96f5ecee2fe32a3aa6125f41/src/Discord/Parts/Channel/Webhook.php) class.
+- Added the [`Reaction`](https://github.com/discord-php/DiscordPHP/blob/ca05832fa0d5700d96f5ecee2fe32a3aa6125f41/src/Discord/Parts/Channel/Reaction.php) class.
+- Added the [`Webhook`](https://github.com/discord-php/DiscordPHP/blob/ca05832fa0d5700d96f5ecee2fe32a3aa6125f41/src/Discord/Parts/Channel/Webhook.php) class.
 - Implemented gateway intents:
-    - See the [`Intents` class](https://github.com/teamreflex/DiscordPHP/blob/ca05832fa0d5700d96f5ecee2fe32a3aa6125f41/src/Discord/WebSockets/Intents.php) for constants.
+    - See the [`Intents` class](https://github.com/discord-php/DiscordPHP/blob/ca05832fa0d5700d96f5ecee2fe32a3aa6125f41/src/Discord/WebSockets/Intents.php) for constants.
     - User can specify an `intents` field in the options array, containing either an array of intents or an integer corresponding to the intents.
 
 ### Changes
@@ -186,18 +186,18 @@ First release for many years. Contains many bug fixes and stability patches so t
     - Commands have a cooldown option.
 - Factory now has a `part()` and `repository()` function to bypass `strpos` functions.
 - Channels:
-    - [Added new attributes](https://github.com/teamreflex/DiscordPHP/pull/309/files#diff-d1f173f4572644420fb9cd5d0b540c59R51-R58).
-    - [Added new channel types](https://github.com/teamreflex/DiscordPHP/pull/309/files#diff-d1f173f4572644420fb9cd5d0b540c59R66-R72).
+    - [Added new attributes](https://github.com/discord-php/DiscordPHP/pull/309/files#diff-d1f173f4572644420fb9cd5d0b540c59R51-R58).
+    - [Added new channel types](https://github.com/discord-php/DiscordPHP/pull/309/files#diff-d1f173f4572644420fb9cd5d0b540c59R66-R72).
     - Added webhook classes and repositories.
     - `Channel::setOverwrite()` has been added to perform the action of `setPermissions()` from the previous version.
 - Messages:
-    - [Added new attributes](https://github.com/teamreflex/DiscordPHP/pull/309/files#diff-dcdab880a1ed5dbd0b65000834e4955cR44-R55).
-    - [Added new message types](https://github.com/teamreflex/DiscordPHP/pull/309/files#diff-dcdab880a1ed5dbd0b65000834e4955cR59-R78).
+    - [Added new attributes](https://github.com/discord-php/DiscordPHP/pull/309/files#diff-dcdab880a1ed5dbd0b65000834e4955cR44-R55).
+    - [Added new message types](https://github.com/discord-php/DiscordPHP/pull/309/files#diff-dcdab880a1ed5dbd0b65000834e4955cR59-R78).
     - Added `Message::delayedReply()` to perform a reply after a specified duration.
     - `Message::react()` and `Message::deleteReaction()` now takes an `Emoji` object or a string emoji.
     - Added `Message::delete()` to delete a message without using the repository.
     - Added `Message::addEmbed()` to add an embed to the message.
-    - Added the [`MessageReaction` class](https://github.com/teamreflex/DiscordPHP/blob/ca05832fa0d5700d96f5ecee2fe32a3aa6125f41/src/Discord/Parts/WebSockets/MessageReaction.php) to represent a reaction to a message.
+    - Added the [`MessageReaction` class](https://github.com/discord-php/DiscordPHP/blob/ca05832fa0d5700d96f5ecee2fe32a3aa6125f41/src/Discord/Parts/WebSockets/MessageReaction.php) to represent a reaction to a message.
 - Embeds:
     - Added the `type` parameter.
 - Emojis:
@@ -208,16 +208,16 @@ First release for many years. Contains many bug fixes and stability patches so t
     - Guild region is no longer checked before saving. Make sure to handle any exceptions from Discord servers and do not spam.
     - Roles can now update their `mentionable` attribute.
 - Permissions:
-    - [Added new permissions.](https://github.com/teamreflex/DiscordPHP/pull/309/files#diff-60e83a1d96a4957061230b770a056001R5-R35)
+    - [Added new permissions.](https://github.com/discord-php/DiscordPHP/pull/309/files#diff-60e83a1d96a4957061230b770a056001R5-R35)
 - Members:
-    - [Added new attributes.](https://github.com/teamreflex/DiscordPHP/pull/309/files#diff-8f236f99fe6eec45c56cff1be0ba0f90R40-R42)
+    - [Added new attributes.](https://github.com/discord-php/DiscordPHP/pull/309/files#diff-8f236f99fe6eec45c56cff1be0ba0f90R40-R42)
     - The `game` attribute now returns an `Activity` part.
 - Presence updates:
-    - [Added new attributes.](https://github.com/teamreflex/DiscordPHP/pull/309/files#diff-d6e13d509fb506d128c564d3ea4217adR25-R32)
+    - [Added new attributes.](https://github.com/discord-php/DiscordPHP/pull/309/files#diff-d6e13d509fb506d128c564d3ea4217adR25-R32)
 - Typing updates:
-    - [Added new attributes.](https://github.com/teamreflex/DiscordPHP/pull/309/files#diff-bc4d0e1ce4e436c29b922dd26266df68R26-R32)
+    - [Added new attributes.](https://github.com/discord-php/DiscordPHP/pull/309/files#diff-bc4d0e1ce4e436c29b922dd26266df68R26-R32)
 - Voice state updates:
-    - [Added new attributes.](https://github.com/teamreflex/DiscordPHP/pull/309/files#diff-4aa18d683d39063927ff9ff28149698fR21-R35)
+    - [Added new attributes.](https://github.com/discord-php/DiscordPHP/pull/309/files#diff-4aa18d683d39063927ff9ff28149698fR21-R35)
 
 ### Bug Fixes
 

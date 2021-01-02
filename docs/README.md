@@ -6,7 +6,7 @@ Special thanks to the amazing guys over at [@octokit/rest.js](https://octokit.gi
 ## License
 
 Original template is licensed under the MIT license from [@octokit/rest.js](https://github.com/octokit/rest.js/blob/master/LICENSE).
-Any changes are licensed under the MIT license from [DiscordPHP](https://github.com/teamreflex/DiscordPHP/blob/master/LICENSE.md).
+Any changes are licensed under the MIT license from [DiscordPHP](https://github.com/discord-php/DiscordPHP/blob/master/LICENSE.md).
 
 ## Local Development
 
