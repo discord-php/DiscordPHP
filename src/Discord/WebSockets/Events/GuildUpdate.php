@@ -11,8 +11,6 @@
 
 namespace Discord\WebSockets\Events;
 
-use Discord\Parts\Guild\Guild;
-use Discord\Parts\Guild\Role;
 use Discord\WebSockets\Event;
 use Discord\Helpers\Deferred;
 
@@ -23,30 +21,12 @@ class GuildUpdate extends Event
      */
     public function handle(Deferred &$deferred, $data): void
     {
-        if (isset($data->unavailable) && $data->unavailable) {
-            $deferred->notify('Guild is unavailable.');
+        /** @var \Discord\Parts\Guild\Guild */
+        $guild = $this->discord->guilds->get('id', $data->id);
+        $oldGuild = clone $guild;
 
-            return;
-        }
+        $guild->fill((array) $data);
 
-        /** @var Guild */
-        $guildPart = $this->factory->create(Guild::class, $data, true);
-
-        foreach ($data->roles as $role) {
-            $role = (array) $role;
-            $role['guild_id'] = $guildPart->id;
-            $rolePart = $this->factory->create(Role::class, $role, true);
-
-            $guildPart->roles->push($rolePart);
-        }
-
-        if ($guildPart->large) {
-            $this->discord->addLargeGuild($guildPart);
-        }
-
-        $old = $this->discord->guilds->get('id', $guildPart->id);
-        $this->discord->guilds->offsetSet($guildPart->id, $guildPart);
-
-        $deferred->resolve([$guildPart, $old]);
+        $deferred->resolve([$guild, $oldGuild]);
     }
 }
