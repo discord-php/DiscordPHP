@@ -278,7 +278,7 @@ class Http
                     });
                 }
 
-                $deferred->reject($>rateLimit);
+                $deferred->reject($rateLimit);
             }
             // Bad Gateway
             // Cloudflare SSL Handshake error
