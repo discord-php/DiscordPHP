@@ -818,7 +818,7 @@ class Discord
                 ],
             ];
 
-            $this->logger->info('resuming connection', ['payload' => $payload]);
+            $reason = 'resuming connection';
         } else {
             $payload = [
                 'op' => Op::OP_IDENTIFY,
@@ -847,8 +847,13 @@ class Discord
                 ];
             }
 
-            $this->logger->info('identifying', ['payload' => $payload]);
+            $reason = 'identifying';
         }
+
+        $safePayload = $payload;
+        $safePayload['d']['token'] = 'xxxxxx';
+
+        $this->logger->info($reason, ['payload' => $safePayload]);
 
         $this->send($payload);
 
