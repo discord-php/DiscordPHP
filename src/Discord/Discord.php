@@ -1063,7 +1063,7 @@ class Discord
         if (! is_null($activity)) {
             $activity = $activity->getRawAttributes();
 
-            if (! in_array($activity['type'], [Activity::TYPE_PLAYING, Activity::TYPE_STREAMING, Activity::TYPE_LISTENING])) {
+            if (! in_array($activity['type'], [Activity::TYPE_PLAYING, Activity::TYPE_STREAMING, Activity::TYPE_LISTENING, Activity::TYPE_WATCHING, Activity::TYPE_COMPETING ])) {
                 throw new \Exception("The given activity type ({$activity['type']}) is invalid.");
 
                 return;
