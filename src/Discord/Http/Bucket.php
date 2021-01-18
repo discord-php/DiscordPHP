@@ -139,7 +139,12 @@ class Bucket
                 return;
             }
 
+            /** @var Request */
             $request = $this->queue->dequeue();
+            $request->getDeferred()->promise()->otherwise(function () use ($checkQueue) {
+                // exception happened - move on to next request
+                $checkQueue();
+            });
 
             ($this->runRequest)($request)->done(function (ResponseInterface $response) use (&$checkQueue) {
                 $resetAfter = (float) $response->getHeaderLine('X-Ratelimit-Reset-After');
