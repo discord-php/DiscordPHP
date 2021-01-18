@@ -706,6 +706,11 @@ Search.appendIndex(
             "summary": "Converts\u0020a\u0020file\u0020to\u0020base64\u0020representation.",
             "url": "namespaces/discord.html#function_imageToBase64"
         },                {
+            "fqsen": "\\Discord\\getSnowflakeTimestamp\u0028\u0029",
+            "name": "getSnowflakeTimestamp",
+            "summary": "Takes\u0020a\u0020snowflake\u0020and\u0020calculates\u0020the\u0020time\u0020that\u0020the\u0020snowflake\nwas\u0020generated.",
+            "url": "namespaces/discord.html#function_getSnowflakeTimestamp"
+        },                {
             "fqsen": "\\Discord\\Helpers\\Collection",
             "name": "Collection",
             "summary": "Collection\u0020of\u0020items.\u0020Inspired\u0020by\u0020Laravel\u0020Collections.",
@@ -2705,6 +2710,11 @@ Search.appendIndex(
             "name": "getRepositoryAttributes",
             "summary": "Gets\u0020the\u0020attributes\u0020to\u0020pass\u0020to\u0020repositories.",
             "url": "classes/Discord-Parts-Guild-Guild.html#method_getRepositoryAttributes"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AcreatedTimestamp\u0028\u0029",
+            "name": "createdTimestamp",
+            "summary": "Returns\u0020the\u0020timestamp\u0020of\u0020when\u0020the\u0020guild\u0020was\u0020created.",
+            "url": "classes/Discord-Parts-Guild-Guild.html#method_createdTimestamp"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AREGION_DEFAULT",
             "name": "REGION_DEFAULT",
