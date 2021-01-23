@@ -70,3 +70,26 @@ $guild->unban($user)->done(...);
 $guild->unban('user_id')->done(...);
 ```
 
+### Querying the Guild audit log
+
+Takes an array of parameters to query the audit log for the guild. Returns an Audit Log object inside a promise.
+
+#### Parameters
+
+| name        | type                          | description                                            |
+| ----------- | ----------------------------- | ------------------------------------------------------ |
+| user_id     | string, int, `Member`, `User` | Filters audit log by who performed the action          |
+| action_type | `Entry` constants             | Filters audit log by the type of action                |
+| before      | string, int, `Entry`          | Retrieves audit logs before the given audit log object |
+| limit       | int between 1 and 100         | Limits the amount of audit log entries to return       |
+
+```php
+$guild->getAuditLog([
+    'user_id' => '123456',
+    'action_type' => Entry::CHANNEL_CREATE,
+    'before' => $anotherEntry,
+    'limit' => 12,
+])->done(function (AuditLog $auditLog) {
+
+});
+```

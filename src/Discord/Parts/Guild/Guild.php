@@ -436,7 +436,7 @@ class Guild extends Part
         ])
         ->setAllowedTypes('user_id', ['string', 'int', Member::class, User::class])
         ->setAllowedTypes('action_type', 'int')
-        ->setAllowedTypes('before', ['string', 'int', AuditLog::class])
+        ->setAllowedTypes('before', ['string', 'int', Entry::class])
         ->setAllowedTypes('limit', 'int')
         ->setAllowedValues('action_type', array_values((new ReflectionClass(Entry::class))->getConstants()))
         ->setAllowedValues('limit', range(1, 100));
@@ -511,9 +511,9 @@ class Guild extends Part
             'guild_id' => $this->id,
         ];
     }
-    
+
     /**
-     * Returns the timestamp of when the guild was created. 
+     * Returns the timestamp of when the guild was created.
      *
      * @return float
      */
