@@ -86,6 +86,7 @@ class Message extends Part
     const REACT_DELETE_ALL = 0;
     const REACT_DELETE_ME = 1;
     const REACT_DELETE_ID = 2;
+    const REACT_DELETE_EMOJI = 3;
 
     /**
      * {@inheritdoc}
@@ -444,7 +445,7 @@ class Message extends Part
     {
         $deferred = new Deferred();
 
-        $types = [self::REACT_DELETE_ALL, self::REACT_DELETE_ME, self::REACT_DELETE_ID];
+        $types = [self::REACT_DELETE_ALL, self::REACT_DELETE_ME, self::REACT_DELETE_ID, self::REACT_DELETE_EMOJI];
 
         if ($emoticon instanceof Emoji) {
             $emoticon = $emoticon->toReactionString();
@@ -460,6 +461,9 @@ class Message extends Part
                     break;
                 case self::REACT_DELETE_ID:
                     $url = "channels/{$this->channel->id}/messages/{$this->id}/reactions/{$emoticon}/{$id}";
+                    break;
+                case self::REACT_DELETE_EMOJI:
+                    $url = "channels/{$this->channel->id}/messages/{$this->id}/reactions/{$emoticon}";
                     break;
             }
 
