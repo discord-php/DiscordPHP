@@ -65,6 +65,7 @@ class Member extends Part
      *
      * @return PresenceUpdate Old presence.
      * @throws \Exception
+     * @internal
      */
     public function updateFromPresence(PresenceUpdate $presence): Part
     {
@@ -231,7 +232,7 @@ class Member extends Part
             $bitwise |= 0x8; // Add administrator permission
         } else {
             $roles = [];
-            
+
             /* @var Role */
             foreach ($this->roles ?? [] as $role) {
                 $roles[] = $role->id;
@@ -246,7 +247,7 @@ class Member extends Part
             foreach (RolePermission::getPermissions() as $permission => $_) {
                 $newPermission->{$permission} = true;
             }
-            
+
             return $newPermission;
         }
 
@@ -256,7 +257,7 @@ class Member extends Part
                 $bitwise |= $overwrite->allow->bitwise;
                 $bitwise &= ~($overwrite->deny->bitwise);
             }
-            
+
             /* @var Overwrite */
             foreach ($channel->overwrites as $overwrite) {
                 if ($overwrite->type !== 'role' || ! in_array($overwrite->id, $roles)) {
