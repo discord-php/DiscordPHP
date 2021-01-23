@@ -283,7 +283,7 @@ Sends a file to the channel. Takes a filepath, filename, message content and tts
 | tts      | bool   | Whether the message content is TTS    | false            |
 
 ```php
-$channel->sendMessage('/home/user/my_cool_pic.png', 'new_filename.png', 'content', false)
+$channel->sendFile('/home/user/my_cool_pic.png', 'new_filename.png', 'content', false)
 ->done(function (Message $message) {
     // ...
 });
@@ -321,7 +321,6 @@ $channel->createMessageCollector(fn ($message) => strpos($message->content, 'hel
 });
 ```
 
-
 #### Options
 
 One of `time` or `limit` is required, or the collector will not resolve.
@@ -330,3 +329,15 @@ One of `time` or `limit` is required, or the collector will not resolve.
 | ----- | ---- | ---------------------------------------------------------------- |
 | time  | int  | The time after which the collector will resolve, in milliseconds |
 | limit | int  | The number of messages to be collected                           |
+
+### Get pinned messages
+
+Returns the messages pinned in the channel. Only applicable for text channels. Returns a collection of messages in a promise.
+
+```php
+$channel->getPinnedMessages()->done(function (Collection $messages) {
+    foreach ($messages as $message) {
+        // $message->...
+    }
+});
+```

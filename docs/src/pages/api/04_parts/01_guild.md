@@ -90,6 +90,8 @@ $guild->getAuditLog([
     'before' => $anotherEntry,
     'limit' => 12,
 ])->done(function (AuditLog $auditLog) {
-
+    foreach ($auditLog->audit_log_entries as $entry) {
+        // $entry->...
+    }
 });
 ```
