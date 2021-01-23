@@ -4,6 +4,31 @@ title: "Channel"
 
 Channels represent a Discord channel, whether it be a direct message channel, group channel, voice channel, text channel etc.
 
+### Properties
+
+| name                | type                         | description                                                        |
+| ------------------- | ---------------------------- | ------------------------------------------------------------------ |
+| id                  | string                       | id of the channel                                                  |
+| name                | string                       | name of the channel                                                |
+| type                | int                          | type of the channel, see Channel constants                         |
+| topic               | string                       | topic of the channel                                               |
+| guild_id            | string or null               | id of the guild the channel belongs to, null if direct message     |
+| guild               | Guild or null                | guild the channel belongs to, null if direct message               |
+| position            | int                          | position of the channel in the Discord client                      |
+| is_private          | bool                         | whether the message is a private direct message channel            |
+| last_message_id     | string                       | id of the last message sent in the channel                         |
+| bitrate             | int                          | bitrate of the voice channel                                       |
+| recipient           | [User](#user)                | recipient of the direct message, only for direct message channel   |
+| recipients          | Collection of [Users](#user) | recipients of the group direct message, only for group dm channels |
+| nsfw                | bool                         | whether the channel is set as NSFW                                 |
+| user_limit          | int                          | user limit of the channel for voice channels                       |
+| rate_limit_per_user | int                          | amount of time in seconds a user has to wait between messages      |
+| icon                | string                       | channel icon hash                                                  |
+| owner_id            | string                       | owner of the group DM                                              |
+| application_id      | string                       | id of the group dm creator if it was via an oauth application      |
+| parent_id           | string                       | id of the parent of the channel if it is in a group                |
+| last_pin_timestamp  | `Carbon` timestamp           | when the last message was pinned in the channel                    |
+
 ### Repositories
 
 | name       | type                    | notes                                            |
