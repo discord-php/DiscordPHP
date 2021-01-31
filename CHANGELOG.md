@@ -22,6 +22,20 @@
     - `close()`
     - `getRecieveStream()`
 
+## Version 5.1.1
+
+- Added permission checking before executing requests for channels.
+- Fixed issue where global rate limits would delay too long.
+- Added option to pass through `react/socket` connector options through `socket_options`.
+- Fixed issue with case-insensitive commands in the command client.
+- Fixed issue where users would not update in the user repository on an `GUILD_MEMBER_*` event.
+- Repository is now hosted under the `discord-php` organisation on GitHub. This will not change anything unless you have the repository cloned.
+- Fixed an issue where guild repositories would empty on `GUILD_UPDATE`.
+- Fixed issue where buckets would deadlock when there is a global rate limit and a non-global rate limit at the same time.
+- Token is now stripped from any text output.
+- `TYPE_STREAMING` and `TYPE_COMPETING` is now allowed for bots.
+- Fixed an issue where a bucket queue would be blocked when a request throws an exception.
+
 ## Version 5.1.0
 
 - Refactored and rebuilt the HTTP client.

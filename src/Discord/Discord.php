@@ -91,7 +91,7 @@ class Discord
      *
      * @var string Version.
      */
-    const VERSION = 'v5.1.0';
+    const VERSION = 'v5.1.1';
 
     /**
      * The logger.
@@ -817,7 +817,7 @@ class Discord
                 ],
             ];
 
-            $this->logger->info('resuming connection', ['payload' => $payload]);
+            $reason = 'resuming connection';
         } else {
             $payload = [
                 'op' => Op::OP_IDENTIFY,
@@ -843,8 +843,13 @@ class Discord
                 ];
             }
 
-            $this->logger->info('identifying', ['payload' => $payload]);
+            $reason = 'identifying';
         }
+
+        $safePayload = $payload;
+        $safePayload['d']['token'] = 'xxxxxx';
+
+        $this->logger->info($reason, ['payload' => $safePayload]);
 
         $this->send($payload);
 
@@ -1054,7 +1059,7 @@ class Discord
         if (! is_null($activity)) {
             $activity = $activity->getRawAttributes();
 
-            if (! in_array($activity['type'], [Activity::TYPE_PLAYING, Activity::TYPE_STREAMING, Activity::TYPE_LISTENING])) {
+            if (! in_array($activity['type'], [Activity::TYPE_PLAYING, Activity::TYPE_STREAMING, Activity::TYPE_LISTENING, Activity::TYPE_WATCHING, Activity::TYPE_COMPETING ])) {
                 throw new \Exception("The given activity type ({$activity['type']}) is invalid.");
 
                 return;

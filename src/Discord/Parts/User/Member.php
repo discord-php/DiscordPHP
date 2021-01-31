@@ -62,6 +62,7 @@ class Member extends Part
      *
      * @return PresenceUpdate Old presence.
      * @throws \Exception
+     * @internal
      */
     public function updateFromPresence(PresenceUpdate $presence): Part
     {
