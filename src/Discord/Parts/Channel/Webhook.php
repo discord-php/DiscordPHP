@@ -11,6 +11,7 @@
 
 namespace Discord\Parts\Channel;
 
+use Discord\Http\Endpoint;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
@@ -59,7 +60,7 @@ class Webhook extends Part
      */
     public function execute(array $data): PromiseInterface
     {
-        return $this->http->post("webhooks/{$this->id}/{$this->token}", $data);
+        return $this->http->post(Endpoint::bind(Endpoint::WEBHOOK_EXECUTE, $this->id, $this->token), $data);
     }
 
     /**

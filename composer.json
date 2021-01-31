@@ -25,7 +25,7 @@
         "react/http": "^1.1",
         "ext-json": "*",
         "ext-zlib": "*",
-        "discord-php/http": "^8.0"
+        "discord-php/http": "dev-master"
     },
     "require-dev": {
         "symfony/var-dumper": "*",

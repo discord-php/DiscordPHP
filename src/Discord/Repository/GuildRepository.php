@@ -11,6 +11,7 @@
 
 namespace Discord\Repository;
 
+use Discord\Http\Endpoint;
 use Discord\Parts\Guild\Guild;
 use React\Promise\ExtendedPromiseInterface;
 
@@ -51,7 +52,7 @@ class GuildRepository extends AbstractRepository
             $guild = $guild->id;
         }
 
-        return $this->http->delete("users/@me/guilds/{$guild}")->then(function () use ($guild) {
+        return $this->http->delete(Endpoint::bind(Endpoint::USER_CURRENT_GUILD, $guild))->then(function () use ($guild) {
             $this->pull('id', $guild);
 
             return $this;

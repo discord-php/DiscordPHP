@@ -14,7 +14,6 @@ namespace Discord\Parts\Channel;
 use Carbon\Carbon;
 use Discord\Exceptions\FileNotFoundException;
 use Discord\Exceptions\InvalidOverwriteException;
-use Discord\Exceptions\Rest\NoPermissionsException;
 use Discord\Helpers\Collection;
 use Discord\Parts\Embed\Embed;
 use Discord\Parts\Guild\Guild;
@@ -31,6 +30,8 @@ use Discord\Repository\Channel\WebhookRepository;
 use Discord\WebSockets\Event;
 use Discord\Helpers\Deferred;
 use Discord\Helpers\Multipart;
+use Discord\Http\Endpoint;
+use Discord\Http\Exceptions\NoPermissionsException;
 use React\Promise\ExtendedPromiseInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Traversable;
@@ -192,7 +193,7 @@ class Channel extends Part
      */
     public function getPinnedMessages(): ExtendedPromiseInterface
     {
-        return $this->http->get($this->replaceWithVariables('channels/:id/pins'))
+        return $this->http->get(Endpoint::bind(Endpoint::CHANNEL_PINS, $this->id))
         ->then(function ($responses) {
             $messages = new Collection();
 
@@ -284,7 +285,7 @@ class Channel extends Part
             return \React\Promise\resolve();
         }
 
-        return $this->http->put("channels/{$this->id}/permissions/{$part->id}", $payload);
+        return $this->http->put(Endpoint::bind(Endpoint::CHANNEL_PERMISSIONS, $this->id, $part->id), $payload);
     }
 
     /**
@@ -324,7 +325,7 @@ class Channel extends Part
             $member = $member->id;
         }
 
-        return $this->http->patch("guilds/{$this->guild_id}/members/{$member}", ['channel_id' => $this->id]);
+        return $this->http->patch(Endpoint::bind(Endpoint::GUILD_MEMBER, $this->guild_id, $member), ['channel_id' => $this->id]);
     }
 
     /**
@@ -352,7 +353,7 @@ class Channel extends Part
             $member = $member->id;
         }
 
-        return $this->http->patch("guilds/{$this->guild_id}/members/{$member}", ['mute' => true]);
+        return $this->http->patch(Endpoint::bind(Endpoint::GUILD_MEMBER, $this->guild_id, $member), ['mute' => true]);
     }
 
     /**
@@ -380,7 +381,7 @@ class Channel extends Part
             $member = $member->id;
         }
 
-        return $this->http->patch("guilds/{$this->guild_id}/members/{$member}", ['mute' => false]);
+        return $this->http->patch(Endpoint::bind(Endpoint::GUILD_MEMBER, $this->guild_id, $member), ['mute' => false]);
     }
 
     /**
@@ -405,7 +406,7 @@ class Channel extends Part
             }
         }
 
-        return $this->http->post($this->replaceWithVariables('channels/:id/invites'), $options)
+        return $this->http->post(Endpoint::bind(Endpoint::CHANNEL_INVITES, $this->id), $options)
         ->then(function ($response) {
             return $this->factory->create(Invite::class, $response, true);
         });
@@ -436,7 +437,7 @@ class Channel extends Part
                     return $message->delete();
                 }
 
-                return $this->http->delete("channels/{$this->id}/messages/{$message}");
+                return $this->http->delete(Endpoint::bind(Endpoint::CHANNEL_MESSAGE, $this->id, $message));
             }
         } else {
             $messageID = [];
@@ -452,7 +453,7 @@ class Channel extends Part
             $promises = [];
 
             while (! empty($messageID)) {
-                $promises[] = $this->http->post("channels/{$this->id}/messages/bulk-delete", ['messages' => array_slice($messageID, 0, 100)]);
+                $promises[] = $this->http->post(Endpoint::bind(Endpoint::CHANNEL_MESSAGES_BULK_DELETE, $this->id), ['messages' => array_slice($messageID, 0, 100)]);
                 $messageID = array_slice($messageID, 100);
             }
 
@@ -506,18 +507,20 @@ class Channel extends Part
             return \React\Promise\reject(new \Exception('Can only specify one of before, after and around.'));
         }
 
-        $url = "channels/{$this->id}/messages?limit={$options['limit']}";
+        $endpoint = Endpoint::bind(Endpoint::CHANNEL_MESSAGES);
+        $endpoint->addQuery('limit', $options['limit']);
+
         if (isset($options['before'])) {
-            $url .= '&before='.($options['before'] instanceof Message ? $options['before']->id : $options['before']);
+            $endpoint->addQuery('before', $options['before'] instanceof Message ? $options['before']->id : $options['before']);
         }
         if (isset($options['after'])) {
-            $url .= '&after='.($options['after'] instanceof Message ? $options['after']->id : $options['after']);
+            $endpoint->addQuery('after', $options['after'] instanceof Message ? $options['after']->id : $options['after']);
         }
         if (isset($options['around'])) {
-            $url .= '&around='.($options['around'] instanceof Message ? $options['around']->id : $options['around']);
+            $endpoint->addQuery('around', $options['around'] instanceof Message ? $options['around']->id : $options['around']);
         }
 
-        return $this->http->get($url, null, [], $options['cache'] ? null : 0)->then(function ($responses) {
+        return $this->http->get($endpoint)->then(function ($responses) {
             $messages = new Collection();
 
             foreach ($responses as $response) {
@@ -556,7 +559,7 @@ class Channel extends Part
             return \React\Promise\reject(new \Exception('You cannot pin a message to a different channel.'));
         }
 
-        return $this->http->put("channels/{$this->id}/pins/{$message->id}")->then(function () use (&$message) {
+        return $this->http->put(Endpoint::bind(Endpoint::CHANNEL_PIN, $this->id, $message->id))->then(function () use (&$message) {
             $message->pinned = true;
 
             return $message;
@@ -588,7 +591,7 @@ class Channel extends Part
             return \React\Promise\reject(new \Exception('You cannot un-pin a message from a different channel.'));
         }
 
-        return $this->http->delete("channels/{$this->id}/pins/{$message->id}")->then(function () use (&$message) {
+        return $this->http->delete(Endpoint::bind(Endpoint::CHANNEL_PIN, $this->id, $message->id))->then(function () use (&$message) {
             $message->pinned = false;
 
             return $message;
@@ -603,7 +606,7 @@ class Channel extends Part
      */
     public function getInvites(): ExtendedPromiseInterface
     {
-        return $this->http->get($this->replaceWithVariables('channels/:id/invites'))->then(function ($response) {
+        return $this->http->get(Endpoint::bind(Endpoint::CHANNEL_INVITES, $this->id))->then(function ($response) {
             $invites = new Collection();
 
             foreach ($response as $invite) {
@@ -682,7 +685,7 @@ class Channel extends Part
             }
         }
 
-        return $this->http->post("channels/{$this->id}/messages", $content)->then(function ($response) {
+        return $this->http->post(Endpoint::bind(Endpoint::CHANNEL_MESSAGES), $content)->then(function ($response) {
             return $this->factory->create(Message::class, $response, true);
         });
     }
@@ -710,7 +713,7 @@ class Channel extends Part
             'embed' => $embed,
         ];
 
-        return $this->http->patch("channels/{$this->id}/messages/{$message->id}", $content)->then(function ($response) {
+        return $this->http->patch(Endpoint::bind(Endpoint::CHANNEL_MESSAGE, $this->id, $message->id), $content)->then(function ($response) {
             return $this->factory->create(Message::class, $response, true);
         });
     }
@@ -737,7 +740,7 @@ class Channel extends Part
             }
         }
 
-        return $this->http->post("channels/{$this->id}/messages", ['embed' => $embed->getRawAttributes()])->then(function ($response) {
+        return $this->http->post(Endpoint::bind(Endpoint::CHANNEL_MESSAGES, $this->id), ['embed' => $embed->getRawAttributes()])->then(function ($response) {
             return $this->factory->create(Message::class, $response, true);
         });
     }
@@ -790,7 +793,7 @@ class Channel extends Part
             ],
         ]);
 
-        return $this->http->post("channels/{$this->id}/messages", (string) $multipart, $multipart->getHeaders())->then(function ($response) {
+        return $this->http->post(Endpoint::bind(Endpoint::CHANNEL_MESSAGES, $this->id), (string) $multipart, $multipart->getHeaders())->then(function ($response) {
             return $this->factory->create(Message::class, $response, true);
         });
     }
@@ -806,7 +809,7 @@ class Channel extends Part
             return \React\Promise\reject(new \Exception('You cannot broadcast typing to a voice channel.'));
         }
 
-        return $this->http->post("channels/{$this->id}/typing");
+        return $this->http->post(Endpoint::bind(Endpoint::CHANNEL_TYPING, $this->id));
     }
 
     /**

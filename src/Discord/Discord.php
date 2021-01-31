@@ -42,6 +42,7 @@ use React\EventLoop\LoopInterface;
 use React\EventLoop\TimerInterface;
 use Discord\Helpers\Deferred;
 use Discord\Http\Drivers\React;
+use Discord\Http\Endpoint;
 use Evenement\EventEmitterTrait;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
@@ -1228,7 +1229,7 @@ class Discord
         };
 
         if (is_null($gateway)) {
-            $this->http->get('gateway/bot')->done(function ($response) use ($buildParams) {
+            $this->http->get(Endpoint::GATEWAY_BOT)->done(function ($response) use ($buildParams) {
                 $buildParams($response->url, $response->session_start_limit);
             }, function ($e) use ($buildParams) {
                 // Can't access the API server so we will use the default gateway.

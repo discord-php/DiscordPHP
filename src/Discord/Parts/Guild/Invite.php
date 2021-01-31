@@ -12,6 +12,7 @@
 namespace Discord\Parts\Guild;
 
 use Carbon\Carbon;
+use Discord\Http\Endpoint;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
@@ -68,7 +69,7 @@ class Invite extends Part
             return \React\Promise\reject(new \Exception('This invite has been used the max times.'));
         }
 
-        return $this->http->post("invites/{$this->code}");
+        return $this->http->post(Endpoint::bind(Endpoint::INVITE, $this->code));
     }
 
     /**

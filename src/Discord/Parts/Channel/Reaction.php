@@ -12,6 +12,7 @@
 namespace Discord\Parts\Channel;
 
 use Discord\Helpers\Collection;
+use Discord\Http\Endpoint;
 use Discord\Parts\Guild\Emoji;
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
@@ -55,8 +56,11 @@ class Reaction extends Part
      */
     public function getUsers(array $options = []): ExtendedPromiseInterface
     {
-        $content = http_build_query($options);
-        $query = "channels/{$this->channel_id}/messages/{$this->message_id}/reactions/".urlencode($this->id).(empty($content) ? null : "?{$content}");
+        $query = Endpoint::bind(Endpoint::MESSAGE_REACTION_EMOJI, $this->channel_id, $this->message_id, urlencode($this->id));
+
+        foreach ($options as $key => $value) {
+            $query->addQuery($key, $value);
+        }
 
         return $this->http->get($query)
         ->then(function ($response) {

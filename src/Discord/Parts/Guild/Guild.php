@@ -13,6 +13,7 @@ namespace Discord\Parts\Guild;
 
 use Carbon\Carbon;
 use Discord\Helpers\Collection;
+use Discord\Http\Endpoint;
 use Discord\Parts\Part;
 use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
@@ -162,7 +163,7 @@ class Guild extends Part
      */
     public function getInvites(): ExtendedPromiseInterface
     {
-        return $this->http->get($this->replaceWithVariables('guilds/:id/invites'))->then(function ($response) {
+        return $this->http->get(Endpoint::bind(Endpoint::GUILD_INVITES, $this->id))->then(function ($response) {
             $invites = new Collection();
 
             foreach ($response as $invite) {
@@ -336,7 +337,7 @@ class Guild extends Part
             $member = $member->id;
         }
 
-        return $this->http->patch($this->replaceWithVariables('guilds/:id'), ['owner_id' => $member])->then(function ($response) use ($member) {
+        return $this->http->patch(Endpoint::bind(Endpoint::GUILD), ['owner_id' => $member])->then(function ($response) use ($member) {
             if ($response->owner_id != $member) {
                 throw new Exception('Ownership was not transferred correctly.');
             }
@@ -404,7 +405,11 @@ class Guild extends Part
             $options['before'] = $options['before']->id;
         }
 
-        $endpoint = "guilds/{$this->id}/audit-logs?".http_build_query($options);
+        $endpoint = Endpoint::bind(Endpoint::AUDIT_LOG);
+
+        foreach ($options as $key => $value) {
+            $endpoint->addQuery($key, $value);
+        }
 
         return $this->http->get($endpoint)->then(function ($response) {
             $response = (array) $response;

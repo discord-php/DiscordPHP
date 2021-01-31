@@ -12,6 +12,7 @@
 namespace Discord\Repository\Guild;
 
 use Discord\Helpers\Deferred;
+use Discord\Http\Endpoint;
 use Discord\Parts\Guild\Ban;
 use Discord\Parts\User\Member;
 use Discord\Repository\AbstractRepository;
@@ -70,7 +71,7 @@ class BanRepository extends AbstractRepository
         }
 
         $this->http->put(
-            $this->replaceWithVariables('guilds/:guild_id/bans/').$member,
+            Endpoint::bind(Endpoint::GUILD_BAN, $this->vars['guild_id'], $member),
             empty($content) ? null : $content
         )->done(function ($response) use ($deferred) {
             $ban = $this->factory->create(Ban::class, $response, true);

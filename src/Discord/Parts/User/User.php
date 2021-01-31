@@ -11,6 +11,7 @@
 
 namespace Discord\Parts\User;
 
+use Discord\Http\Endpoint;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Embed\Embed;
 use Discord\Parts\Part;
@@ -72,7 +73,7 @@ class User extends Part
             return \React\Promise\resolve($channel);
         }
 
-        return $this->http->post('users/@me/channels', ['recipient_id' => $this->id])->then(function ($response) {
+        return $this->http->post(Endpoint::USER_CURRENT_CHANNELS, ['recipient_id' => $this->id])->then(function ($response) {
             $channel = $this->factory->create(Channel::class, $response, true);
             $this->discord->private_channels->push($channel);
 

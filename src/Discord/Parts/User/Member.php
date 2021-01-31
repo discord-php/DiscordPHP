@@ -13,6 +13,7 @@ namespace Discord\Parts\User;
 
 use Carbon\Carbon;
 use Discord\Helpers\Collection;
+use Discord\Http\Endpoint;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Channel\Overwrite;
 use Discord\Parts\Guild\Guild;
@@ -103,10 +104,10 @@ class Member extends Part
 
         // jake plz
         if ($this->discord->id == $this->id) {
-            return $this->http->patch("guilds/{$this->guild_id}/members/@me/nick", $payload);
+            return $this->http->patch(Endpoint::bind(Endpoint::GUILD_MEMBER_SELF_NICK, $this->guild_id), $payload);
         }
 
-        return $this->http->patch("guilds/{$this->guild_id}/members/{$this->id}", $payload);
+        return $this->http->patch(Endpoint::bind(Endpoint::GUILD_MEMBER, $this->guild_id, $this->id), $payload);
     }
 
     /**
@@ -122,7 +123,7 @@ class Member extends Part
             $channel = $channel->id;
         }
 
-        return $this->http->patch("guilds/{$this->guild_id}/members/{$this->id}", ['channel_id' => $channel]);
+        return $this->http->patch(Endpoint::bind(Endpoint::GUILD_MEMBER, $this->guild_id, $this->id), ['channel_id' => $channel]);
     }
 
     /**
@@ -143,7 +144,7 @@ class Member extends Part
             return \React\Promise\reject(new \Exception('User already has role.'));
         }
 
-        return $this->http->put("guilds/{$this->guild_id}/members/{$this->id}/roles/{$role}");
+        return $this->http->put(Endpoint::bind(Endpoint::GUILD_MEMBER_ROLE, $this->guild_id, $this->id, $role));
     }
 
     /**
@@ -160,7 +161,7 @@ class Member extends Part
         }
 
         if (false !== array_search($role, $this->attributes['roles'])) {
-            return $this->http->delete("guilds/{$this->guild_id}/members/{$this->id}/roles/{$role}");
+            return $this->http->delete(Endpoint::bind(Endpoint::GUILD_MEMBER_ROLE, $this->guild_id, $this->id, $role));
         }
 
         return \React\Promise\reject(new \Exception('User does not have role.'));

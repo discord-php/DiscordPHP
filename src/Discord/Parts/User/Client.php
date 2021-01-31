@@ -12,6 +12,7 @@
 namespace Discord\Parts\User;
 
 use Discord\Exceptions\FileNotFoundException;
+use Discord\Http\Endpoint;
 use Discord\Parts\OAuth\Application;
 use Discord\Parts\Part;
 use Discord\Repository\GuildRepository;
@@ -59,7 +60,7 @@ class Client extends Part
     {
         $this->application = $this->factory->create(Application::class, [], true);
 
-        $this->http->get('oauth2/applications/@me')->done(function ($response) {
+        $this->http->get(Endpoint::APPLICATION_CURRENT)->done(function ($response) {
             $this->application->fill((array) $response);
         });
     }
@@ -121,7 +122,7 @@ class Client extends Part
      */
     public function save(): ExtendedPromiseInterface
     {
-        return $this->http->patch('users/@me', $this->getUpdatableAttributes());
+        return $this->http->patch(Endpoint::USER_CURRENT, $this->getUpdatableAttributes());
     }
 
     /**

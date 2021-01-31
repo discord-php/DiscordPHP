@@ -22,6 +22,7 @@ use Discord\Parts\User\User;
 use Discord\Parts\WebSockets\MessageReaction;
 use Discord\WebSockets\Event;
 use Discord\Helpers\Deferred;
+use Discord\Http\Endpoint;
 use Discord\Repository\Channel\ReactionRepository;
 use React\Promise\ExtendedPromiseInterface;
 
@@ -401,7 +402,7 @@ class Message extends Part
      */
     public function crosspost(): ExtendedPromiseInterface
     {
-        return $this->http->post("channels/{$this->channel_id}/messages/{$this->id}/crosspost")->then(function ($response) {
+        return $this->http->post(Endpoint::bind((Endpoint::CHANNEL_CROSSPOST_MESSAGE, $this->channel_id, $this->id)))->then(function ($response) {
             return $this->factory->part(Message::class, $response, true);
         });
     }
@@ -438,9 +439,7 @@ class Message extends Part
             $emoticon = $emoticon->toReactionString();
         }
 
-        $emoticon = urlencode($emoticon);
-
-        return $this->http->put("channels/{$this->channel->id}/messages/{$this->id}/reactions/{$emoticon}/@me");
+        return $this->http->put(Endpoint::bind(Endpoint::OWN_MESSAGE_REACTION, $this->channel_id, $this->id, urlencode($emoticon)));
     }
 
     /**
@@ -463,20 +462,20 @@ class Message extends Part
         if (in_array($type, $types)) {
             switch ($type) {
                 case self::REACT_DELETE_ALL:
-                    $url = "channels/{$this->channel->id}/messages/{$this->id}/reactions";
+                    $url = Endpoint::bind(Endpoint::MESSAGE_REACTION_ALL, $this->channel_id, $this->id);
                     break;
                 case self::REACT_DELETE_ME:
-                    $url = "channels/{$this->channel->id}/messages/{$this->id}/reactions/{$emoticon}/@me";
+                    $url = Endpoint::bind(Endpoint::OWN_MESSAGE_REACTION, $this->channel_id, $this->id, $emoticon);
                     break;
                 case self::REACT_DELETE_ID:
-                    $url = "channels/{$this->channel->id}/messages/{$this->id}/reactions/{$emoticon}/{$id}";
+                    $url = Endpoint::bind(Endpoint::USER_MESSAGE_REACTION, $this->channel_id, $this->id, $emoticon, $id);
                     break;
                 case self::REACT_DELETE_EMOJI:
-                    $url = "channels/{$this->channel->id}/messages/{$this->id}/reactions/{$emoticon}";
+                    $url = Endpoint::bind(Endpoint::MESSAGE_REACTION_EMOJI, $this->channel_id, $this->id, $emoticon);
                     break;
             }
 
-            return $this->http->delete($url, []);
+            return $this->http->delete($url);
         }
 
         return \React\Promise\reject();
@@ -489,7 +488,7 @@ class Message extends Part
      */
     public function delete(): ExtendedPromiseInterface
     {
-        return $this->http->delete("channels/{$this->channel_id}/messages/{$this->id}");
+        return $this->http->delete(Endpoint::bind(Endpoint::CHANNEL_MESSAGE, $this->channel_id, $this->id));
     }
 
     /**
@@ -553,7 +552,7 @@ class Message extends Part
      */
     public function addEmbed(Embed $embed): ExtendedPromiseInterface
     {
-        return $this->http->patch("channels/{$this->channel_id}/messages/{$this->id}", [
+        return $this->http->patch(Endpoint::bind(Endpoint::CHANNEL_MESSAGE, $this->channel_id, $this->id), [
             'embed' => $embed->getRawAttributes(),
         ]);
     }

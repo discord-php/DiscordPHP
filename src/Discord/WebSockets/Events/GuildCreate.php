@@ -20,6 +20,7 @@ use Discord\Parts\User\User;
 use Discord\Parts\WebSockets\VoiceStateUpdate as VoiceStateUpdatePart;
 use Discord\WebSockets\Event;
 use Discord\Helpers\Deferred;
+use Discord\Http\Endpoint;
 
 class GuildCreate extends Event
 {
@@ -91,7 +92,7 @@ class GuildCreate extends Event
         };
 
         if ($this->discord->options['retrieveBans']) {
-            $this->http->get("guilds/{$guildPart->id}/bans")->done(function ($rawBans) use (&$guildPart, $resolve) {
+            $this->http->get(Endpoint::bind(Endpoint::GUILD_BANS, $guildPart->id))->done(function ($rawBans) use (&$guildPart, $resolve) {
                 foreach ($rawBans as $ban) {
                     $ban = (array) $ban;
                     $ban['guild'] = $guildPart;
