@@ -402,7 +402,7 @@ class Message extends Part
      */
     public function crosspost(): ExtendedPromiseInterface
     {
-        return $this->http->post(Endpoint::bind((Endpoint::CHANNEL_CROSSPOST_MESSAGE, $this->channel_id, $this->id)))->then(function ($response) {
+        return $this->http->post(Endpoint::bind(Endpoint::CHANNEL_CROSSPOST_MESSAGE, $this->channel_id, $this->id))->then(function ($response) {
             return $this->factory->part(Message::class, $response, true);
         });
     }
