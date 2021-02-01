@@ -54,9 +54,10 @@ final class EmptyMessageTest extends TestCase
     public function testCanReplyToMessage(Message $message)
     {
         return wait(function (Discord $discord, $resolve) use ($message) {
-            $message->reply('replying to my message')->done(function (Message $message) use ($resolve) {
-                $this->assertEquals('<@'.DiscordSingleton::get()->id.'>, replying to my message', $message->content);
-                $resolve($message);
+            $message->reply('replying to my message')->done(function (Message $new_message) use ($resolve, $message) {
+                $this->assertEquals('replying to my message', $new_message->content);
+                $this->assertEquals($message->id, $new_message->referenced_message->id);
+                $resolve($new_message);
             });
         });
     }

@@ -10,6 +10,7 @@
  */
 
 use Discord\Discord;
+use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 
 class DiscordSingleton
@@ -22,9 +23,13 @@ class DiscordSingleton
     public static function get()
     {
         if (! self::$discord) {
+            $logger = new Logger('DiscordPHP-UnitTests');
+            $logger->pushHandler(new StreamHandler(fopen(__DIR__.'/../phpunit.log', 'w')));
+
             self::$discord = new Discord([
                 'token' => getenv('DISCORD_TOKEN'),
-                'loggerLevel' => Logger::EMERGENCY,
+                'logger' => $logger,
+                'httpLogger' => $logger,
             ]);
         }
 

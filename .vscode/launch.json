@@ -14,10 +14,17 @@
             "name": "Launch currently open script",
             "type": "php",
             "request": "launch",
-            "program": "${workspaceFolder}/test.php",
-            "cwd": "${workspaceFolder}",
-            "port": 9000,
-            "runtimeExecutable": "/usr/bin/php"
+            "program": "${file}",
+            "cwd": "${fileDirname}",
+            "port": 9000
+        },
+        {
+            "name": "Launch phpunit",
+            "type": "php",
+            "request": "launch",
+            "program": "${workspaceRoot}/vendor/bin/phpunit",
+            "cwd": "${workspaceRoot}",
+            "port": 9000
         }
     ]
 }

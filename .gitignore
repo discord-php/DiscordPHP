@@ -9,3 +9,4 @@ test*.php
 .env
 .phpunit*
 .DS_Store
+phpunit.log

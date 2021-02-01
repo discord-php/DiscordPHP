@@ -27,7 +27,11 @@ function wait(callable $callback, float $timeout = TIMEOUT)
             $discord->getLoop()->stop();
         };
 
-        $finally = $callback($discord, $resolve);
+        try {
+            $finally = $callback($discord, $resolve);
+        } catch (\Throwable $e) {
+            $resolve($e);
+        }
     });
 
     $timeout = $discord->getLoop()->addTimer($timeout, function () use ($discord, &$timedOut) {
@@ -37,6 +41,10 @@ function wait(callable $callback, float $timeout = TIMEOUT)
 
     $discord->getLoop()->run();
     $discord->getLoop()->cancelTimer($timeout);
+
+    if ($result instanceof Exception) {
+        throw $result;
+    }
 
     if (is_callable($finally)) {
         $finally();
