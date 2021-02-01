@@ -554,7 +554,11 @@ class Message extends Part
     {
         return $this->http->patch(Endpoint::bind(Endpoint::CHANNEL_MESSAGE, $this->channel_id, $this->id), [
             'embed' => $embed->getRawAttributes(),
-        ]);
+        ])->then(function ($response) {
+            $this->fill((array) $response);
+            
+            return $this;
+        });
     }
 
     /**
