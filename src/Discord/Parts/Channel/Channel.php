@@ -484,6 +484,23 @@ class Channel extends Part
             }
         }
 
+        $resolver = new OptionsResolver();
+        $resolver
+            ->setDefined([
+                'max_age',
+                'max_uses',
+                'temporary',
+                'unique',
+            ])
+            ->setAllowedTypes('max_age', 'int')
+            ->setAllowedTypes('max_uses', 'int')
+            ->setAllowedTypes('temporary', 'bool')
+            ->setAllowedTypes('unique', 'bool')
+            ->setAllowedValues('max_age', range(0, 604800))
+            ->setAllowedValues('max_uses', range(0, 100));
+        
+        $options = $resolver->resolve($options);
+
         $this->http->post($this->replaceWithVariables('channels/:id/invites'), $options)->done(
             function ($response) use ($deferred) {
                 $invite = $this->factory->create(Invite::class, $response, true);
