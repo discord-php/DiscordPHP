@@ -1,5 +1,5 @@
 # Dockerfile for PHP 7.3
-FROM php:7.3-cli
+FROM php:8.0-cli
 
 RUN apt-get update -y && apt-get upgrade -y
 RUN apt-get install git zip unzip -y

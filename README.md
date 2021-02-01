@@ -24,9 +24,8 @@ Before you start using this Library, you **need** to know how PHP works, you nee
 
 ### Requirements
 
-- PHP 7.3
-	- Technically the library can run on some versions of PHP 7.2, however, no support will be given for any version lower than 7.3.
-	- The requirement will be increased to PHP 7.4 so you should develop for the latest version of PHP.
+- PHP 7.4
+	- Versions as early as PHP 7.2 may work but no support will be provided in the case you encounter problems.
 - Composer
 - `ext-json`
 - `ext-zlib`
