@@ -685,7 +685,7 @@ class Channel extends Part
             }
         }
 
-        return $this->http->post(Endpoint::bind(Endpoint::CHANNEL_MESSAGES), $content)->then(function ($response) {
+        return $this->http->post(Endpoint::bind(Endpoint::CHANNEL_MESSAGES, $this->id), $content)->then(function ($response) {
             return $this->factory->create(Message::class, $response, true);
         });
     }
