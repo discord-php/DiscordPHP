@@ -11,6 +11,7 @@
 
 namespace Discord\Repository\Channel;
 
+use Discord\Http\Endpoint;
 use Discord\Parts\Channel\Webhook;
 use Discord\Repository\AbstractRepository;
 
@@ -23,11 +24,11 @@ class WebhookRepository extends AbstractRepository
      * {@inheritdoc}
      */
     protected $endpoints = [
-        'all' => 'channels/:channel_id/webhooks',
-        'create' => 'channels/:channel_id/webhooks',
-        'get' => 'webhooks/:id',
-        'delete' => 'webhooks/:id',
-        'update' => 'webhooks/:id',
+        'all' => Endpoint::CHANNEL_WEBHOOKS,
+        'create' => Endpoint::CHANNEL_WEBHOOKS,
+        'get' => Endpoint::WEBHOOK,
+        'delete' => Endpoint::WEBHOOK,
+        'update' => Endpoint::WEBHOOK,
     ];
 
     /**

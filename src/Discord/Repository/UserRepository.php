@@ -11,6 +11,7 @@
 
 namespace Discord\Repository;
 
+use Discord\Http\Endpoint;
 use Discord\Parts\User\User;
 
 /**
@@ -24,7 +25,7 @@ class UserRepository extends AbstractRepository
      * {@inheritdoc}
      */
     protected $endpoints = [
-        'get' => 'users/:id',
+        'get' => Endpoint::USER,
     ];
 
     /**

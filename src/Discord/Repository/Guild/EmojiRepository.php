@@ -11,6 +11,7 @@
 
 namespace Discord\Repository\Guild;
 
+use Discord\Http\Endpoint;
 use Discord\Parts\Guild\Emoji;
 use Discord\Repository\AbstractRepository;
 
@@ -26,10 +27,10 @@ class EmojiRepository extends AbstractRepository
      * {@inheritdoc}
      */
     protected $endpoints = [
-        'all' => 'guilds/:guild_id/emojis',
-        'create' => 'guilds/:guild_id/emojis',
-        'delete' => 'guilds/:guild_id/emojis/:id',
-        'update' => 'guilds/:guild_id/emojis/:id',
+        'all' => Endpoint::GUILD_EMOJIS, 
+        'create' => Endpoint::GUILD_EMOJIS,
+        'delete' => Endpoint::GUILD_EMOJI,
+        'update' => Endpoint::GUILD_EMOJI,
     ];
 
     /**

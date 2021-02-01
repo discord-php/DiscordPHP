@@ -11,6 +11,7 @@
 
 namespace Discord\Repository\Guild;
 
+use Discord\Http\Endpoint;
 use Discord\Parts\Channel\Channel;
 use Discord\Repository\AbstractRepository;
 
@@ -26,11 +27,11 @@ class ChannelRepository extends AbstractRepository
      * {@inheritdoc}
      */
     protected $endpoints = [
-        'all' => 'guilds/:guild_id/channels',
-        'get' => 'channels/:id',
-        'create' => 'guilds/:guild_id/channels',
-        'update' => 'channels/:id',
-        'delete' => 'channels/:id',
+        'all' => Endpoint::GUILD_CHANNELS,
+        'get' => Endpoint::CHANNEL,
+        'create' => Endpoint::GUILD_CHANNELS,
+        'update' => Endpoint::CHANNEL,
+        'delete' => Endpoint::CHANNEL,
     ];
 
     /**

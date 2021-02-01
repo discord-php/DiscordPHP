@@ -125,4 +125,14 @@ class Webhook extends Part
             'avatar' => $this->avatar,
         ];
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getRepositoryAttributes(): array
+    {
+        return [
+            'webhook_id' => $this->id,
+        ];
+    }
 }

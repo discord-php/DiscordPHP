@@ -11,6 +11,7 @@
 
 namespace Discord\Repository\Channel;
 
+use Discord\Http\Endpoint;
 use Discord\Parts\Channel\Overwrite;
 use Discord\Repository\AbstractRepository;
 
@@ -26,7 +27,7 @@ class OverwriteRepository extends AbstractRepository
      * {@inheritdoc}
      */
     protected $endpoints = [
-        'delete' => 'channels/:channel_id/permissions/:id',
+        'delete' => Endpoint::CHANNEL_PERMISSIONS,
     ];
 
     /**

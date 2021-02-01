@@ -35,8 +35,8 @@ class BanRepository extends AbstractRepository
      * {@inheritdoc}
      */
     protected $endpoints = [
-        'all' => 'guilds/:guild_id/bans',
-        'delete' => 'guilds/:guild_id/bans/:user_id',
+        'all' => Endpoint::GUILD_BANS,
+        'delete' => Endpoint::GUILD_BAN,
     ];
 
     /**

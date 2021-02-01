@@ -183,4 +183,14 @@ class Invite extends Part
     {
         return [];
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getRepositoryAttributes(): array
+    {
+        return [
+            'code' => $this->code,
+        ];
+    }
 }

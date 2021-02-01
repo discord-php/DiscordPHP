@@ -11,6 +11,7 @@
 
 namespace Discord\Repository\Guild;
 
+use Discord\Http\Endpoint;
 use Discord\Parts\Guild\Role;
 use Discord\Repository\AbstractRepository;
 
@@ -26,11 +27,11 @@ class RoleRepository extends AbstractRepository
      * {@inheritdoc}
      */
     protected $endpoints = [
-        'all' => 'guilds/:guild_id/roles',
-        'get' => 'guilds/:guild_id/roles/:id',
-        'create' => 'guilds/:guild_id/roles',
-        'update' => 'guilds/:guild_id/roles/:id',
-        'delete' => 'guilds/:guild_id/roles/:id',
+        'all' => Endpoint::GUILD_ROLES,
+        'get' => Endpoint::GUILD_ROLE,
+        'create' => Endpoint::GUILD_ROLES,
+        'update' => Endpoint::GUILD_ROLE,
+        'delete' => Endpoint::GUILD_ROLE,
     ];
 
     /**

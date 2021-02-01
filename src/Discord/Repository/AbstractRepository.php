@@ -13,6 +13,7 @@ namespace Discord\Repository;
 
 use Discord\Factory\Factory;
 use Discord\Helpers\Collection;
+use Discord\Http\Endpoint;
 use Discord\Http\Http;
 use Discord\Parts\Part;
 use React\Promise\ExtendedPromiseInterface;
@@ -87,7 +88,10 @@ abstract class AbstractRepository extends Collection
             return \React\Promise\reject(new \Exception('You cannot freshen this repository.'));
         }
 
-        return $this->http->get($this->replaceWithVariables($this->endpoints['all']))->then(function ($response) {
+        $endpoint = new Endpoint($this->endpoints['all']);
+        $endpoint->bindAssoc($this->vars);
+
+        return $this->http->get($endpoint)->then(function ($response) {
             $this->fill([]);
 
             foreach ($response as $value) {
@@ -128,21 +132,23 @@ abstract class AbstractRepository extends Collection
     public function save(Part $part): ExtendedPromiseInterface
     {
         if ($part->created) {
-            $method = 'patch';
-            $endpoint = $part->replaceWithVariables($this->replaceWithVariables(@$this->endpoints['update']));
-            $attributes = $part->getUpdatableAttributes();
-
             if (! isset($this->endpoints['update'])) {
                 return \React\Promise\reject(new \Exception('You cannot update this part.'));
             }
-        } else {
-            $method = 'post';
-            $endpoint = $part->replaceWithVariables($this->replaceWithVariables(@$this->endpoints['create']));
-            $attributes = $part->getCreatableAttributes();
 
+            $method = 'patch';
+            $endpoint = new Endpoint($this->endpoints['update']);
+            $endpoint->bindAssoc(array_merge($part->getRepositoryAttributes(), $this->vars));
+            $attributes = $part->getUpdatableAttributes();
+        } else {
             if (! isset($this->endpoints['create'])) {
                 return \React\Promise\reject(new \Exception('You cannot create this part.'));
             }
+
+            $method = 'post';
+            $endpoint = new Endpoint($this->endpoints['create']);
+            $endpoint->bindAssoc(array_merge($part->getRepositoryAttributes(), $this->vars));
+            $attributes = $part->getCreatableAttributes();
         }
 
         return $this->http->{$method}($endpoint, $attributes)->then(function ($response) use (&$part) {
@@ -178,7 +184,8 @@ abstract class AbstractRepository extends Collection
             return \React\Promise\reject(new \Exception('You cannot delete this part.'));
         }
 
-        $endpoint = $part->replaceWithVariables($this->replaceWithVariables($this->endpoints['delete']));
+        $endpoint = new Endpoint($this->endpoints['delete']);
+        $endpoint->bindAssoc(array_merge($part->getRepositoryAttributes(), $this->vars));
 
         return $this->http->delete($endpoint)->then(function ($response) use (&$part) {
             $part->created = false;
@@ -205,7 +212,8 @@ abstract class AbstractRepository extends Collection
             return \React\Promise\reject(new \Exception('You cannot get this part.'));
         }
 
-        $endpoint = $part->replaceWithVariables($this->replaceWithVariables($this->endpoints['get']));
+        $endpoint = new Endpoint($this->endpoints['get']);
+        $endpoint->bindAssoc(array_merge($part->getRepositoryAttributes(), $this->vars));
 
         return $this->http->get($endpoint)->then(function ($response) use (&$part) {
             $part->fill((array) $response);
@@ -233,7 +241,10 @@ abstract class AbstractRepository extends Collection
             return \React\Promise\resolve(new \Exception('You cannot get this part.'));
         }
 
-        $endpoint = $this->replaceWithVariables(str_replace(':id', $id, $this->endpoints['get']));
+
+        $part = $this->factory->create($this->class, [$this->discrim => $id]);
+        $endpoint = new Endpoint($this->endpoints['get']);
+        $endpoint->bindAssoc(array_merge($part->getRepositoryAttributes(), $this->vars));
 
         return $this->http->get($endpoint)->then(function ($response) {
             $part = $this->factory->create($this->class, array_merge($this->vars, (array) $response), true);
@@ -241,31 +252,6 @@ abstract class AbstractRepository extends Collection
 
             return $part;
         });
-    }
-
-    /**
-     * Replaces variables in string with syntax :{varname}.
-     *
-     * @param string $string A string with placeholders.
-     *
-     * @return string A string with placeholders replaced.
-     */
-    protected function replaceWithVariables(string $string): string
-    {
-        if (preg_match_all('/:([a-z_]+)/', $string, $matches)) {
-            list(
-                $original,
-                $vars
-            ) = $matches;
-
-            foreach ($vars as $key => $var) {
-                if (isset($this->vars[$var])) {
-                    $string = str_replace($original[$key], $this->vars[$var], $string);
-                }
-            }
-        }
-
-        return $string;
     }
 
     /**

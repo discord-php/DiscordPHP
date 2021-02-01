@@ -11,6 +11,7 @@
 
 namespace Discord\Repository\Guild;
 
+use Discord\Http\Endpoint;
 use Discord\Parts\User\Member;
 use Discord\Repository\AbstractRepository;
 use React\Promise\PromiseInterface;
@@ -27,10 +28,10 @@ class MemberRepository extends AbstractRepository
      * {@inheritdoc}
      */
     protected $endpoints = [
-        'all' => 'guilds/:guild_id/members',
-        'get' => 'guilds/:guild_id/members/:id',
-        'update' => 'guilds/:guild_id/members/:id',
-        'delete' => 'guilds/:guild_id/members/:id',
+        'all' => Endpoint::GUILD_MEMBERS, 
+        'get' => Endpoint::GUILD_MEMBER,
+        'update' => Endpoint::GUILD_MEMBER,
+        'delete' => Endpoint::GUILD_MEMBER,
     ];
 
     /**

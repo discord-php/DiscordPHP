@@ -93,4 +93,14 @@ class Ban extends Part
     {
         return [];
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getRepositoryAttributes(): array
+    {
+        return [
+            'user_id' => $this->user_id,
+        ];
+    }
 }

@@ -385,6 +385,16 @@ class Member extends Part
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function getRepositoryAttributes(): array
+    {
+        return [
+            'user_id' => $this->id,
+        ];
+    }
+
+    /**
      * Returns a formatted mention.
      *
      * @return string

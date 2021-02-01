@@ -86,4 +86,14 @@ class Emoji extends Part
 
         return $this->name;
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getRepositoryAttributes(): array
+    {
+        return [
+            'emoji_id' => $this->id,
+        ];
+    }
 }

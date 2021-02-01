@@ -103,6 +103,17 @@ class Role extends Part
             'mentionable' => $this->mentionable,
         ];
     }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function getRepositoryAttributes(): array
+    {
+        return [
+            'role_id' => $this->id,
+        ];
+    }
+
 
     /**
      * Returns a formatted mention.

@@ -26,12 +26,12 @@ class GuildRepository extends AbstractRepository
      * {@inheritdoc}
      */
     protected $endpoints = [
-        'all' => 'users/@me/guilds',
-        'get' => 'guilds/:id',
-        'create' => 'guilds',
-        'update' => 'guilds/:id',
-        'delete' => 'guilds/:id',
-        'leave' => 'users/@me/guilds/:id',
+        'all' => Endpoint::USER_CURRENT_GUILDS,
+        'get' => Endpoint::GUILD,
+        'create' => Endpoint::GUILDS,
+        'update' => Endpoint::GUILD,
+        'delete' => Endpoint::GUILD,
+        'leave' => Endpoint::USER_CURRENT_GUILD,
     ];
 
     /**

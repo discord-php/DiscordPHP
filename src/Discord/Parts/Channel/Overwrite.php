@@ -62,4 +62,14 @@ class Overwrite extends Part
 
         $this->attributes['deny'] = $deny;
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getRepositoryAttributes(): array
+    {
+        return [
+            'overwrite_id' => $this->id,
+        ];
+    }
 }

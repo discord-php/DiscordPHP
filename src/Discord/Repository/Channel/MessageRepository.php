@@ -11,6 +11,7 @@
 
 namespace Discord\Repository\Channel;
 
+use Discord\Http\Endpoint;
 use Discord\Parts\Channel\Message;
 use Discord\Repository\AbstractRepository;
 
@@ -26,9 +27,9 @@ class MessageRepository extends AbstractRepository
      * {@inheritdoc}
      */
     protected $endpoints = [
-        'get' => 'channels/:channel_id/messages/:id',
-        'update' => 'channels/:channel_id/messages/:id',
-        'delete' => 'channels/:channel_id/messages/:id',
+        'get' => Endpoint::CHANNEL_MESSAGE,
+        'update' => Endpoint::CHANNEL_MESSAGE,
+        'delete' => Endpoint::CHANNEL_MESSAGE,
     ];
 
     /**
