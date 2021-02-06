@@ -1,10 +1,18 @@
 # Changelog
 
-## Version 6.0.0
+## Version 5.2.0
 
-- HTTP client has been moved to a seperate package: [DiscordPHP-Http](https://github.com/discord-api/DiscordPHP-Http)
+- PHP 7.4 is now the lowest supported version of PHP.
+    - Versions as low as PHP 7.2 may still work, however, no support will be provided.
+- Discord Gateway and REST API versions changed to Version 8.
 - Removed unnecessary deferred promises from various parts and repositories.
 - `Message::reply()` now creates a "Discord reply" rather than the old way which was simply a mention with the content afterwards.
+- Tidied up and removed any unessacary deferred promises and promise binds.
+
+### HTTP Client
+
+- HTTP client has been moved to a seperate package: [DiscordPHP-Http](https://github.com/discord-api/DiscordPHP-Http)
+- Improved rate limits by grouping requests by major parameters.
 
 ### Voice Client
 
@@ -21,6 +29,8 @@
     - `stop()`
     - `close()`
     - `getRecieveStream()`
+- Although this is not deemed a breaking change it will break anything that uses the promise response.
+- Expect a voice client refactor in a future release.
 
 ## Version 5.1.1
 
