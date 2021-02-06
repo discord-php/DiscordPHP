@@ -40,7 +40,7 @@ Messages are present in channels and can be anything from a cross post to a repl
 
 ### Reply to a message
 
-Sends a "reply" to the message. Note that this is not the same as the implemented replies in Discord (those will be implemented in version 6.0.0), but in the form `"<@id_of_message_author>, <content>"`. Returns the new message in a promise.
+Sends a "reply" to the message. Returns the new message in a promise.
 
 #### Parameters
 
@@ -49,7 +49,6 @@ Sends a "reply" to the message. Note that this is not the same as the implemente
 | text | string | text to send in the message |
 
 ```php
-// <@message_author_id>, hello!
 $message->reply('hello!')->done(function (Message $message) {
     // ...
 });
