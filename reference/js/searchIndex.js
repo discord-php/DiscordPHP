@@ -1951,6 +1951,11 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Discord-Parts-Channel-Message.html#constant_REACT_DELETE_ID"
         },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\u003A\u003AREACT_DELETE_EMOJI",
+            "name": "REACT_DELETE_EMOJI",
+            "summary": "",
+            "url": "classes/Discord-Parts-Channel-Message.html#constant_REACT_DELETE_EMOJI"
+        },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\u003A\u003A\u0024fillable",
             "name": "fillable",
             "summary": "The\u0020parts\u0020fillable\u0020attributes.",
@@ -3280,11 +3285,6 @@ Search.appendIndex(
             "name": "Member",
             "summary": "A\u0020member\u0020is\u0020a\u0020relationship\u0020between\u0020a\u0020user\u0020and\u0020a\u0020guild.\u0020It\u0020contains\u0020user\u002Dto\u002Dguild\u0020specific\u0020data\u0020like\u0020roles.",
             "url": "classes/Discord-Parts-User-Member.html"
-        },                {
-            "fqsen": "\\Discord\\Parts\\User\\Member\u003A\u003AupdateFromPresence\u0028\u0029",
-            "name": "updateFromPresence",
-            "summary": "Updates\u0020the\u0020member\u0020from\u0020a\u0020new\u0020presence\u0020update\u0020object.",
-            "url": "classes/Discord-Parts-User-Member.html#method_updateFromPresence"
         },                {
             "fqsen": "\\Discord\\Parts\\User\\Member\u003A\u003Aban\u0028\u0029",
             "name": "ban",
