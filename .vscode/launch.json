@@ -11,11 +11,11 @@
             "port": 9000
         },
         {
-            "name": "Launch currently open script",
+            "name": "Launch with XDebug",
             "type": "php",
             "request": "launch",
-            "program": "${file}",
-            "cwd": "${fileDirname}",
+            "program": "${workspaceFolder}/test.php",
+            "cwd": "${workspaceFolder}",
             "port": 9000
         },
         {

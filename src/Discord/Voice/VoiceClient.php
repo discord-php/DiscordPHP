@@ -16,8 +16,8 @@ use Discord\Exceptions\FFmpegNotFoundException;
 use Discord\Exceptions\FileNotFoundException;
 use Discord\Exceptions\LibSodiumNotFoundException;
 use Discord\Exceptions\OutdatedDCAException;
+use Discord\Helpers\Buffer as RealBuffer;
 use Discord\Helpers\Collection;
-use Discord\Helpers\Process;
 use Discord\Parts\Channel\Channel;
 use Discord\WebSockets\Op;
 use Evenement\EventEmitter;
@@ -28,11 +28,15 @@ use React\Datagram\Socket;
 use React\Dns\Resolver\Factory as DNSFactory;
 use React\EventLoop\LoopInterface;
 use Discord\Helpers\Deferred;
+use Exception;
 use Psr\Log\LoggerInterface;
+use React\ChildProcess\Process;
 use React\Promise\ExtendedPromiseInterface;
 use React\Stream\ReadableResourceStream as Stream;
 use React\EventLoop\TimerInterface;
+use React\Stream\ReadableResourceStream;
 use React\Stream\ReadableStreamInterface;
+use RuntimeException;
 
 /**
  * The Discord voice client.
@@ -59,6 +63,13 @@ class VoiceClient extends EventEmitter
      * @var string The DCA binary name that will be run.
      */
     protected $dca;
+
+    /**
+     * The FFmpeg binary location.
+     *
+     * @var string
+     */
+    protected $ffmpeg;
 
     /**
      * The ReactPHP event loop.
@@ -236,7 +247,7 @@ class VoiceClient extends EventEmitter
     protected $streamTime = 0;
 
     /**
-     * The size of audio frames.
+     * The size of audio frames, in milliseconds.
      *
      * @var int The size of audio frames.
      */
@@ -316,7 +327,7 @@ class VoiceClient extends EventEmitter
      * @param LoggerInterface $logger    The logger.
      * @param array           $data      More information related to the voice client.
      */
-    public function __construct(WebSocket $websocket, LoopInterface &$loop, Channel $channel, LoggerInterface $logger, array $data)
+    public function __construct(WebSocket $websocket, LoopInterface $loop, Channel $channel, LoggerInterface $logger, array $data)
     {
         $this->loop = $loop;
         $this->mainWebsocket = $websocket;
@@ -336,21 +347,15 @@ class VoiceClient extends EventEmitter
      *
      * @return void|bool
      */
-    public function start(bool $check = true)
+    public function start()
     {
-        if ($check) {
-            if (! $this->checkForFFmpeg() ||
-                ! $this->checkForDCA() ||
-                ! $this->checkForLibsodium()) {
-                return false;
-            }
-
-            // temp
-            if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
-                $this->emit('error', [new \Exception('The voice client does not work on Windows operating systems at the moment.')]);
-
-                return false;
-            }
+        if (
+            ! $this->checkForFFmpeg() ||
+            ! $this->checkForDCA() ||
+            ! $this->checkForLibsodium() ||
+            ! $this->checkPHPVersion()
+        ) {
+            return false;
         }
 
         $this->initSockets();
@@ -476,19 +481,23 @@ class VoiceClient extends EventEmitter
             $this->emit('ws-message', [$message, $this]);
 
             switch ($data->op) {
-                case Op::VOICE_HEARTBEAT: // keepalive response
+                case Op::VOICE_HEARTBEAT_ACK: // keepalive response
                     $end = microtime(true);
                     $start = $data->d;
                     $diff = ($end - $start) * 1000;
 
-                    if ($diff <= 10) { // set to 20ms
-                        $this->setFrameSize(20);
-                    } elseif ($diff <= 20) { // set to 40ms
-                        $this->setFrameSize(40);
-                    } else { // set to 60ms
-                        $this->setFrameSize(60);
-                    }
-
+                    // dont know what this is
+                    // dynamic frame size obviously
+                    // doesnt work
+                    // if ($diff <= 10) { // set to 20ms
+                    //     $this->setFrameSize(20);
+                    // } elseif ($diff <= 20) { // set to 40ms
+                    //     $this->setFrameSize(40);
+                    // } else { // set to 60ms
+                    //     $this->setFrameSize(60);
+                    // }
+                    
+                    $this->logger->debug('received heartbeat ack', ['response_time' => $diff]);
                     $this->emit('ws-ping', [$diff]);
                     break;
                 case Op::VOICE_DESCRIPTION: // ready
@@ -526,6 +535,7 @@ class VoiceClient extends EventEmitter
                             'op' => Op::VOICE_HEARTBEAT,
                             'd' => microtime(true),
                         ]);
+                        $this->logger->debug('sending heartbeat');
                         $this->emit('ws-heartbeat', []);
                     };
 
@@ -725,176 +735,120 @@ class VoiceClient extends EventEmitter
     {
         $deferred = new Deferred();
 
-        if (! $this->ready) {
-            $deferred->reject(new \Exception('Voice Client is not ready.'));
+        if (! $this->isReady()) {
+            $deferred->reject(new Exception('Voice client is not ready yet.'));
 
             return $deferred->promise();
         }
 
         if ($stream instanceof Process) {
-            $stream->stderr->on('data', function ($d) {
+            $stream->stdout->on('data', function ($d) {
                 if (empty($d)) {
                     return;
                 }
 
                 $this->emit('stderr', [$d, $this]);
             });
-
+            
             $stream = $stream->stdout;
         }
 
-        if ($stream instanceof ReadableStreamInterface) {
-            $stream->pause();
-            /**
-             * @todo $stream->stream has private access
-             *       see https://github.com/reactphp/stream/blob/ff5e01d6bddd549b3ddea86cceb7efd41eab78f6/src/ReadableResourceStream.php#L14
-             */
-            $stream = $stream->stream;
+        if (is_resource($stream)) {
+            $stream = new ReadableResourceStream($stream, $this->loop);
         }
 
-        if (! is_resource($stream)) {
-            $deferred->reject(new \RuntimeException('The stream passed to playDCAStream was not an instance of resource, ReactPHP Process or ReactPHP Stream.'));
+        if (! ($stream instanceof ReadableStreamInterface)) {
+            $deferred->reject(new Exception('The stream passed to playDCAStream was not an instance of resource, ReactPHP Process, ReactPHP Readable Stream'));
 
             return $deferred->promise();
         }
 
+        $buffer = new RealBuffer($this->loop);
+        $stream->on('data', function ($d) use ($buffer) {
+            $buffer->write($d);
+        });
+
         $count = 0;
-        $noData = false;
-        $noDataHeader = false;
-
-        $this->setSpeaking(true);
-
-        $processff2opus = function () use (&$processff2opus, $stream, &$noData, &$noDataHeader, $deferred, &$count) {
+        $readOpus = function () use ($buffer, $deferred, &$readOpus, &$count) {
+            // If the client is paused, delay by frame size and check again.
             if ($this->isPaused) {
-                $this->loop->addTimer($this->frameSize / 1000, $processff2opus);
+                $this->loop->addTimer($this->frameSize / 1000, $readOpus);
 
                 return;
             }
 
             if ($this->stopAudio) {
-                $this->setSpeaking(false);
-                fclose($stream);
-
-                $this->seq = 0;
-                $this->timestamp = 0;
-                $this->streamTime = 0;
-                $this->startTime = null;
-
-                $this->stopAudio = false;
-                $deferred->resolve(true);
+                $this->reset();
+                $deferred->resolve();
 
                 return;
             }
 
-            $header = @fread($stream, 2);
+            // Read opus length
+            $buffer->readInt16(1000)->then(function ($opusLength) use ($buffer) {
+                // Read opus data
+                return $buffer->read($opusLength, null, 1000);
+            })->then(function ($opus) use (&$readOpus, &$count) {
+                ++$count;
+                $this->sendBuffer($opus);
 
-            if (! $header) {
-                if ($noDataHeader && $this->streamTime != 0) {
-                    $this->setSpeaking(false);
-                    fclose($stream);
-
+                // increment sequence
+                // uint16 overflow protection
+                if (++$this->seq >= 2 ** 16) {
                     $this->seq = 0;
-                    $this->timestamp = 0;
-                    $this->streamTime = 0;
-                    $this->startTime = null;
-
-                    $deferred->resolve(false);
-                } else {
-                    $noDataHeader = true;
-                    $this->loop->addTimer($this->frameSize / 1000, $processff2opus);
                 }
 
-                return;
-            }
-
-            $opusLength = unpack('v', $header);
-            $opusLength = reset($opusLength);
-            $buffer = fread($stream, $opusLength);
-
-            if (strlen($buffer) !== $opusLength) {
-                $newbuff = new Buffer($opusLength);
-                $newbuff->write($buffer, 0);
-                $buffer = (string) $newbuff;
-            }
-
-            ++$count;
-
-            $this->sendBuffer($buffer);
-
-            if (($this->seq + 1) < 65535) {
-                ++$this->seq;
-            } else {
-                $this->seq = 0;
-            }
-
-            if (($this->timestamp + ($this->frameSize * 48)) < 4294967295) {
-                $this->timestamp += $this->frameSize * 48;
-            } else {
-                $this->timestamp = 0;
-            }
-
-            $this->streamTime = $count * $this->frameSize;
-
-            $this->loop->addTimer($this->startTime + $this->streamTime / 1000 - microtime(true), $processff2opus);
+                // increment timestamp
+                // uint32 overflow protection
+                if (($this->timestamp += ($this->frameSize * 48)) >= 2 ** 32) {
+                    $this->timestamp = 0;
+                }
+                
+                $this->loop->addTimer(($this->frameSize - 1) / 1000, $readOpus);
+            }, function () use ($deferred) {
+                $this->setSpeaking(false);
+                $this->reset();
+                $deferred->resolve();
+            });
         };
 
-        $readMagicBytes = false;
-        $readJsonLeng = false;
-
-        $jsonLen = 0;
-        $jsonBuff = '';
-
-        $this->loop->addReadStream($stream, function ($stream) use ($deferred, &$readMagicBytes, &$readJsonLeng, &$jsonLen, &$jsonBuff, $processff2opus) {
-            if (! $readMagicBytes) {
-                $magicBytes = fread($stream, 4);
-
-                if ($magicBytes !== self::DCA_VERSION) {
-                    $content = fread($stream, 1024);
-                    $deferred->reject(new OutdatedDCAException('You are using an outdated version of DCA. Please make sure you have the latest version from https://github.com/bwmarrin/dca - Debugging: '.$magicBytes.$content));
-
-                    return;
-                }
-
-                $readMagicBytes = true;
-
-                return;
+        $this->setSpeaking(true);
+        
+        // Read magic byte header
+        $buffer->read(4)->then(function ($mb) use ($buffer) {
+            if ($mb !== self::DCA_VERSION) {
+                throw new OutdatedDCAException('The DCA magic byte header was not correct.');
             }
-
-            if (! $readJsonLeng) {
-                $len = fread($stream, 4);
-                $len = unpack('l', $len);
-                $jsonLen = reset($len);
-
-                $readJsonLeng = true;
-
-                return;
+            
+            // Read JSON length
+            return $buffer->readInt32();
+        })->then(function ($jsonLength) use ($buffer) {
+            // Read JSON content
+            return $buffer->read($jsonLength);
+        })->then(function ($metadata) use ($readOpus) {
+            $metadata = json_decode($metadata, true);
+            
+            if ($metadata !== null) {
+                $this->frameSize = $metadata['opus']['frame_size'] / 48;
             }
-
-            $jsonBuffTemp = fread($stream, $jsonLen);
-            $buffTempLeng = strlen($jsonBuffTemp);
-            $jsonBuff .= $jsonBuffTemp;
-
-            if ($buffTempLeng < $jsonLen) {
-                $jsonLen -= $buffTempLeng;
-
-                return;
-            }
-
-            $json = json_decode($jsonBuff, true);
-
-            if (! is_null($json)) {
-                $this->frameSize = $json['opus']['frame_size'] / 48;
-
-                $deferred->notify($json);
-            }
-
-            $this->loop->removeReadStream($stream);
-            $this->loop->addTimer(0.5, $processff2opus);
 
             $this->startTime = microtime(true) + 0.5;
+            $this->loop->addTimer(0.5, $readOpus);
         });
 
         return $deferred->promise();
+    }
+
+    /**
+     * Resets the voice client.
+     */
+    private function reset()
+    {
+        $this->setSpeaking(false);
+        $this->seq = 0;
+        $this->timestamp = 0;
+        $this->streamTime = 0;
+        $this->startTime = 0;
     }
 
     /**
@@ -902,7 +856,7 @@ class VoiceClient extends EventEmitter
      *
      * @param string $data The data to send to the UDP server.
      */
-    public function sendBuffer(string $data): void
+    private function sendBuffer(string $data): void
     {
         if (! $this->ready) {
             return;
@@ -1052,7 +1006,7 @@ class VoiceClient extends EventEmitter
      *
      * @param array $data The data to send to the voice WebSocket.
      */
-    public function send(array $data): void
+    private function send(array $data): void
     {
         $json = json_encode($data);
         $this->voiceWebsocket->send($json);
@@ -1063,7 +1017,7 @@ class VoiceClient extends EventEmitter
      *
      * @param array $data The data to send to the main WebSocket.
      */
-    public function mainSend(array $data): void
+    private function mainSend(array $data): void
     {
         $json = json_encode($data);
         $this->mainWebsocket->send($json);
@@ -1252,7 +1206,7 @@ class VoiceClient extends EventEmitter
      *
      * @return RecieveStream
      */
-    public function getRecieveStream($id): RecieveStream
+    public function getRecieveStream($id): ?RecieveStream
     {
         if (isset($this->recieveStreams[$id])) {
             return $this->recieveStreams[$id];
@@ -1263,8 +1217,6 @@ class VoiceClient extends EventEmitter
                 return $this->recieveStreams[$status->ssrc];
             }
         }
-
-        return null;
     }
 
     /**
@@ -1357,16 +1309,18 @@ class VoiceClient extends EventEmitter
      *
      * @return bool Whether FFmpeg is installed or not.
      */
-    public function checkForFFmpeg(): bool
+    private function checkForFFmpeg(): bool
     {
         $binaries = [
             'ffmpeg',
         ];
 
         foreach ($binaries as $binary) {
-            $output = shell_exec("which {$binary}");
+            $output = $this->checkForExecutable('ffmpeg');
 
-            if (! empty($output)) {
+            if ($output !== null) {
+                $this->ffmpeg = $output;
+
                 return true;
             }
         }
@@ -1381,20 +1335,21 @@ class VoiceClient extends EventEmitter
      *
      * @return bool Whether DCA is installed or not.
      */
-    public function checkForDCA(): bool
+    private function checkForDCA(): bool
     {
         $binaries = [
             'Darwin' => [
-                32 => 'dca-v0.1.0-darwin-10.6-386',
                 64 => 'dca-v0.1.0-darwin-10.6-amd64',
             ],
             'Linux' => [
-                32 => 'dca-v0.1.0-linux-386',
                 64 => 'dca-v0.1.0-linux-amd64',
+            ],
+            'WINNT' => [
+                64 => 'dca-v0.1.0-windows-4.0-amd64.exe',
             ],
         ];
 
-        if (array_key_exists(PHP_OS, $binaries)) {
+        if (array_key_exists(PHP_OS, $binaries) && array_key_exists(PHP_INT_SIZE * 8, $binaries[PHP_OS])) {
             $binary = realpath(__DIR__.'/../../../bin/'.$binaries[PHP_OS][PHP_INT_SIZE * 8]);
 
             $this->dca = $binary;
@@ -1402,7 +1357,7 @@ class VoiceClient extends EventEmitter
             return true;
         }
 
-        $this->emit('error', [new DCANotFoundException('No DCA binary was found that is compatible with your operating system and arch.')]);
+        $this->emit('error', [new DCANotFoundException('No DCA binary was found that is compatible with your operating system and architecture.')]);
 
         return false;
     }
@@ -1412,7 +1367,7 @@ class VoiceClient extends EventEmitter
      *
      * @return bool
      */
-    public function checkForLibsodium(): bool
+    private function checkForLibsodium(): bool
     {
         if (! function_exists('\Sodium\crypto_secretbox')) {
             $this->emit('error', [new LibSodiumNotFoundException('libsodium-php could not be found.')]);
@@ -1421,6 +1376,35 @@ class VoiceClient extends EventEmitter
         }
 
         return true;
+    }
+
+    private function checkPHPVersion(): bool
+    {
+        if (strpos(strtolower(PHP_OS), 'win') !== false && PHP_VERSION_ID < 80000) {
+            $this->emit('error', [new RuntimeException('PHP 8.0.0 or later is required to run the voice client on Windows.')]);
+
+            return false;
+        } elseif (PHP_VERSION_ID < 70400) {
+            $this->emit('error', [new RuntimeException('PHP 7.4.0 or later is required to run the voice client.')]);
+
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Checks if an executable exists on the system.
+     *
+     * @param  string      $executable
+     * @return string|null
+     */
+    private static function checkForExecutable(string $executable): ?string
+    {
+        $which = strtoupper(substr(PHP_OS, 0, 3) === 'WIN') ? 'where' : 'command -v';
+        $executable = rtrim(shell_exec("{$which} {$executable}"));
+
+        return is_executable($executable) ? $executable : null;
     }
 
     /**
@@ -1433,10 +1417,6 @@ class VoiceClient extends EventEmitter
      */
     public function dcaEncode(string $filename = '', int $channels = 2): Process
     {
-        // if (! empty($filename) && ! file_exists($filename)) {
-        //     return;
-        // }
-
         $flags = [
              '-ac', $channels, // Channels
              '-aa', $this->audioApplication, // Audio application
@@ -1447,8 +1427,18 @@ class VoiceClient extends EventEmitter
         ];
 
         $flags = implode(' ', $flags);
+        $pwd = "{$this->dca} {$flags}";
+        
+        // >= PHP 8.0, use sockets
+        if (PHP_VERSION_ID >= 80000) {
+            return new Process($pwd, null, null, [
+                ['socket'],
+                ['socket'],
+                ['socket'],
+            ]);
+        }
 
-        return new Process("{$this->dca} {$flags}");
+        return new Process($pwd);
     }
 
     /**

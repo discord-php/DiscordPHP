@@ -241,7 +241,6 @@ abstract class AbstractRepository extends Collection
             return \React\Promise\resolve(new \Exception('You cannot get this part.'));
         }
 
-
         $part = $this->factory->create($this->class, [$this->discrim => $id]);
         $endpoint = new Endpoint($this->endpoints['get']);
         $endpoint->bindAssoc(array_merge($part->getRepositoryAttributes(), $this->vars));

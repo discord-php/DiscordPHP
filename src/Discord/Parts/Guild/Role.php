@@ -114,7 +114,6 @@ class Role extends Part
         ];
     }
 
-
     /**
      * Returns a formatted mention.
      *

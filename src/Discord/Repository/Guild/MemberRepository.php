@@ -28,7 +28,7 @@ class MemberRepository extends AbstractRepository
      * {@inheritdoc}
      */
     protected $endpoints = [
-        'all' => Endpoint::GUILD_MEMBERS, 
+        'all' => Endpoint::GUILD_MEMBERS,
         'get' => Endpoint::GUILD_MEMBER,
         'update' => Endpoint::GUILD_MEMBER,
         'delete' => Endpoint::GUILD_MEMBER,
