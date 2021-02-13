@@ -74,7 +74,7 @@ Loading members takes a while to retrieve from Discord and store, so default is 
 Useful if you want to use other React components. By default, a new loop is created.</p>
 <div class="gatsby-highlight" data-language="php"><pre class="language-php"><code class="language-php">    <span class="token string single-quoted-string">'loop'</span> <span class="token operator">=></span> <span class="token class-name class-name-fully-qualified static-context"><span class="token punctuation">\</span>React<span class="token punctuation">\</span>EventLoop<span class="token punctuation">\</span>Factory</span><span class="token operator">::</span><span class="token function">create</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span></code></pre></div>
 <p><code class="language-text">logger</code> is an instance of a logger that implements <code class="language-text">LoggerInterface</code>. By default, a new Monolog logger is created to print to stdout.</p>
-<div class="gatsby-highlight" data-language="php"><pre class="language-php"><code class="language-php">    <span class="token string single-quoted-string">'logger'</span> <span class="token operator">=></span> <span class="token keyword">new</span> <span class="token class-name">Logger</span><span class="token punctuation">(</span><span class="token string single-quoted-string">'New lOgger'</span><span class="token punctuation">)</span><span class="token punctuation">,</span></code></pre></div>
+<div class="gatsby-highlight" data-language="php"><pre class="language-php"><code class="language-php">    <span class="token string single-quoted-string">'logger'</span> <span class="token operator">=></span> <span class="token keyword">new</span> <span class="token class-name">Logger</span><span class="token punctuation">(</span><span class="token string single-quoted-string">'New logger'</span><span class="token punctuation">)</span><span class="token punctuation">,</span></code></pre></div>
 <p><code class="language-text">loggerLevel</code> is the level of logging that the default logger will use. See a list of possible constants <a href="https://github.com/Seldaek/monolog/blob/master/src/Monolog/Logger.php#L33-L78">here</a>. Default is <code class="language-text">INFO</code> level.</p>
 <div class="gatsby-highlight" data-language="php"><pre class="language-php"><code class="language-php">    <span class="token string single-quoted-string">'loggerLevel'</span> <span class="token operator">=></span> <span class="token class-name static-context">Logger</span><span class="token operator">::</span><span class="token constant">INFO</span><span class="token punctuation">,</span></code></pre></div>
 <p><code class="language-text">httpLogger</code> is an instance of a logger for the HTTP client that implements PSR <code class="language-text">LoggerInterface</code>.
@@ -1710,7 +1710,7 @@ All parts share a common set of attributes and methods.</p>
 </tbody>
 </table>
 <h3>Reply to a message</h3>
-<p>Sends a "reply" to the message. Returns the new message in a promise.</p>
+<p>Sends a "reply" to the message. Note that this is not the same as the implemented replies in Discord (those will be implemented in version 6.0.0), but in the form <code class="language-text">&quot;&lt;@id_of_message_author&gt;, &lt;content&gt;&quot;</code>. Returns the new message in a promise.</p>
 <h4>Parameters</h4>
 <table>
 <thead>
@@ -1728,7 +1728,8 @@ All parts share a common set of attributes and methods.</p>
 </tr>
 </tbody>
 </table>
-<div class="gatsby-highlight" data-language="php"><pre class="language-php"><code class="language-php"><span class="token variable">$message</span><span class="token operator">-></span><span class="token function">reply</span><span class="token punctuation">(</span><span class="token string single-quoted-string">'hello!'</span><span class="token punctuation">)</span><span class="token operator">-></span><span class="token function">done</span><span class="token punctuation">(</span><span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token class-name type-declaration">Message</span> <span class="token variable">$message</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+<div class="gatsby-highlight" data-language="php"><pre class="language-php"><code class="language-php"><span class="token comment">// &lt;@message_author_id>, hello!</span>
+<span class="token variable">$message</span><span class="token operator">-></span><span class="token function">reply</span><span class="token punctuation">(</span><span class="token string single-quoted-string">'hello!'</span><span class="token punctuation">)</span><span class="token operator">-></span><span class="token function">done</span><span class="token punctuation">(</span><span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token class-name type-declaration">Message</span> <span class="token variable">$message</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token comment">// ...</span>
 <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre></div>
 <h3>Crosspost a message</h3>

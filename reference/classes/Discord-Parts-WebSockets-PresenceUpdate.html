@@ -57,6 +57,7 @@
                                             <li><a href="namespaces/discord-exceptions.html"><abbr title="\Discord\Exceptions">Exceptions</abbr></a></li>
                                             <li><a href="namespaces/discord-factory.html"><abbr title="\Discord\Factory">Factory</abbr></a></li>
                                             <li><a href="namespaces/discord-helpers.html"><abbr title="\Discord\Helpers">Helpers</abbr></a></li>
+                                            <li><a href="namespaces/discord-http.html"><abbr title="\Discord\Http">Http</abbr></a></li>
                                             <li><a href="namespaces/discord-parts.html"><abbr title="\Discord\Parts">Parts</abbr></a></li>
                                             <li><a href="namespaces/discord-repository.html"><abbr title="\Discord\Repository">Repository</abbr></a></li>
                                             <li><a href="namespaces/discord-voice.html"><abbr title="\Discord\Voice">Voice</abbr></a></li>
@@ -100,7 +101,7 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/WebSockets/PresenceUpdate.php"><a href="files/src-discord-parts-websockets-presenceupdate.html"><abbr title="src/Discord/Parts/WebSockets/PresenceUpdate.php">PresenceUpdate.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">34</span>
+    <span class="phpdocumentor-element-found-in__line">36</span>
 </aside>
 
             <p class="phpdocumentor-summary">A PresenceUpdate part is used when the `PRESENCE_UPDATE` event is fired on the WebSocket. It contains
@@ -153,6 +154,20 @@ information about the users presence such as their status (online/away) and thei
     <a href="classes/Discord-Parts-WebSockets-PresenceUpdate.html#property_member">$member</a>
     <span>
                 &nbsp;: <a href="classes/Discord-Parts-User-Member.html"><abbr title="\Discord\Parts\User\Member">Member</abbr></a>            </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a href="classes/Discord-Parts-WebSockets-PresenceUpdate.html#property_premium_since">$premium_since</a>
+    <span>
+                &nbsp;: <abbr title="\Carbon\Carbon">Carbon</abbr>            </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a href="classes/Discord-Parts-WebSockets-PresenceUpdate.html#property_roles">$roles</a>
+    <span>
+                &nbsp;: <a href="classes/Discord-Helpers-Collection.html"><abbr title="\Discord\Helpers\Collection">Collection</abbr></a>|array&lt;string|int, <a href="classes/Discord-Parts-Guild-Role.html"><abbr title="\Discord\Parts\Guild\Role">Role</abbr></a>&gt;            </span>
 </dt>
 <dd></dd>
 
@@ -222,7 +237,7 @@ information about the users presence such as their status (online/away) and thei
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/Discord-Parts-Part.html#property_http">$http</a>
     <span>
-                &nbsp;: <abbr title="\Discord\Http\Http">Http</abbr>            </span>
+                &nbsp;: <a href="classes/Discord-Http-Http.html"><abbr title="\Discord\Http\Http">Http</abbr></a>            </span>
 </dt>
 <dd>The HTTP client.</dd>
 
@@ -387,13 +402,6 @@ JSON. Used for JsonSerializable.</dd>
                         &nbsp;: void    </span>
 </dt>
 <dd>Called after the part has been constructed.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -protected">
-    <a href="classes/Discord-Parts-WebSockets-PresenceUpdate.html#method_getActivitiesAttribute">getActivitiesAttribute()</a>
-    <span>
-                        &nbsp;: <a href="classes/Discord-Helpers-Collection.html"><abbr title="\Discord\Helpers\Collection">Collection</abbr></a>|array&lt;string|int, <a href="classes/Discord-Parts-User-Activity.html"><abbr title="\Discord\Parts\User\Activity">Activity</abbr></a>&gt;    </span>
-</dt>
-<dd>Gets the activities attribute.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
     <a href="classes/Discord-Parts-WebSockets-PresenceUpdate.html#method_getGameAttribute">getGameAttribute()</a>
@@ -637,6 +645,70 @@ JSON. Used for JsonSerializable.</dd>
             -public
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="property_premium_since">
+        $premium_since
+        <a href="classes/Discord-Parts-WebSockets-PresenceUpdate.html#property_premium_since" class="headerlink"><i class="fas fa-link"></i></a>
+        <span class="phpdocumentor-element__modifiers">
+                                </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/WebSockets/PresenceUpdate.php"><a href="files/src-discord-parts-websockets-presenceupdate.html"><abbr title="src/Discord/Parts/WebSockets/PresenceUpdate.php">PresenceUpdate.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">0</span>
+</aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type"><abbr title="\Carbon\Carbon">Carbon</abbr></span>
+    <span class="phpdocumentor-signature__name">$premium_since</span>
+    </code>
+
+        <section class="phpdocumentor-description"><p>Time since user started boosting guild.</p>
+</section>
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="property_roles">
+        $roles
+        <a href="classes/Discord-Parts-WebSockets-PresenceUpdate.html#property_roles" class="headerlink"><i class="fas fa-link"></i></a>
+        <span class="phpdocumentor-element__modifiers">
+                                </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/WebSockets/PresenceUpdate.php"><a href="files/src-discord-parts-websockets-presenceupdate.html"><abbr title="src/Discord/Parts/WebSockets/PresenceUpdate.php">PresenceUpdate.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">0</span>
+</aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type"><a href="classes/Discord-Helpers-Collection.html"><abbr title="\Discord\Helpers\Collection">Collection</abbr></a>|array&lt;string|int, <a href="classes/Discord-Parts-Guild-Role.html"><abbr title="\Discord\Parts\Guild\Role">Role</abbr></a>&gt;</span>
+    <span class="phpdocumentor-signature__name">$roles</span>
+    </code>
+
+        <section class="phpdocumentor-description"><p>The roles that the user has.</p>
+</section>
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="property_scriptData">
         $scriptData
         <a href="classes/Discord-Parts-Part.html#property_scriptData" class="headerlink"><i class="fas fa-link"></i></a>
@@ -839,7 +911,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/WebSockets/PresenceUpdate.php"><a href="files/src-discord-parts-websockets-presenceupdate.html"><abbr title="src/Discord/Parts/WebSockets/PresenceUpdate.php">PresenceUpdate.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">39</span>
+    <span class="phpdocumentor-element-found-in__line">41</span>
 </aside>
 
         <p class="phpdocumentor-summary">The parts fillable attributes.</p>
@@ -848,7 +920,7 @@ JSON. Used for JsonSerializable.</dd>
     <span class="phpdocumentor-signature__visibility">protected</span>
         <span class="phpdocumentor-signature__type">array&lt;string|int, mixed&gt;</span>
     <span class="phpdocumentor-signature__name">$fillable</span>
-     = <span class="phpdocumentor-signature__default-value">[&#039;user&#039;, &#039;guild_id&#039;, &#039;status&#039;, &#039;activities&#039;, &#039;client_status&#039;]</span></code>
+     = <span class="phpdocumentor-signature__default-value">[&#039;user&#039;, &#039;roles&#039;, &#039;game&#039;, &#039;guild_id&#039;, &#039;status&#039;, &#039;activities&#039;, &#039;client_status&#039;, &#039;premium_since&#039;, &#039;nick&#039;]</span></code>
 
         <section class="phpdocumentor-description"></section>
 
@@ -942,7 +1014,7 @@ JSON. Used for JsonSerializable.</dd>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
-        <span class="phpdocumentor-signature__type"><abbr title="\Discord\Http\Http">Http</abbr></span>
+        <span class="phpdocumentor-signature__type"><a href="classes/Discord-Http-Http.html"><abbr title="\Discord\Http\Http">Http</abbr></a></span>
     <span class="phpdocumentor-signature__name">$http</span>
     </code>
 
@@ -2110,40 +2182,6 @@ JSON. Used for JsonSerializable.</p>
             -protected
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_getActivitiesAttribute">
-        getActivitiesAttribute()
-        <a href="classes/Discord-Parts-WebSockets-PresenceUpdate.html#method_getActivitiesAttribute" class="headerlink"><i class="fas fa-link"></i></a>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/WebSockets/PresenceUpdate.php"><a href="files/src-discord-parts-websockets-presenceupdate.html"><abbr title="src/Discord/Parts/WebSockets/PresenceUpdate.php">PresenceUpdate.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">115</span>
-</aside>
-
-        <p class="phpdocumentor-summary">Gets the activities attribute.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">protected</span>
-                <span class="phpdocumentor-signature__name">getActivitiesAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Helpers-Collection.html"><abbr title="\Discord\Helpers\Collection">Collection</abbr></a>|array&lt;string|int, <a href="classes/Discord-Parts-User-Activity.html"><abbr title="\Discord\Parts\User\Activity">Activity</abbr></a>&gt;</span></code>
-
-        <section class="phpdocumentor-description"></section>
-
-    
-    
-
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Helpers-Collection.html"><abbr title="\Discord\Helpers\Collection">Collection</abbr></a>|array&lt;string|int, <a href="classes/Discord-Parts-User-Activity.html"><abbr title="\Discord\Parts\User\Activity">Activity</abbr></a>&gt;</span>
-            &mdash;
-            <section class="phpdocumentor-description"></section>
-
-    
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -protected
-                                                        "
->
     <h4 class="phpdocumentor-element__name" id="method_getGameAttribute">
         getGameAttribute()
         <a href="classes/Discord-Parts-WebSockets-PresenceUpdate.html#method_getGameAttribute" class="headerlink"><i class="fas fa-link"></i></a>
@@ -2151,7 +2189,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/WebSockets/PresenceUpdate.php"><a href="files/src-discord-parts-websockets-presenceupdate.html"><abbr title="src/Discord/Parts/WebSockets/PresenceUpdate.php">PresenceUpdate.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">105</span>
+    <span class="phpdocumentor-element-found-in__line">107</span>
 </aside>
 
         <p class="phpdocumentor-summary">Gets the game attribute.</p>
@@ -2186,7 +2224,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/WebSockets/PresenceUpdate.php"><a href="files/src-discord-parts-websockets-presenceupdate.html"><abbr title="src/Discord/Parts/WebSockets/PresenceUpdate.php">PresenceUpdate.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">95</span>
+    <span class="phpdocumentor-element-found-in__line">97</span>
 </aside>
 
         <p class="phpdocumentor-summary">Gets the guild attribute.</p>
@@ -2221,7 +2259,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/WebSockets/PresenceUpdate.php"><a href="files/src-discord-parts-websockets-presenceupdate.html"><abbr title="src/Discord/Parts/WebSockets/PresenceUpdate.php">PresenceUpdate.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">46</span>
+    <span class="phpdocumentor-element-found-in__line">48</span>
 </aside>
 
         <p class="phpdocumentor-summary">Gets the member attribute.</p>
@@ -2255,7 +2293,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/WebSockets/PresenceUpdate.php"><a href="files/src-discord-parts-websockets-presenceupdate.html"><abbr title="src/Discord/Parts/WebSockets/PresenceUpdate.php">PresenceUpdate.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">131</span>
+    <span class="phpdocumentor-element-found-in__line">121</span>
 </aside>
 
         <p class="phpdocumentor-summary">Gets the premium since timestamp.</p>
@@ -2289,7 +2327,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/WebSockets/PresenceUpdate.php"><a href="files/src-discord-parts-websockets-presenceupdate.html"><abbr title="src/Discord/Parts/WebSockets/PresenceUpdate.php">PresenceUpdate.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">75</span>
+    <span class="phpdocumentor-element-found-in__line">77</span>
 </aside>
 
         <p class="phpdocumentor-summary">Returns the users roles.</p>
@@ -2323,7 +2361,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/WebSockets/PresenceUpdate.php"><a href="files/src-discord-parts-websockets-presenceupdate.html"><abbr title="src/Discord/Parts/WebSockets/PresenceUpdate.php">PresenceUpdate.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">61</span>
+    <span class="phpdocumentor-element-found-in__line">63</span>
 </aside>
 
         <p class="phpdocumentor-summary">Gets the user attribute.</p>
