@@ -57,7 +57,6 @@
                                             <li><a href="namespaces/discord-exceptions.html"><abbr title="\Discord\Exceptions">Exceptions</abbr></a></li>
                                             <li><a href="namespaces/discord-factory.html"><abbr title="\Discord\Factory">Factory</abbr></a></li>
                                             <li><a href="namespaces/discord-helpers.html"><abbr title="\Discord\Helpers">Helpers</abbr></a></li>
-                                            <li><a href="namespaces/discord-http.html"><abbr title="\Discord\Http">Http</abbr></a></li>
                                             <li><a href="namespaces/discord-parts.html"><abbr title="\Discord\Parts">Parts</abbr></a></li>
                                             <li><a href="namespaces/discord-repository.html"><abbr title="\Discord\Repository">Repository</abbr></a></li>
                                             <li><a href="namespaces/discord-voice.html"><abbr title="\Discord\Voice">Voice</abbr></a></li>
@@ -166,7 +165,7 @@
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/Discord-Repository-AbstractRepository.html#property_http">$http</a>
     <span>
-                &nbsp;: <a href="classes/Discord-Http-Http.html"><abbr title="\Discord\Http\Http">Http</abbr></a>            </span>
+                &nbsp;: <abbr title="\Discord\Http\Http">Http</abbr>            </span>
 </dt>
 <dd>The HTTP client.</dd>
 
@@ -231,7 +230,7 @@
     <span>
                         &nbsp;: <abbr title="\React\Promise\ExtendedPromiseInterface">ExtendedPromiseInterface</abbr>    </span>
 </dt>
-<dd>Force gets a part from the Discord servers.</dd>
+<dd>Gets a part from the repository or Discord servers.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Discord-Helpers-Collection.html#method_fill">fill()</a>
@@ -417,13 +416,6 @@ of the callback.</dd>
 </dt>
 <dd>Unserializes the collection.</dd>
 
-            <dt class="phpdocumentor-table-of-contents__entry -method -protected">
-    <a href="classes/Discord-Repository-AbstractRepository.html#method_replaceWithVariables">replaceWithVariables()</a>
-    <span>
-                        &nbsp;: string    </span>
-</dt>
-<dd>Replaces variables in string with syntax :{varname}.</dd>
-
         </dl>
 
 
@@ -525,7 +517,7 @@ of the callback.</dd>
     <span class="phpdocumentor-signature__visibility">protected</span>
         <span class="phpdocumentor-signature__type">array&lt;string|int, mixed&gt;</span>
     <span class="phpdocumentor-signature__name">$endpoints</span>
-     = <span class="phpdocumentor-signature__default-value">[&#039;all&#039; =&gt; &#039;users/@me/guilds&#039;, &#039;get&#039; =&gt; &#039;guilds/:id&#039;, &#039;create&#039; =&gt; &#039;guilds&#039;, &#039;update&#039; =&gt; &#039;guilds/:id&#039;, &#039;delete&#039; =&gt; &#039;guilds/:id&#039;, &#039;leave&#039; =&gt; &#039;users/@me/guilds/:id&#039;]</span></code>
+     = <span class="phpdocumentor-signature__default-value">[&#039;all&#039; =&gt; DiscordHttpEndpoint::USER_CURRENT_GUILDS, &#039;get&#039; =&gt; DiscordHttpEndpoint::GUILD, &#039;create&#039; =&gt; DiscordHttpEndpoint::GUILDS, &#039;update&#039; =&gt; DiscordHttpEndpoint::GUILD, &#039;delete&#039; =&gt; DiscordHttpEndpoint::GUILD, &#039;leave&#039; =&gt; DiscordHttpEndpoint::USER_CURRENT_GUILD]</span></code>
 
         <section class="phpdocumentor-description"></section>
 
@@ -548,7 +540,7 @@ of the callback.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/AbstractRepository.php"><a href="files/src-discord-repository-abstractrepository.html"><abbr title="src/Discord/Repository/AbstractRepository.php">AbstractRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">49</span>
+    <span class="phpdocumentor-element-found-in__line">47</span>
 </aside>
 
         <p class="phpdocumentor-summary">The parts factory.</p>
@@ -580,14 +572,14 @@ of the callback.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/AbstractRepository.php"><a href="files/src-discord-repository-abstractrepository.html"><abbr title="src/Discord/Repository/AbstractRepository.php">AbstractRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">42</span>
+    <span class="phpdocumentor-element-found-in__line">40</span>
 </aside>
 
         <p class="phpdocumentor-summary">The HTTP client.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
-        <span class="phpdocumentor-signature__type"><a href="classes/Discord-Http-Http.html"><abbr title="\Discord\Http\Http">Http</abbr></a></span>
+        <span class="phpdocumentor-signature__type"><abbr title="\Discord\Http\Http">Http</abbr></span>
     <span class="phpdocumentor-signature__name">$http</span>
     </code>
 
@@ -644,7 +636,7 @@ of the callback.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/AbstractRepository.php"><a href="files/src-discord-repository-abstractrepository.html"><abbr title="src/Discord/Repository/AbstractRepository.php">AbstractRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">63</span>
+    <span class="phpdocumentor-element-found-in__line">61</span>
 </aside>
 
         <p class="phpdocumentor-summary">Variables that are related to the repository.</p>
@@ -843,7 +835,7 @@ of the callback.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/AbstractRepository.php"><a href="files/src-discord-repository-abstractrepository.html"><abbr title="src/Discord/Repository/AbstractRepository.php">AbstractRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">129</span>
+    <span class="phpdocumentor-element-found-in__line">117</span>
 </aside>
 
         <p class="phpdocumentor-summary">Builds a new, empty part.</p>
@@ -913,7 +905,7 @@ of the callback.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/AbstractRepository.php"><a href="files/src-discord-repository-abstractrepository.html"><abbr title="src/Discord/Repository/AbstractRepository.php">AbstractRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">191</span>
+    <span class="phpdocumentor-element-found-in__line">173</span>
 </aside>
 
         <p class="phpdocumentor-summary">Attempts to delete a part on the Discord servers.</p>
@@ -974,10 +966,10 @@ of the callback.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/AbstractRepository.php"><a href="files/src-discord-repository-abstractrepository.html"><abbr title="src/Discord/Repository/AbstractRepository.php">AbstractRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">270</span>
+    <span class="phpdocumentor-element-found-in__line">234</span>
 </aside>
 
-        <p class="phpdocumentor-summary">Force gets a part from the Discord servers.</p>
+        <p class="phpdocumentor-summary">Gets a part from the repository or Discord servers.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
@@ -1223,7 +1215,7 @@ of the callback.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/AbstractRepository.php"><a href="files/src-discord-repository-abstractrepository.html"><abbr title="src/Discord/Repository/AbstractRepository.php">AbstractRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">232</span>
+    <span class="phpdocumentor-element-found-in__line">205</span>
 </aside>
 
         <p class="phpdocumentor-summary">Returns a part with fresh values.</p>
@@ -1284,7 +1276,7 @@ of the callback.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/AbstractRepository.php"><a href="files/src-discord-repository-abstractrepository.html"><abbr title="src/Discord/Repository/AbstractRepository.php">AbstractRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">87</span>
+    <span class="phpdocumentor-element-found-in__line">85</span>
 </aside>
 
         <p class="phpdocumentor-summary">Freshens the repository collection.</p>
@@ -2025,7 +2017,7 @@ of the callback.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/AbstractRepository.php"><a href="files/src-discord-repository-abstractrepository.html"><abbr title="src/Discord/Repository/AbstractRepository.php">AbstractRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">144</span>
+    <span class="phpdocumentor-element-found-in__line">132</span>
 </aside>
 
         <p class="phpdocumentor-summary">Attempts to save a part to the Discord servers.</p>
@@ -2236,53 +2228,6 @@ of the callback.</p>
     <span class="phpdocumentor-signature__response_type">void</span>
             &mdash;
             <section class="phpdocumentor-description"></section>
-
-    
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -protected
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_replaceWithVariables">
-        replaceWithVariables()
-        <a href="classes/Discord-Repository-AbstractRepository.html#method_replaceWithVariables" class="headerlink"><i class="fas fa-link"></i></a>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/AbstractRepository.php"><a href="files/src-discord-repository-abstractrepository.html"><abbr title="src/Discord/Repository/AbstractRepository.php">AbstractRepository.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">305</span>
-</aside>
-
-        <p class="phpdocumentor-summary">Replaces variables in string with syntax :{varname}.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">protected</span>
-                <span class="phpdocumentor-signature__name">replaceWithVariables</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$string</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
-
-        <section class="phpdocumentor-description"></section>
-
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$string</span>
-                : <span class="phpdocumentor-signature__argument__return-type">string</span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>A string with placeholders.</p>
-</section>
-
-            </dd>
-            </dl>
-
-    
-
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type">string</span>
-            &mdash;
-            <section class="phpdocumentor-description"><p>A string with placeholders replaced.</p>
-</section>
 
     
 </article>
