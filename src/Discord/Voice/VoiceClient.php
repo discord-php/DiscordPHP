@@ -496,7 +496,7 @@ class VoiceClient extends EventEmitter
                     // } else { // set to 60ms
                     //     $this->setFrameSize(60);
                     // }
-                    
+
                     $this->logger->debug('received heartbeat ack', ['response_time' => $diff]);
                     $this->emit('ws-ping', [$diff]);
                     break;
@@ -749,7 +749,7 @@ class VoiceClient extends EventEmitter
 
                 $this->emit('stderr', [$d, $this]);
             });
-            
+
             $stream = $stream->stdout;
         }
 
@@ -803,7 +803,7 @@ class VoiceClient extends EventEmitter
                 if (($this->timestamp += ($this->frameSize * 48)) >= 2 ** 32) {
                     $this->timestamp = 0;
                 }
-                
+
                 $this->loop->addTimer(($this->frameSize - 1) / 1000, $readOpus);
             }, function () use ($deferred) {
                 $this->setSpeaking(false);
@@ -813,13 +813,13 @@ class VoiceClient extends EventEmitter
         };
 
         $this->setSpeaking(true);
-        
+
         // Read magic byte header
         $buffer->read(4)->then(function ($mb) use ($buffer) {
             if ($mb !== self::DCA_VERSION) {
                 throw new OutdatedDCAException('The DCA magic byte header was not correct.');
             }
-            
+
             // Read JSON length
             return $buffer->readInt32();
         })->then(function ($jsonLength) use ($buffer) {
@@ -827,7 +827,7 @@ class VoiceClient extends EventEmitter
             return $buffer->read($jsonLength);
         })->then(function ($metadata) use ($readOpus) {
             $metadata = json_decode($metadata, true);
-            
+
             if ($metadata !== null) {
                 $this->frameSize = $metadata['opus']['frame_size'] / 48;
             }
@@ -1380,7 +1380,7 @@ class VoiceClient extends EventEmitter
 
     private function checkPHPVersion(): bool
     {
-        if (strpos(strtolower(PHP_OS), 'win') !== false && PHP_VERSION_ID < 80000) {
+        if (substr(strtolower(PHP_OS), 0, 3) === 'win'  && PHP_VERSION_ID < 80000) {
             $this->emit('error', [new RuntimeException('PHP 8.0.0 or later is required to run the voice client on Windows.')]);
 
             return false;
@@ -1428,7 +1428,7 @@ class VoiceClient extends EventEmitter
 
         $flags = implode(' ', $flags);
         $pwd = "{$this->dca} {$flags}";
-        
+
         // >= PHP 8.0, use sockets
         if (PHP_VERSION_ID >= 80000) {
             return new Process($pwd, null, null, [
