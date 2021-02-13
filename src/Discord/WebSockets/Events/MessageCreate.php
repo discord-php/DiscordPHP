@@ -14,6 +14,7 @@ namespace Discord\WebSockets\Events;
 use Discord\Parts\Channel\Message;
 use Discord\WebSockets\Event;
 use Discord\Helpers\Deferred;
+use Discord\Parts\Channel\Channel;
 
 class MessageCreate extends Event
 {
@@ -22,7 +23,20 @@ class MessageCreate extends Event
      */
     public function handle(Deferred &$deferred, $data): void
     {
+        /** @var Message */
         $message = $this->factory->create(Message::class, $data, true);
+
+        // assume it is a private channel
+        if ($message->channel === null) {
+            $channel = $this->factory->create(Channel::class, [
+                'id' => $message->channel_id,
+                'type' => Channel::TYPE_DM,
+                'last_message_id' => $message->id,
+                'recipients' => [$message->author],
+            ], true);
+
+            $this->discord->private_channels->push($channel);
+        }
 
         if ($this->discord->options['storeMessages']) {
             if ($channel = $message->channel) {
