@@ -44,6 +44,10 @@ class Reaction extends Part
      */
     protected function getIdAttribute(): string
     {
+        if ($this->emoji->id === null) {
+            return $this->emoji->name;
+        }
+
         return ":{$this->emoji->name}:{$this->emoji->id}";
     }
 
