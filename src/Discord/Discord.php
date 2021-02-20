@@ -1334,6 +1334,8 @@ class Discord
                 $options['intents'] = $intentVal;
             }
         }
+        
+        $options['socket_options']['happy_eyeballs'] = false; //Discord doesn't use IPv6
 
         return $options;
     }
