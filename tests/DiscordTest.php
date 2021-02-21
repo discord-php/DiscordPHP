@@ -36,10 +36,15 @@ final class DiscordTest extends TestCase
         });
     }
 
+    /**
+     * @depends testCanConnect
+     */
     public function testCanGetChannel()
     {
         return wait(function (Discord $discord, $resolve) {
             $channel = $discord->getChannel(getenv('TEST_CHANNEL'));
+
+            $this->assertNotNull($channel);
             $this->assertEquals(getenv('TEST_CHANNEL_NAME'), $channel->name);
 
             $resolve($channel);

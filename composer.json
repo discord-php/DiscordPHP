@@ -46,6 +46,7 @@
     },
     "scripts": {
         "cs": ["./vendor/bin/php-cs-fixer fix"],
-        "unit": ["./vendor/bin/phpunit"]
+        "unit": ["./vendor/bin/phpunit"],
+        "coverage": ["XDEBUG_MODE=coverage ./vendor/bin/phpunit --coverage-html coverage"]
     }
 }

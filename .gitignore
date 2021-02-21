@@ -1,12 +1,22 @@
-/vendor
-/build
-composer.lock
+# general
+.env
+.DS_Store
 test*.php
 .idea
+
+# composer
+/vendor
+composer.lock
+
+# docs
+/build
+.phpdoc
+
+# php-cs-fixer
 .php_cs.cache
 .php_cs
-.phpdoc
-.env
-.phpunit*
-.DS_Store
+
+# phpunit
 phpunit.log
+/.phpunit*
+/coverage

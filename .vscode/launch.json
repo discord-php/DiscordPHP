@@ -28,6 +28,11 @@
             "type": "php",
             "request": "launch",
             "program": "${workspaceRoot}/vendor/bin/phpunit",
+            "args": [
+                "-d xdebug.mode=debug",
+                "-d xdebug.start_with_request=yes",
+                "-d xdebug.client_port=9000"
+            ],
             "cwd": "${workspaceRoot}",
             "port": 9000
         }
