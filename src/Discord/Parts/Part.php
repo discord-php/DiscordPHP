@@ -170,31 +170,6 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
     }
 
     /**
-     * Replaces variables in string with syntax :{varname}.
-     *
-     * @param string $string A string with placeholders.
-     *
-     * @return string     A string with placeholders replaced.
-     * @throws \Exception
-     */
-    public function replaceWithVariables(string $string): string
-    {
-        $matches = null;
-        preg_match_all($this->regex, $string, $matches);
-
-        $original = $matches[0];
-        $vars = $matches[1];
-
-        foreach ($vars as $key => $variable) {
-            if ($attribute = $this->getAttribute($variable)) {
-                $string = str_replace($original[$key], $attribute, $string);
-            }
-        }
-
-        return $string;
-    }
-
-    /**
      * Gets an attribute on the part.
      *
      * @param string $key The key to the attribute.
