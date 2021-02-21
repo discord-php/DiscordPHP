@@ -1316,6 +1316,11 @@ class Discord
             $options['logger'] = new NullLogger();
         }
 
+        // Discord doesn't currently support IPv6
+        // This prevents xdebug from catching exceptions when trying to fetch IPv6
+        // for Discord
+        $options['socket_options']['happy_eyeballs'] = false;
+
         return $options;
     }
 

@@ -15,6 +15,11 @@
             "type": "php",
             "request": "launch",
             "program": "${workspaceFolder}/test.php",
+            "args": [
+                "-d xdebug.mode=debug",
+                "-d xdebug.start_with_request=yes",
+                "-d xdebug.client_port=9000"
+            ],
             "cwd": "${workspaceFolder}",
             "port": 9000
         },
