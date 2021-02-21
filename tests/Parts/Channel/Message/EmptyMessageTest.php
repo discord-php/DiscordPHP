@@ -192,11 +192,25 @@ final class EmptyMessageTest extends DiscordTestCase
     /**
      * @depends testCanSendMessage
      */
-    public function testCanDeleteMessage(Message $message)
+    public function testCanDeleteMessageThroughRepository(Message $message)
     {
         return wait(function (Discord $discord, $resolve) use ($message) {
             $message->channel->messages->delete($message)->done(function (Message $message) use ($resolve) {
                 $this->assertFalse($message->created);
+                $resolve();
+            });
+        });
+    }
+
+    /**
+     * @doesNotPerformAssertions
+     */
+    public function testCanDeleteMessageThroughPart()
+    {
+        return wait(function (Discord $discord, $resolve) {
+            $this->channel()->sendMessage('testing delete through part')->then(function (Message $message) {
+                return $message->delete();
+            })->done(function () use ($resolve) {
                 $resolve();
             });
         });

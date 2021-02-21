@@ -11,7 +11,7 @@ declare(strict_types=1);
  * with this source code in the LICENSE.md file.
  */
 
-const TIMEOUT = 5;
+const TIMEOUT = 10;
 
 function wait(callable $callback, float $timeout = TIMEOUT)
 {
