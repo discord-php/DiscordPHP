@@ -22,32 +22,4 @@ final class DiscordTest extends TestCase
         $this->assertNotFalse(getenv('TEST_CHANNEL'), 'Test channel ID is missing');
         $this->assertNotFalse(getenv('TEST_CHANNEL_NAME'), 'Test channel name is missing');
     }
-
-    /**
-     * @depends testCheckEnvVariablesPresent
-     */
-    public function testCanConnect()
-    {
-        return wait(function (Discord $discord, $resolve) {
-            $discord->on('ready', function () use ($resolve) {
-                $this->assertTrue(true);
-                $resolve();
-            });
-        });
-    }
-
-    /**
-     * @depends testCanConnect
-     */
-    public function testCanGetChannel()
-    {
-        return wait(function (Discord $discord, $resolve) {
-            $channel = $discord->getChannel(getenv('TEST_CHANNEL'));
-
-            $this->assertNotNull($channel);
-            $this->assertEquals(getenv('TEST_CHANNEL_NAME'), $channel->name);
-
-            $resolve($channel);
-        });
-    }
 }

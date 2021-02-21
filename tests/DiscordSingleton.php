@@ -10,6 +10,7 @@
  */
 
 use Discord\Discord;
+use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 
@@ -23,16 +24,43 @@ class DiscordSingleton
     public static function get()
     {
         if (! self::$discord) {
-            $logger = new Logger('DiscordPHP-UnitTests');
-            $logger->pushHandler(new StreamHandler(fopen(__DIR__.'/../phpunit.log', 'w')));
-
-            self::$discord = new Discord([
-                'token' => getenv('DISCORD_TOKEN'),
-                'logger' => $logger,
-                'httpLogger' => $logger,
-            ]);
+            self::new();
         }
 
         return self::$discord;
+    }
+
+    private static function new()
+    {
+        $logger = new Logger('DiscordPHP-UnitTests');
+        $handler = new StreamHandler(fopen(__DIR__ . '/../phpunit.log', 'w'));
+        $formatter = new LineFormatter(null, null, true, true);
+        $handler->setFormatter($formatter);
+        $logger->pushHandler($handler);
+
+        $discord = new Discord([
+            'token' => getenv('DISCORD_TOKEN'),
+            'logger' => $logger,
+            'httpLogger' => $logger,
+        ]);
+
+        $e = null;
+
+        $timer = $discord->getLoop()->addTimer(10, function () use (&$e) {
+            $e = new Exception("Timed out trying to connect to Discord.");
+        });
+
+        $discord->on('ready', function (Discord $discord) use ($timer) {
+            $discord->getLoop()->cancelTimer($timer);
+            $discord->getLoop()->stop();
+        });
+
+        $discord->getLoop()->run();
+
+        if ($e !== null) {
+            throw $e;
+        }
+
+        self::$discord = $discord;
     }
 }
