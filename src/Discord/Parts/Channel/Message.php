@@ -363,7 +363,14 @@ class Message extends Part
      */
     public function reply(string $text): ExtendedPromiseInterface
     {
-        return $this->channel->sendMessage("{$this->author}, {$text}");
+        $reference = [
+            'message_id' => $this->id,
+            'channel_id' => $this->channel->id,
+            'guild_id' => $this->channel->guild->id,
+            'fail_if_not_exists' => false,
+        ];
+
+        return $this->channel->sendMessage($text, false, false, false, $reference);
     }
 
     /**

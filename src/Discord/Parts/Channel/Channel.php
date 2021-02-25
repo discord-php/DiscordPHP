@@ -498,7 +498,7 @@ class Channel extends Part
             ->setAllowedTypes('unique', 'bool')
             ->setAllowedValues('max_age', range(0, 604800))
             ->setAllowedValues('max_uses', range(0, 100));
-        
+
         $options = $resolver->resolve($options);
 
         $this->http->post($this->replaceWithVariables('channels/:id/invites'), $options)->done(
@@ -787,7 +787,7 @@ class Channel extends Part
      * @return ExtendedPromiseInterface
      * @throws \Exception
      */
-    public function sendMessage(string $text, bool $tts = false, $embed = null, $allowed_mentions = null): ExtendedPromiseInterface
+    public function sendMessage(string $text, bool $tts = false, $embed = null, $allowed_mentions = null, $message_reference = []): ExtendedPromiseInterface
     {
         if ($embed instanceof Embed) {
             $embed = $embed->getRawAttributes();
@@ -823,6 +823,7 @@ class Channel extends Part
                 'tts' => $tts,
                 'embed' => $embed,
                 'allowed_mentions' => $allowed_mentions,
+                'message_reference' => $message_reference,
             ]
         )->done(
             function ($response) use ($deferred) {
