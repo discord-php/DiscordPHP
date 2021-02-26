@@ -524,7 +524,7 @@ class Channel extends Part
             return \React\Promise\reject(new \Exception('Can only specify one of before, after and around.'));
         }
 
-        $endpoint = Endpoint::bind(Endpoint::CHANNEL_MESSAGES);
+        $endpoint = Endpoint::bind(Endpoint::CHANNEL_MESSAGES, $this->id);
         $endpoint->addQuery('limit', $options['limit']);
 
         if (isset($options['before'])) {
