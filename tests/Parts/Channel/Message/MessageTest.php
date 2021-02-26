@@ -8,31 +8,38 @@ use Discord\Parts\Channel\Message;
 
 final class MessageTest extends DiscordTestCase
 {
+    /**
+     * @covers \Discord\Parts\Channel\Message::getMentionChannelsAttribute
+     */
     public function testCanMentionChannel()
     {
         return wait(function (Discord $discord, $resolve) {
             $this->channel()->sendMessage('mention channel <#'.$this->channel()->id.'>')
-            ->then(function (Message $message) use ($resolve) {
-                $this->assertEquals(1, $message->mention_channels->count());
-                $this->assertInstanceOf(Channel::class, $message->mention_channels->first());
-                $this->assertEquals($this->channel()->id, $message->mention_channels->first()->id);
-                $resolve();
-            })
-            ->done();
+                ->then(function (Message $message) {
+                    $this->assertEquals(1, $message->mention_channels->count());
+                    $this->assertInstanceOf(Channel::class, $message->mention_channels->first());
+                    $this->assertEquals($this->channel()->id, $message->mention_channels->first()->id);
+                })
+                ->done($resolve, $resolve);
         });
     }
 
+    /**
+     * @covers \Discord\Parts\Channel\Message::crosspost
+     */
     public function testCanCrosspostMessage()
     {
         return wait(function (Discord $discord, $resolve) {
             $this->channel()->sendMessage('crossposting message')
-            ->then(function (Message $message) use ($resolve) {
-                return $message->crosspost();
-            })
-            ->done(function ($message) use ($resolve) {
-                $this->assertInstanceOf(Message::class, $message);
-                $resolve();
-            });
+                ->then(function (Message $message) {
+                    return $message->crosspost();
+                })
+                ->then(function ($message) {
+                    $this->assertInstanceOf(Message::class, $message);
+                })
+                ->done($resolve, $resolve);
+        }, 10, function () {
+            $this->markTestIncomplete('Crosspost has likely hit ratelimit.');
         });
     }
 }

@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 const TIMEOUT = 10;
 
-function wait(callable $callback, float $timeout = TIMEOUT)
+function wait(callable $callback, float $timeout = TIMEOUT, callable $timeoutFn = null)
 {
     $discord = DiscordSingleton::get();
 
@@ -51,7 +51,11 @@ function wait(callable $callback, float $timeout = TIMEOUT)
     }
 
     if ($timedOut) {
-        throw new \Exception('Timed out');
+        if ($timeoutFn != null) {
+            $timeoutFn();
+        } else {
+            throw new \Exception('Timed out');
+        }
     }
 
     return $result;

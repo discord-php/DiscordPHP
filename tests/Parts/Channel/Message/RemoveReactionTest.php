@@ -9,6 +9,7 @@ final class RemoveReactionTest extends DiscordTestCase
 {
     /**
      * @doesNotPerformAssertions
+     * @covers \Discord\Parts\Channel\Message::deleteReaction
      */
     public function testDeleteAllReactions()
     {
@@ -25,12 +26,13 @@ final class RemoveReactionTest extends DiscordTestCase
                 ->then(function (Message $message) {
                     return $message->deleteReaction(Message::REACT_DELETE_ALL);
                 })
-                ->done($resolve);
+                ->done($resolve, $resolve);
         });
     }
 
     /**
      * @doesNotPerformAssertions
+     * @covers \Discord\Parts\Channel\Message::deleteReaction
      */
     public function testDeleteSelfReaction()
     {
@@ -45,12 +47,13 @@ final class RemoveReactionTest extends DiscordTestCase
                 })->then(function (Message $message) {
                     return $message->deleteReaction(Message::REACT_DELETE_ME, '🤪');
                 })
-                ->done($resolve);
+                ->done($resolve, $resolve);
         });
     }
 
     /**
      * @doesNotPerformAssertions
+     * @covers \Discord\Parts\Channel\Message::deleteReaction
      */
     public function testDeleteReactionOfUser()
     {
@@ -65,12 +68,13 @@ final class RemoveReactionTest extends DiscordTestCase
                 })->then(function (Message $message) use ($discord) {
                     return $message->deleteReaction(Message::REACT_DELETE_ID, '🤪', $discord->id);
                 })
-                ->done($resolve);
+                ->done($resolve, $resolve);
         });
     }
 
     /**
      * @doesNotPerformAssertions
+     * @covers \Discord\Parts\Channel\Message::deleteReaction
      */
     public function testDeleteAllReactionsForEmoji()
     {
@@ -85,7 +89,7 @@ final class RemoveReactionTest extends DiscordTestCase
                 })->then(function (Message $message) use ($discord) {
                     return $message->deleteReaction(Message::REACT_DELETE_EMOJI, '🤪');
                 })
-                ->done($resolve);
+                ->done($resolve, $resolve);
         });
     }
 }

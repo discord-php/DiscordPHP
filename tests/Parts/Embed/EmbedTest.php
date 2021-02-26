@@ -25,22 +25,22 @@ final class EmbedTest extends DiscordTestCase
         return wait(function (Discord $discord, $resolve) {
             // kek
             $url = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ';
-            $this->channel()->sendMessage($url)->done(function (Message $message) use ($discord, $resolve, $url, &$handler) {
-                $this->assertEquals(1, $message->embeds->count());
-                /** @var \Discord\Parts\Embed\Embed */
-                $embed = $message->embeds->first();
+            $this->channel()->sendMessage($url)
+                ->then(function (Message $message) use ($url) {
+                    $this->assertEquals(1, $message->embeds->count());
+                    /** @var \Discord\Parts\Embed\Embed */
+                    $embed = $message->embeds->first();
 
-                $this->assertInstanceOf(Video::class, $embed->video);
-                $this->assertInstanceOf(Image::class, $embed->thumbnail);
-                $this->assertInstanceOf(Author::class, $embed->author);
+                    $this->assertInstanceOf(Video::class, $embed->video);
+                    $this->assertInstanceOf(Image::class, $embed->thumbnail);
+                    $this->assertInstanceOf(Author::class, $embed->author);
 
-                $this->assertTrue(contains($embed->video->url, ['dQw4w9WgXcQ']));
+                    $this->assertTrue(contains($embed->video->url, ['dQw4w9WgXcQ']));
 
-                $this->assertEquals($url, $embed->url);
-                $this->assertEquals(Embed::TYPE_VIDEO, $embed->type);
-
-                $resolve();
-            });
+                    $this->assertEquals($url, $embed->url);
+                    $this->assertEquals(Embed::TYPE_VIDEO, $embed->type);
+                })
+                ->done($resolve, $resolve);
         }, 10);
     }
 
@@ -48,17 +48,17 @@ final class EmbedTest extends DiscordTestCase
     {
         return wait(function (Discord $discord, $resolve) {
             $url = 'https://discord.com/assets/94db9c3c1eba8a38a1fcf4f223294185.png';
-            $this->channel()->sendMessage($url)->done(function (Message $message) use ($discord, $resolve, $url, &$handler) {
-                $this->assertEquals(1, $message->embeds->count());
-                /** @var \Discord\Parts\Embed\Embed */
-                $embed = $message->embeds->first();
+            $this->channel()->sendMessage($url)
+                ->then(function (Message $message) use ($url) {
+                    $this->assertEquals(1, $message->embeds->count());
+                    /** @var \Discord\Parts\Embed\Embed */
+                    $embed = $message->embeds->first();
 
-                $this->assertEquals($url, $embed->url);
-                $this->assertEquals(Embed::TYPE_IMAGE, $embed->type);
-                $this->assertInstanceOf(Image::class, $embed->thumbnail);
-
-                $resolve();
-            });
+                    $this->assertEquals($url, $embed->url);
+                    $this->assertEquals(Embed::TYPE_IMAGE, $embed->type);
+                    $this->assertInstanceOf(Image::class, $embed->thumbnail);
+                })
+                ->done($resolve, $resolve);
         }, 10);
     }
 }
