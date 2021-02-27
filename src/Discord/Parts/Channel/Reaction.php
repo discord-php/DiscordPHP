@@ -20,6 +20,7 @@ use React\Promise\ExtendedPromiseInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 use function Discord\normalizePartId;
+use function React\Promise\resolve;
 
 /**
  * Represents a reaction to a message by members(s).
@@ -95,6 +96,37 @@ class Reaction extends Part
 
             return $users;
         });
+    }
+
+    /**
+     * Gets all the users that have used this reaction.
+     * Wrapper of the lower-level getUsers() function.
+     * 
+     * @return ExtendedPromiseInterface<Collection|Users[]>
+     */
+    public function getAllUsers(): ExtendedPromiseInterface
+    {
+        $response = Collection::for(User::class);
+        $getUsers = function ($after = null) use (&$getUsers, $response) {
+            $options = ['limit' => 100];
+            if ($after != null) $options['after'] = $after;
+
+            return $this->getUsers($options)->then(function (Collection $users) use ($response, &$getUsers) {
+                $last = null;
+                foreach ($users as $user) {
+                    $response->push($user);
+                    $last = $user;
+                }
+
+                if ($users->count() < 100) {
+                    return resolve($response);
+                }
+
+                return $getUsers($last);
+            });
+        };
+
+        return $getUsers();
     }
 
     /**
