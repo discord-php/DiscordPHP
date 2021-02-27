@@ -17,6 +17,9 @@ use Discord\Parts\Guild\Emoji;
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
 use React\Promise\ExtendedPromiseInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+
+use function Discord\normalizePartId;
 
 /**
  * Represents a reaction to a message by members(s).
@@ -61,6 +64,18 @@ class Reaction extends Part
     public function getUsers(array $options = []): ExtendedPromiseInterface
     {
         $query = Endpoint::bind(Endpoint::MESSAGE_REACTION_EMOJI, $this->channel_id, $this->message_id, urlencode($this->id));
+
+        $resolver = new OptionsResolver();
+        $resolver
+            ->setDefined(['before', 'after', 'limit'])
+            ->setAllowedTypes('before', ['int', 'string', User::class])
+            ->setAllowedTypes('after', ['int', 'string', User::class])
+            ->setAllowedTypes('limit', 'int')
+            ->setNormalizer('before', normalizePartId())
+            ->setNormalizer('after', normalizePartId())
+            ->setAllowedValues('limit', range(1, 100));
+
+        $options = $resolver->resolve($options);
 
         foreach ($options as $key => $value) {
             $query->addQuery($key, $value);
