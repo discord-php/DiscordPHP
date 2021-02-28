@@ -22,9 +22,10 @@ class ChannelCreate extends Event
      */
     public function handle(Deferred &$deferred, $data): void
     {
+        /** @var Channel */
         $channel = $this->factory->create(Channel::class, $data, true);
 
-        if (isset($data->attributes['recipients'])) {
+        if ($channel->is_private) {
             $this->discord->private_channels->push($channel);
         } else {
             if ($guild = $this->discord->guilds->get('id', $channel->guild_id)) {
