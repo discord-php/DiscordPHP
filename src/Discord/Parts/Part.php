@@ -156,7 +156,7 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
      * 
      * @throws RuntimeException The part is not fetchable.
      * 
-     * @return ExtendedPromiseInterface
+     * @return ExtendedPromiseInterface<static>
      */
     public function fetch(): ExtendedPromiseInterface
     {

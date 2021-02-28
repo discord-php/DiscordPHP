@@ -11,6 +11,7 @@
 
 namespace Discord\Parts\WebSockets;
 
+use Discord\Http\Endpoint;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Channel\Message;
 use Discord\Parts\Guild\Emoji;
@@ -18,6 +19,9 @@ use Discord\Parts\Guild\Guild;
 use Discord\Parts\Part;
 use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
+use React\Promise\ExtendedPromiseInterface;
+
+use function React\Promise\resolve;
 
 /**
  * Represents a specific reaction to a message by a specific user.
@@ -44,6 +48,48 @@ class MessageReaction extends Part
     protected $fillable = ['user_id', 'message_id', 'member', 'emoji', 'channel_id', 'guild_id'];
 
     /**
+     * {@inheritDoc}
+     */
+    public function isPartial(): bool
+    {
+        return $this->user == null ||
+            $this->message == null ||
+            $this->member == null;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function fetch(): ExtendedPromiseInterface
+    {
+        $promise = resolve();
+
+        if ($this->member == null) {
+            $promise = $promise
+                ->then(function () {
+                    return $this->http->get(Endpoint::bind(Endpoint::GUILD_MEMBER, $this->guild_id, $this->user_id));
+                })
+                ->then(function ($member) {
+                    $this->attributes['member'] = $this->factory->create(Member::class, $member, true);
+                });
+        }
+
+        if ($this->message == null) {
+            $promise = $promise
+                ->then(function () {
+                    return $this->http->get(Endpoint::bind(Endpoint::CHANNEL_MESSAGE, $this->channel_id, $this->message_id));
+                })
+                ->then(function ($message) {
+                    $this->attributes['message'] = $this->factory->create(Message::class, $message, true);
+                });
+        }
+
+        return $promise->then(function () {
+            return $this;
+        });
+    }
+
+    /**
      * Gets the ID of the reaction.
      *
      * @return string
@@ -66,19 +112,15 @@ class MessageReaction extends Part
             return $user;
         }
 
-        return null;
+        return $this->attributes['user'] ?? null;
     }
 
     /**
      * Gets the message attribute.
-     * The bot needs to be set up to store messages
-     * to get the full message, otherwise the message
-     * object only contains the ID.
      *
      * @return Message
-     * @throws \Exception
      */
-    protected function getMessageAttribute(): Message
+    protected function getMessageAttribute(): ?Message
     {
         if ($channel = $this->channel) {
             if ($message = $channel->messages->get('id', $this->attributes['message_id'])) {
@@ -86,10 +128,7 @@ class MessageReaction extends Part
             }
         }
 
-        return $this->factory->create(Message::class, [
-            'id' => $this->attributes['message_id'],
-            'channel_id' => $this->attributes['channel_id'],
-        ], true);
+        return $this->attributes['message'] ?? null;
     }
 
     /**
@@ -108,7 +147,7 @@ class MessageReaction extends Part
             return $this->factory->create(Member::class, $this->attributes['member'], true);
         }
 
-        return null;
+        return $this->attributes['member'] ?? null;
     }
 
     /**

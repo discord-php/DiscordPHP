@@ -42,6 +42,26 @@ class Reaction extends Part
     protected $fillable = ['count', 'me', 'emoji', 'message_id', 'channel_id'];
 
     /**
+     * {@inheritDoc}
+     */
+    public function isPartial(): bool
+    {
+        return $this->message == null;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function fetch(): ExtendedPromiseInterface
+    {
+        return $this->http->get(Endpoint::bind(Endpoint::CHANNEL_MESSAGE, $this->channel_id, $this->message_id))
+            ->then(function ($message) {
+                $this->attributes['message'] = $this->factory->create(Message::class, $message, true);
+                return $this;
+            });
+    }
+
+    /**
      * Gets the emoji identifier, combination of `id` and `name`.
      *
      * @return string
@@ -155,7 +175,7 @@ class Reaction extends Part
             return $channel->messages->offsetGet($this->message_id);
         }
 
-        return null;
+        return $this->attributes['message'] ?? null;
     }
 
     /**
