@@ -17,6 +17,8 @@ use Discord\Discord;
 use Discord\Factory\Factory;
 use Discord\Http\Http;
 use JsonSerializable;
+use React\Promise\ExtendedPromiseInterface;
+use RuntimeException;
 use Serializable;
 
 /**
@@ -134,6 +136,31 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
      */
     protected function afterConstruct(): void
     {
+    }
+
+    /**
+     * Whether the part is considered partial
+     * i.e. missing information which can be
+     * fetched from Discord.
+     * 
+     * @return bool
+     */
+    public function isPartial(): bool
+    {
+        return false;
+    }
+
+    /**
+     * Fetches any missing information about
+     * the part from Discord's servers.
+     * 
+     * @throws RuntimeException The part is not fetchable.
+     * 
+     * @return ExtendedPromiseInterface
+     */
+    public function fetch(): ExtendedPromiseInterface
+    {
+        throw new RuntimeException('This part is not fetchable.');
     }
 
     /**
