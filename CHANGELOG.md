@@ -1,5 +1,16 @@
 # Changelog
 
+## Version 5.1.2
+
+- Fixed bug where websocket connection would fail and wouldn't reconnect.
+- Expanded on documentation.
+- Updated documentation `marked` version to `^2.0.0` due to security concern.
+- Disabled happy eyeballs connector as Discord does not use IPv6, and this causes an error when using a debugger.
+- Added options resolver for creating an invite.
+- Added the option to delete all reactions of a certain emoji from a message.
+- Fixed getting emoji ID for unicode emojis.
+- Fixed audit log query not accepting an `Entry` object.
+
 ## Version 5.1.1
 
 - Added permission checking before executing requests for channels.
