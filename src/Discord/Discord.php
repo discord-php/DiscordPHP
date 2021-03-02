@@ -659,6 +659,20 @@ class Discord
     }
 
     /**
+     * Handles cases when the WebSocket cannot be connected to.
+     *
+     * @param \Throwable $e
+     */
+    public function handleWsConnectionFailed(\Throwable $e)
+    {
+        $this->logger->error('failed to connect to websocket, retry in 5 seconds', ['e' => $e->getMessage()]);
+
+        $this->loop->addTimer(5, function () {
+            $this->connectWs();
+        });
+    }
+
+    /**
      * Handles dispatch events received by the WebSocket.
      *
      * @param object $data Packet data.
@@ -997,7 +1011,7 @@ class Discord
             $promise = ($this->wsFactory)($this->gateway);
             $promise->done(
                 [$this, 'handleWsConnection'],
-                [$this, 'handleWsError']
+                [$this, 'handleWsConnectionFailed']
             );
         });
     }
