@@ -161,6 +161,11 @@ Search.appendIndex(
             "summary": "Handles\u0020WebSocket\u0020errors\u0020received\u0020by\u0020the\u0020client.",
             "url": "classes/Discord-Discord.html#method_handleWsError"
         },                {
+            "fqsen": "\\Discord\\Discord\u003A\u003AhandleWsConnectionFailed\u0028\u0029",
+            "name": "handleWsConnectionFailed",
+            "summary": "Handles\u0020cases\u0020when\u0020the\u0020WebSocket\u0020cannot\u0020be\u0020connected\u0020to.",
+            "url": "classes/Discord-Discord.html#method_handleWsConnectionFailed"
+        },                {
             "fqsen": "\\Discord\\Discord\u003A\u003AhandleDispatch\u0028\u0029",
             "name": "handleDispatch",
             "summary": "Handles\u0020dispatch\u0020events\u0020received\u0020by\u0020the\u0020WebSocket.",
