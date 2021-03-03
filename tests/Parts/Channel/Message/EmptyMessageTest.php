@@ -34,6 +34,7 @@ final class EmptyMessageTest extends DiscordTestCase
                     $this->assertEquals($content, $message->content);
                     $this->assertInstanceOf(Carbon::class, $message->timestamp);
                     $this->assertNull($message->edited_timestamp);
+
                     return $message;
                 })
                 ->done($resolve, $resolve);
@@ -52,6 +53,7 @@ final class EmptyMessageTest extends DiscordTestCase
                     $this->assertEquals('replying to my message', $new_message->content);
                     $this->assertInstanceOf(Message::class, $new_message->referenced_message);
                     $this->assertEquals($message->id, $new_message->referenced_message->id);
+
                     return $new_message;
                 })
                 ->done($resolve, $resolve);
@@ -69,9 +71,11 @@ final class EmptyMessageTest extends DiscordTestCase
             $this->channel()->sendMessage('before edit')
                 ->then(function (Message $message) use ($content) {
                     $message->content = $content;
+
                     return $message->channel->messages->save($message)->then(function (Message $message) use ($content) {
                         $this->assertEquals($content, $message->content);
                         $this->assertNotNull($message->edited_timestamp);
+
                         return $message;
                     });
                 })

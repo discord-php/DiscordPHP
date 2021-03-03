@@ -18,7 +18,7 @@ use Discord\Parts\Embed\Video;
 
 use function Discord\contains;
 
-final class EmbedTest extends DiscordTestCase 
+final class EmbedTest extends DiscordTestCase
 {
     public function testCanGetVideoEmbed()
     {

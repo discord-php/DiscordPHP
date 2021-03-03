@@ -142,7 +142,7 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
      * Whether the part is considered partial
      * i.e. missing information which can be
      * fetched from Discord.
-     * 
+     *
      * @return bool
      */
     public function isPartial(): bool
@@ -153,9 +153,9 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
     /**
      * Fetches any missing information about
      * the part from Discord's servers.
-     * 
+     *
      * @throws RuntimeException The part is not fetchable.
-     * 
+     *
      * @return ExtendedPromiseInterface<static>
      */
     public function fetch(): ExtendedPromiseInterface

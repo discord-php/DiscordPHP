@@ -2,6 +2,15 @@
 
 declare(strict_types=1);
 
+/*
+ * This file is apart of the DiscordPHP project.
+ *
+ * Copyright (c) 2021 David Cole <david.cole1340@gmail.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the LICENSE.md file.
+ */
+
 use Discord\Discord;
 use Discord\Helpers\Collection;
 use Discord\Parts\Channel\Channel;
@@ -162,6 +171,7 @@ final class ChannelTest extends DiscordTestCase
 
                     if ($messages->count() < 1) {
                         $this->markTestSkipped('no messages were present when gettign message history - could not check if collection contained message objects.');
+
                         return;
                     }
 
@@ -185,6 +195,7 @@ final class ChannelTest extends DiscordTestCase
 
                     if ($invites->count() < 1) {
                         $this->markTestSkipped('no invites were present when getting invites - could not check if collection contained invite objects.');
+
                         return;
                     }
 

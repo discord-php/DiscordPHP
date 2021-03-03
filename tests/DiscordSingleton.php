@@ -33,7 +33,7 @@ class DiscordSingleton
     private static function new()
     {
         $logger = new Logger('DiscordPHP-UnitTests');
-        $handler = new StreamHandler(fopen(__DIR__ . '/../phpunit.log', 'w'));
+        $handler = new StreamHandler(fopen(__DIR__.'/../phpunit.log', 'w'));
         $formatter = new LineFormatter(null, null, true, true);
         $handler->setFormatter($formatter);
         $logger->pushHandler($handler);
@@ -47,7 +47,7 @@ class DiscordSingleton
         $e = null;
 
         $timer = $discord->getLoop()->addTimer(10, function () use (&$e) {
-            $e = new Exception("Timed out trying to connect to Discord.");
+            $e = new Exception('Timed out trying to connect to Discord.');
         });
 
         $discord->on('ready', function (Discord $discord) use ($timer) {

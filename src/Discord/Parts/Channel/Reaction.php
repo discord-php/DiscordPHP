@@ -42,7 +42,7 @@ class Reaction extends Part
     protected $fillable = ['count', 'me', 'emoji', 'message_id', 'channel_id'];
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function isPartial(): bool
     {
@@ -50,13 +50,14 @@ class Reaction extends Part
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function fetch(): ExtendedPromiseInterface
     {
         return $this->http->get(Endpoint::bind(Endpoint::CHANNEL_MESSAGE, $this->channel_id, $this->message_id))
             ->then(function ($message) {
                 $this->attributes['message'] = $this->factory->create(Message::class, $message, true);
+
                 return $this;
             });
     }
@@ -121,7 +122,7 @@ class Reaction extends Part
     /**
      * Gets all the users that have used this reaction.
      * Wrapper of the lower-level getUsers() function.
-     * 
+     *
      * @return ExtendedPromiseInterface<Collection|Users[]>
      */
     public function getAllUsers(): ExtendedPromiseInterface
@@ -129,7 +130,9 @@ class Reaction extends Part
         $response = Collection::for(User::class);
         $getUsers = function ($after = null) use (&$getUsers, $response) {
             $options = ['limit' => 100];
-            if ($after != null) $options['after'] = $after;
+            if ($after != null) {
+                $options['after'] = $after;
+            }
 
             return $this->getUsers($options)->then(function (Collection $users) use ($response, &$getUsers) {
                 $last = null;

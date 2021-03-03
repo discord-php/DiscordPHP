@@ -230,7 +230,7 @@ function getSnowflakeTimestamp(string $snowflake)
  * on the part.
  *
  * @param string $id_field
- * 
+ *
  * @internal
  */
 function normalizePartId($id_field = 'id')

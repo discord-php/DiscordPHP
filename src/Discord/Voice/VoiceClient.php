@@ -1380,7 +1380,7 @@ class VoiceClient extends EventEmitter
 
     private function checkPHPVersion(): bool
     {
-        if (substr(strtolower(PHP_OS), 0, 3) === 'win'  && PHP_VERSION_ID < 80000) {
+        if (substr(strtolower(PHP_OS), 0, 3) === 'win' && PHP_VERSION_ID < 80000) {
             $this->emit('error', [new RuntimeException('PHP 8.0.0 or later is required to run the voice client on Windows.')]);
 
             return false;

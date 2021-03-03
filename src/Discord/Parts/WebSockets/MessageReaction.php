@@ -48,7 +48,7 @@ class MessageReaction extends Part
     protected $fillable = ['user_id', 'message_id', 'member', 'emoji', 'channel_id', 'guild_id'];
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function isPartial(): bool
     {
@@ -58,7 +58,7 @@ class MessageReaction extends Part
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function fetch(): ExtendedPromiseInterface
     {

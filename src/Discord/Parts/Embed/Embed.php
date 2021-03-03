@@ -224,9 +224,9 @@ class Embed extends Part
 
     /**
      * Sets the title of the embed.
-     * 
+     *
      * @param string $title
-     * 
+     *
      * @return $this
      */
     public function setTitle(string $title)
