@@ -51,6 +51,7 @@ use function React\Promise\reject as Reject;
  * @property string $last_message_id            The unique identifier of the last message sent in the channel.
  * @property int $bitrate                       The bitrate of the channel. Only for voice channels.
  * @property User $recipient                    The first recipient of the channel. Only for DM or group channels.
+ * @property string $recipient_id               The ID of the recipient of the channel, if it is a DM channel.
  * @property Collection|User[] $recipients      A collection of all the recipients in the channel. Only for DM or group channels.
  * @property bool $nsfw                         Whether the channel is NSFW.
  * @property int $user_limit                    The user limit of the channel.
@@ -138,6 +139,18 @@ class Channel extends Part
     protected function getRecipientAttribute(): ?User
     {
         return $this->recipients->first();
+    }
+
+    /**
+     * Gets the recipient ID attribute.
+     *
+     * @return string
+     */
+    protected function getRecipientIdAttribute(): ?string
+    {
+        if ($this->recipient) {
+            return $this->recipient->id;
+        }
     }
 
     /**
@@ -498,7 +511,7 @@ class Channel extends Part
             ->setAllowedTypes('unique', 'bool')
             ->setAllowedValues('max_age', range(0, 604800))
             ->setAllowedValues('max_uses', range(0, 100));
-        
+
         $options = $resolver->resolve($options);
 
         $this->http->post($this->replaceWithVariables('channels/:id/invites'), $options)->done(

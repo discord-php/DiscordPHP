@@ -71,7 +71,7 @@ class User extends Part
     {
         $deferred = new Deferred();
 
-        if ($channel = $this->discord->private_channels->get('id', $this->id)) {
+        if ($channel = $this->discord->private_channels->get('recipient_id', $this->id)) {
             $deferred->resolve($channel);
         } else {
             $this->http->post('users/@me/channels', ['recipient_id' => $this->id])->done(function ($response) use ($deferred) {
@@ -164,7 +164,7 @@ class User extends Part
     /**
      * Returns a timestamp for when a user's account was created.
      *
-     * @return float 
+     * @return float
      */
     public function createdTimestamp()
     {
