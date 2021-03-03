@@ -11,7 +11,6 @@
 
 namespace Discord\WebSockets\Events;
 
-use Discord\Parts\Channel\Channel;
 use Discord\Parts\WebSockets\VoiceStateUpdate as VoiceStateUpdatePart;
 use Discord\WebSockets\Event;
 use Discord\Helpers\Deferred;
@@ -24,6 +23,7 @@ class VoiceStateUpdate extends Event
     public function handle(Deferred &$deferred, $data): void
     {
         $state = $this->factory->create(VoiceStateUpdatePart::class, $data, true);
+        $old_state = null;
 
         if ($state->guild) {
             $guild = $state->guild;
@@ -35,6 +35,7 @@ class VoiceStateUpdate extends Event
 
                 // Remove old member states
                 if ($channel->members->has($state->user_id)) {
+                    $old_state = $channel->members->offsetGet($state->user_id);
                     $channel->members->offsetUnset($state->user_id);
                 }
 
@@ -49,6 +50,6 @@ class VoiceStateUpdate extends Event
             $this->discord->guilds->offsetSet($state->guild->id, $state->guild);
         }
 
-        $deferred->resolve($state);
+        $deferred->resolve([$state, $old_state]);
     }
 }
