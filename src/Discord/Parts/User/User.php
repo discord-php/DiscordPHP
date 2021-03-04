@@ -69,7 +69,7 @@ class User extends Part
      */
     public function getPrivateChannel(): ExtendedPromiseInterface
     {
-        if ($channel = $this->discord->private_channels->get('id', $this->id)) {
+        if ($channel = $this->discord->private_channels->get('recipient_id', $this->id)) {
             return \React\Promise\resolve($channel);
         }
 
