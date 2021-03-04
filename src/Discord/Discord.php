@@ -1433,6 +1433,8 @@ class Discord
      * Gets the HTTP client.
      *
      * @return Http
+     *
+     * @deprecated Use Discord::getHttpClient()
      */
     public function getHttp(): Http
     {
