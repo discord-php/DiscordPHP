@@ -1521,6 +1521,11 @@ Search.appendIndex(
             "summary": "Gets\u0020the\u0020recipient\u0020attribute.",
             "url": "classes/Discord-Parts-Channel-Channel.html#method_getRecipientAttribute"
         },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Channel\u003A\u003AgetRecipientIdAttribute\u0028\u0029",
+            "name": "getRecipientIdAttribute",
+            "summary": "Gets\u0020the\u0020recipient\u0020ID\u0020attribute.",
+            "url": "classes/Discord-Parts-Channel-Channel.html#method_getRecipientIdAttribute"
+        },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Channel\u003A\u003AgetRecipientsAttribute\u0028\u0029",
             "name": "getRecipientsAttribute",
             "summary": "Gets\u0020the\u0020recipients\u0020attribute.",
