@@ -1305,7 +1305,6 @@ class Discord
                 'pmChannels' => false,
                 'storeMessages' => false,
                 'retrieveBans' => false,
-                'intents' => false,
                 'httpLogger' => new NullLogger(),
                 'intents' => Intents::getAllIntents(),
                 'socket_options' => [],
@@ -1317,7 +1316,7 @@ class Discord
             ->setAllowedTypes('pmChannels', 'bool')
             ->setAllowedTypes('storeMessages', 'bool')
             ->setAllowedTypes('retrieveBans', 'bool')
-            ->setAllowedTypes('intents', ['bool', 'array', 'int'])
+            ->setAllowedTypes('intents', ['array', 'int'])
             ->setAllowedTypes('httpLogger', LoggerInterface::class);
 
         $options = $resolver->resolve($options);
@@ -1328,6 +1327,21 @@ class Discord
             $options['logger'] = $logger;
         } elseif (! $options['logging']) {
             $options['logger'] = new NullLogger();
+        }
+
+        if (is_array($options['intents'])) {
+            $intent = 0;
+            $validIntents = Intents::getValidIntents();
+
+            foreach ($options['intents'] as $idx => $i) {
+                if (! in_array($i, $validIntents)) {
+                    throw new IntentException('Given intent at index '.$idx.' is invalid.');
+                }
+
+                $intent |= $i;
+            }
+
+            $options['intents'] = $intent;
         }
 
         // Discord doesn't currently support IPv6
