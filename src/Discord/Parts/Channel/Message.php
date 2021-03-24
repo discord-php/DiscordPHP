@@ -408,7 +408,7 @@ class Message extends Part
     }
 
     /**
-     * Send message after delay.
+     * Replies to the message after a delay.
      *
      * @param string $text  Text to send after delay.
      * @param int    $delay Delay after text will be sent in milliseconds.
@@ -421,6 +421,24 @@ class Message extends Part
 
         $this->discord->getLoop()->addTimer($delay / 1000, function () use ($text, $deferred) {
             $this->reply($text)->done([$deferred, 'resolve'], [$deferred, 'reject']);
+        });
+
+        return $deferred->promise();
+    }
+
+    /**
+     * Deletes the message after a delay.
+     *
+     * @param int $delay Time to delay the delete by, in milliseconds.
+     *
+     * @return ExtendedPromseInterface
+     */
+    public function delayedDelete(int $delay): ExtendedPromiseInterface
+    {
+        $deferred = new Deferred();
+
+        $this->discord->getLoop()->addTimer($delay / 1000, function () use ($deferred) {
+            $this->delete([$deferred, 'resolve'], [$deferred, 'reject']);
         });
 
         return $deferred->promise();
