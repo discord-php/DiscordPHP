@@ -35,6 +35,7 @@ class GuildCreate extends Event
             return $deferred->promise();
         }
 
+        /** @var Guild */
         $guildPart = $this->factory->create(Guild::class, $data, true);
         foreach ($data->roles as $role) {
             $role = (array) $role;
@@ -82,7 +83,7 @@ class GuildCreate extends Event
         }
 
         $resolve = function () use (&$guildPart, $deferred) {
-            if ($guildPart->large) {
+            if ($guildPart->large || $guildPart->member_count > $guildPart->members->count()) {
                 $this->discord->addLargeGuild($guildPart);
             }
 
