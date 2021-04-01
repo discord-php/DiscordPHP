@@ -11,6 +11,7 @@
 
 namespace Discord\Parts\WebSockets;
 
+use Carbon\Carbon;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Part;
@@ -35,6 +36,7 @@ use Discord\Parts\User\User;
  * @property bool $self_stream
  * @property bool $self_video
  * @property bool $suppress
+ * @property Carbon|null $request_to_speak_timestamp
  */
 class VoiceStateUpdate extends Part
 {
@@ -54,6 +56,7 @@ class VoiceStateUpdate extends Part
         'self_stream',
         'self_video',
         'suppress',
+        'request_to_speak_timestamp',
     ];
 
     /**
@@ -110,5 +113,19 @@ class VoiceStateUpdate extends Part
     protected function getGuildAttribute(): ?Guild
     {
         return $this->discord->guilds->get('id', $this->guild_id);
+    }
+    
+    /**
+     * Gets the request_to_speak_timestamp attribute.
+     *
+     * @return Carbon
+     */
+    protected function getRequestToSpeakTimestampAttribute(): ?Carbon
+    {
+        if (($this->attributes['request_to_speak_timestamp'] ?? null) != null) {
+            return new Carbon($this->attributes['request_to_speak_timestamp']);
+        }
+
+        return null;
     }
 }
