@@ -850,8 +850,10 @@ class Discord
                 ],
             ];
 
-            if (array_key_exists('shardId', $this->options) &&
-                array_key_exists('shardCount', $this->options)) {
+            if (
+                array_key_exists('shardId', $this->options) &&
+                array_key_exists('shardCount', $this->options)
+            ) {
                 $payload['d']['shard'] = [
                     (int) $this->options['shardId'],
                     (int) $this->options['shardCount'],
@@ -1306,7 +1308,7 @@ class Discord
                 'storeMessages' => false,
                 'retrieveBans' => false,
                 'httpLogger' => new NullLogger(),
-                'intents' => Intents::getAllIntents(),
+                'intents' => Intents::getDefaultIntents(),
                 'socket_options' => [],
             ])
             ->setAllowedTypes('loop', LoopInterface::class)
@@ -1342,6 +1344,11 @@ class Discord
             }
 
             $options['intents'] = $intent;
+        }
+
+        if ($options['loadAllMembers'] && ! ($options['intents'] & Intents::GUILD_MEMBERS)) {
+            throw new IntentException('You have enabled the `loadAllMembers` option but have not enabled the required `GUILD_MEMBERS` intent.'.
+            'See the documentation on the `loadAllMembers` property for more information: http://discord-php.github.io/DiscordPHP/#basics');
         }
 
         // Discord doesn't currently support IPv6

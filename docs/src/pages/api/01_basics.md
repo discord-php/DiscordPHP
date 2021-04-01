@@ -9,6 +9,7 @@ First step is to include the Composer autoload file.
 
 include __DIR__.'/vendor/autoload.php';
 ```
+
 <br>
 
 The Discord instance can be set up with an array of options. All are optional except for token:
@@ -23,7 +24,9 @@ $discord = new Discord([
     'token' => 'Your-Token-Here',
 ```
 
-`intents` can be an array of valid intents _or_ an integer representing the intents. Default is all intents.
+`intents` can be an array of valid intents _or_ an integer representing the intents. Default is all intents minus any privileged intents.
+At the moment this means all intents minus `GUILD_MEMBERS` and `GUILD_PRESENCES`. To enable these intents you must first enable them in your
+Discord developer portal.
 
 ```php
     'intents' => [
@@ -31,10 +34,13 @@ $discord = new Discord([
     ],
     // or
     'intents' => 12345,
+    // or
+    'intents' => Intents::getDefaultIntents() | Intents::GUILD_MEMBERS, // default intents as well as guild members
 ```
 
 `loadAllMembers` is a boolean whether all members should be fetched and stored on bot start.
 Loading members takes a while to retrieve from Discord and store, so default is false.
+This requires the `GUILD_MEMBERS` intent to be enabled in DiscordPHP. See above for more details.
 
 ```php
     'loadAllMembers' => false,
@@ -91,6 +97,7 @@ By default, a null logger is created, which supresses HTTP logs.
 ```php
     'httpLogger' => new Logger('HTTP Logger'),
 ```
+
 <hr>
 
 The following options should only be used by large bots that require sharding. If you plan to use sharding, [read up](https://discord.com/developers/docs/topics/gateway#sharding) on how Discord implements it.
@@ -110,6 +117,7 @@ The following options should only be used by large bots that require sharding. I
 ```
 ]);
 ```
+
 <hr>
 
 Gateway events should be registered inside the `ready` event, which is emitted once when the bot first starts and has connected to the gateway.
@@ -131,6 +139,7 @@ All events take a callback which is called when the event is triggered, and the 
 ```
 });
 ```
+
 <br>
 
 Finally, the event loop needs to be started. Treat this as an infinite loop.
@@ -151,4 +160,5 @@ If you want to stop the bot without stopping the event loop, the close function 
 ```php
 $discord->close(false);
 ```
+
 </div>
