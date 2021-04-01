@@ -1,13 +1,28 @@
 # Changelog
 
-## Version 5.2.0
+## Version 6.0.0
 
-- PHP 7.4 is now the lowest supported version of PHP.
-    - Versions as low as PHP 7.2 may still work, however, no support will be provided.
+This version has also been known as `v5.2.0`, however, breaking changes caused the version to be increased.
+
 - Discord Gateway and REST API versions changed to Version 8.
 - Removed unnecessary deferred promises from various parts and repositories.
 - `Message::reply()` now creates a "Discord reply" rather than the old way which was simply a mention with the content afterwards.
 - Tidied up and removed any unessacary deferred promises and promise binds.
+- Added `Message::delayedDelete(int $ms)` to delete a message after a delay.
+- Fixed member chunking not working when the guild is not considered 'large'.
+
+## Breaking Changes
+
+- PHP 7.4 is now the lowest supported version of PHP.
+    - Versions as low as PHP 7.2 may still work, however, no support will be provided.
+    - PHP 8.0 is now recommended, and CI is run on PHP 7.4 and 8.0.
+- With the update to gateway version 8, the `GUILD_MEMBER` and `PRESENCE_UPDATE` intents are not enabled by default.
+    - You must first enable these in your Discord developer portal before enabling them in DiscordPHP. See the documentation for an example.
+    - The `loadAllMembers` option requires the `GUILD_MEMBER` intent to be enabled.
+- The `logging` and `httpLogger` options have been removed.
+    - All HTTP logging information is now redirected to the `logger` that you have passed, or the default logger.
+    - For people that disabled logging by setting `logging` to false, you can create a logger with a [`NullHandler`](https://github.com/Seldaek/monolog/blob/main/src/Monolog/Handler/NullHandler.php).
+- For voice client users, see the section below for breaking changes.
 
 ### HTTP Client
 
@@ -16,6 +31,12 @@
 
 ### Voice Client
 
+- The voice client now requires at least PHP 7.4 to operate. It will not attempt to start on any version lower.
+- The voice client can now run on Windows! PHP 8.0 is required to run the voice client on Windows.
+- DCA has been rebuilt and refactored for better use with DiscordPHP. Note that the binaries have only been rebuilt for the `amd64` architecture. The following platforms are now supported:
+    - Windows AMD64
+    - macOS AMD64
+    - Linux AMD64
 - The following functions no longer return promises, rather they throw exceptions and will return void. This is because none of these functions actually did any async work, therefore promises were redundant in this situation.
     - `setSpeaking()`
     - `switchChannel()`
@@ -29,7 +50,6 @@
     - `stop()`
     - `close()`
     - `getRecieveStream()`
-- Although this is not deemed a breaking change it will break anything that uses the promise response.
 - Expect a voice client refactor in a future release.
 
 ## Version 5.1.1
