@@ -344,7 +344,7 @@ class Discord
         $this->http = new Http(
             'Bot '.$this->token,
             $this->loop,
-            $this->options['httpLogger'],
+            $this->options['logger'],
             new React($this->loop, $options['socket_options'])
         );
 
@@ -1286,49 +1286,42 @@ class Discord
                 'shardCount',
                 'loop',
                 'logger',
-                'loggerLevel',
-                'logging',
                 'loadAllMembers',
                 'disabledEvents',
                 'pmChannels',
                 'storeMessages',
                 'retrieveBans',
                 'intents',
-                'httpLogger',
                 'socket_options',
             ])
             ->setDefaults([
                 'loop' => LoopFactory::create(),
                 'logger' => null,
-                'loggerLevel' => Monolog::INFO,
-                'logging' => true,
                 'loadAllMembers' => false,
                 'disabledEvents' => [],
                 'pmChannels' => false,
                 'storeMessages' => false,
                 'retrieveBans' => false,
-                'httpLogger' => new NullLogger(),
                 'intents' => Intents::getDefaultIntents(),
                 'socket_options' => [],
             ])
+            ->setAllowedTypes('token', 'string')
+            ->setAllowedTypes('logger', ['null', LoggerInterface::class])
             ->setAllowedTypes('loop', LoopInterface::class)
-            ->setAllowedTypes('logging', 'bool')
             ->setAllowedTypes('loadAllMembers', ['bool', 'array'])
             ->setAllowedTypes('disabledEvents', 'array')
             ->setAllowedTypes('pmChannels', 'bool')
             ->setAllowedTypes('storeMessages', 'bool')
             ->setAllowedTypes('retrieveBans', 'bool')
             ->setAllowedTypes('intents', ['array', 'int'])
-            ->setAllowedTypes('httpLogger', LoggerInterface::class);
+            ->setAllowedTypes('socket_options', 'array');
 
         $options = $resolver->resolve($options);
 
-        if (is_null($options['logger']) && $options['logging']) {
+        if (is_null($options['logger'])) {
             $logger = new Monolog('DiscordPHP');
-            $logger->pushHandler(new StreamHandler('php://stdout', $options['loggerLevel']));
+            $logger->pushHandler(new StreamHandler('php://stdout', Monolog::DEBUG));
             $options['logger'] = $logger;
-        } elseif (! $options['logging']) {
-            $options['logger'] = new NullLogger();
         }
 
         if (is_array($options['intents'])) {
