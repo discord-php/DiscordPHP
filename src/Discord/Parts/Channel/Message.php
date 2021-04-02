@@ -29,36 +29,39 @@ use React\Promise\ExtendedPromiseInterface;
 /**
  * A message which is posted to a Discord text channel.
  *
- * @property string                         $id               The unique identifier of the message.
- * @property Channel                        $channel          The channel that the message was sent in.
- * @property string                         $channel_id       The unique identifier of the channel that the message was went in.
- * @property string                         $content          The content of the message if it is a normal message.
- * @property int                            $type             The type of message.
- * @property Collection|User[]              $mentions         A collection of the users mentioned in the message.
- * @property Member|User                    $author           The author of the message.
- * @property string                         $user_id          The user id of the author.
- * @property bool                           $mention_everyone Whether the message contained an @everyone mention.
- * @property Carbon                         $timestamp        A timestamp of when the message was sent.
- * @property Carbon|null                    $edited_timestamp A timestamp of when the message was edited, or null.
- * @property bool                           $tts              Whether the message was sent as a text-to-speech message.
- * @property array                          $attachments      An array of attachment objects.
- * @property Collection|Embed[]             $embeds           A collection of embed objects.
- * @property string|null                    $nonce            A randomly generated string that provides verification for the client. Not required.
- * @property Collection|Role[]              $mention_roles    A collection of roles that were mentioned in the message.
- * @property bool                           $pinned           Whether the message is pinned to the channel.
- * @property Collection|Channel[]           $mention_channels Collection of mentioned channels.
- * @property ReactionRepository             $reactions        Collection of reactions on the message.
- * @property string                         $webhook_id       ID of the webhook that made the message, if any.
- * @property object                         $activity         Current message activity. Requires rich presence.
- * @property object                         $application      Application of message. Requires rich presence.
- * @property object                         $message_reference Message that is referenced by this message.
- * @property Message|null                   $referenced_message The message that is referenced in a reply.
- * @property int                            $flags             Message flags.
- * @property bool                           $crossposted       Message has been crossposted.
- * @property bool                           $is_crosspost      Message is a crosspost from another channel.
- * @property bool                           $suppress_embeds   Do not include embeds when serializing message.
+ * @property string                         $id                     The unique identifier of the message.
+ * @property Channel                        $channel                The channel that the message was sent in.
+ * @property string                         $channel_id             The unique identifier of the channel that the message was went in.
+ * @property string                         $guild_id               The unique identifier of the guild that the channel the message was sent in belongs to.
+ * @property string                         $content                The content of the message if it is a normal message.
+ * @property int                            $type                   The type of message.
+ * @property Collection|User[]              $mentions               A collection of the users mentioned in the message.
+ * @property Member|User                    $author                 The author of the message.
+ * @property string                         $user_id                The user id of the author.
+ * @property bool                           $mention_everyone       Whether the message contained an @everyone mention.
+ * @property Carbon                         $timestamp              A timestamp of when the message was sent.
+ * @property Carbon|null                    $edited_timestamp       A timestamp of when the message was edited, or null.
+ * @property bool                           $tts                    Whether the message was sent as a text-to-speech message.
+ * @property array                          $attachments            An array of attachment objects.
+ * @property Collection|Embed[]             $embeds                 A collection of embed objects.
+ * @property string|null                    $nonce                  A randomly generated string that provides verification for the client. Not required.
+ * @property Collection|Role[]              $mention_roles          A collection of roles that were mentioned in the message.
+ * @property bool                           $pinned                 Whether the message is pinned to the channel.
+ * @property Collection|Channel[]           $mention_channels       Collection of mentioned channels.
+ * @property ReactionRepository             $reactions              Collection of reactions on the message.
+ * @property string                         $webhook_id             ID of the webhook that made the message, if any.
+ * @property object                         $activity               Current message activity. Requires rich presence.
+ * @property object                         $application            Application of message. Requires rich presence.
+ * @property object                         $message_reference      Message that is referenced by this message.
+ * @property Message|null                   $referenced_message     The message that is referenced in a reply.
+ * @property int                            $flags                  Message flags.
+ * @property bool                           $crossposted            Message has been crossposted.
+ * @property bool                           $is_crosspost           Message is a crosspost from another channel.
+ * @property bool                           $suppress_embeds        Do not include embeds when serializing message.
  * @property bool                           $source_message_deleted Source message for this message has been deleted.
- * @property bool                           $urgent            Message is urgent.
+ * @property bool                           $urgent                 Message is urgent.
+ * @property Collection|Sticker[]           $stickers               Stickers attached to the message.
+ * @property object|null                    $interaction            The interaction which triggered the message (slash commands).
  */
 class Message extends Part
 {
@@ -78,6 +81,7 @@ class Message extends Part
     const GUILD_DISCOVERY_DISQUALIFIED = 14;
     const GUILD_DISCOVERY_REQUALIFIED = 15;
     const TYPE_REPLY = 19;
+    const TYPE_APPLICATION_COMMAND = 20;
 
     const ACTIVITY_JOIN = 1;
     const ACTIVITY_SPECTATE = 2;
@@ -95,10 +99,12 @@ class Message extends Part
     protected $fillable = [
         'id',
         'channel_id',
+        'guild_id',
         'content',
         'type',
         'mentions',
         'author',
+        'member',
         'mention_everyone',
         'timestamp',
         'edited_timestamp',
@@ -116,6 +122,8 @@ class Message extends Part
         'message_reference',
         'referenced_message',
         'flags',
+        'stickers',
+        'interaction',
     ];
 
     /**
@@ -305,6 +313,13 @@ class Message extends Part
             return $author;
         }
 
+        if (isset($this->attributes['member'])) {
+            return $this->factory->create(Member::class, array_merge((array) $this->attributes['member'], [
+                'user' => $this->attributes['author'],
+                'guild_id' => $this->guild_id,
+            ]), true);
+        }
+
         return $this->factory->create(User::class, $this->attributes['author'], true);
     }
 
@@ -380,6 +395,22 @@ class Message extends Part
         }
 
         return null;
+    }
+
+    /**
+     * Returns the stickers attribute.
+     *
+     * @return Sticker[]|Collection
+     */
+    protected function getStickersAttribute(): Collection
+    {
+        $stickers = Collection::for(Sticker::class);
+
+        foreach ($this->attributes['stickers'] ?? [] as $sticker) {
+            $stickers->push($this->factory->create(Sticker::class, $sticker, true));
+        }
+
+        return $stickers;
     }
 
     /**
