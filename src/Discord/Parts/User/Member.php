@@ -48,7 +48,7 @@ class Member extends Part
     /**
      * {@inheritdoc}
      */
-    protected $fillable = ['user', 'roles', 'deaf', 'mute', 'joined_at', 'guild_id', 'status', 'nick', 'premium_since', 'activities', 'client_status'];
+    protected $fillable = ['id', 'user', 'roles', 'deaf', 'mute', 'joined_at', 'guild_id', 'status', 'nick', 'premium_since', 'activities', 'client_status'];
 
     /**
      * {@inheritdoc}
@@ -272,7 +272,7 @@ class Member extends Part
      */
     protected function getIdAttribute(): string
     {
-        return $this->attributes['user']->id;
+        return $this->attributes['id'] ?? $this->attributes['user']->id;
     }
 
     /**
