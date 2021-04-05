@@ -36,7 +36,9 @@ use React\Promise\ExtendedPromiseInterface;
  * @property string                         $content                The content of the message if it is a normal message.
  * @property int                            $type                   The type of message.
  * @property Collection|User[]              $mentions               A collection of the users mentioned in the message.
- * @property Member|User                    $author                 The author of the message.
+ * @property Member|User|null               $author                 The author of the message.
+ * @property Member|null                    $member                 The member that sent this message, or null if it was in a private message.
+ * @property User|null                      $user                   The user that sent this message. Will be a webhook if sent from one.
  * @property string                         $user_id                The user id of the author.
  * @property bool                           $mention_everyone       Whether the message contained an @everyone mention.
  * @property Carbon                         $timestamp              A timestamp of when the message was sent.
@@ -297,15 +299,29 @@ class Message extends Part
     /**
      * Returns the author attribute.
      *
-     * @return User|Member The member that sent the message. Will return a User object if it is a PM.
+     * @return User|Member|null The member that sent the message. Will return a User object if it is a PM.
      * @throws \Exception
      */
     protected function getAuthorAttribute(): ?Part
     {
-        if (! isset($this->attributes['author'])) {
-            return null;
+        if ($this->member) {
+            return $this->member;
         }
 
+        if ($this->user) {
+            return $this->user;
+        }
+
+        return null;
+    }
+    
+    /**
+     * Returns the member attribute.
+     *
+     * @return Member|null The member that sent the message, or null if it was in a private message.
+     */
+    protected function getMemberAttribute(): ?Member
+    {
         if (($this->channel->guild &&
             $author = $this->channel->guild->members->get('id', $this->attributes['author']->id)) ||
             $author = $this->discord->users->get('id', $this->attributes['author']->id)
@@ -320,7 +336,25 @@ class Message extends Part
             ]), true);
         }
 
-        return $this->factory->create(User::class, $this->attributes['author'], true);
+        return null;
+    }
+
+    /**
+     * Returns the user attribute.
+     *
+     * @return User|null The user that sent the message. Can also be a webhook.
+     */
+    protected function getUserAttribute(): ?User
+    {
+        if (isset($this->attributes['author'])) {
+            if ($user = $this->discord->users->get('id', $this->attributes['author']->id)) {
+                return $user;
+            }
+
+            return $this->factory->create(User::class, $this->attributes['author'], true);
+        }
+
+        return null;
     }
 
     /**
