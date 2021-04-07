@@ -1,5 +1,11 @@
 # Changelog
 
+## Version 5.1.3
+
+- Added the `recipient_id` property to `Channel` - 8b3eb0e667b39d906b3962a55d1469f5184b63ff
+- Fixed private channel caching bug - 8b3eb0e667b39d906b3962a55d1469f5184b63ff
+- Fixed guild member chunking not working on some bot accounts - 96f1ce30236ec7b18b70216e7e4f73317f242073
+
 ## Version 5.1.2
 
 - Fixed bug where websocket connection would fail and wouldn't reconnect.
