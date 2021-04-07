@@ -1338,6 +1338,8 @@ class Discord
 
             $options['intents'] = $intent;
         }
+        
+        $options['socket_options']['happy_eyeballs'] = false; //Discord doesn't use IPv6
 
         if ($options['loadAllMembers'] && ! ($options['intents'] & Intents::GUILD_MEMBERS)) {
             throw new IntentException('You have enabled the `loadAllMembers` option but have not enabled the required `GUILD_MEMBERS` intent.'.

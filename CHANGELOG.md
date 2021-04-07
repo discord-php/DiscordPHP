@@ -51,6 +51,22 @@ This version has also been known as `v5.2.0`, however, breaking changes caused t
     - `close()`
     - `getRecieveStream()`
 - Expect a voice client refactor in a future release.
+## Version 5.1.3
+
+- Added the `recipient_id` property to `Channel` - 8b3eb0e667b39d906b3962a55d1469f5184b63ff
+- Fixed private channel caching bug - 8b3eb0e667b39d906b3962a55d1469f5184b63ff
+- Fixed guild member chunking not working on some bot accounts - 96f1ce30236ec7b18b70216e7e4f73317f242073
+
+## Version 5.1.2
+
+- Fixed bug where websocket connection would fail and wouldn't reconnect.
+- Expanded on documentation.
+- Updated documentation `marked` version to `^2.0.0` due to security concern.
+- Disabled happy eyeballs connector as Discord does not use IPv6, and this causes an error when using a debugger.
+- Added options resolver for creating an invite.
+- Added the option to delete all reactions of a certain emoji from a message.
+- Fixed getting emoji ID for unicode emojis.
+- Fixed audit log query not accepting an `Entry` object.
 
 ## Version 5.1.1
 
