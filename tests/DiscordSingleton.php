@@ -41,7 +41,6 @@ class DiscordSingleton
         $discord = new Discord([
             'token' => getenv('DISCORD_TOKEN'),
             'logger' => $logger,
-            'httpLogger' => $logger,
         ]);
 
         $e = null;
