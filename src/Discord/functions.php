@@ -179,7 +179,7 @@ function imageToBase64(string $filepath): string
         throw new \InvalidArgumentException('The given filepath does not exist.');
     }
 
-    $mimetype = mime_content_type($filepath);
+    $mimetype = \mime_content_type($filepath);
 
     if (array_search($mimetype, ['image/jpeg', 'image/png', 'image/gif']) === false) {
         throw new \InvalidArgumentException('The given filepath is not one of jpeg, png or gif.');
