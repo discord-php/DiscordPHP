@@ -2,10 +2,14 @@
 title: "Basics"
 ---
 
-First step is to include the Composer autoload file.
+First step is to include the Composer autoload file and [import](https://www.php.net/manual/en/language.namespaces.importing.php) any required classes.
 
 ```php
 <?php
+
+use Discord\Discord;
+use Discord\WebSockets\Intents;
+use Discord\WebSockets\Event;
 
 include __DIR__.'/vendor/autoload.php';
 ```
@@ -76,20 +80,20 @@ Useful if you want to use other React components. By default, a new loop is crea
 `logger` is an instance of a logger that implements `LoggerInterface`. By default, a new Monolog logger is created to print to stdout.
 
 ```php
-    'logger' => new Logger('New logger'),
+    'logger' => new \Monolog\Logger('New logger'),
 ```
 
 `loggerLevel` is the level of logging that the default logger will use. See a list of possible constants [here](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Logger.php#L33-L78). Default is `INFO` level.
 
 ```php
-    'loggerLevel' => Logger::INFO,
+    'loggerLevel' => \Monolog\Logger::INFO,
 ```
 
 `httpLogger` is an instance of a logger for the HTTP client that implements PSR `LoggerInterface`.
 By default, a null logger is created, which supresses HTTP logs.
 
 ```php
-    'httpLogger' => new Logger('HTTP Logger'),
+    'httpLogger' => new \Monolog\Logger('HTTP Logger'),
 ```
 <hr>
 

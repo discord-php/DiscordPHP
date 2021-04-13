@@ -26,6 +26,18 @@ The class reference has moved. You can now access it [here](http://discord-php.g
 - `ext-sodium` for voice encryption.
 - FFmpeg if you plan on playing anything but raw 16-bit little-endian PCM.
 
+### Development Environment Recommendations
+
+We recommend using an editor with support for the [Language Server Protocol](https://microsoft.github.io/language-server-protocol/).
+A list of supported editors can be found [here](https://microsoft.github.io/language-server-protocol/implementors/servers/).
+Here are some commonly used editors:
+
+- Visual Studio Code (built-in LSP support)
+- Vim/Neovim (with the [coc.nvim](https://github.com/neoclide/coc.nvim) plugin for LSP support)
+- PHPStorm (built-in PHP support)
+
+We recommend installing the [PHP Intelephense](https://intelephense.com/) alongside your LSP-equipped editor for code completion along with many other helpful features. There is no need to pay for the premium features, as the free version will suffice.
+
 ### Installation
 
 Installation requries [Composer](https://getcomposer.org).
