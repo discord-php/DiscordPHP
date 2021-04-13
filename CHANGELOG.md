@@ -32,11 +32,12 @@ This version has also been known as `v5.2.0`, however, breaking changes caused t
 ### Voice Client
 
 - The voice client now requires at least PHP 7.4 to operate. It will not attempt to start on any version lower.
-- The voice client can now run on Windows! PHP 8.0 is required to run the voice client on Windows.
+- The voice client can now run on Windows, thanks to the introduction of socker pair descriptors in PHP 8.0 (see reactphp/child-process#85). As such, PHP 8.0 is required to run the voice client on Windows.
 - DCA has been rebuilt and refactored for better use with DiscordPHP. Note that the binaries have only been rebuilt for the `amd64` architecture. The following platforms are now supported:
     - Windows AMD64
     - macOS AMD64
     - Linux AMD64
+    - I'm happy to support DCA for other platforms if requested. Please ensure that your platform is supported by the Go compiler, see the supported list [here](https://golang.org/doc/install/source#introduction).
 - The following functions no longer return promises, rather they throw exceptions and will return void. This is because none of these functions actually did any async work, therefore promises were redundant in this situation.
     - `setSpeaking()`
     - `switchChannel()`
@@ -51,6 +52,7 @@ This version has also been known as `v5.2.0`, however, breaking changes caused t
     - `close()`
     - `getRecieveStream()`
 - Expect a voice client refactor in a future release.
+
 ## Version 5.1.3
 
 - Added the `recipient_id` property to `Channel` - 8b3eb0e667b39d906b3962a55d1469f5184b63ff
