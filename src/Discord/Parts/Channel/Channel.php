@@ -913,7 +913,7 @@ class Channel extends Part
      */
     public function allowVoice()
     {
-        return in_array($this->type, [self::TYPE_VOICE]);
+        return in_array($this->type, [self::TYPE_VOICE, self::TYPE_STAGE_CHANNEL]);
     }
 
     /**
