@@ -75,6 +75,7 @@ class Channel extends Part
     const TYPE_CATEGORY = 4;
     const TYPE_NEWS = 5;
     const TYPE_GAME_STORE = 6;
+    const TYPE_STAGE_CHANNEL = 13;
 
     /**
      * {@inheritdoc}
@@ -1085,7 +1086,7 @@ class Channel extends Part
      */
     public function allowVoice()
     {
-        return in_array($this->type, [self::TYPE_VOICE]);
+        return in_array($this->type, [self::TYPE_VOICE, self::TYPE_STAGE_CHANNEL]);
     }
 
     /**
