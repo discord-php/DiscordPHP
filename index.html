@@ -3,11 +3,9 @@
 <h3>Requirements</h3>
 <ul>
 <li>
-<p>PHP 7.3 CLI</p>
+<p>PHP 7.4 CLI</p>
 <ul>
-<li>Will not run on a webserver (FPM, CGI), you must run through CLI.</li>
-<li>Library <em>can</em> run on PHP 7.2 but support for this version will be removed soon. No support will be given if there are any errors.</li>
-<li>Expect the requirement to increased to PHP 7.4 without warning.</li>
+<li>Will not run on a webserver (FPM, CGI), you must run through CLI. A bot is a long-running process.</li>
 </ul>
 </li>
 <li><code class="language-text">ext-json</code> for JSON parsing.</li>
@@ -15,14 +13,19 @@
 </ul>
 <h4>Recommended Extensions</h4>
 <ul>
-<li>One of <code class="language-text">ext-uv</code> (preferred), <code class="language-text">ext-libev</code> or <code class="language-text">evt-event</code> for a faster, and more performant event loop.</li>
+<li>One of <code class="language-text">ext-uv</code>, <code class="language-text">ext-libev</code> or <code class="language-text">evt-event</code> (in order of preference) for a faster, and more performant event loop.</li>
 <li><code class="language-text">ext-mbstring</code> if you may handle non-english characters.</li>
 </ul>
 <h4>Voice Requirements</h4>
 <ul>
-<li>64-bit Linux or Darwin based OS. Windows is not and is not planned to be supported.</li>
+<li>
+<p>x86_64 Windows, Linux or Darwin based OS.</p>
+<ul>
+<li>If you are running on Windows, you must be using PHP 8.0.</li>
+</ul>
+</li>
 <li><code class="language-text">ext-sodium</code> for voice encryption.</li>
-<li>FFmpeg if you plan on playing anything but raw 16-bit little-endian PCM.</li>
+<li>FFmpeg</li>
 </ul>
 <h3>Development Environment Recommendations</h3>
 <p>We recommend using an editor with support for the <a href="https://microsoft.github.io/language-server-protocol/">Language Server Protocol</a>.
@@ -46,7 +49,7 @@ Here are some commonly used editors:</p>
 Most, if not all, functions return promises, therefore it is vital that you understand the concept of asynchronous programming with promises.
 You can learn more about ReactPHP promises <a href="https://reactphp.org/promise/">here</a>.</p>
 <h3>Help</h3>
-<p>If you need any help, feel free to join the <a href="">PHP Discorders</a> Discord and someone should be able to give you a hand. We are a small community so please be patient if someone can't help you straight away.</p>
+<p>If you need any help, feel free to join the <a href="https://discord.gg/dphp">PHP Discorders</a> Discord and someone should be able to give you a hand. We are a small community so please be patient if someone can't help you straight away.</p>
 <h3>Contributing</h3>
 <p>All contributions are welcome through pull requests in our GitHub repository. At the moment we would love contributions towards:</p>
 <ul>
@@ -83,14 +86,19 @@ You can learn more about ReactPHP promises <a href="https://reactphp.org/promise
 <div class="gatsby-highlight" data-language="php"><pre class="language-php"><code class="language-php"><span class="token variable">$discord</span> <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Discord</span><span class="token punctuation">(</span><span class="token punctuation">[</span></code></pre></div>
 <p><code class="language-text">token</code> is your Discord token. <strong>Required</strong>.</p>
 <div class="gatsby-highlight" data-language="php"><pre class="language-php"><code class="language-php">    <span class="token string single-quoted-string">'token'</span> <span class="token operator">=></span> <span class="token string single-quoted-string">'Your-Token-Here'</span><span class="token punctuation">,</span></code></pre></div>
-<p><code class="language-text">intents</code> can be an array of valid intents <em>or</em> an integer representing the intents. Default is all intents.</p>
+<p><code class="language-text">intents</code> can be an array of valid intents <em>or</em> an integer representing the intents. Default is all intents minus any privileged intents.
+At the moment this means all intents minus <code class="language-text">GUILD_MEMBERS</code> and <code class="language-text">GUILD_PRESENCES</code>. To enable these intents you must first enable them in your
+Discord developer portal.</p>
 <div class="gatsby-highlight" data-language="php"><pre class="language-php"><code class="language-php">    <span class="token string single-quoted-string">'intents'</span> <span class="token operator">=></span> <span class="token punctuation">[</span>
         <span class="token class-name static-context">Intents</span><span class="token operator">::</span><span class="token constant">GUILDS</span><span class="token punctuation">,</span> <span class="token class-name static-context">Intents</span><span class="token operator">::</span><span class="token constant">GUILD_BANS</span><span class="token punctuation">,</span> <span class="token comment">// ...</span>
     <span class="token punctuation">]</span><span class="token punctuation">,</span>
     <span class="token comment">// or</span>
-    <span class="token string single-quoted-string">'intents'</span> <span class="token operator">=></span> <span class="token number">12345</span><span class="token punctuation">,</span></code></pre></div>
+    <span class="token string single-quoted-string">'intents'</span> <span class="token operator">=></span> <span class="token number">12345</span><span class="token punctuation">,</span>
+    <span class="token comment">// or</span>
+    <span class="token string single-quoted-string">'intents'</span> <span class="token operator">=></span> <span class="token class-name static-context">Intents</span><span class="token operator">::</span><span class="token function">getDefaultIntents</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">|</span> <span class="token class-name">Intents</span><span class="token operator">::</span><span class="token constant">GUILD_MEMBERS</span><span class="token punctuation">,</span> <span class="token comment">// default intents as well as guild members</span></code></pre></div>
 <p><code class="language-text">loadAllMembers</code> is a boolean whether all members should be fetched and stored on bot start.
-Loading members takes a while to retrieve from Discord and store, so default is false.</p>
+Loading members takes a while to retrieve from Discord and store, so default is false.
+This requires the <code class="language-text">GUILD_MEMBERS</code> intent to be enabled in DiscordPHP. See above for more details.</p>
 <div class="gatsby-highlight" data-language="php"><pre class="language-php"><code class="language-php">    <span class="token string single-quoted-string">'loadAllMembers'</span> <span class="token operator">=></span> <span class="token constant boolean">false</span><span class="token punctuation">,</span></code></pre></div>
 <p><code class="language-text">storeMessages</code> is a boolean whether messages received and sent should be stored. Default is false.</p>
 <div class="gatsby-highlight" data-language="php"><pre class="language-php"><code class="language-php">    <span class="token string single-quoted-string">'storeMessages'</span> <span class="token operator">=></span> <span class="token constant boolean">false</span><span class="token punctuation">,</span></code></pre></div>
@@ -148,7 +156,7 @@ Requires the <code class="language-text">Intents::GUILD_MESSAGES</code> intent.<
 The old message may be null if <code class="language-text">storeMessages</code> is not enabled <em>or</em> the message was sent before the bot was started.
 Discord does not provide a way to get message update history.
 Requires the <code class="language-text">Intents::GUILD_MESSAGES</code> intent.</p>
-<div class="gatsby-highlight" data-language="php"><pre class="language-php"><code class="language-php"><span class="token variable">$discord</span><span class="token operator">-></span><span class="token function">on</span><span class="token punctuation">(</span><span class="token class-name static-context">Event</span><span class="token operator">::</span><span class="token constant">MESSAGE_UPDATE</span><span class="token punctuation">,</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token class-name type-declaration">Message</span> <span class="token variable">$newMessage</span><span class="token punctuation">,</span> <span class="token class-name type-declaration">Discord</span> <span class="token variable">$discord</span><span class="token punctuation">,</span> <span class="token class-name type-declaration">Message</span> <span class="token variable">$oldMessage</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+<div class="gatsby-highlight" data-language="php"><pre class="language-php"><code class="language-php"><span class="token variable">$discord</span><span class="token operator">-></span><span class="token function">on</span><span class="token punctuation">(</span><span class="token class-name static-context">Event</span><span class="token operator">::</span><span class="token constant">MESSAGE_UPDATE</span><span class="token punctuation">,</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token class-name type-declaration">Message</span> <span class="token variable">$newMessage</span><span class="token punctuation">,</span> <span class="token class-name type-declaration">Discord</span> <span class="token variable">$discord</span><span class="token punctuation">,</span> <span class="token variable">$oldMessage</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token comment">// ...</span>
 <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre></div>
 <h3>Message Delete</h3>
@@ -292,7 +300,7 @@ Requires the <code class="language-text">Intents::GUILD_MEMBERS</code> intent. T
 <h3>Guild Member Update</h3>
 <p>Called with two <code class="language-text">Member</code> objects when a member is updated in a guild. Note that the old version of the member <em>may</em> be null if <code class="language-text">loadAllMembers</code> is disabled.
 Requires the <code class="language-text">Intents::GUILD_MEMBERS</code> intent. This intent is a priviliged intent, it must be enabled in your Discord bot developer settings.</p>
-<div class="gatsby-highlight" data-language="php"><pre class="language-php"><code class="language-php"><span class="token variable">$discord</span><span class="token operator">-></span><span class="token function">on</span><span class="token punctuation">(</span><span class="token class-name static-context">Event</span><span class="token operator">::</span><span class="token constant">GUILD_MEMBER_UPDATE</span><span class="token punctuation">,</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token class-name type-declaration">Member</span> <span class="token variable">$new</span><span class="token punctuation">,</span> <span class="token class-name type-declaration">Discord</span> <span class="token variable">$discord</span><span class="token punctuation">,</span> <span class="token class-name type-declaration">Member</span> <span class="token variable">$old</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+<div class="gatsby-highlight" data-language="php"><pre class="language-php"><code class="language-php"><span class="token variable">$discord</span><span class="token operator">-></span><span class="token function">on</span><span class="token punctuation">(</span><span class="token class-name static-context">Event</span><span class="token operator">::</span><span class="token constant">GUILD_MEMBER_UPDATE</span><span class="token punctuation">,</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token class-name type-declaration">Member</span> <span class="token variable">$new</span><span class="token punctuation">,</span> <span class="token class-name type-declaration">Discord</span> <span class="token variable">$discord</span><span class="token punctuation">,</span> <span class="token variable">$old</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token comment">// ...</span>
 <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre></div>
 <h3>Guild Member Remove</h3>
@@ -1742,7 +1750,7 @@ All parts share a common set of attributes and methods.</p>
 </tbody>
 </table>
 <h3>Reply to a message</h3>
-<p>Sends a "reply" to the message. Note that this is not the same as the implemented replies in Discord (those will be implemented in version 6.0.0), but in the form <code class="language-text">&quot;&lt;@id_of_message_author&gt;, &lt;content&gt;&quot;</code>. Returns the new message in a promise.</p>
+<p>Sends a "reply" to the message. Returns the new message in a promise.</p>
 <h4>Parameters</h4>
 <table>
 <thead>
@@ -1760,8 +1768,7 @@ All parts share a common set of attributes and methods.</p>
 </tr>
 </tbody>
 </table>
-<div class="gatsby-highlight" data-language="php"><pre class="language-php"><code class="language-php"><span class="token comment">// &lt;@message_author_id>, hello!</span>
-<span class="token variable">$message</span><span class="token operator">-></span><span class="token function">reply</span><span class="token punctuation">(</span><span class="token string single-quoted-string">'hello!'</span><span class="token punctuation">)</span><span class="token operator">-></span><span class="token function">done</span><span class="token punctuation">(</span><span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token class-name type-declaration">Message</span> <span class="token variable">$message</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+<div class="gatsby-highlight" data-language="php"><pre class="language-php"><code class="language-php"><span class="token variable">$message</span><span class="token operator">-></span><span class="token function">reply</span><span class="token punctuation">(</span><span class="token string single-quoted-string">'hello!'</span><span class="token punctuation">)</span><span class="token operator">-></span><span class="token function">done</span><span class="token punctuation">(</span><span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token class-name type-declaration">Message</span> <span class="token variable">$message</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token comment">// ...</span>
 <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre></div>
 <h3>Crosspost a message</h3>

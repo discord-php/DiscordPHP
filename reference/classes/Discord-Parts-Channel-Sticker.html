@@ -82,12 +82,12 @@
                     <ul class="phpdocumentor-breadcrumbs">
             <li class="phpdocumentor-breadcrumb"><a href="namespaces/discord.html">Discord</a></li>
             <li class="phpdocumentor-breadcrumb"><a href="namespaces/discord-parts.html">Parts</a></li>
-            <li class="phpdocumentor-breadcrumb"><a href="namespaces/discord-parts-websockets.html">WebSockets</a></li>
+            <li class="phpdocumentor-breadcrumb"><a href="namespaces/discord-parts-channel.html">Channel</a></li>
     </ul>
 
     <article class="phpdocumentor-element -class">
         <h2 class="phpdocumentor-content__title">
-    VoiceStateUpdate
+    Sticker
 
         <span class="phpdocumentor-element__extends">
         extends <a href="classes/Discord-Parts-Part.html"><abbr title="\Discord\Parts\Part">Part</abbr></a>
@@ -98,16 +98,29 @@
     </h2>
 
         <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/WebSockets/VoiceStateUpdate.php"><a href="files/src-discord-parts-websockets-voicestateupdate.html"><abbr title="src/Discord/Parts/WebSockets/VoiceStateUpdate.php">VoiceStateUpdate.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Sticker.php"><a href="files/src-discord-parts-channel-sticker.html"><abbr title="src/Discord/Parts/Channel/Sticker.php">Sticker.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">41</span>
+    <span class="phpdocumentor-element-found-in__line">30</span>
 </aside>
 
-            <p class="phpdocumentor-summary">Notifies the client of voice state updates about users.</p>
+            <p class="phpdocumentor-summary">A sticker that can be sent in a Discord message.</p>
 
     <section class="phpdocumentor-description"></section>
 
 
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">link</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                                        <a class="phpdocumentor-tag-link" href="https://discord.com/developers/docs/resources/channel#message-object-message-sticker-structure"> https://discord.com/developers/docs/resources/channel#message-object-message-sticker-structure </a>
+                    
+                                    </dd>
+                        </dl>
 
 
 
@@ -120,15 +133,29 @@
 </h3>
 
 <dl class="phpdocumentor-table-of-contents">
-                <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a href="classes/Discord-Parts-WebSockets-VoiceStateUpdate.html#property_channel">$channel</a>
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a href="classes/Discord-Parts-Channel-Sticker.html#constant_FORMAT_TYPE_APNG">FORMAT_TYPE_APNG</a>
     <span>
-                &nbsp;: <a href="classes/Discord-Parts-Channel-Channel.html"><abbr title="\Discord\Parts\Channel\Channel">Channel</abbr></a>            </span>
+        &nbsp;= 2                    </span>
 </dt>
 <dd></dd>
 
-            <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a href="classes/Discord-Parts-WebSockets-VoiceStateUpdate.html#property_channel_id">$channel_id</a>
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a href="classes/Discord-Parts-Channel-Sticker.html#constant_FORMAT_TYPE_LOTTIE">FORMAT_TYPE_LOTTIE</a>
+    <span>
+        &nbsp;= 3                    </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a href="classes/Discord-Parts-Channel-Sticker.html#constant_FORMAT_TYPE_PNG">FORMAT_TYPE_PNG</a>
+    <span>
+        &nbsp;= 1                    </span>
+</dt>
+<dd></dd>
+
+                <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a href="classes/Discord-Parts-Channel-Sticker.html#property_asset">$asset</a>
     <span>
                 &nbsp;: string            </span>
 </dt>
@@ -142,44 +169,44 @@
 <dd>Is the part already created in the Discord servers?</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a href="classes/Discord-Parts-WebSockets-VoiceStateUpdate.html#property_deaf">$deaf</a>
-    <span>
-                &nbsp;: bool            </span>
-</dt>
-<dd></dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a href="classes/Discord-Parts-WebSockets-VoiceStateUpdate.html#property_guild">$guild</a>
-    <span>
-                &nbsp;: <a href="classes/Discord-Parts-Guild-Guild.html"><abbr title="\Discord\Parts\Guild\Guild">Guild</abbr></a>            </span>
-</dt>
-<dd></dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a href="classes/Discord-Parts-WebSockets-VoiceStateUpdate.html#property_guild_id">$guild_id</a>
+    <a href="classes/Discord-Parts-Channel-Sticker.html#property_description">$description</a>
     <span>
                 &nbsp;: string            </span>
 </dt>
 <dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a href="classes/Discord-Parts-WebSockets-VoiceStateUpdate.html#property_member">$member</a>
+    <a href="classes/Discord-Parts-Channel-Sticker.html#property_format_type">$format_type</a>
     <span>
-                &nbsp;: <a href="classes/Discord-Parts-User-Member.html"><abbr title="\Discord\Parts\User\Member">Member</abbr></a>            </span>
+                &nbsp;: int            </span>
 </dt>
 <dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a href="classes/Discord-Parts-WebSockets-VoiceStateUpdate.html#property_mute">$mute</a>
+    <a href="classes/Discord-Parts-Channel-Sticker.html#property_id">$id</a>
     <span>
-                &nbsp;: bool            </span>
+                &nbsp;: string            </span>
 </dt>
 <dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a href="classes/Discord-Parts-WebSockets-VoiceStateUpdate.html#property_request_to_speak_timestamp">$request_to_speak_timestamp</a>
+    <a href="classes/Discord-Parts-Channel-Sticker.html#property_name">$name</a>
     <span>
-                &nbsp;: <abbr title="\Carbon\Carbon">Carbon</abbr>|null            </span>
+                &nbsp;: string            </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a href="classes/Discord-Parts-Channel-Sticker.html#property_pack_id">$pack_id</a>
+    <span>
+                &nbsp;: string            </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a href="classes/Discord-Parts-Channel-Sticker.html#property_preview_asset">$preview_asset</a>
+    <span>
+                &nbsp;: string|null            </span>
 </dt>
 <dd></dd>
 
@@ -191,58 +218,9 @@
 <dd>Custom script data.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a href="classes/Discord-Parts-WebSockets-VoiceStateUpdate.html#property_self_deaf">$self_deaf</a>
+    <a href="classes/Discord-Parts-Channel-Sticker.html#property_tags">$tags</a>
     <span>
-                &nbsp;: bool            </span>
-</dt>
-<dd></dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a href="classes/Discord-Parts-WebSockets-VoiceStateUpdate.html#property_self_mute">$self_mute</a>
-    <span>
-                &nbsp;: bool            </span>
-</dt>
-<dd></dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a href="classes/Discord-Parts-WebSockets-VoiceStateUpdate.html#property_self_stream">$self_stream</a>
-    <span>
-                &nbsp;: bool            </span>
-</dt>
-<dd></dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a href="classes/Discord-Parts-WebSockets-VoiceStateUpdate.html#property_self_video">$self_video</a>
-    <span>
-                &nbsp;: bool            </span>
-</dt>
-<dd></dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a href="classes/Discord-Parts-WebSockets-VoiceStateUpdate.html#property_session_id">$session_id</a>
-    <span>
-                &nbsp;: string            </span>
-</dt>
-<dd></dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a href="classes/Discord-Parts-WebSockets-VoiceStateUpdate.html#property_suppress">$suppress</a>
-    <span>
-                &nbsp;: bool            </span>
-</dt>
-<dd></dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a href="classes/Discord-Parts-WebSockets-VoiceStateUpdate.html#property_user">$user</a>
-    <span>
-                &nbsp;: <a href="classes/Discord-Parts-User-User.html"><abbr title="\Discord\Parts\User\User">User</abbr></a>            </span>
-</dt>
-<dd></dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a href="classes/Discord-Parts-WebSockets-VoiceStateUpdate.html#property_user_id">$user_id</a>
-    <span>
-                &nbsp;: string            </span>
+                &nbsp;: array&lt;string|int, mixed&gt;            </span>
 </dt>
 <dd></dd>
 
@@ -268,7 +246,7 @@
 <dd>The factory.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a href="classes/Discord-Parts-WebSockets-VoiceStateUpdate.html#property_fillable">$fillable</a>
+    <a href="classes/Discord-Parts-Channel-Sticker.html#property_fillable">$fillable</a>
     <span>
                 &nbsp;: array&lt;string|int, mixed&gt;            </span>
 </dt>
@@ -468,39 +446,11 @@ JSON. Used for JsonSerializable.</dd>
 <dd>Called after the part has been constructed.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
-    <a href="classes/Discord-Parts-WebSockets-VoiceStateUpdate.html#method_getChannelAttribute">getChannelAttribute()</a>
+    <a href="classes/Discord-Parts-Channel-Sticker.html#method_getTagsAttribute">getTagsAttribute()</a>
     <span>
-                        &nbsp;: <a href="classes/Discord-Parts-Channel-Channel.html"><abbr title="\Discord\Parts\Channel\Channel">Channel</abbr></a>|null    </span>
+                        &nbsp;: array&lt;string|int, mixed&gt;    </span>
 </dt>
-<dd>Gets the channel attribute.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -protected">
-    <a href="classes/Discord-Parts-WebSockets-VoiceStateUpdate.html#method_getGuildAttribute">getGuildAttribute()</a>
-    <span>
-                        &nbsp;: <a href="classes/Discord-Parts-Guild-Guild.html"><abbr title="\Discord\Parts\Guild\Guild">Guild</abbr></a>|null    </span>
-</dt>
-<dd>Gets the guild attribute.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -protected">
-    <a href="classes/Discord-Parts-WebSockets-VoiceStateUpdate.html#method_getMemberAttribute">getMemberAttribute()</a>
-    <span>
-                        &nbsp;: <a href="classes/Discord-Parts-User-Member.html"><abbr title="\Discord\Parts\User\Member">Member</abbr></a>|null    </span>
-</dt>
-<dd>Gets the member attribute.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -protected">
-    <a href="classes/Discord-Parts-WebSockets-VoiceStateUpdate.html#method_getRequestToSpeakTimestampAttribute">getRequestToSpeakTimestampAttribute()</a>
-    <span>
-                        &nbsp;: <abbr title="\Carbon\Carbon">Carbon</abbr>    </span>
-</dt>
-<dd>Gets the request_to_speak_timestamp attribute.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -protected">
-    <a href="classes/Discord-Parts-WebSockets-VoiceStateUpdate.html#method_getUserAttribute">getUserAttribute()</a>
-    <span>
-                        &nbsp;: <a href="classes/Discord-Parts-User-User.html"><abbr title="\Discord\Parts\User\User">User</abbr></a>|null    </span>
-</dt>
-<dd>Gets the user attribute.</dd>
+<dd>Returns the tags attribute.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -private">
     <a href="classes/Discord-Parts-Part.html#method_checkForMutator">checkForMutator()</a>
@@ -528,12 +478,93 @@ JSON. Used for JsonSerializable.</dd>
 
 
         
+    <section class="phpdocumentor-constants">
+        <h3 class="phpdocumentor-elements__header" id="constants">
+            Constants
+            <a href="classes/Discord-Parts-Channel-Sticker.html#constants" class="headerlink"><i class="fas fa-link"></i></a>
+        </h3>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_FORMAT_TYPE_APNG">
+        FORMAT_TYPE_APNG
+        <a href="classes/Discord-Parts-Channel-Sticker.html#constant_FORMAT_TYPE_APNG" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Sticker.php"><a href="files/src-discord-parts-channel-sticker.html"><abbr title="src/Discord/Parts/Channel/Sticker.php">Sticker.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">33</span>
+</aside>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+    <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">FORMAT_TYPE_APNG</span>
+    = <span class="phpdocumentor-signature__default-value">2</span>
+</code>
+
+
+    
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_FORMAT_TYPE_LOTTIE">
+        FORMAT_TYPE_LOTTIE
+        <a href="classes/Discord-Parts-Channel-Sticker.html#constant_FORMAT_TYPE_LOTTIE" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Sticker.php"><a href="files/src-discord-parts-channel-sticker.html"><abbr title="src/Discord/Parts/Channel/Sticker.php">Sticker.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">34</span>
+</aside>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+    <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">FORMAT_TYPE_LOTTIE</span>
+    = <span class="phpdocumentor-signature__default-value">3</span>
+</code>
+
+
+    
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_FORMAT_TYPE_PNG">
+        FORMAT_TYPE_PNG
+        <a href="classes/Discord-Parts-Channel-Sticker.html#constant_FORMAT_TYPE_PNG" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Sticker.php"><a href="files/src-discord-parts-channel-sticker.html"><abbr title="src/Discord/Parts/Channel/Sticker.php">Sticker.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">32</span>
+</aside>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+    <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">FORMAT_TYPE_PNG</span>
+    = <span class="phpdocumentor-signature__default-value">1</span>
+</code>
+
+
+    
+    
+
+</article>
+            </section>
 
         
     <section class="phpdocumentor-properties">
         <h3 class="phpdocumentor-elements__header" id="properties">
             Properties
-            <a href="classes/Discord-Parts-WebSockets-VoiceStateUpdate.html#properties" class="headerlink"><i class="fas fa-link"></i></a>
+            <a href="classes/Discord-Parts-Channel-Sticker.html#properties" class="headerlink"><i class="fas fa-link"></i></a>
         </h3>
                     <article
         class="
@@ -542,45 +573,14 @@ JSON. Used for JsonSerializable.</dd>
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="property_channel">
-        $channel
-        <a href="classes/Discord-Parts-WebSockets-VoiceStateUpdate.html#property_channel" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="property_asset">
+        $asset
+        <a href="classes/Discord-Parts-Channel-Sticker.html#property_asset" class="headerlink"><i class="fas fa-link"></i></a>
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/WebSockets/VoiceStateUpdate.php"><a href="files/src-discord-parts-websockets-voicestateupdate.html"><abbr title="src/Discord/Parts/WebSockets/VoiceStateUpdate.php">VoiceStateUpdate.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">0</span>
-</aside>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type"><a href="classes/Discord-Parts-Channel-Channel.html"><abbr title="\Discord\Parts\Channel\Channel">Channel</abbr></a></span>
-    <span class="phpdocumentor-signature__name">$channel</span>
-    </code>
-
-        <section class="phpdocumentor-description"></section>
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -public
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="property_channel_id">
-        $channel_id
-        <a href="classes/Discord-Parts-WebSockets-VoiceStateUpdate.html#property_channel_id" class="headerlink"><i class="fas fa-link"></i></a>
-        <span class="phpdocumentor-element__modifiers">
-                                </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/WebSockets/VoiceStateUpdate.php"><a href="files/src-discord-parts-websockets-voicestateupdate.html"><abbr title="src/Discord/Parts/WebSockets/VoiceStateUpdate.php">VoiceStateUpdate.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Sticker.php"><a href="files/src-discord-parts-channel-sticker.html"><abbr title="src/Discord/Parts/Channel/Sticker.php">Sticker.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">0</span>
 </aside>
@@ -589,7 +589,7 @@ JSON. Used for JsonSerializable.</dd>
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
         <span class="phpdocumentor-signature__type">string</span>
-    <span class="phpdocumentor-signature__name">$channel_id</span>
+    <span class="phpdocumentor-signature__name">$asset</span>
     </code>
 
         <section class="phpdocumentor-description"></section>
@@ -636,76 +636,14 @@ JSON. Used for JsonSerializable.</dd>
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="property_deaf">
-        $deaf
-        <a href="classes/Discord-Parts-WebSockets-VoiceStateUpdate.html#property_deaf" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="property_description">
+        $description
+        <a href="classes/Discord-Parts-Channel-Sticker.html#property_description" class="headerlink"><i class="fas fa-link"></i></a>
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/WebSockets/VoiceStateUpdate.php"><a href="files/src-discord-parts-websockets-voicestateupdate.html"><abbr title="src/Discord/Parts/WebSockets/VoiceStateUpdate.php">VoiceStateUpdate.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">0</span>
-</aside>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">bool</span>
-    <span class="phpdocumentor-signature__name">$deaf</span>
-    </code>
-
-        <section class="phpdocumentor-description"></section>
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -public
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="property_guild">
-        $guild
-        <a href="classes/Discord-Parts-WebSockets-VoiceStateUpdate.html#property_guild" class="headerlink"><i class="fas fa-link"></i></a>
-        <span class="phpdocumentor-element__modifiers">
-                                </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/WebSockets/VoiceStateUpdate.php"><a href="files/src-discord-parts-websockets-voicestateupdate.html"><abbr title="src/Discord/Parts/WebSockets/VoiceStateUpdate.php">VoiceStateUpdate.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">0</span>
-</aside>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type"><a href="classes/Discord-Parts-Guild-Guild.html"><abbr title="\Discord\Parts\Guild\Guild">Guild</abbr></a></span>
-    <span class="phpdocumentor-signature__name">$guild</span>
-    </code>
-
-        <section class="phpdocumentor-description"></section>
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -public
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="property_guild_id">
-        $guild_id
-        <a href="classes/Discord-Parts-WebSockets-VoiceStateUpdate.html#property_guild_id" class="headerlink"><i class="fas fa-link"></i></a>
-        <span class="phpdocumentor-element__modifiers">
-                                </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/WebSockets/VoiceStateUpdate.php"><a href="files/src-discord-parts-websockets-voicestateupdate.html"><abbr title="src/Discord/Parts/WebSockets/VoiceStateUpdate.php">VoiceStateUpdate.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Sticker.php"><a href="files/src-discord-parts-channel-sticker.html"><abbr title="src/Discord/Parts/Channel/Sticker.php">Sticker.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">0</span>
 </aside>
@@ -714,7 +652,7 @@ JSON. Used for JsonSerializable.</dd>
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
         <span class="phpdocumentor-signature__type">string</span>
-    <span class="phpdocumentor-signature__name">$guild_id</span>
+    <span class="phpdocumentor-signature__name">$description</span>
     </code>
 
         <section class="phpdocumentor-description"></section>
@@ -729,14 +667,14 @@ JSON. Used for JsonSerializable.</dd>
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="property_member">
-        $member
-        <a href="classes/Discord-Parts-WebSockets-VoiceStateUpdate.html#property_member" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="property_format_type">
+        $format_type
+        <a href="classes/Discord-Parts-Channel-Sticker.html#property_format_type" class="headerlink"><i class="fas fa-link"></i></a>
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/WebSockets/VoiceStateUpdate.php"><a href="files/src-discord-parts-websockets-voicestateupdate.html"><abbr title="src/Discord/Parts/WebSockets/VoiceStateUpdate.php">VoiceStateUpdate.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Sticker.php"><a href="files/src-discord-parts-channel-sticker.html"><abbr title="src/Discord/Parts/Channel/Sticker.php">Sticker.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">0</span>
 </aside>
@@ -744,8 +682,8 @@ JSON. Used for JsonSerializable.</dd>
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type"><a href="classes/Discord-Parts-User-Member.html"><abbr title="\Discord\Parts\User\Member">Member</abbr></a></span>
-    <span class="phpdocumentor-signature__name">$member</span>
+        <span class="phpdocumentor-signature__type">int</span>
+    <span class="phpdocumentor-signature__name">$format_type</span>
     </code>
 
         <section class="phpdocumentor-description"></section>
@@ -760,14 +698,14 @@ JSON. Used for JsonSerializable.</dd>
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="property_mute">
-        $mute
-        <a href="classes/Discord-Parts-WebSockets-VoiceStateUpdate.html#property_mute" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="property_id">
+        $id
+        <a href="classes/Discord-Parts-Channel-Sticker.html#property_id" class="headerlink"><i class="fas fa-link"></i></a>
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/WebSockets/VoiceStateUpdate.php"><a href="files/src-discord-parts-websockets-voicestateupdate.html"><abbr title="src/Discord/Parts/WebSockets/VoiceStateUpdate.php">VoiceStateUpdate.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Sticker.php"><a href="files/src-discord-parts-channel-sticker.html"><abbr title="src/Discord/Parts/Channel/Sticker.php">Sticker.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">0</span>
 </aside>
@@ -775,8 +713,8 @@ JSON. Used for JsonSerializable.</dd>
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">bool</span>
-    <span class="phpdocumentor-signature__name">$mute</span>
+        <span class="phpdocumentor-signature__type">string</span>
+    <span class="phpdocumentor-signature__name">$id</span>
     </code>
 
         <section class="phpdocumentor-description"></section>
@@ -791,14 +729,14 @@ JSON. Used for JsonSerializable.</dd>
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="property_request_to_speak_timestamp">
-        $request_to_speak_timestamp
-        <a href="classes/Discord-Parts-WebSockets-VoiceStateUpdate.html#property_request_to_speak_timestamp" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="property_name">
+        $name
+        <a href="classes/Discord-Parts-Channel-Sticker.html#property_name" class="headerlink"><i class="fas fa-link"></i></a>
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/WebSockets/VoiceStateUpdate.php"><a href="files/src-discord-parts-websockets-voicestateupdate.html"><abbr title="src/Discord/Parts/WebSockets/VoiceStateUpdate.php">VoiceStateUpdate.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Sticker.php"><a href="files/src-discord-parts-channel-sticker.html"><abbr title="src/Discord/Parts/Channel/Sticker.php">Sticker.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">0</span>
 </aside>
@@ -806,8 +744,70 @@ JSON. Used for JsonSerializable.</dd>
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type"><abbr title="\Carbon\Carbon">Carbon</abbr>|null</span>
-    <span class="phpdocumentor-signature__name">$request_to_speak_timestamp</span>
+        <span class="phpdocumentor-signature__type">string</span>
+    <span class="phpdocumentor-signature__name">$name</span>
+    </code>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="property_pack_id">
+        $pack_id
+        <a href="classes/Discord-Parts-Channel-Sticker.html#property_pack_id" class="headerlink"><i class="fas fa-link"></i></a>
+        <span class="phpdocumentor-element__modifiers">
+                                </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Sticker.php"><a href="files/src-discord-parts-channel-sticker.html"><abbr title="src/Discord/Parts/Channel/Sticker.php">Sticker.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">0</span>
+</aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">string</span>
+    <span class="phpdocumentor-signature__name">$pack_id</span>
+    </code>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="property_preview_asset">
+        $preview_asset
+        <a href="classes/Discord-Parts-Channel-Sticker.html#property_preview_asset" class="headerlink"><i class="fas fa-link"></i></a>
+        <span class="phpdocumentor-element__modifiers">
+                                </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Sticker.php"><a href="files/src-discord-parts-channel-sticker.html"><abbr title="src/Discord/Parts/Channel/Sticker.php">Sticker.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">0</span>
+</aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">string|null</span>
+    <span class="phpdocumentor-signature__name">$preview_asset</span>
     </code>
 
         <section class="phpdocumentor-description"></section>
@@ -855,14 +855,14 @@ JSON. Used for JsonSerializable.</dd>
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="property_self_deaf">
-        $self_deaf
-        <a href="classes/Discord-Parts-WebSockets-VoiceStateUpdate.html#property_self_deaf" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="property_tags">
+        $tags
+        <a href="classes/Discord-Parts-Channel-Sticker.html#property_tags" class="headerlink"><i class="fas fa-link"></i></a>
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/WebSockets/VoiceStateUpdate.php"><a href="files/src-discord-parts-websockets-voicestateupdate.html"><abbr title="src/Discord/Parts/WebSockets/VoiceStateUpdate.php">VoiceStateUpdate.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Sticker.php"><a href="files/src-discord-parts-channel-sticker.html"><abbr title="src/Discord/Parts/Channel/Sticker.php">Sticker.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">0</span>
 </aside>
@@ -870,225 +870,8 @@ JSON. Used for JsonSerializable.</dd>
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">bool</span>
-    <span class="phpdocumentor-signature__name">$self_deaf</span>
-    </code>
-
-        <section class="phpdocumentor-description"></section>
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -public
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="property_self_mute">
-        $self_mute
-        <a href="classes/Discord-Parts-WebSockets-VoiceStateUpdate.html#property_self_mute" class="headerlink"><i class="fas fa-link"></i></a>
-        <span class="phpdocumentor-element__modifiers">
-                                </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/WebSockets/VoiceStateUpdate.php"><a href="files/src-discord-parts-websockets-voicestateupdate.html"><abbr title="src/Discord/Parts/WebSockets/VoiceStateUpdate.php">VoiceStateUpdate.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">0</span>
-</aside>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">bool</span>
-    <span class="phpdocumentor-signature__name">$self_mute</span>
-    </code>
-
-        <section class="phpdocumentor-description"></section>
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -public
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="property_self_stream">
-        $self_stream
-        <a href="classes/Discord-Parts-WebSockets-VoiceStateUpdate.html#property_self_stream" class="headerlink"><i class="fas fa-link"></i></a>
-        <span class="phpdocumentor-element__modifiers">
-                                </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/WebSockets/VoiceStateUpdate.php"><a href="files/src-discord-parts-websockets-voicestateupdate.html"><abbr title="src/Discord/Parts/WebSockets/VoiceStateUpdate.php">VoiceStateUpdate.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">0</span>
-</aside>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">bool</span>
-    <span class="phpdocumentor-signature__name">$self_stream</span>
-    </code>
-
-        <section class="phpdocumentor-description"></section>
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -public
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="property_self_video">
-        $self_video
-        <a href="classes/Discord-Parts-WebSockets-VoiceStateUpdate.html#property_self_video" class="headerlink"><i class="fas fa-link"></i></a>
-        <span class="phpdocumentor-element__modifiers">
-                                </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/WebSockets/VoiceStateUpdate.php"><a href="files/src-discord-parts-websockets-voicestateupdate.html"><abbr title="src/Discord/Parts/WebSockets/VoiceStateUpdate.php">VoiceStateUpdate.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">0</span>
-</aside>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">bool</span>
-    <span class="phpdocumentor-signature__name">$self_video</span>
-    </code>
-
-        <section class="phpdocumentor-description"></section>
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -public
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="property_session_id">
-        $session_id
-        <a href="classes/Discord-Parts-WebSockets-VoiceStateUpdate.html#property_session_id" class="headerlink"><i class="fas fa-link"></i></a>
-        <span class="phpdocumentor-element__modifiers">
-                                </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/WebSockets/VoiceStateUpdate.php"><a href="files/src-discord-parts-websockets-voicestateupdate.html"><abbr title="src/Discord/Parts/WebSockets/VoiceStateUpdate.php">VoiceStateUpdate.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">0</span>
-</aside>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">string</span>
-    <span class="phpdocumentor-signature__name">$session_id</span>
-    </code>
-
-        <section class="phpdocumentor-description"></section>
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -public
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="property_suppress">
-        $suppress
-        <a href="classes/Discord-Parts-WebSockets-VoiceStateUpdate.html#property_suppress" class="headerlink"><i class="fas fa-link"></i></a>
-        <span class="phpdocumentor-element__modifiers">
-                                </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/WebSockets/VoiceStateUpdate.php"><a href="files/src-discord-parts-websockets-voicestateupdate.html"><abbr title="src/Discord/Parts/WebSockets/VoiceStateUpdate.php">VoiceStateUpdate.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">0</span>
-</aside>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">bool</span>
-    <span class="phpdocumentor-signature__name">$suppress</span>
-    </code>
-
-        <section class="phpdocumentor-description"></section>
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -public
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="property_user">
-        $user
-        <a href="classes/Discord-Parts-WebSockets-VoiceStateUpdate.html#property_user" class="headerlink"><i class="fas fa-link"></i></a>
-        <span class="phpdocumentor-element__modifiers">
-                                </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/WebSockets/VoiceStateUpdate.php"><a href="files/src-discord-parts-websockets-voicestateupdate.html"><abbr title="src/Discord/Parts/WebSockets/VoiceStateUpdate.php">VoiceStateUpdate.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">0</span>
-</aside>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type"><a href="classes/Discord-Parts-User-User.html"><abbr title="\Discord\Parts\User\User">User</abbr></a></span>
-    <span class="phpdocumentor-signature__name">$user</span>
-    </code>
-
-        <section class="phpdocumentor-description"></section>
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -public
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="property_user_id">
-        $user_id
-        <a href="classes/Discord-Parts-WebSockets-VoiceStateUpdate.html#property_user_id" class="headerlink"><i class="fas fa-link"></i></a>
-        <span class="phpdocumentor-element__modifiers">
-                                </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/WebSockets/VoiceStateUpdate.php"><a href="files/src-discord-parts-websockets-voicestateupdate.html"><abbr title="src/Discord/Parts/WebSockets/VoiceStateUpdate.php">VoiceStateUpdate.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">0</span>
-</aside>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">string</span>
-    <span class="phpdocumentor-signature__name">$user_id</span>
+        <span class="phpdocumentor-signature__type">array&lt;string|int, mixed&gt;</span>
+    <span class="phpdocumentor-signature__name">$tags</span>
     </code>
 
         <section class="phpdocumentor-description"></section>
@@ -1201,14 +984,14 @@ JSON. Used for JsonSerializable.</dd>
 >
     <h4 class="phpdocumentor-element__name" id="property_fillable">
         $fillable
-        <a href="classes/Discord-Parts-WebSockets-VoiceStateUpdate.html#property_fillable" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Parts-Channel-Sticker.html#property_fillable" class="headerlink"><i class="fas fa-link"></i></a>
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/WebSockets/VoiceStateUpdate.php"><a href="files/src-discord-parts-websockets-voicestateupdate.html"><abbr title="src/Discord/Parts/WebSockets/VoiceStateUpdate.php">VoiceStateUpdate.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Sticker.php"><a href="files/src-discord-parts-channel-sticker.html"><abbr title="src/Discord/Parts/Channel/Sticker.php">Sticker.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">46</span>
+    <span class="phpdocumentor-element-found-in__line">39</span>
 </aside>
 
         <p class="phpdocumentor-summary">The parts fillable attributes.</p>
@@ -1217,7 +1000,7 @@ JSON. Used for JsonSerializable.</dd>
     <span class="phpdocumentor-signature__visibility">protected</span>
         <span class="phpdocumentor-signature__type">array&lt;string|int, mixed&gt;</span>
     <span class="phpdocumentor-signature__name">$fillable</span>
-     = <span class="phpdocumentor-signature__default-value">[&#039;guild_id&#039;, &#039;channel_id&#039;, &#039;user_id&#039;, &#039;member&#039;, &#039;session_id&#039;, &#039;deaf&#039;, &#039;mute&#039;, &#039;self_deaf&#039;, &#039;self_mute&#039;, &#039;self_stream&#039;, &#039;self_video&#039;, &#039;suppress&#039;, &#039;request_to_speak_timestamp&#039;]</span></code>
+     = <span class="phpdocumentor-signature__default-value">[&#039;id&#039;, &#039;pack_id&#039;, &#039;name&#039;, &#039;description&#039;, &#039;tags&#039;, &#039;asset&#039;, &#039;preview_asset&#039;, &#039;format_type&#039;]</span></code>
 
         <section class="phpdocumentor-description"></section>
 
@@ -1421,7 +1204,7 @@ JSON. Used for JsonSerializable.</dd>
             <section class="phpdocumentor-methods">
         <h3 class="phpdocumentor-elements__header" id="methods">
             Methods
-            <a href="classes/Discord-Parts-WebSockets-VoiceStateUpdate.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
+            <a href="classes/Discord-Parts-Channel-Sticker.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
         </h3>
                     <article
         class="phpdocumentor-element
@@ -2504,21 +2287,21 @@ JSON. Used for JsonSerializable.</p>
             -protected
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_getChannelAttribute">
-        getChannelAttribute()
-        <a href="classes/Discord-Parts-WebSockets-VoiceStateUpdate.html#method_getChannelAttribute" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="method_getTagsAttribute">
+        getTagsAttribute()
+        <a href="classes/Discord-Parts-Channel-Sticker.html#method_getTagsAttribute" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/WebSockets/VoiceStateUpdate.php"><a href="files/src-discord-parts-websockets-voicestateupdate.html"><abbr title="src/Discord/Parts/WebSockets/VoiceStateUpdate.php">VoiceStateUpdate.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Sticker.php"><a href="files/src-discord-parts-channel-sticker.html"><abbr title="src/Discord/Parts/Channel/Sticker.php">Sticker.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">84</span>
+    <span class="phpdocumentor-element-found-in__line">46</span>
 </aside>
 
-        <p class="phpdocumentor-summary">Gets the channel attribute.</p>
+        <p class="phpdocumentor-summary">Returns the tags attribute.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
-                <span class="phpdocumentor-signature__name">getChannelAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Channel-Channel.html"><abbr title="\Discord\Parts\Channel\Channel">Channel</abbr></a>|null</span></code>
+                <span class="phpdocumentor-signature__name">getTagsAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span></code>
 
         <section class="phpdocumentor-description"></section>
 
@@ -2526,179 +2309,9 @@ JSON. Used for JsonSerializable.</p>
     
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Channel-Channel.html"><abbr title="\Discord\Parts\Channel\Channel">Channel</abbr></a>|null</span>
-            &mdash;
-            <section class="phpdocumentor-description"><p>The channel attribute.</p>
-</section>
-
-    
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -protected
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_getGuildAttribute">
-        getGuildAttribute()
-        <a href="classes/Discord-Parts-WebSockets-VoiceStateUpdate.html#method_getGuildAttribute" class="headerlink"><i class="fas fa-link"></i></a>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/WebSockets/VoiceStateUpdate.php"><a href="files/src-discord-parts-websockets-voicestateupdate.html"><abbr title="src/Discord/Parts/WebSockets/VoiceStateUpdate.php">VoiceStateUpdate.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">113</span>
-</aside>
-
-        <p class="phpdocumentor-summary">Gets the guild attribute.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">protected</span>
-                <span class="phpdocumentor-signature__name">getGuildAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Guild-Guild.html"><abbr title="\Discord\Parts\Guild\Guild">Guild</abbr></a>|null</span></code>
-
-        <section class="phpdocumentor-description"></section>
-
-    
-    
-
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Guild-Guild.html"><abbr title="\Discord\Parts\Guild\Guild">Guild</abbr></a>|null</span>
-            &mdash;
-            <section class="phpdocumentor-description"><p>The guild attribute.</p>
-</section>
-
-    
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -protected
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_getMemberAttribute">
-        getMemberAttribute()
-        <a href="classes/Discord-Parts-WebSockets-VoiceStateUpdate.html#method_getMemberAttribute" class="headerlink"><i class="fas fa-link"></i></a>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/WebSockets/VoiceStateUpdate.php"><a href="files/src-discord-parts-websockets-voicestateupdate.html"><abbr title="src/Discord/Parts/WebSockets/VoiceStateUpdate.php">VoiceStateUpdate.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">68</span>
-</aside>
-
-        <p class="phpdocumentor-summary">Gets the member attribute.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">protected</span>
-                <span class="phpdocumentor-signature__name">getMemberAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-User-Member.html"><abbr title="\Discord\Parts\User\Member">Member</abbr></a>|null</span></code>
-
-        <section class="phpdocumentor-description"></section>
-
-    
-    
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">throws</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                <span class="phpdocumentor-tag-link"><abbr title="\Exception">Exception</abbr></span>
-                                                            
-                                                 <section class="phpdocumentor-description"></section>
-
-                                    </dd>
-                        </dl>
-
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-User-Member.html"><abbr title="\Discord\Parts\User\Member">Member</abbr></a>|null</span>
-            &mdash;
-            <section class="phpdocumentor-description"><p>The member attribute.</p>
-</section>
-
-    
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -protected
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_getRequestToSpeakTimestampAttribute">
-        getRequestToSpeakTimestampAttribute()
-        <a href="classes/Discord-Parts-WebSockets-VoiceStateUpdate.html#method_getRequestToSpeakTimestampAttribute" class="headerlink"><i class="fas fa-link"></i></a>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/WebSockets/VoiceStateUpdate.php"><a href="files/src-discord-parts-websockets-voicestateupdate.html"><abbr title="src/Discord/Parts/WebSockets/VoiceStateUpdate.php">VoiceStateUpdate.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">123</span>
-</aside>
-
-        <p class="phpdocumentor-summary">Gets the request_to_speak_timestamp attribute.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">protected</span>
-                <span class="phpdocumentor-signature__name">getRequestToSpeakTimestampAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\Carbon\Carbon">Carbon</abbr></span></code>
-
-        <section class="phpdocumentor-description"></section>
-
-    
-    
-
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><abbr title="\Carbon\Carbon">Carbon</abbr></span>
+    <span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span>
             &mdash;
             <section class="phpdocumentor-description"></section>
-
-    
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -protected
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_getUserAttribute">
-        getUserAttribute()
-        <a href="classes/Discord-Parts-WebSockets-VoiceStateUpdate.html#method_getUserAttribute" class="headerlink"><i class="fas fa-link"></i></a>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/WebSockets/VoiceStateUpdate.php"><a href="files/src-discord-parts-websockets-voicestateupdate.html"><abbr title="src/Discord/Parts/WebSockets/VoiceStateUpdate.php">VoiceStateUpdate.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">97</span>
-</aside>
-
-        <p class="phpdocumentor-summary">Gets the user attribute.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">protected</span>
-                <span class="phpdocumentor-signature__name">getUserAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-User-User.html"><abbr title="\Discord\Parts\User\User">User</abbr></a>|null</span></code>
-
-        <section class="phpdocumentor-description"></section>
-
-    
-    
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">throws</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                <span class="phpdocumentor-tag-link"><abbr title="\Exception">Exception</abbr></span>
-                                                            
-                                                 <section class="phpdocumentor-description"></section>
-
-                                    </dd>
-                        </dl>
-
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-User-User.html"><abbr title="\Discord\Parts\User\User">User</abbr></a>|null</span>
-            &mdash;
-            <section class="phpdocumentor-description"><p>The user attribute.</p>
-</section>
 
     
 </article>
@@ -2891,7 +2504,7 @@ JSON. Used for JsonSerializable.</p>
 </section>
             </div>
         </div>
-        <a href="classes/Discord-Parts-WebSockets-VoiceStateUpdate.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
+        <a href="classes/Discord-Parts-Channel-Sticker.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
 
     </main>
 
