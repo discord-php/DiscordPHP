@@ -5,7 +5,7 @@ declare(strict_types=1);
 /*
  * This file is apart of the DiscordPHP project.
  *
- * Copyright (c) 2016-2020 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2021 David Cole <david.cole1340@gmail.com>
  *
  * This source file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -18,67 +18,78 @@ use Discord\Parts\Channel\Channel;
 use Discord\Parts\Channel\Message;
 use Discord\Parts\Embed\Embed;
 use Discord\Parts\User\Member;
-use PHPUnit\Framework\TestCase;
 
-final class EmptyMessageTest extends TestCase
+final class EmptyMessageTest extends DiscordTestCase
 {
     /**
-     * @depends DiscordTest::testCanGetChannel
+     * @covers \Discord\Parts\Channel\Channel::sendMessage
      */
-    public function testCanSendMessage(Channel $channel)
+    public function testCanSendMessage()
     {
-        return wait(function (Discord $discord, $resolve) use ($channel) {
+        return wait(function (Discord $discord, $resolve) {
             $content = 'Hello, world! From PHPunit';
 
-            $channel->sendMessage($content)->done(function (Message $message) use ($resolve, $content) {
-                $this->assertEquals($content, $message->content);
-                $resolve($message);
-            });
+            $this->channel()->sendMessage($content)
+                ->then(function (Message $message) use ($content) {
+                    $this->assertEquals($content, $message->content);
+                    $this->assertInstanceOf(Carbon::class, $message->timestamp);
+                    $this->assertNull($message->edited_timestamp);
+
+                    return $message;
+                })
+                ->done($resolve, $resolve);
         });
     }
 
     /**
      * @depends testCanSendMessage
-     *
-     * Must go before testing edit message to assert edited timestamp
-     */
-    public function testTimestampsType(Message $message)
-    {
-        $this->assertInstanceOf(Carbon::class, $message->timestamp);
-        $this->assertEquals(null, $message->edited_timestamp);
-    }
-
-    /**
-     * @depends testCanSendMessage
+     * @covers \Discord\Parts\Channel\Message::reply
      */
     public function testCanReplyToMessage(Message $message)
     {
         return wait(function (Discord $discord, $resolve) use ($message) {
-            $message->reply('replying to my message')->done(function (Message $message) use ($resolve) {
-                $this->assertEquals('<@'.DiscordSingleton::get()->id.'>, replying to my message', $message->content);
-                $resolve($message);
-            });
+            $message->reply('replying to my message')
+                ->then(function (Message $new_message) use ($message) {
+                    $this->assertEquals('replying to my message', $new_message->content);
+                    $this->assertInstanceOf(Message::class, $new_message->referenced_message);
+                    $this->assertEquals($message->id, $new_message->referenced_message->id);
+
+                    return $new_message;
+                })
+                ->done($resolve, $resolve);
         });
     }
 
     /**
-     * @depends testCanSendMessage
+     * @covers \Discord\Repository\Channel\MessageRepository::save
      */
-    public function testCanEditMessage(Message $message)
+    public function testCanEditMessage()
     {
-        return wait(function (Discord $discord, $resolve) use ($message) {
+        return wait(function (Discord $discord, $resolve) {
             $content = 'Message edit with PHPunit';
 
-            $message->content = $content;
-            $message->channel->messages->save($message)->done(function (Message $message) use ($resolve, $content) {
-                $this->assertEquals($content, $message->content);
-                $resolve($message);
-            });
+            $this->channel()->sendMessage('before edit')
+                ->then(function (Message $message) use ($content) {
+                    $message->content = $content;
+
+                    return $message->channel->messages->save($message)->then(function (Message $message) use ($content) {
+                        $this->assertEquals($content, $message->content);
+                        $this->assertNotNull($message->edited_timestamp);
+
+                        return $message;
+                    });
+                })
+                ->done($resolve, $resolve);
         });
     }
 
     /**
      * @depends testCanSendMessage
+     * @covers \Discord\Parts\Channel\Message::getCrosspostedAttribute
+     * @covers \Discord\Parts\Channel\Message::getIsCrosspostAttribute
+     * @covers \Discord\Parts\Channel\Message::getSuppressEmbedsAttribute
+     * @covers \Discord\Parts\Channel\Message::getSourceMessageDeletedAttribute
+     * @covers \Discord\Parts\Channel\Message::getUrgentAttribute
      */
     public function testCheckMessageFlagsFalse(Message $message)
     {
@@ -91,6 +102,7 @@ final class EmptyMessageTest extends TestCase
 
     /**
      * @depends testCanSendMessage
+     * @covers \Discord\Parts\Channel\Message::getChannelAttribute
      */
     public function testChannelAttribute(Message $message)
     {
@@ -100,6 +112,10 @@ final class EmptyMessageTest extends TestCase
 
     /**
      * @depends testCanSendMessage
+     * @covers \Discord\Parts\Channel\Message::getMentionsAttribute
+     * @covers \Discord\Parts\Channel\Message::getMentionRolesAttribute
+     * @covers \Discord\Parts\Channel\Message::getMentionChannelsAttribute
+     * @covers \Discord\Parts\Channel\Message::getEmbedsAttribute
      */
     public function testCollectionsEmpty(Message $message)
     {
@@ -121,6 +137,7 @@ final class EmptyMessageTest extends TestCase
 
     /**
      * @depends testCanSendMessage
+     * @covers \Discord\Parts\Channel\Message::getAuthorAttribute
      */
     public function testAuthorAttribute(Message $message)
     {
@@ -130,6 +147,7 @@ final class EmptyMessageTest extends TestCase
 
     /**
      * @depends testCanEditMessage
+     * @covers \Discord\Parts\Channel\Message::getEditedTimestampAttribute
      */
     public function testEditedTimestampAttribute(Message $message)
     {
@@ -137,77 +155,104 @@ final class EmptyMessageTest extends TestCase
     }
 
     /**
-     * @depends testCanSendMessage
+     * @covers \Discord\Parts\Channel\Message::delayedReply
      */
-    public function testDelayedReply(Message $message)
+    public function testDelayedReply()
     {
-        return wait(function (Discord $discord, $resolve) use ($message) {
+        return wait(function (Discord $discord, $resolve) {
             // Random delay between 0 and 5s.
             $delay = (int) ((mt_rand() / mt_getrandmax()) * 5000);
             $start = microtime(true);
 
-            $message->delayedReply('delayed reply to message', $delay)->done(function (Message $message) use ($delay, $start, $resolve) {
-                $stop = microtime(true);
-                $diff = $stop - $start;
+            $this->channel()->sendMessage('testing delayed reply')
+                ->then(function (Message $message) use ($delay) {
+                    return $message->delayedReply('delayed reply to message', $delay);
+                })
+                ->then(function (Message $message) use ($delay, $start, $resolve) {
+                    $stop = microtime(true);
+                    $diff = $stop - $start;
 
-                $this->assertGreaterThanOrEqual($delay / 1000, $diff);
-                $resolve();
-            });
+                    $this->assertGreaterThanOrEqual($delay / 1000, $diff);
+                })
+                ->done($resolve, $resolve);
         }, 10);
     }
 
     /**
-     * @depends testCanSendMessage
+     * @doesNotPerformAssertions
+     * @covers \Discord\Parts\Channel\Message::react
      */
-    public function testCanReactWithString(Message $message)
+    public function testCanReactWithString()
     {
-        return wait(function (Discord $discord, $resolve) use ($message) {
-            $message->react('😀')->done(function () use ($resolve) {
-                $this->assertTrue(true);
-                $resolve();
-            });
+        return wait(function (Discord $discord, $resolve) {
+            $this->channel()->sendMessage('testing reactions')
+                ->then(function (Message $message) {
+                    return $message->react('😀');
+                })
+                ->done($resolve, $resolve);
         });
     }
 
     /**
      * @depends testCanSendMessage
+     * @covers \Discord\Parts\Channel\Message::addEmbed
      */
     public function testCanAddEmbed(Message $message)
     {
         return wait(function (Discord $discord, $resolve) use ($message) {
-            $embed = new Embed($discord);
-            $embed->setTitle('Test embed')
-                ->addFieldValues('Field name', 'Field value', true);
+            $this->channel()->sendMessage('testing adding embed')
+                ->then(function (Message $message) use ($discord) {
+                    $embed = new Embed($discord);
+                    $embed->setTitle('Test embed')
+                        ->addFieldValues('Field name', 'Field value', true);
 
-            $message->addEmbed($embed)->done(function (Message $message) use ($resolve) {
-                $this->assertEquals(1, $message->embeds->count());
+                    return $message->addEmbed($embed);
+                })
+                ->then(function (Message $message) {
+                    $this->assertEquals(1, $message->embeds->count());
 
-                /** @var Embed */
-                $embed = $message->embeds->first();
-                $this->assertEquals('Test embed', $embed->title);
-                $this->assertEquals(1, $embed->fields->count());
+                    /** @var Embed */
+                    $embed = $message->embeds->first();
+                    $this->assertEquals('Test embed', $embed->title);
+                    $this->assertEquals(1, $embed->fields->count());
 
-                /** @var \Discord\Parts\Embed\Field */
-                $field = $embed->fields->first();
-                $this->assertEquals('Field name', $field->name);
-                $this->assertEquals('Field value', $field->value);
-                $this->assertEquals(true, $field->inline);
-
-                $resolve();
-            });
+                    /** @var \Discord\Parts\Embed\Field */
+                    $field = $embed->fields->first();
+                    $this->assertEquals('Field name', $field->name);
+                    $this->assertEquals('Field value', $field->value);
+                    $this->assertEquals(true, $field->inline);
+                })
+                ->done($resolve, $resolve);
         });
     }
 
     /**
      * @depends testCanSendMessage
+     * @covers \Discord\Repository\Channel\MessageRepository::delete
      */
-    public function testCanDeleteMessage(Message $message)
+    public function testCanDeleteMessageThroughRepository(Message $message)
     {
         return wait(function (Discord $discord, $resolve) use ($message) {
-            $message->channel->messages->delete($message)->done(function (Message $message) use ($resolve) {
-                $this->assertFalse($message->created);
-                $resolve();
-            });
+            $message->channel->messages->delete($message)
+                ->then(function (Message $message) {
+                    $this->assertFalse($message->created);
+                })
+                ->done($resolve, $resolve);
+        });
+    }
+
+    /**
+     * @doesNotPerformAssertions
+     * @covers \Discord\Parts\Channel\Message::delete
+     */
+    public function testCanDeleteMessageThroughPart()
+    {
+        return wait(function (Discord $discord, $resolve) {
+            $this->channel()->sendMessage('testing delete through part')
+                ->then(function (Message $message) {
+                    return $message->delete();
+                })
+                ->done($resolve);
         });
     }
 }

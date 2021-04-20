@@ -3,7 +3,7 @@
 /*
  * This file is apart of the DiscordPHP project.
  *
- * Copyright (c) 2016-2020 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2021 David Cole <david.cole1340@gmail.com>
  *
  * This source file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -17,6 +17,8 @@ use Discord\Discord;
 use Discord\Factory\Factory;
 use Discord\Http\Http;
 use JsonSerializable;
+use React\Promise\ExtendedPromiseInterface;
+use RuntimeException;
 use Serializable;
 
 /**
@@ -137,6 +139,31 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
     }
 
     /**
+     * Whether the part is considered partial
+     * i.e. missing information which can be
+     * fetched from Discord.
+     *
+     * @return bool
+     */
+    public function isPartial(): bool
+    {
+        return false;
+    }
+
+    /**
+     * Fetches any missing information about
+     * the part from Discord's servers.
+     *
+     * @throws RuntimeException The part is not fetchable.
+     *
+     * @return ExtendedPromiseInterface<static>
+     */
+    public function fetch(): ExtendedPromiseInterface
+    {
+        throw new RuntimeException('This part is not fetchable.');
+    }
+
+    /**
      * Fills the parts attributes from an array.
      *
      * @param array $attributes An array of attributes to build the part.
@@ -167,31 +194,6 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
         }
 
         return false;
-    }
-
-    /**
-     * Replaces variables in string with syntax :{varname}.
-     *
-     * @param string $string A string with placeholders.
-     *
-     * @return string     A string with placeholders replaced.
-     * @throws \Exception
-     */
-    public function replaceWithVariables(string $string): string
-    {
-        $matches = null;
-        preg_match_all($this->regex, $string, $matches);
-
-        $original = $matches[0];
-        $vars = $matches[1];
-
-        foreach ($vars as $key => $variable) {
-            if ($attribute = $this->getAttribute($variable)) {
-                $string = str_replace($original[$key], $attribute, $string);
-            }
-        }
-
-        return $string;
     }
 
     /**

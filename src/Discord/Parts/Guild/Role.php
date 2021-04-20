@@ -3,7 +3,7 @@
 /*
  * This file is apart of the DiscordPHP project.
  *
- * Copyright (c) 2016-2020 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2021 David Cole <david.cole1340@gmail.com>
  *
  * This source file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -13,8 +13,6 @@ namespace Discord\Parts\Guild;
 
 use Discord\Parts\Part;
 use Discord\Parts\Permissions\RolePermission;
-use Discord\Helpers\Deferred;
-use React\Promise\PromiseInterface;
 
 /**
  * A role defines permissions for the guild. Members can be added to the role. The role belongs to a guild.
@@ -75,29 +73,13 @@ class Role extends Part
     /**
      * Sets the color for a role. RGB.
      *
-     * @param int|null $red   The red value in RGB.
-     * @param int|null $green The green value in RGB.
-     * @param int|null $blue  The blue value in RGB.
-     *
-     * @return PromiseInterface
+     * @param int $red   The red value in RGB.
+     * @param int $green The green value in RGB.
+     * @param int $blue  The blue value in RGB.
      */
-    public function setColor(?int $red = null, ?int $green = null, ?int $blue = null): PromiseInterface
+    public function setColor(int $red = 0, int $green = 0, int $blue = 0)
     {
-        $deferred = new Deferred();
-
-        if (is_null($red)) {
-            $this->color = 0;
-
-            $deferred->resolve();
-
-            return $deferred->promise();
-        }
-
         $this->color = ($red * 16 ** 4 + $green * 16 ** 2 + $blue);
-
-        $deferred->resolve();
-
-        return $deferred->promise();
     }
 
     /**
@@ -119,6 +101,16 @@ class Role extends Part
             'color' => $this->color,
             'permissions' => $this->permissions->bitwise,
             'mentionable' => $this->mentionable,
+        ];
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function getRepositoryAttributes(): array
+    {
+        return [
+            'role_id' => $this->id,
         ];
     }
 

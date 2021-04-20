@@ -3,7 +3,7 @@
 /*
  * This file is apart of the DiscordPHP project.
  *
- * Copyright (c) 2016-2020 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2021 David Cole <david.cole1340@gmail.com>
  *
  * This source file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -207,7 +207,7 @@ class Embed extends Part
      *
      * @throws \InvalidArgumentException
      */
-    public function setTitle(string $title)
+    protected function setTitleAttribute(string $title)
     {
         if (poly_strlen($title) == 0) {
             $this->attributes['title'] = null;
@@ -218,6 +218,20 @@ class Embed extends Part
         } else {
             $this->attributes['title'] = $title;
         }
+
+        return $this;
+    }
+
+    /**
+     * Sets the title of the embed.
+     *
+     * @param string $title
+     *
+     * @return $this
+     */
+    public function setTitle(string $title)
+    {
+        $this->title = $title;
 
         return $this;
     }

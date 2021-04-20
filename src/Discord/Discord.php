@@ -3,7 +3,7 @@
 /*
  * This file is apart of the DiscordPHP project.
  *
- * Copyright (c) 2016-2020 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2021 David Cole <david.cole1340@gmail.com>
  *
  * This source file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -42,6 +42,7 @@ use React\EventLoop\LoopInterface;
 use React\EventLoop\TimerInterface;
 use Discord\Helpers\Deferred;
 use Discord\Http\Drivers\React;
+use Discord\Http\Endpoint;
 use Evenement\EventEmitterTrait;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
@@ -77,21 +78,21 @@ class Discord
      *
      * @var int Gateway version.
      */
-    const GATEWAY_VERSION = 6;
+    const GATEWAY_VERSION = 8;
 
     /**
      * The HTTP API version the client usees.
      *
      * @var int HTTP API version.
      */
-    const HTTP_API_VERSION = 6;
+    const HTTP_API_VERSION = 8;
 
     /**
      * The client version.
      *
      * @var string Version.
      */
-    const VERSION = 'v5.1.3';
+    const VERSION = 'v6.0.0';
 
     /**
      * The logger.
@@ -343,7 +344,7 @@ class Discord
         $this->http = new Http(
             'Bot '.$this->token,
             $this->loop,
-            $this->options['httpLogger'],
+            $this->options['logger'],
             new React($this->loop, $options['socket_options'])
         );
 
@@ -498,7 +499,6 @@ class Discord
             $member = (array) $member;
             $member['guild_id'] = $guild->id;
             $member['status'] = 'offline';
-            $member['game'] = null;
 
             if (! $this->users->has($member['user']->id)) {
                 $userPart = $this->factory->create(User::class, $member['user'], true);
@@ -846,15 +846,14 @@ class Discord
                         '$referring_domain' => 'https://github.com/discord-php/DiscordPHP',
                     ],
                     'compress' => true,
+                    'intents' => $this->options['intents'],
                 ],
             ];
 
-            if ($this->options['intents'] !== false) {
-                $payload['d']['intents'] = $this->options['intents'];
-            }
-
-            if (array_key_exists('shardId', $this->options) &&
-                array_key_exists('shardCount', $this->options)) {
+            if (
+                array_key_exists('shardId', $this->options) &&
+                array_key_exists('shardCount', $this->options)
+            ) {
                 $payload['d']['shard'] = [
                     (int) $this->options['shardId'],
                     (int) $this->options['shardCount'],
@@ -1077,7 +1076,7 @@ class Discord
         if (! is_null($activity)) {
             $activity = $activity->getRawAttributes();
 
-            if (! in_array($activity['type'], [Activity::TYPE_PLAYING, Activity::TYPE_STREAMING, Activity::TYPE_LISTENING, Activity::TYPE_WATCHING, Activity::TYPE_COMPETING ])) {
+            if (! in_array($activity['type'], [Activity::TYPE_PLAYING, Activity::TYPE_STREAMING, Activity::TYPE_LISTENING, Activity::TYPE_WATCHING, Activity::TYPE_COMPETING])) {
                 throw new \Exception("The given activity type ({$activity['type']}) is invalid.");
 
                 return;
@@ -1092,7 +1091,7 @@ class Discord
             'op' => Op::OP_PRESENCE_UPDATE,
             'd' => [
                 'since' => $idle,
-                'game' => $activity,
+                'activities' => [$activity],
                 'status' => $status,
                 'afk' => $afk,
             ],
@@ -1178,10 +1177,9 @@ class Discord
                 $logger->info('voice client is ready');
                 $this->voiceClients[$channel->guild_id] = $vc;
 
-                $vc->setBitrate($channel->bitrate)->done(function () use ($vc, $deferred, $logger, $channel) {
-                    $logger->info('set voice client bitrate', ['bitrate' => $channel->bitrate]);
-                    $deferred->resolve($vc);
-                });
+                $vc->setBitrate($channel->bitrate);
+                $logger->info('set voice client bitrate', ['bitrate' => $channel->bitrate]);
+                $deferred->resolve($vc);
             });
             $vc->once('error', function ($e) use ($deferred, $logger) {
                 $logger->error('error initilizing voice client', ['e' => $e->getMessage()]);
@@ -1247,7 +1245,7 @@ class Discord
         };
 
         if (is_null($gateway)) {
-            $this->http->get('gateway/bot')->done(function ($response) use ($buildParams) {
+            $this->http->get(Endpoint::GATEWAY_BOT)->done(function ($response) use ($buildParams) {
                 $buildParams($response->url, $response->session_start_limit);
             }, function ($e) use ($buildParams) {
                 // Can't access the API server so we will use the default gateway.
@@ -1288,68 +1286,70 @@ class Discord
                 'shardCount',
                 'loop',
                 'logger',
-                'loggerLevel',
-                'logging',
                 'loadAllMembers',
                 'disabledEvents',
                 'pmChannels',
                 'storeMessages',
                 'retrieveBans',
                 'intents',
-                'httpLogger',
                 'socket_options',
             ])
             ->setDefaults([
                 'loop' => LoopFactory::create(),
                 'logger' => null,
-                'loggerLevel' => Monolog::INFO,
-                'logging' => true,
                 'loadAllMembers' => false,
                 'disabledEvents' => [],
                 'pmChannels' => false,
                 'storeMessages' => false,
                 'retrieveBans' => false,
-                'intents' => false,
-                'httpLogger' => new NullLogger(),
+                'intents' => Intents::getDefaultIntents(),
                 'socket_options' => [],
             ])
+            ->setAllowedTypes('token', 'string')
+            ->setAllowedTypes('logger', ['null', LoggerInterface::class])
             ->setAllowedTypes('loop', LoopInterface::class)
-            ->setAllowedTypes('logging', 'bool')
             ->setAllowedTypes('loadAllMembers', ['bool', 'array'])
             ->setAllowedTypes('disabledEvents', 'array')
             ->setAllowedTypes('pmChannels', 'bool')
             ->setAllowedTypes('storeMessages', 'bool')
             ->setAllowedTypes('retrieveBans', 'bool')
-            ->setAllowedTypes('intents', ['bool', 'array', 'int'])
-            ->setAllowedTypes('httpLogger', LoggerInterface::class);
+            ->setAllowedTypes('intents', ['array', 'int'])
+            ->setAllowedTypes('socket_options', 'array');
 
         $options = $resolver->resolve($options);
 
-        if (is_null($options['logger']) && $options['logging']) {
+        if (is_null($options['logger'])) {
             $logger = new Monolog('DiscordPHP');
-            $logger->pushHandler(new StreamHandler('php://stdout', $options['loggerLevel']));
+            $logger->pushHandler(new StreamHandler('php://stdout', Monolog::DEBUG));
             $options['logger'] = $logger;
-        } elseif (! $options['logging']) {
-            $options['logger'] = new NullLogger();
         }
 
-        if ($options['intents'] !== false) {
-            if (is_array($options['intents'])) {
-                $intentVal = 0;
-                $validIntents = Intents::getValidIntents();
+        if (is_array($options['intents'])) {
+            $intent = 0;
+            $validIntents = Intents::getValidIntents();
 
-                foreach ($options['intents'] as $intent) {
-                    if (! in_array($intent, $validIntents)) {
-                        throw new IntentException('Given intent is not valid: '.$intent);
-                    }
-                    $intentVal |= $intent;
+            foreach ($options['intents'] as $idx => $i) {
+                if (! in_array($i, $validIntents)) {
+                    throw new IntentException('Given intent at index '.$idx.' is invalid.');
                 }
 
-                $options['intents'] = $intentVal;
+                $intent |= $i;
             }
+
+            $options['intents'] = $intent;
         }
         
         $options['socket_options']['happy_eyeballs'] = false; //Discord doesn't use IPv6
+
+        if ($options['loadAllMembers'] && ! ($options['intents'] & Intents::GUILD_MEMBERS)) {
+            throw new IntentException('You have enabled the `loadAllMembers` option but have not enabled the required `GUILD_MEMBERS` intent.'.
+            'See the documentation on the `loadAllMembers` property for more information: http://discord-php.github.io/DiscordPHP/#basics');
+        }
+
+        // Discord doesn't currently support IPv6
+        // This prevents xdebug from catching exceptions when trying to fetch IPv6
+        // for Discord
+        $options['socket_options']['happy_eyeballs'] = false;
 
         return $options;
     }
@@ -1443,6 +1443,18 @@ class Discord
     public function getLogger(): LoggerInterface
     {
         return $this->logger;
+    }
+
+    /**
+     * Gets the HTTP client.
+     *
+     * @return Http
+     *
+     * @deprecated Use Discord::getHttpClient()
+     */
+    public function getHttp(): Http
+    {
+        return $this->http;
     }
 
     /**

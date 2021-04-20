@@ -5,30 +5,28 @@ declare(strict_types=1);
 /*
  * This file is apart of the DiscordPHP project.
  *
- * Copyright (c) 2016-2020 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2021 David Cole <david.cole1340@gmail.com>
  *
  * This source file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
  */
 
 use Discord\Discord;
-use Discord\Parts\Channel\Channel;
 use Discord\Parts\Channel\Message;
 use Discord\Parts\Embed\Author;
 use Discord\Parts\Embed\Embed;
 use Discord\Parts\Embed\Footer;
-use PHPUnit\Framework\TestCase;
 
 use function Discord\getColor;
 
-final class EmbedMessageTest extends TestCase
+final class EmbedMessageTest extends DiscordTestCase
 {
     /**
-     * @depends DiscordTest::testCanGetChannel
+     * @covers \Discord\Parts\Channel\Channel::sendEmbed
      */
-    public function testCanSendEmbed(Channel $channel)
+    public function testCanSendEmbed()
     {
-        return wait(function (Discord $discord, $resolve) use ($channel) {
+        return wait(function (Discord $discord, $resolve) {
             $embed = new Embed($discord);
             $embed->setTitle('Testing Embed')
                 ->setType(Embed::TYPE_RICH)
@@ -47,33 +45,33 @@ final class EmbedMessageTest extends TestCase
                 ])
                 ->setFooter('Footer Value');
 
-            $channel->sendEmbed($embed)->done(function (Message $message) use ($resolve) {
-                $this->assertEquals(1, $message->embeds->count());
+            $this->channel()->sendEmbed($embed)
+                ->then(function (Message $message) use ($resolve) {
+                    $this->assertEquals(1, $message->embeds->count());
 
-                /** @var Embed */
-                $embed = $message->embeds->first();
-                $this->assertEquals('Testing Embed', $embed->title);
-                $this->assertEquals(Embed::TYPE_RICH, $embed->type);
-                $this->assertEquals('Embed Description', $embed->description);
-                $this->assertEquals(getColor('lightblue'), $embed->color);
+                    /** @var Embed */
+                    $embed = $message->embeds->first();
+                    $this->assertEquals('Testing Embed', $embed->title);
+                    $this->assertEquals(Embed::TYPE_RICH, $embed->type);
+                    $this->assertEquals('Embed Description', $embed->description);
+                    $this->assertEquals(getColor('lightblue'), $embed->color);
 
-                $this->assertInstanceOf(Author::class, $embed->author);
-                $this->assertEquals('DiscordPHP Bot', $embed->author->name);
+                    http://discord-php.github.io/DiscordPHP/reference/classes/Discord-Parts-Permissions-RolePermission.html          $this->assertInstanceOf(Author::class, $embed->author);
+                    $this->assertEquals('DiscordPHP Bot', $embed->author->name);
 
-                $this->assertInstanceOf(Footer::class, $embed->footer);
-                $this->assertEquals('Footer Value', $embed->footer->text);
+                    $this->assertInstanceOf(Footer::class, $embed->footer);
+                    $this->assertEquals('Footer Value', $embed->footer->text);
 
-                $this->assertEquals(2, $embed->fields->count());
-                $this->assertNotFalse(isset($embed->fields['Field 1']));
-                $this->assertNotFalse(isset($embed->fields['Field 2']));
+                    $this->assertEquals(2, $embed->fields->count());
+                    $this->assertNotFalse(isset($embed->fields['Field 1']));
+                    $this->assertNotFalse(isset($embed->fields['Field 2']));
 
-                $this->assertNotEquals(
-                    (string) $embed->fields['Field 1'],
-                    (string) $embed->fields['Field 2']
-                );
-
-                $resolve();
-            });
+                    $this->assertNotEquals(
+                        (string) $embed->fields['Field 1'],
+                        (string) $embed->fields['Field 2']
+                    );
+                })
+                ->done($resolve, $resolve);
         }, 10);
     }
 }

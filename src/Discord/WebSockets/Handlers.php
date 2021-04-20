@@ -3,7 +3,7 @@
 /*
  * This file is apart of the DiscordPHP project.
  *
- * Copyright (c) 2016-2020 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2021 David Cole <david.cole1340@gmail.com>
  *
  * This source file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -33,6 +33,7 @@ class Handlers
         $this->addHandler(Event::TYPING_START, \Discord\WebSockets\Events\TypingStart::class);
         $this->addHandler(Event::VOICE_STATE_UPDATE, \Discord\WebSockets\Events\VoiceStateUpdate::class);
         $this->addHandler(Event::VOICE_SERVER_UPDATE, \Discord\WebSockets\Events\VoiceServerUpdate::class);
+        $this->addHandler(Event::INTERACTION_CREATE, \Discord\WebSockets\Events\InteractionCreate::class);
 
         // Guild Event handlers
         $this->addHandler(Event::GUILD_CREATE, \Discord\WebSockets\Events\GuildCreate::class);

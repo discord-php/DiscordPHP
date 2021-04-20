@@ -3,7 +3,7 @@
 /*
  * This file is apart of the DiscordPHP project.
  *
- * Copyright (c) 2016-2020 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2021 David Cole <david.cole1340@gmail.com>
  *
  * This source file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -13,6 +13,7 @@ namespace Discord\Parts\Guild;
 
 use Carbon\Carbon;
 use Discord\Helpers\Collection;
+use Discord\Http\Endpoint;
 use Discord\Parts\Part;
 use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
@@ -22,14 +23,12 @@ use Discord\Repository\Guild\EmojiRepository;
 use Discord\Repository\Guild\InviteRepository;
 use Discord\Repository\Guild\MemberRepository;
 use Discord\Repository\Guild\RoleRepository;
-use Discord\Helpers\Deferred;
 use Discord\Parts\Guild\AuditLog\AuditLog;
 use Discord\Parts\Guild\AuditLog\Entry;
+use Exception;
 use React\Promise\ExtendedPromiseInterface;
 use ReflectionClass;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-
-use function React\Partial\bind as Bind;
 
 /**
  * A Guild is Discord's equivalent of a server. It contains all the Members, Channels, Roles, Bans etc.
@@ -44,8 +43,6 @@ use function React\Partial\bind as Bind;
  * @property Carbon            $joined_at          A timestamp of when the current user joined the guild.
  * @property string            $afk_channel_id     The unique identifier of the AFK channel ID.
  * @property int               $afk_timeout        How long you will remain in the voice channel until you are moved into the AFK channel.
- * @property bool              $embed_enabled      Whether the embed is enabled.
- * @property string            $embed_channel_id   The unique identifier of the channel that will be used for the embed.
  * @property string[]          $features           An array of features that the guild has.
  * @property string            $splash             The URL to the guild splash.
  * @property string            $discovery_splash Discovery splash hash. Only for discoverable guilds.
@@ -108,8 +105,6 @@ class Guild extends Part
         'joined_at',
         'afk_channel_id',
         'afk_timeout',
-        'embed_enabled',
-        'embed_channel_id',
         'features',
         'splash',
         'discovery_splash',
@@ -168,23 +163,16 @@ class Guild extends Part
      */
     public function getInvites(): ExtendedPromiseInterface
     {
-        $deferred = new Deferred();
+        return $this->http->get(Endpoint::bind(Endpoint::GUILD_INVITES, $this->id))->then(function ($response) {
+            $invites = new Collection();
 
-        $this->http->get($this->replaceWithVariables('guilds/:id/invites'))->done(
-            function ($response) use ($deferred) {
-                $invites = new Collection();
+            foreach ($response as $invite) {
+                $invite = $this->factory->create(Invite::class, $invite, true);
+                $invites->push($invite);
+            }
 
-                foreach ($response as $invite) {
-                    $invite = $this->factory->create(Invite::class, $invite, true);
-                    $invites->push($invite);
-                }
-
-                $deferred->resolve($invites);
-            },
-            Bind([$deferred, 'reject'])
-        );
-
-        return $deferred->promise();
+            return $invites;
+        });
     }
 
     /**
@@ -293,16 +281,17 @@ class Guild extends Part
      */
     public function getVoiceRegions(): ExtendedPromiseInterface
     {
-        $deferred = new Deferred();
+        if (! is_null($this->regions)) {
+            return \React\Promise\resolve($this->regions);
+        }
 
-        $this->http->get('voice/regions')->done(function ($regions) use ($deferred) {
+        return $this->http->get('voice/regions')->then(function ($regions) {
             $regions = new Collection($regions);
 
             $this->regions = $regions;
-            $deferred->resolve($regions);
-        }, Bind([$deferred, 'reject']));
 
-        return $deferred->promise();
+            return $regions;
+        });
     }
 
     /**
@@ -315,25 +304,13 @@ class Guild extends Part
      */
     public function createRole(array $data = []): ExtendedPromiseInterface
     {
-        $deferred = new Deferred();
-
         $rolePart = $this->factory->create(Role::class);
 
-        $this->roles->save($rolePart)->done(
-            function ($role) use ($deferred, $data) {
-                $role->fill((array) $data);
+        return $this->roles->save($rolePart)->then(function ($role) use ($data) {
+            $role->fill((array) $data);
 
-                $this->roles->save($role)->done(
-                    function ($role) use ($deferred) {
-                        $deferred->resolve($role);
-                    },
-                    Bind([$deferred, 'reject'])
-                );
-            },
-            Bind([$deferred, 'reject'])
-        );
-
-        return $deferred->promise();
+            return $this->roles->save($role);
+        });
     }
 
     /**
@@ -356,30 +333,17 @@ class Guild extends Part
      */
     public function transferOwnership($member): ExtendedPromiseInterface
     {
-        $deferred = new Deferred();
-
         if ($member instanceof Member) {
             $member = $member->id;
         }
 
-        $this->http->patch(
-            $this->replaceWithVariables('guilds/:id'),
-            [
-                'owner_id' => $member,
-            ]
-        )->done(
-            function ($response) use ($member, $deferred) {
-                if ($response->owner_id != $member) {
-                    $deferred->reject(new \Exception('Ownership was not transferred correctly.'));
-                    $this->fill((array) $response);
-                } else {
-                    $deferred->resolve();
-                }
-            },
-            Bind([$deferred, 'reject'])
-        );
+        return $this->http->patch(Endpoint::bind(Endpoint::GUILD), ['owner_id' => $member])->then(function ($response) use ($member) {
+            if ($response->owner_id != $member) {
+                throw new Exception('Ownership was not transferred correctly.');
+            }
 
-        return $deferred->promise();
+            return $this;
+        });
     }
 
     /**
@@ -391,27 +355,17 @@ class Guild extends Part
      */
     public function validateRegion(): ExtendedPromiseInterface
     {
-        $deferred = new Deferred();
-
-        $validate = function () use ($deferred) {
+        return $this->getVoiceRegions()->then(function () {
             $regions = $this->regions->map(function ($region) {
                 return $region->id;
             })->toArray();
 
             if (! in_array($this->region, $regions)) {
-                $deferred->resolve(self::REGION_DEFAULT);
-            } else {
-                $deferred->resolve($this->region);
+                return self::REGION_DEFAULT;
             }
-        };
 
-        if (! is_null($this->regions)) {
-            $validate();
-        } else {
-            $this->getVoiceRegions()->done($validate, Bind([$deferred, 'reject']));
-        }
-
-        return $deferred->promise();
+            return $this->region;
+        });
     }
 
     /**
@@ -451,7 +405,11 @@ class Guild extends Part
             $options['before'] = $options['before']->id;
         }
 
-        $endpoint = "guilds/{$this->id}/audit-logs?".http_build_query($options);
+        $endpoint = Endpoint::bind(Endpoint::AUDIT_LOG);
+
+        foreach ($options as $key => $value) {
+            $endpoint->addQuery($key, $value);
+        }
 
         return $this->http->get($endpoint)->then(function ($response) {
             $response = (array) $response;

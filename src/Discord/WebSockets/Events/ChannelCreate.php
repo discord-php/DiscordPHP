@@ -3,7 +3,7 @@
 /*
  * This file is apart of the DiscordPHP project.
  *
- * Copyright (c) 2016-2020 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2021 David Cole <david.cole1340@gmail.com>
  *
  * This source file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -22,9 +22,10 @@ class ChannelCreate extends Event
      */
     public function handle(Deferred &$deferred, $data): void
     {
+        /** @var Channel */
         $channel = $this->factory->create(Channel::class, $data, true);
 
-        if (isset($data->attributes['recipients'])) {
+        if ($channel->is_private) {
             $this->discord->private_channels->push($channel);
         } else {
             if ($guild = $this->discord->guilds->get('id', $channel->guild_id)) {

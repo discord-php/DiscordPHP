@@ -11,13 +11,30 @@
             "port": 9000
         },
         {
-            "name": "Launch currently open script",
+            "name": "Launch with XDebug",
             "type": "php",
             "request": "launch",
             "program": "${workspaceFolder}/test.php",
+            "args": [
+                "-d xdebug.mode=debug",
+                "-d xdebug.start_with_request=yes",
+                "-d xdebug.client_port=9000"
+            ],
             "cwd": "${workspaceFolder}",
-            "port": 9000,
-            "runtimeExecutable": "/usr/bin/php"
+            "port": 9000
+        },
+        {
+            "name": "Launch phpunit",
+            "type": "php",
+            "request": "launch",
+            "program": "${workspaceRoot}/vendor/bin/phpunit",
+            "args": [
+                "-d xdebug.mode=debug",
+                "-d xdebug.start_with_request=yes",
+                "-d xdebug.client_port=9000"
+            ],
+            "cwd": "${workspaceRoot}",
+            "port": 9000
         }
     ]
 }

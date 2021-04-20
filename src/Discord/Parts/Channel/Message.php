@@ -3,7 +3,7 @@
 /*
  * This file is apart of the DiscordPHP project.
  *
- * Copyright (c) 2016-2020 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2021 David Cole <david.cole1340@gmail.com>
  *
  * This source file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -22,43 +22,48 @@ use Discord\Parts\User\User;
 use Discord\Parts\WebSockets\MessageReaction;
 use Discord\WebSockets\Event;
 use Discord\Helpers\Deferred;
+use Discord\Http\Endpoint;
 use Discord\Repository\Channel\ReactionRepository;
 use React\Promise\ExtendedPromiseInterface;
-
-use function React\Partial\bind as Bind;
 
 /**
  * A message which is posted to a Discord text channel.
  *
- * @property string                         $id               The unique identifier of the message.
- * @property Channel                        $channel          The channel that the message was sent in.
- * @property string                         $channel_id       The unique identifier of the channel that the message was went in.
- * @property string                         $content          The content of the message if it is a normal message.
- * @property int                            $type             The type of message.
- * @property Collection|User[]              $mentions         A collection of the users mentioned in the message.
- * @property Member|User                    $author           The author of the message.
- * @property string                         $user_id          The user id of the author.
- * @property bool                           $mention_everyone Whether the message contained an @everyone mention.
- * @property Carbon                         $timestamp        A timestamp of when the message was sent.
- * @property Carbon|null                    $edited_timestamp A timestamp of when the message was edited, or null.
- * @property bool                           $tts              Whether the message was sent as a text-to-speech message.
- * @property array                          $attachments      An array of attachment objects.
- * @property Collection|Embed[]             $embeds           A collection of embed objects.
- * @property string|null                    $nonce            A randomly generated string that provides verification for the client. Not required.
- * @property Collection|Role[]              $mention_roles    A collection of roles that were mentioned in the message.
- * @property bool                           $pinned           Whether the message is pinned to the channel.
- * @property Collection|Channel[]           $mention_channels Collection of mentioned channels.
- * @property ReactionRepository             $reactions        Collection of reactions on the message.
- * @property string                         $webhook_id       ID of the webhook that made the message, if any.
- * @property object                         $activity         Current message activity. Requires rich presence.
- * @property object                         $application      Application of message. Requires rich presence.
- * @property object                         $message_reference Message that is referenced by this message.
- * @property int                            $flags             Message flags.
- * @property bool                           $crossposted       Message has been crossposted.
- * @property bool                           $is_crosspost      Message is a crosspost from another channel.
- * @property bool                           $suppress_embeds   Do not include embeds when serializing message.
+ * @property string                         $id                     The unique identifier of the message.
+ * @property Channel                        $channel                The channel that the message was sent in.
+ * @property string                         $channel_id             The unique identifier of the channel that the message was went in.
+ * @property string                         $guild_id               The unique identifier of the guild that the channel the message was sent in belongs to.
+ * @property string                         $content                The content of the message if it is a normal message.
+ * @property int                            $type                   The type of message.
+ * @property Collection|User[]              $mentions               A collection of the users mentioned in the message.
+ * @property Member|User|null               $author                 The author of the message.
+ * @property Member|null                    $member                 The member that sent this message, or null if it was in a private message.
+ * @property User|null                      $user                   The user that sent this message. Will be a webhook if sent from one.
+ * @property string                         $user_id                The user id of the author.
+ * @property bool                           $mention_everyone       Whether the message contained an @everyone mention.
+ * @property Carbon                         $timestamp              A timestamp of when the message was sent.
+ * @property Carbon|null                    $edited_timestamp       A timestamp of when the message was edited, or null.
+ * @property bool                           $tts                    Whether the message was sent as a text-to-speech message.
+ * @property array                          $attachments            An array of attachment objects.
+ * @property Collection|Embed[]             $embeds                 A collection of embed objects.
+ * @property string|null                    $nonce                  A randomly generated string that provides verification for the client. Not required.
+ * @property Collection|Role[]              $mention_roles          A collection of roles that were mentioned in the message.
+ * @property bool                           $pinned                 Whether the message is pinned to the channel.
+ * @property Collection|Channel[]           $mention_channels       Collection of mentioned channels.
+ * @property ReactionRepository             $reactions              Collection of reactions on the message.
+ * @property string                         $webhook_id             ID of the webhook that made the message, if any.
+ * @property object                         $activity               Current message activity. Requires rich presence.
+ * @property object                         $application            Application of message. Requires rich presence.
+ * @property object                         $message_reference      Message that is referenced by this message.
+ * @property Message|null                   $referenced_message     The message that is referenced in a reply.
+ * @property int                            $flags                  Message flags.
+ * @property bool                           $crossposted            Message has been crossposted.
+ * @property bool                           $is_crosspost           Message is a crosspost from another channel.
+ * @property bool                           $suppress_embeds        Do not include embeds when serializing message.
  * @property bool                           $source_message_deleted Source message for this message has been deleted.
- * @property bool                           $urgent            Message is urgent.
+ * @property bool                           $urgent                 Message is urgent.
+ * @property Collection|Sticker[]           $stickers               Stickers attached to the message.
+ * @property object|null                    $interaction            The interaction which triggered the message (slash commands).
  */
 class Message extends Part
 {
@@ -77,6 +82,8 @@ class Message extends Part
     const CHANNEL_FOLLOW_ADD = 12;
     const GUILD_DISCOVERY_DISQUALIFIED = 14;
     const GUILD_DISCOVERY_REQUALIFIED = 15;
+    const TYPE_REPLY = 19;
+    const TYPE_APPLICATION_COMMAND = 20;
 
     const ACTIVITY_JOIN = 1;
     const ACTIVITY_SPECTATE = 2;
@@ -94,10 +101,12 @@ class Message extends Part
     protected $fillable = [
         'id',
         'channel_id',
+        'guild_id',
         'content',
         'type',
         'mentions',
         'author',
+        'member',
         'mention_everyone',
         'timestamp',
         'edited_timestamp',
@@ -113,7 +122,10 @@ class Message extends Part
         'activity',
         'application',
         'message_reference',
+        'referenced_message',
         'flags',
+        'stickers',
+        'interaction',
     ];
 
     /**
@@ -287,15 +299,29 @@ class Message extends Part
     /**
      * Returns the author attribute.
      *
-     * @return User|Member The member that sent the message. Will return a User object if it is a PM.
+     * @return User|Member|null The member that sent the message. Will return a User object if it is a PM.
      * @throws \Exception
      */
     protected function getAuthorAttribute(): ?Part
     {
-        if (! isset($this->attributes['author'])) {
-            return null;
+        if ($this->member) {
+            return $this->member;
         }
 
+        if ($this->user) {
+            return $this->user;
+        }
+
+        return null;
+    }
+    
+    /**
+     * Returns the member attribute.
+     *
+     * @return Member|null The member that sent the message, or null if it was in a private message.
+     */
+    protected function getMemberAttribute(): ?Member
+    {
         if (($this->channel->guild &&
             $author = $this->channel->guild->members->get('id', $this->attributes['author']->id)) ||
             $author = $this->discord->users->get('id', $this->attributes['author']->id)
@@ -303,7 +329,32 @@ class Message extends Part
             return $author;
         }
 
-        return $this->factory->create(User::class, $this->attributes['author'], true);
+        if (isset($this->attributes['member'])) {
+            return $this->factory->create(Member::class, array_merge((array) $this->attributes['member'], [
+                'user' => $this->attributes['author'],
+                'guild_id' => $this->guild_id,
+            ]), true);
+        }
+
+        return null;
+    }
+
+    /**
+     * Returns the user attribute.
+     *
+     * @return User|null The user that sent the message. Can also be a webhook.
+     */
+    protected function getUserAttribute(): ?User
+    {
+        if (isset($this->attributes['author'])) {
+            if ($user = $this->discord->users->get('id', $this->attributes['author']->id)) {
+                return $user;
+            }
+
+            return $this->factory->create(User::class, $this->attributes['author'], true);
+        }
+
+        return null;
     }
 
     /**
@@ -321,6 +372,33 @@ class Message extends Part
         }
 
         return $embeds;
+    }
+
+    /**
+     * Gets the referenced message attribute, if present.
+     *
+     * @return Message
+     */
+    protected function getReferencedMessageAttribute(): ?Message
+    {
+        // try get the message from the relevant repository
+        // otherwise, if message is present in payload, create it
+        // otherwise, return null
+        if (isset($this->attributes['message_reference'])) {
+            $reference = $this->attributes['message_reference'];
+
+            if ($channel = $this->discord->getChannel($reference->channel_id ?? null)) {
+                if ($message = $channel->messages->get('id', $reference->message_id ?? null)) {
+                    return $message;
+                }
+            }
+        }
+
+        if (isset($this->attributes['referenced_message'])) {
+            return $this->factory->create(Message::class, $this->attributes['referenced_message'] ?? [], true);
+        }
+
+        return null;
     }
 
     /**
@@ -354,6 +432,22 @@ class Message extends Part
     }
 
     /**
+     * Returns the stickers attribute.
+     *
+     * @return Sticker[]|Collection
+     */
+    protected function getStickersAttribute(): Collection
+    {
+        $stickers = Collection::for(Sticker::class);
+
+        foreach ($this->attributes['stickers'] ?? [] as $sticker) {
+            $stickers->push($this->factory->create(Sticker::class, $sticker, true));
+        }
+
+        return $stickers;
+    }
+
+    /**
      * Replies to the message.
      *
      * @param string $text The text to reply with.
@@ -363,7 +457,7 @@ class Message extends Part
      */
     public function reply(string $text): ExtendedPromiseInterface
     {
-        return $this->channel->sendMessage("{$this->author}, {$text}");
+        return $this->channel->sendMessage($text, false, null, null, $this);
     }
 
     /**
@@ -373,18 +467,13 @@ class Message extends Part
      */
     public function crosspost(): ExtendedPromiseInterface
     {
-        $deferred = new Deferred();
-
-        $this->http->post("channels/{$this->channel_id}/messages/{$this->id}/crosspost")->done(function ($response) use ($deferred) {
-            $message = $this->factory->part(Message::class, $response, true);
-            $deferred->resolve($message);
-        }, Bind([$deferred, 'reject']));
-
-        return $deferred->promise();
+        return $this->http->post(Endpoint::bind(Endpoint::CHANNEL_CROSSPOST_MESSAGE, $this->channel_id, $this->id))->then(function ($response) {
+            return $this->factory->create(Message::class, $response, true);
+        });
     }
 
     /**
-     * Send message after delay.
+     * Replies to the message after a delay.
      *
      * @param string $text  Text to send after delay.
      * @param int    $delay Delay after text will be sent in milliseconds.
@@ -396,10 +485,25 @@ class Message extends Part
         $deferred = new Deferred();
 
         $this->discord->getLoop()->addTimer($delay / 1000, function () use ($text, $deferred) {
-            $this->reply($text)->done(
-                Bind([$deferred, 'resolve']),
-                Bind([$deferred, 'reject'])
-            );
+            $this->reply($text)->done([$deferred, 'resolve'], [$deferred, 'reject']);
+        });
+
+        return $deferred->promise();
+    }
+
+    /**
+     * Deletes the message after a delay.
+     *
+     * @param int $delay Time to delay the delete by, in milliseconds.
+     *
+     * @return ExtendedPromseInterface
+     */
+    public function delayedDelete(int $delay): ExtendedPromiseInterface
+    {
+        $deferred = new Deferred();
+
+        $this->discord->getLoop()->addTimer($delay / 1000, function () use ($deferred) {
+            $this->delete([$deferred, 'resolve'], [$deferred, 'reject']);
         });
 
         return $deferred->promise();
@@ -414,22 +518,11 @@ class Message extends Part
      */
     public function react($emoticon): ExtendedPromiseInterface
     {
-        $deferred = new Deferred();
-
         if ($emoticon instanceof Emoji) {
             $emoticon = $emoticon->toReactionString();
         }
 
-        $emoticon = urlencode($emoticon);
-
-        $this->http->put(
-            "channels/{$this->channel->id}/messages/{$this->id}/reactions/{$emoticon}/@me"
-        )->done(
-            Bind([$deferred, 'resolve']),
-            Bind([$deferred, 'reject'])
-        );
-
-        return $deferred->promise();
+        return $this->http->put(Endpoint::bind(Endpoint::OWN_MESSAGE_REACTION, $this->channel_id, $this->id, urlencode($emoticon)));
     }
 
     /**
@@ -443,8 +536,6 @@ class Message extends Part
      */
     public function deleteReaction(int $type, $emoticon = null, ?string $id = null): ExtendedPromiseInterface
     {
-        $deferred = new Deferred();
-
         $types = [self::REACT_DELETE_ALL, self::REACT_DELETE_ME, self::REACT_DELETE_ID, self::REACT_DELETE_EMOJI];
 
         if ($emoticon instanceof Emoji) {
@@ -454,30 +545,23 @@ class Message extends Part
         if (in_array($type, $types)) {
             switch ($type) {
                 case self::REACT_DELETE_ALL:
-                    $url = "channels/{$this->channel->id}/messages/{$this->id}/reactions";
+                    $url = Endpoint::bind(Endpoint::MESSAGE_REACTION_ALL, $this->channel_id, $this->id);
                     break;
                 case self::REACT_DELETE_ME:
-                    $url = "channels/{$this->channel->id}/messages/{$this->id}/reactions/{$emoticon}/@me";
+                    $url = Endpoint::bind(Endpoint::OWN_MESSAGE_REACTION, $this->channel_id, $this->id, $emoticon);
                     break;
                 case self::REACT_DELETE_ID:
-                    $url = "channels/{$this->channel->id}/messages/{$this->id}/reactions/{$emoticon}/{$id}";
+                    $url = Endpoint::bind(Endpoint::USER_MESSAGE_REACTION, $this->channel_id, $this->id, $emoticon, $id);
                     break;
                 case self::REACT_DELETE_EMOJI:
-                    $url = "channels/{$this->channel->id}/messages/{$this->id}/reactions/{$emoticon}";
+                    $url = Endpoint::bind(Endpoint::MESSAGE_REACTION_EMOJI, $this->channel_id, $this->id, $emoticon);
                     break;
             }
 
-            $this->http->delete(
-                $url, []
-            )->done(
-                Bind([$deferred, 'resolve']),
-                Bind([$deferred, 'reject'])
-            );
-        } else {
-            $deferred->reject();
+            return $this->http->delete($url);
         }
 
-        return $deferred->promise();
+        return \React\Promise\reject();
     }
 
     /**
@@ -487,14 +571,7 @@ class Message extends Part
      */
     public function delete(): ExtendedPromiseInterface
     {
-        $deferred = new Deferred();
-
-        $this->http->delete("channels/{$this->channel_id}/messages/{$this->id}")->done(
-            Bind([$deferred, 'resolve']),
-            Bind([$deferred, 'reject'])
-        );
-
-        return $deferred->promise();
+        return $this->http->delete(Endpoint::bind(Endpoint::CHANNEL_MESSAGE, $this->channel_id, $this->id));
     }
 
     /**
@@ -558,16 +635,13 @@ class Message extends Part
      */
     public function addEmbed(Embed $embed): ExtendedPromiseInterface
     {
-        $deferred = new Deferred();
-
-        $this->http->patch("channels/{$this->channel_id}/messages/{$this->id}", [
+        return $this->http->patch(Endpoint::bind(Endpoint::CHANNEL_MESSAGE, $this->channel_id, $this->id), [
             'embed' => $embed->getRawAttributes(),
-        ])->done(function ($data) use ($deferred) {
-            $this->fill((array) $data);
-            $deferred->resolve($this);
-        }, Bind([$deferred, 'reject']));
-
-        return $deferred->promise();
+        ])->then(function ($response) {
+            $this->fill((array) $response);
+            
+            return $this;
+        });
     }
 
     /**

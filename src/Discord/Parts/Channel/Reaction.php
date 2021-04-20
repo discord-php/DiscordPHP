@@ -3,7 +3,7 @@
 /*
  * This file is apart of the DiscordPHP project.
  *
- * Copyright (c) 2016-2020 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2021 David Cole <david.cole1340@gmail.com>
  *
  * This source file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -12,10 +12,15 @@
 namespace Discord\Parts\Channel;
 
 use Discord\Helpers\Collection;
+use Discord\Http\Endpoint;
 use Discord\Parts\Guild\Emoji;
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
 use React\Promise\ExtendedPromiseInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+
+use function Discord\normalizePartId;
+use function React\Promise\resolve;
 
 /**
  * Represents a reaction to a message by members(s).
@@ -35,6 +40,27 @@ class Reaction extends Part
      * {@inheritdoc}
      */
     protected $fillable = ['count', 'me', 'emoji', 'message_id', 'channel_id'];
+
+    /**
+     * {@inheritdoc}
+     */
+    public function isPartial(): bool
+    {
+        return $this->message == null;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function fetch(): ExtendedPromiseInterface
+    {
+        return $this->http->get(Endpoint::bind(Endpoint::CHANNEL_MESSAGE, $this->channel_id, $this->message_id))
+            ->then(function ($message) {
+                $this->attributes['message'] = $this->factory->create(Message::class, $message, true);
+
+                return $this;
+            });
+    }
 
     /**
      * Gets the emoji identifier, combination of `id` and `name`.
@@ -59,16 +85,31 @@ class Reaction extends Part
      */
     public function getUsers(array $options = []): ExtendedPromiseInterface
     {
-        $content = http_build_query($options);
-        $query = "channels/{$this->channel_id}/messages/{$this->message_id}/reactions/".urlencode($this->id).(empty($content) ? null : "?{$content}");
+        $query = Endpoint::bind(Endpoint::MESSAGE_REACTION_EMOJI, $this->channel_id, $this->message_id, urlencode($this->id));
+
+        $resolver = new OptionsResolver();
+        $resolver
+            ->setDefined(['before', 'after', 'limit'])
+            ->setAllowedTypes('before', ['int', 'string', User::class])
+            ->setAllowedTypes('after', ['int', 'string', User::class])
+            ->setAllowedTypes('limit', 'int')
+            ->setNormalizer('before', normalizePartId())
+            ->setNormalizer('after', normalizePartId())
+            ->setAllowedValues('limit', range(1, 100));
+
+        $options = $resolver->resolve($options);
+
+        foreach ($options as $key => $value) {
+            $query->addQuery($key, $value);
+        }
 
         return $this->http->get($query)
         ->then(function ($response) {
             $users = new Collection([], 'id', User::class);
 
             foreach ((array) $response as $user) {
-                if ($user = $this->discord->users->get('id', $user->id)) {
-                    $users->push($user);
+                if ($part = $this->discord->users->get('id', $user->id)) {
+                    $users->push($part);
                 } else {
                     $users->push(new User($this->discord, (array) $user, true));
                 }
@@ -76,6 +117,39 @@ class Reaction extends Part
 
             return $users;
         });
+    }
+
+    /**
+     * Gets all the users that have used this reaction.
+     * Wrapper of the lower-level getUsers() function.
+     *
+     * @return ExtendedPromiseInterface<Collection|Users[]>
+     */
+    public function getAllUsers(): ExtendedPromiseInterface
+    {
+        $response = Collection::for(User::class);
+        $getUsers = function ($after = null) use (&$getUsers, $response) {
+            $options = ['limit' => 100];
+            if ($after != null) {
+                $options['after'] = $after;
+            }
+
+            return $this->getUsers($options)->then(function (Collection $users) use ($response, &$getUsers) {
+                $last = null;
+                foreach ($users as $user) {
+                    $response->push($user);
+                    $last = $user;
+                }
+
+                if ($users->count() < 100) {
+                    return resolve($response);
+                }
+
+                return $getUsers($last);
+            });
+        };
+
+        return $getUsers();
     }
 
     /**
@@ -104,7 +178,7 @@ class Reaction extends Part
             return $channel->messages->offsetGet($this->message_id);
         }
 
-        return null;
+        return $this->attributes['message'] ?? null;
     }
 
     /**

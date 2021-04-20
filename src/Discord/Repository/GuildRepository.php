@@ -3,7 +3,7 @@
 /*
  * This file is apart of the DiscordPHP project.
  *
- * Copyright (c) 2016-2020 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2021 David Cole <david.cole1340@gmail.com>
  *
  * This source file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -11,8 +11,8 @@
 
 namespace Discord\Repository;
 
+use Discord\Http\Endpoint;
 use Discord\Parts\Guild\Guild;
-use Discord\Helpers\Deferred;
 use React\Promise\ExtendedPromiseInterface;
 
 /**
@@ -26,12 +26,12 @@ class GuildRepository extends AbstractRepository
      * {@inheritdoc}
      */
     protected $endpoints = [
-        'all' => 'users/@me/guilds',
-        'get' => 'guilds/:id',
-        'create' => 'guilds',
-        'update' => 'guilds/:id',
-        'delete' => 'guilds/:id',
-        'leave' => 'users/@me/guilds/:id',
+        'all' => Endpoint::USER_CURRENT_GUILDS,
+        'get' => Endpoint::GUILD,
+        'create' => Endpoint::GUILDS,
+        'update' => Endpoint::GUILD,
+        'delete' => Endpoint::GUILD,
+        'leave' => Endpoint::USER_CURRENT_GUILD,
     ];
 
     /**
@@ -48,17 +48,14 @@ class GuildRepository extends AbstractRepository
      */
     public function leave($guild): ExtendedPromiseInterface
     {
-        $deferred = new Deferred();
-
         if ($guild instanceof Guild) {
             $guild = $guild->id;
         }
 
-        $this->http->delete("users/@me/guilds/{$guild}")->done(function () use ($guild, $deferred) {
+        return $this->http->delete(Endpoint::bind(Endpoint::USER_CURRENT_GUILD, $guild))->then(function () use ($guild) {
             $this->pull('id', $guild);
-            $deferred->resolve();
-        }, \React\Partial\bind([$deferred, 'reject']));
 
-        return $deferred->promise();
+            return $this;
+        });
     }
 }

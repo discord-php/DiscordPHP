@@ -3,7 +3,7 @@
 /*
  * This file is apart of the DiscordPHP project.
  *
- * Copyright (c) 2016-2020 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2021 David Cole <david.cole1340@gmail.com>
  *
  * This source file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -11,12 +11,11 @@
 
 namespace Discord\Parts\Channel;
 
+use Discord\Http\Endpoint;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
-use Discord\Helpers\Deferred;
 use React\Promise\PromiseInterface;
-use function React\Partial\bind as Bind;
 
 /**
  * Webhooks are a low-effort way to post messages to channels in Discord. They do not require a bot user or authentication to use.
@@ -61,14 +60,7 @@ class Webhook extends Part
      */
     public function execute(array $data): PromiseInterface
     {
-        $deferred = new Deferred();
-
-        $this->http->post("webhooks/{$this->id}/{$this->token}", $data)->done(
-            Bind([$deferred, 'resolve']),
-            Bind([$deferred, 'reject'])
-        );
-
-        return $deferred->promise();
+        return $this->http->post(Endpoint::bind(Endpoint::WEBHOOK_EXECUTE, $this->id, $this->token), $data);
     }
 
     /**
@@ -131,6 +123,16 @@ class Webhook extends Part
         return [
             'name' => $this->name,
             'avatar' => $this->avatar,
+        ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getRepositoryAttributes(): array
+    {
+        return [
+            'webhook_id' => $this->id,
         ];
     }
 }

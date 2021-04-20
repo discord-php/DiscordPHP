@@ -3,7 +3,7 @@
 /*
  * This file is apart of the DiscordPHP project.
  *
- * Copyright (c) 2016-2020 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2021 David Cole <david.cole1340@gmail.com>
  *
  * This source file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -20,6 +20,7 @@ use Discord\Parts\User\User;
 use Discord\Parts\WebSockets\VoiceStateUpdate as VoiceStateUpdatePart;
 use Discord\WebSockets\Event;
 use Discord\Helpers\Deferred;
+use Discord\Http\Endpoint;
 
 class GuildCreate extends Event
 {
@@ -92,7 +93,7 @@ class GuildCreate extends Event
         };
 
         if ($this->discord->options['retrieveBans']) {
-            $this->http->get("guilds/{$guildPart->id}/bans")->done(function ($rawBans) use (&$guildPart, $resolve) {
+            $this->http->get(Endpoint::bind(Endpoint::GUILD_BANS, $guildPart->id))->done(function ($rawBans) use (&$guildPart, $resolve) {
                 foreach ($rawBans as $ban) {
                     $ban = (array) $ban;
                     $ban['guild'] = $guildPart;

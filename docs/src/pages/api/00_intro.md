@@ -8,23 +8,22 @@ The class reference has moved. You can now access it [here](http://discord-php.g
 
 ### Requirements
 
-- PHP 7.3 CLI
-    - Will not run on a webserver (FPM, CGI), you must run through CLI.
-    - Library _can_ run on PHP 7.2 but support for this version will be removed soon. No support will be given if there are any errors.
-    - Expect the requirement to increased to PHP 7.4 without warning.
+- PHP 7.4 CLI
+    - Will not run on a webserver (FPM, CGI), you must run through CLI. A bot is a long-running process.
 - `ext-json` for JSON parsing.
 - `ext-zlib` for gateway packet compression.
 
 #### Recommended Extensions
 
-- One of `ext-uv` (preferred), `ext-libev` or `evt-event` for a faster, and more performant event loop.
+- One of `ext-uv`, `ext-libev` or `evt-event` (in order of preference) for a faster, and more performant event loop.
 - `ext-mbstring` if you may handle non-english characters.
 
 #### Voice Requirements
 
-- 64-bit Linux or Darwin based OS. Windows is not and is not planned to be supported.
+- x86_64 Windows, Linux or Darwin based OS.
+    - If you are running on Windows, you must be using PHP 8.0.
 - `ext-sodium` for voice encryption.
-- FFmpeg if you plan on playing anything but raw 16-bit little-endian PCM.
+- FFmpeg
 
 ### Development Environment Recommendations
 
@@ -64,7 +63,7 @@ You can learn more about ReactPHP promises [here](https://reactphp.org/promise/)
 
 ### Help
 
-If you need any help, feel free to join the [PHP Discorders]() Discord and someone should be able to give you a hand. We are a small community so please be patient if someone can't help you straight away.
+If you need any help, feel free to join the [PHP Discorders](https://discord.gg/dphp) Discord and someone should be able to give you a hand. We are a small community so please be patient if someone can't help you straight away.
 
 ### Contributing
 

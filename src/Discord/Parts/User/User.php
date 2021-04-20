@@ -3,7 +3,7 @@
 /*
  * This file is apart of the DiscordPHP project.
  *
- * Copyright (c) 2016-2020 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2021 David Cole <david.cole1340@gmail.com>
  *
  * This source file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -11,12 +11,12 @@
 
 namespace Discord\Parts\User;
 
+use Discord\Http\Endpoint;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Embed\Embed;
 use Discord\Parts\Part;
-use Discord\Helpers\Deferred;
+use Discord\Parts\Channel\Message;
 use React\Promise\ExtendedPromiseInterface;
-use function React\Partial\bind as Bind;
 
 /**
  * A user is a general user that is not attached to a guild.
@@ -69,20 +69,16 @@ class User extends Part
      */
     public function getPrivateChannel(): ExtendedPromiseInterface
     {
-        $deferred = new Deferred();
-
         if ($channel = $this->discord->private_channels->get('recipient_id', $this->id)) {
-            $deferred->resolve($channel);
-        } else {
-            $this->http->post('users/@me/channels', ['recipient_id' => $this->id])->done(function ($response) use ($deferred) {
-                $channel = $this->factory->create(Channel::class, $response, true);
-                $this->discord->private_channels->push($channel);
-
-                $deferred->resolve($channel);
-            }, Bind([$deferred, 'reject']));
+            return \React\Promise\resolve($channel);
         }
 
-        return $deferred->promise();
+        return $this->http->post(Endpoint::USER_CURRENT_CHANNELS, ['recipient_id' => $this->id])->then(function ($response) {
+            $channel = $this->factory->create(Channel::class, $response, true);
+            $this->discord->private_channels->push($channel);
+
+            return $channel;
+        });
     }
 
     /**
@@ -97,15 +93,9 @@ class User extends Part
      */
     public function sendMessage(string $message, bool $tts = false, ?Embed $embed = null): ExtendedPromiseInterface
     {
-        $deferred = new Deferred();
-
-        $this->getPrivateChannel()->done(function ($channel) use ($message, $tts, $embed, $deferred) {
-            $channel->sendMessage($message, $tts, $embed)->done(function ($message) use ($deferred) {
-                $deferred->resolve($message);
-            }, Bind([$deferred, 'reject']));
-        }, Bind([$deferred, 'reject']));
-
-        return $deferred->promise();
+        return $this->getPrivateChannel()->then(function ($channel) use ($message, $tts, $embed) {
+            return $channel->sendMessage($message, $tts, $embed);
+        });
     }
 
     /**
@@ -116,16 +106,9 @@ class User extends Part
      */
     public function broadcastTyping(): ExtendedPromiseInterface
     {
-        $deferred = new Deferred();
-
-        $this->getPrivateChannel()->done(function ($channel) use ($deferred) {
-            $channel->broadcastTyping()->done(
-                Bind([$deferred, 'resolve']),
-                Bind([$deferred, 'reject'])
-            );
+        return $this->getPrivateChannel()->then(function ($channel) {
+            return $channel->broadcastTyping();
         });
-
-        return $deferred->promise();
     }
 
     /**
@@ -169,6 +152,16 @@ class User extends Part
     public function createdTimestamp()
     {
         return \Discord\getSnowflakeTimestamp($this->id);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getRepositoryAttributes(): array
+    {
+        return [
+            'user_id' => $this->id,
+        ];
     }
 
     /**

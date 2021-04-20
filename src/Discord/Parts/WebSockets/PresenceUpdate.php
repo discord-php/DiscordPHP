@@ -3,7 +3,7 @@
 /*
  * This file is apart of the DiscordPHP project.
  *
- * Copyright (c) 2016-2020 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2021 David Cole <david.cole1340@gmail.com>
  *
  * This source file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -26,19 +26,17 @@ use Discord\Parts\User\User;
  *
  * @property Member                       $member The member that the presence update affects.
  * @property User                         $user The user that the presence update affects.
- * @property Collection|Role[]            $roles The roles that the user has.
  * @property Guild                        $guild The guild that the presence update affects.
  * @property string                       $guild_id The unique identifier of the guild that the presence update affects.
  * @property string                       $status The updated status of the user.
  * @property Activity                     $game The updated game of the user.
- * @property Carbon                       $premium_since Time since user started boosting guild.
  */
 class PresenceUpdate extends Part
 {
     /**
      * {@inheritdoc}
      */
-    protected $fillable = ['user', 'roles', 'game', 'guild_id', 'status', 'activities', 'client_status', 'premium_since', 'nick'];
+    protected $fillable = ['user', 'guild_id', 'status', 'activities', 'client_status'];
 
     /**
      * Gets the member attribute.
@@ -106,11 +104,23 @@ class PresenceUpdate extends Part
      */
     protected function getGameAttribute(): ?Part
     {
-        if (! isset($this->attributes['game'])) {
-            return null;
+        return $this->activities->first();
+    }
+
+    /**
+     * Gets the activities attribute.
+     *
+     * @return Collection|Activity[]
+     */
+    protected function getActivitiesAttribute()
+    {
+        $collection = Collection::for(Activity::class, null);
+
+        foreach ($this->attributes['activities'] ?? [] as $activity) {
+            $collection->push($this->factory->create(Activity::class, $activity, true));
         }
 
-        return $this->factory->create(Activity::class, $this->attributes['game'], true);
+        return $collection;
     }
 
     /**

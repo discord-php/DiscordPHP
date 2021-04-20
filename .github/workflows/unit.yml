@@ -16,5 +16,5 @@ jobs:
         uses: actions/checkout@v2
       - name: PHP 7.4
         uses: ./.github/actions/php7.4
-      - name: PHP 7.3
-        uses: ./.github/actions/php7.3
+      - name: PHP 8.0
+        uses: ./.github/actions/php8.0

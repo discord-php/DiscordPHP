@@ -21,7 +21,7 @@ Discord does not provide a way to get message update history.
 Requires the `Intents::GUILD_MESSAGES` intent.
 
 ```php
-$discord->on(Event::MESSAGE_UPDATE, function (Message $newMessage, Discord $discord, Message $oldMessage) {
+$discord->on(Event::MESSAGE_UPDATE, function (Message $newMessage, Discord $discord, $oldMessage) {
     // ...
 });
 ```
@@ -240,7 +240,7 @@ Called with two `Member` objects when a member is updated in a guild. Note that 
 Requires the `Intents::GUILD_MEMBERS` intent. This intent is a priviliged intent, it must be enabled in your Discord bot developer settings.
 
 ```php
-$discord->on(Event::GUILD_MEMBER_UPDATE, function (Member $new, Discord $discord, Member $old) {
+$discord->on(Event::GUILD_MEMBER_UPDATE, function (Member $new, Discord $discord, $old) {
     // ...
 });
 ```

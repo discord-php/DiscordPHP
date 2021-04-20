@@ -3,7 +3,7 @@
 /*
  * This file is apart of the DiscordPHP project.
  *
- * Copyright (c) 2016-2020 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2021 David Cole <david.cole1340@gmail.com>
  *
  * This source file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -12,12 +12,11 @@
 namespace Discord\Parts\Guild;
 
 use Carbon\Carbon;
+use Discord\Http\Endpoint;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
-use Discord\Helpers\Deferred;
 use React\Promise\ExtendedPromiseInterface;
-use function React\Partial\bind as Bind;
 
 /**
  * An invite to a Channel and Guild.
@@ -62,26 +61,15 @@ class Invite extends Part
      */
     public function accept(): ExtendedPromiseInterface
     {
-        $deferred = new Deferred();
-
         if ($this->revoked) {
-            $deferred->reject(new \Exception('This invite has been revoked.'));
-
-            return $deferred->promise();
+            return \React\Promise\reject(new \Exception('This invite has been revoked.'));
         }
 
         if ($this->uses >= $this->max_uses) {
-            $deferred->reject(new \Exception('This invite has been used the max times.'));
-
-            return $deferred->promise();
+            return \React\Promise\reject(new \Exception('This invite has been used the max times.'));
         }
 
-        $this->http->post("invite/{$this->code}")->done(
-            Bind([$deferred, 'resolve']),
-            Bind([$deferred, 'reject'])
-        );
-
-        return $deferred->promise();
+        return $this->http->post(Endpoint::bind(Endpoint::INVITE, $this->code));
     }
 
     /**
@@ -194,5 +182,15 @@ class Invite extends Part
     public function getCreatableAttributes(): array
     {
         return [];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getRepositoryAttributes(): array
+    {
+        return [
+            'code' => $this->code,
+        ];
     }
 }

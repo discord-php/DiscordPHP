@@ -3,7 +3,7 @@
 /*
  * This file is apart of the DiscordPHP project.
  *
- * Copyright (c) 2016-2020 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2021 David Cole <david.cole1340@gmail.com>
  *
  * This source file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -170,5 +170,16 @@ class Intents
         }
 
         return $intentVal;
+    }
+
+    /**
+     * Returns an integer value that represents the default intents.
+     * This is all intents minus the privileged intents.
+     *
+     * @return int
+     */
+    public static function getDefaultIntents(): int
+    {
+        return static::getAllIntents() & ~(static::GUILD_MEMBERS | static::GUILD_PRESENCES);
     }
 }

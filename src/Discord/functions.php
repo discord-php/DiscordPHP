@@ -3,7 +3,7 @@
 /*
  * This file is apart of the DiscordPHP project.
  *
- * Copyright (c) 2016-2020 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2021 David Cole <david.cole1340@gmail.com>
  *
  * This source file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -17,6 +17,7 @@ use Discord\Parts\Guild\Role;
 use Discord\Parts\Part;
 use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
+use Symfony\Component\OptionsResolver\Options;
 
 /**
  * The HTML Color Table.
@@ -220,4 +221,25 @@ function getSnowflakeTimestamp(string $snowflake)
     }
 
     return $timestamp;
+}
+
+/**
+ * For use with the Symfony options resolver.
+ * For an option that takes a snowflake or part,
+ * returns the snowflake or the value of `id_field`
+ * on the part.
+ *
+ * @param string $id_field
+ *
+ * @internal
+ */
+function normalizePartId($id_field = 'id')
+{
+    return static function (Options $options, $part) use ($id_field) {
+        if ($part instanceof Part) {
+            return $part->{$id_field};
+        }
+
+        return $part;
+    };
 }

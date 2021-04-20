@@ -5,15 +5,15 @@ declare(strict_types=1);
 /*
  * This file is apart of the DiscordPHP project.
  *
- * Copyright (c) 2016-2020 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2021 David Cole <david.cole1340@gmail.com>
  *
  * This source file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
  */
 
-const TIMEOUT = 5;
+const TIMEOUT = 10;
 
-function wait(callable $callback, float $timeout = TIMEOUT)
+function wait(callable $callback, float $timeout = TIMEOUT, callable $timeoutFn = null)
 {
     $discord = DiscordSingleton::get();
 
@@ -27,7 +27,11 @@ function wait(callable $callback, float $timeout = TIMEOUT)
             $discord->getLoop()->stop();
         };
 
-        $finally = $callback($discord, $resolve);
+        try {
+            $finally = $callback($discord, $resolve);
+        } catch (\Throwable $e) {
+            $resolve($e);
+        }
     });
 
     $timeout = $discord->getLoop()->addTimer($timeout, function () use ($discord, &$timedOut) {
@@ -38,12 +42,20 @@ function wait(callable $callback, float $timeout = TIMEOUT)
     $discord->getLoop()->run();
     $discord->getLoop()->cancelTimer($timeout);
 
+    if ($result instanceof Exception) {
+        throw $result;
+    }
+
     if (is_callable($finally)) {
         $finally();
     }
 
     if ($timedOut) {
-        throw new \Exception('Timed out');
+        if ($timeoutFn != null) {
+            $timeoutFn();
+        } else {
+            throw new \Exception('Timed out');
+        }
     }
 
     return $result;

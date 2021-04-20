@@ -3,7 +3,7 @@
 /*
  * This file is apart of the DiscordPHP project.
  *
- * Copyright (c) 2016-2020 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2021 David Cole <david.cole1340@gmail.com>
  *
  * This source file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -13,17 +13,15 @@ namespace Discord\Parts\User;
 
 use Carbon\Carbon;
 use Discord\Helpers\Collection;
+use Discord\Http\Endpoint;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Channel\Overwrite;
-use Discord\Parts\Guild\Ban;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Guild\Role;
 use Discord\Parts\Part;
 use Discord\Parts\Permissions\RolePermission;
 use Discord\Parts\WebSockets\PresenceUpdate;
-use Discord\Helpers\Deferred;
 use React\Promise\ExtendedPromiseInterface;
-use function React\Partial\bind as Bind;
 
 /**
  * A member is a relationship between a user and a guild. It contains user-to-guild specific data like roles.
@@ -50,7 +48,7 @@ class Member extends Part
     /**
      * {@inheritdoc}
      */
-    protected $fillable = ['user', 'roles', 'deaf', 'mute', 'joined_at', 'guild_id', 'status', 'game', 'nick', 'premium_since', 'activities', 'client_status'];
+    protected $fillable = ['id', 'user', 'roles', 'deaf', 'mute', 'joined_at', 'guild_id', 'status', 'nick', 'premium_since', 'activities', 'client_status'];
 
     /**
      * {@inheritdoc}
@@ -100,26 +98,16 @@ class Member extends Part
      */
     public function setNickname(?string $nick = null): ExtendedPromiseInterface
     {
-        $deferred = new Deferred();
-
-        $nick = $nick ?: '';
         $payload = [
-            'nick' => $nick,
+            'nick' => $nick ?: '',
         ];
 
         // jake plz
         if ($this->discord->id == $this->id) {
-            $promise = $this->http->patch("guilds/{$this->guild_id}/members/@me/nick", $payload);
-        } else {
-            $promise = $this->http->patch("guilds/{$this->guild_id}/members/{$this->id}", $payload);
+            return $this->http->patch(Endpoint::bind(Endpoint::GUILD_MEMBER_SELF_NICK, $this->guild_id), $payload);
         }
 
-        $promise->done(
-            Bind([$deferred, 'resolve']),
-            Bind([$deferred, 'reject'])
-        );
-
-        return $deferred->promise();
+        return $this->http->patch(Endpoint::bind(Endpoint::GUILD_MEMBER, $this->guild_id, $this->id), $payload);
     }
 
     /**
@@ -131,25 +119,11 @@ class Member extends Part
      */
     public function moveMember($channel): ExtendedPromiseInterface
     {
-        $deferred = new Deferred();
-
         if ($channel instanceof Channel) {
             $channel = $channel->id;
         }
 
-        $this->http->patch(
-            "guilds/{$this->guild_id}/members/{$this->id}",
-            [
-                'channel_id' => $channel,
-            ]
-        )->done(function () use ($deferred) {
-            $deferred->resolve();
-        }, Bind([$deferred, 'reject']));
-
-        // At the moment we are unable to check if the member
-        // was moved successfully.
-
-        return $deferred->promise();
+        return $this->http->patch(Endpoint::bind(Endpoint::GUILD_MEMBER, $this->guild_id, $this->id), ['channel_id' => $channel]);
     }
 
     /**
@@ -161,25 +135,16 @@ class Member extends Part
      */
     public function addRole($role): ExtendedPromiseInterface
     {
-        $deferred = new Deferred();
-
         if ($role instanceof Role) {
             $role = $role->id;
         }
 
         // We don't want a double up on roles
         if (false !== array_search($role, (array) $this->attributes['roles'])) {
-            $deferred->reject(new \Exception('User already has role.'));
-        } else {
-            $this->http->put(
-                "guilds/{$this->guild_id}/members/{$this->id}/roles/{$role}"
-            )->done(function () use ($role, $deferred) {
-                $this->attributes['roles'][] = $role;
-                $deferred->resolve();
-            }, Bind([$deferred, 'reject']));
+            return \React\Promise\reject(new \Exception('User already has role.'));
         }
 
-        return $deferred->promise();
+        return $this->http->put(Endpoint::bind(Endpoint::GUILD_MEMBER_ROLE, $this->guild_id, $this->id, $role));
     }
 
     /**
@@ -191,24 +156,15 @@ class Member extends Part
      */
     public function removeRole($role): ExtendedPromiseInterface
     {
-        $deferred = new Deferred();
-
         if ($role instanceof Role) {
             $role = $role->id;
         }
 
-        if (false !== ($index = array_search($role, $this->attributes['roles']))) {
-            $this->http->delete(
-                "guilds/{$this->guild_id}/members/{$this->id}/roles/{$role}"
-            )->done(function () use ($index, $deferred) {
-                unset($this->attributes['roles'][$index]);
-                $deferred->resolve();
-            }, Bind([$deferred, 'reject']));
-        } else {
-            $deferred->reject(new \Exception('User does not have role.'));
+        if (false !== array_search($role, $this->attributes['roles'])) {
+            return $this->http->delete(Endpoint::bind(Endpoint::GUILD_MEMBER_ROLE, $this->guild_id, $this->id, $role));
         }
 
-        return $deferred->promise();
+        return \React\Promise\reject(new \Exception('User does not have role.'));
     }
 
     /**
@@ -260,7 +216,7 @@ class Member extends Part
 
             /* @var Overwrite */
             foreach ($channel->overwrites as $overwrite) {
-                if ($overwrite->type !== 'role' || ! in_array($overwrite->id, $roles)) {
+                if ($overwrite->type !== Overwrite::TYPE_ROLE || ! in_array($overwrite->id, $roles)) {
                     continue;
                 }
 
@@ -283,13 +239,13 @@ class Member extends Part
 
     /**
      * Gets the game attribute.
+     * Polyfill for the first activity.
      *
      * @return Activity
-     * @throws \Exception
      */
-    protected function getGameAttribute(): Part
+    protected function getGameAttribute(): ?Activity
     {
-        return $this->factory->create(Activity::class, $this->attributes['game'] ?? [], true);
+        return $this->activities->first();
     }
 
     /**
@@ -316,7 +272,7 @@ class Member extends Part
      */
     protected function getIdAttribute(): string
     {
-        return $this->attributes['user']->id;
+        return $this->attributes['id'] ?? $this->attributes['user']->id;
     }
 
     /**
@@ -392,7 +348,7 @@ class Member extends Part
     /**
      * Returns the joined at attribute.
      *
-     * @return Carbon|null     The timestamp from when the member joined.
+     * @return Carbon|null The timestamp from when the member joined.
      * @throws \Exception
      */
     protected function getJoinedAtAttribute(): ?Carbon
@@ -425,6 +381,16 @@ class Member extends Part
     {
         return [
             'roles' => array_values($this->attributes['roles']),
+        ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getRepositoryAttributes(): array
+    {
+        return [
+            'user_id' => $this->id,
         ];
     }
 

@@ -5,15 +5,11 @@
     "authors": [
         {
             "name": "David Cole",
-            "email": "david@team-reflex.com"
-        },
-        {
-            "name": "Aaron Scherer",
-            "email": "aequasi@gmail.com"
+            "email": "david.cole1340@gmail.com"
         }
     ],
     "require": {
-        "php": "^7.2|^8.0",
+        "php": "^7.4|^8.0",
         "nesbot/carbon": "^2.38",
         "ratchet/pawl": "0.3.*",
         "react/datagram": "1.5.*",
@@ -24,7 +20,9 @@
         "mollie/polyfill-libsodium": "^1.1",
         "react/http": "^1.1",
         "ext-json": "*",
-        "ext-zlib": "*"
+        "ext-zlib": "*",
+        "discord-php/http": "^8",
+        "react/child-process": "^0.6.2"
     },
     "require-dev": {
         "symfony/var-dumper": "*",
@@ -41,13 +39,14 @@
         }
     },
     "suggest": {
-        "ext-uv": "For a faster, and more performant loop. PHP >=7 only. Preferred.",
-        "ext-libev": "For a faster, and more performant loop",
-        "ext-event": "For a faster, and more performant loop",
+        "ext-uv": "For a faster, and more performant loop. Preferred.",
+        "ext-libev": "For a faster, and more performant loop.",
+        "ext-event": "For a faster, and more performant loop.",
         "ext-mbstring": "For accurate calculations of string length when handling non-english characters."
     },
     "scripts": {
         "cs": ["./vendor/bin/php-cs-fixer fix"],
-        "unit": ["./vendor/bin/phpunit"]
+        "unit": ["./vendor/bin/phpunit --testdox"],
+        "coverage": ["XDEBUG_MODE=coverage ./vendor/bin/phpunit --coverage-html coverage --testdox"]
     }
 }

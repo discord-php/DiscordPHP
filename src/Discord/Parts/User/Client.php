@@ -3,7 +3,7 @@
 /*
  * This file is apart of the DiscordPHP project.
  *
- * Copyright (c) 2016-2020 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2021 David Cole <david.cole1340@gmail.com>
  *
  * This source file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -12,14 +12,13 @@
 namespace Discord\Parts\User;
 
 use Discord\Exceptions\FileNotFoundException;
+use Discord\Http\Endpoint;
 use Discord\Parts\OAuth\Application;
 use Discord\Parts\Part;
 use Discord\Repository\GuildRepository;
 use Discord\Repository\PrivateChannelRepository;
 use Discord\Repository\UserRepository;
-use Discord\Helpers\Deferred;
 use React\Promise\ExtendedPromiseInterface;
-use function React\Partial\bind as Bind;
 
 /**
  * The client is the main interface for the client. Most calls on the main class are forwarded here.
@@ -61,7 +60,7 @@ class Client extends Part
     {
         $this->application = $this->factory->create(Application::class, [], true);
 
-        $this->http->get('oauth2/applications/@me')->done(function ($response) {
+        $this->http->get(Endpoint::APPLICATION_CURRENT)->done(function ($response) {
             $this->application->fill((array) $response);
         });
     }
@@ -123,14 +122,7 @@ class Client extends Part
      */
     public function save(): ExtendedPromiseInterface
     {
-        $deferred = new Deferred();
-
-        $this->http->patch('users/@me', $this->getUpdatableAttributes())->done(
-            Bind([$deferred, 'resolve']),
-            Bind([$deferred, 'reject'])
-        );
-
-        return $deferred->promise();
+        return $this->http->patch(Endpoint::USER_CURRENT, $this->getUpdatableAttributes());
     }
 
     /**

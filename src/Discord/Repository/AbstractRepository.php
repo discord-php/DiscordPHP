@@ -3,7 +3,7 @@
 /*
  * This file is apart of the DiscordPHP project.
  *
- * Copyright (c) 2016-2020 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2021 David Cole <david.cole1340@gmail.com>
  *
  * This source file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -13,12 +13,10 @@ namespace Discord\Repository;
 
 use Discord\Factory\Factory;
 use Discord\Helpers\Collection;
+use Discord\Http\Endpoint;
 use Discord\Http\Http;
 use Discord\Parts\Part;
-use Discord\Helpers\Deferred;
 use React\Promise\ExtendedPromiseInterface;
-use function React\Promise\reject as Reject;
-use function React\Promise\resolve as Resolve;
 
 /**
  * Repositories provide a way to store and update parts on the Discord server.
@@ -87,19 +85,13 @@ abstract class AbstractRepository extends Collection
     public function freshen(): ExtendedPromiseInterface
     {
         if (! isset($this->endpoints['all'])) {
-            return Reject(new \Exception('You cannot freshen this repository.'));
+            return \React\Promise\reject(new \Exception('You cannot freshen this repository.'));
         }
 
-        $deferred = new Deferred();
+        $endpoint = new Endpoint($this->endpoints['all']);
+        $endpoint->bindAssoc($this->vars);
 
-        $this->http->get(
-            $this->replaceWithVariables(
-                $this->endpoints['all']
-            ),
-            null,
-            [],
-            false
-        )->done(function ($response) use ($deferred) {
+        return $this->http->get($endpoint)->then(function ($response) {
             $this->fill([]);
 
             foreach ($response as $value) {
@@ -109,12 +101,8 @@ abstract class AbstractRepository extends Collection
                 $this->push($part);
             }
 
-            $deferred->resolve($this);
-        }, function ($e) use ($deferred) {
-            $deferred->reject($e);
+            return $this;
         });
-
-        return $deferred->promise();
     }
 
     /**
@@ -144,40 +132,34 @@ abstract class AbstractRepository extends Collection
     public function save(Part $part): ExtendedPromiseInterface
     {
         if ($part->created) {
-            $method = 'patch';
-            $endpoint = $part->replaceWithVariables($this->replaceWithVariables(@$this->endpoints['update']));
-            $attributes = $part->getUpdatableAttributes();
-
             if (! isset($this->endpoints['update'])) {
-                return Reject(new \Exception('You cannot update this part.'));
+                return \React\Promise\reject(new \Exception('You cannot update this part.'));
             }
-        } else {
-            $method = 'post';
-            $endpoint = $part->replaceWithVariables($this->replaceWithVariables(@$this->endpoints['create']));
-            $attributes = $part->getCreatableAttributes();
 
+            $method = 'patch';
+            $endpoint = new Endpoint($this->endpoints['update']);
+            $endpoint->bindAssoc(array_merge($part->getRepositoryAttributes(), $this->vars));
+            $attributes = $part->getUpdatableAttributes();
+        } else {
             if (! isset($this->endpoints['create'])) {
-                return Reject(new \Exception('You cannot create this part.'));
+                return \React\Promise\reject(new \Exception('You cannot create this part.'));
             }
+
+            $method = 'post';
+            $endpoint = new Endpoint($this->endpoints['create']);
+            $endpoint->bindAssoc(array_merge($part->getRepositoryAttributes(), $this->vars));
+            $attributes = $part->getCreatableAttributes();
         }
 
-        $deferred = new Deferred();
-
-        $this->http->{$method}(
-            $endpoint,
-            $attributes
-        )->done(function ($response) use ($deferred, &$part, $method) {
+        return $this->http->{$method}($endpoint, $attributes)->then(function ($response) use (&$part) {
             $part->fill((array) $response);
             $part->created = true;
             $part->deleted = false;
 
             $this->push($part);
-            $deferred->resolve($part);
-        }, function ($e) use ($deferred) {
-            $deferred->reject($e);
-        });
 
-        return $deferred->promise();
+            return $part;
+        });
     }
 
     /**
@@ -195,30 +177,21 @@ abstract class AbstractRepository extends Collection
         }
 
         if (! $part->created) {
-            return Reject(new \Exception('You cannot delete a non-existant part.'));
+            return \React\Promise\reject(new \Exception('You cannot delete a non-existant part.'));
         }
 
         if (! isset($this->endpoints['delete'])) {
-            return Reject(new \Exception('You cannot delete this part.'));
+            return \React\Promise\reject(new \Exception('You cannot delete this part.'));
         }
 
-        $deferred = new Deferred();
+        $endpoint = new Endpoint($this->endpoints['delete']);
+        $endpoint->bindAssoc(array_merge($part->getRepositoryAttributes(), $this->vars));
 
-        $this->http->delete(
-            $part->replaceWithVariables(
-                $this->replaceWithVariables(
-                    $this->endpoints['delete']
-                )
-            )
-        )->done(function ($response) use ($deferred, &$part) {
+        return $this->http->delete($endpoint)->then(function ($response) use (&$part) {
             $part->created = false;
 
-            $deferred->resolve($part);
-        }, function ($e) use ($deferred) {
-            $deferred->reject($e);
+            return $part;
         });
-
-        return $deferred->promise();
     }
 
     /**
@@ -232,34 +205,25 @@ abstract class AbstractRepository extends Collection
     public function fresh(Part $part): ExtendedPromiseInterface
     {
         if (! $part->created) {
-            return Reject(new \Exception('You cannot get a non-existant part.'));
+            return \React\Promise\reject(new \Exception('You cannot get a non-existant part.'));
         }
 
         if (! isset($this->endpoints['get'])) {
-            return Reject(new \Exception('You cannot get this part.'));
+            return \React\Promise\reject(new \Exception('You cannot get this part.'));
         }
 
-        $deferred = new Deferred();
+        $endpoint = new Endpoint($this->endpoints['get']);
+        $endpoint->bindAssoc(array_merge($part->getRepositoryAttributes(), $this->vars));
 
-        $this->http->get(
-            $part->replaceWithVariables(
-                $this->replaceWithVariables(
-                    $this->endpoints['get']
-                )
-            )
-        )->done(function ($response) use ($deferred, &$part) {
+        return $this->http->get($endpoint)->then(function ($response) use (&$part) {
             $part->fill((array) $response);
 
-            $deferred->resolve($part);
-        }, function ($e) use ($deferred) {
-            $deferred->reject($e);
+            return $part;
         });
-
-        return $deferred->promise();
     }
 
     /**
-     * Force gets a part from the Discord servers.
+     * Gets a part from the repository or Discord servers.
      *
      * @param string $id    The ID to search for.
      * @param bool   $fresh Whether we should skip checking the cache.
@@ -270,54 +234,23 @@ abstract class AbstractRepository extends Collection
     public function fetch(string $id, bool $fresh = false): ExtendedPromiseInterface
     {
         if (! $fresh && $part = $this->get($this->discrim, $id)) {
-            return Resolve($part);
+            return \React\Promise\resolve($part);
         }
 
         if (! isset($this->endpoints['get'])) {
-            return Reject(new \Exception('You cannot get this part.'));
+            return \React\Promise\resolve(new \Exception('You cannot get this part.'));
         }
 
-        $deferred = new Deferred();
+        $part = $this->factory->create($this->class, [$this->discrim => $id]);
+        $endpoint = new Endpoint($this->endpoints['get']);
+        $endpoint->bindAssoc(array_merge($part->getRepositoryAttributes(), $this->vars));
 
-        $this->http->get(
-            $this->replaceWithVariables(
-                str_replace(':id', $id, $this->endpoints['get'])
-            )
-        )->done(function ($response) use ($deferred) {
+        return $this->http->get($endpoint)->then(function ($response) {
             $part = $this->factory->create($this->class, array_merge($this->vars, (array) $response), true);
             $this->push($part);
 
-            $deferred->resolve($part);
-        }, function ($e) use ($deferred) {
-            $deferred->reject($e);
+            return $part;
         });
-
-        return $deferred->promise();
-    }
-
-    /**
-     * Replaces variables in string with syntax :{varname}.
-     *
-     * @param string $string A string with placeholders.
-     *
-     * @return string A string with placeholders replaced.
-     */
-    protected function replaceWithVariables(string $string): string
-    {
-        if (preg_match_all('/:([a-z_]+)/', $string, $matches)) {
-            list(
-                $original,
-                $vars
-            ) = $matches;
-
-            foreach ($vars as $key => $var) {
-                if (isset($this->vars[$var])) {
-                    $string = str_replace($original[$key], $this->vars[$var], $string);
-                }
-            }
-        }
-
-        return $string;
     }
 
     /**
