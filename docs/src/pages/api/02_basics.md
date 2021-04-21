@@ -83,23 +83,10 @@ Useful if you want to use other React components. By default, a new loop is crea
     'loop' => \React\EventLoop\Factory::create(),
 ```
 
-`logger` is an instance of a logger that implements `LoggerInterface`. By default, a new Monolog logger is created to print to stdout.
+`logger` is an instance of a logger that implements `LoggerInterface`. By default, a new Monolog logger with log level DEBUG is created to print to stdout.
 
 ```php
     'logger' => new \Monolog\Logger('New logger'),
-```
-
-`loggerLevel` is the level of logging that the default logger will use. See a list of possible constants [here](https://github.com/Seldaek/monolog/blob/master/src/Monolog/Logger.php#L33-L78). Default is `INFO` level.
-
-```php
-    'loggerLevel' => \Monolog\Logger::INFO,
-```
-
-`httpLogger` is an instance of a logger for the HTTP client that implements PSR `LoggerInterface`.
-By default, a null logger is created, which supresses HTTP logs.
-
-```php
-    'httpLogger' => new \Monolog\Logger('HTTP Logger'),
 ```
 
 <hr>
