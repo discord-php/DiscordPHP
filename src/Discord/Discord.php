@@ -1118,7 +1118,7 @@ class Discord
      * @param Channel              $channel The channel to join.
      * @param bool                 $mute    Whether you should be mute when you join the channel.
      * @param bool                 $deaf    Whether you should be deaf when you join the channel.
-     * @param LoggerInterface|null $logger  Voice client logger.
+     * @param LoggerInterface|null $logger  Voice client logger. If null, uses same logger as Discord client.
      * @param bool                 $check   Whether to check for system requirements.
      *
      * @return PromiseInterface
@@ -1164,11 +1164,8 @@ class Discord
             $data['endpoint'] = $vs->endpoint;
             $this->logger->info('received token and endpoint for voice session', ['guild' => $channel->guild_id, 'token' => $vs->token, 'endpoint' => $vs->endpoint]);
 
-            if (is_null($logger) && $this->options['logging']) {
-                $logger = new Monolog('Voice-'.$channel->guild_id);
-                $logger->pushHandler(new StreamHandler('php://stdout', $this->options['loggerLevel']));
-            } elseif (! $this->options['logging']) {
-                $logger = new NullLogger();
+            if (is_null($logger)) {
+                $logger = $this->logger;
             }
 
             $vc = new VoiceClient($this->ws, $this->loop, $channel, $logger, $data);
