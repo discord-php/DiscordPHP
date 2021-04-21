@@ -704,8 +704,8 @@ class Channel extends Part
             ];
         }
 
-        if (! $this->is_private) {
-            $botperms = $this->guild->members->offsetGet($this->discord->id)->getPermissions($this);
+        if (! $this->is_private && $member = $this->guild->members->offsetGet($this->discord->id)) {
+            $botperms = $member->getPermissions($this);
 
             if (! $botperms->send_messages) {
                 return \React\Promise\reject(new NoPermissionsException('You do not have permission to send messages in the specified channel.'));
