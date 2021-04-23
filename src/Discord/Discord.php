@@ -92,7 +92,7 @@ class Discord
      *
      * @var string Version.
      */
-    const VERSION = 'v6.0.0';
+    const VERSION = 'v6.0.1';
 
     /**
      * The logger.

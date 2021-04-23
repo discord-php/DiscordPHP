@@ -1,5 +1,11 @@
 # Changelog
 
+## Version 6.0.1
+
+- Fixed `Message::member` attribute returning a `User` - #523 @davidcole1340
+- Added `loggerLevel` changes to changelog and conversion guide - c11af7c646c18b0e124b2b1fa349daeced76ad78
+- Updated documentation to reflect missed changes in 6.0.0 - #520 #521 @hemberger
+
 ## Version 6.0.0
 
 This version has also been known as `v5.2.0`, however, breaking changes caused the version to be increased.
