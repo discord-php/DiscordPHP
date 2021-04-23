@@ -670,4 +670,12 @@ class Message extends Part
             'channel_id' => $this->channel_id,
         ];
     }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function link(): string
+    {
+        return 'https://discord.com/channels/' . $this->guild_id . '/' . $this->channel_id . '/' . $this->id;
+    }
 }
