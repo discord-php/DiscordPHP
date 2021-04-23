@@ -676,6 +676,6 @@ class Message extends Part
      */
     public function link(): string
     {
-        return 'https://discord.com/channels/' . $this->guild_id . '/' . $this->channel_id . '/' . $this->id;
+        return 'https://discord.com/channels/' . ($this->guild_id ?? '@me') . '/' . $this->channel_id . '/' . $this->id;
     }
 }
