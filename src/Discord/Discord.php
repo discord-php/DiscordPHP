@@ -45,7 +45,6 @@ use Discord\Http\Drivers\React;
 use Discord\Http\Endpoint;
 use Evenement\EventEmitterTrait;
 use Psr\Log\LoggerInterface;
-use Psr\Log\NullLogger;
 use React\Promise\ExtendedPromiseInterface;
 use React\Promise\PromiseInterface;
 use React\Socket\Connector as SocketConnector;

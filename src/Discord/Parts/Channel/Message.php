@@ -64,6 +64,7 @@ use React\Promise\ExtendedPromiseInterface;
  * @property bool                           $urgent                 Message is urgent.
  * @property Collection|Sticker[]           $stickers               Stickers attached to the message.
  * @property object|null                    $interaction            The interaction which triggered the message (slash commands).
+ * @property string|null                    $link                   Returns a link to the message.
  */
 class Message extends Part
 {
@@ -442,6 +443,18 @@ class Message extends Part
         }
 
         return $stickers;
+    }
+    
+    /**
+     * Returns the message link attribute.
+     *
+     * @return String|null
+     */
+    public function getLinkAttribute(): ?string
+    {
+        if ($this->id && $this->channel_id) {
+            return 'https://discord.com/channels/'.($this->guild_id ?? '@me').'/'.$this->channel_id.'/'.$this->id;
+        }
     }
 
     /**
