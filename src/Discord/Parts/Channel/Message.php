@@ -672,10 +672,14 @@ class Message extends Part
     }
     
     /**
-     * {@inheritdoc}
+     * Gets the message link attribute.
+     *
+     * @return String|null
      */
-    public function link(): string
+    public function getLinkAttribute()
     {
-        return 'https://discord.com/channels/' . ($this->guild_id ?? '@me') . '/' . $this->channel_id . '/' . $this->id;
+        if ($this->id){
+            return 'https://discord.com/channels/' . ($this->guild_id ?? '@me') . '/' . $this->channel_id . '/' . $this->id;
+        }
     }
 }
