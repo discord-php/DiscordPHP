@@ -249,6 +249,15 @@ returns a new collection based on the response
 of the callback.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/Discord-Helpers-Collection.html#method_find">find()</a>
+    <span>
+                        &nbsp;: mixed    </span>
+</dt>
+<dd>Runs a filter callback over the collection and
+returns the first item where the callback returns
+`true` when given the item.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Discord-Helpers-Collection.html#method_first">first()</a>
     <span>
                         &nbsp;: mixed    </span>
@@ -764,7 +773,7 @@ of the callback.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/Collection.php"><a href="files/src-discord-helpers-collection.html"><abbr title="src/Discord/Helpers/Collection.php">Collection.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">287</span>
+    <span class="phpdocumentor-element-found-in__line">309</span>
 </aside>
 
         <p class="phpdocumentor-summary">Clears the collection.</p>
@@ -1118,6 +1127,55 @@ of the callback.</p>
             -public
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_find">
+        find()
+        <a href="classes/Discord-Helpers-Collection.html#method_find" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/Collection.php"><a href="files/src-discord-helpers-collection.html"><abbr title="src/Discord/Helpers/Collection.php">Collection.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">295</span>
+</aside>
+
+        <p class="phpdocumentor-summary">Runs a filter callback over the collection and
+returns the first item where the callback returns
+`true` when given the item.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                <span class="phpdocumentor-signature__name">find</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">callable&nbsp;</span><span class="phpdocumentor-signature__argument__name">$callback</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+
+        <section class="phpdocumentor-description"><p>Returns <code class="prettyprint">null</code> if no items returns <code class="prettyprint">true</code> when called in
+the callback.</p>
+</section>
+
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$callback</span>
+                : <span class="phpdocumentor-signature__argument__return-type">callable</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"></section>
+
+            </dd>
+            </dl>
+
+    
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type">mixed</span>
+            &mdash;
+            <section class="phpdocumentor-description"></section>
+
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_first">
         first()
         <a href="classes/Discord-Helpers-Collection.html#method_first" class="headerlink"><i class="fas fa-link"></i></a>
@@ -1436,7 +1494,7 @@ of the callback.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/Collection.php"><a href="files/src-discord-helpers-collection.html"><abbr title="src/Discord/Helpers/Collection.php">Collection.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">397</span>
+    <span class="phpdocumentor-element-found-in__line">419</span>
 </aside>
 
         <p class="phpdocumentor-summary">Returns an iterator for the collection.</p>
@@ -1560,7 +1618,7 @@ of the callback.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/Collection.php"><a href="files/src-discord-helpers-collection.html"><abbr title="src/Discord/Helpers/Collection.php">Collection.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">387</span>
+    <span class="phpdocumentor-element-found-in__line">409</span>
 </aside>
 
         <p class="phpdocumentor-summary">Serializes the object to a value that can be serialized natively by json_encode().</p>
@@ -1594,7 +1652,7 @@ of the callback.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/Collection.php"><a href="files/src-discord-helpers-collection.html"><abbr title="src/Discord/Helpers/Collection.php">Collection.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">299</span>
+    <span class="phpdocumentor-element-found-in__line">321</span>
 </aside>
 
         <p class="phpdocumentor-summary">Runs a callback over the collection and creates a new collection.</p>
@@ -1639,7 +1697,7 @@ of the callback.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/Collection.php"><a href="files/src-discord-helpers-collection.html"><abbr title="src/Discord/Helpers/Collection.php">Collection.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">324</span>
+    <span class="phpdocumentor-element-found-in__line">346</span>
 </aside>
 
         <p class="phpdocumentor-summary">If the collection has an offset.</p>
@@ -1684,7 +1742,7 @@ of the callback.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/Collection.php"><a href="files/src-discord-helpers-collection.html"><abbr title="src/Discord/Helpers/Collection.php">Collection.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">336</span>
+    <span class="phpdocumentor-element-found-in__line">358</span>
 </aside>
 
         <p class="phpdocumentor-summary">Gets an item from the collection.</p>
@@ -1729,7 +1787,7 @@ of the callback.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/Collection.php"><a href="files/src-discord-helpers-collection.html"><abbr title="src/Discord/Helpers/Collection.php">Collection.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">347</span>
+    <span class="phpdocumentor-element-found-in__line">369</span>
 </aside>
 
         <p class="phpdocumentor-summary">Sets an item into the collection.</p>
@@ -1782,7 +1840,7 @@ of the callback.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/Collection.php"><a href="files/src-discord-helpers-collection.html"><abbr title="src/Discord/Helpers/Collection.php">Collection.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">357</span>
+    <span class="phpdocumentor-element-found-in__line">379</span>
 </aside>
 
         <p class="phpdocumentor-summary">Unsets an index from the collection.</p>
@@ -2030,7 +2088,7 @@ of the callback.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/Collection.php"><a href="files/src-discord-helpers-collection.html"><abbr title="src/Discord/Helpers/Collection.php">Collection.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">367</span>
+    <span class="phpdocumentor-element-found-in__line">389</span>
 </aside>
 
         <p class="phpdocumentor-summary">Returns the string representation of the collection.</p>
@@ -2117,7 +2175,7 @@ of the callback.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/Collection.php"><a href="files/src-discord-helpers-collection.html"><abbr title="src/Discord/Helpers/Collection.php">Collection.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">312</span>
+    <span class="phpdocumentor-element-found-in__line">334</span>
 </aside>
 
         <p class="phpdocumentor-summary">Converts the collection to an array.</p>
@@ -2151,7 +2209,7 @@ of the callback.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/Collection.php"><a href="files/src-discord-helpers-collection.html"><abbr title="src/Discord/Helpers/Collection.php">Collection.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">377</span>
+    <span class="phpdocumentor-element-found-in__line">399</span>
 </aside>
 
         <p class="phpdocumentor-summary">Unserializes the collection.</p>

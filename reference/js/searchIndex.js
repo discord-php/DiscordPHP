@@ -836,6 +836,11 @@ Search.appendIndex(
             "summary": "Runs\u0020a\u0020filter\u0020callback\u0020over\u0020the\u0020collection\u0020and\nreturns\u0020a\u0020new\u0020collection\u0020based\u0020on\u0020the\u0020response\nof\u0020the\u0020callback.",
             "url": "classes/Discord-Helpers-Collection.html#method_filter"
         },                {
+            "fqsen": "\\Discord\\Helpers\\Collection\u003A\u003Afind\u0028\u0029",
+            "name": "find",
+            "summary": "Runs\u0020a\u0020filter\u0020callback\u0020over\u0020the\u0020collection\u0020and\nreturns\u0020the\u0020first\u0020item\u0020where\u0020the\u0020callback\u0020returns\n\u0060true\u0060\u0020when\u0020given\u0020the\u0020item.",
+            "url": "classes/Discord-Helpers-Collection.html#method_find"
+        },                {
             "fqsen": "\\Discord\\Helpers\\Collection\u003A\u003Aclear\u0028\u0029",
             "name": "clear",
             "summary": "Clears\u0020the\u0020collection.",
@@ -1295,6 +1300,11 @@ Search.appendIndex(
             "name": "getStickersAttribute",
             "summary": "Returns\u0020the\u0020stickers\u0020attribute.",
             "url": "classes/Discord-Parts-Channel-Message.html#method_getStickersAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\u003A\u003AgetLinkAttribute\u0028\u0029",
+            "name": "getLinkAttribute",
+            "summary": "Returns\u0020the\u0020message\u0020link\u0020attribute.",
+            "url": "classes/Discord-Parts-Channel-Message.html#method_getLinkAttribute"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\u003A\u003Areply\u0028\u0029",
             "name": "reply",
