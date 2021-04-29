@@ -292,7 +292,7 @@ class Collection implements ArrayAccess, Serializable, JsonSerializable, Iterato
      * @param  callable $callback
      * @return mixed
      */
-    public function find(callable $callback): mixed
+    public function find(callable $callback)
     {
         foreach ($this->items as $item) {
             if ($callback($item)) {
