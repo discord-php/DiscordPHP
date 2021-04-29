@@ -1,5 +1,0 @@
-name: 'phpDocumentor Build'
-description: 'Runs phpDocumentor'
-runs:
-  using: 'docker'
-  image: 'Dockerfile'
