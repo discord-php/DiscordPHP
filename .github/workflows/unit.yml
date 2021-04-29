@@ -10,6 +10,7 @@ jobs:
   unit-lint:
     name: PHPUnit and Lint
     runs-on: ubuntu-latest
+    if: "!contains(github.event.head_commit.message, 'no test')"
     strategy:
       matrix:
         php:
