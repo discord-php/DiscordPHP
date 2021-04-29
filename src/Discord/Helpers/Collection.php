@@ -282,6 +282,28 @@ class Collection implements ArrayAccess, Serializable, JsonSerializable, Iterato
     }
 
     /**
+     * Runs a filter callback over the collection and
+     * returns the first item where the callback returns
+     * `true` when given the item.
+     *
+     * Returns `null` if no items returns `true` when called in
+     * the callback.
+     *
+     * @param  callable $callback
+     * @return mixed
+     */
+    public function find(callable $callback): mixed
+    {
+        foreach ($this->items as $item) {
+            if ($callback($item)) {
+                return $item;
+            }
+        }
+
+        return null;
+    }
+
+    /**
      * Clears the collection.
      */
     public function clear(): void
