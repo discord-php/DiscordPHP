@@ -94,7 +94,7 @@ class Buffer extends EventEmitter implements WritableStreamInterface
      *
      * @return mixed The bytes read, or false if not enough bytes are present.
      */
-    private function readRaw(int $length): mixed
+    private function readRaw(int $length)
     {
         if ((count($this->buffer) - $this->readPointer) >= $length) {
             $output = '';
