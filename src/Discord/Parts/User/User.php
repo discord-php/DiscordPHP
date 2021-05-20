@@ -51,6 +51,7 @@ class User extends Part
     const FLAG_BUG_HUNTER_LEVEL_2 = (1 << 14);
     const FLAG_VERIFIED_BOT = (1 << 16);
     const FLAG_VERIFIED_BOT_DEVELOPER = (1 << 17);
+    const FLAG_DISCORD_CERTIFIED_MODERATOR = (1 << 18);
 
     const PREMIUM_NONE = 0;
     const PREMIUM_NITRO_CLASSIC = 1;
