@@ -166,6 +166,23 @@ class Member extends Part
 
         return \React\Promise\reject(new \Exception('User does not have role.'));
     }
+    
+    /**		
+    * Sends a message to the user.
+    *
+    * @param string     $message The text to send in the message.
+    * @param bool       $tts     Whether the message should be sent with text to speech enabled.
+    * @param Embed|null $embed   An embed to send.
+    *
+    * @return ExtendedPromiseInterface
+    * @throws \Exception
+    */
+    public function sendMessage(string $message, bool $tts = false, ?Embed $embed = null): ExtendedPromiseInterface
+    {
+        return $this->getUserAttribute()->getPrivateChannel()->then(function ($channel) use ($message, $tts, $embed) {
+            return $channel->sendMessage($message, $tts, $embed);
+        });
+    }
 
     /**
      * Gets the total permissions of the member.
