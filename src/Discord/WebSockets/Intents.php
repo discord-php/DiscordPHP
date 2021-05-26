@@ -182,4 +182,26 @@ class Intents
     {
         return static::getAllIntents() & ~(static::GUILD_MEMBERS | static::GUILD_PRESENCES);
     }
+    
+    /**
+     * Converts an integer intent representation into an array of strings,
+     * representing the enabled intents. Useful for debugging.
+     *
+     * @param int $intents
+     *
+     * @return string[]
+     */
+    public static function getIntentArray(int $intents): array
+    {
+        $results = [];
+        $reflect = new \ReflectionClass(__CLASS__);
+
+        foreach ($reflect->getConstants() as $intent => $val) {
+            if ($intents & $val) {
+                $results[] = $intent;
+            }
+        }
+
+        return $results;
+    }
 }
