@@ -24,7 +24,8 @@ use Discord\Parts\Part;
  * @property string|null                    $custom_id              A developer-defined identifier for the button, max 100 characters	Buttons
  * @property string|null                    $url                  	A url for link-style buttons Buttons
  * @property bool|null                      $disabled               whether the button is disabled, default false	Buttons
- 
+ *
+ * @see https://discord.com/developers/docs/interactions/message-components
  */
 class Component extends Part //Should this extend Message instead?
 {
