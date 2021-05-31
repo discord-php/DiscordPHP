@@ -39,6 +39,19 @@ class Component extends Part //Should this extend Message instead?
     const LINK = 5; //grey, navigates to a URL, requires $url
     
     /**
+     * {@inheritdoc}
+     */
+    protected $fillable = [
+        'type',
+        'style',
+        'label',
+        'emoji',
+        'custom_id',
+        'url',
+        'disabled',
+    ];
+    
+    /**
      * Gets the partial emoji attribute.
      *
      * @return Emoji
