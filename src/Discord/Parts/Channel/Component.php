@@ -26,8 +26,11 @@ use Discord\Parts\Part;
  * @property bool|null                      $disabled               whether the button is disabled, default false	Buttons
  
  */
-class Component extends Part
+class Component extends Part //Should this extend Message instead?
 {
+    const TYPE_ACTIONROW = 1;
+    const TYPE_BUTTON = 2;
+    
     /**
      * Gets the partial emoji attribute.
      *
