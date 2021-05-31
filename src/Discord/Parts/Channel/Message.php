@@ -65,6 +65,8 @@ use React\Promise\ExtendedPromiseInterface;
  * @property Collection|Sticker[]           $stickers               Stickers attached to the message.
  * @property object|null                    $interaction            The interaction which triggered the message (slash commands).
  * @property string|null                    $link                   Returns a link to the message.
+ * @property Channel|null                   $thread                 The thread that was started from this message, includes thread member object
+ * @property Component|null                 $component              Sent if the message contains components like buttons, action rows, or other interactive components
  */
 class Message extends Part
 {
