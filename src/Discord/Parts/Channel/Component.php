@@ -31,6 +31,12 @@ class Component extends Part //Should this extend Message instead?
     const TYPE_ACTIONROW = 1;
     const TYPE_BUTTON = 2;
     
+    const PRIMARY = 1; //blurple, requires $custom_id
+    const SECONDARY = 2; //grey, requires $custom_id
+    const SUCCESS = 3; //green, requires $custom_id
+    const DANGER = 4; //red, required $custom_id
+    const LINK = 5; //grey, navigates to a URL, requires $url
+    
     /**
      * Gets the partial emoji attribute.
      *
