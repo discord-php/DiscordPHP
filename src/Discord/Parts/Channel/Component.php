@@ -15,7 +15,7 @@ use Discord\Parts\Guild\Emoji;
 use Discord\Parts\Part;
 
 /**
- * A message which is posted to a Discord text channel.
+ * Components are a new field on the message object, so you can use them whether you're sending messages or responding to a slash command or other interaction.
  *
  * @property int                            $type                   The type of component.
  * @property int|null                       $style                  One of button styles
