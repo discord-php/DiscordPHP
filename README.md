@@ -25,7 +25,6 @@ Before you start using this Library, you **need** to know how PHP works, you nee
 ### Requirements
 
 - PHP 7.4
-	- Versions as early as PHP 7.3 may work but no support will be provided in the case you encounter problems.
 	- We recommend PHP 8.0 as it will be the most stable and most performant.
 - Composer
 - `ext-json`
@@ -72,16 +71,16 @@ include __DIR__.'/vendor/autoload.php';
 use Discord\Discord;
 
 $discord = new Discord([
-	'token' => 'bot-token',
+    'token' => 'bot-token',
 ]);
 
 $discord->on('ready', function ($discord) {
-	echo "Bot is ready!", PHP_EOL;
+    echo "Bot is ready!", PHP_EOL;
 
-	// Listen for messages.
-	$discord->on('message', function ($message, $discord) {
-		echo "{$message->author->username}: {$message->content}",PHP_EOL;
-	});
+    // Listen for messages.
+    $discord->on('message', function ($message, $discord) {
+        echo "{$message->author->username}: {$message->content}",PHP_EOL;
+    });
 });
 
 $discord->run();
