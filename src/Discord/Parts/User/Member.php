@@ -16,6 +16,7 @@ use Discord\Helpers\Collection;
 use Discord\Http\Endpoint;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Channel\Overwrite;
+use Discord\Parts\Embed\Embed;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Guild\Role;
 use Discord\Parts\Part;
@@ -167,21 +168,23 @@ class Member extends Part
         return \React\Promise\reject(new \Exception('User does not have role.'));
     }
     
-    /**		
-    * Sends a message to the user.
-    *
-    * @param string     $message The text to send in the message.
-    * @param bool       $tts     Whether the message should be sent with text to speech enabled.
-    * @param Embed|null $embed   An embed to send.
-    *
-    * @return ExtendedPromiseInterface
-    * @throws \Exception
-    */
+    /**
+     * Sends a message to the user.
+     *
+     * @param string     $message The text to send in the message.
+     * @param bool       $tts     Whether the message should be sent with text to speech enabled.
+     * @param Embed|null $embed   An embed to send.
+     *
+     * @return ExtendedPromiseInterface
+     * @throws \Exception
+     */
     public function sendMessage(string $message, bool $tts = false, ?Embed $embed = null): ExtendedPromiseInterface
     {
-        return $this->getUserAttribute()->getPrivateChannel()->then(function ($channel) use ($message, $tts, $embed) {
-            return $channel->sendMessage($message, $tts, $embed);
-        });
+        if ($this->user) {
+            return $this->user->sendMessage($message, $tts, $embed);
+        }
+
+        return \React\promise\reject(new \Exception('Member had no user part.'));
     }
 
     /**
