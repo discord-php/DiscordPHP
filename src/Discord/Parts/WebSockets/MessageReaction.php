@@ -143,11 +143,13 @@ class MessageReaction extends Part
             if ($member = $guild->members->get('id', $this->attributes['user_id'])) {
                 return $member;
             }
-        } elseif (isset($this->attributes['member'])) {
+        }
+
+        if (isset($this->attributes['member'])) {
             return $this->factory->create(Member::class, $this->attributes['member'], true);
         }
 
-        return $this->attributes['member'] ?? null;
+        return null;
     }
 
     /**
