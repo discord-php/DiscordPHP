@@ -60,13 +60,20 @@ class DiscordCommandClient extends Discord
             $this->commandClientOptions['prefix'] = str_replace('@mention', (string) $this->user, $this->commandClientOptions['prefix']);
             $this->commandClientOptions['name'] = str_replace('<UsernamePlaceholder>', $this->username, $this->commandClientOptions['name']);
 
+            foreach ($this->commandClientOptions['prefixes'] as $key => $prefix) {
+                if (contains($prefix, ['@mention'])) {
+                    $this->commandClientOptions['prefixes'][] = str_replace('@mention', "<@{$this->user->id}>", $prefix);
+                    $this->commandClientOptions['prefixes'][] = str_replace('@mention', "<@!{$this->user->id}>", $prefix);
+                    unset($this->commandClientOptions['prefixes'][$key]);
+                }
+            }
+
             $this->on('message', function ($message) {
                 if ($message->author->id == $this->id) {
                     return;
                 }
 
-                if (substr($message->content, 0, strlen($this->commandClientOptions['prefix'])) == $this->commandClientOptions['prefix']) {
-                    $withoutPrefix = substr($message->content, strlen($this->commandClientOptions['prefix']));
+                if ($withoutPrefix = $this->checkForPrefix($message->content)) {
                     $args = str_getcsv($withoutPrefix, ' ');
                     $command = array_shift($args);
 
@@ -221,6 +228,26 @@ class DiscordCommandClient extends Discord
                 'usage' => '[command]',
             ]);
         }
+    }
+
+    /**
+     * Checks for a prefix in the message content, and returns the content
+     * of the message minus the prefix if a prefix was detected. If no prefix
+     * is detected, null is returned.
+     *
+     * @param string $content
+     *
+     * @return string|null
+     */
+    protected function checkForPrefix(string $content): ?string
+    {
+        foreach ($this->commandClientOptions['prefixes'] as $prefix) {
+            if (substr($content, 0, strlen($prefix)) == $prefix) {
+                return substr($content, strlen($prefix));
+            }
+        }
+
+        return null;
     }
 
     /**
@@ -407,6 +434,7 @@ class DiscordCommandClient extends Discord
             ->setDefined([
                 'token',
                 'prefix',
+                'prefixes',
                 'name',
                 'description',
                 'defaultHelpCommand',
@@ -415,6 +443,7 @@ class DiscordCommandClient extends Discord
             ])
             ->setDefaults([
                 'prefix' => '@mention ',
+                'prefixes' => [],
                 'name' => '<UsernamePlaceholder>',
                 'description' => 'A bot made with DiscordPHP '.self::VERSION.'.',
                 'defaultHelpCommand' => true,
@@ -422,7 +451,10 @@ class DiscordCommandClient extends Discord
                 'caseInsensitiveCommands' => false,
             ]);
 
-        return $resolver->resolve($options);
+        $options = $resolver->resolve($options);
+        $options['prefixes'][] = $options['prefix'];
+
+        return $options;
     }
 
     /**
