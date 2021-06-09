@@ -215,7 +215,7 @@ class DiscordCommandClient extends Discord
                     }
                 }
 
-                $embed->setDescription($this->commandClientOptions['description'] . $commandsDescription);
+                $embed->setDescription($this->commandClientOptions['description'].$commandsDescription);
 
                 $message->channel->sendEmbed($embed);
             }, [

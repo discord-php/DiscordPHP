@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is apart of the DiscordPHP project.
+ *
+ * Copyright (c) 2021 David Cole <david.cole1340@gmail.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the LICENSE.md file.
+ */
+
 namespace Discord\Builders;
 
 use Discord\Parts\Embed\Embed;
@@ -23,13 +32,14 @@ class MessageBuilder
     /**
      * Sets the TTS value of the message.
      *
-     * @param boolean $tts
-     * 
+     * @param bool $tts
+     *
      * @return self
      */
     public function tts(bool $tts = true): self
     {
         $this->tts = $tts;
+
         return $this;
     }
 
@@ -38,7 +48,7 @@ class MessageBuilder
      * You may only have one embed per message.
      *
      * @param Embed|array $embed
-     * 
+     *
      * @return self
      */
     public function embed($embed): self
@@ -48,12 +58,13 @@ class MessageBuilder
         }
 
         $this->embed = $embed;
+
         return $this;
     }
 
     /**
      * Adds an attachment to the message.
-     * 
+     *
      * @param string $path Path to the attachment.
      * @param string $name Name of the attachment.
      *
@@ -62,6 +73,7 @@ class MessageBuilder
     public function addAttachment(string $path, string $name): self
     {
         $this->attachments[] = [$path, $name];
+
         return $this;
     }
 }
