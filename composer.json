@@ -21,7 +21,7 @@
         "react/http": "^1.1",
         "ext-json": "*",
         "ext-zlib": "*",
-        "discord-php/http": "^8",
+        "discord-php/http": "^9",
         "react/child-process": "^0.6.2"
     },
     "require-dev": {
