@@ -80,13 +80,6 @@ class Discord
     public const GATEWAY_VERSION = 8;
 
     /**
-     * The HTTP API version the client usees.
-     *
-     * @var int HTTP API version.
-     */
-    public const HTTP_API_VERSION = 8;
-
-    /**
      * The client version.
      *
      * @var string Version.
@@ -1334,7 +1327,7 @@ class Discord
 
             $options['intents'] = $intent;
         }
-        
+
         $options['socket_options']['happy_eyeballs'] = false; //Discord doesn't use IPv6
 
         if ($options['loadAllMembers'] && ! ($options['intents'] & Intents::GUILD_MEMBERS)) {
