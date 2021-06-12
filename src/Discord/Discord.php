@@ -80,13 +80,6 @@ class Discord
     const GATEWAY_VERSION = 9;
 
     /**
-     * The HTTP API version the client usees.
-     *
-     * @var int HTTP API version.
-     */
-    const HTTP_API_VERSION = 9;
-
-    /**
      * The client version.
      *
      * @var string Version.
