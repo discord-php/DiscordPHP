@@ -1,9 +1,9 @@
 <?php
 
 /*
- * This file is apart of the DiscordPHP project.
+ * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2021 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
  *
  * This source file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
@@ -12,35 +12,47 @@
 namespace Discord\Parts\Channel;
 
 use Carbon\Carbon;
+use Discord\Exceptions\FileNotFoundException;
+use Discord\Helpers\Collection;
+use Discord\Helpers\Deferred;
+use Discord\Helpers\Multipart;
+use Discord\Http\Endpoint;
+use Discord\Parts\Embed\Embed;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Part;
 use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
+use Discord\Repository\Channel\MessageRepository;
+use Discord\WebSockets\Event;
+use React\Promise\ExtendedPromiseInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Traversable;
 
 /**
  * Represents a Discord thread.
  *
- * @property string       $id                    The ID of the thread.
- * @property string       $guild_id              The ID of the guild which the thread belongs to.
- * @property string       $name                  The name of the thread.
- * @property string       $last_message_id       The ID of the last message sent in the thread.
- * @property Carbon|null  $last_pin_timestamp    The timestamp when the last message was pinned in the thread.
- * @property int          $rate_limit_per_user   Amount of seconds a user has to wait before sending a new message.
- * @property string       $owner_id              The ID of the owner of the thread.
- * @property string       $parent_id             The ID of the channel which the thread was started in.
- * @property int          $message_count         An approximate count of the number of messages sent in the thread. Stops counting at 50.
- * @property int          $member_count          An approximate count of the number of members in the thread. Stops counting at 50.
- * @property Guild|null   $guild                 The guild which the thread belongs to.
- * @property User|null    $owner                 The owner of the thread.
- * @property Member|null  $member                The member object for the owner of the thread.
- * @property Channel|null $parent                The channel which the thread was created in.
- * @property bool         $archived              Whether the thread has been archived.
- * @property bool         $locked                Whether the thread has been locked.
- * @property int          $auto_archive_duration The number of minutes of inactivity until the thread is automatically archived.
- * @property string|null  $archiver_id           The ID of the user that archived the thread, if any.
- * @property User|null    $archiver              The user that archived the thread, if any.
- * @property Member|null  $archiver_member       The corresponding member object for the user that archived the thread, if any.
- * @property Carbon       $archive_timestamp     The time that the thread's archive status was changed.
+ * @property string            $id                    The ID of the thread.
+ * @property string            $guild_id              The ID of the guild which the thread belongs to.
+ * @property string            $name                  The name of the thread.
+ * @property string            $last_message_id       The ID of the last message sent in the thread.
+ * @property Carbon|null       $last_pin_timestamp    The timestamp when the last message was pinned in the thread.
+ * @property int               $rate_limit_per_user   Amount of seconds a user has to wait before sending a new message.
+ * @property string            $owner_id              The ID of the owner of the thread.
+ * @property string            $parent_id             The ID of the channel which the thread was started in.
+ * @property int               $message_count         An approximate count of the number of messages sent in the thread. Stops counting at 50.
+ * @property int               $member_count          An approximate count of the number of members in the thread. Stops counting at 50.
+ * @property Guild|null        $guild                 The guild which the thread belongs to.
+ * @property User|null         $owner                 The owner of the thread.
+ * @property Member|null       $member                The member object for the owner of the thread.
+ * @property Channel|null      $parent                The channel which the thread was created in.
+ * @property bool              $archived              Whether the thread has been archived.
+ * @property bool              $locked                Whether the thread has been locked.
+ * @property int               $auto_archive_duration The number of minutes of inactivity until the thread is automatically archived.
+ * @property string|null       $archiver_id           The ID of the user that archived the thread, if any.
+ * @property User|null         $archiver              The user that archived the thread, if any.
+ * @property Member|null       $archiver_member       The corresponding member object for the user that archived the thread, if any.
+ * @property Carbon            $archive_timestamp     The time that the thread's archive status was changed.
+ * @property MessageRepository $messages              Repository of messages sent in the thread.
  */
 class Thread extends Part
 {
@@ -61,6 +73,9 @@ class Thread extends Part
         'thread_metadata',
     ];
 
+    /**
+     * {@inheritdoc}
+     */
     protected $visible = [
         'guild',
         'owner',
@@ -73,6 +88,13 @@ class Thread extends Part
         'archiver',
         'archiver_member',
         'archive_timestamp',
+    ];
+
+    /**
+     * {@inheritdoc}
+     */
+    protected $repositories = [
+        'messages' => MessageRepository::class,
     ];
 
     /**
@@ -217,5 +239,350 @@ class Thread extends Part
     protected function getArchiveTimestampAttribute(): Carbon
     {
         return new Carbon($this->thread_metadata->archive_timestamp);
+    }
+
+    /**
+     * Returns the thread's pinned messages.
+     *
+     * @return ExtendedPromiseInterface<Collection<Message>>
+     */
+    public function getPinnedMessages(): ExtendedPromiseInterface
+    {
+        return $this->http->get(Endpoint::bind(Endpoint::CHANNEL_PINS, $this->id))
+            ->then(function ($responses) {
+                $messages = Collection::for(Message::class);
+                
+                foreach ($responses as $response) {
+                    if (! $message = $this->messages->get('id', $response->id)) {
+                        $message = $this->factory->create(Message::class, $response, true);
+                    }
+
+                    $messages->push($message);
+                }
+
+                return $messages;
+            });
+    }
+
+    /**
+     * Bulk deletes an array of messages.
+     *
+     * @param array|Traversable $messages
+     *
+     * @return ExtendedPromiseInterface
+     */
+    public function deleteMessages($messages): ExtendedPromiseInterface
+    {
+        if (! is_array($messages) && ! ($messages instanceof Traversable)) {
+            return \React\Promise\reject(new \Exception('$messages must be an array or implement Traversable.'));
+        }
+
+        $count = count($messages);
+
+        if ($count == 0) {
+            return \React\Promise\resolve();
+        } elseif ($count == 1) {
+            foreach ($messages as $message) {
+                if ($message instanceof Message) {
+                    $message = $message->id;
+                }
+
+                return $this->http->delete(Endpoint::bind(Endpoint::CHANNEL_MESSAGE, $this->id, $message));
+            }
+        }
+
+        $promises = [];
+        $chunks = array_chunk(array_map(function ($message) {
+            if ($message instanceof Message) {
+                return $message->id;
+            }
+
+            return $message;
+        }, $messages), 100);
+
+        foreach ($chunks as $messages) {
+            $promises[] = $this->http->post(Endpoint::bind(Endpoint::CHANNEL_MESSAGES_BULK_DELETE, $this->id), [
+                'messages' => $messages,
+            ]);
+        }
+
+        return \React\Promise\all($promises);
+    }
+
+    /**
+     * Fetches the message history of the thread with a given array
+     * of arguments.
+     *
+     * @param array $options
+     *
+     * @return ExtendedPromiseInterface<Collection<Message>>
+     */
+    public function getMessageHistory(array $options): ExtendedPromiseInterface
+    {
+        $resolver = new OptionsResolver();
+        $resolver
+            ->setDefaults(['limit' => 100, 'cache' => false])
+            ->setDefined(['before', 'after', 'around'])
+            ->setAllowedTypes('before', [Message::class, 'string'])
+            ->setAllowedTypes('after', [Message::class, 'string'])
+            ->setAllowedTypes('around', [Message::class, 'string'])
+            ->setAllowedValues('limit', range(1, 100));
+
+        $options = $resolver->resolve($options);
+
+        if (isset($options['before'], $options['after']) ||
+            isset($options['before'], $options['around']) ||
+            isset($options['around'], $options['after'])) {
+            return \React\Promise\reject(new \Exception('Can only specify one of before, after and around.'));
+        }
+
+        $endpoint = Endpoint::bind(Endpoint::CHANNEL_MESSAGES, $this->id);
+        $endpoint->addQuery('limit', $options['limit']);
+
+        if (isset($options['before'])) {
+            $endpoint->addQuery('before', $options['before'] instanceof Message ? $options['before']->id : $options['before']);
+        }
+
+        if (isset($options['after'])) {
+            $endpoint->addQuery('after', $options['after'] instanceof Message ? $options['after']->id : $options['after']);
+        }
+
+        if (isset($options['around'])) {
+            $endpoint->addQuery('around', $options['around'] instanceof Message ? $options['around']->id : $options['around']);
+        }
+
+        return $this->http->get($endpoint)->then(function ($responses) {
+            $messages = new Collection();
+
+            foreach ($responses as $response) {
+                if (! $message = $this->messages->get('id', $response->id)) {
+                    $message = $this->factory->create(Message::class, $response, true);
+                    $this->messages->push($message);
+                }
+
+                $messages->push($message);
+            }
+
+            return $messages;
+        });
+    }
+
+    /**
+     * Pins a message in the thread.
+     *
+     * @param Message $message
+     *
+     * @return ExtendedPromiseInterface<Message>
+     */
+    public function pinMessage(Message $message): ExtendedPromiseInterface
+    {
+        if ($message->pinned) {
+            return \React\Promise\reject(new \Exception('This message is already pinned.'));
+        }
+
+        if ($message->channel_id != $this->id) {
+            return \React\Promise\reject(new \Exception('You cannot pin a message not sent in this thread.'));
+        }
+
+        return $this->http->put(Endpoint::bind(Endpoint::CHANNEL_PIN, $this->id, $message->id))->then(function () use (&$message) {
+            $message->pinned = true;
+
+            return $message;
+        });
+    }
+
+    /**
+     * Unpins a message in the thread.
+     *
+     * @param Message $message
+     *
+     * @return ExtendedPromiseInterface<Message>
+     */
+    public function unpinMessage(Message $message): ExtendedPromiseInterface
+    {
+        if (! $message->pinned) {
+            return \React\Promise\reject(new \Exception('This message is not pinned.'));
+        }
+
+        if ($message->channel_id != $this->id) {
+            return \React\Promise\reject(new \Exception('You cannot un-pin a message not sent in this thread.'));
+        }
+
+        return $this->http->delete(Endpoint::bind(Endpoint::CHANNEL_PIN, $this->id, $message->id))->then(function () use (&$message) {
+            $message->pinned = false;
+
+            return $message;
+        });
+    }
+
+    /**
+     * Sends a message in the thread.
+     *
+     * @param string           $text             The content of the message.
+     * @param bool             $tts              Whether the message should be sent with TTS enabled.
+     * @param Embed|array|null $embed            An embed to attach to the message, in the form of an `Embed` object or array.
+     * @param array|null       $allowed_mentions Mentions to enable in the  message.
+     * @param Message|null     $replyTo          The message to reply to.
+     *
+     * @return ExtendedPromiseInterface<Message>
+     */
+    public function sendMessage(string $text, bool $tts = false, $embed = null, $allowed_mentions = null, ?Message $replyTo = null): ExtendedPromiseInterface
+    {
+        if ($embed instanceof Embed) {
+            $embed = $embed->getRawAttributes();
+        }
+
+        $content = [
+            'content' => $text,
+            'tts' => $tts,
+            'embed' => $embed,
+            'allowed_mentions' => $allowed_mentions,
+        ];
+
+        if (! is_null($replyTo)) {
+            $content['message_reference'] = [
+                'message_id' => $replyTo->id,
+                'channel_id' => $replyTo->channel_id,
+            ];
+        }
+
+        return $this->http->post(Endpoint::bind(Endpoint::CHANNEL_MESSAGES, $this->id), $content)->then(function ($response) {
+            return $this->factory->create(Message::class, $response, true);
+        });
+    }
+
+    /**
+     * Sends an embed in the thread.
+     *
+     * @param Embed|array $embed
+     *
+     * @return ExtendedPromiseInterface<Message>
+     */
+    public function sendEmbed($embed): ExtendedPromiseInterface
+    {
+        if ($embed instanceof Embed) {
+            $embed = $embed->getRawAttributes();
+        }
+
+        return $this->http->post(Endpoint::bind(Endpoint::CHANNEL_MESSAGES, $this->id), ['embed' => $embed])->then(function ($response) {
+            return $this->factory->create(Message::class, $response, true);
+        });
+    }
+
+    /**
+     * Sends a file to the thread.
+     *
+     * @param string      $filepath The path to the file to be sent.
+     * @param string|null $filename The name to send the file as.
+     * @param string|null $content  Message content to send with the file.
+     * @param bool        $tts      Whether to send the message with TTS.
+     *
+     * @return ExtendedPromiseInterface<Message>
+     */
+    public function sendFile(string $filepath, ?string $filename = null, ?string $content = null, bool $tts = false): ExtendedPromiseInterface
+    {
+        if (! file_exists($filepath)) {
+            return \React\Promise\reject(new FileNotFoundException("File does not exist at path {$filepath}."));
+        }
+
+        if (is_null($filename)) {
+            $filename = basename($filepath);
+        }
+
+        $multipart = new Multipart([
+            [
+                'name' => 'file',
+                'content' => file_get_contents($filepath),
+                'filename' => $filename,
+            ],
+            [
+                'name' => 'tts',
+                'content' => $tts ? 'true' : 'false',
+            ],
+            [
+                'name' => 'content',
+                'content' => $content ?? '',
+            ],
+        ]);
+
+        return $this->http->post(Endpoint::bind(Endpoint::CHANNEL_MESSAGES, $this->id), (string) $multipart, $multipart->getHeaders())->then(function ($response) {
+            return $this->factory->create(Message::class, $response, true);
+        });
+    }
+
+    /**
+     * Broadcasts that you are typing to the channel. Lasts for 5 seconds.
+     *
+     * @return ExtendedPromiseInterface
+     */
+    public function broadcastTyping(): ExtendedPromiseInterface
+    {
+        return $this->http->post(Endpoint::bind(Endpoint::CHANNEL_TYPING, $this->id));
+    }
+
+    /**
+     * Creates a message collector for the channel.
+     *
+     * @param callable $filter  The filter function. Returns true or false.
+     * @param array    $options
+     * @param int      $options ['time']  Time in milliseconds until the collector finishes or false.
+     * @param int      $options ['limit'] The amount of messages allowed or false.
+     *
+     * @return ExtendedPromiseInterface<Collection<Message>>
+     */
+    public function createMessageCollector(callable $filter, array $options = []): ExtendedPromiseInterface
+    {
+        $deferred = new Deferred();
+        $messages = new Collection([], null, null);
+        $timer = null;
+
+        $options = array_merge([
+            'time' => false,
+            'limit' => false,
+        ], $options);
+
+        $eventHandler = function (Message $message) use (&$eventHandler, $filter, $options, &$messages, &$deferred, &$timer) {
+            // Reject messages not in this thread
+            if ($message->channel_id != $this->id) {
+                return;
+            }
+
+            $filterResult = call_user_func_array($filter, [$message]);
+
+            if ($filterResult) {
+                $messages->push($message);
+
+                if ($options['limit'] !== false && sizeof($messages) >= $options['limit']) {
+                    $this->discord->removeListener(Event::MESSAGE_CREATE, $eventHandler);
+                    $deferred->resolve($messages);
+
+                    if (! is_null($timer)) {
+                        $this->discord->getLoop()->cancelTimer($timer);
+                    }
+                }
+            }
+        };
+
+        $this->discord->on(Event::MESSAGE_CREATE, $eventHandler);
+
+        if ($options['time'] !== false) {
+            $timer = $this->discord->getLoop()->addTimer($options['time'] / 1000, function () use (&$eventHandler, &$messages, &$deferred) {
+                $this->discord->removeListener(Event::MESSAGE_CREATE, $eventHandler);
+                $deferred->resolve($messages);
+            });
+        }
+
+        return $deferred->promise();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getRepositoryAttributes(): array
+    {
+        return [
+            'channel_id' => $this->id,
+            'thread_id' => $this->id,
+        ];
     }
 }
