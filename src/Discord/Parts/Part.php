@@ -71,6 +71,13 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
     protected $attributes = [];
 
     /**
+     * Attributes which are visible from debug info.
+     *
+     * @var array
+     */
+    protected $visible = [];
+
+    /**
      * Attributes that are hidden from debug info.
      *
      * @var array Attributes that are hidden from public.
@@ -347,7 +354,7 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
     {
         $data = [];
 
-        foreach ($this->fillable as $key) {
+        foreach (array_merge($this->fillable, $this->visible) as $key) {
             if (in_array($key, $this->hidden)) {
                 continue;
             }
