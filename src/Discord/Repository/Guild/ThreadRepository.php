@@ -7,6 +7,9 @@ use Discord\Repository\AbstractRepository;
 
 /**
  * Contains threads that belong to a guild.
+ * 
+ * @method Thread|null get(string $discrim, $key)
+ * @method Thread|null first()
  */
 class ThreadRepository extends AbstractRepository
 {
