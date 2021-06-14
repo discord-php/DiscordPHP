@@ -23,7 +23,9 @@ use Discord\Parts\WebSockets\MessageReaction;
 use Discord\WebSockets\Event;
 use Discord\Helpers\Deferred;
 use Discord\Http\Endpoint;
+use Discord\Parts\Thread\Thread;
 use Discord\Repository\Channel\ReactionRepository;
+use InvalidArgumentException;
 use React\Promise\ExtendedPromiseInterface;
 
 /**
@@ -455,6 +457,44 @@ class Message extends Part
         if ($this->id && $this->channel_id) {
             return 'https://discord.com/channels/'.($this->guild_id ?? '@me').'/'.$this->channel_id.'/'.$this->id;
         }
+    }
+
+    /**
+     * Starts a thread from the message.
+     *
+     * @param string $name                  The name of the thread.
+     * @param bool   $private               Whether the thread should be private. Cannot be private in a news channel.
+     * @param int    $auto_archive_duration Number of minutes of inactivity until the thread is auto-archived. One of 60, 1440, 4320, 10080.
+     *
+     * @return ExtendedPromiseInterface<Thread>
+     */
+    public function startThread(string $name, bool $private, int $auto_archive_duration = 1440): ExtendedPromiseInterface
+    {
+        if ($this->channel->type == Channel::TYPE_NEWS) {
+            if ($private) {
+                throw new InvalidArgumentException('You cannot create a private thread in a news channel.');
+            }
+
+            $type = 10;
+        } elseif ($this->channel->type != Channel::TYPE_TEXT) {
+            throw new InvalidArgumentException('You can only start a thread in a guild text or news channel.');
+        } elseif ($private) {
+            $type = 12;
+        } else {
+            $type = 11;
+        }
+
+        if (! in_array($auto_archive_duration, [60, 1440, 4320, 10080])) {
+            throw new InvalidArgumentException('`auto_archive_duration` must be one of 60, 1440, 4320, 10080.');
+        }
+
+        return $this->http->post(Endpoint::bind('channels/:channel_id/messages/:message_id/threads', $this->channel_id, $this->id), [
+            'name' => $name,
+            'type' => $type,
+            'auto_archive_duration' => $auto_archive_duration,
+        ])->then(function ($response) {
+            return $this->factory->create(Thread::class, $response, true);
+        });
     }
 
     /**
