@@ -671,6 +671,14 @@ class Discord
      */
     protected function handleDispatch(object $data): void
     {
+        $handlers = [
+            Event::VOICE_SERVER_UPDATE => 'handleVoiceServerUpdate',
+            Event::RESUMED => 'handleResume',
+            Event::READY => 'handleReady',
+            Event::GUILD_MEMBERS_CHUNK => 'handleGuildMembersChunk',
+            Event::VOICE_STATE_UPDATE => 'handleVoiceStateUpdate',
+        ];
+
         if (! is_null($hData = $this->handlers->getHandler($data->t))) {
             $handler = new $hData['class'](
                 $this->http,
@@ -713,17 +721,7 @@ class Discord
             } else {
                 $handler->handle($deferred, $data->d);
             }
-        }
-
-        $handlers = [
-            Event::VOICE_SERVER_UPDATE => 'handleVoiceServerUpdate',
-            Event::RESUMED => 'handleResume',
-            Event::READY => 'handleReady',
-            Event::GUILD_MEMBERS_CHUNK => 'handleGuildMembersChunk',
-            Event::VOICE_STATE_UPDATE => 'handleVoiceStateUpdate',
-        ];
-
-        if (isset($handlers[$data->t])) {
+        } elseif (isset($handlers[$data->t])) {
             $this->{$handlers[$data->t]}($data);
         }
     }
