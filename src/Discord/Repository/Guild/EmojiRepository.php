@@ -20,6 +20,11 @@ use Discord\Repository\AbstractRepository;
  *
  * @see \Discord\Parts\Guild\Emoji
  * @see \Discord\Parts\Guild\Guild
+ *
+ * @method Emoji|null get(string $discrim, $key)  Gets an item from the collection.
+ * @method Emoji|null first()                     Returns the first element of the collection.
+ * @method Emoji|null pull($key, $default = null) Pulls an item from the repository, removing and returning the item.
+ * @method Emoji|null find(callable $callback)    Runs a filter callback over the repository.
  */
 class EmojiRepository extends AbstractRepository
 {

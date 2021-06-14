@@ -20,6 +20,11 @@ use Discord\Repository\AbstractRepository;
  *
  * @see \Discord\Parts\Channel\Overwrite
  * @see \Discord\Parts\Channel\Channel
+ *
+ * @method Overwrite|null get(string $discrim, $key)  Gets an item from the collection.
+ * @method Overwrite|null first()                     Returns the first element of the collection.
+ * @method Overwrite|null pull($key, $default = null) Pulls an item from the repository, removing and returning the item.
+ * @method Overwrite|null find(callable $callback)    Runs a filter callback over the repository.
  */
 class OverwriteRepository extends AbstractRepository
 {
