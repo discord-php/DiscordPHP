@@ -1,11 +1,11 @@
 <?php
 
 /*
- * This file is apart of the DiscordPHP project.
+ * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2021 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
  *
- * This source file is subject to the MIT license that is bundled
+ * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
  */
 
@@ -53,17 +53,17 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * The Discord client class.
  *
- * @property string                   $id            The unique identifier of the client.
- * @property string                   $username      The username of the client.
- * @property string                   $password      The password of the client (if they have provided it).
- * @property string                   $email         The email of the client.
- * @property bool                     $verified      Whether the client has verified their email.
- * @property string                   $avatar        The avatar URL of the client.
- * @property string                   $avatar_hash   The avatar hash of the client.
- * @property string                   $discriminator The unique discriminator of the client.
- * @property bool                     $bot           Whether the client is a bot.
- * @property User                     $user          The user instance of the client.
- * @property Application              $application   The OAuth2 application of the bot.
+ * @property string                   $id               The unique identifier of the client.
+ * @property string                   $username         The username of the client.
+ * @property string                   $password         The password of the client (if they have provided it).
+ * @property string                   $email            The email of the client.
+ * @property bool                     $verified         Whether the client has verified their email.
+ * @property string                   $avatar           The avatar URL of the client.
+ * @property string                   $avatar_hash      The avatar hash of the client.
+ * @property string                   $discriminator    The unique discriminator of the client.
+ * @property bool                     $bot              Whether the client is a bot.
+ * @property User                     $user             The user instance of the client.
+ * @property Application              $application      The OAuth2 application of the bot.
  * @property GuildRepository          $guilds
  * @property PrivateChannelRepository $private_channels
  * @property UserRepository           $users

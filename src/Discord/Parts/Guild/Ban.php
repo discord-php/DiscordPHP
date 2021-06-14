@@ -1,11 +1,11 @@
 <?php
 
 /*
- * This file is apart of the DiscordPHP project.
+ * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2021 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
  *
- * This source file is subject to the MIT license that is bundled
+ * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
  */
 
@@ -18,9 +18,9 @@ use Discord\Parts\User\User;
  * A Ban is a ban on a user specific to a guild. It is also IP based.
  *
  * @property string $guild_id
- * @property Guild $guild
+ * @property Guild  $guild
  * @property string $user_id
- * @property User $user
+ * @property User   $user
  * @property string $reason
  */
 class Ban extends Part

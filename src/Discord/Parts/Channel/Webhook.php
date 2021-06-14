@@ -1,11 +1,11 @@
 <?php
 
 /*
- * This file is apart of the DiscordPHP project.
+ * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2021 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
  *
- * This source file is subject to the MIT license that is bundled
+ * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
  */
 
@@ -20,14 +20,14 @@ use React\Promise\PromiseInterface;
 /**
  * Webhooks are a low-effort way to post messages to channels in Discord. They do not require a bot user or authentication to use.
  *
- * @property string $id The id of the webhook.
- * @property int $type The type of webhook.
- * @property string $guild_id The guild ID this is for.
+ * @property string $id         The id of the webhook.
+ * @property int    $type       The type of webhook.
+ * @property string $guild_id   The guild ID this is for.
  * @property string $channel_id The channel ID this is for.
- * @property User $user The user that created the webhook.
- * @property string $name The name of the webhook.
- * @property string $avatar The avatar of the webhook.
- * @property string $token The token of the webhook.
+ * @property User   $user       The user that created the webhook.
+ * @property string $name       The name of the webhook.
+ * @property string $avatar     The avatar of the webhook.
+ * @property string $token      The token of the webhook.
  */
 class Webhook extends Part
 {

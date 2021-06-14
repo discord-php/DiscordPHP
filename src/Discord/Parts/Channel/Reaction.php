@@ -1,11 +1,11 @@
 <?php
 
 /*
- * This file is apart of the DiscordPHP project.
+ * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2021 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
  *
- * This source file is subject to the MIT license that is bundled
+ * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
  */
 
@@ -25,14 +25,14 @@ use function React\Promise\resolve;
 /**
  * Represents a reaction to a message by members(s).
  *
- * @property string $id The identifier of the reaction.
- * @property int $count Number of reactions.
- * @property bool $me Whether the current bot has reacted.
- * @property Emoji $emoji The emoji that was reacted with.
- * @property string $message_id The message ID the reaction is for.
- * @property Message|null $message The message the reaction is for.
- * @property string $channel_id The channel ID that the message belongs in.
- * @property Channel $channel The channel that the message belongs tol
+ * @property string       $id         The identifier of the reaction.
+ * @property int          $count      Number of reactions.
+ * @property bool         $me         Whether the current bot has reacted.
+ * @property Emoji        $emoji      The emoji that was reacted with.
+ * @property string       $message_id The message ID the reaction is for.
+ * @property Message|null $message    The message the reaction is for.
+ * @property string       $channel_id The channel ID that the message belongs in.
+ * @property Channel      $channel    The channel that the message belongs tol
  */
 class Reaction extends Part
 {
