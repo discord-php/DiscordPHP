@@ -27,24 +27,22 @@ class ThreadCreate extends Event
         $thread = $this->factory->create(Thread::class, $data, true);
 
         // Ignore threads that have already been added
-        if ($guild = $thread->guild) {
-            if ($guild->threads->get('id', $thread->id)) {
+        if ($parent = $thread->parent) {
+            if ($parent->threads->get('id', $thread->id)) {
                 return;
             }
-        }
 
-        foreach ($data->members ?? [] as $member) {
-            $member = $this->factory->create(Member::class, $member, true);
-            $thread->members->push($member);
-        }
+            foreach ($data->members ?? [] as $member) {
+                $member = $this->factory->create(Member::class, $member, true);
+                $thread->members->push($member);
+            }
 
-        if ($data->member ?? null) {
-            $member = $this->factory->create(Member::class, $data->member, true);
-            $thread->members->push($member);
-        }
+            if ($data->member ?? null) {
+                $member = $this->factory->create(Member::class, $data->member, true);
+                $thread->members->push($member);
+            }
 
-        if ($guild = $thread->guild) {
-            $guild->threads->push($thread);
+            $parent->threads->push($thread);
         }
         
         $deferred->resolve($thread);
