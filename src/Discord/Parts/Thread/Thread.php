@@ -5,11 +5,11 @@
  *
  * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
  *
- * This source file is subject to the MIT license that is bundled
+ * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
  */
 
-namespace Discord\Parts\Channel;
+namespace Discord\Parts\Thread;
 
 use Carbon\Carbon;
 use Discord\Exceptions\FileNotFoundException;
@@ -17,12 +17,15 @@ use Discord\Helpers\Collection;
 use Discord\Helpers\Deferred;
 use Discord\Helpers\Multipart;
 use Discord\Http\Endpoint;
+use Discord\Parts\Channel\Channel;
+use Discord\Parts\Channel\Message;
 use Discord\Parts\Embed\Embed;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Part;
 use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
 use Discord\Repository\Channel\MessageRepository;
+use Discord\Repository\Thread\MemberRepository;
 use Discord\WebSockets\Event;
 use React\Promise\ExtendedPromiseInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -43,7 +46,7 @@ use Traversable;
  * @property int               $member_count          An approximate count of the number of members in the thread. Stops counting at 50.
  * @property Guild|null        $guild                 The guild which the thread belongs to.
  * @property User|null         $owner                 The owner of the thread.
- * @property Member|null       $member                The member object for the owner of the thread.
+ * @property Member|null       $owner_member          The member object for the owner of the thread.
  * @property Channel|null      $parent                The channel which the thread was created in.
  * @property bool              $archived              Whether the thread has been archived.
  * @property bool              $locked                Whether the thread has been locked.
@@ -53,6 +56,7 @@ use Traversable;
  * @property Member|null       $archiver_member       The corresponding member object for the user that archived the thread, if any.
  * @property Carbon            $archive_timestamp     The time that the thread's archive status was changed.
  * @property MessageRepository $messages              Repository of messages sent in the thread.
+ * @property MemberRepository  $members               Repository of members in the thread.
  */
 class Thread extends Part
 {
@@ -79,7 +83,7 @@ class Thread extends Part
     protected $visible = [
         'guild',
         'owner',
-        'member',
+        'owner_member',
         'parent',
         'archived',
         'locked',
@@ -95,6 +99,7 @@ class Thread extends Part
      */
     protected $repositories = [
         'messages' => MessageRepository::class,
+        'members' => MemberRepository::class,
     ];
 
     /**
@@ -122,7 +127,7 @@ class Thread extends Part
      *
      * @return Member|null
      */
-    protected function getMemberAttribute(): ?Member
+    protected function getOwnerMemberAttribute(): ?Member
     {
         if ($this->guild) {
             return $this->guild->members->get('id', $this->owner_id);
