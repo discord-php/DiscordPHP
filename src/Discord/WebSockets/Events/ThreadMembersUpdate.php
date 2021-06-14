@@ -42,6 +42,7 @@ class ThreadMembersUpdate extends Event
                 }
 
                 $deferred->resolve($thread);
+
                 return;
             }
         }
