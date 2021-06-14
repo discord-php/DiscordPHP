@@ -9,19 +9,21 @@
  * with this source code in the LICENSE.md file.
  */
 
-namespace Discord\Repository\Guild;
+namespace Discord\Repository\Thread;
 
-use Discord\Parts\Thread\Thread;
+use Discord\Parts\Thread\Member;
 use Discord\Repository\AbstractRepository;
 
 /**
- * Contains threads that belong to a guild.
- *
- * @method Thread|null get(string $discrim, $key)
- * @method Thread|null first()
+ * Contains members of a thread.
  */
-class ThreadRepository extends AbstractRepository
+class MemberRepository extends AbstractRepository
 {
+    /**
+     * {@inheritdoc}
+     */
+    protected $discrim = 'user_id';
+
     /**
      * {@inheritdoc}
      */
@@ -30,5 +32,5 @@ class ThreadRepository extends AbstractRepository
     /**
      * {@inheritdoc}
      */
-    protected $class = Thread::class;
+    protected $class = Member::class;
 }
