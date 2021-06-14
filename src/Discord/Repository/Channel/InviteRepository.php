@@ -20,6 +20,11 @@ use Discord\Repository\AbstractRepository;
  *
  * @see \Discord\Parts\Guild\Invite
  * @see \Discord\Parts\Channel\Channel
+ *
+ * @method Invite|null get(string $discrim, $key)  Gets an item from the collection.
+ * @method Invite|null first()                     Returns the first element of the collection.
+ * @method Invite|null pull($key, $default = null) Pulls an item from the repository, removing and returning the item.
+ * @method Invite|null find(callable $callback)    Runs a filter callback over the repository.
  */
 class InviteRepository extends AbstractRepository
 {

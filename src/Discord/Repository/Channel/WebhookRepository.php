@@ -17,6 +17,11 @@ use Discord\Repository\AbstractRepository;
 
 /**
  * {@inheritdoc}
+ *
+ * @method Webhook|null get(string $discrim, $key)  Gets an item from the collection.
+ * @method Webhook|null first()                     Returns the first element of the collection.
+ * @method Webhook|null pull($key, $default = null) Pulls an item from the repository, removing and returning the item.
+ * @method Webhook|null find(callable $callback)    Runs a filter callback over the repository.
  */
 class WebhookRepository extends AbstractRepository
 {

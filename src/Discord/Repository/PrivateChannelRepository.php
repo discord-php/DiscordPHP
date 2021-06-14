@@ -17,6 +17,11 @@ use Discord\Parts\Channel\Channel;
  * Contains private channels and groups that the user has access to.
  *
  * @see \Discord\Parts\Channel\Channel
+ *
+ * @method Channel|null get(string $discrim, $key)  Gets an item from the collection.
+ * @method Channel|null first()                     Returns the first element of the collection.
+ * @method Channel|null pull($key, $default = null) Pulls an item from the repository, removing and returning the item.
+ * @method Channel|null find(callable $callback)    Runs a filter callback over the repository.
  */
 class PrivateChannelRepository extends AbstractRepository
 {

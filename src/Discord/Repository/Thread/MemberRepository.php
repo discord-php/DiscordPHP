@@ -16,6 +16,11 @@ use Discord\Repository\AbstractRepository;
 
 /**
  * Contains members of a thread.
+ *
+ * @method Member|null get(string $discrim, $key)  Gets an item from the collection.
+ * @method Member|null first()                     Returns the first element of the collection.
+ * @method Member|null pull($key, $default = null) Pulls an item from the repository, removing and returning the item.
+ * @method Member|null find(callable $callback)    Runs a filter callback over the repository.
  */
 class MemberRepository extends AbstractRepository
 {
