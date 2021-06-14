@@ -9,13 +9,13 @@
  * with this source code in the LICENSE.md file.
  */
 
-namespace Discord\Repository\Guild;
+namespace Discord\Repository\Channel;
 
 use Discord\Parts\Thread\Thread;
 use Discord\Repository\AbstractRepository;
 
 /**
- * Contains threads that belong to a guild.
+ * Contains threads that belong to a channel.
  *
  * @method Thread|null get(string $discrim, $key)
  * @method Thread|null first()
