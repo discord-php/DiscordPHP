@@ -13,8 +13,6 @@ namespace Discord\WebSockets\Events;
 
 use Discord\Helpers\Deferred;
 use Discord\Parts\Thread\Member;
-use Discord\Parts\User\Member as UserMember;
-use Discord\Parts\WebSockets\PresenceUpdate;
 use Discord\WebSockets\Event;
 
 class ThreadMembersUpdate extends Event
@@ -23,6 +21,9 @@ class ThreadMembersUpdate extends Event
     {
         $guild = $this->discord->guilds->get('id', $data->guild_id);
 
+        // When the bot is added to a private thread, sometimes the `THREAD_MEMBER_UPDATE` event
+        // comes before the `THREAD_CREATE` event, so we just don't emit this event if we don't have the
+        // thread cached.
         if ($thread = $guild->threads->get('id', $data->id)) {
             $thread->member_count = $data->member_count;
 
@@ -38,8 +39,8 @@ class ThreadMembersUpdate extends Event
                     $thread->members->push($member);
                 }
             }
-        }
 
-        $deferred->resolve($thread);
+            $deferred->resolve($thread);
+        }
     }
 }
