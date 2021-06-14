@@ -79,7 +79,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * @property InviteRepository  $invites
  * @property BanRepository     $bans
  * @property EmojiRepository   $emojis
- * @property ThreadRepository $threads
+ * @property ThreadRepository  $threads
  */
 class Guild extends Part
 {

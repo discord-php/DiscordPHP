@@ -4,6 +4,7 @@
 test*.php
 .idea
 .phplint-cache
+dump.html
 
 # phive
 /tools
