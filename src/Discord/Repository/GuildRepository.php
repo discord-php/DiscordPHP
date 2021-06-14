@@ -19,7 +19,7 @@ use React\Promise\ExtendedPromiseInterface;
  * Contains guilds that the user is in.
  *
  * @see \Discord\Parts\Guild\Guild
- * 
+ *
  * @method Guild|null get(string $discrim, $key)
  */
 class GuildRepository extends AbstractRepository

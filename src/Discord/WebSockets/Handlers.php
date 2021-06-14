@@ -74,6 +74,14 @@ class Handlers
         $this->addHandler(Event::GUILD_ROLE_CREATE, \Discord\WebSockets\Events\GuildRoleCreate::class);
         $this->addHandler(Event::GUILD_ROLE_DELETE, \Discord\WebSockets\Events\GuildRoleDelete::class);
         $this->addHandler(Event::GUILD_ROLE_UPDATE, \Discord\WebSockets\Events\GuildRoleUpdate::class);
+
+        // Thread events
+        $this->addHandler(Event::THREAD_CREATE, \Discord\WebSockets\Events\ThreadCreate::class);
+        $this->addHandler(Event::THREAD_UPDATE, \Discord\WebSockets\Events\ThreadUpdate::class);
+        $this->addHandler(Event::THREAD_DELETE, \Discord\WebSockets\Events\ThreadDelete::class);
+        $this->addHandler(Event::THREAD_LIST_SYNC, \Discord\WebSockets\Events\ThreadListSync::class);
+        // $this->addHandler(Event::THREAD_MEMBER_UPDATE, \Discord\WebSockets\Events\ThreadMemberUpdate::class);
+        $this->addHandler(Event::THREAD_MEMBERS_UPDATE, \Discord\WebSockets\Events\ThreadMembersUpdate::class);
     }
 
     /**
