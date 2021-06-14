@@ -32,6 +32,7 @@ use Discord\Helpers\Deferred;
 use Discord\Helpers\Multipart;
 use Discord\Http\Endpoint;
 use Discord\Http\Exceptions\NoPermissionsException;
+use Discord\Repository\Channel\ThreadRepository;
 use React\Promise\ExtendedPromiseInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Traversable;
@@ -66,6 +67,7 @@ use Traversable;
  * @property MessageRepository   $messages            text channel only - messages sent in the channel
  * @property OverwriteRepository $overwrites          permission overwrites
  * @property WebhookRepository   $webhooks            webhooks in the channel
+ * @property ThreadRepository    $threads             threads that belong to the channel
  */
 class Channel extends Part
 {
@@ -113,6 +115,7 @@ class Channel extends Part
         'messages' => MessageRepository::class,
         'overwrites' => OverwriteRepository::class,
         'webhooks' => WebhookRepository::class,
+        'threads' => ThreadRepository::class,
     ];
 
     /**

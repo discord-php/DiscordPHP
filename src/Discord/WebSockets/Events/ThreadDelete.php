@@ -21,7 +21,9 @@ class ThreadDelete extends Event
         $thread = null;
 
         if ($guild = $this->discord->guilds->get('id', $data->guild_id)) {
-            $thread = $guild->threads->pull($data->id);
+            if ($parent = $guild->channels->get('id', $data->parent_id)) {
+                $thread = $parent->threads->pull($data->id);
+            }
         }
 
         $deferred->resolve($thread);

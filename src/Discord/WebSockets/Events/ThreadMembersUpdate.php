@@ -24,23 +24,26 @@ class ThreadMembersUpdate extends Event
         // When the bot is added to a private thread, sometimes the `THREAD_MEMBER_UPDATE` event
         // comes before the `THREAD_CREATE` event, so we just don't emit this event if we don't have the
         // thread cached.
-        if ($thread = $guild->threads->get('id', $data->id)) {
-            $thread->member_count = $data->member_count;
+        foreach ($guild->channels as $channel) {
+            if ($thread = $channel->threads->get('id', $data->id)) {
+                $thread->member_count = $data->member_count;
 
-            if ($data->removed_member_ids ?? null) {
-                foreach ($data->removed_member_ids as $id) {
-                    $thread->members->pull($id);
+                if ($data->removed_member_ids ?? null) {
+                    foreach ($data->removed_member_ids as $id) {
+                        $thread->members->pull($id);
+                    }
                 }
-            }
 
-            if ($data->added_members ?? null) {
-                foreach ($data->added_members as $member) {
-                    $member = $this->factory->create(Member::class, $member, true);
-                    $thread->members->push($member);
+                if ($data->added_members ?? null) {
+                    foreach ($data->added_members as $member) {
+                        $member = $this->factory->create(Member::class, $member, true);
+                        $thread->members->push($member);
+                    }
                 }
-            }
 
-            $deferred->resolve($thread);
+                $deferred->resolve($thread);
+                return;
+            }
         }
     }
 }
