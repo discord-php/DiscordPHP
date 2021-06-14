@@ -18,9 +18,13 @@ class ThreadUpdate extends Event
 {
     public function handle(Deferred &$deferred, $data)
     {
+        $thread = null;
+
         if ($guild = $this->discord->guilds->get('id', $data->guild_id)) {
-            if ($thread = $guild->threads->get('id', $data->id)) {
-                $thread->fill((array) $data);
+            if ($parent = $guild->channels->get('id', $data->parent_id)) {
+                if ($thread = $parent->threads->get('id', $data->id)) {
+                    $thread->fill((array) $data);
+                }
             }
         }
 
