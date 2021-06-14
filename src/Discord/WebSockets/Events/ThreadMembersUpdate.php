@@ -33,19 +33,8 @@ class ThreadMembersUpdate extends Event
             }
 
             if ($data->added_members ?? null) {
-                foreach ($data->added_members as $memberRaw) {
-                    $member = $this->factory->create(Member::class, $memberRaw, true);
-
-                    /* @var UserMember */
-                    if (! $guildMember = $guild->members->get('id', $member->user_id)) {
-                        /** @var UserMember */
-                        $guildMember = $this->factory->create(UserMember::class, $memberRaw->member, true);
-                        $guild->members->push($guildMember);
-                    }
-
-                    $presenceUpdate = $this->factory->create(PresenceUpdate::class, $memberRaw->presence, true);
-                    $guildMember->updateFromPresence($presenceUpdate);
-
+                foreach ($data->added_members as $member) {
+                    $member = $this->factory->create(Member::class, $member, true);
                     $thread->members->push($member);
                 }
             }
