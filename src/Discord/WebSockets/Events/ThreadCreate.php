@@ -33,8 +33,13 @@ class ThreadCreate extends Event
             }
         }
 
-        foreach ($data->members as $member) {
+        foreach ($data->members ?? [] as $member) {
             $member = $this->factory->create(Member::class, $member, true);
+            $thread->members->push($member);
+        }
+
+        if ($data->member ?? null) {
+            $member = $this->factory->create(Member::class, $data->member, true);
             $thread->members->push($member);
         }
 
