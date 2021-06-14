@@ -21,7 +21,8 @@ use Discord\Parts\WebSockets\VoiceStateUpdate as VoiceStateUpdatePart;
 use Discord\WebSockets\Event;
 use Discord\Helpers\Deferred;
 use Discord\Http\Endpoint;
-use Discord\Parts\Channel\Thread;
+use Discord\Parts\Thread\Member as ThreadMember;
+use Discord\Parts\Thread\Thread;
 
 class GuildCreate extends Event
 {
@@ -83,8 +84,18 @@ class GuildCreate extends Event
             }
         }
 
-        foreach ($data->threads as $thread) {
-            $thread = $this->factory->create(Thread::class, $thread, true);
+        foreach ($data->threads as $rawThread) {
+            $thread = $this->factory->create(Thread::class, $rawThread, true);
+
+            if ($rawThread->member ?? null) {
+                $member = (array) $rawThread->member;
+                $member['id'] = $thread->id;
+                $member['user_id'] = $this->discord->id;
+
+                $selfMember = $this->factory->create(ThreadMember::class, $member, true);
+                $thread->members->push($selfMember);
+            }
+
             $guildPart->threads->push($thread);
         }
 
