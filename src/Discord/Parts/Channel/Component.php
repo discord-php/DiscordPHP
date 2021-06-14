@@ -9,7 +9,7 @@
  * with this source code in the LICENSE.md file.
  */
 
-namespace Discord\Parts\Component;
+namespace Discord\Parts\Channel;
 
 use Discord\Parts\Guild\Emoji;
 use Discord\Parts\Part;
