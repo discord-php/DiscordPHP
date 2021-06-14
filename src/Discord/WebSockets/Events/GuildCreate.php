@@ -88,6 +88,9 @@ class GuildCreate extends Event
         }
 
         foreach ($data->threads as $rawThread) {
+            /**
+             * @var Thread
+             */
             $thread = $this->factory->create(Thread::class, $rawThread, true);
 
             if ($rawThread->member ?? null) {
@@ -99,7 +102,7 @@ class GuildCreate extends Event
                 $thread->members->push($selfMember);
             }
 
-            $guildPart->threads->push($thread);
+            $guildPart->channels->get('id', $thread->parent_id)->threads->push($thread);
         }
 
         $resolve = function () use (&$guildPart, $deferred) {
