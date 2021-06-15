@@ -32,7 +32,9 @@ use Discord\Helpers\Deferred;
 use Discord\Helpers\Multipart;
 use Discord\Http\Endpoint;
 use Discord\Http\Exceptions\NoPermissionsException;
+use Discord\Parts\Thread\Thread;
 use Discord\Repository\Channel\ThreadRepository;
+use InvalidArgumentException;
 use React\Promise\ExtendedPromiseInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Traversable;
@@ -669,6 +671,44 @@ class Channel extends Part
                 $this->overwrites->push($this->factory->create(Overwrite::class, $overwrite, true));
             }
         }
+    }
+
+    /**
+     * Starts a thread in the channel.
+     *
+     * @param string $name                  the name of the thread.
+     * @param string $content               content of the message that will be used to start the thread.
+     * @param int    $auto_archive_duration number of minutes of inactivity until the thread is auto-archived. one of 60, 1440, 4320, 10080.
+     *
+     * @return ExtendedPromiseInterface<Thread>
+     */
+    public function startThread(string $name, string $content, int $auto_archive_duration = 1440): ExtendedPromiseInterface
+    {
+        return $this->sendMessage($content)->then(function (Message $message) use ($name, $auto_archive_duration) {
+            return $message->startThread($name, $auto_archive_duration);
+        });
+    }
+
+    /**
+     * Starts a private thread in the channel.
+     *
+     * @param string $name                  the name of the thread.
+     * @param int    $auto_archive_duration number of minutes of inactivity until the thread is auto-archived. one of 60, 1440, 4320, 10080.
+     *
+     * @return ExtendedPromiseInterface<Thread>
+     */
+    public function startPrivateThread(string $name, int $auto_archive_duration = 1440): ExtendedPromiseInterface
+    {
+        if (! in_array($auto_archive_duration, [60, 1440, 4320, 10080])) {
+            throw new InvalidArgumentException('`auto_archive_duration` must be one of 60, 1440, 4320, 10080.');
+        }
+
+        return $this->http->post(Endpoint::bind('channels/:channel_id/threads', $this->id), [
+            'name' => $name,
+            'auto_archive_duration' => $auto_archive_duration,
+        ])->then(function ($response) {
+            return $this->factory->create(Thread::class, $response, true);
+        });
     }
 
     /**
