@@ -22,6 +22,7 @@ use Discord\Parts\Channel\Message;
 use Discord\Parts\Embed\Embed;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Part;
+use Discord\Parts\Thread\Member as ThreadMember;
 use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
 use Discord\Repository\Channel\MessageRepository;
@@ -244,6 +245,60 @@ class Thread extends Part
     protected function getArchiveTimestampAttribute(): Carbon
     {
         return new Carbon($this->thread_metadata->archive_timestamp);
+    }
+
+    /**
+     * Attempts to join the thread.
+     *
+     * @return ExtendedPromiseInterface
+     */
+    public function join(): ExtendedPromiseInterface
+    {
+        return $this->http->put(Endpoint::bind('channels/:thread_id/thread-members/@me', $this->id));
+    }
+
+    /**
+     * Attempts to add a user to the thread.
+     *
+     * @param User|Member|string $user User to add. Can be one of the user objects or a user ID.
+     *
+     * @return ExtendedPromiseInterface
+     */
+    public function addMember($user): ExtendedPromiseInterface
+    {
+        if ($user instanceof User || $user instanceof Member) {
+            $user = $user->id;
+        }
+
+        return $this->http->put(Endpoint::bind('channels/:thread_id/thread-members/:user_id', $this->id, $user));
+    }
+
+    /**
+     * Attempts to leave the thread.
+     *
+     * @return ExtendedPromiseInterface
+     */
+    public function leave(): ExtendedPromiseInterface
+    {
+        return $this->http->delete(Endpoint::bind('channels/:thread_id/thread-members/@me', $this->id));
+    }
+
+    /**
+     * Attempts to remove a user from the thread.
+     *
+     * @param User|Member|ThreadMember|string $user User to remove. Can be one of the user objects or a user ID.
+     *
+     * @return ExtendedPromiseInterface
+     */
+    public function removeMember($user): ExtendedPromiseInterface
+    {
+        if ($user instanceof User || $user instanceof Member) {
+            $user = $user->id;
+        } elseif ($user instanceof ThreadMember) {
+            $user = $user->user_id;
+        }
+
+        return $this->http->delete(Endpoint::bind('channels/:thread_id/thread-members/:user_id', $this->id, $user));
     }
 
     /**
