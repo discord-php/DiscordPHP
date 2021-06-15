@@ -12,8 +12,10 @@
 namespace Discord\Parts\Thread;
 
 use Carbon\Carbon;
+use Discord\Http\Endpoint;
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
+use React\Promise\ExtendedPromiseInterface;
 
 /**
  * Represents a member that belongs to a thread. Not the same as a user nor a guild member.
@@ -49,5 +51,15 @@ class Member extends Part
     protected function getUserAttribute(): ?User
     {
         return $this->discord->users->get('id', $this->user_id);
+    }
+
+    /**
+     * Attempts to remove the member from the thread.
+     *
+     * @return ExtendedPromiseInterface
+     */
+    public function remove(): ExtendedPromiseInterface
+    {
+        return $this->http->delete(Endpoint::bind('channels/:thread_id/thread-members/:user_id', $this->id, $this->user_id));
     }
 }
