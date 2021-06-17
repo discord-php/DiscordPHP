@@ -32,7 +32,9 @@ class MemberRepository extends AbstractRepository
     /**
      * {@inheritdoc}
      */
-    protected $endpoints = [];
+    protected $endpoints = [
+        'all' => 'channels/:thread_id/thread-members',
+    ];
 
     /**
      * {@inheritdoc}
