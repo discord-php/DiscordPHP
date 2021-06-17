@@ -1,20 +1,11 @@
 <?php
 
-/*
- * This file is a part of the DiscordPHP project.
- *
- * Copyright (c) 2021 David Cole <david.cole1340@gmail.com>
- *
- * This source file is subject to the MIT license that is bundled
- * with this source code in the LICENSE.md file.
- */
-
 $header = <<<'EOF'
-This file is apart of the DiscordPHP project.
+This file is a part of the DiscordPHP project.
 
-Copyright (c) 2021 David Cole <david.cole1340@gmail.com>
+Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
 
-This source file is subject to the MIT license that is bundled
+This file is subject to the MIT license that is bundled
 with this source code in the LICENSE.md file.
 EOF;
 
@@ -90,7 +81,8 @@ $rules = [
     'header_comment' => ['header' => $header],
     'indentation_type' => true,
     'phpdoc_align' => [
-        'align' => 'vertical'
+        'align' => 'vertical',
+        'tags' => ['param', 'property', 'property-read', 'property-write', 'return', 'throws', 'type', 'var', 'method'],
     ]
 ];
 
@@ -98,7 +90,9 @@ foreach ($fixers as $fix) {
     $rules[$fix] = true;
 }
 
-return PhpCsFixer\Config::create()
+$config = new PhpCsFixer\Config();
+
+return $config
     ->setRules($rules)
     ->setFinder(
         PhpCsFixer\Finder::create()

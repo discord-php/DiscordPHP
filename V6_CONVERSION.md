@@ -6,7 +6,7 @@ PHP 7.4 is now required. Please update to _at least_ PHP 7.4, but we recommend P
 
 ## Options removal
 
-The `logging` and `httpLogger` options have been removed. Any logs that went to the HTTP logger are now sent to the default `logger`.
+The `logging`, `httpLogger` and `loggerLevel` options have been removed. Any logs that went to the HTTP logger are now sent to the default `logger`.
 
 If you were using the `logging` option to disable logging, you can do the same by creating a null logger:
 
@@ -20,6 +20,23 @@ use Monolog\Handler\NullLogger;
 $logger = new Logger('Logger');
 $logger->pushHandler(new NullHandler());
 
+$discord = new Discord([
+    // ...
+    'logger' => $logger,
+]);
+```
+
+If you were using the `loggerLevel` option to change the logger level, you can do the same by creating a logger and changing the level of the handler:
+
+```php
+<?php
+
+use Discord\Discord;
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
+
+$logger = new Logger('Logger');
+$logger->pushHandler(new StreamHandler('php://stdout'), Logger::DEBUG); // Change the second parameter of this function call.
 $discord = new Discord([
     // ...
     'logger' => $logger,

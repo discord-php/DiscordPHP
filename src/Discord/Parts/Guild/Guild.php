@@ -1,11 +1,11 @@
 <?php
 
 /*
- * This file is apart of the DiscordPHP project.
+ * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2021 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
  *
- * This source file is subject to the MIT license that is bundled
+ * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
  */
 
@@ -33,43 +33,43 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * A Guild is Discord's equivalent of a server. It contains all the Members, Channels, Roles, Bans etc.
  *
- * @property string            $id                 The unique identifier of the guild.
- * @property string            $name               The name of the guild.
- * @property string            $icon               The URL to the guild icon.
- * @property string            $icon_hash          The icon hash for the guild.
- * @property string            $region             The region the guild's voice channels are hosted in.
- * @property User              $owner              The owner of the guild.
- * @property string            $owner_id           The unique identifier of the owner of the guild.
- * @property Carbon            $joined_at          A timestamp of when the current user joined the guild.
- * @property string            $afk_channel_id     The unique identifier of the AFK channel ID.
- * @property int               $afk_timeout        How long you will remain in the voice channel until you are moved into the AFK channel.
- * @property string[]          $features           An array of features that the guild has.
- * @property string            $splash             The URL to the guild splash.
- * @property string            $discovery_splash Discovery splash hash. Only for discoverable guilds.
- * @property string            $splash_hash        The splash hash for the guild.
- * @property bool              $large              Whether the guild is considered 'large' (over 250 members).
- * @property int               $verification_level The verification level used for the guild.
- * @property int               $member_count       How many members are in the guild.
+ * @property string            $id                            The unique identifier of the guild.
+ * @property string            $name                          The name of the guild.
+ * @property string            $icon                          The URL to the guild icon.
+ * @property string            $icon_hash                     The icon hash for the guild.
+ * @property string            $region                        The region the guild's voice channels are hosted in.
+ * @property User              $owner                         The owner of the guild.
+ * @property string            $owner_id                      The unique identifier of the owner of the guild.
+ * @property Carbon            $joined_at                     A timestamp of when the current user joined the guild.
+ * @property string            $afk_channel_id                The unique identifier of the AFK channel ID.
+ * @property int               $afk_timeout                   How long you will remain in the voice channel until you are moved into the AFK channel.
+ * @property string[]          $features                      An array of features that the guild has.
+ * @property string            $splash                        The URL to the guild splash.
+ * @property string            $discovery_splash              Discovery splash hash. Only for discoverable guilds.
+ * @property string            $splash_hash                   The splash hash for the guild.
+ * @property bool              $large                         Whether the guild is considered 'large' (over 250 members).
+ * @property int               $verification_level            The verification level used for the guild.
+ * @property int               $member_count                  How many members are in the guild.
  * @property int               $default_message_notifications Default notification level.
- * @property int               $explicit_content_filter Explicit content filter level.
- * @property int               $mfa_level MFA level required to join.
- * @property string            $application_id Application that made the guild, if made by one.
- * @property bool              $widget_enabled Is server widget enabled.
- * @property string            $widget_channel_id Channel that the widget will create an invite to.
- * @property string            $system_channel_id Channel that system notifications are posted in.
- * @property int               $system_channel_flags Flags for the system channel.
- * @property string            $rules_channel_id Channel that the rules are in.
- * @property object[]          $voice_states Array of voice states.
- * @property int               $max_presences Maximum amount of presences allowed in the guild.
- * @property int               $max_members Maximum amount of members allowed in the guild.
- * @property string            $vanity_url_code Vanity URL code for the guild.
- * @property string            $description Guild description if it is discoverable.
- * @property string            $banner Banner hash.
- * @property int               $premium_tier Server boost level.
- * @property int               $premium_subscription_count Number of boosts in the guild.
- * @property string            $preferred_locale Preferred locale of the guild.
- * @property string            $public_updates_channel_id Notice channel id.
- * @property int               $max_video_channel_users Maximum amount of users allowed in a video channel.
+ * @property int               $explicit_content_filter       Explicit content filter level.
+ * @property int               $mfa_level                     MFA level required to join.
+ * @property string            $application_id                Application that made the guild, if made by one.
+ * @property bool              $widget_enabled                Is server widget enabled.
+ * @property string            $widget_channel_id             Channel that the widget will create an invite to.
+ * @property string            $system_channel_id             Channel that system notifications are posted in.
+ * @property int               $system_channel_flags          Flags for the system channel.
+ * @property string            $rules_channel_id              Channel that the rules are in.
+ * @property object[]          $voice_states                  Array of voice states.
+ * @property int               $max_presences                 Maximum amount of presences allowed in the guild.
+ * @property int               $max_members                   Maximum amount of members allowed in the guild.
+ * @property string            $vanity_url_code               Vanity URL code for the guild.
+ * @property string            $description                   Guild description if it is discoverable.
+ * @property string            $banner                        Banner hash.
+ * @property int               $premium_tier                  Server boost level.
+ * @property int               $premium_subscription_count    Number of boosts in the guild.
+ * @property string            $preferred_locale              Preferred locale of the guild.
+ * @property string            $public_updates_channel_id     Notice channel id.
+ * @property int               $max_video_channel_users       Maximum amount of users allowed in a video channel.
  * @property int               $approximate_member_count
  * @property int               $approximate_presence_count
  * @property RoleRepository    $roles

@@ -1,5 +1,11 @@
 # Changelog
 
+## Version 6.0.1
+
+- Fixed `Message::member` attribute returning a `User` - #523 @davidcole1340
+- Added `loggerLevel` changes to changelog and conversion guide - c11af7c646c18b0e124b2b1fa349daeced76ad78
+- Updated documentation to reflect missed changes in 6.0.0 - #520 #521 @hemberger
+
 ## Version 6.0.0
 
 This version has also been known as `v5.2.0`, however, breaking changes caused the version to be increased.
@@ -19,7 +25,7 @@ This version has also been known as `v5.2.0`, however, breaking changes caused t
 - With the update to gateway version 8, the `GUILD_MEMBER` and `PRESENCE_UPDATE` intents are not enabled by default.
     - You must first enable these in your Discord developer portal before enabling them in DiscordPHP. See the documentation for an example.
     - The `loadAllMembers` option requires the `GUILD_MEMBER` intent to be enabled.
-- The `logging` and `httpLogger` options have been removed.
+- The `logging`, `httpLogger` and `loggerLevel` options have been removed.
     - All HTTP logging information is now redirected to the `logger` that you have passed, or the default logger.
     - For people that disabled logging by setting `logging` to false, you can create a logger with a [`NullHandler`](https://github.com/Seldaek/monolog/blob/main/src/Monolog/Handler/NullHandler.php).
 - For voice client users, see the section below for breaking changes.

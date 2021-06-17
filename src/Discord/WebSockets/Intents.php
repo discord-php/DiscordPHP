@@ -1,11 +1,11 @@
 <?php
 
 /*
- * This file is apart of the DiscordPHP project.
+ * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2021 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
  *
- * This source file is subject to the MIT license that is bundled
+ * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
  */
 
@@ -181,5 +181,27 @@ class Intents
     public static function getDefaultIntents(): int
     {
         return static::getAllIntents() & ~(static::GUILD_MEMBERS | static::GUILD_PRESENCES);
+    }
+    
+    /**
+     * Converts an integer intent representation into an array of strings,
+     * representing the enabled intents. Useful for debugging.
+     *
+     * @param int $intents
+     *
+     * @return string[]
+     */
+    public static function getIntentArray(int $intents): array
+    {
+        $results = [];
+        $reflect = new \ReflectionClass(__CLASS__);
+
+        foreach ($reflect->getConstants() as $intent => $val) {
+            if ($intents & $val) {
+                $results[] = $intent;
+            }
+        }
+
+        return $results;
     }
 }

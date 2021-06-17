@@ -1,11 +1,11 @@
 <?php
 
 /*
- * This file is apart of the DiscordPHP project.
+ * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2021 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
  *
- * This source file is subject to the MIT license that is bundled
+ * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
  */
 
@@ -17,14 +17,14 @@ use Discord\Parts\Part;
 /**
  * An emoji object represents a custom emoji.
  *
- * @property string                     $id             The identifier for the emoji.
- * @property string                     $name           The name of the emoji.
- * @property Guild                      $guild          The guild that owns the emoji.
- * @property string                     $guild_id       The identifier of the guild that owns the emoji.
- * @property bool                       $managed        Whether this emoji is managed by a role.
- * @property bool                       $require_colons Whether the emoji requires colons to be triggered.
- * @property Collection|Role[]          $roles          The roles that are allowed to use the emoji.
- * @property bool                       $animated       Whether the emoji is animated.
+ * @property string            $id             The identifier for the emoji.
+ * @property string            $name           The name of the emoji.
+ * @property Guild             $guild          The guild that owns the emoji.
+ * @property string            $guild_id       The identifier of the guild that owns the emoji.
+ * @property bool              $managed        Whether this emoji is managed by a role.
+ * @property bool              $require_colons Whether the emoji requires colons to be triggered.
+ * @property Collection|Role[] $roles          The roles that are allowed to use the emoji.
+ * @property bool              $animated       Whether the emoji is animated.
  */
 class Emoji extends Part
 {

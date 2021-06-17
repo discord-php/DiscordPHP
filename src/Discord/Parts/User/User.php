@@ -1,11 +1,11 @@
 <?php
 
 /*
- * This file is apart of the DiscordPHP project.
+ * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2021 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
  *
- * This source file is subject to the MIT license that is bundled
+ * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
  */
 
@@ -27,14 +27,14 @@ use React\Promise\ExtendedPromiseInterface;
  * @property string $avatar_hash   The avatar hash of the user.
  * @property string $discriminator The discriminator of the user.
  * @property bool   $bot           Whether the user is a bot.
- * @property bool $system Whether the user is a Discord system user.
- * @property bool $mfa_enabled Whether MFA is enabled.
- * @property string $locale User locale.
- * @property bool $verified Whether the user is verified.
- * @property string $email User email.
- * @property int $flags User flags.
- * @property int $premium_type Type of nitro subscription.
- * @property int $public_flags Public flags on the user.
+ * @property bool   $system        Whether the user is a Discord system user.
+ * @property bool   $mfa_enabled   Whether MFA is enabled.
+ * @property string $locale        User locale.
+ * @property bool   $verified      Whether the user is verified.
+ * @property string $email         User email.
+ * @property int    $flags         User flags.
+ * @property int    $premium_type  Type of nitro subscription.
+ * @property int    $public_flags  Public flags on the user.
  */
 class User extends Part
 {
@@ -51,6 +51,7 @@ class User extends Part
     const FLAG_BUG_HUNTER_LEVEL_2 = (1 << 14);
     const FLAG_VERIFIED_BOT = (1 << 16);
     const FLAG_VERIFIED_BOT_DEVELOPER = (1 << 17);
+    const FLAG_DISCORD_CERTIFIED_MODERATOR = (1 << 18);
 
     const PREMIUM_NONE = 0;
     const PREMIUM_NITRO_CLASSIC = 1;

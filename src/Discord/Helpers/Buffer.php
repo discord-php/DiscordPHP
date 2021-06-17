@@ -1,11 +1,11 @@
 <?php
 
 /*
- * This file is apart of the DiscordPHP project.
+ * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2021 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
  *
- * This source file is subject to the MIT license that is bundled
+ * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
  */
 
@@ -94,7 +94,7 @@ class Buffer extends EventEmitter implements WritableStreamInterface
      *
      * @return mixed The bytes read, or false if not enough bytes are present.
      */
-    private function readRaw(int $length): mixed
+    private function readRaw(int $length)
     {
         if ((count($this->buffer) - $this->readPointer) >= $length) {
             $output = '';

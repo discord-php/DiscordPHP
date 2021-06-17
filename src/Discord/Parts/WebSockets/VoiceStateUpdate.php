@@ -1,11 +1,11 @@
 <?php
 
 /*
- * This file is apart of the DiscordPHP project.
+ * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2021 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
  *
- * This source file is subject to the MIT license that is bundled
+ * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
  */
 
@@ -21,21 +21,21 @@ use Discord\Parts\User\User;
 /**
  * Notifies the client of voice state updates about users.
  *
- * @property string $guild_id
- * @property string $channel_id
- * @property string $user_id
- * @property Member $member
- * @property Guild $guild
- * @property Channel $channel
- * @property User $user
- * @property string $session_id
- * @property bool $deaf
- * @property bool $mute
- * @property bool $self_deaf
- * @property bool $self_mute
- * @property bool $self_stream
- * @property bool $self_video
- * @property bool $suppress
+ * @property string      $guild_id
+ * @property string      $channel_id
+ * @property string      $user_id
+ * @property Member      $member
+ * @property Guild       $guild
+ * @property Channel     $channel
+ * @property User        $user
+ * @property string      $session_id
+ * @property bool        $deaf
+ * @property bool        $mute
+ * @property bool        $self_deaf
+ * @property bool        $self_mute
+ * @property bool        $self_stream
+ * @property bool        $self_video
+ * @property bool        $suppress
  * @property Carbon|null $request_to_speak_timestamp
  */
 class VoiceStateUpdate extends Part

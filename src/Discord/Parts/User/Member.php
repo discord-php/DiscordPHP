@@ -1,11 +1,11 @@
 <?php
 
 /*
- * This file is apart of the DiscordPHP project.
+ * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2021 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
  *
- * This source file is subject to the MIT license that is bundled
+ * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
  */
 
@@ -16,6 +16,7 @@ use Discord\Helpers\Collection;
 use Discord\Http\Endpoint;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Channel\Overwrite;
+use Discord\Parts\Embed\Embed;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Guild\Role;
 use Discord\Parts\Part;
@@ -26,22 +27,22 @@ use React\Promise\ExtendedPromiseInterface;
 /**
  * A member is a relationship between a user and a guild. It contains user-to-guild specific data like roles.
  *
- * @property string                       $id            The unique identifier of the member.
- * @property string                       $username      The username of the member.
- * @property string                       $discriminator The discriminator of the member.
- * @property User                         $user          The user part of the member.
- * @property Collection|Role[]            $roles         A collection of Roles that the member has.
- * @property bool                         $deaf          Whether the member is deaf.
- * @property bool                         $mute          Whether the member is mute.
- * @property Carbon|null                  $joined_at     A timestamp of when the member joined the guild.
- * @property Guild                        $guild         The guild that the member belongs to.
- * @property string                       $guild_id      The unique identifier of the guild that the member belongs to.
- * @property string                       $status        The status of the member.
- * @property Activity                     $game          The game the member is playing.
- * @property string|null                  $nick          The nickname of the member.
- * @property Carbon|null                  $premium_since When the user started boosting the server.
- * @property Collection|Activity[]        $activities User's current activities.
- * @property object                       $client_status Current client status
+ * @property string                $id            The unique identifier of the member.
+ * @property string                $username      The username of the member.
+ * @property string                $discriminator The discriminator of the member.
+ * @property User                  $user          The user part of the member.
+ * @property Collection|Role[]     $roles         A collection of Roles that the member has.
+ * @property bool                  $deaf          Whether the member is deaf.
+ * @property bool                  $mute          Whether the member is mute.
+ * @property Carbon|null           $joined_at     A timestamp of when the member joined the guild.
+ * @property Guild                 $guild         The guild that the member belongs to.
+ * @property string                $guild_id      The unique identifier of the guild that the member belongs to.
+ * @property string                $status        The status of the member.
+ * @property Activity              $game          The game the member is playing.
+ * @property string|null           $nick          The nickname of the member.
+ * @property Carbon|null           $premium_since When the user started boosting the server.
+ * @property Collection|Activity[] $activities    User's current activities.
+ * @property object                $client_status Current client status
  */
 class Member extends Part
 {
@@ -165,6 +166,25 @@ class Member extends Part
         }
 
         return \React\Promise\reject(new \Exception('User does not have role.'));
+    }
+    
+    /**
+     * Sends a message to the user.
+     *
+     * @param string     $message The text to send in the message.
+     * @param bool       $tts     Whether the message should be sent with text to speech enabled.
+     * @param Embed|null $embed   An embed to send.
+     *
+     * @return ExtendedPromiseInterface
+     * @throws \Exception
+     */
+    public function sendMessage(string $message, bool $tts = false, ?Embed $embed = null): ExtendedPromiseInterface
+    {
+        if ($this->user) {
+            return $this->user->sendMessage($message, $tts, $embed);
+        }
+
+        return \React\promise\reject(new \Exception('Member had no user part.'));
     }
 
     /**

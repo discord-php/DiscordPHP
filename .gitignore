@@ -3,6 +3,11 @@
 .DS_Store
 test*.php
 .idea
+.phplint-cache
+
+# phive
+/tools
+.phive
 
 # composer
 /vendor

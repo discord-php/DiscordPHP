@@ -1,17 +1,18 @@
 <?php
 
 /*
- * This file is apart of the DiscordPHP project.
+ * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2021 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
  *
- * This source file is subject to the MIT license that is bundled
+ * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
  */
 
 namespace Discord;
 
 use Discord\CommandClient\Command;
+use Discord\Parts\Embed\Embed;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -60,13 +61,20 @@ class DiscordCommandClient extends Discord
             $this->commandClientOptions['prefix'] = str_replace('@mention', (string) $this->user, $this->commandClientOptions['prefix']);
             $this->commandClientOptions['name'] = str_replace('<UsernamePlaceholder>', $this->username, $this->commandClientOptions['name']);
 
+            foreach ($this->commandClientOptions['prefixes'] as $key => $prefix) {
+                if (contains($prefix, ['@mention'])) {
+                    $this->commandClientOptions['prefixes'][] = str_replace('@mention', "<@{$this->user->id}>", $prefix);
+                    $this->commandClientOptions['prefixes'][] = str_replace('@mention', "<@!{$this->user->id}>", $prefix);
+                    unset($this->commandClientOptions['prefixes'][$key]);
+                }
+            }
+
             $this->on('message', function ($message) {
                 if ($message->author->id == $this->id) {
                     return;
                 }
 
-                if (substr($message->content, 0, strlen($this->commandClientOptions['prefix'])) == $this->commandClientOptions['prefix']) {
-                    $withoutPrefix = substr($message->content, strlen($this->commandClientOptions['prefix']));
+                if ($withoutPrefix = $this->checkForPrefix($message->content)) {
                     $args = str_getcsv($withoutPrefix, ' ');
                     $command = array_shift($args);
 
@@ -170,57 +178,71 @@ class DiscordCommandClient extends Discord
                     return;
                 }
 
-                /**
-                 * @todo Use internal Embed::class
-                 */
-                $embed = [
-                    'author' => [
-                        'name' => $this->commandClientOptions['name'],
-                        'icon_url' => $this->client->avatar,
-                    ],
-                    'title' => $this->commandClientOptions['name'].'\'s Help',
-                    'description' => $this->commandClientOptions['description']."\n\nRun `{$prefix}help` command to get more information about a specific command.\n----------------------------",
-                    'fields' => [],
-                    'footer' => [
-                        'text' => $this->commandClientOptions['name'],
-                    ],
-                ];
+                $embed = new Embed($this);
+                $embed->setAuthor($this->commandClientOptions['name'], $this->client->avatar)
+                    ->setTitle($this->commandClientOptions['name'])
+                    ->setType(Embed::TYPE_RICH)
+                    ->setFooter($this->commandClientOptions['name']);
 
+                $commandsDescription = '';
                 // Fallback in case commands count reaches the fields limit
                 if (count($this->commands) > 20) {
                     foreach ($this->commands as $command) {
                         $help = $command->getHelp($prefix);
-                        $embed['description'] .= "\n\n`".$help['command']."`\n".$help['description'];
+
+                        $commandsDescription .= "\n\n`".$help['command']."`\n".$help['description'];
 
                         foreach ($help['subCommandsHelp'] as $subCommandHelp) {
-                            $embed['description'] .= "\n\n`".$subCommandHelp['command']."`\n".$subCommandHelp['description'];
+                            $commandsDescription .= "\n\n`".$subCommandHelp['command']."`\n".$subCommandHelp['description'];
                         }
                     }
                 } else {
                     foreach ($this->commands as $command) {
                         $help = $command->getHelp($prefix);
-                        $embed['fields'][] = [
+                        $embed->addField([
                             'name' => $help['command'],
                             'value' => $help['description'],
                             'inline' => true,
-                        ];
+                        ]);
 
                         foreach ($help['subCommandsHelp'] as $subCommandHelp) {
-                            $embed['fields'][] = [
+                            $embed->addField([
                                 'name' => $subCommandHelp['command'],
                                 'value' => $subCommandHelp['description'],
                                 'inline' => true,
-                            ];
+                            ]);
                         }
                     }
                 }
 
-                $message->channel->sendMessage('', false, $embed);
+                $embed->setDescription($this->commandClientOptions['description'].$commandsDescription);
+
+                $message->channel->sendEmbed($embed);
             }, [
                 'description' => 'Provides a list of commands available.',
                 'usage' => '[command]',
             ]);
         }
+    }
+
+    /**
+     * Checks for a prefix in the message content, and returns the content
+     * of the message minus the prefix if a prefix was detected. If no prefix
+     * is detected, null is returned.
+     *
+     * @param string $content
+     *
+     * @return string|null
+     */
+    protected function checkForPrefix(string $content): ?string
+    {
+        foreach ($this->commandClientOptions['prefixes'] as $prefix) {
+            if (substr($content, 0, strlen($prefix)) == $prefix) {
+                return substr($content, strlen($prefix));
+            }
+        }
+
+        return null;
     }
 
     /**
@@ -407,6 +429,7 @@ class DiscordCommandClient extends Discord
             ->setDefined([
                 'token',
                 'prefix',
+                'prefixes',
                 'name',
                 'description',
                 'defaultHelpCommand',
@@ -415,6 +438,7 @@ class DiscordCommandClient extends Discord
             ])
             ->setDefaults([
                 'prefix' => '@mention ',
+                'prefixes' => [],
                 'name' => '<UsernamePlaceholder>',
                 'description' => 'A bot made with DiscordPHP '.self::VERSION.'.',
                 'defaultHelpCommand' => true,
@@ -422,7 +446,10 @@ class DiscordCommandClient extends Discord
                 'caseInsensitiveCommands' => false,
             ]);
 
-        return $resolver->resolve($options);
+        $options = $resolver->resolve($options);
+        $options['prefixes'][] = $options['prefix'];
+
+        return $options;
     }
 
     /**

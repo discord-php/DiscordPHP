@@ -1,11 +1,11 @@
 <?php
 
 /*
- * This file is apart of the DiscordPHP project.
+ * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2021 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
  *
- * This source file is subject to the MIT license that is bundled
+ * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
  */
 
@@ -21,18 +21,18 @@ use React\Promise\ExtendedPromiseInterface;
 /**
  * An invite to a Channel and Guild.
  *
- * @property string     $code       The invite code.
- * @property int        $max_age    How many seconds the invite will be alive.
- * @property Guild      $guild      The guild that the invite is for.
- * @property string     $guild_id
- * @property bool       $revoked    Whether the invite has been revoked.
- * @property Carbon     $created_at A timestamp of when the invite was created.
- * @property bool       $temporary  Whether the invite is for temporary membership.
- * @property int        $uses       How many times the invite has been used.
- * @property int        $max_uses   How many times the invite can be used.
- * @property User       $inviter    The user that created the invite.
- * @property Channel    $channel    The channel that the invite is for.
- * @property string     $channel_id
+ * @property string  $code       The invite code.
+ * @property int     $max_age    How many seconds the invite will be alive.
+ * @property Guild   $guild      The guild that the invite is for.
+ * @property string  $guild_id
+ * @property bool    $revoked    Whether the invite has been revoked.
+ * @property Carbon  $created_at A timestamp of when the invite was created.
+ * @property bool    $temporary  Whether the invite is for temporary membership.
+ * @property int     $uses       How many times the invite has been used.
+ * @property int     $max_uses   How many times the invite can be used.
+ * @property User    $inviter    The user that created the invite.
+ * @property Channel $channel    The channel that the invite is for.
+ * @property string  $channel_id
  */
 class Invite extends Part
 {

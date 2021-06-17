@@ -1,11 +1,11 @@
 <?php
 
 /*
- * This file is apart of the DiscordPHP project.
+ * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2021 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
  *
- * This source file is subject to the MIT license that is bundled
+ * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
  */
 
@@ -45,7 +45,6 @@ use Discord\Http\Drivers\React;
 use Discord\Http\Endpoint;
 use Evenement\EventEmitterTrait;
 use Psr\Log\LoggerInterface;
-use Psr\Log\NullLogger;
 use React\Promise\ExtendedPromiseInterface;
 use React\Promise\PromiseInterface;
 use React\Socket\Connector as SocketConnector;
@@ -54,17 +53,17 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * The Discord client class.
  *
- * @property string                   $id            The unique identifier of the client.
- * @property string                   $username      The username of the client.
- * @property string                   $password      The password of the client (if they have provided it).
- * @property string                   $email         The email of the client.
- * @property bool                     $verified      Whether the client has verified their email.
- * @property string                   $avatar        The avatar URL of the client.
- * @property string                   $avatar_hash   The avatar hash of the client.
- * @property string                   $discriminator The unique discriminator of the client.
- * @property bool                     $bot           Whether the client is a bot.
- * @property User                     $user          The user instance of the client.
- * @property Application              $application   The OAuth2 application of the bot.
+ * @property string                   $id               The unique identifier of the client.
+ * @property string                   $username         The username of the client.
+ * @property string                   $password         The password of the client (if they have provided it).
+ * @property string                   $email            The email of the client.
+ * @property bool                     $verified         Whether the client has verified their email.
+ * @property string                   $avatar           The avatar URL of the client.
+ * @property string                   $avatar_hash      The avatar hash of the client.
+ * @property string                   $discriminator    The unique discriminator of the client.
+ * @property bool                     $bot              Whether the client is a bot.
+ * @property User                     $user             The user instance of the client.
+ * @property Application              $application      The OAuth2 application of the bot.
  * @property GuildRepository          $guilds
  * @property PrivateChannelRepository $private_channels
  * @property UserRepository           $users
@@ -92,7 +91,7 @@ class Discord
      *
      * @var string Version.
      */
-    const VERSION = 'v6.0.0';
+    const VERSION = 'v6.0.1';
 
     /**
      * The logger.
@@ -1118,7 +1117,7 @@ class Discord
      * @param Channel              $channel The channel to join.
      * @param bool                 $mute    Whether you should be mute when you join the channel.
      * @param bool                 $deaf    Whether you should be deaf when you join the channel.
-     * @param LoggerInterface|null $logger  Voice client logger.
+     * @param LoggerInterface|null $logger  Voice client logger. If null, uses same logger as Discord client.
      * @param bool                 $check   Whether to check for system requirements.
      *
      * @return PromiseInterface
@@ -1164,11 +1163,8 @@ class Discord
             $data['endpoint'] = $vs->endpoint;
             $this->logger->info('received token and endpoint for voice session', ['guild' => $channel->guild_id, 'token' => $vs->token, 'endpoint' => $vs->endpoint]);
 
-            if (is_null($logger) && $this->options['logging']) {
-                $logger = new Monolog('Voice-'.$channel->guild_id);
-                $logger->pushHandler(new StreamHandler('php://stdout', $this->options['loggerLevel']));
-            } elseif (! $this->options['logging']) {
-                $logger = new NullLogger();
+            if (is_null($logger)) {
+                $logger = $this->logger;
             }
 
             $vc = new VoiceClient($this->ws, $this->loop, $channel, $logger, $data);

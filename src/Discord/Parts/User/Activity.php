@@ -1,11 +1,11 @@
 <?php
 
 /*
- * This file is apart of the DiscordPHP project.
+ * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2021 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
  *
- * This source file is subject to the MIT license that is bundled
+ * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
  */
 
@@ -19,19 +19,19 @@ use Discord\Parts\Part;
  * The Activity part describes activities the member is undertaking.
  *
  * @property string $name
- * @property int $type
+ * @property int    $type
  * @property string $url
  * @property Carbon $created_at
- * @property array $timestamps
+ * @property array  $timestamps
  * @property string $application_id
  * @property string $details
  * @property string $state
- * @property Emoji $emoji
+ * @property Emoji  $emoji
  * @property object $party
  * @property object $assets
  * @property object $secrets
- * @property bool $instance
- * @property int $flags
+ * @property bool   $instance
+ * @property int    $flags
  */
 class Activity extends Part
 {

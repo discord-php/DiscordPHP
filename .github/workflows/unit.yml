@@ -7,14 +7,28 @@ env:
   TEST_CHANNEL_NAME: ${{ secrets.TEST_CHANNEL_NAME }}
 
 jobs:
-  test-suite:
-    name: Test Suite
+  unit-lint:
+    name: PHPUnit and Lint
     runs-on: ubuntu-latest
     if: "!contains(github.event.head_commit.message, 'no test')"
+    concurrency: phpunit
+    strategy:
+      matrix:
+        php:
+          - '8.0'
+          - '7.4'
     steps:
-      - name: Checkout
+      - name: Checkout code
         uses: actions/checkout@v2
-      - name: PHP 7.4
-        uses: ./.github/actions/php7.4
-      - name: PHP 8.0
-        uses: ./.github/actions/php8.0
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: uv, zlib, mbstring
+          tools: phpunit, phplint
+      - name: Install dependencies
+        run: composer install
+      - name: Run PHPUnit
+        run: phpunit
+      - name: Run PHPLint
+        run: phplint

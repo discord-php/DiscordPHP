@@ -1,11 +1,11 @@
 <?php
 
 /*
- * This file is apart of the DiscordPHP project.
+ * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2021 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
  *
- * This source file is subject to the MIT license that is bundled
+ * This file is subject to the MIT license that is bundled
  * with this source code in the LICENSE.md file.
  */
 
@@ -279,6 +279,28 @@ class Collection implements ArrayAccess, Serializable, JsonSerializable, Iterato
         }
 
         return $collection;
+    }
+
+    /**
+     * Runs a filter callback over the collection and
+     * returns the first item where the callback returns
+     * `true` when given the item.
+     *
+     * Returns `null` if no items returns `true` when called in
+     * the callback.
+     *
+     * @param  callable $callback
+     * @return mixed
+     */
+    public function find(callable $callback)
+    {
+        foreach ($this->items as $item) {
+            if ($callback($item)) {
+                return $item;
+            }
+        }
+
+        return null;
     }
 
     /**
