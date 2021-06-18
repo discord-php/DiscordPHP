@@ -80,7 +80,7 @@ class Handlers
         $this->addHandler(Event::THREAD_UPDATE, \Discord\WebSockets\Events\ThreadUpdate::class);
         $this->addHandler(Event::THREAD_DELETE, \Discord\WebSockets\Events\ThreadDelete::class);
         $this->addHandler(Event::THREAD_LIST_SYNC, \Discord\WebSockets\Events\ThreadListSync::class);
-        // $this->addHandler(Event::THREAD_MEMBER_UPDATE, \Discord\WebSockets\Events\ThreadMemberUpdate::class);
+        $this->addHandler(Event::THREAD_MEMBER_UPDATE, \Discord\WebSockets\Events\ThreadMemberUpdate::class);
         $this->addHandler(Event::THREAD_MEMBERS_UPDATE, \Discord\WebSockets\Events\ThreadMembersUpdate::class);
     }
 
