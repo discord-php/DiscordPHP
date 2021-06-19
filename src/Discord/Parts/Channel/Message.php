@@ -473,7 +473,7 @@ class Message extends Part
             throw new InvalidArgumentException('`auto_archive_duration` must be one of 60, 1440, 4320, 10080.');
         }
 
-        return $this->http->post(Endpoint::bind('channels/:channel_id/messages/:message_id/threads', $this->channel_id, $this->id), [
+        return $this->http->post(Endpoint::bind(Endpoint::CHANNEL_MESSAGE_THREADS, $this->channel_id, $this->id), [
             'name' => $name,
             'auto_archive_duration' => $auto_archive_duration,
         ])->then(function ($response) {
