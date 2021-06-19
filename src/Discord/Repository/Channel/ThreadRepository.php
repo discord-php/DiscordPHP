@@ -33,10 +33,10 @@ class ThreadRepository extends AbstractRepository
      * {@inheritdoc}
      */
     protected $endpoints = [
-        'all' => 'channels/:channel_id/threads/active',
-        'get' => 'channels/:thread_id',
-        'update' => 'channels/:thread_id',
-        'delete' => 'channels/:thread_id',
+        'all' => Endpoint::CHANNEL_THREADS_ACTIVE,
+        'get' => Endpoint::THREAD,
+        'update' => Endpoint::THREAD,
+        'delete' => Endpoint::THREAD,
     ];
 
     /**
@@ -51,7 +51,7 @@ class ThreadRepository extends AbstractRepository
      */
     public function active(): ExtendedPromiseInterface
     {
-        return $this->http->get(Endpoint::bind('channels/:channel_id/threads/active', $this->vars['channel_id']))
+        return $this->http->get(Endpoint::bind(Endpoint::CHANNEL_THREADS_ACTIVE, $this->vars['channel_id']))
             ->then(function ($response) {
                 return $this->handleThreadPaginationResponse($response);
             });
@@ -74,12 +74,12 @@ class ThreadRepository extends AbstractRepository
                 throw new InvalidArgumentException('You cannot fetch threads that the bot has joined but are not private.');
             }
 
-            $endpoint = 'channels/:channel_id/users/@me/threads/archived/private';
+            $endpoint = Endpoint::CHANNEL_THREADS_ARCHIVED_PRIVATE_ME;
         } else {
             if ($private) {
-                $endpoint = 'channels/:channel_id/threads/archived/private';
+                $endpoint = Endpoint::CHANNEL_THREADS_ARCHIVED_PRIVATE;
             } else {
-                $endpoint = 'channels/:channel_id/threads/archived/public';
+                $endpoint = Endpoint::CHANNEL_THREADS_ARCHIVED_PUBLIC;
             }
         }
 
