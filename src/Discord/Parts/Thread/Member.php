@@ -60,6 +60,6 @@ class Member extends Part
      */
     public function remove(): ExtendedPromiseInterface
     {
-        return $this->http->delete(Endpoint::bind('channels/:thread_id/thread-members/:user_id', $this->id, $this->user_id));
+        return $this->http->delete(Endpoint::bind(Endpoint::THREAD_MEMBER, $this->id, $this->user_id));
     }
 }

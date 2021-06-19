@@ -11,6 +11,7 @@
 
 namespace Discord\Repository\Thread;
 
+use Discord\Http\Endpoint;
 use Discord\Parts\Thread\Member;
 use Discord\Repository\AbstractRepository;
 
@@ -33,7 +34,7 @@ class MemberRepository extends AbstractRepository
      * {@inheritdoc}
      */
     protected $endpoints = [
-        'all' => 'channels/:thread_id/thread-members',
+        'all' => Endpoint::THREAD_MEMBERS,
     ];
 
     /**
