@@ -41,6 +41,7 @@ use React\Promise\ExtendedPromiseInterface;
  * @property Activity              $game          The game the member is playing.
  * @property string|null           $nick          The nickname of the member.
  * @property Carbon|null           $premium_since When the user started boosting the server.
+ * @property bool                  $pending       Whether the user has not yet passed the guild's Membership Screening requirements.
  * @property Collection|Activity[] $activities    User's current activities.
  * @property object                $client_status Current client status
  */
@@ -49,7 +50,7 @@ class Member extends Part
     /**
      * {@inheritdoc}
      */
-    protected $fillable = ['id', 'user', 'roles', 'deaf', 'mute', 'joined_at', 'guild_id', 'status', 'nick', 'premium_since', 'activities', 'client_status'];
+    protected $fillable = ['id', 'user', 'roles', 'deaf', 'mute', 'joined_at', 'guild_id', 'status', 'nick', 'premium_since', 'pending', 'activities', 'client_status'];
 
     /**
      * {@inheritdoc}
