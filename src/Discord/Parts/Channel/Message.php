@@ -23,6 +23,7 @@ use Discord\Parts\WebSockets\MessageReaction;
 use Discord\WebSockets\Event;
 use Discord\Helpers\Deferred;
 use Discord\Http\Endpoint;
+use Discord\Parts\Guild\Guild;
 use Discord\Parts\Thread\Thread;
 use Discord\Repository\Channel\ReactionRepository;
 use InvalidArgumentException;
@@ -32,9 +33,11 @@ use React\Promise\ExtendedPromiseInterface;
  * A message which is posted to a Discord text channel.
  *
  * @property string               $id                     The unique identifier of the message.
- * @property Channel              $channel                The channel that the message was sent in.
+ * @property Channel|Thread|null  $channel                The channel that the message was sent in.
+ * @property Thread|null          $thread                 The thread that the message was sent in.
  * @property string               $channel_id             The unique identifier of the channel that the message was went in.
  * @property string               $guild_id               The unique identifier of the guild that the channel the message was sent in belongs to.
+ * @property Guild|null           $guild                  The guild that the message was sent in.
  * @property string               $content                The content of the message if it is a normal message.
  * @property int                  $type                   The type of message.
  * @property Collection|User[]    $mentions               A collection of the users mentioned in the message.
@@ -234,19 +237,51 @@ class Message extends Part
     /**
      * Returns the channel attribute.
      *
-     * @return Channel    The channel the message was sent in.
+     * @return Channel|Thread The channel or thread the message was sent in.
      * @throws \Exception
      */
-    protected function getChannelAttribute(): Channel
+    protected function getChannelAttribute(): Part
     {
         if ($channel = $this->discord->getChannel($this->channel_id)) {
             return $channel;
+        }
+
+        if ($thread = $this->thread) {
+            return $thread;
         }
 
         return $this->factory->create(Channel::class, [
             'id' => $this->channel_id,
             'type' => Channel::TYPE_DM,
         ], true);
+    }
+
+    /**
+     * Returns the thread which the message was sent in.
+     *
+     * @return Thread|null
+     */
+    protected function getThreadAttribute(): ?Thread
+    {
+        if ($this->guild) {
+            foreach ($this->guild->channels as $channel) {
+                if ($thread = $channel->threads->get('id', $this->channel_id)) {
+                    return $thread;
+                }
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Returns the guild which the channel that the message was sent in belongs to.
+     *
+     * @return Guild|null
+     */
+    protected function getGuildAttribute(): ?Guild
+    {
+        return $this->discord->guilds->get('id', $this->guild_id);
     }
 
     /**
