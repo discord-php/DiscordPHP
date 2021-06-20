@@ -1486,7 +1486,7 @@ class Discord
      *
      * @param string|int $channel_id Id of the channel.
      *
-     * @return Channel
+     * @return Channel|null
      */
     public function getChannel($channel_id): ?Channel
     {

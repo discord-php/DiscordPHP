@@ -28,17 +28,17 @@ use function React\Promise\resolve;
  * Different from `Reaction` in the fact that `Reaction` represents a specific reaction
  * to a message by _multiple_ members.
  *
- * @property string  $reaction_id
- * @property string  $user_id
- * @property string  $message_id
- * @property Member  $member
- * @property Emoji   $emoji
- * @property string  $channel_id
- * @property string  $guild_id
- * @property Channel $channel
- * @property Guild   $guild
- * @property User    $user
- * @property Message $message
+ * @property string         $reaction_id ID of the reaction.
+ * @property string         $user_id     ID of the user that performed the reaction.
+ * @property string         $message_id  ID of the message that the reaction was placed on.
+ * @property Member|null    $member      Member object of the user that performed the reaction, null if not cached or DM channel.
+ * @property Emoji          $emoji       The emoji that was used as the reaction.
+ * @property string         $channel_id  ID of the channel that the reaction was performed in.
+ * @property string         $guild_id    ID of the guild that owns the channel.
+ * @property Channel|Thread $channel     Channel that the reaction was performed in.
+ * @property Guild|null     $guild       Guild that owns the channel.
+ * @property User|null      $user        User that performed the reaction.
+ * @property Message|null   $message     Message that the reaction was placed on, null if not cached.
  */
 class MessageReaction extends Part
 {
@@ -46,6 +46,11 @@ class MessageReaction extends Part
      * {@inheritdoc}
      */
     protected $fillable = ['user_id', 'message_id', 'member', 'emoji', 'channel_id', 'guild_id'];
+
+    /**
+     * {@inheritdoc}
+     */
+    protected $visible = ['user', 'message', 'member', 'channel', 'guild'];
 
     /**
      * {@inheritdoc}
@@ -108,7 +113,7 @@ class MessageReaction extends Part
     {
         if ($member = $this->member) {
             return $member->user;
-        } elseif ($user = $this->discord->users->get('id', $this->attributes['user_id'])) {
+        } elseif ($user = $this->discord->users->get('id', $this->user_id)) {
             return $user;
         }
 
@@ -123,7 +128,7 @@ class MessageReaction extends Part
     protected function getMessageAttribute(): ?Message
     {
         if ($channel = $this->channel) {
-            if ($message = $channel->messages->get('id', $this->attributes['message_id'])) {
+            if ($message = $channel->messages->get('id', $this->message_id)) {
                 return $message;
             }
         }
@@ -139,8 +144,8 @@ class MessageReaction extends Part
      */
     protected function getMemberAttribute(): ?Member
     {
-        if (isset($this->attributes['user_id']) && $guild = $this->guild) {
-            if ($member = $guild->members->get('id', $this->attributes['user_id'])) {
+        if ($this->user_id && $guild = $this->guild) {
+            if ($member = $guild->members->get('id', $this->user_id)) {
                 return $member;
             }
         }
@@ -156,29 +161,41 @@ class MessageReaction extends Part
      * Gets the emoji attribute.
      *
      * @return Emoji
-     * @throws \Exception
      */
-    protected function getEmojiAttribute(): ?Emoji
+    protected function getEmojiAttribute(): Emoji
     {
-        if (isset($this->attributes['emoji'])) {
-            return $this->factory->create(Emoji::class, $this->attributes['emoji'], true);
-        }
-
-        return null;
+        return $this->factory->create(Emoji::class, $this->attributes['emoji'], true);
     }
 
     /**
      * Gets the channel attribute.
      *
-     * @return Channel
+     * @return Channel|Thread
      */
-    protected function getChannelAttribute(): ?Channel
+    protected function getChannelAttribute()
     {
         if ($guild = $this->guild) {
-            return $guild->channels->get('id', $this->attributes['channel_id']);
+            if ($channel = $guild->channels->get('id', $this->channel_id)) {
+                return $channel;
+            }
+
+            foreach ($guild->channels as $channel) {
+                if ($thread = $channel->threads->get('id', $this->channel_id)) {
+                    return $thread;
+                }
+            }
+
+            return null;
         }
 
-        return $this->discord->private_channels->get('id', $this->attributes['channel_id']);
+        if ($channel = $this->discord->private_channels->get('id', $this->channel_id)) {
+            return $channel;
+        }
+
+        return $this->factory->create(Channel::class, [
+            'id' => $this->channel_id,
+            'type' => Channel::TYPE_DM,
+        ]);
     }
 
     /**
@@ -188,8 +205,8 @@ class MessageReaction extends Part
      */
     protected function getGuildAttribute(): ?Guild
     {
-        if (isset($this->attributes['guild_id'])) {
-            return $this->discord->guilds->get('id', $this->attributes['guild_id']);
+        if ($this->guild_id) {
+            return $this->discord->guilds->get('id', $this->guild_id);
         }
 
         return null;

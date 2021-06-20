@@ -14,6 +14,7 @@ namespace Discord\Parts\Channel;
 use Discord\Helpers\Collection;
 use Discord\Http\Endpoint;
 use Discord\Parts\Guild\Emoji;
+use Discord\Parts\Guild\Guild;
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
 use React\Promise\ExtendedPromiseInterface;
@@ -25,21 +26,23 @@ use function React\Promise\resolve;
 /**
  * Represents a reaction to a message by members(s).
  *
- * @property string       $id         The identifier of the reaction.
- * @property int          $count      Number of reactions.
- * @property bool         $me         Whether the current bot has reacted.
- * @property Emoji        $emoji      The emoji that was reacted with.
- * @property string       $message_id The message ID the reaction is for.
- * @property Message|null $message    The message the reaction is for.
- * @property string       $channel_id The channel ID that the message belongs in.
- * @property Channel      $channel    The channel that the message belongs tol
+ * @property string         $id         The identifier of the reaction.
+ * @property int            $count      Number of reactions.
+ * @property bool           $me         Whether the current bot has reacted.
+ * @property Emoji          $emoji      The emoji that was reacted with.
+ * @property string         $message_id The message ID the reaction is for.
+ * @property Message|null   $message    The message the reaction is for.
+ * @property string         $channel_id The channel ID that the message belongs in.
+ * @property Channel|Thread $channel    The channel that the message belongs tol
+ * @property string|null    $guild_id   The guild ID of the guild that owns the channel the message belongs in.
+ * @property Guild|null     $guild      The guild that owns the channel the message belongs in.
  */
 class Reaction extends Part
 {
     /**
      * {@inheritdoc}
      */
-    protected $fillable = ['count', 'me', 'emoji', 'message_id', 'channel_id'];
+    protected $fillable = ['count', 'me', 'emoji', 'message_id', 'channel_id', 'guild_id'];
 
     /**
      * {@inheritdoc}
@@ -184,10 +187,39 @@ class Reaction extends Part
     /**
      * Gets the channel attribute.
      *
-     * @return Channel
+     * @return Channel|Thread
      */
-    protected function getChannelAttribute(): Channel
+    protected function getChannelAttribute()
     {
-        return $this->discord->getChannel($this->channel_id);
+        if ($channel = $this->discord->getChannel($this->channel_id)) {
+            return $channel;
+        }
+
+        if ($this->guild) {
+            foreach ($this->guild->channels as $channel) {
+                if ($thread = $channel->threads->get('id', $this->channel_id)) {
+                    return $thread;
+                }
+            }
+        }
+
+        return $this->factory->create(Channel::class, [
+            'id' => $this->channel_id,
+            'type' => Channel::TYPE_DM,
+        ]);
+    }
+
+    /**
+     * Returns the guild that owns the channel the message was sent in.
+     *
+     * @return Guild|null
+     */
+    protected function getGuildAttribute(): ?Guild
+    {
+        if ($this->guild_id) {
+            return $this->discord->guilds->get('id', $this->guild_id);
+        }
+
+        return null;
     }
 }
