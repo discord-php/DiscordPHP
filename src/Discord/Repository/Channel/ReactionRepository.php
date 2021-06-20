@@ -15,7 +15,7 @@ use Discord\Parts\Channel\Reaction;
 use Discord\Repository\AbstractRepository;
 
 /**
- * Contains invites on a message.
+ * Contains reactions on a message.
  *
  * @see \Discord\Parts\Channel\Message
  * @see Reaction
