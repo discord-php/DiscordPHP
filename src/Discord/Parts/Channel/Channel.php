@@ -1009,6 +1009,7 @@ class Channel extends Part
     {
         return [
             'channel_id' => $this->id,
+            'guild_id' => $this->guild_id,
         ];
     }
 }
