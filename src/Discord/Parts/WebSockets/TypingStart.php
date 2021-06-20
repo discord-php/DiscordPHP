@@ -22,14 +22,14 @@ use Discord\Parts\User\User;
  * A TypingStart part is used when the `TYPING_START` event is fired on the WebSocket. It contains
  * information such as when the event was fired and then channel it was fired in.
  *
- * @property User    $user       The user that started typing.
- * @property Member  $member     The member that started typing.
- * @property string  $user_id    The unique identifier of the user that started typing
- * @property Carbon  $timestamp  A timestamp of when the user started typing.
- * @property Channel $channel    The channel that the user started typing in.
- * @property string  $channel_id The unique identifier of the channel that the user started typing in.
- * @property Guild   $guild      The guild that the user started typing in.
- * @property string  $guild_id   The unique identifier of the guild that the user started typing in.
+ * @property User|null      $user       The user that started typing.
+ * @property Member|null    $member     The member that started typing.
+ * @property string         $user_id    The unique identifier of the user that started typing
+ * @property Carbon         $timestamp  A timestamp of when the user started typing.
+ * @property Channel|Thread $channel    The channel that the user started typing in.
+ * @property string         $channel_id The unique identifier of the channel that the user started typing in.
+ * @property Guild|null     $guild      The guild that the user started typing in.
+ * @property string|null    $guild_id   The unique identifier of the guild that the user started typing in.
  */
 class TypingStart extends Part
 {
@@ -37,6 +37,11 @@ class TypingStart extends Part
      * @inheritdoc
      */
     protected $fillable = ['user_id', 'timestamp', 'channel_id', 'guild_id', 'member'];
+
+    /**
+     * {@inheritdoc}
+     */
+    protected $visible = ['user', 'channel', 'guild', 'member'];
 
     /**
      * Gets the user attribute.
@@ -77,28 +82,45 @@ class TypingStart extends Part
     /**
      * Gets the channel attribute.
      *
-     * @return Channel The channel that the user started typing in.
+     * @return Channel|Thread The channel that the user started typing in.
      */
-    protected function getChannelAttribute(): ?Channel
+    protected function getChannelAttribute()
     {
         if ($this->guild) {
-            return $this->guild->channels->get('id', $this->attributes['channel_id']);
+            if ($channel = $this->guild->channels->get('id', $this->channel_id)) {
+                return $channel;
+            }
+
+            foreach ($this->guild->channels as $channel) {
+                if ($thread = $channel->threads->get('id', $this->channel_id)) {
+                    return $thread;
+                }
+            }
+
+            return null;
         }
 
-        return $this->discord->private_channels->get('id', $this->attributes['channel_id']);
+        if ($channel = $this->discord->private_channels->get('id', $this->channel_id)) {
+            return $channel;
+        }
+
+        return $this->factory->create(Channel::class, [
+            'id' => $this->channel_id,
+            'type' => Channel::TYPE_DM,
+        ], true);
     }
 
     /**
      * Gets the guild attribute.
      *
-     * @return ?Guild
+     * @return Guild|null
      */
     protected function getGuildAttribute(): ?Guild
     {
-        if (! isset($this->attributes['guild_id'])) {
+        if (! $this->guild_id) {
             return null;
         }
 
-        return $this->discord->guilds->get('id', $this->attributes['guild_id']);
+        return $this->discord->guilds->get('id', $this->guild_id);
     }
 }
