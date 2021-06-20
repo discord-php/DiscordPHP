@@ -12,6 +12,7 @@
 namespace Discord\Parts\Channel;
 
 use Carbon\Carbon;
+use Discord\Builders\MessageBuilder;
 use Discord\Exceptions\FileNotFoundException;
 use Discord\Exceptions\InvalidOverwriteException;
 use Discord\Helpers\Collection;
@@ -761,6 +762,59 @@ class Channel extends Part
         }
 
         return $this->http->post(Endpoint::bind(Endpoint::CHANNEL_MESSAGES, $this->id), $content)->then(function ($response) {
+            return $this->factory->create(Message::class, $response, true);
+        });
+    }
+
+    /**
+     * Sends a message to the channel using a `MessageBuilder.
+     *
+     * @param MessageBuilder $message The message builder that should be converted into a message.
+     *
+     * @return ExtendedPromiseInterface<Message>
+     */
+    public function sendBuilder(MessageBuilder $message): ExtendedPromiseInterface
+    {
+        if (count($message->_getFiles()) > 0) {
+            return $this->sendMultipartMessage($message);
+        }
+
+        return $this->http->post(Endpoint::bind(Endpoint::CHANNEL_MESSAGES, $this->id), $message)
+            ->then(function ($response) {
+                return $this->factory->create(Message::class, $response, true);
+            });
+    }
+    
+    /**
+     * Sends a message to the channel using a `MessageBuilder` and a multipart request.
+     *
+     * @param MessageBuilder $message The message builder that should be converted into a message.
+     *
+     * @return ExtendedPromiseInterface<Message>
+     */
+    private function sendMultipartMessage(MessageBuilder $message)
+    {
+        $fields = [
+            [
+                'name' => 'payload_json',
+                'content' => json_encode($message),
+                'headers' => [
+                    'Content-Type' => 'application/json',
+                ],
+            ],
+        ];
+
+        foreach ($message->_getFiles() as $idx => [$filename, $content]) {
+            $fields[] = [
+                'name' => 'file'.$idx,
+                'content' => $content,
+                'filename' => $filename,
+            ];
+        }
+
+        $multipart = new Multipart($fields);
+
+        return $this->http->post(Endpoint::bind(Endpoint::CHANNEL_MESSAGES, $this->id), (string) $multipart, $multipart->getHeaders())->then(function ($response) {
             return $this->factory->create(Message::class, $response, true);
         });
     }
