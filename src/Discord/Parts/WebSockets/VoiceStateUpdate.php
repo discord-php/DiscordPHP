@@ -21,22 +21,22 @@ use Discord\Parts\User\User;
 /**
  * Notifies the client of voice state updates about users.
  *
- * @property string      $guild_id
- * @property string      $channel_id
- * @property string      $user_id
- * @property Member      $member
- * @property Guild       $guild
- * @property Channel     $channel
- * @property User        $user
- * @property string      $session_id
- * @property bool        $deaf
- * @property bool        $mute
- * @property bool        $self_deaf
- * @property bool        $self_mute
- * @property bool        $self_stream
- * @property bool        $self_video
- * @property bool        $suppress
- * @property Carbon|null $request_to_speak_timestamp
+ * @property string|null  $guild_id                   Guild ID of the guild that owns the channel relating to the voice state. Null if for a DM/group channel.
+ * @property string|null  $channel_id                 Channel ID of the channel that the voice state is for. Null if the user has left the channel.
+ * @property string       $user_id                    User ID of the user that the voice state is for.
+ * @property Member|null  $member                     Member object the voice state is for. Null if for a DM/group channel.
+ * @property Guild|null   $guild                      Guild object that owns the channel relating to the voice state. Null if for a DM/group channel.
+ * @property Channel|null $channel                    Channel that the voice state is for. Null if the user has left the channel.
+ * @property User|null    $user                       User that the voice state is for.
+ * @property string       $session_id                 Session ID for this voice state.
+ * @property bool         $deaf
+ * @property bool         $mute
+ * @property bool         $self_deaf
+ * @property bool         $self_mute
+ * @property bool         $self_stream
+ * @property bool         $self_video
+ * @property bool         $suppress
+ * @property Carbon|null  $request_to_speak_timestamp Time the user requested to speak.
  */
 class VoiceStateUpdate extends Part
 {
@@ -62,10 +62,9 @@ class VoiceStateUpdate extends Part
     /**
      * Gets the member attribute.
      *
-     * @return ?Member    The member attribute.
-     * @throws \Exception
+     * @return Member|null The member attribute.
      */
-    protected function getMemberAttribute(): ?Part
+    protected function getMemberAttribute(): ?Member
     {
         if ($this->guild) {
             if ($member = $this->guild->members->get('id', $this->user_id)) {
@@ -79,28 +78,29 @@ class VoiceStateUpdate extends Part
     /**
      * Gets the channel attribute.
      *
-     * @return ?Channel The channel attribute.
+     * @return Channel|null The channel attribute.
      */
-    protected function getChannelAttribute(): ?Part
+    protected function getChannelAttribute(): ?Channel
     {
-        if ($this->guild) {
+        if ($this->channel_id) {
             return $this->guild->channels->get('id', $this->channel_id);
         }
+
+        return null;
     }
 
     /**
      * Gets the user attribute.
      *
-     * @return ?User      The user attribute.
-     * @throws \Exception
+     * @return User|null The user attribute.
      */
-    protected function getUserAttribute(): ?Part
+    protected function getUserAttribute(): ?User
     {
         if ($user = $this->discord->users->get('id', $this->user_id)) {
             return $user;
         }
 
-        if ($this->attributes['member']->user !== null) {
+        if ($this->attributes['member']->user ?? null) {
             return $this->factory->create(User::class, $this->attributes['member']->user, true);
         }
     }
