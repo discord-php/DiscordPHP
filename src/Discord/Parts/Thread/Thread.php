@@ -254,7 +254,7 @@ class Thread extends Part
      */
     public function join(): ExtendedPromiseInterface
     {
-        return $this->http->put(Endpoint::bind('channels/:thread_id/thread-members/@me', $this->id));
+        return $this->http->put(Endpoint::bind(Endpoint::THREAD_MEMBER_ME, $this->id));
     }
 
     /**
@@ -270,7 +270,7 @@ class Thread extends Part
             $user = $user->id;
         }
 
-        return $this->http->put(Endpoint::bind('channels/:thread_id/thread-members/:user_id', $this->id, $user));
+        return $this->http->put(Endpoint::bind(Endpoint::THREAD_MEMBER, $this->id, $user));
     }
 
     /**
@@ -280,7 +280,7 @@ class Thread extends Part
      */
     public function leave(): ExtendedPromiseInterface
     {
-        return $this->http->delete(Endpoint::bind('channels/:thread_id/thread-members/@me', $this->id));
+        return $this->http->delete(Endpoint::bind(Endpoint::THREAD_MEMBER_ME, $this->id));
     }
 
     /**
@@ -298,7 +298,7 @@ class Thread extends Part
             $user = $user->user_id;
         }
 
-        return $this->http->delete(Endpoint::bind('channels/:thread_id/thread-members/:user_id', $this->id, $user));
+        return $this->http->delete(Endpoint::bind(Endpoint::THREAD_MEMBER, $this->id, $user));
     }
 
     /**
