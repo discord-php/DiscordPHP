@@ -18,7 +18,7 @@ use JsonSerializable;
 
 /**
  * Helper class used to build messages.
- * 
+ *
  * @author David Cole <david.cole1340@gmail.com>
  */
 class MessageBuilder implements JsonSerializable
