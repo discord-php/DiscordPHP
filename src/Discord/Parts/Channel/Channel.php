@@ -80,6 +80,9 @@ class Channel extends Part
     public const TYPE_CATEGORY = 4;
     public const TYPE_NEWS = 5;
     public const TYPE_GAME_STORE = 6;
+    public const TYPE_NEWS_THREAD = 10;
+    public const TYPE_PUBLIC_THREAD = 11;
+    public const TYPE_PRIVATE_THREAD = 12;
     public const TYPE_STAGE_CHANNEL = 13;
 
     /**
@@ -681,28 +684,25 @@ class Channel extends Part
      * Starts a thread in the channel.
      *
      * @param string $name                  the name of the thread.
-     * @param string $content               content of the message that will be used to start the thread.
+     * @param bool   $private               whether the thread should be private. cannot start a private thread in a news channel.
      * @param int    $auto_archive_duration number of minutes of inactivity until the thread is auto-archived. one of 60, 1440, 4320, 10080.
      *
      * @return ExtendedPromiseInterface<Thread>
      */
-    public function startThread(string $name, string $content, int $auto_archive_duration = 1440): ExtendedPromiseInterface
+    public function startThread(string $name, bool $private = false, int $auto_archive_duration = 1440): ExtendedPromiseInterface
     {
-        return $this->sendMessage($content)->then(function (Message $message) use ($name, $auto_archive_duration) {
-            return $message->startThread($name, $auto_archive_duration);
-        });
-    }
+        if ($this->type == Channel::TYPE_NEWS) {
+            if ($private) {
+                throw new InvalidArgumentException('You cannot start a private thread within a news channel.');
+            }
 
-    /**
-     * Starts a private thread in the channel.
-     *
-     * @param string $name                  the name of the thread.
-     * @param int    $auto_archive_duration number of minutes of inactivity until the thread is auto-archived. one of 60, 1440, 4320, 10080.
-     *
-     * @return ExtendedPromiseInterface<Thread>
-     */
-    public function startPrivateThread(string $name, int $auto_archive_duration = 1440): ExtendedPromiseInterface
-    {
+            $type = Channel::TYPE_NEWS_THREAD;
+        } elseif ($this->type == Channel::TYPE_TEXT) {
+            $type = $private ? Channel::TYPE_PRIVATE_THREAD : Channel::TYPE_PUBLIC_THREAD;
+        } else {
+            throw new InvalidArgumentException('You cannot start a thread in this type of channel.');
+        }
+
         if (! in_array($auto_archive_duration, [60, 1440, 4320, 10080])) {
             throw new InvalidArgumentException('`auto_archive_duration` must be one of 60, 1440, 4320, 10080.');
         }
@@ -710,6 +710,7 @@ class Channel extends Part
         return $this->http->post(Endpoint::bind(Endpoint::CHANNEL_THREADS, $this->id), [
             'name' => $name,
             'auto_archive_duration' => $auto_archive_duration,
+            'type' => $type,
         ])->then(function ($response) {
             return $this->factory->create(Thread::class, $response, true);
         });
