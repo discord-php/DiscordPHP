@@ -38,6 +38,90 @@ Channels represent a Discord channel, whether it be a direct message channel, gr
 | overwrites | [Overwrite](#overwrite) | Contains permissioon overwrites.                 |
 | webhooks   | [Webhook](#webhook)     |                                                  |
 
+### Message Builder
+
+The `MessageBuilder` class is used to describe the contents of a new (or to be updated) message.
+
+A new message builder can be created with the `new` function:
+
+```php
+$builder = MessageBuilder::new();
+```
+
+Most builder functions return itself, so you can easily chain function calls together for a clean API,
+an example is shown on the right.
+
+```php
+$channel->sendMessage(MessageBuilder::new()
+    ->setContent('Hello, world!')
+    ->addEmbed($embed)
+    ->addFile('/path/to/file'));
+```
+
+#### Setting content
+
+Sets the text content of the message.
+
+```php
+$builder->setContent('Hello, world!');
+```
+
+#### Setting TTS value
+
+Sets the TTS value of the message.
+
+```php
+$builder->setTts(true);
+```
+
+#### Adding embeds
+
+You can add up to 10 embeds to a message. The embed functions takes `Embed` objects or associative arrays:
+
+```php
+$builder->addEmbed($embed);
+```
+
+You can also set the embeds from another array of embeds. Note this will remove the current embeds from the message.
+
+```php
+$embeds = [...];
+$builder->setEmbeds($embeds);
+```
+
+#### Replying to a message
+
+Sets the message as replying to another message. Takes a message object.
+
+```php
+$builder->setReplyTo($message);
+```
+
+#### Adding files to the message
+
+You can add multiple files to a message. The `addFile` function takes a path to a file, as well as an optional filename.
+
+If the filename parameter is ommited, it will take the filename from the path. Throws an exception if the path
+does not exist.
+
+```php
+$builder->addFile('/path/to/file', 'file.png');
+```
+
+You can also add files to messages with the content as a string:
+
+```php
+$builder->addFileFromContent('file.txt', 'contents of my file!');
+```
+
+You can also remove all files from a builder:
+
+```php
+$builder->clearFiles();
+```
+
+There is no limit on the number of files you can upload, but the whole request must be less than 8MB (including headers and JSON payload).
+
 ### Set permissions of a member or role
 
 Sets the permissions of a member or role. Takes two arrays of permissions - one for allow and one for deny. See [Channel Permissions](#permissions) for a valid list of permissions. Returns nothing in a promise.
@@ -262,18 +346,21 @@ $channel->getInvites()->done(function (Collection $invites) {
 
 ### Send a message
 
-Sends a message to the channel. Takes a string of content, whether the message is TTS and an embed. Returns the message in a promise.
+Sends a message to the channel. Takes a message builder. Returns the message in a promise.
 
 #### Parameters
 
-| name  | type                           | description                | default  |
-| ----- | ------------------------------ | -------------------------- | -------- |
-| text  | string                         | Message content            | required |
-| tts   | bool                           | Whether the message is TTS | false    |
-| embed | [Embed](#embed) or embed array | The embed for the message  | none     |
+| name    | type                           | description                | default  |
+| ------- | ------------------------------ | -------------------------- | -------- |
+| message | MessageBuilder                 | Message content            | required         |
 
 ```php
-$channel->sendMessage('Hello, world!', false, $embed)->done(function (Message $message) {
+$message = MessageBuilder::new()
+    ->setContent('Hello, world!')
+    ->addEmbed($embed)
+    ->setTts(true);
+
+$channel->sendMessage($message)->done(function (Message $message) {
     // ...
 });
 ```
@@ -290,26 +377,6 @@ Sends an embed to the channel. Takes an embed and returns the sent message in a 
 
 ```php
 $channel->sendEmbed($embed)->done(function (Message $message) {
-    // ...
-});
-```
-
-### Send a file
-
-Sends a file to the channel. Takes a filepath, filename, message content and tts value. Returns a message in a promise.
-
-#### Parameters
-
-| name     | type   | description                           | default          |
-| -------- | ------ | ------------------------------------- | ---------------- |
-| filepath | string | Path to the file to send              | required         |
-| filename | string | The filename to send the file as      | same as filepath |
-| content  | string | Message content to send with the file |                  |
-| tts      | bool   | Whether the message content is TTS    | false            |
-
-```php
-$channel->sendFile('/home/user/my_cool_pic.png', 'new_filename.png', 'content', false)
-->done(function (Message $message) {
     // ...
 });
 ```
