@@ -12,6 +12,7 @@
 namespace Discord\Builders;
 
 use Discord\Exceptions\FileNotFoundException;
+use Discord\Helpers\Multipart;
 use Discord\Parts\Channel\Message;
 use Discord\Parts\Embed\Embed;
 use JsonSerializable;
@@ -191,14 +192,54 @@ class MessageBuilder implements JsonSerializable
     }
 
     /**
-     * Gets the files of the message.
+     * Removes all files from the message.
      *
-     * @return array
-     * @internal
+     * @return $this
      */
-    public function _getFiles(): array
+    public function clearFiles(): static
     {
-        return $this->files;
+        $this->files = [];
+
+        return $this;
+    }
+
+    /**
+     * Returns a boolean that determines whether the message needs to
+     * be sent via multipart request, i.e. contains files.
+     *
+     * @return bool
+     */
+    public function requiresMultipart(): bool
+    {
+        return count($this->files) > 0;
+    }
+
+    /**
+     * Converts the request to a multipart request.
+     *
+     * @return Multipart
+     */
+    public function toMultipart(): Multipart
+    {
+        $fields = [
+            [
+                'name' => 'payload_json',
+                'content' => json_encode($this),
+                'headers' => [
+                    'Content-Type' => 'application/json',
+                ],
+            ],
+        ];
+
+        foreach ($this->files as $idx => [$filename, $content]) {
+            $fields[] = [
+                'name' => 'file'.$idx,
+                'content' => $content,
+                'filename' => $filename,
+            ];
+        }
+
+        return new Multipart($fields);
     }
 
     public function jsonSerialize(): array
