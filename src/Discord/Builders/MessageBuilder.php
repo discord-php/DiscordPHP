@@ -98,6 +98,16 @@ class MessageBuilder implements JsonSerializable
     }
 
     /**
+     * Returns the value of TTS of the message.
+     *
+     * @return bool
+     */
+    public function getTts(): bool
+    {
+        return $this->tts ?? false;
+    }
+
+    /**
      * Adds an embed to the message.
      *
      * @param Embed|array $embeds,...
@@ -189,6 +199,16 @@ class MessageBuilder implements JsonSerializable
         $this->files[] = [$filename, $content];
 
         return $this;
+    }
+
+    /**
+     * Returns the number of files attached to the message.
+     *
+     * @return int
+     */
+    public function numFiles(): int
+    {
+        return count($this->files);
     }
 
     /**
