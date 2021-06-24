@@ -6,6 +6,7 @@ as future proofing for message components (buttons).
 ## Sending messages
 
 Sending messages is now done through the [`MessageBuilder`](src/Discord/Builders/MessageBuilder.php) class.
+See the [documentation](http://discord-php.github.io/DiscordPHP/) section on the message builder for usage.
 
 This has been added to support a few features:
 

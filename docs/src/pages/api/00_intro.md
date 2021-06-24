@@ -35,7 +35,7 @@ Here are some commonly used editors:
 - Vim/Neovim (with the [coc.nvim](https://github.com/neoclide/coc.nvim) plugin for LSP support)
 - PHPStorm (built-in PHP support)
 
-We recommend installing the [PHP Intelephense](https://intelephense.com/) alongside your LSP-equipped editor for code completion along with many other helpful features. There is no need to pay for the premium features, as the free version will suffice.
+We recommend installing [PHP Intelephense](https://intelephense.com/) alongside your LSP-equipped editor for code completion alongside other helpful features. There is no need to pay for the premium features, the free version will suffice.
 
 ### Installation
 

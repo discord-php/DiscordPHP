@@ -15,6 +15,7 @@ use Discord\Exceptions\FileNotFoundException;
 use Discord\Helpers\Multipart;
 use Discord\Parts\Channel\Message;
 use Discord\Parts\Embed\Embed;
+use InvalidArgumentException;
 use JsonSerializable;
 
 /**
@@ -121,6 +122,10 @@ class MessageBuilder implements JsonSerializable
                 $embed = $embed->getRawAttributes();
             }
 
+            if (count($this->embeds) >= 10) {
+                throw new InvalidArgumentException('You can only have 10 embeds per message.');
+            }
+
             $this->embeds[] = $embed;
         }
 
@@ -136,15 +141,9 @@ class MessageBuilder implements JsonSerializable
      */
     public function setEmbeds(array $embeds): static
     {
-        $this->embeds = array_map(function ($embed) {
-            if ($embed instanceof Embed) {
-                $embed = $embed->getRawAttributes();
-            }
+        $this->embeds = [];
 
-            return $embed;
-        }, $embeds);
-
-        return $this;
+        return $this->addEmbed(...$embeds);
     }
 
     /**
