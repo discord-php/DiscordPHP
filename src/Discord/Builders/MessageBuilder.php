@@ -65,7 +65,7 @@ class MessageBuilder implements JsonSerializable
      *
      * @return $this
      */
-    public static function new(): static
+    public static function new(): self
     {
         return new static();
     }
@@ -77,7 +77,7 @@ class MessageBuilder implements JsonSerializable
      *
      * @return $this
      */
-    public function setContent(string $content): static
+    public function setContent(string $content): self
     {
         $this->content = $content;
 
@@ -91,7 +91,7 @@ class MessageBuilder implements JsonSerializable
      *
      * @return $this
      */
-    public function setTts(bool $tts): static
+    public function setTts(bool $tts): self
     {
         $this->tts = $tts;
 
@@ -115,7 +115,7 @@ class MessageBuilder implements JsonSerializable
      *
      * @return $this
      */
-    public function addEmbed(...$embeds): static
+    public function addEmbed(...$embeds): self
     {
         foreach ($embeds as $embed) {
             if ($embed instanceof Embed) {
@@ -139,7 +139,7 @@ class MessageBuilder implements JsonSerializable
      *
      * @return $this
      */
-    public function setEmbeds(array $embeds): static
+    public function setEmbeds(array $embeds): self
     {
         $this->embeds = [];
 
@@ -153,7 +153,7 @@ class MessageBuilder implements JsonSerializable
      *
      * @return $this
      */
-    public function setReplyTo(?Message $message): static
+    public function setReplyTo(?Message $message): self
     {
         $this->replyTo = $message;
 
@@ -172,7 +172,7 @@ class MessageBuilder implements JsonSerializable
      *
      * @return $this
      */
-    public function addFile(string $filepath, ?string $filename = null): static
+    public function addFile(string $filepath, ?string $filename = null): self
     {
         if (! file_exists($filepath)) {
             throw new FileNotFoundException("File does not exist at path {$filepath}.");
@@ -193,7 +193,7 @@ class MessageBuilder implements JsonSerializable
      *
      * @return $this
      */
-    public function addFileFromContent(string $filename, string $content): static
+    public function addFileFromContent(string $filename, string $content): self
     {
         $this->files[] = [$filename, $content];
 
@@ -215,7 +215,7 @@ class MessageBuilder implements JsonSerializable
      *
      * @return $this
      */
-    public function clearFiles(): static
+    public function clearFiles(): self
     {
         $this->files = [];
 
