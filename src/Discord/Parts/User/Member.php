@@ -12,6 +12,7 @@
 namespace Discord\Parts\User;
 
 use Carbon\Carbon;
+use Discord\Builders\MessageBuilder;
 use Discord\Helpers\Collection;
 use Discord\Http\Endpoint;
 use Discord\Parts\Channel\Channel;
@@ -172,17 +173,14 @@ class Member extends Part
     /**
      * Sends a message to the user.
      *
-     * @param string     $message The text to send in the message.
-     * @param bool       $tts     Whether the message should be sent with text to speech enabled.
-     * @param Embed|null $embed   An embed to send.
+     * @param MessageBuilder $message The message to send.
      *
      * @return ExtendedPromiseInterface
-     * @throws \Exception
      */
-    public function sendMessage(string $message, bool $tts = false, ?Embed $embed = null): ExtendedPromiseInterface
+    public function sendMessage(MessageBuilder $message): ExtendedPromiseInterface
     {
         if ($this->user) {
-            return $this->user->sendMessage($message, $tts, $embed);
+            return $this->user->sendMessage($message);
         }
 
         return \React\promise\reject(new \Exception('Member had no user part.'));

@@ -11,6 +11,7 @@
 
 namespace Discord\Parts\User;
 
+use Discord\Builders\MessageBuilder;
 use Discord\Http\Endpoint;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Embed\Embed;
@@ -66,7 +67,6 @@ class User extends Part
      * Gets the private channel for the user.
      *
      * @return ExtendedPromiseInterface
-     * @throws \Exception
      */
     public function getPrivateChannel(): ExtendedPromiseInterface
     {
@@ -85,17 +85,14 @@ class User extends Part
     /**
      * Sends a message to the user.
      *
-     * @param string     $message The text to send in the message.
-     * @param bool       $tts     Whether the message should be sent with text to speech enabled.
-     * @param Embed|null $embed   An embed to send.
+     * @param MessageBuilder $message Message to send.
      *
      * @return ExtendedPromiseInterface
-     * @throws \Exception
      */
-    public function sendMessage(string $message, bool $tts = false, ?Embed $embed = null): ExtendedPromiseInterface
+    public function sendMessage(MessageBuilder $message): ExtendedPromiseInterface
     {
-        return $this->getPrivateChannel()->then(function ($channel) use ($message, $tts, $embed) {
-            return $channel->sendMessage($message, $tts, $embed);
+        return $this->getPrivateChannel()->then(function ($channel) use ($message) {
+            return $channel->sendMessage($message);
         });
     }
 

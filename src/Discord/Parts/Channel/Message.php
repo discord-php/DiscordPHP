@@ -12,6 +12,7 @@
 namespace Discord\Parts\Channel;
 
 use Carbon\Carbon;
+use Discord\Builders\MessageBuilder;
 use Discord\Helpers\Collection;
 use Discord\Parts\Embed\Embed;
 use Discord\Parts\Guild\Emoji;
@@ -195,7 +196,6 @@ class Message extends Part
      * Gets the mention_channels attribute.
      *
      * @return Collection|Channel[]
-     * @throws \Exception
      */
     protected function getMentionChannelsAttribute(): Collection
     {
@@ -238,7 +238,6 @@ class Message extends Part
      * Returns the channel attribute.
      *
      * @return Channel|Thread The channel or thread the message was sent in.
-     * @throws \Exception
      */
     protected function getChannelAttribute(): Part
     {
@@ -308,7 +307,6 @@ class Message extends Part
      * Returns the mention attribute.
      *
      * @return Collection The users that were mentioned.
-     * @throws \Exception
      */
     protected function getMentionsAttribute(): Collection
     {
@@ -338,7 +336,8 @@ class Message extends Part
      * Returns the author attribute.
      *
      * @return User|Member|null The member that sent the message. Will return a User object if it is a PM.
-     * @throws \Exception
+     * 
+     * @deprecated 6.0.0 Use `Message::member` or `Message:user` instead.
      */
     protected function getAuthorAttribute(): ?Part
     {
@@ -395,8 +394,7 @@ class Message extends Part
     /**
      * Returns the embed attribute.
      *
-     * @return Collection A collection of embeds.
-     * @throws \Exception
+     * @return Collection|Embed[] A collection of embeds.
      */
     protected function getEmbedsAttribute(): Collection
     {
@@ -412,7 +410,7 @@ class Message extends Part
     /**
      * Gets the referenced message attribute, if present.
      *
-     * @return Message
+     * @return Message|null
      */
     protected function getReferencedMessageAttribute(): ?Message
     {
@@ -439,8 +437,7 @@ class Message extends Part
     /**
      * Returns the timestamp attribute.
      *
-     * @return Carbon     The time that the message was sent.
-     * @throws \Exception
+     * @return Carbon|null The time that the message was sent.
      */
     protected function getTimestampAttribute(): ?Carbon
     {
@@ -455,7 +452,6 @@ class Message extends Part
      * Returns the edited_timestamp attribute.
      *
      * @return Carbon|null The time that the message was edited.
-     * @throws \Exception
      */
     protected function getEditedTimestampAttribute(): ?Carbon
     {
@@ -521,18 +517,19 @@ class Message extends Part
      *
      * @param string $text The text to reply with.
      *
-     * @return ExtendedPromiseInterface
-     * @throws \Exception
+     * @return ExtendedPromiseInterface<Message>
      */
     public function reply(string $text): ExtendedPromiseInterface
     {
-        return $this->channel->sendMessage($text, false, null, null, $this);
+        return $this->channel->sendMessage(MessageBuilder::new()
+            ->setContent($text)
+            ->setReplyTo($this));
     }
 
     /**
      * Crossposts the message to any following channels.
      *
-     * @return ExtendedPromiseInterface
+     * @return ExtendedPromiseInterface<Message>
      */
     public function crosspost(): ExtendedPromiseInterface
     {
@@ -547,7 +544,7 @@ class Message extends Part
      * @param string $text  Text to send after delay.
      * @param int    $delay Delay after text will be sent in milliseconds.
      *
-     * @return ExtendedPromiseInterface
+     * @return ExtendedPromiseInterface<Message>
      */
     public function delayedReply(string $text, int $delay): ExtendedPromiseInterface
     {
@@ -634,6 +631,33 @@ class Message extends Part
     }
 
     /**
+     * Edits the message.
+     *
+     * @param MessageBuilder $message Contains the new contents of the message. Note that fields not specified in the builder will not be overwritten.
+     * 
+     * @return ExtendedPromiseInterface<Message>
+     */
+    public function edit(MessageBuilder $message): ExtendedPromiseInterface
+    {
+        return $this->_edit($message)->then(function ($response) {
+            $this->fill((array) $response);
+
+            return $this;
+        });
+    }
+
+    private function _edit(MessageBuilder $message): ExtendedPromiseInterface
+    {
+        if ($message->requiresMultipart()) {
+            $multipart = $message->toMultipart();
+
+            return $this->http->patch(Endpoint::bind(Endpoint::CHANNEL_MESSAGE, $this->channel_id, $this->id), (string) $multipart, $multipart->getHeaders());
+        }
+
+        return $this->http->patch(Endpoint::bind(Endpoint::CHANNEL_MESSAGE, $this->channel_id, $this->id), $message);
+    }
+
+    /**
      * Deletes the message from the channel.
      *
      * @return ExtendedPromiseInterface
@@ -650,7 +674,7 @@ class Message extends Part
      * @param int      $options['time']  Time in milliseconds until the collector finishes or false.
      * @param int      $options['limit'] The amount of reactions allowed or false.
      *
-     * @return ExtendedPromiseInterface
+     * @return ExtendedPromiseInterface<Collection<MessageReaction>>
      */
     public function createReactionCollector(callable $filter, array $options = []): ExtendedPromiseInterface
     {
@@ -683,6 +707,7 @@ class Message extends Part
                 }
             }
         };
+
         $this->discord->on(Event::MESSAGE_REACTION_ADD, $eventHandler);
 
         if ($options['time'] !== false) {
@@ -700,17 +725,12 @@ class Message extends Part
      *
      * @param Embed $embed
      *
-     * @return ExtendedPromiseInterface
+     * @return ExtendedPromiseInterface<Message>
      */
     public function addEmbed(Embed $embed): ExtendedPromiseInterface
     {
-        return $this->http->patch(Endpoint::bind(Endpoint::CHANNEL_MESSAGE, $this->channel_id, $this->id), [
-            'embed' => $embed->getRawAttributes(),
-        ])->then(function ($response) {
-            $this->fill((array) $response);
-            
-            return $this;
-        });
+        return $this->edit(MessageBuilder::new()
+            ->addEmbed($embed));
     }
 
     /**
