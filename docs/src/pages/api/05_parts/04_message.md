@@ -164,6 +164,19 @@ $message->delete()->done(function () {
 });
 ```
 
+### Edit the message
+
+Updates the message. Takes a message builder. Returns the updated message in a promise.
+
+```php
+$message->edit(MessageBuilder::new()
+    ->setContent('new content'))->done(function (Message $message) {
+        // ...
+    });
+```
+
+Note fields not set in the builder will not be updated, and will retain their previous value.
+
 ### Create reaction collector
 
 Creates a reaction collector. Works similar to [Channel](#channel)'s reaction collector. Takes a callback and an array of options. Returns a collection of reactions in a promise.
