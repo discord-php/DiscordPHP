@@ -40,6 +40,10 @@ use React\Promise\ExtendedPromiseInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Traversable;
 
+use function React\Promise\all;
+use function React\Promise\reject;
+use function React\Promise\resolve;
+
 /**
  * A Channel can be either a text or voice channel on a Discord guild.
  *
@@ -215,8 +219,7 @@ class Channel extends Part
     /**
      * Returns the channels pinned messages.
      *
-     * @return ExtendedPromiseInterface
-     * @throws \Exception
+     * @return ExtendedPromiseInterface<Collection<Message>>
      */
     public function getPinnedMessages(): ExtendedPromiseInterface
     {
@@ -244,7 +247,6 @@ class Channel extends Part
      * @param array $deny  An array of permissions to deny.
      *
      * @return ExtendedPromiseInterface
-     * @throws \Exception
      */
     public function setPermissions(Part $part, array $allow = [], array $deny = []): ExtendedPromiseInterface
     {
@@ -253,7 +255,7 @@ class Channel extends Part
         } elseif ($part instanceof Role) {
             $type = Overwrite::TYPE_ROLE;
         } else {
-            return \React\Promise\reject(new InvalidOverwriteException('Given part was not one of member or role.'));
+            return reject(new InvalidOverwriteException('Given part was not one of member or role.'));
         }
 
         $allow = array_fill_keys($allow, true);
@@ -287,7 +289,7 @@ class Channel extends Part
             $botperms = $this->guild->members->offsetGet($this->discord->id)->getPermissions($this);
 
             if (! $botperms->manage_roles) {
-                return \React\Promise\reject(new NoPermissionsException('You do not have permission to edit roles in the specified channel.'));
+                return reject(new NoPermissionsException('You do not have permission to edit roles in the specified channel.'));
             }
         }
 
@@ -296,7 +298,7 @@ class Channel extends Part
         } elseif ($part instanceof Role) {
             $type = Overwrite::TYPE_ROLE;
         } else {
-            return \React\Promise\reject(new InvalidOverwriteException('Given part was not one of member or role.'));
+            return reject(new InvalidOverwriteException('Given part was not one of member or role.'));
         }
 
         $payload = [
@@ -320,6 +322,8 @@ class Channel extends Part
      *
      * @param string $id The message snowflake.
      *
+     * @deprecated 7.0.0 Use `$message->messages->fetch($id)`.
+     * 
      * @return ExtendedPromiseInterface
      */
     public function getMessage(string $id): ExtendedPromiseInterface
@@ -330,21 +334,21 @@ class Channel extends Part
     /**
      * Moves a member to another voice channel.
      *
-     * @param Member|int The member to move. (either a Member part or the member ID)
+     * @param Member|string The member to move. (either a Member part or the member ID)
      *
      * @return ExtendedPromiseInterface
      */
     public function moveMember($member): ExtendedPromiseInterface
     {
         if (! $this->allowVoice()) {
-            return \React\Promise\reject(new \Exception('You cannot move a member in a text channel.'));
+            return reject(new \Exception('You cannot move a member in a text channel.'));
         }
 
         if (! $this->is_private) {
             $botperms = $this->guild->members->offsetGet($this->discord->id)->getPermissions($this);
 
             if (! $botperms->move_members) {
-                return \React\Promise\reject(new NoPermissionsException('You do not have permission to move members in the specified channel.'));
+                return reject(new NoPermissionsException('You do not have permission to move members in the specified channel.'));
             }
         }
 
@@ -358,21 +362,21 @@ class Channel extends Part
     /**
      * Mutes a member on a voice channel.
      *
-     * @param Member|int The member to mute. (either a Member part or the member ID)
+     * @param Member|string The member to mute. (either a Member part or the member ID)
      *
-     * @return \React\Promise\Promise
+     * @return ExtendedPromiseInterface
      */
     public function muteMember($member): ExtendedPromiseInterface
     {
         if (! $this->allowVoice()) {
-            return \React\Promise\reject(new \Exception('You cannot mute a member in a text channel.'));
+            return reject(new \Exception('You cannot mute a member in a text channel.'));
         }
 
         if (! $this->is_private) {
             $botperms = $this->guild->members->offsetGet($this->discord->id)->getPermissions($this);
 
             if (! $botperms->mute_members) {
-                return \React\Promise\reject(new NoPermissionsException('You do not have permission to mute members in the specified channel.'));
+                return reject(new NoPermissionsException('You do not have permission to mute members in the specified channel.'));
             }
         }
 
@@ -386,9 +390,9 @@ class Channel extends Part
     /**
      * Unmutes a member on a voice channel.
      *
-     * @param Member|int The member to unmute. (either a Member part or the member ID)
+     * @param Member|string The member to unmute. (either a Member part or the member ID)
      *
-     * @return \React\Promise\Promise
+     * @return ExtendedPromiseInterface
      */
     public function unmuteMember($member): ExtendedPromiseInterface
     {
@@ -420,8 +424,7 @@ class Channel extends Part
      * @param bool  $options ['temporary'] Whether the invite is for temporary membership.
      * @param bool  $options ['unique']    Whether the invite code should be unique (useful for creating many unique one time use invites).
      *
-     * @return ExtendedPromiseInterface
-     * @throws \Exception
+     * @return ExtendedPromiseInterface<Invite>
      */
     public function createInvite($options = []): ExtendedPromiseInterface
     {
@@ -429,7 +432,7 @@ class Channel extends Part
             $botperms = $this->guild->members->offsetGet($this->discord->id)->getPermissions($this);
 
             if (! $botperms->create_instant_invite) {
-                return \React\Promise\reject(new NoPermissionsException('You do not have permission to create an invite for the specified channel.'));
+                return reject(new NoPermissionsException('You do not have permission to create an invite for the specified channel.'));
             }
         }
 
@@ -451,9 +454,9 @@ class Channel extends Part
         $options = $resolver->resolve($options);
 
         return $this->http->post(Endpoint::bind(Endpoint::CHANNEL_INVITES, $this->id), $options)
-        ->then(function ($response) {
-            return $this->factory->create(Invite::class, $response, true);
-        });
+            ->then(function ($response) {
+                return $this->factory->create(Invite::class, $response, true);
+            });
     }
 
     /**
@@ -466,13 +469,13 @@ class Channel extends Part
     public function deleteMessages($messages): ExtendedPromiseInterface
     {
         if (! is_array($messages) && ! ($messages instanceof Traversable)) {
-            return \React\Promise\reject(new \Exception('$messages must be an array or implement Traversable.'));
+            return reject(new \Exception('$messages must be an array or implement Traversable.'));
         }
 
         $count = count($messages);
 
         if ($count == 0) {
-            return \React\Promise\resolve();
+            return resolve();
         } elseif ($count == 1 || $this->is_private) {
             foreach ($messages as $message) {
                 if ($message instanceof Message ||
@@ -501,7 +504,7 @@ class Channel extends Part
                 $messageID = array_slice($messageID, 100);
             }
 
-            return \React\Promise\all($promises);
+            return all($promises);
         }
     }
 
@@ -524,7 +527,7 @@ class Channel extends Part
      *
      * @param array $options
      *
-     * @return ExtendedPromiseInterface
+     * @return ExtendedPromiseInterface<Collection<Message>>
      */
     public function getMessageHistory(array $options): ExtendedPromiseInterface
     {
@@ -532,7 +535,7 @@ class Channel extends Part
             $botperms = $this->guild->members->offsetGet($this->discord->id)->getPermissions($this);
 
             if (! $botperms->read_message_history) {
-                return \React\Promise\reject(new NoPermissionsException('You do not have permission to read the specified channel\'s message history.'));
+                return reject(new NoPermissionsException('You do not have permission to read the specified channel\'s message history.'));
             }
         }
 
@@ -548,7 +551,7 @@ class Channel extends Part
         if (isset($options['before'], $options['after']) ||
             isset($options['before'], $options['around']) ||
             isset($options['around'], $options['after'])) {
-            return \React\Promise\reject(new \Exception('Can only specify one of before, after and around.'));
+            return reject(new \Exception('Can only specify one of before, after and around.'));
         }
 
         $endpoint = Endpoint::bind(Endpoint::CHANNEL_MESSAGES, $this->id);
@@ -583,7 +586,7 @@ class Channel extends Part
      *
      * @param Message $message The message to pin.
      *
-     * @return ExtendedPromiseInterface
+     * @return ExtendedPromiseInterface<Message>
      */
     public function pinMessage(Message $message): ExtendedPromiseInterface
     {
@@ -591,16 +594,16 @@ class Channel extends Part
             $botperms = $this->guild->members->offsetGet($this->discord->id)->getPermissions($this);
 
             if (! $botperms->manage_messages) {
-                return \React\Promise\reject(new NoPermissionsException('You do not have permission to pin messages in the specified channel.'));
+                return reject(new NoPermissionsException('You do not have permission to pin messages in the specified channel.'));
             }
         }
 
         if ($message->pinned) {
-            return \React\Promise\reject(new \Exception('This message is already pinned.'));
+            return reject(new \Exception('This message is already pinned.'));
         }
 
         if ($message->channel_id != $this->id) {
-            return \React\Promise\reject(new \Exception('You cannot pin a message to a different channel.'));
+            return reject(new \Exception('You cannot pin a message to a different channel.'));
         }
 
         return $this->http->put(Endpoint::bind(Endpoint::CHANNEL_PIN, $this->id, $message->id))->then(function () use (&$message) {
@@ -623,16 +626,16 @@ class Channel extends Part
             $botperms = $this->guild->members->offsetGet($this->discord->id)->getPermissions($this);
 
             if (! $botperms->manage_messages) {
-                return \React\Promise\reject(new NoPermissionsException('You do not have permission to unpin messages in the specified channel.'));
+                return reject(new NoPermissionsException('You do not have permission to unpin messages in the specified channel.'));
             }
         }
 
         if (! $message->pinned) {
-            return \React\Promise\reject(new \Exception('This message is not pinned.'));
+            return reject(new \Exception('This message is not pinned.'));
         }
 
         if ($message->channel_id != $this->id) {
-            return \React\Promise\reject(new \Exception('You cannot un-pin a message from a different channel.'));
+            return reject(new \Exception('You cannot un-pin a message from a different channel.'));
         }
 
         return $this->http->delete(Endpoint::bind(Endpoint::CHANNEL_PIN, $this->id, $message->id))->then(function () use (&$message) {
@@ -645,8 +648,7 @@ class Channel extends Part
     /**
      * Returns the channels invites.
      *
-     * @return ExtendedPromiseInterface
-     * @throws \Exception
+     * @return ExtendedPromiseInterface<Collection<Invite>>
      */
     public function getInvites(): ExtendedPromiseInterface
     {
@@ -718,74 +720,41 @@ class Channel extends Part
     }
 
     /**
-     * Sends a message to the channel if it is a text channel.
-     *
-     * @param string           $text             The text to send in the message.
-     * @param bool             $tts              Whether the message should be sent with text to speech enabled.
-     * @param Embed|array|null $embed            An embed to send.
-     * @param array|null       $allowed_mentions Set mentions allowed in the message.
-     * @param Message|null     $replyTo          The message to reply to.
-     *
-     * @return ExtendedPromiseInterface
-     * @throws \Exception
-     */
-    public function sendMessage(string $text, bool $tts = false, $embed = null, $allowed_mentions = null, ?Message $replyTo = null): ExtendedPromiseInterface
-    {
-        if (! $this->allowText()) {
-            return \React\Promise\reject(new \Exception('You can only send text messages to a text enabled channel.'));
-        }
-
-        if ($embed instanceof Embed) {
-            $embed = $embed->getRawAttributes();
-        }
-
-        $content = [
-            'content' => $text,
-            'tts' => $tts,
-            'embed' => $embed,
-            'allowed_mentions' => $allowed_mentions,
-        ];
-
-        if (! is_null($replyTo)) {
-            $content['message_reference'] = [
-                'message_id' => $replyTo->id,
-                'channel_id' => $replyTo->channel_id,
-            ];
-        }
-
-        if (! $this->is_private && $member = $this->guild->members->offsetGet($this->discord->id)) {
-            $botperms = $member->getPermissions($this);
-
-            if (! $botperms->send_messages) {
-                return \React\Promise\reject(new NoPermissionsException('You do not have permission to send messages in the specified channel.'));
-            }
-
-            if ($tts && ! $botperms->send_tts_messages) {
-                return \React\Promise\reject(new NoPermissionsException('You do not have permission to send tts messages in the specified channel.'));
-            }
-        }
-
-        return $this->http->post(Endpoint::bind(Endpoint::CHANNEL_MESSAGES, $this->id), $content)->then(function ($response) {
-            return $this->factory->create(Message::class, $response, true);
-        });
-    }
-
-    /**
-     * Sends a message to the channel using a `MessageBuilder.
+     * Sends a message to the channel.
      *
      * @param MessageBuilder $message The message builder that should be converted into a message.
      *
      * @return ExtendedPromiseInterface<Message>
      */
-    public function sendBuilder(MessageBuilder $message): ExtendedPromiseInterface
+    public function sendMessage(MessageBuilder $message): ExtendedPromiseInterface
     {
-        return $this->_sendBuilder($message)
+        if (! $this->allowText()) {
+            return reject(new InvalidArgumentException('You can only send messages to text channels.'));
+        }
+
+        if (! $this->is_private && $member = $this->guild->members->get('id', $this->discord->id)) {
+            $botperms = $member->getPermissions($this);
+
+            if (! $botperms->send_messages) {
+                return reject(new NoPermissionsException('You do not have permission to send messages in the specified channel.'));
+            }
+
+            if ($message->getTts() && ! $botperms->send_tts_messages) {
+                return reject(new NoPermissionsException('You do not have permission to send tts messages in the specified channel.'));
+            }
+
+            if ($message->numFiles() > 0 && ! $botperms->attach_files) {
+                return reject(new NoPermissionsException('You do not have permission to send files in the specified channel.'));
+            }
+        }
+
+        return $this->_sendMessage($message)
             ->then(function ($response) {
                 return $this->factory->create(Message::class, $response, true);
             });
     }
 
-    private function _sendBuilder(MessageBuilder $message): ExtendedPromiseInterface
+    private function _sendMessage(MessageBuilder $message): ExtendedPromiseInterface
     {
         if ($message->requiresMultipart()) {
             $multipart = $message->toMultipart();
@@ -799,109 +768,54 @@ class Channel extends Part
     /**
      * Edit a message in the channel.
      *
-     * @param Message          $message The message to edit.
-     * @param string           $text    The text to of the message.
-     * @param bool             $tts     Whether the message should be sent with text to speech enabled.
-     * @param Embed|array|null $embed   An embed to send.
+     * @param Message $message The message to update.
+     * @param MessageBuilder $message Contains the new contents of the message. Note that fields not specified in the builder will not be overwritten.
+     * 
+     * @deprecated 7.0.0 Use `Message::edit` instead
      *
-     * @return ExtendedPromiseInterface
-     * @throws \Exception
+     * @return ExtendedPromiseInterface<Message>
      */
-    public function editMessage(Message $message, string $text, bool $tts = false, $embed = null): ExtendedPromiseInterface
+    public function editMessage(Message $message, MessageBuilder $builder): ExtendedPromiseInterface
     {
-        if ($embed instanceof Embed) {
-            $embed = $embed->getRawAttributes();
-        }
-
-        $content = [
-            'content' => $text,
-            'tts' => $tts,
-            'embed' => $embed,
-        ];
-
-        return $this->http->patch(Endpoint::bind(Endpoint::CHANNEL_MESSAGE, $this->id, $message->id), $content)->then(function ($response) {
-            return $this->factory->create(Message::class, $response, true);
-        });
+        return $message->edit($builder);
     }
 
     /**
-     * Sends an embed to the channel if it is a text channel.
+     * Sends an embed to the channel.
      *
-     * @param Embed $embed
-     *
-     * @return ExtendedPromiseInterface
-     * @throws \Exception
+     * @param Embed $embed Embed to send.
+     * 
+     * @return ExtendedPromiseInterface<Message>
      */
     public function sendEmbed(Embed $embed): ExtendedPromiseInterface
     {
-        if (! $this->allowText()) {
-            return \React\Promise\reject(new \Exception('You cannot send an embed to a voice channel.'));
-        }
-
-        if (! $this->is_private) {
-            $botperms = $this->guild->members->offsetGet($this->discord->id)->getPermissions($this);
-
-            if (! $botperms->send_messages) {
-                return \React\Promise\reject(new NoPermissionsException('You do not have permission to send messages in the specified channel.'));
-            }
-        }
-
-        return $this->http->post(Endpoint::bind(Endpoint::CHANNEL_MESSAGES, $this->id), ['embed' => $embed->getRawAttributes()])->then(function ($response) {
-            return $this->factory->create(Message::class, $response, true);
-        });
+        return $this->sendMessage(MessageBuilder::new()
+            ->addEmbed($embed));
     }
 
     /**
-     * Sends a file to the channel if it is a text channel.
+     * Sends a file to the channel.
      *
      * @param string      $filepath The path to the file to be sent.
      * @param string|null $filename The name to send the file as.
      * @param string|null $content  Message content to send with the file.
      * @param bool        $tts      Whether to send the message with TTS.
      *
-     * @return ExtendedPromiseInterface
+     * @deprecated 7.0.0 Use `Channel::sendMessage` to send files.
+     * 
+     * @return ExtendedPromiseInterface<Message>
      */
     public function sendFile(string $filepath, ?string $filename = null, ?string $content = null, bool $tts = false): ExtendedPromiseInterface
     {
-        if (! $this->allowText()) {
-            return \React\Promise\reject(new \Exception('You cannot send a file to a voice channel.'));
+        $builder = MessageBuilder::new()
+            ->setTts($tts)
+            ->addFile($filepath, $filename);
+
+        if ($content) {
+            $builder->setContent($content);
         }
 
-        if (! $this->is_private) {
-            $botperms = $this->guild->members->offsetGet($this->discord->id)->getPermissions($this);
-
-            if (! $botperms->attach_files) {
-                return \React\Promise\reject(new NoPermissionsException('You do not have permission to send files into the specified channel.'));
-            }
-        }
-
-        if (! file_exists($filepath)) {
-            return \React\Promise\reject(new FileNotFoundException("File does not exist at path {$filepath}."));
-        }
-
-        if (is_null($filename)) {
-            $filename = basename($filepath);
-        }
-
-        $multipart = new Multipart([
-            [
-                'name' => 'file',
-                'content' => file_get_contents($filepath),
-                'filename' => $filename,
-            ],
-            [
-                'name' => 'tts',
-                'content' => $tts ? 'true' : 'false',
-            ],
-            [
-                'name' => 'content',
-                'content' => $content ?? '',
-            ],
-        ]);
-
-        return $this->http->post(Endpoint::bind(Endpoint::CHANNEL_MESSAGES, $this->id), (string) $multipart, $multipart->getHeaders())->then(function ($response) {
-            return $this->factory->create(Message::class, $response, true);
-        });
+        return $this->sendMessage($builder);
     }
 
     /**
@@ -926,7 +840,7 @@ class Channel extends Part
      * @param int      $options ['time']  Time in milliseconds until the collector finishes or false.
      * @param int      $options ['limit'] The amount of messages allowed or false.
      *
-     * @return ExtendedPromiseInterface
+     * @return ExtendedPromiseInterface<Collection<Message>>
      */
     public function createMessageCollector(callable $filter, array $options = []): ExtendedPromiseInterface
     {
@@ -959,6 +873,7 @@ class Channel extends Part
                 }
             }
         };
+
         $this->discord->on(Event::MESSAGE_CREATE, $eventHandler);
 
         if ($options['time'] !== false) {

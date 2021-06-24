@@ -11,6 +11,7 @@
 
 namespace Discord;
 
+use Discord\Builders\MessageBuilder;
 use Discord\CommandClient\Command;
 use Discord\Parts\Embed\Embed;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -173,7 +174,7 @@ class DiscordCommandClient extends Discord
                         }
                     }
 
-                    $message->channel->sendMessage('', false, $embed);
+                    $message->channel->sendEmbed($embed);
 
                     return;
                 }

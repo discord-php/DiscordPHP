@@ -12,6 +12,7 @@
 namespace Discord\Parts\Thread;
 
 use Carbon\Carbon;
+use Discord\Builders\MessageBuilder;
 use Discord\Exceptions\FileNotFoundException;
 use Discord\Helpers\Collection;
 use Discord\Helpers\Deferred;
@@ -476,108 +477,42 @@ class Thread extends Part
     }
 
     /**
-     * Sends a message in the thread.
+     * Sends a message to the channel.
      *
-     * @param string           $text             The content of the message.
-     * @param bool             $tts              Whether the message should be sent with TTS enabled.
-     * @param Embed|array|null $embed            An embed to attach to the message, in the form of an `Embed` object or array.
-     * @param array|null       $allowed_mentions Mentions to enable in the  message.
-     * @param Message|null     $replyTo          The message to reply to.
+     * @param MessageBuilder $message The message builder that should be converted into a message.
      *
      * @return ExtendedPromiseInterface<Message>
      */
-    public function sendMessage(string $text, bool $tts = false, $embed = null, $allowed_mentions = null, ?Message $replyTo = null): ExtendedPromiseInterface
+    public function sendMessage(MessageBuilder $message): ExtendedPromiseInterface
     {
-        if ($embed instanceof Embed) {
-            $embed = $embed->getRawAttributes();
+        return $this->_sendMessage($message)
+            ->then(function ($response) {
+                return $this->factory->create(Message::class, $response, true);
+            });
+    }
+
+    private function _sendMessage(MessageBuilder $message): ExtendedPromiseInterface
+    {
+        if ($message->requiresMultipart()) {
+            $multipart = $message->toMultipart();
+
+            return $this->http->post(Endpoint::bind(Endpoint::CHANNEL_MESSAGES, $this->id), (string) $multipart, $multipart->getHeaders());
         }
 
-        $content = [
-            'content' => $text,
-            'tts' => $tts,
-            'embed' => $embed,
-            'allowed_mentions' => $allowed_mentions,
-        ];
-
-        if (! is_null($replyTo)) {
-            $content['message_reference'] = [
-                'message_id' => $replyTo->id,
-                'channel_id' => $replyTo->channel_id,
-            ];
-        }
-
-        return $this->http->post(Endpoint::bind(Endpoint::CHANNEL_MESSAGES, $this->id), $content)->then(function ($response) {
-            return $this->factory->create(Message::class, $response, true);
-        });
+        return $this->http->post(Endpoint::bind(Endpoint::CHANNEL_MESSAGES, $this->id), $message);
     }
 
     /**
-     * Sends an embed in the thread.
+     * Sends an embed to the thread.
      *
-     * @param Embed|array $embed
-     *
+     * @param Embed $embed Embed to send.
+     * 
      * @return ExtendedPromiseInterface<Message>
      */
-    public function sendEmbed($embed): ExtendedPromiseInterface
+    public function sendEmbed(Embed $embed): ExtendedPromiseInterface
     {
-        if ($embed instanceof Embed) {
-            $embed = $embed->getRawAttributes();
-        }
-
-        return $this->http->post(Endpoint::bind(Endpoint::CHANNEL_MESSAGES, $this->id), ['embed' => $embed])->then(function ($response) {
-            return $this->factory->create(Message::class, $response, true);
-        });
-    }
-
-    /**
-     * Sends a file to the thread.
-     *
-     * @param string      $filepath The path to the file to be sent.
-     * @param string|null $filename The name to send the file as.
-     * @param string|null $content  Message content to send with the file.
-     * @param bool        $tts      Whether to send the message with TTS.
-     *
-     * @return ExtendedPromiseInterface<Message>
-     */
-    public function sendFile(string $filepath, ?string $filename = null, ?string $content = null, bool $tts = false): ExtendedPromiseInterface
-    {
-        if (! file_exists($filepath)) {
-            return \React\Promise\reject(new FileNotFoundException("File does not exist at path {$filepath}."));
-        }
-
-        if (is_null($filename)) {
-            $filename = basename($filepath);
-        }
-
-        $multipart = new Multipart([
-            [
-                'name' => 'file',
-                'content' => file_get_contents($filepath),
-                'filename' => $filename,
-            ],
-            [
-                'name' => 'tts',
-                'content' => $tts ? 'true' : 'false',
-            ],
-            [
-                'name' => 'content',
-                'content' => $content ?? '',
-            ],
-        ]);
-
-        return $this->http->post(Endpoint::bind(Endpoint::CHANNEL_MESSAGES, $this->id), (string) $multipart, $multipart->getHeaders())->then(function ($response) {
-            return $this->factory->create(Message::class, $response, true);
-        });
-    }
-
-    /**
-     * Broadcasts that you are typing to the channel. Lasts for 5 seconds.
-     *
-     * @return ExtendedPromiseInterface
-     */
-    public function broadcastTyping(): ExtendedPromiseInterface
-    {
-        return $this->http->post(Endpoint::bind(Endpoint::CHANNEL_TYPING, $this->id));
+        return $this->sendMessage(MessageBuilder::new()
+            ->addEmbed($embed));
     }
 
     /**
