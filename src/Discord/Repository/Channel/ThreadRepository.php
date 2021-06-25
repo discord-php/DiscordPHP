@@ -30,7 +30,7 @@ use React\Promise\ExtendedPromiseInterface;
 class ThreadRepository extends AbstractRepository
 {
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     protected $endpoints = [
         'all' => Endpoint::CHANNEL_THREADS_ACTIVE,
@@ -40,7 +40,7 @@ class ThreadRepository extends AbstractRepository
     ];
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     protected $class = Thread::class;
 
