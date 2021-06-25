@@ -13,6 +13,7 @@ namespace Discord\Builders;
 
 use Discord\Exceptions\FileNotFoundException;
 use Discord\Helpers\Multipart;
+use Discord\Http\Exceptions\RequestFailedException;
 use Discord\Parts\Channel\Message;
 use Discord\Parts\Embed\Embed;
 use InvalidArgumentException;
@@ -263,10 +264,12 @@ class MessageBuilder implements JsonSerializable
 
     public function jsonSerialize(): array
     {
+        $empty = count($this->files) < 1;
         $content = [];
 
         if ($this->content) {
             $content['content'] = $this->content;
+            $empty = false;
         }
 
         if ($this->tts) {
@@ -275,6 +278,7 @@ class MessageBuilder implements JsonSerializable
 
         if (count($this->embeds) > 0) {
             $content['embeds'] = $this->embeds;
+            $empty = false;
         }
 
         if ($this->replyTo) {
@@ -282,6 +286,10 @@ class MessageBuilder implements JsonSerializable
                 'message_id' => $this->replyTo->id,
                 'channel_id' => $this->replyTo->channel_id,
             ];
+        }
+
+        if ($empty) {
+            throw new RequestFailedException('You cannot send an empty message. Set the content or add an embed or file.');
         }
 
         return $content;
