@@ -19,7 +19,7 @@ use Discord\WebSockets\Event;
 class ThreadCreate extends Event
 {
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function handle(Deferred &$deferred, $data)
     {

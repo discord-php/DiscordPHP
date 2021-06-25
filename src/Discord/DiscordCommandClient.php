@@ -11,7 +11,6 @@
 
 namespace Discord;
 
-use Discord\Builders\MessageBuilder;
 use Discord\CommandClient\Command;
 use Discord\Parts\Embed\Embed;
 use Symfony\Component\OptionsResolver\OptionsResolver;
