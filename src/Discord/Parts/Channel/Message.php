@@ -336,7 +336,7 @@ class Message extends Part
      * Returns the author attribute.
      *
      * @return User|Member|null The member that sent the message. Will return a User object if it is a PM.
-     * 
+     *
      * @deprecated 6.0.0 Use `Message::member` or `Message:user` instead.
      */
     protected function getAuthorAttribute(): ?Part
@@ -636,7 +636,7 @@ class Message extends Part
      * Edits the message.
      *
      * @param MessageBuilder $message Contains the new contents of the message. Note that fields not specified in the builder will not be overwritten.
-     * 
+     *
      * @return ExtendedPromiseInterface<Message>
      */
     public function edit(MessageBuilder $message): ExtendedPromiseInterface

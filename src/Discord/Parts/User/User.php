@@ -14,7 +14,6 @@ namespace Discord\Parts\User;
 use Discord\Builders\MessageBuilder;
 use Discord\Http\Endpoint;
 use Discord\Parts\Channel\Channel;
-use Discord\Parts\Embed\Embed;
 use Discord\Parts\Part;
 use Discord\Parts\Channel\Message;
 use React\Promise\ExtendedPromiseInterface;

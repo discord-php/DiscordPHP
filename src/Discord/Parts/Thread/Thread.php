@@ -13,10 +13,8 @@ namespace Discord\Parts\Thread;
 
 use Carbon\Carbon;
 use Discord\Builders\MessageBuilder;
-use Discord\Exceptions\FileNotFoundException;
 use Discord\Helpers\Collection;
 use Discord\Helpers\Deferred;
-use Discord\Helpers\Multipart;
 use Discord\Http\Endpoint;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Channel\Message;
@@ -63,7 +61,7 @@ use Traversable;
 class Thread extends Part
 {
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     protected $fillable = [
         'id',
@@ -80,7 +78,7 @@ class Thread extends Part
     ];
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     protected $visible = [
         'guild',
@@ -97,7 +95,7 @@ class Thread extends Part
     ];
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     protected $repositories = [
         'messages' => MessageRepository::class,
@@ -506,7 +504,7 @@ class Thread extends Part
      * Sends an embed to the thread.
      *
      * @param Embed $embed Embed to send.
-     * 
+     *
      * @return ExtendedPromiseInterface<Message>
      */
     public function sendEmbed(Embed $embed): ExtendedPromiseInterface
@@ -571,7 +569,7 @@ class Thread extends Part
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function getRepositoryAttributes(): array
     {

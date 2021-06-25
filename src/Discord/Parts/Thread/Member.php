@@ -29,7 +29,7 @@ use React\Promise\ExtendedPromiseInterface;
 class Member extends Part
 {
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     protected $fillable = ['id', 'user_id', 'flags', 'join_timestamp'];
 
