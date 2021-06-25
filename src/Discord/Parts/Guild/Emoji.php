@@ -29,7 +29,7 @@ use Discord\Parts\Part;
 class Emoji extends Part
 {
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     protected $fillable = ['id', 'name', 'guild_id', 'managed', 'require_colons', 'roles', 'animated'];
 
@@ -88,7 +88,7 @@ class Emoji extends Part
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function getRepositoryAttributes(): array
     {

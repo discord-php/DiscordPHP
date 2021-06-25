@@ -32,7 +32,7 @@ use ReflectionClass;
 class AuditLog extends Part
 {
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     protected $fillable = [
         'guild_id',

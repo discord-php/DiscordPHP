@@ -17,7 +17,7 @@ use Discord\Helpers\Deferred;
 class ChannelPinsUpdate extends Event
 {
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function handle(Deferred &$deferred, $data): void
     {

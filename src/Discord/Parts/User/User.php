@@ -38,27 +38,27 @@ use React\Promise\ExtendedPromiseInterface;
  */
 class User extends Part
 {
-    const FLAG_DISCORD_EMPLOYEE = (1 << 0);
-    const FLAG_DISCORD_PARTNER = (1 << 1);
-    const FLAG_HYPESQUAD_EVENTS = (1 << 2);
-    const FLAG_BUG_HUNTER_LEVEL_1 = (1 << 3);
-    const FLAG_HOUSE_BRAVERY = (1 << 6);
-    const FLAG_HOUSE_BRILLIANCE = (1 << 7);
-    const FLAG_HOUSE_BALANCE = (1 << 8);
-    const FLAG_EARLY_SUPPORTER = (1 << 9);
-    const FLAG_TEAM_USER = (1 << 10);
-    const FLAG_SYSTEM = (1 << 12);
-    const FLAG_BUG_HUNTER_LEVEL_2 = (1 << 14);
-    const FLAG_VERIFIED_BOT = (1 << 16);
-    const FLAG_VERIFIED_BOT_DEVELOPER = (1 << 17);
-    const FLAG_DISCORD_CERTIFIED_MODERATOR = (1 << 18);
+    public const FLAG_DISCORD_EMPLOYEE = (1 << 0);
+    public const FLAG_DISCORD_PARTNER = (1 << 1);
+    public const FLAG_HYPESQUAD_EVENTS = (1 << 2);
+    public const FLAG_BUG_HUNTER_LEVEL_1 = (1 << 3);
+    public const FLAG_HOUSE_BRAVERY = (1 << 6);
+    public const FLAG_HOUSE_BRILLIANCE = (1 << 7);
+    public const FLAG_HOUSE_BALANCE = (1 << 8);
+    public const FLAG_EARLY_SUPPORTER = (1 << 9);
+    public const FLAG_TEAM_USER = (1 << 10);
+    public const FLAG_SYSTEM = (1 << 12);
+    public const FLAG_BUG_HUNTER_LEVEL_2 = (1 << 14);
+    public const FLAG_VERIFIED_BOT = (1 << 16);
+    public const FLAG_VERIFIED_BOT_DEVELOPER = (1 << 17);
+    public const FLAG_DISCORD_CERTIFIED_MODERATOR = (1 << 18);
 
-    const PREMIUM_NONE = 0;
-    const PREMIUM_NITRO_CLASSIC = 1;
-    const PREMIUM_NITRO = 2;
+    public const PREMIUM_NONE = 0;
+    public const PREMIUM_NITRO_CLASSIC = 1;
+    public const PREMIUM_NITRO = 2;
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     protected $fillable = ['id', 'username', 'avatar', 'discriminator', 'bot', 'system', 'mfa_enabled', 'locale', 'verified', 'email', 'flags', 'premium_type', 'public_flags'];
 
@@ -156,7 +156,7 @@ class User extends Part
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function getRepositoryAttributes(): array
     {

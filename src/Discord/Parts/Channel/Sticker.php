@@ -29,12 +29,12 @@ use Discord\Parts\Part;
  */
 class Sticker extends Part
 {
-    const FORMAT_TYPE_PNG = 1;
-    const FORMAT_TYPE_APNG = 2;
-    const FORMAT_TYPE_LOTTIE = 3;
+    public const FORMAT_TYPE_PNG = 1;
+    public const FORMAT_TYPE_APNG = 2;
+    public const FORMAT_TYPE_LOTTIE = 3;
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     protected $fillable = ['id', 'pack_id', 'name', 'description', 'tags', 'asset', 'preview_asset', 'format_type'];
 

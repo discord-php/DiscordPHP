@@ -18,7 +18,7 @@ use Discord\Helpers\Deferred;
 class InviteCreate extends Event
 {
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function handle(Deferred &$deferred, $data): void
     {

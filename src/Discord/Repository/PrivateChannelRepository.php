@@ -21,12 +21,12 @@ use Discord\Parts\Channel\Channel;
 class PrivateChannelRepository extends AbstractRepository
 {
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     protected $endpoints = [];
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     protected $class = Channel::class;
 }

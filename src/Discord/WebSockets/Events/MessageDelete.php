@@ -17,7 +17,7 @@ use Discord\Helpers\Deferred;
 class MessageDelete extends Event
 {
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function handle(Deferred &$deferred, $data): void
     {

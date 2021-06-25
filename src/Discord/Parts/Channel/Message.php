@@ -68,36 +68,36 @@ use React\Promise\ExtendedPromiseInterface;
  */
 class Message extends Part
 {
-    const TYPE_NORMAL = 0;
-    const TYPE_USER_ADDED = 1;
-    const TYPE_USER_REMOVED = 2;
-    const TYPE_CALL = 3;
-    const TYPE_CHANNEL_NAME_CHANGE = 4;
-    const TYPE_CHANNEL_ICON_CHANGE = 5;
-    const CHANNEL_PINNED_MESSAGE = 6;
-    const GUILD_MEMBER_JOIN = 7;
-    const USER_PREMIUM_GUILD_SUBSCRIPTION = 8;
-    const USER_PREMIUM_GUILD_SUBSCRIPTION_TIER_1 = 9;
-    const USER_PREMIUM_GUILD_SUBSCRIPTION_TIER_2 = 10;
-    const USER_PREMIUM_GUILD_SUBSCRIPTION_TIER_3 = 11;
-    const CHANNEL_FOLLOW_ADD = 12;
-    const GUILD_DISCOVERY_DISQUALIFIED = 14;
-    const GUILD_DISCOVERY_REQUALIFIED = 15;
-    const TYPE_REPLY = 19;
-    const TYPE_APPLICATION_COMMAND = 20;
+    public const TYPE_NORMAL = 0;
+    public const TYPE_USER_ADDED = 1;
+    public const TYPE_USER_REMOVED = 2;
+    public const TYPE_CALL = 3;
+    public const TYPE_CHANNEL_NAME_CHANGE = 4;
+    public const TYPE_CHANNEL_ICON_CHANGE = 5;
+    public const CHANNEL_PINNED_MESSAGE = 6;
+    public const GUILD_MEMBER_JOIN = 7;
+    public const USER_PREMIUM_GUILD_SUBSCRIPTION = 8;
+    public const USER_PREMIUM_GUILD_SUBSCRIPTION_TIER_1 = 9;
+    public const USER_PREMIUM_GUILD_SUBSCRIPTION_TIER_2 = 10;
+    public const USER_PREMIUM_GUILD_SUBSCRIPTION_TIER_3 = 11;
+    public const CHANNEL_FOLLOW_ADD = 12;
+    public const GUILD_DISCOVERY_DISQUALIFIED = 14;
+    public const GUILD_DISCOVERY_REQUALIFIED = 15;
+    public const TYPE_REPLY = 19;
+    public const TYPE_APPLICATION_COMMAND = 20;
 
-    const ACTIVITY_JOIN = 1;
-    const ACTIVITY_SPECTATE = 2;
-    const ACTIVITY_LISTEN = 3;
-    const ACTIVITY_JOIN_REQUEST = 4;
+    public const ACTIVITY_JOIN = 1;
+    public const ACTIVITY_SPECTATE = 2;
+    public const ACTIVITY_LISTEN = 3;
+    public const ACTIVITY_JOIN_REQUEST = 4;
 
-    const REACT_DELETE_ALL = 0;
-    const REACT_DELETE_ME = 1;
-    const REACT_DELETE_ID = 2;
-    const REACT_DELETE_EMOJI = 3;
+    public const REACT_DELETE_ALL = 0;
+    public const REACT_DELETE_ME = 1;
+    public const REACT_DELETE_ID = 2;
+    public const REACT_DELETE_EMOJI = 3;
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     protected $fillable = [
         'id',
@@ -130,7 +130,7 @@ class Message extends Part
     ];
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     protected $repositories = [
         'reactions' => ReactionRepository::class,
@@ -655,7 +655,7 @@ class Message extends Part
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function getCreatableAttributes(): array
     {
@@ -663,7 +663,7 @@ class Message extends Part
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function getUpdatableAttributes(): array
     {
@@ -674,7 +674,7 @@ class Message extends Part
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function getRepositoryAttributes(): array
     {

@@ -17,7 +17,6 @@ $fixers = [
     'encoding',
     'full_opening_tag',
     'function_declaration',
-    'lowercase_constants',
     'lowercase_keywords',
     'method_argument_space',
     'no_closing_tag',
@@ -35,19 +34,18 @@ $fixers = [
     'blank_line_after_opening_tag',
     'no_multiline_whitespace_around_double_arrow',
     'no_empty_statement',
-    'no_extra_consecutive_blank_lines',
     'include',
     'no_trailing_comma_in_list_call',
     'not_operator_with_successor_space',
-    'trailing_comma_in_multiline_array',
-    'no_multiline_whitespace_before_semicolons',
     'no_leading_namespace_whitespace',
     'no_blank_lines_after_class_opening',
     'no_blank_lines_after_phpdoc',
     'object_operator_without_whitespace',
     'binary_operator_spaces',
     'phpdoc_indent',
-    'phpdoc_inline_tag',
+    'general_phpdoc_tag_rename',
+    'phpdoc_inline_tag_normalizer',
+    'phpdoc_tag_type',
     'phpdoc_no_access',
     'phpdoc_no_package',
     'phpdoc_scalar',
@@ -56,8 +54,6 @@ $fixers = [
     'phpdoc_trim',
     'phpdoc_var_without_name',
     'no_leading_import_slash',
-    'blank_line_before_return',
-    'no_short_echo_tag',
     'no_trailing_comma_in_singleline_array',
     'single_blank_line_before_namespace',
     'single_quote',
@@ -71,11 +67,13 @@ $fixers = [
     'no_useless_else',
     'no_useless_return',
     'phpdoc_no_empty_return',
+    'no_extra_blank_lines',
+    'multiline_whitespace_before_semicolons',
 ];
 
 $rules = [
     'concat_space' => ['spacing' => 'none'],
-    'phpdoc_no_alias_tag' => ['type' => 'var'],
+    'phpdoc_no_alias_tag' => ['replacements' => ['type' => 'var']],
     'array_syntax' => ['syntax' => 'short'],
     'binary_operator_spaces' => ['align_double_arrow' => true, 'align_equals' => true],
     'header_comment' => ['header' => $header],
@@ -83,7 +81,11 @@ $rules = [
     'phpdoc_align' => [
         'align' => 'vertical',
         'tags' => ['param', 'property', 'property-read', 'property-write', 'return', 'throws', 'type', 'var', 'method'],
-    ]
+    ],
+    'blank_line_before_statement' => ['statements' => ['return']],
+    'constant_case' => ['case' => 'lower'],
+    'echo_tag_syntax' => ['format' => 'long'],
+    'trailing_comma_in_multiline' => ['elements' => ['arrays']],
 ];
 
 foreach ($fixers as $fix) {

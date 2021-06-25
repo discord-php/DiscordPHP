@@ -34,7 +34,7 @@ use Discord\Parts\User\User;
 class TypingStart extends Part
 {
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     protected $fillable = ['user_id', 'timestamp', 'channel_id', 'guild_id', 'member'];
 

@@ -27,12 +27,12 @@ use React\Promise\ExtendedPromiseInterface;
 class BanRepository extends AbstractRepository
 {
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     protected $discrim = 'user_id';
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     protected $endpoints = [
         'all' => Endpoint::GUILD_BANS,
@@ -40,7 +40,7 @@ class BanRepository extends AbstractRepository
     ];
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     protected $class = Ban::class;
 

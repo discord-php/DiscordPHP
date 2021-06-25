@@ -38,7 +38,7 @@ class Buffer extends EventEmitter implements WritableStreamInterface
      * Array of deferred reads waiting to
      * be resolved.
      *
-     * @var [Deferred, int][]
+     * @var Deferred[]|int[]
      */
     private $reads = [];
 
@@ -63,7 +63,7 @@ class Buffer extends EventEmitter implements WritableStreamInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function write($data): bool
     {
@@ -186,7 +186,7 @@ class Buffer extends EventEmitter implements WritableStreamInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function isWritable()
     {
@@ -194,7 +194,7 @@ class Buffer extends EventEmitter implements WritableStreamInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function end($data = null): void
     {
@@ -203,7 +203,7 @@ class Buffer extends EventEmitter implements WritableStreamInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function close(): void
     {

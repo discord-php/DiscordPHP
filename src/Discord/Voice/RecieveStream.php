@@ -115,7 +115,7 @@ class RecieveStream extends EventEmitter implements DuplexStreamInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function isReadable()
     {
@@ -123,7 +123,7 @@ class RecieveStream extends EventEmitter implements DuplexStreamInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function isWritable()
     {
@@ -131,7 +131,7 @@ class RecieveStream extends EventEmitter implements DuplexStreamInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function write($data)
     {
@@ -139,7 +139,7 @@ class RecieveStream extends EventEmitter implements DuplexStreamInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function end($data = null)
     {
@@ -152,7 +152,7 @@ class RecieveStream extends EventEmitter implements DuplexStreamInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function close()
     {
@@ -167,7 +167,7 @@ class RecieveStream extends EventEmitter implements DuplexStreamInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function pause()
     {
@@ -183,7 +183,7 @@ class RecieveStream extends EventEmitter implements DuplexStreamInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function resume()
     {
@@ -207,7 +207,7 @@ class RecieveStream extends EventEmitter implements DuplexStreamInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function pipe(WritableStreamInterface $dest, array $options = [])
     {

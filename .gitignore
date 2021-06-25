@@ -20,6 +20,8 @@ composer.lock
 # php-cs-fixer
 .php_cs.cache
 .php_cs
+.php-cs-fixer.php
+.php-cs-fixer.cache
 
 # phpunit
 phpunit.log

@@ -24,7 +24,7 @@ use Discord\Parts\Part;
 class Image extends Part
 {
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     protected $fillable = ['url', 'proxy_url', 'height', 'width'];
 }

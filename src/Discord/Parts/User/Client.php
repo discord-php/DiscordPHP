@@ -40,12 +40,12 @@ use React\Promise\ExtendedPromiseInterface;
 class Client extends Part
 {
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     protected $fillable = ['id', 'username', 'email', 'verified', 'avatar', 'discriminator', 'bot', 'user', 'application'];
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     protected $repositories = [
         'guilds' => GuildRepository::class,
@@ -126,7 +126,7 @@ class Client extends Part
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function getUpdatableAttributes(): array
     {
@@ -142,7 +142,7 @@ class Client extends Part
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function getRepositoryAttributes(): array
     {

@@ -25,7 +25,7 @@ use Discord\Http\Endpoint;
 class GuildCreate extends Event
 {
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function handle(Deferred &$deferred, $data)
     {

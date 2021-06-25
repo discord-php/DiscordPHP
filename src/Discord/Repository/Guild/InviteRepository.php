@@ -24,7 +24,7 @@ use Discord\Repository\AbstractRepository;
 class InviteRepository extends AbstractRepository
 {
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     protected $endpoints = [
         'all' => Endpoint::GUILD_INVITES,
@@ -34,7 +34,7 @@ class InviteRepository extends AbstractRepository
     ];
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     protected $class = Invite::class;
 }

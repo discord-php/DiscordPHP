@@ -31,12 +31,12 @@ use Discord\Parts\Permissions\RolePermission;
 class Role extends Part
 {
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     protected $fillable = ['id', 'name', 'color', 'managed', 'hoist', 'position', 'permissions', 'mentionable', 'guild_id'];
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     protected function afterConstruct(): void
     {
@@ -83,7 +83,7 @@ class Role extends Part
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function getCreatableAttributes(): array
     {
@@ -91,7 +91,7 @@ class Role extends Part
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function getUpdatableAttributes(): array
     {
@@ -105,7 +105,7 @@ class Role extends Part
     }
     
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function getRepositoryAttributes(): array
     {

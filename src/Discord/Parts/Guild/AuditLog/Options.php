@@ -32,7 +32,7 @@ use Discord\Parts\Part;
 class Options extends Part
 {
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     protected $fillable = [
         'delete_member_days',

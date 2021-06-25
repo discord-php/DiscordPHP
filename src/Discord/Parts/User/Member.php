@@ -48,12 +48,12 @@ use React\Promise\ExtendedPromiseInterface;
 class Member extends Part
 {
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     protected $fillable = ['id', 'user', 'roles', 'deaf', 'mute', 'joined_at', 'guild_id', 'status', 'nick', 'premium_since', 'pending', 'activities', 'client_status'];
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     protected $fillAfterSave = false;
 
@@ -396,7 +396,7 @@ class Member extends Part
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function getUpdatableAttributes(): array
     {
@@ -406,7 +406,7 @@ class Member extends Part
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function getRepositoryAttributes(): array
     {

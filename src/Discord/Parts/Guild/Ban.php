@@ -26,7 +26,7 @@ use Discord\Parts\User\User;
 class Ban extends Part
 {
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     protected $fillable = ['user_id', 'user', 'guild_id', 'reason'];
 
@@ -79,7 +79,7 @@ class Ban extends Part
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function getCreatableAttributes(): array
     {
@@ -87,7 +87,7 @@ class Ban extends Part
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function getUpdatableAttributes(): array
     {
@@ -95,7 +95,7 @@ class Ban extends Part
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function getRepositoryAttributes(): array
     {

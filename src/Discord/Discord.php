@@ -77,21 +77,21 @@ class Discord
      *
      * @var int Gateway version.
      */
-    const GATEWAY_VERSION = 8;
+    public const GATEWAY_VERSION = 8;
 
     /**
      * The HTTP API version the client usees.
      *
      * @var int HTTP API version.
      */
-    const HTTP_API_VERSION = 8;
+    public const HTTP_API_VERSION = 8;
 
     /**
      * The client version.
      *
      * @var string Version.
      */
-    const VERSION = 'v6.0.1';
+    public const VERSION = 'v6.0.1';
 
     /**
      * The logger.

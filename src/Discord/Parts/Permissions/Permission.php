@@ -31,7 +31,7 @@ abstract class Permission extends Part
      *
      * @var array
      */
-    const VOICE_PERMISSIONS = [
+    public const VOICE_PERMISSIONS = [
         'priority_speaker' => 0x100,
         'stream' => 0x200,
         'connect' => 0x100000,
@@ -47,7 +47,7 @@ abstract class Permission extends Part
      *
      * @var array
      */
-    const TEXT_PERMISSIONS = [
+    public const TEXT_PERMISSIONS = [
         'add_reactions' => 0x40,
         'send_messages' => 0x800,
         'send_tts_messages' => 0x1000,
@@ -64,7 +64,7 @@ abstract class Permission extends Part
      *
      * @var array
      */
-    const ROLE_PERMISSIONS = [
+    public const ROLE_PERMISSIONS = [
         'kick_members' => 0x2,
         'ban_members' => 0x4,
         'administrator' => 0x8,
@@ -81,7 +81,7 @@ abstract class Permission extends Part
      *
      * @var array
      */
-    const ALL_PERMISSIONS = [
+    public const ALL_PERMISSIONS = [
         'create_instant_invite' => 0x1,
         'manage_channels' => 0x10,
         'view_channel' => 0x400,
@@ -97,7 +97,7 @@ abstract class Permission extends Part
     private $permissions = [];
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function __construct(Discord $discord, array $attributes = [], bool $created = false)
     {

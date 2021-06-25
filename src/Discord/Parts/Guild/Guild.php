@@ -81,19 +81,19 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class Guild extends Part
 {
-    const REGION_DEFAULT = 'us_west';
+    public const REGION_DEFAULT = 'us_west';
 
-    const LEVEL_OFF = 0;
-    const LEVEL_LOW = 1;
-    const LEVEL_MEDIUM = 2;
-    const LEVEL_TABLEFLIP = 3;
-    const LEVEL_DOUBLE_TABLEFLIP = 4;
+    public const LEVEL_OFF = 0;
+    public const LEVEL_LOW = 1;
+    public const LEVEL_MEDIUM = 2;
+    public const LEVEL_TABLEFLIP = 3;
+    public const LEVEL_DOUBLE_TABLEFLIP = 4;
 
-    const SUPPRESS_JOIN_NOTIFICATIONS = (1 << 0);
-    const SUPPRESS_PREMIUM_SUBSCRIPTION = (1 << 1);
+    public const SUPPRESS_JOIN_NOTIFICATIONS = (1 << 0);
+    public const SUPPRESS_PREMIUM_SUBSCRIPTION = (1 << 1);
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     protected $fillable = [
         'id',
@@ -137,7 +137,7 @@ class Guild extends Part
     ];
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     protected $repositories = [
         'members' => MemberRepository::class,
@@ -420,7 +420,7 @@ class Guild extends Part
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function getCreatableAttributes(): array
     {
@@ -438,7 +438,7 @@ class Guild extends Part
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function getUpdatableAttributes(): array
     {
@@ -461,7 +461,7 @@ class Guild extends Part
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function getRepositoryAttributes(): array
     {

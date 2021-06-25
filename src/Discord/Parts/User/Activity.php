@@ -35,20 +35,20 @@ use Discord\Parts\Part;
  */
 class Activity extends Part
 {
-    const TYPE_PLAYING = 0; // Playing {$this->name}
-    const TYPE_STREAMING = 1; // Streaming {$this->details}
-    const TYPE_LISTENING = 2; // Listening to {$this->name}
-    const TYPE_WATCHING = 3; // Watching {$this->name}
-    const TYPE_CUSTOM = 4; // {$this->emoji} {$this->name}
-    const TYPE_COMPETING = 5; // Competing in {$this->name}
+    public const TYPE_PLAYING = 0; // Playing {$this->name}
+    public const TYPE_STREAMING = 1; // Streaming {$this->details}
+    public const TYPE_LISTENING = 2; // Listening to {$this->name}
+    public const TYPE_WATCHING = 3; // Watching {$this->name}
+    public const TYPE_CUSTOM = 4; // {$this->emoji} {$this->name}
+    public const TYPE_COMPETING = 5; // Competing in {$this->name}
 
-    const STATUS_ONLINE = 'online';
-    const STATUS_IDLE = 'idle';
-    const STATUS_DND = 'dnd';
-    const STATUS_INVISIBLE = 'invisible';
+    public const STATUS_ONLINE = 'online';
+    public const STATUS_IDLE = 'idle';
+    public const STATUS_DND = 'dnd';
+    public const STATUS_INVISIBLE = 'invisible';
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     protected $fillable = [
         'name',

@@ -19,7 +19,7 @@ use Discord\Parts\Channel\Reaction;
 class MessageReactionAdd extends Event
 {
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function handle(Deferred &$deferred, $data): void
     {

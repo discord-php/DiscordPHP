@@ -25,7 +25,7 @@ use Discord\Parts\Part;
 class VoiceServerUpdate extends Part
 {
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     protected $fillable = ['token', 'guild_id', 'endpoint'];
 

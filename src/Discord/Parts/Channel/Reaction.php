@@ -37,12 +37,12 @@ use function React\Promise\resolve;
 class Reaction extends Part
 {
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     protected $fillable = ['count', 'me', 'emoji', 'message_id', 'channel_id'];
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function isPartial(): bool
     {
@@ -50,7 +50,7 @@ class Reaction extends Part
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function fetch(): ExtendedPromiseInterface
     {

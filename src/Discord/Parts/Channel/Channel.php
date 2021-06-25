@@ -67,17 +67,17 @@ use Traversable;
  */
 class Channel extends Part
 {
-    const TYPE_TEXT = 0;
-    const TYPE_DM = 1;
-    const TYPE_VOICE = 2;
-    const TYPE_GROUP = 3;
-    const TYPE_CATEGORY = 4;
-    const TYPE_NEWS = 5;
-    const TYPE_GAME_STORE = 6;
-    const TYPE_STAGE_CHANNEL = 13;
+    public const TYPE_TEXT = 0;
+    public const TYPE_DM = 1;
+    public const TYPE_VOICE = 2;
+    public const TYPE_GROUP = 3;
+    public const TYPE_CATEGORY = 4;
+    public const TYPE_NEWS = 5;
+    public const TYPE_GAME_STORE = 6;
+    public const TYPE_STAGE_CHANNEL = 13;
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     protected $fillable = [
         'id',
@@ -102,7 +102,7 @@ class Channel extends Part
     ];
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     protected $repositories = [
         'members' => MemberRepository::class,
@@ -112,7 +112,7 @@ class Channel extends Part
     ];
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     protected function afterConstruct(): void
     {
@@ -917,7 +917,7 @@ class Channel extends Part
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function getCreatableAttributes(): array
     {
@@ -936,7 +936,7 @@ class Channel extends Part
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function getUpdatableAttributes(): array
     {
@@ -949,7 +949,7 @@ class Channel extends Part
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function getRepositoryAttributes(): array
     {

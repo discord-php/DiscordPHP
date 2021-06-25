@@ -346,8 +346,7 @@ class DiscordCommandClient extends Discord
      * @param \Callable|string $callable The function called when the command is executed.
      * @param array            $options  An array of options.
      *
-     * @return array[Command, array] The command instance and options.
-     * @throws \Exception
+     * @return Command[]|array[] The command instance and options.
      */
     public function buildCommand(string $command, $callable, array $options = []): array
     {
@@ -368,8 +367,15 @@ class DiscordCommandClient extends Discord
         $options = $this->resolveCommandOptions($options);
 
         $commandInstance = new Command(
-            $this, $command, $callable,
-            $options['description'], $options['longDescription'], $options['usage'], $options['cooldown'], $options['cooldownMessage']);
+            $this,
+            $command,
+            $callable,
+            $options['description'],
+            $options['longDescription'],
+            $options['usage'],
+            $options['cooldown'],
+            $options['cooldownMessage']
+        );
 
         return [$commandInstance, $options];
     }

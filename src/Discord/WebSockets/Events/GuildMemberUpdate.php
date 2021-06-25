@@ -18,7 +18,7 @@ use Discord\Helpers\Deferred;
 class GuildMemberUpdate extends Event
 {
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function handle(Deferred &$deferred, $data): void
     {

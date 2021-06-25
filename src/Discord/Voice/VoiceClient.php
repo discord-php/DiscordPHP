@@ -48,7 +48,7 @@ class VoiceClient extends EventEmitter
      *
      * @var string The DCA version.
      */
-    const DCA_VERSION = 'DCA1';
+    public const DCA_VERSION = 'DCA1';
 
     /**
      * Is the voice client ready?

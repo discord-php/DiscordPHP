@@ -25,7 +25,7 @@ use React\Promise\PromiseInterface;
 class MemberRepository extends AbstractRepository
 {
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     protected $endpoints = [
         'all' => Endpoint::GUILD_MEMBERS,
@@ -35,7 +35,7 @@ class MemberRepository extends AbstractRepository
     ];
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     protected $class = Member::class;
 

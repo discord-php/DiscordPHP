@@ -19,7 +19,7 @@ use Discord\Parts\Channel\Channel;
 class MessageCreate extends Event
 {
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function handle(Deferred &$deferred, $data): void
     {

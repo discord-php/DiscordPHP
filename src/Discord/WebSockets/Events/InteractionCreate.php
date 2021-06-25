@@ -17,7 +17,7 @@ use Discord\WebSockets\Event;
 class InteractionCreate extends Event
 {
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function handle(Deferred &$deferred, $data): void
     {

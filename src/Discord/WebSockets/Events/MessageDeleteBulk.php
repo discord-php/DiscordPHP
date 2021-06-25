@@ -20,7 +20,7 @@ use function React\Promise\all as All;
 class MessageDeleteBulk extends Event
 {
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function handle(Deferred &$deferred, $data): void
     {

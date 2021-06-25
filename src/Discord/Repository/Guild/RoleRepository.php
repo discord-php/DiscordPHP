@@ -24,7 +24,7 @@ use Discord\Repository\AbstractRepository;
 class RoleRepository extends AbstractRepository
 {
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     protected $endpoints = [
         'all' => Endpoint::GUILD_ROLES,
@@ -35,7 +35,7 @@ class RoleRepository extends AbstractRepository
     ];
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     protected $class = Role::class;
 }

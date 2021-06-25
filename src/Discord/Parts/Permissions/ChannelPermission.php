@@ -12,7 +12,7 @@
 namespace Discord\Parts\Permissions;
 
 /**
- * {@inheritdoc}
+ * @inheritdoc
  *
  * @property bool $priority_speaker
  * @property bool $stream
@@ -36,7 +36,7 @@ namespace Discord\Parts\Permissions;
 class ChannelPermission extends Permission
 {
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public static function getPermissions(): array
     {

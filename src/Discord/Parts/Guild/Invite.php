@@ -37,7 +37,7 @@ use React\Promise\ExtendedPromiseInterface;
 class Invite extends Part
 {
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     protected $fillable = [
         'code',
@@ -177,7 +177,7 @@ class Invite extends Part
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function getCreatableAttributes(): array
     {
@@ -185,7 +185,7 @@ class Invite extends Part
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function getRepositoryAttributes(): array
     {
