@@ -13,7 +13,6 @@ namespace Discord\Parts\Channel;
 
 use Carbon\Carbon;
 use Discord\Builders\MessageBuilder;
-use Discord\Exceptions\FileNotFoundException;
 use Discord\Exceptions\InvalidOverwriteException;
 use Discord\Helpers\Collection;
 use Discord\Parts\Embed\Embed;
@@ -30,7 +29,6 @@ use Discord\Repository\Channel\VoiceMemberRepository as MemberRepository;
 use Discord\Repository\Channel\WebhookRepository;
 use Discord\WebSockets\Event;
 use Discord\Helpers\Deferred;
-use Discord\Helpers\Multipart;
 use Discord\Http\Endpoint;
 use Discord\Http\Exceptions\NoPermissionsException;
 use Discord\Parts\Thread\Thread;
@@ -319,7 +317,7 @@ class Channel extends Part
      * @param string $id The message snowflake.
      *
      * @deprecated 7.0.0 Use `$message->messages->fetch($id)`.
-     * 
+     *
      * @return ExtendedPromiseInterface
      */
     public function getMessage(string $id): ExtendedPromiseInterface
@@ -764,9 +762,9 @@ class Channel extends Part
     /**
      * Edit a message in the channel.
      *
-     * @param Message $message The message to update.
+     * @param Message        $message The message to update.
      * @param MessageBuilder $message Contains the new contents of the message. Note that fields not specified in the builder will not be overwritten.
-     * 
+     *
      * @deprecated 7.0.0 Use `Message::edit` instead
      *
      * @return ExtendedPromiseInterface<Message>
@@ -780,7 +778,7 @@ class Channel extends Part
      * Sends an embed to the channel.
      *
      * @param Embed $embed Embed to send.
-     * 
+     *
      * @return ExtendedPromiseInterface<Message>
      */
     public function sendEmbed(Embed $embed): ExtendedPromiseInterface
@@ -798,7 +796,7 @@ class Channel extends Part
      * @param bool        $tts      Whether to send the message with TTS.
      *
      * @deprecated 7.0.0 Use `Channel::sendMessage` to send files.
-     * 
+     *
      * @return ExtendedPromiseInterface<Message>
      */
     public function sendFile(string $filepath, ?string $filename = null, ?string $content = null, bool $tts = false): ExtendedPromiseInterface
