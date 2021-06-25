@@ -39,7 +39,7 @@ class TypingStart extends Part
     protected $fillable = ['user_id', 'timestamp', 'channel_id', 'guild_id', 'member'];
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     protected $visible = ['user', 'channel', 'guild', 'member'];
 

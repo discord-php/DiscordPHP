@@ -53,7 +53,7 @@ class MessageReaction extends Part
     protected $visible = ['user', 'message', 'member', 'channel', 'guild'];
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function isPartial(): bool
     {
