@@ -420,6 +420,33 @@ class Guild extends Part
     }
 
     /**
+     * Updates the positions of a list of given roles.
+     *
+     * The `$roles` array should be an associative array where the LHS key is the position,
+     * and the RHS value is a `Role` object or a string ID, e.g. [1 => 'role_id_1', 3 => 'role_id_3'].
+     *
+     * @param array $roles
+     *
+     * @return ExtendedPromiseInterface
+     */
+    public function updateRolePositions(array $roles): ExtendedPromiseInterface
+    {
+        $payload = [];
+
+        foreach ($roles as $position => $role) {
+            $payload[] = [
+                'id' => ($role instanceof Role) ? $role->id : $role,
+                'position' => $position,
+            ];
+        }
+
+        return $this->http->patch(Endpoint::bind(Endpoint::GUILD_ROLES, $this->id), $payload)
+            ->then(function () {
+                return $this;
+            });
+    }
+
+    /**
      * @inheritdoc
      */
     public function getCreatableAttributes(): array
