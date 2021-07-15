@@ -75,6 +75,9 @@ class GuildCreate extends Event
 
         foreach ($data->voice_states as $state) {
             if ($channel = $guildPart->channels->offsetGet($state->channel_id)) {
+                $state = (array) $state;
+                $state['guild_id'] = $guildPart->id;
+
                 $stateUpdate = $this->factory->create(VoiceStateUpdatePart::class, $state, true);
 
                 $channel->members->offsetSet($stateUpdate->user_id, $stateUpdate);
