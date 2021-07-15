@@ -60,6 +60,8 @@ use Traversable;
  * @property string              $application_id      ID of the group DM creator if it is a bot.
  * @property string              $parent_id           ID of the parent channel.
  * @property Carbon              $last_pin_timestamp  When the last message was pinned.
+ * @property string|null         $rtc_region          voice region id for the voice channel, automatic when set to null
+ * @property int|null            $video_quality_mode  the camera video quality mode of the voice channel, 1 when not present
  * @property MemberRepository    $members             voice channel only - members in the channel
  * @property MessageRepository   $messages            text channel only - messages sent in the channel
  * @property OverwriteRepository $overwrites          permission overwrites
@@ -99,6 +101,8 @@ class Channel extends Part
         'application_id',
         'parent_id',
         'last_pin_timestamp',
+        'rtc_region',
+        'video_quality_mode',
     ];
 
     /**
@@ -942,9 +946,16 @@ class Channel extends Part
     {
         return [
             'name' => $this->name,
-            'topic' => $this->topic,
+            'type' => $this->type,
             'position' => $this->position,
+            'topic' => $this->topic,
+            'nsfw' => $this->nsfw,
+            'rate_limit_per_user' => $this->rate_limit_per_user,
+            'bitrate' => $this->bitrate,
+            'user_limit' => $this->user_limit,
             'parent_id' => $this->parent_id,
+            'rtc_region' => $this->rtc_region,
+            'video_quality_mode' => $this->video_quality_mode,
         ];
     }
 
