@@ -24,12 +24,13 @@ use Discord\Parts\User\User;
  * A PresenceUpdate part is used when the `PRESENCE_UPDATE` event is fired on the WebSocket. It contains
  * information about the users presence such as their status (online/away) and their current game.
  *
- * @property Member   $member   The member that the presence update affects.
- * @property User     $user     The user that the presence update affects.
- * @property Guild    $guild    The guild that the presence update affects.
- * @property string   $guild_id The unique identifier of the guild that the presence update affects.
- * @property string   $status   The updated status of the user.
- * @property Activity $game     The updated game of the user.
+ * @property Member                $member     The member that the presence update affects.
+ * @property User                  $user       The user that the presence update affects.
+ * @property Guild                 $guild      The guild that the presence update affects.
+ * @property string                $guild_id   The unique identifier of the guild that the presence update affects.
+ * @property string                $status     The updated status of the user.
+ * @property Activity              $game       The updated game of the user.
+ * @property Collection|Activity[] $activities The updated activities of the user.
  */
 class PresenceUpdate extends Part
 {
@@ -68,26 +69,6 @@ class PresenceUpdate extends Part
     }
 
     /**
-     * Returns the users roles.
-     *
-     * @return Collection|Role[]
-     */
-    protected function getRolesAttribute(): Collection
-    {
-        $roles = new Collection();
-
-        if (! $this->guild) {
-            $roles->fill($this->attributes['roles']);
-        } else {
-            foreach ($this->attributes['roles'] as $role) {
-                $roles->push($this->guild->roles->get('id', $role));
-            }
-        }
-
-        return $roles;
-    }
-
-    /**
      * Gets the guild attribute.
      *
      * @return Guild The guild that the user was in.
@@ -121,19 +102,5 @@ class PresenceUpdate extends Part
         }
 
         return $collection;
-    }
-
-    /**
-     * Gets the premium since timestamp.
-     *
-     * @return Carbon|null
-     */
-    protected function getPremiumSinceAttribute(): ?Carbon
-    {
-        if (! isset($this->attributes['premium_since'])) {
-            return null;
-        }
-
-        return Carbon::parse($this->attributes['premium_since']);
     }
 }
