@@ -956,9 +956,9 @@ class Channel extends Part
             'parent_id' => $this->parent_id,
             'rtc_region' => $this->rtc_region,
             'video_quality_mode' => $this->video_quality_mode,
-            'permission_overwrites' => $this->overwrites->map(function (Overwrite $overwrite) {
+            'permission_overwrites' => array_values($this->overwrites->map(function (Overwrite $overwrite) {
                 return $overwrite->getUpdatableAttributes();
-            }),
+            })->toArray()),
         ];
     }
 
