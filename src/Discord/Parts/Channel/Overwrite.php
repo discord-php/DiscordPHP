@@ -71,8 +71,8 @@ class Overwrite extends Part
         return [
             'id' => $this->id,
             'type' => $this->type,
-            'allow' => $this->allow,
-            'deny' => $this->deny,
+            'allow' => $this->allow->bitwise,
+            'deny' => $this->deny->bitwise,
         ];
     }
 
