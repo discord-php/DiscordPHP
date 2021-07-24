@@ -23,7 +23,6 @@ class InteractionCreate extends Event
     public function handle(Deferred &$deferred, $data): void
     {
         // do nothing with interactions - pass on to DiscordPHP-Slash
-        // $deferred->resolve($data);
         $deferred->resolve($this->factory->create(Interaction::class, $data, true));
     }
 }
