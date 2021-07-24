@@ -153,7 +153,7 @@ class Button extends Component
     /**
      * Sets the label of the button.
      *
-     * @param string $label
+     * @param string $label Label of the button. Maximum 80 characters.
      *
      * @return $this
      */
