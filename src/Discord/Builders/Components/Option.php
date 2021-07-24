@@ -56,13 +56,13 @@ class Option extends Component
     /**
      * Creates a new select menu option.
      *
-     * @param string      $label User-visible label for the option. Maximum 25 characters.
+     * @param string      $label User-visible label for the option. Maximum 100 characters.
      * @param string|null $value Developer value for the option. Maximum 100 characters. Leave as null to automatically generate a UUID.
      */
     public function __construct(string $label, ?string $value)
     {
-        if (poly_strlen($label) > 25) {
-            throw new InvalidArgumentException('Label must be less than or equal to 25 characters.');
+        if (poly_strlen($label) > 100) {
+            throw new InvalidArgumentException('Label must be less than or equal to 100 characters.');
         }
 
         if ($value && poly_strlen($value) > 100) {
@@ -89,14 +89,14 @@ class Option extends Component
     /**
      * Sets the description of the option. Null to clear.
      *
-     * @param string|null $description Description of the option. Maximum 50 characters.
+     * @param string|null $description Description of the option. Maximum 100 characters.
      *
      * @return $this
      */
     public function setDescription(?string $description): self
     {
-        if ($description && poly_strlen($description) > 50) {
-            throw new InvalidArgumentException('Description must be less than or equal to 50 characters.');
+        if ($description && poly_strlen($description) > 100) {
+            throw new InvalidArgumentException('Description must be less than or equal to 100 characters.');
         }
 
         $this->description = $description;
