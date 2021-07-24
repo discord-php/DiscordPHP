@@ -8,12 +8,16 @@
     <link rel="icon" href="images/favicon.ico"/>
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/base.css">
-            <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+            <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;600;700&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="css/template.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0/css/all.min.css" integrity="sha256-ybRkN9dBjhcS2qrW1z+hfCxq+1aBdwyQM5wlQoQVt/0=" crossorigin="anonymous" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/themes/prism-okaidia.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/line-numbers/prism-line-numbers.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/line-highlight/prism-line-highlight.css">
                 <script src="https://cdn.jsdelivr.net/npm/fuse.js@3.4.6"></script>
         <script src="https://cdn.jsdelivr.net/npm/css-vars-ponyfill@2"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0/js/all.min.js" integrity="sha256-0vuk8LXoyrmCjp1f0O300qo1M75ZQyhH9X3J6d+scmk=" crossorigin="anonymous"></script>
         <script src="js/search.js"></script>
         <script defer src="js/searchIndex.js"></script>
     </head>
@@ -48,11 +52,12 @@
     Menu
 </label>
 <aside class="phpdocumentor-column -four phpdocumentor-sidebar">
-    
+        
     <section class="phpdocumentor-sidebar__category">
         <h2 class="phpdocumentor-sidebar__category-header">Namespaces</h2>
                                                 <h4 class="phpdocumentor-sidebar__root-namespace"><a href="namespaces/discord.html"><abbr title="\Discord">Discord</abbr></a></h4>
                 <ul class="phpdocumentor-list">
+                                            <li><a href="namespaces/discord-builders.html"><abbr title="\Discord\Builders">Builders</abbr></a></li>
                                             <li><a href="namespaces/discord-commandclient.html"><abbr title="\Discord\CommandClient">CommandClient</abbr></a></li>
                                             <li><a href="namespaces/discord-exceptions.html"><abbr title="\Discord\Exceptions">Exceptions</abbr></a></li>
                                             <li><a href="namespaces/discord-factory.html"><abbr title="\Discord\Factory">Factory</abbr></a></li>
@@ -64,6 +69,10 @@
                                     </ul>
                         </section>
 
+        <section class="phpdocumentor-sidebar__category">
+        <h2 class="phpdocumentor-sidebar__category-header">Packages</h2>
+                    <h3 class="phpdocumentor-sidebar__root-package"><a href="packages/Application.html"><abbr title="\Application">Application</abbr></a></h3>
+                        </section>
     
     <section class="phpdocumentor-sidebar__category">
         <h2 class="phpdocumentor-sidebar__category-header">Reports</h2>
@@ -93,6 +102,12 @@
         extends <a href="classes/Discord-WebSockets-Event.html"><abbr title="\Discord\WebSockets\Event">Event</abbr></a>
     </span>
     
+            <div class="phpdocumentor-element__package">
+            in package
+            <ul class="phpdocumentor-breadcrumbs">
+                                    <li class="phpdocumentor-breadcrumb"><a href="packages/Application.html">Application</a></li>
+                            </ul>
+        </div>
     
     
     </h2>
@@ -101,12 +116,12 @@
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Events/GuildMemberUpdate.php"><a href="files/src-discord-websockets-events-guildmemberupdate.html"><abbr title="src/Discord/WebSockets/Events/GuildMemberUpdate.php">GuildMemberUpdate.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">18</span>
-</aside>
+
+    </aside>
 
             <p class="phpdocumentor-summary">Contains constants for WebSocket events as well as handlers
 for the events.</p>
 
-    <section class="phpdocumentor-description"></section>
 
 
 
@@ -346,6 +361,48 @@ for the events.</p>
 <dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a href="classes/Discord-WebSockets-Event.html#constant_THREAD_CREATE">THREAD_CREATE</a>
+    <span>
+        &nbsp;= &#039;THREAD_CREATE&#039;                    </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a href="classes/Discord-WebSockets-Event.html#constant_THREAD_DELETE">THREAD_DELETE</a>
+    <span>
+        &nbsp;= &#039;THREAD_DELETE&#039;                    </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a href="classes/Discord-WebSockets-Event.html#constant_THREAD_LIST_SYNC">THREAD_LIST_SYNC</a>
+    <span>
+        &nbsp;= &#039;THREAD_LIST_SYNC&#039;                    </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a href="classes/Discord-WebSockets-Event.html#constant_THREAD_MEMBER_UPDATE">THREAD_MEMBER_UPDATE</a>
+    <span>
+        &nbsp;= &#039;THREAD_MEMBER_UPDATE&#039;                    </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a href="classes/Discord-WebSockets-Event.html#constant_THREAD_MEMBERS_UPDATE">THREAD_MEMBERS_UPDATE</a>
+    <span>
+        &nbsp;= &#039;THREAD_MEMBERS_UPDATE&#039;                    </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a href="classes/Discord-WebSockets-Event.html#constant_THREAD_UPDATE">THREAD_UPDATE</a>
+    <span>
+        &nbsp;= &#039;THREAD_UPDATE&#039;                    </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a href="classes/Discord-WebSockets-Event.html#constant_TYPING_START">TYPING_START</a>
     <span>
         &nbsp;= &#039;TYPING_START&#039;                    </span>
@@ -436,7 +493,8 @@ Discord instance if necessary.</dd>
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Event.php"><a href="files/src-discord-websockets-event.html"><abbr title="src/Discord/WebSockets/Event.php">Event.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">63</span>
-</aside>
+
+    </aside>
 
     
     <code class="phpdocumentor-signature phpdocumentor-code ">
@@ -447,7 +505,10 @@ Discord instance if necessary.</dd>
 </code>
 
 
-    
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
     
 
 </article>
@@ -461,7 +522,8 @@ Discord instance if necessary.</dd>
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Event.php"><a href="files/src-discord-websockets-event.html"><abbr title="src/Discord/WebSockets/Event.php">Event.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">64</span>
-</aside>
+
+    </aside>
 
     
     <code class="phpdocumentor-signature phpdocumentor-code ">
@@ -472,7 +534,10 @@ Discord instance if necessary.</dd>
 </code>
 
 
-    
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
     
 
 </article>
@@ -486,7 +551,8 @@ Discord instance if necessary.</dd>
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Event.php"><a href="files/src-discord-websockets-event.html"><abbr title="src/Discord/WebSockets/Event.php">Event.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">66</span>
-</aside>
+
+    </aside>
 
     
     <code class="phpdocumentor-signature phpdocumentor-code ">
@@ -497,7 +563,10 @@ Discord instance if necessary.</dd>
 </code>
 
 
-    
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
     
 
 </article>
@@ -511,7 +580,8 @@ Discord instance if necessary.</dd>
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Event.php"><a href="files/src-discord-websockets-event.html"><abbr title="src/Discord/WebSockets/Event.php">Event.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">65</span>
-</aside>
+
+    </aside>
 
     
     <code class="phpdocumentor-signature phpdocumentor-code ">
@@ -522,7 +592,10 @@ Discord instance if necessary.</dd>
 </code>
 
 
-    
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
     
 
 </article>
@@ -536,7 +609,8 @@ Discord instance if necessary.</dd>
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Event.php"><a href="files/src-discord-websockets-event.html"><abbr title="src/Discord/WebSockets/Event.php">Event.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">46</span>
-</aside>
+
+    </aside>
 
     
     <code class="phpdocumentor-signature phpdocumentor-code ">
@@ -547,7 +621,10 @@ Discord instance if necessary.</dd>
 </code>
 
 
-    
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
     
 
 </article>
@@ -561,7 +638,8 @@ Discord instance if necessary.</dd>
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Event.php"><a href="files/src-discord-websockets-event.html"><abbr title="src/Discord/WebSockets/Event.php">Event.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">47</span>
-</aside>
+
+    </aside>
 
     
     <code class="phpdocumentor-signature phpdocumentor-code ">
@@ -572,7 +650,10 @@ Discord instance if necessary.</dd>
 </code>
 
 
-    
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
     
 
 </article>
@@ -586,7 +667,8 @@ Discord instance if necessary.</dd>
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Event.php"><a href="files/src-discord-websockets-event.html"><abbr title="src/Discord/WebSockets/Event.php">Event.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">42</span>
-</aside>
+
+    </aside>
 
     
     <code class="phpdocumentor-signature phpdocumentor-code ">
@@ -597,7 +679,10 @@ Discord instance if necessary.</dd>
 </code>
 
 
-    
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
     
 
 </article>
@@ -611,7 +696,8 @@ Discord instance if necessary.</dd>
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Event.php"><a href="files/src-discord-websockets-event.html"><abbr title="src/Discord/WebSockets/Event.php">Event.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">43</span>
-</aside>
+
+    </aside>
 
     
     <code class="phpdocumentor-signature phpdocumentor-code ">
@@ -622,7 +708,10 @@ Discord instance if necessary.</dd>
 </code>
 
 
-    
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
     
 
 </article>
@@ -636,7 +725,8 @@ Discord instance if necessary.</dd>
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Event.php"><a href="files/src-discord-websockets-event.html"><abbr title="src/Discord/WebSockets/Event.php">Event.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">57</span>
-</aside>
+
+    </aside>
 
     
     <code class="phpdocumentor-signature phpdocumentor-code ">
@@ -647,7 +737,10 @@ Discord instance if necessary.</dd>
 </code>
 
 
-    
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
     
 
 </article>
@@ -661,7 +754,8 @@ Discord instance if necessary.</dd>
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Event.php"><a href="files/src-discord-websockets-event.html"><abbr title="src/Discord/WebSockets/Event.php">Event.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">49</span>
-</aside>
+
+    </aside>
 
     
     <code class="phpdocumentor-signature phpdocumentor-code ">
@@ -672,7 +766,10 @@ Discord instance if necessary.</dd>
 </code>
 
 
-    
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
     
 
 </article>
@@ -686,7 +783,8 @@ Discord instance if necessary.</dd>
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Event.php"><a href="files/src-discord-websockets-event.html"><abbr title="src/Discord/WebSockets/Event.php">Event.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">50</span>
-</aside>
+
+    </aside>
 
     
     <code class="phpdocumentor-signature phpdocumentor-code ">
@@ -697,7 +795,10 @@ Discord instance if necessary.</dd>
 </code>
 
 
-    
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
     
 
 </article>
@@ -711,7 +812,8 @@ Discord instance if necessary.</dd>
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Event.php"><a href="files/src-discord-websockets-event.html"><abbr title="src/Discord/WebSockets/Event.php">Event.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">51</span>
-</aside>
+
+    </aside>
 
     
     <code class="phpdocumentor-signature phpdocumentor-code ">
@@ -722,7 +824,10 @@ Discord instance if necessary.</dd>
 </code>
 
 
-    
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
     
 
 </article>
@@ -736,7 +841,8 @@ Discord instance if necessary.</dd>
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Event.php"><a href="files/src-discord-websockets-event.html"><abbr title="src/Discord/WebSockets/Event.php">Event.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">38</span>
-</aside>
+
+    </aside>
 
     
     <code class="phpdocumentor-signature phpdocumentor-code ">
@@ -747,7 +853,10 @@ Discord instance if necessary.</dd>
 </code>
 
 
-    
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
     
 
 </article>
@@ -761,7 +870,8 @@ Discord instance if necessary.</dd>
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Event.php"><a href="files/src-discord-websockets-event.html"><abbr title="src/Discord/WebSockets/Event.php">Event.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">53</span>
-</aside>
+
+    </aside>
 
     
     <code class="phpdocumentor-signature phpdocumentor-code ">
@@ -772,7 +882,10 @@ Discord instance if necessary.</dd>
 </code>
 
 
-    
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
     
 
 </article>
@@ -786,7 +899,8 @@ Discord instance if necessary.</dd>
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Event.php"><a href="files/src-discord-websockets-event.html"><abbr title="src/Discord/WebSockets/Event.php">Event.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">55</span>
-</aside>
+
+    </aside>
 
     
     <code class="phpdocumentor-signature phpdocumentor-code ">
@@ -797,7 +911,10 @@ Discord instance if necessary.</dd>
 </code>
 
 
-    
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
     
 
 </article>
@@ -811,7 +928,8 @@ Discord instance if necessary.</dd>
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Event.php"><a href="files/src-discord-websockets-event.html"><abbr title="src/Discord/WebSockets/Event.php">Event.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">54</span>
-</aside>
+
+    </aside>
 
     
     <code class="phpdocumentor-signature phpdocumentor-code ">
@@ -822,7 +940,10 @@ Discord instance if necessary.</dd>
 </code>
 
 
-    
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
     
 
 </article>
@@ -836,7 +957,8 @@ Discord instance if necessary.</dd>
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Event.php"><a href="files/src-discord-websockets-event.html"><abbr title="src/Discord/WebSockets/Event.php">Event.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">44</span>
-</aside>
+
+    </aside>
 
     
     <code class="phpdocumentor-signature phpdocumentor-code ">
@@ -847,7 +969,10 @@ Discord instance if necessary.</dd>
 </code>
 
 
-    
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
     
 
 </article>
@@ -861,7 +986,8 @@ Discord instance if necessary.</dd>
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Event.php"><a href="files/src-discord-websockets-event.html"><abbr title="src/Discord/WebSockets/Event.php">Event.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">39</span>
-</aside>
+
+    </aside>
 
     
     <code class="phpdocumentor-signature phpdocumentor-code ">
@@ -872,7 +998,10 @@ Discord instance if necessary.</dd>
 </code>
 
 
-    
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
     
 
 </article>
@@ -886,7 +1015,8 @@ Discord instance if necessary.</dd>
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Event.php"><a href="files/src-discord-websockets-event.html"><abbr title="src/Discord/WebSockets/Event.php">Event.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">59</span>
-</aside>
+
+    </aside>
 
     
     <code class="phpdocumentor-signature phpdocumentor-code ">
@@ -897,7 +1027,10 @@ Discord instance if necessary.</dd>
 </code>
 
 
-    
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
     
 
 </article>
@@ -911,7 +1044,8 @@ Discord instance if necessary.</dd>
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Event.php"><a href="files/src-discord-websockets-event.html"><abbr title="src/Discord/WebSockets/Event.php">Event.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">60</span>
-</aside>
+
+    </aside>
 
     
     <code class="phpdocumentor-signature phpdocumentor-code ">
@@ -922,7 +1056,10 @@ Discord instance if necessary.</dd>
 </code>
 
 
-    
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
     
 
 </article>
@@ -935,8 +1072,9 @@ Discord instance if necessary.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Event.php"><a href="files/src-discord-websockets-event.html"><abbr title="src/Discord/WebSockets/Event.php">Event.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">69</span>
-</aside>
+    <span class="phpdocumentor-element-found-in__line">77</span>
+
+    </aside>
 
     
     <code class="phpdocumentor-signature phpdocumentor-code ">
@@ -947,7 +1085,10 @@ Discord instance if necessary.</dd>
 </code>
 
 
-    
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
     
 
 </article>
@@ -960,8 +1101,9 @@ Discord instance if necessary.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Event.php"><a href="files/src-discord-websockets-event.html"><abbr title="src/Discord/WebSockets/Event.php">Event.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">70</span>
-</aside>
+    <span class="phpdocumentor-element-found-in__line">78</span>
+
+    </aside>
 
     
     <code class="phpdocumentor-signature phpdocumentor-code ">
@@ -972,7 +1114,10 @@ Discord instance if necessary.</dd>
 </code>
 
 
-    
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
     
 
 </article>
@@ -985,8 +1130,9 @@ Discord instance if necessary.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Event.php"><a href="files/src-discord-websockets-event.html"><abbr title="src/Discord/WebSockets/Event.php">Event.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">72</span>
-</aside>
+    <span class="phpdocumentor-element-found-in__line">80</span>
+
+    </aside>
 
     
     <code class="phpdocumentor-signature phpdocumentor-code ">
@@ -997,7 +1143,10 @@ Discord instance if necessary.</dd>
 </code>
 
 
-    
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
     
 
 </article>
@@ -1010,8 +1159,9 @@ Discord instance if necessary.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Event.php"><a href="files/src-discord-websockets-event.html"><abbr title="src/Discord/WebSockets/Event.php">Event.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">73</span>
-</aside>
+    <span class="phpdocumentor-element-found-in__line">81</span>
+
+    </aside>
 
     
     <code class="phpdocumentor-signature phpdocumentor-code ">
@@ -1022,7 +1172,10 @@ Discord instance if necessary.</dd>
 </code>
 
 
-    
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
     
 
 </article>
@@ -1035,8 +1188,9 @@ Discord instance if necessary.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Event.php"><a href="files/src-discord-websockets-event.html"><abbr title="src/Discord/WebSockets/Event.php">Event.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">74</span>
-</aside>
+    <span class="phpdocumentor-element-found-in__line">82</span>
+
+    </aside>
 
     
     <code class="phpdocumentor-signature phpdocumentor-code ">
@@ -1047,7 +1201,10 @@ Discord instance if necessary.</dd>
 </code>
 
 
-    
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
     
 
 </article>
@@ -1060,8 +1217,9 @@ Discord instance if necessary.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Event.php"><a href="files/src-discord-websockets-event.html"><abbr title="src/Discord/WebSockets/Event.php">Event.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">75</span>
-</aside>
+    <span class="phpdocumentor-element-found-in__line">83</span>
+
+    </aside>
 
     
     <code class="phpdocumentor-signature phpdocumentor-code ">
@@ -1072,7 +1230,10 @@ Discord instance if necessary.</dd>
 </code>
 
 
-    
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
     
 
 </article>
@@ -1085,8 +1246,9 @@ Discord instance if necessary.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Event.php"><a href="files/src-discord-websockets-event.html"><abbr title="src/Discord/WebSockets/Event.php">Event.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">76</span>
-</aside>
+    <span class="phpdocumentor-element-found-in__line">84</span>
+
+    </aside>
 
     
     <code class="phpdocumentor-signature phpdocumentor-code ">
@@ -1097,7 +1259,10 @@ Discord instance if necessary.</dd>
 </code>
 
 
-    
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
     
 
 </article>
@@ -1110,8 +1275,9 @@ Discord instance if necessary.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Event.php"><a href="files/src-discord-websockets-event.html"><abbr title="src/Discord/WebSockets/Event.php">Event.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">71</span>
-</aside>
+    <span class="phpdocumentor-element-found-in__line">79</span>
+
+    </aside>
 
     
     <code class="phpdocumentor-signature phpdocumentor-code ">
@@ -1122,7 +1288,10 @@ Discord instance if necessary.</dd>
 </code>
 
 
-    
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
     
 
 </article>
@@ -1136,7 +1305,8 @@ Discord instance if necessary.</dd>
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Event.php"><a href="files/src-discord-websockets-event.html"><abbr title="src/Discord/WebSockets/Event.php">Event.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">32</span>
-</aside>
+
+    </aside>
 
     
     <code class="phpdocumentor-signature phpdocumentor-code ">
@@ -1147,7 +1317,10 @@ Discord instance if necessary.</dd>
 </code>
 
 
-    
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
     
 
 </article>
@@ -1161,7 +1334,8 @@ Discord instance if necessary.</dd>
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Event.php"><a href="files/src-discord-websockets-event.html"><abbr title="src/Discord/WebSockets/Event.php">Event.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">33</span>
-</aside>
+
+    </aside>
 
     
     <code class="phpdocumentor-signature phpdocumentor-code ">
@@ -1172,7 +1346,10 @@ Discord instance if necessary.</dd>
 </code>
 
 
-    
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
     
 
 </article>
@@ -1186,7 +1363,8 @@ Discord instance if necessary.</dd>
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Event.php"><a href="files/src-discord-websockets-event.html"><abbr title="src/Discord/WebSockets/Event.php">Event.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">30</span>
-</aside>
+
+    </aside>
 
     
     <code class="phpdocumentor-signature phpdocumentor-code ">
@@ -1197,7 +1375,10 @@ Discord instance if necessary.</dd>
 </code>
 
 
-    
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
     
 
 </article>
@@ -1211,7 +1392,8 @@ Discord instance if necessary.</dd>
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Event.php"><a href="files/src-discord-websockets-event.html"><abbr title="src/Discord/WebSockets/Event.php">Event.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">31</span>
-</aside>
+
+    </aside>
 
     
     <code class="phpdocumentor-signature phpdocumentor-code ">
@@ -1222,7 +1404,184 @@ Discord instance if necessary.</dd>
 </code>
 
 
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
     
+
+</article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_THREAD_CREATE">
+        THREAD_CREATE
+        <a href="classes/Discord-WebSockets-Event.html#constant_THREAD_CREATE" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Event.php"><a href="files/src-discord-websockets-event.html"><abbr title="src/Discord/WebSockets/Event.php">Event.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">69</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+    <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">THREAD_CREATE</span>
+    = <span class="phpdocumentor-signature__default-value">&#039;THREAD_CREATE&#039;</span>
+</code>
+
+
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_THREAD_DELETE">
+        THREAD_DELETE
+        <a href="classes/Discord-WebSockets-Event.html#constant_THREAD_DELETE" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Event.php"><a href="files/src-discord-websockets-event.html"><abbr title="src/Discord/WebSockets/Event.php">Event.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">71</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+    <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">THREAD_DELETE</span>
+    = <span class="phpdocumentor-signature__default-value">&#039;THREAD_DELETE&#039;</span>
+</code>
+
+
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_THREAD_LIST_SYNC">
+        THREAD_LIST_SYNC
+        <a href="classes/Discord-WebSockets-Event.html#constant_THREAD_LIST_SYNC" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Event.php"><a href="files/src-discord-websockets-event.html"><abbr title="src/Discord/WebSockets/Event.php">Event.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">72</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+    <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">THREAD_LIST_SYNC</span>
+    = <span class="phpdocumentor-signature__default-value">&#039;THREAD_LIST_SYNC&#039;</span>
+</code>
+
+
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_THREAD_MEMBER_UPDATE">
+        THREAD_MEMBER_UPDATE
+        <a href="classes/Discord-WebSockets-Event.html#constant_THREAD_MEMBER_UPDATE" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Event.php"><a href="files/src-discord-websockets-event.html"><abbr title="src/Discord/WebSockets/Event.php">Event.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">73</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+    <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">THREAD_MEMBER_UPDATE</span>
+    = <span class="phpdocumentor-signature__default-value">&#039;THREAD_MEMBER_UPDATE&#039;</span>
+</code>
+
+
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_THREAD_MEMBERS_UPDATE">
+        THREAD_MEMBERS_UPDATE
+        <a href="classes/Discord-WebSockets-Event.html#constant_THREAD_MEMBERS_UPDATE" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Event.php"><a href="files/src-discord-websockets-event.html"><abbr title="src/Discord/WebSockets/Event.php">Event.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">74</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+    <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">THREAD_MEMBERS_UPDATE</span>
+    = <span class="phpdocumentor-signature__default-value">&#039;THREAD_MEMBERS_UPDATE&#039;</span>
+</code>
+
+
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_THREAD_UPDATE">
+        THREAD_UPDATE
+        <a href="classes/Discord-WebSockets-Event.html#constant_THREAD_UPDATE" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Event.php"><a href="files/src-discord-websockets-event.html"><abbr title="src/Discord/WebSockets/Event.php">Event.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">70</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+    <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">THREAD_UPDATE</span>
+    = <span class="phpdocumentor-signature__default-value">&#039;THREAD_UPDATE&#039;</span>
+</code>
+
+
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
     
 
 </article>
@@ -1236,7 +1595,8 @@ Discord instance if necessary.</dd>
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Event.php"><a href="files/src-discord-websockets-event.html"><abbr title="src/Discord/WebSockets/Event.php">Event.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">34</span>
-</aside>
+
+    </aside>
 
     
     <code class="phpdocumentor-signature phpdocumentor-code ">
@@ -1247,7 +1607,10 @@ Discord instance if necessary.</dd>
 </code>
 
 
-    
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
     
 
 </article>
@@ -1261,7 +1624,8 @@ Discord instance if necessary.</dd>
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Event.php"><a href="files/src-discord-websockets-event.html"><abbr title="src/Discord/WebSockets/Event.php">Event.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">35</span>
-</aside>
+
+    </aside>
 
     
     <code class="phpdocumentor-signature phpdocumentor-code ">
@@ -1272,7 +1636,10 @@ Discord instance if necessary.</dd>
 </code>
 
 
-    
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
     
 
 </article>
@@ -1286,7 +1653,8 @@ Discord instance if necessary.</dd>
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Event.php"><a href="files/src-discord-websockets-event.html"><abbr title="src/Discord/WebSockets/Event.php">Event.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">37</span>
-</aside>
+
+    </aside>
 
     
     <code class="phpdocumentor-signature phpdocumentor-code ">
@@ -1297,7 +1665,10 @@ Discord instance if necessary.</dd>
 </code>
 
 
-    
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
     
 
 </article>
@@ -1311,7 +1682,8 @@ Discord instance if necessary.</dd>
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Event.php"><a href="files/src-discord-websockets-event.html"><abbr title="src/Discord/WebSockets/Event.php">Event.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">36</span>
-</aside>
+
+    </aside>
 
     
     <code class="phpdocumentor-signature phpdocumentor-code ">
@@ -1322,7 +1694,10 @@ Discord instance if necessary.</dd>
 </code>
 
 
-    
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
     
 
 </article>
@@ -1350,8 +1725,9 @@ Discord instance if necessary.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Event.php"><a href="files/src-discord-websockets-event.html"><abbr title="src/Discord/WebSockets/Event.php">Event.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">97</span>
-</aside>
+    <span class="phpdocumentor-element-found-in__line">105</span>
+
+    </aside>
 
         <p class="phpdocumentor-summary">The Discord client instance.</p>
 
@@ -1361,7 +1737,9 @@ Discord instance if necessary.</dd>
     <span class="phpdocumentor-signature__name">$discord</span>
     </code>
 
-        <section class="phpdocumentor-description"></section>
+    
+        <section class="phpdocumentor-description"><p>Client.</p>
+</section>
 
     
 
@@ -1382,8 +1760,9 @@ Discord instance if necessary.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Event.php"><a href="files/src-discord-websockets-event.html"><abbr title="src/Discord/WebSockets/Event.php">Event.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">90</span>
-</aside>
+    <span class="phpdocumentor-element-found-in__line">98</span>
+
+    </aside>
 
         <p class="phpdocumentor-summary">The Factory.</p>
 
@@ -1393,7 +1772,9 @@ Discord instance if necessary.</dd>
     <span class="phpdocumentor-signature__name">$factory</span>
     </code>
 
-        <section class="phpdocumentor-description"></section>
+    
+        <section class="phpdocumentor-description"><p>Factory.</p>
+</section>
 
     
 
@@ -1414,8 +1795,9 @@ Discord instance if necessary.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Event.php"><a href="files/src-discord-websockets-event.html"><abbr title="src/Discord/WebSockets/Event.php">Event.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">83</span>
-</aside>
+    <span class="phpdocumentor-element-found-in__line">91</span>
+
+    </aside>
 
         <p class="phpdocumentor-summary">The HTTP client.</p>
 
@@ -1425,7 +1807,9 @@ Discord instance if necessary.</dd>
     <span class="phpdocumentor-signature__name">$http</span>
     </code>
 
-        <section class="phpdocumentor-description"></section>
+    
+        <section class="phpdocumentor-description"><p>Client.</p>
+</section>
 
     
 
@@ -1450,8 +1834,9 @@ Discord instance if necessary.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Event.php"><a href="files/src-discord-websockets-event.html"><abbr title="src/Discord/WebSockets/Event.php">Event.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">106</span>
-</aside>
+    <span class="phpdocumentor-element-found-in__line">114</span>
+
+    </aside>
 
         <p class="phpdocumentor-summary">Constructs an event.</p>
 
@@ -1459,8 +1844,7 @@ Discord instance if necessary.</dd>
     <span class="phpdocumentor-signature__visibility">public</span>
                 <span class="phpdocumentor-signature__name">__construct</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><abbr title="\Discord\Http\Http">Http</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$http</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Discord-Factory-Factory.html"><abbr title="\Discord\Factory\Factory">Factory</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$factory</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Discord-Discord.html"><abbr title="\Discord\Discord">Discord</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$discord</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
@@ -1497,8 +1881,7 @@ Discord instance if necessary.</dd>
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
     <span class="phpdocumentor-signature__response_type">mixed</span>
             &mdash;
-            <section class="phpdocumentor-description"></section>
-
+        
     
 </article>
                     <article
@@ -1514,23 +1897,24 @@ Discord instance if necessary.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Event.php"><a href="files/src-discord-websockets-event.html"><abbr title="src/Discord/WebSockets/Event.php">Event.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">124</span>
-</aside>
+    <span class="phpdocumentor-element-found-in__line">132</span>
+
+    </aside>
 
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
                 <span class="phpdocumentor-signature__name">__debugInfo</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span></code>
 
-    
+        <section class="phpdocumentor-description"></section>
+
     
     
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
     <span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span>
             &mdash;
-            <section class="phpdocumentor-description"></section>
-
+        
     
 </article>
                     <article
@@ -1547,7 +1931,8 @@ Discord instance if necessary.</dd>
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/WebSockets/Events/GuildMemberUpdate.php"><a href="files/src-discord-websockets-events-guildmemberupdate.html"><abbr title="src/Discord/WebSockets/Events/GuildMemberUpdate.php">GuildMemberUpdate.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">23</span>
-</aside>
+
+    </aside>
 
         <p class="phpdocumentor-summary">Transforms the given data, and updates the
 Discord instance if necessary.</p>
@@ -1556,8 +1941,7 @@ Discord instance if necessary.</p>
     <span class="phpdocumentor-signature__visibility">public</span>
                 <span class="phpdocumentor-signature__name">handle</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Discord-Helpers-Deferred.html"><abbr title="\Discord\Helpers\Deferred">Deferred</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__reference-operator">&amp;</span><span class="phpdocumentor-signature__argument__name">$deferred</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$data</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">void|<abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr></span></code>
 
-        <section class="phpdocumentor-description"></section>
-
+    
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
@@ -1581,15 +1965,89 @@ Discord instance if necessary.</p>
             </dl>
 
     
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">inheritdoc</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                
+                                             
+                                    </dd>
+                        </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
     <span class="phpdocumentor-signature__response_type">void|<abbr title="\React\Promise\PromiseInterface">PromiseInterface</abbr></span>
             &mdash;
-            <section class="phpdocumentor-description"></section>
-
+        
     
 </article>
             </section>
+
+        
+    <script type="text/javascript">
+        function loadExternalCodeSnippets(line) {
+            Array.prototype.slice.call(document.querySelectorAll('pre[data-src]')).forEach((pre) => {
+                var src = pre.getAttribute('data-src').replace( /\\/g, '/');
+                var extension = (src.match(/\.(\w+)$/) || [, ''])[1];
+                var language = 'php';
+
+                var code = document.createElement('code');
+                code.className = 'language-' + language;
+
+                pre.textContent = '';
+
+                pre.setAttribute('data-line', line)
+                code.textContent = 'Loading…';
+
+                pre.appendChild(code);
+
+                var xhr = new XMLHttpRequest();
+
+                xhr.open('GET', src, true);
+
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState == 4) {
+
+                        if (xhr.status < 400 && xhr.responseText) {
+                            code.textContent = xhr.responseText;
+
+                            Prism.highlightElement(code);
+                        }
+                        else if (xhr.status >= 400) {
+                            code.textContent = '✖ Error ' + xhr.status + ' while fetching file: ' + xhr.statusText;
+                        }
+                        else {
+                            code.textContent = '✖ Error: File does not exist, is empty or trying to view from localhost';
+                        }
+                    }
+                };
+
+                xhr.send(null);
+            });
+        }
+
+        var modals = document.querySelectorAll("[data-modal]");
+
+        modals.forEach(function (trigger) {
+            trigger.addEventListener("click", function (event) {
+                //event.preventDefault();
+                const modal = document.getElementById(trigger.dataset.modal);
+                modal.classList.add("phpdocumentor-modal__open");
+                loadExternalCodeSnippets(trigger.dataset.line)
+                const exits = modal.querySelectorAll("[data-exit-button]");
+                exits.forEach(function (exit) {
+                    exit.addEventListener("click", function (event) {
+                        event.preventDefault();
+                        modal.classList.remove("phpdocumentor-modal__open");
+                    });
+                });
+            });
+        });
+    </script>
 
     </article>
                 <section data-search-results class="phpdocumentor-search-results phpdocumentor-search-results--hidden">
@@ -1612,5 +2070,9 @@ Discord instance if necessary.</p>
     <script>
         cssVars({});
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/prism.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/line-highlight/prism-line-highlight.min.js"></script>
 </body>
 </html>

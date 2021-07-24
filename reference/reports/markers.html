@@ -9,12 +9,16 @@
     <link rel="icon" href="images/favicon.ico"/>
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/base.css">
-            <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+            <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;600;700&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="css/template.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0/css/all.min.css" integrity="sha256-ybRkN9dBjhcS2qrW1z+hfCxq+1aBdwyQM5wlQoQVt/0=" crossorigin="anonymous" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/themes/prism-okaidia.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/line-numbers/prism-line-numbers.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/line-highlight/prism-line-highlight.css">
                 <script src="https://cdn.jsdelivr.net/npm/fuse.js@3.4.6"></script>
         <script src="https://cdn.jsdelivr.net/npm/css-vars-ponyfill@2"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0/js/all.min.js" integrity="sha256-0vuk8LXoyrmCjp1f0O300qo1M75ZQyhH9X3J6d+scmk=" crossorigin="anonymous"></script>
         <script src="js/search.js"></script>
         <script defer src="js/searchIndex.js"></script>
     </head>
@@ -49,11 +53,12 @@
     Menu
 </label>
 <aside class="phpdocumentor-column -four phpdocumentor-sidebar">
-    
+        
     <section class="phpdocumentor-sidebar__category">
         <h2 class="phpdocumentor-sidebar__category-header">Namespaces</h2>
                                                 <h4 class="phpdocumentor-sidebar__root-namespace"><a href="namespaces/discord.html"><abbr title="\Discord">Discord</abbr></a></h4>
                 <ul class="phpdocumentor-list">
+                                            <li><a href="namespaces/discord-builders.html"><abbr title="\Discord\Builders">Builders</abbr></a></li>
                                             <li><a href="namespaces/discord-commandclient.html"><abbr title="\Discord\CommandClient">CommandClient</abbr></a></li>
                                             <li><a href="namespaces/discord-exceptions.html"><abbr title="\Discord\Exceptions">Exceptions</abbr></a></li>
                                             <li><a href="namespaces/discord-factory.html"><abbr title="\Discord\Factory">Factory</abbr></a></li>
@@ -65,6 +70,10 @@
                                     </ul>
                         </section>
 
+        <section class="phpdocumentor-sidebar__category">
+        <h2 class="phpdocumentor-sidebar__category-header">Packages</h2>
+                    <h3 class="phpdocumentor-sidebar__root-package"><a href="packages/Application.html"><abbr title="\Application">Application</abbr></a></h3>
+                        </section>
     
     <section class="phpdocumentor-sidebar__category">
         <h2 class="phpdocumentor-sidebar__category-header">Reports</h2>
@@ -87,10 +96,1558 @@
     <div class="phpdocumentor-row">
         <h2 class="phpdocumentor-content__title">Markers</h2>
 
-                    <div class="phpdocumentor-admonition phpdocumentor-admonition--success">
-                No markers have been found in this project.
-            </div>
+                    <h3>Table of Contents</h3>
+            <table class="phpdocumentor-table_of_contents">
+                                                            <tr>
+                            <td class="phpdocumentor-cell"><a href="reports/markers.html#src/Discord/Builders/Components/Button.php">src/Discord/Builders/Components/Button.php</a></td>
+                            <td class="phpdocumentor-cell">2</td>
+                        </tr>
+                                                                                <tr>
+                            <td class="phpdocumentor-cell"><a href="reports/markers.html#src/Discord/Builders/Components/SelectMenu.php">src/Discord/Builders/Components/SelectMenu.php</a></td>
+                            <td class="phpdocumentor-cell">2</td>
+                        </tr>
+                                                                                <tr>
+                            <td class="phpdocumentor-cell"><a href="reports/markers.html#src/Discord/Discord.php">src/Discord/Discord.php</a></td>
+                            <td class="phpdocumentor-cell">23</td>
+                        </tr>
+                                                                                <tr>
+                            <td class="phpdocumentor-cell"><a href="reports/markers.html#src/Discord/DiscordCommandClient.php">src/Discord/DiscordCommandClient.php</a></td>
+                            <td class="phpdocumentor-cell">2</td>
+                        </tr>
+                                                                                <tr>
+                            <td class="phpdocumentor-cell"><a href="reports/markers.html#src/Discord/functions.php">src/Discord/functions.php</a></td>
+                            <td class="phpdocumentor-cell">3</td>
+                        </tr>
+                                                                                <tr>
+                            <td class="phpdocumentor-cell"><a href="reports/markers.html#src/Discord/Helpers/Collection.php">src/Discord/Helpers/Collection.php</a></td>
+                            <td class="phpdocumentor-cell">1</td>
+                        </tr>
+                                                                                <tr>
+                            <td class="phpdocumentor-cell"><a href="reports/markers.html#src/Discord/Helpers/Multipart.php">src/Discord/Helpers/Multipart.php</a></td>
+                            <td class="phpdocumentor-cell">2</td>
+                        </tr>
+                                                                                <tr>
+                            <td class="phpdocumentor-cell"><a href="reports/markers.html#src/Discord/Parts/Channel/Channel.php">src/Discord/Parts/Channel/Channel.php</a></td>
+                            <td class="phpdocumentor-cell">1</td>
+                        </tr>
+                                                                                <tr>
+                            <td class="phpdocumentor-cell"><a href="reports/markers.html#src/Discord/Parts/Channel/Message.php">src/Discord/Parts/Channel/Message.php</a></td>
+                            <td class="phpdocumentor-cell">4</td>
+                        </tr>
+                                                                                <tr>
+                            <td class="phpdocumentor-cell"><a href="reports/markers.html#src/Discord/Parts/Channel/Reaction.php">src/Discord/Parts/Channel/Reaction.php</a></td>
+                            <td class="phpdocumentor-cell">1</td>
+                        </tr>
+                                                                                <tr>
+                            <td class="phpdocumentor-cell"><a href="reports/markers.html#src/Discord/Parts/Channel/Sticker.php">src/Discord/Parts/Channel/Sticker.php</a></td>
+                            <td class="phpdocumentor-cell">1</td>
+                        </tr>
+                                                                                <tr>
+                            <td class="phpdocumentor-cell"><a href="reports/markers.html#src/Discord/Parts/Channel/Webhook.php">src/Discord/Parts/Channel/Webhook.php</a></td>
+                            <td class="phpdocumentor-cell">1</td>
+                        </tr>
+                                                                                <tr>
+                            <td class="phpdocumentor-cell"><a href="reports/markers.html#src/Discord/Parts/Guild/AuditLog/Entry.php">src/Discord/Parts/Guild/AuditLog/Entry.php</a></td>
+                            <td class="phpdocumentor-cell">3</td>
+                        </tr>
+                                                                                <tr>
+                            <td class="phpdocumentor-cell"><a href="reports/markers.html#src/Discord/Parts/Guild/AuditLog/Options.php">src/Discord/Parts/Guild/AuditLog/Options.php</a></td>
+                            <td class="phpdocumentor-cell">2</td>
+                        </tr>
+                                                                                <tr>
+                            <td class="phpdocumentor-cell"><a href="reports/markers.html#src/Discord/Parts/Guild/Guild.php">src/Discord/Parts/Guild/Guild.php</a></td>
+                            <td class="phpdocumentor-cell">2</td>
+                        </tr>
+                                                                                <tr>
+                            <td class="phpdocumentor-cell"><a href="reports/markers.html#src/Discord/Parts/Guild/Invite.php">src/Discord/Parts/Guild/Invite.php</a></td>
+                            <td class="phpdocumentor-cell">1</td>
+                        </tr>
+                                                                                <tr>
+                            <td class="phpdocumentor-cell"><a href="reports/markers.html#src/Discord/Parts/OAuth/Application.php">src/Discord/Parts/OAuth/Application.php</a></td>
+                            <td class="phpdocumentor-cell">1</td>
+                        </tr>
+                                                                                <tr>
+                            <td class="phpdocumentor-cell"><a href="reports/markers.html#src/Discord/Parts/Thread/Thread.php">src/Discord/Parts/Thread/Thread.php</a></td>
+                            <td class="phpdocumentor-cell">1</td>
+                        </tr>
+                                                                                <tr>
+                            <td class="phpdocumentor-cell"><a href="reports/markers.html#src/Discord/Parts/User/Activity.php">src/Discord/Parts/User/Activity.php</a></td>
+                            <td class="phpdocumentor-cell">6</td>
+                        </tr>
+                                                                                <tr>
+                            <td class="phpdocumentor-cell"><a href="reports/markers.html#src/Discord/Parts/User/Member.php">src/Discord/Parts/User/Member.php</a></td>
+                            <td class="phpdocumentor-cell">4</td>
+                        </tr>
+                                                                                <tr>
+                            <td class="phpdocumentor-cell"><a href="reports/markers.html#src/Discord/Parts/User/User.php">src/Discord/Parts/User/User.php</a></td>
+                            <td class="phpdocumentor-cell">2</td>
+                        </tr>
+                                                                                <tr>
+                            <td class="phpdocumentor-cell"><a href="reports/markers.html#src/Discord/Voice/RecieveStream.php">src/Discord/Voice/RecieveStream.php</a></td>
+                            <td class="phpdocumentor-cell">1</td>
+                        </tr>
+                                                                                <tr>
+                            <td class="phpdocumentor-cell"><a href="reports/markers.html#src/Discord/Voice/VoiceClient.php">src/Discord/Voice/VoiceClient.php</a></td>
+                            <td class="phpdocumentor-cell">52</td>
+                        </tr>
+                                                                                <tr>
+                            <td class="phpdocumentor-cell"><a href="reports/markers.html#src/Discord/Voice/VoicePacket.php">src/Discord/Voice/VoicePacket.php</a></td>
+                            <td class="phpdocumentor-cell">1</td>
+                        </tr>
+                                                                                <tr>
+                            <td class="phpdocumentor-cell"><a href="reports/markers.html#src/Discord/WebSockets/Event.php">src/Discord/WebSockets/Event.php</a></td>
+                            <td class="phpdocumentor-cell">5</td>
+                        </tr>
+                                                                                <tr>
+                            <td class="phpdocumentor-cell"><a href="reports/markers.html#src/Discord/WebSockets/Events/ChannelPinsUpdate.php">src/Discord/WebSockets/Events/ChannelPinsUpdate.php</a></td>
+                            <td class="phpdocumentor-cell">1</td>
+                        </tr>
+                                                                                <tr>
+                            <td class="phpdocumentor-cell"><a href="reports/markers.html#src/Discord/WebSockets/Events/InteractionCreate.php">src/Discord/WebSockets/Events/InteractionCreate.php</a></td>
+                            <td class="phpdocumentor-cell">1</td>
+                        </tr>
+                                                                                <tr>
+                            <td class="phpdocumentor-cell"><a href="reports/markers.html#src/Discord/WebSockets/Events/MessageCreate.php">src/Discord/WebSockets/Events/MessageCreate.php</a></td>
+                            <td class="phpdocumentor-cell">1</td>
+                        </tr>
+                                                                                <tr>
+                            <td class="phpdocumentor-cell"><a href="reports/markers.html#src/Discord/WebSockets/Events/MessageReactionAdd.php">src/Discord/WebSockets/Events/MessageReactionAdd.php</a></td>
+                            <td class="phpdocumentor-cell">1</td>
+                        </tr>
+                                                                                <tr>
+                            <td class="phpdocumentor-cell"><a href="reports/markers.html#src/Discord/WebSockets/Events/ThreadCreate.php">src/Discord/WebSockets/Events/ThreadCreate.php</a></td>
+                            <td class="phpdocumentor-cell">1</td>
+                        </tr>
+                                                                                <tr>
+                            <td class="phpdocumentor-cell"><a href="reports/markers.html#src/Discord/WebSockets/Events/ThreadMembersUpdate.php">src/Discord/WebSockets/Events/ThreadMembersUpdate.php</a></td>
+                            <td class="phpdocumentor-cell">3</td>
+                        </tr>
+                                                                                <tr>
+                            <td class="phpdocumentor-cell"><a href="reports/markers.html#src/Discord/WebSockets/Events/VoiceStateUpdate.php">src/Discord/WebSockets/Events/VoiceStateUpdate.php</a></td>
+                            <td class="phpdocumentor-cell">2</td>
+                        </tr>
+                                                                                <tr>
+                            <td class="phpdocumentor-cell"><a href="reports/markers.html#src/Discord/WebSockets/Handlers.php">src/Discord/WebSockets/Handlers.php</a></td>
+                            <td class="phpdocumentor-cell">9</td>
+                        </tr>
+                                                                                <tr>
+                            <td class="phpdocumentor-cell"><a href="reports/markers.html#src/Discord/WebSockets/Op.php">src/Discord/WebSockets/Op.php</a></td>
+                            <td class="phpdocumentor-cell">51</td>
+                        </tr>
+                                                </table>
         
+                    <a id="src/Discord/Builders/Components/Button.php"></a>
+            <h3><abbr title="src/Discord/Builders/Components/Button.php">Button.php</abbr></h3>
+            <table>
+                <thead>
+                <tr>
+                    <th class="phpdocumentor-heading">Type</th>
+                    <th class="phpdocumentor-heading">Line</th>
+                    <th class="phpdocumentor-heading">Description</th>
+                </tr>
+                </thead>
+                <tbody>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">273</td>
+                        <td class="phpdocumentor-cell">Remove any existing listener</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">288</td>
+                        <td class="phpdocumentor-cell">attempt to acknowledge interaction if it has not already been responded to.</td>
+                    </tr>
+                                </tbody>
+            </table>
+                    <a id="src/Discord/Builders/Components/SelectMenu.php"></a>
+            <h3><abbr title="src/Discord/Builders/Components/SelectMenu.php">SelectMenu.php</abbr></h3>
+            <table>
+                <thead>
+                <tr>
+                    <th class="phpdocumentor-heading">Type</th>
+                    <th class="phpdocumentor-heading">Line</th>
+                    <th class="phpdocumentor-heading">Description</th>
+                </tr>
+                </thead>
+                <tbody>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">115</td>
+                        <td class="phpdocumentor-cell">didn&#039;t wanna use a hashtable here so that we can keep the order of options</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">262</td>
+                        <td class="phpdocumentor-cell">attempt to acknowledge interaction if it has not already been responded to.</td>
+                    </tr>
+                                </tbody>
+            </table>
+                    <a id="src/Discord/Discord.php"></a>
+            <h3><abbr title="src/Discord/Discord.php">Discord.php</abbr></h3>
+            <table>
+                <thead>
+                <tr>
+                    <th class="phpdocumentor-heading">Type</th>
+                    <th class="phpdocumentor-heading">Line</th>
+                    <th class="phpdocumentor-heading">Description</th>
+                </tr>
+                </thead>
+                <tbody>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">385</td>
+                        <td class="phpdocumentor-cell">If this is a reconnect we don&#039;t want to</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">386</td>
+                        <td class="phpdocumentor-cell">reparse the READY packet as it would remove</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">387</td>
+                        <td class="phpdocumentor-cell">all the data cached.</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">400</td>
+                        <td class="phpdocumentor-cell">Setup the user account</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">406</td>
+                        <td class="phpdocumentor-cell">Private Channels</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">418</td>
+                        <td class="phpdocumentor-cell">Guilds</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">447</td>
+                        <td class="phpdocumentor-cell">Emit ready after 60 seconds</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">458</td>
+                        <td class="phpdocumentor-cell">todo setup timer to continue after x amount of time</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">643</td>
+                        <td class="phpdocumentor-cell">Pawl pls</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">835</td>
+                        <td class="phpdocumentor-cell">github.com/discord-php/DiscordPHP&#039;,</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">836</td>
+                        <td class="phpdocumentor-cell">github.com/discord-php/DiscordPHP&#039;,</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">1018</td>
+                        <td class="phpdocumentor-cell">Wait until payload count has been reset</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">1019</td>
+                        <td class="phpdocumentor-cell">Keep 5 payloads for heartbeats as required</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">1140</td>
+                        <td class="phpdocumentor-cell">This voice state update isn&#039;t for our guild.</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">1150</td>
+                        <td class="phpdocumentor-cell">This voice server update isn&#039;t for our guild.</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">1238</td>
+                        <td class="phpdocumentor-cell">Can&#039;t access the API server so we will use the default gateway.</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">1240</td>
+                        <td class="phpdocumentor-cell">gateway.discord.gg&#039;);</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">1310</td>
+                        <td class="phpdocumentor-cell">stdout&#039;, Monolog::DEBUG));</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">1329</td>
+                        <td class="phpdocumentor-cell">Discord doesn&#039;t use IPv6</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">1333</td>
+                        <td class="phpdocumentor-cell">discord-php.github.io/DiscordPHP/#basics&#039;);</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">1336</td>
+                        <td class="phpdocumentor-cell">Discord doesn&#039;t currently support IPv6</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">1337</td>
+                        <td class="phpdocumentor-cell">This prevents xdebug from catching exceptions when trying to fetch IPv6</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">1338</td>
+                        <td class="phpdocumentor-cell">for Discord</td>
+                    </tr>
+                                </tbody>
+            </table>
+                    <a id="src/Discord/DiscordCommandClient.php"></a>
+            <h3><abbr title="src/Discord/DiscordCommandClient.php">DiscordCommandClient.php</abbr></h3>
+            <table>
+                <thead>
+                <tr>
+                    <th class="phpdocumentor-heading">Type</th>
+                    <th class="phpdocumentor-heading">Line</th>
+                    <th class="phpdocumentor-heading">Description</th>
+                </tr>
+                </thead>
+                <tbody>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">90</td>
+                        <td class="phpdocumentor-cell">Command doesn&#039;t exist.</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">188</td>
+                        <td class="phpdocumentor-cell">Fallback in case commands count reaches the fields limit</td>
+                    </tr>
+                                </tbody>
+            </table>
+                    <a id="src/Discord/functions.php"></a>
+            <h3><abbr title="src/Discord/functions.php">functions.php</abbr></h3>
+            <table>
+                <thead>
+                <tr>
+                    <th class="phpdocumentor-heading">Type</th>
+                    <th class="phpdocumentor-heading">Line</th>
+                    <th class="phpdocumentor-heading">Description</th>
+                </tr>
+                </thead>
+                <tbody>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">162</td>
+                        <td class="phpdocumentor-cell">If mbstring is installed, use it.</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">204</td>
+                        <td class="phpdocumentor-cell">x86</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">211</td>
+                        <td class="phpdocumentor-cell">x64</td>
+                    </tr>
+                                </tbody>
+            </table>
+                    <a id="src/Discord/Helpers/Collection.php"></a>
+            <h3><abbr title="src/Discord/Helpers/Collection.php">Collection.php</abbr></h3>
+            <table>
+                <thead>
+                <tr>
+                    <th class="phpdocumentor-heading">Type</th>
+                    <th class="phpdocumentor-heading">Line</th>
+                    <th class="phpdocumentor-heading">Description</th>
+                </tr>
+                </thead>
+                <tbody>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">122</td>
+                        <td class="phpdocumentor-cell">Don&#039;t insert elements that are not of type class.</td>
+                    </tr>
+                                </tbody>
+            </table>
+                    <a id="src/Discord/Helpers/Multipart.php"></a>
+            <h3><abbr title="src/Discord/Helpers/Multipart.php">Multipart.php</abbr></h3>
+            <table>
+                <thead>
+                <tr>
+                    <th class="phpdocumentor-heading">Type</th>
+                    <th class="phpdocumentor-heading">Line</th>
+                    <th class="phpdocumentor-heading">Description</th>
+                </tr>
+                </thead>
+                <tbody>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">59</td>
+                        <td class="phpdocumentor-cell">Optional</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">62</td>
+                        <td class="phpdocumentor-cell">...</td>
+                    </tr>
+                                </tbody>
+            </table>
+                    <a id="src/Discord/Parts/Channel/Channel.php"></a>
+            <h3><abbr title="src/Discord/Parts/Channel/Channel.php">Channel.php</abbr></h3>
+            <table>
+                <thead>
+                <tr>
+                    <th class="phpdocumentor-heading">Type</th>
+                    <th class="phpdocumentor-heading">Line</th>
+                    <th class="phpdocumentor-heading">Description</th>
+                </tr>
+                </thead>
+                <tbody>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">878</td>
+                        <td class="phpdocumentor-cell">Reject messages not in this channel</td>
+                    </tr>
+                                </tbody>
+            </table>
+                    <a id="src/Discord/Parts/Channel/Message.php"></a>
+            <h3><abbr title="src/Discord/Parts/Channel/Message.php">Message.php</abbr></h3>
+            <table>
+                <thead>
+                <tr>
+                    <th class="phpdocumentor-heading">Type</th>
+                    <th class="phpdocumentor-heading">Line</th>
+                    <th class="phpdocumentor-heading">Description</th>
+                </tr>
+                </thead>
+                <tbody>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">420</td>
+                        <td class="phpdocumentor-cell">try get the message from the relevant repository</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">421</td>
+                        <td class="phpdocumentor-cell">otherwise, if message is present in payload, create it</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">422</td>
+                        <td class="phpdocumentor-cell">otherwise, return null</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">492</td>
+                        <td class="phpdocumentor-cell">discord.com/channels/&#039;.($this-&gt;guild_id ?? &#039;@me&#039;).&#039;/&#039;.$this-&gt;channel_id.&#039;/&#039;.$this-&gt;id;</td>
+                    </tr>
+                                </tbody>
+            </table>
+                    <a id="src/Discord/Parts/Channel/Reaction.php"></a>
+            <h3><abbr title="src/Discord/Parts/Channel/Reaction.php">Reaction.php</abbr></h3>
+            <table>
+                <thead>
+                <tr>
+                    <th class="phpdocumentor-heading">Type</th>
+                    <th class="phpdocumentor-heading">Line</th>
+                    <th class="phpdocumentor-heading">Description</th>
+                </tr>
+                </thead>
+                <tbody>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">85</td>
+                        <td class="phpdocumentor-cell">discord.com/developers/docs/resources/channel#get-reactions</td>
+                    </tr>
+                                </tbody>
+            </table>
+                    <a id="src/Discord/Parts/Channel/Sticker.php"></a>
+            <h3><abbr title="src/Discord/Parts/Channel/Sticker.php">Sticker.php</abbr></h3>
+            <table>
+                <thead>
+                <tr>
+                    <th class="phpdocumentor-heading">Type</th>
+                    <th class="phpdocumentor-heading">Line</th>
+                    <th class="phpdocumentor-heading">Description</th>
+                </tr>
+                </thead>
+                <tbody>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">19</td>
+                        <td class="phpdocumentor-cell">discord.com/developers/docs/resources/channel#message-object-message-sticker-structure</td>
+                    </tr>
+                                </tbody>
+            </table>
+                    <a id="src/Discord/Parts/Channel/Webhook.php"></a>
+            <h3><abbr title="src/Discord/Parts/Channel/Webhook.php">Webhook.php</abbr></h3>
+            <table>
+                <thead>
+                <tr>
+                    <th class="phpdocumentor-heading">Type</th>
+                    <th class="phpdocumentor-heading">Line</th>
+                    <th class="phpdocumentor-heading">Description</th>
+                </tr>
+                </thead>
+                <tbody>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">55</td>
+                        <td class="phpdocumentor-cell">discord.com/developers/docs/resources/webhook#execute-webhook-jsonform-params</td>
+                    </tr>
+                                </tbody>
+            </table>
+                    <a id="src/Discord/Parts/Guild/AuditLog/Entry.php"></a>
+            <h3><abbr title="src/Discord/Parts/Guild/AuditLog/Entry.php">Entry.php</abbr></h3>
+            <table>
+                <thead>
+                <tr>
+                    <th class="phpdocumentor-heading">Type</th>
+                    <th class="phpdocumentor-heading">Line</th>
+                    <th class="phpdocumentor-heading">Description</th>
+                </tr>
+                </thead>
+                <tbody>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">32</td>
+                        <td class="phpdocumentor-cell">AUDIT LOG ENTRY TYPES</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">68</td>
+                        <td class="phpdocumentor-cell">AUDIT LOG ENTRY TYPES</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">96</td>
+                        <td class="phpdocumentor-cell">discord.com/developers/docs/resources/audit-log#audit-log-change-object</td>
+                    </tr>
+                                </tbody>
+            </table>
+                    <a id="src/Discord/Parts/Guild/AuditLog/Options.php"></a>
+            <h3><abbr title="src/Discord/Parts/Guild/AuditLog/Options.php">Options.php</abbr></h3>
+            <table>
+                <thead>
+                <tr>
+                    <th class="phpdocumentor-heading">Type</th>
+                    <th class="phpdocumentor-heading">Line</th>
+                    <th class="phpdocumentor-heading">Description</th>
+                </tr>
+                </thead>
+                <tbody>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">19</td>
+                        <td class="phpdocumentor-cell">discord.com/developers/docs/resources/audit-log#audit-log-entry-object-optional-audit-entry-info.</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">21</td>
+                        <td class="phpdocumentor-cell">discord.com/developers/docs/resources/audit-log#audit-log-entry-object-optional-audit-entry-info</td>
+                    </tr>
+                                </tbody>
+            </table>
+                    <a id="src/Discord/Parts/Guild/Guild.php"></a>
+            <h3><abbr title="src/Discord/Parts/Guild/Guild.php">Guild.php</abbr></h3>
+            <table>
+                <thead>
+                <tr>
+                    <th class="phpdocumentor-heading">Type</th>
+                    <th class="phpdocumentor-heading">Line</th>
+                    <th class="phpdocumentor-heading">Description</th>
+                </tr>
+                </thead>
+                <tbody>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">281</td>
+                        <td class="phpdocumentor-cell">cdn.discordapp.com/icons/{$this-&gt;id}/{$this-&gt;attributes[&#039;icon&#039;]}.{$format}?size={$size}&quot;;</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">312</td>
+                        <td class="phpdocumentor-cell">cdn.discordapp.com/slashes/{$this-&gt;id}/{$this-&gt;attributes[&#039;splash&#039;]}.{$format}?size={$size}&quot;;</td>
+                    </tr>
+                                </tbody>
+            </table>
+                    <a id="src/Discord/Parts/Guild/Invite.php"></a>
+            <h3><abbr title="src/Discord/Parts/Guild/Invite.php">Invite.php</abbr></h3>
+            <table>
+                <thead>
+                <tr>
+                    <th class="phpdocumentor-heading">Type</th>
+                    <th class="phpdocumentor-heading">Line</th>
+                    <th class="phpdocumentor-heading">Description</th>
+                </tr>
+                </thead>
+                <tbody>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">92</td>
+                        <td class="phpdocumentor-cell">discord.gg/{$this-&gt;code}&quot;;</td>
+                    </tr>
+                                </tbody>
+            </table>
+                    <a id="src/Discord/Parts/OAuth/Application.php"></a>
+            <h3><abbr title="src/Discord/Parts/OAuth/Application.php">Application.php</abbr></h3>
+            <table>
+                <thead>
+                <tr>
+                    <th class="phpdocumentor-heading">Type</th>
+                    <th class="phpdocumentor-heading">Line</th>
+                    <th class="phpdocumentor-heading">Description</th>
+                </tr>
+                </thead>
+                <tbody>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">65</td>
+                        <td class="phpdocumentor-cell">discordapp.com/oauth2/authorize?client_id={$this-&gt;id}&amp;scope=bot&amp;permissions={$permissions}&quot;;</td>
+                    </tr>
+                                </tbody>
+            </table>
+                    <a id="src/Discord/Parts/Thread/Thread.php"></a>
+            <h3><abbr title="src/Discord/Parts/Thread/Thread.php">Thread.php</abbr></h3>
+            <table>
+                <thead>
+                <tr>
+                    <th class="phpdocumentor-heading">Type</th>
+                    <th class="phpdocumentor-heading">Line</th>
+                    <th class="phpdocumentor-heading">Description</th>
+                </tr>
+                </thead>
+                <tbody>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">538</td>
+                        <td class="phpdocumentor-cell">Reject messages not in this thread</td>
+                    </tr>
+                                </tbody>
+            </table>
+                    <a id="src/Discord/Parts/User/Activity.php"></a>
+            <h3><abbr title="src/Discord/Parts/User/Activity.php">Activity.php</abbr></h3>
+            <table>
+                <thead>
+                <tr>
+                    <th class="phpdocumentor-heading">Type</th>
+                    <th class="phpdocumentor-heading">Line</th>
+                    <th class="phpdocumentor-heading">Description</th>
+                </tr>
+                </thead>
+                <tbody>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">38</td>
+                        <td class="phpdocumentor-cell">Playing {$this-&gt;name}</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">39</td>
+                        <td class="phpdocumentor-cell">Streaming {$this-&gt;details}</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">40</td>
+                        <td class="phpdocumentor-cell">Listening to {$this-&gt;name}</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">41</td>
+                        <td class="phpdocumentor-cell">Watching {$this-&gt;name}</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">42</td>
+                        <td class="phpdocumentor-cell">{$this-&gt;emoji} {$this-&gt;name}</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">43</td>
+                        <td class="phpdocumentor-cell">Competing in {$this-&gt;name}</td>
+                    </tr>
+                                </tbody>
+            </table>
+                    <a id="src/Discord/Parts/User/Member.php"></a>
+            <h3><abbr title="src/Discord/Parts/User/Member.php">Member.php</abbr></h3>
+            <table>
+                <thead>
+                <tr>
+                    <th class="phpdocumentor-heading">Type</th>
+                    <th class="phpdocumentor-heading">Line</th>
+                    <th class="phpdocumentor-heading">Description</th>
+                </tr>
+                </thead>
+                <tbody>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">107</td>
+                        <td class="phpdocumentor-cell">jake plz</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">144</td>
+                        <td class="phpdocumentor-cell">We don&#039;t want a double up on roles</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">195</td>
+                        <td class="phpdocumentor-cell">discord.com/developers/docs/topics/permissions</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">206</td>
+                        <td class="phpdocumentor-cell">Add administrator permission</td>
+                    </tr>
+                                </tbody>
+            </table>
+                    <a id="src/Discord/Parts/User/User.php"></a>
+            <h3><abbr title="src/Discord/Parts/User/User.php">User.php</abbr></h3>
+            <table>
+                <thead>
+                <tr>
+                    <th class="phpdocumentor-heading">Type</th>
+                    <th class="phpdocumentor-heading">Line</th>
+                    <th class="phpdocumentor-heading">Description</th>
+                </tr>
+                </thead>
+                <tbody>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">124</td>
+                        <td class="phpdocumentor-cell">cdn.discordapp.com/embed/avatars/{$avatarDiscrim}.png?size={$size}&quot;;</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">131</td>
+                        <td class="phpdocumentor-cell">cdn.discordapp.com/avatars/{$this-&gt;id}/{$this-&gt;attributes[&#039;avatar&#039;]}.{$format}?size={$size}&quot;;</td>
+                    </tr>
+                                </tbody>
+            </table>
+                    <a id="src/Discord/Voice/RecieveStream.php"></a>
+            <h3><abbr title="src/Discord/Voice/RecieveStream.php">RecieveStream.php</abbr></h3>
+            <table>
+                <thead>
+                <tr>
+                    <th class="phpdocumentor-heading">Type</th>
+                    <th class="phpdocumentor-heading">Line</th>
+                    <th class="phpdocumentor-heading">Description</th>
+                </tr>
+                </thead>
+                <tbody>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">70</td>
+                        <td class="phpdocumentor-cell">empty for now</td>
+                    </tr>
+                                </tbody>
+            </table>
+                    <a id="src/Discord/Voice/VoiceClient.php"></a>
+            <h3><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></h3>
+            <table>
+                <thead>
+                <tr>
+                    <th class="phpdocumentor-heading">Type</th>
+                    <th class="phpdocumentor-heading">Line</th>
+                    <th class="phpdocumentor-heading">Description</th>
+                </tr>
+                </thead>
+                <tbody>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">371</td>
+                        <td class="phpdocumentor-cell">{$this-&gt;endpoint}?v={$this-&gt;version}&quot;);</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">436</td>
+                        <td class="phpdocumentor-cell">let&#039;s get our IP</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">442</td>
+                        <td class="phpdocumentor-cell">now the port!</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">484</td>
+                        <td class="phpdocumentor-cell">keepalive response</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">489</td>
+                        <td class="phpdocumentor-cell">dont know what this is</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">490</td>
+                        <td class="phpdocumentor-cell">dynamic frame size obviously</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">491</td>
+                        <td class="phpdocumentor-cell">doesnt work</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">492</td>
+                        <td class="phpdocumentor-cell">if ($diff &lt;= 10) { // set to 20ms</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">493</td>
+                        <td class="phpdocumentor-cell">$this-&gt;setFrameSize(20);</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">494</td>
+                        <td class="phpdocumentor-cell">} elseif ($diff &lt;= 20) { // set to 40ms</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">495</td>
+                        <td class="phpdocumentor-cell">$this-&gt;setFrameSize(40);</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">496</td>
+                        <td class="phpdocumentor-cell">} else { // set to 60ms</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">497</td>
+                        <td class="phpdocumentor-cell">$this-&gt;setFrameSize(60);</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">498</td>
+                        <td class="phpdocumentor-cell">}</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">503</td>
+                        <td class="phpdocumentor-cell">ready</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">522</td>
+                        <td class="phpdocumentor-cell">user started speaking</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">595</td>
+                        <td class="phpdocumentor-cell">Cancel heartbeat timers</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">606</td>
+                        <td class="phpdocumentor-cell">Close UDP socket.</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">611</td>
+                        <td class="phpdocumentor-cell">Don&#039;t reconnect on a critical opcode.</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">618</td>
+                        <td class="phpdocumentor-cell">Retry connect after 2 seconds</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">646</td>
+                        <td class="phpdocumentor-cell">set the token if it changed</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">773</td>
+                        <td class="phpdocumentor-cell">If the client is paused, delay by frame size and check again.</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">787</td>
+                        <td class="phpdocumentor-cell">Read opus length</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">789</td>
+                        <td class="phpdocumentor-cell">Read opus data</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">795</td>
+                        <td class="phpdocumentor-cell">increment sequence</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">796</td>
+                        <td class="phpdocumentor-cell">uint16 overflow protection</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">801</td>
+                        <td class="phpdocumentor-cell">increment timestamp</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">802</td>
+                        <td class="phpdocumentor-cell">uint32 overflow protection</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">817</td>
+                        <td class="phpdocumentor-cell">Read magic byte header</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">823</td>
+                        <td class="phpdocumentor-cell">Read JSON length</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">826</td>
+                        <td class="phpdocumentor-cell">Read JSON content</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">1161</td>
+                        <td class="phpdocumentor-cell">} elseif (is_null($user) &amp;&amp; ! is_null($ssrc)) {</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">1162</td>
+                        <td class="phpdocumentor-cell">return $user-&gt;speaking;</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">1163</td>
+                        <td class="phpdocumentor-cell">} elseif (is_null($user) &amp;&amp; is_null($ssrc)) {</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">1164</td>
+                        <td class="phpdocumentor-cell">return $user-&gt;speaking;</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">1181</td>
+                        <td class="phpdocumentor-cell">no voice decoder to remove</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">1192</td>
+                        <td class="phpdocumentor-cell">not in our channel</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">1196</td>
+                        <td class="phpdocumentor-cell">ignore, just a mute/deaf change</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">1235</td>
+                        <td class="phpdocumentor-cell">if we can&#039;t decode the message, drop it silently.</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">1246</td>
+                        <td class="phpdocumentor-cell">for some reason we don&#039;t have a speaking status</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">1251</td>
+                        <td class="phpdocumentor-cell">make a decoder</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">1421</td>
+                        <td class="phpdocumentor-cell">Channels</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">1422</td>
+                        <td class="phpdocumentor-cell">Audio application</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">1423</td>
+                        <td class="phpdocumentor-cell">Bitrate</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">1424</td>
+                        <td class="phpdocumentor-cell">Frame Size</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">1425</td>
+                        <td class="phpdocumentor-cell">Volume</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">1426</td>
+                        <td class="phpdocumentor-cell">Input file</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">1432</td>
+                        <td class="phpdocumentor-cell">&gt;= PHP 8.0, use sockets</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">1459</td>
+                        <td class="phpdocumentor-cell">Channels</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">1460</td>
+                        <td class="phpdocumentor-cell">Bitrate</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">1461</td>
+                        <td class="phpdocumentor-cell">Frame Size</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">1462</td>
+                        <td class="phpdocumentor-cell">Decode mode</td>
+                    </tr>
+                                </tbody>
+            </table>
+                    <a id="src/Discord/Voice/VoicePacket.php"></a>
+            <h3><abbr title="src/Discord/Voice/VoicePacket.php">VoicePacket.php</abbr></h3>
+            <table>
+                <thead>
+                <tr>
+                    <th class="phpdocumentor-heading">Type</th>
+                    <th class="phpdocumentor-heading">Line</th>
+                    <th class="phpdocumentor-heading">Description</th>
+                </tr>
+                </thead>
+                <tbody>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">26</td>
+                        <td class="phpdocumentor-cell">github.com/DV8FromTheWorld/JDA</td>
+                    </tr>
+                                </tbody>
+            </table>
+                    <a id="src/Discord/WebSockets/Event.php"></a>
+            <h3><abbr title="src/Discord/WebSockets/Event.php">Event.php</abbr></h3>
+            <table>
+                <thead>
+                <tr>
+                    <th class="phpdocumentor-heading">Type</th>
+                    <th class="phpdocumentor-heading">Line</th>
+                    <th class="phpdocumentor-heading">Description</th>
+                </tr>
+                </thead>
+                <tbody>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">29</td>
+                        <td class="phpdocumentor-cell">General</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">41</td>
+                        <td class="phpdocumentor-cell">Guild</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">62</td>
+                        <td class="phpdocumentor-cell">Channel</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">68</td>
+                        <td class="phpdocumentor-cell">Threads</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">76</td>
+                        <td class="phpdocumentor-cell">Messages</td>
+                    </tr>
+                                </tbody>
+            </table>
+                    <a id="src/Discord/WebSockets/Events/ChannelPinsUpdate.php"></a>
+            <h3><abbr title="src/Discord/WebSockets/Events/ChannelPinsUpdate.php">ChannelPinsUpdate.php</abbr></h3>
+            <table>
+                <thead>
+                <tr>
+                    <th class="phpdocumentor-heading">Type</th>
+                    <th class="phpdocumentor-heading">Line</th>
+                    <th class="phpdocumentor-heading">Description</th>
+                </tr>
+                </thead>
+                <tbody>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">24</td>
+                        <td class="phpdocumentor-cell">TODO</td>
+                    </tr>
+                                </tbody>
+            </table>
+                    <a id="src/Discord/WebSockets/Events/InteractionCreate.php"></a>
+            <h3><abbr title="src/Discord/WebSockets/Events/InteractionCreate.php">InteractionCreate.php</abbr></h3>
+            <table>
+                <thead>
+                <tr>
+                    <th class="phpdocumentor-heading">Type</th>
+                    <th class="phpdocumentor-heading">Line</th>
+                    <th class="phpdocumentor-heading">Description</th>
+                </tr>
+                </thead>
+                <tbody>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">25</td>
+                        <td class="phpdocumentor-cell">do nothing with interactions - pass on to DiscordPHP-Slash</td>
+                    </tr>
+                                </tbody>
+            </table>
+                    <a id="src/Discord/WebSockets/Events/MessageCreate.php"></a>
+            <h3><abbr title="src/Discord/WebSockets/Events/MessageCreate.php">MessageCreate.php</abbr></h3>
+            <table>
+                <thead>
+                <tr>
+                    <th class="phpdocumentor-heading">Type</th>
+                    <th class="phpdocumentor-heading">Line</th>
+                    <th class="phpdocumentor-heading">Description</th>
+                </tr>
+                </thead>
+                <tbody>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">29</td>
+                        <td class="phpdocumentor-cell">assume it is a private channel</td>
+                    </tr>
+                                </tbody>
+            </table>
+                    <a id="src/Discord/WebSockets/Events/MessageReactionAdd.php"></a>
+            <h3><abbr title="src/Discord/WebSockets/Events/MessageReactionAdd.php">MessageReactionAdd.php</abbr></h3>
+            <table>
+                <thead>
+                <tr>
+                    <th class="phpdocumentor-heading">Type</th>
+                    <th class="phpdocumentor-heading">Line</th>
+                    <th class="phpdocumentor-heading">Description</th>
+                </tr>
+                </thead>
+                <tbody>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">45</td>
+                        <td class="phpdocumentor-cell">New reaction added</td>
+                    </tr>
+                                </tbody>
+            </table>
+                    <a id="src/Discord/WebSockets/Events/ThreadCreate.php"></a>
+            <h3><abbr title="src/Discord/WebSockets/Events/ThreadCreate.php">ThreadCreate.php</abbr></h3>
+            <table>
+                <thead>
+                <tr>
+                    <th class="phpdocumentor-heading">Type</th>
+                    <th class="phpdocumentor-heading">Line</th>
+                    <th class="phpdocumentor-heading">Description</th>
+                </tr>
+                </thead>
+                <tbody>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">29</td>
+                        <td class="phpdocumentor-cell">Ignore threads that have already been added</td>
+                    </tr>
+                                </tbody>
+            </table>
+                    <a id="src/Discord/WebSockets/Events/ThreadMembersUpdate.php"></a>
+            <h3><abbr title="src/Discord/WebSockets/Events/ThreadMembersUpdate.php">ThreadMembersUpdate.php</abbr></h3>
+            <table>
+                <thead>
+                <tr>
+                    <th class="phpdocumentor-heading">Type</th>
+                    <th class="phpdocumentor-heading">Line</th>
+                    <th class="phpdocumentor-heading">Description</th>
+                </tr>
+                </thead>
+                <tbody>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">24</td>
+                        <td class="phpdocumentor-cell">When the bot is added to a private thread, sometimes the `THREAD_MEMBER_UPDATE` event</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">25</td>
+                        <td class="phpdocumentor-cell">comes before the `THREAD_CREATE` event, so we just don&#039;t emit this event if we don&#039;t have the</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">26</td>
+                        <td class="phpdocumentor-cell">thread cached.</td>
+                    </tr>
+                                </tbody>
+            </table>
+                    <a id="src/Discord/WebSockets/Events/VoiceStateUpdate.php"></a>
+            <h3><abbr title="src/Discord/WebSockets/Events/VoiceStateUpdate.php">VoiceStateUpdate.php</abbr></h3>
+            <table>
+                <thead>
+                <tr>
+                    <th class="phpdocumentor-heading">Type</th>
+                    <th class="phpdocumentor-heading">Line</th>
+                    <th class="phpdocumentor-heading">Description</th>
+                </tr>
+                </thead>
+                <tbody>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">36</td>
+                        <td class="phpdocumentor-cell">Remove old member states</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">42</td>
+                        <td class="phpdocumentor-cell">Add member state to new channel</td>
+                    </tr>
+                                </tbody>
+            </table>
+                    <a id="src/Discord/WebSockets/Handlers.php"></a>
+            <h3><abbr title="src/Discord/WebSockets/Handlers.php">Handlers.php</abbr></h3>
+            <table>
+                <thead>
+                <tr>
+                    <th class="phpdocumentor-heading">Type</th>
+                    <th class="phpdocumentor-heading">Line</th>
+                    <th class="phpdocumentor-heading">Description</th>
+                </tr>
+                </thead>
+                <tbody>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">31</td>
+                        <td class="phpdocumentor-cell">General</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">38</td>
+                        <td class="phpdocumentor-cell">Guild Event handlers</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">44</td>
+                        <td class="phpdocumentor-cell">Invite handlers</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">48</td>
+                        <td class="phpdocumentor-cell">Channel Event handlers</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">54</td>
+                        <td class="phpdocumentor-cell">Ban Event handlers</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">58</td>
+                        <td class="phpdocumentor-cell">Message handlers</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">68</td>
+                        <td class="phpdocumentor-cell">New Member Event handlers</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">73</td>
+                        <td class="phpdocumentor-cell">New Role Event handlers</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">78</td>
+                        <td class="phpdocumentor-cell">Thread events</td>
+                    </tr>
+                                </tbody>
+            </table>
+                    <a id="src/Discord/WebSockets/Op.php"></a>
+            <h3><abbr title="src/Discord/WebSockets/Op.php">Op.php</abbr></h3>
+            <table>
+                <thead>
+                <tr>
+                    <th class="phpdocumentor-heading">Type</th>
+                    <th class="phpdocumentor-heading">Line</th>
+                    <th class="phpdocumentor-heading">Description</th>
+                </tr>
+                </thead>
+                <tbody>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">19</td>
+                        <td class="phpdocumentor-cell">Dispatches an event.</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">21</td>
+                        <td class="phpdocumentor-cell">Used for ping checking.</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">23</td>
+                        <td class="phpdocumentor-cell">Used for client handshake.</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">25</td>
+                        <td class="phpdocumentor-cell">Used to update the client presence.</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">27</td>
+                        <td class="phpdocumentor-cell">Used to join/move/leave voice channels.</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">29</td>
+                        <td class="phpdocumentor-cell">Used for voice ping checking.</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">31</td>
+                        <td class="phpdocumentor-cell">Used to resume a closed connection.</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">33</td>
+                        <td class="phpdocumentor-cell">Used to redirect clients to a new gateway.</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">35</td>
+                        <td class="phpdocumentor-cell">Used to request member chunks.</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">37</td>
+                        <td class="phpdocumentor-cell">Used to notify clients when they have an invalid session.</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">39</td>
+                        <td class="phpdocumentor-cell">Used to pass through the heartbeat interval</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">41</td>
+                        <td class="phpdocumentor-cell">Used to acknowledge heartbeats.</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">44</td>
+                        <td class="phpdocumentor-cell">/////////////////////////////////////</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">45</td>
+                        <td class="phpdocumentor-cell">/////////////////////////////////////</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">46</td>
+                        <td class="phpdocumentor-cell">/////////////////////////////////////</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">48</td>
+                        <td class="phpdocumentor-cell">Used to begin a voice WebSocket connection.</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">50</td>
+                        <td class="phpdocumentor-cell">Used to select the voice protocol.</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">52</td>
+                        <td class="phpdocumentor-cell">Used to complete the WebSocket handshake.</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">54</td>
+                        <td class="phpdocumentor-cell">Used to keep the WebSocket connection alive.e</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">56</td>
+                        <td class="phpdocumentor-cell">Used to describe the session.</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">58</td>
+                        <td class="phpdocumentor-cell">Used to identify which users are speaking.</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">60</td>
+                        <td class="phpdocumentor-cell">Sent by the Discord servers to acknowledge heartbeat</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">62</td>
+                        <td class="phpdocumentor-cell">Hello packet used to pass heartbeat interval</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">65</td>
+                        <td class="phpdocumentor-cell">/////////////////////////////////////</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">66</td>
+                        <td class="phpdocumentor-cell">/////////////////////////////////////</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">67</td>
+                        <td class="phpdocumentor-cell">/////////////////////////////////////</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">69</td>
+                        <td class="phpdocumentor-cell">Normal close or heartbeat is invalid.</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">71</td>
+                        <td class="phpdocumentor-cell">Abnormal close.</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">73</td>
+                        <td class="phpdocumentor-cell">Unknown error.</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">75</td>
+                        <td class="phpdocumentor-cell">Unknown opcode was went.</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">77</td>
+                        <td class="phpdocumentor-cell">Invalid message was sent.</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">79</td>
+                        <td class="phpdocumentor-cell">Not authenticated.</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">81</td>
+                        <td class="phpdocumentor-cell">Invalid token on IDENTIFY.</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">83</td>
+                        <td class="phpdocumentor-cell">Already authenticated.</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">85</td>
+                        <td class="phpdocumentor-cell">Session is invalid.</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">87</td>
+                        <td class="phpdocumentor-cell">Invalid RESUME sequence.</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">89</td>
+                        <td class="phpdocumentor-cell">Too many messages sent.</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">91</td>
+                        <td class="phpdocumentor-cell">Session timeout.</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">93</td>
+                        <td class="phpdocumentor-cell">Invalid shard.</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">95</td>
+                        <td class="phpdocumentor-cell">Sharding requred.</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">97</td>
+                        <td class="phpdocumentor-cell">Invalid API version.</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">99</td>
+                        <td class="phpdocumentor-cell">Invalid intents.</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">101</td>
+                        <td class="phpdocumentor-cell">Disallowed intents.</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">104</td>
+                        <td class="phpdocumentor-cell">/////////////////////////////////////</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">105</td>
+                        <td class="phpdocumentor-cell">/////////////////////////////////////</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">106</td>
+                        <td class="phpdocumentor-cell">/////////////////////////////////////</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">108</td>
+                        <td class="phpdocumentor-cell">Can&#039;t find the server.</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">110</td>
+                        <td class="phpdocumentor-cell">Unknown protocol.</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">112</td>
+                        <td class="phpdocumentor-cell">Disconnected from channel.</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">114</td>
+                        <td class="phpdocumentor-cell">Voice server crashed.</td>
+                    </tr>
+                                    <tr>
+                        <td class="phpdocumentor-cell"></td>
+                        <td class="phpdocumentor-cell">116</td>
+                        <td class="phpdocumentor-cell">Unknown encryption mode.</td>
+                    </tr>
+                                </tbody>
+            </table>
             </div>
                 <section data-search-results class="phpdocumentor-search-results phpdocumentor-search-results--hidden">
     <section class="phpdocumentor-search-results__dialog">
@@ -112,5 +1669,9 @@
     <script>
         cssVars({});
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/prism.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/line-highlight/prism-line-highlight.min.js"></script>
 </body>
 </html>
