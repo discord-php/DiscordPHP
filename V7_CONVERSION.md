@@ -14,7 +14,7 @@ This has been added to support a few features:
 - Sending multiple files in a message.
 - Sending file attachments alongside embeds (e.g. images).
 - Unifying `sendMessage` and `sendFile` functions.
-- Future-proofing for message components.
+- Adding message components.
 
 The following functions have been changed, alongside their new signature:
 
@@ -56,3 +56,7 @@ $discord->on('message', function (Message $message) {
     }
 });
 ```
+
+## Message components
+
+Message components (buttons, select menus) are now availabe! See the [documentation](https://discord-php.github.io/DiscordPHP/) on how to use implement these into your bot.
