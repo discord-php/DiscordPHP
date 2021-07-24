@@ -291,12 +291,17 @@ class Interaction extends Part
     /**
      * Responds to the interaction with a message.
      *
-     * @param MessageBuilder $builder Message to respond with.
+     * @param MessageBuilder $builder   Message to respond with.
+     * @param bool           $ephemeral Whether the created message should be ephemeral.
      *
      * @return ExtendedPromiseInterface
      */
-    public function respondWithMessage(MessageBuilder $builder): ExtendedPromiseInterface
+    public function respondWithMessage(MessageBuilder $builder, bool $ephemeral = false): ExtendedPromiseInterface
     {
+        if ($ephemeral) {
+            $builder->_setFlags(64);
+        }
+
         return $this->respond([
             'type' => InteractionResponseType::CHANNEL_MESSAGE_WITH_SOURCE,
             'data' => $builder,

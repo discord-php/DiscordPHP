@@ -22,6 +22,8 @@ use Discord\Parts\Embed\Embed;
 use InvalidArgumentException;
 use JsonSerializable;
 
+use function Discord\poly_strlen;
+
 /**
  * Helper class used to build messages.
  *
@@ -91,12 +93,16 @@ class MessageBuilder implements JsonSerializable
     /**
      * Sets the content of the message.
      *
-     * @param string $content
+     * @param string $content Content of the message. Maximum 2000 characters.
      *
      * @return $this
      */
     public function setContent(string $content): self
     {
+        if (poly_strlen($content) > 2000) {
+            throw new InvalidArgumentException('Message content must be less than or equal to 2000 characters.');
+        }
+
         $this->content = $content;
 
         return $this;
