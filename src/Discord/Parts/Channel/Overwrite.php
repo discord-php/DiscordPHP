@@ -64,6 +64,19 @@ class Overwrite extends Part
     }
 
     /**
+     * @inheritDoc
+     */
+    public function getUpdatableAttributes(): array
+    {
+        return [
+            'id' => $this->id,
+            'type' => $this->type,
+            'allow' => $this->allow,
+            'deny' => $this->deny,
+        ];
+    }
+
+    /**
      * @inheritdoc
      */
     public function getRepositoryAttributes(): array
