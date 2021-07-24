@@ -18,20 +18,21 @@ use Discord\Parts\Part;
 /**
  * The Activity part describes activities the member is undertaking.
  *
- * @property string $name
- * @property int    $type
- * @property string $url
- * @property Carbon $created_at
- * @property array  $timestamps
- * @property string $application_id
- * @property string $details
- * @property string $state
- * @property Emoji  $emoji
- * @property object $party
- * @property object $assets
- * @property object $secrets
- * @property bool   $instance
- * @property int    $flags
+ * @property string   $name
+ * @property int      $type
+ * @property string   $url
+ * @property Carbon   $created_at
+ * @property array    $timestamps
+ * @property string   $application_id
+ * @property string   $details
+ * @property string   $state
+ * @property Emoji    $emoji
+ * @property object   $party
+ * @property object   $assets
+ * @property object   $secrets
+ * @property bool     $instance
+ * @property int      $flags
+ * @property object[] $buttons
  */
 class Activity extends Part
 {
@@ -65,6 +66,7 @@ class Activity extends Part
         'secrets',
         'instance',
         'flags',
+        'buttons',
     ];
 
     /**

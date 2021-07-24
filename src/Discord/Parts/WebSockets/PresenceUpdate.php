@@ -24,12 +24,13 @@ use Discord\Parts\User\User;
  * A PresenceUpdate part is used when the `PRESENCE_UPDATE` event is fired on the WebSocket. It contains
  * information about the users presence such as their status (online/away) and their current game.
  *
- * @property Member   $member   The member that the presence update affects.
- * @property User     $user     The user that the presence update affects.
- * @property Guild    $guild    The guild that the presence update affects.
- * @property string   $guild_id The unique identifier of the guild that the presence update affects.
- * @property string   $status   The updated status of the user.
- * @property Activity $game     The updated game of the user.
+ * @property Member                $member     The member that the presence update affects.
+ * @property User                  $user       The user that the presence update affects.
+ * @property Guild                 $guild      The guild that the presence update affects.
+ * @property string                $guild_id   The unique identifier of the guild that the presence update affects.
+ * @property string                $status     The updated status of the user.
+ * @property Collection|Activity[] $activities Activitires of the user.
+ * @property Activity              $game       The updated game of the user.
  */
 class PresenceUpdate extends Part
 {
