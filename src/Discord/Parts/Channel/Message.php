@@ -550,6 +550,8 @@ class Message extends Part
 
         if ($emoticon instanceof Emoji) {
             $emoticon = $emoticon->toReactionString();
+        } else {
+            $emoticon = urlencode($emoticon);
         }
 
         if (in_array($type, $types)) {
