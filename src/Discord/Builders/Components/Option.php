@@ -42,7 +42,7 @@ class Option extends Component
     /**
      * Emoji to display alongside the option.
      *
-     * @var Emoji|null
+     * @var array|null
      */
     private $emoji;
 
@@ -107,13 +107,43 @@ class Option extends Component
     /**
      * Sets the emoji of the option. Null to clear.
      *
-     * @param Emoji|null $emoji Emoji to set.
+     * @param Emoji|string|null $emoji Emoji to set.
      *
      * @return $this
      */
-    public function setEmoji(?Emoji $emoji): self
+    public function setEmoji($emoji): self
     {
-        $this->emoji = $emoji;
+        $this->emoji = (function () use ($emoji) {
+            if ($emoji === null) {
+                return null;
+            }
+
+            if ($emoji instanceof Emoji) {
+                return [
+                    'id' => $emoji->id,
+                    'name' => $emoji->name,
+                    'animated' => $emoji->animated,
+                ];
+            }
+
+            $parts = explode(':', $emoji, 3);
+
+            if (count($parts) < 3) {
+                return [
+                    'id' => null,
+                    'name' => $emoji,
+                    'animated' => false,
+                ];
+            }
+
+            [$animated, $name, $id] = $parts;
+
+            return [
+                'id' => $id,
+                'name' => $name,
+                'animated' => $animated == 'a',
+            ];
+        })();
 
         return $this;
     }
@@ -157,11 +187,7 @@ class Option extends Component
         }
         
         if ($this->emoji) {
-            $content['emoji'] = [
-                'id' => $this->emoji->id,
-                'name' => $this->emoji->name,
-                'animated' => $this->emoji->animated,
-            ];
+            $content['emoji'] = $this->emoji;
         }
 
         if ($this->default) {
