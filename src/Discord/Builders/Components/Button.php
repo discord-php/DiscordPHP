@@ -169,19 +169,45 @@ class Button extends Component
     }
 
     /**
-     * Sets the emoji of the button.
+     * Sets the emoji of the button. Null to clear.
      *
-     * @param Emoji $emoji
+     * @param Emoji|string|null $emoji Emoji to set.
      *
      * @return $this
      */
-    public function setEmoji(Emoji $emoji): self
+    public function setEmoji($emoji): self
     {
-        $this->emoji = [
-            'name' => $emoji->name,
-            'id' => $emoji->id,
-            'animated' => $emoji->animated,
-        ];
+        $this->emoji = (function () use ($emoji) {
+            if ($emoji === null) {
+                return null;
+            }
+
+            if ($emoji instanceof Emoji) {
+                return [
+                    'id' => $emoji->id,
+                    'name' => $emoji->name,
+                    'animated' => $emoji->animated,
+                ];
+            }
+
+            $parts = explode(':', $emoji, 3);
+
+            if (count($parts) < 3) {
+                return [
+                    'id' => null,
+                    'name' => $emoji,
+                    'animated' => false,
+                ];
+            }
+
+            [$animated, $name, $id] = $parts;
+
+            return [
+                'id' => $id,
+                'name' => $name,
+                'animated' => $animated == 'a',
+            ];
+        })();
 
         return $this;
     }
