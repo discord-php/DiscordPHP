@@ -67,7 +67,7 @@ class Emoji extends Part
     public function toReactionString(): string
     {
         if ($this->id) {
-            return ":{$this->name}:{$this->id}";
+            return ($this->animated ? 'a' : '') . ":{$this->name}:{$this->id}";
         }
 
         return $this->name;
