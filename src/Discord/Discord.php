@@ -1486,9 +1486,9 @@ class Discord
      *
      * @param string|int $channel_id Id of the channel.
      *
-     * @return Channel|null
+     * @return Channel|Thread|null
      */
-    public function getChannel($channel_id): ?Channel
+    public function getChannel($channel_id): Channel|Thread|null
     {
         foreach ($this->guilds as $guild) {
             if ($channel = $guild->channels->get('id', $channel_id)) {
