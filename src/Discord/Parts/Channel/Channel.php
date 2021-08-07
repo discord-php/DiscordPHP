@@ -745,15 +745,15 @@ class Channel extends Part
      * @return ExtendedPromiseInterface<Message>
      */
     public function sendMessage($message): ExtendedPromiseInterface
-    {
+    {   
+        if (! $this->allowText()) {
+            return reject(new InvalidArgumentException('You can only send messages to text channels.'));
+        }
+        
         if (is_string($message)) {
             $message = MessageBuilder::new()->setContent($message);
         }
         
-        if (! $this->allowText()) {
-            return reject(new InvalidArgumentException('You can only send messages to text channels.'));
-        }
-
         if (! $this->is_private && $member = $this->guild->members->get('id', $this->discord->id)) {
             $botperms = $member->getPermissions($this);
 
