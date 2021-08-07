@@ -81,6 +81,13 @@ class MessageBuilder implements JsonSerializable
     private $flags;
 
     /**
+     * Allowed mentions object for the message.
+     *
+     * @var array|null
+     */
+    private $allowed_mentions;
+
+    /**
      * Creates a new message builder.
      *
      * @return $this
@@ -313,6 +320,20 @@ class MessageBuilder implements JsonSerializable
     }
 
     /**
+     * Sets the allowed mentions object of the message.
+     *
+     * @param array $allowed_mentions
+     *
+     * @return $this
+     */
+    public function setAllowedMentions(array $allowed_mentions)
+    {
+        $this->allowed_mentions = $allowed_mentions;
+        
+        return $this;
+    }
+
+    /**
      * Sets the flags of the message.
      *
      * @internal You cannot set flags except for when sending webhooks. Use the APIs given.
@@ -394,6 +415,10 @@ class MessageBuilder implements JsonSerializable
 
         if ($this->flags) {
             $content['flags'] = $this->flags;
+        }
+
+        if ($this->allowed_mentions) {
+            $content['allowed_mentions'] = $this->allowed_mentions;
         }
 
         if (count($this->embeds) > 0) {

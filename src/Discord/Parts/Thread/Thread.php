@@ -57,6 +57,9 @@ use Traversable;
  * @property Carbon            $archive_timestamp     The time that the thread's archive status was changed.
  * @property MessageRepository $messages              Repository of messages sent in the thread.
  * @property MemberRepository  $members               Repository of members in the thread.
+ *
+ * @method ExtendedPromiseInterface sendMessage(MessageBuilder $builder)
+ * @method ExtendedPromiseInterface sendMessage(string $text, bool $tts = false, Embed|array $embed = null, array $allowed_mentions = null, ?Message $replyTo = null)
  */
 class Thread extends Part
 {
@@ -475,29 +478,54 @@ class Thread extends Part
     }
 
     /**
-     * Sends a message to the channel.
+     * Sends a message to the thread.
      *
-     * @param MessageBuilder $message The message builder that should be converted into a message.
+     * Takes a `MessageBuilder` or content of the message for the first parameter. If the first parameter
+     * is an instance of `MessageBuilder`, the rest of the arguments are disregarded.
+     *
+     * @param MessageBuilder|string $message          The message builder that should be converted into a message, or the string content of the message.
+     * @param bool                  $tts              Whether the message is TTS.
+     * @param Embed|array|null      $embed            An embed object or array to send in the message.
+     * @param array|null            $allowed_mentions Allowed mentions object for the message.
+     * @param Message|null          $replyTo          Sends the message as a reply to the given message instance.
      *
      * @return ExtendedPromiseInterface<Message>
      */
-    public function sendMessage(MessageBuilder $message): ExtendedPromiseInterface
+    public function sendMessage($message, bool $tts = false, $embed = null, $allowed_mentions = null, ?Message $replyTo = null): ExtendedPromiseInterface
     {
-        return $this->_sendMessage($message)
-            ->then(function ($response) {
-                return $this->factory->create(Message::class, $response, true);
-            });
-    }
+        // Backwards compatible support for old `sendMessage` function signature.
+        if (! ($message instanceof MessageBuilder)) {
+            $message = MessageBuilder::new()
+                ->setContent($message);
 
-    private function _sendMessage(MessageBuilder $message): ExtendedPromiseInterface
-    {
-        if ($message->requiresMultipart()) {
-            $multipart = $message->toMultipart();
+            if ($tts) {
+                $message->setTts(true);
+            }
 
-            return $this->http->post(Endpoint::bind(Endpoint::CHANNEL_MESSAGES, $this->id), (string) $multipart, $multipart->getHeaders());
+            if ($embed) {
+                $message->addEmbed($embed);
+            }
+
+            if ($allowed_mentions) {
+                $message->setAllowedMentions($allowed_mentions);
+            }
+
+            if ($replyTo) {
+                $message->setReplyTo($replyTo);
+            }
         }
 
-        return $this->http->post(Endpoint::bind(Endpoint::CHANNEL_MESSAGES, $this->id), $message);
+        return (function () use ($message) {
+            if ($message->requiresMultipart()) {
+                $multipart = $message->toMultipart();
+
+                return $this->http->post(Endpoint::bind(Endpoint::CHANNEL_MESSAGES, $this->id), (string) $multipart, $multipart->getHeaders());
+            }
+
+            return $this->http->post(Endpoint::bind(Endpoint::CHANNEL_MESSAGES, $this->id), $message);
+        })()->then(function ($response) {
+            return $this->factory->create(Message::class, $response, true);
+        });
     }
 
     /**
