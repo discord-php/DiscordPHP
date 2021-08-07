@@ -75,6 +75,9 @@ use function React\Promise\resolve;
  * @property OverwriteRepository $overwrites                    permission overwrites
  * @property WebhookRepository   $webhooks                      webhooks in the channel
  * @property ThreadRepository    $threads                       threads that belong to the channel
+ *
+ * @method ExtendedPromiseInterface sendMessage(MessageBuilder $builder)
+ * @method ExtendedPromiseInterface sendMessage(string $text, bool $tts = false, Embed|array $embed = null, array $allowed_mentions = null, ?Message $replyTo = null)
  */
 class Channel extends Part
 {
@@ -740,12 +743,41 @@ class Channel extends Part
     /**
      * Sends a message to the channel.
      *
-     * @param MessageBuilder $message The message builder that should be converted into a message.
+     * Takes a `MessageBuilder` or content of the message for the first parameter. If the first parameter
+     * is an instance of `MessageBuilder`, the rest of the arguments are disregarded.
+     *
+     * @param MessageBuilder|string $message          The message builder that should be converted into a message, or the string content of the message.
+     * @param bool                  $tts              Whether the message is TTS.
+     * @param Embed|array|null      $embed            An embed object or array to send in the message.
+     * @param array|null            $allowed_mentions Allowed mentions object for the message.
+     * @param Message|null          $replyTo          Sends the message as a reply to the given message instance.
      *
      * @return ExtendedPromiseInterface<Message>
      */
-    public function sendMessage(MessageBuilder $message): ExtendedPromiseInterface
+    public function sendMessage($message, bool $tts = false, $embed = null, $allowed_mentions = null, ?Message $replyTo = null): ExtendedPromiseInterface
     {
+        // Backwards compatible support for old `sendMessage` function signature.
+        if (! ($message instanceof MessageBuilder)) {
+            $message = MessageBuilder::new()
+                ->setContent($message);
+
+            if ($tts) {
+                $message->setTts(true);
+            }
+
+            if ($embed) {
+                $message->addEmbed($embed);
+            }
+
+            if ($allowed_mentions) {
+                $message->setAllowedMentions($allowed_mentions);
+            }
+
+            if ($replyTo) {
+                $message->setReplyTo($replyTo);
+            }
+        }
+
         if (! $this->allowText()) {
             return reject(new InvalidArgumentException('You can only send messages to text channels.'));
         }
@@ -766,21 +798,17 @@ class Channel extends Part
             }
         }
 
-        return $this->_sendMessage($message)
-            ->then(function ($response) {
-                return $this->factory->create(Message::class, $response, true);
-            });
-    }
+        return (function () use ($message) {
+            if ($message->requiresMultipart()) {
+                $multipart = $message->toMultipart();
 
-    private function _sendMessage(MessageBuilder $message): ExtendedPromiseInterface
-    {
-        if ($message->requiresMultipart()) {
-            $multipart = $message->toMultipart();
+                return $this->http->post(Endpoint::bind(Endpoint::CHANNEL_MESSAGES, $this->id), (string) $multipart, $multipart->getHeaders());
+            }
 
-            return $this->http->post(Endpoint::bind(Endpoint::CHANNEL_MESSAGES, $this->id), (string) $multipart, $multipart->getHeaders());
-        }
-
-        return $this->http->post(Endpoint::bind(Endpoint::CHANNEL_MESSAGES, $this->id), $message);
+            return $this->http->post(Endpoint::bind(Endpoint::CHANNEL_MESSAGES, $this->id), $message);
+        })()->then(function ($response) {
+            return $this->factory->create(Message::class, $response, true);
+        });
     }
 
     /**
