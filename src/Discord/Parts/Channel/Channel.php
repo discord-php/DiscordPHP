@@ -740,7 +740,7 @@ class Channel extends Part
     /**
      * Sends a message to the channel.
      *
-     * @param MessageBuilder|string $message The message builder that should be converted into a message.
+     * @param MessageBuilder|string $message The message text or message builder that should be converted into a message.
      *
      * @return ExtendedPromiseInterface<Message>
      */
