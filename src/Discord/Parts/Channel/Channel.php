@@ -740,12 +740,16 @@ class Channel extends Part
     /**
      * Sends a message to the channel.
      *
-     * @param MessageBuilder $message The message builder that should be converted into a message.
+     * @param MessageBuilder|string $message The message builder that should be converted into a message.
      *
      * @return ExtendedPromiseInterface<Message>
      */
-    public function sendMessage(MessageBuilder $message): ExtendedPromiseInterface
+    public function sendMessage($message): ExtendedPromiseInterface
     {
+        if (is_string($message)) {
+            $message = MessageBuilder::new()->setContent($message);
+        }
+        
         if (! $this->allowText()) {
             return reject(new InvalidArgumentException('You can only send messages to text channels.'));
         }
