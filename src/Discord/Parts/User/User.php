@@ -35,6 +35,9 @@ use React\Promise\ExtendedPromiseInterface;
  * @property int    $flags         User flags.
  * @property int    $premium_type  Type of nitro subscription.
  * @property int    $public_flags  Public flags on the user.
+ *
+ * @method ExtendedPromiseInterface sendMessage(MessageBuilder $builder)
+ * @method ExtendedPromiseInterface sendMessage(string $text, bool $tts = false, Embed|array $embed = null, array $allowed_mentions = null, ?Message $replyTo = null)
  */
 class User extends Part
 {
@@ -84,14 +87,21 @@ class User extends Part
     /**
      * Sends a message to the user.
      *
-     * @param MessageBuilder $message Message to send.
+     * Takes a `MessageBuilder` or content of the message for the first parameter. If the first parameter
+     * is an instance of `MessageBuilder`, the rest of the arguments are disregarded.
      *
-     * @return ExtendedPromiseInterface
+     * @param MessageBuilder|string $message          The message builder that should be converted into a message, or the string content of the message.
+     * @param bool                  $tts              Whether the message is TTS.
+     * @param Embed|array|null      $embed            An embed object or array to send in the message.
+     * @param array|null            $allowed_mentions Allowed mentions object for the message.
+     * @param Message|null          $replyTo          Sends the message as a reply to the given message instance.
+     *
+     * @return ExtendedPromiseInterface<Message>
      */
-    public function sendMessage(MessageBuilder $message): ExtendedPromiseInterface
+    public function sendMessage($message, bool $tts = false, $embed = null, $allowed_mentions = null, ?Message $replyTo = null): ExtendedPromiseInterface
     {
-        return $this->getPrivateChannel()->then(function ($channel) use ($message) {
-            return $channel->sendMessage($message);
+        return $this->getPrivateChannel()->then(function ($channel) use ($message, $tts, $embed, $allowed_mentions, $replyTo) {
+            return $channel->sendMessage($message, $tts, $embed, $allowed_mentions, $replyTo);
         });
     }
 
