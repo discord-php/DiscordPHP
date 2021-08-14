@@ -979,9 +979,6 @@ class Channel extends Part
      */
     public function __toString(): string
     {
-        if ($this->type == self::TYPE_TEXT) {
-            return "<#{$this->id}>";
-        }
-        return $this->name;
+        return "<#{$this->id}>";
     }
 }
