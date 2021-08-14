@@ -607,4 +607,14 @@ class Thread extends Part
             'parent_id' => $this->parent_id,
         ];
     }
+    
+    /**
+     * Returns a formatted mention.
+     *
+     * @return string A formatted mention.
+     */
+    public function __toString()
+    {
+        return "<#{$this->id}>";
+    }
 }
