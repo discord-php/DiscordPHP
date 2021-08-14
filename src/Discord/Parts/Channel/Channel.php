@@ -971,4 +971,17 @@ class Channel extends Part
             'channel_id' => $this->id,
         ];
     }
+    
+    /**
+     * Returns a formatted mention for text channel or name of the channel.
+     *
+     * @return string A formatted mention for text channel or name of the channel.
+     */
+    public function __toString(): string
+    {
+        if ($this->type == self::TYPE_TEXT) {
+            return "<#{$this->id}>";
+        }
+        return $this->name;
+    }
 }
