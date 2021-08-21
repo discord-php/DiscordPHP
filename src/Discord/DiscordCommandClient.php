@@ -120,28 +120,14 @@ class DiscordCommandClient extends Discord
 
                     $help = $command->getHelp($prefix);
 
-                    /**
-                     * @todo Use internal Embed::class
-                     */
-                    $embed = [
-                        'author' => [
-                            'name' => $this->commandClientOptions['name'],
-                            'icon_url' => $this->client->user->avatar,
-                        ],
-                        'title' => $prefix.$fullCommandString.'\'s Help',
-                        'description' => ! empty($help['longDescription']) ? $help['longDescription'] : $help['description'],
-                        'fields' => [],
-                        'footer' => [
-                            'text' => $this->commandClientOptions['name'],
-                        ],
-                    ];
+                    $embed = new Embed($this);
+                    $embed->setAuthor($this->commandClientOptions['name'], $this->client->user->avatar)
+                        ->setTitle($prefix.$fullCommandString.'\'s Help')
+                        ->setDescription(! empty($help['longDescription']) ? $help['longDescription'] : $help['description'])
+                        ->setFooter($this->commandClientOptions['name']);
 
                     if (! empty($help['usage'])) {
-                        $embed['fields'][] = [
-                            'name' => 'Usage',
-                            'value' => '``'.$help['usage'].'``',
-                            'inline' => true,
-                        ];
+                        $embed->addFieldValues('Usage', '``'.$help['usage'].'``', true);
                     }
 
                     if (! empty($this->aliases)) {
@@ -155,21 +141,13 @@ class DiscordCommandClient extends Discord
                         }
 
                         if (! empty($aliasesString)) {
-                            $embed['fields'][] = [
-                                'name' => 'Aliases',
-                                'value' => $aliasesString,
-                                'inline' => true,
-                            ];
+                            $embed->addFieldValues('Aliases', $aliasesString, true);
                         }
                     }
 
                     if (! empty($help['subCommandsHelp'])) {
                         foreach ($help['subCommandsHelp'] as $subCommandHelp) {
-                            $embed['fields'][] = [
-                                'name' => $subCommandHelp['command'],
-                                'value' => $subCommandHelp['description'],
-                                'inline' => true,
-                            ];
+                            $embed->addFieldValues($subCommandHelp['command'], $subCommandHelp['description'], true);
                         }
                     }
 
