@@ -345,6 +345,66 @@ class Button extends Component
         return $this->setListener(null, $this->discord);
     }
 
+        /**
+     * Returns the style for the button.
+     *
+     * @return int
+     */
+    public function getStyle(): int
+    {
+        return $this->style;
+    }
+
+    /**
+     * Returns the label for the button.
+     *
+     * @return string|null
+     */
+    public function getLabel(): string
+    {
+        return $this->label;
+    }
+
+    /**
+     * Returns the emoji display on the button.
+     *
+     * @return array|null
+     */
+    public function getEmoji(): array
+    {
+        return $this->emoji;
+    }
+
+    /**
+     * Returns the Custom ID of the button.
+     *
+     * @return string|null
+     */
+    public function getCustomId(): string
+    {
+        return $this->custom_id;
+    }
+
+    /**
+     * Returns the URL of the button. Only for link buttons.
+     *
+     * @return string
+     */
+    public function getURL(): string
+    {
+        return $this->url;
+    }
+
+    /**
+     * Returns wether the button is disabled.
+     *
+     * @return bool
+     */
+    public function isDisabled(): bool
+    {
+        return $this->disabled;
+    }
+
     /**
      * @inheritdoc
      */
