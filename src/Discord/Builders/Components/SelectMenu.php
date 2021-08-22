@@ -294,6 +294,66 @@ class SelectMenu extends Component
     }
 
     /**
+     * Returns the Custom ID of the select menu.
+     *
+     * @return string
+     */
+    public function getCustomId(): string
+    {
+        return $this->custom_id;
+    }
+
+    /**
+     * Returns the array of options that the select menu has.
+     *
+     * @return array
+     */
+    public function getOptions(): array
+    {
+        return $this->options;
+    }
+
+    /**
+     * Returns the palceholder string of the select menu.
+     *
+     * @return string|null
+     */
+    public function getPlaceholder(): string
+    {
+        return $this->placeholder;
+    }
+
+    /**
+     * Returns the minimum number of options that must be selected.
+     *
+     * @return int|null
+     */
+    public function getMinValues(): int
+    {
+        return $this->min_values;
+    }
+
+    /**
+     * Returns the maximum number of options that must be selected.
+     *
+     * @return int|null
+     */
+    public function getMaxValues(): int
+    {
+        return $this->max_values;
+    }
+
+    /**
+     * Returns wether the select menu is disabled.
+     *
+     * @return bool|null
+     */
+    public function isDisabled(): bool
+    {
+        return $this->disabled;
+    }
+
+    /**
      * @inheritDoc
      */
     public function jsonSerialize(): array
