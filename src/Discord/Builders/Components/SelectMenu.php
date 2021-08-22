@@ -125,16 +125,6 @@ class SelectMenu extends Component
     }
 
     /**
-     * Creates a new select menu.
-     *
-     * @return self
-     */
-    public static function new(): self
-    {
-        return new self();
-    }
-
-    /**
      * Adds an option to the select menu. Maximum 25 options.
      *
      * @param Option $option Option to add.
