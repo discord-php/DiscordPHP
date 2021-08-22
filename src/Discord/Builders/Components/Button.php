@@ -345,7 +345,7 @@ class Button extends Component
         return $this->setListener(null, $this->discord);
     }
 
-        /**
+    /**
      * Returns the style for the button.
      *
      * @return int
