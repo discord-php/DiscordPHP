@@ -173,6 +173,46 @@ class Option extends Component
     }
 
     /**
+     * Returns the user-visible label for the option.
+     *
+     * @return string
+     */
+    public function getLabel(): string
+    {
+        return $this->label;
+    }
+
+    /**
+     * Returns the description for the option.
+     *
+     * @return string|null
+     */
+    public function getDescription(): string
+    {
+        return $this->description;
+    }
+
+    /**
+     * Returns the emoji display alongside the option.
+     *
+     * @return array|null
+     */
+    public function getEmoji(): array
+    {
+        return $this->emoji;
+    }
+
+    /**
+     * Returns wether the option is default.
+     *
+     * @return bool
+     */
+    public function isDefault(): bool
+    {
+        return $this->default;
+    }
+
+    /**
      * @inheritDoc
      */
     public function jsonSerialize(): array
