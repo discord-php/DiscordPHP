@@ -163,34 +163,29 @@ class DiscordCommandClient extends Discord
                     ->setFooter($this->commandClientOptions['name']);
 
                 $commandsDescription = '';
-                // Fallback in case commands count reaches the fields limit
-                if (count($this->commands) > 20) {
-                    foreach ($this->commands as $command) {
-                        $help = $command->getHelp($prefix);
+                $embedfields = [];
+                foreach ($this->commands as $command) {
+                    $help = $command->getHelp($prefix);
+                    $embedfields[] = [
+                        'name' => $help['command'],
+                        'value' => $help['description'],
+                        'inline' => true,
+                    ];
+                    $commandsDescription .= "\n\n`".$help['command']."`\n".$help['description'];
 
-                        $commandsDescription .= "\n\n`".$help['command']."`\n".$help['description'];
-
-                        foreach ($help['subCommandsHelp'] as $subCommandHelp) {
-                            $commandsDescription .= "\n\n`".$subCommandHelp['command']."`\n".$subCommandHelp['description'];
-                        }
-                    }
-                } else {
-                    foreach ($this->commands as $command) {
-                        $help = $command->getHelp($prefix);
-                        $embed->addField([
-                            'name' => $help['command'],
-                            'value' => $help['description'],
+                    foreach ($help['subCommandsHelp'] as $subCommandHelp) {
+                        $embedfields[] = [
+                            'name' => $subCommandHelp['command'],
+                            'value' => $subCommandHelp['description'],
                             'inline' => true,
-                        ]);
-
-                        foreach ($help['subCommandsHelp'] as $subCommandHelp) {
-                            $embed->addField([
-                                'name' => $subCommandHelp['command'],
-                                'value' => $subCommandHelp['description'],
-                                'inline' => true,
-                            ]);
-                        }
+                        ];
+                        $commandsDescription .= "\n\n`".$subCommandHelp['command']."`\n".$subCommandHelp['description'];
                     }
+                }
+                // Use embed fields in case commands count is below limit
+                if (count($embedfields) <= 25) {
+                    $embed->addField($embedfields);
+                    $commandsDescription = '';
                 }
 
                 $embed->setDescription($this->commandClientOptions['description'].$commandsDescription);
