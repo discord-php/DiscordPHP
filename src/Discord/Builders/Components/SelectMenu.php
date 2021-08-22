@@ -81,10 +81,47 @@ class SelectMenu extends Component
 
     /**
      * Creates a new select menu.
+     * 
+     * @param string $customId The custom_id for this SelectMenu. If no $customID given, a generic $custom_id is set
      */
-    public function __construct()
+    public function __construct(string $customId = null)
     {
-        $this->custom_id = $this->generateUuid();
+        $this->custom_id = $customId ?? $this->generateUuid(); 
+    }
+
+    /**
+     * Creates a new select menu.
+     *
+     * @param string $customId The custom_id for this Selectmenu
+     * 
+     * @return self
+     */
+    public static function new($customId = null): self
+    {
+        return new self($customId);
+    }
+
+    /**
+     * Returns the custom_id of the SelectMenu
+     * 
+     * @return string
+     */
+    public function getCustomId()
+    {
+        return $this->custom_id;
+    }
+
+    /**
+     * Sets the custom ID of this SelectMenu
+     * 
+     * @param string $customId
+     * @return $this
+     */
+    public function setCustomId($customId)
+    {
+        $this->custom_id = $customId;
+
+        return $this;
     }
 
     /**
