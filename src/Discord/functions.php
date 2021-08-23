@@ -243,3 +243,13 @@ function normalizePartId($id_field = 'id')
         return $part;
     };
 }
+
+/**
+ * Escape Discord markdown formatting
+ * 
+ * @return string the escaped string
+ */
+function EscapeMarkdown($text): string
+{
+    return addcslashes($text, '*:>@_`|~');
+}
