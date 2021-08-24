@@ -314,7 +314,7 @@ class SelectMenu extends Component
     }
 
     /**
-     * Returns the palceholder string of the select menu.
+     * Returns the placeholder string of the select menu.
      *
      * @return string|null
      */
