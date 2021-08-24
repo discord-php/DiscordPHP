@@ -203,7 +203,7 @@ class Option extends Component
     }
 
     /**
-     * Returns wether the option is default.
+     * Returns whether the option is default.
      *
      * @return bool
      */
