@@ -249,7 +249,7 @@ function normalizePartId($id_field = 'id')
  * 
  * @return string the escaped string
  */
-function EscapeMarkdown($text): string
+function escapeMarkdown(string $text): string
 {
     return addcslashes($text, '*:>@_`|~');
 }
