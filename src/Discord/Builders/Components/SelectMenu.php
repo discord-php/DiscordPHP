@@ -19,6 +19,8 @@ use Exception;
 use InvalidArgumentException;
 use React\Promise\PromiseInterface;
 
+use function Discord\poly_strlen;
+
 class SelectMenu extends Component
 {
     /**
@@ -82,44 +84,39 @@ class SelectMenu extends Component
     /**
      * Creates a new select menu.
      * 
-     * @param string $customId The custom_id for this SelectMenu. If no $customID given, a generic $custom_id is set
+     * @param string|null $custom_id The custom ID of the select menu. If not given, an UUID will be used
      */
-    public function __construct(string $customId = null)
+    public function __construct(?string $custom_id)
     {
-        $this->custom_id = $customId ?? $this->generateUuid(); 
+        $this->setCustomId($custom_id ?? $this->generateUuid()); 
     }
 
     /**
      * Creates a new select menu.
      *
-     * @param string $customId The custom_id for this Selectmenu
+     * @param string|null $custom_id The custom ID of the select menu.
      * 
      * @return self
      */
-    public static function new($customId = null): self
+    public static function new(?string $custom_id = null): self
     {
-        return new self($customId);
+        return new self($custom_id);
     }
 
     /**
-     * Returns the custom_id of the SelectMenu
+     * Sets the custom ID for the select menu
      * 
-     * @return string
-     */
-    public function getCustomId()
-    {
-        return $this->custom_id;
-    }
-
-    /**
-     * Sets the custom ID of this SelectMenu
-     * 
-     * @param string $customId
+     * @param string $custom_id
+     
      * @return $this
      */
-    public function setCustomId($customId)
+    public function setCustomId($custom_id): self
     {
-        $this->custom_id = $customId;
+        if (poly_strlen($custom_id) > 100) {
+            throw new InvalidArgumentException('Custom ID must be maximum 100 characters.');
+        }
+        
+        $this->custom_id = $custom_id;
 
         return $this;
     }
