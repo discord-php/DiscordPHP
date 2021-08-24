@@ -396,7 +396,7 @@ class Button extends Component
     }
 
     /**
-     * Returns wether the button is disabled.
+     * Returns whether the button is disabled.
      *
      * @return bool
      */
