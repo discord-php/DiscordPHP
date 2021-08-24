@@ -91,7 +91,7 @@ class Button extends Component
      * @param int $style Style of the button.
      * @param string|null $custom_id custom ID of the button. If not given, an UUID will be used
      */
-    public function __construct(int $style, ?string $custom_id = null)
+    public function __construct(int $style, ?string $custom_id)
     {
         if (! in_array($style, [
             self::STYLE_PRIMARY,
