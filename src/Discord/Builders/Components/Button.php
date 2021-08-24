@@ -89,8 +89,9 @@ class Button extends Component
      * Creates a new button.
      *
      * @param int $style Style of the button.
+     * @param string|null $custom_id custom ID of the button. If not given, an UUID will be used
      */
-    public function __construct(int $style)
+    public function __construct(int $style, ?string $custom_id = null)
     {
         if (! in_array($style, [
             self::STYLE_PRIMARY,
@@ -103,18 +104,20 @@ class Button extends Component
         }
 
         $this->style = $style;
+        $this->setCustomId($custom_id ?? $this->generateUuid()); 
     }
 
     /**
      * Creates a new button.
      *
      * @param int $style Style of the button.
+     * @param string|null $custom_id custom ID of the button.
      *
      * @return self
      */
-    public static function new(int $style): self
+    public static function new(int $style, ?string $custom_id = null): self
     {
-        return new self($style);
+        return new self($style, $custom_id);
     }
 
     /**
@@ -376,7 +379,7 @@ class Button extends Component
     }
 
     /**
-     * Returns the Custom ID of the button.
+     * Returns the custom ID of the button.
      *
      * @return string|null
      */
