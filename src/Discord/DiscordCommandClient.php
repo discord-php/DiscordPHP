@@ -184,11 +184,14 @@ class DiscordCommandClient extends Discord
                 }
                 // Use embed fields in case commands count is below limit
                 if (count($embedfields) <= 25) {
-                    $embed->addField($embedfields);
+                    foreach ($embedfields as $field)
+                    {
+                        $embed->addField($field);
+                    }
                     $commandsDescription = '';
                 }
 
-                $embed->setDescription($this->commandClientOptions['description'].$commandsDescription);
+                $embed->setDescription(substr($this->commandClientOptions['description'].$commandsDescription, 0, 2048));
 
                 $message->channel->sendEmbed($embed);
             }, [
