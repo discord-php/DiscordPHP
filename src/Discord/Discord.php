@@ -11,7 +11,6 @@
 
 namespace Discord;
 
-use Discord\Discord\Parts\Slash\RegisteredCommand;
 use Discord\Exceptions\IntentException;
 use Discord\Factory\Factory;
 use Discord\Http\Http;
@@ -44,6 +43,7 @@ use React\EventLoop\TimerInterface;
 use Discord\Helpers\Deferred;
 use Discord\Http\Drivers\React;
 use Discord\Http\Endpoint;
+use Discord\Parts\Interactions\Command\RegisteredCommand;
 use Evenement\EventEmitterTrait;
 use InvalidArgumentException;
 use Psr\Log\LoggerInterface;
