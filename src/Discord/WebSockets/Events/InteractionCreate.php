@@ -12,6 +12,7 @@
 namespace Discord\WebSockets\Events;
 
 use Discord\Helpers\Deferred;
+use Discord\InteractionType;
 use Discord\Parts\Interactions\Interaction;
 use Discord\WebSockets\Event;
 
@@ -22,7 +23,26 @@ class InteractionCreate extends Event
      */
     public function handle(Deferred &$deferred, $data): void
     {
-        // do nothing with interactions - pass on to DiscordPHP-Slash
-        $deferred->resolve($this->factory->create(Interaction::class, $data, true));
+        $interaction = $this->factory->create(Interaction::class, $data, true);
+
+        if ($interaction->type == InteractionType::APPLICATION_COMMAND) {
+            $checkCommand = function ($command) use ($interaction, &$checkCommand) {
+                if (isset($this->discord->commands[$command['name']])) {
+                    if ($this->discord->commands[$command['name']]->execute($command['options'] ?? [], $interaction)) {
+                        return true;
+                    }
+                }
+
+                foreach ($command['options'] ?? [] as $option) {
+                    if ($checkCommand($option)) {
+                        return true;
+                    }
+                }
+            };
+
+            $checkCommand($interaction->data);
+        }
+
+        $deferred->resolve($interaction);
     }
 }
