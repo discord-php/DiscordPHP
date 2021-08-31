@@ -138,4 +138,14 @@ class RegisteredCommand
 
         return $this->subCommands[$baseCommand]->addSubCommand($name, $callback);
     }
+
+    /**
+     * Get command name
+     *
+     * @return RegisteredCommand[]|null
+     */
+    public function getCommandName(): string
+    {
+        return $this->name;
+    }
 }

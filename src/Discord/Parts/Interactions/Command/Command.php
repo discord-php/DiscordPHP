@@ -29,9 +29,9 @@ use Discord\Parts\Part;
  */
 class Command extends Part
 {
-    public const CHAT_INPUT = 0;
-    public const USER = 1;
-    public const MESSAGE = 2;
+    public const CHAT_INPUT = 1;
+    public const USER = 2;
+    public const MESSAGE = 3;
 
     /**
      * @inheritdoc

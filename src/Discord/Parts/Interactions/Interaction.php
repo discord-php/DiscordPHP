@@ -381,9 +381,15 @@ class Interaction extends Part
         $builder = MessageBuilder::new()
             ->setContent($content)
             ->setTts($tts)
-            ->setEmbeds($embeds)
-            ->setAllowedMentions($allowed_mentions)
-            ->_setFlags($flags);
+            ->setEmbeds($embeds);
+
+        if ($allowed_mentions) {
+            $builder->setAllowedMentions($allowed_mentions);
+        }
+
+        if ($flags) {
+            $builder->_setFlags($flags);
+        }
 
         return $this->respondWithMessage($builder);
     }
@@ -391,8 +397,8 @@ class Interaction extends Part
     /**
      * Replies to the interaction with a message and shows the source message.
      * Alias for `reply()` with source = true.
-     * @deprecated 7.0.0
-     * Backported for DiscordPHP-Slash
+     *
+     * @deprecated 7.0.0 Backported for DiscordPHP-Slash
      * @see respondWithMessage()
      *
      * @param string     $content
@@ -413,8 +419,7 @@ class Interaction extends Part
      /**
      * Updates the original response to the interaction.
      * Must have already used `reply` or `replyWithSource`.
-     * @deprecated 7.0.0
-     * Backported for DiscordPHP-Slash
+     * @deprecated 7.0.0 Backported for DiscordPHP-Slash
      * @see updateOriginalResponse()
      *
      * @param string               $content          Content of the message.
@@ -439,8 +444,11 @@ class Interaction extends Part
 
         $builder = MessageBuilder::new()
             ->setContent($content)
-            ->setEmbeds($embeds)
-            ->setAllowedMentions($allowed_mentions);
+            ->setEmbeds($embeds);
+
+        if ($allowed_mentions) {
+            $builder->setAllowedMentions($allowed_mentions);
+        }
 
         return $this->updateOriginalResponse($builder);
     }
@@ -448,8 +456,7 @@ class Interaction extends Part
     /**
      * Deletes the original response to the interaction.
      * Must have already used `reply` or `replyToSource`.
-     * @deprecated 7.0.0
-     * Backported for DiscordPHP-Slash
+     * @deprecated 7.0.0 Backported for DiscordPHP-Slash
      * @see deleteOriginalResponse()
      *
      * @return ExtendedPromiseInterface
