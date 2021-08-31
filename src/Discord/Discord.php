@@ -1308,7 +1308,7 @@ class Discord
             ->setAllowedTypes('retrieveBans', 'bool')
             ->setAllowedTypes('intents', ['array', 'int'])
             ->setAllowedTypes('socket_options', 'array')
-            ->setAllowedTypes('socket_options', ['null', 'string']);
+            ->setAllowedTypes('application_id', ['null', 'string']);
 
         $options = $resolver->resolve($options);
 
