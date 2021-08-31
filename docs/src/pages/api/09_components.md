@@ -133,6 +133,6 @@ $select->setListener(function (Interaction $interaction, Collection $options) {
         echo $option->getValue().PHP_EOL;
     }
 
-    $interaction->respondWithMessage('thanks!');
+    $interaction->respondWithMessage(MessageBuilder::new()->setContent('thanks!'));
 }, $discord);
 ```
