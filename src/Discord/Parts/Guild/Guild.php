@@ -553,7 +553,7 @@ class Guild extends Part
             $options['before'] = $options['before']->id;
         }
 
-        $endpoint = Endpoint::bind(Endpoint::AUDIT_LOG);
+        $endpoint = Endpoint::bind(Endpoint::AUDIT_LOG, $this->id);
 
         foreach ($options as $key => $value) {
             $endpoint->addQuery($key, $value);
