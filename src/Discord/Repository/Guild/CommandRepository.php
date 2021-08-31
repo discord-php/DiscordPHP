@@ -12,6 +12,7 @@
 namespace Discord\Repository\Guild;
 
 use Discord\Http\Endpoint;
+use Discord\Parts\Interactions\Command\Command;
 use Discord\Repository\AbstractRepository;
 
 /**

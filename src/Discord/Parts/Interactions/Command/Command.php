@@ -53,6 +53,9 @@ class Command extends Part
     protected function afterConstruct(): void
     {
         // @todo registerCommand
+        if (! $this->offsetExists('application_id')) {
+            $this->offsetSet('application_id', $this->discord->application->id);
+        }
     }
 
     /**
