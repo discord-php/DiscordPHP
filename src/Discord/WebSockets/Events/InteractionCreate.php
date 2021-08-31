@@ -40,8 +40,6 @@ class InteractionCreate extends Event
                 if ($interaction->guild_id) {
                     if (! $interaction->guild->commands->get('id', $cmd['id'])) {
                         $interaction->guild->commands->offsetSet($cmd['id'], $this->factory->create(Command::class, $cmd, true));
-
-                        var_dump($interaction->guild->commands->get('id', $cmd['id']));
                     }
                 } else {
                     if (! $this->discord->commands->get('id', $cmd['id'])) {
