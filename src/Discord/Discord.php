@@ -44,6 +44,7 @@ use Discord\Helpers\Deferred;
 use Discord\Http\Drivers\React;
 use Discord\Http\Endpoint;
 use Discord\Parts\Interactions\Command\RegisteredCommand;
+use Discord\Repository\Interaction\GlobalCommandRepository;
 use Evenement\EventEmitterTrait;
 use InvalidArgumentException;
 use Psr\Log\LoggerInterface;
@@ -69,6 +70,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * @property GuildRepository          $guilds
  * @property PrivateChannelRepository $private_channels
  * @property UserRepository           $users
+ * @property GlobalCommandRepository  $commands
  */
 class Discord
 {
