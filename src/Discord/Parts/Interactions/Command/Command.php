@@ -13,20 +13,19 @@ namespace Discord\Parts\Interactions\Command;
 
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Part;
-use Discord\Repository\Interaction\OptionRepository;
 
 /**
  * Represents a command registered on the Discord servers.
  *
- * @property string             $id                         The unique identifier of the command.
- * @property string             $type                       The type of the command.
- * @property string             $application_id             Application that made the command, if made by one.
- * @property Guild|null         $guild                      The guild that the command belongs to. Null if global.
- * @property string|null        $guild_id                   The unique identifier of the guild that the command belongs to. Null if global.
- * @property string             $name                       The name of the command.
- * @property string             $description                1-100 character description.
- * @property boolean            $default_permission         Whether the command is enabled by default when the app is added to a guild.
- * @property OptionRepository   $options                    The parameters for the command, max 25. Only for Slash command (CHAT_INPUT).
+ * @property string         $id                         The unique identifier of the command.
+ * @property string         $type                       The type of the command.
+ * @property string         $application_id             Application that made the command, if made by one.
+ * @property Guild|null     $guild                      The guild that the command belongs to. Null if global.
+ * @property string|null    $guild_id                   The unique identifier of the guild that the command belongs to. Null if global.
+ * @property string         $name                       The name of the command.
+ * @property string         $description                1-100 character description.
+ * @property Option[]       $options                    The parameters for the command, max 25. Only for Slash command (CHAT_INPUT).
+ * @property boolean        $default_permission         Whether the command is enabled by default when the app is added to a guild.
  */
 class Command extends Part
 {
@@ -46,13 +45,6 @@ class Command extends Part
         'description',
         'options',
         'default_permission',
-    ];
-
-    /**
-     * @inheritdoc
-     */
-    protected $repositories = [
-        'options' => OptionRepository::class,
     ];
 
     /**
@@ -79,9 +71,9 @@ class Command extends Part
     public function getCreatableAttributes(): array
     {
         return [
-            'name' => $this->name,
             'type' => $this->type,
             'guild_id' => $this->guild_id,
+            'name' => $this->name,
             'description' => $this->description,
             'options' => $this->options,
             'default_permission' => $this->default_permission,
@@ -94,9 +86,9 @@ class Command extends Part
     public function getUpdatableAttributes(): array
     {
         return [
-            'name' => $this->name,
             'type' => $this->type,
             'guild_id' => $this->guild_id,
+            'name' => $this->name,
             'description' => $this->description,
             'options' => $this->options,
             'default_permission' => $this->default_permission,
@@ -109,7 +101,9 @@ class Command extends Part
     public function getRepositoryAttributes(): array
     {
         return [
+            'command_id' => $this->id,
             'guild_id' => $this->guild_id,
+            'application_id' => $this->application_id,
         ];
     }
 }
