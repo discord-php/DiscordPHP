@@ -43,10 +43,7 @@ use React\EventLoop\TimerInterface;
 use Discord\Helpers\Deferred;
 use Discord\Http\Drivers\React;
 use Discord\Http\Endpoint;
-use Discord\Parts\Interactions\Command\RegisteredCommand;
-use Discord\Repository\Interaction\GlobalCommandRepository;
 use Evenement\EventEmitterTrait;
-use InvalidArgumentException;
 use Psr\Log\LoggerInterface;
 use React\Promise\ExtendedPromiseInterface;
 use React\Promise\PromiseInterface;
@@ -1284,7 +1281,6 @@ class Discord
                 'retrieveBans',
                 'intents',
                 'socket_options',
-                'application_id',
             ])
             ->setDefaults([
                 'loop' => LoopFactory::create(),
@@ -1296,7 +1292,6 @@ class Discord
                 'retrieveBans' => false,
                 'intents' => Intents::getDefaultIntents(),
                 'socket_options' => [],
-                'application_id' => null,
             ])
             ->setAllowedTypes('token', 'string')
             ->setAllowedTypes('logger', ['null', LoggerInterface::class])
@@ -1307,8 +1302,7 @@ class Discord
             ->setAllowedTypes('storeMessages', 'bool')
             ->setAllowedTypes('retrieveBans', 'bool')
             ->setAllowedTypes('intents', ['array', 'int'])
-            ->setAllowedTypes('socket_options', 'array')
-            ->setAllowedTypes('application_id', ['null', 'string']);
+            ->setAllowedTypes('socket_options', 'array');
 
         $options = $resolver->resolve($options);
 
@@ -1544,44 +1538,5 @@ class Discord
         unset($config['loop'], $config['logger']);
 
         return $config;
-    }
-
-    /**
-     * An array of registered commands.
-     *
-     * @var RegisteredCommand[]
-     */
-    private $commands;
-
-    /**
-     * Registeres a command with the client.
-     *
-     * @param string|array $name
-     * @param callable     $callback
-     *
-     * @return RegisteredCommand
-     */
-    public function registerCommand($name, callable $callback = null): RegisteredCommand
-    {
-        if (is_array($name) && count($name) == 1) {
-            $name = array_shift($name);
-        }
-
-        // registering base command
-        if (! is_array($name) || count($name) == 1) {
-            if (isset($this->commands[$name])) {
-                throw new InvalidArgumentException("The command `{$name}` already exists.");
-            }
-
-            return $this->commands[$name] = new RegisteredCommand($name, $callback);
-        }
-
-        $baseCommand = array_shift($name);
-
-        if (! isset($this->commands[$baseCommand])) {
-            $this->registerCommand($baseCommand);
-        }
-
-        return $this->commands[$baseCommand]->addSubCommand($name, $callback);
     }
 }

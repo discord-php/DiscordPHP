@@ -13,12 +13,14 @@ namespace Discord\Parts\User;
 
 use Discord\Exceptions\FileNotFoundException;
 use Discord\Http\Endpoint;
+use Discord\Parts\Interactions\Command\RegisteredCommand;
 use Discord\Parts\OAuth\Application;
 use Discord\Parts\Part;
 use Discord\Repository\GuildRepository;
 use Discord\Repository\Interaction\GlobalCommandRepository;
 use Discord\Repository\PrivateChannelRepository;
 use Discord\Repository\UserRepository;
+use InvalidArgumentException;
 use React\Promise\ExtendedPromiseInterface;
 
 /**
@@ -44,7 +46,7 @@ class Client extends Part
     /**
      * @inheritdoc
      */
-    protected $fillable = ['id', 'username', 'email', 'verified', 'avatar', 'discriminator', 'bot', 'user', 'application'];
+    protected $fillable = ['id', 'username', 'email', 'verified', 'avatar', 'discriminator', 'bot', 'user', 'application', 'commands'];
 
     /**
      * @inheritdoc
@@ -150,5 +152,43 @@ class Client extends Part
     public function getRepositoryAttributes(): array
     {
         return [];
+    }
+
+    /**
+     * An array of registered commands.
+     *
+     * @var RegisteredCommand[]
+     */
+    public $registered_commands;
+
+    /**
+     * Registeres a command with the client.
+     *
+     * @param string|array $name
+     * @param callable     $callback
+     *
+     * @return RegisteredCommand
+     */
+    public function registerCommand($name, callable $callback = null): RegisteredCommand
+    {
+        if (is_array($name) && count($name) == 1) {
+            $name = array_shift($name);
+        }
+
+        // registering base command
+        if (! is_array($name) || count($name) == 1) {
+            if (isset($this->registered_commands[$name])) {
+                throw new InvalidArgumentException("The command `{$name}` already exists.");
+            }
+
+            return $this->registered_commands[$name] = new RegisteredCommand($name, $callback);
+        }
+
+        $baseCommand = array_shift($name);
+
+        if (! isset($this->registered_commands[$baseCommand])) {
+            $this->registerCommand($baseCommand);
+        }
+        return $this->registered_commands[$baseCommand]->addSubCommand($name, $callback);
     }
 }
