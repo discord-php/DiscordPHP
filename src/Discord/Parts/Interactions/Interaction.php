@@ -17,6 +17,7 @@ use Discord\Http\Endpoint;
 use Discord\InteractionResponseType;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Channel\Message;
+use Discord\Parts\Embed\Embed;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Interactions\Request\InteractionData;
 use Discord\Parts\Part;
@@ -158,6 +159,10 @@ class Interaction extends Part
      */
     public function acknowledge(): ExtendedPromiseInterface
     {
+        if ($this->type == Interaction::TYPE_APPLICATION_COMMAND) {
+            return $this->acknowledgeWithResponse();
+        }
+
         if ($this->type != Interaction::TYPE_MESSAGE_COMPONENT) {
             throw new InvalidArgumentException('You can only acknowledge message component interactions.');
         }
@@ -340,5 +345,153 @@ class Interaction extends Part
         }
 
         return $this->http->post(Endpoint::bind(Endpoint::INTERACTION_RESPONSE, $this->id, $this->token), $payload);
+    }
+
+    /**
+     * Replies to the interaction with a message.
+     * @deprecated 7.0.0
+     * Backported for DiscordPHP-Slash
+     * @see respondWithMessage()
+     *
+     * @see https://discord.com/developers/docs/interactions/slash-commands#interaction-response-interactionapplicationcommandcallbackdata
+     *
+     * @param string               $content          String content for the message. Required.
+     * @param bool                 $tts              Whether the message should be text-to-speech.
+     * @param array[]|Embed[]|null $embeds           An array of up to 10 embeds. Can also be an array of DiscordPHP embeds.
+     * @param array|null           $allowed_mentions Allowed mentions object. See Discord developer docs.
+     * @param int|null             $flags            Set to 64 to make your response ephemeral
+     *
+     * Source is unused
+     * @see https://discord.com/developers/docs/change-log#changes-to-slash-command-response-types-and-flags
+     */
+    public function reply(string $content, bool $tts = false, array $embeds = [], ?array $allowed_mentions = null, ?bool $source = false, ?int $flags = null)
+    {
+        if ($this->type != Interaction::TYPE_APPLICATION_COMMAND) {
+            throw new InvalidArgumentException('You can only reply messages that occur due to a application command interaction. Use respondWithMessage() for message component');
+        }
+
+        $embeds = array_map(function ($e) {
+            if ($e instanceof Embed) {
+                return $e->getRawAttributes();
+            }
+
+            return $e;
+        }, $embeds);
+
+        $builder = MessageBuilder::new()
+            ->setContent($content)
+            ->setTts($tts)
+            ->setEmbeds($embeds)
+            ->setAllowedMentions($allowed_mentions)
+            ->_setFlags($flags);
+
+        return $this->respondWithMessage($builder);
+    }
+
+    /**
+     * Replies to the interaction with a message and shows the source message.
+     * Alias for `reply()` with source = true.
+     * @deprecated 7.0.0
+     * Backported for DiscordPHP-Slash
+     * @see respondWithMessage()
+     *
+     * @param string     $content
+     * @param bool       $tts
+     * @param array|null $embeds
+     * @param array|null $allowed_mentions
+     * @param int|null   $flags
+     */
+    public function replyWithSource(string $content, bool $tts = false, ?array $embeds = null, ?array $allowed_mentions = null, ?int $flags = null)
+    {
+        if ($this->type != Interaction::TYPE_APPLICATION_COMMAND) {
+            throw new InvalidArgumentException('You can only reply messages that occur due to a application command interaction. Use respondWithMessage() for message component');
+        }
+
+        $this->reply($content, $tts, $embeds, $allowed_mentions, true, $flags);
+    }
+
+     /**
+     * Updates the original response to the interaction.
+     * Must have already used `reply` or `replyWithSource`.
+     * @deprecated 7.0.0
+     * Backported for DiscordPHP-Slash
+     * @see updateOriginalResponse()
+     *
+     * @param string               $content          Content of the message.
+     * @param array[]|Embed[]|null $embeds           An array of up to 10 embeds. Can also be an array of DiscordPHP embeds.
+     * @param array|null           $allowed_mentions Allowed mentions object. See Discord developer docs.
+     *
+     * @return ExtendedPromiseInterface
+     */
+    public function updateInitialResponse(?string $content = null, ?array $embeds = null, ?array $allowed_mentions = null): ExtendedPromiseInterface
+    {
+        if ($this->type != Interaction::TYPE_APPLICATION_COMMAND) {
+            throw new InvalidArgumentException('You can only update follow up messages that occur due to a application command interaction. Use updateOriginalResponse() for message component');
+        }
+
+        $embeds = array_map(function ($e) {
+            if ($e instanceof Embed) {
+                return $e->getRawAttributes();
+            }
+
+            return $e;
+        }, $embeds);
+
+        $builder = MessageBuilder::new()
+            ->setContent($content)
+            ->setEmbeds($embeds)
+            ->setAllowedMentions($allowed_mentions);
+
+        return $this->updateOriginalResponse($builder);
+    }
+
+    /**
+     * Deletes the original response to the interaction.
+     * Must have already used `reply` or `replyToSource`.
+     * @deprecated 7.0.0
+     * Backported for DiscordPHP-Slash
+     * @see deleteOriginalResponse()
+     *
+     * @return ExtendedPromiseInterface
+     */
+    public function deleteInitialResponse(): ExtendedPromiseInterface
+    {
+        if ($this->type != Interaction::TYPE_APPLICATION_COMMAND) {
+            throw new InvalidArgumentException('You can only delete initial response that occur due to a application command interaction. Use deleteOriginalResponse() for message component');
+        }
+
+        return $this->deleteOriginalResponse();
+    }
+
+    /**
+     * Updates a follow up message.
+     * Backported for DiscordPHP-Slash
+     *
+     * @param string               $message_id
+     * @param string|null          $content
+     * @param array[]|Embed[]|null $embeds
+     * @param array|null           $allowed_mentions
+     *
+     * @return ExtendedPromiseInterface
+     */
+    public function updateFollowUpMessage(string $message_id, string $content = null, array $embeds = null, array $allowed_mentions = null)
+    {
+        if ($this->type != Interaction::TYPE_APPLICATION_COMMAND) {
+            throw new InvalidArgumentException('You can only update follow up messages that occur due to a application command interaction.');
+        }
+
+        if (! $this->responded) {
+            throw new RuntimeException('Cannot create a follow-up message as the interaction has not been responded to.');
+        }
+
+        return (function () use ($message_id, $content, $embeds, $allowed_mentions): ExtendedPromiseInterface {
+            return $this->http->patch(Endpoint::bind(Endpoint::INTERACTION_FOLLOW_UP, $this->application_id, $this->token, $message_id), [
+                'content' => $content,
+                'embeds' => $embeds,
+                'allowed_mentions' => $allowed_mentions,
+            ]);
+        })()->then(function ($response) {
+            return $this->factory->create(Message::class, $response, true);
+        });
     }
 }
