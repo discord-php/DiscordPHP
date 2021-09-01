@@ -54,7 +54,11 @@ class Command extends Part
     {
         // @todo registerCommand
         if (! $this->offsetExists('application_id')) {
-            $this->offsetSet('application_id', $this->discord->application->id);
+            if (isset($this->discord->application->id)) {
+                $this->offsetSet('application_id', $this->discord->application->id);
+            } else if ($guild = $this->getGuildAttribute()) {
+                $this->offsetSet('application_id', $guild->application_id);
+            }
         }
     }
 
