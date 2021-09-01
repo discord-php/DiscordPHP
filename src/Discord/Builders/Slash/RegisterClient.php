@@ -43,7 +43,7 @@ class RegisterClient
      */
     public function __construct(Discord $discord)
     {
-        $this->discord = &$discord;
+        $this->discord = $discord;
     }
 
     /**
@@ -56,7 +56,7 @@ class RegisterClient
      */
     public function getCommands(?string $guild_id = null)
     {
-        if ($guild_id) {
+        if (! is_null($guild_id)) {
             $guild = $this->discord->guilds->get('id', $guild_id);
             return $guild->commands;
         } else {
@@ -75,11 +75,18 @@ class RegisterClient
      */
     public function getCommand(string $command_id, ?string $guild_id = null)
     {
-        $guild = $this->discord->guilds->get('id', $guild_id);
-        if ($command = $guild->commands->get('id', $command_id)) {
-            return $command;
+        if (! is_null($guild_id)) {
+            $guild = $this->discord->guilds->get('id', $guild_id);
+            if ($command = $guild->commands->get('id', $command_id)) {
+                return $command;
+            }
+            return $guild->commands->fetch($command_id);
+        } else {
+            if ($command = $this->discord->commands->get('id', $command_id)) {
+                return $command;
+            }
+            return $this->discord->commands->fetch($command_id);
         }
-        return $guild->commands->fetch($command_id);
     }
 
     /**
@@ -153,7 +160,7 @@ class RegisterClient
             $raw['options'][$key] = $this->resolveApplicationCommandOption($option);
         }
 
-        if ($command->guild_id) {
+        if (! is_null($command->guild_id)) {
             $guild = $this->discord->guilds->get('id', $command->guild_id);
             $guild->commands->save($command);
         } else {
@@ -169,12 +176,12 @@ class RegisterClient
      */
     public function deleteCommand(Command $command)
     {
-        if ($command->guild_id) {
+        if (! is_null($command->guild_id)) {
             $guild = $this->discord->guilds->get('id', $command->guild_id);
             $guild->commands->delete($command);
+        } else {
+            $this->discord->commands->delete($command);
         }
-
-        $this->discord->commands->delete($command);
     }
 
     /**
