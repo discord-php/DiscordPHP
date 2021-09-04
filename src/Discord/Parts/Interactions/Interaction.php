@@ -364,24 +364,26 @@ class Interaction extends Part
      * Source is unused
      * @see https://discord.com/developers/docs/change-log#changes-to-slash-command-response-types-and-flags
      */
-    public function reply(string $content, bool $tts = false, array $embeds = [], ?array $allowed_mentions = null, ?bool $source = false, ?int $flags = null)
+    public function reply(string $content, bool $tts = false, ?array $embeds = [], ?array $allowed_mentions = null, ?bool $source = false, ?int $flags = null)
     {
         if ($this->type != Interaction::TYPE_APPLICATION_COMMAND) {
             throw new InvalidArgumentException('You can only reply messages that occur due to a application command interaction. Use respondWithMessage() for message component');
         }
 
-        $embeds = array_map(function ($e) {
-            if ($e instanceof Embed) {
-                return $e->getRawAttributes();
-            }
-
-            return $e;
-        }, $embeds);
-
         $builder = MessageBuilder::new()
             ->setContent($content)
-            ->setTts($tts)
-            ->setEmbeds($embeds);
+            ->setTts($tts);
+
+        if ($embeds) {
+            $embeds = array_map(function ($e) {
+                if ($e instanceof Embed) {
+                    return $e->getRawAttributes();
+                }
+    
+                return $e;
+            }, $embeds);
+            $builder->setEmbeds($embeds);
+        }
 
         if ($allowed_mentions) {
             $builder->setAllowedMentions($allowed_mentions);

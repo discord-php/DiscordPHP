@@ -42,8 +42,8 @@ class InteractionCreate extends Event
                         $interaction->guild->commands->offsetSet($cmd['id'], $this->factory->create(Command::class, $cmd, true));
                     }
                 } else {
-                    if (! $this->discord->commands->get('id', $cmd['id'])) {
-                        $this->discord->commands->offsetSet($cmd['id'], $this->factory->create(Command::class, $cmd, true));
+                    if (! $this->discord->application->commands->get('id', $cmd['id'])) {
+                        $this->discord->application->commands->offsetSet($cmd['id'], $this->factory->create(Command::class, $cmd, true));
                     }
                 }
 
