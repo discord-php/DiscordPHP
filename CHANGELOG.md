@@ -16,6 +16,42 @@ This release contains breaking changes regarding messages.
 - Removed `premium_since` attribute from the `PresenceUpdate` object.
     - This would have been null since v6 anyway.
 
+## Version 6.0.2
+
+- Added `link` attribute to `Message` - [#526]
+- Added `filter` function to `Collection`.
+- Fixed voice client error when using PHP 7.4
+- Added 'Discord Certified Moderator' flag to `Member`.
+- Fixed `member` attribute on `MessageReaction` returning the wrong type.
+- Add `sendMessage` to `Member` object - [#538]
+- Fixed command client mention prefix when mentioning nickname.
+- Use `Embed` inside command client - [#546]
+- Add `pending` flag to `Member` object - [#550]
+- Add `updateRolePositions` to `Guild` to change position of roles.
+- Added buttons to `Activity` - [#561]
+- Allow bulk updating of permission overwrites through `Channel`.
+- Fix emoji deletion on macOS.
+- Add `__toString()` function to `Channel` for channel mention - [#575]
+- Add function to escape Discord markdown - [#586]
+
+Thank you to the following for contributions to this release:
+
+- @valzargaming
+- @Max2408
+- @MohsinEngineer
+- @rachids
+- @key2peace
+- @SQKo
+- @davidcole1340
+
+[#526]: https://github.com/discord-php/DiscordPHP/pull/526
+[#538]: https://github.com/discord-php/DiscordPHP/pull/538
+[#546]: https://github.com/discord-php/DiscordPHP/pull/546
+[#550]: https://github.com/discord-php/DiscordPHP/pull/550
+[#561]: https://github.com/discord-php/DiscordPHP/pull/561
+[#575]: https://github.com/discord-php/DiscordPHP/pull/575
+[#586]: https://github.com/discord-php/DiscordPHP/pull/586
+
 ## Version 6.0.1
 
 - Fixed `Message::member` attribute returning a `User` - #523 @davidcole1340

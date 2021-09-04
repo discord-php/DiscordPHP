@@ -243,3 +243,17 @@ function normalizePartId($id_field = 'id')
         return $part;
     };
 }
+
+/**
+ * Escape various Discord formatting and markdown into a plain text:
+ * _Italics_, **Bold**, __Underline__, ~~Strikethrough~~, ||spoiler||
+ * `Code`, ```Code block```, > Quotes, >>> Block quotes
+ * #Channel @User
+ * A backslash will be added before the each formatting symbol
+ * 
+ * @return string the escaped string unformatted as plain text
+ */
+function escapeMarkdown(string $text): string
+{
+    return addcslashes($text, '#*:>@_`|~');
+}
