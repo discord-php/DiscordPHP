@@ -16,7 +16,7 @@ namespace Discord\Parts\Interactions\Command;
  *
  * @author David Cole <david.cole1340@gmail.com>
  *
- * @todo convert to part
+ * @todo convert to single part
  */
 class Choices
 {

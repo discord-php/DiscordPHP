@@ -24,7 +24,7 @@ use Discord\Parts\Part;
  * @property string|null    $guild_id                   The unique identifier of the guild that the command belongs to. Null if global.
  * @property string         $name                       The name of the command.
  * @property string         $description                1-100 character description.
- * @property Option[]       $options                    The parameters for the command, max 25. Only for Slash command (CHAT_INPUT).
+ * @property Options        $options                    The parameters for the command, max 25. Only for Slash command (CHAT_INPUT).
  * @property boolean        $default_permission         Whether the command is enabled by default when the app is added to a guild.
  */
 class Command extends Part
@@ -52,7 +52,6 @@ class Command extends Part
      */
     protected function afterConstruct(): void
     {
-        // @todo registerCommand
         if (! isset($this->attributes['application_id'])) {
             $this->offsetSet('application_id', $this->discord->application->id);
         }

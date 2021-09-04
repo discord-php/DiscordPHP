@@ -18,41 +18,41 @@ use Discord\Discord\Enums\ApplicationCommandOptionType;
  *
  * @author David Cole <david.cole1340@gmail.com>
  *
- * @todo convert to part
+ * @todo convert to single part
  */
-class Option
+class Options
 {
     /**
      * The type of option
-     * 
+     *
      * @var ApplicationCommandOptionType
      */
     private ApplicationCommandOptionType $type;
 
     /**
      * 1-32 lowercase character name matching ^[\w-]{1,32}$
-     * 
+     *
      * @var string
      */
-    private $name = '';
+    private $name;
 
     /**
      * 1-100 character description
-     * 
+     *
      * @var string
      */
-    private $description = '';
+    private $description;
 
     /**
      * if the parameter is required or optional--default false
-     * 
+     *
      * @var boolean
      */
     private $required = false;
 
     /**
      * Array of choices.
-     * 
+     *
      * choices for STRING, INTEGER, and NUMBER types for the user to pick from, max 25
      *
      * @var Choices
@@ -61,12 +61,12 @@ class Option
 
     /**
      * Array of options
-     * 
+     *
      * if the option is a subcommand or subcommand group type, this nested options will be the parameters
-     * 
-     * @var Option
+     *
+     * @var Options
      */
-    private Option $options;
+    private Options $options;
 
     /**
      * Options constructor.
