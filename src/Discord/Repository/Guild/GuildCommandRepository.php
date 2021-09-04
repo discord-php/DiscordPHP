@@ -26,7 +26,7 @@ use Discord\Repository\AbstractRepository;
  * @method Command|null pull($key, $default = null) Pulls an item from the repository, removing and returning the item.
  * @method Command|null find(callable $callback)    Runs a filter callback over the repository.
  */
-class CommandRepository extends AbstractRepository
+class GuildCommandRepository extends AbstractRepository
 {
     /**
      * @inheritdoc
