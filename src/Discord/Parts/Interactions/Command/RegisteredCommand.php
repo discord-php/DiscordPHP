@@ -148,4 +148,14 @@ class RegisteredCommand
     {
         return $this->name;
     }
+
+    /**
+     * Get sub commands
+     *
+     * @return RegisteredCommand[]|null
+     */
+    public function getSubCommands()
+    {
+        return $this->subCommands;
+    }
 }
