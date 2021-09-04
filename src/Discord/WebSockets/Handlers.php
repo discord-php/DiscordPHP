@@ -35,6 +35,11 @@ class Handlers
         $this->addHandler(Event::VOICE_SERVER_UPDATE, \Discord\WebSockets\Events\VoiceServerUpdate::class);
         $this->addHandler(Event::INTERACTION_CREATE, \Discord\WebSockets\Events\InteractionCreate::class);
 
+        // Application Command Event handlers
+        $this->addHandler(Event::APPLICATION_COMMAND_CREATE, \Discord\WebSockets\Events\ApplicationCommandCreate::class);
+        $this->addHandler(Event::APPLICATION_COMMAND_UPDATE, \Discord\WebSockets\Events\ApplicationCommandUpdate::class);
+        $this->addHandler(Event::APPLICATION_COMMAND_DELETE, \Discord\WebSockets\Events\ApplicationCommandDelete::class);
+
         // Guild Event handlers
         $this->addHandler(Event::GUILD_CREATE, \Discord\WebSockets\Events\GuildCreate::class);
         $this->addHandler(Event::GUILD_DELETE, \Discord\WebSockets\Events\GuildDelete::class);

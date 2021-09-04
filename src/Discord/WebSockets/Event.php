@@ -38,6 +38,11 @@ abstract class Event
     public const GUILD_MEMBERS_CHUNK = 'GUILD_MEMBERS_CHUNK';
     public const INTERACTION_CREATE = 'INTERACTION_CREATE';
 
+    // Application Command
+    public const APPLICATION_COMMAND_CREATE = 'APPLICATION_COMMAND_CREATE';
+    public const APPLICATION_COMMAND_UPDATE = 'APPLICATION_COMMAND_UPDATE';
+    public const APPLICATION_COMMAND_DELETE = 'APPLICATION_COMMAND_DELETE';
+
     // Guild
     public const GUILD_CREATE = 'GUILD_CREATE';
     public const GUILD_DELETE = 'GUILD_DELETE';
