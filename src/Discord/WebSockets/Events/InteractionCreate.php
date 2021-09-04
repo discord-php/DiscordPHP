@@ -47,8 +47,8 @@ class InteractionCreate extends Event
                     }
                 }
 
-                if (isset($this->discord->registered_commands[$command['name']])) {
-                    if ($this->discord->registered_commands[$command['name']]->execute($command['options'] ?? [], $interaction)) {
+                if (isset($this->discord->commands[$command['name']])) {
+                    if ($this->discord->commands[$command['name']]->execute($command['options'] ?? [], $interaction)) {
                         return true;
                     }
                 }

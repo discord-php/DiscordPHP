@@ -306,7 +306,7 @@ class Discord
      *
      * @var RegisteredCommand[]
      */
-    protected $registered_commands;
+    protected $commands;
 
     /**
      * Creates a Discord client instance.
@@ -1462,7 +1462,7 @@ class Discord
      */
     public function __get(string $name)
     {
-        $allowed = ['loop', 'options', 'logger', 'http', 'registered_commands'];
+        $allowed = ['loop', 'options', 'logger', 'http', 'commands'];
 
         if (array_search($name, $allowed) !== false) {
             return $this->{$name};
@@ -1528,19 +1528,19 @@ class Discord
 
         // registering base command
         if (! is_array($name) || count($name) == 1) {
-            if (isset($this->registered_commands[$name])) {
+            if (isset($this->commands[$name])) {
                 throw new InvalidArgumentException("The command `{$name}` already exists.");
             }
 
-            return $this->registered_commands[$name] = new RegisteredCommand($name, $callback);
+            return $this->commands[$name] = new RegisteredCommand($name, $callback);
         }
 
         $baseCommand = array_shift($name);
 
-        if (! isset($this->registered_commands[$baseCommand])) {
+        if (! isset($this->commands[$baseCommand])) {
             $this->registerCommand($baseCommand);
         }
-        return $this->registered_commands[$baseCommand]->addSubCommand($name, $callback);
+        return $this->commands[$baseCommand]->addSubCommand($name, $callback);
     }
 
     /**
