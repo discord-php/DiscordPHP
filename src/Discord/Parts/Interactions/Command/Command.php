@@ -53,19 +53,15 @@ class Command extends Part
     protected function afterConstruct(): void
     {
         // @todo registerCommand
-        if (! $this->offsetExists('application_id')) {
-            if (isset($this->discord->application->id)) {
-                $this->offsetSet('application_id', $this->discord->application->id);
-            } else if ($guild = $this->getGuildAttribute()) {
-                $this->offsetSet('application_id', $guild->application_id);
-            }
+        if (! isset($this->attributes['application_id'])) {
+            $this->offsetSet('application_id', $this->discord->application->id);
         }
     }
 
     /**
      * Returns the guild attribute.
      *
-     * @return Guild The guild attribute.
+     * @return Guild|null The guild attribute. Null for global command.
      */
     protected function getGuildAttribute(): ?Guild
     {

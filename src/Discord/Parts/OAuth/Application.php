@@ -14,6 +14,7 @@ namespace Discord\Parts\OAuth;
 use Discord\Parts\Part;
 use Discord\Parts\Permissions\Permission;
 use Discord\Parts\User\User;
+use Discord\Repository\Interaction\GlobalCommandRepository;
 
 /**
  * The OAuth2 application of the bot.
@@ -26,6 +27,7 @@ use Discord\Parts\User\User;
  * @property string[] $rpc_origins An array of RPC origin URLs.
  * @property int      $flags       ?
  * @property User     $owner       The owner of the OAuth application.
+ * @property GlobalCommandRepository  $commands
  */
 class Application extends Part
 {
@@ -34,6 +36,13 @@ class Application extends Part
      */
     protected $fillable = ['id', 'name', 'description', 'icon', 'rpc_origins', 'flags', 'owner'];
 
+    /**
+     * @inheritdoc
+     */
+    protected $repositories = [
+        'commands' => GlobalCommandRepository::class,
+    ];
+    
     /**
      * Returns the owner of the application.
      *
@@ -63,5 +72,15 @@ class Application extends Part
         }
 
         return "https://discordapp.com/oauth2/authorize?client_id={$this->id}&scope=bot&permissions={$permissions}";
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getRepositoryAttributes(): array
+    {
+        return [
+            'application_id' => $this->id,
+        ];
     }
 }

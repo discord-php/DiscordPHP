@@ -16,7 +16,6 @@ use Discord\Http\Endpoint;
 use Discord\Parts\OAuth\Application;
 use Discord\Parts\Part;
 use Discord\Repository\GuildRepository;
-use Discord\Repository\Interaction\GlobalCommandRepository;
 use Discord\Repository\PrivateChannelRepository;
 use Discord\Repository\UserRepository;
 use React\Promise\ExtendedPromiseInterface;
@@ -37,14 +36,13 @@ use React\Promise\ExtendedPromiseInterface;
  * @property GuildRepository          $guilds
  * @property PrivateChannelRepository $private_channels
  * @property UserRepository           $users
- * @property GlobalCommandRepository  $commands
  */
 class Client extends Part
 {
     /**
      * @inheritdoc
      */
-    protected $fillable = ['id', 'username', 'email', 'verified', 'avatar', 'discriminator', 'bot', 'user', 'application', 'commands'];
+    protected $fillable = ['id', 'username', 'email', 'verified', 'avatar', 'discriminator', 'bot', 'user', 'application'];
 
     /**
      * @inheritdoc
@@ -53,7 +51,6 @@ class Client extends Part
         'guilds' => GuildRepository::class,
         'private_channels' => PrivateChannelRepository::class,
         'users' => UserRepository::class,
-        'commands' => GlobalCommandRepository::class,
     ];
 
     /**

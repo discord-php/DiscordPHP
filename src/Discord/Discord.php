@@ -69,7 +69,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * @property GuildRepository          $guilds
  * @property PrivateChannelRepository $private_channels
  * @property UserRepository           $users
- * @property GlobalCommandRepository  $commands
  */
 class Discord
 {
