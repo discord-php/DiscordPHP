@@ -142,9 +142,9 @@ class RegisteredCommand
     /**
      * Get command name
      *
-     * @return RegisteredCommand[]|null
+     * @return string
      */
-    public function getCommandName(): string
+    public function getName(): string
     {
         return $this->name;
     }
