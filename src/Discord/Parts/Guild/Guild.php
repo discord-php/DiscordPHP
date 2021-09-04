@@ -645,6 +645,9 @@ class Guild extends Part
     {
         return [
             'guild_id' => $this->id,
+
+            // Hack, should be only used for the bot's Application Guild Commands
+            'application_id' => $this->discord->application->id,
         ];
     }
 
