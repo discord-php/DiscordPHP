@@ -22,7 +22,7 @@ use Traversable;
 /**
  * Collection of items. Inspired by Laravel Collections.
  */
-class Collection implements ArrayAccess, Serializable, JsonSerializable, IteratorAggregate, Countable
+class Collection implements ArrayAccess, JsonSerializable, IteratorAggregate, Countable
 {
     /**
      * The collection discriminator.
@@ -369,6 +369,7 @@ class Collection implements ArrayAccess, Serializable, JsonSerializable, Iterato
      *
      * @return mixed
      */
+    #[\ReturnTypeWillChange]
     public function offsetGet($offset)
     {
         return $this->items[$offset] ?? null;
@@ -400,19 +401,19 @@ class Collection implements ArrayAccess, Serializable, JsonSerializable, Iterato
      *
      * @return string
      */
-    public function serialize(): string
+    public function __serialize(): array
     {
-        return json_encode($this->items);
+        return $this->items;
     }
 
     /**
      * Unserializes the collection.
      *
-     * @param string $serialized
+     * @param array $serialized
      */
-    public function unserialize($serialized): void
+    public function __unserialize(array $serialized): void
     {
-        $this->items = json_decode($serialized);
+        $this->items = $serialized;
     }
 
     /**

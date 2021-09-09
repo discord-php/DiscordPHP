@@ -25,7 +25,7 @@ use Serializable;
  * This class is the base of all objects that are returned. All "Parts" extend off this
  * base class.
  */
-abstract class Part implements ArrayAccess, Serializable, JsonSerializable
+abstract class Part implements ArrayAccess, JsonSerializable
 {
     /**
      * The HTTP client.
@@ -261,6 +261,7 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
      * @throws \Exception
      * @see self::getAttribute() This function forwards onto getAttribute.
      */
+    #[\ReturnTypeWillChange]
     public function offsetGet($key)
     {
         return $this->getAttribute($key);
@@ -273,7 +274,7 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
      *
      * @return bool Whether the offset exists.
      */
-    public function offsetExists($key)
+    public function offsetExists($key): bool
     {
         return isset($this->attributes[$key]);
     }
@@ -287,7 +288,7 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
      *
      * @see self::setAttribute() This function forwards onto setAttribute.
      */
-    public function offsetSet($key, $value)
+    public function offsetSet($key, $value): void
     {
         $this->setAttribute($key, $value);
     }
@@ -297,7 +298,7 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
      *
      * @param string $key The attribute key.
      */
-    public function offsetUnset($key)
+    public function offsetUnset($key): void
     {
         if (isset($this->attributes[$key])) {
             unset($this->attributes[$key]);
@@ -309,7 +310,7 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
      *
      * @return string A string of serialized data.
      */
-    public function serialize()
+    public function __serialize()
     {
         return serialize($this->attributes);
     }
@@ -321,7 +322,7 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
      *
      * @see self::setAttribute() The unserialized data is stored with setAttribute.
      */
-    public function unserialize($data)
+    public function __unserialize($data)
     {
         $data = unserialize($data);
 
@@ -339,7 +340,7 @@ abstract class Part implements ArrayAccess, Serializable, JsonSerializable
      * @throws \Exception
      * @see self::getPublicAttributes() This function forwards onto getPublicAttributes.
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): array
     {
         return $this->getPublicAttributes();
     }
