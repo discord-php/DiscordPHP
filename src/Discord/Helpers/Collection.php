@@ -401,9 +401,29 @@ class Collection implements ArrayAccess, JsonSerializable, IteratorAggregate, Co
      *
      * @return string
      */
+    public function serialize(): string
+    {
+        return json_encode($this->items);
+    }
+
+    /**
+     * Returns the string representation of the collection.
+     *
+     * @return string
+     */
     public function __serialize(): array
     {
         return $this->items;
+    }
+
+    /**
+     * Unserializes the collection.
+     *
+     * @param string $serialized
+     */
+    public function unserialize(string $serialized): void
+    {
+        $this->items = json_decode($serialized);
     }
 
     /**
