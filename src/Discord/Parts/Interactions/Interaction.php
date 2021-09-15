@@ -265,29 +265,49 @@ class Interaction extends Part
     /**
      * Sends a follow-up message to the interaction.
      *
-     * @param MessageBuilder $builder   Message to send.
-     * @param bool           $ephemeral Whether the created follow-up should be ephemeral.
+     * @param MessageBuilder|array $message   Message builder that should be converted into a message, or the array of the message to send.
+     * @param bool                 $ephemeral Whether the created follow-up should be ephemeral.
      *
      * @return ExtendedPromiseInterface<Message>
      */
-    public function sendFollowUpMessage(MessageBuilder $builder, bool $ephemeral = false): ExtendedPromiseInterface
+    public function sendFollowUpMessage($message, bool $ephemeral = false): ExtendedPromiseInterface
     {
         if (! $this->responded) {
             throw new RuntimeException('Cannot create a follow-up message as the interaction has not been responded to.');
         }
 
-        if ($ephemeral) {
-            $builder->_setFlags(64);
+        // Backwards compatible support for DiscordPHP-Slash function signature.
+        if (! ($message instanceof MessageBuilder)) {
+            $builder = MessageBuilder::new()
+                ->setContent($message['content']);
+
+            if (isset($message['tts'])) {
+                $builder->setTts(true);
+            }
+
+            if (isset($message['embeds'])) {
+                $builder->setEmbeds($message['embeds']);
+            }
+
+            if (isset($message['allowed_mentions'])) {
+                $builder->setAllowedMentions($message['allowed_mentions']);
+            }
+
+            $message = $builder;
         }
 
-        return (function () use ($builder): ExtendedPromiseInterface {
-            if ($builder->requiresMultipart()) {
-                $multipart = $builder->toMultipart();
+        if ($ephemeral) {
+            $message->_setFlags(64);
+        }
+
+        return (function () use ($message): ExtendedPromiseInterface {
+            if ($message->requiresMultipart()) {
+                $multipart = $message->toMultipart();
 
                 return $this->http->post(Endpoint::bind(Endpoint::CREATE_INTERACTION_FOLLOW_UP, $this->application_id, $this->token), (string) $multipart, $multipart->getHeaders());
             }
 
-            return $this->http->post(Endpoint::bind(Endpoint::CREATE_INTERACTION_FOLLOW_UP, $this->application_id, $this->token), $builder);
+            return $this->http->post(Endpoint::bind(Endpoint::CREATE_INTERACTION_FOLLOW_UP, $this->application_id, $this->token), $message);
         })()->then(function ($response) {
             return $this->factory->create(Message::class, $response, true);
         });
@@ -475,7 +495,7 @@ class Interaction extends Part
     public function updateFollowUpMessage(string $message_id, string $content = null, array $embeds = null, array $allowed_mentions = null)
     {
         if ($this->type != Interaction::TYPE_APPLICATION_COMMAND) {
-            throw new InvalidArgumentException('You can only update follow up messages that occur due to a application command interaction.');
+            $this->discord->logger->warning('You can only update follow up messages that occur due to a application command interaction.');
         }
 
         if (! $this->responded) {
