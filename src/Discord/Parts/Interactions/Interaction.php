@@ -349,8 +349,7 @@ class Interaction extends Part
 
     /**
      * Replies to the interaction with a message.
-     * @deprecated 7.0.0
-     * Backported for DiscordPHP-Slash
+     * Backported for DiscordPHP-Slash, equal to respondWithMessage
      * @see respondWithMessage()
      *
      * @see https://discord.com/developers/docs/interactions/slash-commands#interaction-response-interactionapplicationcommandcallbackdata
@@ -366,10 +365,6 @@ class Interaction extends Part
      */
     public function reply(string $content, bool $tts = false, ?array $embeds = [], ?array $allowed_mentions = null, ?bool $source = false, ?int $flags = null)
     {
-        if ($this->type != Interaction::TYPE_APPLICATION_COMMAND) {
-            throw new InvalidArgumentException('You can only reply messages that occur due to a application command interaction. Use respondWithMessage() for message component');
-        }
-
         $builder = MessageBuilder::new()
             ->setContent($content)
             ->setTts($tts);
@@ -400,7 +395,7 @@ class Interaction extends Part
      * Replies to the interaction with a message and shows the source message.
      * Alias for `reply()` with source = true.
      *
-     * @deprecated 7.0.0 Backported for DiscordPHP-Slash
+     * @deprecated 7.1.0 Backported for DiscordPHP-Slash
      * @see respondWithMessage()
      *
      * @param string     $content
@@ -421,7 +416,7 @@ class Interaction extends Part
      /**
      * Updates the original response to the interaction.
      * Must have already used `reply` or `replyWithSource`.
-     * @deprecated 7.0.0 Backported for DiscordPHP-Slash
+     * @deprecated 7.1.0 Backported for DiscordPHP-Slash
      * @see updateOriginalResponse()
      *
      * @param string               $content          Content of the message.
@@ -432,21 +427,19 @@ class Interaction extends Part
      */
     public function updateInitialResponse(?string $content = null, ?array $embeds = null, ?array $allowed_mentions = null): ExtendedPromiseInterface
     {
-        if ($this->type != Interaction::TYPE_APPLICATION_COMMAND) {
-            throw new InvalidArgumentException('You can only update follow up messages that occur due to a application command interaction. Use updateOriginalResponse() for message component');
-        }
-
-        $embeds = array_map(function ($e) {
-            if ($e instanceof Embed) {
-                return $e->getRawAttributes();
-            }
-
-            return $e;
-        }, $embeds);
-
         $builder = MessageBuilder::new()
-            ->setContent($content)
-            ->setEmbeds($embeds);
+            ->setContent($content);
+
+        if ($embeds) {
+            $embeds = array_map(function ($e) {
+                if ($e instanceof Embed) {
+                    return $e->getRawAttributes();
+                }
+    
+                return $e;
+            }, $embeds);
+            $builder->setEmbeds($embeds);
+        }
 
         if ($allowed_mentions) {
             $builder->setAllowedMentions($allowed_mentions);
@@ -458,17 +451,13 @@ class Interaction extends Part
     /**
      * Deletes the original response to the interaction.
      * Must have already used `reply` or `replyToSource`.
-     * @deprecated 7.0.0 Backported for DiscordPHP-Slash
+     * @deprecated 7.1.0 Backported for DiscordPHP-Slash
      * @see deleteOriginalResponse()
      *
      * @return ExtendedPromiseInterface
      */
     public function deleteInitialResponse(): ExtendedPromiseInterface
     {
-        if ($this->type != Interaction::TYPE_APPLICATION_COMMAND) {
-            throw new InvalidArgumentException('You can only delete initial response that occur due to a application command interaction. Use deleteOriginalResponse() for message component');
-        }
-
         return $this->deleteOriginalResponse();
     }
 
