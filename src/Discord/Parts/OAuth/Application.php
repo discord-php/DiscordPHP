@@ -32,7 +32,23 @@ class Application extends Part
     /**
      * @inheritdoc
      */
-    protected $fillable = ['id', 'name', 'description', 'icon', 'rpc_origins', 'flags', 'owner'];
+     protected static $fillable = ['id', 'name', 'description', 'icon', 'rpc_origins', 'flags', 'owner'];
+	/**
+     * Returns the fillable attributes.
+     *
+     * @return array
+     */
+
+    public static function getFillableAttributes($context = '')
+	{
+		$fillable = array();
+		foreach (self::$fillable as $attr) {
+			if (!$context || in_array($context, $attrContexts)) {
+				$fillable[] = $attr;
+			}
+		}
+		return $fillable;
+	}
 
     /**
      * Returns the owner of the application.

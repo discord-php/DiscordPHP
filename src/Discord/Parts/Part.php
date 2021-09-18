@@ -61,7 +61,7 @@ abstract class Part implements ArrayAccess, JsonSerializable
      *
      * @var array The array of attributes that can be mass-assigned.
      */
-    protected $fillable = [];
+    protected static $fillable = [];
 
     /**
      * The parts attributes.
@@ -178,11 +178,27 @@ abstract class Part implements ArrayAccess, JsonSerializable
     public function fill(array $attributes): void
     {
         foreach ($attributes as $key => $value) {
-            if (in_array($key, $this->fillable)) {
+            if (in_array($key, $this::getFillableAttributes())) {
                 $this->setAttribute($key, $value);
             }
         }
     }
+
+	/**
+     * Returns the fillable attributes.
+     *
+     * @return array
+     */
+    public static function getFillableAttributes($context = '')
+	{
+		$fillable = array();
+		foreach (self::$fillable as $attr) {
+			if (!$context || in_array($context, $attrContexts)) {
+				$fillable[] = $attr;
+			}
+		}
+		return $fillable;
+	}	
 
     /**
      * Checks if there is a mutator present.
@@ -246,7 +262,7 @@ abstract class Part implements ArrayAccess, JsonSerializable
             return;
         }
 
-        if (array_search($key, $this->fillable) !== false) {
+        if (array_search($key, $this::getFillableAttributes()) !== false) {
             $this->attributes[$key] = $value;
         }
     }
@@ -355,7 +371,7 @@ abstract class Part implements ArrayAccess, JsonSerializable
     {
         $data = [];
 
-        foreach (array_merge($this->fillable, $this->visible) as $key) {
+        foreach (array_merge($this::getFillableAttributes(), $this->visible) as $key) {
             if (in_array($key, $this->hidden)) {
                 continue;
             }
