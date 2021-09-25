@@ -211,4 +211,47 @@ class MessageReaction extends Part
 
         return null;
     }
+    
+    /**
+     * Delete this reaction
+     *
+     * @param int|null $type The type of deletion to perform.
+     *
+     * @return ExtendedPromiseInterface
+     */
+    public function delete(?int $type = null): ExtendedPromiseInterface
+    {
+        if (is_null($type)) {
+            if ($this->user_id == $this->discord->id) {
+                $type = Message::REACT_DELETE_ME;
+            } else {
+                $type = Message::REACT_DELETE_ID;
+            }
+        }
+
+        $types = [Message::REACT_DELETE_ALL, Message::REACT_DELETE_ME, Message::REACT_DELETE_ID, Message::REACT_DELETE_EMOJI];
+
+        $emoticon = $this->emoji->toReactionString();
+
+        if (in_array($type, $types)) {
+            switch ($type) {
+                case Message::REACT_DELETE_ALL:
+                    $url = Endpoint::bind(Endpoint::MESSAGE_REACTION_ALL, $this->channel_id, $this->message_id);
+                    break;
+                case Message::REACT_DELETE_ME:
+                    $url = Endpoint::bind(Endpoint::OWN_MESSAGE_REACTION, $this->channel_id, $this->message_id, $emoticon);
+                    break;
+                case Message::REACT_DELETE_ID:
+                    $url = Endpoint::bind(Endpoint::USER_MESSAGE_REACTION, $this->channel_id, $this->message_id, $emoticon, $this->user_id);
+                    break;
+                case Message::REACT_DELETE_EMOJI:
+                    $url = Endpoint::bind(Endpoint::MESSAGE_REACTION_EMOJI, $this->channel_id, $this->message_id, $emoticon);
+                    break;
+            }
+
+            return $this->http->delete($url);
+        }
+
+        return \React\Promise\reject();
+    }
 }
