@@ -481,7 +481,7 @@ class Embed extends Part
         }
 
         if (! is_array($color)) {
-            return hexdec(((string) $color));
+            return hexdec((preg_replace('/[^0-9a-fA-FxX]/', '', (string) $color)));
         }
 
         if (count($color) < 1) {
