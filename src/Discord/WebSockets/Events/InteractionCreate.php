@@ -28,25 +28,6 @@ class InteractionCreate extends Event
 
         if ($interaction->type == InteractionType::APPLICATION_COMMAND) {
             $checkCommand = function ($command) use ($interaction, &$checkCommand) {
-                // Tries to cache the command
-                // possibly the laziest thing ive ever done - stdClass -> array
-                $cmd = json_decode(json_encode($command), true);
-                if (! isset($cmd['id'])) {
-                    $cmd['id'] = $interaction->data->id;
-                }
-                if (! isset($cmd['application_id'])) {
-                    $cmd['application_id'] = $interaction->application_id;
-                }
-                if ($interaction->guild_id) {
-                    if (! $interaction->guild->commands->get('id', $cmd['id'])) {
-                        $interaction->guild->commands->offsetSet($cmd['id'], $this->factory->create(Command::class, $cmd, true));
-                    }
-                } else {
-                    if (! $this->discord->application->commands->get('id', $cmd['id'])) {
-                        $this->discord->application->commands->offsetSet($cmd['id'], $this->factory->create(Command::class, $cmd, true));
-                    }
-                }
-
                 if (isset($this->discord->commands[$command['name']])) {
                     if ($this->discord->commands[$command['name']]->execute($command['options'] ?? [], $interaction)) {
                         return true;
