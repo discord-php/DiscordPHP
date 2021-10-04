@@ -481,7 +481,7 @@ class Embed extends Part
         }
 
         if (! is_array($color)) {
-            return hexdec(((string) $color));
+            return hexdec((str_replace('#', '', (string) $color)));
         }
 
         if (count($color) < 1) {
