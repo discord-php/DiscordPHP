@@ -13,7 +13,6 @@ namespace Discord\WebSockets\Events;
 
 use Discord\Helpers\Deferred;
 use Discord\InteractionType;
-use Discord\Parts\Interactions\Command\Command;
 use Discord\Parts\Interactions\Interaction;
 use Discord\WebSockets\Event;
 
