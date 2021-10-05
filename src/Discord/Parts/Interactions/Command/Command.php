@@ -11,22 +11,23 @@
 
 namespace Discord\Parts\Interactions\Command;
 
+use Discord\Helpers\Collection;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Part;
 
 /**
  * Represents a command registered on the Discord servers.
  *
- * @property string         $id                 The unique identifier of the command.
- * @property string         $type               The type of the command, defaults 1 if not set
- * @property string         $application_id     The unique identifier of the parent Application that made the command, if made by one.
- * @property Guild|null     $guild              The guild that the command belongs to. Null if global.
- * @property string|null    $guild_id           The unique identifier of the guild that the command belongs to. Null if global.
- * @property string         $name               1-32 character name of the command.
- * @property string         $description        1-100 character description for CHAT_INPUT commands, empty string for USER and MESSAGE commands
- * @property Options        $options            The parameters for the command, max 25. Only for Slash command (CHAT_INPUT).
- * @property boolean        $default_permission Whether the command is enabled by default when the app is added to a guild.
- * @property string         $version            Autoincrementing version identifier updated during substantial record changes
+ * @property string              $id                 The unique identifier of the command.
+ * @property string              $type               The type of the command, defaults 1 if not set
+ * @property string              $application_id     The unique identifier of the parent Application that made the command, if made by one.
+ * @property Guild|null          $guild              The guild that the command belongs to. Null if global.
+ * @property string|null         $guild_id           The unique identifier of the guild that the command belongs to. Null if global.
+ * @property string              $name               1-32 character name of the command.
+ * @property string              $description        1-100 character description for CHAT_INPUT commands, empty string for USER and MESSAGE commands
+ * @property Collection|Option[] $options            The parameters for the command, max 25. Only for Slash command (CHAT_INPUT).
+ * @property boolean             $default_permission Whether the command is enabled by default when the app is added to a guild.
+ * @property string              $version            Autoincrementing version identifier updated during substantial record changes
  */
 class Command extends Part
 {
@@ -53,11 +54,32 @@ class Command extends Part
     /**
      * @inheritdoc
      */
+    protected $visible = ['options'];
+
+    /**
+     * @inheritdoc
+     */
     protected function afterConstruct(): void
     {
         if (! isset($this->attributes['application_id'])) {
             $this->offsetSet('application_id', $this->discord->application->id);
         }
+    }
+
+    /**
+     * Gets the options attribute.
+     *
+     * @return Collection|Options[] A collection of options.
+     */
+    protected function getOptionsAttribute(): Collection
+    {
+        $options = new Collection([], 'name');
+
+        foreach ($this->attributes['options'] ?? [] as $option) {
+            $options->push($this->factory->create(Option::class, $option, true));
+        }
+
+        return $options;
     }
 
     /**

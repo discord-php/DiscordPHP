@@ -9,7 +9,7 @@
  * bundled with this source code in the LICENSE.md file.
  */
 
-namespace Discord\Parts\Interactions\Command;
+namespace Discord\Helpers;
 
 use Discord\Parts\Interactions\Interaction;
 use InvalidArgumentException;
@@ -77,8 +77,14 @@ class RegisteredCommand
             }
         }
 
+        // Old DiscordPHP-Slash Choices signature
+        $choices = [];
+        foreach ($interaction->data->options as $option) {
+            $choices[$option->name] = $option->value;
+        }
+
         if (! is_null($this->callback)) {
-            ($this->callback)($interaction, new Choices($options));
+            ($this->callback)($interaction, $choices);
 
             return true;
         }
