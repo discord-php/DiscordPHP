@@ -742,7 +742,7 @@ class VoiceClient extends EventEmitter
         }
 
         if ($stream instanceof Process) {
-            $stream->stdout->on('data', function ($d) {
+            $stream->stderr->on('data', function ($d) {
                 if (empty($d)) {
                     return;
                 }

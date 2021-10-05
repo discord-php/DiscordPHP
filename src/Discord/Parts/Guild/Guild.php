@@ -312,7 +312,7 @@ class Guild extends Part
             $format = 'jpg';
         }
 
-        return "https://cdn.discordapp.com/slashes/{$this->id}/{$this->attributes['splash']}.{$format}?size={$size}";
+        return "https://cdn.discordapp.com/splashes/{$this->id}/{$this->attributes['splash']}.{$format}?size={$size}";
     }
 
     /**
@@ -556,7 +556,7 @@ class Guild extends Part
             $options['before'] = $options['before']->id;
         }
 
-        $endpoint = Endpoint::bind(Endpoint::AUDIT_LOG);
+        $endpoint = Endpoint::bind(Endpoint::AUDIT_LOG, $this->id);
 
         foreach ($options as $key => $value) {
             $endpoint->addQuery($key, $value);
