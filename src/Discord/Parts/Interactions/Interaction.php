@@ -265,49 +265,29 @@ class Interaction extends Part
     /**
      * Sends a follow-up message to the interaction.
      *
-     * @param MessageBuilder|array $message   Message builder that should be converted into a message, or the array of the message to send.
-     * @param bool                 $ephemeral Whether the created follow-up should be ephemeral.
+     * @param MessageBuilder $builder   Message to send.
+     * @param bool           $ephemeral Whether the created follow-up should be ephemeral.
      *
      * @return ExtendedPromiseInterface<Message>
      */
-    public function sendFollowUpMessage($message, bool $ephemeral = false): ExtendedPromiseInterface
+    public function sendFollowUpMessage(MessageBuilder $builder, bool $ephemeral = false): ExtendedPromiseInterface
     {
         if (! $this->responded) {
             throw new RuntimeException('Cannot create a follow-up message as the interaction has not been responded to.');
         }
 
-        // Backwards compatible support for DiscordPHP-Slash function signature.
-        if (! ($message instanceof MessageBuilder)) {
-            $builder = MessageBuilder::new()
-                ->setContent($message['content']);
-
-            if (isset($message['tts'])) {
-                $builder->setTts(true);
-            }
-
-            if (isset($message['embeds'])) {
-                $builder->setEmbeds($message['embeds']);
-            }
-
-            if (isset($message['allowed_mentions'])) {
-                $builder->setAllowedMentions($message['allowed_mentions']);
-            }
-
-            $message = $builder;
-        }
-
         if ($ephemeral) {
-            $message->_setFlags(64);
+            $builder->_setFlags(64);
         }
 
-        return (function () use ($message): ExtendedPromiseInterface {
-            if ($message->requiresMultipart()) {
-                $multipart = $message->toMultipart();
+        return (function () use ($builder): ExtendedPromiseInterface {
+            if ($builder->requiresMultipart()) {
+                $multipart = $builder->toMultipart();
 
                 return $this->http->post(Endpoint::bind(Endpoint::CREATE_INTERACTION_FOLLOW_UP, $this->application_id, $this->token), (string) $multipart, $multipart->getHeaders());
             }
 
-            return $this->http->post(Endpoint::bind(Endpoint::CREATE_INTERACTION_FOLLOW_UP, $this->application_id, $this->token), $message);
+            return $this->http->post(Endpoint::bind(Endpoint::CREATE_INTERACTION_FOLLOW_UP, $this->application_id, $this->token), $builder);
         })()->then(function ($response) {
             return $this->factory->create(Message::class, $response, true);
         });
@@ -368,27 +348,26 @@ class Interaction extends Part
     }
 
     /**
-     * Updates a follow up message.
+     * Updates a non ephemeral follow up message.
      *
-     * @param string               $message_id
-     * @param string|null          $content
-     * @param array[]|Embed[]|null $embeds
-     * @param array|null           $allowed_mentions
+     * @param string         $message_id Message to update.
+     * @param MessageBuilder $builder    New message.
      *
-     * @return ExtendedPromiseInterface
+     * @return ExtendedPromiseInterface<Message>
      */
-    public function updateFollowUpMessage(string $message_id, string $content = null, array $embeds = null, array $allowed_mentions = null)
+    public function updateFollowUpMessage(string $message_id, MessageBuilder $builder)
     {
         if (! $this->responded) {
             throw new RuntimeException('Cannot create a follow-up message as the interaction has not been responded to.');
         }
 
-        return (function () use ($message_id, $content, $embeds, $allowed_mentions): ExtendedPromiseInterface {
-            return $this->http->patch(Endpoint::bind(Endpoint::INTERACTION_FOLLOW_UP, $this->application_id, $this->token, $message_id), [
-                'content' => $content,
-                'embeds' => $embeds,
-                'allowed_mentions' => $allowed_mentions,
-            ]);
+        return (function () use ($message_id, $builder): ExtendedPromiseInterface {
+            if ($builder->requiresMultipart()) {
+                $multipart = $builder->toMultipart();
+
+                return $this->http->patch(Endpoint::bind(Endpoint::CREATE_INTERACTION_FOLLOW_UP, $this->application_id, $this->token, $message_id), (string) $multipart, $multipart->getHeaders());
+            }
+            return $this->http->patch(Endpoint::bind(Endpoint::INTERACTION_FOLLOW_UP, $this->application_id, $this->token, $message_id), $builder);
         })()->then(function ($response) {
             return $this->factory->create(Message::class, $response, true);
         });
