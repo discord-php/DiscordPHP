@@ -104,7 +104,9 @@ class Button extends Component
         }
 
         $this->style = $style;
-        $this->setCustomId($custom_id ?? $this->generateUuid()); 
+        if ($this->style != self::STYLE_LINK) {
+            $this->setCustomId($custom_id ?? $this->generateUuid());
+        }
     }
 
     /**

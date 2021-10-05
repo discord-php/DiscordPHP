@@ -13,7 +13,7 @@ You can only add buttons to action rows.
 
 ```php
 $row = ActionRow::new()
-    ->addComponent(Button::new(Button::TYPE_SUCCESS));
+    ->addComponent(Button::new(Button::STYLE_SUCCESS));
 ```
 
 ### Functions
@@ -30,7 +30,7 @@ Represents a button attached to a message.
 You cannot directly attach a button to a message, it must be contained inside an `ActionRow`.
 
 ```php
-$button = Button::new(Button::TYPE_SUCCESS)
+$button = Button::new(Button::STYLE_SUCCESS)
     ->setLabel('push me!');
 ```
 
@@ -133,6 +133,6 @@ $select->setListener(function (Interaction $interaction, Collection $options) {
         echo $option->getValue().PHP_EOL;
     }
 
-    $interaction->respondWithMessage('thanks!');
+    $interaction->respondWithMessage(MessageBuilder::new()->setContent('thanks!'));
 }, $discord);
 ```
