@@ -154,7 +154,7 @@ class User extends Part
         return $this->attributes['avatar'];
     }
 
-        /**
+    /**
      * Returns the banner URL for the client.
      *
      * @param string $format The image format.
