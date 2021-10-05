@@ -229,29 +229,24 @@ class MessageReaction extends Part
             }
         }
 
-        $types = [Message::REACT_DELETE_ALL, Message::REACT_DELETE_ME, Message::REACT_DELETE_ID, Message::REACT_DELETE_EMOJI];
-
         $emoticon = $this->emoji->toReactionString();
 
-        if (in_array($type, $types)) {
-            switch ($type) {
-                case Message::REACT_DELETE_ALL:
-                    $url = Endpoint::bind(Endpoint::MESSAGE_REACTION_ALL, $this->channel_id, $this->message_id);
-                    break;
-                case Message::REACT_DELETE_ME:
-                    $url = Endpoint::bind(Endpoint::OWN_MESSAGE_REACTION, $this->channel_id, $this->message_id, $emoticon);
-                    break;
-                case Message::REACT_DELETE_ID:
-                    $url = Endpoint::bind(Endpoint::USER_MESSAGE_REACTION, $this->channel_id, $this->message_id, $emoticon, $this->user_id);
-                    break;
-                case Message::REACT_DELETE_EMOJI:
-                    $url = Endpoint::bind(Endpoint::MESSAGE_REACTION_EMOJI, $this->channel_id, $this->message_id, $emoticon);
-                    break;
-            }
-
-            return $this->http->delete($url);
+        switch ($type) {
+            case Message::REACT_DELETE_ALL:
+                $url = Endpoint::bind(Endpoint::MESSAGE_REACTION_ALL, $this->channel_id, $this->message_id);
+                break;
+            case Message::REACT_DELETE_ME:
+                $url = Endpoint::bind(Endpoint::OWN_MESSAGE_REACTION, $this->channel_id, $this->message_id, $emoticon);
+                break;
+            case Message::REACT_DELETE_EMOJI:
+                $url = Endpoint::bind(Endpoint::MESSAGE_REACTION_EMOJI, $this->channel_id, $this->message_id, $emoticon);
+                break;
+            case Message::REACT_DELETE_ID:
+            default:
+                $url = Endpoint::bind(Endpoint::USER_MESSAGE_REACTION, $this->channel_id, $this->message_id, $emoticon, $this->user_id);
+                break;
         }
 
-        return \React\Promise\reject();
+        return $this->http->delete($url);
     }
 }
