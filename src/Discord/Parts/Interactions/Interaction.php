@@ -17,7 +17,6 @@ use Discord\Http\Endpoint;
 use Discord\InteractionResponseType;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Channel\Message;
-use Discord\Parts\Embed\Embed;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Interactions\Request\InteractionData;
 use Discord\Parts\Part;
@@ -351,7 +350,7 @@ class Interaction extends Part
      * Updates a non ephemeral follow up message.
      *
      * @param string         $message_id Message to update.
-     * @param MessageBuilder $builder    New message.
+     * @param MessageBuilder $builder    New message contents.
      *
      * @return ExtendedPromiseInterface<Message>
      */
@@ -365,8 +364,9 @@ class Interaction extends Part
             if ($builder->requiresMultipart()) {
                 $multipart = $builder->toMultipart();
 
-                return $this->http->patch(Endpoint::bind(Endpoint::CREATE_INTERACTION_FOLLOW_UP, $this->application_id, $this->token, $message_id), (string) $multipart, $multipart->getHeaders());
+                return $this->http->patch(Endpoint::bind(Endpoint::INTERACTION_FOLLOW_UP, $this->application_id, $this->token, $message_id), (string) $multipart, $multipart->getHeaders());
             }
+
             return $this->http->patch(Endpoint::bind(Endpoint::INTERACTION_FOLLOW_UP, $this->application_id, $this->token, $message_id), $builder);
         })()->then(function ($response) {
             return $this->factory->create(Message::class, $response, true);
