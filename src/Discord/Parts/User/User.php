@@ -29,6 +29,9 @@ use React\Promise\ExtendedPromiseInterface;
  * @property bool   $bot           Whether the user is a bot.
  * @property bool   $system        Whether the user is a Discord system user.
  * @property bool   $mfa_enabled   Whether MFA is enabled.
+ * @property string $banner        The banner URL of the user.
+ * @property string $banner_hash   The banner hash of the user.
+ * @property int    $accent_color  The user's banner color encoded as an integer representation of hexadecimal color code.
  * @property string $locale        User locale.
  * @property bool   $verified      Whether the user is verified.
  * @property string $email         User email.
@@ -63,7 +66,7 @@ class User extends Part
     /**
      * @inheritdoc
      */
-    protected $fillable = ['id', 'username', 'avatar', 'discriminator', 'bot', 'system', 'mfa_enabled', 'locale', 'verified', 'email', 'flags', 'premium_type', 'public_flags'];
+    protected $fillable = ['id', 'username', 'avatar', 'discriminator', 'bot', 'system', 'mfa_enabled', 'banner', 'accent_color', 'locale', 'verified', 'email', 'flags', 'premium_type', 'public_flags'];
 
     /**
      * Gets the private channel for the user.
@@ -134,7 +137,7 @@ class User extends Part
             return "https://cdn.discordapp.com/embed/avatars/{$avatarDiscrim}.png?size={$size}";
         }
 
-        if (false === array_search($format, ['png', 'jpg', 'webp'])) {
+        if (false === array_search($format, ['png', 'jpg', 'webp', 'gif'])) {
             $format = 'jpg';
         }
 
@@ -149,6 +152,37 @@ class User extends Part
     protected function getAvatarHashAttribute(): string
     {
         return $this->attributes['avatar'];
+    }
+
+        /**
+     * Returns the banner URL for the client.
+     *
+     * @param string $format The image format.
+     * @param int    $size   The size of the image.
+     *
+     * @return string|null The URL to the clients banner.
+     */
+    public function getBannerAttribute(string $format = 'jpg', int $size = 600): ?string
+    {
+        if (empty($this->attributes['banner'])) {
+            return null;
+        }
+
+        if (false === array_search($format, ['png', 'jpg', 'webp', 'gif'])) {
+            $format = 'jpg';
+        }
+
+        return "https://cdn.discordapp.com/banners/{$this->id}/{$this->attributes['banner']}.{$format}?size={$size}";
+    }
+
+    /**
+     * Returns the banner hash for the client.
+     *
+     * @return string The client banner's hash.
+     */
+    protected function getBannerHashAttribute(): string
+    {
+        return $this->attributes['banner'];
     }
 
     /**
