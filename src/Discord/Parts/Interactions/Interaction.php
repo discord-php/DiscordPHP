@@ -369,7 +369,7 @@ class Interaction extends Part
 
     /**
      * Replies to the interaction with a message.
-     * Backported for DiscordPHP-Slash, equal to respondWithMessage
+     * @deprecated Backported for DiscordPHP-Slash
      * @see respondWithMessage()
      *
      * @see https://discord.com/developers/docs/interactions/slash-commands#interaction-response-interactionapplicationcommandcallbackdata
@@ -494,10 +494,6 @@ class Interaction extends Part
      */
     public function updateFollowUpMessage(string $message_id, string $content = null, array $embeds = null, array $allowed_mentions = null)
     {
-        if ($this->type != Interaction::TYPE_APPLICATION_COMMAND) {
-            $this->discord->logger->warning('You can only update follow up messages that occur due to a application command interaction.');
-        }
-
         if (! $this->responded) {
             throw new RuntimeException('Cannot create a follow-up message as the interaction has not been responded to.');
         }
