@@ -130,7 +130,7 @@ class SelectMenu extends Component
      */
     public function addOption(Option $option): self
     {
-        if (count($this->options) >= 25) {
+        if (count($this->options) > 25) {
             throw new InvalidArgumentException('You can only have 25 options per select menu.');
         }
 
