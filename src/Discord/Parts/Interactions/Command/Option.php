@@ -47,7 +47,7 @@ class Option extends Part
      */
     protected function getChoicesAttribute(): Collection
     {
-        $choices = new Collection([], 'name');
+        $choices = new Collection([], null);
 
         foreach ($this->attributes['choices'] ?? [] as $choice) {
             $choices->push($this->factory->create(Choice::class, $choice, true));
@@ -63,7 +63,7 @@ class Option extends Part
      */
     protected function getOptionsAttribute(): Collection
     {
-        $options = new Collection([], 'name');
+        $options = new Collection([], null);
 
         foreach ($this->attributes['options'] ?? [] as $option) {
             $options->push($this->factory->create(Option::class, $option, true));

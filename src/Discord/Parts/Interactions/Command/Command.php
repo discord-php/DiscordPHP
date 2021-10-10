@@ -73,7 +73,7 @@ class Command extends Part
      */
     protected function getOptionsAttribute(): Collection
     {
-        $options = new Collection([], 'name');
+        $options = new Collection([], null);
 
         foreach ($this->attributes['options'] ?? [] as $option) {
             $options->push($this->factory->create(Option::class, $option, true));
