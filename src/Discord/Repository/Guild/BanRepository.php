@@ -41,6 +41,7 @@ class BanRepository extends AbstractRepository
      */
     protected $endpoints = [
         'all' => Endpoint::GUILD_BANS,
+        'get' => Endpoint::GUILD_BAN,
         'delete' => Endpoint::GUILD_BAN,
     ];
 
