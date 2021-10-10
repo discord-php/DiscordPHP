@@ -290,7 +290,7 @@ class Embed extends Part
     public function addField(...$fields): self
     {
         foreach ($fields as $field) {
-            if (count($this->fields) >= 25) {
+            if (count($this->fields) > 25) {
                 throw new \RangeException('Embeds can not have more than 25 fields.');
             }
 
