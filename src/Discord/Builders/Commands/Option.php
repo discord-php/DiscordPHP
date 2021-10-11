@@ -6,18 +6,20 @@ use Discord\Builders\Commands\Choice;
 use InvalidArgumentException;
 use JsonSerializable;
 
+use function Discord\poly_strlen;
+
 class Option implements JsonSerializable
 {
-    public const TYPE_SUB_COMMAND = 1;
-    public const TYPE_SUB_COMMAND_GROUP = 2;
-    public const TYPE_STRING = 3;
-    public const TYPE_INTEGER = 4;
-    public const TYPE_BOOLEAN = 5;
-    public const TYPE_USER = 6;
-    public const TYPE_CHANNEL = 7;
-    public const TYPE_ROLE = 8;
-    public const TYPE_MENTIONABLE = 9;
-    public const TYPE_NUMBER = 10;
+    public const SUB_COMMAND = 1;
+    public const SUB_COMMAND_GROUP = 2;
+    public const STRING = 3;
+    public const INTEGER = 4;
+    public const BOOLEAN = 5;
+    public const USER = 6;
+    public const CHANNEL = 7;
+    public const ROLE = 8;
+    public const MENTIONABLE = 9;
+    public const sNUMBER = 10;
 
     /**
      * Name of the option.
@@ -87,6 +89,10 @@ class Option implements JsonSerializable
      */
     public function setName(string $name)
     {
+        if ($name && poly_strlen($name) >= 32)
+        {
+            throw new InvalidArgumentException('Name must be less than or equal to 32 characters.');
+        }
         $this->name = $name;
 
         return $this;
@@ -101,6 +107,10 @@ class Option implements JsonSerializable
      */
     public function setDescription(string $description)
     {
+        if ($description && poly_strlen($description) >= 100)
+        {
+            throw new InvalidArgumentException('Description must be less than or equal to 100 characters.');
+        }
         $this->description = $description;
 
         return $this;
@@ -196,7 +206,7 @@ class Option implements JsonSerializable
      */
     public function addOption(Option $option)
     {
-        //https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-option-structure
+        // https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-option-structure
         // Does not say it has a max...
         $this->options[] = $option;
 
@@ -212,7 +222,7 @@ class Option implements JsonSerializable
      */
     public function addChoice(Choice $choice)
     {
-        if (count($this->choices) > 25)
+        if (count($this->choices) >= 25)
         {
             throw new InvalidArgumentException('You can only have a maximum of 25 Choices.'); 
         }
@@ -231,7 +241,8 @@ class Option implements JsonSerializable
      */
     public function removeOption(Option $option)
     {
-        if (($idx = array_search($option, $this->options)) !== null) {
+        if (($idx = array_search($option, $this->options)) !== null)
+        {
             array_splice($this->options, $idx, 1);
         }
 
@@ -247,7 +258,8 @@ class Option implements JsonSerializable
      */
     public function removeChoice(Choice $choice)
     {
-        if (($idx = array_search($choice, $this->choices)) !== null) {
+        if (($idx = array_search($choice, $this->choices)) !== null)
+        {
             array_splice($this->choices, $idx, 1);
         }
 
@@ -281,9 +293,18 @@ class Option implements JsonSerializable
      */
     public function toArray(): array
     {
+        if ($this->name && poly_strlen($this->name) <= 0)
+        {
+            throw new InvalidArgumentException('Name must be greater than or equal to 1 character.');
+        }
+
+        if ($this->description && poly_strlen($this->description) <= 0)
+        {
+            throw new InvalidArgumentException('Description must be greater than or equal to 1 character.');
+        }
+
         if (count($this->choices) > 0 && ($this->type != self::TYPE_STRING && $this->type != self::TYPE_INTEGER && $this->type != self::TYPE_NUMBER))
         {
-            //echo "Komt hier hoor",PHP_EOL;
             throw new InvalidArgumentException('Choices are only available for STRING, INTEGER or NUMBER types.'); 
         }
         
