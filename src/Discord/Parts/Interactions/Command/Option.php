@@ -11,7 +11,6 @@
 
 namespace Discord\Parts\Interactions\Command;
 
-use Discord\Discord\Enums\ApplicationCommandOptionType;
 use Discord\Helpers\Collection;
 use Discord\Parts\Part;
 
@@ -22,16 +21,27 @@ use function Discord\poly_strlen;
  *
  * @author David Cole <david.cole1340@gmail.com>
  *
- * @property ApplicationCommandOptionType $type          Type of the option.
- * @property string                       $name          Name of the option.
- * @property string                       $description   1-100 character description.
- * @property bool                         $required      if the parameter is required or optional--default false.
- * @property Collection|Choice[]          $choices       choices for STRING, INTEGER, and NUMBER types for the user to pick from, max 25.
- * @property Collection|Option[]          $options       Sub-options if applicable.
- * @property array                        $channel_types If the option is a channel type, the channels shown will be restricted to these types.
+ * @property int                 $type          Type of the option.
+ * @property string              $name          Name of the option.
+ * @property string              $description   1-100 character description.
+ * @property bool                $required      if the parameter is required or optional--default false.
+ * @property Collection|Choice[] $choices       choices for STRING, INTEGER, and NUMBER types for the user to pick from, max 25.
+ * @property Collection|Option[] $options       Sub-options if applicable.
+ * @property array               $channel_types If the option is a channel type, the channels shown will be restricted to these types.
  */
 class Option extends Part
 {
+    public const SUB_COMMAND = 1;
+    public const SUB_COMMAND_GROUP = 2;
+    public const STRING = 3;
+    public const INTEGER = 4;
+    public const BOOLEAN = 5;
+    public const USER = 6;
+    public const CHANNEL = 7;
+    public const ROLE = 8;
+    public const MENTIONABLE = 9;
+    public const NUMBER = 10;
+
     /**
      * @inheritdoc
      */
@@ -77,12 +87,16 @@ class Option extends Part
     /**
      * Sets the type of the option.
      *
-     * @param ApplicationCommandOptionType $type type of the option
+     * @param int $type type of the option
      *
      * @return $this
      */
-    public function setType(ApplicationCommandOptionType $type)
+    public function setType(int $type)
     {
+        if ($type < 1 || $type > 10) {
+            throw new \InvalidArgumentException('Invalid type provided.');
+        }
+
         $this->type = $type;
         return $this;
     }
