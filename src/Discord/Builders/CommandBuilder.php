@@ -42,7 +42,7 @@ class CommandBuilder implements JsonSerializable
      *
      * @var string
      */
-    protected string $description;
+    protected string $description = '';
 
     /**
      * array with options.
