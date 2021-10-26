@@ -595,6 +595,49 @@ class Guild extends Part
     }
 
     /**
+     * Returns a list of guild member objects whose username or nickname starts with a provided string.
+     *
+     * @param array $options An array of options.
+     *                       query => query string to match username(s) and nickname(s) against
+     *                       limit => how many entries are returned (default 1, minimum 1, maximum 1000)
+     *
+     * @return ExtendedPromiseInterface
+     */
+    public function searchMembers(array $options): ExtendedPromiseInterface
+    {
+        $resolver = new OptionsResolver();
+        $resolver->setDefined([
+            'query',
+            'limit',
+        ])
+        ->setDefaults(['limit' => 1])
+        ->setAllowedTypes('query', 'string')
+        ->setAllowedTypes('limit', 'int')
+        ->setAllowedValues('limit', range(1, 1000));
+
+        $options = $resolver->resolve($options);
+
+        $endpoint = Endpoint::bind(Endpoint::GUILD_MEMBERS . '/search', $this->id);
+        $endpoint->addQuery('query', $options['query']);
+        $endpoint->addQuery('limit', $options['limit']);
+
+        return $this->http->get($endpoint)->then(function ($responses) {
+            $members = new Collection();
+
+            foreach ($responses as $response) {
+                if (! $member = $this->members->get('id', $response->user->id)) {
+                    $member = $this->factory->create(Member::class, $response, true);
+                    $this->members->push($member);
+                }
+
+                $members->push($member);
+            }
+
+            return $members;
+        });
+    }
+
+    /**
      * @inheritdoc
      */
     public function getCreatableAttributes(): array
