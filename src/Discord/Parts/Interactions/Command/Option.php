@@ -138,13 +138,13 @@ class Option extends Part
     /**
      * Sets the requirement of the option.
      *
-     * @param bool $require requirement of the option
+     * @param bool $required requirement of the option
      *
      * @return $this
      */
-    public function setRequire(bool $require)
+    public function setRequired(bool $required)
     {
-        $this->required = $require;
+        $this->required = $required;
         return $this;
     }
 
@@ -174,7 +174,7 @@ class Option extends Part
             throw new \RangeException('Option can not have more than 25 parameters.');
         }
 
-        $this->attributes['options'][] = $option;
+        $this->attributes['options'][] = $option->getRawAttributes();
         return $this;
     }
 
@@ -191,7 +191,7 @@ class Option extends Part
             throw new \RangeException('Option can only have a maximum of 25 Choices.');
         }
 
-        $this->attributes['choices'][] = $choice;
+        $this->attributes['choices'][] = $choice->getRawAttributes();
         return $this;
     }
 
