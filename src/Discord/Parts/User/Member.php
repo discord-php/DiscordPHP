@@ -401,7 +401,7 @@ class Member extends Part
      */
     public function getAvatarAttribute(string $format = 'jpg', int $size = 1024): string
     {
-        if (false === array_search($format, ['png', 'jpg', 'webp'])) {
+        if (false === array_search($format, ['png', 'jpg', 'webp', 'gif'])) {
             $format = 'jpg';
         }
 
