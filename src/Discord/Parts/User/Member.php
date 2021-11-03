@@ -405,7 +405,7 @@ class Member extends Part
             $format = 'jpg';
         }
 
-        return "https://cdn.discordapp.com/guilds/{$this->guild}/users/{$this->id}/avatars/{$this->attributes['avatar']}.{$format}?size={$size}";
+        return "https://cdn.discordapp.com/guilds/{$this->guild_id}/users/{$this->id}/avatars/{$this->attributes['avatar']}.{$format}?size={$size}";
     }
 
     /**
