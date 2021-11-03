@@ -135,6 +135,7 @@ class Role extends Part
             'color' => $this->color,
             'permissions' => $this->permissions->bitwise,
             'icon' => $this->attributes['icon'],
+            'unicode_emoji' => $this->unicode_emoji,
             'mentionable' => $this->mentionable,
         ];
     }
