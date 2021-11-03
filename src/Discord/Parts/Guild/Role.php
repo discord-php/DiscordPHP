@@ -17,23 +17,26 @@ use Discord\Parts\Permissions\RolePermission;
 /**
  * A role defines permissions for the guild. Members can be added to the role. The role belongs to a guild.
  *
- * @property string         $id          The unique identifier of the role.
- * @property string         $name        The name of the role.
- * @property int            $color       The color of the guild.
- * @property bool           $managed     Whether the role is managed by a Twitch subscriber feature.
- * @property bool           $hoist       Whether the role is hoisted on the sidebar.
- * @property int            $position    The position of the role on the sidebar.
- * @property RolePermission $permissions The permissions of the role.
- * @property bool           $mentionable Whether the role is mentionable.
- * @property Guild          $guild       The guild that the role belongs to.
- * @property string         $guild_id    The unique identifier of the guild that the role belongs to.
+ * @property string         $id            The unique identifier of the role.
+ * @property string         $name          The name of the role.
+ * @property int            $color         The color of the guild.
+ * @property bool           $managed       Whether the role is managed by a Twitch subscriber feature.
+ * @property bool           $hoist         Whether the role is hoisted on the sidebar.
+ * @property int            $position      The position of the role on the sidebar.
+ * @property RolePermission $permissions   The permissions of the role.
+ * @property string         $icon          The URL to the role icon.
+ * @property string         $icon_hash     The icon hash for the role.
+ * @property string         $unicode_emoji The unicode emoji for the role.
+ * @property bool           $mentionable   Whether the role is mentionable.
+ * @property Guild          $guild         The guild that the role belongs to.
+ * @property string         $guild_id      The unique identifier of the guild that the role belongs to.
  */
 class Role extends Part
 {
     /**
      * @inheritdoc
      */
-    protected $fillable = ['id', 'name', 'color', 'managed', 'hoist', 'position', 'permissions', 'mentionable', 'guild_id'];
+    protected $fillable = ['id', 'name', 'color', 'managed', 'hoist', 'position', 'permissions', 'icon', 'unicode_emoji', 'mentionable', 'guild_id'];
 
     /**
      * @inheritdoc
@@ -91,6 +94,37 @@ class Role extends Part
     }
 
     /**
+     * Returns the role icon.
+     *
+     * @param string $format The image format.
+     * @param int    $size   The size of the image.
+     *
+     * @return string|null The URL to the role icon or null.
+     */
+    public function getIconAttribute(string $format = 'jpg', int $size = 64)
+    {
+        if (is_null($this->attributes['icon'])) {
+            return null;
+        }
+
+        if (false === array_search($format, ['png', 'jpg', 'webp'])) {
+            $format = 'jpg';
+        }
+
+        return "https://cdn.discordapp.com/role-icons/{$this->id}/{$this->attributes['icon']}.{$format}?size={$size}";
+    }
+
+    /**
+     * Returns the role icon hash.
+     *
+     * @return string|null The role icon hash or null.
+     */
+    protected function getIconHashAttribute()
+    {
+        return $this->attributes['icon'];
+    }
+
+    /**
      * @inheritdoc
      */
     public function getUpdatableAttributes(): array
@@ -100,6 +134,7 @@ class Role extends Part
             'hoist' => $this->hoist,
             'color' => $this->color,
             'permissions' => $this->permissions->bitwise,
+            'icon' => $this->attributes['icon'],
             'mentionable' => $this->mentionable,
         ];
     }
