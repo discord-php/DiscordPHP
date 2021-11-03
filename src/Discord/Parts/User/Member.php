@@ -397,10 +397,14 @@ class Member extends Part
      * @param string $format The image format.
      * @param int    $size   The size of the image.
      *
-     * @return string The URL to the member avatar.
+     * @return string|null The URL to the member avatar or null.
      */
     public function getAvatarAttribute(string $format = 'jpg', int $size = 1024): string
     {
+        if (is_null($this->attributes['avatar'])) {
+            return null;
+        }
+
         if (false === array_search($format, ['png', 'jpg', 'webp', 'gif'])) {
             $format = 'jpg';
         }
