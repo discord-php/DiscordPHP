@@ -35,6 +35,7 @@ class MemberRepository extends AbstractRepository
      */
     protected $endpoints = [
         'all' => Endpoint::THREAD_MEMBERS,
+        'get' => Endpoint::THREAD_MEMBER,
     ];
 
     /**
