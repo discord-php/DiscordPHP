@@ -444,27 +444,35 @@ class Discord
             return $this->ready();
         }
 
-        // Emit ready after 60 seconds
-        $this->loop->addTimer(60, function () {
-            $this->ready();
-        });
+		$done = function () use (&$function) {
+			$this->logger->info('all guilds are now available', ['count' => $this->guilds->count()]);
 
-        $function = function ($guild) use (&$function, &$unavailable) {
+			$this->removeListener(Event::GUILD_CREATE, $function);
+			$this->removeListener(Event::GUILD_DELETE, $function);
+
+			$this->setupChunking();
+		};
+
+        // Emit ready after 5 seconds
+		$this->loop->addTimer(5, function () use ($done) {
+			$done();
+		});
+
+        $function = function ($guild) use (&$unavailable, $done) {
             $this->logger->debug('guild available', ['guild' => $guild->id, 'unavailable' => count($unavailable)]);
             if (array_key_exists($guild->id, $unavailable)) {
                 unset($unavailable[$guild->id]);
             }
 
-            // todo setup timer to continue after x amount of time
-            //if (count($unavailable) < 1) { //Temporary fix for #620
-                $this->logger->info('all guilds are now available', ['count' => $this->guilds->count()]);
-                $this->removeListener(Event::GUILD_CREATE, $function);
-
-                $this->setupChunking();
-            //}
+			if (count($unavailable) < 1) {
+				$done();
+			}
         };
 
+        // We listen for both events here as actually unavailable guilds will trigger
+        // a `GUILD_DELETE`.
         $this->on(Event::GUILD_CREATE, $function);
+        $this->on(Event::GUILD_DELETE, $function);
     }
 
     /**
