@@ -456,12 +456,12 @@ class Discord
             }
 
             // todo setup timer to continue after x amount of time
-            if (count($unavailable) < 1) {
+            //if (count($unavailable) < 1) { //Temporary fix for #620
                 $this->logger->info('all guilds are now available', ['count' => $this->guilds->count()]);
                 $this->removeListener(Event::GUILD_CREATE, $function);
 
                 $this->setupChunking();
-            }
+            //}
         };
 
         $this->on(Event::GUILD_CREATE, $function);
