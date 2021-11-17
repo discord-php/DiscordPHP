@@ -402,7 +402,7 @@ class Member extends Part
     public function getAvatarAttribute(string $format = 'jpg', int $size = 1024): string
     {
         if (is_null($this->attributes['avatar'])) {
-            return null;
+            return '';
         }
 
         if (false === array_search($format, ['png', 'jpg', 'webp', 'gif'])) {
