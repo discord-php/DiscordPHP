@@ -399,7 +399,7 @@ class Member extends Part
      *
      * @return string|null The URL to the member avatar or null.
      */
-    public function getAvatarAttribute(string $format = 'jpg', int $size = 1024): string
+    public function getAvatarAttribute(string $format = 'jpg', int $size = 1024): ?string
     {
         if (is_null($this->attributes['avatar'])) {
             return null;
