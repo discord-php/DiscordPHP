@@ -68,6 +68,14 @@ abstract class Event
     public const CHANNEL_DELETE = 'CHANNEL_DELETE';
     public const CHANNEL_UPDATE = 'CHANNEL_UPDATE';
     public const CHANNEL_PINS_UPDATE = 'CHANNEL_PINS_UPDATE';
+    
+    // Threads
+    public const THREAD_CREATE = 'THREAD_CREATE';
+    public const THREAD_UPDATE = 'THREAD_UPDATE';
+    public const THREAD_DELETE = 'THREAD_DELETE';
+    public const THREAD_LIST_SYNC = 'THREAD_LIST_SYNC';
+    public const THREAD_MEMBER_UPDATE = 'THREAD_MEMBER_UPDATE';
+    public const THREAD_MEMBERS_UPDATE = 'THREAD_MEMBERS_UPDATE';
 
     // Voice
     public const VOICE_STATE_UPDATE = 'VOICE_STATE_UPDATE';
