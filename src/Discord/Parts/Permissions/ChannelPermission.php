@@ -23,6 +23,7 @@ namespace Discord\Parts\Permissions;
  * @property bool $move_members
  * @property bool $use_vad
  * @property bool $request_to_speak
+ * @property bool $start_embedded_activities
  *
  * @property bool $add_reactions
  * @property bool $send_messages
@@ -37,6 +38,8 @@ namespace Discord\Parts\Permissions;
  * @property bool $manage_threads
  * @property bool $use_public_threads
  * @property bool $use_private_threads
+ * @property bool $use_external_stickers
+ * @property bool $send_messages_in_threads
  */
 class ChannelPermission extends Permission
 {
