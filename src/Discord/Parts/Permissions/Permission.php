@@ -41,6 +41,7 @@ abstract class Permission extends Part
         'move_members' => 0x1000000,
         'use_vad' => 0x2000000,
         'request_to_speak' => (1 << 32),
+        'start_embedded_activities' => (1 << 39),
     ];
 
     /**
@@ -62,6 +63,8 @@ abstract class Permission extends Part
         'manage_threads' => (1 << 34),
         'use_public_threads' => (1 << 35),
         'use_private_threads' => (1 << 36),
+        'use_external_stickers' => (1 << 37),
+        'send_messages_in_threads' => (1 << 38),
     ];
 
     /**
