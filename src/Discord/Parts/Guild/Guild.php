@@ -626,7 +626,7 @@ class Guild extends Part
 
         $options = $resolver->resolve($options);
 
-        $endpoint = Endpoint::bind(Endpoint::GUILD_MEMBERS . '/search', $this->id);
+        $endpoint = Endpoint::bind(Endpoint::GUILD_MEMBERS_SEARCH, $this->id);
         $endpoint->addQuery('query', $options['query']);
         $endpoint->addQuery('limit', $options['limit']);
 
