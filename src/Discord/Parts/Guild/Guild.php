@@ -93,6 +93,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * @property bool              $feature_three_day_thread_archive         guild has access to the three day archive time for threads.
  * @property bool              $feature_seven_day_thread_archive         guild has access to the seven day archive time for threads.
  * @property bool              $feature_private_threads                  guild has access to create private threads.
+ * @property bool              $feature_role_icons                       guild is able to set role icons.
  * @property RoleRepository    $roles
  * @property ChannelRepository $channels
  * @property MemberRepository  $members
@@ -112,6 +113,8 @@ class Guild extends Part
 
     public const SUPPRESS_JOIN_NOTIFICATIONS = (1 << 0);
     public const SUPPRESS_PREMIUM_SUBSCRIPTION = (1 << 1);
+    public const SUPPRESS_GUILD_REMINDER_NOTIFICATIONS = (1 << 2);
+    public const SUPPRESS_JOIN_NOTIFICATION_REPLIES = (1 << 3);
 
     /**
      * @inheritdoc
@@ -182,6 +185,7 @@ class Guild extends Part
         'feature_three_day_thread_archive',
         'feature_seven_day_thread_archive',
         'feature_private_threads',
+        'feature_role_icons',
     ];
 
     /**
@@ -420,6 +424,11 @@ class Guild extends Part
     protected function getFeaturePrivateThreadsAttribute(): bool
     {
         return in_array('PRIVATE_THREADS', $this->features);
+    }
+
+    protected function getFeatureRoleIconsAttribute(): bool
+    {
+        return in_array('ROLE_ICONS', $this->features);
     }
 
     /**
