@@ -113,6 +113,8 @@ class Guild extends Part
 
     public const SUPPRESS_JOIN_NOTIFICATIONS = (1 << 0);
     public const SUPPRESS_PREMIUM_SUBSCRIPTION = (1 << 1);
+    public const SUPPRESS_GUILD_REMINDER_NOTIFICATIONS = (1 << 2);
+    public const SUPPRESS_JOIN_NOTIFICATION_REPLIES = (1 << 3);
 
     /**
      * @inheritdoc
