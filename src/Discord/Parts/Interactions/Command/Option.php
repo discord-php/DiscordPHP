@@ -28,6 +28,9 @@ use function Discord\poly_strlen;
  * @property Collection|Choice[] $choices       choices for STRING, INTEGER, and NUMBER types for the user to pick from, max 25.
  * @property Collection|Option[] $options       Sub-options if applicable.
  * @property array               $channel_types If the option is a channel type, the channels shown will be restricted to these types.
+ * @property int|float           $min_value     if the option is an INTEGER or NUMBER type, the minimum value permitted.
+ * @property int|float           $max_value     if the option is an INTEGER or NUMBER type, the maximum value permitted.
+ * @property bool                $autocomplete  enable autocomplete interactions for this option.
  */
 class Option extends Part
 {
@@ -45,7 +48,7 @@ class Option extends Part
     /**
      * @inheritdoc
      */
-    protected $fillable = ['type', 'name', 'description', 'required', 'choices', 'options', 'channel_types'];
+    protected $fillable = ['type', 'name', 'description', 'required', 'choices', 'options', 'channel_types', 'min_value', 'max_value', 'autocomplete'];
 
     /**
      * @inheritdoc
@@ -224,6 +227,45 @@ class Option extends Part
             $this->attributes['choices']->offsetUnset($cho);
         }
 
+        return $this;
+    }
+
+    /**
+     * Sets the minimum value permitted.
+     *
+     * @param int|float $min_value integer for INTEGER options, double for NUMBER options
+     *
+     * @return $this
+     */
+    public function setMinValue($min_value)
+    {
+        $this->min_value = $min_value;
+        return $this;
+    }
+
+    /**
+     * Sets the minimum value permitted.
+     *
+     * @param int|float $min_value integer for INTEGER options, double for NUMBER options
+     *
+     * @return $this
+     */
+    public function setMaxValue($max_value)
+    {
+        $this->max_value = $max_value;
+        return $this;
+    }
+
+    /**
+     * Sets the autocomplete interactions for this option.
+     *
+     * @param bool $autocomplete enable autocomplete interactions for this option
+     *
+     * @return $this
+     */
+    public function setAutoComplete(bool $autocomplete)
+    {
+        $this->autocomplete = $autocomplete;
         return $this;
     }
 }
