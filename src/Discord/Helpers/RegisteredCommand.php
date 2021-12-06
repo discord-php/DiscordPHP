@@ -77,14 +77,8 @@ class RegisteredCommand
             }
         }
 
-        // Old DiscordPHP-Slash Choices signature
-        $choices = [];
-        foreach ($interaction->data->options as $option) {
-            $choices[$option->name] = $option->value;
-        }
-
         if (! is_null($this->callback)) {
-            ($this->callback)($interaction, $choices);
+            ($this->callback)($interaction);
 
             return true;
         }
