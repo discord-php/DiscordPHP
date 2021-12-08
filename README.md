@@ -42,7 +42,7 @@ The path to the caextract must be set in the [`php.ini`](https://secure.php.net/
 #### Recommended Extensions
 
 - The latest PHP version.
-- One of `ext-uv` (preferred), `ext-libev` or `evt-event` for a faster, and more performant event loop.
+- One of `ext-uv` (recommended), `ext-libev` or `ext-event` for a faster, and more performant event loop.
 - `ext-mbstring` if handling non-english characters.
 
 #### Voice Requirements
