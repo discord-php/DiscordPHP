@@ -72,6 +72,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * @property int               $max_video_channel_users                  Maximum amount of users allowed in a video channel.
  * @property int               $approximate_member_count
  * @property int               $approximate_presence_count
+ * @property bool              $premium_progress_bar_enabled             Whether the guild has the boost progress bar enabled
  * @property bool              $feature_animated_icon                    guild has access to set an animated guild icon.
  * @property bool              $feature_banner                           guild has access to set a guild banner image.
  * @property bool              $feature_commerce                         guild has access to use commerce features (create store channels).
@@ -158,6 +159,7 @@ class Guild extends Part
         'max_video_channel_users',
         'approximate_member_count',
         'approximate_presence_count',
+        'premium_progress_bar_enabled',
     ];
 
     /**
@@ -682,6 +684,7 @@ class Guild extends Part
             'rules_channel_id' => $this->rules_channel_id,
             'public_updates_channel_id' => $this->public_updates_channel_id,
             'preferred_locale' => $this->preferred_locale,
+            'premium_progress_bar_enabled' => $this->premium_progress_bar_enabled,
         ];
     }
 
