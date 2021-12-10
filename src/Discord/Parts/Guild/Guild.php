@@ -72,6 +72,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * @property int               $max_video_channel_users                  Maximum amount of users allowed in a video channel.
  * @property int               $approximate_member_count
  * @property int               $approximate_presence_count
+ * @property int               $nsfw_level                               The guild NSFW level
+ * @property bool              $premium_progress_bar_enabled             Whether the guild has the boost progress bar enabled
  * @property bool              $feature_animated_icon                    guild has access to set an animated guild icon.
  * @property bool              $feature_banner                           guild has access to set a guild banner image.
  * @property bool              $feature_commerce                         guild has access to use commerce features (create store channels).
@@ -116,6 +118,11 @@ class Guild extends Part
     public const SUPPRESS_GUILD_REMINDER_NOTIFICATIONS = (1 << 2);
     public const SUPPRESS_JOIN_NOTIFICATION_REPLIES = (1 << 3);
 
+    public const NSFW_DEFAULT = 0;
+    public const NSFW_EXPLICIT = 1;
+    public const NSFW_SAFE = 2;
+    public const NSFW_AGE_RESTRICTED = 3;
+
     /**
      * @inheritdoc
      */
@@ -158,6 +165,8 @@ class Guild extends Part
         'max_video_channel_users',
         'approximate_member_count',
         'approximate_presence_count',
+        'nsfw_level',
+        'premium_progress_bar_enabled',
     ];
 
     /**
@@ -682,6 +691,7 @@ class Guild extends Part
             'rules_channel_id' => $this->rules_channel_id,
             'public_updates_channel_id' => $this->public_updates_channel_id,
             'preferred_locale' => $this->preferred_locale,
+            'premium_progress_bar_enabled' => $this->premium_progress_bar_enabled,
         ];
     }
 
