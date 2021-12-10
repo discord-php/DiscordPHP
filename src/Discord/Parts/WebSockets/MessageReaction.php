@@ -213,7 +213,7 @@ class MessageReaction extends Part
     }
     
     /**
-     * Delete this reaction
+     * Delete this reaction.
      *
      * @param int|null $type The type of deletion to perform.
      *
