@@ -41,6 +41,8 @@ use React\Promise\ExtendedPromiseInterface;
  * @property string                $status        The status of the member.
  * @property Activity              $game          The game the member is playing.
  * @property string|null           $nick          The nickname of the member.
+ * @property string                $avatar        The avatar URL of the member.
+ * @property string                $avatar_hash   The avatar hash of the member.
  * @property Carbon|null           $premium_since When the user started boosting the server.
  * @property bool                  $pending       Whether the user has not yet passed the guild's Membership Screening requirements.
  * @property Collection|Activity[] $activities    User's current activities.
@@ -54,7 +56,7 @@ class Member extends Part
     /**
      * @inheritdoc
      */
-    protected $fillable = ['id', 'user', 'roles', 'deaf', 'mute', 'joined_at', 'guild_id', 'status', 'nick', 'premium_since', 'pending', 'activities', 'client_status'];
+    protected $fillable = ['id', 'user', 'roles', 'deaf', 'mute', 'joined_at', 'guild_id', 'status', 'nick', 'avatar', 'premium_since', 'pending', 'activities', 'client_status'];
 
     /**
      * @inheritdoc
@@ -387,6 +389,37 @@ class Member extends Part
         }
 
         return new Carbon($this->attributes['joined_at']);
+    }
+
+    /**
+     * Returns the guild avatar URL for the member.
+     *
+     * @param string $format The image format.
+     * @param int    $size   The size of the image.
+     *
+     * @return string|null The URL to the member avatar or null.
+     */
+    public function getAvatarAttribute(string $format = 'jpg', int $size = 1024): ?string
+    {
+        if (is_null($this->attributes['avatar'])) {
+            return null;
+        }
+
+        if (false === array_search($format, ['png', 'jpg', 'webp', 'gif'])) {
+            $format = 'jpg';
+        }
+
+        return "https://cdn.discordapp.com/guilds/{$this->guild_id}/users/{$this->id}/avatars/{$this->attributes['avatar']}.{$format}?size={$size}";
+    }
+
+    /**
+     * Returns the guild avatar hash for the member.
+     *
+     * @return string The member avatar's hash.
+     */
+    protected function getAvatarHashAttribute(): string
+    {
+        return $this->attributes['avatar'];
     }
 
     /**

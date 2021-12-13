@@ -145,6 +145,17 @@ class Intents
     public const DIRECT_MESSAGE_TYPING = (1 << 14);
 
     /**
+     * Guild scheduled events events:.
+     *
+     * - GUILD_SCHEDULED_EVENT_CREATE
+     * - GUILD_SCHEDULED_EVENT_UPDATE
+     * - GUILD_SCHEDULED_EVENT_DELETE
+     * - GUILD_SCHEDULED_EVENT_USER_ADD
+     * - GUILD_SCHEDULED_EVENT_USER_REMOVE
+     */
+    public const GUILD_SCHEDULED_EVENTS = (1 << 16);
+
+    /**
      * Returns an array of valid intents.
      *
      * @return array

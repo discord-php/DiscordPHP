@@ -72,6 +72,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * @property int               $max_video_channel_users                  Maximum amount of users allowed in a video channel.
  * @property int               $approximate_member_count
  * @property int               $approximate_presence_count
+ * @property int               $nsfw_level                               The guild NSFW level
+ * @property bool              $premium_progress_bar_enabled             Whether the guild has the boost progress bar enabled
  * @property bool              $feature_animated_icon                    guild has access to set an animated guild icon.
  * @property bool              $feature_banner                           guild has access to set a guild banner image.
  * @property bool              $feature_commerce                         guild has access to use commerce features (create store channels).
@@ -113,6 +115,13 @@ class Guild extends Part
 
     public const SUPPRESS_JOIN_NOTIFICATIONS = (1 << 0);
     public const SUPPRESS_PREMIUM_SUBSCRIPTION = (1 << 1);
+    public const SUPPRESS_GUILD_REMINDER_NOTIFICATIONS = (1 << 2);
+    public const SUPPRESS_JOIN_NOTIFICATION_REPLIES = (1 << 3);
+
+    public const NSFW_DEFAULT = 0;
+    public const NSFW_EXPLICIT = 1;
+    public const NSFW_SAFE = 2;
+    public const NSFW_AGE_RESTRICTED = 3;
 
     /**
      * @inheritdoc
@@ -156,6 +165,8 @@ class Guild extends Part
         'max_video_channel_users',
         'approximate_member_count',
         'approximate_presence_count',
+        'nsfw_level',
+        'premium_progress_bar_enabled',
     ];
 
     /**
@@ -602,13 +613,55 @@ class Guild extends Part
     }
 
     /**
+     * Returns a list of guild member objects whose username or nickname starts with a provided string.
+     *
+     * @param array $options An array of options.
+     *                       query => query string to match username(s) and nickname(s) against
+     *                       limit => how many entries are returned (default 1, minimum 1, maximum 1000)
+     *
+     * @return ExtendedPromiseInterface
+     */
+    public function searchMembers(array $options): ExtendedPromiseInterface
+    {
+        $resolver = new OptionsResolver();
+        $resolver->setDefined([
+            'query',
+            'limit',
+        ])
+        ->setDefaults(['limit' => 1])
+        ->setAllowedTypes('query', 'string')
+        ->setAllowedTypes('limit', 'int')
+        ->setAllowedValues('limit', range(1, 1000));
+
+        $options = $resolver->resolve($options);
+
+        $endpoint = Endpoint::bind(Endpoint::GUILD_MEMBERS_SEARCH, $this->id);
+        $endpoint->addQuery('query', $options['query']);
+        $endpoint->addQuery('limit', $options['limit']);
+
+        return $this->http->get($endpoint)->then(function ($responses) {
+            $members = new Collection();
+
+            foreach ($responses as $response) {
+                if (! $member = $this->members->get('id', $response->user->id)) {
+                    $member = $this->factory->create(Member::class, $response, true);
+                    $this->members->push($member);
+                }
+
+                $members->push($member);
+            }
+
+            return $members;
+        });
+    }
+
+    /**
      * @inheritdoc
      */
     public function getCreatableAttributes(): array
     {
         return [
             'name' => $this->name,
-            'region' => $this->region,
             'icon' => $this->attributes['icon'],
             'verification_level' => $this->verification_level,
             'default_message_notifications' => $this->default_message_notifications,
@@ -626,7 +679,6 @@ class Guild extends Part
     {
         return [
             'name' => $this->name,
-            'region' => $this->region,
             'verification_level' => $this->verification_level,
             'default_message_notifications' => $this->default_message_notifications,
             'explicit_content_filter' => $this->explicit_content_filter,
@@ -639,6 +691,7 @@ class Guild extends Part
             'rules_channel_id' => $this->rules_channel_id,
             'public_updates_channel_id' => $this->public_updates_channel_id,
             'preferred_locale' => $this->preferred_locale,
+            'premium_progress_bar_enabled' => $this->premium_progress_bar_enabled,
         ];
     }
 
