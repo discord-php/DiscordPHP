@@ -665,7 +665,7 @@ class Guild extends Part
     {
         return $this->http->get(Endpoint::bind(Endpoint::GUILD_WELCOME_SCREEN, $this->id))->then(function ($response) {
             $welcome_screen = $this->discord->factory(WelcomeScreen::class, $response, true);
-            $this->welcome_screen = $welcome_screen;
+            $this->attributes['welcome_screen'] = $welcome_screen;
 
             return $welcome_screen;
         });
@@ -697,7 +697,7 @@ class Guild extends Part
 
         return $this->http->patch(Endpoint::bind(Endpoint::GUILD_WELCOME_SCREEN, $this->id), $options)->then(function ($response) {
             $welcome_screen = $this->discord->factory(WelcomeScreen::class, $response, true);
-            $this->welcome_screen = $welcome_screen;
+            $this->attributes['welcome_screen'] = $welcome_screen;
 
             return $welcome_screen;
         });
