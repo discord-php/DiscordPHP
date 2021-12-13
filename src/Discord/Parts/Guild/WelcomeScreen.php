@@ -11,6 +11,7 @@
 
 namespace Discord\Parts\Guild;
 
+use Discord\Helpers\Collection;
 use Discord\Parts\Part;
 
 /**
@@ -27,4 +28,20 @@ class WelcomeScreen extends Part
      * @inheritdoc
      */
     protected $fillable = ['description', 'welcome_channels'];
+
+    /**
+     * Returns the Welcome Channel object of the Welcome Screen
+     *
+     * @return Collection|WelcomeChannel[] The channels of welcome screen.
+     */
+    public function getWelcomeChannelsAttribute(): Collection
+    {
+        $collection = Collection::for(WelcomeScreen::class, 'channel_id');
+
+        foreach ($this->attributes['welcome_channels'] ?? [] as $welcome_channel) {
+            $collection->push($this->factory->create(WelcomeScreen::class, $welcome_channel, true));
+        }
+
+        return $collection;
+    }
 }

@@ -705,6 +705,16 @@ class Guild extends Part
     }
 
     /**
+     * Returns the Welcome Screen object for the guild.
+     *
+     * @return WelcomeScreen|null
+     */
+    public function getWelcomeScreenAttribute(): ?WelcomeScreen
+    {
+        return $this->attributes['welcome_screen'] ?? null;
+    }
+
+    /**
      * @inheritdoc
      */
     public function getCreatableAttributes(): array
