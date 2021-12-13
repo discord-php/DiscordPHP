@@ -72,7 +72,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * @property int                $max_video_channel_users                  Maximum amount of users allowed in a video channel.
  * @property int                $approximate_member_count
  * @property int                $approximate_presence_count
- * @property WelcomeScreen|null $welcome_screen                           The welcome screen of a Community guild, shown to new members, returned in an Invite's guild object.
  * @property int                $nsfw_level                               The guild NSFW level.
  * @property bool               $premium_progress_bar_enabled             Whether the guild has the boost progress bar enabled.
  * @property bool               $feature_animated_icon                    guild has access to set an animated guild icon.
