@@ -51,7 +51,6 @@ class Sticker extends Part
         'description',
         'tags',
         'asset',
-        'preview_asset',
         'type',
         'format_type',
         'available',
