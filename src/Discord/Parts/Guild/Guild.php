@@ -14,6 +14,7 @@ namespace Discord\Parts\Guild;
 use Carbon\Carbon;
 use Discord\Helpers\Collection;
 use Discord\Http\Endpoint;
+use Discord\Parts\Channel\StageInstance;
 use Discord\Parts\Part;
 use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
@@ -102,6 +103,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * @property InviteRepository  $invites
  * @property BanRepository     $bans
  * @property EmojiRepository   $emojis
+ * @property StageInstanceRepository $stageinstances
  */
 class Guild extends Part
 {
@@ -166,6 +168,7 @@ class Guild extends Part
         'approximate_member_count',
         'approximate_presence_count',
         'nsfw_level',
+        'stage_instances',
         'premium_progress_bar_enabled',
     ];
 
@@ -207,6 +210,7 @@ class Guild extends Part
         'bans' => BanRepository::class,
         'invites' => InviteRepository::class,
         'emojis' => EmojiRepository::class,
+        'stage_instances' => StageInstance::class,
     ];
 
     /**
