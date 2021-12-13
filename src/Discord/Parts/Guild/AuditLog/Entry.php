@@ -65,6 +65,9 @@ class Entry extends Part
     public const INTEGRATION_CREATE = 80;
     public const INTEGRATION_UPDATE = 81;
     public const INTEGRATION_DELETE = 82;
+    public const STICKER_CREATE = 90;
+    public const STICKER_UPDATE = 91;
+    public const STICKER_DELETE = 92;
     // AUDIT LOG ENTRY TYPES
 
     /**

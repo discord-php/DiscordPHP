@@ -25,6 +25,7 @@ use Discord\Repository\Guild\MemberRepository;
 use Discord\Repository\Guild\RoleRepository;
 use Discord\Parts\Guild\AuditLog\AuditLog;
 use Discord\Parts\Guild\AuditLog\Entry;
+use Discord\Repository\Guild\StickerRepository;
 use Exception;
 use React\Promise\ExtendedPromiseInterface;
 use ReflectionClass;
@@ -208,6 +209,7 @@ class Guild extends Part
         'bans' => BanRepository::class,
         'invites' => InviteRepository::class,
         'emojis' => EmojiRepository::class,
+        'stickers' => StickerRepository::class,
     ];
 
     /**
