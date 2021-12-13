@@ -102,6 +102,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * @property InviteRepository  $invites
  * @property BanRepository     $bans
  * @property EmojiRepository   $emojis
+ * @property StickerRepository $stickers
  */
 class Guild extends Part
 {
