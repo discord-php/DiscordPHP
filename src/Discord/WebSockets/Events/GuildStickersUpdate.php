@@ -30,8 +30,6 @@ class GuildStickersUpdate extends Event
         if ($guild = $this->discord->guilds->get('id', $stickerPart->guild_id)) {
             $old = $guild->stickers->get('id', $stickerPart->id);
             $guild->stickers->push($stickerPart);
-
-            $this->discord->guilds->push($guild);
         } else {
             $old = null;
         }
