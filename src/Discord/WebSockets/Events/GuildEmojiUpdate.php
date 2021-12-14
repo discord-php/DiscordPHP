@@ -30,8 +30,6 @@ class GuildEmojisUpdate extends Event
         if ($guild = $this->discord->guilds->get('id', $emojiPart->guild_id)) {
             $old = $guild->emojis->get('id', $emojiPart->id);
             $guild->emojis->push($emojiPart);
-
-            $this->discord->guilds->push($guild);
         } else {
             $old = null;
         }
