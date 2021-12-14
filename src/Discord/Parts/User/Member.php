@@ -401,7 +401,7 @@ class Member extends Part
      */
     public function getAvatarAttribute(string $format = 'jpg', int $size = 1024): ?string
     {
-        if (is_null($this->attributes['avatar'])) {
+        if (! isset($this->attributes['avatar'])) {
             return null;
         }
 
