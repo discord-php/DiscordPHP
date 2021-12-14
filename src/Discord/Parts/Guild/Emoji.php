@@ -31,7 +31,7 @@ class Emoji extends Part
     /**
      * @inheritdoc
      */
-    protected $fillable = ['id', 'name', 'guild_id', 'managed', 'require_colons', 'roles', 'animated'];
+    protected $fillable = ['id', 'name', 'guild_id', 'managed', 'require_colons', 'roles', 'user', 'animated', 'available'];
 
     /**
      * Returns the guild attribute.
