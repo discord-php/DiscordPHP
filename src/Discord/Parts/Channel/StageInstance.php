@@ -48,7 +48,7 @@ class StageInstance extends Part
      *
      * @return Guild The guild attribute.
      */
-    protected function getGuildAttribute(): ?Guild
+    protected function getGuildAttribute(): Guild
     {
         return $this->discord->guilds->get('id', $this->guild_id);
     }
