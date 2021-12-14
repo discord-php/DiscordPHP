@@ -25,6 +25,7 @@ use Discord\Repository\Guild\MemberRepository;
 use Discord\Repository\Guild\RoleRepository;
 use Discord\Parts\Guild\AuditLog\AuditLog;
 use Discord\Parts\Guild\AuditLog\Entry;
+use Discord\Repository\Guild\GuildTemplateRepository;
 use Exception;
 use React\Promise\ExtendedPromiseInterface;
 use ReflectionClass;
@@ -102,6 +103,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * @property InviteRepository  $invites
  * @property BanRepository     $bans
  * @property EmojiRepository   $emojis
+ * @property GuildTemplateRepository $templates
  */
 class Guild extends Part
 {
@@ -207,6 +209,7 @@ class Guild extends Part
         'bans' => BanRepository::class,
         'invites' => InviteRepository::class,
         'emojis' => EmojiRepository::class,
+        'templates' => GuildTemplateRepository::class,
     ];
 
     /**
@@ -384,7 +387,7 @@ class Guild extends Part
     {
         return in_array('PREVIEW_ENABLED', $this->features);
     }
-    
+
     protected function getFeatureVanityUrlAttribute(): bool
     {
         return in_array('VANITY_URL', $this->features);
