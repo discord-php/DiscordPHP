@@ -24,7 +24,9 @@ use Discord\Parts\Part;
  * @property bool              $managed        Whether this emoji is managed by a role.
  * @property bool              $require_colons Whether the emoji requires colons to be triggered.
  * @property Collection|Role[] $roles          The roles that are allowed to use the emoji.
+ * @property User|null         $user           user that created this emoji.
  * @property bool              $animated       Whether the emoji is animated.
+ * @property bool              $available      Whether this emoji can be used, may be false due to loss of Server Boosts.
  */
 class Emoji extends Part
 {
@@ -57,6 +59,24 @@ class Emoji extends Part
         return $this->guild->roles->filter(function ($role) {
             return array_search($role->id, $this->attributes['roles']) !== false;
         });
+    }
+
+    /**
+     * Gets the user that created the emoji.
+     *
+     * @return User|null
+     */
+    protected function getUserAttribute(): ?Part
+    {
+        if (! isset($this->attributes['user'])) {
+            return null;
+        }
+
+        if ($user = $this->discord->users->get('id', $this->attributes['user']->id)) {
+            return $user;
+        }
+
+        return $this->factory->part(User::class, $this->attributes['user'], true);
     }
 
     /**
