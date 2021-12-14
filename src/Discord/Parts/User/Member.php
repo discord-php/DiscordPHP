@@ -42,7 +42,7 @@ use React\Promise\ExtendedPromiseInterface;
  * @property Activity              $game          The game the member is playing.
  * @property string|null           $nick          The nickname of the member.
  * @property string|null           $avatar        The avatar URL of the member or null if member has no guild avatar.
- * @property string                $avatar_hash   The avatar hash of the member.
+ * @property string|null           $avatar_hash   The avatar hash of the member or null if member has no guild avatar.
  * @property Carbon|null           $premium_since When the user started boosting the server.
  * @property bool                  $pending       Whether the user has not yet passed the guild's Membership Screening requirements.
  * @property Collection|Activity[] $activities    User's current activities.
