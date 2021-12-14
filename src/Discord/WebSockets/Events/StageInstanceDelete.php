@@ -22,14 +22,14 @@ class StageInstanceDelete extends Event
      */
     public function handle(Deferred &$deferred, $data): void
     {
-        $stageinstance = $this->factory->create(StageInstance::class, $data);
+        $stage_instance = $this->factory->create(StageInstance::class, $data);
 
-        if ($guild = $stageinstance->guild) {
-            $guild->stageinstances->pull($stageinstance->id);
+        if ($guild = $stage_instance->guild) {
+            $guild->stage_instances->pull($stage_instance->id);
 
             $this->discord->guilds->push($guild);
         }
 
-        $deferred->resolve($stageinstance);
+        $deferred->resolve($stage_instance);
     }
 }

@@ -22,14 +22,14 @@ class StageInstanceUpdate extends Event
      */
     public function handle(Deferred &$deferred, $data): void
     {
-        $stageinstance = $this->factory->create(StageInstance::class, $data, true);
+        $stage_instance = $this->factory->create(StageInstance::class, $data, true);
 
-        if ($guild = $this->discord->guilds->get('id', $stageinstance->guild_id)) {
-            $old = $guild->stageinstances->get('id', $stageinstance->id);
-            $guild->stageinstances->push($stageinstance);
+        if ($guild = $this->discord->guilds->get('id', $stage_instance->guild_id)) {
+            $old = $guild->stage_instances->get('id', $stage_instance->id);
+            $guild->stage_instances->push($stage_instance);
             $this->discord->guilds->push($guild);
         }
 
-        $deferred->resolve([$stageinstance, $old]);
+        $deferred->resolve([$stage_instance, $old]);
     }
 }

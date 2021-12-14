@@ -98,8 +98,8 @@ class StageInstance extends Part
      */
     public function getRepositoryAttributes(): array
     {
+        var_dump($this->channel_id);
         return [
-            'id' => $this->id,
             'channel_id' => $this->channel_id,
         ];
     }

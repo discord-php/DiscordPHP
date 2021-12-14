@@ -12,11 +12,11 @@
 namespace Discord\Repository\Guild;
 
 use Discord\Http\Endpoint;
-use Discord\Parts\StageInstance\StageInstance;
+use Discord\Parts\Channel\StageInstance;
 use Discord\Repository\AbstractRepository;
 
 /**
- * Contains stageinstances that belong to a channel.
+ * Contains a live stage instances channel.
  *
  * @method StageInstance|null get(string $discrim, $key)  Gets an item from the collection.
  * @method StageInstance|null first()                     Returns the first element of the collection.
@@ -28,8 +28,12 @@ class StageInstanceRepository extends AbstractRepository
     /**
      * @inheritdoc
      */
+    protected $discrim = 'channel_id';
+
+    /**
+     * @inheritdoc
+     */
     protected $endpoints = [
-        'all' => Endpoint::STAGE_INSTANCES,
         'get' => Endpoint::STAGE_INSTANCE,
         'create' => Endpoint::STAGE_INSTANCES,
         'update' => Endpoint::STAGE_INSTANCE,
