@@ -27,7 +27,6 @@ class StageInstanceCreate extends Event
 
         if ($guild = $this->discord->guilds->get('id', $stage_instance->guild_id)) {
             $guild->stage_instances->push($stage_instance);
-            $this->discord->guilds->push($guild);
         }
 
         $deferred->resolve($stage_instance);

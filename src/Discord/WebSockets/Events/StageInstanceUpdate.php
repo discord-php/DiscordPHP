@@ -27,7 +27,6 @@ class StageInstanceUpdate extends Event
         if ($guild = $this->discord->guilds->get('id', $stage_instance->guild_id)) {
             $old = $guild->stage_instances->get('id', $stage_instance->id);
             $guild->stage_instances->push($stage_instance);
-            $this->discord->guilds->push($guild);
         }
 
         $deferred->resolve([$stage_instance, $old]);

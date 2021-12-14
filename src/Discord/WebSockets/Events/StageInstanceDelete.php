@@ -26,8 +26,6 @@ class StageInstanceDelete extends Event
 
         if ($guild = $stage_instance->guild) {
             $guild->stage_instances->pull($stage_instance->id);
-
-            $this->discord->guilds->push($guild);
         }
 
         $deferred->resolve($stage_instance);
