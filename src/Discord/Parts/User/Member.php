@@ -41,8 +41,8 @@ use React\Promise\ExtendedPromiseInterface;
  * @property string                $status        The status of the member.
  * @property Activity              $game          The game the member is playing.
  * @property string|null           $nick          The nickname of the member.
- * @property string                $avatar        The avatar URL of the member.
- * @property string                $avatar_hash   The avatar hash of the member.
+ * @property string|null           $avatar        The avatar URL of the member or null if member has no guild avatar.
+ * @property string|null           $avatar_hash   The avatar hash of the member or null if member has no guild avatar.
  * @property Carbon|null           $premium_since When the user started boosting the server.
  * @property bool                  $pending       Whether the user has not yet passed the guild's Membership Screening requirements.
  * @property Collection|Activity[] $activities    User's current activities.
@@ -401,7 +401,7 @@ class Member extends Part
      */
     public function getAvatarAttribute(string $format = 'jpg', int $size = 1024): ?string
     {
-        if (is_null($this->attributes['avatar'])) {
+        if (! isset($this->attributes['avatar'])) {
             return null;
         }
 
@@ -415,11 +415,11 @@ class Member extends Part
     /**
      * Returns the guild avatar hash for the member.
      *
-     * @return string The member avatar's hash.
+     * @return string|null The member avatar's hash or null.
      */
-    protected function getAvatarHashAttribute(): string
+    protected function getAvatarHashAttribute(): ?string
     {
-        return $this->attributes['avatar'];
+        return $this->attributes['avatar'] ?? null;
     }
 
     /**
