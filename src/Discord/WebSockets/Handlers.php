@@ -75,6 +75,13 @@ class Handlers
         $this->addHandler(Event::GUILD_ROLE_DELETE, \Discord\WebSockets\Events\GuildRoleDelete::class);
         $this->addHandler(Event::GUILD_ROLE_UPDATE, \Discord\WebSockets\Events\GuildRoleUpdate::class);
 
+        // Guild Scheduled Events Event handlers
+        $this->addHandler(Event::GUILD_SCHEDULED_EVENT_CREATE, \Discord\WebSockets\Events\GuildScheduledEventCreate::class);
+        $this->addHandler(Event::GUILD_SCHEDULED_EVENT_UPDATE, \Discord\WebSockets\Events\GuildScheduledEventUpdate::class);
+        $this->addHandler(Event::GUILD_SCHEDULED_EVENT_DELETE, \Discord\WebSockets\Events\GuildScheduledEventDelete::class);
+        $this->addHandler(Event::GUILD_SCHEDULED_EVENT_USER_ADD, \Discord\WebSockets\Events\GuildScheduledEventUserAdd::class);
+        $this->addHandler(Event::GUILD_SCHEDULED_EVENT_USER_REMOVE, \Discord\WebSockets\Events\GuildScheduledEventUserRemove::class);
+
         // Thread events
         $this->addHandler(Event::THREAD_CREATE, \Discord\WebSockets\Events\ThreadCreate::class);
         $this->addHandler(Event::THREAD_UPDATE, \Discord\WebSockets\Events\ThreadUpdate::class);
