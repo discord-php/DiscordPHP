@@ -14,6 +14,7 @@ namespace Discord\Parts\Guild\AuditLog;
 use Discord\Helpers\Collection;
 use Discord\Parts\Channel\Webhook;
 use Discord\Parts\Guild\Guild;
+use Discord\Parts\Guild\ScheduledEvent;
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
 use InvalidArgumentException;
@@ -28,6 +29,7 @@ use ReflectionClass;
  * @property Collection|User[]    $users
  * @property Collection|Entry[]   $audit_log_entries
  * @property Collection           $integrations
+ * @property Collection|GuildScheduledEvent[] $guild_scheduled_events
  */
 class AuditLog extends Part
 {
@@ -40,6 +42,7 @@ class AuditLog extends Part
         'users',
         'audit_log_entries',
         'integrations',
+        'guild_scheduled_events',
     ];
 
     /**
@@ -112,6 +115,22 @@ class AuditLog extends Part
     protected function getIntegrationsAttribute(): Collection
     {
         return new Collection($this->attributes['integrations'] ?? []);
+    }
+
+    /**
+     * Returns a collection of guild scheduled events found in the audit log.
+     *
+     * @return Collection|ScheduledEvent[]
+     */
+    protected function getGuildScheduledEventsAttribute(): Collection
+    {
+        $collection = Collection::for(ScheduledEvent::class);
+
+        foreach ($this->attributes['guild_scheduled_events'] ?? [] as $scheduled_event) {
+            $collection->push($this->factory->create(ScheduledEvent::class, $scheduled_event, true));
+        }
+
+        return $collection;
     }
 
     /**
