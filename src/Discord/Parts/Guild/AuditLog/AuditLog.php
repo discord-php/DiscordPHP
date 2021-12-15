@@ -15,6 +15,7 @@ use Discord\Helpers\Collection;
 use Discord\Parts\Channel\Webhook;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Part;
+use Discord\Parts\Thread\Thread;
 use Discord\Parts\User\User;
 use InvalidArgumentException;
 use ReflectionClass;
@@ -28,6 +29,7 @@ use ReflectionClass;
  * @property Collection|User[]    $users
  * @property Collection|Entry[]   $audit_log_entries
  * @property Collection           $integrations
+ * @property Collection|Threads[] $threads
  */
 class AuditLog extends Part
 {
@@ -40,6 +42,7 @@ class AuditLog extends Part
         'users',
         'audit_log_entries',
         'integrations',
+        'threads',
     ];
 
     /**
@@ -112,6 +115,22 @@ class AuditLog extends Part
     protected function getIntegrationsAttribute(): Collection
     {
         return new Collection($this->attributes['integrations'] ?? []);
+    }
+
+    /**
+     * Returns a collection of threads found in the audit log.
+     *
+     * @return Collection|Thread[]
+     */
+    protected function getThreadsAttribute(): Collection
+    {
+        $collection = Collection::for(Thread::class);
+
+        foreach ($this->attributes['threads'] ?? [] as $thread) {
+            $collection->push($this->factory->create(Thread::class, $thread, true));
+        }
+
+        return $collection;
     }
 
     /**
