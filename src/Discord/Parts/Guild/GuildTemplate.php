@@ -30,7 +30,7 @@ use Discord\Parts\User\User;
  * @property Carbon      $updated_at              When this template was last synced to the source guild.
  * @property string      $source_guild_id         The ID of the guild this template is based on.
  * @property Guild       $source_guild            The guild this template is based on.
- * @property object[]    $serialized_source_guild The guild snapshot this template contains.
+ * @property object      $serialized_source_guild The guild snapshot this template contains.
  * @property bool        $is_dirty                Whether the template has unsynced changes.
  */
 class GuildTemplate extends Part
