@@ -78,7 +78,7 @@ class GuildTemplate extends Part
     }
 
     /**
-     * Gets the user that created the emoji.
+     * Gets the user that created the template.
      *
      * @return User
      */
