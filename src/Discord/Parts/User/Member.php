@@ -273,7 +273,7 @@ class Member extends Part
     /**
      * Sets timeout on a member.
      *
-     * @param Carbon|null When the user's timeout will expire and the user will be able to communicate in the guild again, null or a time in the past if the user is not timed out.
+     * @param Carbon|null $communication_disabled_until When the user's timeout will expire and the user will be able to communicate in the guild again, null or a time in the past if the user is not timed out.
      *
      * @return ExtendedPromiseInterface
      */
