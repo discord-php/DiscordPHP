@@ -56,7 +56,7 @@ class Member extends Part
     /**
      * @inheritdoc
      */
-    protected $fillable = ['id', 'user', 'roles', 'deaf', 'mute', 'joined_at', 'guild_id', 'status', 'nick', 'avatar', 'premium_since', 'pending', 'activities', 'client_status'];
+    protected $fillable = ['id', 'user', 'roles', 'deaf', 'mute', 'joined_at', 'guild_id', 'status', 'nick', 'avatar', 'premium_since', 'pending', 'activities', 'client_status', 'communication_disabled_until'];
 
     /**
      * @inheritdoc
