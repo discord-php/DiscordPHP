@@ -41,7 +41,6 @@ abstract class Permission extends Part
         'move_members' => (1 << 24),
         'use_vad' => (1 << 25),
         'request_to_speak' => (1 << 32),
-        'manage_events' => (1 << 33),
         'start_embedded_activities' => (1 << 39),
     ];
 
@@ -83,6 +82,7 @@ abstract class Permission extends Part
         'change_nickname' => (1 << 26),
         'manage_nicknames' => (1 << 27),
         'manage_emojis' => (1 << 30),
+        'manage_events' => (1 << 33),
     ];
 
     /**
