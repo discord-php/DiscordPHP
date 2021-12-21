@@ -83,6 +83,7 @@ abstract class Permission extends Part
         'change_nickname' => (1 << 26),
         'manage_nicknames' => (1 << 27),
         'manage_emojis' => (1 << 30),
+        'moderate_members' => (1 << 40),
     ];
 
     /**
