@@ -15,6 +15,7 @@ use Carbon\Carbon;
 use Discord\Builders\MessageBuilder;
 use Discord\Helpers\Collection;
 use Discord\Http\Endpoint;
+use Discord\Http\Exceptions\NoPermissionsException;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Channel\Message;
 use Discord\Parts\Channel\Overwrite;
@@ -270,6 +271,24 @@ class Member extends Part
     }
 
     /**
+     * Sets timeout on a member.
+     *
+     * @param Carbon|null When the user's timeout will expire and the user will be able to communicate in the guild again, null or a time in the past if the user is not timed out.
+     *
+     * @return ExtendedPromiseInterface
+     */
+    public function timeoutMember(?Carbon $communication_disabled_until): ExtendedPromiseInterface
+    {
+        $botperms = $this->guild->members->offsetGet($this->discord->id)->getPermissions();
+
+        if (! $botperms->moderate_members) {
+            return \React\promise\reject(new NoPermissionsException('You do not have permission to time out members in the specified guild.'));
+        }
+
+        return $this->http->patch(Endpoint::bind(Endpoint::GUILD_MEMBER, $this->guild_id, $this->id), ['communication_disabled_until' => isset($communication_disabled_until) ? $communication_disabled_until->toIso8601ZuluString() : null]);
+    }
+
+    /**
      * Gets the game attribute.
      * Polyfill for the first activity.
      *
@@ -458,7 +477,6 @@ class Member extends Part
     {
         return [
             'roles' => array_values($this->attributes['roles']),
-            'communication_disabled_until' => $this->attributes['communication_disabled_until'],
         ];
     }
 
