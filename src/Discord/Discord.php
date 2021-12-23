@@ -714,7 +714,7 @@ class Discord
                 Event::GUILD_CREATE,
             ];
 
-            if (! $this->emittedReady && (in_array($data->t, $parse))) {
+            if (! $this->emittedReady && (! in_array($data->t, $parse))) {
                 $this->unparsedPackets[] = function () use (&$handler, &$deferred, &$data) {
                     $handler->handle($deferred, $data->d);
                 };
