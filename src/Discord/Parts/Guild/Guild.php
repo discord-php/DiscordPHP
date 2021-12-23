@@ -292,7 +292,7 @@ class Guild extends Part
 
         $allowed = ['png', 'jpg', 'webp'];
 
-		if (! in_array(strtolower($format), $allowed)) {
+        if (! in_array(strtolower($format), $allowed)) {
             $format = 'jpg';
         }
 
