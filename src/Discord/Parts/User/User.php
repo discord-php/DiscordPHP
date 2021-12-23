@@ -130,7 +130,7 @@ class User extends Part
      *
      * @return string The URL to the clients avatar.
      */
-    public function getAvatarAttribute(string $format = 'jpg', int $size = 1024): string
+    public function getAvatarAttribute(string $format = 'webp', int $size = 1024): string
     {
         if (empty($this->attributes['avatar'])) {
             $avatarDiscrim = (int) $this->discriminator % 5;
@@ -138,8 +138,10 @@ class User extends Part
             return "https://cdn.discordapp.com/embed/avatars/{$avatarDiscrim}.png?size={$size}";
         }
 
-        if (false === array_search($format, ['png', 'jpg', 'webp', 'gif'])) {
-            $format = 'jpg';
+        $allowed = ['png', 'jpg', 'webp', 'gif'];
+
+        if (! in_array(strtolower($format), $allowed)) {
+            $format = 'webp';
         }
 
         return "https://cdn.discordapp.com/avatars/{$this->id}/{$this->attributes['avatar']}.{$format}?size={$size}";
@@ -163,14 +165,16 @@ class User extends Part
      *
      * @return string|null The URL to the clients banner.
      */
-    public function getBannerAttribute(string $format = 'jpg', int $size = 600): ?string
+    public function getBannerAttribute(string $format = 'png', int $size = 600): ?string
     {
         if (empty($this->attributes['banner'])) {
             return null;
         }
 
-        if (false === array_search($format, ['png', 'jpg', 'webp', 'gif'])) {
-            $format = 'jpg';
+        $allowed = ['png', 'jpg', 'webp', 'gif'];
+	
+        if (! in_array(strtolower($format), $allowed)) {
+            $format = 'png';
         }
 
         return "https://cdn.discordapp.com/banners/{$this->id}/{$this->attributes['banner']}.{$format}?size={$size}";

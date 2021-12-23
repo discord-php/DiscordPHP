@@ -181,8 +181,9 @@ function imageToBase64(string $filepath): string
     }
 
     $mimetype = \mime_content_type($filepath);
+    $allowed = ['image/jpeg', 'image/png', 'image/gif'];
 
-    if (array_search($mimetype, ['image/jpeg', 'image/png', 'image/gif']) === false) {
+    if (! in_array($mimetype, $allowed)) {
         throw new \InvalidArgumentException('The given filepath is not one of jpeg, png or gif.');
     }
 

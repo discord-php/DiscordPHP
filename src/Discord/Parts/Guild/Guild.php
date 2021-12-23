@@ -284,14 +284,16 @@ class Guild extends Part
      *
      * @return string|null The URL to the guild icon or null.
      */
-    public function getIconAttribute(string $format = 'jpg', int $size = 1024)
+    public function getIconAttribute(string $format = 'webp', int $size = 1024)
     {
         if (is_null($this->attributes['icon'])) {
             return null;
         }
 
-        if (false === array_search($format, ['png', 'jpg', 'webp'])) {
-            $format = 'jpg';
+        $allowed = ['png', 'jpg', 'webp'];
+
+        if (! in_array(strtolower($format), $allowed)) {
+            $format = 'webp';
         }
 
         return "https://cdn.discordapp.com/icons/{$this->id}/{$this->attributes['icon']}.{$format}?size={$size}";
@@ -315,14 +317,16 @@ class Guild extends Part
      *
      * @return string|null The URL to the guild splash or null.
      */
-    public function getSplashAttribute(string $format = 'jpg', int $size = 2048)
+    public function getSplashAttribute(string $format = 'webp', int $size = 2048)
     {
         if (is_null($this->attributes['splash'])) {
             return null;
         }
 
-        if (false === array_search($format, ['png', 'jpg', 'webp'])) {
-            $format = 'jpg';
+        $allowed = ['png', 'jpg', 'webp'];
+
+        if (! in_array(strtolower($format), $allowed)) {
+            $format = 'webp';
         }
 
         return "https://cdn.discordapp.com/splashes/{$this->id}/{$this->attributes['splash']}.{$format}?size={$size}";
