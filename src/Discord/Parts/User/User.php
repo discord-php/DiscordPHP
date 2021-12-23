@@ -173,8 +173,8 @@ class User extends Part
 
         $allowed = ['png', 'jpg', 'webp', 'gif'];
 	
-		if (! in_array(strtolower($format), $allowed)) {
-            $format = 'webp';
+        if (! in_array(strtolower($format), $allowed)) {
+            $format = 'png';
         }
 
         return "https://cdn.discordapp.com/banners/{$this->id}/{$this->attributes['banner']}.{$format}?size={$size}";
