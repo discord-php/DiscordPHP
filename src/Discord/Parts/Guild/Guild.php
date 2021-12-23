@@ -290,7 +290,9 @@ class Guild extends Part
             return null;
         }
 
-        if (false === array_search($format, ['png', 'jpg', 'webp'])) {
+        $allowed = ['png', 'jpg', 'webp'];
+
+		if (! in_array(strtolower($format), $allowed)) {
             $format = 'jpg';
         }
 
@@ -321,7 +323,9 @@ class Guild extends Part
             return null;
         }
 
-        if (false === array_search($format, ['png', 'jpg', 'webp'])) {
+        $allowed = ['png', 'jpg', 'webp'];
+
+		if (! in_array(strtolower($format), $allowed)) {
             $format = 'jpg';
         }
 

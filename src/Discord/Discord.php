@@ -714,7 +714,7 @@ class Discord
                 Event::GUILD_CREATE,
             ];
 
-            if (! $this->emittedReady && (array_search($data->t, $parse) === false)) {
+            if (! $this->emittedReady && (in_array($data->t, $parse))) {
                 $this->unparsedPackets[] = function () use (&$handler, &$deferred, &$data) {
                     $handler->handle($deferred, $data->d);
                 };
@@ -917,7 +917,7 @@ class Discord
 
             if (is_array($this->options['loadAllMembers'])) {
                 foreach ($this->largeGuilds as $key => $guild) {
-                    if (array_search($guild, $this->options['loadAllMembers']) === false) {
+                    if (! in_array($guild, $this->options['loadAllMembers'])) {
                         $this->logger->debug('not fetching members for guild ID '.$guild);
                         unset($this->largeGuilds[$key]);
                     }
@@ -1073,7 +1073,9 @@ class Discord
             }
         }
 
-        if (! array_search($status, ['online', 'dnd', 'idle', 'invisible', 'offline'])) {
+        $allowed = ['online', 'dnd', 'idle', 'invisible', 'offline'];
+
+		if (! in_array($status, $allowed)) {
             $status = 'online';
         }
 
@@ -1455,7 +1457,7 @@ class Discord
     {
         $allowed = ['loop', 'options', 'logger', 'http'];
 
-        if (array_search($name, $allowed) !== false) {
+        if (in_array($name, $allowed)) {
             return $this->{$name};
         }
 

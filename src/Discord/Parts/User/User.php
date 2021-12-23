@@ -138,8 +138,10 @@ class User extends Part
             return "https://cdn.discordapp.com/embed/avatars/{$avatarDiscrim}.png?size={$size}";
         }
 
-        if (false === array_search($format, ['png', 'jpg', 'webp', 'gif'])) {
-            $format = 'jpg';
+        $allowed = ['png', 'jpg', 'webp', 'gif'];
+
+		if (in_array(strtolower($format), $allowed)) {
+            $format = 'webp';
         }
 
         return "https://cdn.discordapp.com/avatars/{$this->id}/{$this->attributes['avatar']}.{$format}?size={$size}";
@@ -169,8 +171,10 @@ class User extends Part
             return null;
         }
 
-        if (false === array_search($format, ['png', 'jpg', 'webp', 'gif'])) {
-            $format = 'jpg';
+        $allowed = ['png', 'jpg', 'webp', 'gif'];
+	
+		if (in_array(strtolower($format), $allowed)) {
+            $format = 'webp';
         }
 
         return "https://cdn.discordapp.com/banners/{$this->id}/{$this->attributes['banner']}.{$format}?size={$size}";

@@ -149,7 +149,7 @@ class Channel extends Part
      */
     protected function getIsPrivateAttribute(): bool
     {
-        return array_search($this->type, [self::TYPE_DM, self::TYPE_GROUP]) !== false;
+        return in_array($this->type, [self::TYPE_DM, self::TYPE_GROUP]);
     }
 
     /**

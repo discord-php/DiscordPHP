@@ -55,7 +55,7 @@ class Emoji extends Part
         }
 
         return $this->guild->roles->filter(function ($role) {
-            return array_search($role->id, $this->attributes['roles']) !== false;
+            return in_array($role->id, $this->attributes['roles']);
         });
     }
 
