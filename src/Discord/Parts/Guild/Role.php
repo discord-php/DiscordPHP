@@ -109,8 +109,8 @@ class Role extends Part
 
         $allowed = ['png', 'jpg', 'webp'];
 	
-		if (! in_array(strtolower($format), $allowed)) {
-            $format = 'webp';
+        if (! in_array(strtolower($format), $allowed)) {
+            $format = 'png';
         }
 
         return "https://cdn.discordapp.com/role-icons/{$this->id}/{$this->attributes['icon']}.{$format}?size={$size}";
