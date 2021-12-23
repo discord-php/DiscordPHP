@@ -140,7 +140,7 @@ class User extends Part
 
         $allowed = ['png', 'jpg', 'webp', 'gif'];
 
-		if (in_array(strtolower($format), $allowed)) {
+		if (! in_array(strtolower($format), $allowed)) {
             $format = 'webp';
         }
 
