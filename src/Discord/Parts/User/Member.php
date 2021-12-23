@@ -405,7 +405,7 @@ class Member extends Part
             return null;
         }
 
-		$allowed = ['png', 'jpg', 'webp', 'gif'];
+        $allowed = ['png', 'jpg', 'webp', 'gif'];
 
         if (! in_array(strtolower($format), $allowed)) {
             $format = 'webp';
