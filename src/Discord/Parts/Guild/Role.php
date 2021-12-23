@@ -101,7 +101,7 @@ class Role extends Part
      *
      * @return string|null The URL to the role icon or null.
      */
-    public function getIconAttribute(string $format = 'jpg', int $size = 64)
+    public function getIconAttribute(string $format = 'png', int $size = 64)
     {
         if (is_null($this->attributes['icon'])) {
             return null;
