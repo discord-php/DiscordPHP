@@ -141,7 +141,12 @@ class GuildTemplate extends Part
 
         return $this->http->post(Endpoint::bind(Endpoint::GUILDS_TEMPLATE, $this->code), $options)
             ->then(function ($response) {
-                return $this->factory->create(Guild::class, $response, true);
+                if (! $guild = $this->discord->guilds->offsetGet($response->id)) {
+                    // Does not fill the repositories (e.g. channels)
+                    $guild = $this->factory->create(Guild::class, $response, true);
+                    $this->discord->guilds->push($guild);
+                }
+                return $guild;
             });
     }
 
