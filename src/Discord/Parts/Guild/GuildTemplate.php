@@ -12,8 +12,11 @@
 namespace Discord\Parts\Guild;
 
 use Carbon\Carbon;
+use Discord\Http\Endpoint;
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
+use React\Promise\ExtendedPromiseInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * A Guild Template is a code that when used, creates a guild based on a snapshot of an existing guild.
@@ -111,6 +114,40 @@ class GuildTemplate extends Part
     protected function getUpdatedAtAttribute(): Carbon
     {
         return new Carbon($this->attributes['updated_at']);
+    }
+
+    /**
+     * Creates a guild from this template. Can be used only by bots in less than 10 guilds.
+     *
+     * @param array       $options An array of options.
+     * @param string      $options ['name'] The name of the guild (2-100 characters).
+     * @param string|null $options ['icon'] The base64 128x128 image for the guild icon.
+     *
+     * @return ExtendedPromiseInterface<Guild>
+     */
+    public function createGuild($options = []): ExtendedPromiseInterface
+    {
+        $resolver = new OptionsResolver();
+        $resolver
+            ->setRequired('name')
+            ->setDefined([
+                'name',
+                'icon',
+            ])
+            ->setAllowedTypes('name', 'string')
+            ->setAllowedTypes('icon', 'string');
+
+        $options = $resolver->resolve($options);
+
+        return $this->http->post(Endpoint::bind(Endpoint::GUILDS_TEMPLATE, $this->code), $options)
+            ->then(function ($response) {
+                if (! $guild = $this->discord->guilds->offsetGet($response->id)) {
+                    // Does not fill the repositories (e.g. channels)
+                    $guild = $this->factory->create(Guild::class, $response, true);
+                    $this->discord->guilds->push($guild);
+                }
+                return $guild;
+            });
     }
 
     /**
