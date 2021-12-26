@@ -139,13 +139,29 @@ class GuildTemplate extends Part
 
         $options = $resolver->resolve($options);
 
+        $roles = $channels = [];
+        if (!empty($this->attributes['is_dirty'])) {
+            $roles = (array) $this->attributes['serialized_source_guild']->roles;
+            $channels = (array) $this->attributes['serialized_source_guild']->channels;
+        }
+
         return $this->http->post(Endpoint::bind(Endpoint::GUILDS_TEMPLATE, $this->code), $options)
-            ->then(function ($response) {
+            ->then(function ($response) use ($roles, $channels) {
                 if (! $guild = $this->discord->guilds->offsetGet($response->id)) {
-                    // Does not fill the repositories (e.g. channels)
+                    /** @var Guild */
                     $guild = $this->factory->create(Guild::class, $response, true);
+
+                    foreach ($roles as $role) {
+                        $guild->roles->push($guild->roles->create($role, true));
+                    }
+
+                    foreach ($channels as $channel) {
+                        $guild->channels->push($guild->channels->create($channel, true));
+                    }
+
                     $this->discord->guilds->push($guild);
                 }
+
                 return $guild;
             });
     }
