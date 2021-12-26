@@ -13,6 +13,7 @@ namespace Discord\Parts\Guild;
 
 use Carbon\Carbon;
 use Discord\Http\Endpoint;
+use Discord\Parts\Channel\Channel;
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
 use React\Promise\ExtendedPromiseInterface;
