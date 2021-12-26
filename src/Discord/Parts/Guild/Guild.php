@@ -500,17 +500,23 @@ class Guild extends Part
      * Transfers ownership of the guild to
      * another member.
      *
-     * @param Member|int $member The member to transfer ownership to.
+     * @param Member|int  $member The member to transfer ownership to.
+     * @param string|null $reason Reason for Audit Log.
      *
      * @return ExtendedPromiseInterface
      */
-    public function transferOwnership($member): ExtendedPromiseInterface
+    public function transferOwnership($member, ?string $reason = null): ExtendedPromiseInterface
     {
         if ($member instanceof Member) {
             $member = $member->id;
         }
 
-        return $this->http->patch(Endpoint::bind(Endpoint::GUILD), ['owner_id' => $member])->then(function ($response) use ($member) {
+        $headers = [];
+        if (isset($reason)) {
+            $headers['X-Audit-Log-Reason'] = $reason;
+        }
+
+        return $this->http->patch(Endpoint::bind(Endpoint::GUILD), ['owner_id' => $member], $headers)->then(function ($response) use ($member) {
             if ($response->owner_id != $member) {
                 throw new Exception('Ownership was not transferred correctly.');
             }
@@ -599,10 +605,11 @@ class Guild extends Part
      * and the RHS value is a `Role` object or a string ID, e.g. [1 => 'role_id_1', 3 => 'role_id_3'].
      *
      * @param array $roles
+     * @param string|null  $reason Reason for Audit Log.
      *
      * @return ExtendedPromiseInterface
      */
-    public function updateRolePositions(array $roles): ExtendedPromiseInterface
+    public function updateRolePositions(array $roles, ?string $reason = null): ExtendedPromiseInterface
     {
         $payload = [];
 
@@ -613,7 +620,12 @@ class Guild extends Part
             ];
         }
 
-        return $this->http->patch(Endpoint::bind(Endpoint::GUILD_ROLES, $this->id), $payload)
+        $headers = [];
+        if (isset($reason)) {
+            $headers['X-Audit-Log-Reason'] = $reason;
+        }
+
+        return $this->http->patch(Endpoint::bind(Endpoint::GUILD_ROLES, $this->id), $payload, $headers)
             ->then(function () {
                 return $this;
             });
