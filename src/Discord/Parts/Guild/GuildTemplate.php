@@ -140,7 +140,7 @@ class GuildTemplate extends Part
         $options = $resolver->resolve($options);
 
         $roles = $channels = [];
-        if (!empty($this->attributes['is_dirty'])) {
+        if (isset($this->attributes['is_dirty']) && ! $this->is_dirty) {
             $roles = (array) $this->attributes['serialized_source_guild']->roles;
             $channels = (array) $this->attributes['serialized_source_guild']->channels;
         }
