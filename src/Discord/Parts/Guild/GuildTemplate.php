@@ -141,8 +141,8 @@ class GuildTemplate extends Part
 
         $roles = $channels = [];
         if (isset($this->attributes['is_dirty']) && ! $this->is_dirty) {
-            $roles = (array) $this->attributes['serialized_source_guild']->roles;
-            $channels = (array) $this->attributes['serialized_source_guild']->channels;
+            $roles = $this->attributes['serialized_source_guild']->roles;
+            $channels = $this->attributes['serialized_source_guild']->channels;
         }
 
         return $this->http->post(Endpoint::bind(Endpoint::GUILDS_TEMPLATE, $this->code), $options)
