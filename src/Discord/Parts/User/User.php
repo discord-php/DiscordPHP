@@ -144,12 +144,10 @@ class User extends Part
             if (! in_array(strtolower($format), $allowed)) {
                 $format = 'webp';
             }
+        } elseif (strpos($this->attributes['avatar'], 'a_') === 0) {
+            $format = 'gif';
         } else {
-            if (strpos($this->attributes['avatar'], 'a_') === 0) {
-                $format = 'gif';
-            } else {
-                $format = 'webp';
-            }
+            $format = 'webp';
         }
 
         return "https://cdn.discordapp.com/avatars/{$this->id}/{$this->attributes['avatar']}.{$format}?size={$size}";
@@ -185,12 +183,10 @@ class User extends Part
             if (! in_array(strtolower($format), $allowed)) {
                 $format = 'png';
             }
+        } elseif (strpos($this->attributes['banner'], 'a_') === 0) {
+            $format = 'gif';
         } else {
-            if (strpos($this->attributes['banner'], 'a_') === 0) {
-                $format = 'gif';
-            } else {
-                $format = 'png';
-            }
+            $format = 'png';
         }
 
         return "https://cdn.discordapp.com/banners/{$this->id}/{$this->attributes['banner']}.{$format}?size={$size}";

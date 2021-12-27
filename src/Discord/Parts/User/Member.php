@@ -411,12 +411,10 @@ class Member extends Part
             if (! in_array(strtolower($format), $allowed)) {
                 $format = 'webp';
             }
+        } elseif (strpos($this->attributes['avatar'], 'a_') === 0) {
+            $format = 'gif';
         } else {
-            if (strpos($this->attributes['avatar'], 'a_') === 0) {
-                $format = 'gif';
-            } else {
-                $format = 'webp';
-            }
+            $format = 'webp';
         }
 
         return "https://cdn.discordapp.com/guilds/{$this->guild_id}/users/{$this->id}/avatars/{$this->attributes['avatar']}.{$format}?size={$size}";

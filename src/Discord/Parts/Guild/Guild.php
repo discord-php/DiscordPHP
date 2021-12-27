@@ -296,12 +296,10 @@ class Guild extends Part
             if (! in_array(strtolower($format), $allowed)) {
                 $format = 'webp';
             }
+        } elseif (strpos($this->attributes['icon'], 'a_') === 0) {
+            $format = 'gif';
         } else {
-            if (strpos($this->attributes['icon'], 'a_') === 0) {
-                $format = 'gif';
-            } else {
-                $format = 'webp';
-            }
+            $format = 'webp';
         }
 
         return "https://cdn.discordapp.com/icons/{$this->id}/{$this->attributes['icon']}.{$format}?size={$size}";
