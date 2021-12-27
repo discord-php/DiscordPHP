@@ -394,20 +394,26 @@ class Member extends Part
     /**
      * Returns the guild avatar URL for the member.
      *
-     * @param string $format The image format.
-     * @param int    $size   The size of the image.
+     * @param string|null $format The image format.
+     * @param int         $size   The size of the image.
      *
      * @return string|null The URL to the member avatar or null.
      */
-    public function getAvatarAttribute(string $format = 'webp', int $size = 1024): ?string
+    public function getAvatarAttribute(?string $format = null, int $size = 1024): ?string
     {
         if (! isset($this->attributes['avatar'])) {
             return null;
         }
 
-        $allowed = ['png', 'jpg', 'webp', 'gif'];
+        if (isset($format)) {
+            $allowed = ['png', 'jpg', 'webp', 'gif'];
 
-        if (! in_array(strtolower($format), $allowed)) {
+            if (! in_array(strtolower($format), $allowed)) {
+                $format = 'webp';
+            }
+        } elseif (strpos($this->attributes['avatar'], 'a_') === 0) {
+            $format = 'gif';
+        } else {
             $format = 'webp';
         }
 
