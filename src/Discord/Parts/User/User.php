@@ -125,12 +125,12 @@ class User extends Part
     /**
      * Returns the avatar URL for the client.
      *
-     * @param string $format The image format.
-     * @param int    $size   The size of the image.
+     * @param string|null $format The image format.
+     * @param int         $size   The size of the image.
      *
      * @return string The URL to the clients avatar.
      */
-    public function getAvatarAttribute(string $format = 'webp', int $size = 1024): string
+    public function getAvatarAttribute(?string $format = null, int $size = 1024): string
     {
         if (empty($this->attributes['avatar'])) {
             $avatarDiscrim = (int) $this->discriminator % 5;
@@ -138,10 +138,18 @@ class User extends Part
             return "https://cdn.discordapp.com/embed/avatars/{$avatarDiscrim}.png?size={$size}";
         }
 
-        $allowed = ['png', 'jpg', 'webp', 'gif'];
+        if (isset($format)) {
+            $allowed = ['png', 'jpg', 'webp', 'gif'];
 
-        if (! in_array(strtolower($format), $allowed)) {
-            $format = 'webp';
+            if (! in_array(strtolower($format), $allowed)) {
+                $format = 'webp';
+            }
+        } else {
+            if (strpos($this->attributes['avatar'], 'a_') === 0) {
+                $format = 'gif';
+            } else {
+                $format = 'webp';
+            }
         }
 
         return "https://cdn.discordapp.com/avatars/{$this->id}/{$this->attributes['avatar']}.{$format}?size={$size}";
@@ -160,21 +168,29 @@ class User extends Part
     /**
      * Returns the banner URL for the client.
      *
-     * @param string $format The image format.
-     * @param int    $size   The size of the image.
+     * @param string|null $format The image format.
+     * @param int         $size   The size of the image.
      *
      * @return string|null The URL to the clients banner.
      */
-    public function getBannerAttribute(string $format = 'png', int $size = 600): ?string
+    public function getBannerAttribute(?string $format = null, int $size = 600): ?string
     {
         if (empty($this->attributes['banner'])) {
             return null;
         }
 
-        $allowed = ['png', 'jpg', 'webp', 'gif'];
-	
-        if (! in_array(strtolower($format), $allowed)) {
-            $format = 'png';
+        if (isset($format)) {
+            $allowed = ['png', 'jpg', 'webp', 'gif'];
+
+            if (! in_array(strtolower($format), $allowed)) {
+                $format = 'png';
+            }
+        } else {
+            if (strpos($this->attributes['banner'], 'a_') === 0) {
+                $format = 'gif';
+            } else {
+                $format = 'png';
+            }
         }
 
         return "https://cdn.discordapp.com/banners/{$this->id}/{$this->attributes['banner']}.{$format}?size={$size}";
