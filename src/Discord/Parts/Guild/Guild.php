@@ -279,21 +279,29 @@ class Guild extends Part
     /**
      * Returns the guilds icon.
      *
-     * @param string $format The image format.
-     * @param int    $size   The size of the image.
+     * @param string|null $format The image format.
+     * @param int         $size   The size of the image.
      *
      * @return string|null The URL to the guild icon or null.
      */
-    public function getIconAttribute(string $format = 'webp', int $size = 1024)
+    public function getIconAttribute(?string $format = null, int $size = 1024)
     {
         if (is_null($this->attributes['icon'])) {
             return null;
         }
 
-        $allowed = ['png', 'jpg', 'webp'];
+        if (isset($format)) {
+            $allowed = ['png', 'jpg', 'webp', 'gif'];
 
-        if (! in_array(strtolower($format), $allowed)) {
-            $format = 'webp';
+            if (! in_array(strtolower($format), $allowed)) {
+                $format = 'webp';
+            }
+        } else {
+            if (strpos($this->attributes['icon'], 'a_') === 0) {
+                $format = 'gif';
+            } else {
+                $format = 'webp';
+            }
         }
 
         return "https://cdn.discordapp.com/icons/{$this->id}/{$this->attributes['icon']}.{$format}?size={$size}";
