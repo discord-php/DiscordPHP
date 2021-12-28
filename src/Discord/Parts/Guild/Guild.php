@@ -14,6 +14,7 @@ namespace Discord\Parts\Guild;
 use Carbon\Carbon;
 use Discord\Helpers\Collection;
 use Discord\Http\Endpoint;
+use Discord\Http\Exceptions\NoPermissionsException;
 use Discord\Parts\Part;
 use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
@@ -477,6 +478,12 @@ class Guild extends Part
      */
     public function createRole(array $data = []): ExtendedPromiseInterface
     {
+        $botperms = $this->members->offsetGet($this->discord->id)->getPermissions();
+
+        if (! $botperms->manage_roles) {
+            return \React\Promise\reject(new NoPermissionsException('You do not have permission to manage roles in the specified guild.'));
+        }
+
         return $this->roles->save($this->factory->create(Role::class, $data));
     }
 
