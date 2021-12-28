@@ -286,7 +286,7 @@ class Guild extends Part
      */
     public function getIconAttribute(string $format = 'webp', int $size = 1024)
     {
-        if (is_null($this->attributes['icon'])) {
+        if (! isset($this->attributes['icon'])) {
             return null;
         }
 
@@ -319,7 +319,7 @@ class Guild extends Part
      */
     public function getSplashAttribute(string $format = 'webp', int $size = 2048)
     {
-        if (is_null($this->attributes['splash'])) {
+        if (! isset($this->attributes['splash'])) {
             return null;
         }
 

@@ -111,7 +111,7 @@ class Role extends Part
      */
     public function getIconAttribute(string $format = 'png', int $size = 64)
     {
-        if (is_null($this->attributes['icon'])) {
+        if (! isset($this->attributes['icon'])) {
             return null;
         }
 
