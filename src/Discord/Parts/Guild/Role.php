@@ -24,9 +24,9 @@ use Discord\Parts\Permissions\RolePermission;
  * @property bool           $hoist         Whether the role is hoisted on the sidebar.
  * @property int            $position      The position of the role on the sidebar.
  * @property RolePermission $permissions   The permissions of the role.
- * @property string         $icon          The URL to the role icon.
- * @property string         $icon_hash     The icon hash for the role.
- * @property string         $unicode_emoji The unicode emoji for the role.
+ * @property string|null    $icon          The URL to the role icon.
+ * @property string|null    $icon_hash     The icon hash for the role.
+ * @property string|null    $unicode_emoji The unicode emoji for the role.
  * @property bool           $mentionable   Whether the role is mentionable.
  * @property Guild          $guild         The guild that the role belongs to.
  * @property string         $guild_id      The unique identifier of the guild that the role belongs to.
@@ -90,7 +90,15 @@ class Role extends Part
      */
     public function getCreatableAttributes(): array
     {
-        return [];
+        return [
+            'name' => $this->name,
+            'permissions' => $this->permissions->bitwise,
+            'color' => $this->color,
+            'hoist' => $this->hoist,
+            'icon' => $this->attributes['icon'] ?? null,
+            'unicode_emoji' => $this->unicode_emoji ?? null,
+            'mentionable' => $this->mentionable,
+        ];
     }
 
     /**

@@ -477,13 +477,7 @@ class Guild extends Part
      */
     public function createRole(array $data = []): ExtendedPromiseInterface
     {
-        $rolePart = $this->factory->create(Role::class);
-
-        return $this->roles->save($rolePart)->then(function ($role) use ($data) {
-            $role->fill((array) $data);
-
-            return $this->roles->save($role);
-        });
+        return $this->roles->save($this->factory->create(Role::class, $data));
     }
 
     /**
