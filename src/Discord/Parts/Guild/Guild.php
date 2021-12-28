@@ -14,6 +14,7 @@ namespace Discord\Parts\Guild;
 use Carbon\Carbon;
 use Discord\Helpers\Collection;
 use Discord\Http\Endpoint;
+use Discord\Http\Exceptions\NoPermissionsException;
 use Discord\Parts\Part;
 use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
@@ -286,7 +287,7 @@ class Guild extends Part
      */
     public function getIconAttribute(?string $format = null, int $size = 1024)
     {
-        if (is_null($this->attributes['icon'])) {
+        if (! isset($this->attributes['icon'])) {
             return null;
         }
 
@@ -325,7 +326,7 @@ class Guild extends Part
      */
     public function getSplashAttribute(string $format = 'webp', int $size = 2048)
     {
-        if (is_null($this->attributes['splash'])) {
+        if (! isset($this->attributes['splash'])) {
             return null;
         }
 
@@ -483,13 +484,13 @@ class Guild extends Part
      */
     public function createRole(array $data = []): ExtendedPromiseInterface
     {
-        $rolePart = $this->factory->create(Role::class);
+        $botperms = $this->members->offsetGet($this->discord->id)->getPermissions();
 
-        return $this->roles->save($rolePart)->then(function ($role) use ($data) {
-            $role->fill((array) $data);
+        if (! $botperms->manage_roles) {
+            return \React\Promise\reject(new NoPermissionsException('You do not have permission to manage roles in the specified guild.'));
+        }
 
-            return $this->roles->save($role);
-        });
+        return $this->roles->save($this->factory->create(Role::class, $data));
     }
 
     /**
