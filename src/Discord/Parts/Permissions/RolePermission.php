@@ -50,6 +50,8 @@ namespace Discord\Parts\Permissions;
  * @property bool $change_nickname
  * @property bool $manage_nicknames
  * @property bool $manage_emojis
+ * @property bool $manage_events
+ * @property bool $moderate_members
  */
 class RolePermission extends Permission
 {
