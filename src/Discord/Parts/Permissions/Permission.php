@@ -11,7 +11,6 @@
 
 namespace Discord\Parts\Permissions;
 
-use Brick\Math\BigInteger;
 use Discord\Discord;
 use Discord\Helpers\Bitwise;
 use Discord\Parts\Part;
@@ -28,7 +27,7 @@ use Discord\Parts\Part;
  */
 abstract class Permission extends Part
 {
-    // Note: Bits above 44th must use numeric string for 32 bit compatibility
+    // Note: Bits above 43rd (i.e. 1 << 44) must use numeric string for 32 bit compatibility
 
     /**
      * Array of permissions that only apply to voice channels.
@@ -151,8 +150,8 @@ abstract class Permission extends Part
             }
         }
 
-        if ($bitwise instanceof BigInteger) {
-            return (string) $bitwise;
+        if (! is_int($bitwise)) { // x86
+            return \gmp_strval($bitwise);
         }
 
         return $bitwise;
@@ -166,8 +165,8 @@ abstract class Permission extends Part
     protected function setBitwiseAttribute($bitwise)
     {
         $bitcomparator = function ($bit1, $bit2) {
-            if (PHP_INT_SIZE == 4) {
-                $bit2 = BigInteger::of($bit2);
+            if (PHP_INT_SIZE == 4) { // x86
+                $bit2 = \gmp_init(Bitwise::floatCast($bit2));
             } elseif (is_string($bit1)) {
                 $bit1 = (int) $bit1;
             }

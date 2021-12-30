@@ -311,6 +311,11 @@ class Discord
             trigger_error('DiscordPHP will not run on a webserver. Please use PHP CLI to run a DiscordPHP bot.', E_USER_ERROR);
         }
 
+        // x86 need gmp extension for bit integer operation
+        if (PHP_INT_SIZE == 4 && ! extension_loaded('gmp')) {
+            trigger_error('ext-gmp is not loaded. Permissions will NOT work correctly!', E_USER_WARNING);
+        }
+
         $options = $this->resolveOptions($options);
 
         $this->options = $options;

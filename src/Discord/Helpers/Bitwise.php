@@ -11,76 +11,121 @@
 
 namespace Discord\Helpers;
 
-use Brick\Math\BigInteger;
-
 /**
- * A compat helper to handle bitwise operation in 32 bit php wrapping BigInteger
+ * Polyfill to handle bitwise operation in 32 bit php using ext-gmp
  */
 class Bitwise
 {
     /**
-     * @param BigInteger|int|float|string $a
-     * @param BigInteger|int|float|string $b
+     * @param \GMP|int|string $a
+     * @param \GMP|int|string $b
      *
-     * @return BigInteger|int $a & $b
+     * @return \GMP|int $a & $b
      */
     public static function and($a, $b)
     {
-        return (PHP_INT_SIZE == 4) ? BigInteger::of($a)->and($b) : $a & $b;
+        if (PHP_INT_SIZE == 4) {
+            return \gmp_and(self::floatCast($a), self::floatCast($b));
+        }
+
+        return $a & $b;
     }
 
     /**
-     * @param BigInteger|int|float|string $a
-     * @param BigInteger|int|float|string $b
+     * @param \GMP|int|string $a
+     * @param \GMP|int|string $b
      *
-     * @return BigInteger|int $a | $b
+     * @return \GMP|int $a | $b
      */
     public static function or($a, $b)
     {
-        return (PHP_INT_SIZE == 4) ? BigInteger::of($a)->or($b) : $a | $b;
+        if (PHP_INT_SIZE == 4) {
+            return \gmp_or(self::floatCast($a), self::floatCast($b));
+        }
 
+        return $a | $b;
     }
 
     /**
-     * @param BigInteger|int|float|string $a
-     * @param BigInteger|int|float|string $b
+     * @param \GMP|int|string $a
+     * @param \GMP|int|string $b
      *
-     * @return BigInteger|int $a ^ $b
+     * @return \GMP|int $a ^ $b
      */
     public static function xor($a, $b)
     {
-        return (PHP_INT_SIZE == 4) ? BigInteger::of($a)->xor($b) : $a ^ $b;
+        if (PHP_INT_SIZE == 4) {
+            return \gmp_xor(self::floatCast($a), self::floatCast($b));
+        }
+
+        return $a ^ $b;
     }
 
     /**
-     * @param BigInteger|int|float|string $a
+     * @param \GMP|int|string $a
      *
-     * @return BigInteger|int ~ $a
+     * @return \GMP|int ~ $a
      */
     public static function not($a)
     {
-        return (PHP_INT_SIZE == 4) ? BigInteger::of($a)->not() : ~$a;
+        if (PHP_INT_SIZE == 4) {
+            return \gmp_neg(self::floatCast($a));
+        }
+
+        return ~ $a;
     }
 
     /**
-     * @param BigInteger|int|float|string $a
-     * @param BigInteger|int|float|string $b
+     * @param \GMP|int|string $a
+     * @param int             $b
      *
-     * @return BigInteger|int $a << $b
+     * @return \GMP|int $a << $b
      */
-    public static function shiftLeft($a, $b)
+    public static function shiftLeft($a, int $b)
     {
-        return (PHP_INT_SIZE == 4) ? BigInteger::of($a)->shiftedLeft($b) : $a << $b;
+        if (PHP_INT_SIZE == 4) {
+            return \gmp_mul(self::floatCast($a), \gmp_pow(2, $b));
+        }
+
+        return $a << $b;
     }
 
     /**
-     * @param BigInteger|int|float|string $a
-     * @param BigInteger|int|float|string $b
+     * @param \GMP|int|string $a
+     * @param int             $b
      *
-     * @return BigInteger|int $a >> $b
+     * @return \GMP|int $a >> $b
      */
-    public static function shiftRight($a, $b)
+    public static function shiftRight($a, int $b)
     {
-        return (PHP_INT_SIZE == 4) ? BigInteger::of($a)->shiftedRight($b) : $a >> $b;
+        if (PHP_INT_SIZE == 4) {
+            return \gmp_div(self::floatCast($a), \gmp_pow(2, $b));
+        }
+
+        return $a >> $b;
+    }
+
+    /**
+     * Safely converts float to string, avoiding locale-dependent issues.
+     *
+     * @see https://github.com/brick/math/pull/20
+     *
+     * @param mixed $value if not a float, it is discarded
+     *
+     * @return mixed|string string if value is a float, otherwise discarded
+     */
+    public static function floatCast($value)
+    {
+        // Discard non float
+        if (! is_float($value)) return $value;
+
+        $currentLocale = setlocale(LC_NUMERIC, '0');
+        setlocale(LC_NUMERIC, 'C');
+
+        $result = (string) $value;
+
+        setlocale(LC_NUMERIC, $currentLocale);
+
+        return $result;
     }
 }
