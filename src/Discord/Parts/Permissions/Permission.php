@@ -181,22 +181,22 @@ abstract class Permission extends Part
         }
     }
 
-    public function getUseSlashCommandsAttribute(): bool
+    public function getUseSlashCommandsAttribute()
     {
         return $this->attributes['use_application_commands'] ?? null;
     }
 
-    public function getUsePublicThreadsAttribute(): bool
+    public function getUsePublicThreadsAttribute()
     {
         return $this->attributes['create_public_threads'] ?? null;
     }
 
-    public function getUsePrivateThreadsAttribute(): bool
+    public function getUsePrivateThreadsAttribute()
     {
         return $this->attributes['create_private_threads'] ?? null;
     }
 
-    public function getManageEmojisAttribute(): bool
+    public function getManageEmojisAttribute()
     {
         return $this->attributes['manage_emojis_and_stickers'] ?? null;
     }
