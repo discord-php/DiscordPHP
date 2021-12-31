@@ -1,25 +1,37 @@
 <?php
+
+/**
+ * Example Bot with Discord-PHP
+ *
+ * When an User says "ping", the Bot will reply "pong"
+ *
+ * Run this example bot from main directory using command:
+ * php examples/ping.php
+ */
+
+include __DIR__.'/vendor/autoload.php';
+
 use Discord\Discord;
 use Discord\Parts\Channel\Message;
-use Psr\Http\Message\ResponseInterface;
-use React\EventLoop\Factory;
-use React\Http\Browser;
 
-require __DIR__ . '/vendor/autoload.php';
-
-$loop = Factory::create();
-
-$browser = new Browser($loop);
-
+// Create a $discord BOT
 $discord = new Discord([
-    'token' => '',
-    'loop' => $loop,
+    'token' => '', // Put your Bot token here (https://discord.com/developers/applications/)
 ]);
 
-$discord->on('message', function (Message $message, Discord $discord) use ($browser) {
-    if ($message->content == 'ping') {
-        $message->reply("pong");
-    }
+// When the Bot is ready
+$discord->on('ready', function (Discord $discord) {
+
+    // Listen for messages
+    $discord->on('message', function (Message $message, Discord $discord) {
+        // If message is "ping" and not from a Bot
+        if ($message->content == 'ping' && ! $message->author->bot) {
+            // Reply with "pong"
+            $message->reply('pong');
+        }
+    });
+
 });
 
+// Start the Bot
 $discord->run();
