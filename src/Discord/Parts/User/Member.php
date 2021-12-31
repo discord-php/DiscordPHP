@@ -13,6 +13,7 @@ namespace Discord\Parts\User;
 
 use Carbon\Carbon;
 use Discord\Builders\MessageBuilder;
+use Discord\Helpers\Bitwise;
 use Discord\Helpers\Collection;
 use Discord\Http\Endpoint;
 use Discord\Parts\Channel\Channel;
@@ -21,6 +22,7 @@ use Discord\Parts\Channel\Overwrite;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Guild\Role;
 use Discord\Parts\Part;
+use Discord\Parts\Permissions\Permission;
 use Discord\Parts\Permissions\RolePermission;
 use Discord\Parts\WebSockets\PresenceUpdate;
 use React\Promise\ExtendedPromiseInterface;
@@ -216,14 +218,14 @@ class Member extends Part
         $bitwise = $this->guild->roles->get('id', $this->guild_id)->permissions->bitwise;
 
         if ($this->guild->owner_id == $this->id) {
-            $bitwise |= 0x8; // Add administrator permission
+            $bitwise = Bitwise::set($bitwise, Permission::ROLE_PERMISSIONS['administrator']); // Add administrator permission
         } else {
             $roles = [];
 
             /* @var Role */
             foreach ($this->roles ?? [] as $role) {
                 $roles[] = $role->id;
-                $bitwise |= $role->permissions->bitwise;
+                $bitwise = Bitwise::or($bitwise, $role->permissions->bitwise);
             }
         }
 
@@ -241,8 +243,8 @@ class Member extends Part
         if ($channel) {
             /* @var Overwrite */
             if ($overwrite = $channel->overwrites->get('id', $this->guild->id)) {
-                $bitwise |= $overwrite->allow->bitwise;
-                $bitwise &= ~($overwrite->deny->bitwise);
+                $bitwise = Bitwise::or($bitwise, $overwrite->allow->bitwise);
+                $bitwise = Bitwise::and($bitwise, Bitwise::not($overwrite->deny->bitwise));
             }
 
             /* @var Overwrite */
@@ -251,14 +253,14 @@ class Member extends Part
                     continue;
                 }
 
-                $bitwise |= $overwrite->allow->bitwise;
-                $bitwise &= ~($overwrite->deny->bitwise);
+                $bitwise = Bitwise::or($bitwise, $overwrite->allow->bitwise);
+                $bitwise = Bitwise::and($bitwise, Bitwise::not($overwrite->deny->bitwise));
             }
 
             /* @var Overwrite */
             if ($overwrite = $channel->overwrites->get('id', $this->id)) {
-                $bitwise |= $overwrite->allow->bitwise;
-                $bitwise &= ~($overwrite->deny->bitwise);
+                $bitwise = Bitwise::or($bitwise, $overwrite->allow->bitwise);
+                $bitwise = Bitwise::and($bitwise, Bitwise::not($overwrite->deny->bitwise));
             }
         }
 

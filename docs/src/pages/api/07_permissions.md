@@ -87,4 +87,4 @@ Represents permissions for roles.
 - `view_guild_insights`
 - `change_nicknames`
 - `manage_nicknames`
-- `manage_emojis`
+- `manage_emojis_and_stickers`
