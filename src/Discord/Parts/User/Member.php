@@ -22,6 +22,7 @@ use Discord\Parts\Channel\Overwrite;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Guild\Role;
 use Discord\Parts\Part;
+use Discord\Parts\Permissions\Permission;
 use Discord\Parts\Permissions\RolePermission;
 use Discord\Parts\WebSockets\PresenceUpdate;
 use React\Promise\ExtendedPromiseInterface;
@@ -217,7 +218,7 @@ class Member extends Part
         $bitwise = $this->guild->roles->get('id', $this->guild_id)->permissions->bitwise;
 
         if ($this->guild->owner_id == $this->id) {
-            $bitwise = Bitwise::or($bitwise, 0x8); // Add administrator permission
+            $bitwise = Bitwise::set($bitwise, Permission::ROLE_PERMISSIONS['administrator']); // Add administrator permission
         } else {
             $roles = [];
 

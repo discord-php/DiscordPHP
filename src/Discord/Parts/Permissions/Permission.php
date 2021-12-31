@@ -27,25 +27,23 @@ use Discord\Parts\Part;
  */
 abstract class Permission extends Part
 {
-    // Note: Bits above 43rd (i.e. 1 << 44) must use numeric string for 32 bit compatibility
-
     /**
      * Array of permissions that only apply to voice channels.
      *
      * @var array
      */
     public const VOICE_PERMISSIONS = [
-        'priority_speaker' => 0x100,
-        'stream' => 0x200,
-        'connect' => 0x100000,
-        'speak' => 0x200000,
-        'mute_members' => 0x400000,
-        'deafen_members' => 0x800000,
-        'move_members' => 0x1000000,
-        'use_vad' => 0x2000000,
-        'request_to_speak' => 0x100000000,
-        'manage_events' => 0x200000000,
-        'start_embedded_activities' => 0x8000000000,
+        'priority_speaker' => 8,
+        'stream' => 9,
+        'connect' => 20,
+        'speak' => 21,
+        'mute_members' => 22,
+        'deafen_members' => 23,
+        'move_members' => 24,
+        'use_vad' => 25,
+        'request_to_speak' => 32,
+        'manage_events' => 33,
+        'start_embedded_activities' => 39,
     ];
 
     /**
@@ -54,21 +52,21 @@ abstract class Permission extends Part
      * @var array
      */
     public const TEXT_PERMISSIONS = [
-        'add_reactions' => 0x40,
-        'send_messages' => 0x800,
-        'send_tts_messages' => 0x1000,
-        'manage_messages' => 0x2000,
-        'embed_links' => 0x4000,
-        'attach_files' => 0x8000,
-        'read_message_history' => 0x10000,
-        'mention_everyone' => 0x20000,
-        'use_external_emojis' => 0x40000,
-        'use_slash_commands' => 0x80000000,
-        'manage_threads' => 0x400000000,
-        'use_public_threads' => 0x800000000,
-        'use_private_threads' => 0x1000000000,
-        'use_external_stickers' => 0x2000000000,
-        'send_messages_in_threads' => 0x4000000000,
+        'add_reactions' => 6,
+        'send_messages' => 11,
+        'send_tts_messages' => 12,
+        'manage_messages' => 13,
+        'embed_links' => 14,
+        'attach_files' => 15,
+        'read_message_history' => 16,
+        'mention_everyone' => 17,
+        'use_external_emojis' => 18,
+        'use_slash_commands' => 31,
+        'manage_threads' => 34,
+        'use_public_threads' => 35,
+        'use_private_threads' => 36,
+        'use_external_stickers' => 37,
+        'send_messages_in_threads' => 38,
     ];
 
     /**
@@ -77,17 +75,17 @@ abstract class Permission extends Part
      * @var array
      */
     public const ROLE_PERMISSIONS = [
-        'kick_members' => 0x2,
-        'ban_members' => 0x4,
-        'administrator' => 0x8,
-        'manage_guild' => 0x20,
-        'view_audit_log' => 0x80,
-        'view_guild_insights' => 0x80000,
-        'change_nickname' => 0x4000000,
-        'manage_nicknames' => 0x8000000,
-        'manage_emojis' => 0x40000000,
-        'manage_events' => 0x200000000,
-        'moderate_members' => 0x10000000000,
+        'kick_members' => 1,
+        'ban_members' => 2,
+        'administrator' => 3,
+        'manage_guild' => 5,
+        'view_audit_log' => 7,
+        'view_guild_insights' => 19,
+        'change_nickname' => 26,
+        'manage_nicknames' => 27,
+        'manage_emojis' => 30,
+        'manage_events' => 33,
+        'moderate_members' => 40,
     ];
 
     /**
@@ -96,11 +94,11 @@ abstract class Permission extends Part
      * @var array
      */
     public const ALL_PERMISSIONS = [
-        'create_instant_invite' => 0x1,
-        'manage_channels' => 0x10,
-        'view_channel' => 0x400,
-        'manage_roles' => 0x10000000,
-        'manage_webhooks' => 0x20000000,
+        'create_instant_invite' => 0,
+        'manage_channels' => 4,
+        'view_channel' => 10,
+        'manage_roles' => 28,
+        'manage_webhooks' => 29,
     ];
 
     /**
@@ -144,14 +142,20 @@ abstract class Permission extends Part
     {
         $bitwise = 0;
 
-        foreach ($this->permissions as $permission => $value) {
-            if ($this->attributes[$permission]) {
-                $bitwise = Bitwise::or($bitwise, $value);
+        if (Bitwise::$is_32_gmp) { // x86
+            $bitwise = \gmp_init(0);
+
+            foreach ($this->permissions as $permission => $value) {
+                \gmp_setbit($bitwise, $value, $this->attributes[$permission]);
             }
+
+            return \gmp_strval($bitwise);
         }
 
-        if (! is_int($bitwise)) { // x86
-            return \gmp_strval($bitwise);
+        foreach ($this->permissions as $permission => $value) {
+            if ($this->attributes[$permission]) {
+                $bitwise |= 1 << $value;
+            }
         }
 
         return $bitwise;
@@ -164,18 +168,12 @@ abstract class Permission extends Part
      */
     protected function setBitwiseAttribute($bitwise)
     {
-        $bitcomparator = function ($bit1, $bit2) {
-            if (PHP_INT_SIZE == 4) { // x86
-                $bit2 = \gmp_init(Bitwise::floatCast($bit2));
-            } elseif (is_string($bit1)) {
-                $bit1 = (int) $bit1;
-            }
-
-            return (Bitwise::and($bit1, $bit2)) == $bit2;
-        };
+        if (PHP_INT_SIZE === 8 && is_string($bitwise)) { // x64
+            $bitwise = (int) $bitwise;
+        }
 
         foreach ($this->permissions as $permission => $value) {
-            if ($bitcomparator($bitwise, $value)) {
+            if (Bitwise::test($bitwise, $value)) {
                 $this->attributes[$permission] = true;
             } else {
                 $this->attributes[$permission] = false;

@@ -16,6 +16,8 @@ namespace Discord\Helpers;
  */
 class Bitwise
 {
+    public static $is_32_gmp = false;
+
     /**
      * @param \GMP|int|string $a
      * @param \GMP|int|string $b
@@ -24,7 +26,7 @@ class Bitwise
      */
     public static function and($a, $b)
     {
-        if (PHP_INT_SIZE == 4) {
+        if (self::$is_32_gmp) {
             return \gmp_and(self::floatCast($a), self::floatCast($b));
         }
 
@@ -39,7 +41,7 @@ class Bitwise
      */
     public static function or($a, $b)
     {
-        if (PHP_INT_SIZE == 4) {
+        if (self::$is_32_gmp) {
             return \gmp_or(self::floatCast($a), self::floatCast($b));
         }
 
@@ -54,7 +56,7 @@ class Bitwise
      */
     public static function xor($a, $b)
     {
-        if (PHP_INT_SIZE == 4) {
+        if (self::$is_32_gmp) {
             return \gmp_xor(self::floatCast($a), self::floatCast($b));
         }
 
@@ -68,7 +70,7 @@ class Bitwise
      */
     public static function not($a)
     {
-        if (PHP_INT_SIZE == 4) {
+        if (self::$is_32_gmp) {
             return \gmp_neg(self::floatCast($a));
         }
 
@@ -83,7 +85,7 @@ class Bitwise
      */
     public static function shiftLeft($a, int $b)
     {
-        if (PHP_INT_SIZE == 4) {
+        if (self::$is_32_gmp) {
             return \gmp_mul(self::floatCast($a), \gmp_pow(2, $b));
         }
 
@@ -98,11 +100,41 @@ class Bitwise
      */
     public static function shiftRight($a, int $b)
     {
-        if (PHP_INT_SIZE == 4) {
+        if (self::$is_32_gmp) {
             return \gmp_div(self::floatCast($a), \gmp_pow(2, $b));
         }
 
         return $a >> $b;
+    }
+
+    /**
+     * @param \GMP|int|string $a
+     * @param int             $b
+     *
+     * @return bool $a & (1 << $b)
+     */
+    public static function test($a, int $b): bool
+    {
+        if (self::$is_32_gmp) {
+            return \gmp_testbit(self::floatCast($a), $b);
+        }
+
+        return $a & (1 << $b);
+    }
+
+    /**
+     * @param \GMP|int|string $a
+     * @param int             $b
+     *
+     * @return \GMP|int $a |= (1 << $b)
+     */
+    public static function set($a, int $b)
+    {
+        if (self::$is_32_gmp) {
+            return \gmp_setbit(\gmp_init(self::floatCast($a)), $b);
+        }
+
+        return $a |= (1 << $b);
     }
 
     /**

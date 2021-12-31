@@ -13,6 +13,7 @@ namespace Discord;
 
 use Discord\Exceptions\IntentException;
 use Discord\Factory\Factory;
+use Discord\Helpers\Bitwise;
 use Discord\Http\Http;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\OAuth\Application;
@@ -311,9 +312,13 @@ class Discord
             trigger_error('DiscordPHP will not run on a webserver. Please use PHP CLI to run a DiscordPHP bot.', E_USER_ERROR);
         }
 
-        // x86 need gmp extension for bit integer operation
-        if (PHP_INT_SIZE == 4 && ! extension_loaded('gmp')) {
-            trigger_error('ext-gmp is not loaded. Permissions will NOT work correctly!', E_USER_WARNING);
+        // x86 need gmp extension for big integer operation
+        if (PHP_INT_SIZE === 4) {
+            if (! extension_loaded('gmp')) {
+                trigger_error('ext-gmp is not loaded. Permissions will NOT work correctly!', E_USER_WARNING);
+            } else {
+                Bitwise::$is_32_gmp = true;
+            }
         }
 
         $options = $this->resolveOptions($options);
