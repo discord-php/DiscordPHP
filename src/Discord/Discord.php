@@ -13,6 +13,7 @@ namespace Discord;
 
 use Discord\Exceptions\IntentException;
 use Discord\Factory\Factory;
+use Discord\Helpers\Bitwise;
 use Discord\Http\Http;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\OAuth\Application;
@@ -309,6 +310,15 @@ class Discord
     {
         if (php_sapi_name() !== 'cli') {
             trigger_error('DiscordPHP will not run on a webserver. Please use PHP CLI to run a DiscordPHP bot.', E_USER_ERROR);
+        }
+
+        // x86 need gmp extension for big integer operation
+        if (PHP_INT_SIZE === 4) {
+            if (! extension_loaded('gmp')) {
+                trigger_error('ext-gmp is not loaded. Permissions will NOT work correctly!', E_USER_WARNING);
+            } else {
+                Bitwise::$is_32_gmp = true;
+            }
         }
 
         $options = $this->resolveOptions($options);
@@ -714,7 +724,7 @@ class Discord
                 Event::GUILD_CREATE,
             ];
 
-            if (! $this->emittedReady && (array_search($data->t, $parse) === false)) {
+            if (! $this->emittedReady && (! in_array($data->t, $parse))) {
                 $this->unparsedPackets[] = function () use (&$handler, &$deferred, &$data) {
                     $handler->handle($deferred, $data->d);
                 };
@@ -917,7 +927,7 @@ class Discord
 
             if (is_array($this->options['loadAllMembers'])) {
                 foreach ($this->largeGuilds as $key => $guild) {
-                    if (array_search($guild, $this->options['loadAllMembers']) === false) {
+                    if (! in_array($guild, $this->options['loadAllMembers'])) {
                         $this->logger->debug('not fetching members for guild ID '.$guild);
                         unset($this->largeGuilds[$key]);
                     }
@@ -1073,7 +1083,9 @@ class Discord
             }
         }
 
-        if (! array_search($status, ['online', 'dnd', 'idle', 'invisible', 'offline'])) {
+        $allowed = ['online', 'dnd', 'idle', 'invisible', 'offline'];
+
+		if (! in_array($status, $allowed)) {
             $status = 'online';
         }
 
@@ -1455,7 +1467,7 @@ class Discord
     {
         $allowed = ['loop', 'options', 'logger', 'http'];
 
-        if (array_search($name, $allowed) !== false) {
+        if (in_array($name, $allowed)) {
             return $this->{$name};
         }
 

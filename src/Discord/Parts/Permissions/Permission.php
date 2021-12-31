@@ -12,17 +12,18 @@
 namespace Discord\Parts\Permissions;
 
 use Discord\Discord;
+use Discord\Helpers\Bitwise;
 use Discord\Parts\Part;
 
 /**
  * Permission represents a set of permissions for a given role or overwrite.
  *
- * @property int  $bitwise
- * @property bool $create_instant_invite
- * @property bool $manage_channels
- * @property bool $view_channel
- * @property bool $manage_roles
- * @property bool $manage_webhooks
+ * @property int|string $bitwise
+ * @property bool       $create_instant_invite
+ * @property bool       $manage_channels
+ * @property bool       $view_channel
+ * @property bool       $manage_roles
+ * @property bool       $manage_webhooks
  */
 abstract class Permission extends Part
 {
@@ -32,17 +33,17 @@ abstract class Permission extends Part
      * @var array
      */
     public const VOICE_PERMISSIONS = [
-        'priority_speaker' => (1 << 8),
-        'stream' => (1 << 9),
-        'connect' => (1 << 20),
-        'speak' => (1 << 21),
-        'mute_members' => (1 << 22),
-        'deafen_members' => (1 << 23),
-        'move_members' => (1 << 24),
-        'use_vad' => (1 << 25),
-        'request_to_speak' => (1 << 32),
-        'manage_events' => (1 << 33),
-        'start_embedded_activities' => (1 << 39),
+        'priority_speaker' => 8,
+        'stream' => 9,
+        'connect' => 20,
+        'speak' => 21,
+        'mute_members' => 22,
+        'deafen_members' => 23,
+        'move_members' => 24,
+        'use_vad' => 25,
+        'request_to_speak' => 32,
+        'manage_events' => 33,
+        'start_embedded_activities' => 39,
     ];
 
     /**
@@ -51,21 +52,21 @@ abstract class Permission extends Part
      * @var array
      */
     public const TEXT_PERMISSIONS = [
-        'add_reactions' => (1 << 6),
-        'send_messages' => (1 << 11),
-        'send_tts_messages' => (1 << 12),
-        'manage_messages' => (1 << 13),
-        'embed_links' => (1 << 14),
-        'attach_files' => (1 << 15),
-        'read_message_history' => (1 << 16),
-        'mention_everyone' => (1 << 17),
-        'use_external_emojis' => (1 << 18),
-        'use_slash_commands' => (1 << 31),
-        'manage_threads' => (1 << 34),
-        'use_public_threads' => (1 << 35),
-        'use_private_threads' => (1 << 36),
-        'use_external_stickers' => (1 << 37),
-        'send_messages_in_threads' => (1 << 38),
+        'add_reactions' => 6,
+        'send_messages' => 11,
+        'send_tts_messages' => 12,
+        'manage_messages' => 13,
+        'embed_links' => 14,
+        'attach_files' => 15,
+        'read_message_history' => 16,
+        'mention_everyone' => 17,
+        'use_external_emojis' => 18,
+        'use_application_commands' => 31,
+        'manage_threads' => 34,
+        'create_public_threads' => 35,
+        'create_private_threads' => 36,
+        'use_external_stickers' => 37,
+        'send_messages_in_threads' => 38,
     ];
 
     /**
@@ -74,16 +75,17 @@ abstract class Permission extends Part
      * @var array
      */
     public const ROLE_PERMISSIONS = [
-        'kick_members' => (1 << 1),
-        'ban_members' => (1 << 2),
-        'administrator' => (1 << 3),
-        'manage_guild' => (1 << 5),
-        'view_audit_log' => (1 << 7),
-        'view_guild_insights' => (1 << 19),
-        'change_nickname' => (1 << 26),
-        'manage_nicknames' => (1 << 27),
-        'manage_emojis' => (1 << 30),
-        'moderate_members' => (1 << 40),
+        'kick_members' => 1,
+        'ban_members' => 2,
+        'administrator' => 3,
+        'manage_guild' => 5,
+        'view_audit_log' => 7,
+        'view_guild_insights' => 19,
+        'change_nickname' => 26,
+        'manage_nicknames' => 27,
+        'manage_emojis_and_stickers' => 30,
+        'manage_events' => 33,
+        'moderate_members' => 40,
     ];
 
     /**
@@ -92,11 +94,11 @@ abstract class Permission extends Part
      * @var array
      */
     public const ALL_PERMISSIONS = [
-        'create_instant_invite' => (1 << 0),
-        'manage_channels' => (1 << 4),
-        'view_channel' => (1 << 10),
-        'manage_roles' => (1 << 28),
-        'manage_webhooks' => (1 << 29),
+        'create_instant_invite' => 0,
+        'manage_channels' => 4,
+        'view_channel' => 10,
+        'manage_roles' => 28,
+        'manage_webhooks' => 29,
     ];
 
     /**
@@ -134,15 +136,25 @@ abstract class Permission extends Part
     /**
      * Gets the bitwise attribute of the permission.
      *
-     * @return int
+     * @return int|string
      */
-    protected function getBitwiseAttribute(): int
+    protected function getBitwiseAttribute()
     {
         $bitwise = 0;
 
+        if (Bitwise::$is_32_gmp) { // x86
+            $bitwise = \gmp_init(0);
+
+            foreach ($this->permissions as $permission => $value) {
+                \gmp_setbit($bitwise, $value, $this->attributes[$permission]);
+            }
+
+            return \gmp_strval($bitwise);
+        }
+
         foreach ($this->permissions as $permission => $value) {
             if ($this->attributes[$permission]) {
-                $bitwise |= $value;
+                $bitwise |= 1 << $value;
             }
         }
 
@@ -156,16 +168,96 @@ abstract class Permission extends Part
      */
     protected function setBitwiseAttribute($bitwise)
     {
-        if (is_string($bitwise)) {
+        if (PHP_INT_SIZE === 8 && is_string($bitwise)) { // x64
             $bitwise = (int) $bitwise;
         }
 
         foreach ($this->permissions as $permission => $value) {
-            if (($bitwise & $value) == $value) {
+            if (Bitwise::test($bitwise, $value)) {
                 $this->attributes[$permission] = true;
             } else {
                 $this->attributes[$permission] = false;
             }
         }
+    }
+
+    /**
+     * @inheritdoc
+     *
+     * @deprecated 7.0.0 Use `use_application_commands`
+     */
+    public function getUseSlashCommandsAttribute()
+    {
+        return $this->attributes['use_application_commands'] ?? null;
+    }
+
+    /**
+     * @inheritdoc
+     *
+     * @deprecated 7.0.0 Use `create_public_threads`
+     */
+    public function getUsePublicThreadsAttribute()
+    {
+        return $this->attributes['create_public_threads'] ?? null;
+    }
+
+    /**
+     * @inheritdoc
+     *
+     * @deprecated 7.0.0 Use `create_private_threads`
+     */
+    public function getUsePrivateThreadsAttribute()
+    {
+        return $this->attributes['create_private_threads'] ?? null;
+    }
+
+    /**
+     * @inheritdoc
+     *
+     * @deprecated 7.0.0 Use `manage_emojis_and_stickers`
+     */
+    public function getManageEmojisAttribute()
+    {
+        return $this->attributes['manage_emojis_and_stickers'] ?? null;
+    }
+
+    /**
+     * @inheritdoc
+     *
+     * @deprecated 7.0.0 Use `use_application_commands`
+     */
+    public function setUseSlashCommandsAttribute($value)
+    {
+        return $this->attributes['use_application_commands'] = $value;
+    }
+
+    /**
+     * @inheritdoc
+     *
+     * @deprecated 7.0.0 Use `create_public_threads`
+     */
+    public function setUsePublicThreadsAttribute($value)
+    {
+        return $this->attributes['create_public_threads'] = $value;
+    }
+
+    /**
+     * @inheritdoc
+     *
+     * @deprecated 7.0.0 Use `create_private_threads`
+     */
+    public function setUsePrivateThreadsAttribute($value)
+    {
+        return $this->attributes['create_private_threads'] = $value;
+    }
+
+    /**
+     * @inheritdoc
+     *
+     * @deprecated 7.0.0 Use `manage_emojis_and_stickers`
+     */
+    public function setManageEmojisAttribute($value)
+    {
+        return $this->attributes['manage_emojis_and_stickers'] = $value;
     }
 }

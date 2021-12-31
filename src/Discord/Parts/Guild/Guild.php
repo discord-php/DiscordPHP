@@ -14,6 +14,7 @@ namespace Discord\Parts\Guild;
 use Carbon\Carbon;
 use Discord\Helpers\Collection;
 use Discord\Http\Endpoint;
+use Discord\Http\Exceptions\NoPermissionsException;
 use Discord\Parts\Part;
 use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
@@ -279,19 +280,27 @@ class Guild extends Part
     /**
      * Returns the guilds icon.
      *
-     * @param string $format The image format.
-     * @param int    $size   The size of the image.
+     * @param string|null $format The image format.
+     * @param int         $size   The size of the image.
      *
      * @return string|null The URL to the guild icon or null.
      */
-    public function getIconAttribute(string $format = 'jpg', int $size = 1024)
+    public function getIconAttribute(?string $format = null, int $size = 1024)
     {
-        if (is_null($this->attributes['icon'])) {
+        if (! isset($this->attributes['icon'])) {
             return null;
         }
 
-        if (false === array_search($format, ['png', 'jpg', 'webp'])) {
-            $format = 'jpg';
+        if (isset($format)) {
+            $allowed = ['png', 'jpg', 'webp', 'gif'];
+
+            if (! in_array(strtolower($format), $allowed)) {
+                $format = 'webp';
+            }
+        } elseif (strpos($this->attributes['icon'], 'a_') === 0) {
+            $format = 'gif';
+        } else {
+            $format = 'webp';
         }
 
         return "https://cdn.discordapp.com/icons/{$this->id}/{$this->attributes['icon']}.{$format}?size={$size}";
@@ -315,14 +324,16 @@ class Guild extends Part
      *
      * @return string|null The URL to the guild splash or null.
      */
-    public function getSplashAttribute(string $format = 'jpg', int $size = 2048)
+    public function getSplashAttribute(string $format = 'webp', int $size = 2048)
     {
-        if (is_null($this->attributes['splash'])) {
+        if (! isset($this->attributes['splash'])) {
             return null;
         }
 
-        if (false === array_search($format, ['png', 'jpg', 'webp'])) {
-            $format = 'jpg';
+        $allowed = ['png', 'jpg', 'webp'];
+
+        if (! in_array(strtolower($format), $allowed)) {
+            $format = 'webp';
         }
 
         return "https://cdn.discordapp.com/splashes/{$this->id}/{$this->attributes['splash']}.{$format}?size={$size}";
@@ -473,13 +484,13 @@ class Guild extends Part
      */
     public function createRole(array $data = []): ExtendedPromiseInterface
     {
-        $rolePart = $this->factory->create(Role::class);
+        $botperms = $this->members->offsetGet($this->discord->id)->getPermissions();
 
-        return $this->roles->save($rolePart)->then(function ($role) use ($data) {
-            $role->fill((array) $data);
+        if (! $botperms->manage_roles) {
+            return \React\Promise\reject(new NoPermissionsException('You do not have permission to manage roles in the specified guild.'));
+        }
 
-            return $this->roles->save($role);
-        });
+        return $this->roles->save($this->factory->create(Role::class, $data));
     }
 
     /**

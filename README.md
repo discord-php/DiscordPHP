@@ -26,6 +26,7 @@ Before you start using this Library, you **need** to know how PHP works, you nee
 
 - PHP 7.4
 	- We recommend PHP 8.0 as it will be the most stable and most performant.
+	- x86 (32 bit) PHP requires `ext-gmp` [extension](https://www.php.net/manual/en/book.gmp.php) enabled for handling Permissions.
 - Composer
 - `ext-json`
 - `ext-zlib`
