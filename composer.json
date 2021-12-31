@@ -44,7 +44,7 @@
         "ext-libev": "For a faster, and more performant loop.",
         "ext-event": "For a faster, and more performant loop.",
         "ext-mbstring": "For accurate calculations of string length when handling non-english characters.",
-        "ext-gmp": "For 32 bit php to deal with permissions and other 64 bit values"
+        "ext-gmp": "For Permissions and 64 bit calculations on x86 (32 bit) PHP."
     },
     "scripts": {
         "cs": ["./vendor/bin/php-cs-fixer fix"],
