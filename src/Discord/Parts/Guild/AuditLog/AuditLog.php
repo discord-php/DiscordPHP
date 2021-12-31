@@ -60,7 +60,7 @@ class AuditLog extends Part
      *
      * @return Collection|Webhook[]
      */
-    protected function getWebhookAttribute(): Collection
+    protected function getWebhooksAttribute(): Collection
     {
         $collection = Collection::for(Webhook::class);
 
