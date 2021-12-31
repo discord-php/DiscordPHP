@@ -16,7 +16,7 @@ namespace Discord\Helpers;
  */
 class Bitwise
 {
-    public static $is_32_gmp = false;
+    public static bool $is_32_gmp = false;
 
     /**
      * @param \GMP|int|string $a
