@@ -181,23 +181,83 @@ abstract class Permission extends Part
         }
     }
 
+    /**
+     * @inheritdoc
+     *
+     * @deprecated 7.0.0 Use `use_application_commands`
+     */
     public function getUseSlashCommandsAttribute()
     {
         return $this->attributes['use_application_commands'] ?? null;
     }
 
+    /**
+     * @inheritdoc
+     *
+     * @deprecated 7.0.0 Use `create_public_threads`
+     */
     public function getUsePublicThreadsAttribute()
     {
         return $this->attributes['create_public_threads'] ?? null;
     }
 
+    /**
+     * @inheritdoc
+     *
+     * @deprecated 7.0.0 Use `create_private_threads`
+     */
     public function getUsePrivateThreadsAttribute()
     {
         return $this->attributes['create_private_threads'] ?? null;
     }
 
+    /**
+     * @inheritdoc
+     *
+     * @deprecated 7.0.0 Use `manage_emojis_and_stickers`
+     */
     public function getManageEmojisAttribute()
     {
         return $this->attributes['manage_emojis_and_stickers'] ?? null;
+    }
+
+    /**
+     * @inheritdoc
+     *
+     * @deprecated 7.0.0 Use `use_application_commands`
+     */
+    public function setUseSlashCommandsAttribute($value)
+    {
+        return $this->attributes['use_application_commands'] = $value;
+    }
+
+    /**
+     * @inheritdoc
+     *
+     * @deprecated 7.0.0 Use `create_public_threads`
+     */
+    public function setUsePublicThreadsAttribute($value)
+    {
+        return $this->attributes['create_public_threads'] = $value;
+    }
+
+    /**
+     * @inheritdoc
+     *
+     * @deprecated 7.0.0 Use `create_private_threads`
+     */
+    public function setUsePrivateThreadsAttribute($value)
+    {
+        return $this->attributes['create_private_threads'] = $value;
+    }
+
+    /**
+     * @inheritdoc
+     *
+     * @deprecated 7.0.0 Use `manage_emojis_and_stickers`
+     */
+    public function setManageEmojisAttribute($value)
+    {
+        return $this->attributes['manage_emojis_and_stickers'] = $value;
     }
 }
