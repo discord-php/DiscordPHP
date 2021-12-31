@@ -61,10 +61,10 @@ abstract class Permission extends Part
         'read_message_history' => 16,
         'mention_everyone' => 17,
         'use_external_emojis' => 18,
-        'use_slash_commands' => 31,
+        'use_application_commands' => 31,
         'manage_threads' => 34,
-        'use_public_threads' => 35,
-        'use_private_threads' => 36,
+        'create_public_threads' => 35,
+        'create_private_threads' => 36,
         'use_external_stickers' => 37,
         'send_messages_in_threads' => 38,
     ];
@@ -83,7 +83,7 @@ abstract class Permission extends Part
         'view_guild_insights' => 19,
         'change_nickname' => 26,
         'manage_nicknames' => 27,
-        'manage_emojis' => 30,
+        'manage_emojis_and_stickers' => 30,
         'manage_events' => 33,
         'moderate_members' => 40,
     ];
@@ -179,5 +179,25 @@ abstract class Permission extends Part
                 $this->attributes[$permission] = false;
             }
         }
+    }
+
+    public function getUseSlashCommandsAttribute(): bool
+    {
+        return $this->attributes['use_application_commands'] ?? null;
+    }
+
+    public function getUsePublicThreadsAttribute(): bool
+    {
+        return $this->attributes['create_public_threads'] ?? null;
+    }
+
+    public function getUsePrivateThreadsAttribute(): bool
+    {
+        return $this->attributes['create_private_threads'] ?? null;
+    }
+
+    public function getManageEmojisAttribute(): bool
+    {
+        return $this->attributes['manage_emojis_and_stickers'] ?? null;
     }
 }
