@@ -313,12 +313,8 @@ class Discord
         }
 
         // x86 need gmp extension for big integer operation
-        if (PHP_INT_SIZE === 4) {
-            if (! extension_loaded('gmp')) {
-                trigger_error('ext-gmp is not loaded. Permissions will NOT work correctly!', E_USER_WARNING);
-            } else {
-                Bitwise::$is_32_gmp = true;
-            }
+        if (PHP_INT_SIZE === 4 && ! Bitwise::init()) {
+            trigger_error('ext-gmp is not loaded. Permissions will NOT work correctly!', E_USER_WARNING);
         }
 
         $options = $this->resolveOptions($options);

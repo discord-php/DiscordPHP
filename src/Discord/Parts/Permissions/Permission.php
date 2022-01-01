@@ -28,6 +28,20 @@ use Discord\Parts\Part;
 abstract class Permission extends Part
 {
     /**
+     * Array of permissions that only apply to stage channels.
+     *
+     * @var array
+     */
+    public const STAGE_PERMISSIONS = [
+        'connect' => 20,
+        'mute_members' => 22,
+        'deafen_members' => 23,
+        'move_members' => 24,
+        'request_to_speak' => 32,
+        'manage_events' => 33,
+    ];
+
+    /**
      * Array of permissions that only apply to voice channels.
      *
      * @var array
@@ -41,7 +55,6 @@ abstract class Permission extends Part
         'deafen_members' => 23,
         'move_members' => 24,
         'use_vad' => 25,
-        'request_to_speak' => 32,
         'manage_events' => 33,
         'start_embedded_activities' => 39,
     ];
@@ -140,9 +153,7 @@ abstract class Permission extends Part
      */
     protected function getBitwiseAttribute()
     {
-        $bitwise = 0;
-
-        if (Bitwise::$is_32_gmp) { // x86
+        if (Bitwise::is32BitWithGMP()) { // x86 with GMP
             $bitwise = \gmp_init(0);
 
             foreach ($this->permissions as $permission => $value) {
@@ -151,6 +162,8 @@ abstract class Permission extends Part
 
             return \gmp_strval($bitwise);
         }
+
+        $bitwise = 0;
 
         foreach ($this->permissions as $permission => $value) {
             if ($this->attributes[$permission]) {
