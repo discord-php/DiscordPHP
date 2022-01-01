@@ -48,6 +48,6 @@ class ChannelPermission extends Permission
      */
     public static function getPermissions(): array
     {
-        return array_merge(parent::ALL_PERMISSIONS, parent::TEXT_PERMISSIONS, parent::VOICE_PERMISSIONS);
+        return array_merge(parent::ALL_PERMISSIONS, parent::TEXT_PERMISSIONS, parent::VOICE_PERMISSIONS, parent::STAGE_PERMISSIONS);
     }
 }
