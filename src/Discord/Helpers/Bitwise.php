@@ -16,7 +16,22 @@ namespace Discord\Helpers;
  */
 class Bitwise
 {
-    private static ?bool $is_32_gmp = null;
+    private static bool $is_32_gmp = false;
+
+    /**
+     * Run a single check whether the GMP extension is loaded, internally used
+     * during Discord class construct
+     *
+     * @return bool true if GMP extension is loaded
+     */
+    public static function init(): bool
+    {
+        if (extension_loaded('gmp')) {
+            self::$is_32_gmp = true;
+        }
+
+        return self::$is_32_gmp;
+    }
 
     /**
      * @param \GMP|int|string $a
@@ -163,16 +178,11 @@ class Bitwise
         return $result;
     }
 
+    /**
+     * @return bool Whether the GMP extension is loaded
+     */
     public static function is32BitWithGMP(): bool
     {
-        if (! isset(self::$is_32_gmp)) {
-            if (! extension_loaded('gmp')) {
-                self::$is_32_gmp = false;
-            } else {
-                self::$is_32_gmp = true;
-            }
-        }
-
         return self::$is_32_gmp;
     }
 }
