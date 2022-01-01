@@ -140,9 +140,7 @@ abstract class Permission extends Part
      */
     protected function getBitwiseAttribute()
     {
-        $bitwise = 0;
-
-        if (Bitwise::$is_32_gmp) { // x86
+        if (Bitwise::is32BitWithGMP()) { // x86 with GMP
             $bitwise = \gmp_init(0);
 
             foreach ($this->permissions as $permission => $value) {
@@ -151,6 +149,8 @@ abstract class Permission extends Part
 
             return \gmp_strval($bitwise);
         }
+
+        $bitwise = 0;
 
         foreach ($this->permissions as $permission => $value) {
             if ($this->attributes[$permission]) {

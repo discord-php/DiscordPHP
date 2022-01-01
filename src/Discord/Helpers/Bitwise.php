@@ -16,7 +16,7 @@ namespace Discord\Helpers;
  */
 class Bitwise
 {
-    public static bool $is_32_gmp = false;
+    private static ?bool $is_32_gmp = null;
 
     /**
      * @param \GMP|int|string $a
@@ -131,7 +131,9 @@ class Bitwise
     public static function set($a, int $b)
     {
         if (self::$is_32_gmp) {
-            return \gmp_setbit(\gmp_init(self::floatCast($a)), $b);
+            $gmp = \gmp_init(self::floatCast($a));
+            \gmp_setbit($gmp, $b);
+            return $gmp;
         }
 
         return $a |= (1 << $b);
@@ -159,5 +161,18 @@ class Bitwise
         setlocale(LC_NUMERIC, $currentLocale);
 
         return $result;
+    }
+
+    public static function is32BitWithGMP(): bool
+    {
+        if (! isset(self::$is_32_gmp)) {
+            if (! extension_loaded('gmp')) {
+                self::$is_32_gmp = false;
+            } else {
+                self::$is_32_gmp = true;
+            }
+        }
+
+        return self::$is_32_gmp;
     }
 }
