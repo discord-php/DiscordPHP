@@ -16,6 +16,7 @@ use Discord\Builders\MessageBuilder;
 use Discord\Helpers\Bitwise;
 use Discord\Helpers\Collection;
 use Discord\Http\Endpoint;
+use Discord\Http\Exceptions\NoPermissionsException;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Channel\Message;
 use Discord\Parts\Channel\Overwrite;
@@ -30,25 +31,26 @@ use React\Promise\ExtendedPromiseInterface;
 /**
  * A member is a relationship between a user and a guild. It contains user-to-guild specific data like roles.
  *
- * @property string                $id            The unique identifier of the member.
- * @property string                $username      The username of the member.
- * @property string                $discriminator The discriminator of the member.
- * @property User                  $user          The user part of the member.
- * @property Collection|Role[]     $roles         A collection of Roles that the member has.
- * @property bool                  $deaf          Whether the member is deaf.
- * @property bool                  $mute          Whether the member is mute.
- * @property Carbon|null           $joined_at     A timestamp of when the member joined the guild.
- * @property Guild                 $guild         The guild that the member belongs to.
- * @property string                $guild_id      The unique identifier of the guild that the member belongs to.
- * @property string                $status        The status of the member.
- * @property Activity              $game          The game the member is playing.
- * @property string|null           $nick          The nickname of the member.
- * @property string|null           $avatar        The avatar URL of the member or null if member has no guild avatar.
- * @property string|null           $avatar_hash   The avatar hash of the member or null if member has no guild avatar.
- * @property Carbon|null           $premium_since When the user started boosting the server.
- * @property bool                  $pending       Whether the user has not yet passed the guild's Membership Screening requirements.
- * @property Collection|Activity[] $activities    User's current activities.
- * @property object                $client_status Current client status
+ * @property string                $id                           The unique identifier of the member.
+ * @property string                $username                     The username of the member.
+ * @property string                $discriminator                The discriminator of the member.
+ * @property User                  $user                         The user part of the member.
+ * @property Collection|Role[]     $roles                        A collection of Roles that the member has.
+ * @property bool                  $deaf                         Whether the member is deaf.
+ * @property bool                  $mute                         Whether the member is mute.
+ * @property Carbon|null           $joined_at                    A timestamp of when the member joined the guild.
+ * @property Guild                 $guild                        The guild that the member belongs to.
+ * @property string                $guild_id                     The unique identifier of the guild that the member belongs to.
+ * @property string                $status                       The status of the member.
+ * @property Activity              $game                         The game the member is playing.
+ * @property string|null           $nick                         The nickname of the member.
+ * @property string|null           $avatar                       The avatar URL of the member or null if member has no guild avatar.
+ * @property string|null           $avatar_hash                  The avatar hash of the member or null if member has no guild avatar.
+ * @property Carbon|null           $premium_since                When the user started boosting the server.
+ * @property bool                  $pending                      Whether the user has not yet passed the guild's Membership Screening requirements.
+ * @property Collection|Activity[] $activities                   User's current activities.
+ * @property object                $client_status                Current client status.
+ * @property Carbon|null           $communication_disabled_until When the user's timeout will expire and the user will be able to communicate in the guild again, null or a time in the past if the user is not timed out.
  *
  * @method ExtendedPromiseInterface sendMessage(MessageBuilder $builder)
  * @method ExtendedPromiseInterface sendMessage(string $text, bool $tts = false, Embed|array $embed = null, array $allowed_mentions = null, ?Message $replyTo = null)
@@ -58,7 +60,7 @@ class Member extends Part
     /**
      * @inheritdoc
      */
-    protected $fillable = ['id', 'user', 'roles', 'deaf', 'mute', 'joined_at', 'guild_id', 'status', 'nick', 'avatar', 'premium_since', 'pending', 'activities', 'client_status'];
+    protected $fillable = ['id', 'user', 'roles', 'deaf', 'mute', 'joined_at', 'guild_id', 'status', 'nick', 'avatar', 'premium_since', 'pending', 'activities', 'client_status', 'communication_disabled_until'];
 
     /**
      * @inheritdoc
@@ -271,6 +273,24 @@ class Member extends Part
     }
 
     /**
+     * Sets timeout on a member.
+     *
+     * @param Carbon|null $communication_disabled_until When the user's timeout will expire and the user will be able to communicate in the guild again, null or a time in the past if the user is not timed out.
+     *
+     * @return ExtendedPromiseInterface
+     */
+    public function timeoutMember(?Carbon $communication_disabled_until): ExtendedPromiseInterface
+    {
+        $botperms = $this->guild->members->offsetGet($this->discord->id)->getPermissions();
+
+        if (! $botperms->moderate_members) {
+            return \React\promise\reject(new NoPermissionsException('You do not have permission to time out members in the specified guild.'));
+        }
+
+        return $this->http->patch(Endpoint::bind(Endpoint::GUILD_MEMBER, $this->guild_id, $this->id), ['communication_disabled_until' => isset($communication_disabled_until) ? $communication_disabled_until->toIso8601ZuluString() : null]);
+    }
+
+    /**
      * Gets the game attribute.
      * Polyfill for the first activity.
      *
@@ -444,6 +464,20 @@ class Member extends Part
         }
 
         return Carbon::parse($this->attributes['premium_since']);
+    }
+
+    /**
+     * Returns the communication disabled until attribute.
+     *
+     * @return Carbon|null
+     */
+    protected function getCommunicationDisabledUntilAttribute(): ?Carbon
+    {
+        if (! isset($this->attributes['communication_disabled_until'])) {
+            return null;
+        }
+
+        return Carbon::parse($this->attributes['communication_disabled_until']);
     }
 
     /**
