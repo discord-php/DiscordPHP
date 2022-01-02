@@ -507,17 +507,23 @@ class Guild extends Part
      * Transfers ownership of the guild to
      * another member.
      *
-     * @param Member|int $member The member to transfer ownership to.
+     * @param Member|int  $member The member to transfer ownership to.
+     * @param string|null $reason Reason for Audit Log.
      *
      * @return ExtendedPromiseInterface
      */
-    public function transferOwnership($member): ExtendedPromiseInterface
+    public function transferOwnership($member, ?string $reason = null): ExtendedPromiseInterface
     {
         if ($member instanceof Member) {
             $member = $member->id;
         }
 
-        return $this->http->patch(Endpoint::bind(Endpoint::GUILD), ['owner_id' => $member])->then(function ($response) use ($member) {
+        $headers = [];
+        if (isset($reason)) {
+            $headers['X-Audit-Log-Reason'] = $reason;
+        }
+
+        return $this->http->patch(Endpoint::bind(Endpoint::GUILD), ['owner_id' => $member], $headers)->then(function ($response) use ($member) {
             if ($response->owner_id != $member) {
                 throw new Exception('Ownership was not transferred correctly.');
             }
