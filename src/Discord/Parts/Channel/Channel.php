@@ -492,7 +492,7 @@ class Channel extends Part
      * Bulk deletes an array of messages.
      *
      * @param array|Traversable $messages An array of messages to delete.
-     * @param string|null       $reason   Reason for Audit Log.
+     * @param string|null       $reason   Reason for Audit Log (only for bulk messages).
      *
      * @return ExtendedPromiseInterface
      */
@@ -506,14 +506,7 @@ class Channel extends Part
 
         if ($count == 0) {
             return resolve();
-        }
-
-        $headers = [];
-        if (isset($reason)) {
-            $headers['X-Audit-Log-Reason'] = $reason;
-        }
-
-        if ($count == 1 || $this->is_private) {
+        } elseif ($count == 1 || $this->is_private) {
             foreach ($messages as $message) {
                 if ($message instanceof Message ||
                     $message = $this->messages->get('id', $message)
@@ -521,7 +514,7 @@ class Channel extends Part
                     return $message->delete();
                 }
 
-                return $this->http->delete(Endpoint::bind(Endpoint::CHANNEL_MESSAGE, $this->id, $message), null, $headers);
+                return $this->http->delete(Endpoint::bind(Endpoint::CHANNEL_MESSAGE, $this->id, $message));
             }
         } else {
             $messageID = [];
@@ -536,6 +529,11 @@ class Channel extends Part
 
             $promises = [];
 
+            $headers = [];
+            if (isset($reason)) {
+                $headers['X-Audit-Log-Reason'] = $reason;
+            }
+
             while (! empty($messageID)) {
                 $promises[] = $this->http->post(Endpoint::bind(Endpoint::CHANNEL_MESSAGES_BULK_DELETE, $this->id), ['messages' => array_slice($messageID, 0, 100)], $headers);
                 $messageID = array_slice($messageID, 100);
@@ -549,7 +547,7 @@ class Channel extends Part
      * Deletes a given number of messages, in order of time sent.
      *
      * @param int         $value
-     * @param string|null $reason Reason for Audit Log.
+     * @param string|null $reason Reason for Audit Log (only for bulk messages).
      *
      * @return ExtendedPromiseInterface
      */

@@ -330,7 +330,7 @@ class Thread extends Part
      * Bulk deletes an array of messages.
      *
      * @param array|Traversable $messages
-     * @param string|null       $reason   Reason for Audit Log.
+     * @param string|null       $reason   Reason for Audit Log (only for bulk messages).
      *
      * @return ExtendedPromiseInterface
      */
@@ -344,21 +344,19 @@ class Thread extends Part
 
         if ($count == 0) {
             return \React\Promise\resolve();
-        }
-
-        $headers = [];
-        if (isset($reason)) {
-            $headers['X-Audit-Log-Reason'] = $reason;
-        }
-        
-        if ($count == 1) {
+        } elseif ($count == 1) {
             foreach ($messages as $message) {
                 if ($message instanceof Message) {
                     $message = $message->id;
                 }
 
-                return $this->http->delete(Endpoint::bind(Endpoint::CHANNEL_MESSAGE, $this->id, $message), null, $headers);
+                return $this->http->delete(Endpoint::bind(Endpoint::CHANNEL_MESSAGE, $this->id, $message));
             }
+        }
+
+        $headers = [];
+        if (isset($reason)) {
+            $headers['X-Audit-Log-Reason'] = $reason;
         }
 
         $promises = [];

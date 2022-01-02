@@ -605,11 +605,10 @@ class Guild extends Part
      * and the RHS value is a `Role` object or a string ID, e.g. [1 => 'role_id_1', 3 => 'role_id_3'].
      *
      * @param array $roles
-     * @param string|null  $reason Reason for Audit Log.
      *
      * @return ExtendedPromiseInterface
      */
-    public function updateRolePositions(array $roles, ?string $reason = null): ExtendedPromiseInterface
+    public function updateRolePositions(array $roles): ExtendedPromiseInterface
     {
         $payload = [];
 
@@ -620,12 +619,7 @@ class Guild extends Part
             ];
         }
 
-        $headers = [];
-        if (isset($reason)) {
-            $headers['X-Audit-Log-Reason'] = $reason;
-        }
-
-        return $this->http->patch(Endpoint::bind(Endpoint::GUILD_ROLES, $this->id), $payload, $headers)
+        return $this->http->patch(Endpoint::bind(Endpoint::GUILD_ROLES, $this->id), $payload)
             ->then(function () {
                 return $this;
             });
