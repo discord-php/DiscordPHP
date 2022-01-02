@@ -120,28 +120,14 @@ class DiscordCommandClient extends Discord
 
                     $help = $command->getHelp($prefix);
 
-                    /**
-                     * @todo Use internal Embed::class
-                     */
-                    $embed = [
-                        'author' => [
-                            'name' => $this->commandClientOptions['name'],
-                            'icon_url' => $this->client->user->avatar,
-                        ],
-                        'title' => $prefix.$fullCommandString.'\'s Help',
-                        'description' => ! empty($help['longDescription']) ? $help['longDescription'] : $help['description'],
-                        'fields' => [],
-                        'footer' => [
-                            'text' => $this->commandClientOptions['name'],
-                        ],
-                    ];
+                    $embed = new Embed($this);
+                    $embed->setAuthor($this->commandClientOptions['name'], $this->client->user->avatar)
+                        ->setTitle($prefix.$fullCommandString.'\'s Help')
+                        ->setDescription(! empty($help['longDescription']) ? $help['longDescription'] : $help['description'])
+                        ->setFooter($this->commandClientOptions['name']);
 
                     if (! empty($help['usage'])) {
-                        $embed['fields'][] = [
-                            'name' => 'Usage',
-                            'value' => '``'.$help['usage'].'``',
-                            'inline' => true,
-                        ];
+                        $embed->addFieldValues('Usage', '``'.$help['usage'].'``', true);
                     }
 
                     if (! empty($this->aliases)) {
@@ -155,25 +141,17 @@ class DiscordCommandClient extends Discord
                         }
 
                         if (! empty($aliasesString)) {
-                            $embed['fields'][] = [
-                                'name' => 'Aliases',
-                                'value' => $aliasesString,
-                                'inline' => true,
-                            ];
+                            $embed->addFieldValues('Aliases', $aliasesString, true);
                         }
                     }
 
                     if (! empty($help['subCommandsHelp'])) {
                         foreach ($help['subCommandsHelp'] as $subCommandHelp) {
-                            $embed['fields'][] = [
-                                'name' => $subCommandHelp['command'],
-                                'value' => $subCommandHelp['description'],
-                                'inline' => true,
-                            ];
+                            $embed->addFieldValues($subCommandHelp['command'], $subCommandHelp['description'], true);
                         }
                     }
 
-                    $message->channel->sendMessage('', false, $embed);
+                    $message->channel->sendEmbed($embed);
 
                     return;
                 }
@@ -185,37 +163,35 @@ class DiscordCommandClient extends Discord
                     ->setFooter($this->commandClientOptions['name']);
 
                 $commandsDescription = '';
-                // Fallback in case commands count reaches the fields limit
-                if (count($this->commands) > 20) {
-                    foreach ($this->commands as $command) {
-                        $help = $command->getHelp($prefix);
+                $embedfields = [];
+                foreach ($this->commands as $command) {
+                    $help = $command->getHelp($prefix);
+                    $embedfields[] = [
+                        'name' => $help['command'],
+                        'value' => $help['description'],
+                        'inline' => true,
+                    ];
+                    $commandsDescription .= "\n\n`".$help['command']."`\n".$help['description'];
 
-                        $commandsDescription .= "\n\n`".$help['command']."`\n".$help['description'];
-
-                        foreach ($help['subCommandsHelp'] as $subCommandHelp) {
-                            $commandsDescription .= "\n\n`".$subCommandHelp['command']."`\n".$subCommandHelp['description'];
-                        }
-                    }
-                } else {
-                    foreach ($this->commands as $command) {
-                        $help = $command->getHelp($prefix);
-                        $embed->addField([
-                            'name' => $help['command'],
-                            'value' => $help['description'],
+                    foreach ($help['subCommandsHelp'] as $subCommandHelp) {
+                        $embedfields[] = [
+                            'name' => $subCommandHelp['command'],
+                            'value' => $subCommandHelp['description'],
                             'inline' => true,
-                        ]);
-
-                        foreach ($help['subCommandsHelp'] as $subCommandHelp) {
-                            $embed->addField([
-                                'name' => $subCommandHelp['command'],
-                                'value' => $subCommandHelp['description'],
-                                'inline' => true,
-                            ]);
-                        }
+                        ];
+                        $commandsDescription .= "\n\n`".$subCommandHelp['command']."`\n".$subCommandHelp['description'];
                     }
                 }
+                // Use embed fields in case commands count is below limit
+                if (count($embedfields) <= 25) {
+                    foreach ($embedfields as $field)
+                    {
+                        $embed->addField($field);
+                    }
+                    $commandsDescription = '';
+                }
 
-                $embed->setDescription($this->commandClientOptions['description'].$commandsDescription);
+                $embed->setDescription(substr($this->commandClientOptions['description'].$commandsDescription, 0, 2048));
 
                 $message->channel->sendEmbed($embed);
             }, [
@@ -346,8 +322,7 @@ class DiscordCommandClient extends Discord
      * @param \Callable|string $callable The function called when the command is executed.
      * @param array            $options  An array of options.
      *
-     * @return array[Command, array] The command instance and options.
-     * @throws \Exception
+     * @return Command[]|array[] The command instance and options.
      */
     public function buildCommand(string $command, $callable, array $options = []): array
     {
@@ -368,8 +343,15 @@ class DiscordCommandClient extends Discord
         $options = $this->resolveCommandOptions($options);
 
         $commandInstance = new Command(
-            $this, $command, $callable,
-            $options['description'], $options['longDescription'], $options['usage'], $options['cooldown'], $options['cooldownMessage']);
+            $this,
+            $command,
+            $callable,
+            $options['description'],
+            $options['longDescription'],
+            $options['usage'],
+            $options['cooldown'],
+            $options['cooldownMessage']
+        );
 
         return [$commandInstance, $options];
     }
@@ -473,7 +455,7 @@ class DiscordCommandClient extends Discord
     {
         $allowed = ['commands', 'aliases'];
 
-        if (array_search($name, $allowed) !== false) {
+        if (in_array($name, $allowed)) {
             return $this->{$name};
         }
 

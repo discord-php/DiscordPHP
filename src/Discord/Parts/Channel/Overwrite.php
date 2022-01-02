@@ -25,11 +25,11 @@ use Discord\Parts\Permissions\ChannelPermission;
  */
 class Overwrite extends Part
 {
-    const TYPE_ROLE = 0;
-    const TYPE_MEMBER = 1;
+    public const TYPE_ROLE = 0;
+    public const TYPE_MEMBER = 1;
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     protected $fillable = ['id', 'channel_id', 'type', 'allow', 'deny', 'permissions'];
 
@@ -64,7 +64,20 @@ class Overwrite extends Part
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
+     */
+    public function getUpdatableAttributes(): array
+    {
+        return [
+            'id' => $this->id,
+            'type' => $this->type,
+            'allow' => $this->allow->bitwise,
+            'deny' => $this->deny->bitwise,
+        ];
+    }
+
+    /**
+     * @inheritdoc
      */
     public function getRepositoryAttributes(): array
     {

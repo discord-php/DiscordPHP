@@ -13,6 +13,7 @@ namespace Discord;
 
 use Discord\Exceptions\IntentException;
 use Discord\Factory\Factory;
+use Discord\Helpers\Bitwise;
 use Discord\Http\Http;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\OAuth\Application;
@@ -77,21 +78,14 @@ class Discord
      *
      * @var int Gateway version.
      */
-    const GATEWAY_VERSION = 8;
-
-    /**
-     * The HTTP API version the client usees.
-     *
-     * @var int HTTP API version.
-     */
-    const HTTP_API_VERSION = 8;
+    public const GATEWAY_VERSION = 9;
 
     /**
      * The client version.
      *
      * @var string Version.
      */
-    const VERSION = 'v6.0.1';
+    public const VERSION = 'v7.0.0';
 
     /**
      * The logger.
@@ -316,6 +310,11 @@ class Discord
     {
         if (php_sapi_name() !== 'cli') {
             trigger_error('DiscordPHP will not run on a webserver. Please use PHP CLI to run a DiscordPHP bot.', E_USER_ERROR);
+        }
+
+        // x86 need gmp extension for big integer operation
+        if (PHP_INT_SIZE === 4 && ! Bitwise::init()) {
+            trigger_error('ext-gmp is not loaded. Permissions will NOT work correctly!', E_USER_WARNING);
         }
 
         $options = $this->resolveOptions($options);
@@ -678,6 +677,14 @@ class Discord
      */
     protected function handleDispatch(object $data): void
     {
+        $handlers = [
+            Event::VOICE_SERVER_UPDATE => 'handleVoiceServerUpdate',
+            Event::RESUMED => 'handleResume',
+            Event::READY => 'handleReady',
+            Event::GUILD_MEMBERS_CHUNK => 'handleGuildMembersChunk',
+            Event::VOICE_STATE_UPDATE => 'handleVoiceStateUpdate',
+        ];
+
         if (! is_null($hData = $this->handlers->getHandler($data->t))) {
             $handler = new $hData['class'](
                 $this->http,
@@ -713,24 +720,14 @@ class Discord
                 Event::GUILD_CREATE,
             ];
 
-            if (! $this->emittedReady && (array_search($data->t, $parse) === false)) {
+            if (! $this->emittedReady && (! in_array($data->t, $parse))) {
                 $this->unparsedPackets[] = function () use (&$handler, &$deferred, &$data) {
                     $handler->handle($deferred, $data->d);
                 };
             } else {
                 $handler->handle($deferred, $data->d);
             }
-        }
-
-        $handlers = [
-            Event::VOICE_SERVER_UPDATE => 'handleVoiceServerUpdate',
-            Event::RESUMED => 'handleResume',
-            Event::READY => 'handleReady',
-            Event::GUILD_MEMBERS_CHUNK => 'handleGuildMembersChunk',
-            Event::VOICE_STATE_UPDATE => 'handleVoiceStateUpdate',
-        ];
-
-        if (isset($handlers[$data->t])) {
+        } elseif (isset($handlers[$data->t])) {
             $this->{$handlers[$data->t]}($data);
         }
     }
@@ -926,7 +923,7 @@ class Discord
 
             if (is_array($this->options['loadAllMembers'])) {
                 foreach ($this->largeGuilds as $key => $guild) {
-                    if (array_search($guild, $this->options['loadAllMembers']) === false) {
+                    if (! in_array($guild, $this->options['loadAllMembers'])) {
                         $this->logger->debug('not fetching members for guild ID '.$guild);
                         unset($this->largeGuilds[$key]);
                     }
@@ -1082,7 +1079,9 @@ class Discord
             }
         }
 
-        if (! array_search($status, ['online', 'dnd', 'idle', 'invisible', 'offline'])) {
+        $allowed = ['online', 'dnd', 'idle', 'invisible', 'offline'];
+
+		if (! in_array($status, $allowed)) {
             $status = 'online';
         }
 
@@ -1334,7 +1333,7 @@ class Discord
 
             $options['intents'] = $intent;
         }
-        
+
         $options['socket_options']['happy_eyeballs'] = false; //Discord doesn't use IPv6
 
         if ($options['loadAllMembers'] && ! ($options['intents'] & Intents::GUILD_MEMBERS)) {
@@ -1464,7 +1463,7 @@ class Discord
     {
         $allowed = ['loop', 'options', 'logger', 'http'];
 
-        if (array_search($name, $allowed) !== false) {
+        if (in_array($name, $allowed)) {
             return $this->{$name};
         }
 
@@ -1495,7 +1494,7 @@ class Discord
      *
      * @param string|int $channel_id Id of the channel.
      *
-     * @return Channel
+     * @return Channel|null
      */
     public function getChannel($channel_id): ?Channel
     {

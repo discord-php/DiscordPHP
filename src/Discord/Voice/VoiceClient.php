@@ -48,7 +48,7 @@ class VoiceClient extends EventEmitter
      *
      * @var string The DCA version.
      */
-    const DCA_VERSION = 'DCA1';
+    public const DCA_VERSION = 'DCA1';
 
     /**
      * Is the voice client ready?
@@ -742,7 +742,7 @@ class VoiceClient extends EventEmitter
         }
 
         if ($stream instanceof Process) {
-            $stream->stdout->on('data', function ($d) {
+            $stream->stderr->on('data', function ($d) {
                 if (empty($d)) {
                     return;
                 }
@@ -934,7 +934,7 @@ class VoiceClient extends EventEmitter
     {
         $legal = [20, 40, 60];
 
-        if (false === array_search($fs, $legal)) {
+        if (! in_array($fs, $legal)) {
             throw new \InvalidArgumentException("{$fs} is not a valid option. Valid options are: ".trim(implode(', ', $legal), ', '));
         }
 
@@ -990,7 +990,7 @@ class VoiceClient extends EventEmitter
     {
         $legal = ['voip', 'audio', 'lowdelay'];
 
-        if (false === array_search($app, $legal)) {
+        if (! in_array($app, $legal)) {
             throw new \InvalidArgumentException("{$app} is not a valid option. Valid options are: ".trim(implode(', ', $legal), ', '));
         }
 

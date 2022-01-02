@@ -30,7 +30,7 @@ use Discord\Parts\User\User;
 class Application extends Part
 {
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     protected $fillable = ['id', 'name', 'description', 'icon', 'rpc_origins', 'flags', 'owner'];
 

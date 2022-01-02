@@ -262,18 +262,21 @@ $channel->getInvites()->done(function (Collection $invites) {
 
 ### Send a message
 
-Sends a message to the channel. Takes a string of content, whether the message is TTS and an embed. Returns the message in a promise.
+Sends a message to the channel. Takes a message builder. Returns the message in a promise.
 
 #### Parameters
 
-| name  | type                           | description                | default  |
-| ----- | ------------------------------ | -------------------------- | -------- |
-| text  | string                         | Message content            | required |
-| tts   | bool                           | Whether the message is TTS | false    |
-| embed | [Embed](#embed) or embed array | The embed for the message  | none     |
+| name    | type                           | description                | default  |
+| ------- | ------------------------------ | -------------------------- | -------- |
+| message | MessageBuilder                 | Message content            | required         |
 
 ```php
-$channel->sendMessage('Hello, world!', false, $embed)->done(function (Message $message) {
+$message = MessageBuilder::new()
+    ->setContent('Hello, world!')
+    ->addEmbed($embed)
+    ->setTts(true);
+
+$channel->sendMessage($message)->done(function (Message $message) {
     // ...
 });
 ```
@@ -290,26 +293,6 @@ Sends an embed to the channel. Takes an embed and returns the sent message in a 
 
 ```php
 $channel->sendEmbed($embed)->done(function (Message $message) {
-    // ...
-});
-```
-
-### Send a file
-
-Sends a file to the channel. Takes a filepath, filename, message content and tts value. Returns a message in a promise.
-
-#### Parameters
-
-| name     | type   | description                           | default          |
-| -------- | ------ | ------------------------------------- | ---------------- |
-| filepath | string | Path to the file to send              | required         |
-| filename | string | The filename to send the file as      | same as filepath |
-| content  | string | Message content to send with the file |                  |
-| tts      | bool   | Whether the message content is TTS    | false            |
-
-```php
-$channel->sendFile('/home/user/my_cool_pic.png', 'new_filename.png', 'content', false)
-->done(function (Message $message) {
     // ...
 });
 ```

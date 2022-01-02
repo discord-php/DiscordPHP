@@ -11,9 +11,9 @@
 
 namespace Discord\Parts\User;
 
+use Discord\Builders\MessageBuilder;
 use Discord\Http\Endpoint;
 use Discord\Parts\Channel\Channel;
-use Discord\Parts\Embed\Embed;
 use Discord\Parts\Part;
 use Discord\Parts\Channel\Message;
 use React\Promise\ExtendedPromiseInterface;
@@ -29,44 +29,50 @@ use React\Promise\ExtendedPromiseInterface;
  * @property bool   $bot           Whether the user is a bot.
  * @property bool   $system        Whether the user is a Discord system user.
  * @property bool   $mfa_enabled   Whether MFA is enabled.
+ * @property string $banner        The banner URL of the user.
+ * @property string $banner_hash   The banner hash of the user.
+ * @property int    $accent_color  The user's banner color encoded as an integer representation of hexadecimal color code.
  * @property string $locale        User locale.
  * @property bool   $verified      Whether the user is verified.
  * @property string $email         User email.
  * @property int    $flags         User flags.
  * @property int    $premium_type  Type of nitro subscription.
  * @property int    $public_flags  Public flags on the user.
+ *
+ * @method ExtendedPromiseInterface sendMessage(MessageBuilder $builder)
+ * @method ExtendedPromiseInterface sendMessage(string $text, bool $tts = false, Embed|array $embed = null, array $allowed_mentions = null, ?Message $replyTo = null)
  */
 class User extends Part
 {
-    const FLAG_DISCORD_EMPLOYEE = (1 << 0);
-    const FLAG_DISCORD_PARTNER = (1 << 1);
-    const FLAG_HYPESQUAD_EVENTS = (1 << 2);
-    const FLAG_BUG_HUNTER_LEVEL_1 = (1 << 3);
-    const FLAG_HOUSE_BRAVERY = (1 << 6);
-    const FLAG_HOUSE_BRILLIANCE = (1 << 7);
-    const FLAG_HOUSE_BALANCE = (1 << 8);
-    const FLAG_EARLY_SUPPORTER = (1 << 9);
-    const FLAG_TEAM_USER = (1 << 10);
-    const FLAG_SYSTEM = (1 << 12);
-    const FLAG_BUG_HUNTER_LEVEL_2 = (1 << 14);
-    const FLAG_VERIFIED_BOT = (1 << 16);
-    const FLAG_VERIFIED_BOT_DEVELOPER = (1 << 17);
-    const FLAG_DISCORD_CERTIFIED_MODERATOR = (1 << 18);
+    public const FLAG_DISCORD_EMPLOYEE = (1 << 0);
+    public const FLAG_DISCORD_PARTNER = (1 << 1);
+    public const FLAG_HYPESQUAD_EVENTS = (1 << 2);
+    public const FLAG_BUG_HUNTER_LEVEL_1 = (1 << 3);
+    public const FLAG_HOUSE_BRAVERY = (1 << 6);
+    public const FLAG_HOUSE_BRILLIANCE = (1 << 7);
+    public const FLAG_HOUSE_BALANCE = (1 << 8);
+    public const FLAG_EARLY_SUPPORTER = (1 << 9);
+    public const FLAG_TEAM_USER = (1 << 10);
+    public const FLAG_SYSTEM = (1 << 12);
+    public const FLAG_BUG_HUNTER_LEVEL_2 = (1 << 14);
+    public const FLAG_VERIFIED_BOT = (1 << 16);
+    public const FLAG_VERIFIED_BOT_DEVELOPER = (1 << 17);
+    public const FLAG_DISCORD_CERTIFIED_MODERATOR = (1 << 18);
+    public const BOT_HTTP_INTERACTIONS = (1 << 19);
 
-    const PREMIUM_NONE = 0;
-    const PREMIUM_NITRO_CLASSIC = 1;
-    const PREMIUM_NITRO = 2;
+    public const PREMIUM_NONE = 0;
+    public const PREMIUM_NITRO_CLASSIC = 1;
+    public const PREMIUM_NITRO = 2;
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
-    protected $fillable = ['id', 'username', 'avatar', 'discriminator', 'bot', 'system', 'mfa_enabled', 'locale', 'verified', 'email', 'flags', 'premium_type', 'public_flags'];
+    protected $fillable = ['id', 'username', 'avatar', 'discriminator', 'bot', 'system', 'mfa_enabled', 'banner', 'accent_color', 'locale', 'verified', 'email', 'flags', 'premium_type', 'public_flags'];
 
     /**
      * Gets the private channel for the user.
      *
      * @return ExtendedPromiseInterface
-     * @throws \Exception
      */
     public function getPrivateChannel(): ExtendedPromiseInterface
     {
@@ -85,17 +91,21 @@ class User extends Part
     /**
      * Sends a message to the user.
      *
-     * @param string     $message The text to send in the message.
-     * @param bool       $tts     Whether the message should be sent with text to speech enabled.
-     * @param Embed|null $embed   An embed to send.
+     * Takes a `MessageBuilder` or content of the message for the first parameter. If the first parameter
+     * is an instance of `MessageBuilder`, the rest of the arguments are disregarded.
      *
-     * @return ExtendedPromiseInterface
-     * @throws \Exception
+     * @param MessageBuilder|string $message          The message builder that should be converted into a message, or the string content of the message.
+     * @param bool                  $tts              Whether the message is TTS.
+     * @param Embed|array|null      $embed            An embed object or array to send in the message.
+     * @param array|null            $allowed_mentions Allowed mentions object for the message.
+     * @param Message|null          $replyTo          Sends the message as a reply to the given message instance.
+     *
+     * @return ExtendedPromiseInterface<Message>
      */
-    public function sendMessage(string $message, bool $tts = false, ?Embed $embed = null): ExtendedPromiseInterface
+    public function sendMessage($message, bool $tts = false, $embed = null, $allowed_mentions = null, ?Message $replyTo = null): ExtendedPromiseInterface
     {
-        return $this->getPrivateChannel()->then(function ($channel) use ($message, $tts, $embed) {
-            return $channel->sendMessage($message, $tts, $embed);
+        return $this->getPrivateChannel()->then(function ($channel) use ($message, $tts, $embed, $allowed_mentions, $replyTo) {
+            return $channel->sendMessage($message, $tts, $embed, $allowed_mentions, $replyTo);
         });
     }
 
@@ -115,12 +125,12 @@ class User extends Part
     /**
      * Returns the avatar URL for the client.
      *
-     * @param string $format The image format.
-     * @param int    $size   The size of the image.
+     * @param string|null $format The image format.
+     * @param int         $size   The size of the image.
      *
      * @return string The URL to the clients avatar.
      */
-    public function getAvatarAttribute(string $format = 'jpg', int $size = 1024): string
+    public function getAvatarAttribute(?string $format = null, int $size = 1024): string
     {
         if (empty($this->attributes['avatar'])) {
             $avatarDiscrim = (int) $this->discriminator % 5;
@@ -128,8 +138,16 @@ class User extends Part
             return "https://cdn.discordapp.com/embed/avatars/{$avatarDiscrim}.png?size={$size}";
         }
 
-        if (false === array_search($format, ['png', 'jpg', 'webp'])) {
-            $format = 'jpg';
+        if (isset($format)) {
+            $allowed = ['png', 'jpg', 'webp', 'gif'];
+
+            if (! in_array(strtolower($format), $allowed)) {
+                $format = 'webp';
+            }
+        } elseif (strpos($this->attributes['avatar'], 'a_') === 0) {
+            $format = 'gif';
+        } else {
+            $format = 'webp';
         }
 
         return "https://cdn.discordapp.com/avatars/{$this->id}/{$this->attributes['avatar']}.{$format}?size={$size}";
@@ -146,6 +164,45 @@ class User extends Part
     }
 
     /**
+     * Returns the banner URL for the client.
+     *
+     * @param string|null $format The image format.
+     * @param int         $size   The size of the image.
+     *
+     * @return string|null The URL to the clients banner.
+     */
+    public function getBannerAttribute(?string $format = null, int $size = 600): ?string
+    {
+        if (empty($this->attributes['banner'])) {
+            return null;
+        }
+
+        if (isset($format)) {
+            $allowed = ['png', 'jpg', 'webp', 'gif'];
+
+            if (! in_array(strtolower($format), $allowed)) {
+                $format = 'png';
+            }
+        } elseif (strpos($this->attributes['banner'], 'a_') === 0) {
+            $format = 'gif';
+        } else {
+            $format = 'png';
+        }
+
+        return "https://cdn.discordapp.com/banners/{$this->id}/{$this->attributes['banner']}.{$format}?size={$size}";
+    }
+
+    /**
+     * Returns the banner hash for the client.
+     *
+     * @return string The client banner's hash.
+     */
+    protected function getBannerHashAttribute(): string
+    {
+        return $this->attributes['banner'];
+    }
+
+    /**
      * Returns a timestamp for when a user's account was created.
      *
      * @return float
@@ -156,7 +213,7 @@ class User extends Part
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function getRepositoryAttributes(): array
     {

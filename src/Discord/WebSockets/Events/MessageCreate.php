@@ -19,7 +19,7 @@ use Discord\Parts\Channel\Channel;
 class MessageCreate extends Event
 {
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function handle(Deferred &$deferred, $data): void
     {
@@ -40,11 +40,7 @@ class MessageCreate extends Event
 
         if ($this->discord->options['storeMessages']) {
             if ($channel = $message->channel) {
-                if ($guild = $channel->guild) {
-                    $channel->messages->push($message);
-                    $guild->channels->push($channel);
-                    $this->discord->guilds->push($guild);
-                }
+                $channel->messages->push($message);
             }
         }
 

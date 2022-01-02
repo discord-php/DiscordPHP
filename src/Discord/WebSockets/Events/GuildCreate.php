@@ -21,11 +21,13 @@ use Discord\Parts\WebSockets\VoiceStateUpdate as VoiceStateUpdatePart;
 use Discord\WebSockets\Event;
 use Discord\Helpers\Deferred;
 use Discord\Http\Endpoint;
+use Discord\Parts\Thread\Member as ThreadMember;
+use Discord\Parts\Thread\Thread;
 
 class GuildCreate extends Event
 {
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function handle(Deferred &$deferred, $data)
     {
@@ -75,11 +77,32 @@ class GuildCreate extends Event
 
         foreach ($data->voice_states as $state) {
             if ($channel = $guildPart->channels->offsetGet($state->channel_id)) {
+                $state = (array) $state;
+                $state['guild_id'] = $guildPart->id;
+
                 $stateUpdate = $this->factory->create(VoiceStateUpdatePart::class, $state, true);
 
                 $channel->members->offsetSet($stateUpdate->user_id, $stateUpdate);
                 $guildPart->channels->offsetSet($channel->id, $channel);
             }
+        }
+
+        foreach ($data->threads as $rawThread) {
+            /**
+             * @var Thread
+             */
+            $thread = $this->factory->create(Thread::class, $rawThread, true);
+
+            if ($rawThread->member ?? null) {
+                $member = (array) $rawThread->member;
+                $member['id'] = $thread->id;
+                $member['user_id'] = $this->discord->id;
+
+                $selfMember = $this->factory->create(ThreadMember::class, $member, true);
+                $thread->members->push($selfMember);
+            }
+
+            $guildPart->channels->get('id', $thread->parent_id)->threads->push($thread);
         }
 
         $resolve = function () use (&$guildPart, $deferred) {

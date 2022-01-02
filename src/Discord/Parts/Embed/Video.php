@@ -23,7 +23,7 @@ use Discord\Parts\Part;
 class Video extends Part
 {
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     protected $fillable = ['url', 'height', 'width'];
 }

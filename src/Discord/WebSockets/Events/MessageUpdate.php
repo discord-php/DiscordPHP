@@ -18,7 +18,7 @@ use Discord\Helpers\Deferred;
 class MessageUpdate extends Event
 {
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function handle(Deferred &$deferred, $data): void
     {
@@ -31,11 +31,6 @@ class MessageUpdate extends Event
             }
 
             $channel->messages->offsetSet($messagePart->id, $messagePart);
-
-            if ($guild = $this->discord->guilds->get('id', $channel->guild_id)) {
-                $guild->channels->offsetSet($channel->id, $channel);
-                $this->discord->guilds->offsetSet($guild->id, $guild);
-            }
         }
 
         $deferred->resolve([$messagePart, $oldMessage]);

@@ -21,7 +21,8 @@ use React\Promise\ExtendedPromiseInterface;
 /**
  * Repositories provide a way to store and update parts on the Discord server.
  *
- * @author Aaron Scherer <aequasi@gmail.com>, David Cole <david.cole1340@gmail.com>
+ * @author Aaron Scherer <aequasi@gmail.com>
+ * @author David Cole <david.cole1340@gmail.com>
  */
 abstract class AbstractRepository extends Collection
 {

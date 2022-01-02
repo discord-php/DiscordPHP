@@ -22,7 +22,7 @@ use Traversable;
 /**
  * Collection of items. Inspired by Laravel Collections.
  */
-class Collection implements ArrayAccess, Serializable, JsonSerializable, IteratorAggregate, Countable
+class Collection implements ArrayAccess, JsonSerializable, IteratorAggregate, Countable
 {
     /**
      * The collection discriminator.
@@ -327,6 +327,20 @@ class Collection implements ArrayAccess, Serializable, JsonSerializable, Iterato
     }
 
     /**
+     * Merges another collection into this collection.
+     *
+     * @param Collection $collection
+     *
+     * @return Collection
+     */
+    public function merge(Collection $collection): Collection
+    {
+        $this->items = array_merge($this->items, $collection->toArray());
+
+        return $this;
+    }
+
+    /**
      * Converts the collection to an array.
      *
      * @return array
@@ -355,6 +369,7 @@ class Collection implements ArrayAccess, Serializable, JsonSerializable, Iterato
      *
      * @return mixed
      */
+    #[\ReturnTypeWillChange]
     public function offsetGet($offset)
     {
         return $this->items[$offset] ?? null;
@@ -392,13 +407,33 @@ class Collection implements ArrayAccess, Serializable, JsonSerializable, Iterato
     }
 
     /**
+     * Returns the string representation of the collection.
+     *
+     * @return string
+     */
+    public function __serialize(): array
+    {
+        return $this->items;
+    }
+
+    /**
      * Unserializes the collection.
      *
      * @param string $serialized
      */
-    public function unserialize($serialized): void
+    public function unserialize(string $serialized): void
     {
         $this->items = json_decode($serialized);
+    }
+
+    /**
+     * Unserializes the collection.
+     *
+     * @param array $serialized
+     */
+    public function __unserialize(array $serialized): void
+    {
+        $this->items = $serialized;
     }
 
     /**

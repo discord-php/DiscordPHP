@@ -18,7 +18,7 @@ use Discord\Helpers\Deferred;
 class GuildDelete extends Event
 {
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function handle(Deferred &$deferred, $data): void
     {

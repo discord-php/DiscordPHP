@@ -19,11 +19,16 @@ use React\Promise\ExtendedPromiseInterface;
  * Contains guilds that the user is in.
  *
  * @see \Discord\Parts\Guild\Guild
+ *
+ * @method Guild|null get(string $discrim, $key)  Gets an item from the collection.
+ * @method Guild|null first()                     Returns the first element of the collection.
+ * @method Guild|null pull($key, $default = null) Pulls an item from the repository, removing and returning the item.
+ * @method Guild|null find(callable $callback)    Runs a filter callback over the repository.
  */
 class GuildRepository extends AbstractRepository
 {
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     protected $endpoints = [
         'all' => Endpoint::USER_CURRENT_GUILDS,
@@ -35,7 +40,7 @@ class GuildRepository extends AbstractRepository
     ];
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     protected $class = Guild::class;
 

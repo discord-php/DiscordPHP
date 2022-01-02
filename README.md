@@ -26,6 +26,7 @@ Before you start using this Library, you **need** to know how PHP works, you nee
 
 - PHP 7.4
 	- We recommend PHP 8.0 as it will be the most stable and most performant.
+	- x86 (32 bit) PHP requires `ext-gmp` [extension](https://www.php.net/manual/en/book.gmp.php) enabled for handling Permissions.
 - Composer
 - `ext-json`
 - `ext-zlib`
@@ -42,7 +43,7 @@ The path to the caextract must be set in the [`php.ini`](https://secure.php.net/
 #### Recommended Extensions
 
 - The latest PHP version.
-- One of `ext-uv` (preferred), `ext-libev` or `evt-event` for a faster, and more performant event loop.
+- One of `ext-uv` (recommended), `ext-libev` or `ext-event` for a faster, and more performant event loop.
 - `ext-mbstring` if handling non-english characters.
 
 #### Voice Requirements
@@ -55,7 +56,7 @@ The path to the caextract must be set in the [`php.ini`](https://secure.php.net/
 
 DiscordPHP is installed using [Composer](https://getcomposer.org).
 
-1. Run `composer require team-reflex/discord-php`. This will install the lastest release.
+1. Run `composer require team-reflex/discord-php`. This will install the latest release.
 	- If you would like, you can also install the development branch by running `composer require team-reflex/discord-php dev-master`.
 2. Include the Composer autoload file at the top of your main file:
 	- `include __DIR__.'/vendor/autoload.php';`
@@ -88,7 +89,7 @@ $discord->run();
 
 ## Documentation
 
-Documentation can be found [here](http://discord-php.github.io/DiscordPHP). Raw documentation can be found in-line in the code and on the [DiscordPHP Class Reference](http://discord-php.github.io/DiscordPHP/).
+Documentation can be found [here](//discord-php.github.io/DiscordPHP). Raw documentation can be found in-line in the code and on the [DiscordPHP Class Reference](//discord-php.github.io/DiscordPHP/reference).
 
 ## Contributing
 

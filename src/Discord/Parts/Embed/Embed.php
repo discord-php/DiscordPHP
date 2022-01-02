@@ -35,15 +35,15 @@ use function Discord\poly_strlen;
  */
 class Embed extends Part
 {
-    const TYPE_RICH = 'rich';
-    const TYPE_IMAGE = 'image';
-    const TYPE_VIDEO = 'video';
-    const TYPE_GIFV = 'gifv';
-    const TYPE_ARTICLE = 'article';
-    const TYPE_LINK = 'link';
+    public const TYPE_RICH = 'rich';
+    public const TYPE_IMAGE = 'image';
+    public const TYPE_VIDEO = 'video';
+    public const TYPE_GIFV = 'gifv';
+    public const TYPE_ARTICLE = 'article';
+    public const TYPE_LINK = 'link';
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     protected $fillable = ['title', 'type', 'description', 'url', 'timestamp', 'color', 'footer', 'image', 'thumbnail', 'video', 'provider', 'author', 'fields'];
 
@@ -290,7 +290,7 @@ class Embed extends Part
     public function addField(...$fields): self
     {
         foreach ($fields as $field) {
-            if (count($this->fields) >= 25) {
+            if (count($this->fields) > 25) {
                 throw new \RangeException('Embeds can not have more than 25 fields.');
             }
 
@@ -481,7 +481,7 @@ class Embed extends Part
         }
 
         if (! is_array($color)) {
-            return hexdec(((string) $color));
+            return hexdec((str_replace('#', '', (string) $color)));
         }
 
         if (count($color) < 1) {

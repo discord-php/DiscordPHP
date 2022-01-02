@@ -30,45 +30,48 @@ use Discord\Parts\User\User;
 class Entry extends Part
 {
     // AUDIT LOG ENTRY TYPES
-    const GUILD_UPDATE = 1;
-    const CHANNEL_CREATE = 10;
-    const CHANNEL_UPDATE = 11;
-    const CHANNEL_DELETE = 12;
-    const CHANNEL_OVERWRITE_CREATE = 13;
-    const CHANNEL_OVERWRITE_UPDATE = 14;
-    const CHANNEL_OVERWRITE_DELETE = 15;
-    const MEMBER_KICK = 20;
-    const MEMBER_PRUNE = 21;
-    const MEMBER_BAN_ADD = 22;
-    const MEMBER_BAN_REMOVE = 23;
-    const MEMBER_UPDATE = 24;
-    const MEMBER_ROLE_UPDATE = 25;
-    const MEMBER_MOVE = 26;
-    const MEMBER_DISCONNECT = 27;
-    const BOT_ADD = 28;
-    const ROLE_CREATE = 30;
-    const ROLE_UPDATE = 31;
-    const ROLE_DELETE = 32;
-    const INVITE_CREATE = 40;
-    const INVITE_UPDATE = 41;
-    const INVITE_DELETE = 42;
-    const WEBHOOK_CREATE = 50;
-    const WEBHOOK_UPDATE = 51;
-    const WEBHOOK_DELETE = 52;
-    const EMOJI_CREATE = 60;
-    const EMOJI_UPDATE = 61;
-    const EMOJI_DELETE = 62;
-    const MESSAGE_DELETE = 72;
-    const MESSAGE_BULK_DELETE = 63;
-    const MESSAGE_PIN = 74;
-    const MESSAGE_UNPIN = 75;
-    const INTEGRATION_CREATE = 80;
-    const INTEGRATION_UPDATE = 81;
-    const INTEGRATION_DELETE = 82;
+    public const GUILD_UPDATE = 1;
+    public const CHANNEL_CREATE = 10;
+    public const CHANNEL_UPDATE = 11;
+    public const CHANNEL_DELETE = 12;
+    public const CHANNEL_OVERWRITE_CREATE = 13;
+    public const CHANNEL_OVERWRITE_UPDATE = 14;
+    public const CHANNEL_OVERWRITE_DELETE = 15;
+    public const MEMBER_KICK = 20;
+    public const MEMBER_PRUNE = 21;
+    public const MEMBER_BAN_ADD = 22;
+    public const MEMBER_BAN_REMOVE = 23;
+    public const MEMBER_UPDATE = 24;
+    public const MEMBER_ROLE_UPDATE = 25;
+    public const MEMBER_MOVE = 26;
+    public const MEMBER_DISCONNECT = 27;
+    public const BOT_ADD = 28;
+    public const ROLE_CREATE = 30;
+    public const ROLE_UPDATE = 31;
+    public const ROLE_DELETE = 32;
+    public const INVITE_CREATE = 40;
+    public const INVITE_UPDATE = 41;
+    public const INVITE_DELETE = 42;
+    public const WEBHOOK_CREATE = 50;
+    public const WEBHOOK_UPDATE = 51;
+    public const WEBHOOK_DELETE = 52;
+    public const EMOJI_CREATE = 60;
+    public const EMOJI_UPDATE = 61;
+    public const EMOJI_DELETE = 62;
+    public const MESSAGE_DELETE = 72;
+    public const MESSAGE_BULK_DELETE = 63;
+    public const MESSAGE_PIN = 74;
+    public const MESSAGE_UNPIN = 75;
+    public const INTEGRATION_CREATE = 80;
+    public const INTEGRATION_UPDATE = 81;
+    public const INTEGRATION_DELETE = 82;
+    public const THREAD_CREATE = 110;
+    public const THREAD_UPDATE = 111;
+    public const THREAD_DELETE = 112;
     // AUDIT LOG ENTRY TYPES
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     protected $fillable = [
         'id',

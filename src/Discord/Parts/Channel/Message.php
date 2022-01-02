@@ -12,6 +12,7 @@
 namespace Discord\Parts\Channel;
 
 use Carbon\Carbon;
+use Discord\Builders\MessageBuilder;
 use Discord\Helpers\Collection;
 use Discord\Parts\Embed\Embed;
 use Discord\Parts\Guild\Emoji;
@@ -23,16 +24,24 @@ use Discord\Parts\WebSockets\MessageReaction;
 use Discord\WebSockets\Event;
 use Discord\Helpers\Deferred;
 use Discord\Http\Endpoint;
+use Discord\Parts\Guild\Guild;
+use Discord\Parts\Thread\Thread;
 use Discord\Repository\Channel\ReactionRepository;
+use InvalidArgumentException;
 use React\Promise\ExtendedPromiseInterface;
+use RuntimeException;
+
+use function React\Promise\reject;
 
 /**
  * A message which is posted to a Discord text channel.
  *
  * @property string               $id                     The unique identifier of the message.
- * @property Channel              $channel                The channel that the message was sent in.
+ * @property Channel|Thread|null  $channel                The channel that the message was sent in.
+ * @property Thread|null          $thread                 The thread that the message was sent in.
  * @property string               $channel_id             The unique identifier of the channel that the message was went in.
  * @property string               $guild_id               The unique identifier of the guild that the channel the message was sent in belongs to.
+ * @property Guild|null           $guild                  The guild that the message was sent in.
  * @property string               $content                The content of the message if it is a normal message.
  * @property int                  $type                   The type of message.
  * @property Collection|User[]    $mentions               A collection of the users mentioned in the message.
@@ -68,36 +77,36 @@ use React\Promise\ExtendedPromiseInterface;
  */
 class Message extends Part
 {
-    const TYPE_NORMAL = 0;
-    const TYPE_USER_ADDED = 1;
-    const TYPE_USER_REMOVED = 2;
-    const TYPE_CALL = 3;
-    const TYPE_CHANNEL_NAME_CHANGE = 4;
-    const TYPE_CHANNEL_ICON_CHANGE = 5;
-    const CHANNEL_PINNED_MESSAGE = 6;
-    const GUILD_MEMBER_JOIN = 7;
-    const USER_PREMIUM_GUILD_SUBSCRIPTION = 8;
-    const USER_PREMIUM_GUILD_SUBSCRIPTION_TIER_1 = 9;
-    const USER_PREMIUM_GUILD_SUBSCRIPTION_TIER_2 = 10;
-    const USER_PREMIUM_GUILD_SUBSCRIPTION_TIER_3 = 11;
-    const CHANNEL_FOLLOW_ADD = 12;
-    const GUILD_DISCOVERY_DISQUALIFIED = 14;
-    const GUILD_DISCOVERY_REQUALIFIED = 15;
-    const TYPE_REPLY = 19;
-    const TYPE_APPLICATION_COMMAND = 20;
+    public const TYPE_NORMAL = 0;
+    public const TYPE_USER_ADDED = 1;
+    public const TYPE_USER_REMOVED = 2;
+    public const TYPE_CALL = 3;
+    public const TYPE_CHANNEL_NAME_CHANGE = 4;
+    public const TYPE_CHANNEL_ICON_CHANGE = 5;
+    public const CHANNEL_PINNED_MESSAGE = 6;
+    public const GUILD_MEMBER_JOIN = 7;
+    public const USER_PREMIUM_GUILD_SUBSCRIPTION = 8;
+    public const USER_PREMIUM_GUILD_SUBSCRIPTION_TIER_1 = 9;
+    public const USER_PREMIUM_GUILD_SUBSCRIPTION_TIER_2 = 10;
+    public const USER_PREMIUM_GUILD_SUBSCRIPTION_TIER_3 = 11;
+    public const CHANNEL_FOLLOW_ADD = 12;
+    public const GUILD_DISCOVERY_DISQUALIFIED = 14;
+    public const GUILD_DISCOVERY_REQUALIFIED = 15;
+    public const TYPE_REPLY = 19;
+    public const TYPE_APPLICATION_COMMAND = 20;
 
-    const ACTIVITY_JOIN = 1;
-    const ACTIVITY_SPECTATE = 2;
-    const ACTIVITY_LISTEN = 3;
-    const ACTIVITY_JOIN_REQUEST = 4;
+    public const ACTIVITY_JOIN = 1;
+    public const ACTIVITY_SPECTATE = 2;
+    public const ACTIVITY_LISTEN = 3;
+    public const ACTIVITY_JOIN_REQUEST = 4;
 
-    const REACT_DELETE_ALL = 0;
-    const REACT_DELETE_ME = 1;
-    const REACT_DELETE_ID = 2;
-    const REACT_DELETE_EMOJI = 3;
+    public const REACT_DELETE_ALL = 0;
+    public const REACT_DELETE_ME = 1;
+    public const REACT_DELETE_ID = 2;
+    public const REACT_DELETE_EMOJI = 3;
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     protected $fillable = [
         'id',
@@ -130,7 +139,7 @@ class Message extends Part
     ];
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     protected $repositories = [
         'reactions' => ReactionRepository::class,
@@ -190,7 +199,6 @@ class Message extends Part
      * Gets the mention_channels attribute.
      *
      * @return Collection|Channel[]
-     * @throws \Exception
      */
     protected function getMentionChannelsAttribute(): Collection
     {
@@ -232,19 +240,50 @@ class Message extends Part
     /**
      * Returns the channel attribute.
      *
-     * @return Channel    The channel the message was sent in.
-     * @throws \Exception
+     * @return Channel|Thread The channel or thread the message was sent in.
      */
-    protected function getChannelAttribute(): Channel
+    protected function getChannelAttribute(): Part
     {
         if ($channel = $this->discord->getChannel($this->channel_id)) {
             return $channel;
+        }
+
+        if ($thread = $this->thread) {
+            return $thread;
         }
 
         return $this->factory->create(Channel::class, [
             'id' => $this->channel_id,
             'type' => Channel::TYPE_DM,
         ], true);
+    }
+
+    /**
+     * Returns the thread which the message was sent in.
+     *
+     * @return Thread|null
+     */
+    protected function getThreadAttribute(): ?Thread
+    {
+        if ($this->guild) {
+            foreach ($this->guild->channels as $channel) {
+                if ($thread = $channel->threads->get('id', $this->channel_id)) {
+                    return $thread;
+                }
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Returns the guild which the channel that the message was sent in belongs to.
+     *
+     * @return Guild|null
+     */
+    protected function getGuildAttribute(): ?Guild
+    {
+        return $this->discord->guilds->get('id', $this->guild_id);
     }
 
     /**
@@ -258,7 +297,7 @@ class Message extends Part
 
         if ($this->channel->guild) {
             foreach ($this->channel->guild->roles ?? [] as $role) {
-                if (array_search($role->id, $this->attributes['mention_roles'] ?? []) !== false) {
+                if (in_array($role->id, $this->attributes['mention_roles'] ?? [])) {
                     $roles->push($role);
                 }
             }
@@ -271,7 +310,6 @@ class Message extends Part
      * Returns the mention attribute.
      *
      * @return Collection The users that were mentioned.
-     * @throws \Exception
      */
     protected function getMentionsAttribute(): Collection
     {
@@ -301,7 +339,8 @@ class Message extends Part
      * Returns the author attribute.
      *
      * @return User|Member|null The member that sent the message. Will return a User object if it is a PM.
-     * @throws \Exception
+     *
+     * @deprecated 6.0.0 Use `Message::member` or `Message:user` instead.
      */
     protected function getAuthorAttribute(): ?Part
     {
@@ -358,8 +397,7 @@ class Message extends Part
     /**
      * Returns the embed attribute.
      *
-     * @return Collection A collection of embeds.
-     * @throws \Exception
+     * @return Collection|Embed[] A collection of embeds.
      */
     protected function getEmbedsAttribute(): Collection
     {
@@ -375,7 +413,7 @@ class Message extends Part
     /**
      * Gets the referenced message attribute, if present.
      *
-     * @return Message
+     * @return Message|null
      */
     protected function getReferencedMessageAttribute(): ?Message
     {
@@ -402,8 +440,7 @@ class Message extends Part
     /**
      * Returns the timestamp attribute.
      *
-     * @return Carbon     The time that the message was sent.
-     * @throws \Exception
+     * @return Carbon|null The time that the message was sent.
      */
     protected function getTimestampAttribute(): ?Carbon
     {
@@ -418,7 +455,6 @@ class Message extends Part
      * Returns the edited_timestamp attribute.
      *
      * @return Carbon|null The time that the message was edited.
-     * @throws \Exception
      */
     protected function getEditedTimestampAttribute(): ?Carbon
     {
@@ -458,22 +494,62 @@ class Message extends Part
     }
 
     /**
+     * Starts a public thread from the message.
+     *
+     * @param string $name                  The name of the thread.
+     * @param int    $auto_archive_duration Number of minutes of inactivity until the thread is auto-archived. One of 60, 1440, 4320, 10080.
+     *
+     * @return ExtendedPromiseInterface<Thread>
+     */
+    public function startThread(string $name, int $auto_archive_duration = 1440): ExtendedPromiseInterface
+    {
+        if (! $this->guild) {
+            return reject(new RuntimeException('You can only start threads on guild text channels.'));
+        }
+
+        if (! in_array($auto_archive_duration, [60, 1440, 4320, 10080])) {
+            return reject(new InvalidArgumentException('`auto_archive_duration` must be one of 60, 1440, 4320, 10080.'));
+        }
+
+        switch ($auto_archive_duration) {
+            case 4320:
+                if (! $this->guild->feature_three_day_thread_archive) {
+                    return reject(new RuntimeException('Guild does not have access to three day thread archive.'));
+                }
+                break;
+            case 10080:
+                if (! $this->guild->feature_seven_day_thread_archive) {
+                    return reject(new RuntimeException('Guild does not have access to seven day thread archive.'));
+                }
+                break;
+        }
+
+        return $this->http->post(Endpoint::bind(Endpoint::CHANNEL_MESSAGE_THREADS, $this->channel_id, $this->id), [
+            'name' => $name,
+            'auto_archive_duration' => $auto_archive_duration,
+        ])->then(function ($response) {
+            return $this->factory->create(Thread::class, $response, true);
+        });
+    }
+
+    /**
      * Replies to the message.
      *
      * @param string $text The text to reply with.
      *
-     * @return ExtendedPromiseInterface
-     * @throws \Exception
+     * @return ExtendedPromiseInterface<Message>
      */
     public function reply(string $text): ExtendedPromiseInterface
     {
-        return $this->channel->sendMessage($text, false, null, null, $this);
+        return $this->channel->sendMessage(MessageBuilder::new()
+            ->setContent($text)
+            ->setReplyTo($this));
     }
 
     /**
      * Crossposts the message to any following channels.
      *
-     * @return ExtendedPromiseInterface
+     * @return ExtendedPromiseInterface<Message>
      */
     public function crosspost(): ExtendedPromiseInterface
     {
@@ -488,7 +564,7 @@ class Message extends Part
      * @param string $text  Text to send after delay.
      * @param int    $delay Delay after text will be sent in milliseconds.
      *
-     * @return ExtendedPromiseInterface
+     * @return ExtendedPromiseInterface<Message>
      */
     public function delayedReply(string $text, int $delay): ExtendedPromiseInterface
     {
@@ -550,6 +626,8 @@ class Message extends Part
 
         if ($emoticon instanceof Emoji) {
             $emoticon = $emoticon->toReactionString();
+        } else {
+            $emoticon = urlencode($emoticon);
         }
 
         if (in_array($type, $types)) {
@@ -575,6 +653,33 @@ class Message extends Part
     }
 
     /**
+     * Edits the message.
+     *
+     * @param MessageBuilder $message Contains the new contents of the message. Note that fields not specified in the builder will not be overwritten.
+     *
+     * @return ExtendedPromiseInterface<Message>
+     */
+    public function edit(MessageBuilder $message): ExtendedPromiseInterface
+    {
+        return $this->_edit($message)->then(function ($response) {
+            $this->fill((array) $response);
+
+            return $this;
+        });
+    }
+
+    private function _edit(MessageBuilder $message): ExtendedPromiseInterface
+    {
+        if ($message->requiresMultipart()) {
+            $multipart = $message->toMultipart();
+
+            return $this->http->patch(Endpoint::bind(Endpoint::CHANNEL_MESSAGE, $this->channel_id, $this->id), (string) $multipart, $multipart->getHeaders());
+        }
+
+        return $this->http->patch(Endpoint::bind(Endpoint::CHANNEL_MESSAGE, $this->channel_id, $this->id), $message);
+    }
+
+    /**
      * Deletes the message from the channel.
      *
      * @return ExtendedPromiseInterface
@@ -591,7 +696,7 @@ class Message extends Part
      * @param int      $options['time']  Time in milliseconds until the collector finishes or false.
      * @param int      $options['limit'] The amount of reactions allowed or false.
      *
-     * @return ExtendedPromiseInterface
+     * @return ExtendedPromiseInterface<Collection<MessageReaction>>
      */
     public function createReactionCollector(callable $filter, array $options = []): ExtendedPromiseInterface
     {
@@ -624,6 +729,7 @@ class Message extends Part
                 }
             }
         };
+
         $this->discord->on(Event::MESSAGE_REACTION_ADD, $eventHandler);
 
         if ($options['time'] !== false) {
@@ -641,21 +747,16 @@ class Message extends Part
      *
      * @param Embed $embed
      *
-     * @return ExtendedPromiseInterface
+     * @return ExtendedPromiseInterface<Message>
      */
     public function addEmbed(Embed $embed): ExtendedPromiseInterface
     {
-        return $this->http->patch(Endpoint::bind(Endpoint::CHANNEL_MESSAGE, $this->channel_id, $this->id), [
-            'embed' => $embed->getRawAttributes(),
-        ])->then(function ($response) {
-            $this->fill((array) $response);
-            
-            return $this;
-        });
+        return $this->edit(MessageBuilder::new()
+            ->addEmbed($embed));
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function getCreatableAttributes(): array
     {
@@ -663,7 +764,7 @@ class Message extends Part
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function getUpdatableAttributes(): array
     {
@@ -674,13 +775,14 @@ class Message extends Part
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function getRepositoryAttributes(): array
     {
         return [
             'message_id' => $this->id,
             'channel_id' => $this->channel_id,
+            'guild_id' => $this->guild_id,
         ];
     }
 }

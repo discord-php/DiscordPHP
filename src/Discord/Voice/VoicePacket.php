@@ -25,17 +25,17 @@ class VoicePacket
      * Check out their repo:
      * https://github.com/DV8FromTheWorld/JDA
      */
-    const RTP_HEADER_BYTE_LENGTH = 12;
+    public const RTP_HEADER_BYTE_LENGTH = 12;
 
-    const RTP_VERSION_PAD_EXTEND_INDEX = 0;
-    const RTP_VERSION_PAD_EXTEND = 0x80;
+    public const RTP_VERSION_PAD_EXTEND_INDEX = 0;
+    public const RTP_VERSION_PAD_EXTEND = 0x80;
 
-    const RTP_PAYLOAD_INDEX = 1;
-    const RTP_PAYLOAD_TYPE = 0x78;
+    public const RTP_PAYLOAD_INDEX = 1;
+    public const RTP_PAYLOAD_TYPE = 0x78;
 
-    const SEQ_INDEX = 2;
-    const TIMESTAMP_INDEX = 4;
-    const SSRC_INDEX = 8;
+    public const SEQ_INDEX = 2;
+    public const TIMESTAMP_INDEX = 4;
+    public const SSRC_INDEX = 8;
 
     /**
      * The voice packet buffer.

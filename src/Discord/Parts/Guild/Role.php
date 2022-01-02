@@ -17,26 +17,29 @@ use Discord\Parts\Permissions\RolePermission;
 /**
  * A role defines permissions for the guild. Members can be added to the role. The role belongs to a guild.
  *
- * @property string         $id          The unique identifier of the role.
- * @property string         $name        The name of the role.
- * @property int            $color       The color of the guild.
- * @property bool           $managed     Whether the role is managed by a Twitch subscriber feature.
- * @property bool           $hoist       Whether the role is hoisted on the sidebar.
- * @property int            $position    The position of the role on the sidebar.
- * @property RolePermission $permissions The permissions of the role.
- * @property bool           $mentionable Whether the role is mentionable.
- * @property Guild          $guild       The guild that the role belongs to.
- * @property string         $guild_id    The unique identifier of the guild that the role belongs to.
+ * @property string         $id            The unique identifier of the role.
+ * @property string         $name          The name of the role.
+ * @property int            $color         The color of the guild.
+ * @property bool           $managed       Whether the role is managed by a Twitch subscriber feature.
+ * @property bool           $hoist         Whether the role is hoisted on the sidebar.
+ * @property int            $position      The position of the role on the sidebar.
+ * @property RolePermission $permissions   The permissions of the role.
+ * @property string|null    $icon          The URL to the role icon.
+ * @property string|null    $icon_hash     The icon hash for the role.
+ * @property string|null    $unicode_emoji The unicode emoji for the role.
+ * @property bool           $mentionable   Whether the role is mentionable.
+ * @property Guild          $guild         The guild that the role belongs to.
+ * @property string         $guild_id      The unique identifier of the guild that the role belongs to.
  */
 class Role extends Part
 {
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
-    protected $fillable = ['id', 'name', 'color', 'managed', 'hoist', 'position', 'permissions', 'mentionable', 'guild_id'];
+    protected $fillable = ['id', 'name', 'color', 'managed', 'hoist', 'position', 'permissions', 'icon', 'unicode_emoji', 'mentionable', 'guild_id'];
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     protected function afterConstruct(): void
     {
@@ -83,15 +86,56 @@ class Role extends Part
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function getCreatableAttributes(): array
     {
-        return [];
+        return [
+            'name' => $this->name,
+            'permissions' => $this->permissions->bitwise,
+            'color' => $this->color,
+            'hoist' => $this->hoist,
+            'icon' => $this->attributes['icon'] ?? null,
+            'unicode_emoji' => $this->unicode_emoji ?? null,
+            'mentionable' => $this->mentionable,
+        ];
     }
 
     /**
-     * {@inheritdoc}
+     * Returns the role icon.
+     *
+     * @param string $format The image format.
+     * @param int    $size   The size of the image.
+     *
+     * @return string|null The URL to the role icon or null.
+     */
+    public function getIconAttribute(string $format = 'png', int $size = 64)
+    {
+        if (! isset($this->attributes['icon'])) {
+            return null;
+        }
+
+        $allowed = ['png', 'jpg', 'webp'];
+	
+        if (! in_array(strtolower($format), $allowed)) {
+            $format = 'png';
+        }
+
+        return "https://cdn.discordapp.com/role-icons/{$this->id}/{$this->attributes['icon']}.{$format}?size={$size}";
+    }
+
+    /**
+     * Returns the role icon hash.
+     *
+     * @return string|null The role icon hash or null.
+     */
+    protected function getIconHashAttribute()
+    {
+        return $this->attributes['icon'];
+    }
+
+    /**
+     * @inheritdoc
      */
     public function getUpdatableAttributes(): array
     {
@@ -100,12 +144,14 @@ class Role extends Part
             'hoist' => $this->hoist,
             'color' => $this->color,
             'permissions' => $this->permissions->bitwise,
+            'icon' => $this->attributes['icon'],
+            'unicode_emoji' => $this->unicode_emoji,
             'mentionable' => $this->mentionable,
         ];
     }
     
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function getRepositoryAttributes(): array
     {

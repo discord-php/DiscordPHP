@@ -31,11 +31,11 @@ use React\Promise\PromiseInterface;
  */
 class Webhook extends Part
 {
-    const TYPE_INCOMING = 1;
-    const TYPE_CHANNEL_FOLLOWER = 2;
+    public const TYPE_INCOMING = 1;
+    public const TYPE_CHANNEL_FOLLOWER = 2;
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     protected $fillable = [
         'id',
@@ -104,7 +104,7 @@ class Webhook extends Part
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function getUpdatableAttributes(): array
     {
@@ -116,7 +116,7 @@ class Webhook extends Part
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function getCreatableAttributes(): array
     {
@@ -127,7 +127,7 @@ class Webhook extends Part
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function getRepositoryAttributes(): array
     {

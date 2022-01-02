@@ -23,7 +23,7 @@ use Discord\Parts\Part;
 class Footer extends Part
 {
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     protected $fillable = ['text', 'icon_url', 'proxy_icon_url'];
 }
