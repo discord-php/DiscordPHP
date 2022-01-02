@@ -132,7 +132,7 @@ class Member extends Part
      *
      * @return ExtendedPromiseInterface
      */
-    public function moveMember($channel): ExtendedPromiseInterface
+    public function moveMember($channel, ?string $reason = null): ExtendedPromiseInterface
     {
         if ($channel instanceof Channel) {
             $channel = $channel->id;
