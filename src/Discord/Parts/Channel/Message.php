@@ -297,7 +297,7 @@ class Message extends Part
 
         if ($this->channel->guild) {
             foreach ($this->channel->guild->roles ?? [] as $role) {
-                if (array_search($role->id, $this->attributes['mention_roles'] ?? []) !== false) {
+                if (in_array($role->id, $this->attributes['mention_roles'] ?? [])) {
                     $roles->push($role);
                 }
             }
@@ -496,12 +496,13 @@ class Message extends Part
     /**
      * Starts a public thread from the message.
      *
-     * @param string $name                  The name of the thread.
-     * @param int    $auto_archive_duration Number of minutes of inactivity until the thread is auto-archived. One of 60, 1440, 4320, 10080.
+     * @param string      $name                  The name of the thread.
+     * @param int         $auto_archive_duration Number of minutes of inactivity until the thread is auto-archived. One of 60, 1440, 4320, 10080.
+     * @param string|null $reason                Reason for Audit Log.
      *
      * @return ExtendedPromiseInterface<Thread>
      */
-    public function startThread(string $name, int $auto_archive_duration = 1440): ExtendedPromiseInterface
+    public function startThread(string $name, int $auto_archive_duration = 1440, ?string $reason = null): ExtendedPromiseInterface
     {
         if (! $this->guild) {
             return reject(new RuntimeException('You can only start threads on guild text channels.'));
@@ -524,10 +525,15 @@ class Message extends Part
                 break;
         }
 
+        $headers = [];
+        if (isset($reason)) {
+            $headers['X-Audit-Log-Reason'] = $reason;
+        }
+
         return $this->http->post(Endpoint::bind(Endpoint::CHANNEL_MESSAGE_THREADS, $this->channel_id, $this->id), [
             'name' => $name,
             'auto_archive_duration' => $auto_archive_duration,
-        ])->then(function ($response) {
+        ], $headers)->then(function ($response) {
             return $this->factory->create(Thread::class, $response, true);
         });
     }
