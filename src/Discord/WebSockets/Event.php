@@ -44,6 +44,8 @@ abstract class Event
     public const GUILD_BAN_ADD = 'GUILD_BAN_ADD';
     public const GUILD_BAN_REMOVE = 'GUILD_BAN_REMOVE';
 
+    public const GUILD_EMOJIS_UPDATE = 'GUILD_EMOJIS_UPDATE';
+
     public const GUILD_MEMBER_ADD = 'GUILD_MEMBER_ADD';
     public const GUILD_MEMBER_REMOVE = 'GUILD_MEMBER_REMOVE';
     public const GUILD_MEMBER_UPDATE = 'GUILD_MEMBER_UPDATE';

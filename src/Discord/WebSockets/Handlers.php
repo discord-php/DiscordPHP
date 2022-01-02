@@ -55,6 +55,9 @@ class Handlers
         $this->addHandler(Event::GUILD_BAN_ADD, \Discord\WebSockets\Events\GuildBanAdd::class);
         $this->addHandler(Event::GUILD_BAN_REMOVE, \Discord\WebSockets\Events\GuildBanRemove::class);
 
+        // Guild Emoji Event handler
+        $this->addHandler(Event::GUILD_EMOJIS_UPDATE, \Discord\WebSockets\Events\GuildEmojisUpdate::class);
+
         // Message handlers
         $this->addHandler(Event::MESSAGE_CREATE, \Discord\WebSockets\Events\MessageCreate::class, ['message']);
         $this->addHandler(Event::MESSAGE_DELETE, \Discord\WebSockets\Events\MessageDelete::class);
