@@ -27,6 +27,7 @@ use Discord\Repository\Guild\RoleRepository;
 use Discord\Parts\Guild\AuditLog\AuditLog;
 use Discord\Parts\Guild\AuditLog\Entry;
 use Discord\Repository\Guild\GuildTemplateRepository;
+use Discord\Repository\Guild\StageInstanceRepository;
 use Exception;
 use React\Promise\ExtendedPromiseInterface;
 use ReflectionClass;
@@ -105,6 +106,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * @property BanRepository     $bans
  * @property EmojiRepository   $emojis
  * @property GuildTemplateRepository $templates
+ * @property StageInstanceRepository $stage_instances
  */
 class Guild extends Part
 {
@@ -169,6 +171,7 @@ class Guild extends Part
         'approximate_member_count',
         'approximate_presence_count',
         'nsfw_level',
+        'stage_instances',
         'premium_progress_bar_enabled',
     ];
 
@@ -211,6 +214,7 @@ class Guild extends Part
         'invites' => InviteRepository::class,
         'emojis' => EmojiRepository::class,
         'templates' => GuildTemplateRepository::class,
+        'stage_instances' => StageInstanceRepository::class,
     ];
 
     /**
