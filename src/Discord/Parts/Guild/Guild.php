@@ -657,12 +657,18 @@ class Guild extends Part
     }
 
     /**
-     * Returns the Welcome Screen object for the guild.
+     * Get the Welcome Screen for the guild.
+     *
+     * @param bool $fresh Whether we should skip checking the cache.
      *
      * @return ExtendedPromiseInterface
      */
-    public function getWelcomeScreen(): ExtendedPromiseInterface
+    public function getWelcomeScreen(bool $fresh = false): ExtendedPromiseInterface
     {
+        if (! $fresh && isset($this->attributes['welcome_screen'])) {
+            return \React\Promise\resolve($this->attributes['welcome_screen']);
+        }
+
         return $this->http->get(Endpoint::bind(Endpoint::GUILD_WELCOME_SCREEN, $this->id))->then(function ($response) {
             $welcome_screen = $this->discord->factory(WelcomeScreen::class, $response, true);
             $this->attributes['welcome_screen'] = $welcome_screen;

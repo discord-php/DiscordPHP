@@ -30,7 +30,7 @@ class WelcomeScreen extends Part
     protected $fillable = ['description', 'welcome_channels'];
 
     /**
-     * Returns the Welcome Channel object of the Welcome Screen
+     * Returns the Welcome Channels of the Welcome Screen
      *
      * @return Collection|WelcomeChannel[] The channels of welcome screen.
      */
