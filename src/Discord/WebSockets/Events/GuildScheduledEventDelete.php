@@ -26,7 +26,7 @@ class GuildScheduledEventDelete extends Event
         $scheduled_event = $this->factory->create(ScheduledEvent::class, $data);
 
         if ($guild = $scheduled_event->guild) {
-            $guild->scheduled_events->pull($scheduled_event->id);
+            $guild->guild_scheduled_events->pull($scheduled_event->id);
         }
 
         $deferred->resolve($scheduled_event);

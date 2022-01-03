@@ -26,7 +26,7 @@ class GuildScheduledEventCreate extends Event
         $scheduled_event = $this->factory->create(ScheduledEvent::class, $data, true);
 
         if ($guild = $this->discord->guilds->get('id', $scheduled_event->guild_id)) {
-            $guild->scheduled_events->push($scheduled_event);
+            $guild->guild_scheduled_events->push($scheduled_event);
         }
 
         $deferred->resolve($scheduled_event);

@@ -47,6 +47,8 @@ class ScheduledEventRepository extends AbstractRepository
 
     /**
      * @inheritdoc
+     * 
+     * @param bool $with_user_count Whether to include number of users subscribed to each event
      */
     public function freshen(bool $with_user_count = false): ExtendedPromiseInterface
     {
@@ -73,6 +75,8 @@ class ScheduledEventRepository extends AbstractRepository
 
     /**
      * @inheritdoc
+     * 
+     * @param bool $with_user_count Whether to include number of users subscribed to each event
      */
     public function fetch(string $id, bool $fresh = false, bool $with_user_count = false): ExtendedPromiseInterface
     {

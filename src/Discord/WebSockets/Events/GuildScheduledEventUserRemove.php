@@ -22,7 +22,7 @@ class GuildScheduledEventUserRemove extends Event
     public function handle(Deferred &$deferred, $data): void
     {
         if ($guild = $this->discord->guilds->get('id', $data->guild_id)) {
-            $scheduled_event = $guild->scheduled_events->get('id', $data->guild_scheduled_event_id);
+            $scheduled_event = $guild->guild_scheduled_events->get('id', $data->guild_scheduled_event_id);
             $user = $this->discord->users->get('id', $data->user_id);
         }
 

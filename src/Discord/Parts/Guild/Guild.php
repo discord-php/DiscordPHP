@@ -106,9 +106,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * @property InviteRepository  $invites
  * @property BanRepository     $bans
  * @property EmojiRepository   $emojis
- * @property ScheduledeventRepository $scheduled_events
  * @property GuildTemplateRepository $templates
  * @property StageInstanceRepository $stage_instances
+ * @property ScheduledeventRepository $guild_scheduled_events
  */
 class Guild extends Part
 {
@@ -175,6 +175,7 @@ class Guild extends Part
         'welcome_screen',
         'nsfw_level',
         'stage_instances',
+        'guild_scheduled_events',
         'premium_progress_bar_enabled',
     ];
 
@@ -216,9 +217,9 @@ class Guild extends Part
         'bans' => BanRepository::class,
         'invites' => InviteRepository::class,
         'emojis' => EmojiRepository::class,
-        'scheduled_events' => ScheduledEventRepository::class,
         'templates' => GuildTemplateRepository::class,
         'stage_instances' => StageInstanceRepository::class,
+        'guild_scheduled_events' => ScheduledEventRepository::class,
     ];
 
     /**
