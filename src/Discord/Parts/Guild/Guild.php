@@ -26,6 +26,7 @@ use Discord\Repository\Guild\MemberRepository;
 use Discord\Repository\Guild\RoleRepository;
 use Discord\Parts\Guild\AuditLog\AuditLog;
 use Discord\Parts\Guild\AuditLog\Entry;
+use Discord\Repository\Guild\ScheduledEventRepository;
 use Discord\Repository\Guild\GuildTemplateRepository;
 use Discord\Repository\Guild\StageInstanceRepository;
 use Exception;
@@ -107,6 +108,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * @property EmojiRepository   $emojis
  * @property GuildTemplateRepository $templates
  * @property StageInstanceRepository $stage_instances
+ * @property ScheduledeventRepository $guild_scheduled_events
  */
 class Guild extends Part
 {
@@ -173,6 +175,7 @@ class Guild extends Part
         'welcome_screen',
         'nsfw_level',
         'stage_instances',
+        'guild_scheduled_events',
         'premium_progress_bar_enabled',
     ];
 
@@ -216,6 +219,7 @@ class Guild extends Part
         'emojis' => EmojiRepository::class,
         'templates' => GuildTemplateRepository::class,
         'stage_instances' => StageInstanceRepository::class,
+        'guild_scheduled_events' => ScheduledEventRepository::class,
     ];
 
     /**
