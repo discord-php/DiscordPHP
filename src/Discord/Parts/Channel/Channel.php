@@ -149,7 +149,7 @@ class Channel extends Part
      */
     protected function getIsPrivateAttribute(): bool
     {
-        return array_search($this->type, [self::TYPE_DM, self::TYPE_GROUP]) !== false;
+        return in_array($this->type, [self::TYPE_DM, self::TYPE_GROUP]);
     }
 
     /**
@@ -246,13 +246,14 @@ class Channel extends Part
     /**
      * Sets permissions in a channel.
      *
-     * @param Part  $part  A role or member.
-     * @param array $allow An array of permissions to allow.
-     * @param array $deny  An array of permissions to deny.
+     * @param Part        $part   A role or member.
+     * @param array       $allow  An array of permissions to allow.
+     * @param array       $deny   An array of permissions to deny.
+     * @param string|null $reason Reason for Audit Log.
      *
      * @return ExtendedPromiseInterface
      */
-    public function setPermissions(Part $part, array $allow = [], array $deny = []): ExtendedPromiseInterface
+    public function setPermissions(Part $part, array $allow = [], array $deny = [], ?string $reason = null): ExtendedPromiseInterface
     {
         if ($part instanceof Member) {
             $type = Overwrite::TYPE_MEMBER;
@@ -276,18 +277,19 @@ class Channel extends Part
             'deny' => $denyPart->bitwise,
         ]);
 
-        return $this->setOverwrite($part, $overwrite);
+        return $this->setOverwrite($part, $overwrite, $reason);
     }
 
     /**
      * Sets an overwrite to the channel.
      *
-     * @param Part      $part      A role or member.
-     * @param Overwrite $overwrite An overwrite object.
+     * @param Part        $part      A role or member.
+     * @param Overwrite   $overwrite An overwrite object.
+     * @param string|null $reason    Reason for Audit Log.
      *
      * @return ExtendedPromiseInterface
      */
-    public function setOverwrite(Part $part, Overwrite $overwrite): ExtendedPromiseInterface
+    public function setOverwrite(Part $part, Overwrite $overwrite, ?string $reason = null): ExtendedPromiseInterface
     {
         if (! $this->is_private) {
             $botperms = $this->guild->members->offsetGet($this->discord->id)->getPermissions($this);
@@ -318,7 +320,12 @@ class Channel extends Part
             return \React\Promise\resolve();
         }
 
-        return $this->http->put(Endpoint::bind(Endpoint::CHANNEL_PERMISSIONS, $this->id, $part->id), $payload);
+        $headers = [];
+        if (isset($reason)) {
+            $headers['X-Audit-Log-Reason'] = $reason;
+        }
+
+        return $this->http->put(Endpoint::bind(Endpoint::CHANNEL_PERMISSIONS, $this->id, $part->id), $payload, $headers);
     }
 
     /**
@@ -338,11 +345,12 @@ class Channel extends Part
     /**
      * Moves a member to another voice channel.
      *
-     * @param Member|string The member to move. (either a Member part or the member ID)
+     * @param Member|string $member The member to move. (either a Member part or the member ID)
+     * @param string|null   $reason Reason for Audit Log.
      *
      * @return ExtendedPromiseInterface
      */
-    public function moveMember($member): ExtendedPromiseInterface
+    public function moveMember($member, ?string $reason = null): ExtendedPromiseInterface
     {
         if (! $this->allowVoice()) {
             return reject(new \Exception('You cannot move a member in a text channel.'));
@@ -360,17 +368,23 @@ class Channel extends Part
             $member = $member->id;
         }
 
-        return $this->http->patch(Endpoint::bind(Endpoint::GUILD_MEMBER, $this->guild_id, $member), ['channel_id' => $this->id]);
+        $headers = [];
+        if (isset($reason)) {
+            $headers['X-Audit-Log-Reason'] = $reason;
+        }
+
+        return $this->http->patch(Endpoint::bind(Endpoint::GUILD_MEMBER, $this->guild_id, $member), ['channel_id' => $this->id], $headers);
     }
 
     /**
      * Mutes a member on a voice channel.
      *
-     * @param Member|string The member to mute. (either a Member part or the member ID)
+     * @param Member|string $member The member to mute. (either a Member part or the member ID)
+     * @param string|null   $reason Reason for Audit Log.
      *
      * @return ExtendedPromiseInterface
      */
-    public function muteMember($member): ExtendedPromiseInterface
+    public function muteMember($member, ?string $reason = null): ExtendedPromiseInterface
     {
         if (! $this->allowVoice()) {
             return reject(new \Exception('You cannot mute a member in a text channel.'));
@@ -388,17 +402,23 @@ class Channel extends Part
             $member = $member->id;
         }
 
-        return $this->http->patch(Endpoint::bind(Endpoint::GUILD_MEMBER, $this->guild_id, $member), ['mute' => true]);
+        $headers = [];
+        if (isset($reason)) {
+            $headers['X-Audit-Log-Reason'] = $reason;
+        }
+
+        return $this->http->patch(Endpoint::bind(Endpoint::GUILD_MEMBER, $this->guild_id, $member), ['mute' => true], $headers);
     }
 
     /**
      * Unmutes a member on a voice channel.
      *
-     * @param Member|string The member to unmute. (either a Member part or the member ID)
+     * @param Member|string $member The member to unmute. (either a Member part or the member ID)
+     * @param string|null   $reason Reason for Audit Log.
      *
      * @return ExtendedPromiseInterface
      */
-    public function unmuteMember($member): ExtendedPromiseInterface
+    public function unmuteMember($member, ?string $reason = null): ExtendedPromiseInterface
     {
         if (! $this->allowVoice()) {
             return \React\Promise\reject(new \Exception('You cannot unmute a member in a text channel.'));
@@ -416,7 +436,12 @@ class Channel extends Part
             $member = $member->id;
         }
 
-        return $this->http->patch(Endpoint::bind(Endpoint::GUILD_MEMBER, $this->guild_id, $member), ['mute' => false]);
+        $headers = [];
+        if (isset($reason)) {
+            $headers['X-Audit-Log-Reason'] = $reason;
+        }
+
+        return $this->http->patch(Endpoint::bind(Endpoint::GUILD_MEMBER, $this->guild_id, $member), ['mute' => false], $headers);
     }
 
     /**
@@ -467,10 +492,11 @@ class Channel extends Part
      * Bulk deletes an array of messages.
      *
      * @param array|Traversable $messages An array of messages to delete.
+     * @param string|null       $reason   Reason for Audit Log (only for bulk messages).
      *
      * @return ExtendedPromiseInterface
      */
-    public function deleteMessages($messages): ExtendedPromiseInterface
+    public function deleteMessages($messages, ?string $reason = null): ExtendedPromiseInterface
     {
         if (! is_array($messages) && ! ($messages instanceof Traversable)) {
             return reject(new \Exception('$messages must be an array or implement Traversable.'));
@@ -503,8 +529,13 @@ class Channel extends Part
 
             $promises = [];
 
+            $headers = [];
+            if (isset($reason)) {
+                $headers['X-Audit-Log-Reason'] = $reason;
+            }
+
             while (! empty($messageID)) {
-                $promises[] = $this->http->post(Endpoint::bind(Endpoint::CHANNEL_MESSAGES_BULK_DELETE, $this->id), ['messages' => array_slice($messageID, 0, 100)]);
+                $promises[] = $this->http->post(Endpoint::bind(Endpoint::CHANNEL_MESSAGES_BULK_DELETE, $this->id), ['messages' => array_slice($messageID, 0, 100)], $headers);
                 $messageID = array_slice($messageID, 100);
             }
 
@@ -515,14 +546,15 @@ class Channel extends Part
     /**
      * Deletes a given number of messages, in order of time sent.
      *
-     * @param int $value
+     * @param int         $value
+     * @param string|null $reason Reason for Audit Log (only for bulk messages).
      *
      * @return ExtendedPromiseInterface
      */
-    public function limitDelete(int $value): ExtendedPromiseInterface
+    public function limitDelete(int $value, ?string $reason = null): ExtendedPromiseInterface
     {
-        return $this->getMessageHistory(['limit' => $value])->then(function ($messages) {
-            return $this->deleteMessages($messages);
+        return $this->getMessageHistory(['limit' => $value])->then(function ($messages) use ($reason) {
+            return $this->deleteMessages($messages, $reason);
         });
     }
 
@@ -588,11 +620,12 @@ class Channel extends Part
     /**
      * Adds a message to the channels pinboard.
      *
-     * @param Message $message The message to pin.
+     * @param Message     $message The message to pin.
+     * @param string|null $reason  Reason for Audit Log.
      *
      * @return ExtendedPromiseInterface<Message>
      */
-    public function pinMessage(Message $message): ExtendedPromiseInterface
+    public function pinMessage(Message $message, ?string $reason = null): ExtendedPromiseInterface
     {
         if (! $this->is_private) {
             $botperms = $this->guild->members->offsetGet($this->discord->id)->getPermissions($this);
@@ -610,7 +643,12 @@ class Channel extends Part
             return reject(new \Exception('You cannot pin a message to a different channel.'));
         }
 
-        return $this->http->put(Endpoint::bind(Endpoint::CHANNEL_PIN, $this->id, $message->id))->then(function () use (&$message) {
+        $headers = [];
+        if (isset($reason)) {
+            $headers['X-Audit-Log-Reason'] = $reason;
+        }
+
+        return $this->http->put(Endpoint::bind(Endpoint::CHANNEL_PIN, $this->id, $message->id), null, $headers)->then(function () use (&$message) {
             $message->pinned = true;
 
             return $message;
@@ -620,11 +658,12 @@ class Channel extends Part
     /**
      * Removes a message from the channels pinboard.
      *
-     * @param Message $message The message to un-pin.
+     * @param Message     $message The message to un-pin.
+     * @param string|null $reason  Reason for Audit Log.
      *
      * @return ExtendedPromiseInterface
      */
-    public function unpinMessage(Message $message): ExtendedPromiseInterface
+    public function unpinMessage(Message $message, ?string $reason = null): ExtendedPromiseInterface
     {
         if (! $this->is_private) {
             $botperms = $this->guild->members->offsetGet($this->discord->id)->getPermissions($this);
@@ -642,7 +681,12 @@ class Channel extends Part
             return reject(new \Exception('You cannot un-pin a message from a different channel.'));
         }
 
-        return $this->http->delete(Endpoint::bind(Endpoint::CHANNEL_PIN, $this->id, $message->id))->then(function () use (&$message) {
+        $headers = [];
+        if (isset($reason)) {
+            $headers['X-Audit-Log-Reason'] = $reason;
+        }
+
+        return $this->http->delete(Endpoint::bind(Endpoint::CHANNEL_PIN, $this->id, $message->id), null, $headers)->then(function () use (&$message) {
             $message->pinned = false;
 
             return $message;
@@ -690,13 +734,14 @@ class Channel extends Part
     /**
      * Starts a thread in the channel.
      *
-     * @param string $name                  the name of the thread.
-     * @param bool   $private               whether the thread should be private. cannot start a private thread in a news channel.
-     * @param int    $auto_archive_duration number of minutes of inactivity until the thread is auto-archived. one of 60, 1440, 4320, 10080.
+     * @param string      $name                  the name of the thread.
+     * @param bool        $private               whether the thread should be private. cannot start a private thread in a news channel.
+     * @param int         $auto_archive_duration number of minutes of inactivity until the thread is auto-archived. one of 60, 1440, 4320, 10080.
+     * @param string|null $reason                Reason for Audit Log.
      *
      * @return ExtendedPromiseInterface<Thread>
      */
-    public function startThread(string $name, bool $private = false, int $auto_archive_duration = 1440): ExtendedPromiseInterface
+    public function startThread(string $name, bool $private = false, int $auto_archive_duration = 1440, ?string $reason = null): ExtendedPromiseInterface
     {
         if ($private && ! $this->guild->feature_private_threads) {
             return reject(new RuntimeException('Guild does not have access to private threads.'));
@@ -731,11 +776,16 @@ class Channel extends Part
                 break;
         }
 
+        $headers = [];
+        if (isset($reason)) {
+            $headers['X-Audit-Log-Reason'] = $reason;
+        }
+
         return $this->http->post(Endpoint::bind(Endpoint::CHANNEL_THREADS, $this->id), [
             'name' => $name,
             'auto_archive_duration' => $auto_archive_duration,
             'type' => $type,
-        ])->then(function ($response) {
+        ], $headers)->then(function ($response) {
             return $this->factory->create(Thread::class, $response, true);
         });
     }

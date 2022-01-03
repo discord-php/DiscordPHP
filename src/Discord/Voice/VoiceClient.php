@@ -934,7 +934,7 @@ class VoiceClient extends EventEmitter
     {
         $legal = [20, 40, 60];
 
-        if (false === array_search($fs, $legal)) {
+        if (! in_array($fs, $legal)) {
             throw new \InvalidArgumentException("{$fs} is not a valid option. Valid options are: ".trim(implode(', ', $legal), ', '));
         }
 
@@ -990,7 +990,7 @@ class VoiceClient extends EventEmitter
     {
         $legal = ['voip', 'audio', 'lowdelay'];
 
-        if (false === array_search($app, $legal)) {
+        if (! in_array($app, $legal)) {
             throw new \InvalidArgumentException("{$app} is not a valid option. Valid options are: ".trim(implode(', ', $legal), ', '));
         }
 

@@ -44,6 +44,8 @@ abstract class Event
     public const GUILD_BAN_ADD = 'GUILD_BAN_ADD';
     public const GUILD_BAN_REMOVE = 'GUILD_BAN_REMOVE';
 
+    public const GUILD_EMOJIS_UPDATE = 'GUILD_EMOJIS_UPDATE';
+
     public const GUILD_MEMBER_ADD = 'GUILD_MEMBER_ADD';
     public const GUILD_MEMBER_REMOVE = 'GUILD_MEMBER_REMOVE';
     public const GUILD_MEMBER_UPDATE = 'GUILD_MEMBER_UPDATE';
@@ -80,6 +82,11 @@ abstract class Event
     // Voice
     public const VOICE_STATE_UPDATE = 'VOICE_STATE_UPDATE';
     public const VOICE_SERVER_UPDATE = 'VOICE_SERVER_UPDATE';
+
+    // Stage Instance
+    public const STAGE_INSTANCE_CREATE = 'STAGE_INSTANCE_CREATE';
+    public const STAGE_INSTANCE_UPDATE = 'STAGE_INSTANCE_UPDATE';
+    public const STAGE_INSTANCE_DELETE = 'STAGE_INSTANCE_DELETE';
 
     // Messages
     public const MESSAGE_CREATE = 'MESSAGE_CREATE';
