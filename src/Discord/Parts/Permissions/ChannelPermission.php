@@ -34,10 +34,10 @@ namespace Discord\Parts\Permissions;
  * @property bool $read_message_history
  * @property bool $mention_everyone
  * @property bool $use_external_emojis
- * @property bool $use_slash_commands
+ * @property bool $use_application_commands
  * @property bool $manage_threads
- * @property bool $use_public_threads
- * @property bool $use_private_threads
+ * @property bool $create_public_threads
+ * @property bool $create_private_threads
  * @property bool $use_external_stickers
  * @property bool $send_messages_in_threads
  */
@@ -48,6 +48,6 @@ class ChannelPermission extends Permission
      */
     public static function getPermissions(): array
     {
-        return array_merge(parent::ALL_PERMISSIONS, parent::TEXT_PERMISSIONS, parent::VOICE_PERMISSIONS);
+        return array_merge(parent::ALL_PERMISSIONS, parent::TEXT_PERMISSIONS, parent::VOICE_PERMISSIONS, parent::STAGE_PERMISSIONS);
     }
 }

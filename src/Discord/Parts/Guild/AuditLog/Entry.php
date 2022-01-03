@@ -65,9 +65,15 @@ class Entry extends Part
     public const INTEGRATION_CREATE = 80;
     public const INTEGRATION_UPDATE = 81;
     public const INTEGRATION_DELETE = 82;
+    public const STAGE_INSTANCE_CREATE = 83;
+    public const STAGE_INSTANCE_UPDATE = 84;
+    public const STAGE_INSTANCE_DELETE = 85;
     public const GUILD_SCHEDULED_EVENT_CREATE = 100;
     public const GUILD_SCHEDULED_EVENT_UPDATE = 101;
     public const GUILD_SCHEDULED_EVENT_DELETE = 102;
+    public const THREAD_CREATE = 110;
+    public const THREAD_UPDATE = 111;
+    public const THREAD_DELETE = 112;
     // AUDIT LOG ENTRY TYPES
 
     /**

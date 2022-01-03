@@ -26,6 +26,9 @@ class Intents
      * - CHANNEL_UPDATE
      * - CHANNEL_DELETE
      * - CHANNEL_PINS_UPDATE
+     * - STAGE_INSTANCE_CREATE
+     * - STAGE_INSTANCE_UPDATE
+     * - STAGE_INSTANCE_DELETE
      */
     public const GUILDS = (1 << 0);
 
