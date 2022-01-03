@@ -75,8 +75,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * @property int               $max_video_channel_users                  Maximum amount of users allowed in a video channel.
  * @property int               $approximate_member_count
  * @property int               $approximate_presence_count
- * @property int               $nsfw_level                               The guild NSFW level
- * @property bool              $premium_progress_bar_enabled             Whether the guild has the boost progress bar enabled
+ * @property int               $nsfw_level                               The guild NSFW level.
+ * @property bool              $premium_progress_bar_enabled             Whether the guild has the boost progress bar enabled.
  * @property bool              $feature_animated_icon                    guild has access to set an animated guild icon.
  * @property bool              $feature_banner                           guild has access to set a guild banner image.
  * @property bool              $feature_commerce                         guild has access to use commerce features (create store channels).
@@ -170,6 +170,7 @@ class Guild extends Part
         'max_video_channel_users',
         'approximate_member_count',
         'approximate_presence_count',
+        'welcome_screen',
         'nsfw_level',
         'stage_instances',
         'premium_progress_bar_enabled',
@@ -677,6 +678,69 @@ class Guild extends Part
 
             return $members;
         });
+    }
+
+    /**
+     * Get the Welcome Screen for the guild.
+     *
+     * @param bool $fresh Whether we should skip checking the cache.
+     *
+     * @return ExtendedPromiseInterface
+     */
+    public function getWelcomeScreen(bool $fresh = false): ExtendedPromiseInterface
+    {
+        if (! $fresh && isset($this->attributes['welcome_screen'])) {
+            return \React\Promise\resolve($this->attributes['welcome_screen']);
+        }
+
+        return $this->http->get(Endpoint::bind(Endpoint::GUILD_WELCOME_SCREEN, $this->id))->then(function ($response) {
+            $welcome_screen = $this->discord->factory(WelcomeScreen::class, $response, true);
+            $this->attributes['welcome_screen'] = $welcome_screen;
+
+            return $welcome_screen;
+        });
+    }
+
+    /**
+     * Modify the guild's Welcome Screen. Requires the MANAGE_GUILD permission. Returns the updated Welcome Screen object.
+     *
+     * @param array $options An array of options.
+     *                       enabled => whether the welcome screen is enabled
+     *                       welcome_channels => channels linked in the welcome screen and their display options (maximum 5)
+     *                       description => the server description to show in the welcome screen (maximum 140)
+     *
+     * @return ExtendedPromiseInterface
+     */
+    public function updateWelcomeScreen(array $options): ExtendedPromiseInterface
+    {
+        $resolver = new OptionsResolver();
+        $resolver->setDefined([
+            'enabled',
+            'welcome_channels',
+            'description'
+        ])
+        ->setAllowedTypes('enabled', 'string')
+        ->setAllowedTypes('welcome_channels', ['array', WelcomeScreen::class])
+        ->setAllowedTypes('description', 'string');
+
+        $options = $resolver->resolve($options);
+
+        return $this->http->patch(Endpoint::bind(Endpoint::GUILD_WELCOME_SCREEN, $this->id), $options)->then(function ($response) {
+            $welcome_screen = $this->discord->factory(WelcomeScreen::class, $response, true);
+            $this->attributes['welcome_screen'] = $welcome_screen;
+
+            return $welcome_screen;
+        });
+    }
+
+    /**
+     * Returns the Welcome Screen object for the guild.
+     *
+     * @return WelcomeScreen|null
+     */
+    public function getWelcomeScreenAttribute(): ?WelcomeScreen
+    {
+        return $this->attributes['welcome_screen'] ?? null;
     }
 
     /**
