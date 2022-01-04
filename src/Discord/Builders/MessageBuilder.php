@@ -372,6 +372,10 @@ class MessageBuilder implements JsonSerializable
      */
     public function removeSticker($sticker): self
     {
+        if ($sticker instanceof Sticker) {
+            $sticker = $sticker->id;
+        }
+
         if (($idx = array_search($sticker, $this->sticker_ids)) !== null) {
             array_splice($this->sticker_ids, $idx, 1);
         }
@@ -398,7 +402,7 @@ class MessageBuilder implements JsonSerializable
     }
 
     /**
-     * Returns all the stickers in the message.
+     * Returns all the sticker IDs in the message.
      *
      * @return Sticker[]
      */

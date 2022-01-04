@@ -64,7 +64,12 @@ class Sticker extends Part
      */
     public function isPartial(): bool
     {
-        return array_keys($this->attributes) == ['id', 'name', 'format_type'];
+        $partial = array_filter($this->attributes, function ($var) {
+            return isset($var);
+        });
+
+        sort($partial);
+        return array_keys($partial) == ['format_type', 'name', 'id'];
     }
 
     /**
@@ -136,12 +141,12 @@ class Sticker extends Part
     {
         if ($this->type == self::TYPE_GUILD) {
             return [
-                'id' => $this->id,
+                'sticker_id' => $this->id,
                 'guild_id' => $this->guild_id
             ];
         }
         return [
-            'id' => $this->id
+            'sticker_id' => $this->id
         ];
     }
 }

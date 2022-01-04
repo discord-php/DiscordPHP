@@ -11,6 +11,7 @@
 
 namespace Discord\WebSockets\Events;
 
+use Discord\Helpers\Collection;
 use Discord\WebSockets\Event;
 use Discord\Helpers\Deferred;
 use Discord\Parts\Channel\Sticker;
@@ -22,18 +23,22 @@ class GuildStickersUpdate extends Event
      */
     public function handle(Deferred &$deferred, $data): void
     {
-        $adata = (array) $data->stickers;
-        $adata['guild_id'] = $data->guild_id;
+        $stickerParts = Collection::for(Sticker::class);
 
-        $stickerPart = $this->factory->create(Sticker::class, $adata, true);
-
-        if ($guild = $this->discord->guilds->get('id', $stickerPart->guild_id)) {
-            $old = $guild->stickers->get('id', $stickerPart->id);
-            $guild->stickers->push($stickerPart);
-        } else {
-            $old = null;
+        if ($guild = $this->discord->guilds->get('id', $data->guild_id)) {
+            $oldParts = clone $guild->stickers;
+            $guild->stickers->clear();
         }
 
-        $deferred->resolve([$stickerPart, $old]);
+        foreach ($data->stickers as $sticker) {
+            if (! isset($sticker->user) && $oldUser = $oldParts->offsetGet($sticker->id)->user) {
+                $sticker->user = $oldUser;
+            }
+            $stickerPart = $this->factory->create(Sticker::class, $sticker, true);
+            $guild->stickers->pushItem($stickerPart);
+            $stickerParts->pushItem($stickerPart);
+        }
+
+        $deferred->resolve([$stickerParts, $oldParts]);
     }
 }

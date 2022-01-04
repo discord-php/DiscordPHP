@@ -168,6 +168,7 @@ class Guild extends Part
         'approximate_member_count',
         'approximate_presence_count',
         'nsfw_level',
+        'stickers',
         'premium_progress_bar_enabled',
     ];
 
