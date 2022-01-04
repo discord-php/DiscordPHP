@@ -23,20 +23,24 @@ class GuildStickersUpdate extends Event
      */
     public function handle(Deferred &$deferred, $data): void
     {
+        $oldParts = Collection::for(Sticker::class);
         $stickerParts = Collection::for(Sticker::class);
 
         if ($guild = $this->discord->guilds->get('id', $data->guild_id)) {
-            $oldParts = clone $guild->stickers;
+            $oldParts->merge($guild->stickers);
             $guild->stickers->clear();
         }
 
         foreach ($data->stickers as $sticker) {
-            if (! isset($sticker->user) && $oldUser = $oldParts->offsetGet($sticker->id)->user) {
-                $sticker->user = $oldUser;
+            if (! isset($sticker->user) && $oldPart = $oldParts->offsetGet($sticker->id)) {
+                $sticker->user = $oldPart->user;
             }
             $stickerPart = $this->factory->create(Sticker::class, $sticker, true);
-            $guild->stickers->pushItem($stickerPart);
             $stickerParts->pushItem($stickerPart);
+        }
+
+        if ($guild) {
+            $guild->stickers->merge($stickerParts);
         }
 
         $deferred->resolve([$stickerParts, $oldParts]);
