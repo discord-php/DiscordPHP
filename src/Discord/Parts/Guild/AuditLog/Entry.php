@@ -68,6 +68,9 @@ class Entry extends Part
     public const STAGE_INSTANCE_CREATE = 83;
     public const STAGE_INSTANCE_UPDATE = 84;
     public const STAGE_INSTANCE_DELETE = 85;
+    public const STICKER_CREATE = 90;
+    public const STICKER_UPDATE = 91;
+    public const STICKER_DELETE = 92;
     public const GUILD_SCHEDULED_EVENT_CREATE = 100;
     public const GUILD_SCHEDULED_EVENT_UPDATE = 101;
     public const GUILD_SCHEDULED_EVENT_DELETE = 102;

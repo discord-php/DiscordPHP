@@ -26,6 +26,7 @@ use Discord\Repository\Guild\MemberRepository;
 use Discord\Repository\Guild\RoleRepository;
 use Discord\Parts\Guild\AuditLog\AuditLog;
 use Discord\Parts\Guild\AuditLog\Entry;
+use Discord\Repository\Guild\StickerRepository;
 use Discord\Repository\Guild\ScheduledEventRepository;
 use Discord\Repository\Guild\GuildTemplateRepository;
 use Discord\Repository\Guild\StageInstanceRepository;
@@ -106,6 +107,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * @property InviteRepository  $invites
  * @property BanRepository     $bans
  * @property EmojiRepository   $emojis
+ * @property StickerRepository $stickers
  * @property GuildTemplateRepository $templates
  * @property StageInstanceRepository $stage_instances
  * @property ScheduledeventRepository $guild_scheduled_events
@@ -174,6 +176,7 @@ class Guild extends Part
         'approximate_presence_count',
         'welcome_screen',
         'nsfw_level',
+        'stickers',
         'stage_instances',
         'guild_scheduled_events',
         'premium_progress_bar_enabled',
@@ -217,6 +220,7 @@ class Guild extends Part
         'bans' => BanRepository::class,
         'invites' => InviteRepository::class,
         'emojis' => EmojiRepository::class,
+        'stickers' => StickerRepository::class,
         'templates' => GuildTemplateRepository::class,
         'stage_instances' => StageInstanceRepository::class,
         'guild_scheduled_events' => ScheduledEventRepository::class,

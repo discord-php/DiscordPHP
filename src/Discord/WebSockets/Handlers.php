@@ -58,6 +58,9 @@ class Handlers
         // Guild Emoji Event handler
         $this->addHandler(Event::GUILD_EMOJIS_UPDATE, \Discord\WebSockets\Events\GuildEmojisUpdate::class);
 
+        // Guild Sticker Event handler
+        $this->addHandler(Event::GUILD_STICKERS_UPDATE, \Discord\WebSockets\Events\GuildStickersUpdate::class);
+
         // Message handlers
         $this->addHandler(Event::MESSAGE_CREATE, \Discord\WebSockets\Events\MessageCreate::class, ['message']);
         $this->addHandler(Event::MESSAGE_DELETE, \Discord\WebSockets\Events\MessageDelete::class);

@@ -27,16 +27,20 @@ class GuildEmojisUpdate extends Event
         $emojiParts = Collection::for(Emoji::class);
 
         if ($guild = $this->discord->guilds->get('id', $data->guild_id)) {
-            // Will not contain removed emoji
-            foreach ($data->emojis as $emoji) {
-                $oldParts->pushItem($guild->emojis->get('id', $emoji->id));
-            }
+            $oldParts->merge($guild->emojis);
+            $guild->emojis->clear();
         }
 
         foreach ($data->emojis as $emoji) {
+            if (! isset($emoji->user) && $oldPart = $oldParts->offsetGet($emoji->id)) {
+                $emoji->user = $oldPart->user;
+            }
             $emojiPart = $this->factory->create(Emoji::class, $emoji, true);
-            $guild->emojis->offsetSet($emoji->id, $emojiPart);
             $emojiParts->pushItem($emojiPart);
+        }
+
+        if ($guild) {
+            $guild->emojis->merge($emojiParts);
         }
 
         $deferred->resolve([$emojiParts, $oldParts]);

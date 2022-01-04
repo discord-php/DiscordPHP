@@ -50,11 +50,12 @@ class Intents
     public const GUILD_BANS = (1 << 2);
 
     /**
-     * Guild emoji events:.
+     * Guild emoji and sticker events:.
      *
      * - GUILD_EMOJIS_UPDATE
+     * - GUILD_STICKERS_UPDATE
      */
-    public const GUILD_EMOJIS = (1 << 3);
+    public const GUILD_EMOJIS_AND_STICKERS = (1 << 3);
 
     /**
      * Guild integration events:.
