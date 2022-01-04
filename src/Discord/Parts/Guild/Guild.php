@@ -14,6 +14,7 @@ namespace Discord\Parts\Guild;
 use Carbon\Carbon;
 use Discord\Helpers\Collection;
 use Discord\Http\Endpoint;
+use Discord\Http\Exceptions\NoPermissionsException;
 use Discord\Parts\Part;
 use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
@@ -26,6 +27,9 @@ use Discord\Repository\Guild\RoleRepository;
 use Discord\Parts\Guild\AuditLog\AuditLog;
 use Discord\Parts\Guild\AuditLog\Entry;
 use Discord\Repository\Guild\StickerRepository;
+use Discord\Repository\Guild\ScheduledEventRepository;
+use Discord\Repository\Guild\GuildTemplateRepository;
+use Discord\Repository\Guild\StageInstanceRepository;
 use Exception;
 use React\Promise\ExtendedPromiseInterface;
 use ReflectionClass;
@@ -73,8 +77,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * @property int               $max_video_channel_users                  Maximum amount of users allowed in a video channel.
  * @property int               $approximate_member_count
  * @property int               $approximate_presence_count
- * @property int               $nsfw_level                               The guild NSFW level
- * @property bool              $premium_progress_bar_enabled             Whether the guild has the boost progress bar enabled
+ * @property int               $nsfw_level                               The guild NSFW level.
+ * @property bool              $premium_progress_bar_enabled             Whether the guild has the boost progress bar enabled.
  * @property bool              $feature_animated_icon                    guild has access to set an animated guild icon.
  * @property bool              $feature_banner                           guild has access to set a guild banner image.
  * @property bool              $feature_commerce                         guild has access to use commerce features (create store channels).
@@ -104,6 +108,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * @property BanRepository     $bans
  * @property EmojiRepository   $emojis
  * @property StickerRepository $stickers
+ * @property GuildTemplateRepository $templates
+ * @property StageInstanceRepository $stage_instances
+ * @property ScheduledeventRepository $guild_scheduled_events
  */
 class Guild extends Part
 {
@@ -167,8 +174,11 @@ class Guild extends Part
         'max_video_channel_users',
         'approximate_member_count',
         'approximate_presence_count',
+        'welcome_screen',
         'nsfw_level',
         'stickers',
+        'stage_instances',
+        'guild_scheduled_events',
         'premium_progress_bar_enabled',
     ];
 
@@ -211,6 +221,9 @@ class Guild extends Part
         'invites' => InviteRepository::class,
         'emojis' => EmojiRepository::class,
         'stickers' => StickerRepository::class,
+        'templates' => GuildTemplateRepository::class,
+        'stage_instances' => StageInstanceRepository::class,
+        'guild_scheduled_events' => ScheduledEventRepository::class,
     ];
 
     /**
@@ -280,19 +293,27 @@ class Guild extends Part
     /**
      * Returns the guilds icon.
      *
-     * @param string $format The image format.
-     * @param int    $size   The size of the image.
+     * @param string|null $format The image format.
+     * @param int         $size   The size of the image.
      *
      * @return string|null The URL to the guild icon or null.
      */
-    public function getIconAttribute(string $format = 'jpg', int $size = 1024)
+    public function getIconAttribute(?string $format = null, int $size = 1024)
     {
-        if (is_null($this->attributes['icon'])) {
+        if (! isset($this->attributes['icon'])) {
             return null;
         }
 
-        if (false === array_search($format, ['png', 'jpg', 'webp'])) {
-            $format = 'jpg';
+        if (isset($format)) {
+            $allowed = ['png', 'jpg', 'webp', 'gif'];
+
+            if (! in_array(strtolower($format), $allowed)) {
+                $format = 'webp';
+            }
+        } elseif (strpos($this->attributes['icon'], 'a_') === 0) {
+            $format = 'gif';
+        } else {
+            $format = 'webp';
         }
 
         return "https://cdn.discordapp.com/icons/{$this->id}/{$this->attributes['icon']}.{$format}?size={$size}";
@@ -316,14 +337,16 @@ class Guild extends Part
      *
      * @return string|null The URL to the guild splash or null.
      */
-    public function getSplashAttribute(string $format = 'jpg', int $size = 2048)
+    public function getSplashAttribute(string $format = 'webp', int $size = 2048)
     {
-        if (is_null($this->attributes['splash'])) {
+        if (! isset($this->attributes['splash'])) {
             return null;
         }
 
-        if (false === array_search($format, ['png', 'jpg', 'webp'])) {
-            $format = 'jpg';
+        $allowed = ['png', 'jpg', 'webp'];
+
+        if (! in_array(strtolower($format), $allowed)) {
+            $format = 'webp';
         }
 
         return "https://cdn.discordapp.com/splashes/{$this->id}/{$this->attributes['splash']}.{$format}?size={$size}";
@@ -388,7 +411,7 @@ class Guild extends Part
     {
         return in_array('PREVIEW_ENABLED', $this->features);
     }
-    
+
     protected function getFeatureVanityUrlAttribute(): bool
     {
         return in_array('VANITY_URL', $this->features);
@@ -474,13 +497,13 @@ class Guild extends Part
      */
     public function createRole(array $data = []): ExtendedPromiseInterface
     {
-        $rolePart = $this->factory->create(Role::class);
+        $botperms = $this->members->offsetGet($this->discord->id)->getPermissions();
 
-        return $this->roles->save($rolePart)->then(function ($role) use ($data) {
-            $role->fill((array) $data);
+        if (! $botperms->manage_roles) {
+            return \React\Promise\reject(new NoPermissionsException('You do not have permission to manage roles in the specified guild.'));
+        }
 
-            return $this->roles->save($role);
-        });
+        return $this->roles->save($this->factory->create(Role::class, $data));
     }
 
     /**
@@ -497,17 +520,23 @@ class Guild extends Part
      * Transfers ownership of the guild to
      * another member.
      *
-     * @param Member|int $member The member to transfer ownership to.
+     * @param Member|int  $member The member to transfer ownership to.
+     * @param string|null $reason Reason for Audit Log.
      *
      * @return ExtendedPromiseInterface
      */
-    public function transferOwnership($member): ExtendedPromiseInterface
+    public function transferOwnership($member, ?string $reason = null): ExtendedPromiseInterface
     {
         if ($member instanceof Member) {
             $member = $member->id;
         }
 
-        return $this->http->patch(Endpoint::bind(Endpoint::GUILD), ['owner_id' => $member])->then(function ($response) use ($member) {
+        $headers = [];
+        if (isset($reason)) {
+            $headers['X-Audit-Log-Reason'] = $reason;
+        }
+
+        return $this->http->patch(Endpoint::bind(Endpoint::GUILD), ['owner_id' => $member], $headers)->then(function ($response) use ($member) {
             if ($response->owner_id != $member) {
                 throw new Exception('Ownership was not transferred correctly.');
             }
@@ -657,6 +686,69 @@ class Guild extends Part
 
             return $members;
         });
+    }
+
+    /**
+     * Get the Welcome Screen for the guild.
+     *
+     * @param bool $fresh Whether we should skip checking the cache.
+     *
+     * @return ExtendedPromiseInterface
+     */
+    public function getWelcomeScreen(bool $fresh = false): ExtendedPromiseInterface
+    {
+        if (! $fresh && isset($this->attributes['welcome_screen'])) {
+            return \React\Promise\resolve($this->attributes['welcome_screen']);
+        }
+
+        return $this->http->get(Endpoint::bind(Endpoint::GUILD_WELCOME_SCREEN, $this->id))->then(function ($response) {
+            $welcome_screen = $this->discord->factory(WelcomeScreen::class, $response, true);
+            $this->attributes['welcome_screen'] = $welcome_screen;
+
+            return $welcome_screen;
+        });
+    }
+
+    /**
+     * Modify the guild's Welcome Screen. Requires the MANAGE_GUILD permission. Returns the updated Welcome Screen object.
+     *
+     * @param array $options An array of options.
+     *                       enabled => whether the welcome screen is enabled
+     *                       welcome_channels => channels linked in the welcome screen and their display options (maximum 5)
+     *                       description => the server description to show in the welcome screen (maximum 140)
+     *
+     * @return ExtendedPromiseInterface
+     */
+    public function updateWelcomeScreen(array $options): ExtendedPromiseInterface
+    {
+        $resolver = new OptionsResolver();
+        $resolver->setDefined([
+            'enabled',
+            'welcome_channels',
+            'description'
+        ])
+        ->setAllowedTypes('enabled', 'string')
+        ->setAllowedTypes('welcome_channels', ['array', WelcomeScreen::class])
+        ->setAllowedTypes('description', 'string');
+
+        $options = $resolver->resolve($options);
+
+        return $this->http->patch(Endpoint::bind(Endpoint::GUILD_WELCOME_SCREEN, $this->id), $options)->then(function ($response) {
+            $welcome_screen = $this->discord->factory(WelcomeScreen::class, $response, true);
+            $this->attributes['welcome_screen'] = $welcome_screen;
+
+            return $welcome_screen;
+        });
+    }
+
+    /**
+     * Returns the Welcome Screen object for the guild.
+     *
+     * @return WelcomeScreen|null
+     */
+    public function getWelcomeScreenAttribute(): ?WelcomeScreen
+    {
+        return $this->attributes['welcome_screen'] ?? null;
     }
 
     /**
