@@ -330,10 +330,11 @@ class Thread extends Part
      * Bulk deletes an array of messages.
      *
      * @param array|Traversable $messages
+     * @param string|null       $reason   Reason for Audit Log (only for bulk messages).
      *
      * @return ExtendedPromiseInterface
      */
-    public function deleteMessages($messages): ExtendedPromiseInterface
+    public function deleteMessages($messages, ?string $reason = null): ExtendedPromiseInterface
     {
         if (! is_array($messages) && ! ($messages instanceof Traversable)) {
             return \React\Promise\reject(new \Exception('$messages must be an array or implement Traversable.'));
@@ -353,6 +354,11 @@ class Thread extends Part
             }
         }
 
+        $headers = [];
+        if (isset($reason)) {
+            $headers['X-Audit-Log-Reason'] = $reason;
+        }
+
         $promises = [];
         $chunks = array_chunk(array_map(function ($message) {
             if ($message instanceof Message) {
@@ -365,7 +371,7 @@ class Thread extends Part
         foreach ($chunks as $messages) {
             $promises[] = $this->http->post(Endpoint::bind(Endpoint::CHANNEL_MESSAGES_BULK_DELETE, $this->id), [
                 'messages' => $messages,
-            ]);
+            ], $headers);
         }
 
         return \React\Promise\all($promises);
@@ -432,11 +438,12 @@ class Thread extends Part
     /**
      * Pins a message in the thread.
      *
-     * @param Message $message
+     * @param Message     $message
+     * @param string|null $reason  Reason for Audit Log.
      *
      * @return ExtendedPromiseInterface<Message>
      */
-    public function pinMessage(Message $message): ExtendedPromiseInterface
+    public function pinMessage(Message $message, ?string $reason = null): ExtendedPromiseInterface
     {
         if ($message->pinned) {
             return \React\Promise\reject(new \Exception('This message is already pinned.'));
@@ -446,7 +453,12 @@ class Thread extends Part
             return \React\Promise\reject(new \Exception('You cannot pin a message not sent in this thread.'));
         }
 
-        return $this->http->put(Endpoint::bind(Endpoint::CHANNEL_PIN, $this->id, $message->id))->then(function () use (&$message) {
+        $headers = [];
+        if (isset($reason)) {
+            $headers['X-Audit-Log-Reason'] = $reason;
+        }
+
+        return $this->http->put(Endpoint::bind(Endpoint::CHANNEL_PIN, $this->id, $message->id), null, $headers)->then(function () use (&$message) {
             $message->pinned = true;
 
             return $message;
@@ -456,11 +468,12 @@ class Thread extends Part
     /**
      * Unpins a message in the thread.
      *
-     * @param Message $message
+     * @param Message     $message
+     * @param string|null $reason  Reason for Audit Log.
      *
      * @return ExtendedPromiseInterface<Message>
      */
-    public function unpinMessage(Message $message): ExtendedPromiseInterface
+    public function unpinMessage(Message $message, ?string $reason = null): ExtendedPromiseInterface
     {
         if (! $message->pinned) {
             return \React\Promise\reject(new \Exception('This message is not pinned.'));
@@ -470,7 +483,12 @@ class Thread extends Part
             return \React\Promise\reject(new \Exception('You cannot un-pin a message not sent in this thread.'));
         }
 
-        return $this->http->delete(Endpoint::bind(Endpoint::CHANNEL_PIN, $this->id, $message->id))->then(function () use (&$message) {
+        $headers = [];
+        if (isset($reason)) {
+            $headers['X-Audit-Log-Reason'] = $reason;
+        }
+
+        return $this->http->delete(Endpoint::bind(Endpoint::CHANNEL_PIN, $this->id, $message->id), null, $headers)->then(function () use (&$message) {
             $message->pinned = false;
 
             return $message;

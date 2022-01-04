@@ -18,6 +18,7 @@ use Discord\Exceptions\FileNotFoundException;
 use Discord\Helpers\Multipart;
 use Discord\Http\Exceptions\RequestFailedException;
 use Discord\Parts\Channel\Message;
+use Discord\Parts\Channel\Sticker;
 use Discord\Parts\Embed\Embed;
 use InvalidArgumentException;
 use JsonSerializable;
@@ -37,7 +38,7 @@ class MessageBuilder implements JsonSerializable
      * @var string|null
      */
     private $content;
-    
+
     /**
      * Whether the message is text-to-speech.
      *
@@ -86,6 +87,13 @@ class MessageBuilder implements JsonSerializable
      * @var array|null
      */
     private $allowed_mentions;
+
+    /**
+     * IDs of up to 3 stickers in the server to send in the message
+     *
+     * @var array|null
+     */
+    private $sticker_ids = [];
 
     /**
      * Creates a new message builder.
@@ -329,8 +337,78 @@ class MessageBuilder implements JsonSerializable
     public function setAllowedMentions(array $allowed_mentions)
     {
         $this->allowed_mentions = $allowed_mentions;
-        
+
         return $this;
+    }
+
+    /**
+     * Adds a sticker to the message.
+     *
+     * @param string|Sticker $sticker Sticker to add.
+     *
+     * @return $this
+     */
+    public function addSticker($sticker): self
+    {
+        if ($sticker instanceof Sticker) {
+            $sticker = $sticker->id;
+        }
+
+        if (count($this->sticker_ids) >= 3) {
+            throw new InvalidArgumentException('You can only add 3 stickers to a message');
+        }
+
+        $this->sticker_ids[] = $sticker;
+
+        return $this;
+    }
+
+    /**
+     * Removes a sticker from the message.
+     *
+     * @param string|Sticker $sticker Sticker to remove.
+     *
+     * @return $this
+     */
+    public function removeSticker($sticker): self
+    {
+        if ($sticker instanceof Sticker) {
+            $sticker = $sticker->id;
+        }
+
+        if (($idx = array_search($sticker, $this->sticker_ids)) !== null) {
+            array_splice($this->sticker_ids, $idx, 1);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Sets the stickers of the message. Removes the existing stickers in the process.
+     *
+     * @param array $stickers New message stickers.
+     *
+     * @return $this
+     */
+    public function setStickers(array $stickers): self
+    {
+        $this->sticker_ids = [];
+
+        foreach ($stickers as $sticker) {
+            $this->addSticker($sticker);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Returns all the sticker IDs in the message.
+     *
+     * @return Sticker[]
+     */
+    public function getStickers(): array
+    {
+        return $this->sticker_ids;
     }
 
     /**
@@ -357,7 +435,7 @@ class MessageBuilder implements JsonSerializable
      */
     public function requiresMultipart(): bool
     {
-        return count($this->files) > 0;
+        return count($this->files);
     }
 
     /**
@@ -421,8 +499,13 @@ class MessageBuilder implements JsonSerializable
             $content['allowed_mentions'] = $this->allowed_mentions;
         }
 
-        if (count($this->embeds) > 0) {
+        if (count($this->embeds)) {
             $content['embeds'] = $this->embeds;
+            $empty = false;
+        }
+
+        if (count($this->sticker_ids)) {
+            $content['sticker_ids'] = $this->sticker_ids;
             $empty = false;
         }
 

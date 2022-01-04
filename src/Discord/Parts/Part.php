@@ -246,7 +246,7 @@ abstract class Part implements ArrayAccess, JsonSerializable
             return;
         }
 
-        if (array_search($key, $this->fillable) !== false) {
+        if (in_array($key, $this->fillable)) {
             $this->attributes[$key] = $value;
         }
     }
