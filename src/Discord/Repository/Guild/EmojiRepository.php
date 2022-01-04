@@ -33,6 +33,7 @@ class EmojiRepository extends AbstractRepository
      */
     protected $endpoints = [
         'all' => Endpoint::GUILD_EMOJIS,
+        'get' => Endpoint::GUILD_EMOJI,
         'create' => Endpoint::GUILD_EMOJIS,
         'delete' => Endpoint::GUILD_EMOJI,
         'update' => Endpoint::GUILD_EMOJI,
