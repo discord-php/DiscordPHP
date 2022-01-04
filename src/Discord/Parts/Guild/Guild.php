@@ -12,6 +12,7 @@
 namespace Discord\Parts\Guild;
 
 use Carbon\Carbon;
+use Discord\Exceptions\FileNotFoundException;
 use Discord\Helpers\Collection;
 use Discord\Http\Endpoint;
 use Discord\Http\Exceptions\NoPermissionsException;
@@ -504,6 +505,63 @@ class Guild extends Part
         }
 
         return $this->roles->save($this->factory->create(Role::class, $data));
+    }
+
+    /**
+     * Creates an Emoji for the guild.
+     *
+     * @param array $options        An array of options.
+     *                              name => name of the emoji
+     *                              image => the 128x128 emoji image
+     *                              roles => roles allowed to use this emoji
+     * @param string|null $filepath The path to the file if specified will override image data string.
+     * @param string|null $reason   Reason for Audit Log.
+     *
+     * @throws FileNotFoundException Thrown when the file does not exist.
+     *
+     * @return ExtendedPromiseInterface<Emoji>
+     */
+    public function createEmoji(array $options, ?string $filepath = null, ?string $reason = null): ExtendedPromiseInterface
+    {
+        $resolver = new OptionsResolver();
+        $resolver
+            ->setDefined([
+                'name',
+                'image',
+                'roles',
+            ])
+            ->setRequired('name')
+            ->setAllowedTypes('name', 'string')
+            ->setAllowedTypes('image', 'string')
+            ->setAllowedTypes('roles', 'array')
+            ->setDefault('roles', []);
+
+        $options = $resolver->resolve($options);
+
+        if (isset($filepath)) {
+            if (! file_exists($filepath)) {
+                throw new FileNotFoundException("File does not exist at path {$filepath}.");
+            }
+
+            $extension = strtolower(pathinfo($filepath, PATHINFO_EXTENSION));
+            if ($extension == 'jpg') $extension = 'jpeg';
+            $contents = file_get_contents($filepath);
+
+            $options['image'] = "data:image/{$extension};base64,".base64_encode($contents);
+        }
+
+        $headers = [];
+        if (isset($reason)) {
+            $headers['X-Audit-Log-Reason'] = $reason;
+        }
+
+        return $this->http->post(Endpoint::bind(Endpoint::GUILD_EMOJIS, $this->id), $options, $headers)
+            ->then(function ($response) {
+                $emoji = $this->factory->create(Emoji::class, $response, true);
+                $this->emojis->push($emoji);
+
+                return $emoji;
+            });
     }
 
     /**
