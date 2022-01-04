@@ -435,7 +435,7 @@ class MessageBuilder implements JsonSerializable
      */
     public function requiresMultipart(): bool
     {
-        return count($this->files) > 0;
+        return count($this->files);
     }
 
     /**
@@ -499,12 +499,12 @@ class MessageBuilder implements JsonSerializable
             $content['allowed_mentions'] = $this->allowed_mentions;
         }
 
-        if (count($this->embeds) > 0) {
+        if (count($this->embeds)) {
             $content['embeds'] = $this->embeds;
             $empty = false;
         }
 
-        if (count($this->sticker_ids) > 0) {
+        if (count($this->sticker_ids)) {
             $content['sticker_ids'] = $this->sticker_ids;
             $empty = false;
         }
