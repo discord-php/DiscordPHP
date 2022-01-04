@@ -11,6 +11,7 @@
 
 namespace Discord\Helpers;
 
+use Discord\Discord;
 use Discord\Parts\Interactions\Interaction;
 use InvalidArgumentException;
 
@@ -23,6 +24,13 @@ use InvalidArgumentException;
  */
 class RegisteredCommand
 {
+    /**
+     * The Discord client.
+     *
+     * @var Discord Client.
+     */
+    protected $discord;
+
     /**
      * The name of the command.
      *
@@ -49,11 +57,13 @@ class RegisteredCommand
      * with the Discord servers and has a handler to handle when the
      * command is triggered.
      *
+     * @param Discord  $discord
      * @param string   $name
      * @param callable $callback
      */
-    public function __construct(string $name, callable $callback = null)
+    public function __construct(Discord $discord, string $name, callable $callback = null)
     {
+        $this->discord = $discord;
         $this->name = $name;
         $this->callback = $callback;
     }
@@ -127,7 +137,7 @@ class RegisteredCommand
                 throw new InvalidArgumentException("The command `{$name}` already exists.");
             }
 
-            return $this->subCommands[$name] = new static($name, $callback);
+            return $this->subCommands[$name] = new static($this->discord, $name, $callback);
         }
 
         $baseCommand = array_shift($name);

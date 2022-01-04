@@ -1540,7 +1540,7 @@ class Discord
                 throw new InvalidArgumentException("The command `{$name}` already exists.");
             }
 
-            return $this->commands[$name] = new RegisteredCommand($name, $callback);
+            return $this->commands[$name] = new RegisteredCommand($this, $name, $callback);
         }
 
         $baseCommand = array_shift($name);
