@@ -12,35 +12,24 @@
 namespace Discord\Parts\Interactions\Request;
 
 use Discord\Parts\Part;
-use Discord\Repository\Interaction\OptionRepository;
 
 /**
  * Represents an option received with an interaction.
  *
- * @property string           $name    Name of the option.
- * @property int              $type    Type of the option.
- * @property mixed            $value   Value of the option.
- * @property OptionRepository $options Sub-options if applicable.
- * @property bool             $focused Whether this option is the currently focused option for autocomplete.
+ * @see https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-interaction-data-option-structure
+ *
+ * @property string                   $name    Name of the option.
+ * @property int                      $type    Type of the option.
+ * @property string                   $value   Value of the option.
+ * @property Collection|Option[]|null $options Sub-options if applicable.
+ * @property bool                     $focused Whether this option is the currently focused option for autocomplete.
  */
 class Option extends Part
 {
     /**
      * @inheritdoc
      */
-    protected $fillable = ['name', 'type', 'value', 'focused'];
-
-    /**
-     * @inheritdoc
-     */
-    protected $visible = ['options'];
-
-    /**
-     * @inheritdoc
-     */
-    protected $repositories = [
-        'options' => OptionRepository::class,
-    ];
+    protected $fillable = ['name', 'type', 'value', 'options', 'focused'];
 
     /**
      * Sets the sub-options of the option.
@@ -52,13 +41,5 @@ class Option extends Part
         foreach ($options as $option) {
             $this->options->push($this->factory->create(Option::class, $option, true));
         }
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getRepositoryAttributes(): array
-    {
-        return [];
     }
 }

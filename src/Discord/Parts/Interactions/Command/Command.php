@@ -24,24 +24,30 @@ use React\Promise\ExtendedPromiseInterface;
 
 /**
  * Represents a command registered on the Discord servers.
+ * 
+ * @link https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-structure
  *
- * @property string              $id                 The unique identifier of the command.
- * @property string              $type               The type of the command, defaults 1 if not set
- * @property string              $application_id     The unique identifier of the parent Application that made the command, if made by one.
- * @property Guild|null          $guild              The guild that the command belongs to. Null if global.
- * @property string|null         $guild_id           The unique identifier of the guild that the command belongs to. Null if global.
- * @property string              $name               1-32 character name of the command.
- * @property string              $description        1-100 character description for CHAT_INPUT commands, empty string for USER and MESSAGE commands
- * @property Collection|Option[] $options            The parameters for the command, max 25. Only for Slash command (CHAT_INPUT).
- * @property boolean             $default_permission Whether the command is enabled by default when the app is added to a guild.
- * @property string              $version            Autoincrementing version identifier updated during substantial record changes
- * @property OverwriteRepository $overwrites         permission overwrites
+ * @property string                   $id                 The unique identifier of the command.
+ * @property int                      $type               The type of the command, defaults 1 if not set
+ * @property string                   $application_id     The unique identifier of the parent Application that made the command, if made by one.
+ * @property string|null              $guild_id           The unique identifier of the guild that the command belongs to. Null if global.
+ * @property Guild|null               $guild              The guild that the command belongs to. Null if global.
+ * @property string                   $name               1-32 character name of the command.
+ * @property string                   $description        1-100 character description for CHAT_INPUT commands, empty string for USER and MESSAGE commands
+ * @property Collection|Option[]|null $options            The parameters for the command, max 25. Only for Slash command (CHAT_INPUT).
+ * @property boolean                  $default_permission Whether the command is enabled by default when the app is added to a guild.
+ * @property string                   $version            Autoincrementing version identifier updated during substantial record changes
+ * @property OverwriteRepository      $overwrites         Permission overwrites
  */
 class Command extends Part
 {
-    /** Previously known as Slash Command */
+    /** Slash commands; a text-based command that shows up when a user types / */
     public const CHAT_INPUT = 1;
+
+    /** A UI-based command that shows up when you right click or tap on a user */
     public const USER = 2;
+
+    /** A UI-based command that shows up when you right click or tap on a message */
     public const MESSAGE = 3;
 
     /**
@@ -58,11 +64,6 @@ class Command extends Part
         'default_permission',
         'version'
     ];
-
-    /**
-     * @inheritdoc
-     */
-    protected $visible = ['options'];
 
     /**
      * @inheritdoc
@@ -104,7 +105,23 @@ class Command extends Part
      */
     protected function getGuildAttribute(): ?Guild
     {
+        if (! isset($this->attributes['guild_id'])) {
+            return null;
+        }
+
         return $this->discord->guilds->get('id', $this->guild_id);
+    }
+
+    /**
+     * Sets an overwrite to the guild application command.
+     *
+     * @param Overwrite $overwrite An overwrite object.
+     *
+     * @return ExtendedPromiseInterface
+     */
+    public function setOverwrite(Overwrite $overwrite): ExtendedPromiseInterface
+    {
+        return $this->http->put(Endpoint::bind(Endpoint::GUILD_APPLICATION_COMMAND_PERMISSIONS, $this->application_id, $this->guild_id, $this->id), $overwrite->getUpdatableAttributes());
     }
 
     /**
@@ -113,12 +130,12 @@ class Command extends Part
     public function getCreatableAttributes(): array
     {
         return [
-            'type' => $this->type,
-            'guild_id' => $this->guild_id,
+            'guild_id' => $this->guild_id ?? null,
             'name' => $this->name,
             'description' => $this->description,
-            'options' => $this->options,
+            'options' => $this->attributes['options'] ?? null,
             'default_permission' => $this->default_permission,
+            'type' => $this->type,
         ];
     }
 
@@ -128,12 +145,12 @@ class Command extends Part
     public function getUpdatableAttributes(): array
     {
         return [
-            'type' => $this->type,
-            'guild_id' => $this->guild_id,
+            'guild_id' => $this->guild_id ?? null,
             'name' => $this->name,
             'description' => $this->description,
-            'options' => $this->options,
+            'options' => $this->attributes['options'] ?? null,
             'default_permission' => $this->default_permission,
+            'type' => $this->type,
         ];
     }
 
@@ -147,22 +164,5 @@ class Command extends Part
             'guild_id' => $this->guild_id,
             'application_id' => $this->application_id,
         ];
-    }
-
-    /**
-     * Sets an overwrite to the application command.
-     *
-     * @param Part      $part      A role or user.
-     * @param Overwrite $overwrite An overwrite object.
-     *
-     * @return ExtendedPromiseInterface
-     */
-    public function setOverwrite(Part $part, Overwrite $overwrite): ExtendedPromiseInterface
-    {
-        if (!($part instanceof Role || $part instanceof User || $part instanceof Member)) {
-            return \React\Promise\reject(new InvalidOverwriteException('Given part was not one of role or user.'));
-        }
-
-        return $this->http->put(Endpoint::bind(Endpoint::GUILD_APPLICATION_COMMAND_PERMISSIONS, $this->application_id, $this->guild_id, $this->id), $overwrite->getRawAttributes());
     }
 }

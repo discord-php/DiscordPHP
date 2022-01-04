@@ -191,7 +191,7 @@ class CommandBuilder implements JsonSerializable
             if ($desclen < 1) {
                 throw new \InvalidArgumentException('Description must be greater than or equal to 1 character.');
             }
-        } else if ($this->type == Command::USER || $this->type == Command::MESSAGE) {
+        } elseif ($this->type == Command::USER || $this->type == Command::MESSAGE) {
             if ($desclen) {
                 throw new \InvalidArgumentException('Only a command with type CHAT_INPUT accepts a description.');
             }

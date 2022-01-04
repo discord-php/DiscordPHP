@@ -18,10 +18,10 @@ use function Discord\poly_strlen;
 /**
  * Choice represents a choice that can be given to a command.
  *
- * @author David Cole <david.cole1340@gmail.com>
+ * @see https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-option-choice-structure
  *
- * @property string $name       1-100 character choice name.
- * @property string|int|float   $value  Value of the choice, up to 100 characters if string.
+ * @property string           $name  1-100 character choice name.
+ * @property string|int|float $value Value of the choice, up to 100 characters if string.
  */
 class Choice extends Part
 {
@@ -42,7 +42,7 @@ class Choice extends Part
         $namelen = poly_strlen($name);
         if ($namelen < 1) {
             throw new \InvalidArgumentException('Choice name can not be empty.');
-        } else if ($namelen > 100) {
+        } elseif ($namelen > 100) {
             throw new \InvalidArgumentException('Choice name must be less than or equal to 100 characters.');
         }
 

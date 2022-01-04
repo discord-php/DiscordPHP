@@ -18,42 +18,37 @@ use function Discord\poly_strlen;
 
 /**
  * Option represents an array of options that can be given to a command.
- *
- * @author David Cole <david.cole1340@gmail.com>
+ * 
+ * @link https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-option-structure
  *
  * @property int                 $type          Type of the option.
  * @property string              $name          Name of the option.
  * @property string              $description   1-100 character description.
- * @property bool                $required      if the parameter is required or optional--default false.
- * @property Collection|Choice[] $choices       choices for STRING, INTEGER, and NUMBER types for the user to pick from, max 25.
+ * @property bool                $required      If the parameter is required or optional--default false.
+ * @property Collection|Choice[] $choices       Choices for STRING, INTEGER, and NUMBER types for the user to pick from, max 25.
  * @property Collection|Option[] $options       Sub-options if applicable.
  * @property array               $channel_types If the option is a channel type, the channels shown will be restricted to these types.
- * @property int|float           $min_value     if the option is an INTEGER or NUMBER type, the minimum value permitted.
- * @property int|float           $max_value     if the option is an INTEGER or NUMBER type, the maximum value permitted.
- * @property bool                $autocomplete  enable autocomplete interactions for this option.
+ * @property int|float           $min_value     If the option is an INTEGER or NUMBER type, the minimum value permitted.
+ * @property int|float           $max_value     If the option is an INTEGER or NUMBER type, the maximum value permitted.
+ * @property bool                $autocomplete  Enable autocomplete interactions for this option.
  */
 class Option extends Part
 {
     public const SUB_COMMAND = 1;
     public const SUB_COMMAND_GROUP = 2;
     public const STRING = 3;
-    public const INTEGER = 4;
+    public const INTEGER = 4; // Any integer between -2^53 and 2^53
     public const BOOLEAN = 5;
     public const USER = 6;
-    public const CHANNEL = 7;
+    public const CHANNEL = 7; // Includes all channel types + categories
     public const ROLE = 8;
-    public const MENTIONABLE = 9;
-    public const NUMBER = 10;
+    public const MENTIONABLE = 9; // Includes users and roles
+    public const NUMBER = 10; // Any double between -2^53 and 2^53
 
     /**
      * @inheritdoc
      */
     protected $fillable = ['type', 'name', 'description', 'required', 'choices', 'options', 'channel_types', 'min_value', 'max_value', 'autocomplete'];
-
-    /**
-     * @inheritdoc
-     */
-    protected $visible = ['choices', 'options'];
 
     /**
      * Gets the choices attribute.
@@ -265,6 +260,10 @@ class Option extends Part
      */
     public function setAutoComplete(bool $autocomplete)
     {
+        if ($autocomplete && !empty($this->attributes['choices'])) {
+            throw new \InvalidArgumentException('Autocomplete may not be set to true if choices are present.');
+        }
+
         $this->autocomplete = $autocomplete;
         return $this;
     }
