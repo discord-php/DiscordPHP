@@ -59,4 +59,18 @@ class InteractionData extends Part
             $this->options->push($this->factory->create(Option::class, $option, true));
         }
     }
+
+    /**
+     * Returns a collection of resolved data.
+     *
+     * @return Resolved|null
+     */
+    protected function getResolvedAttributes()
+    {
+        if (empty($this->attributes['resolved'])) {
+            return null;
+        }
+
+        return $this->factory->create(Resolved::class, $this->attributes['resolved'], true);
+    }
 }
