@@ -1151,17 +1151,12 @@ class VoiceClient extends EventEmitter
      *
      * @return bool Whether the user is speaking.
      */
-    public function isSpeaking(int $id): bool
+    public function isSpeaking(string $id): bool
     {
-        $ssrc = $this->speakingStatus[$id] ?? null;
-        $user = $this->speakingStatus->get('user_id', $id);
-
-        if (is_null($ssrc) && ! is_null($user)) {
+        if ($user = $this->speakingStatus->get('user_id', $id)) {
             return $user->speaking;
-            // } elseif (is_null($user) && ! is_null($ssrc)) {
-        //     return $user->speaking;
-        // } elseif (is_null($user) && is_null($ssrc)) {
-        //     return $user->speaking;
+        } elseif ($ssrc = $this->speakingStatus->get('ssrc', $id)) {
+            return $ssrc->speaking;
         }
 
         return false;
