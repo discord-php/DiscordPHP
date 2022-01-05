@@ -1125,8 +1125,8 @@ class Discord
     {
         $deferred = new Deferred();
 
-        if ($channel->type != Channel::TYPE_VOICE) {
-            $deferred->reject(new \Exception('You cannot join a text channel.'));
+        if (! $channel->allowVoice()) {
+            $deferred->reject(new \Exception('Channel must allow voice.'));
 
             return $deferred->promise();
         }
