@@ -21,16 +21,16 @@ use function Discord\poly_strlen;
  * 
  * @link https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-option-structure
  *
- * @property int                 $type          Type of the option.
- * @property string              $name          Name of the option.
- * @property string              $description   1-100 character description.
- * @property bool                $required      If the parameter is required or optional--default false.
- * @property Collection|Choice[] $choices       Choices for STRING, INTEGER, and NUMBER types for the user to pick from, max 25.
- * @property Collection|Option[] $options       Sub-options if applicable.
- * @property array               $channel_types If the option is a channel type, the channels shown will be restricted to these types.
- * @property int|float           $min_value     If the option is an INTEGER or NUMBER type, the minimum value permitted.
- * @property int|float           $max_value     If the option is an INTEGER or NUMBER type, the maximum value permitted.
- * @property bool                $autocomplete  Enable autocomplete interactions for this option.
+ * @property int                      $type          Type of the option.
+ * @property string                   $name          Name of the option.
+ * @property string                   $description   1-100 character description.
+ * @property bool                     $required      If the parameter is required or optional--default false.
+ * @property Collection|Choice[]|null $choices       Choices for STRING, INTEGER, and NUMBER types for the user to pick from, max 25.
+ * @property Collection|Option[]      $options       Sub-options if applicable.
+ * @property array                    $channel_types If the option is a channel type, the channels shown will be restricted to these types.
+ * @property int|float                $min_value     If the option is an INTEGER or NUMBER type, the minimum value permitted.
+ * @property int|float                $max_value     If the option is an INTEGER or NUMBER type, the maximum value permitted.
+ * @property bool                     $autocomplete  Enable autocomplete interactions for this option.
  */
 class Option extends Part
 {
@@ -53,11 +53,15 @@ class Option extends Part
     /**
      * Gets the choices attribute.
      *
-     * @return Collection|Choices[] A collection of choices.
+     * @return Collection|Choices[]|null A collection of choices.
      */
-    protected function getChoicesAttribute(): Collection
+    protected function getChoicesAttribute(): ?Collection
     {
-        $choices = new Collection([], null);
+        if (! isset($this->attributes['choices'])) {
+            return null;
+        }
+
+        $choices = Collection::for(Choice::class, null);
 
         foreach ($this->attributes['choices'] ?? [] as $choice) {
             $choices->push($this->factory->create(Choice::class, $choice, true));
@@ -73,7 +77,7 @@ class Option extends Part
      */
     protected function getOptionsAttribute(): Collection
     {
-        $options = new Collection([], null);
+        $options = Collection::for(Option::class, null);
 
         foreach ($this->attributes['options'] ?? [] as $option) {
             $options->push($this->factory->create(Option::class, $option, true));

@@ -15,9 +15,11 @@ use Discord\Builders\MessageBuilder;
 use Discord\Helpers\Multipart;
 use Discord\Http\Endpoint;
 use Discord\InteractionResponseType;
+use Discord\InteractionType;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Channel\Message;
 use Discord\Parts\Guild\Guild;
+use Discord\Parts\Interactions\Command\Choice;
 use Discord\Parts\Interactions\Request\InteractionData;
 use Discord\Parts\Part;
 use Discord\Parts\User\Member;
@@ -45,10 +47,6 @@ use RuntimeException;
  */
 class Interaction extends Part
 {
-    public const TYPE_PING = 1;
-    public const TYPE_APPLICATION_COMMAND = 2;
-    public const TYPE_MESSAGE_COMPONENT = 3;
-
     /**
      * @inheritdoc
      */
@@ -163,11 +161,11 @@ class Interaction extends Part
      */
     public function acknowledge(): ExtendedPromiseInterface
     {
-        if ($this->type == Interaction::TYPE_APPLICATION_COMMAND) {
+        if ($this->type == InteractionType::APPLICATION_COMMAND) {
             return $this->acknowledgeWithResponse();
         }
 
-        if ($this->type != Interaction::TYPE_MESSAGE_COMPONENT) {
+        if ($this->type != InteractionType::MESSAGE_COMPONENT) {
             throw new InvalidArgumentException('You can only acknowledge message component interactions.');
         }
 
@@ -199,7 +197,7 @@ class Interaction extends Part
      */
     public function updateMessage(MessageBuilder $builder): ExtendedPromiseInterface
     {
-        if ($this->type != Interaction::TYPE_MESSAGE_COMPONENT) {
+        if ($this->type != InteractionType::MESSAGE_COMPONENT) {
             throw new InvalidArgumentException('You can only update messages that occur due to a message component interaction.');
         }
 
@@ -376,5 +374,20 @@ class Interaction extends Part
         })()->then(function ($response) {
             return $this->factory->create(Message::class, $response, true);
         });
+    }
+
+    /**
+     * Responds to the interaction with a message.
+     *
+     * @param array|Choice[] $choice Autocomplete choices (max of 25 choices)
+     *
+     * @return ExtendedPromiseInterface
+     */
+    public function autoCompleteResult($choices): ExtendedPromiseInterface
+    {
+        return $this->respond([
+            'type' => InteractionResponseType::APPLICATION_COMMAND_AUTOCOMPLETE_RESULT,
+            'data' => ['choices' => $choices],
+        ]);
     }
 }
