@@ -28,13 +28,14 @@ use Discord\Repository\Interaction\OptionRepository;
  * @property int|null         $component_type Type of the component. Not used for slash commands.
  * @property string[]|null    $values         Values selected in a select menu.
  * @property string|null      $target_id      Id the of user or message targetted by a user or message command.
+ * @property string|null      $guild_id       ID of the guild passed from Interaction.
  */
 class InteractionData extends Part
 {
     /**
      * @inheritdoc
      */
-    protected $fillable = ['id', 'name', 'type', 'resolved', 'options', 'custom_id', 'component_type', 'values', 'target_id'];
+    protected $fillable = ['id', 'name', 'type', 'resolved', 'options', 'custom_id', 'component_type', 'values', 'target_id', 'guild_id'];
 
     /**
      * @inheritdoc
@@ -71,6 +72,11 @@ class InteractionData extends Part
             return null;
         }
 
-        return $this->factory->create(Resolved::class, $this->attributes['resolved'], true);
+        $adata = $this->attributes['resolved'];
+        if (isset($this->attributes['guild_id'])) {
+            $adata->guild_id = $this->guild_id;
+        }
+
+        return $this->factory->create(Resolved::class, $adata, true);
     }
 }

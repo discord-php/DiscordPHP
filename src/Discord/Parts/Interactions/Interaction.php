@@ -77,7 +77,12 @@ class Interaction extends Part
             return null;
         }
 
-        return $this->factory->create(InteractionData::class, $this->attributes['data'], true);
+        $adata = $this->attributes['data'];
+        if (isset($this->attributes['guild_id'])) {
+            $adata->guild_id = $this->guild_id;
+        }
+
+        return $this->factory->create(InteractionData::class, $adata, true);
     }
 
     /**
