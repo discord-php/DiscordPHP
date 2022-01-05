@@ -904,7 +904,7 @@ class VoiceClient extends EventEmitter
     public function switchChannel(Channel $channel): void
     {
         if (! $channel->allowVoice()) {
-            throw new \InvalidArgumentException('Channel must be a voice chnanel to be able to switch');
+            throw new \InvalidArgumentException('Channel must be a voice channel to be able to switch');
         }
 
         $this->mainSend([
