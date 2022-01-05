@@ -110,6 +110,25 @@ class Emoji extends Part
     /**
      * @inheritdoc
      */
+    public function getCreatableAttributes(): array
+    {
+        return [];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getUpdatableAttributes(): array
+    {
+        return [
+            'name' => $this->name,
+            'roles' => $this->attributes['roles'],
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function getRepositoryAttributes(): array
     {
         return [

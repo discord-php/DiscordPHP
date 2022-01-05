@@ -63,6 +63,7 @@ class BanRepository extends AbstractRepository
     {
         $deferred = new Deferred();
         $content = [];
+        $headers = [];
 
         if ($member instanceof Member) {
             $member = $member->id;
@@ -73,12 +74,13 @@ class BanRepository extends AbstractRepository
         }
 
         if (! is_null($reason)) {
-            $content['reason'] = $reason;
+            $headers['X-Audit-Log-Reason'] = $reason;
         }
 
         $this->http->put(
             Endpoint::bind(Endpoint::GUILD_BAN, $this->vars['guild_id'], $member),
-            empty($content) ? null : $content
+            empty($content) ? null : $content,
+            $headers
         )->done(function ($response) use ($deferred) {
             $ban = $this->factory->create(Ban::class, $response, true);
             $this->push($ban);

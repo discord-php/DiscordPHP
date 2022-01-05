@@ -12,6 +12,7 @@
 namespace Discord\Parts\Guild;
 
 use Carbon\Carbon;
+use Discord\Exceptions\FileNotFoundException;
 use Discord\Helpers\Collection;
 use Discord\Http\Endpoint;
 use Discord\Http\Exceptions\NoPermissionsException;
@@ -26,7 +27,10 @@ use Discord\Repository\Guild\MemberRepository;
 use Discord\Repository\Guild\RoleRepository;
 use Discord\Parts\Guild\AuditLog\AuditLog;
 use Discord\Parts\Guild\AuditLog\Entry;
+use Discord\Repository\Guild\StickerRepository;
+use Discord\Repository\Guild\ScheduledEventRepository;
 use Discord\Repository\Guild\GuildTemplateRepository;
+use Discord\Repository\Guild\StageInstanceRepository;
 use Exception;
 use React\Promise\ExtendedPromiseInterface;
 use ReflectionClass;
@@ -74,8 +78,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * @property int               $max_video_channel_users                  Maximum amount of users allowed in a video channel.
  * @property int               $approximate_member_count
  * @property int               $approximate_presence_count
- * @property int               $nsfw_level                               The guild NSFW level
- * @property bool              $premium_progress_bar_enabled             Whether the guild has the boost progress bar enabled
+ * @property int               $nsfw_level                               The guild NSFW level.
+ * @property bool              $premium_progress_bar_enabled             Whether the guild has the boost progress bar enabled.
  * @property bool              $feature_animated_icon                    guild has access to set an animated guild icon.
  * @property bool              $feature_banner                           guild has access to set a guild banner image.
  * @property bool              $feature_commerce                         guild has access to use commerce features (create store channels).
@@ -104,7 +108,10 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * @property InviteRepository  $invites
  * @property BanRepository     $bans
  * @property EmojiRepository   $emojis
+ * @property StickerRepository $stickers
  * @property GuildTemplateRepository $templates
+ * @property StageInstanceRepository $stage_instances
+ * @property ScheduledeventRepository $guild_scheduled_events
  */
 class Guild extends Part
 {
@@ -168,7 +175,11 @@ class Guild extends Part
         'max_video_channel_users',
         'approximate_member_count',
         'approximate_presence_count',
+        'welcome_screen',
         'nsfw_level',
+        'stickers',
+        'stage_instances',
+        'guild_scheduled_events',
         'premium_progress_bar_enabled',
     ];
 
@@ -210,7 +221,10 @@ class Guild extends Part
         'bans' => BanRepository::class,
         'invites' => InviteRepository::class,
         'emojis' => EmojiRepository::class,
+        'stickers' => StickerRepository::class,
         'templates' => GuildTemplateRepository::class,
+        'stage_instances' => StageInstanceRepository::class,
+        'guild_scheduled_events' => ScheduledEventRepository::class,
     ];
 
     /**
@@ -494,6 +508,63 @@ class Guild extends Part
     }
 
     /**
+     * Creates an Emoji for the guild.
+     *
+     * @param array $options        An array of options.
+     *                              name => name of the emoji
+     *                              image => the 128x128 emoji image
+     *                              roles => roles allowed to use this emoji
+     * @param string|null $filepath The path to the file if specified will override image data string.
+     * @param string|null $reason   Reason for Audit Log.
+     *
+     * @throws FileNotFoundException Thrown when the file does not exist.
+     *
+     * @return ExtendedPromiseInterface<Emoji>
+     */
+    public function createEmoji(array $options, ?string $filepath = null, ?string $reason = null): ExtendedPromiseInterface
+    {
+        $resolver = new OptionsResolver();
+        $resolver
+            ->setDefined([
+                'name',
+                'image',
+                'roles',
+            ])
+            ->setRequired('name')
+            ->setAllowedTypes('name', 'string')
+            ->setAllowedTypes('image', 'string')
+            ->setAllowedTypes('roles', 'array')
+            ->setDefault('roles', []);
+
+        $options = $resolver->resolve($options);
+
+        if (isset($filepath)) {
+            if (! file_exists($filepath)) {
+                throw new FileNotFoundException("File does not exist at path {$filepath}.");
+            }
+
+            $extension = strtolower(pathinfo($filepath, PATHINFO_EXTENSION));
+            if ($extension == 'jpg') $extension = 'jpeg';
+            $contents = file_get_contents($filepath);
+
+            $options['image'] = "data:image/{$extension};base64,".base64_encode($contents);
+        }
+
+        $headers = [];
+        if (isset($reason)) {
+            $headers['X-Audit-Log-Reason'] = $reason;
+        }
+
+        return $this->http->post(Endpoint::bind(Endpoint::GUILD_EMOJIS, $this->id), $options, $headers)
+            ->then(function ($response) {
+                $emoji = $this->factory->create(Emoji::class, $response, true);
+                $this->emojis->push($emoji);
+
+                return $emoji;
+            });
+    }
+
+    /**
      * Leaves the guild.
      *
      * @return ExtendedPromiseInterface
@@ -507,17 +578,23 @@ class Guild extends Part
      * Transfers ownership of the guild to
      * another member.
      *
-     * @param Member|int $member The member to transfer ownership to.
+     * @param Member|int  $member The member to transfer ownership to.
+     * @param string|null $reason Reason for Audit Log.
      *
      * @return ExtendedPromiseInterface
      */
-    public function transferOwnership($member): ExtendedPromiseInterface
+    public function transferOwnership($member, ?string $reason = null): ExtendedPromiseInterface
     {
         if ($member instanceof Member) {
             $member = $member->id;
         }
 
-        return $this->http->patch(Endpoint::bind(Endpoint::GUILD), ['owner_id' => $member])->then(function ($response) use ($member) {
+        $headers = [];
+        if (isset($reason)) {
+            $headers['X-Audit-Log-Reason'] = $reason;
+        }
+
+        return $this->http->patch(Endpoint::bind(Endpoint::GUILD), ['owner_id' => $member], $headers)->then(function ($response) use ($member) {
             if ($response->owner_id != $member) {
                 throw new Exception('Ownership was not transferred correctly.');
             }
@@ -667,6 +744,69 @@ class Guild extends Part
 
             return $members;
         });
+    }
+
+    /**
+     * Get the Welcome Screen for the guild.
+     *
+     * @param bool $fresh Whether we should skip checking the cache.
+     *
+     * @return ExtendedPromiseInterface
+     */
+    public function getWelcomeScreen(bool $fresh = false): ExtendedPromiseInterface
+    {
+        if (! $fresh && isset($this->attributes['welcome_screen'])) {
+            return \React\Promise\resolve($this->attributes['welcome_screen']);
+        }
+
+        return $this->http->get(Endpoint::bind(Endpoint::GUILD_WELCOME_SCREEN, $this->id))->then(function ($response) {
+            $welcome_screen = $this->discord->factory(WelcomeScreen::class, $response, true);
+            $this->attributes['welcome_screen'] = $welcome_screen;
+
+            return $welcome_screen;
+        });
+    }
+
+    /**
+     * Modify the guild's Welcome Screen. Requires the MANAGE_GUILD permission. Returns the updated Welcome Screen object.
+     *
+     * @param array $options An array of options.
+     *                       enabled => whether the welcome screen is enabled
+     *                       welcome_channels => channels linked in the welcome screen and their display options (maximum 5)
+     *                       description => the server description to show in the welcome screen (maximum 140)
+     *
+     * @return ExtendedPromiseInterface
+     */
+    public function updateWelcomeScreen(array $options): ExtendedPromiseInterface
+    {
+        $resolver = new OptionsResolver();
+        $resolver->setDefined([
+            'enabled',
+            'welcome_channels',
+            'description'
+        ])
+        ->setAllowedTypes('enabled', 'string')
+        ->setAllowedTypes('welcome_channels', ['array', WelcomeScreen::class])
+        ->setAllowedTypes('description', 'string');
+
+        $options = $resolver->resolve($options);
+
+        return $this->http->patch(Endpoint::bind(Endpoint::GUILD_WELCOME_SCREEN, $this->id), $options)->then(function ($response) {
+            $welcome_screen = $this->discord->factory(WelcomeScreen::class, $response, true);
+            $this->attributes['welcome_screen'] = $welcome_screen;
+
+            return $welcome_screen;
+        });
+    }
+
+    /**
+     * Returns the Welcome Screen object for the guild.
+     *
+     * @return WelcomeScreen|null
+     */
+    public function getWelcomeScreenAttribute(): ?WelcomeScreen
+    {
+        return $this->attributes['welcome_screen'] ?? null;
     }
 
     /**

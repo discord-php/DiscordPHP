@@ -104,48 +104,61 @@ class Member extends Part
     /**
      * Sets the nickname of the member.
      *
-     * @param string|null $nick The nickname of the member.
+     * @param string|null $nick   The nickname of the member.
+     * @param string|null $reason Reason for Audit Log.
      *
      * @return ExtendedPromiseInterface
      */
-    public function setNickname(?string $nick = null): ExtendedPromiseInterface
+    public function setNickname(?string $nick = null, ?string $reason = null): ExtendedPromiseInterface
     {
         $payload = [
             'nick' => $nick ?: '',
         ];
 
-        // jake plz
-        if ($this->discord->id == $this->id) {
-            return $this->http->patch(Endpoint::bind(Endpoint::GUILD_MEMBER_SELF_NICK, $this->guild_id), $payload);
+        $headers = [];
+        if (isset($reason)) {
+            $headers['X-Audit-Log-Reason'] = $reason;
         }
 
-        return $this->http->patch(Endpoint::bind(Endpoint::GUILD_MEMBER, $this->guild_id, $this->id), $payload);
+        // jake plz
+        if ($this->discord->id == $this->id) {
+            return $this->http->patch(Endpoint::bind(Endpoint::GUILD_MEMBER_SELF_NICK, $this->guild_id), $payload, $headers);
+        }
+
+        return $this->http->patch(Endpoint::bind(Endpoint::GUILD_MEMBER, $this->guild_id, $this->id), $payload, $headers);
     }
 
     /**
      * Moves the member to another voice channel.
      *
      * @param Channel|string $channel The channel to move the member to.
+     * @param string|null    $reason  Reason for Audit Log.
      *
      * @return ExtendedPromiseInterface
      */
-    public function moveMember($channel): ExtendedPromiseInterface
+    public function moveMember($channel, ?string $reason = null): ExtendedPromiseInterface
     {
         if ($channel instanceof Channel) {
             $channel = $channel->id;
         }
 
-        return $this->http->patch(Endpoint::bind(Endpoint::GUILD_MEMBER, $this->guild_id, $this->id), ['channel_id' => $channel]);
+        $headers = [];
+        if (isset($reason)) {
+            $headers['X-Audit-Log-Reason'] = $reason;
+        }
+
+        return $this->http->patch(Endpoint::bind(Endpoint::GUILD_MEMBER, $this->guild_id, $this->id), ['channel_id' => $channel], $headers);
     }
 
     /**
      * Adds a role to the member.
      *
-     * @param Role|string $role The role to add to the member.
+     * @param Role|string $role   The role to add to the member.
+     * @param string|null $reason Reason for Audit Log.
      *
      * @return ExtendedPromiseInterface
      */
-    public function addRole($role): ExtendedPromiseInterface
+    public function addRole($role, ?string $reason = null): ExtendedPromiseInterface
     {
         if ($role instanceof Role) {
             $role = $role->id;
@@ -156,24 +169,35 @@ class Member extends Part
             return \React\Promise\reject(new \Exception('User already has role.'));
         }
 
-        return $this->http->put(Endpoint::bind(Endpoint::GUILD_MEMBER_ROLE, $this->guild_id, $this->id, $role));
+        $headers = [];
+        if (isset($reason)) {
+            $headers['X-Audit-Log-Reason'] = $reason;
+        }
+
+        return $this->http->put(Endpoint::bind(Endpoint::GUILD_MEMBER_ROLE, $this->guild_id, $this->id, $role), null, $headers);
     }
 
     /**
      * Removes a role from the user.
      *
-     * @param Role|string $role The role to remove from the member.
+     * @param Role|string $role   The role to remove from the member.
+     * @param string|null $reason Reason for Audit Log.
      *
      * @return ExtendedPromiseInterface
      */
-    public function removeRole($role): ExtendedPromiseInterface
+    public function removeRole($role, ?string $reason = null): ExtendedPromiseInterface
     {
         if ($role instanceof Role) {
             $role = $role->id;
         }
 
         if (in_array($role, $this->attributes['roles'])) {
-            return $this->http->delete(Endpoint::bind(Endpoint::GUILD_MEMBER_ROLE, $this->guild_id, $this->id, $role));
+            $headers = [];
+            if (isset($reason)) {
+                $headers['X-Audit-Log-Reason'] = $reason;
+            }
+
+            return $this->http->delete(Endpoint::bind(Endpoint::GUILD_MEMBER_ROLE, $this->guild_id, $this->id, $role), null, $headers);
         }
 
         return \React\Promise\reject(new \Exception('User does not have role.'));

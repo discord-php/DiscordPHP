@@ -26,6 +26,9 @@ class Intents
      * - CHANNEL_UPDATE
      * - CHANNEL_DELETE
      * - CHANNEL_PINS_UPDATE
+     * - STAGE_INSTANCE_CREATE
+     * - STAGE_INSTANCE_UPDATE
+     * - STAGE_INSTANCE_DELETE
      */
     public const GUILDS = (1 << 0);
 
@@ -47,11 +50,12 @@ class Intents
     public const GUILD_BANS = (1 << 2);
 
     /**
-     * Guild emoji events:.
+     * Guild emoji and sticker events:.
      *
      * - GUILD_EMOJIS_UPDATE
+     * - GUILD_STICKERS_UPDATE
      */
-    public const GUILD_EMOJIS = (1 << 3);
+    public const GUILD_EMOJIS_AND_STICKERS = (1 << 3);
 
     /**
      * Guild integration events:.
