@@ -12,6 +12,7 @@
 namespace Discord\Parts\Interactions\Request;
 
 use Discord\Parts\Part;
+use Discord\Repository\Interaction\OptionRepository;
 
 /**
  * Represents an option received with an interaction.
@@ -32,6 +33,18 @@ class Option extends Part
     protected $fillable = ['name', 'type', 'value', 'options', 'focused'];
 
     /**
+     * @inheritdoc
+     */
+    protected $visible = ['options'];
+
+    /**
+     * @inheritdoc
+     */
+    protected $repositories = [
+        'options' => OptionRepository::class,
+    ];
+
+    /**
      * Sets the sub-options of the option.
      *
      * @param array $options
@@ -41,5 +54,13 @@ class Option extends Part
         foreach ($options as $option) {
             $this->options->push($this->factory->create(Option::class, $option, true));
         }
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getRepositoryAttributes(): array
+    {
+        return [];
     }
 }
