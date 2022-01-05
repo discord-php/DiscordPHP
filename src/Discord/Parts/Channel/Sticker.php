@@ -137,6 +137,18 @@ class Sticker extends Part
     /**
      * @inheritdoc
      */
+    public function getUpdatableAttributes(): array
+    {
+        return [
+            'name' => $this->name,
+            'description' => $this->description ?? null,
+            'tags' => $this->attributes['tags'],
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function getRepositoryAttributes(): array
     {
         if ($this->type == self::TYPE_GUILD) {
