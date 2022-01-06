@@ -40,21 +40,6 @@ class Resolved extends Part
     protected $fillable = ['users', 'members', 'roles', 'channels', 'messages', 'guild_id'];
 
     /**
-     * @inheritdoc
-     */
-    protected function afterConstruct(): void
-    {
-        foreach ($this->attributes['users'] ?? [] as $snowflake => $user) {
-            if ($userPart = $this->discord->users->get('id', $snowflake)) {
-                $userPart->fill((array) $user);
-            } else {
-                $userPart = $this->factory->create(User::class, $user, true);
-                $this->discord->users->pushItem($userPart);
-            }
-        }
-    }
-
-    /**
      * Returns a collection of resolved users.
      *
      * @return Collection|User[]|null Map of Snowflakes to user objects
