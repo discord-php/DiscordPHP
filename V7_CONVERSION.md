@@ -90,8 +90,8 @@ If you previously linked [DiscordPHP-Slash](https://github.com/discord-php/Disco
 |Register a Command|`$client->registerCommand('hello', function (Interaction $interaction, Choices $choices) {`|`$discord->registerCommand('hello', function (Interaction $interaction) {`<br/>Choices are inside `$interaction->data->options`|
 |Acknowledge|`$interaction->acknowledge();`|*Same as below*|
 |Acknowledge with source|`$interaction->acknowledge(true);`|`$interaction->acknowledgeWithResponse();`|
-|Reply with source|`$interaction->reply('Hello world!');`|`$interaction->respondWithMessage(MessageBuilder::new()->setContent('Hello world!'));`|
-|Reply|`$interaction->replyWithSource('Hello world!');`|*Same as above*|
+|Reply|`$interaction->reply('Hello world!');`|*Same as below*|
+|Reply with source|`$interaction->replyWithSource('Hello world!');`|`$interaction->respondWithMessage(MessageBuilder::new()->setContent('Hello world!'));`|
 |Update initial response|`$interaction->updateInitialResponse('text');`|`$interaction->updateOriginalResponse(MessageBuilder::new()->setContent('text'));`|
 |Delete initial response|`$interaction->deleteInitialResponse();`|`$interaction->deleteOriginalResponse();`|
 |Send a follow up message|`$interaction->sendFollowUpMessage('text');`|`$interaction->sendFollowUpMessage(MessageBuilder::new()->setContent('text'));`|
