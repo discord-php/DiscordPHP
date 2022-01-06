@@ -1470,7 +1470,7 @@ class Discord
      */
     public function __get(string $name)
     {
-        $allowed = ['loop', 'options', 'logger', 'http', 'commands'];
+        $allowed = ['loop', 'options', 'logger', 'http', 'application_commands'];
 
         if (in_array($name, $allowed)) {
             return $this->{$name};
@@ -1528,7 +1528,7 @@ class Discord
      *
      * @return RegisteredCommand
      */
-    public function registerCommand($name, callable $callback = null): RegisteredCommand
+    public function listenCommand($name, callable $callback = null): RegisteredCommand
     {
         if (is_array($name) && count($name) == 1) {
             $name = array_shift($name);
@@ -1536,19 +1536,19 @@ class Discord
 
         // registering base command
         if (! is_array($name) || count($name) == 1) {
-            if (isset($this->commands[$name])) {
+            if (isset($this->application_commands[$name])) {
                 throw new InvalidArgumentException("The command `{$name}` already exists.");
             }
 
-            return $this->commands[$name] = new RegisteredCommand($this, $name, $callback);
+            return $this->application_commands[$name] = new RegisteredCommand($this, $name, $callback);
         }
 
         $baseCommand = array_shift($name);
 
-        if (! isset($this->commands[$baseCommand])) {
+        if (! isset($this->application_commands[$baseCommand])) {
             $this->registerCommand($baseCommand);
         }
-        return $this->commands[$baseCommand]->addSubCommand($name, $callback);
+        return $this->application_commands[$baseCommand]->addSubCommand($name, $callback);
     }
 
     /**

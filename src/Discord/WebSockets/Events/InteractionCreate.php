@@ -27,8 +27,8 @@ class InteractionCreate extends Event
 
         if ($interaction->type == InteractionType::APPLICATION_COMMAND) {
             $checkCommand = function ($command) use ($interaction, &$checkCommand) {
-                if (isset($this->discord->commands[$command['name']])) {
-                    if ($this->discord->commands[$command['name']]->execute($command['options'] ?? [], $interaction)) {
+                if (isset($this->discord->application_commands[$command['name']])) {
+                    if ($this->discord->application_commands[$command['name']]->execute($command['options'] ?? [], $interaction)) {
                         return true;
                     }
                 }
