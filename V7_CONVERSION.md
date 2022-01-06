@@ -87,7 +87,7 @@ If you previously linked [DiscordPHP-Slash](https://github.com/discord-php/Disco
 |-----|-----|-----|
 |Client|`$client = new Client([ /* options */ ]);`|*Removed*|
 |Link|`$client->linkDiscord($discord, false);`|*Removed*|
-|Register a Command|`$client->registerCommand('hello', function (Interaction $interaction, Choices $choices) {`|`$discord->registerCommand('hello', function (Interaction $interaction, Choices $choices) {`|
+|Register a Command|`$client->registerCommand('hello', function (Interaction $interaction, Choices $choices) {`|`$discord->registerCommand('hello', function (Interaction $interaction) {`<br/>Choices are inside `$interaction->data->options`|
 |Acknowledge|`$interaction->acknowledge();`|*Same as below*|
 |Acknowledge with source|`$interaction->acknowledge(true);`|`$interaction->acknowledgeWithResponse();`|
 |Reply with source|`$interaction->reply('Hello world!');`|`$interaction->respondWithMessage(MessageBuilder::new()->setContent('Hello world!'));`|
