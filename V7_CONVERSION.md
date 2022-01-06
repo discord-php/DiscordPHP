@@ -71,8 +71,8 @@ If you previously linked [DiscordPHP-Slash](https://github.com/discord-php/Disco
 |-----|-----|-----|
 |Register Client|`$client = new RegisterClient('your-bot-token-here');`|*Removed*|
 |Get list of all Global Commands|`$commands = $client->getCommands();`|`$discord->application->commands->freshen()->done(function ($commands) { /* ... */ });`|
-|Get list of all Guild Commands|`$guildCommands = $client->getCommands('guild_id_here');`|`$discord->guilds['guild_id_here']->commands->freshen()->done(function ($commands) { // .. });`|
-|Get a specific Global Command|`$command = $client->getCommand('command_id');`|`$discord->application->commands->fetch('command_id')->done(function ($command) { // ... });`|
+|Get list of all Guild Commands|`$guildCommands = $client->getCommands('guild_id_here');`|`$discord->guilds['guild_id_here']->commands->freshen()->done(function ($commands) { /* ... */ });`|
+|Get a specific Global Command|`$command = $client->getCommand('command_id');`|`$discord->application->commands->fetch('command_id')->done(function ($command) { /* ... */ });`|
 |Get a specific Guild Commands|`$command = $client->getCommand('command_id', 'guild_id');`|`$discord->guilds['guild_id']->commands->fetch('command_id')->done(function ($command) { /* ... */ });`|
 |Create a Global Command|`$command = $client->createGlobalCommand('command_name', 'command_description', [     // optional array of options ]);`|`$command = new Command($discord, ['name' => 'command_name', 'description' => 'command_description']);`<br/>`$discord->application->commands->save($command)`|
 |Create a Guild Command|`$command = $client->createGuildSpecificCommand('guild_id', 'command_name', 'command_description', [     // optional array of options ]);`|`$command = new Command($discord, ['name' => 'command_name', 'description' => 'command_description']);`<br/>`$discord->guilds['guild_id']->commands->save($command)`|
@@ -90,8 +90,8 @@ If you previously linked [DiscordPHP-Slash](https://github.com/discord-php/Disco
 |Register a Command|`$client->registerCommand('hello', function (Interaction $interaction, Choices $choices) {`|`$discord->registerCommand('hello', function (Interaction $interaction, Choices $choices) {`|
 |Acknowledge|`$interaction->acknowledge();`|*Same as below*|
 |Acknowledge with source|`$interaction->acknowledge(true);`|`$interaction->acknowledgeWithResponse();`|
-|Reply with source|`$interaction->reply('Hello, world!');`|`$interaction->respondWithMessage(MessageBuilder::new()->setContent('Hello, world!'));`|
-|Reply|`$interaction->replyWithSource('Hello, world!');`|*Same as above*|
+|Reply with source|`$interaction->reply('Hello world!');`|`$interaction->respondWithMessage(MessageBuilder::new()->setContent('Hello world!'));`|
+|Reply|`$interaction->replyWithSource('Hello world!');`|*Same as above*|
 |Update initial response|`$interaction->updateInitialResponse('text');`|`$interaction->updateOriginalResponse(MessageBuilder::new()->setContent('text'));`|
 |Delete initial response|`$interaction->deleteInitialResponse();`|`$interaction->deleteOriginalResponse();`|
 |Send a follow up message|`$interaction->sendFollowUpMessage('text');`|`$interaction->sendFollowUpMessage(MessageBuilder::new()->setContent('text'));`|
