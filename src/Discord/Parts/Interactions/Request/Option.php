@@ -19,18 +19,18 @@ use Discord\Repository\Interaction\OptionRepository;
  *
  * @see https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-interaction-data-option-structure
  *
- * @property string                   $name    Name of the option.
- * @property int                      $type    Type of the option.
- * @property string                   $value   Value of the option.
- * @property Collection|Option[]|null $options Sub-options if applicable.
- * @property bool                     $focused Whether this option is the currently focused option for autocomplete.
+ * @property string           $name    Name of the option.
+ * @property int              $type    Type of the option.
+ * @property mixed            $value   Value of the option.
+ * @property bool             $focused Whether this option is the currently focused option for autocomplete.
+ * @property OptionRepository $options Sub-options if applicable.
  */
 class Option extends Part
 {
     /**
      * @inheritdoc
      */
-    protected $fillable = ['name', 'type', 'value', 'options', 'focused'];
+    protected $fillable = ['name', 'type', 'value', 'focused'];
 
     /**
      * @inheritdoc
