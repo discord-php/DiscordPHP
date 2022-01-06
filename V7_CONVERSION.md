@@ -69,7 +69,7 @@ If you previously linked [DiscordPHP-Slash](https://github.com/discord-php/Disco
 
 | |DiscordPHP-Slash|DiscordPHP|
 |-----|-----|-----|
-|Register Client|`$client = new RegisterClient('your-bot-token-here');`|*Removed*|
+|Register Client|`$client = new RegisterClient('your-bot-token-here');`|*Removed*, the `$discord` can deal with commands from REST API, requires `application.commands` scope|
 |Get list of all Global Commands|`$commands = $client->getCommands();`|`$discord->application->commands->freshen()->done(function ($commands) { /* ... */ });`|
 |Get list of all Guild Commands|`$guildCommands = $client->getCommands('guild_id_here');`|`$discord->guilds['guild_id_here']->commands->freshen()->done(function ($commands) { /* ... */ });`|
 |Get a specific Global Command|`$command = $client->getCommand('command_id');`|`$discord->application->commands->fetch('command_id')->done(function ($command) { /* ... */ });`|
@@ -85,9 +85,9 @@ If you previously linked [DiscordPHP-Slash](https://github.com/discord-php/Disco
 
 | |DiscordPHP-Slash|DiscordPHP|
 |-----|-----|-----|
-|Client|`$client = new Client([ /* options */ ]);`|*Removed*|
-|Link|`$client->linkDiscord($discord, false);`|*Removed*|
-|Register a Command|`$client->registerCommand('hello', function (Interaction $interaction, Choices $choices) {`|`$discord->registerCommand('hello', function (Interaction $interaction) {`<br/>Choices are inside `$interaction->data->options`|
+|Client|`$client = new Client([ /* options */ ]);`|*Removed*, all options are present when constructing `$discord`|
+|Link|`$client->linkDiscord($discord, false);`|*Removed*, this is already the `$discord`|
+|Register a Command|`$client->registerCommand('hello', function (Interaction $interaction, Choices $choices) {`|`$discord->listenCommand('hello', function (Interaction $interaction) {`<br/>Choices are inside `$interaction->data->options`|
 |Acknowledge|`$interaction->acknowledge();`|*Same as below*|
 |Acknowledge with source|`$interaction->acknowledge(true);`|`$interaction->acknowledgeWithResponse();`|
 |Reply|`$interaction->reply('Hello world!');`|*Same as below*|
