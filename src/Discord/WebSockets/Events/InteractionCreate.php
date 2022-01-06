@@ -14,6 +14,7 @@ namespace Discord\WebSockets\Events;
 use Discord\Helpers\Deferred;
 use Discord\InteractionType;
 use Discord\Parts\Interactions\Interaction;
+use Discord\Parts\User\User;
 use Discord\WebSockets\Event;
 
 class InteractionCreate extends Event
@@ -24,6 +25,15 @@ class InteractionCreate extends Event
     public function handle(Deferred &$deferred, $data): void
     {
         $interaction = $this->factory->create(Interaction::class, $data, true);
+
+        foreach ($data->data->resolved->users ?? [] as $snowflake => $user) {
+            if ($userPart = $this->discord->users->get('id', $snowflake)) {
+                $userPart->fill((array) $user);
+            } else {
+                $userPart = $this->factory->create(User::class, $user, true);
+                $this->discord->users->pushItem($userPart);
+            }
+        }
 
         if ($interaction->type == InteractionType::APPLICATION_COMMAND) {
             $checkCommand = function ($command) use ($interaction, &$checkCommand) {

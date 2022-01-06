@@ -307,7 +307,7 @@ class Discord
      *
      * @var RegisteredCommand[]
      */
-    protected $commands;
+    private $application_commands;
 
     /**
      * Creates a Discord client instance.
@@ -1546,7 +1546,7 @@ class Discord
         $baseCommand = array_shift($name);
 
         if (! isset($this->application_commands[$baseCommand])) {
-            $this->registerCommand($baseCommand);
+            $this->listenCommand($baseCommand);
         }
         return $this->application_commands[$baseCommand]->addSubCommand($name, $callback);
     }
