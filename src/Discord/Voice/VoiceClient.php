@@ -1105,8 +1105,11 @@ class VoiceClient extends EventEmitter
             throw new \Exception('Voice Client is not connected.');
         }
 
-        $this->stop();
-        $this->setSpeaking(false);
+        if ($this->speaking) {
+            $this->stop();
+            $this->setSpeaking(false);
+        }
+
         $this->ready = false;
 
         $this->mainSend([
