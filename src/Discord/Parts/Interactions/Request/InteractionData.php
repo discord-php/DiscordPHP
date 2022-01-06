@@ -17,20 +17,25 @@ use Discord\Repository\Interaction\OptionRepository;
 /**
  * Represents the data associated with an interaction.
  *
+ * @see https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-interaction-data-structure
+ *
  * @property string           $id             ID of the invoked command.
  * @property string           $name           Name of the invoked command.
+ * @property int              $type           The type of the invoked command.
  * @property Resolved|null    $resolved       Resolved users, members, roles and channels that are relevant.
  * @property OptionRepository $options        Parameters and values from the user.
- * @property string[]|null    $values         Values selected in a select menu.
  * @property string|null      $custom_id      Custom ID the component was created for. Not used for slash commands.
  * @property int|null         $component_type Type of the component. Not used for slash commands.
+ * @property string[]|null    $values         Values selected in a select menu.
+ * @property string|null      $target_id      Id the of user or message targetted by a user or message command.
+ * @property string|null      $guild_id       ID of the guild passed from Interaction.
  */
 class InteractionData extends Part
 {
     /**
      * @inheritdoc
      */
-    protected $fillable = ['id', 'name', 'resolved', 'options', 'values', 'custom_id', 'component_type'];
+    protected $fillable = ['id', 'name', 'type', 'resolved', 'options', 'custom_id', 'component_type', 'values', 'target_id', 'guild_id'];
 
     /**
      * @inheritdoc
@@ -54,5 +59,24 @@ class InteractionData extends Part
         foreach ($options as $option) {
             $this->options->push($this->factory->create(Option::class, $option, true));
         }
+    }
+
+    /**
+     * Returns a collection of resolved data.
+     *
+     * @return Resolved|null
+     */
+    protected function getResolvedAttribute()
+    {
+        if (! isset($this->attributes['resolved'])) {
+            return null;
+        }
+
+        $adata = $this->attributes['resolved'];
+        if (isset($this->attributes['guild_id'])) {
+            $adata->guild_id = $this->guild_id;
+        }
+
+        return $this->factory->create(Resolved::class, $adata, true);
     }
 }

@@ -42,9 +42,11 @@ use React\EventLoop\Factory as LoopFactory;
 use React\EventLoop\LoopInterface;
 use React\EventLoop\TimerInterface;
 use Discord\Helpers\Deferred;
+use Discord\Helpers\RegisteredCommand;
 use Discord\Http\Drivers\React;
 use Discord\Http\Endpoint;
 use Evenement\EventEmitterTrait;
+use InvalidArgumentException;
 use Psr\Log\LoggerInterface;
 use React\Promise\ExtendedPromiseInterface;
 use React\Promise\PromiseInterface;
@@ -299,6 +301,13 @@ class Discord
      * @var Client Discord client.
      */
     protected $client;
+
+    /**
+     * An array of registered slash commands.
+     *
+     * @var RegisteredCommand[]
+     */
+    protected $commands;
 
     /**
      * Creates a Discord client instance.
@@ -1461,7 +1470,7 @@ class Discord
      */
     public function __get(string $name)
     {
-        $allowed = ['loop', 'options', 'logger', 'http'];
+        $allowed = ['loop', 'options', 'logger', 'http', 'commands'];
 
         if (in_array($name, $allowed)) {
             return $this->{$name};
@@ -1509,6 +1518,37 @@ class Discord
         }
 
         return null;
+    }
+
+    /**
+     * Registeres a command with the client.
+     *
+     * @param string|array $name
+     * @param callable     $callback
+     *
+     * @return RegisteredCommand
+     */
+    public function registerCommand($name, callable $callback = null): RegisteredCommand
+    {
+        if (is_array($name) && count($name) == 1) {
+            $name = array_shift($name);
+        }
+
+        // registering base command
+        if (! is_array($name) || count($name) == 1) {
+            if (isset($this->commands[$name])) {
+                throw new InvalidArgumentException("The command `{$name}` already exists.");
+            }
+
+            return $this->commands[$name] = new RegisteredCommand($this, $name, $callback);
+        }
+
+        $baseCommand = array_shift($name);
+
+        if (! isset($this->commands[$baseCommand])) {
+            $this->registerCommand($baseCommand);
+        }
+        return $this->commands[$baseCommand]->addSubCommand($name, $callback);
     }
 
     /**

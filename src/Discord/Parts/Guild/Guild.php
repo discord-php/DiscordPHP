@@ -27,6 +27,7 @@ use Discord\Repository\Guild\MemberRepository;
 use Discord\Repository\Guild\RoleRepository;
 use Discord\Parts\Guild\AuditLog\AuditLog;
 use Discord\Parts\Guild\AuditLog\Entry;
+use Discord\Repository\Guild\GuildCommandRepository;
 use Discord\Repository\Guild\StickerRepository;
 use Discord\Repository\Guild\ScheduledEventRepository;
 use Discord\Repository\Guild\GuildTemplateRepository;
@@ -108,6 +109,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * @property InviteRepository  $invites
  * @property BanRepository     $bans
  * @property EmojiRepository   $emojis
+ * @property GuildCommandRepository $commands
  * @property StickerRepository $stickers
  * @property GuildTemplateRepository $templates
  * @property StageInstanceRepository $stage_instances
@@ -221,6 +223,7 @@ class Guild extends Part
         'bans' => BanRepository::class,
         'invites' => InviteRepository::class,
         'emojis' => EmojiRepository::class,
+        'commands' => GuildCommandRepository::class,
         'stickers' => StickerRepository::class,
         'templates' => GuildTemplateRepository::class,
         'stage_instances' => StageInstanceRepository::class,
@@ -856,6 +859,9 @@ class Guild extends Part
     {
         return [
             'guild_id' => $this->id,
+
+            // Hack, should be only used for the bot's Application Guild Commands
+            'application_id' => $this->discord->application->id,
         ];
     }
 
