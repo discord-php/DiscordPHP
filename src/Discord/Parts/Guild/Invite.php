@@ -21,18 +21,25 @@ use React\Promise\ExtendedPromiseInterface;
 /**
  * An invite to a Channel and Guild.
  *
- * @property string  $code       The invite code.
- * @property int     $max_age    How many seconds the invite will be alive.
- * @property Guild   $guild      The guild that the invite is for.
- * @property string  $guild_id
- * @property bool    $revoked    Whether the invite has been revoked.
- * @property Carbon  $created_at A timestamp of when the invite was created.
- * @property bool    $temporary  Whether the invite is for temporary membership.
- * @property int     $uses       How many times the invite has been used.
- * @property int     $max_uses   How many times the invite can be used.
- * @property User    $inviter    The user that created the invite.
- * @property Channel $channel    The channel that the invite is for.
- * @property string  $channel_id
+ * @property string      $code                       The invite code.
+ * @property Guild       $guild                      The guild that the invite is for.
+ * @property string|null $guild_id
+ * @property Channel     $channel                    The channel that the invite is for.
+ * @property string|null $channel_id
+ * @property User|null   $inviter                    The user that created the invite.
+ * @property int|null    $target_type                The type of target for this voice channel invite.
+ * @property User|null   $target_user                The user whose stream to display for this voice channel stream invite.
+ * @property object|null $target_application         The embedded application to open for this voice channel embedded application invite.
+ * @property int|null    $approximate_presence_count Approximate count of online members, returned from the GET /invites/<code> endpoint when with_counts is true.
+ * @property int|null    $approximate_member_count   Approximate count of total members, returned from the GET /invites/<code> endpoint when with_counts is true.
+ * @property Carbon|null $expires_at                 The expiration date of this invite, returned from the GET /invites/<code> endpoint when with_expiration is true.
+ * @property object|null $stage_instance             Stage instance data if there is a public Stage instance in the Stage channel this invite is for.
+ * @property object|null $guild_scheduled_event      Guild scheduled event data, only included if guild_scheduled_event_id contains a valid guild scheduled event id.
+ * @property int         $uses                       How many times the invite has been used.
+ * @property int         $max_uses                   How many times the invite can be used.
+ * @property int         $max_age                    How many seconds the invite will be alive.
+ * @property bool        $temporary                  Whether the invite is for temporary membership.
+ * @property Carbon      $created_at                 A timestamp of when the invite was created.
  */
 class Invite extends Part
 {
@@ -41,18 +48,32 @@ class Invite extends Part
      */
     protected $fillable = [
         'code',
-        'max_age',
         'guild',
-        'guild_id',
-        'revoked',
-        'created_at',
-        'temporary',
+        'channel',
+        'inviter',
+        'target_type',
+        'target_user',
+        'target_application',
+        'approximate_presence_count',
+        'approximate_member_count',
+        'expires_at',
+        'stage_instance',
+        'guild_scheduled_event',
+
+        // Extra metadata
         'uses',
         'max_uses',
-        'inviter',
-        'channel',
+        'max_age',
+        'temporary',
+        'created_at',
+
+        // Internal use
+        'guild_id',
         'channel_id',
     ];
+
+    public const TARGET_TYPE_STREAM = 1;
+    public const TARGET_TYPE_EMBEDDED_APPLICATION = 2;
 
     /**
      * Accepts the invite.
@@ -61,10 +82,6 @@ class Invite extends Part
      */
     public function accept(): ExtendedPromiseInterface
     {
-        if ($this->revoked) {
-            return \React\Promise\reject(new \Exception('This invite has been revoked.'));
-        }
-
         if ($this->uses >= $this->max_uses) {
             return \React\Promise\reject(new \Exception('This invite has been used the max times.'));
         }
@@ -174,6 +191,40 @@ class Invite extends Part
     protected function getCreatedAtAttribute(): Carbon
     {
         return new Carbon($this->attributes['created_at']);
+    }
+
+    /**
+     * Returns the target user attribute.
+     *
+     * @return User|null  The user whose stream to display for this voice channel stream invite.
+     * @throws \Exception
+     */
+    protected function getTargetUserAttribute(): ?User
+    {
+        if (! isset($this->attributes['target_user'])) {
+            return null;
+        }
+
+        if ($user = $this->discord->users->get('id', $this->attributes['target_user']->id ?? null)) {
+            return $user;
+        }
+
+        return $this->factory->create(User::class, $this->attributes['target_user'], true);
+    }
+
+    /**
+     * Returns the expires at attribute.
+     *
+     * @return Carbon|null The time that the invite was created.
+     * @throws \Exception
+     */
+    protected function getExpiresAtAttribute(): ?Carbon
+    {
+        if (! isset($this->attributes['expires_at'])) {
+            return null;
+        }
+
+        return new Carbon($this->attributes['expires_at']);
     }
 
     /**
