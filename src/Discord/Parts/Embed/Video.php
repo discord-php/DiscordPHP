@@ -16,14 +16,15 @@ use Discord\Parts\Part;
 /**
  * A video for an embed.
  *
- * @property string $url    The source of the video.
- * @property int    $height The height of the video.
- * @property int    $width  The width of the video.
+ * @property string|null $url       The source of the video.
+ * @property string|null $proxy_url A proxied url of the video.
+ * @property int|null    $height    The height of the video.
+ * @property int|null    $width     The width of the video.
  */
 class Video extends Part
 {
     /**
      * @inheritdoc
      */
-    protected $fillable = ['url', 'height', 'width'];
+    protected $fillable = ['url', 'proxy_url', 'height', 'width'];
 }
