@@ -142,6 +142,7 @@ class Guild extends Part
         'id',
         'name',
         'icon',
+        'icon_hash',
         'region',
         'owner_id',
         'roles',
@@ -330,7 +331,7 @@ class Guild extends Part
      */
     protected function getIconHashAttribute()
     {
-        return $this->attributes['icon'];
+        return $this->attributes['icon_hash'] ?? $this->attributes['icon'];
     }
 
     /**
@@ -759,7 +760,7 @@ class Guild extends Part
     public function getWelcomeScreen(bool $fresh = false): ExtendedPromiseInterface
     {
         if (! $fresh && isset($this->attributes['welcome_screen'])) {
-            return \React\Promise\resolve($this->attributes['welcome_screen']);
+            return \React\Promise\resolve($this->discord->factory(WelcomeScreen::class, $this->attributes['welcome_screen'], true));
         }
 
         return $this->http->get(Endpoint::bind(Endpoint::GUILD_WELCOME_SCREEN, $this->id))->then(function ($response) {
@@ -800,16 +801,6 @@ class Guild extends Part
 
             return $welcome_screen;
         });
-    }
-
-    /**
-     * Returns the Welcome Screen object for the guild.
-     *
-     * @return WelcomeScreen|null
-     */
-    public function getWelcomeScreenAttribute(): ?WelcomeScreen
-    {
-        return $this->attributes['welcome_screen'] ?? null;
     }
 
     /**

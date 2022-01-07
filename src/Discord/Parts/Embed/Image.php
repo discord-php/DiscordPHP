@@ -16,10 +16,10 @@ use Discord\Parts\Part;
 /**
  * An image for an embed.
  *
- * @property string $url       The source of the image. Must be https.
- * @property string $proxy_url A proxied version of the image.
- * @property int    $height    The height of the image.
- * @property int    $width     The width of the image.
+ * @property string      $url       The source of the image. Must be https.
+ * @property string|null $proxy_url A proxied version of the image.
+ * @property int|null    $height    The height of the image.
+ * @property int|null    $width     The width of the image.
  */
 class Image extends Part
 {

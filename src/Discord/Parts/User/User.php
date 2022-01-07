@@ -21,23 +21,23 @@ use React\Promise\ExtendedPromiseInterface;
 /**
  * A user is a general user that is not attached to a guild.
  *
- * @property string $id            The unique identifier of the user.
- * @property string $username      The username of the user.
- * @property string $avatar        The avatar URL of the user.
- * @property string $avatar_hash   The avatar hash of the user.
- * @property string $discriminator The discriminator of the user.
- * @property bool   $bot           Whether the user is a bot.
- * @property bool   $system        Whether the user is a Discord system user.
- * @property bool   $mfa_enabled   Whether MFA is enabled.
- * @property string $banner        The banner URL of the user.
- * @property string $banner_hash   The banner hash of the user.
- * @property int    $accent_color  The user's banner color encoded as an integer representation of hexadecimal color code.
- * @property string $locale        User locale.
- * @property bool   $verified      Whether the user is verified.
- * @property string $email         User email.
- * @property int    $flags         User flags.
- * @property int    $premium_type  Type of nitro subscription.
- * @property int    $public_flags  Public flags on the user.
+ * @property string      $id            The unique identifier of the user.
+ * @property string      $username      The username of the user.
+ * @property string      $discriminator The discriminator of the user.
+ * @property string      $avatar        The avatar URL of the user.
+ * @property string      $avatar_hash   The avatar hash of the user.
+ * @property bool|null   $bot           Whether the user is a bot.
+ * @property bool|null   $system        Whether the user is a Discord system user.
+ * @property bool|null   $mfa_enabled   Whether MFA is enabled.
+ * @property string|null $banner        The banner URL of the user.
+ * @property string|null $banner_hash   The banner hash of the user.
+ * @property int|null    $accent_color  The user's banner color encoded as an integer representation of hexadecimal color code.
+ * @property string|null $locale        User locale.
+ * @property bool|null   $verified      Whether the user is verified.
+ * @property string|null $email         User email.
+ * @property int|null    $flags         User flags.
+ * @property int|null    $premium_type  Type of nitro subscription.
+ * @property int|null    $public_flags  Public flags on the user.
  *
  * @method ExtendedPromiseInterface sendMessage(MessageBuilder $builder)
  * @method ExtendedPromiseInterface sendMessage(string $text, bool $tts = false, Embed|array $embed = null, array $allowed_mentions = null, ?Message $replyTo = null)
@@ -67,7 +67,7 @@ class User extends Part
     /**
      * @inheritdoc
      */
-    protected $fillable = ['id', 'username', 'avatar', 'discriminator', 'bot', 'system', 'mfa_enabled', 'banner', 'accent_color', 'locale', 'verified', 'email', 'flags', 'premium_type', 'public_flags'];
+    protected $fillable = ['id', 'username', 'discriminator', 'avatar', 'bot', 'system', 'mfa_enabled', 'banner', 'accent_color', 'locale', 'verified', 'email', 'flags', 'premium_type', 'public_flags'];
 
     /**
      * Gets the private channel for the user.
@@ -195,11 +195,11 @@ class User extends Part
     /**
      * Returns the banner hash for the client.
      *
-     * @return string The client banner's hash.
+     * @return string|null The client banner's hash.
      */
-    protected function getBannerHashAttribute(): string
+    protected function getBannerHashAttribute(): ?string
     {
-        return $this->attributes['banner'];
+        return $this->attributes['banner'] ?? null;
     }
 
     /**
