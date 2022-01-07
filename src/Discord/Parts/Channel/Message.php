@@ -25,6 +25,7 @@ use Discord\WebSockets\Event;
 use Discord\Helpers\Deferred;
 use Discord\Http\Endpoint;
 use Discord\Parts\Guild\Guild;
+use Discord\Parts\Guild\Sticker;
 use Discord\Parts\Thread\Thread;
 use Discord\Repository\Channel\ReactionRepository;
 use InvalidArgumentException;

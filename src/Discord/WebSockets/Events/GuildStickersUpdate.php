@@ -14,7 +14,7 @@ namespace Discord\WebSockets\Events;
 use Discord\Helpers\Collection;
 use Discord\WebSockets\Event;
 use Discord\Helpers\Deferred;
-use Discord\Parts\Channel\Sticker;
+use Discord\Parts\Guild\Sticker;
 
 class GuildStickersUpdate extends Event
 {
