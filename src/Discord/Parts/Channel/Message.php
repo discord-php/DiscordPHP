@@ -63,6 +63,7 @@ use function React\Promise\reject;
  * @property string               $webhook_id             ID of the webhook that made the message, if any.
  * @property object               $activity               Current message activity. Requires rich presence.
  * @property object               $application            Application of message. Requires rich presence.
+ * @property string               $application_id         If the message is a response to an Interaction, this is the id of the interaction's application.
  * @property object               $message_reference      Message that is referenced by this message.
  * @property Message|null         $referenced_message     The message that is referenced in a reply.
  * @property int                  $flags                  Message flags.
@@ -73,6 +74,7 @@ use function React\Promise\reject;
  * @property bool                 $urgent                 Message is urgent.
  * @property Collection|Sticker[] $sticker_items          Stickers attached to the message.
  * @property object|null          $interaction            The interaction which triggered the message (slash commands).
+ * @property array                $components             Sent if the message contains components like buttons, action rows, or other interactive components.
  * @property string|null          $link                   Returns a link to the message.
  */
 class Message extends Part
@@ -92,13 +94,19 @@ class Message extends Part
     public const CHANNEL_FOLLOW_ADD = 12;
     public const GUILD_DISCOVERY_DISQUALIFIED = 14;
     public const GUILD_DISCOVERY_REQUALIFIED = 15;
+    public const GUILD_DISCOVERY_GRACE_PERIOD_INITIAL_WARNING = 16;
+    public const GUILD_DISCOVERY_GRACE_PERIOD_FINAL_WARNING = 17;
+    public const TYPE_THREAD_CREATED = 18;
     public const TYPE_REPLY = 19;
     public const TYPE_APPLICATION_COMMAND = 20;
+    public const TYPE_THREAD_STARTER_MESSAGE = 21;
+    public const TYPE_GUILD_INVITE_REMINDER = 22;
+    public const TYPE_CONTEXT_MENU_COMMAND = 23;
 
     public const ACTIVITY_JOIN = 1;
     public const ACTIVITY_SPECTATE = 2;
     public const ACTIVITY_LISTEN = 3;
-    public const ACTIVITY_JOIN_REQUEST = 4;
+    public const ACTIVITY_JOIN_REQUEST = 5;
 
     public const REACT_DELETE_ALL = 0;
     public const REACT_DELETE_ME = 1;
@@ -131,12 +139,14 @@ class Message extends Part
         'webhook_id',
         'activity',
         'application',
+        'application_id',
         'message_reference',
         'referenced_message',
         'flags',
         'sticker_items',
         'stickers',
         'interaction',
+        'components',
     ];
 
     /**
