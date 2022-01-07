@@ -9,9 +9,8 @@
  * with this source code in the LICENSE.md file.
  */
 
-namespace Discord\Parts\Channel;
+namespace Discord\Parts\Guild;
 
-use Discord\Parts\Guild\Guild;
 use Discord\Parts\Part;
 
 /**

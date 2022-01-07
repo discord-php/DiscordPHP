@@ -12,7 +12,7 @@
 namespace Discord\Repository\Guild;
 
 use Discord\Http\Endpoint;
-use Discord\Parts\Channel\Sticker;
+use Discord\Parts\Guild\Sticker;
 use Discord\Repository\AbstractRepository;
 
 /**
