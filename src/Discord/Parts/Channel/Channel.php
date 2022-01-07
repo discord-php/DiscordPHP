@@ -47,34 +47,35 @@ use function React\Promise\resolve;
  * A Channel can be either a text or voice channel on a Discord guild.
  *
  * @property string              $id                            The unique identifier of the Channel.
- * @property string              $name                          The name of the channel.
  * @property int                 $type                          The type of the channel.
- * @property string              $topic                         The topic of the channel.
- * @property Guild               $guild                         The guild that the channel belongs to. Only for text or voice channels.
  * @property string|null         $guild_id                      The unique identifier of the guild that the channel belongs to. Only for text or voice channels.
+ * @property Guild               $guild                         The guild that the channel belongs to. Only for text or voice channels.
  * @property int                 $position                      The position of the channel on the sidebar.
- * @property bool                $is_private                    Whether the channel is a private channel.
+ * @property string              $name                          The name of the channel.
+ * @property string              $topic                         The topic of the channel.
+ * @property bool                $nsfw                          Whether the channel is NSFW.
  * @property string              $last_message_id               The unique identifier of the last message sent in the channel.
  * @property int                 $bitrate                       The bitrate of the channel. Only for voice channels.
- * @property User                $recipient                     The first recipient of the channel. Only for DM or group channels.
- * @property string              $recipient_id                  The ID of the recipient of the channel, if it is a DM channel.
- * @property Collection|User[]   $recipients                    A collection of all the recipients in the channel. Only for DM or group channels.
- * @property bool                $nsfw                          Whether the channel is NSFW.
  * @property int                 $user_limit                    The user limit of the channel.
  * @property int                 $rate_limit_per_user           Amount of seconds a user has to wait before sending a new message.
+ * @property Collection|User[]   $recipients                    A collection of all the recipients in the channel. Only for DM or group channels.
+ * @property User                $recipient                     The first recipient of the channel. Only for DM or group channels.
+ * @property string              $recipient_id                  The ID of the recipient of the channel, if it is a DM channel.
  * @property string              $icon                          Icon hash.
  * @property string              $owner_id                      The ID of the DM creator. Only for DM or group channels.
  * @property string              $application_id                ID of the group DM creator if it is a bot.
  * @property string              $parent_id                     ID of the parent channel.
  * @property Carbon              $last_pin_timestamp            When the last message was pinned.
- * @property string|null         $rtc_region                    voice region id for the voice channel, automatic when set to null
- * @property int|null            $video_quality_mode            the camera video quality mode of the voice channel, 1 when not present
- * @property int|null            $default_auto_archive_duration default duration for newly created threads, in minutes, to automatically archive the thread after recent activity, can be set to: 60, 1440, 4320, 10080
- * @property MemberRepository    $members                       voice channel only - members in the channel
- * @property MessageRepository   $messages                      text channel only - messages sent in the channel
- * @property OverwriteRepository $overwrites                    permission overwrites
- * @property WebhookRepository   $webhooks                      webhooks in the channel
- * @property ThreadRepository    $threads                       threads that belong to the channel
+ * @property string|null         $rtc_region                    Voice region id for the voice channel, automatic when set to null
+ * @property int|null            $video_quality_mode            The camera video quality mode of the voice channel, 1 when not present
+ * @property int|null            $default_auto_archive_duration Default duration for newly created threads, in minutes, to automatically archive the thread after recent activity, can be set to: 60, 1440, 4320, 10080
+ * @property string|null         $permissions                   Computed permissions for the invoking user in the channel, including overwrites, only included when part of the resolved data received on a slash command interaction.
+ * @property bool                $is_private                    Whether the channel is a private channel.
+ * @property OverwriteRepository $overwrites                    Permission overwrites
+ * @property MemberRepository    $members                       Voice channel only - members in the channel
+ * @property MessageRepository   $messages                      Text channel only - messages sent in the channel
+ * @property WebhookRepository   $webhooks                      Webhooks in the channel
+ * @property ThreadRepository    $threads                       Threads that belong to the channel
  *
  * @method ExtendedPromiseInterface sendMessage(MessageBuilder $builder)
  * @method ExtendedPromiseInterface sendMessage(string $text, bool $tts = false, Embed|array $embed = null, array $allowed_mentions = null, ?Message $replyTo = null)
@@ -93,24 +94,26 @@ class Channel extends Part
     public const TYPE_PRIVATE_THREAD = 12;
     public const TYPE_STAGE_CHANNEL = 13;
 
+    public const VIDEO_QUALITY_AUTO = 1;
+    public const VIDEO_QUALITY_FULL = 2;
+
     /**
      * @inheritdoc
      */
     protected $fillable = [
         'id',
-        'name',
         'type',
-        'topic',
         'guild_id',
         'position',
-        'is_private',
-        'last_message_id',
         'permission_overwrites',
-        'bitrate',
-        'recipients',
+        'name',
+        'topic',
         'nsfw',
+        'last_message_id',
+        'bitrate',
         'user_limit',
         'rate_limit_per_user',
+        'recipients',
         'icon',
         'owner_id',
         'application_id',
@@ -119,15 +122,17 @@ class Channel extends Part
         'rtc_region',
         'video_quality_mode',
         'default_auto_archive_duration',
+        'permissions',
+        'is_private',
     ];
 
     /**
      * @inheritdoc
      */
     protected $repositories = [
+        'overwrites' => OverwriteRepository::class,
         'members' => MemberRepository::class,
         'messages' => MessageRepository::class,
-        'overwrites' => OverwriteRepository::class,
         'webhooks' => WebhookRepository::class,
         'threads' => ThreadRepository::class,
     ];
