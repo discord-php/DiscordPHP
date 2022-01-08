@@ -377,7 +377,7 @@ class Interaction extends Part
     }
 
     /**
-     * Responds to the interaction with a message.
+     * Responds to the interaction with auto complete suggestions.
      *
      * @param array|Choice[] $choice Autocomplete choices (max of 25 choices)
      *
