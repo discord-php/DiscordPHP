@@ -269,7 +269,7 @@ class Option extends Part
                 throw new \InvalidArgumentException('Autocomplete may not be set to true if choices are present.');
             }
             if (! in_array($this->type, [self::STRING, self::INTEGER, self::NUMBER])) {
-                throw new \InvalidArgumentException('Autocomplete may be only set option type STRING, INTEGER, NUMBER.');
+                throw new \InvalidArgumentException('Autocomplete may be only set to true if option type is STRING, INTEGER, or NUMBER.');
             }
         }
 
