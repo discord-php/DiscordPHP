@@ -14,6 +14,13 @@ namespace Discord\Parts\Permissions;
 /**
  * @inheritdoc
  *
+ * @property bool $connect
+ * @property bool $mute_members
+ * @property bool $deafen_members
+ * @property bool $move_members
+ * @property bool $request_to_speak
+ * @property bool $manage_events
+ *
  * @property bool $priority_speaker
  * @property bool $stream
  * @property bool $connect
@@ -22,7 +29,7 @@ namespace Discord\Parts\Permissions;
  * @property bool $deafen_members
  * @property bool $move_members
  * @property bool $use_vad
- * @property bool $request_to_speak
+ * @property bool $manage_events
  * @property bool $start_embedded_activities
  *
  * @property bool $add_reactions
@@ -34,6 +41,7 @@ namespace Discord\Parts\Permissions;
  * @property bool $read_message_history
  * @property bool $mention_everyone
  * @property bool $use_external_emojis
+ * @property bool $manage_webhooks
  * @property bool $use_application_commands
  * @property bool $manage_threads
  * @property bool $create_public_threads

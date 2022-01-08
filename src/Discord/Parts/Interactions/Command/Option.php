@@ -18,8 +18,8 @@ use function Discord\poly_strlen;
 
 /**
  * Option represents an array of options that can be given to a command.
- * 
- * @link https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-option-structure
+ *
+ * @see https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-option-structure
  *
  * @property int                      $type          Type of the option.
  * @property string                   $name          Name of the option.
@@ -63,7 +63,7 @@ class Option extends Part
 
         $choices = Collection::for(Choice::class, null);
 
-        foreach ($this->attributes['choices'] ?? [] as $choice) {
+        foreach ($this->attributes['choices'] as $choice) {
             $choices->push($this->factory->create(Choice::class, $choice, true));
         }
 
@@ -264,8 +264,13 @@ class Option extends Part
      */
     public function setAutoComplete(bool $autocomplete)
     {
-        if ($autocomplete && !empty($this->attributes['choices'])) {
-            throw new \InvalidArgumentException('Autocomplete may not be set to true if choices are present.');
+        if ($autocomplete) {
+            if (!empty($this->attributes['choices'])) {
+                throw new \InvalidArgumentException('Autocomplete may not be set to true if choices are present.');
+            }
+            if (! in_array($this->type, [self::STRING, self::INTEGER, self::NUMBER])) {
+                throw new \InvalidArgumentException('Autocomplete may be only set to true if option type is STRING, INTEGER, or NUMBER.');
+            }
         }
 
         $this->autocomplete = $autocomplete;

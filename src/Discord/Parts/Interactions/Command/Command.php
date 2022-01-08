@@ -11,21 +11,17 @@
 
 namespace Discord\Parts\Interactions\Command;
 
-use Discord\Exceptions\InvalidOverwriteException;
 use Discord\Helpers\Collection;
 use Discord\Http\Endpoint;
 use Discord\Parts\Guild\Guild;
-use Discord\Parts\Guild\Role;
 use Discord\Parts\Part;
-use Discord\Parts\User\Member;
-use Discord\Parts\User\User;
 use Discord\Repository\Guild\OverwriteRepository;
 use React\Promise\ExtendedPromiseInterface;
 
 /**
  * Represents a command registered on the Discord servers.
- * 
- * @link https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-structure
+ *
+ * @see https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-structure
  *
  * @property string                   $id                 The unique identifier of the command.
  * @property int                      $type               The type of the command, defaults 1 if not set
@@ -85,13 +81,17 @@ class Command extends Part
     /**
      * Gets the options attribute.
      *
-     * @return Collection|Options[] A collection of options.
+     * @return Collection|Options[]|null A collection of options.
      */
-    protected function getOptionsAttribute(): Collection
+    protected function getOptionsAttribute(): ?Collection
     {
-        $options = new Collection([], null);
+        if (! isset($this->attributes['options'])) {
+            return null;
+        }
 
-        foreach ($this->attributes['options'] ?? [] as $option) {
+        $options = Collection::for(Option::class, null);
+
+        foreach ($this->attributes['options'] as $option) {
             $options->push($this->factory->create(Option::class, $option, true));
         }
 
