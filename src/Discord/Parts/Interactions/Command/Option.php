@@ -264,8 +264,13 @@ class Option extends Part
      */
     public function setAutoComplete(bool $autocomplete)
     {
-        if ($autocomplete && !empty($this->attributes['choices'])) {
-            throw new \InvalidArgumentException('Autocomplete may not be set to true if choices are present.');
+        if ($autocomplete) {
+            if (!empty($this->attributes['choices'])) {
+                throw new \InvalidArgumentException('Autocomplete may not be set to true if choices are present.');
+            }
+            if (! in_array($this->type, [self::STRING, self::INTEGER, self::NUMBER])) {
+                throw new \InvalidArgumentException('Autocomplete may be only set option type STRING, INTEGER, NUMBER.');
+            }
         }
 
         $this->autocomplete = $autocomplete;
