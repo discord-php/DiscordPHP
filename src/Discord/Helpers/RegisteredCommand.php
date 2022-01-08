@@ -115,15 +115,7 @@ class RegisteredCommand
     public function suggest(Interaction $interaction): bool
     {
         if (is_callable($this->autocomplete_callback)) {
-            $focusedOption = null;
-            foreach ($interaction->data->options as $option) {
-                if ($option->focused) {
-                    $focusedOption = $option;
-                    break;
-                }
-            }
-
-            $choice = ($this->autocomplete_callback)($interaction, $focusedOption);
+            $choice = ($this->autocomplete_callback)($interaction);
             if (is_array($choice)) {
                 $interaction->autoCompleteResult($choice);
             }
