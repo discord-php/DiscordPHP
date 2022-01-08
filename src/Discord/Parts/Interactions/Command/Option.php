@@ -63,7 +63,7 @@ class Option extends Part
 
         $choices = Collection::for(Choice::class, null);
 
-        foreach ($this->attributes['choices'] ?? [] as $choice) {
+        foreach ($this->attributes['choices'] as $choice) {
             $choices->push($this->factory->create(Choice::class, $choice, true));
         }
 

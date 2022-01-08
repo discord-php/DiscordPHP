@@ -52,7 +52,7 @@ class Resolved extends Part
 
         $collection = Collection::for(User::class);
 
-        foreach ($this->attributes['users'] ?? [] as $snowflake => $user) {
+        foreach ($this->attributes['users'] as $snowflake => $user) {
             if (! $userPart = $this->discord->users->get('id', $snowflake)) {
                 $userPart = $this->factory->create(User::class, $user, true);
             }
@@ -78,7 +78,7 @@ class Resolved extends Part
 
         $collection = Collection::for(Member::class);
 
-        foreach ($this->attributes['members'] ?? [] as $snowflake => $member) {
+        foreach ($this->attributes['members'] as $snowflake => $member) {
             if ($guild = $this->discord->guilds->get('id', $this->guild_id)) {
                 $memberPart = $guild->members->get('id', $snowflake);
             }
@@ -107,7 +107,7 @@ class Resolved extends Part
 
         $collection = Collection::for(Role::class);
 
-        foreach ($this->attributes['roles'] ?? [] as $snowflake => $role) {
+        foreach ($this->attributes['roles'] as $snowflake => $role) {
             if ($guild = $this->discord->guilds->get('id', $this->guild_id)) {
                 $rolePart = $guild->roles->get('id', $snowflake);
             }
@@ -138,7 +138,7 @@ class Resolved extends Part
 
         $collection = new Collection();
 
-        foreach ($this->attributes['channels'] ?? [] as $snowflake => $channel) {
+        foreach ($this->attributes['channels'] as $snowflake => $channel) {
             if ($guild = $this->discord->guilds->get('id', $this->guild_id)) {
                 $channelPart = $guild->channels->get('id', $snowflake);
             }
@@ -170,7 +170,7 @@ class Resolved extends Part
 
         $collection = Collection::for(Message::class);
 
-        foreach ($this->attributes['messages'] ?? [] as $snowflake => $message) {
+        foreach ($this->attributes['messages'] as $snowflake => $message) {
             if ($guild = $this->discord->guilds->get('id', $this->guild_id)) {
                 if ($channel = $guild->channels->get('id', $message->channel_id)) {
                     $messagePart = $channel->messages->get('id', $snowflake);

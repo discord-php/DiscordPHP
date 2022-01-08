@@ -11,14 +11,10 @@
 
 namespace Discord\Parts\Interactions\Command;
 
-use Discord\Exceptions\InvalidOverwriteException;
 use Discord\Helpers\Collection;
 use Discord\Http\Endpoint;
 use Discord\Parts\Guild\Guild;
-use Discord\Parts\Guild\Role;
 use Discord\Parts\Part;
-use Discord\Parts\User\Member;
-use Discord\Parts\User\User;
 use Discord\Repository\Guild\OverwriteRepository;
 use React\Promise\ExtendedPromiseInterface;
 
@@ -85,13 +81,17 @@ class Command extends Part
     /**
      * Gets the options attribute.
      *
-     * @return Collection|Options[] A collection of options.
+     * @return Collection|Options[]|null A collection of options.
      */
-    protected function getOptionsAttribute(): Collection
+    protected function getOptionsAttribute(): ?Collection
     {
-        $options = new Collection([], null);
+        if (! isset($this->attributes['options'])) {
+            return null;
+        }
 
-        foreach ($this->attributes['options'] ?? [] as $option) {
+        $options = Collection::for(Option::class, null);
+
+        foreach ($this->attributes['options'] as $option) {
             $options->push($this->factory->create(Option::class, $option, true));
         }
 
