@@ -17,8 +17,8 @@ use Discord\Parts\Part;
 /**
  * A Welcome Screen of a Guild
  *
- * @link https://discord.com/developers/docs/resources/guild#welcome-screen-object-welcome-screen-structure
- * 
+ * @see https://discord.com/developers/docs/resources/guild#welcome-screen-object-welcome-screen-structure
+ *
  * @property string                      $description      The server description shown in the welcome screen.
  * @property Collection|WelcomeChannel[] $welcome_channels The channels shown in the welcome screen, up to 5.
  */

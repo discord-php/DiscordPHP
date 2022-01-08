@@ -18,8 +18,8 @@ use function Discord\poly_strlen;
 
 /**
  * Option represents an array of options that can be given to a command.
- * 
- * @link https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-option-structure
+ *
+ * @see https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-option-structure
  *
  * @property int                      $type          Type of the option.
  * @property string                   $name          Name of the option.

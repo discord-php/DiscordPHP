@@ -21,7 +21,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * A Guild Template is a code that when used, creates a guild based on a snapshot of an existing guild.
  *
- * @link https://discord.com/developers/docs/resources/guild-template
+ * @see https://discord.com/developers/docs/resources/guild-template
  *
  * @property string      $code                    The template code (unique ID).
  * @property string      $name                    Template name.

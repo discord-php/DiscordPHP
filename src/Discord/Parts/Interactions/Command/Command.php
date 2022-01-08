@@ -20,8 +20,8 @@ use React\Promise\ExtendedPromiseInterface;
 
 /**
  * Represents a command registered on the Discord servers.
- * 
- * @link https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-structure
+ *
+ * @see https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-structure
  *
  * @property string                   $id                 The unique identifier of the command.
  * @property int                      $type               The type of the command, defaults 1 if not set
