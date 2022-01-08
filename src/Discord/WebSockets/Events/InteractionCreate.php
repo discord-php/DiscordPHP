@@ -51,6 +51,12 @@ class InteractionCreate extends Event
             };
 
             $checkCommand($interaction->data);
+        } elseif ($interaction->type == InteractionType::APPLICATION_COMMAND_AUTOCOMPLETE) {
+            if (isset($this->discord->application_commands[$interaction->data['name']])) {
+                if ($this->discord->application_commands[$interaction->data['name']]->suggest($interaction)) {
+                    return;
+                }
+            }
         }
 
         $deferred->resolve($interaction);

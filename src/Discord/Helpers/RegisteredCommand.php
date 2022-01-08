@@ -46,6 +46,13 @@ class RegisteredCommand
     private $callback;
 
     /**
+     * The callback to be called when the auto complete is triggered.
+     *
+     * @var callable
+     */
+    private $autocomplete_callback;
+
+    /**
      * Array of sub-commands.
      *
      * @var RegisteredCommand[]
@@ -61,11 +68,12 @@ class RegisteredCommand
      * @param string   $name
      * @param callable $callback
      */
-    public function __construct(Discord $discord, string $name, callable $callback = null)
+    public function __construct(Discord $discord, string $name, callable $callback = null, ?callable $autocomplete_callback = null)
     {
         $this->discord = $discord;
         $this->name = $name;
         $this->callback = $callback;
+        $this->autocomplete_callback = $autocomplete_callback;
     }
 
     /**
@@ -97,6 +105,36 @@ class RegisteredCommand
     }
 
     /**
+     * Executes the command. Will search for a sub-command if given,
+     * otherwise executes the callback, if given.
+     *
+     * @param Interaction $interaction
+     *
+     * @return bool Whether the command successfully executed.
+     */
+    public function suggest(Interaction $interaction): bool
+    {
+        if (is_callable($this->autocomplete_callback)) {
+            $focusedOption = null;
+            foreach ($interaction->data->options as $option) {
+                if ($option->focused) {
+                    $focusedOption = $option;
+                    break;
+                }
+            }
+
+            $choice = ($this->autocomplete_callback)($interaction, $focusedOption);
+            if (is_array($choice)) {
+                $interaction->autoCompleteResult($choice);
+            }
+
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
      * Sets the callback for the command.
      *
      * @param callable $callback
@@ -104,6 +142,16 @@ class RegisteredCommand
     public function setCallback(callable $callback)
     {
         $this->callback = $callback;
+    }
+
+    /**
+     * Sets the callback for the auto complete suggestion.
+     *
+     * @param callable $callback
+     */
+    public function setAutoCompleteCallback(callable $autocomplete_callback)
+    {
+        $this->autocomplete_callback = $autocomplete_callback;
     }
 
     /**
