@@ -26,7 +26,7 @@ class Bitwise
      */
     public static function init(): bool
     {
-        if (PHP_INT_SIZE === 4 && extension_loaded('gmp')) {
+        if (extension_loaded('gmp')) {
             self::$is_32_gmp = true;
         }
 
