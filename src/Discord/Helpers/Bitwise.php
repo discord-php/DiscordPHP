@@ -26,7 +26,7 @@ class Bitwise
      */
     public static function init(): bool
     {
-        if (extension_loaded('gmp')) {
+        if (PHP_INT_SIZE === 4 && extension_loaded('gmp')) {
             self::$is_32_gmp = true;
         }
 
@@ -86,7 +86,7 @@ class Bitwise
     public static function not($a)
     {
         if (self::$is_32_gmp) {
-            return \gmp_neg(self::floatCast($a));
+            return \gmp_sub(\gmp_neg(self::floatCast($a)), 1);
         }
 
         return ~ $a;

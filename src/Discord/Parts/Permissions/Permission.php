@@ -74,6 +74,7 @@ abstract class Permission extends Part
         'read_message_history' => 16,
         'mention_everyone' => 17,
         'use_external_emojis' => 18,
+        'manage_webhooks' => 29,
         'use_application_commands' => 31,
         'manage_threads' => 34,
         'create_public_threads' => 35,
@@ -111,7 +112,6 @@ abstract class Permission extends Part
         'manage_channels' => 4,
         'view_channel' => 10,
         'manage_roles' => 28,
-        'manage_webhooks' => 29,
     ];
 
     /**
