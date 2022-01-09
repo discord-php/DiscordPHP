@@ -66,7 +66,7 @@ class InteractionData extends Part
      *
      * @return Resolved|null
      */
-    protected function getResolvedAttribute()
+    protected function getResolvedAttribute(): ?Resolved
     {
         if (! isset($this->attributes['resolved'])) {
             return null;
