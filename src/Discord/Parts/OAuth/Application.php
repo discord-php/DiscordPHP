@@ -28,7 +28,7 @@ use Discord\Repository\Interaction\GlobalCommandRepository;
  * @property bool                    $bot_require_code_grant When true the app's bot will only join upon completion of the full oauth2 code grant flow.
  * @property string|null             $terms_of_service_url   The url of the app's terms of service.
  * @property string|null             $privacy_policy_url     The url of the app's privacy policy
- * @property User                    $owner                  The owner of the OAuth application.
+ * @property User|null               $owner                  The owner of the OAuth application.
  * @property string                  $verify_key             The hex encoded key for verification in interactions and the GameSDK's GetTicket.
  * @property object|null             $team                   If the application belongs to a team, this will be a list of the members of that team.
  * @property int                     $flags                  The application's public flags.
@@ -62,20 +62,23 @@ class Application extends Part
     protected $repositories = [
         'commands' => GlobalCommandRepository::class,
     ];
-    
+
     /**
      * Returns the owner of the application.
      *
-     * @return User       Owner of the application.
-     * @throws \Exception
+     * @return User|null Owner of the application.
      */
     protected function getOwnerAttribute(): ?User
     {
-        if (isset($this->attributes['owner'])) {
-            return $this->factory->create(User::class, $this->attributes['owner'], true);
+        if (! isset($this->attributes['owner'])) {
+            return null;
         }
-        
-        return null;
+
+        if ($owner = $this->discord->users->get('id', $this->attributes['owner']->id)) {
+            return $owner;
+        }
+
+        return $this->factory->create(User::class, $this->attributes['owner'], true);
     }
 
     /**
