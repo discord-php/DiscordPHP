@@ -144,7 +144,7 @@ class Button extends Component
             self::STYLE_DANGER,
             self::STYLE_LINK,
         ])) {
-            throw new \InvalidArgumentException('Invalid style.');
+            throw new \InvalidArgumentException('Invalid button style.');
         }
 
         if ($this->style == self::STYLE_LINK && $style != self::STYLE_LINK) {

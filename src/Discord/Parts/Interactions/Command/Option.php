@@ -270,7 +270,7 @@ class Option extends Part
      *
      * @param bool $autocomplete enable autocomplete interactions for this option
      *
-     * @throws \LogicException
+     * @throws \InvalidArgumentException
      *
      * @return $this
      */
@@ -278,11 +278,11 @@ class Option extends Part
     {
         if ($autocomplete) {
             if (!empty($this->attributes['choices'])) {
-                throw new \LogicException('Autocomplete may not be set to true if choices are present.');
+                throw new \InvalidArgumentException('Autocomplete may not be set to true if choices are present.');
             }
 
             if (! in_array($this->type, [self::STRING, self::INTEGER, self::NUMBER])) {
-                throw new \LogicException('Autocomplete may be only set to true if option type is STRING, INTEGER, or NUMBER.');
+                throw new \InvalidArgumentException('Autocomplete may be only set to true if option type is STRING, INTEGER, or NUMBER.');
             }
         }
 
