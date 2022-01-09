@@ -1523,12 +1523,13 @@ class Discord
     /**
      * Registeres a command with the client.
      *
-     * @param string|array $name
-     * @param callable     $callback
+     * @param string|array  $name
+     * @param callable      $callback
+     * @param callable|null $autocomplete_callback
      *
      * @return RegisteredCommand
      */
-    public function listenCommand($name, callable $callback = null): RegisteredCommand
+    public function listenCommand($name, callable $callback = null, ?callable $autocomplete_callback = null): RegisteredCommand
     {
         if (is_array($name) && count($name) == 1) {
             $name = array_shift($name);
@@ -1540,7 +1541,7 @@ class Discord
                 throw new InvalidArgumentException("The command `{$name}` already exists.");
             }
 
-            return $this->application_commands[$name] = new RegisteredCommand($this, $name, $callback);
+            return $this->application_commands[$name] = new RegisteredCommand($this, $name, $callback, $autocomplete_callback);
         }
 
         $baseCommand = array_shift($name);
