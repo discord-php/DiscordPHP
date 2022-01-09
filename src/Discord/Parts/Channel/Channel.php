@@ -33,11 +33,12 @@ use Discord\Http\Endpoint;
 use Discord\Http\Exceptions\NoPermissionsException;
 use Discord\Parts\Thread\Thread;
 use Discord\Repository\Channel\ThreadRepository;
-use InvalidArgumentException;
+use RangeException;
 use React\Promise\ExtendedPromiseInterface;
 use RuntimeException;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Traversable;
+use UnexpectedValueException;
 
 use function React\Promise\all;
 use function React\Promise\reject;
@@ -46,36 +47,38 @@ use function React\Promise\resolve;
 /**
  * A Channel can be either a text or voice channel on a Discord guild.
  *
+ * @see https://discord.com/developers/docs/resources/channel#channel-object
+ *
  * @property string              $id                            The unique identifier of the Channel.
  * @property int                 $type                          The type of the channel.
  * @property string|null         $guild_id                      The unique identifier of the guild that the channel belongs to. Only for text or voice channels.
- * @property Guild               $guild                         The guild that the channel belongs to. Only for text or voice channels.
- * @property int                 $position                      The position of the channel on the sidebar.
- * @property string              $name                          The name of the channel.
- * @property string              $topic                         The topic of the channel.
- * @property bool                $nsfw                          Whether the channel is NSFW.
- * @property string              $last_message_id               The unique identifier of the last message sent in the channel.
- * @property int                 $bitrate                       The bitrate of the channel. Only for voice channels.
- * @property int                 $user_limit                    The user limit of the channel.
- * @property int                 $rate_limit_per_user           Amount of seconds a user has to wait before sending a new message.
+ * @property Guild|null          $guild                         The guild that the channel belongs to. Only for text or voice channels.
+ * @property int|null            $position                      The position of the channel on the sidebar.
+ * @property OverwriteRepository $overwrites                    Permission overwrites
+ * @property string|null         $name                          The name of the channel.
+ * @property string|null         $topic                         The topic of the channel.
+ * @property bool|null           $nsfw                          Whether the channel is NSFW.
+ * @property string|null         $last_message_id               The unique identifier of the last message sent in the channel.
+ * @property int|null            $bitrate                       The bitrate of the channel. Only for voice channels.
+ * @property int|null            $user_limit                    The user limit of the channel.
+ * @property int|null            $rate_limit_per_user           Amount of seconds a user has to wait before sending a new message.
  * @property Collection|User[]   $recipients                    A collection of all the recipients in the channel. Only for DM or group channels.
- * @property User                $recipient                     The first recipient of the channel. Only for DM or group channels.
- * @property string              $recipient_id                  The ID of the recipient of the channel, if it is a DM channel.
- * @property string              $icon                          Icon hash.
- * @property string              $owner_id                      The ID of the DM creator. Only for DM or group channels.
- * @property string              $application_id                ID of the group DM creator if it is a bot.
- * @property string              $parent_id                     ID of the parent channel.
- * @property Carbon              $last_pin_timestamp            When the last message was pinned.
- * @property string|null         $rtc_region                    Voice region id for the voice channel, automatic when set to null
- * @property int|null            $video_quality_mode            The camera video quality mode of the voice channel, 1 when not present
- * @property int|null            $default_auto_archive_duration Default duration for newly created threads, in minutes, to automatically archive the thread after recent activity, can be set to: 60, 1440, 4320, 10080
+ * @property User|null           $recipient                     The first recipient of the channel. Only for DM or group channels.
+ * @property string|null         $recipient_id                  The ID of the recipient of the channel, if it is a DM channel.
+ * @property string|null         $icon                          Icon hash.
+ * @property string|null         $owner_id                      The ID of the DM creator. Only for DM or group channels.
+ * @property string|null         $application_id                ID of the group DM creator if it is a bot.
+ * @property string|null         $parent_id                     ID of the parent channel.
+ * @property Carbon|null         $last_pin_timestamp            When the last message was pinned.
+ * @property string|null         $rtc_region                    Voice region id for the voice channel, automatic when set to null.
+ * @property int|null            $video_quality_mode            The camera video quality mode of the voice channel, 1 when not present.
+ * @property int|null            $default_auto_archive_duration Default duration for newly created threads, in minutes, to automatically archive the thread after recent activity, can be set to: 60, 1440, 4320, 10080.
  * @property string|null         $permissions                   Computed permissions for the invoking user in the channel, including overwrites, only included when part of the resolved data received on a slash command interaction.
  * @property bool                $is_private                    Whether the channel is a private channel.
- * @property OverwriteRepository $overwrites                    Permission overwrites
- * @property MemberRepository    $members                       Voice channel only - members in the channel
- * @property MessageRepository   $messages                      Text channel only - messages sent in the channel
- * @property WebhookRepository   $webhooks                      Webhooks in the channel
- * @property ThreadRepository    $threads                       Threads that belong to the channel
+ * @property MemberRepository    $members                       Voice channel only - members in the channel.
+ * @property MessageRepository   $messages                      Text channel only - messages sent in the channel.
+ * @property WebhookRepository   $webhooks                      Webhooks in the channel.
+ * @property ThreadRepository    $threads                       Threads that belong to the channel.
  *
  * @method ExtendedPromiseInterface sendMessage(MessageBuilder $builder)
  * @method ExtendedPromiseInterface sendMessage(string $text, bool $tts = false, Embed|array $embed = null, array $allowed_mentions = null, ?Message $replyTo = null)
@@ -160,7 +163,7 @@ class Channel extends Part
     /**
      * Gets the recipient attribute.
      *
-     * @return User The recipient.
+     * @return User|null The recipient.
      */
     protected function getRecipientAttribute(): ?User
     {
@@ -170,7 +173,7 @@ class Channel extends Part
     /**
      * Gets the recipient ID attribute.
      *
-     * @return string
+     * @return string|null
      */
     protected function getRecipientIdAttribute(): ?string
     {
@@ -183,14 +186,13 @@ class Channel extends Part
      * Gets the recipients attribute.
      *
      * @return Collection A collection of recepients.
-     * @throws \Exception
      */
     protected function getRecipientsAttribute(): Collection
     {
         $recipients = new Collection();
 
-        if (array_key_exists('recipients', $this->attributes)) {
-            foreach ((array) $this->attributes['recipients'] as $recipient) {
+        if (! empty($this->attributes['recipients'])) {
+            foreach ($this->attributes['recipients'] as $recipient) {
                 if (! $user = $this->discord->users->get('id', $recipient->id)) {
                     $user = $this->factory->create(User::class, $recipient, true);
                 }
@@ -204,7 +206,7 @@ class Channel extends Part
     /**
      * Returns the guild attribute.
      *
-     * @return Guild The guild attribute.
+     * @return Guild|null The guild attribute.
      */
     protected function getGuildAttribute(): ?Guild
     {
@@ -214,7 +216,7 @@ class Channel extends Part
     /**
      * Gets the last pinned message timestamp.
      *
-     * @return Carbon
+     * @return Carbon|null
      */
     protected function getLastPinTimestampAttribute(): ?Carbon
     {
@@ -322,7 +324,7 @@ class Channel extends Part
         if (! $this->created) {
             $this->attributes['permission_overwrites'][] = $payload;
 
-            return \React\Promise\resolve();
+            return resolve();
         }
 
         $headers = [];
@@ -358,7 +360,7 @@ class Channel extends Part
     public function moveMember($member, ?string $reason = null): ExtendedPromiseInterface
     {
         if (! $this->allowVoice()) {
-            return reject(new \Exception('You cannot move a member in a text channel.'));
+            return reject(new RuntimeException('You cannot move a member in a text channel.'));
         }
 
         if (! $this->is_private) {
@@ -392,7 +394,7 @@ class Channel extends Part
     public function muteMember($member, ?string $reason = null): ExtendedPromiseInterface
     {
         if (! $this->allowVoice()) {
-            return reject(new \Exception('You cannot mute a member in a text channel.'));
+            return reject(new RuntimeException('You cannot mute a member in a text channel.'));
         }
 
         if (! $this->is_private) {
@@ -426,14 +428,14 @@ class Channel extends Part
     public function unmuteMember($member, ?string $reason = null): ExtendedPromiseInterface
     {
         if (! $this->allowVoice()) {
-            return \React\Promise\reject(new \Exception('You cannot unmute a member in a text channel.'));
+            return reject(new RuntimeException('You cannot unmute a member in a text channel.'));
         }
 
         if (! $this->is_private) {
             $botperms = $this->guild->members->offsetGet($this->discord->id)->getPermissions($this);
 
             if (! $botperms->mute_members) {
-                return \React\Promise\reject(new NoPermissionsException('You do not have permission to unmute members in the specified channel.'));
+                return reject(new NoPermissionsException('You do not have permission to unmute members in the specified channel.'));
             }
         }
 
@@ -453,10 +455,10 @@ class Channel extends Part
      * Creates an invite for the channel.
      *
      * @param array $options An array of options. All fields are optional.
-     * @param int   $options ['max_age']   The time that the invite will be valid in seconds.
-     * @param int   $options ['max_uses']  The amount of times the invite can be used.
-     * @param bool  $options ['temporary'] Whether the invite is for temporary membership.
-     * @param bool  $options ['unique']    Whether the invite code should be unique (useful for creating many unique one time use invites).
+     * @param int   $options['max_age']   The time that the invite will be valid in seconds.
+     * @param int   $options['max_uses']  The amount of times the invite can be used.
+     * @param bool  $options['temporary'] Whether the invite is for temporary membership.
+     * @param bool  $options['unique']    Whether the invite code should be unique (useful for creating many unique one time use invites).
      *
      * @return ExtendedPromiseInterface<Invite>
      */
@@ -504,7 +506,7 @@ class Channel extends Part
     public function deleteMessages($messages, ?string $reason = null): ExtendedPromiseInterface
     {
         if (! is_array($messages) && ! ($messages instanceof Traversable)) {
-            return reject(new \Exception('$messages must be an array or implement Traversable.'));
+            return reject(new UnexpectedValueException('$messages must be an array or implement Traversable.'));
         }
 
         $count = count($messages);
@@ -592,7 +594,7 @@ class Channel extends Part
         if (isset($options['before'], $options['after']) ||
             isset($options['before'], $options['around']) ||
             isset($options['around'], $options['after'])) {
-            return reject(new \Exception('Can only specify one of before, after and around.'));
+            return reject(new RangeException('Can only specify one of before, after and around.'));
         }
 
         $endpoint = Endpoint::bind(Endpoint::CHANNEL_MESSAGES, $this->id);
@@ -641,11 +643,11 @@ class Channel extends Part
         }
 
         if ($message->pinned) {
-            return reject(new \Exception('This message is already pinned.'));
+            return reject(new RuntimeException('This message is already pinned.'));
         }
 
         if ($message->channel_id != $this->id) {
-            return reject(new \Exception('You cannot pin a message to a different channel.'));
+            return reject(new RuntimeException('You cannot pin a message to a different channel.'));
         }
 
         $headers = [];
@@ -679,11 +681,11 @@ class Channel extends Part
         }
 
         if (! $message->pinned) {
-            return reject(new \Exception('This message is not pinned.'));
+            return reject(new RuntimeException('This message is not pinned.'));
         }
 
         if ($message->channel_id != $this->id) {
-            return reject(new \Exception('You cannot un-pin a message from a different channel.'));
+            return reject(new RuntimeException('You cannot un-pin a message from a different channel.'));
         }
 
         $headers = [];
@@ -709,8 +711,7 @@ class Channel extends Part
             $invites = new Collection();
 
             foreach ($response as $invite) {
-                $invite = $this->factory->create(Invite::class, $invite, true);
-                $invites->push($invite);
+                $invites->push($this->factory->create(Invite::class, $invite, true));
             }
 
             return $invites;
@@ -754,18 +755,18 @@ class Channel extends Part
 
         if ($this->type == Channel::TYPE_NEWS) {
             if ($private) {
-                return reject(new InvalidArgumentException('You cannot start a private thread within a news channel.'));
+                return reject(new RuntimeException('You cannot start a private thread within a news channel.'));
             }
 
             $type = Channel::TYPE_NEWS_THREAD;
         } elseif ($this->type == Channel::TYPE_TEXT) {
             $type = $private ? Channel::TYPE_PRIVATE_THREAD : Channel::TYPE_PUBLIC_THREAD;
         } else {
-            return reject(new InvalidArgumentException('You cannot start a thread in this type of channel.'));
+            return reject(new RuntimeException('You cannot start a thread in this type of channel.'));
         }
 
         if (! in_array($auto_archive_duration, [60, 1440, 4320, 10080])) {
-            return reject(new InvalidArgumentException('`auto_archive_duration` must be one of 60, 1440, 4320, 10080.'));
+            return reject(new UnexpectedValueException('`auto_archive_duration` must be one of 60, 1440, 4320, 10080.'));
         }
 
         switch ($auto_archive_duration) {
@@ -834,10 +835,10 @@ class Channel extends Part
         }
 
         if (! $this->allowText()) {
-            return reject(new InvalidArgumentException('You can only send messages to text channels.'));
+            return reject(new RuntimeException('You can only send messages to text channels.'));
         }
 
-        if (! $this->is_private && $member = $this->guild->members->get('id', $this->discord->id)) {
+        if (! $this->is_private && $member = $this->guild->members->offsetGet($this->discord->id)) {
             $botperms = $member->getPermissions($this);
 
             if (! $botperms->send_messages) {
@@ -927,7 +928,7 @@ class Channel extends Part
     public function broadcastTyping(): ExtendedPromiseInterface
     {
         if (! $this->allowText()) {
-            return \React\Promise\reject(new \Exception('You cannot broadcast typing to a voice channel.'));
+            return reject(new RuntimeException('You cannot broadcast typing to a voice channel.'));
         }
 
         return $this->http->post(Endpoint::bind(Endpoint::CHANNEL_TYPING, $this->id));
@@ -936,10 +937,10 @@ class Channel extends Part
     /**
      * Creates a message collector for the channel.
      *
-     * @param callable $filter  The filter function. Returns true or false.
+     * @param callable $filter           The filter function. Returns true or false.
      * @param array    $options
-     * @param int      $options ['time']  Time in milliseconds until the collector finishes or false.
-     * @param int      $options ['limit'] The amount of messages allowed or false.
+     * @param int      $options['time']  Time in milliseconds until the collector finishes or false.
+     * @param int      $options['limit'] The amount of messages allowed or false.
      *
      * @return ExtendedPromiseInterface<Collection<Message>>
      */
@@ -1060,7 +1061,7 @@ class Channel extends Part
             'guild_id' => $this->guild_id,
         ];
     }
-    
+
     /**
      * Returns a formatted mention for text channel or name of the channel.
      *

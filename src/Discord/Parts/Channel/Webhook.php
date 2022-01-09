@@ -20,19 +20,27 @@ use React\Promise\PromiseInterface;
 /**
  * Webhooks are a low-effort way to post messages to channels in Discord. They do not require a bot user or authentication to use.
  *
- * @property string $id         The id of the webhook.
- * @property int    $type       The type of webhook.
- * @property string $guild_id   The guild ID this is for.
- * @property string $channel_id The channel ID this is for.
- * @property User   $user       The user that created the webhook.
- * @property string $name       The name of the webhook.
- * @property string $avatar     The avatar of the webhook.
- * @property string $token      The token of the webhook.
+ * @see https://discord.com/developers/docs/resources/webhook#webhook-resource
+ *
+ * @property string       $id             The id of the webhook.
+ * @property int          $type           The type of webhook.
+ * @property string|null  $guild_id       The guild ID this is for, if any.
+ * @property Guild|null   $guild          The guild this is for, if any.
+ * @property string|null  $channel_id     The channel ID this is for, if any.
+ * @property Channel|null $channel        The channel ID this is for, if any.
+ * @property User|null    $user           The user that created the webhook.
+ * @property string       $name           The name of the webhook.
+ * @property string       $avatar         The avatar of the webhook.
+ * @property string|null  $token          The token of the webhook.
+ * @property object|null  $source_guild   The partial guild of the channel that this webhook is following (returned for Channel Follower Webhooks).
+ * @property object|null  $source_channel The partial channel that this webhook is following (returned for Channel Follower Webhooks).
+ * @property string|null  $url            The url used for executing the webhook (returned by the webhooks OAuth2 flow).
  */
 class Webhook extends Part
 {
     public const TYPE_INCOMING = 1;
     public const TYPE_CHANNEL_FOLLOWER = 2;
+    public const TYPE_APPLICATION = 3;
 
     /**
      * @inheritdoc
@@ -47,6 +55,9 @@ class Webhook extends Part
         'avatar',
         'token',
         'application_id',
+        'source_guild',
+        'source_channel',
+        'url',
     ];
 
     /**
@@ -66,9 +77,9 @@ class Webhook extends Part
     /**
      * Gets the guild the webhook belongs to.
      *
-     * @return Guild
+     * @return Guild|null
      */
-    protected function getGuildAttribute(): Guild
+    protected function getGuildAttribute(): ?Guild
     {
         return $this->discord->guilds->get('id', $this->guild_id);
     }
@@ -76,13 +87,19 @@ class Webhook extends Part
     /**
      * Gets the channel the webhook belongs to.
      *
-     * @return Channel
+     * @return Channel|null
      */
-    protected function getChannelAttribute(): Channel
+    protected function getChannelAttribute(): ?Channel
     {
-        if ($guild = $this->guild) {
-            return $guild->channels->get('id', $this->channel_id);
+        if (! isset($this->attributes['channel_id'])) {
+            return null;
         }
+
+        if ($this->guild && $channel = $this->guild->channels->get('id', $this->channel_id)) {
+            return $channel;
+        }
+
+        return $this->discord->getChannel($this->channel_id);
     }
 
     /**

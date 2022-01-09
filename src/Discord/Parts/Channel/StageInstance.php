@@ -17,14 +17,16 @@ use Discord\Parts\Part;
 /**
  * A Stage Instance holds information about a live stage. on a Discord guild.
  *
- * @property string  $id                    The unique identifier of the Stage Instance.
- * @property string  $guild_id              The unique identifier of the guild that the stage instance associated to.
- * @property Guild   $guild                 The guild that the stage instance associated to.
- * @property string  $channel_id            The id of the associated Stage channel.
- * @property Channel $channel               The channel that the stage instance associated to.
- * @property string  $topic                 The topic of the Stage instance (1-120 characters).
- * @property int     $privacy_level         The privacy level of the Stage instance.
- * @property bool    $discoverable_disabled Whether or not Stage Discovery is disabled.
+ * @see https://discord.com/developers/docs/resources/stage-instance#stage-instance-resource
+ *
+ * @property string     $id                    The unique identifier of the Stage Instance.
+ * @property string     $guild_id              The unique identifier of the guild that the stage instance associated to.
+ * @property Guild|null $guild                 The guild that the stage instance associated to.
+ * @property string     $channel_id            The id of the associated Stage channel.
+ * @property Channel    $channel               The channel that the stage instance associated to.
+ * @property string     $topic                 The topic of the Stage instance (1-120 characters).
+ * @property int        $privacy_level         The privacy level of the Stage instance.
+ * @property bool       $discoverable_disabled Whether or not Stage Discovery is disabled.
  */
 class StageInstance extends Part
 {
@@ -46,28 +48,29 @@ class StageInstance extends Part
     /**
      * Returns the guild attribute.
      *
-     * @return Guild The guild attribute.
+     * @return Guild|null The guild attribute.
      */
-    protected function getGuildAttribute(): Guild
+    protected function getGuildAttribute(): ?Guild
     {
-        return $this->discord->guilds->get('id', $this->guild_id);
+        return $this->discord->guilds->offsetGet($this->guild_id);
     }
 
     /**
      * Returns the channel attribute.
      *
-     * @return Channel The Stage channel.
+     * @return Channel|null The Stage channel.
      */
-    protected function getChannelAttribute(): Part
+    protected function getChannelAttribute(): ?Channel
     {
+        if ($this->guild && $channel = $this->guild->channels->offsetGet($this->channel_id)) {
+            return $channel;
+        }
+
         if ($channel = $this->discord->getChannel($this->channel_id)) {
             return $channel;
         }
 
-        return $this->factory->create(Channel::class, [
-            'id' => $this->channel_id,
-            'type' => Channel::TYPE_STAGE_CHANNEL,
-        ], true);
+        return null;
     }
 
     /**
