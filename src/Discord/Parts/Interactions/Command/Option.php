@@ -91,6 +91,8 @@ class Option extends Part
      *
      * @param int $type type of the option
      *
+     * @throws \InvalidArgumentException
+     *
      * @return $this
      */
     public function setType(int $type)
@@ -108,12 +110,14 @@ class Option extends Part
      *
      * @param string $name name of the option
      *
+     * @throws \LengthException
+     *
      * @return $this
      */
     public function setName(string $name)
     {
         if ($name && poly_strlen($name) > 32) {
-            throw new \InvalidArgumentException('Name must be less than or equal to 32 characters.');
+            throw new \LengthException('Name must be less than or equal to 32 characters.');
         }
 
         $this->name = $name;
@@ -125,12 +129,14 @@ class Option extends Part
      *
      * @param string $description description of the option
      *
+     * @throws \LengthException
+     *
      * @return $this
      */
     public function setDescription(string $description)
     {
         if ($description && poly_strlen($description) > 100) {
-            throw new \InvalidArgumentException('Description must be less than or equal to 100 characters.');
+            throw new \LengthException('Description must be less than or equal to 100 characters.');
         }
 
         $this->description = $description;
@@ -168,12 +174,14 @@ class Option extends Part
      *
      * @param Option $option The option
      *
+     * @throws \InvalidArgumentException
+     *
      * @return $this
      */
     public function addOption(Option $option)
     {
         if (count($this->options) >= 25) {
-            throw new \RangeException('Option can not have more than 25 parameters.');
+            throw new \InvalidArgumentException('Option can not have more than 25 parameters.');
         }
 
         $this->attributes['options'][] = $option->getRawAttributes();
@@ -185,12 +193,14 @@ class Option extends Part
      *
      * @param Choice $choice The choice
      *
+     * @throws \InvalidArgumentException
+     *
      * @return $this
      */
     public function addChoice(Choice $choice)
     {
         if (count($this->choices) >= 25) {
-            throw new \RangeException('Option can only have a maximum of 25 Choices.');
+            throw new \InvalidArgumentException('Option can only have a maximum of 25 Choices.');
         }
 
         $this->attributes['choices'][] = $choice->getRawAttributes();
@@ -260,16 +270,19 @@ class Option extends Part
      *
      * @param bool $autocomplete enable autocomplete interactions for this option
      *
+     * @throws \LogicException
+     *
      * @return $this
      */
     public function setAutoComplete(bool $autocomplete)
     {
         if ($autocomplete) {
             if (!empty($this->attributes['choices'])) {
-                throw new \InvalidArgumentException('Autocomplete may not be set to true if choices are present.');
+                throw new \LogicException('Autocomplete may not be set to true if choices are present.');
             }
+
             if (! in_array($this->type, [self::STRING, self::INTEGER, self::NUMBER])) {
-                throw new \InvalidArgumentException('Autocomplete may be only set to true if option type is STRING, INTEGER, or NUMBER.');
+                throw new \LogicException('Autocomplete may be only set to true if option type is STRING, INTEGER, or NUMBER.');
             }
         }
 

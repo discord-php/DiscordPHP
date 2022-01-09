@@ -11,6 +11,7 @@
 
 namespace Discord\Parts\Interactions\Command;
 
+use Discord\Discord;
 use Discord\Parts\Part;
 
 use function Discord\poly_strlen;
@@ -31,9 +32,25 @@ class Choice extends Part
     protected $fillable = ['name', 'value'];
 
     /**
+     * Creates a new Choice builder.
+     *
+     * @param Discord $discord
+     * @param string $name name of the choice
+     * @param string|int|float $value value of the choice
+     *
+     * @return $this
+     */
+    public static function new(Discord $discord, string $name, $value): self
+    {
+        return new static($discord, ['name' => $name, 'value' => $value]);
+    }
+
+    /**
      * Sets the name of the choice.
      *
      * @param string $name name of the choice
+     *
+     * @throws \LengthException
      *
      * @return $this
      */
@@ -41,9 +58,9 @@ class Choice extends Part
     {
         $namelen = poly_strlen($name);
         if ($namelen < 1) {
-            throw new \InvalidArgumentException('Choice name can not be empty.');
+            throw new \LengthException('Choice name can not be empty.');
         } elseif ($namelen > 100) {
-            throw new \InvalidArgumentException('Choice name must be less than or equal to 100 characters.');
+            throw new \LengthException('Choice name must be less than or equal to 100 characters.');
         }
 
         $this->name = $name;
@@ -55,12 +72,14 @@ class Choice extends Part
      *
      * @param string|int|float $value value of the choice
      *
+     * @throws \LengthException
+     *
      * @return $this
      */
     public function setValue($value)
     {
         if (is_string($value) && poly_strlen($value) > 100) {
-            throw new \InvalidArgumentException('Choice value must be less than or equal to 100 characters.');
+            throw new \LengthException('Choice value must be less than or equal to 100 characters.');
         }
 
         $this->value = $value;

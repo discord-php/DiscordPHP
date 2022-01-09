@@ -46,7 +46,6 @@ use Discord\Helpers\RegisteredCommand;
 use Discord\Http\Drivers\React;
 use Discord\Http\Endpoint;
 use Evenement\EventEmitterTrait;
-use InvalidArgumentException;
 use Psr\Log\LoggerInterface;
 use React\Promise\ExtendedPromiseInterface;
 use React\Promise\PromiseInterface;
@@ -1527,6 +1526,8 @@ class Discord
      * @param callable      $callback
      * @param callable|null $autocomplete_callback
      *
+     * @throws \InvalidArgumentException
+     *
      * @return RegisteredCommand
      */
     public function listenCommand($name, callable $callback = null, ?callable $autocomplete_callback = null): RegisteredCommand
@@ -1538,7 +1539,7 @@ class Discord
         // registering base command
         if (! is_array($name) || count($name) == 1) {
             if (isset($this->application_commands[$name])) {
-                throw new InvalidArgumentException("The command `{$name}` already exists.");
+                throw new \InvalidArgumentException("The command `{$name}` already exists.");
             }
 
             return $this->application_commands[$name] = new RegisteredCommand($this, $name, $callback, $autocomplete_callback);
@@ -1549,7 +1550,7 @@ class Discord
         if (! isset($this->application_commands[$baseCommand])) {
             $this->listenCommand($baseCommand);
         }
-        return $this->application_commands[$baseCommand]->addSubCommand($name, $callback);
+        return $this->application_commands[$baseCommand]->addSubCommand($name, $callback, $autocomplete_callback);
     }
 
     /**

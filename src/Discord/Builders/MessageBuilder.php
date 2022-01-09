@@ -20,7 +20,6 @@ use Discord\Http\Exceptions\RequestFailedException;
 use Discord\Parts\Channel\Message;
 use Discord\Parts\Embed\Embed;
 use Discord\Parts\Guild\Sticker;
-use InvalidArgumentException;
 use JsonSerializable;
 
 use function Discord\poly_strlen;
@@ -110,12 +109,14 @@ class MessageBuilder implements JsonSerializable
      *
      * @param string $content Content of the message. Maximum 2000 characters.
      *
+     * @throws \LengthException
+     *
      * @return $this
      */
     public function setContent(string $content): self
     {
         if (poly_strlen($content) > 2000) {
-            throw new InvalidArgumentException('Message content must be less than or equal to 2000 characters.');
+            throw new \LengthException('Message content must be less than or equal to 2000 characters.');
         }
 
         $this->content = $content;
@@ -152,6 +153,8 @@ class MessageBuilder implements JsonSerializable
      *
      * @param Embed|array $embeds,...
      *
+     * @throws \InvalidArgumentException
+     *
      * @return $this
      */
     public function addEmbed(...$embeds): self
@@ -162,7 +165,7 @@ class MessageBuilder implements JsonSerializable
             }
 
             if (count($this->embeds) >= 10) {
-                throw new InvalidArgumentException('You can only have 10 embeds per message.');
+                throw new \InvalidArgumentException('You can only have 10 embeds per message.');
             }
 
             $this->embeds[] = $embed;
@@ -266,16 +269,18 @@ class MessageBuilder implements JsonSerializable
      *
      * @param Component $component Component to add.
      *
+     * @throws \InvalidArgumentException
+     *
      * @return $this
      */
     public function addComponent(Component $component): self
     {
         if (! ($component instanceof ActionRow || $component instanceof SelectMenu)) {
-            throw new InvalidArgumentException('You can only add action rows and select menus as components to messages. Put your other components inside an action row.');
+            throw new \InvalidArgumentException('You can only add action rows and select menus as components to messages. Put your other components inside an action row.');
         }
 
         if (count($this->components) >= 5) {
-            throw new InvalidArgumentException('You can only add 5 components to a message');
+            throw new \InvalidArgumentException('You can only add 5 components to a message');
         }
 
         $this->components[] = $component;
@@ -346,6 +351,8 @@ class MessageBuilder implements JsonSerializable
      *
      * @param string|Sticker $sticker Sticker to add.
      *
+     * @throws \InvalidArgumentException
+     *
      * @return $this
      */
     public function addSticker($sticker): self
@@ -355,7 +362,7 @@ class MessageBuilder implements JsonSerializable
         }
 
         if (count($this->sticker_ids) >= 3) {
-            throw new InvalidArgumentException('You can only add 3 stickers to a message');
+            throw new \InvalidArgumentException('You can only add 3 stickers to a message');
         }
 
         $this->sticker_ids[] = $sticker;

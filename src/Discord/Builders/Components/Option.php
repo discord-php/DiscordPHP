@@ -12,7 +12,6 @@
 namespace Discord\Builders\Components;
 
 use Discord\Parts\Guild\Emoji;
-use InvalidArgumentException;
 
 use function Discord\poly_strlen;
 
@@ -58,15 +57,17 @@ class Option extends Component
      *
      * @param string      $label User-visible label for the option. Maximum 100 characters.
      * @param string|null $value Developer value for the option. Maximum 100 characters. Leave as null to automatically generate a UUID.
+     *
+     * @throws \LengthException
      */
     public function __construct(string $label, ?string $value)
     {
         if (poly_strlen($label) > 100) {
-            throw new InvalidArgumentException('Label must be less than or equal to 100 characters.');
+            throw new \LengthException('Label must be less than or equal to 100 characters.');
         }
 
         if ($value && poly_strlen($value) > 100) {
-            throw new InvalidArgumentException('Value must be less than or equal to 100 characters.');
+            throw new \LengthException('Value must be less than or equal to 100 characters.');
         }
 
         $this->label = $label;
@@ -91,12 +92,14 @@ class Option extends Component
      *
      * @param string|null $description Description of the option. Maximum 100 characters.
      *
+     * @throws \LengthException
+     *
      * @return $this
      */
     public function setDescription(?string $description): self
     {
         if ($description && poly_strlen($description) > 100) {
-            throw new InvalidArgumentException('Description must be less than or equal to 100 characters.');
+            throw new \LengthException('Description must be less than or equal to 100 characters.');
         }
 
         $this->description = $description;
@@ -225,7 +228,7 @@ class Option extends Component
         if ($this->description) {
             $content['description'] = $this->description;
         }
-        
+
         if ($this->emoji) {
             $content['emoji'] = $this->emoji;
         }

@@ -13,7 +13,6 @@ namespace Discord\Helpers;
 
 use Discord\Discord;
 use Discord\Parts\Interactions\Interaction;
-use InvalidArgumentException;
 
 /**
  * RegisteredCommand represents a command that has been registered
@@ -161,12 +160,15 @@ class RegisteredCommand
     /**
      * Adds a sub-command to the command.
      *
-     * @param string|array $name
-     * @param callable     $callback
+     * @param string|array  $name
+     * @param callable      $callback
+     * @param callable|null $autocomplete_callback
+     *
+     * @throws \InvalidArgumentException
      *
      * @return RegisteredCommand
      */
-    public function addSubCommand($name, callable $callback = null): RegisteredCommand
+    public function addSubCommand($name, callable $callback = null, ?callable $autocomplete_callback = null): RegisteredCommand
     {
         if (is_array($name) && count($name) == 1) {
             $name = array_shift($name);
@@ -174,10 +176,10 @@ class RegisteredCommand
 
         if (! is_array($name) || count($name) == 1) {
             if (isset($this->subCommands[$name])) {
-                throw new InvalidArgumentException("The command `{$name}` already exists.");
+                throw new \InvalidArgumentException("The command `{$name}` already exists.");
             }
 
-            return $this->subCommands[$name] = new static($this->discord, $name, $callback);
+            return $this->subCommands[$name] = new static($this->discord, $name, $callback, $autocomplete_callback);
         }
 
         $baseCommand = array_shift($name);
@@ -186,7 +188,7 @@ class RegisteredCommand
             $this->addSubCommand($baseCommand);
         }
 
-        return $this->subCommands[$baseCommand]->addSubCommand($name, $callback);
+        return $this->subCommands[$baseCommand]->addSubCommand($name, $callback, $autocomplete_callback);
     }
 
     /**

@@ -24,12 +24,14 @@ use Discord\Parts\Interactions\Request\InteractionData;
 use Discord\Parts\Part;
 use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
-use InvalidArgumentException;
 use React\Promise\ExtendedPromiseInterface;
 use RuntimeException;
 
 /**
  * Represents an interaction from Discord.
+ *
+ * @see https://discord.com/developers/docs/interactions/receiving-and-responding#interactions
+ * @see \Discord\WebSockets\Events\InteractionCreate
  *
  * @property string               $id             ID of the interaction.
  * @property string               $application_id ID of the application the interaction is for.
@@ -50,7 +52,19 @@ class Interaction extends Part
     /**
      * @inheritdoc
      */
-    protected $fillable = ['id', 'application_id', 'type', 'data', 'guild_id', 'channel_id', 'member', 'user', 'token', 'version', 'message'];
+    protected $fillable = [
+        'id',
+        'application_id',
+        'type',
+        'data',
+        'guild_id',
+        'channel_id',
+        'member',
+        'user',
+        'token',
+        'version',
+        'message',
+    ];
 
     /**
      * @inheritdoc
@@ -66,7 +80,7 @@ class Interaction extends Part
 
     /**
      * Returns the data associated with the interaction.
-     *ean.
+     *
      * @return InteractionData|null
      */
     protected function getDataAttribute(): ?InteractionData
@@ -132,7 +146,7 @@ class Interaction extends Part
      */
     protected function getUserAttribute(): User
     {
-        if ($this->member) {
+        if (isset($this->member->user)) {
             return $this->member->user;
         }
 
@@ -157,6 +171,8 @@ class Interaction extends Part
      * Acknowledges an interaction without returning a response.
      * Only valid for message component interactions.
      *
+     * @throws \LogicException
+     *
      * @return ExtendedPromiseInterface
      */
     public function acknowledge(): ExtendedPromiseInterface
@@ -166,7 +182,7 @@ class Interaction extends Part
         }
 
         if ($this->type != InteractionType::MESSAGE_COMPONENT) {
-            throw new InvalidArgumentException('You can only acknowledge message component interactions.');
+            throw new \LogicException('You can only acknowledge message component interactions.');
         }
 
         return $this->respond([
@@ -178,10 +194,16 @@ class Interaction extends Part
      * Acknowledges an interaction, creating a placeholder response message which can be edited later
      * through the `updateOriginalResponse` function.
      *
+     * @throws \LogicException
+     *
      * @return ExtendedPromiseInterface
      */
     public function acknowledgeWithResponse(): ExtendedPromiseInterface
     {
+        if (! in_array($this->type, [InteractionType::APPLICATION_COMMAND, InteractionType::MESSAGE_COMPONENT])) {
+            throw new \LogicException('You can only acknowledge application command or message component interactions.');
+        }
+
         return $this->respond([
             'type' => InteractionResponseType::DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE,
         ]);
@@ -193,12 +215,14 @@ class Interaction extends Part
      *
      * @param MessageBuilder $builder The new message content.
      *
+     * @throws \LogicException
+     *
      * @return ExtendedPromiseInterface
      */
     public function updateMessage(MessageBuilder $builder): ExtendedPromiseInterface
     {
         if ($this->type != InteractionType::MESSAGE_COMPONENT) {
-            throw new InvalidArgumentException('You can only update messages that occur due to a message component interaction.');
+            throw new \LogicException('You can only update messages that occur due to a message component interaction.');
         }
 
         return $this->respond([
@@ -209,6 +233,8 @@ class Interaction extends Part
 
     /**
      * Retrieves the original interaction response.
+     *
+     * @throws RuntimeException
      *
      * @return ExtendedPromiseInterface<Message>
      */
@@ -228,6 +254,8 @@ class Interaction extends Part
      * Updates the original interaction response.
      *
      * @param MessageBuilder $builder New message contents.
+     *
+     * @throws RuntimeException
      *
      * @return ExtendedPromiseInterface<Message>
      */
@@ -253,6 +281,8 @@ class Interaction extends Part
     /**
      * Deletes the original interaction response.
      *
+     * @throws RuntimeException
+     *
      * @return ExtendedPromiseInterface
      */
     public function deleteOriginalResponse(): ExtendedPromiseInterface
@@ -269,6 +299,8 @@ class Interaction extends Part
      *
      * @param MessageBuilder $builder   Message to send.
      * @param bool           $ephemeral Whether the created follow-up should be ephemeral.
+     *
+     * @throws RuntimeException
      *
      * @return ExtendedPromiseInterface<Message>
      */
@@ -301,10 +333,16 @@ class Interaction extends Part
      * @param MessageBuilder $builder   Message to respond with.
      * @param bool           $ephemeral Whether the created message should be ephemeral.
      *
+     * @throws \LogicException
+     *
      * @return ExtendedPromiseInterface
      */
     public function respondWithMessage(MessageBuilder $builder, bool $ephemeral = false): ExtendedPromiseInterface
     {
+        if (! in_array($this->type, [InteractionType::APPLICATION_COMMAND, InteractionType::MESSAGE_COMPONENT])) {
+            throw new \LogicException('You can only acknowledge application command or message component interactions.');
+        }
+
         if ($ephemeral) {
             $builder->_setFlags(64);
         }
@@ -323,6 +361,8 @@ class Interaction extends Part
      *
      * @param array          $payload   Response payload.
      * @param Multipart|null $multipart Optional multipart payload.
+     *
+     * @throws RuntimeException
      *
      * @return ExtendedPromiseInterface
      */
@@ -355,6 +395,8 @@ class Interaction extends Part
      * @param string         $message_id Message to update.
      * @param MessageBuilder $builder    New message contents.
      *
+     * @throws RuntimeException
+     *
      * @return ExtendedPromiseInterface<Message>
      */
     public function updateFollowUpMessage(string $message_id, MessageBuilder $builder)
@@ -381,10 +423,16 @@ class Interaction extends Part
      *
      * @param array|Choice[] $choice Autocomplete choices (max of 25 choices)
      *
+     * @throws \LogicException
+     *
      * @return ExtendedPromiseInterface
      */
-    public function autoCompleteResult($choices): ExtendedPromiseInterface
+    public function autoCompleteResult(array $choices): ExtendedPromiseInterface
     {
+        if ($this->type != InteractionType::APPLICATION_COMMAND_AUTOCOMPLETE) {
+            throw new \LogicException('You can only respond command option results with auto complete interactions.');
+        }
+
         return $this->respond([
             'type' => InteractionResponseType::APPLICATION_COMMAND_AUTOCOMPLETE_RESULT,
             'data' => ['choices' => $choices],
