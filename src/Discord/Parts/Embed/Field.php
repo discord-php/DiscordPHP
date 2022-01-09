@@ -16,6 +16,8 @@ use Discord\Parts\Part;
 /**
  * A field of an embed object.
  *
+ * @see https://discord.com/developers/docs/resources/channel#embed-object-embed-field-structure
+ *
  * @property string $name   The name of the field.
  * @property string $value  The value of the field.
  * @property bool   $inline Whether the field should be displayed in-line.

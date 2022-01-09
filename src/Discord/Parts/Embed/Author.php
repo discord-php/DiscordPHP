@@ -16,6 +16,8 @@ use Discord\Parts\Part;
 /**
  * The author of an embed object.
  *
+ * @see https://discord.com/developers/docs/resources/channel#embed-object-embed-author-structure
+ *
  * @property string      $name           The name of the author.
  * @property string|null $url            The URL to the author.
  * @property string|null $icon_url       The source of the author icon. Must be https.
