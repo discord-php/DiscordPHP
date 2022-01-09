@@ -27,6 +27,8 @@ use Discord\Parts\User\User;
 use React\Promise\ExtendedPromiseInterface;
 use RuntimeException;
 
+use function React\Promise\reject;
+
 /**
  * Represents an interaction from Discord.
  *
@@ -241,7 +243,7 @@ class Interaction extends Part
     public function getOriginalResponse(): ExtendedPromiseInterface
     {
         if (! $this->responded) {
-            throw new RuntimeException('Interaction has not been responded to.');
+            return reject(new RuntimeException('Interaction has not been responded to.'));
         }
 
         return $this->http->get(Endpoint::bind(Endpoint::ORIGINAL_INTERACTION_RESPONSE, $this->application_id, $this->token))
@@ -288,7 +290,7 @@ class Interaction extends Part
     public function deleteOriginalResponse(): ExtendedPromiseInterface
     {
         if (! $this->responded) {
-            throw new RuntimeException('Interaction has not been responded to.');
+            return reject(new RuntimeException('Interaction has not been responded to.'));
         }
 
         return $this->http->delete(Endpoint::bind(Endpoint::ORIGINAL_INTERACTION_RESPONSE, $this->application_id, $this->token));
@@ -369,7 +371,7 @@ class Interaction extends Part
     protected function respond(array $payload, ?Multipart $multipart = null): ExtendedPromiseInterface
     {
         if ($this->responded) {
-            throw new RuntimeException('Interaction has already been responded to.');
+            return reject(new RuntimeException('Interaction has already been responded to.'));
         }
 
         $this->responded = true;
