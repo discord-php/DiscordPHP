@@ -21,20 +21,23 @@ use React\Promise\ExtendedPromiseInterface;
 /**
  * A user is a general user that is not attached to a guild.
  *
- * @property string $id            The unique identifier of the user.
- * @property string $username      The username of the user.
- * @property string $avatar        The avatar URL of the user.
- * @property string $avatar_hash   The avatar hash of the user.
- * @property string $discriminator The discriminator of the user.
- * @property bool   $bot           Whether the user is a bot.
- * @property bool   $system        Whether the user is a Discord system user.
- * @property bool   $mfa_enabled   Whether MFA is enabled.
- * @property string $locale        User locale.
- * @property bool   $verified      Whether the user is verified.
- * @property string $email         User email.
- * @property int    $flags         User flags.
- * @property int    $premium_type  Type of nitro subscription.
- * @property int    $public_flags  Public flags on the user.
+ * @property string      $id            The unique identifier of the user.
+ * @property string      $username      The username of the user.
+ * @property string      $discriminator The discriminator of the user.
+ * @property string      $avatar        The avatar URL of the user.
+ * @property string      $avatar_hash   The avatar hash of the user.
+ * @property bool|null   $bot           Whether the user is a bot.
+ * @property bool|null   $system        Whether the user is a Discord system user.
+ * @property bool|null   $mfa_enabled   Whether MFA is enabled.
+ * @property string|null $banner        The banner URL of the user.
+ * @property string|null $banner_hash   The banner hash of the user.
+ * @property int|null    $accent_color  The user's banner color encoded as an integer representation of hexadecimal color code.
+ * @property string|null $locale        User locale.
+ * @property bool|null   $verified      Whether the user is verified.
+ * @property string|null $email         User email.
+ * @property int|null    $flags         User flags.
+ * @property int|null    $premium_type  Type of nitro subscription.
+ * @property int|null    $public_flags  Public flags on the user.
  *
  * @method ExtendedPromiseInterface sendMessage(MessageBuilder $builder)
  * @method ExtendedPromiseInterface sendMessage(string $text, bool $tts = false, Embed|array $embed = null, array $allowed_mentions = null, ?Message $replyTo = null)
@@ -55,6 +58,7 @@ class User extends Part
     public const FLAG_VERIFIED_BOT = (1 << 16);
     public const FLAG_VERIFIED_BOT_DEVELOPER = (1 << 17);
     public const FLAG_DISCORD_CERTIFIED_MODERATOR = (1 << 18);
+    public const BOT_HTTP_INTERACTIONS = (1 << 19);
 
     public const PREMIUM_NONE = 0;
     public const PREMIUM_NITRO_CLASSIC = 1;
@@ -63,7 +67,7 @@ class User extends Part
     /**
      * @inheritdoc
      */
-    protected $fillable = ['id', 'username', 'avatar', 'discriminator', 'bot', 'system', 'mfa_enabled', 'locale', 'verified', 'email', 'flags', 'premium_type', 'public_flags'];
+    protected $fillable = ['id', 'username', 'discriminator', 'avatar', 'bot', 'system', 'mfa_enabled', 'banner', 'accent_color', 'locale', 'verified', 'email', 'flags', 'premium_type', 'public_flags'];
 
     /**
      * Gets the private channel for the user.
@@ -121,12 +125,12 @@ class User extends Part
     /**
      * Returns the avatar URL for the client.
      *
-     * @param string $format The image format.
-     * @param int    $size   The size of the image.
+     * @param string|null $format The image format.
+     * @param int         $size   The size of the image.
      *
      * @return string The URL to the clients avatar.
      */
-    public function getAvatarAttribute(string $format = 'jpg', int $size = 1024): string
+    public function getAvatarAttribute(?string $format = null, int $size = 1024): string
     {
         if (empty($this->attributes['avatar'])) {
             $avatarDiscrim = (int) $this->discriminator % 5;
@@ -134,8 +138,16 @@ class User extends Part
             return "https://cdn.discordapp.com/embed/avatars/{$avatarDiscrim}.png?size={$size}";
         }
 
-        if (false === array_search($format, ['png', 'jpg', 'webp'])) {
-            $format = 'jpg';
+        if (isset($format)) {
+            $allowed = ['png', 'jpg', 'webp', 'gif'];
+
+            if (! in_array(strtolower($format), $allowed)) {
+                $format = 'webp';
+            }
+        } elseif (strpos($this->attributes['avatar'], 'a_') === 0) {
+            $format = 'gif';
+        } else {
+            $format = 'webp';
         }
 
         return "https://cdn.discordapp.com/avatars/{$this->id}/{$this->attributes['avatar']}.{$format}?size={$size}";
@@ -149,6 +161,45 @@ class User extends Part
     protected function getAvatarHashAttribute(): string
     {
         return $this->attributes['avatar'];
+    }
+
+    /**
+     * Returns the banner URL for the client.
+     *
+     * @param string|null $format The image format.
+     * @param int         $size   The size of the image.
+     *
+     * @return string|null The URL to the clients banner.
+     */
+    public function getBannerAttribute(?string $format = null, int $size = 600): ?string
+    {
+        if (empty($this->attributes['banner'])) {
+            return null;
+        }
+
+        if (isset($format)) {
+            $allowed = ['png', 'jpg', 'webp', 'gif'];
+
+            if (! in_array(strtolower($format), $allowed)) {
+                $format = 'png';
+            }
+        } elseif (strpos($this->attributes['banner'], 'a_') === 0) {
+            $format = 'gif';
+        } else {
+            $format = 'png';
+        }
+
+        return "https://cdn.discordapp.com/banners/{$this->id}/{$this->attributes['banner']}.{$format}?size={$size}";
+    }
+
+    /**
+     * Returns the banner hash for the client.
+     *
+     * @return string|null The client banner's hash.
+     */
+    protected function getBannerHashAttribute(): ?string
+    {
+        return $this->attributes['banner'] ?? null;
     }
 
     /**

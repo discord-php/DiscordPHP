@@ -25,6 +25,7 @@ use Discord\WebSockets\Event;
 use Discord\Helpers\Deferred;
 use Discord\Http\Endpoint;
 use Discord\Parts\Guild\Guild;
+use Discord\Parts\Guild\Sticker;
 use Discord\Parts\Thread\Thread;
 use Discord\Repository\Channel\ReactionRepository;
 use InvalidArgumentException;
@@ -45,9 +46,8 @@ use function React\Promise\reject;
  * @property string               $content                The content of the message if it is a normal message.
  * @property int                  $type                   The type of message.
  * @property Collection|User[]    $mentions               A collection of the users mentioned in the message.
- * @property Member|User|null     $author                 The author of the message.
+ * @property User|null            $author                 The author of the message. Will be a webhook if sent from one.
  * @property Member|null          $member                 The member that sent this message, or null if it was in a private message.
- * @property User|null            $user                   The user that sent this message. Will be a webhook if sent from one.
  * @property string               $user_id                The user id of the author.
  * @property bool                 $mention_everyone       Whether the message contained an @everyone mention.
  * @property Carbon               $timestamp              A timestamp of when the message was sent.
@@ -63,6 +63,7 @@ use function React\Promise\reject;
  * @property string               $webhook_id             ID of the webhook that made the message, if any.
  * @property object               $activity               Current message activity. Requires rich presence.
  * @property object               $application            Application of message. Requires rich presence.
+ * @property string               $application_id         If the message is a response to an Interaction, this is the id of the interaction's application.
  * @property object               $message_reference      Message that is referenced by this message.
  * @property Message|null         $referenced_message     The message that is referenced in a reply.
  * @property int                  $flags                  Message flags.
@@ -71,8 +72,9 @@ use function React\Promise\reject;
  * @property bool                 $suppress_embeds        Do not include embeds when serializing message.
  * @property bool                 $source_message_deleted Source message for this message has been deleted.
  * @property bool                 $urgent                 Message is urgent.
- * @property Collection|Sticker[] $stickers               Stickers attached to the message.
+ * @property Collection|Sticker[] $sticker_items          Stickers attached to the message.
  * @property object|null          $interaction            The interaction which triggered the message (slash commands).
+ * @property array                $components             Sent if the message contains components like buttons, action rows, or other interactive components.
  * @property string|null          $link                   Returns a link to the message.
  */
 class Message extends Part
@@ -92,13 +94,19 @@ class Message extends Part
     public const CHANNEL_FOLLOW_ADD = 12;
     public const GUILD_DISCOVERY_DISQUALIFIED = 14;
     public const GUILD_DISCOVERY_REQUALIFIED = 15;
+    public const GUILD_DISCOVERY_GRACE_PERIOD_INITIAL_WARNING = 16;
+    public const GUILD_DISCOVERY_GRACE_PERIOD_FINAL_WARNING = 17;
+    public const TYPE_THREAD_CREATED = 18;
     public const TYPE_REPLY = 19;
     public const TYPE_APPLICATION_COMMAND = 20;
+    public const TYPE_THREAD_STARTER_MESSAGE = 21;
+    public const TYPE_GUILD_INVITE_REMINDER = 22;
+    public const TYPE_CONTEXT_MENU_COMMAND = 23;
 
     public const ACTIVITY_JOIN = 1;
     public const ACTIVITY_SPECTATE = 2;
     public const ACTIVITY_LISTEN = 3;
-    public const ACTIVITY_JOIN_REQUEST = 4;
+    public const ACTIVITY_JOIN_REQUEST = 5;
 
     public const REACT_DELETE_ALL = 0;
     public const REACT_DELETE_ME = 1;
@@ -131,11 +139,14 @@ class Message extends Part
         'webhook_id',
         'activity',
         'application',
+        'application_id',
         'message_reference',
         'referenced_message',
         'flags',
+        'sticker_items',
         'stickers',
         'interaction',
+        'components',
     ];
 
     /**
@@ -297,7 +308,7 @@ class Message extends Part
 
         if ($this->channel->guild) {
             foreach ($this->channel->guild->roles ?? [] as $role) {
-                if (array_search($role->id, $this->attributes['mention_roles'] ?? []) !== false) {
+                if (in_array($role->id, $this->attributes['mention_roles'] ?? [])) {
                     $roles->push($role);
                 }
             }
@@ -338,18 +349,16 @@ class Message extends Part
     /**
      * Returns the author attribute.
      *
-     * @return User|Member|null The member that sent the message. Will return a User object if it is a PM.
-     *
-     * @deprecated 6.0.0 Use `Message::member` or `Message:user` instead.
+     * @return User|null The author of the message.
      */
-    protected function getAuthorAttribute(): ?Part
+    protected function getAuthorAttribute(): ?User
     {
-        if ($this->member) {
-            return $this->member;
-        }
+        if (isset($this->attributes['author'])) {
+            if ($user = $this->discord->users->get('id', $this->attributes['author']->id)) {
+                return $user;
+            }
 
-        if ($this->user) {
-            return $this->user;
+            return $this->factory->create(User::class, $this->attributes['author'], true);
         }
 
         return null;
@@ -371,24 +380,6 @@ class Message extends Part
                 'user' => $this->attributes['author'],
                 'guild_id' => $this->guild_id,
             ]), true);
-        }
-
-        return null;
-    }
-
-    /**
-     * Returns the user attribute.
-     *
-     * @return User|null The user that sent the message. Can also be a webhook.
-     */
-    protected function getUserAttribute(): ?User
-    {
-        if (isset($this->attributes['author'])) {
-            if ($user = $this->discord->users->get('id', $this->attributes['author']->id)) {
-                return $user;
-            }
-
-            return $this->factory->create(User::class, $this->attributes['author'], true);
         }
 
         return null;
@@ -431,7 +422,7 @@ class Message extends Part
         }
 
         if (isset($this->attributes['referenced_message'])) {
-            return $this->factory->create(Message::class, $this->attributes['referenced_message'] ?? [], true);
+            return $this->factory->create(Message::class, $this->attributes['referenced_message'], true);
         }
 
         return null;
@@ -466,19 +457,19 @@ class Message extends Part
     }
 
     /**
-     * Returns the stickers attribute.
+     * Returns the sticker_items attribute.
      *
      * @return Sticker[]|Collection
      */
-    protected function getStickersAttribute(): Collection
+    protected function getStickerItemsAttribute(): Collection
     {
-        $stickers = Collection::for(Sticker::class);
+        $sticker_items = Collection::for(Sticker::class);
 
-        foreach ($this->attributes['stickers'] ?? [] as $sticker) {
-            $stickers->push($this->factory->create(Sticker::class, $sticker, true));
+        foreach ($this->attributes['sticker_items'] ?? [] as $sticker) {
+            $sticker_items->push($this->factory->create(Sticker::class, $sticker, true));
         }
 
-        return $stickers;
+        return $sticker_items;
     }
     
     /**
@@ -496,12 +487,13 @@ class Message extends Part
     /**
      * Starts a public thread from the message.
      *
-     * @param string $name                  The name of the thread.
-     * @param int    $auto_archive_duration Number of minutes of inactivity until the thread is auto-archived. One of 60, 1440, 4320, 10080.
+     * @param string      $name                  The name of the thread.
+     * @param int         $auto_archive_duration Number of minutes of inactivity until the thread is auto-archived. One of 60, 1440, 4320, 10080.
+     * @param string|null $reason                Reason for Audit Log.
      *
      * @return ExtendedPromiseInterface<Thread>
      */
-    public function startThread(string $name, int $auto_archive_duration = 1440): ExtendedPromiseInterface
+    public function startThread(string $name, int $auto_archive_duration = 1440, ?string $reason = null): ExtendedPromiseInterface
     {
         if (! $this->guild) {
             return reject(new RuntimeException('You can only start threads on guild text channels.'));
@@ -524,10 +516,15 @@ class Message extends Part
                 break;
         }
 
+        $headers = [];
+        if (isset($reason)) {
+            $headers['X-Audit-Log-Reason'] = $reason;
+        }
+
         return $this->http->post(Endpoint::bind(Endpoint::CHANNEL_MESSAGE_THREADS, $this->channel_id, $this->id), [
             'name' => $name,
             'auto_archive_duration' => $auto_archive_duration,
-        ])->then(function ($response) {
+        ], $headers)->then(function ($response) {
             return $this->factory->create(Thread::class, $response, true);
         });
     }

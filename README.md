@@ -7,8 +7,6 @@ A wrapper for the official [Discord](https://discordapp.com) REST, gateway and v
 
 For testing and stability it would be greatly appreciated if you were able to add our test bot to your server. We don't store any data - the bot simply idles and does not interact with anyone and is used to test stability with large numbers of guilds. You can invite the bot [here.](https://discord.com/oauth2/authorize?client_id=157746770539970560&scope=bot)
 
-This library does not handle slash commands. See [DiscordPHP-Slash](https://github.com/discord-php/DiscordPHP-Slash) for a library to handle these interactions.
-
 ## Before you start
 
 Before you start using this Library, you **need** to know how PHP works, you need to know the language and you need to know how Event Loops and Promises work. This is a fundamental requirement before you start. Without this knowledge, you will only suffer.
@@ -26,6 +24,7 @@ Before you start using this Library, you **need** to know how PHP works, you nee
 
 - PHP 7.4
 	- We recommend PHP 8.0 as it will be the most stable and most performant.
+	- x86 (32-bit) PHP requires [`ext-gmp` extension](https://www.php.net/manual/en/book.gmp.php) enabled for handling Permissions.
 - Composer
 - `ext-json`
 - `ext-zlib`
@@ -42,8 +41,9 @@ The path to the caextract must be set in the [`php.ini`](https://secure.php.net/
 #### Recommended Extensions
 
 - The latest PHP version.
-- One of `ext-uv` (preferred), `ext-libev` or `evt-event` for a faster, and more performant event loop.
+- One of `ext-uv` (recommended), `ext-libev` or `ext-event` for a faster, and more performant event loop.
 - `ext-mbstring` if handling non-english characters.
+- `ext-gmp` if using 32-bit PHP.
 
 #### Voice Requirements
 
@@ -85,6 +85,8 @@ $discord->on('ready', function ($discord) {
 
 $discord->run();
 ```
+
+See [examples folder](examples) for more.
 
 ## Documentation
 

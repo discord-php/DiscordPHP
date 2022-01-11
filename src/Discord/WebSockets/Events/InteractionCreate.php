@@ -12,7 +12,9 @@
 namespace Discord\WebSockets\Events;
 
 use Discord\Helpers\Deferred;
+use Discord\InteractionType;
 use Discord\Parts\Interactions\Interaction;
+use Discord\Parts\User\User;
 use Discord\WebSockets\Event;
 
 class InteractionCreate extends Event
@@ -22,7 +24,41 @@ class InteractionCreate extends Event
      */
     public function handle(Deferred &$deferred, $data): void
     {
-        // do nothing with interactions - pass on to DiscordPHP-Slash
-        $deferred->resolve($this->factory->create(Interaction::class, $data, true));
+        $interaction = $this->factory->create(Interaction::class, $data, true);
+
+        foreach ($data->data->resolved->users ?? [] as $snowflake => $user) {
+            if ($userPart = $this->discord->users->get('id', $snowflake)) {
+                $userPart->fill((array) $user);
+            } else {
+                $userPart = $this->factory->create(User::class, $user, true);
+                $this->discord->users->pushItem($userPart);
+            }
+        }
+
+        if ($interaction->type == InteractionType::APPLICATION_COMMAND) {
+            $checkCommand = function ($command) use ($interaction, &$checkCommand) {
+                if (isset($this->discord->application_commands[$command['name']])) {
+                    if ($this->discord->application_commands[$command['name']]->execute($command['options'] ?? [], $interaction)) {
+                        return true;
+                    }
+                }
+
+                foreach ($command['options'] ?? [] as $option) {
+                    if ($checkCommand($option)) {
+                        return true;
+                    }
+                }
+            };
+
+            $checkCommand($interaction->data);
+        } elseif ($interaction->type == InteractionType::APPLICATION_COMMAND_AUTOCOMPLETE) {
+            if (isset($this->discord->application_commands[$interaction->data['name']])) {
+                if ($this->discord->application_commands[$interaction->data['name']]->suggest($interaction)) {
+                    return;
+                }
+            }
+        }
+
+        $deferred->resolve($interaction);
     }
 }

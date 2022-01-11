@@ -903,8 +903,8 @@ class VoiceClient extends EventEmitter
      */
     public function switchChannel(Channel $channel): void
     {
-        if ($channel->type != Channel::TYPE_VOICE) {
-            throw new \InvalidArgumentException('Channel must be a voice chnanel to be able to switch');
+        if (! $channel->allowVoice()) {
+            throw new \InvalidArgumentException('Channel must be a voice channel to be able to switch');
         }
 
         $this->mainSend([
@@ -934,7 +934,7 @@ class VoiceClient extends EventEmitter
     {
         $legal = [20, 40, 60];
 
-        if (false === array_search($fs, $legal)) {
+        if (! in_array($fs, $legal)) {
             throw new \InvalidArgumentException("{$fs} is not a valid option. Valid options are: ".trim(implode(', ', $legal), ', '));
         }
 
@@ -990,7 +990,7 @@ class VoiceClient extends EventEmitter
     {
         $legal = ['voip', 'audio', 'lowdelay'];
 
-        if (false === array_search($app, $legal)) {
+        if (! in_array($app, $legal)) {
             throw new \InvalidArgumentException("{$app} is not a valid option. Valid options are: ".trim(implode(', ', $legal), ', '));
         }
 
@@ -1105,8 +1105,11 @@ class VoiceClient extends EventEmitter
             throw new \Exception('Voice Client is not connected.');
         }
 
-        $this->stop();
-        $this->setSpeaking(false);
+        if ($this->speaking) {
+            $this->stop();
+            $this->setSpeaking(false);
+        }
+
         $this->ready = false;
 
         $this->mainSend([
@@ -1151,17 +1154,12 @@ class VoiceClient extends EventEmitter
      *
      * @return bool Whether the user is speaking.
      */
-    public function isSpeaking(int $id): bool
+    public function isSpeaking(string $id): bool
     {
-        $ssrc = $this->speakingStatus[$id] ?? null;
-        $user = $this->speakingStatus->get('user_id', $id);
-
-        if (is_null($ssrc) && ! is_null($user)) {
+        if ($user = $this->speakingStatus->get('user_id', $id)) {
             return $user->speaking;
-            // } elseif (is_null($user) && ! is_null($ssrc)) {
-        //     return $user->speaking;
-        // } elseif (is_null($user) && is_null($ssrc)) {
-        //     return $user->speaking;
+        } elseif ($ssrc = $this->speakingStatus->get('ssrc', $id)) {
+            return $ssrc->speaking;
         }
 
         return false;

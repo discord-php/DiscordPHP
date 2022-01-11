@@ -12,8 +12,10 @@
 namespace Discord\Parts\Guild;
 
 use Carbon\Carbon;
+use Discord\Exceptions\FileNotFoundException;
 use Discord\Helpers\Collection;
 use Discord\Http\Endpoint;
+use Discord\Http\Exceptions\NoPermissionsException;
 use Discord\Parts\Part;
 use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
@@ -25,6 +27,11 @@ use Discord\Repository\Guild\MemberRepository;
 use Discord\Repository\Guild\RoleRepository;
 use Discord\Parts\Guild\AuditLog\AuditLog;
 use Discord\Parts\Guild\AuditLog\Entry;
+use Discord\Repository\Guild\GuildCommandRepository;
+use Discord\Repository\Guild\StickerRepository;
+use Discord\Repository\Guild\ScheduledEventRepository;
+use Discord\Repository\Guild\GuildTemplateRepository;
+use Discord\Repository\Guild\StageInstanceRepository;
 use Exception;
 use React\Promise\ExtendedPromiseInterface;
 use ReflectionClass;
@@ -72,6 +79,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * @property int               $max_video_channel_users                  Maximum amount of users allowed in a video channel.
  * @property int               $approximate_member_count
  * @property int               $approximate_presence_count
+ * @property int               $nsfw_level                               The guild NSFW level.
+ * @property bool              $premium_progress_bar_enabled             Whether the guild has the boost progress bar enabled.
  * @property bool              $feature_animated_icon                    guild has access to set an animated guild icon.
  * @property bool              $feature_banner                           guild has access to set a guild banner image.
  * @property bool              $feature_commerce                         guild has access to use commerce features (create store channels).
@@ -93,12 +102,18 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * @property bool              $feature_three_day_thread_archive         guild has access to the three day archive time for threads.
  * @property bool              $feature_seven_day_thread_archive         guild has access to the seven day archive time for threads.
  * @property bool              $feature_private_threads                  guild has access to create private threads.
+ * @property bool              $feature_role_icons                       guild is able to set role icons.
  * @property RoleRepository    $roles
  * @property ChannelRepository $channels
  * @property MemberRepository  $members
  * @property InviteRepository  $invites
  * @property BanRepository     $bans
  * @property EmojiRepository   $emojis
+ * @property GuildCommandRepository $commands
+ * @property StickerRepository $stickers
+ * @property GuildTemplateRepository $templates
+ * @property StageInstanceRepository $stage_instances
+ * @property ScheduledeventRepository $guild_scheduled_events
  */
 class Guild extends Part
 {
@@ -112,6 +127,13 @@ class Guild extends Part
 
     public const SUPPRESS_JOIN_NOTIFICATIONS = (1 << 0);
     public const SUPPRESS_PREMIUM_SUBSCRIPTION = (1 << 1);
+    public const SUPPRESS_GUILD_REMINDER_NOTIFICATIONS = (1 << 2);
+    public const SUPPRESS_JOIN_NOTIFICATION_REPLIES = (1 << 3);
+
+    public const NSFW_DEFAULT = 0;
+    public const NSFW_EXPLICIT = 1;
+    public const NSFW_SAFE = 2;
+    public const NSFW_AGE_RESTRICTED = 3;
 
     /**
      * @inheritdoc
@@ -120,6 +142,7 @@ class Guild extends Part
         'id',
         'name',
         'icon',
+        'icon_hash',
         'region',
         'owner_id',
         'roles',
@@ -155,6 +178,12 @@ class Guild extends Part
         'max_video_channel_users',
         'approximate_member_count',
         'approximate_presence_count',
+        'welcome_screen',
+        'nsfw_level',
+        'stickers',
+        'stage_instances',
+        'guild_scheduled_events',
+        'premium_progress_bar_enabled',
     ];
 
     /**
@@ -182,6 +211,7 @@ class Guild extends Part
         'feature_three_day_thread_archive',
         'feature_seven_day_thread_archive',
         'feature_private_threads',
+        'feature_role_icons',
     ];
 
     /**
@@ -194,6 +224,11 @@ class Guild extends Part
         'bans' => BanRepository::class,
         'invites' => InviteRepository::class,
         'emojis' => EmojiRepository::class,
+        'commands' => GuildCommandRepository::class,
+        'stickers' => StickerRepository::class,
+        'templates' => GuildTemplateRepository::class,
+        'stage_instances' => StageInstanceRepository::class,
+        'guild_scheduled_events' => ScheduledEventRepository::class,
     ];
 
     /**
@@ -263,19 +298,27 @@ class Guild extends Part
     /**
      * Returns the guilds icon.
      *
-     * @param string $format The image format.
-     * @param int    $size   The size of the image.
+     * @param string|null $format The image format.
+     * @param int         $size   The size of the image.
      *
      * @return string|null The URL to the guild icon or null.
      */
-    public function getIconAttribute(string $format = 'jpg', int $size = 1024)
+    public function getIconAttribute(?string $format = null, int $size = 1024)
     {
-        if (is_null($this->attributes['icon'])) {
+        if (! isset($this->attributes['icon'])) {
             return null;
         }
 
-        if (false === array_search($format, ['png', 'jpg', 'webp'])) {
-            $format = 'jpg';
+        if (isset($format)) {
+            $allowed = ['png', 'jpg', 'webp', 'gif'];
+
+            if (! in_array(strtolower($format), $allowed)) {
+                $format = 'webp';
+            }
+        } elseif (strpos($this->attributes['icon'], 'a_') === 0) {
+            $format = 'gif';
+        } else {
+            $format = 'webp';
         }
 
         return "https://cdn.discordapp.com/icons/{$this->id}/{$this->attributes['icon']}.{$format}?size={$size}";
@@ -288,7 +331,7 @@ class Guild extends Part
      */
     protected function getIconHashAttribute()
     {
-        return $this->attributes['icon'];
+        return $this->attributes['icon_hash'] ?? $this->attributes['icon'];
     }
 
     /**
@@ -299,14 +342,16 @@ class Guild extends Part
      *
      * @return string|null The URL to the guild splash or null.
      */
-    public function getSplashAttribute(string $format = 'jpg', int $size = 2048)
+    public function getSplashAttribute(string $format = 'webp', int $size = 2048)
     {
-        if (is_null($this->attributes['splash'])) {
+        if (! isset($this->attributes['splash'])) {
             return null;
         }
 
-        if (false === array_search($format, ['png', 'jpg', 'webp'])) {
-            $format = 'jpg';
+        $allowed = ['png', 'jpg', 'webp'];
+
+        if (! in_array(strtolower($format), $allowed)) {
+            $format = 'webp';
         }
 
         return "https://cdn.discordapp.com/splashes/{$this->id}/{$this->attributes['splash']}.{$format}?size={$size}";
@@ -371,7 +416,7 @@ class Guild extends Part
     {
         return in_array('PREVIEW_ENABLED', $this->features);
     }
-    
+
     protected function getFeatureVanityUrlAttribute(): bool
     {
         return in_array('VANITY_URL', $this->features);
@@ -422,6 +467,11 @@ class Guild extends Part
         return in_array('PRIVATE_THREADS', $this->features);
     }
 
+    protected function getFeatureRoleIconsAttribute(): bool
+    {
+        return in_array('ROLE_ICONS', $this->features);
+    }
+
     /**
      * Gets the voice regions available.
      *
@@ -452,13 +502,70 @@ class Guild extends Part
      */
     public function createRole(array $data = []): ExtendedPromiseInterface
     {
-        $rolePart = $this->factory->create(Role::class);
+        $botperms = $this->members->offsetGet($this->discord->id)->getPermissions();
 
-        return $this->roles->save($rolePart)->then(function ($role) use ($data) {
-            $role->fill((array) $data);
+        if (! $botperms->manage_roles) {
+            return \React\Promise\reject(new NoPermissionsException('You do not have permission to manage roles in the specified guild.'));
+        }
 
-            return $this->roles->save($role);
-        });
+        return $this->roles->save($this->factory->create(Role::class, $data));
+    }
+
+    /**
+     * Creates an Emoji for the guild.
+     *
+     * @param array $options        An array of options.
+     *                              name => name of the emoji
+     *                              image => the 128x128 emoji image
+     *                              roles => roles allowed to use this emoji
+     * @param string|null $filepath The path to the file if specified will override image data string.
+     * @param string|null $reason   Reason for Audit Log.
+     *
+     * @throws FileNotFoundException Thrown when the file does not exist.
+     *
+     * @return ExtendedPromiseInterface<Emoji>
+     */
+    public function createEmoji(array $options, ?string $filepath = null, ?string $reason = null): ExtendedPromiseInterface
+    {
+        $resolver = new OptionsResolver();
+        $resolver
+            ->setDefined([
+                'name',
+                'image',
+                'roles',
+            ])
+            ->setRequired('name')
+            ->setAllowedTypes('name', 'string')
+            ->setAllowedTypes('image', 'string')
+            ->setAllowedTypes('roles', 'array')
+            ->setDefault('roles', []);
+
+        $options = $resolver->resolve($options);
+
+        if (isset($filepath)) {
+            if (! file_exists($filepath)) {
+                throw new FileNotFoundException("File does not exist at path {$filepath}.");
+            }
+
+            $extension = strtolower(pathinfo($filepath, PATHINFO_EXTENSION));
+            if ($extension == 'jpg') $extension = 'jpeg';
+            $contents = file_get_contents($filepath);
+
+            $options['image'] = "data:image/{$extension};base64,".base64_encode($contents);
+        }
+
+        $headers = [];
+        if (isset($reason)) {
+            $headers['X-Audit-Log-Reason'] = $reason;
+        }
+
+        return $this->http->post(Endpoint::bind(Endpoint::GUILD_EMOJIS, $this->id), $options, $headers)
+            ->then(function ($response) {
+                $emoji = $this->factory->create(Emoji::class, $response, true);
+                $this->emojis->push($emoji);
+
+                return $emoji;
+            });
     }
 
     /**
@@ -475,17 +582,23 @@ class Guild extends Part
      * Transfers ownership of the guild to
      * another member.
      *
-     * @param Member|int $member The member to transfer ownership to.
+     * @param Member|int  $member The member to transfer ownership to.
+     * @param string|null $reason Reason for Audit Log.
      *
      * @return ExtendedPromiseInterface
      */
-    public function transferOwnership($member): ExtendedPromiseInterface
+    public function transferOwnership($member, ?string $reason = null): ExtendedPromiseInterface
     {
         if ($member instanceof Member) {
             $member = $member->id;
         }
 
-        return $this->http->patch(Endpoint::bind(Endpoint::GUILD), ['owner_id' => $member])->then(function ($response) use ($member) {
+        $headers = [];
+        if (isset($reason)) {
+            $headers['X-Audit-Log-Reason'] = $reason;
+        }
+
+        return $this->http->patch(Endpoint::bind(Endpoint::GUILD), ['owner_id' => $member], $headers)->then(function ($response) use ($member) {
             if ($response->owner_id != $member) {
                 throw new Exception('Ownership was not transferred correctly.');
             }
@@ -595,13 +708,108 @@ class Guild extends Part
     }
 
     /**
+     * Returns a list of guild member objects whose username or nickname starts with a provided string.
+     *
+     * @param array $options An array of options.
+     *                       query => query string to match username(s) and nickname(s) against
+     *                       limit => how many entries are returned (default 1, minimum 1, maximum 1000)
+     *
+     * @return ExtendedPromiseInterface
+     */
+    public function searchMembers(array $options): ExtendedPromiseInterface
+    {
+        $resolver = new OptionsResolver();
+        $resolver->setDefined([
+            'query',
+            'limit',
+        ])
+        ->setDefaults(['limit' => 1])
+        ->setAllowedTypes('query', 'string')
+        ->setAllowedTypes('limit', 'int')
+        ->setAllowedValues('limit', range(1, 1000));
+
+        $options = $resolver->resolve($options);
+
+        $endpoint = Endpoint::bind(Endpoint::GUILD_MEMBERS_SEARCH, $this->id);
+        $endpoint->addQuery('query', $options['query']);
+        $endpoint->addQuery('limit', $options['limit']);
+
+        return $this->http->get($endpoint)->then(function ($responses) {
+            $members = new Collection();
+
+            foreach ($responses as $response) {
+                if (! $member = $this->members->get('id', $response->user->id)) {
+                    $member = $this->factory->create(Member::class, $response, true);
+                    $this->members->push($member);
+                }
+
+                $members->push($member);
+            }
+
+            return $members;
+        });
+    }
+
+    /**
+     * Get the Welcome Screen for the guild.
+     *
+     * @param bool $fresh Whether we should skip checking the cache.
+     *
+     * @return ExtendedPromiseInterface
+     */
+    public function getWelcomeScreen(bool $fresh = false): ExtendedPromiseInterface
+    {
+        if (! $fresh && isset($this->attributes['welcome_screen'])) {
+            return \React\Promise\resolve($this->discord->factory(WelcomeScreen::class, $this->attributes['welcome_screen'], true));
+        }
+
+        return $this->http->get(Endpoint::bind(Endpoint::GUILD_WELCOME_SCREEN, $this->id))->then(function ($response) {
+            $welcome_screen = $this->discord->factory(WelcomeScreen::class, $response, true);
+            $this->attributes['welcome_screen'] = $welcome_screen;
+
+            return $welcome_screen;
+        });
+    }
+
+    /**
+     * Modify the guild's Welcome Screen. Requires the MANAGE_GUILD permission. Returns the updated Welcome Screen object.
+     *
+     * @param array $options An array of options.
+     *                       enabled => whether the welcome screen is enabled
+     *                       welcome_channels => channels linked in the welcome screen and their display options (maximum 5)
+     *                       description => the server description to show in the welcome screen (maximum 140)
+     *
+     * @return ExtendedPromiseInterface
+     */
+    public function updateWelcomeScreen(array $options): ExtendedPromiseInterface
+    {
+        $resolver = new OptionsResolver();
+        $resolver->setDefined([
+            'enabled',
+            'welcome_channels',
+            'description'
+        ])
+        ->setAllowedTypes('enabled', 'string')
+        ->setAllowedTypes('welcome_channels', ['array', WelcomeScreen::class])
+        ->setAllowedTypes('description', 'string');
+
+        $options = $resolver->resolve($options);
+
+        return $this->http->patch(Endpoint::bind(Endpoint::GUILD_WELCOME_SCREEN, $this->id), $options)->then(function ($response) {
+            $welcome_screen = $this->discord->factory(WelcomeScreen::class, $response, true);
+            $this->attributes['welcome_screen'] = $welcome_screen;
+
+            return $welcome_screen;
+        });
+    }
+
+    /**
      * @inheritdoc
      */
     public function getCreatableAttributes(): array
     {
         return [
             'name' => $this->name,
-            'region' => $this->region,
             'icon' => $this->attributes['icon'],
             'verification_level' => $this->verification_level,
             'default_message_notifications' => $this->default_message_notifications,
@@ -619,7 +827,6 @@ class Guild extends Part
     {
         return [
             'name' => $this->name,
-            'region' => $this->region,
             'verification_level' => $this->verification_level,
             'default_message_notifications' => $this->default_message_notifications,
             'explicit_content_filter' => $this->explicit_content_filter,
@@ -632,6 +839,7 @@ class Guild extends Part
             'rules_channel_id' => $this->rules_channel_id,
             'public_updates_channel_id' => $this->public_updates_channel_id,
             'preferred_locale' => $this->preferred_locale,
+            'premium_progress_bar_enabled' => $this->premium_progress_bar_enabled,
         ];
     }
 
@@ -642,6 +850,9 @@ class Guild extends Part
     {
         return [
             'guild_id' => $this->id,
+
+            // Hack, should be only used for the bot's Application Guild Commands
+            'application_id' => $this->discord->application->id,
         ];
     }
 

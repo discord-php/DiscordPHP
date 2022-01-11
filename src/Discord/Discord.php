@@ -13,6 +13,7 @@ namespace Discord;
 
 use Discord\Exceptions\IntentException;
 use Discord\Factory\Factory;
+use Discord\Helpers\Bitwise;
 use Discord\Http\Http;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\OAuth\Application;
@@ -41,9 +42,11 @@ use React\EventLoop\Factory as LoopFactory;
 use React\EventLoop\LoopInterface;
 use React\EventLoop\TimerInterface;
 use Discord\Helpers\Deferred;
+use Discord\Helpers\RegisteredCommand;
 use Discord\Http\Drivers\React;
 use Discord\Http\Endpoint;
 use Evenement\EventEmitterTrait;
+use InvalidArgumentException;
 use Psr\Log\LoggerInterface;
 use React\Promise\ExtendedPromiseInterface;
 use React\Promise\PromiseInterface;
@@ -300,6 +303,13 @@ class Discord
     protected $client;
 
     /**
+     * An array of registered slash commands.
+     *
+     * @var RegisteredCommand[]
+     */
+    private $application_commands;
+
+    /**
      * Creates a Discord client instance.
      *
      * @param  array           $options Array of options.
@@ -309,6 +319,11 @@ class Discord
     {
         if (php_sapi_name() !== 'cli') {
             trigger_error('DiscordPHP will not run on a webserver. Please use PHP CLI to run a DiscordPHP bot.', E_USER_ERROR);
+        }
+
+        // x86 need gmp extension for big integer operation
+        if (PHP_INT_SIZE === 4 && ! Bitwise::init()) {
+            trigger_error('ext-gmp is not loaded. Permissions will NOT work correctly!', E_USER_WARNING);
         }
 
         $options = $this->resolveOptions($options);
@@ -714,7 +729,7 @@ class Discord
                 Event::GUILD_CREATE,
             ];
 
-            if (! $this->emittedReady && (array_search($data->t, $parse) === false)) {
+            if (! $this->emittedReady && (! in_array($data->t, $parse))) {
                 $this->unparsedPackets[] = function () use (&$handler, &$deferred, &$data) {
                     $handler->handle($deferred, $data->d);
                 };
@@ -917,7 +932,7 @@ class Discord
 
             if (is_array($this->options['loadAllMembers'])) {
                 foreach ($this->largeGuilds as $key => $guild) {
-                    if (array_search($guild, $this->options['loadAllMembers']) === false) {
+                    if (! in_array($guild, $this->options['loadAllMembers'])) {
                         $this->logger->debug('not fetching members for guild ID '.$guild);
                         unset($this->largeGuilds[$key]);
                     }
@@ -1073,7 +1088,9 @@ class Discord
             }
         }
 
-        if (! array_search($status, ['online', 'dnd', 'idle', 'invisible', 'offline'])) {
+        $allowed = ['online', 'dnd', 'idle', 'invisible', 'offline'];
+
+		if (! in_array($status, $allowed)) {
             $status = 'online';
         }
 
@@ -1117,8 +1134,8 @@ class Discord
     {
         $deferred = new Deferred();
 
-        if ($channel->type != Channel::TYPE_VOICE) {
-            $deferred->reject(new \Exception('You cannot join a text channel.'));
+        if (! $channel->allowVoice()) {
+            $deferred->reject(new \Exception('Channel must allow voice.'));
 
             return $deferred->promise();
         }
@@ -1453,9 +1470,9 @@ class Discord
      */
     public function __get(string $name)
     {
-        $allowed = ['loop', 'options', 'logger', 'http'];
+        $allowed = ['loop', 'options', 'logger', 'http', 'application_commands'];
 
-        if (array_search($name, $allowed) !== false) {
+        if (in_array($name, $allowed)) {
             return $this->{$name};
         }
 
@@ -1501,6 +1518,38 @@ class Discord
         }
 
         return null;
+    }
+
+    /**
+     * Registeres a command with the client.
+     *
+     * @param string|array  $name
+     * @param callable      $callback
+     * @param callable|null $autocomplete_callback
+     *
+     * @return RegisteredCommand
+     */
+    public function listenCommand($name, callable $callback = null, ?callable $autocomplete_callback = null): RegisteredCommand
+    {
+        if (is_array($name) && count($name) == 1) {
+            $name = array_shift($name);
+        }
+
+        // registering base command
+        if (! is_array($name) || count($name) == 1) {
+            if (isset($this->application_commands[$name])) {
+                throw new InvalidArgumentException("The command `{$name}` already exists.");
+            }
+
+            return $this->application_commands[$name] = new RegisteredCommand($this, $name, $callback, $autocomplete_callback);
+        }
+
+        $baseCommand = array_shift($name);
+
+        if (! isset($this->application_commands[$baseCommand])) {
+            $this->listenCommand($baseCommand);
+        }
+        return $this->application_commands[$baseCommand]->addSubCommand($name, $callback);
     }
 
     /**

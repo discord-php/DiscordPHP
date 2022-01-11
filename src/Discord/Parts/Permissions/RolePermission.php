@@ -14,6 +14,13 @@ namespace Discord\Parts\Permissions;
 /**
  * @inheritdoc
  *
+ * @property bool $connect
+ * @property bool $mute_members
+ * @property bool $deafen_members
+ * @property bool $move_members
+ * @property bool $request_to_speak
+ * @property bool $manage_events
+ *
  * @property bool $priority_speaker
  * @property bool $stream
  * @property bool $connect
@@ -22,7 +29,8 @@ namespace Discord\Parts\Permissions;
  * @property bool $deafen_members
  * @property bool $move_members
  * @property bool $use_vad
- * @property bool $request_to_speak
+ * @property bool $manage_events
+ * @property bool $start_embedded_activities
  *
  * @property bool $add_reactions
  * @property bool $send_messages
@@ -33,10 +41,13 @@ namespace Discord\Parts\Permissions;
  * @property bool $read_message_history
  * @property bool $mention_everyone
  * @property bool $use_external_emojis
- * @property bool $use_slash_commands
+ * @property bool $manage_webhooks
+ * @property bool $use_application_commands
  * @property bool $manage_threads
- * @property bool $use_public_threads
- * @property bool $use_private_threads
+ * @property bool $create_public_threads
+ * @property bool $create_private_threads
+ * @property bool $use_external_stickers
+ * @property bool $send_messages_in_threads
  *
  * @property bool $kick_members
  * @property bool $ban_members
@@ -46,7 +57,8 @@ namespace Discord\Parts\Permissions;
  * @property bool $view_guild_insights
  * @property bool $change_nickname
  * @property bool $manage_nicknames
- * @property bool $manage_emojis
+ * @property bool $manage_emojis_and_stickers
+ * @property bool $moderate_members
  */
 class RolePermission extends Permission
 {
@@ -55,6 +67,6 @@ class RolePermission extends Permission
      */
     public static function getPermissions(): array
     {
-        return array_merge(parent::ALL_PERMISSIONS, parent::TEXT_PERMISSIONS, parent::VOICE_PERMISSIONS, parent::ROLE_PERMISSIONS);
+        return array_merge(parent::ALL_PERMISSIONS, parent::TEXT_PERMISSIONS, parent::VOICE_PERMISSIONS, parent::STAGE_PERMISSIONS, parent::ROLE_PERMISSIONS);
     }
 }

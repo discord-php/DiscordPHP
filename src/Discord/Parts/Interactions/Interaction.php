@@ -15,9 +15,11 @@ use Discord\Builders\MessageBuilder;
 use Discord\Helpers\Multipart;
 use Discord\Http\Endpoint;
 use Discord\InteractionResponseType;
+use Discord\InteractionType;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Channel\Message;
 use Discord\Parts\Guild\Guild;
+use Discord\Parts\Interactions\Command\Choice;
 use Discord\Parts\Interactions\Request\InteractionData;
 use Discord\Parts\Part;
 use Discord\Parts\User\Member;
@@ -45,10 +47,6 @@ use RuntimeException;
  */
 class Interaction extends Part
 {
-    public const TYPE_PING = 1;
-    public const TYPE_APPLICATION_COMMAND = 2;
-    public const TYPE_MESSAGE_COMPONENT = 3;
-
     /**
      * @inheritdoc
      */
@@ -77,7 +75,12 @@ class Interaction extends Part
             return null;
         }
 
-        return $this->factory->create(InteractionData::class, $this->attributes['data'], true);
+        $adata = $this->attributes['data'];
+        if (isset($this->attributes['guild_id'])) {
+            $adata->guild_id = $this->guild_id;
+        }
+
+        return $this->factory->create(InteractionData::class, $adata, true);
     }
 
     /**
@@ -158,7 +161,11 @@ class Interaction extends Part
      */
     public function acknowledge(): ExtendedPromiseInterface
     {
-        if ($this->type != Interaction::TYPE_MESSAGE_COMPONENT) {
+        if ($this->type == InteractionType::APPLICATION_COMMAND) {
+            return $this->acknowledgeWithResponse();
+        }
+
+        if ($this->type != InteractionType::MESSAGE_COMPONENT) {
             throw new InvalidArgumentException('You can only acknowledge message component interactions.');
         }
 
@@ -190,7 +197,7 @@ class Interaction extends Part
      */
     public function updateMessage(MessageBuilder $builder): ExtendedPromiseInterface
     {
-        if ($this->type != Interaction::TYPE_MESSAGE_COMPONENT) {
+        if ($this->type != InteractionType::MESSAGE_COMPONENT) {
             throw new InvalidArgumentException('You can only update messages that occur due to a message component interaction.');
         }
 
@@ -340,5 +347,47 @@ class Interaction extends Part
         }
 
         return $this->http->post(Endpoint::bind(Endpoint::INTERACTION_RESPONSE, $this->id, $this->token), $payload);
+    }
+
+    /**
+     * Updates a non ephemeral follow up message.
+     *
+     * @param string         $message_id Message to update.
+     * @param MessageBuilder $builder    New message contents.
+     *
+     * @return ExtendedPromiseInterface<Message>
+     */
+    public function updateFollowUpMessage(string $message_id, MessageBuilder $builder)
+    {
+        if (! $this->responded) {
+            throw new RuntimeException('Cannot create a follow-up message as the interaction has not been responded to.');
+        }
+
+        return (function () use ($message_id, $builder): ExtendedPromiseInterface {
+            if ($builder->requiresMultipart()) {
+                $multipart = $builder->toMultipart();
+
+                return $this->http->patch(Endpoint::bind(Endpoint::INTERACTION_FOLLOW_UP, $this->application_id, $this->token, $message_id), (string) $multipart, $multipart->getHeaders());
+            }
+
+            return $this->http->patch(Endpoint::bind(Endpoint::INTERACTION_FOLLOW_UP, $this->application_id, $this->token, $message_id), $builder);
+        })()->then(function ($response) {
+            return $this->factory->create(Message::class, $response, true);
+        });
+    }
+
+    /**
+     * Responds to the interaction with auto complete suggestions.
+     *
+     * @param array|Choice[] $choice Autocomplete choices (max of 25 choices)
+     *
+     * @return ExtendedPromiseInterface
+     */
+    public function autoCompleteResult($choices): ExtendedPromiseInterface
+    {
+        return $this->respond([
+            'type' => InteractionResponseType::APPLICATION_COMMAND_AUTOCOMPLETE_RESULT,
+            'data' => ['choices' => $choices],
+        ]);
     }
 }

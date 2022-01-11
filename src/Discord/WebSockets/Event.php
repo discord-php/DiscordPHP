@@ -33,8 +33,6 @@ abstract class Event
     public const PRESENCES_REPLACE = 'PRESENCES_REPLACE';
     public const TYPING_START = 'TYPING_START';
     public const USER_SETTINGS_UPDATE = 'USER_SETTINGS_UPDATE';
-    public const VOICE_STATE_UPDATE = 'VOICE_STATE_UPDATE';
-    public const VOICE_SERVER_UPDATE = 'VOICE_SERVER_UPDATE';
     public const GUILD_MEMBERS_CHUNK = 'GUILD_MEMBERS_CHUNK';
     public const INTERACTION_CREATE = 'INTERACTION_CREATE';
 
@@ -46,6 +44,9 @@ abstract class Event
     public const GUILD_BAN_ADD = 'GUILD_BAN_ADD';
     public const GUILD_BAN_REMOVE = 'GUILD_BAN_REMOVE';
 
+    public const GUILD_EMOJIS_UPDATE = 'GUILD_EMOJIS_UPDATE';
+    public const GUILD_STICKERS_UPDATE = 'GUILD_STICKERS_UPDATE';
+
     public const GUILD_MEMBER_ADD = 'GUILD_MEMBER_ADD';
     public const GUILD_MEMBER_REMOVE = 'GUILD_MEMBER_REMOVE';
     public const GUILD_MEMBER_UPDATE = 'GUILD_MEMBER_UPDATE';
@@ -53,6 +54,12 @@ abstract class Event
     public const GUILD_ROLE_CREATE = 'GUILD_ROLE_CREATE';
     public const GUILD_ROLE_UPDATE = 'GUILD_ROLE_UPDATE';
     public const GUILD_ROLE_DELETE = 'GUILD_ROLE_DELETE';
+
+    public const GUILD_SCHEDULED_EVENT_CREATE = 'GUILD_SCHEDULED_EVENT_CREATE';
+    public const GUILD_SCHEDULED_EVENT_UPDATE = 'GUILD_SCHEDULED_EVENT_UPDATE';
+    public const GUILD_SCHEDULED_EVENT_DELETE = 'GUILD_SCHEDULED_EVENT_DELETE';
+    public const GUILD_SCHEDULED_EVENT_USER_ADD = 'GUILD_SCHEDULED_EVENT_USER_ADD';
+    public const GUILD_SCHEDULED_EVENT_USER_REMOVE = 'GUILD_SCHEDULED_EVENT_USER_REMOVE';
 
     public const GUILD_INTEGRATIONS_UPDATE = 'GUILD_INTEGRATIONS_UPDATE';
 
@@ -64,7 +71,7 @@ abstract class Event
     public const CHANNEL_DELETE = 'CHANNEL_DELETE';
     public const CHANNEL_UPDATE = 'CHANNEL_UPDATE';
     public const CHANNEL_PINS_UPDATE = 'CHANNEL_PINS_UPDATE';
-
+    
     // Threads
     public const THREAD_CREATE = 'THREAD_CREATE';
     public const THREAD_UPDATE = 'THREAD_UPDATE';
@@ -72,6 +79,15 @@ abstract class Event
     public const THREAD_LIST_SYNC = 'THREAD_LIST_SYNC';
     public const THREAD_MEMBER_UPDATE = 'THREAD_MEMBER_UPDATE';
     public const THREAD_MEMBERS_UPDATE = 'THREAD_MEMBERS_UPDATE';
+
+    // Voice
+    public const VOICE_STATE_UPDATE = 'VOICE_STATE_UPDATE';
+    public const VOICE_SERVER_UPDATE = 'VOICE_SERVER_UPDATE';
+
+    // Stage Instance
+    public const STAGE_INSTANCE_CREATE = 'STAGE_INSTANCE_CREATE';
+    public const STAGE_INSTANCE_UPDATE = 'STAGE_INSTANCE_UPDATE';
+    public const STAGE_INSTANCE_DELETE = 'STAGE_INSTANCE_DELETE';
 
     // Messages
     public const MESSAGE_CREATE = 'MESSAGE_CREATE';

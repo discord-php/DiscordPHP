@@ -14,26 +14,55 @@ namespace Discord\Parts\OAuth;
 use Discord\Parts\Part;
 use Discord\Parts\Permissions\Permission;
 use Discord\Parts\User\User;
+use Discord\Repository\Interaction\GlobalCommandRepository;
 
 /**
  * The OAuth2 application of the bot.
  *
- * @property string   $id          The client ID of the OAuth application.
- * @property string   $name        The name of the OAuth application.
- * @property string   $description The description of the OAuth application.
- * @property string   $icon        The icon hash of the OAuth application.
- * @property string   $invite_url  The invite URL to invite the bot to a guild.
- * @property string[] $rpc_origins An array of RPC origin URLs.
- * @property int      $flags       ?
- * @property User     $owner       The owner of the OAuth application.
+ * @property string                  $id                     The client ID of the OAuth application.
+ * @property string                  $name                   The name of the OAuth application.
+ * @property string                  $icon                   The icon hash of the OAuth application.
+ * @property string                  $description            The description of the OAuth application.
+ * @property string[]                $rpc_origins            An array of RPC origin URLs.
+ * @property bool                    $bot_public             When false only app owner can join the app's bot to guilds.
+ * @property bool                    $bot_require_code_grant When true the app's bot will only join upon completion of the full oauth2 code grant flow.
+ * @property string|null             $terms_of_service_url   The url of the app's terms of service.
+ * @property string|null             $privacy_policy_url     The url of the app's privacy policy
+ * @property User                    $owner                  The owner of the OAuth application.
+ * @property string                  $verify_key             The hex encoded key for verification in interactions and the GameSDK's GetTicket.
+ * @property object|null             $team                   If the application belongs to a team, this will be a list of the members of that team.
+ * @property int                     $flags                  The application's public flags.
+ * @property string                  $invite_url             The invite URL to invite the bot to a guild.
+ * @property GlobalCommandRepository $commands               The application global commands.
  */
 class Application extends Part
 {
     /**
      * @inheritdoc
      */
-    protected $fillable = ['id', 'name', 'description', 'icon', 'rpc_origins', 'flags', 'owner'];
+    protected $fillable = [
+        'id',
+        'name',
+        'icon',
+        'description',
+        'rpc_origins',
+        'bot_public',
+        'bot_require_code_grant',
+        'terms_of_service_url',
+        'privacy_policy_url',
+        'owner',
+        'verify_key',
+        'team',
+        'flags',
+    ];
 
+    /**
+     * @inheritdoc
+     */
+    protected $repositories = [
+        'commands' => GlobalCommandRepository::class,
+    ];
+    
     /**
      * Returns the owner of the application.
      *
@@ -63,5 +92,15 @@ class Application extends Part
         }
 
         return "https://discordapp.com/oauth2/authorize?client_id={$this->id}&scope=bot&permissions={$permissions}";
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getRepositoryAttributes(): array
+    {
+        return [
+            'application_id' => $this->id,
+        ];
     }
 }

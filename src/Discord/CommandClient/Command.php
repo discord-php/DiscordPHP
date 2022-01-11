@@ -293,7 +293,7 @@ class Command
     {
         $allowed = ['command', 'description', 'longDescription', 'usage', 'cooldown', 'cooldownMessage'];
 
-        if (array_search($variable, $allowed) !== false) {
+        if (in_array($variable, $allowed)) {
             return $this->{$variable};
         }
 
