@@ -46,9 +46,8 @@ use function React\Promise\reject;
  * @property string               $content                The content of the message if it is a normal message.
  * @property int                  $type                   The type of message.
  * @property Collection|User[]    $mentions               A collection of the users mentioned in the message.
- * @property Member|User|null     $author                 The author of the message.
+ * @property User|null            $author                 The author of the message. Will be a webhook if sent from one.
  * @property Member|null          $member                 The member that sent this message, or null if it was in a private message.
- * @property User|null            $user                   The user that sent this message. Will be a webhook if sent from one.
  * @property string               $user_id                The user id of the author.
  * @property bool                 $mention_everyone       Whether the message contained an @everyone mention.
  * @property Carbon               $timestamp              A timestamp of when the message was sent.
@@ -350,18 +349,16 @@ class Message extends Part
     /**
      * Returns the author attribute.
      *
-     * @return User|Member|null The member that sent the message. Will return a User object if it is a PM.
-     *
-     * @deprecated 6.0.0 Use `Message::member` or `Message:user` instead.
+     * @return User|null The author of the message.
      */
-    protected function getAuthorAttribute(): ?Part
+    protected function getAuthorAttribute(): ?User
     {
-        if ($this->member) {
-            return $this->member;
-        }
+        if (isset($this->attributes['author'])) {
+            if ($user = $this->discord->users->get('id', $this->attributes['author']->id)) {
+                return $user;
+            }
 
-        if ($this->user) {
-            return $this->user;
+            return $this->factory->create(User::class, $this->attributes['author'], true);
         }
 
         return null;
@@ -383,24 +380,6 @@ class Message extends Part
                 'user' => $this->attributes['author'],
                 'guild_id' => $this->guild_id,
             ]), true);
-        }
-
-        return null;
-    }
-
-    /**
-     * Returns the user attribute.
-     *
-     * @return User|null The user that sent the message. Can also be a webhook.
-     */
-    protected function getUserAttribute(): ?User
-    {
-        if (isset($this->attributes['author'])) {
-            if ($user = $this->discord->users->get('id', $this->attributes['author']->id)) {
-                return $user;
-            }
-
-            return $this->factory->create(User::class, $this->attributes['author'], true);
         }
 
         return null;
