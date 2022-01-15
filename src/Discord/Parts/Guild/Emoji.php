@@ -19,21 +19,21 @@ use Discord\Parts\Part;
  *
  * @property string            $id             The identifier for the emoji.
  * @property string            $name           The name of the emoji.
- * @property Guild             $guild          The guild that owns the emoji.
- * @property string            $guild_id       The identifier of the guild that owns the emoji.
- * @property bool              $managed        Whether this emoji is managed by a role.
- * @property bool              $require_colons Whether the emoji requires colons to be triggered.
  * @property Collection|Role[] $roles          The roles that are allowed to use the emoji.
  * @property User|null         $user           user that created this emoji.
+ * @property bool              $require_colons Whether the emoji requires colons to be triggered.
+ * @property bool              $managed        Whether this emoji is managed by a role.
  * @property bool              $animated       Whether the emoji is animated.
  * @property bool              $available      Whether this emoji can be used, may be false due to loss of Server Boosts.
+ * @property string|null       $guild_id       The identifier of the guild that owns the emoji.
+ * @property Guild|null        $guild          The guild that owns the emoji.
  */
 class Emoji extends Part
 {
     /**
      * @inheritdoc
      */
-    protected $fillable = ['id', 'name', 'guild_id', 'managed', 'require_colons', 'roles', 'user', 'animated', 'available'];
+    protected $fillable = ['id', 'name', 'roles', 'user', 'require_colons', 'managed', 'animated', 'available', 'guild_id'];
 
     /**
      * Returns the guild attribute.
