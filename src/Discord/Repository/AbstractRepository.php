@@ -93,7 +93,7 @@ abstract class AbstractRepository extends Collection
         $endpoint->bindAssoc($this->vars);
 
         return $this->http->get($endpoint)->then(function ($response) {
-            $this->fill([]);
+            $this->clear();
 
             foreach ($response as $value) {
                 $value = array_merge($this->vars, (array) $value);
