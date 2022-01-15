@@ -18,14 +18,16 @@ use Discord\Parts\User\User;
 /**
  * Represents an entry in the audit log.
  *
- * @property string     $id
- * @property string     $user_id
- * @property User       $user
- * @property string     $target_id
- * @property int        $action_type
- * @property Collection $changes
- * @property Options    $options
- * @property string     $reason
+ * @see https://discord.com/developers/docs/resources/audit-log#audit-log-entry-object
+ *
+ * @property string       $target_id   Id of the affected entity (webhook, user, role, etc.).
+ * @property Collection   $changes     Changes made to the target_id.
+ * @property string|null  $user_id     The user who made the changes.
+ * @property User|null    $user
+ * @property string       $id          Id of the entry.
+ * @property int          $action_type Type of action that occurred.
+ * @property Options|null $options     Additional info for certain action types.
+ * @property string|null  $reason      The reason for the change (0-512 characters).
  */
 class Entry extends Part
 {
@@ -83,11 +85,11 @@ class Entry extends Part
      * @inheritdoc
      */
     protected $fillable = [
-        'id',
-        'user_id',
         'target_id',
-        'action_type',
         'changes',
+        'user_id',
+        'id',
+        'action_type',
         'options',
         'reason',
     ];
