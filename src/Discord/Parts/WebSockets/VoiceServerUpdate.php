@@ -17,9 +17,11 @@ use Discord\Parts\Part;
 /**
  * Tells the client that the voice channel's server has changed.
  *
+ * @see https://discord.com/developers/docs/topics/gateway#voice
+ *
  * @property string $token    The new client voice token.
- * @property Guild  $guild    The guild affected by the change.
  * @property string $guild_id The unique identifier of the guild that was affected by the change.
+ * @property Guild  $guild    The guild affected by the change.
  * @property string $endpoint The new voice server endpoint.
  */
 class VoiceServerUpdate extends Part
@@ -36,6 +38,6 @@ class VoiceServerUpdate extends Part
      */
     protected function getGuildAttribute(): Guild
     {
-        return $this->discord->guilds->get('id', $this->guild_id);
+        return $this->discord->guilds->offsetGet($this->guild_id);
     }
 }

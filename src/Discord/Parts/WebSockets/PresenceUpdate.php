@@ -23,18 +23,20 @@ use Discord\Parts\User\User;
  * A PresenceUpdate part is used when the `PRESENCE_UPDATE` event is fired on the WebSocket. It contains
  * information about the users presence such as their status (online/away) and their current game.
  *
- * @property Member                $member         The member that the presence update affects.
+ * @see https://discord.com/developers/docs/topics/gateway#presence
+ *
  * @property User                  $user           The user that the presence update affects.
- * @property Guild                 $guild          The guild that the presence update affects.
  * @property string                $guild_id       The unique identifier of the guild that the presence update affects.
+ * @property Guild                 $guild          The guild that the presence update affects.
  * @property string                $status         The updated status of the user.
- * @property Activity              $game           The updated game of the user.
  * @property Collection|Activity[] $activities     The activities of the user.
- * @property Collection|Role[]     $roles          Roles that the user has in the guild.
+ * @property Activity              $game           The updated game of the user.
  * @property object                $client_status  Status of the client.
  * @property string|null           $desktop_status Status of the user on their desktop client. Null if they are not active on desktop.
  * @property string|null           $mobile_status  Status of the user on their mobile client. Null if they are not active on mobile.
  * @property string|null           $web_status     Status of the user on their web client. Null if they are not active on web.
+ * @property Member                $member         The member that the presence update affects.
+ * @property Collection|Role[]     $roles          Roles that the user has in the guild.
  */
 class PresenceUpdate extends Part
 {
@@ -46,21 +48,7 @@ class PresenceUpdate extends Part
     /**
      * @inheritDoc
      */
-    protected $visible = ['member', 'roles', 'guild', 'game', 'desktop_status', 'mobile_status', 'web_status'];
-
-    /**
-     * Gets the member attribute.
-     *
-     * @return Member|null
-     */
-    protected function getMemberAttribute(): ?Member
-    {
-        if (isset($this->attributes['user']) && $this->guild) {
-            return $this->guild->members->get('id', $this->attributes['user']->id);
-        }
-
-        return null;
-    }
+    protected $visible = ['guild', 'game', 'desktop_status', 'mobile_status', 'web_status', 'member', 'roles'];
 
     /**
      * Gets the user attribute.
@@ -69,21 +57,11 @@ class PresenceUpdate extends Part
      */
     protected function getUserAttribute(): User
     {
-        if ($user = $this->discord->users->get('id', $this->attributes['user']->id)) {
+        if ($user = $this->discord->users->offsetGet($this->attributes['user']->id)) {
             return $user;
         }
 
         return $this->factory->create(User::class, $this->attributes['user'], true);
-    }
-
-    /**
-     * Returns the users roles.
-     *
-     * @return Collection|Role[]
-     */
-    protected function getRolesAttribute(): Collection
-    {
-        return $this->member->roles ?? new Collection();
     }
 
     /**
@@ -93,17 +71,7 @@ class PresenceUpdate extends Part
      */
     protected function getGuildAttribute(): Guild
     {
-        return $this->discord->guilds->get('id', $this->guild_id);
-    }
-
-    /**
-     * Gets the game attribute.
-     *
-     * @return Activity|null The game attribute.
-     */
-    protected function getGameAttribute(): ?Part
-    {
-        return $this->activities->first();
+        return $this->discord->guilds->offsetGet($this->guild_id);
     }
 
     /**
@@ -120,6 +88,16 @@ class PresenceUpdate extends Part
         }
 
         return $collection;
+    }
+
+    /**
+     * Gets the game attribute.
+     *
+     * @return Activity|null The game attribute.
+     */
+    protected function getGameAttribute(): ?Part
+    {
+        return $this->activities->first();
     }
 
     /**
@@ -150,5 +128,29 @@ class PresenceUpdate extends Part
     protected function getWebStatusAttribute(): ?string
     {
         return $this->client_status->web ?? null;
+    }
+
+    /**
+     * Gets the member attribute.
+     *
+     * @return Member|null
+     */
+    protected function getMemberAttribute(): ?Member
+    {
+        if (isset($this->attributes['user']) && $this->guild) {
+            return $this->guild->members->offsetGet($this->attributes['user']->id);
+        }
+
+        return null;
+    }
+
+    /**
+     * Returns the users roles.
+     *
+     * @return Collection|Role[]
+     */
+    protected function getRolesAttribute(): Collection
+    {
+        return $this->member->roles ?? new Collection();
     }
 }
