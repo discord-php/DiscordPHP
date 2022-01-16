@@ -156,15 +156,13 @@ class Interaction extends Part
     /**
      * Acknowledges an interaction without returning a response.
      * Only valid for message component interactions.
-     * 
-     * @param bool $ephemeral Whether the acknowledge should be ephemeral.
      *
      * @return ExtendedPromiseInterface
      */
-    public function acknowledge($ephemeral = false): ExtendedPromiseInterface
+    public function acknowledge(): ExtendedPromiseInterface
     {
         if ($this->type == InteractionType::APPLICATION_COMMAND) {
-            return $this->acknowledgeWithResponse($ephemeral);
+            return $this->acknowledgeWithResponse();
         }
 
         if ($this->type != InteractionType::MESSAGE_COMPONENT) {
@@ -187,8 +185,8 @@ class Interaction extends Part
     public function acknowledgeWithResponse($ephemeral = false): ExtendedPromiseInterface
     {
         return $this->respond([
-            'data' => $ephemeral ? ['flags' => 64] : [],
             'type' => InteractionResponseType::DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE,
+            'data' => $ephemeral ? ['flags' => 64] : [],
         ]);
     }
 
