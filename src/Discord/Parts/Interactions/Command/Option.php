@@ -48,12 +48,23 @@ class Option extends Part
     /**
      * @inheritdoc
      */
-    protected $fillable = ['type', 'name', 'description', 'required', 'choices', 'options', 'channel_types', 'min_value', 'max_value', 'autocomplete'];
+    protected $fillable = [
+        'type',
+        'name',
+        'description',
+        'required',
+        'choices',
+        'options',
+        'channel_types',
+        'min_value',
+        'max_value',
+        'autocomplete'
+    ];
 
     /**
      * Gets the choices attribute.
      *
-     * @return Collection|Choices[]|null A collection of choices.
+     * @return Collection|Choice[]|null A collection of choices.
      */
     protected function getChoicesAttribute(): ?Collection
     {
@@ -73,7 +84,7 @@ class Option extends Part
     /**
      * Gets the options attribute.
      *
-     * @return Collection|Options[] A collection of options.
+     * @return Collection|Option[] A collection of options.
      */
     protected function getOptionsAttribute(): Collection
     {
@@ -102,6 +113,7 @@ class Option extends Part
         }
 
         $this->type = $type;
+
         return $this;
     }
 
@@ -121,6 +133,7 @@ class Option extends Part
         }
 
         $this->name = $name;
+
         return $this;
     }
 
@@ -140,6 +153,7 @@ class Option extends Part
         }
 
         $this->description = $description;
+
         return $this;
     }
 
@@ -153,6 +167,7 @@ class Option extends Part
     public function setRequired(bool $required)
     {
         $this->required = $required;
+
         return $this;
     }
 
@@ -166,6 +181,7 @@ class Option extends Part
     public function setChannelTypes(array $types)
     {
         $this->channel_types = $types;
+
         return $this;
     }
 
@@ -185,6 +201,7 @@ class Option extends Part
         }
 
         $this->attributes['options'][] = $option->getRawAttributes();
+
         return $this;
     }
 
@@ -204,6 +221,7 @@ class Option extends Part
         }
 
         $this->attributes['choices'][] = $choice->getRawAttributes();
+
         return $this;
     }
 
@@ -216,8 +234,13 @@ class Option extends Part
      */
     public function removeOption(Option $option)
     {
-        if ($opt = $this->attributes['options']->offsetGet($option->name)) {
-            $this->attributes['options']->offsetUnset($opt);
+        if (! empty($this->attributes['options'])) {
+            foreach ($this->attributes['options'] as $idx => $opt) {
+                if ($opt['name'] == $option->name) {
+                    unset($this->attributes['options'][$idx]);
+                    break;
+                }
+            }
         }
 
         return $this;
@@ -232,8 +255,13 @@ class Option extends Part
      */
     public function removeChoice(Choice $choice)
     {
-        if ($cho = $this->attributes['choices']->offsetGet($choice->name)) {
-            $this->attributes['choices']->offsetUnset($cho);
+        if (! empty($this->attributes['choices'])) {
+            foreach ($this->attributes['choices'] as $idx => $cho) {
+                if ($cho['name'] == $choice->name) {
+                    unset($this->attributes['choices'][$idx]);
+                    break;
+                }
+            }
         }
 
         return $this;
@@ -249,6 +277,7 @@ class Option extends Part
     public function setMinValue($min_value)
     {
         $this->min_value = $min_value;
+
         return $this;
     }
 
@@ -262,6 +291,7 @@ class Option extends Part
     public function setMaxValue($max_value)
     {
         $this->max_value = $max_value;
+
         return $this;
     }
 
@@ -287,6 +317,7 @@ class Option extends Part
         }
 
         $this->autocomplete = $autocomplete;
+
         return $this;
     }
 }
