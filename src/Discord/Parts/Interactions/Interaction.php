@@ -177,13 +177,16 @@ class Interaction extends Part
     /**
      * Acknowledges an interaction, creating a placeholder response message which can be edited later
      * through the `updateOriginalResponse` function.
+     * 
+     * @param bool $ephemeral Whether the acknowledge should be ephemeral.
      *
      * @return ExtendedPromiseInterface
      */
-    public function acknowledgeWithResponse(): ExtendedPromiseInterface
+    public function acknowledgeWithResponse(bool $ephemeral = false): ExtendedPromiseInterface
     {
         return $this->respond([
             'type' => InteractionResponseType::DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE,
+            'data' => $ephemeral ? ['flags' => 64] : [],
         ]);
     }
 
