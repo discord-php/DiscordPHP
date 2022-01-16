@@ -25,7 +25,7 @@ Interactions are utilized in message components and slash commands.
 | name                                                             | description                                                                                      | return type        |
 | ---------------------------------------------------------------- | ------------------------------------------------------------------------------------------------ | ------------------ |
 | `acknowledge()`                                                  | acknowledges the interaction                                                                     | `Promise<void>`    |
-| `adknowledgeWithResponse()`                                      | adknowledges the interaction, creating a placeholder response to be updated                      | `Promise<void>`    |
+| `adknowledgeWithResponse(?bool $ephemeral)`                                      | adknowledges the interaction, creating a placeholder response to be updated                      | `Promise<void>`    |
 | `updateMessage(MessageBuilder $message)`                         | updates the message the interaction was triggered from. only for message component interactions. | `Promise<void>`    |
 | `getOriginalResponse()`                                          | gets the original interaction response.                                                          | `Promise<Message>` |
 | `updateOriginalResponse(MessageBuilder $message)`                | updates the original interaction response.                                                       | `Promise<Message>` |
