@@ -182,7 +182,7 @@ class Interaction extends Part
      *
      * @return ExtendedPromiseInterface
      */
-    public function acknowledgeWithResponse($ephemeral = false): ExtendedPromiseInterface
+    public function acknowledgeWithResponse(bool $ephemeral = false): ExtendedPromiseInterface
     {
         return $this->respond([
             'type' => InteractionResponseType::DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE,
