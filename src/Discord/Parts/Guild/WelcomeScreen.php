@@ -39,7 +39,7 @@ class WelcomeScreen extends Part
         $collection = Collection::for(WelcomeChannel::class, 'channel_id');
 
         foreach ($this->attributes['welcome_channels'] ?? [] as $welcome_channel) {
-            $collection->push($this->factory->create(WelcomeChannel::class, $welcome_channel, true));
+            $collection->push($this->factory->part(WelcomeChannel::class, (array) $welcome_channel, true));
         }
 
         return $collection;

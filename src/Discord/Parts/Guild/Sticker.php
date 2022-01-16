@@ -45,17 +45,17 @@ class Sticker extends Part
      */
     protected $fillable = [
         'id',
-        'pack_id',
         'name',
-        'description',
         'tags',
         'asset',
         'type',
         'format_type',
+        'description',
+        'pack_id',
+        'sort_value',
         'available',
         'guild_id',
         'user',
-        'sort_value',
     ];
 
     /**

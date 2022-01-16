@@ -21,9 +21,9 @@ use Discord\Parts\User\User;
  *
  * @property string     $reason   The reason for the ban.
  * @property User       $user     The banned user.
+ * @property string     $user_id
  * @property string     $guild_id
  * @property Guild|null $guild
- * @property string     $user_id
  */
 class Ban extends Part
 {
@@ -65,27 +65,17 @@ class Ban extends Part
      *
      * @return User
      */
-    protected function getUserAttribute(): ?Part
+    protected function getUserAttribute(): User
     {
         if (isset($this->attributes['user_id'])) {
             return $this->discord->users->get('id', $this->attributes['user_id']);
-        } elseif (isset($this->attributes['user'])) {
-            if ($user = $this->discord->users->get('id', $this->attributes['user']->id)) {
-                return $user;
-            }
-
-            return $this->factory->part(User::class, (array) $this->attributes['user'], true);
+        }
+        
+        if ($user = $this->discord->users->get('id', $this->attributes['user']->id)) {
+            return $user;
         }
 
-        return null;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getCreatableAttributes(): array
-    {
-        return [];
+        return $this->factory->part(User::class, (array) $this->attributes['user'], true);
     }
 
     /**

@@ -69,15 +69,14 @@ class GuildTemplate extends Part
      * Returns the source guild attribute.
      *
      * @return Guild      The guild snapshot this template contains.
-     * @throws \Exception
      */
-    protected function getSourceGuildAttribute(): ?Guild
+    protected function getSourceGuildAttribute(): Guild
     {
-        if (isset($this->attributes['serialized_source_guild']) && $guild = $this->discord->guilds->get('id', $this->attributes['source_guild_id'])) {
+        if ($guild = $this->discord->guilds->offsetGet($this->source_guild_id)) {
             return $guild;
         }
 
-        return $this->factory->create(Guild::class, $this->attributes['serialized_source_guild'] ?? [], true);
+        return $this->factory->part(Guild::class, (array) $this->attributes['serialized_source_guild'], true);
     }
 
     /**
@@ -87,7 +86,7 @@ class GuildTemplate extends Part
      */
     protected function getCreatorAttribute(): Part
     {
-        if ($creator = $this->discord->users->get('id', $this->attributes['creator_id'])) {
+        if ($creator = $this->discord->users->offsetGet($this->creator_id)) {
             return $creator;
         }
 
