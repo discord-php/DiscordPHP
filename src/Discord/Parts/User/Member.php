@@ -269,8 +269,8 @@ class Member extends Part
         if ($channel) {
             /* @var Overwrite */
             if ($overwrite = $channel->overwrites->get('id', $this->guild->id)) {
-                $bitwise = Bitwise::or($bitwise, $overwrite->allow->bitwise);
                 $bitwise = Bitwise::and($bitwise, Bitwise::not($overwrite->deny->bitwise));
+                $bitwise = Bitwise::or($bitwise, $overwrite->allow->bitwise);
             }
 
             /* @var Overwrite */
@@ -279,14 +279,14 @@ class Member extends Part
                     continue;
                 }
 
-                $bitwise = Bitwise::or($bitwise, $overwrite->allow->bitwise);
                 $bitwise = Bitwise::and($bitwise, Bitwise::not($overwrite->deny->bitwise));
+                $bitwise = Bitwise::or($bitwise, $overwrite->allow->bitwise);
             }
 
             /* @var Overwrite */
             if ($overwrite = $channel->overwrites->get('id', $this->id)) {
-                $bitwise = Bitwise::or($bitwise, $overwrite->allow->bitwise);
                 $bitwise = Bitwise::and($bitwise, Bitwise::not($overwrite->deny->bitwise));
+                $bitwise = Bitwise::or($bitwise, $overwrite->allow->bitwise);
             }
         }
 
