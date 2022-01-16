@@ -107,7 +107,7 @@ class Webhook extends Part
      *
      * @return User|null
      */
-    protected function getUserAttribute(): ?Part
+    protected function getUserAttribute(): ?User
     {
         if (! isset($this->attributes['user'])) {
             return null;
@@ -117,7 +117,7 @@ class Webhook extends Part
             return $user;
         }
 
-        return $this->factory->part(User::class, $this->attributes['user'], true);
+        return $this->factory->part(User::class, (array) $this->attributes['user'], true);
     }
 
     /**

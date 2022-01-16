@@ -61,7 +61,7 @@ class PresenceUpdate extends Part
             return $user;
         }
 
-        return $this->factory->create(User::class, $this->attributes['user'], true);
+        return $this->factory->part(User::class, (array) $this->attributes['user'], true);
     }
 
     /**
