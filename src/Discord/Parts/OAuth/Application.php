@@ -78,7 +78,7 @@ class Application extends Part
             return $owner;
         }
 
-        return $this->factory->create(User::class, $this->attributes['owner'], true);
+        return $this->factory->part(User::class, (array) $this->attributes['owner'], true);
     }
 
     /**

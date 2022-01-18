@@ -119,7 +119,7 @@ class VoiceStateUpdate extends Part
         }
 
         if (isset($this->attributes['member'])) {
-            return $this->factory->create(Member::class, $this->attributes['member'], true);
+            return $this->factory->part(Member::class, (array) $this->attributes['member'], true);
         }
 
         return null;

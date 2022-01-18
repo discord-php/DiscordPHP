@@ -126,7 +126,7 @@ class Invite extends Part
             return null;
         }
 
-        return $this->factory->create(Guild::class, $this->attributes['guild'], true);
+        return $this->factory->part(Guild::class, (array) $this->attributes['guild'], true);
     }
 
     /**

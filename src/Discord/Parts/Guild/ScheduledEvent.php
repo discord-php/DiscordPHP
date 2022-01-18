@@ -133,11 +133,7 @@ class ScheduledEvent extends Part
      */
     protected function getGuildAttribute(): ?Guild
     {
-        if (! isset($this->attributes['guild_id'])) {
-            return null;
-        }
-
-        return $this->discord->guilds->offsetGet($this->attributes['guild_id']);
+        return $this->discord->guilds->get('id', $this->attributes['guild_id']);
     }
 
     /**
