@@ -34,6 +34,7 @@ use React\Promise\ExtendedPromiseInterface;
  * @property string                $id                           The unique identifier of the member.
  * @property string                $username                     The username of the member.
  * @property string                $discriminator                The discriminator of the member.
+ * @property string                $displayname                  The nickname or username with discriminator of the member.
  * @property User                  $user                         The user part of the member.
  * @property Collection|Role[]     $roles                        A collection of Roles that the member has.
  * @property bool                  $deaf                         Whether the member is deaf.
@@ -312,6 +313,16 @@ class Member extends Part
         }
 
         return $this->http->patch(Endpoint::bind(Endpoint::GUILD_MEMBER, $this->guild_id, $this->id), ['communication_disabled_until' => isset($communication_disabled_until) ? $communication_disabled_until->toIso8601ZuluString() : null]);
+    }
+
+    /**
+     * Returns the member nickname or username with the discriminator.
+     *
+     * @return string Nickname#Discriminator
+     */
+    protected function getDisplaynameAttribute(): string
+    {
+        return ($this->nick ?? $this->username) . '#' . $this->discriminator;
     }
 
     /**
