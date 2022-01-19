@@ -24,16 +24,16 @@ use React\Promise\ExtendedPromiseInterface;
  * @see https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-structure
  *
  * @property string                   $id                 The unique identifier of the command.
- * @property int                      $type               The type of the command, defaults 1 if not set
+ * @property int                      $type               The type of the command, defaults 1 if not set.
  * @property string                   $application_id     The unique identifier of the parent Application that made the command, if made by one.
  * @property string|null              $guild_id           The unique identifier of the guild that the command belongs to. Null if global.
  * @property Guild|null               $guild              The guild that the command belongs to. Null if global.
  * @property string                   $name               1-32 character name of the command.
- * @property string                   $description        1-100 character description for CHAT_INPUT commands, empty string for USER and MESSAGE commands
+ * @property string                   $description        1-100 character description for CHAT_INPUT commands, empty string for USER and MESSAGE commands.
  * @property Collection|Option[]|null $options            The parameters for the command, max 25. Only for Slash command (CHAT_INPUT).
  * @property boolean                  $default_permission Whether the command is enabled by default when the app is added to a guild.
- * @property string                   $version            Autoincrementing version identifier updated during substantial record changes
- * @property OverwriteRepository      $overwrites         Permission overwrites
+ * @property string                   $version            Autoincrementing version identifier updated during substantial record changes.
+ * @property OverwriteRepository      $overwrites         Permission overwrites.
  */
 class Command extends Part
 {
@@ -69,13 +69,17 @@ class Command extends Part
     ];
 
     /**
-     * @inheritdoc
+     * Gets the application id attribute.
+     *
+     * @return string Application ID of this Bot if not set.
      */
-    protected function afterConstruct(): void
+    protected function getApplicationIdAttribute(): string
     {
         if (! isset($this->attributes['application_id'])) {
-            $this->offsetSet('application_id', $this->discord->application->id);
+            return $this->discord->application->id;
         }
+
+        return $this->attributes['application_id'];
     }
 
     /**
@@ -114,6 +118,8 @@ class Command extends Part
 
     /**
      * Sets an overwrite to the guild application command.
+     *
+     * @see https://discord.com/developers/docs/interactions/application-commands#edit-application-command-permissions
      *
      * @param Overwrite $overwrite An overwrite object.
      *

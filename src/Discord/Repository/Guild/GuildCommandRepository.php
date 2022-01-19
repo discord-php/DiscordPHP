@@ -54,17 +54,14 @@ class GuildCommandRepository extends AbstractRepository
     /**
      * Sets overwrite to all application commands in the guild.
      *
-     * @param Part      $part      A role or user.
+     * @see https://discord.com/developers/docs/interactions/application-commands#batch-edit-application-command-permissions
+     *
      * @param Overwrite $overwrite An overwrite object.
      *
      * @return ExtendedPromiseInterface
      */
-    public function setOverwrite(Part $part, Overwrite $overwrite): ExtendedPromiseInterface
+    public function setOverwrite(Overwrite $overwrite): ExtendedPromiseInterface
     {
-        if (!($part instanceof Role || $part instanceof User || $part instanceof Member)) {
-            return \React\Promise\reject(new InvalidOverwriteException('Given part was not one of role or user.'));
-        }
-
-        return $this->http->put(Endpoint::bind(Endpoint::GUILD_APPLICATION_COMMAND_PERMISSIONS, $this->vars['application_id'], $this->vars['guild_']), $overwrite->getRawAttributes());
+        return $this->http->put(Endpoint::bind(Endpoint::GUILD_APPLICATION_COMMANDS_PERMISSIONS, $this->vars['application_id'], $this->vars['guild_id']), $overwrite->getRawAttributes());
     }
 }
