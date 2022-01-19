@@ -20,23 +20,37 @@ use Discord\Parts\Permissions\RolePermission;
  * @property string         $id            The unique identifier of the role.
  * @property string         $name          The name of the role.
  * @property int            $color         The color of the guild.
- * @property bool           $managed       Whether the role is managed by a Twitch subscriber feature.
  * @property bool           $hoist         Whether the role is hoisted on the sidebar.
- * @property int            $position      The position of the role on the sidebar.
- * @property RolePermission $permissions   The permissions of the role.
  * @property string|null    $icon          The URL to the role icon.
  * @property string|null    $icon_hash     The icon hash for the role.
  * @property string|null    $unicode_emoji The unicode emoji for the role.
+ * @property int            $position      The position of the role on the sidebar.
+ * @property RolePermission $permissions   The permissions of the role.
+ * @property bool           $managed       Whether the role is managed by a Twitch subscriber feature.
  * @property bool           $mentionable   Whether the role is mentionable.
- * @property Guild          $guild         The guild that the role belongs to.
+ * @property object|null    $tags          The tags this role has.
  * @property string         $guild_id      The unique identifier of the guild that the role belongs to.
+ * @property Guild|null     $guild         The guild that the role belongs to.
  */
 class Role extends Part
 {
     /**
      * @inheritdoc
      */
-    protected $fillable = ['id', 'name', 'color', 'managed', 'hoist', 'position', 'permissions', 'icon', 'unicode_emoji', 'mentionable', 'guild_id'];
+    protected $fillable = [
+        'id',
+        'name',
+        'color',
+        'hoist',
+        'icon',
+        'unicode_emoji',
+        'position',
+        'permissions',
+        'managed',
+        'mentionable',
+        'tags',
+        'guild_id',
+    ];
 
     /**
      * @inheritdoc
@@ -51,9 +65,9 @@ class Role extends Part
     /**
      * Gets the guild attribute.
      *
-     * @return Guild The guild attribute.
+     * @return Guild|null The guild attribute.
      */
-    protected function getGuildAttribute(): Guild
+    protected function getGuildAttribute(): ?Guild
     {
         return $this->discord->guilds->get('id', $this->guild_id);
     }
@@ -62,6 +76,7 @@ class Role extends Part
      * Sets the permissions attribute.
      *
      * @param  RolePermission|int $permission The permissions to set.
+     *
      * @throws \Exception
      */
     protected function setPermissionsAttribute($permission): void
@@ -116,7 +131,7 @@ class Role extends Part
         }
 
         $allowed = ['png', 'jpg', 'webp'];
-	
+
         if (! in_array(strtolower($format), $allowed)) {
             $format = 'png';
         }
@@ -141,15 +156,15 @@ class Role extends Part
     {
         return [
             'name' => $this->name,
-            'hoist' => $this->hoist,
-            'color' => $this->color,
             'permissions' => $this->permissions->bitwise,
+            'color' => $this->color,
+            'hoist' => $this->hoist,
             'icon' => $this->attributes['icon'],
             'unicode_emoji' => $this->unicode_emoji,
             'mentionable' => $this->mentionable,
         ];
     }
-    
+
     /**
      * @inheritdoc
      */
