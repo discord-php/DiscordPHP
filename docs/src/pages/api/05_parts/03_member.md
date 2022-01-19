@@ -9,7 +9,9 @@ A member object can also be serialised into a mention string. For example:
 ```php
 $discord->on(Event::MESSAGE_CREATE, function (Message $message) {
     // Hello <@member_id>!
-    $message->channel->sendMessage('Hello '.$message->author.'!');
+    // Note: `$message->member` will be `null` if the message originated from
+    // a private message, or if the member object was not cached.
+    $message->channel->sendMessage('Hello '.$message->member.'!');
 });
 ```
 

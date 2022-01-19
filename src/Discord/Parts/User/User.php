@@ -24,6 +24,7 @@ use React\Promise\ExtendedPromiseInterface;
  * @property string      $id            The unique identifier of the user.
  * @property string      $username      The username of the user.
  * @property string      $discriminator The discriminator of the user.
+ * @property string      $displayname   The username and discriminator of the user.
  * @property string      $avatar        The avatar URL of the user.
  * @property string      $avatar_hash   The avatar hash of the user.
  * @property bool|null   $bot           Whether the user is a bot.
@@ -120,6 +121,16 @@ class User extends Part
         return $this->getPrivateChannel()->then(function ($channel) {
             return $channel->broadcastTyping();
         });
+    }
+
+    /**
+     * Returns the username with the discriminator.
+     *
+     * @return string Username#Discriminator
+     */
+    protected function getDisplaynameAttribute(): string
+    {
+        return $this->username . '#' . $this->discriminator;
     }
 
     /**

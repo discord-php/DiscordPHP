@@ -60,7 +60,7 @@ class ScheduledEventRepository extends AbstractRepository
         $endpoint->addQuery('with_user_count', $with_user_count);
 
         return $this->http->get($endpoint)->then(function ($response) {
-            $this->fill([]);
+            $this->clear();
 
             foreach ($response as $value) {
                 $value = array_merge($this->vars, (array) $value);
