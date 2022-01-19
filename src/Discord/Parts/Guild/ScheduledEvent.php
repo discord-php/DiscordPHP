@@ -79,7 +79,7 @@ class ScheduledEvent extends Part
     /**
      * Get a list of guild scheduled event users subscribed to a guild scheduled event. Returns a list of guild scheduled event user objects on success. Guild member data, if it exists, is included if the with_member query parameter is set.
      *
-     * @throws \InvalidArgumentException
+     * @throws \RangeException
      *
      * @return ExtendedPromiseInterface
      */
@@ -183,6 +183,8 @@ class ScheduledEvent extends Part
     /**
      * Gets the user that created the scheduled event.
      *
+     * @throws \Exception
+     *
      * @return User|null The user that created the scheduled event.
      */
     protected function getCreatorAttribute(): ?User
@@ -196,7 +198,7 @@ class ScheduledEvent extends Part
                 return $user;
             }
 
-            return $this->factory->part(User::class, (array) $this->attributes['user'], true);
+            return $this->factory->create(User::class, $this->attributes['user'], true);
         }
 
         return null;

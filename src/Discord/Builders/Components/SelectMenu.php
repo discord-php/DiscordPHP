@@ -127,7 +127,7 @@ class SelectMenu extends Component
      * @param Option $option Option to add.
      *
      * @throws \OverflowException
-     * @throws \LogicException
+     * @throws \UnexpectedValueException
      *
      * @return $this
      */
@@ -142,7 +142,7 @@ class SelectMenu extends Component
         // didn't wanna use a hashtable here so that we can keep the order of options
         foreach ($this->options as $other) {
             if ($other->getValue() == $value) {
-                throw new \LogicException('Another value already has the same value. These must not be the same.');
+                throw new \UnexpectedValueException('Another value already has the same value. These must not be the same.');
             }
         }
 

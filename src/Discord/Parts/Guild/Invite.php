@@ -128,7 +128,11 @@ class Invite extends Part
             return null;
         }
 
-        return $this->factory->part(Guild::class, (array) $this->attributes['guild'], true);
+        if ($guild = $this->discord->guilds->get('id', $this->attributes['guild']->id)) {
+            return $guild;
+        }
+
+        return $this->factory->create(Guild::class, $this->attributes['guild'], true);
     }
 
     /**
@@ -178,6 +182,8 @@ class Invite extends Part
     /**
      * Returns the inviter attribute.
      *
+     * @throws \Exception
+     *
      * @return User|null The User that invited you.
      */
     protected function getInviterAttribute(): ?User
@@ -190,7 +196,7 @@ class Invite extends Part
             return $user;
         }
 
-        return $this->factory->part(User::class, (array) $this->attributes['inviter'], true);
+        return $this->factory->create(User::class, $this->attributes['inviter'], true);
     }
 
     /**
@@ -222,7 +228,7 @@ class Invite extends Part
             return $user;
         }
 
-        return $this->factory->part(User::class, (array) $this->attributes['target_user'], true);
+        return $this->factory->create(User::class, $this->attributes['target_user'], true);
     }
 
     /**
@@ -256,7 +262,7 @@ class Invite extends Part
             return $scheduled_event;
         }
 
-        return $this->factory->part(ScheduledEvent::class, (array) $this->attributes['guild_scheduled_event'], true);
+        return $this->factory->create(ScheduledEvent::class, $this->attributes['guild_scheduled_event'], true);
     }
 
     /**

@@ -186,7 +186,8 @@ class CommandBuilder implements JsonSerializable
     /**
      * Returns an array with all the options.
      *
-     * @throws \LogicException
+     * @throws \LengthException
+     * @throws \DomainException
      *
      * @return array
      */
