@@ -15,7 +15,6 @@ use Discord\Discord;
 use Discord\Helpers\Collection;
 use Discord\Parts\Interactions\Interaction;
 use Discord\WebSockets\Event;
-use Exception;
 use React\Promise\PromiseInterface;
 
 use function Discord\poly_strlen;
@@ -127,14 +126,15 @@ class SelectMenu extends Component
      *
      * @param Option $option Option to add.
      *
-     * @throws \InvalidArgumentException
+     * @throws \OverflowException
+     * @throws \LogicException
      *
      * @return $this
      */
     public function addOption(Option $option): self
     {
         if (count($this->options) > 25) {
-            throw new \InvalidArgumentException('You can only have 25 options per select menu.');
+            throw new \OverflowException('You can only have 25 options per select menu.');
         }
 
         $value = $option->getValue();
@@ -142,7 +142,7 @@ class SelectMenu extends Component
         // didn't wanna use a hashtable here so that we can keep the order of options
         foreach ($this->options as $other) {
             if ($other->getValue() == $value) {
-                throw new \InvalidArgumentException('Another value already has the same value. These must not be the same.');
+                throw new \LogicException('Another value already has the same value. These must not be the same.');
             }
         }
 
@@ -295,7 +295,7 @@ class SelectMenu extends Component
                     // attempt to acknowledge interaction if it has not already been responded to.
                     try {
                         $interaction->acknowledge();
-                    } catch (Exception $e) {
+                    } catch (\Exception $e) {
                     }
                 };
 
@@ -403,7 +403,7 @@ class SelectMenu extends Component
 
         if ($this->min_values) {
             if ($this->min_values > count($this->options)) {
-                throw new \LengthException('There are less options than the minimum number of options to be selected.');
+                throw new \OutOfBoundsException('There are less options than the minimum number of options to be selected.');
             }
 
             $content['min_values'] = $this->min_values;
@@ -411,7 +411,7 @@ class SelectMenu extends Component
 
         if ($this->max_values) {
             if ($this->max_values > count($this->options)) {
-                throw new \LengthException('There are less options than the maximum number of options to be selected.');
+                throw new \OutOfBoundsException('There are less options than the maximum number of options to be selected.');
             }
 
             $content['max_values'] = $this->max_values;

@@ -190,14 +190,14 @@ class Option extends Part
      *
      * @param Option $option The option
      *
-     * @throws \InvalidArgumentException
+     * @throws \OverflowException
      *
      * @return $this
      */
     public function addOption(Option $option)
     {
         if (count($this->options) >= 25) {
-            throw new \InvalidArgumentException('Option can not have more than 25 parameters.');
+            throw new \OverflowException('Option can not have more than 25 parameters.');
         }
 
         $this->attributes['options'][] = $option->getRawAttributes();
@@ -210,14 +210,14 @@ class Option extends Part
      *
      * @param Choice $choice The choice
      *
-     * @throws \InvalidArgumentException
+     * @throws \OverflowException
      *
      * @return $this
      */
     public function addChoice(Choice $choice)
     {
         if (count($this->choices) >= 25) {
-            throw new \InvalidArgumentException('Option can only have a maximum of 25 Choices.');
+            throw new \OverflowException('Option can only have a maximum of 25 Choices.');
         }
 
         $this->attributes['choices'][] = $choice->getRawAttributes();

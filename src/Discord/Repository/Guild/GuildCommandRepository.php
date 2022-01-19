@@ -11,14 +11,9 @@
 
 namespace Discord\Repository\Guild;
 
-use Discord\Exceptions\InvalidOverwriteException;
 use Discord\Http\Endpoint;
-use Discord\Parts\Guild\Role;
 use Discord\Parts\Interactions\Command\Command;
 use Discord\Parts\Interactions\Command\Overwrite;
-use Discord\Parts\Part;
-use Discord\Parts\User\Member;
-use Discord\Parts\User\User;
 use Discord\Repository\AbstractRepository;
 use React\Promise\ExtendedPromiseInterface;
 

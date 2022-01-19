@@ -97,6 +97,7 @@ class GuildTemplate extends Part
      * Returns the created at attribute.
      *
      * @return Carbon     The time that the guild template was created.
+     *
      * @throws \Exception
      */
     protected function getCreatedAtAttribute(): Carbon
@@ -108,6 +109,7 @@ class GuildTemplate extends Part
      * Returns the updated at attribute.
      *
      * @return Carbon     The time that the guild template was updated.
+     *
      * @throws \Exception
      */
     protected function getUpdatedAtAttribute(): Carbon

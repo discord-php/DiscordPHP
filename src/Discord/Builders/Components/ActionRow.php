@@ -36,6 +36,7 @@ class ActionRow extends Component
      * @param Component $component Component to add.
      *
      * @throws \InvalidArgumentException
+     * @throws \OverflowException
      *
      * @return $this
      */
@@ -50,7 +51,7 @@ class ActionRow extends Component
         }
 
         if (count($this->components) >= 5) {
-            throw new \InvalidArgumentException('You can only have 5 components per action row.');
+            throw new \OverflowException('You can only have 5 components per action row.');
         }
 
         $this->components[] = $component;

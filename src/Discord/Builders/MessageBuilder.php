@@ -153,7 +153,7 @@ class MessageBuilder implements JsonSerializable
      *
      * @param Embed|array $embeds,...
      *
-     * @throws \InvalidArgumentException
+     * @throws \OverflowException
      *
      * @return $this
      */
@@ -165,7 +165,7 @@ class MessageBuilder implements JsonSerializable
             }
 
             if (count($this->embeds) >= 10) {
-                throw new \InvalidArgumentException('You can only have 10 embeds per message.');
+                throw new \OverflowException('You can only have 10 embeds per message.');
             }
 
             $this->embeds[] = $embed;
@@ -270,6 +270,7 @@ class MessageBuilder implements JsonSerializable
      * @param Component $component Component to add.
      *
      * @throws \InvalidArgumentException
+     * @throws \OverflowException
      *
      * @return $this
      */
@@ -280,7 +281,7 @@ class MessageBuilder implements JsonSerializable
         }
 
         if (count($this->components) >= 5) {
-            throw new \InvalidArgumentException('You can only add 5 components to a message');
+            throw new \OverflowException('You can only add 5 components to a message');
         }
 
         $this->components[] = $component;
@@ -351,7 +352,7 @@ class MessageBuilder implements JsonSerializable
      *
      * @param string|Sticker $sticker Sticker to add.
      *
-     * @throws \InvalidArgumentException
+     * @throws \OverflowException
      *
      * @return $this
      */
@@ -362,7 +363,7 @@ class MessageBuilder implements JsonSerializable
         }
 
         if (count($this->sticker_ids) >= 3) {
-            throw new \InvalidArgumentException('You can only add 3 stickers to a message');
+            throw new \OverflowException('You can only add 3 stickers to a message');
         }
 
         $this->sticker_ids[] = $sticker;

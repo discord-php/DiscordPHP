@@ -1071,7 +1071,8 @@ class Discord
      *                                 Must be one of the following:
      *                                 online, dnd, idle, invisible, offline
      * @param  bool          $afk      Whether the client is AFK.
-     * @throws \Exception
+     *
+     * @throws \UnexpectedValueException
      */
     public function updatePresence(Activity $activity = null, bool $idle = false, string $status = 'online', bool $afk = false): void
     {
@@ -1081,7 +1082,7 @@ class Discord
             $activity = $activity->getRawAttributes();
 
             if (! in_array($activity['type'], [Activity::TYPE_PLAYING, Activity::TYPE_STREAMING, Activity::TYPE_LISTENING, Activity::TYPE_WATCHING, Activity::TYPE_COMPETING])) {
-                throw new \Exception("The given activity type ({$activity['type']}) is invalid.");
+                throw new \UnexpectedValueException("The given activity type ({$activity['type']}) is invalid.");
 
                 return;
             }
@@ -1127,6 +1128,8 @@ class Discord
      * @param LoggerInterface|null $logger  Voice client logger. If null, uses same logger as Discord client.
      * @param bool                 $check   Whether to check for system requirements.
      *
+     * @throws \RuntimeException
+     *
      * @return PromiseInterface
      */
     public function joinVoiceChannel(Channel $channel, $mute = false, $deaf = true, ?LoggerInterface $logger = null, bool $check = true): ExtendedPromiseInterface
@@ -1134,13 +1137,13 @@ class Discord
         $deferred = new Deferred();
 
         if (! $channel->allowVoice()) {
-            $deferred->reject(new \Exception('Channel must allow voice.'));
+            $deferred->reject(new \RuntimeException('Channel must allow voice.'));
 
             return $deferred->promise();
         }
 
         if (isset($this->voiceClients[$channel->guild_id])) {
-            $deferred->reject(new \Exception('You cannot join more than one voice channel per guild.'));
+            $deferred->reject(new \RuntimeException('You cannot join more than one voice channel per guild.'));
 
             return $deferred->promise();
         }
@@ -1526,7 +1529,7 @@ class Discord
      * @param callable      $callback
      * @param callable|null $autocomplete_callback
      *
-     * @throws \InvalidArgumentException
+     * @throws \LogicException
      *
      * @return RegisteredCommand
      */
@@ -1539,7 +1542,7 @@ class Discord
         // registering base command
         if (! is_array($name) || count($name) == 1) {
             if (isset($this->application_commands[$name])) {
-                throw new \InvalidArgumentException("The command `{$name}` already exists.");
+                throw new \LogicException("The command `{$name}` already exists.");
             }
 
             return $this->application_commands[$name] = new RegisteredCommand($this, $name, $callback, $autocomplete_callback);

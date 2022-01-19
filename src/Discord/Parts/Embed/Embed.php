@@ -203,9 +203,9 @@ class Embed extends Part
      *
      * @param string $title Maximum length is 256 characters.
      *
-     * @return $this
-     *
      * @throws \LengthException
+     *
+     * @return $this
      */
     protected function setTitleAttribute(string $title)
     {
@@ -283,15 +283,15 @@ class Embed extends Part
      *
      * @param Field|array $field
      *
-     * @return $this
+     * @throws \OverflowException
      *
-     * @throws \InvalidArgumentException
+     * @return $this
      */
     public function addField(...$fields): self
     {
         foreach ($fields as $field) {
             if (count($this->fields) > 25) {
-                throw new \InvalidArgumentException('Embeds can not have more than 25 fields.');
+                throw new \OverflowException('Embeds can not have more than 25 fields.');
             }
 
             if ($field instanceof Field) {
@@ -311,9 +311,9 @@ class Embed extends Part
      * @param string $value  Maximum length is 1024 characters.
      * @param bool   $inline Whether this field gets shown with other inline fields on one line.
      *
-     * @return $this
+     * @throws \OverflowException
      *
-     * @throws \InvalidArgumentException
+     * @return $this
      */
     public function addFieldValues(string $name, string $value, bool $inline = false)
     {
@@ -331,9 +331,9 @@ class Embed extends Part
      * @param string $iconurl The URL to the icon.
      * @param string $url     The URL to the author.
      *
-     * @return $this
-     *
      * @throws \LengthException
+     *
+     * @return $this
      */
     public function setAuthor(string $name, string $iconurl = '', string $url = '')
     {
@@ -360,9 +360,9 @@ class Embed extends Part
      * @param string $text    Maximum length is 2048 characters.
      * @param string $iconurl The URL to the icon.
      *
-     * @return $this
-     *
      * @throws \LengthException
+     *
+     * @return $this
      */
     public function setFooter(string $text, string $iconurl = '')
     {
@@ -415,9 +415,9 @@ class Embed extends Part
      *
      * @param int|null $timestamp
      *
-     * @return $this
-     *
      * @throws \Exception
+     *
+     * @return $this
      */
     public function setTimestamp(?int $timestamp = null)
     {
@@ -470,9 +470,9 @@ class Embed extends Part
      *
      * @param array|int|string $color
      *
-     * @return int
-     *
      * @throws \InvalidArgumentException
+     *
+     * @return int
      */
     protected static function resolveColor($color)
     {
@@ -497,8 +497,9 @@ class Embed extends Part
      * @param string $key   The attribute key.
      * @param string $class The attribute class.
      *
-     * @return mixed
      * @throws \Exception
+     *
+     * @return mixed
      */
     private function attributeHelper($key, $class)
     {

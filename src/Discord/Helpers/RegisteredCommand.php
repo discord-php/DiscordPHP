@@ -164,7 +164,7 @@ class RegisteredCommand
      * @param callable      $callback
      * @param callable|null $autocomplete_callback
      *
-     * @throws \InvalidArgumentException
+     * @throws \LogicException
      *
      * @return RegisteredCommand
      */
@@ -176,7 +176,7 @@ class RegisteredCommand
 
         if (! is_array($name) || count($name) == 1) {
             if (isset($this->subCommands[$name])) {
-                throw new \InvalidArgumentException("The command `{$name}` already exists.");
+                throw new \LogicException("The command `{$name}` already exists.");
             }
 
             return $this->subCommands[$name] = new static($this->discord, $name, $callback, $autocomplete_callback);

@@ -15,7 +15,6 @@ use Discord\Discord;
 use Discord\Parts\Guild\Emoji;
 use Discord\Parts\Interactions\Interaction;
 use Discord\WebSockets\Event;
-use Exception;
 use React\Promise\PromiseInterface;
 
 use function Discord\poly_strlen;
@@ -228,6 +227,7 @@ class Button extends Component
      * @param string $custom_id
      *
      * @throws \LogicException
+     * @throws \LengthException
      *
      * @return $this
      */
@@ -330,7 +330,7 @@ class Button extends Component
                     // attempt to acknowledge interaction if it has not already been responded to.
                     try {
                         $interaction->acknowledge();
-                    } catch (Exception $e) {
+                    } catch (\Exception $e) {
                     }
                 };
 

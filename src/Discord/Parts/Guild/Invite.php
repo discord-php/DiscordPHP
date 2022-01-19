@@ -85,7 +85,7 @@ class Invite extends Part
     public function accept(): ExtendedPromiseInterface
     {
         if ($this->uses >= $this->max_uses) {
-            return \React\Promise\reject(new \Exception('This invite has been used the max times.'));
+            return \React\Promise\reject(new \RuntimeException('This invite has been used the max times.'));
         }
 
         return $this->http->post(Endpoint::bind(Endpoint::INVITE, $this->code));

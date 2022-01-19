@@ -79,6 +79,8 @@ class ScheduledEvent extends Part
     /**
      * Get a list of guild scheduled event users subscribed to a guild scheduled event. Returns a list of guild scheduled event user objects on success. Guild member data, if it exists, is included if the with_member query parameter is set.
      *
+     * @throws \InvalidArgumentException
+     *
      * @return ExtendedPromiseInterface
      */
     public function getUsers(array $options): ExtendedPromiseInterface
@@ -93,7 +95,7 @@ class ScheduledEvent extends Part
 
         $options = $resolver->resolve($options);
         if (isset($options['before'], $options['after'])) {
-            return \React\Promise\reject(new \Exception('Can only specify one of before after.'));
+            return \React\Promise\reject(new \RangeException('Can only specify one of before after.'));
         }
 
         $endpoint = Endpoint::bind(Endpoint::GUILD_SCHEDULED_EVENT_USERS, $this->guild_id, $this->id);

@@ -25,7 +25,6 @@ use Discord\Parts\Part;
 use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
 use React\Promise\ExtendedPromiseInterface;
-use RuntimeException;
 
 use function React\Promise\reject;
 
@@ -240,14 +239,14 @@ class Interaction extends Part
     /**
      * Retrieves the original interaction response.
      *
-     * @throws RuntimeException
+     * @throws \RuntimeException
      *
      * @return ExtendedPromiseInterface<Message>
      */
     public function getOriginalResponse(): ExtendedPromiseInterface
     {
         if (! $this->responded) {
-            return reject(new RuntimeException('Interaction has not been responded to.'));
+            return reject(new \RuntimeException('Interaction has not been responded to.'));
         }
 
         return $this->http->get(Endpoint::bind(Endpoint::ORIGINAL_INTERACTION_RESPONSE, $this->application_id, $this->token))
@@ -261,14 +260,14 @@ class Interaction extends Part
      *
      * @param MessageBuilder $builder New message contents.
      *
-     * @throws RuntimeException
+     * @throws \RuntimeException
      *
      * @return ExtendedPromiseInterface<Message>
      */
     public function updateOriginalResponse(MessageBuilder $builder): ExtendedPromiseInterface
     {
         if (! $this->responded) {
-            throw new RuntimeException('Interaction has not been responded to.');
+            throw new \RuntimeException('Interaction has not been responded to.');
         }
 
         return (function () use ($builder): ExtendedPromiseInterface {
@@ -287,14 +286,14 @@ class Interaction extends Part
     /**
      * Deletes the original interaction response.
      *
-     * @throws RuntimeException
+     * @throws \RuntimeException
      *
      * @return ExtendedPromiseInterface
      */
     public function deleteOriginalResponse(): ExtendedPromiseInterface
     {
         if (! $this->responded) {
-            return reject(new RuntimeException('Interaction has not been responded to.'));
+            return reject(new \RuntimeException('Interaction has not been responded to.'));
         }
 
         return $this->http->delete(Endpoint::bind(Endpoint::ORIGINAL_INTERACTION_RESPONSE, $this->application_id, $this->token));
@@ -306,14 +305,14 @@ class Interaction extends Part
      * @param MessageBuilder $builder   Message to send.
      * @param bool           $ephemeral Whether the created follow-up should be ephemeral.
      *
-     * @throws RuntimeException
+     * @throws \RuntimeException
      *
      * @return ExtendedPromiseInterface<Message>
      */
     public function sendFollowUpMessage(MessageBuilder $builder, bool $ephemeral = false): ExtendedPromiseInterface
     {
         if (! $this->responded) {
-            throw new RuntimeException('Cannot create a follow-up message as the interaction has not been responded to.');
+            throw new \RuntimeException('Cannot create a follow-up message as the interaction has not been responded to.');
         }
 
         if ($ephemeral) {
@@ -368,14 +367,14 @@ class Interaction extends Part
      * @param array          $payload   Response payload.
      * @param Multipart|null $multipart Optional multipart payload.
      *
-     * @throws RuntimeException
+     * @throws \RuntimeException
      *
      * @return ExtendedPromiseInterface
      */
     protected function respond(array $payload, ?Multipart $multipart = null): ExtendedPromiseInterface
     {
         if ($this->responded) {
-            return reject(new RuntimeException('Interaction has already been responded to.'));
+            return reject(new \RuntimeException('Interaction has already been responded to.'));
         }
 
         $this->responded = true;
@@ -401,14 +400,14 @@ class Interaction extends Part
      * @param string         $message_id Message to update.
      * @param MessageBuilder $builder    New message contents.
      *
-     * @throws RuntimeException
+     * @throws \RuntimeException
      *
      * @return ExtendedPromiseInterface<Message>
      */
     public function updateFollowUpMessage(string $message_id, MessageBuilder $builder)
     {
         if (! $this->responded) {
-            throw new RuntimeException('Cannot create a follow-up message as the interaction has not been responded to.');
+            throw new \RuntimeException('Cannot create a follow-up message as the interaction has not been responded to.');
         }
 
         return (function () use ($message_id, $builder): ExtendedPromiseInterface {
