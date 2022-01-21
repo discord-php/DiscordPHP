@@ -18,8 +18,12 @@ use Discord\Parts\Part;
 use Discord\Parts\Channel\Message;
 use React\Promise\ExtendedPromiseInterface;
 
+use function React\Promise\resolve;
+
 /**
  * A user is a general user that is not attached to a guild.
+ *
+ * @see https://discord.com/developers/docs/resources/user
  *
  * @property string      $id            The unique identifier of the user.
  * @property string      $username      The username of the user.
@@ -68,17 +72,33 @@ class User extends Part
     /**
      * @inheritdoc
      */
-    protected $fillable = ['id', 'username', 'discriminator', 'avatar', 'bot', 'system', 'mfa_enabled', 'banner', 'accent_color', 'locale', 'verified', 'email', 'flags', 'premium_type', 'public_flags'];
+    protected $fillable = [
+        'id',
+        'username',
+        'discriminator',
+        'avatar',
+        'bot',
+        'system',
+        'mfa_enabled',
+        'locale',
+        'verified',
+        'email',
+        'flags',
+        'banner',
+        'accent_color',
+        'premium_type',
+        'public_flags'
+    ];
 
     /**
      * Gets the private channel for the user.
      *
-     * @return ExtendedPromiseInterface
+     * @return ExtendedPromiseInterface<Channel>
      */
     public function getPrivateChannel(): ExtendedPromiseInterface
     {
         if ($channel = $this->discord->private_channels->get('recipient_id', $this->id)) {
-            return \React\Promise\resolve($channel);
+            return resolve($channel);
         }
 
         return $this->http->post(Endpoint::USER_CURRENT_CHANNELS, ['recipient_id' => $this->id])->then(function ($response) {
@@ -113,12 +133,13 @@ class User extends Part
     /**
      * Broadcasts that you are typing to the channel. Lasts for 5 seconds.
      *
-     * @return ExtendedPromiseInterface
      * @throws \Exception
+     *
+     * @return ExtendedPromiseInterface
      */
     public function broadcastTyping(): ExtendedPromiseInterface
     {
-        return $this->getPrivateChannel()->then(function ($channel) {
+        return $this->getPrivateChannel()->then(function (Channel $channel) {
             return $channel->broadcastTyping();
         });
     }
@@ -216,7 +237,7 @@ class User extends Part
     /**
      * Returns a timestamp for when a user's account was created.
      *
-     * @return float
+     * @return int
      */
     public function createdTimestamp()
     {
@@ -238,7 +259,7 @@ class User extends Part
      *
      * @return string A formatted mention.
      */
-    public function __toString()
+    public function __toString(): string
     {
         return "<@{$this->id}>";
     }
