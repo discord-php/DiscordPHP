@@ -32,7 +32,6 @@ use function React\Promise\reject;
  * Represents an interaction from Discord.
  *
  * @see https://discord.com/developers/docs/interactions/receiving-and-responding#interactions
- * @see \Discord\WebSockets\Events\InteractionCreate
  *
  * @property string               $id             ID of the interaction.
  * @property string               $application_id ID of the application the interaction is for.
@@ -43,7 +42,7 @@ use function React\Promise\reject;
  * @property string|null          $channel_id     ID of the channel the interaction was sent from.
  * @property Channel|null         $channel        Channel the interaction was sent from.
  * @property Member|null          $member         Member who invoked the interaction.
- * @property User                 $user           User who invoked the interaction.
+ * @property User|null            $user           User who invoked the interaction.
  * @property string               $token          Continuation token for responding to the interaction.
  * @property int                  $version        Version of interaction.
  * @property Message|null         $message        Message that triggered the interactions, when triggered from message components.
@@ -147,12 +146,16 @@ class Interaction extends Part
     /**
      * Returns the user who invoked the interaction.
      *
-     * @return User
+     * @return User|null
      */
-    protected function getUserAttribute(): User
+    protected function getUserAttribute(): ?User
     {
-        if (isset($this->member->user)) {
+        if ($this->member) {
             return $this->member->user;
+        }
+
+        if (! isset($this->attributes['user'])) {
+            return null;
         }
 
         return $this->factory->create(User::class, $this->attributes['user'], true);
@@ -187,7 +190,7 @@ class Interaction extends Part
         }
 
         if ($this->type != InteractionType::MESSAGE_COMPONENT) {
-            throw new \LogicException('You can only acknowledge message component interactions.');
+            return reject(new \LogicException('You can only acknowledge message component interactions.'));
         }
 
         return $this->respond([
@@ -208,7 +211,7 @@ class Interaction extends Part
     public function acknowledgeWithResponse(bool $ephemeral = false): ExtendedPromiseInterface
     {
         if (! in_array($this->type, [InteractionType::APPLICATION_COMMAND, InteractionType::MESSAGE_COMPONENT])) {
-            throw new \LogicException('You can only acknowledge application command or message component interactions.');
+            return reject(new \LogicException('You can only acknowledge application command or message component interactions.'));
         }
 
         return $this->respond([
@@ -230,7 +233,7 @@ class Interaction extends Part
     public function updateMessage(MessageBuilder $builder): ExtendedPromiseInterface
     {
         if ($this->type != InteractionType::MESSAGE_COMPONENT) {
-            throw new \LogicException('You can only update messages that occur due to a message component interaction.');
+            return reject(new \LogicException('You can only update messages that occur due to a message component interaction.'));
         }
 
         return $this->respond([
@@ -270,7 +273,7 @@ class Interaction extends Part
     public function updateOriginalResponse(MessageBuilder $builder): ExtendedPromiseInterface
     {
         if (! $this->responded) {
-            throw new \RuntimeException('Interaction has not been responded to.');
+            return reject(new \RuntimeException('Interaction has not been responded to.'));
         }
 
         return (function () use ($builder): ExtendedPromiseInterface {
@@ -315,7 +318,7 @@ class Interaction extends Part
     public function sendFollowUpMessage(MessageBuilder $builder, bool $ephemeral = false): ExtendedPromiseInterface
     {
         if (! $this->responded) {
-            throw new \RuntimeException('Cannot create a follow-up message as the interaction has not been responded to.');
+            return reject(new \RuntimeException('Cannot create a follow-up message as the interaction has not been responded to.'));
         }
 
         if ($ephemeral) {
@@ -348,7 +351,7 @@ class Interaction extends Part
     public function respondWithMessage(MessageBuilder $builder, bool $ephemeral = false): ExtendedPromiseInterface
     {
         if (! in_array($this->type, [InteractionType::APPLICATION_COMMAND, InteractionType::MESSAGE_COMPONENT])) {
-            throw new \LogicException('You can only acknowledge application command or message component interactions.');
+            return reject(new \LogicException('You can only acknowledge application command or message component interactions.'));
         }
 
         if ($ephemeral) {
@@ -410,7 +413,7 @@ class Interaction extends Part
     public function updateFollowUpMessage(string $message_id, MessageBuilder $builder)
     {
         if (! $this->responded) {
-            throw new \RuntimeException('Cannot create a follow-up message as the interaction has not been responded to.');
+            return reject(new \RuntimeException('Cannot create a follow-up message as the interaction has not been responded to.'));
         }
 
         return (function () use ($message_id, $builder): ExtendedPromiseInterface {
@@ -438,7 +441,7 @@ class Interaction extends Part
     public function autoCompleteResult(array $choices): ExtendedPromiseInterface
     {
         if ($this->type != InteractionType::APPLICATION_COMMAND_AUTOCOMPLETE) {
-            throw new \LogicException('You can only respond command option results with auto complete interactions.');
+            return reject(new \LogicException('You can only respond command option results with auto complete interactions.'));
         }
 
         return $this->respond([
