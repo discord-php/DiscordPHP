@@ -147,7 +147,7 @@ class CommandBuilder implements JsonSerializable
      *
      * @return $this
      */
-    public function addOption(Option $option)
+    public function addOption(Option $option): self
     {
         if (count($this->options) >= 25) {
             throw new \OverflowException('Command can only have a maximum of 25 options.');
@@ -164,7 +164,7 @@ class CommandBuilder implements JsonSerializable
      *
      * @return $this
      */
-    public function removeOption(Option $option)
+    public function removeOption(Option $option): self
     {
         if (($idx = array_search($option, $this->option)) !== null) {
             array_splice($this->options, $idx, 1);

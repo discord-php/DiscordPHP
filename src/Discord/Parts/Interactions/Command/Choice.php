@@ -54,7 +54,7 @@ class Choice extends Part
      *
      * @return $this
      */
-    public function setName(string $name)
+    public function setName(string $name): self
     {
         $namelen = poly_strlen($name);
         if ($namelen < 1) {
@@ -77,7 +77,7 @@ class Choice extends Part
      *
      * @return $this
      */
-    public function setValue($value)
+    public function setValue($value): self
     {
         if (is_string($value) && poly_strlen($value) > 100) {
             throw new \LengthException('Choice value must be less than or equal to 100 characters.');

@@ -340,7 +340,7 @@ class MessageBuilder implements JsonSerializable
      *
      * @return $this
      */
-    public function setAllowedMentions(array $allowed_mentions)
+    public function setAllowedMentions(array $allowed_mentions): self
     {
         $this->allowed_mentions = $allowed_mentions;
 

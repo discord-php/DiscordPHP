@@ -106,7 +106,7 @@ class Option extends Part
      *
      * @return $this
      */
-    public function setType(int $type)
+    public function setType(int $type): self
     {
         if ($type < 1 || $type > 10) {
             throw new \InvalidArgumentException('Invalid type provided.');
@@ -126,7 +126,7 @@ class Option extends Part
      *
      * @return $this
      */
-    public function setName(string $name)
+    public function setName(string $name): self
     {
         if ($name && poly_strlen($name) > 32) {
             throw new \LengthException('Name must be less than or equal to 32 characters.');
@@ -146,7 +146,7 @@ class Option extends Part
      *
      * @return $this
      */
-    public function setDescription(string $description)
+    public function setDescription(string $description): self
     {
         if ($description && poly_strlen($description) > 100) {
             throw new \LengthException('Description must be less than or equal to 100 characters.');
@@ -164,7 +164,7 @@ class Option extends Part
      *
      * @return $this
      */
-    public function setRequired(bool $required)
+    public function setRequired(bool $required): self
     {
         $this->required = $required;
 
@@ -178,7 +178,7 @@ class Option extends Part
      *
      * @return $this
      */
-    public function setChannelTypes(array $types)
+    public function setChannelTypes(array $types): self
     {
         $this->channel_types = $types;
 
@@ -194,7 +194,7 @@ class Option extends Part
      *
      * @return $this
      */
-    public function addOption(Option $option)
+    public function addOption(Option $option): self
     {
         if (count($this->options) >= 25) {
             throw new \OverflowException('Option can not have more than 25 parameters.');
@@ -214,7 +214,7 @@ class Option extends Part
      *
      * @return $this
      */
-    public function addChoice(Choice $choice)
+    public function addChoice(Choice $choice): self
     {
         if (count($this->choices) >= 25) {
             throw new \OverflowException('Option can only have a maximum of 25 Choices.');
@@ -228,15 +228,19 @@ class Option extends Part
     /**
      * Removes an option.
      *
-     * @param Option $option Option to remove.
+     * @param string|Option $option Option object or name to remove.
      *
      * @return $this
      */
-    public function removeOption(Option $option)
+    public function removeOption($option): self
     {
+        if ($option instanceof Option) {
+            $option = $option->name;
+        }
+
         if (! empty($this->attributes['options'])) {
             foreach ($this->attributes['options'] as $idx => $opt) {
-                if ($opt['name'] == $option->name) {
+                if ($opt['name'] == $option) {
                     unset($this->attributes['options'][$idx]);
                     break;
                 }
@@ -249,15 +253,19 @@ class Option extends Part
     /**
      * Removes a choice.
      *
-     * @param Choice $choice Choice to remove
+     * @param string|Choice $choice Choice object or name to remove.
      *
      * @return $this
      */
-    public function removeChoice(Choice $choice)
+    public function removeChoice($choice): self
     {
+        if ($choice instanceof Choice) {
+            $choice = $choice->name;
+        }
+
         if (! empty($this->attributes['choices'])) {
             foreach ($this->attributes['choices'] as $idx => $cho) {
-                if ($cho['name'] == $choice->name) {
+                if ($cho['name'] == $choice) {
                     unset($this->attributes['choices'][$idx]);
                     break;
                 }
@@ -274,7 +282,7 @@ class Option extends Part
      *
      * @return $this
      */
-    public function setMinValue($min_value)
+    public function setMinValue($min_value): self
     {
         $this->min_value = $min_value;
 
@@ -288,7 +296,7 @@ class Option extends Part
      *
      * @return $this
      */
-    public function setMaxValue($max_value)
+    public function setMaxValue($max_value): self
     {
         $this->max_value = $max_value;
 
@@ -304,7 +312,7 @@ class Option extends Part
      *
      * @return $this
      */
-    public function setAutoComplete(bool $autocomplete)
+    public function setAutoComplete(bool $autocomplete): self
     {
         if ($autocomplete) {
             if (!empty($this->attributes['choices'])) {
