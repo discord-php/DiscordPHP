@@ -183,8 +183,6 @@ class ScheduledEvent extends Part
     /**
      * Gets the user that created the scheduled event.
      *
-     * @throws \Exception
-     *
      * @return User|null The user that created the scheduled event.
      */
     protected function getCreatorAttribute(): ?User
@@ -193,12 +191,12 @@ class ScheduledEvent extends Part
             return $user;
         }
 
-        if (isset($this->attributes['user'])) {
-            if ($user = $this->discord->users->get('id', $this->attributes['user']->id)) {
+        if (isset($this->attributes['creator'])) {
+            if ($user = $this->discord->users->get('id', $this->attributes['creator']->id)) {
                 return $user;
             }
 
-            return $this->factory->create(User::class, $this->attributes['user'], true);
+            return $this->factory->part(User::class, (array) $this->attributes['creator'], true);
         }
 
         return null;

@@ -12,6 +12,7 @@
 namespace Discord\Parts\Channel;
 
 use Discord\Http\Endpoint;
+use Discord\Http\Http;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
@@ -118,6 +119,24 @@ class Webhook extends Part
         }
 
         return $this->factory->part(User::class, (array) $this->attributes['user'], true);
+    }
+
+    /**
+     * Gets the webhook url attribute.
+     *
+     * @return string|null
+     */
+    protected function getUrlAttribute(): ?string
+    {
+        if (isset($this->attributes['url'])) {
+            return $this->attributes['url'];
+        }
+
+        if (isset($this->attributes['token'])) {
+            return Http::BASE_URL.'/'.Endpoint::bind(Endpoint::WEBHOOK_TOKEN, $this->id, $this->token);
+        }
+
+        return null;
     }
 
     /**
