@@ -237,7 +237,7 @@ class User extends Part
     /**
      * Returns a timestamp for when a user's account was created.
      *
-     * @return int
+     * @return float
      */
     public function createdTimestamp()
     {

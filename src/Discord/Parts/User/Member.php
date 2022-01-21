@@ -419,8 +419,6 @@ class Member extends Part
     /**
      * Returns the user attribute.
      *
-     * @throws \Exception
-     *
      * @return User|null The user that owns the member.
      */
     protected function getUserAttribute(): ?User
@@ -433,7 +431,7 @@ class Member extends Part
             return $user;
         }
 
-        return $this->factory->create(User::class, $this->attributes['user'], true);
+        return $this->factory->part(User::class, (array) $this->attributes['user'], true);
     }
 
     /**
