@@ -204,7 +204,7 @@ abstract class Permission extends Part
      *
      * @deprecated 7.0.0 Use `use_application_commands`
      */
-    public function getUseSlashCommandsAttribute()
+    protected function getUseSlashCommandsAttribute()
     {
         return $this->attributes['use_application_commands'] ?? null;
     }
@@ -214,7 +214,7 @@ abstract class Permission extends Part
      *
      * @deprecated 7.0.0 Use `create_public_threads`
      */
-    public function getUsePublicThreadsAttribute()
+    protected function getUsePublicThreadsAttribute()
     {
         return $this->attributes['create_public_threads'] ?? null;
     }
@@ -224,7 +224,7 @@ abstract class Permission extends Part
      *
      * @deprecated 7.0.0 Use `create_private_threads`
      */
-    public function getUsePrivateThreadsAttribute()
+    protected function getUsePrivateThreadsAttribute()
     {
         return $this->attributes['create_private_threads'] ?? null;
     }
@@ -234,7 +234,7 @@ abstract class Permission extends Part
      *
      * @deprecated 7.0.0 Use `manage_emojis_and_stickers`
      */
-    public function getManageEmojisAttribute()
+    protected function getManageEmojisAttribute()
     {
         return $this->attributes['manage_emojis_and_stickers'] ?? null;
     }
@@ -244,7 +244,7 @@ abstract class Permission extends Part
      *
      * @deprecated 7.0.0 Use `use_application_commands`
      */
-    public function setUseSlashCommandsAttribute($value)
+    protected function setUseSlashCommandsAttribute($value)
     {
         return $this->attributes['use_application_commands'] = $value;
     }
@@ -254,7 +254,7 @@ abstract class Permission extends Part
      *
      * @deprecated 7.0.0 Use `create_public_threads`
      */
-    public function setUsePublicThreadsAttribute($value)
+    protected function setUsePublicThreadsAttribute($value)
     {
         return $this->attributes['create_public_threads'] = $value;
     }
@@ -264,7 +264,7 @@ abstract class Permission extends Part
      *
      * @deprecated 7.0.0 Use `create_private_threads`
      */
-    public function setUsePrivateThreadsAttribute($value)
+    protected function setUsePrivateThreadsAttribute($value)
     {
         return $this->attributes['create_private_threads'] = $value;
     }
@@ -274,7 +274,7 @@ abstract class Permission extends Part
      *
      * @deprecated 7.0.0 Use `manage_emojis_and_stickers`
      */
-    public function setManageEmojisAttribute($value)
+    protected function setManageEmojisAttribute($value)
     {
         return $this->attributes['manage_emojis_and_stickers'] = $value;
     }

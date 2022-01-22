@@ -28,30 +28,35 @@ use Discord\Parts\Permissions\RolePermission;
 use Discord\Parts\WebSockets\PresenceUpdate;
 use React\Promise\ExtendedPromiseInterface;
 
+use function React\Promise\reject;
+
 /**
  * A member is a relationship between a user and a guild. It contains user-to-guild specific data like roles.
  *
+ * @see https://discord.com/developers/docs/resources/guild#guild-member-object
+ *
+ * @property User|null             $user                         The user part of the member.
+ * @property string|null           $nick                         The nickname of the member.
+ * @property string|null           $avatar                       The avatar URL of the member or null if member has no guild avatar.
+ * @property string|null           $avatar_hash                  The avatar hash of the member or null if member has no guild avatar.
+ * @property Collection|Role[]     $roles                        A collection of Roles that the member has.
+ * @property Carbon|null           $joined_at                    A timestamp of when the member joined the guild.
+ * @property Carbon|null           $premium_since                When the user started boosting the server.
+ * @property bool                  $deaf                         Whether the member is deaf.
+ * @property bool                  $mute                         Whether the member is mute.
+ * @property bool                  $pending                      Whether the user has not yet passed the guild's Membership Screening requirements.
+ * @property string|null           $permissions
+ * @property Carbon|null           $communication_disabled_until When the user's timeout will expire and the user will be able to communicate in the guild again, null or a time in the past if the user is not timed out.
  * @property string                $id                           The unique identifier of the member.
  * @property string                $username                     The username of the member.
  * @property string                $discriminator                The discriminator of the member.
  * @property string                $displayname                  The nickname or username with discriminator of the member.
- * @property User                  $user                         The user part of the member.
- * @property Collection|Role[]     $roles                        A collection of Roles that the member has.
- * @property bool                  $deaf                         Whether the member is deaf.
- * @property bool                  $mute                         Whether the member is mute.
- * @property Carbon|null           $joined_at                    A timestamp of when the member joined the guild.
  * @property Guild                 $guild                        The guild that the member belongs to.
  * @property string                $guild_id                     The unique identifier of the guild that the member belongs to.
  * @property string                $status                       The status of the member.
  * @property Activity              $game                         The game the member is playing.
- * @property string|null           $nick                         The nickname of the member.
- * @property string|null           $avatar                       The avatar URL of the member or null if member has no guild avatar.
- * @property string|null           $avatar_hash                  The avatar hash of the member or null if member has no guild avatar.
- * @property Carbon|null           $premium_since                When the user started boosting the server.
- * @property bool                  $pending                      Whether the user has not yet passed the guild's Membership Screening requirements.
  * @property Collection|Activity[] $activities                   User's current activities.
  * @property object                $client_status                Current client status.
- * @property Carbon|null           $communication_disabled_until When the user's timeout will expire and the user will be able to communicate in the guild again, null or a time in the past if the user is not timed out.
  *
  * @method ExtendedPromiseInterface sendMessage(MessageBuilder $builder)
  * @method ExtendedPromiseInterface sendMessage(string $text, bool $tts = false, Embed|array $embed = null, array $allowed_mentions = null, ?Message $replyTo = null)
@@ -61,7 +66,23 @@ class Member extends Part
     /**
      * @inheritdoc
      */
-    protected $fillable = ['id', 'user', 'roles', 'deaf', 'mute', 'joined_at', 'guild_id', 'status', 'nick', 'avatar', 'premium_since', 'pending', 'activities', 'client_status', 'communication_disabled_until'];
+    protected $fillable = [
+        'user',
+        'nick',
+        'avatar',
+        'roles',
+        'joined_at',
+        'premium_since',
+        'deaf',
+        'mute',
+        'pending',
+        'guild_id',
+        'status',
+        'communication_disabled_until',
+        'id',
+        'activities',
+        'client_status',
+    ];
 
     /**
      * @inheritdoc
@@ -72,11 +93,13 @@ class Member extends Part
      * Updates the member from a new presence update object.
      * This is an internal function and is not meant to be used by a public application.
      *
+     * @internal
+     *
      * @param PresenceUpdate $presence
      *
-     * @return PresenceUpdate Old presence.
      * @throws \Exception
-     * @internal
+     *
+     * @return PresenceUpdate Old presence.
      */
     public function updateFromPresence(PresenceUpdate $presence): Part
     {
@@ -94,8 +117,9 @@ class Member extends Part
      * @param int|null    $daysToDeleteMessages The amount of days to delete messages from.
      * @param string|null $reason
      *
-     * @return ExtendedPromiseInterface
      * @throws \Exception
+     *
+     * @return ExtendedPromiseInterface
      */
     public function ban(?int $daysToDeleteMessages = null, ?string $reason = null): ExtendedPromiseInterface
     {
@@ -113,7 +137,7 @@ class Member extends Part
     public function setNickname(?string $nick = null, ?string $reason = null): ExtendedPromiseInterface
     {
         $payload = [
-            'nick' => $nick ?: '',
+            'nick' => $nick ?? '',
         ];
 
         $headers = [];
@@ -157,6 +181,8 @@ class Member extends Part
      * @param Role|string $role   The role to add to the member.
      * @param string|null $reason Reason for Audit Log.
      *
+     * @throws \RuntimeException
+     *
      * @return ExtendedPromiseInterface
      */
     public function addRole($role, ?string $reason = null): ExtendedPromiseInterface
@@ -167,7 +193,7 @@ class Member extends Part
 
         // We don't want a double up on roles
         if (in_array($role, (array) $this->attributes['roles'])) {
-            return \React\Promise\reject(new \Exception('User already has role.'));
+            return reject(new \RuntimeException('Member already has role.'));
         }
 
         $headers = [];
@@ -179,10 +205,12 @@ class Member extends Part
     }
 
     /**
-     * Removes a role from the user.
+     * Removes a role from the member.
      *
      * @param Role|string $role   The role to remove from the member.
      * @param string|null $reason Reason for Audit Log.
+     *
+     * @throws \RuntimeException
      *
      * @return ExtendedPromiseInterface
      */
@@ -201,9 +229,9 @@ class Member extends Part
             return $this->http->delete(Endpoint::bind(Endpoint::GUILD_MEMBER_ROLE, $this->guild_id, $this->id, $role), null, $headers);
         }
 
-        return \React\Promise\reject(new \Exception('User does not have role.'));
+        return reject(new \RuntimeException('Member does not have role.'));
     }
-    
+
     /**
      * Sends a message to the member.
      *
@@ -216,6 +244,8 @@ class Member extends Part
      * @param array|null            $allowed_mentions Allowed mentions object for the message.
      * @param Message|null          $replyTo          Sends the message as a reply to the given message instance.
      *
+     * @throws \RuntimeException
+     *
      * @return ExtendedPromiseInterface<Message>
      */
     public function sendMessage($message, bool $tts = false, $embed = null, $allowed_mentions = null, ?Message $replyTo = null): ExtendedPromiseInterface
@@ -224,7 +254,7 @@ class Member extends Part
             return $this->user->sendMessage($message, $tts, $embed, $allowed_mentions, $replyTo);
         }
 
-        return \React\promise\reject(new \Exception('Member had no user part.'));
+        return reject(new \RuntimeException('Member had no user part.'));
     }
 
     /**
@@ -302,6 +332,8 @@ class Member extends Part
      *
      * @param Carbon|null $communication_disabled_until When the user's timeout will expire and the user will be able to communicate in the guild again, null or a time in the past if the user is not timed out.
      *
+     * @throws NoPermissionsException
+     *
      * @return ExtendedPromiseInterface
      */
     public function timeoutMember(?Carbon $communication_disabled_until): ExtendedPromiseInterface
@@ -309,7 +341,7 @@ class Member extends Part
         $botperms = $this->guild->members->offsetGet($this->discord->id)->getPermissions();
 
         if (! $botperms->moderate_members) {
-            return \React\promise\reject(new NoPermissionsException('You do not have permission to time out members in the specified guild.'));
+            return reject(new NoPermissionsException('You do not have permission to time out members in the specified guild.'));
         }
 
         return $this->http->patch(Endpoint::bind(Endpoint::GUILD_MEMBER, $this->guild_id, $this->id), ['communication_disabled_until' => isset($communication_disabled_until) ? $communication_disabled_until->toIso8601ZuluString() : null]);
@@ -339,8 +371,9 @@ class Member extends Part
     /**
      * Gets the activities attribute.
      *
-     * @return Collection|Activity[]
      * @throws \Exception
+     *
+     * @return Collection|Activity[]
      */
     protected function getActivitiesAttribute(): Collection
     {
@@ -386,16 +419,19 @@ class Member extends Part
     /**
      * Returns the user attribute.
      *
-     * @return User       The user that owns the member.
-     * @throws \Exception
+     * @return User|null The user that owns the member.
      */
-    protected function getUserAttribute(): User
+    protected function getUserAttribute(): ?User
     {
+        if (! isset($this->attributes['user'])) {
+            return null;
+        }
+
         if ($user = $this->discord->users->get('id', $this->attributes['user']->id)) {
             return $user;
         }
 
-        return $this->factory->create(User::class, $this->attributes['user'], true);
+        return $this->factory->part(User::class, (array) $this->attributes['user'], true);
     }
 
     /**
@@ -405,14 +441,15 @@ class Member extends Part
      */
     protected function getGuildAttribute(): ?Guild
     {
-        return $this->discord->guilds->get('id', $this->guild_id);
+        return $this->discord->guilds->offsetGet($this->guild_id);
     }
 
     /**
      * Returns the roles attribute.
      *
-     * @return Collection A collection of roles the member is in.
      * @throws \Exception
+     *
+     * @return Collection A collection of roles the member is in.
      */
     protected function getRolesAttribute(): Collection
     {
@@ -436,8 +473,9 @@ class Member extends Part
     /**
      * Returns the joined at attribute.
      *
-     * @return Carbon|null The timestamp from when the member joined.
      * @throws \Exception
+     *
+     * @return Carbon|null The timestamp from when the member joined.
      */
     protected function getJoinedAtAttribute(): ?Carbon
     {
@@ -540,7 +578,7 @@ class Member extends Part
      *
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         if ($this->nick) {
             return "<@!{$this->id}>";

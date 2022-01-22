@@ -18,20 +18,21 @@ use Discord\Parts\Guild\ScheduledEvent;
 use Discord\Parts\Part;
 use Discord\Parts\Thread\Thread;
 use Discord\Parts\User\User;
-use InvalidArgumentException;
 use ReflectionClass;
 
 /**
  * Represents an audit log query from a guild.
  *
- * @property string               $guild_id
- * @property Guild                $guild
- * @property Collection|Webhook[] $webhooks
- * @property Collection|User[]    $users
- * @property Collection|Entry[]   $audit_log_entries
- * @property Collection           $integrations
- * @property Collection|GuildScheduledEvent[] $guild_scheduled_events
- * @property Collection|Threads[] $threads
+ * @see https://discord.com/developers/docs/resources/audit-log#audit-log-object
+ *
+ * @property Collection|Entry[]               $audit_log_entries      List of audit log entries.
+ * @property Collection|GuildScheduledEvent[] $guild_scheduled_events List of guild scheduled events found in the audit log.
+ * @property Collection                       $integrations           List of partial integration objects.
+ * @property Collection|Threads[]             $threads                List of threads found in the audit log.
+ * @property Collection|User[]                $users                  List of users found in the audit log.
+ * @property Collection|Webhook[]             $webhooks               List of webhooks found in the audit log.
+ * @property string                           $guild_id
+ * @property Guild                            $guild
  */
 class AuditLog extends Part
 {
@@ -39,13 +40,13 @@ class AuditLog extends Part
      * @inheritdoc
      */
     protected $fillable = [
-        'guild_id',
         'webhooks',
+        'guild_scheduled_events',
         'users',
         'audit_log_entries',
         'integrations',
-        'guild_scheduled_events',
         'threads',
+        'guild_id',
     ];
 
     /**
@@ -69,6 +70,22 @@ class AuditLog extends Part
 
         foreach ($this->attributes['webhooks'] ?? [] as $webhook) {
             $collection->push($this->factory->create(Webhook::class, $webhook, true));
+        }
+
+        return $collection;
+    }
+
+    /**
+     * Returns a collection of guild scheduled events found in the audit log.
+     *
+     * @return Collection|ScheduledEvent[]
+     */
+    protected function getGuildScheduledEventsAttribute(): Collection
+    {
+        $collection = Collection::for(ScheduledEvent::class);
+
+        foreach ($this->attributes['guild_scheduled_events'] ?? [] as $scheduled_event) {
+            $collection->push($this->factory->create(ScheduledEvent::class, $scheduled_event, true));
         }
 
         return $collection;
@@ -121,22 +138,6 @@ class AuditLog extends Part
     }
 
     /**
-     * Returns a collection of guild scheduled events found in the audit log.
-     *
-     * @return Collection|ScheduledEvent[]
-     */
-    protected function getGuildScheduledEventsAttribute(): Collection
-    {
-        $collection = Collection::for(ScheduledEvent::class);
-
-        foreach ($this->attributes['guild_scheduled_events'] ?? [] as $scheduled_event) {
-            $collection->push($this->factory->create(ScheduledEvent::class, $scheduled_event, true));
-        }
-
-        return $collection;
-    }
-
-    /**
      * Returns a collection of threads found in the audit log.
      *
      * @return Collection|Thread[]
@@ -157,6 +158,8 @@ class AuditLog extends Part
      *
      * @param int $action_type
      *
+     * @throws \InvalidArgumentException
+     *
      * @return Collection|Entry[]
      */
     public function searchByType(int $action_type): Collection
@@ -164,7 +167,7 @@ class AuditLog extends Part
         $types = array_values((new ReflectionClass(Entry::class))->getConstants());
 
         if (! in_array($action_type, $types)) {
-            throw new InvalidArgumentException("The given action type `{$action_type}` is not valid.");
+            throw new \InvalidArgumentException("The given action type `{$action_type}` is not valid.");
         }
 
         return $this->audit_log_entries->filter(function (Entry $entry) use ($action_type) {

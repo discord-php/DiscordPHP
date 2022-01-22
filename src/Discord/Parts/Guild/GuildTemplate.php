@@ -69,15 +69,14 @@ class GuildTemplate extends Part
      * Returns the source guild attribute.
      *
      * @return Guild      The guild snapshot this template contains.
-     * @throws \Exception
      */
-    protected function getSourceGuildAttribute(): ?Guild
+    protected function getSourceGuildAttribute(): Guild
     {
-        if (isset($this->attributes['serialized_source_guild']) && $guild = $this->discord->guilds->get('id', $this->attributes['source_guild_id'])) {
+        if ($guild = $this->discord->guilds->offsetGet($this->source_guild_id)) {
             return $guild;
         }
 
-        return $this->factory->create(Guild::class, $this->attributes['serialized_source_guild'] ?? [], true);
+        return $this->factory->part(Guild::class, (array) $this->attributes['serialized_source_guild'], true);
     }
 
     /**
@@ -87,7 +86,7 @@ class GuildTemplate extends Part
      */
     protected function getCreatorAttribute(): Part
     {
-        if ($creator = $this->discord->users->get('id', $this->attributes['creator_id'])) {
+        if ($creator = $this->discord->users->offsetGet($this->creator_id)) {
             return $creator;
         }
 
@@ -98,6 +97,7 @@ class GuildTemplate extends Part
      * Returns the created at attribute.
      *
      * @return Carbon     The time that the guild template was created.
+     *
      * @throws \Exception
      */
     protected function getCreatedAtAttribute(): Carbon
@@ -109,6 +109,7 @@ class GuildTemplate extends Part
      * Returns the updated at attribute.
      *
      * @return Carbon     The time that the guild template was updated.
+     *
      * @throws \Exception
      */
     protected function getUpdatedAtAttribute(): Carbon
@@ -120,8 +121,8 @@ class GuildTemplate extends Part
      * Creates a guild from this template. Can be used only by bots in less than 10 guilds.
      *
      * @param array       $options An array of options.
-     * @param string      $options ['name'] The name of the guild (2-100 characters).
-     * @param string|null $options ['icon'] The base64 128x128 image for the guild icon.
+     * @param string      $options['name'] The name of the guild (2-100 characters).
+     * @param string|null $options['icon'] The base64 128x128 image for the guild icon.
      *
      * @return ExtendedPromiseInterface<Guild>
      */

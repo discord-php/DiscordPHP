@@ -11,8 +11,6 @@
 
 namespace Discord\Builders\Components;
 
-use InvalidArgumentException;
-
 class ActionRow extends Component
 {
     /**
@@ -37,20 +35,23 @@ class ActionRow extends Component
      *
      * @param Component $component Component to add.
      *
+     * @throws \InvalidArgumentException
+     * @throws \OverflowException
+     *
      * @return $this
      */
     public function addComponent(Component $component): self
     {
         if ($component instanceof ActionRow) {
-            throw new InvalidArgumentException('You cannot add another `ActionRow` to this action row.');
+            throw new \InvalidArgumentException('You cannot add another `ActionRow` to this action row.');
         }
 
         if ($component instanceof SelectMenu) {
-            throw new InvalidArgumentException('Cannot add a select menu to an action row.');
+            throw new \InvalidArgumentException('Cannot add a select menu to an action row.');
         }
 
         if (count($this->components) >= 5) {
-            throw new InvalidArgumentException('You can only have 5 components per action row.');
+            throw new \OverflowException('You can only have 5 components per action row.');
         }
 
         $this->components[] = $component;
@@ -65,7 +66,7 @@ class ActionRow extends Component
      *
      * @return $this
      */
-    public function removeComponent(Component $component)
+    public function removeComponent(Component $component): self
     {
         if (($idx = array_search($component, $this->components)) !== null) {
             array_splice($this->components, $idx, 1);

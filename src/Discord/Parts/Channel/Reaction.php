@@ -26,10 +26,12 @@ use function React\Promise\resolve;
 /**
  * Represents a reaction to a message by members(s).
  *
- * @property string         $id         The identifier of the reaction.
+ * @see https://discord.com/developers/docs/resources/channel#reaction-object
+ *
  * @property int            $count      Number of reactions.
  * @property bool           $me         Whether the current bot has reacted.
  * @property Emoji          $emoji      The emoji that was reacted with.
+ * @property string         $id         The identifier of the reaction.
  * @property string         $message_id The message ID the reaction is for.
  * @property Message|null   $message    The message the reaction is for.
  * @property string         $channel_id The channel ID that the message belongs in.
@@ -158,10 +160,9 @@ class Reaction extends Part
     /**
      * Gets the partial emoji attribute.
      *
-     * @return Emoji
-     * @throws \Exception
+     * @return Emoji|null
      */
-    protected function getEmojiAttribute(): ?Part
+    protected function getEmojiAttribute(): ?Emoji
     {
         if (isset($this->attributes['emoji'])) {
             return $this->factory->create(Emoji::class, $this->attributes['emoji'], true);

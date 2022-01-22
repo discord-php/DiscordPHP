@@ -25,12 +25,14 @@ use React\Promise\ExtendedPromiseInterface;
  *
  * @property string                   $id               The unique identifier of the client.
  * @property string                   $username         The username of the client.
- * @property string                   $email            The email of the client.
- * @property bool                     $verified         Whether the client has verified their email.
+ * @property string                   $discriminator    The unique discriminator of the client.
  * @property string                   $avatar           The avatar URL of the client.
  * @property string                   $avatar_hash      The avatar hash of the client.
- * @property string                   $discriminator    The unique discriminator of the client.
  * @property bool                     $bot              Whether the client is a bot.
+ * @property bool|null                $mfa_enabled      Whether the Bot owner has two factor enabled on their account.
+ * @property bool                     $verified         Whether the client has verified their email.
+ * @property string|null              $email            The email of the client.
+ * @property string|null              $flags            The flags on a user's account.
  * @property User                     $user             The user instance of the client.
  * @property Application              $application      The OAuth2 application of the bot.
  * @property GuildRepository          $guilds
@@ -42,7 +44,19 @@ class Client extends Part
     /**
      * @inheritdoc
      */
-    protected $fillable = ['id', 'username', 'email', 'verified', 'avatar', 'discriminator', 'bot', 'user', 'application'];
+    protected $fillable = [
+        'verified',
+        'username',
+        'mfa_enabled',
+        'id',
+        'flags',
+        'email',
+        'discriminator',
+        'bot',
+        'avatar',
+        'user',
+        'application',
+    ];
 
     /**
      * @inheritdoc
@@ -70,7 +84,7 @@ class Client extends Part
      *
      * @return User
      */
-    protected function getUserAttribute()
+    protected function getUserAttribute(): Part
     {
         return $this->factory->create(User::class, $this->attributes, true);
     }

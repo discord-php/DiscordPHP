@@ -73,6 +73,8 @@ class CommandBuilder implements JsonSerializable
      *
      * @param int $type Type of the command
      *
+     * @throws \InvalidArgumentException
+     *
      * @return $this
      */
     public function setType(int $type): self
@@ -90,12 +92,14 @@ class CommandBuilder implements JsonSerializable
      *
      * @param string $description Name of the command
      *
+     * @throws \LengthException
+     *
      * @return $this
      */
     public function setName(string $name): self
     {
         if (poly_strlen($name) > 100) {
-            throw new \InvalidArgumentException('Command name must be less than or equal to 32 characters.');
+            throw new \LengthException('Command name must be less than or equal to 32 characters.');
         }
 
         $this->name = $name;
@@ -107,12 +111,14 @@ class CommandBuilder implements JsonSerializable
      *
      * @param string $description Description of the command
      *
+     * @throws \LengthException
+     *
      * @return $this
      */
     public function setDescription(string $description): self
     {
         if ($this->type == Command::CHAT_INPUT && poly_strlen($description) > 100) {
-            throw new \InvalidArgumentException('Command description must be less than or equal to 100 characters.');
+            throw new \LengthException('Command description must be less than or equal to 100 characters.');
         }
 
         $this->description = $description;
@@ -137,12 +143,14 @@ class CommandBuilder implements JsonSerializable
      *
      * @param Option $option The option
      *
+     * @throws \OverflowException
+     *
      * @return $this
      */
-    public function addOption(Option $option)
+    public function addOption(Option $option): self
     {
         if (count($this->options) >= 25) {
-            throw new \InvalidArgumentException('Command can only have a maximum of 25 options.');
+            throw new \OverflowException('Command can only have a maximum of 25 options.');
         }
 
         $this->options[] = $option;
@@ -156,7 +164,7 @@ class CommandBuilder implements JsonSerializable
      *
      * @return $this
      */
-    public function removeOption(Option $option)
+    public function removeOption(Option $option): self
     {
         if (($idx = array_search($option, $this->option)) !== null) {
             array_splice($this->options, $idx, 1);
@@ -178,22 +186,25 @@ class CommandBuilder implements JsonSerializable
     /**
      * Returns an array with all the options.
      *
+     * @throws \LengthException
+     * @throws \DomainException
+     *
      * @return array
      */
     public function toArray(): array
     {
         if (poly_strlen($this->name) < 1) {
-            throw new \InvalidArgumentException('Command name must be greater than or equal to 1 character.');
+            throw new \LengthException('Command name must be greater than or equal to 1 character.');
         }
 
         $desclen = poly_strlen($this->description);
         if ($this->type == Command::CHAT_INPUT) {
             if ($desclen < 1) {
-                throw new \InvalidArgumentException('Description must be greater than or equal to 1 character.');
+                throw new \LengthException('Description must be greater than or equal to 1 character.');
             }
         } elseif ($this->type == Command::USER || $this->type == Command::MESSAGE) {
             if ($desclen) {
-                throw new \InvalidArgumentException('Only a command with type CHAT_INPUT accepts a description.');
+                throw new \DomainException('Only a command with type CHAT_INPUT accepts a description.');
             }
         }
 

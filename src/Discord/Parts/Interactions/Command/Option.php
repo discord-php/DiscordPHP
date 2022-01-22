@@ -3,10 +3,10 @@
 /*
  * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2021 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
  *
- * This source file is subject to the MIT license which is
- * bundled with this source code in the LICENSE.md file.
+ * This file is subject to the MIT license that is bundled
+ * with this source code in the LICENSE.md file.
  */
 
 namespace Discord\Parts\Interactions\Command;
@@ -48,12 +48,23 @@ class Option extends Part
     /**
      * @inheritdoc
      */
-    protected $fillable = ['type', 'name', 'description', 'required', 'choices', 'options', 'channel_types', 'min_value', 'max_value', 'autocomplete'];
+    protected $fillable = [
+        'type',
+        'name',
+        'description',
+        'required',
+        'choices',
+        'options',
+        'channel_types',
+        'min_value',
+        'max_value',
+        'autocomplete'
+    ];
 
     /**
      * Gets the choices attribute.
      *
-     * @return Collection|Choices[]|null A collection of choices.
+     * @return Collection|Choice[]|null A collection of choices.
      */
     protected function getChoicesAttribute(): ?Collection
     {
@@ -73,7 +84,7 @@ class Option extends Part
     /**
      * Gets the options attribute.
      *
-     * @return Collection|Options[] A collection of options.
+     * @return Collection|Option[] A collection of options.
      */
     protected function getOptionsAttribute(): Collection
     {
@@ -91,15 +102,18 @@ class Option extends Part
      *
      * @param int $type type of the option
      *
+     * @throws \InvalidArgumentException
+     *
      * @return $this
      */
-    public function setType(int $type)
+    public function setType(int $type): self
     {
         if ($type < 1 || $type > 10) {
             throw new \InvalidArgumentException('Invalid type provided.');
         }
 
         $this->type = $type;
+
         return $this;
     }
 
@@ -108,15 +122,18 @@ class Option extends Part
      *
      * @param string $name name of the option
      *
+     * @throws \LengthException
+     *
      * @return $this
      */
-    public function setName(string $name)
+    public function setName(string $name): self
     {
         if ($name && poly_strlen($name) > 32) {
-            throw new \InvalidArgumentException('Name must be less than or equal to 32 characters.');
+            throw new \LengthException('Name must be less than or equal to 32 characters.');
         }
 
         $this->name = $name;
+
         return $this;
     }
 
@@ -125,15 +142,18 @@ class Option extends Part
      *
      * @param string $description description of the option
      *
+     * @throws \LengthException
+     *
      * @return $this
      */
-    public function setDescription(string $description)
+    public function setDescription(string $description): self
     {
         if ($description && poly_strlen($description) > 100) {
-            throw new \InvalidArgumentException('Description must be less than or equal to 100 characters.');
+            throw new \LengthException('Description must be less than or equal to 100 characters.');
         }
 
         $this->description = $description;
+
         return $this;
     }
 
@@ -144,9 +164,10 @@ class Option extends Part
      *
      * @return $this
      */
-    public function setRequired(bool $required)
+    public function setRequired(bool $required): self
     {
         $this->required = $required;
+
         return $this;
     }
 
@@ -157,9 +178,10 @@ class Option extends Part
      *
      * @return $this
      */
-    public function setChannelTypes(array $types)
+    public function setChannelTypes(array $types): self
     {
         $this->channel_types = $types;
+
         return $this;
     }
 
@@ -168,15 +190,18 @@ class Option extends Part
      *
      * @param Option $option The option
      *
+     * @throws \OverflowException
+     *
      * @return $this
      */
-    public function addOption(Option $option)
+    public function addOption(Option $option): self
     {
         if (count($this->options) >= 25) {
-            throw new \RangeException('Option can not have more than 25 parameters.');
+            throw new \OverflowException('Option can not have more than 25 parameters.');
         }
 
         $this->attributes['options'][] = $option->getRawAttributes();
+
         return $this;
     }
 
@@ -185,29 +210,41 @@ class Option extends Part
      *
      * @param Choice $choice The choice
      *
+     * @throws \OverflowException
+     *
      * @return $this
      */
-    public function addChoice(Choice $choice)
+    public function addChoice(Choice $choice): self
     {
         if (count($this->choices) >= 25) {
-            throw new \RangeException('Option can only have a maximum of 25 Choices.');
+            throw new \OverflowException('Option can only have a maximum of 25 Choices.');
         }
 
         $this->attributes['choices'][] = $choice->getRawAttributes();
+
         return $this;
     }
 
     /**
      * Removes an option.
      *
-     * @param Option $option Option to remove.
+     * @param string|Option $option Option object or name to remove.
      *
      * @return $this
      */
-    public function removeOption(Option $option)
+    public function removeOption($option): self
     {
-        if ($opt = $this->attributes['options']->offsetGet($option->name)) {
-            $this->attributes['options']->offsetUnset($opt);
+        if ($option instanceof Option) {
+            $option = $option->name;
+        }
+
+        if (! empty($this->attributes['options'])) {
+            foreach ($this->attributes['options'] as $idx => $opt) {
+                if ($opt['name'] == $option) {
+                    unset($this->attributes['options'][$idx]);
+                    break;
+                }
+            }
         }
 
         return $this;
@@ -216,14 +253,23 @@ class Option extends Part
     /**
      * Removes a choice.
      *
-     * @param Choice $choice Choice to remove
+     * @param string|Choice $choice Choice object or name to remove.
      *
      * @return $this
      */
-    public function removeChoice(Choice $choice)
+    public function removeChoice($choice): self
     {
-        if ($cho = $this->attributes['choices']->offsetGet($choice->name)) {
-            $this->attributes['choices']->offsetUnset($cho);
+        if ($choice instanceof Choice) {
+            $choice = $choice->name;
+        }
+
+        if (! empty($this->attributes['choices'])) {
+            foreach ($this->attributes['choices'] as $idx => $cho) {
+                if ($cho['name'] == $choice) {
+                    unset($this->attributes['choices'][$idx]);
+                    break;
+                }
+            }
         }
 
         return $this;
@@ -236,9 +282,10 @@ class Option extends Part
      *
      * @return $this
      */
-    public function setMinValue($min_value)
+    public function setMinValue($min_value): self
     {
         $this->min_value = $min_value;
+
         return $this;
     }
 
@@ -249,9 +296,10 @@ class Option extends Part
      *
      * @return $this
      */
-    public function setMaxValue($max_value)
+    public function setMaxValue($max_value): self
     {
         $this->max_value = $max_value;
+
         return $this;
     }
 
@@ -260,20 +308,24 @@ class Option extends Part
      *
      * @param bool $autocomplete enable autocomplete interactions for this option
      *
+     * @throws \InvalidArgumentException
+     *
      * @return $this
      */
-    public function setAutoComplete(bool $autocomplete)
+    public function setAutoComplete(bool $autocomplete): self
     {
         if ($autocomplete) {
             if (!empty($this->attributes['choices'])) {
                 throw new \InvalidArgumentException('Autocomplete may not be set to true if choices are present.');
             }
+
             if (! in_array($this->type, [self::STRING, self::INTEGER, self::NUMBER])) {
                 throw new \InvalidArgumentException('Autocomplete may be only set to true if option type is STRING, INTEGER, or NUMBER.');
             }
         }
 
         $this->autocomplete = $autocomplete;
+
         return $this;
     }
 }

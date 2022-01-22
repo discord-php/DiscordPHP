@@ -17,18 +17,20 @@ use Discord\Parts\User\User;
 /**
  * A Ban is a ban on a user specific to a guild. It is also IP based.
  *
- * @property string $guild_id
- * @property Guild  $guild
- * @property string $user_id
- * @property User   $user
- * @property string $reason
+ * @see https://discord.com/developers/docs/resources/guild#ban-object
+ *
+ * @property string     $reason   The reason for the ban.
+ * @property User       $user     The banned user.
+ * @property string     $user_id
+ * @property string     $guild_id
+ * @property Guild|null $guild
  */
 class Ban extends Part
 {
     /**
      * @inheritdoc
      */
-    protected $fillable = ['user_id', 'user', 'guild_id', 'reason'];
+    protected $fillable = ['reason', 'user', 'user_id', 'guild_id'];
 
     /**
      * Returns the user id of the ban.
@@ -51,7 +53,7 @@ class Ban extends Part
     /**
      * Returns the guild attribute of the ban.
      *
-     * @return Guild
+     * @return Guild|null
      */
     protected function getGuildAttribute(): ?Guild
     {
@@ -63,27 +65,17 @@ class Ban extends Part
      *
      * @return User
      */
-    protected function getUserAttribute(): ?Part
+    protected function getUserAttribute(): User
     {
         if (isset($this->attributes['user_id'])) {
             return $this->discord->users->get('id', $this->attributes['user_id']);
-        } elseif (isset($this->attributes['user'])) {
-            if ($user = $this->discord->users->get('id', $this->attributes['user']->id)) {
-                return $user;
-            }
-
-            return $this->factory->part(User::class, (array) $this->attributes['user'], true);
+        }
+        
+        if ($user = $this->discord->users->get('id', $this->attributes['user']->id)) {
+            return $user;
         }
 
-        return null;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getCreatableAttributes(): array
-    {
-        return [];
+        return $this->factory->part(User::class, (array) $this->attributes['user'], true);
     }
 
     /**

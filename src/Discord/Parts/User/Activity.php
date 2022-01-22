@@ -18,21 +18,23 @@ use Discord\Parts\Part;
 /**
  * The Activity part describes activities the member is undertaking.
  *
- * @property string   $name
- * @property int      $type
- * @property string   $url
- * @property Carbon   $created_at
- * @property array    $timestamps
- * @property string   $application_id
- * @property string   $details
- * @property string   $state
- * @property Emoji    $emoji
- * @property object   $party
- * @property object   $assets
- * @property object   $secrets
- * @property bool     $instance
- * @property int      $flags
- * @property object[] $buttons
+ * @see https://discord.com/developers/docs/topics/gateway#activity-object
+ *
+ * @property string        $name
+ * @property int           $type
+ * @property string|null   $url
+ * @property Carbon|null   $created_at
+ * @property object|null   $timestamps
+ * @property string|null   $application_id
+ * @property string|null   $details
+ * @property string|null   $state
+ * @property Emoji|null    $emoji
+ * @property object|null   $party
+ * @property object|null   $assets
+ * @property object|null   $secrets
+ * @property bool|null     $instance
+ * @property int|null      $flags
+ * @property object[]|null $buttons
  */
 class Activity extends Part
 {
@@ -42,6 +44,16 @@ class Activity extends Part
     public const TYPE_WATCHING = 3; // Watching {$this->name}
     public const TYPE_CUSTOM = 4; // {$this->emoji} {$this->name}
     public const TYPE_COMPETING = 5; // Competing in {$this->name}
+
+    public const FLAG_INSTANCE = (1 << 0);
+    public const FLAG_JOIN = (1 << 1);
+    public const FLAG_SPECTATE = (1 << 2);
+    public const FLAG_JOIN_REQUEST = (1 << 3);
+    public const FLAG_SYNC = (1 << 4);
+    public const FLAG_PLAY = (1 << 5);
+    public const FLAG_PARTY_PRIVACY_FRIENDS = (1 << 6);
+    public const FLAG_PARTY_PRIVACY_VOICE_CHANNEL = (1 << 7);
+    public const FLAG_EMBEDDED = (1 << 8);
 
     public const STATUS_ONLINE = 'online';
     public const STATUS_IDLE = 'idle';
@@ -72,7 +84,7 @@ class Activity extends Part
     /**
      * Gets the created at timestamp.
      *
-     * @return Carbon
+     * @return Carbon|null
      */
     protected function getCreatedAtAttribute(): ?Carbon
     {
@@ -86,7 +98,7 @@ class Activity extends Part
     /**
      * Gets the emoji object of the activity.
      *
-     * @return Emoji
+     * @return Emoji|null
      */
     protected function getEmojiAttribute(): ?Emoji
     {

@@ -40,6 +40,4 @@ class OverwriteRepository extends AbstractRepository
      * @inheritdoc
      */
     protected $class = Overwrite::class;
-
-    // TODO PUT endpoints
 }

@@ -23,11 +23,13 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * A representation of a scheduled event in a guild.
  *
+ * @see https://discord.com/developers/docs/resources/guild-scheduled-event
+ *
  * @property string       $id                   The id of the scheduled event.
- * @property Guild        $guild                The guild which the scheduled event belongs to.
  * @property string       $guild_id             The guild id which the scheduled event belongs to.
- * @property Channel|null $channel              The channel in which the scheduled event will be hosted, or null.
+ * @property Guild|null   $guild                The guild which the scheduled event belongs to.
  * @property string|null  $channel_id           The channel id in which the scheduled event will be hosted, or null if scheduled entity type is EXTERNAL.
+ * @property Channel|null $channel              The channel in which the scheduled event will be hosted, or null.
  * @property string|null  $creator_id           The id of the user that created the scheduled event.
  * @property string|null  $description          The description of the scheduled event (1-1000 characters).
  * @property Carbon       $scheduled_start_time The time the scheduled event will start.
@@ -38,7 +40,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * @property string|null  $entity_id            The id of an entity associated with a guild scheduled event.
  * @property object|null  $entity_metadata      Additional metadata for the guild scheduled event.
  * @property User|null    $creator              The user that created the scheduled event.
- * @property int          $user_count           The number of users subscribed to the scheduled event.
+ * @property int|null     $user_count           The number of users subscribed to the scheduled event.
  */
 class ScheduledEvent extends Part
 {
@@ -77,6 +79,8 @@ class ScheduledEvent extends Part
     /**
      * Get a list of guild scheduled event users subscribed to a guild scheduled event. Returns a list of guild scheduled event user objects on success. Guild member data, if it exists, is included if the with_member query parameter is set.
      *
+     * @throws \RangeException
+     *
      * @return ExtendedPromiseInterface
      */
     public function getUsers(array $options): ExtendedPromiseInterface
@@ -91,7 +95,7 @@ class ScheduledEvent extends Part
 
         $options = $resolver->resolve($options);
         if (isset($options['before'], $options['after'])) {
-            return \React\Promise\reject(new \Exception('Can only specify one of before after.'));
+            return \React\Promise\reject(new \RangeException('Can only specify one of before after.'));
         }
 
         $endpoint = Endpoint::bind(Endpoint::GUILD_SCHEDULED_EVENT_USERS, $this->guild_id, $this->id);
@@ -127,38 +131,33 @@ class ScheduledEvent extends Part
     /**
      * Returns the guild attribute.
      *
-     * @return Guild      The guild which the scheduled event belongs to.
-     * @throws \Exception
+     * @return Guild|null The guild which the scheduled event belongs to.
      */
-    protected function getGuildAttribute(): Guild
+    protected function getGuildAttribute(): ?Guild
     {
-        if ($guild = $this->discord->guilds->get('id', $this->attributes['guild_id'])) {
-            return $guild;
-        }
-
-        return $this->factory->create(Guild::class, $this->attributes['guild'], true);
+        return $this->discord->guilds->get('id', $this->attributes['guild_id']);
     }
 
     /**
      * Returns the channel attribute.
      *
      * @return Channel    The channel in which the scheduled event will be hosted, or null.
-     * @throws \Exception
      */
     protected function getChannelAttribute(): ?Channel
     {
-        if (isset($this->attributes['channel_id']) && $channel = $this->discord->getChannel($this->attributes['channel_id'])) {
-            return $channel;
+        if (! isset($this->attributes['channel_id'])) {
+            return null;
         }
 
-        return null;
+        return $this->discord->getChannel($this->attributes['channel_id']);
     }
 
     /**
      * Returns the created at attribute.
      *
-     * @return Carbon     The time the scheduled event will start.
      * @throws \Exception
+     *
+     * @return Carbon     The time the scheduled event will start.
      */
     protected function getScheduledStartTimeAttribute(): Carbon
     {
@@ -168,8 +167,9 @@ class ScheduledEvent extends Part
     /**
      * Returns the created at attribute.
      *
-     * @return Carbon|null The time the scheduled event will end, required if entity_type is EXTERNAL.
      * @throws \Exception
+     *
+     * @return Carbon|null The time the scheduled event will end, required if entity_type is EXTERNAL.
      */
     protected function getScheduledEndTimeAttribute(): ?Carbon
     {
@@ -185,18 +185,18 @@ class ScheduledEvent extends Part
      *
      * @return User|null The user that created the scheduled event.
      */
-    protected function getCreatorAttribute(): ?Part
+    protected function getCreatorAttribute(): ?User
     {
         if (isset($this->attributes['creator_id']) && $user = $this->discord->users->get('id', $this->attributes['creator_id'])) {
             return $user;
         }
 
-        if (isset($this->attributes['user'])) {
-            if ($user = $this->discord->users->get('id', $this->attributes['user']->id)) {
+        if (isset($this->attributes['creator'])) {
+            if ($user = $this->discord->users->get('id', $this->attributes['creator']->id)) {
                 return $user;
             }
 
-            return $this->factory->part(User::class, $this->attributes['user'], true);
+            return $this->factory->part(User::class, (array) $this->attributes['creator'], true);
         }
 
         return null;

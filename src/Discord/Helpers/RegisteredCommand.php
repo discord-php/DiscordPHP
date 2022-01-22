@@ -1,19 +1,18 @@
 <?php
 
 /*
- * This file was a part of the DiscordPHP-Slash project.
+ * This file is a part of the DiscordPHP project.
  *
- * Copyright (c) 2021 David Cole <david.cole1340@gmail.com>
+ * Copyright (c) 2015-present David Cole <david.cole1340@gmail.com>
  *
- * This source file is subject to the MIT license which is
- * bundled with this source code in the LICENSE.md file.
+ * This file is subject to the MIT license that is bundled
+ * with this source code in the LICENSE.md file.
  */
 
 namespace Discord\Helpers;
 
 use Discord\Discord;
 use Discord\Parts\Interactions\Interaction;
-use InvalidArgumentException;
 
 /**
  * RegisteredCommand represents a command that has been registered
@@ -161,12 +160,15 @@ class RegisteredCommand
     /**
      * Adds a sub-command to the command.
      *
-     * @param string|array $name
-     * @param callable     $callback
+     * @param string|array  $name
+     * @param callable      $callback
+     * @param callable|null $autocomplete_callback
+     *
+     * @throws \LogicException
      *
      * @return RegisteredCommand
      */
-    public function addSubCommand($name, callable $callback = null): RegisteredCommand
+    public function addSubCommand($name, callable $callback = null, ?callable $autocomplete_callback = null): RegisteredCommand
     {
         if (is_array($name) && count($name) == 1) {
             $name = array_shift($name);
@@ -174,10 +176,10 @@ class RegisteredCommand
 
         if (! is_array($name) || count($name) == 1) {
             if (isset($this->subCommands[$name])) {
-                throw new InvalidArgumentException("The command `{$name}` already exists.");
+                throw new \LogicException("The command `{$name}` already exists.");
             }
 
-            return $this->subCommands[$name] = new static($this->discord, $name, $callback);
+            return $this->subCommands[$name] = new static($this->discord, $name, $callback, $autocomplete_callback);
         }
 
         $baseCommand = array_shift($name);
@@ -186,7 +188,7 @@ class RegisteredCommand
             $this->addSubCommand($baseCommand);
         }
 
-        return $this->subCommands[$baseCommand]->addSubCommand($name, $callback);
+        return $this->subCommands[$baseCommand]->addSubCommand($name, $callback, $autocomplete_callback);
     }
 
     /**

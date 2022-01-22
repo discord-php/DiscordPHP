@@ -19,18 +19,18 @@ use function Discord\poly_strlen;
 /**
  * An embed object to be sent with a message.
  *
- * @property string             $title       The title of the embed.
- * @property string             $type        The type of the embed.
- * @property string             $description A description of the embed.
- * @property string             $url         The URL of the embed.
- * @property Carbon|string      $timestamp   A timestamp of the embed.
- * @property int                $color       The color of the embed.
- * @property Footer             $footer      The footer of the embed.
- * @property Image              $image       The image of the embed.
- * @property Image              $thumbnail   The thumbnail of the embed.
- * @property Video              $video       The video of the embed.
- * @property array              $provider    The provider of the embed.
- * @property Author             $author      The author of the embed.
+ * @property string|null        $title       The title of the embed.
+ * @property string|null        $type        The type of the embed.
+ * @property string|null        $description A description of the embed.
+ * @property string|null        $url         The URL of the embed.
+ * @property Carbon|string|null $timestamp   A timestamp of the embed.
+ * @property int|null           $color       The color of the embed.
+ * @property Footer|null        $footer      The footer of the embed.
+ * @property Image|null         $image       The image of the embed.
+ * @property Image|null         $thumbnail   The thumbnail of the embed.
+ * @property Video|null         $video       The video of the embed.
+ * @property object|null        $provider    The provider of the embed.
+ * @property Author|null        $author      The author of the embed.
  * @property Collection|Field[] $fields      A collection of embed fields.
  */
 class Embed extends Part
@@ -165,17 +165,17 @@ class Embed extends Part
      *
      * @param string $description Maximum length is 2048 characters.
      *
-     * @throws \InvalidArgumentException
+     * @throws \LengthException
      */
     protected function setDescriptionAttribute($description)
     {
         if (poly_strlen($description) === 0) {
             $this->attributes['description'] = null;
         } elseif (poly_strlen($description) > 2048) {
-            throw new \InvalidArgumentException('Embed description can not be longer than 2048 characters');
+            throw new \LengthException('Embed description can not be longer than 2048 characters');
         } else {
             if ($this->exceedsOverallLimit(poly_strlen($description))) {
-                throw new \InvalidArgumentException('Embed text values collectively can not exceed than 6000 characters');
+                throw new \LengthException('Embed text values collectively can not exceed than 6000 characters');
             }
 
             $this->attributes['description'] = $description;
@@ -203,18 +203,18 @@ class Embed extends Part
      *
      * @param string $title Maximum length is 256 characters.
      *
-     * @return $this
+     * @throws \LengthException
      *
-     * @throws \InvalidArgumentException
+     * @return $this
      */
-    protected function setTitleAttribute(string $title)
+    protected function setTitleAttribute(string $title): self
     {
         if (poly_strlen($title) == 0) {
             $this->attributes['title'] = null;
         } elseif (poly_strlen($title) > 256) {
-            throw new \InvalidArgumentException('Embed title can not be longer than 256 characters');
+            throw new \LengthException('Embed title can not be longer than 256 characters');
         } elseif ($this->exceedsOverallLimit(poly_strlen($title))) {
-            throw new \InvalidArgumentException('Embed text values collectively can not exceed than 6000 characters');
+            throw new \LengthException('Embed text values collectively can not exceed than 6000 characters');
         } else {
             $this->attributes['title'] = $title;
         }
@@ -229,7 +229,7 @@ class Embed extends Part
      *
      * @return $this
      */
-    public function setTitle(string $title)
+    public function setTitle(string $title): self
     {
         $this->title = $title;
 
@@ -243,7 +243,7 @@ class Embed extends Part
      *
      * @return $this
      */
-    public function setType(string $type)
+    public function setType(string $type): self
     {
         $this->type = $type;
 
@@ -257,7 +257,7 @@ class Embed extends Part
      *
      * @return $this
      */
-    public function setDescription(string $description)
+    public function setDescription(string $description): self
     {
         $this->description = $description;
 
@@ -271,7 +271,7 @@ class Embed extends Part
      *
      * @return $this
      */
-    public function setColor($color)
+    public function setColor($color): self
     {
         $this->color = $color;
 
@@ -283,15 +283,15 @@ class Embed extends Part
      *
      * @param Field|array $field
      *
-     * @return $this
+     * @throws \OverflowException
      *
-     * @throws \RangeException
+     * @return $this
      */
     public function addField(...$fields): self
     {
         foreach ($fields as $field) {
             if (count($this->fields) > 25) {
-                throw new \RangeException('Embeds can not have more than 25 fields.');
+                throw new \OverflowException('Embeds can not have more than 25 fields.');
             }
 
             if ($field instanceof Field) {
@@ -311,9 +311,9 @@ class Embed extends Part
      * @param string $value  Maximum length is 1024 characters.
      * @param bool   $inline Whether this field gets shown with other inline fields on one line.
      *
-     * @return $this
+     * @throws \OverflowException
      *
-     * @throws \RangeException
+     * @return $this
      */
     public function addFieldValues(string $name, string $value, bool $inline = false)
     {
@@ -331,18 +331,18 @@ class Embed extends Part
      * @param string $iconurl The URL to the icon.
      * @param string $url     The URL to the author.
      *
-     * @return $this
+     * @throws \LengthException
      *
-     * @throws \InvalidArgumentException
+     * @return $this
      */
-    public function setAuthor(string $name, string $iconurl = '', string $url = '')
+    public function setAuthor(string $name, string $iconurl = '', string $url = ''): self
     {
         if (poly_strlen($name) === 0) {
             $this->author = null;
         } elseif (poly_strlen($name) > 256) {
-            throw new \InvalidArgumentException('Author name can not be longer than 256 characters.');
+            throw new \LengthException('Author name can not be longer than 256 characters.');
         } elseif ($this->exceedsOverallLimit(poly_strlen($name))) {
-            throw new \InvalidArgumentException('Embed text values collectively can not exceed than 6000 characters');
+            throw new \LengthException('Embed text values collectively can not exceed than 6000 characters');
         } else {
             $this->author = [
                 'name' => $name,
@@ -360,18 +360,18 @@ class Embed extends Part
      * @param string $text    Maximum length is 2048 characters.
      * @param string $iconurl The URL to the icon.
      *
-     * @return $this
+     * @throws \LengthException
      *
-     * @throws \InvalidArgumentException
+     * @return $this
      */
-    public function setFooter(string $text, string $iconurl = '')
+    public function setFooter(string $text, string $iconurl = ''): self
     {
         if (poly_strlen($text) === 0) {
             $this->footer = null;
         } elseif (poly_strlen($text) > 2048) {
-            throw new \InvalidArgumentException('Footer text can not be longer than 2048 characters.');
+            throw new \LengthException('Footer text can not be longer than 2048 characters.');
         } elseif ($this->exceedsOverallLimit(poly_strlen($text))) {
-            throw new \InvalidArgumentException('Embed text values collectively can not exceed than 6000 characters');
+            throw new \LengthException('Embed text values collectively can not exceed than 6000 characters');
         } else {
             $this->footer = [
                 'text' => $text,
@@ -389,7 +389,7 @@ class Embed extends Part
      *
      * @return $this
      */
-    public function setImage($url)
+    public function setImage($url): self
     {
         $this->image = ['url' => (string) $url];
 
@@ -403,7 +403,7 @@ class Embed extends Part
      *
      * @return $this
      */
-    public function setThumbnail($url)
+    public function setThumbnail($url): self
     {
         $this->thumbnail = ['url' => (string) $url];
 
@@ -415,11 +415,11 @@ class Embed extends Part
      *
      * @param int|null $timestamp
      *
-     * @return $this
-     *
      * @throws \Exception
+     *
+     * @return $this
      */
-    public function setTimestamp(?int $timestamp = null)
+    public function setTimestamp(?int $timestamp = null): self
     {
         $this->timestamp = (new Carbon(($timestamp !== null ? '@'.$timestamp : 'now')))->format('c');
 
@@ -433,7 +433,7 @@ class Embed extends Part
      *
      * @return $this
      */
-    public function setURL(string $url)
+    public function setURL(string $url): self
     {
         $this->url = $url;
 
@@ -470,9 +470,9 @@ class Embed extends Part
      *
      * @param array|int|string $color
      *
-     * @return int
-     *
      * @throws \InvalidArgumentException
+     *
+     * @return int
      */
     protected static function resolveColor($color)
     {
@@ -497,8 +497,9 @@ class Embed extends Part
      * @param string $key   The attribute key.
      * @param string $class The attribute class.
      *
-     * @return mixed
      * @throws \Exception
+     *
+     * @return mixed
      */
     private function attributeHelper($key, $class)
     {

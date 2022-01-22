@@ -20,28 +20,20 @@ use React\Promise\ExtendedPromiseInterface;
 /**
  * Represents a member that belongs to a thread. Not the same as a user nor a guild member.
  *
- * @property string $id             ID of the thread.
- * @property string $user_id        ID of the user that the member object represents.
- * @property User   $user           The user that the member object represents.
- * @property int    $flags          Flags relating to the member. Only used for client notifications.
- * @property Carbon $join_timestamp The time that the member joined the thread.
+ * @see https://discord.com/developers/docs/resources/channel#thread-member-object
+ *
+ * @property string|null $id             ID of the thread.
+ * @property string|null $user_id        ID of the user that the member object represents.
+ * @property User|null   $user           The user that the member object represents.
+ * @property Carbon      $join_timestamp The time that the member joined the thread.
+ * @property int         $flags          Flags relating to the member. Only used for client notifications.
  */
 class Member extends Part
 {
     /**
      * @inheritdoc
      */
-    protected $fillable = ['id', 'user_id', 'flags', 'join_timestamp'];
-
-    /**
-     * Returns the time that the member joined the thread.
-     *
-     * @return Carbon
-     */
-    protected function getJoinTimestampAttribute(): Carbon
-    {
-        return new Carbon($this->attributes['join_timestamp']);
-    }
+    protected $fillable = ['id', 'user_id', 'join_timestamp', 'flags'];
 
     /**
      * Returns the user that the member represents.
@@ -51,6 +43,16 @@ class Member extends Part
     protected function getUserAttribute(): ?User
     {
         return $this->discord->users->get('id', $this->user_id);
+    }
+
+    /**
+     * Returns the time that the member joined the thread.
+     *
+     * @return Carbon
+     */
+    protected function getJoinTimestampAttribute(): Carbon
+    {
+        return new Carbon($this->attributes['join_timestamp']);
     }
 
     /**

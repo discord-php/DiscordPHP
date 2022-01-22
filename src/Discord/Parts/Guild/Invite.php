@@ -21,25 +21,27 @@ use React\Promise\ExtendedPromiseInterface;
 /**
  * An invite to a Channel and Guild.
  *
- * @property string      $code                       The invite code.
- * @property Guild       $guild                      The guild that the invite is for.
- * @property string|null $guild_id
- * @property Channel     $channel                    The channel that the invite is for.
- * @property string|null $channel_id
- * @property User|null   $inviter                    The user that created the invite.
- * @property int|null    $target_type                The type of target for this voice channel invite.
- * @property User|null   $target_user                The user whose stream to display for this voice channel stream invite.
- * @property object|null $target_application         The embedded application to open for this voice channel embedded application invite.
- * @property int|null    $approximate_presence_count Approximate count of online members, returned from the GET /invites/<code> endpoint when with_counts is true.
- * @property int|null    $approximate_member_count   Approximate count of total members, returned from the GET /invites/<code> endpoint when with_counts is true.
- * @property Carbon|null $expires_at                 The expiration date of this invite, returned from the GET /invites/<code> endpoint when with_expiration is true.
- * @property object|null $stage_instance             Stage instance data if there is a public Stage instance in the Stage channel this invite is for.
- * @property object|null $guild_scheduled_event      Guild scheduled event data, only included if guild_scheduled_event_id contains a valid guild scheduled event id.
- * @property int         $uses                       How many times the invite has been used.
- * @property int         $max_uses                   How many times the invite can be used.
- * @property int         $max_age                    How many seconds the invite will be alive.
- * @property bool        $temporary                  Whether the invite is for temporary membership.
- * @property Carbon      $created_at                 A timestamp of when the invite was created.
+ * @see https://discord.com/developers/docs/resources/invite
+ *
+ * @property string              $code                       The invite code.
+ * @property Guild|null          $guild                      The guild that the invite is for.
+ * @property string|null         $guild_id
+ * @property Channel             $channel                    The channel that the invite is for.
+ * @property string|null         $channel_id
+ * @property User|null           $inviter                    The user that created the invite.
+ * @property int|null            $target_type                The type of target for this voice channel invite.
+ * @property User|null           $target_user                The user whose stream to display for this voice channel stream invite.
+ * @property object|null         $target_application         The embedded application to open for this voice channel embedded application invite.
+ * @property int|null            $approximate_presence_count Approximate count of online members, returned from the GET /invites/<code> endpoint when with_counts is true.
+ * @property int|null            $approximate_member_count   Approximate count of total members, returned from the GET /invites/<code> endpoint when with_counts is true.
+ * @property Carbon|null         $expires_at                 The expiration date of this invite, returned from the GET /invites/<code> endpoint when with_expiration is true.
+ * @property object|null         $stage_instance             Stage instance data if there is a public Stage instance in the Stage channel this invite is for.
+ * @property ScheduledEvent|null $guild_scheduled_event      Guild scheduled event data, only included if guild_scheduled_event_id contains a valid guild scheduled event id.
+ * @property int                 $uses                       How many times the invite has been used.
+ * @property int                 $max_uses                   How many times the invite can be used.
+ * @property int                 $max_age                    How many seconds the invite will be alive.
+ * @property bool                $temporary                  Whether the invite is for temporary membership.
+ * @property Carbon              $created_at                 A timestamp of when the invite was created.
  */
 class Invite extends Part
 {
@@ -83,7 +85,7 @@ class Invite extends Part
     public function accept(): ExtendedPromiseInterface
     {
         if ($this->uses >= $this->max_uses) {
-            return \React\Promise\reject(new \Exception('This invite has been used the max times.'));
+            return \React\Promise\reject(new \RuntimeException('This invite has been used the max times.'));
         }
 
         return $this->http->post(Endpoint::bind(Endpoint::INVITE, $this->code));
@@ -112,8 +114,9 @@ class Invite extends Part
     /**
      * Returns the guild attribute.
      *
-     * @return Guild      The Guild that you have been invited to.
      * @throws \Exception
+     *
+     * @return Guild|null The Guild that you have been invited to.
      */
     protected function getGuildAttribute(): ?Guild
     {
@@ -121,7 +124,15 @@ class Invite extends Part
             return $guild;
         }
 
-        return $this->factory->create(Guild::class, $this->attributes['guild'] ?? [], true);
+        if (! isset($this->attributes['guild'])) {
+            return null;
+        }
+
+        if ($guild = $this->discord->guilds->get('id', $this->attributes['guild']->id)) {
+            return $guild;
+        }
+
+        return $this->factory->create(Guild::class, $this->attributes['guild'], true);
     }
 
     /**
@@ -141,8 +152,9 @@ class Invite extends Part
     /**
      * Returns the channel attribute.
      *
-     * @return Channel    The Channel that you have been invited to.
      * @throws \Exception
+     *
+     * @return Channel    The Channel that you have been invited to.
      */
     protected function getChannelAttribute(): ?Channel
     {
@@ -170,12 +182,17 @@ class Invite extends Part
     /**
      * Returns the inviter attribute.
      *
-     * @return User       The User that invited you.
      * @throws \Exception
+     *
+     * @return User|null The User that invited you.
      */
-    protected function getInviterAttribute(): User
+    protected function getInviterAttribute(): ?User
     {
-        if (isset($this->attributes['inviter']) && $user = $this->discord->users->get('id', $this->attributes['inviter']->id ?? null)) {
+        if (! isset($this->attributes['inviter'])) {
+            return null;
+        }
+
+        if ($user = $this->discord->users->get('id', $this->attributes['inviter']->id)) {
             return $user;
         }
 
@@ -185,8 +202,9 @@ class Invite extends Part
     /**
      * Returns the created at attribute.
      *
-     * @return Carbon     The time that the invite was created.
      * @throws \Exception
+     *
+     * @return Carbon     The time that the invite was created.
      */
     protected function getCreatedAtAttribute(): Carbon
     {
@@ -196,8 +214,9 @@ class Invite extends Part
     /**
      * Returns the target user attribute.
      *
-     * @return User|null  The user whose stream to display for this voice channel stream invite.
      * @throws \Exception
+     *
+     * @return User|null  The user whose stream to display for this voice channel stream invite.
      */
     protected function getTargetUserAttribute(): ?User
     {
@@ -205,7 +224,7 @@ class Invite extends Part
             return null;
         }
 
-        if ($user = $this->discord->users->get('id', $this->attributes['target_user']->id ?? null)) {
+        if ($user = $this->discord->users->get('id', $this->attributes['target_user']->id)) {
             return $user;
         }
 
@@ -215,8 +234,9 @@ class Invite extends Part
     /**
      * Returns the expires at attribute.
      *
-     * @return Carbon|null The time that the invite was created.
      * @throws \Exception
+     *
+     * @return Carbon|null The time that the invite was created.
      */
     protected function getExpiresAtAttribute(): ?Carbon
     {
@@ -228,11 +248,21 @@ class Invite extends Part
     }
 
     /**
-     * @inheritdoc
+     * Returns the guild scheduled event on this invite.
+     *
+     * @return ScheduledEvent|null The guild scheduled event data.
      */
-    public function getCreatableAttributes(): array
+    protected function getGuildScheduledEventAttribute(): ?ScheduledEvent
     {
-        return [];
+        if (! isset($this->attributes['guild_scheduled_event'])) {
+            return null;
+        }
+
+        if ($this->guild && $scheduled_event = $this->guild->guild_scheduled_events->get('id', $this->attributes['guild_scheduled_event']->id)) {
+            return $scheduled_event;
+        }
+
+        return $this->factory->create(ScheduledEvent::class, $this->attributes['guild_scheduled_event'], true);
     }
 
     /**

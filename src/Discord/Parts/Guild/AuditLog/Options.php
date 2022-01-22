@@ -20,14 +20,14 @@ use Discord\Parts\Part;
  *
  * @see https://discord.com/developers/docs/resources/audit-log#audit-log-entry-object-optional-audit-entry-info
  *
- * @property string $delete_member_days
- * @property string $members_removed
- * @property string $channel_id
- * @property string $message_id
- * @property string $count
- * @property string $id
- * @property string $type
- * @property string $role_name
+ * @property string $channel_id         Channel in which the entities were targeted.
+ * @property string $count              Number of entities that were targeted.
+ * @property string $delete_member_days Number of days after which inactive members were kicked.
+ * @property string $id                 Id of the overwritten entity.
+ * @property string $members_removed    Number of members removed by the prune.
+ * @property string $message_id         Id of the message that was targeted.
+ * @property string $role_name          Name of the role if type is "0" (not present if type is "1").
+ * @property string $type               Type of overwritten entity - "0" for "role" or "1" for "member".
  */
 class Options extends Part
 {
