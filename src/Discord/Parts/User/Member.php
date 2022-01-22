@@ -310,7 +310,7 @@ class Member extends Part
             // Set role "DENY" permissions overwrite
             $bitwise = Bitwise::and($bitwise, Bitwise::not($deny)); $this->discord->logger->debug(print_r([__LINE__=>'bitwise &= ~deny','bitwise'=>$bitwise,'deny'=>$overwrite->deny->bitwise], true));
             // Set role "ALLOW" permissions overwrite
-            $bitwise = Bitwise::and($bitwise, Bitwise::not($deny)); $this->discord->logger->debug(print_r([__LINE__=>'bitwise &= allow','bitwise'=>$bitwise,'deny'=>$overwrite->deny->bitwise], true));
+            $bitwise = Bitwise::or($bitwise, $allow); $this->discord->logger->debug(print_r([__LINE__=>'bitwise &= allow','bitwise'=>$bitwise,'deny'=>$overwrite->deny->bitwise], true));
 
             // Get this member specific overwrite
             /** @var Overwrite */
