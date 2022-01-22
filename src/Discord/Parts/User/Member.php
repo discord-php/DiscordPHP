@@ -241,59 +241,90 @@ class Member extends Part
      */
     public function getPermissions(?Channel $channel = null): RolePermission
     {
+        // Get @everyone role guild permission
         $bitwise = $this->guild->roles->get('id', $this->guild_id)->permissions->bitwise;
 
+        // If this member is the guild owner
         if ($this->guild->owner_id == $this->id) {
-            $bitwise = Bitwise::set($bitwise, Permission::ROLE_PERMISSIONS['administrator']); // Add administrator permission
+            // Add administrator permission
+            $bitwise = Bitwise::set($bitwise, Permission::ROLE_PERMISSIONS['administrator']);
         } else {
+            // Prepare array for role ids
             $roles = [];
 
-            /* @var Role */
+            // Iterate all base roles
+            /** @var Role */
             foreach ($this->roles ?? [] as $role) {
+                // Remember the role id for later use
                 $roles[] = $role->id;
+                // Store permission value from this role
                 $bitwise = Bitwise::or($bitwise, $role->permissions->bitwise);
             }
         }
 
+        // Create from computed base permissions
         /** @var RolePermission */
         $newPermission = $this->factory->part(RolePermission::class, ['bitwise' => $bitwise]);
 
+        // If computed roles has Administrator permission
         if ($newPermission->administrator) {
+            // Iterate all permissions of the computed roles
             foreach (RolePermission::getPermissions() as $permission => $_) {
+                // Set permission to true
                 $newPermission->{$permission} = true;
             }
 
+            // Administrators ends here with all permissions
             return $newPermission;
         }
 
+        // If channel is specified (overwrites)
         if ($channel) { $this->discord->logger->debug(print_r([__LINE__=>'BEGIN CHANNEL OVERWRITE TEST','bitwise'=>$bitwise], true));
-            /* @var Overwrite */
+            // Get @everyone role channel permission
+            /** @var Overwrite */
             if ($overwrite = $channel->overwrites->get('id', $this->guild->id)) { $this->discord->logger->debug(print_r([__LINE__=>'TESTING ROLE @everyone','bitwise'=>$bitwise], true));
+                // Set "DENY" overwrites
                 $bitwise = Bitwise::and($bitwise, Bitwise::not($overwrite->deny->bitwise)); $this->discord->logger->debug(print_r([__LINE__=>'bitwise &= ~deny','bitwise'=>$bitwise,'deny'=>$overwrite->deny->bitwise], true));
+                // Set "ALLOW" overwrites
                 $bitwise = Bitwise::or($bitwise, $overwrite->allow->bitwise); $this->discord->logger->debug(print_r([__LINE__=>'bitwise |= allow','bitwise'=>$bitwise,'allow'=>$overwrite->allow->bitwise], true));
             }
 
-            /* @var Overwrite */
+            // Prepare Allow and Deny buffers for role overwrite
+            $allow = $deny = 0;
+
+            // Iterate all roles channel permission
+            /** @var Overwrite */
             foreach ($channel->overwrites as $overwrite) {
+                // Check for Role overwrite or invalid roles
                 if ($overwrite->type !== Overwrite::TYPE_ROLE || ! in_array($overwrite->id, $roles)) {
+                    // Skip
                     continue;
                 } $this->discord->logger->debug(print_r([__LINE__=>'TESTING ROLE '.$overwrite->id,'bitwise'=>$bitwise], true));
 
-                $bitwise = Bitwise::and($bitwise, Bitwise::not($overwrite->deny->bitwise)); $this->discord->logger->debug(print_r([__LINE__=>'bitwise &= ~deny','bitwise'=>$bitwise,'deny'=>$overwrite->deny->bitwise], true));
-                $bitwise = Bitwise::or($bitwise, $overwrite->allow->bitwise); $this->discord->logger->debug(print_r([__LINE__=>'bitwise |= allow','bitwise'=>$bitwise,'allow'=>$overwrite->allow->bitwise], true));
+                // Get "ALLOW" permissions
+                $allow = Bitwise::or($allow, $overwrite->allow->bitwise); $this->discord->logger->debug(print_r([__LINE__=>'bitwise |= allow','bitwise'=>$bitwise,'allow'=>$overwrite->allow->bitwise], true));
+                // Get "DENY" permissions
+                $deny = Bitwise::or($deny, $overwrite->deny->bitwise); $this->discord->logger->debug(print_r([__LINE__=>'bitwise |= deny','bitwise'=>$bitwise,'deny'=>$overwrite->deny->bitwise], true));
             }
 
-            /* @var Overwrite */
+            // Set role "DENY" permissions overwrite
+            $bitwise = Bitwise::and($bitwise, Bitwise::not($deny)); $this->discord->logger->debug(print_r([__LINE__=>'bitwise &= ~deny','bitwise'=>$bitwise,'deny'=>$overwrite->deny->bitwise], true));
+            // Set role "ALLOW" permissions overwrite
+            $bitwise = Bitwise::and($bitwise, Bitwise::not($deny)); $this->discord->logger->debug(print_r([__LINE__=>'bitwise &= allow','bitwise'=>$bitwise,'deny'=>$overwrite->deny->bitwise], true));
+
+            // Get this member specific overwrite
+            /** @var Overwrite */
             if ($overwrite = $channel->overwrites->get('id', $this->id)) { $this->discord->logger->debug(print_r([__LINE__=>'TESTING MEMBER '.$this->id,'bitwise'=>$bitwise], true));
+                // Set member "DENY" permissions overwrite
                 $bitwise = Bitwise::and($bitwise, Bitwise::not($overwrite->deny->bitwise)); $this->discord->logger->debug(print_r([__LINE__=>'bitwise &= ~deny','bitwise'=>$bitwise,'deny'=>$overwrite->deny->bitwise], true));
+                // Set member "ALLOW" permissions overwrite
                 $bitwise = Bitwise::or($bitwise, $overwrite->allow->bitwise); $this->discord->logger->debug(print_r([__LINE__=>'bitwise |= allow','bitwise'=>$bitwise,'allow'=>$overwrite->allow->bitwise], true));
             } $this->discord->logger->debug(print_r([__LINE__=>'END OF TEST','bitwise'=>$bitwise], true));
         }
 
+        // Re-create the Role Permissions from the computed overwrites
         /** @var RolePermission */
-        $newPermission = $this->factory->part(RolePermission::class, ['bitwise' => $bitwise]);
-
-        return $newPermission;
+        return $this->factory->part(RolePermission::class, ['bitwise' => $bitwise]);
     }
 
     /**
