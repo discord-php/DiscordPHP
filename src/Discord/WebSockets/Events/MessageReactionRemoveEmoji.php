@@ -13,6 +13,7 @@ namespace Discord\WebSockets\Events;
 
 use Discord\WebSockets\Event;
 use Discord\Helpers\Deferred;
+use Discord\Parts\WebSockets\MessageReaction;
 
 class MessageReactionRemoveEmoji extends Event
 {
@@ -21,16 +22,15 @@ class MessageReactionRemoveEmoji extends Event
      */
     public function handle(Deferred &$deferred, $data): void
     {
-        if ($channel = $this->discord->getChannel($data->channel_id)) {
-            if ($message = $channel->messages->offsetGet($data->message_id)) {
-                foreach ($message->reactions as $key => $react) {
-                    if ($react->id == $data->id) {
-                        unset($message->reactions[$key]);
-                    }
-                }
+        $reaction = new MessageReaction($this->discord, (array) $data, true);
+
+        if ($message = $reaction->message) {
+            $react = $reaction->emoji->toReactionString();
+            if ($message->reactions->offsetExists($react)) {
+                $message->reactions->offsetUnset($react);
             }
         }
 
-        $deferred->resolve($data);
+        $deferred->resolve($reaction);
     }
 }
