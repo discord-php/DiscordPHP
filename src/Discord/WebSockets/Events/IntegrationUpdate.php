@@ -34,7 +34,7 @@ class IntegrationUpdate extends Event
             if ($user = $this->discord->users->get('id', $data->user->id)) {
                 $user->fill((array) $data->user);
             } else {
-                $this->discord->users->pushItem($integration->user);
+                $this->discord->users->pushItem($this->factory->part(User::class, (array) $data->user, true));
             }
         }
 
