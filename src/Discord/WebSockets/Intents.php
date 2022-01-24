@@ -61,6 +61,9 @@ class Intents
      * Guild integration events:.
      *
      * - GUILD_INTEGRATIONS_UPDATE
+     * - INTEGRATION_CREATE
+     * - INTEGRATION_UPDATE
+     * - INTEGRATION_DELETE
      */
     public const GUILD_INTEGRATIONS = (1 << 4);
 

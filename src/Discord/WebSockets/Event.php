@@ -35,6 +35,7 @@ abstract class Event
     public const USER_SETTINGS_UPDATE = 'USER_SETTINGS_UPDATE';
     public const GUILD_MEMBERS_CHUNK = 'GUILD_MEMBERS_CHUNK';
     public const INTERACTION_CREATE = 'INTERACTION_CREATE';
+    public const USER_UPDATE = 'USER_UPDATE';
 
     // Guild
     public const GUILD_CREATE = 'GUILD_CREATE';
@@ -62,6 +63,10 @@ abstract class Event
     public const GUILD_SCHEDULED_EVENT_USER_REMOVE = 'GUILD_SCHEDULED_EVENT_USER_REMOVE';
 
     public const GUILD_INTEGRATIONS_UPDATE = 'GUILD_INTEGRATIONS_UPDATE';
+    public const INTEGRATION_CREATE = 'INTEGRATION_CREATE';
+    public const INTEGRATION_UPDATE = 'INTEGRATION_UPDATE';
+    public const INTEGRATION_DELETE = 'INTEGRATION_DELETE';
+    public const WEBHOOKS_UPDATE = 'WEBHOOKS_UPDATE';
 
     public const INVITE_CREATE = 'INVITE_CREATE';
     public const INVITE_DELETE = 'INVITE_DELETE';
