@@ -111,20 +111,12 @@ $discord->on(Event::MESSAGE_REACTION_REMOVE_ALL, function (MessageReaction $reac
 ### Message Reaction Remove Emoji
 
 Called with an object when all reactions of an emoji are removed from a message.
-This event is still to be implemented.
+Unlike Message Reaction Remove, this event contains no users or members.
 Requires the `Intents::GUILD_MESSAGE_REACTIONS` intent.
 
 ```php
-$discord->on(Event::MESSAGE_REACTION_REMOVE_EMOJI, function ($reaction, Discord $discord) {
-    // {
-    //     "channel_id": "",
-    //     "guild_id": "",
-    //     "message_id": "",
-    //     "emoji": {
-    //         "id": "",
-    //         "name": ""
-    //     }
-    // }
+$discord->on(Event::MESSAGE_REACTION_REMOVE_EMOJI, function (MessageReaction $reaction, Discord $discord) {
+    // ...
 });
 ```
 

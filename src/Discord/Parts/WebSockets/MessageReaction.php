@@ -21,6 +21,7 @@ use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
 use React\Promise\ExtendedPromiseInterface;
 
+use function React\Promise\reject;
 use function React\Promise\resolve;
 
 /**
@@ -28,7 +29,7 @@ use function React\Promise\resolve;
  * Different from `Reaction` in the fact that `Reaction` represents a specific reaction
  * to a message by _multiple_ members.
  *
- * @property string         $user_id     ID of the user that performed the reaction.
+ * @property string|null    $user_id     ID of the user that performed the reaction.
  * @property User|null      $user        User that performed the reaction.
  * @property string         $channel_id  ID of the channel that the reaction was performed in.
  * @property Channel|Thread $channel     Channel that the reaction was performed in.
@@ -220,6 +221,8 @@ class MessageReaction extends Part
      *
      * @param int|null $type The type of deletion to perform.
      *
+     * @throws \UnexpectedValueException
+     *
      * @return ExtendedPromiseInterface
      */
     public function delete(?int $type = null): ExtendedPromiseInterface
@@ -246,7 +249,10 @@ class MessageReaction extends Part
                 break;
             case Message::REACT_DELETE_ID:
             default:
-                $url = Endpoint::bind(Endpoint::USER_MESSAGE_REACTION, $this->channel_id, $this->message_id, $reaction, $this->user_id);
+                if (! $userid = $this->user_id ?? $this->user->id) {
+                    return reject(new \UnexpectedValueException('This reaction has no user id'));
+                }
+                $url = Endpoint::bind(Endpoint::USER_MESSAGE_REACTION, $this->channel_id, $this->message_id, $reaction, $userid);
                 break;
         }
 
