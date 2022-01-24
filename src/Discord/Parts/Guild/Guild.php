@@ -31,6 +31,7 @@ use Discord\Repository\Guild\GuildCommandRepository;
 use Discord\Repository\Guild\StickerRepository;
 use Discord\Repository\Guild\ScheduledEventRepository;
 use Discord\Repository\Guild\GuildTemplateRepository;
+use Discord\Repository\Guild\IntegrationRepository;
 use Discord\Repository\Guild\StageInstanceRepository;
 use React\Promise\ExtendedPromiseInterface;
 use ReflectionClass;
@@ -118,6 +119,7 @@ use function React\Promise\resolve;
  * @property BanRepository            $bans
  * @property GuildCommandRepository   $commands
  * @property GuildTemplateRepository  $templates
+ * @property IntegrationRepository    $integrations
  */
 class Guild extends Part
 {
@@ -248,6 +250,7 @@ class Guild extends Part
         'bans' => BanRepository::class,
         'commands' => GuildCommandRepository::class,
         'templates' => GuildTemplateRepository::class,
+        'integrations' => IntegrationRepository::class,
     ];
 
     /**
