@@ -27,7 +27,7 @@ class IntegrationDelete extends Event
         /** @var Guild */
         if ($guild = $this->discord->guilds->get('id', $data->guild_id)) {
             /** @var Integration */
-            $oldintegration = $guild->integrations->pull('id', $data->id);
+            $oldintegration = $guild->integrations->pull($data->id);
         }
 
         $deferred->resolve($oldintegration);
