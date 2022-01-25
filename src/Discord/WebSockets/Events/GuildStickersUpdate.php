@@ -15,6 +15,7 @@ use Discord\Helpers\Collection;
 use Discord\WebSockets\Event;
 use Discord\Helpers\Deferred;
 use Discord\Parts\Guild\Sticker;
+use Discord\Parts\User\User;
 
 class GuildStickersUpdate extends Event
 {
@@ -32,7 +33,14 @@ class GuildStickersUpdate extends Event
         }
 
         foreach ($data->stickers as $sticker) {
-            if (! isset($sticker->user) && $oldPart = $oldParts->offsetGet($sticker->id)) {
+            if (isset($sticker->user)) {
+                // User caching from sticker uploader
+                if ($user = $this->discord->users->get('id', $sticker->user->id)) {
+                    $user->fill((array) $sticker->user);
+                } else {
+                    $this->discord->users->pushItem($this->factory->part(User::class, (array) $sticker->user, true));
+                }
+            } elseif($oldPart = $oldParts->offsetGet($sticker->id)) {
                 $sticker->user = $oldPart->user;
             }
             $stickerPart = $this->factory->create(Sticker::class, $sticker, true);

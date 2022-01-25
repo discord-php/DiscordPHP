@@ -30,7 +30,7 @@ class IntegrationCreate extends Event
         }
 
         // User caching
-        if (! isset($data->user)) {
+        if (isset($data->user)) {
             if ($user = $this->discord->users->get('id', $data->user->id)) {
                 $user->fill((array) $data->user);
             } else {

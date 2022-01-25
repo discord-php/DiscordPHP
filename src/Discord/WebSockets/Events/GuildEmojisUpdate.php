@@ -15,6 +15,7 @@ use Discord\Helpers\Collection;
 use Discord\WebSockets\Event;
 use Discord\Helpers\Deferred;
 use Discord\Parts\Guild\Emoji;
+use Discord\Parts\User\User;
 
 class GuildEmojisUpdate extends Event
 {
@@ -32,7 +33,14 @@ class GuildEmojisUpdate extends Event
         }
 
         foreach ($data->emojis as $emoji) {
-            if (! isset($emoji->user) && $oldPart = $oldParts->offsetGet($emoji->id)) {
+            if (isset($emoji->user)) {
+                // User caching from emoji uploader
+                if ($user = $this->discord->users->get('id', $emoji->user->id)) {
+                    $user->fill((array) $emoji->user);
+                } else {
+                    $this->discord->users->pushItem($this->factory->part(User::class, (array) $emoji->user, true));
+                }
+            } elseif ($oldPart = $oldParts->offsetGet($emoji->id)) {
                 $emoji->user = $oldPart->user;
             }
             $emojiPart = $this->factory->create(Emoji::class, $emoji, true);

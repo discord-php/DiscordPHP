@@ -14,6 +14,7 @@ namespace Discord\WebSockets\Events;
 use Discord\Parts\User\Member;
 use Discord\WebSockets\Event;
 use Discord\Helpers\Deferred;
+use Discord\Parts\User\User;
 
 class GuildMemberRemove extends Event
 {
@@ -29,6 +30,13 @@ class GuildMemberRemove extends Event
             --$guild->member_count;
 
             $this->discord->guilds->push($guild);
+        }
+
+        // User caching
+        if ($user = $this->discord->users->get('id', $data->user->id)) {
+            $user->fill((array) $data->user);
+        } else {
+            $this->discord->users->pushItem($this->factory->part(User::class, (array) $data->user, true));
         }
 
         $deferred->resolve($member);
