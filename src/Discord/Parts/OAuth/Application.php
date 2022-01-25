@@ -39,17 +39,6 @@ class Application extends Part
      * @return array
      */
 
-    public static function getFillableAttributes($context = '')
-	{
-		$fillable = array();
-		foreach (self::$fillable as $attr) {
-			if (!$context || in_array($context, self::$fillable)) {
-				$fillable[] = $attr;
-			}
-		}
-		return $fillable;
-	}
-
     /**
      * Returns the owner of the application.
      *
