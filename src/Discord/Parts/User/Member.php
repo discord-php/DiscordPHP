@@ -279,14 +279,14 @@ class Member extends Part
         }
 
         // If channel is specified (overwrites)
-        if ($channel) { $this->discord->logger->debug(print_r([__LINE__=>'BEGIN CHANNEL OVERWRITE TEST','bitwise'=>$bitwise], true));
+        if ($channel) {
             // Get @everyone role channel permission
             /** @var Overwrite */
-            if ($overwrite = $channel->overwrites->get('id', $this->guild->id)) { $this->discord->logger->debug(print_r([__LINE__=>'TESTING ROLE @everyone','bitwise'=>$bitwise], true));
+            if ($overwrite = $channel->overwrites->get('id', $this->guild->id)) {
                 // Set "DENY" overwrites
-                $bitwise = Bitwise::and($bitwise, Bitwise::not($overwrite->deny->bitwise)); $this->discord->logger->debug(print_r([__LINE__=>'bitwise &= ~deny','bitwise'=>$bitwise,'deny'=>$overwrite->deny->bitwise], true));
+                $bitwise = Bitwise::and($bitwise, Bitwise::not($overwrite->deny->bitwise));
                 // Set "ALLOW" overwrites
-                $bitwise = Bitwise::or($bitwise, $overwrite->allow->bitwise); $this->discord->logger->debug(print_r([__LINE__=>'bitwise |= allow','bitwise'=>$bitwise,'allow'=>$overwrite->allow->bitwise], true));
+                $bitwise = Bitwise::or($bitwise, $overwrite->allow->bitwise);
             }
 
             // Prepare Allow and Deny buffers for role overwrite
@@ -299,27 +299,27 @@ class Member extends Part
                 if ($overwrite->type !== Overwrite::TYPE_ROLE || ! in_array($overwrite->id, $roles)) {
                     // Skip
                     continue;
-                } $this->discord->logger->debug(print_r([__LINE__=>'TESTING ROLE '.$overwrite->id,'bitwise'=>$bitwise], true));
+                }
 
                 // Get "ALLOW" permissions
-                $allow = Bitwise::or($allow, $overwrite->allow->bitwise); $this->discord->logger->debug(print_r([__LINE__=>'bitwise |= allow','bitwise'=>$bitwise,'allow'=>$overwrite->allow->bitwise], true));
+                $allow = Bitwise::or($allow, $overwrite->allow->bitwise);
                 // Get "DENY" permissions
-                $deny = Bitwise::or($deny, $overwrite->deny->bitwise); $this->discord->logger->debug(print_r([__LINE__=>'bitwise |= deny','bitwise'=>$bitwise,'deny'=>$overwrite->deny->bitwise], true));
+                $deny = Bitwise::or($deny, $overwrite->deny->bitwise);
             }
 
             // Set role "DENY" permissions overwrite
-            $bitwise = Bitwise::and($bitwise, Bitwise::not($deny)); $this->discord->logger->debug(print_r([__LINE__=>'bitwise &= ~deny','bitwise'=>$bitwise,'deny'=>$overwrite->deny->bitwise], true));
+            $bitwise = Bitwise::and($bitwise, Bitwise::not($deny));
             // Set role "ALLOW" permissions overwrite
-            $bitwise = Bitwise::or($bitwise, $allow); $this->discord->logger->debug(print_r([__LINE__=>'bitwise |= allow','bitwise'=>$bitwise,'deny'=>$overwrite->allow->bitwise], true));
+            $bitwise = Bitwise::or($bitwise, $allow);
 
             // Get this member specific overwrite
             /** @var Overwrite */
-            if ($overwrite = $channel->overwrites->get('id', $this->id)) { $this->discord->logger->debug(print_r([__LINE__=>'TESTING MEMBER '.$this->id,'bitwise'=>$bitwise], true));
+            if ($overwrite = $channel->overwrites->get('id', $this->id)) {
                 // Set member "DENY" permissions overwrite
-                $bitwise = Bitwise::and($bitwise, Bitwise::not($overwrite->deny->bitwise)); $this->discord->logger->debug(print_r([__LINE__=>'bitwise &= ~deny','bitwise'=>$bitwise,'deny'=>$overwrite->deny->bitwise], true));
+                $bitwise = Bitwise::and($bitwise, Bitwise::not($overwrite->deny->bitwise));
                 // Set member "ALLOW" permissions overwrite
-                $bitwise = Bitwise::or($bitwise, $overwrite->allow->bitwise); $this->discord->logger->debug(print_r([__LINE__=>'bitwise |= allow','bitwise'=>$bitwise,'allow'=>$overwrite->allow->bitwise], true));
-            } $this->discord->logger->debug(print_r([__LINE__=>'END OF TEST','bitwise'=>$bitwise], true));
+                $bitwise = Bitwise::or($bitwise, $overwrite->allow->bitwise);
+            }
         }
 
         // Re-create the Role Permissions from the computed overwrites
