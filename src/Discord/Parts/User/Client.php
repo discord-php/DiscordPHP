@@ -44,22 +44,6 @@ class Client extends Part
      */
     protected static $fillable = ['id', 'username', 'email', 'verified', 'avatar', 'discriminator', 'bot', 'user', 'application'];
 
-	/**
-     * Returns the fillable attributes.
-     *
-     * @return array
-     */
-    public static function getFillableAttributes($context = '')
-	{
-		$fillable = array();
-		foreach (self::$fillable as $attr) {
-			if (!$context || in_array($context, self::$fillable)) {
-				$fillable[] = $attr;
-			}
-		}
-		return $fillable;
-	}
-
     /**
      * @inheritdoc
      */
