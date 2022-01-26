@@ -31,6 +31,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * @property string|null  $channel_id           The channel id in which the scheduled event will be hosted, or null if scheduled entity type is EXTERNAL.
  * @property Channel|null $channel              The channel in which the scheduled event will be hosted, or null.
  * @property string|null  $creator_id           The id of the user that created the scheduled event.
+ * @property string|null  $image                The cover image URL of the scheduled event.
+ * @property string|null  $image_hash           The cover image hash of the scheduled event.
  * @property string|null  $description          The description of the scheduled event (1-1000 characters).
  * @property Carbon       $scheduled_start_time The time the scheduled event will start.
  * @property Carbon|null  $scheduled_end_time   The time the scheduled event will end, required if entity_type is EXTERNAL.
@@ -65,6 +67,7 @@ class ScheduledEvent extends Part
         'creator_id',
         'name',
         'description',
+        'image',
         'scheduled_start_time',
         'scheduled_end_time',
         'privacy_level',
@@ -153,6 +156,39 @@ class ScheduledEvent extends Part
     }
 
     /**
+     * Returns the image attribute.
+     *
+     * @param string|null $format The image format.
+     * @param int         $size   The size of the image.
+     *
+     * @return string|null The URL to the guild scheduled event cover image if exists.
+     */
+    public function getImageAttribute(?string $format = null, int $size = 1024): ?string
+    {
+        if (! isset($this->attributes['image'])) {
+            return null;
+        }
+
+        $allowed = ['png', 'jpg', 'webp'];
+
+        if (! in_array(strtolower($format), $allowed)) {
+            $format = 'png';
+        }
+
+        return "https://cdn.discordapp.com/guild-events/{$this->id}/{$this->attributes['image']}.{$format}?size={$size}";
+    }
+
+    /**
+     * Returns the image hash.
+     *
+     * @return string|null The guild scheduled event cover image hash if exists.
+     */
+    protected function getImageHashAttribute()
+    {
+        return $this->attributes['image'];
+    }
+
+    /**
      * Returns the created at attribute.
      *
      * @throws \Exception
@@ -216,7 +252,7 @@ class ScheduledEvent extends Part
             'scheduled_end_time' => $this->attributes['scheduled_end_time'],
             'description' => $this->description,
             'entity_type' => $this->entity_type,
-            'status' => $this->status,
+            'image' => $this->attributes['image'],
         ];
     }
 
@@ -234,6 +270,8 @@ class ScheduledEvent extends Part
             'scheduled_end_time' => $this->attributes['scheduled_end_time'],
             'description' => $this->description,
             'entity_type' => $this->entity_type,
+            'status' => $this->status,
+            'image' => $this->attributes['image'],
         ];
     }
 
