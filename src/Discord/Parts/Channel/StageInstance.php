@@ -26,10 +26,10 @@ use Discord\Parts\Part;
  * @property Channel    $channel               The channel that the stage instance associated to.
  * @property string     $topic                 The topic of the Stage instance (1-120 characters).
  * @property int        $privacy_level         The privacy level of the Stage instance.
- * @property bool       $discoverable_disabled Whether or not Stage Discovery is disabled.
  */
 class StageInstance extends Part
 {
+    /** @deprecated 7.0.0 */
     public const PRIVACY_LEVEL_PUBLIC = 1;
     public const PRIVACY_LEVEL_GROUP_ONLY = 2;
 
