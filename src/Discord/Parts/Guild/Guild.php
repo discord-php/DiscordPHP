@@ -810,14 +810,14 @@ class Guild extends Part
     }
 
     /**
-     * Modify the guild's Welcome Screen. Requires the MANAGE_GUILD permission. Returns the updated Welcome Screen object.
+     * Modify the guild's Welcome Screen. Requires the MANAGE_GUILD permission.
      *
      * @param array $options An array of options.
      *                       enabled => whether the welcome screen is enabled
      *                       welcome_channels => channels linked in the welcome screen and their display options (maximum 5)
      *                       description => the server description to show in the welcome screen (maximum 140)
      *
-     * @return ExtendedPromiseInterface
+     * @return ExtendedPromiseInterface<WelcomeScreen> The updated Welcome Screen.
      */
     public function updateWelcomeScreen(array $options): ExtendedPromiseInterface
     {
@@ -842,6 +842,66 @@ class Guild extends Part
     }
 
     /**
+     * Fetch the Widget Settings for the guild.
+     *
+     * @return ExtendedPromiseInterface
+     */
+    public function getWidgetSettings(): ExtendedPromiseInterface
+    {
+        return $this->http->get(Endpoint::bind(Endpoint::GUILD_WIDGET_SETTINGS, $this->id))->then(function ($response) {
+            $this->widget_enabled = $response->enabled;
+            $this->widget_channel_id = $response->channel_id;
+
+            return $response;
+        });
+    }
+
+    /**
+     * Modify a guild widget settings object for the guild. All attributes may be passed in with JSON and modified. Requires the MANAGE_GUILD permission.
+     *
+     * @param array $options An array of options.
+     *                       enabled => whether the widget is enabled
+     *                       channel_id => the widget channel id
+     *
+     * @return ExtendedPromiseInterface The updated guild widget object.
+     */
+    public function updateWidgetSettings(array $options, ?string $reason = null): ExtendedPromiseInterface
+    {
+        $resolver = new OptionsResolver();
+        $resolver->setDefined([
+            'enabled',
+            'channel_id',
+        ])
+        ->setRequired('enabled')
+        ->setAllowedTypes('enabled', 'bool')
+        ->setAllowedTypes('channel_id', 'string');
+
+        $options = $resolver->resolve($options);
+
+        $headers = [];
+        if (isset($reason)) {
+            $headers['X-Audit-Log-Reason'] = $reason;
+        }
+
+        return $this->http->patch(Endpoint::bind(Endpoint::GUILD_WIDGET_SETTINGS, $this->id), $options)->then(function ($response) {
+            $this->widget_enabled = $response->enabled;
+            $this->widget_channel_id = $response->channel_id;
+
+            return $response;
+        });
+    }
+
+    /**
+     * Get the Widget for the guild.
+     *
+     * @return ExtendedPromiseInterface<WelcomeScreen>
+     */
+    public function getWidget(): ExtendedPromiseInterface
+    {
+        return $this->factory->part(Widget::class)->fetch();
+    }
+
+    /**
      * @inheritdoc
      */
     public function getCreatableAttributes(): array
@@ -855,6 +915,7 @@ class Guild extends Part
             'afk_channel_id' => $this->afk_channel_id,
             'afk_timeout' => $this->afk_timeout,
             'system_channel_id' => $this->system_channel_id,
+            'system_channel_flags' => $this->system_channel_flags,
         ];
     }
 
@@ -874,9 +935,11 @@ class Guild extends Part
             'splash' => $this->attributes['splash'],
             'banner' => $this->attributes['banner'],
             'system_channel_id' => $this->system_channel_id,
+            'system_channel_flags' => $this->system_channel_flags,
             'rules_channel_id' => $this->rules_channel_id,
             'public_updates_channel_id' => $this->public_updates_channel_id,
             'preferred_locale' => $this->preferred_locale,
+            'description' => $this->description,
             'premium_progress_bar_enabled' => $this->premium_progress_bar_enabled,
         ];
     }
