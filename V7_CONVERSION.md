@@ -96,5 +96,5 @@ If you previously linked [DiscordPHP-Slash](https://github.com/discord-php/Disco
 |Delete initial response|`$interaction->deleteInitialResponse();`|`$interaction->deleteOriginalResponse();`|
 |Send a follow up message|`$interaction->sendFollowUpMessage('text');`|`$interaction->sendFollowUpMessage(MessageBuilder::new()->setContent('text'));`|
 |Update follow up message|`$interaction->updateFollowUpMessage('message_id', 'text');`|`$interaction->updateFollowUpMessage('message_id', MessageBuilder::new()->setContent('text'));`|
-|Delete follow up message|`$interaction->deleteFollowUpMessage('message_id');`|Delete like normal messages<br/>`$message = $channel->messages['message_id'];`<br/>`$message->delete();`|
+|Delete follow up message|`$interaction->deleteFollowUpMessage('message_id');`|`$interaction->deleteFollowUpMessage('message_id');`|
 |ApplicationCommandOptionType|`ApplicationCommandOptionType::x`<br/>`ApplicationCommandOptionType::SUB_COMMAND`|`Option::x`<br/>`Option::SUB_COMMAND`|

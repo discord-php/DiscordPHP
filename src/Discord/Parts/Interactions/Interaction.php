@@ -450,6 +450,49 @@ class Interaction extends Part
     }
 
     /**
+     * Retrieves a non ephemeral follow up message.
+     *
+     * @see https://discord.com/developers/docs/interactions/receiving-and-responding#get-followup-message
+     *
+     * @param string $message_id Message to get.
+     *
+     * @throws \RuntimeException
+     *
+     * @return ExtendedPromiseInterface<Message>
+     */
+    public function getFollowUpMessage(string $message_id): ExtendedPromiseInterface
+    {
+        if (! $this->responded) {
+            return reject(new \RuntimeException('Interaction has not been responded to.'));
+        }
+
+        return $this->http->get(Endpoint::bind(Endpoint::INTERACTION_FOLLOW_UP, $this->application_id, $this->token, $message_id))
+            ->then(function ($response) {
+                return $this->factory->create(Message::class, $response, true);
+            });
+    }
+
+    /**
+     * Deletes a non ephemeral follow up message.
+     *
+     * @see https://discord.com/developers/docs/interactions/receiving-and-responding#delete-followup-message
+     *
+     * @param string $message_id Message to delete.
+     *
+     * @throws \RuntimeException
+     *
+     * @return ExtendedPromiseInterface
+     */
+    public function deleteFollowUpMessage(string $message_id): ExtendedPromiseInterface
+    {
+        if (! $this->responded) {
+            return reject(new \RuntimeException('Interaction has not been responded to.'));
+        }
+
+        return $this->http->delete(Endpoint::bind(Endpoint::INTERACTION_FOLLOW_UP, $this->application_id, $this->token, $message_id));
+    }
+
+    /**
      * Responds to the interaction with auto complete suggestions.
      *
      * @see https://discord.com/developers/docs/interactions/receiving-and-responding#responding-to-an-interaction
