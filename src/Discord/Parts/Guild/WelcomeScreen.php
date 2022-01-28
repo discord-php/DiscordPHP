@@ -34,7 +34,7 @@ class WelcomeScreen extends Part
      *
      * @return Collection|WelcomeChannel[] The channels of welcome screen.
      */
-    public function getWelcomeChannelsAttribute(): Collection
+    protected function getWelcomeChannelsAttribute(): Collection
     {
         $collection = Collection::for(WelcomeChannel::class, 'channel_id');
 

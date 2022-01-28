@@ -37,48 +37,49 @@ use function React\Promise\reject;
  *
  * @see https://discord.com/developers/docs/resources/channel#message-object
  *
- * @property string               $id                     The unique identifier of the message.
- * @property string               $channel_id             The unique identifier of the channel that the message was went in.
- * @property Channel|Thread|null  $channel                The channel that the message was sent in.
- * @property string|null          $guild_id               The unique identifier of the guild that the channel the message was sent in belongs to.
- * @property Guild|null           $guild                  The guild that the message was sent in.
- * @property User|null            $author                 The author of the message. Will be a webhook if sent from one.
- * @property string               $user_id                The user id of the author.
- * @property Member|null          $member                 The member that sent this message, or null if it was in a private message.
- * @property string               $content                The content of the message if it is a normal message.
- * @property Carbon               $timestamp              A timestamp of when the message was sent.
- * @property Carbon|null          $edited_timestamp       A timestamp of when the message was edited, or null.
- * @property bool                 $tts                    Whether the message was sent as a text-to-speech message.
- * @property bool                 $mention_everyone       Whether the message contained an @everyone mention.
- * @property Collection|User[]    $mentions               A collection of the users mentioned in the message.
- * @property Collection|Role[]    $mention_roles          A collection of roles that were mentioned in the message.
- * @property Collection|Channel[] $mention_channels       Collection of mentioned channels.
- * @property array|null           $attachments            An array of attachment objects.
- * @property Collection|Embed[]   $embeds                 A collection of embed objects.
- * @property ReactionRepository   $reactions              Collection of reactions on the message.
- * @property string|null          $nonce                  A randomly generated string that provides verification for the client. Not required.
- * @property bool                 $pinned                 Whether the message is pinned to the channel.
- * @property string|null          $webhook_id             ID of the webhook that made the message, if any.
- * @property int                  $type                   The type of message.
- * @property object|null          $activity               Current message activity. Requires rich presence.
- * @property object|null          $application            Application of message. Requires rich presence.
- * @property string|null          $application_id         If the message is a response to an Interaction, this is the id of the interaction's application.
- * @property object|null          $message_reference      Message that is referenced by this message.
- * @property int|null             $flags                  Message flags.
- * @property Message|null         $referenced_message     The message that is referenced in a reply.
- * @property object|null          $interaction            The interaction which triggered the message (application commands).
- * @property Thread|null          $thread                 The thread that the message was sent in.
- * @property array|null           $components             Sent if the message contains components like buttons, action rows, or other interactive components.
- * @property Collection|Sticker[] $sticker_items          Stickers attached to the message.
- * @property bool                 $crossposted            Message has been crossposted.
- * @property bool                 $is_crosspost           Message is a crosspost from another channel.
- * @property bool                 $suppress_embeds        Do not include embeds when serializing message.
- * @property bool                 $source_message_deleted Source message for this message has been deleted.
- * @property bool                 $urgent                 Message is urgent.
- * @property bool                 $has_thread             Whether this message has an associated thread, with the same id as the message.
- * @property bool                 $ephemeral              Whether this message is only visible to the user who invoked the Interaction.
- * @property bool                 $loading                Whether this message is an Interaction Response and the bot is "thinking".
- * @property string|null          $link                   Returns a link to the message.
+ * @property string               $id                                     The unique identifier of the message.
+ * @property string               $channel_id                             The unique identifier of the channel that the message was went in.
+ * @property Channel|Thread|null  $channel                                The channel that the message was sent in.
+ * @property string|null          $guild_id                               The unique identifier of the guild that the channel the message was sent in belongs to.
+ * @property Guild|null           $guild                                  The guild that the message was sent in.
+ * @property User|null            $author                                 The author of the message. Will be a webhook if sent from one.
+ * @property string               $user_id                                The user id of the author.
+ * @property Member|null          $member                                 The member that sent this message, or null if it was in a private message.
+ * @property string               $content                                The content of the message if it is a normal message.
+ * @property Carbon               $timestamp                              A timestamp of when the message was sent.
+ * @property Carbon|null          $edited_timestamp                       A timestamp of when the message was edited, or null.
+ * @property bool                 $tts                                    Whether the message was sent as a text-to-speech message.
+ * @property bool                 $mention_everyone                       Whether the message contained an @everyone mention.
+ * @property Collection|User[]    $mentions                               A collection of the users mentioned in the message.
+ * @property Collection|Role[]    $mention_roles                          A collection of roles that were mentioned in the message.
+ * @property Collection|Channel[] $mention_channels                       Collection of mentioned channels.
+ * @property array|null           $attachments                            An array of attachment objects.
+ * @property Collection|Embed[]   $embeds                                 A collection of embed objects.
+ * @property ReactionRepository   $reactions                              Collection of reactions on the message.
+ * @property string|null          $nonce                                  A randomly generated string that provides verification for the client. Not required.
+ * @property bool                 $pinned                                 Whether the message is pinned to the channel.
+ * @property string|null          $webhook_id                             ID of the webhook that made the message, if any.
+ * @property int                  $type                                   The type of message.
+ * @property object|null          $activity                               Current message activity. Requires rich presence.
+ * @property object|null          $application                            Application of message. Requires rich presence.
+ * @property string|null          $application_id                         If the message is a response to an Interaction, this is the id of the interaction's application.
+ * @property object|null          $message_reference                      Message that is referenced by this message.
+ * @property int|null             $flags                                  Message flags.
+ * @property Message|null         $referenced_message                     The message that is referenced in a reply.
+ * @property object|null          $interaction                            The interaction which triggered the message (application commands).
+ * @property Thread|null          $thread                                 The thread that the message was sent in.
+ * @property array|null           $components                             Sent if the message contains components like buttons, action rows, or other interactive components.
+ * @property Collection|Sticker[] $sticker_items                          Stickers attached to the message.
+ * @property bool                 $crossposted                            Message has been crossposted.
+ * @property bool                 $is_crosspost                           Message is a crosspost from another channel.
+ * @property bool                 $suppress_embeds                        Do not include embeds when serializing message.
+ * @property bool                 $source_message_deleted                 Source message for this message has been deleted.
+ * @property bool                 $urgent                                 Message is urgent.
+ * @property bool                 $has_thread                             Whether this message has an associated thread, with the same id as the message.
+ * @property bool                 $ephemeral                              Whether this message is only visible to the user who invoked the Interaction.
+ * @property bool                 $loading                                Whether this message is an Interaction Response and the bot is "thinking".
+ * @property bool                 $failed_to_mention_some_roles_in_thread This message failed to mention some roles and add their members to the thread.
+ * @property string|null          $link                                   Returns a link to the message.
  */
 class Message extends Part
 {
@@ -237,6 +238,16 @@ class Message extends Part
     protected function getLoadingAttribute(): bool
     {
         return (bool) ($this->flags & (1 << 7));
+    }
+
+    /**
+     * Gets the failed to mention some roles in thread attribute.
+     *
+     * @return bool
+     */
+    protected function getFailedToMentionSomeRolesInThreadAttribute(): bool
+    {
+        return (bool) ($this->flags & (1 << 8));
     }
 
     /**
@@ -526,6 +537,8 @@ class Message extends Part
     /**
      * Starts a public thread from the message.
      *
+     * @see https://discord.com/developers/docs/resources/channel#start-thread-with-message
+     *
      * @param string      $name                  The name of the thread.
      * @param int         $auto_archive_duration Number of minutes of inactivity until the thread is auto-archived. One of 60, 1440, 4320, 10080.
      * @param string|null $reason                Reason for Audit Log.
@@ -574,6 +587,8 @@ class Message extends Part
     /**
      * Replies to the message.
      *
+     * @see https://discord.com/developers/docs/resources/channel#create-message
+     *
      * @param string $text The text to reply with.
      *
      * @return ExtendedPromiseInterface<Message>
@@ -588,6 +603,8 @@ class Message extends Part
     /**
      * Crossposts the message to any following channels.
      *
+     * @see https://discord.com/developers/docs/resources/channel#crosspost-message
+     *
      * @return ExtendedPromiseInterface<Message>
      */
     public function crosspost(): ExtendedPromiseInterface
@@ -599,6 +616,8 @@ class Message extends Part
 
     /**
      * Replies to the message after a delay.
+     *
+     * @see Message::reply()
      *
      * @param string $text  Text to send after delay.
      * @param int    $delay Delay after text will be sent in milliseconds.
@@ -619,6 +638,8 @@ class Message extends Part
     /**
      * Deletes the message after a delay.
      *
+     * @see Message::deleteMessage()
+     *
      * @param int $delay Time to delay the delete by, in milliseconds.
      *
      * @return ExtendedPromseInterface
@@ -637,6 +658,8 @@ class Message extends Part
     /**
      * Reacts to the message.
      *
+     * @see https://discord.com/developers/docs/resources/channel#create-reaction
+     *
      * @param Emoji|string $emoticon The emoticon to react with. (custom: ':michael:251127796439449631')
      *
      * @return ExtendedPromiseInterface
@@ -652,6 +675,9 @@ class Message extends Part
 
     /**
      * Deletes a reaction.
+     *
+     * @see https://discord.com/developers/docs/resources/channel#delete-own-reaction
+     * @see https://discord.com/developers/docs/resources/channel#delete-user-reaction
      *
      * @param int               $type     The type of deletion to perform.
      * @param Emoji|string|null $emoticon The emoticon to delete (if not all).
@@ -690,6 +716,8 @@ class Message extends Part
     /**
      * Edits the message.
      *
+     * @see https://discord.com/developers/docs/resources/channel#edit-message
+     *
      * @param MessageBuilder $message Contains the new contents of the message. Note that fields not specified in the builder will not be overwritten.
      *
      * @return ExtendedPromiseInterface<Message>
@@ -716,6 +744,8 @@ class Message extends Part
 
     /**
      * Deletes the message from the channel.
+     *
+     * @see https://discord.com/developers/docs/resources/channel#delete-message
      *
      * @return ExtendedPromiseInterface
      */

@@ -53,6 +53,8 @@ class BanRepository extends AbstractRepository
     /**
      * Bans a member from the guild.
      *
+     * @see https://discord.com/developers/docs/resources/guild#create-guild-ban
+     *
      * @param Member|string $member
      * @param int|null      $daysToDeleteMessages
      * @param string|null   $reason
@@ -92,6 +94,8 @@ class BanRepository extends AbstractRepository
 
     /**
      * Unbans a member from the guild.
+     *
+     * @see https://discord.com/developers/docs/resources/guild#remove-guild-ban
      *
      * @param Member|Ban|string $member
      *

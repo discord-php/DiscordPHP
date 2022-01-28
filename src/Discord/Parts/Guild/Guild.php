@@ -263,6 +263,8 @@ class Guild extends Part
     /**
      * Returns the channels invites.
      *
+     * @see https://discord.com/developers/docs/resources/guild#get-guild-invites
+     *
      * @return ExtendedPromiseInterface
      */
     public function getInvites(): ExtendedPromiseInterface
@@ -281,6 +283,8 @@ class Guild extends Part
 
     /**
      * Unbans a member. Alias for `$guild->bans->unban($user)`.
+     *
+     * @see BanRepository::unban()
      *
      * @param User|string $user
      *
@@ -497,6 +501,8 @@ class Guild extends Part
     /**
      * Gets the voice regions available.
      *
+     * @see https://discord.com/developers/docs/resources/voice#list-voice-regions
+     *
      * @return ExtendedPromiseInterface
      */
     public function getVoiceRegions(): ExtendedPromiseInterface
@@ -517,6 +523,8 @@ class Guild extends Part
     /**
      * Creates a role.
      *
+     * @see https://discord.com/developers/docs/resources/guild#create-guild-role
+     *
      * @param array $data The data to fill the role with.
      *
      * @throws NoPermissionsException
@@ -536,6 +544,8 @@ class Guild extends Part
 
     /**
      * Creates an Emoji for the guild.
+     *
+     * @see https://discord.com/developers/docs/resources/emoji#create-guild-emoji
      *
      * @param array $options        An array of options.
      *                              name => name of the emoji
@@ -657,6 +667,8 @@ class Guild extends Part
     /**
      * Returns an audit log object for the query.
      *
+     * @see https://discord.com/developers/docs/resources/audit-log#get-guild-audit-log
+     *
      * @param array $options An array of options.
      *                       user_id => filter the log for actions made by a user
      *                       action_type => the type of audit log event
@@ -708,6 +720,8 @@ class Guild extends Part
     /**
      * Updates the positions of a list of given roles.
      *
+     * @see https://discord.com/developers/docs/resources/guild#modify-guild-role-positions
+     *
      * The `$roles` array should be an associative array where the LHS key is the position,
      * and the RHS value is a `Role` object or a string ID, e.g. [1 => 'role_id_1', 3 => 'role_id_3'].
      *
@@ -734,6 +748,8 @@ class Guild extends Part
 
     /**
      * Returns a list of guild member objects whose username or nickname starts with a provided string.
+     *
+     * @see https://discord.com/developers/docs/resources/guild#search-guild-members
      *
      * @param array $options An array of options.
      *                       query => query string to match username(s) and nickname(s) against
@@ -778,6 +794,8 @@ class Guild extends Part
     /**
      * Get the Welcome Screen for the guild.
      *
+     * @see https://discord.com/developers/docs/resources/guild#get-guild-welcome-screen
+     *
      * @param bool $fresh Whether we should skip checking the cache.
      *
      * @return ExtendedPromiseInterface<WelcomeScreen>
@@ -810,14 +828,16 @@ class Guild extends Part
     }
 
     /**
-     * Modify the guild's Welcome Screen. Requires the MANAGE_GUILD permission. Returns the updated Welcome Screen object.
+     * Modify the guild's Welcome Screen. Requires the MANAGE_GUILD permission.
+     *
+     * @see https://discord.com/developers/docs/resources/guild#modify-guild-welcome-screen
      *
      * @param array $options An array of options.
      *                       enabled => whether the welcome screen is enabled
      *                       welcome_channels => channels linked in the welcome screen and their display options (maximum 5)
      *                       description => the server description to show in the welcome screen (maximum 140)
      *
-     * @return ExtendedPromiseInterface
+     * @return ExtendedPromiseInterface<WelcomeScreen> The updated Welcome Screen.
      */
     public function updateWelcomeScreen(array $options): ExtendedPromiseInterface
     {
@@ -842,6 +862,71 @@ class Guild extends Part
     }
 
     /**
+     * Fetch the Widget Settings for the guild.
+     *
+     * @see https://discord.com/developers/docs/resources/guild#get-guild-widget-settings
+     *
+     * @return ExtendedPromiseInterface
+     */
+    public function getWidgetSettings(): ExtendedPromiseInterface
+    {
+        return $this->http->get(Endpoint::bind(Endpoint::GUILD_WIDGET_SETTINGS, $this->id))->then(function ($response) {
+            $this->widget_enabled = $response->enabled;
+            $this->widget_channel_id = $response->channel_id;
+
+            return $response;
+        });
+    }
+
+    /**
+     * Modify a guild widget settings object for the guild. All attributes may be passed in with JSON and modified. Requires the MANAGE_GUILD permission.
+     *
+     * @see https://discord.com/developers/docs/resources/guild#modify-guild-widget
+     *
+     * @param array $options An array of options.
+     *                       enabled => whether the widget is enabled
+     *                       channel_id => the widget channel id
+     *
+     * @return ExtendedPromiseInterface The updated guild widget object.
+     */
+    public function updateWidgetSettings(array $options, ?string $reason = null): ExtendedPromiseInterface
+    {
+        $resolver = new OptionsResolver();
+        $resolver->setDefined([
+            'enabled',
+            'channel_id',
+        ])
+        ->setAllowedTypes('enabled', 'bool')
+        ->setAllowedTypes('channel_id', ['string', 'null']);
+
+        $options = $resolver->resolve($options);
+
+        $headers = [];
+        if (isset($reason)) {
+            $headers['X-Audit-Log-Reason'] = $reason;
+        }
+
+        return $this->http->patch(Endpoint::bind(Endpoint::GUILD_WIDGET_SETTINGS, $this->id), $options)->then(function ($response) {
+            $this->widget_enabled = $response->enabled;
+            $this->widget_channel_id = $response->channel_id;
+
+            return $response;
+        });
+    }
+
+    /**
+     * Get the Widget for the guild.
+     *
+     * @see https://discord.com/developers/docs/resources/guild#get-guild-widget
+     *
+     * @return ExtendedPromiseInterface<WelcomeScreen>
+     */
+    public function getWidget(): ExtendedPromiseInterface
+    {
+        return $this->factory->part(Widget::class, ['id' => $this->id])->fetch();
+    }
+
+    /**
      * @inheritdoc
      */
     public function getCreatableAttributes(): array
@@ -855,6 +940,7 @@ class Guild extends Part
             'afk_channel_id' => $this->afk_channel_id,
             'afk_timeout' => $this->afk_timeout,
             'system_channel_id' => $this->system_channel_id,
+            'system_channel_flags' => $this->system_channel_flags,
         ];
     }
 
@@ -874,9 +960,11 @@ class Guild extends Part
             'splash' => $this->attributes['splash'],
             'banner' => $this->attributes['banner'],
             'system_channel_id' => $this->system_channel_id,
+            'system_channel_flags' => $this->system_channel_flags,
             'rules_channel_id' => $this->rules_channel_id,
             'public_updates_channel_id' => $this->public_updates_channel_id,
             'preferred_locale' => $this->preferred_locale,
+            'description' => $this->description,
             'premium_progress_bar_enabled' => $this->premium_progress_bar_enabled,
         ];
     }

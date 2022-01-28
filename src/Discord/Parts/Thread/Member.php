@@ -58,6 +58,8 @@ class Member extends Part
     /**
      * Attempts to remove the member from the thread.
      *
+     * @see https://discord.com/developers/docs/resources/channel#remove-thread-member
+     *
      * @return ExtendedPromiseInterface
      */
     public function remove(): ExtendedPromiseInterface

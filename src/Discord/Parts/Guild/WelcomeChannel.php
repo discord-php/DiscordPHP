@@ -37,7 +37,7 @@ class WelcomeChannel extends Part
      *
      * @return Channel|null
      */
-    public function getChannelAttribute(): ?Channel
+    protected function getChannelAttribute(): ?Channel
     {
         return $this->discord->getChannel($this->channel_id);
     }

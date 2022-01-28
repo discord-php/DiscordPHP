@@ -114,6 +114,8 @@ class Member extends Part
     /**
      * Bans the member. Alias for `$guild->bans->ban()`.
      *
+     * @see BanRepository::ban()
+     *
      * @param int|null    $daysToDeleteMessages The amount of days to delete messages from.
      * @param string|null $reason
      *
@@ -178,6 +180,8 @@ class Member extends Part
     /**
      * Adds a role to the member.
      *
+     * @see https://discord.com/developers/docs/resources/guild#add-guild-member-role
+     *
      * @param Role|string $role   The role to add to the member.
      * @param string|null $reason Reason for Audit Log.
      *
@@ -206,6 +210,8 @@ class Member extends Part
 
     /**
      * Removes a role from the member.
+     *
+     * @see https://discord.com/developers/docs/resources/guild#remove-guild-member-role
      *
      * @param Role|string $role   The role to remove from the member.
      * @param string|null $reason Reason for Audit Log.
@@ -237,6 +243,8 @@ class Member extends Part
      *
      * Takes a `MessageBuilder` or content of the message for the first parameter. If the first parameter
      * is an instance of `MessageBuilder`, the rest of the arguments are disregarded.
+     *
+     * @see User::sendMessage()
      *
      * @param MessageBuilder|string $message          The message builder that should be converted into a message, or the string content of the message.
      * @param bool                  $tts              Whether the message is TTS.
