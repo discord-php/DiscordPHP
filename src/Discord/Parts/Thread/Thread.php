@@ -252,6 +252,8 @@ class Thread extends Part
     /**
      * Attempts to join the thread.
      *
+     * @see https://discord.com/developers/docs/resources/channel#join-thread
+     *
      * @return ExtendedPromiseInterface
      */
     public function join(): ExtendedPromiseInterface
@@ -261,6 +263,8 @@ class Thread extends Part
 
     /**
      * Attempts to add a user to the thread.
+     *
+     * @see https://discord.com/developers/docs/resources/channel#add-thread-member
      *
      * @param User|Member|string $user User to add. Can be one of the user objects or a user ID.
      *
@@ -278,6 +282,8 @@ class Thread extends Part
     /**
      * Attempts to leave the thread.
      *
+     * @see https://discord.com/developers/docs/resources/channel#leave-thread
+     *
      * @return ExtendedPromiseInterface
      */
     public function leave(): ExtendedPromiseInterface
@@ -287,6 +293,8 @@ class Thread extends Part
 
     /**
      * Attempts to remove a user from the thread.
+     *
+     * @see https://discord.com/developers/docs/resources/channel#remove-thread-member
      *
      * @param User|Member|ThreadMember|string $user User to remove. Can be one of the user objects or a user ID.
      *
@@ -326,6 +334,8 @@ class Thread extends Part
     /**
      * Returns the thread's pinned messages.
      *
+     * @see https://discord.com/developers/docs/resources/channel#get-pinned-messages
+     *
      * @return ExtendedPromiseInterface<Collection<Message>>
      */
     public function getPinnedMessages(): ExtendedPromiseInterface
@@ -333,7 +343,7 @@ class Thread extends Part
         return $this->http->get(Endpoint::bind(Endpoint::CHANNEL_PINS, $this->id))
             ->then(function ($responses) {
                 $messages = Collection::for(Message::class);
-                
+
                 foreach ($responses as $response) {
                     if (! $message = $this->messages->get('id', $response->id)) {
                         $message = $this->factory->create(Message::class, $response, true);
@@ -348,6 +358,8 @@ class Thread extends Part
 
     /**
      * Bulk deletes an array of messages.
+     *
+     * @see https://discord.com/developers/docs/resources/channel#bulk-delete-messages
      *
      * @param array|Traversable $messages
      * @param string|null       $reason   Reason for Audit Log (only for bulk messages).
@@ -400,6 +412,8 @@ class Thread extends Part
     /**
      * Fetches the message history of the thread with a given array
      * of arguments.
+     *
+     * @see https://discord.com/developers/docs/resources/channel#get-channel-messages
      *
      * @param array $options
      *
@@ -458,6 +472,8 @@ class Thread extends Part
     /**
      * Pins a message in the thread.
      *
+     * @see https://discord.com/developers/docs/resources/channel#pin-message
+     *
      * @param Message     $message
      * @param string|null $reason  Reason for Audit Log.
      *
@@ -487,6 +503,8 @@ class Thread extends Part
 
     /**
      * Unpins a message in the thread.
+     *
+     * @see https://discord.com/developers/docs/resources/channel#unpin-message
      *
      * @param Message     $message
      * @param string|null $reason  Reason for Audit Log.
@@ -520,6 +538,8 @@ class Thread extends Part
      *
      * Takes a `MessageBuilder` or content of the message for the first parameter. If the first parameter
      * is an instance of `MessageBuilder`, the rest of the arguments are disregarded.
+     *
+     * @see https://discord.com/developers/docs/resources/channel#create-message
      *
      * @param MessageBuilder|string $message          The message builder that should be converted into a message, or the string content of the message.
      * @param bool                  $tts              Whether the message is TTS.
@@ -568,6 +588,8 @@ class Thread extends Part
 
     /**
      * Sends an embed to the thread.
+     *
+     * @see Thread::sendMessage()
      *
      * @param Embed $embed Embed to send.
      *
@@ -645,7 +667,7 @@ class Thread extends Part
             'parent_id' => $this->parent_id,
         ];
     }
-    
+
     /**
      * Returns a formatted mention.
      *

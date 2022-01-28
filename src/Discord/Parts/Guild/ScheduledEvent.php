@@ -82,6 +82,8 @@ class ScheduledEvent extends Part
     /**
      * Get a list of guild scheduled event users subscribed to a guild scheduled event. Returns a list of guild scheduled event user objects on success. Guild member data, if it exists, is included if the with_member query parameter is set.
      *
+     * @see https://discord.com/developers/docs/resources/guild-scheduled-event#get-guild-scheduled-event-users
+     *
      * @throws \RangeException
      *
      * @return ExtendedPromiseInterface

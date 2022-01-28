@@ -284,7 +284,7 @@ class Guild extends Part
     /**
      * Unbans a member. Alias for `$guild->bans->unban($user)`.
      *
-     * @see https://discord.com/developers/docs/resources/guild#remove-guild-ban
+     * @see BanRepository::unban()
      *
      * @param User|string $user
      *

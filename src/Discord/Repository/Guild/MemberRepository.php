@@ -47,6 +47,8 @@ class MemberRepository extends AbstractRepository
     /**
      * Alias for delete.
      *
+     * @see https://discord.com/developers/docs/resources/guild#remove-guild-member
+     *
      * @param Member $member The member to kick.
      *
      * @return PromiseInterface

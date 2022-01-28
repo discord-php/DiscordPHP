@@ -84,6 +84,8 @@ class Reaction extends Part
     /**
      * Gets the users that have used the reaction.
      *
+     * @see https://discord.com/developers/docs/resources/channel#get-reactions
+
      * @param array $options See https://discord.com/developers/docs/resources/channel#get-reactions
      *
      * @return ExtendedPromiseInterface<Collection|Users[]>
@@ -127,6 +129,8 @@ class Reaction extends Part
     /**
      * Gets all the users that have used this reaction.
      * Wrapper of the lower-level getUsers() function.
+     *
+     * @see Message::getUsers()
      *
      * @return ExtendedPromiseInterface<Collection|Users[]>
      */

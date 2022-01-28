@@ -537,6 +537,8 @@ class Message extends Part
     /**
      * Starts a public thread from the message.
      *
+     * @see https://discord.com/developers/docs/resources/channel#start-thread-with-message
+     *
      * @param string      $name                  The name of the thread.
      * @param int         $auto_archive_duration Number of minutes of inactivity until the thread is auto-archived. One of 60, 1440, 4320, 10080.
      * @param string|null $reason                Reason for Audit Log.
@@ -585,6 +587,8 @@ class Message extends Part
     /**
      * Replies to the message.
      *
+     * @see https://discord.com/developers/docs/resources/channel#create-message
+     *
      * @param string $text The text to reply with.
      *
      * @return ExtendedPromiseInterface<Message>
@@ -599,6 +603,8 @@ class Message extends Part
     /**
      * Crossposts the message to any following channels.
      *
+     * @see https://discord.com/developers/docs/resources/channel#crosspost-message
+     *
      * @return ExtendedPromiseInterface<Message>
      */
     public function crosspost(): ExtendedPromiseInterface
@@ -610,6 +616,8 @@ class Message extends Part
 
     /**
      * Replies to the message after a delay.
+     *
+     * @see Message::reply()
      *
      * @param string $text  Text to send after delay.
      * @param int    $delay Delay after text will be sent in milliseconds.
@@ -630,6 +638,8 @@ class Message extends Part
     /**
      * Deletes the message after a delay.
      *
+     * @see Message::deleteMessage()
+     *
      * @param int $delay Time to delay the delete by, in milliseconds.
      *
      * @return ExtendedPromseInterface
@@ -648,6 +658,8 @@ class Message extends Part
     /**
      * Reacts to the message.
      *
+     * @see https://discord.com/developers/docs/resources/channel#create-reaction
+     *
      * @param Emoji|string $emoticon The emoticon to react with. (custom: ':michael:251127796439449631')
      *
      * @return ExtendedPromiseInterface
@@ -663,6 +675,9 @@ class Message extends Part
 
     /**
      * Deletes a reaction.
+     *
+     * @see https://discord.com/developers/docs/resources/channel#delete-own-reaction
+     * @see https://discord.com/developers/docs/resources/channel#delete-user-reaction
      *
      * @param int               $type     The type of deletion to perform.
      * @param Emoji|string|null $emoticon The emoticon to delete (if not all).
@@ -701,6 +716,8 @@ class Message extends Part
     /**
      * Edits the message.
      *
+     * @see https://discord.com/developers/docs/resources/channel#edit-message
+     *
      * @param MessageBuilder $message Contains the new contents of the message. Note that fields not specified in the builder will not be overwritten.
      *
      * @return ExtendedPromiseInterface<Message>
@@ -727,6 +744,8 @@ class Message extends Part
 
     /**
      * Deletes the message from the channel.
+     *
+     * @see https://discord.com/developers/docs/resources/channel#delete-message
      *
      * @return ExtendedPromiseInterface
      */

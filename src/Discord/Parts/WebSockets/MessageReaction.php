@@ -219,6 +219,8 @@ class MessageReaction extends Part
     /**
      * Delete this reaction
      *
+     * @see Message::deleteReaction()
+     *
      * @param int|null $type The type of deletion to perform.
      *
      * @throws \UnexpectedValueException
