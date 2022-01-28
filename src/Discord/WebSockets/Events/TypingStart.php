@@ -14,6 +14,7 @@ namespace Discord\WebSockets\Events;
 use Discord\Parts\WebSockets\TypingStart as TypingStartPart;
 use Discord\WebSockets\Event;
 use Discord\Helpers\Deferred;
+use Discord\Parts\User\User;
 
 class TypingStart extends Event
 {
@@ -23,6 +24,15 @@ class TypingStart extends Event
     public function handle(Deferred &$deferred, $data): void
     {
         $typing = $this->factory->create(TypingStartPart::class, $data, true);
+
+        // User caching
+        if (isset($data->member->user)) {
+            if ($user = $this->discord->users->get('id', $data->member->user->id)) {
+                $user->fill((array) $data->member->user);
+            } else {
+                $this->discord->users->pushItem($this->factory->part(User::class, (array) $data->member->user, true));
+            }
+        }
 
         $deferred->resolve($typing);
     }
