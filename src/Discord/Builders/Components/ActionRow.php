@@ -76,6 +76,18 @@ class ActionRow extends Component
     }
 
     /**
+     * Removes all components from the action row.
+     *
+     * @return $this
+     */
+    public function clearComponents(): self
+    {
+        $this->components = [];
+
+        return $this;
+    }
+
+    /**
      * Returns all the components in the action row.
      *
      * @return Component[]

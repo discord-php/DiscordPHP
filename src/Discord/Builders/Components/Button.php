@@ -58,16 +58,16 @@ class Button extends Component
     /**
      * URL to send as the button. Only for link buttons.
      *
-     * @var string
+     * @var string|null
      */
     private $url;
-    
+
     /**
      * Whether the button is disabled.
      *
      * @var bool
      */
-    private $disabled;
+    private $disabled = false;
 
     /**
      * Listener for when the button is pressed.
@@ -88,7 +88,7 @@ class Button extends Component
      *
      * @param int $style Style of the button.
      * @param string|null $custom_id custom ID of the button. If not given, an UUID will be used
-     * 
+     *
      * @throws \InvalidArgumentException
      */
     public function __construct(int $style, ?string $custom_id)
@@ -160,15 +160,15 @@ class Button extends Component
     /**
      * Sets the label of the button.
      *
-     * @param string $label Label of the button. Maximum 80 characters.
+     * @param string|null $label Label of the button. Maximum 80 characters.
      *
      * @throws \LengthException
      *
      * @return $this
      */
-    public function setLabel(string $label): self
+    public function setLabel(?string $label): self
     {
-        if (poly_strlen($label) > 80) {
+        if (isset($label) && poly_strlen($label) > 80) {
             throw new \LengthException('Label must be maximum 80 characters.');
         }
 
@@ -224,20 +224,20 @@ class Button extends Component
     /**
      * Sets the custom ID of the button.
      *
-     * @param string $custom_id
+     * @param string|null $custom_id
      *
      * @throws \LogicException
      * @throws \LengthException
      *
      * @return $this
      */
-    public function setCustomId(string $custom_id): self
+    public function setCustomId(?string $custom_id): self
     {
         if ($this->style == Button::STYLE_LINK) {
             throw new \LogicException('You cannot set the custom ID of a link button.');
         }
 
-        if (poly_strlen($custom_id) > 100) {
+        if (isset($custom_id) && poly_strlen($custom_id) > 100) {
             throw new \LengthException('Custom ID must be maximum 100 characters.');
         }
 
@@ -249,13 +249,13 @@ class Button extends Component
     /**
      * Sets the URL of the button. Only valid for link buttons.tatic.
      *
-     * @param string $url
+     * @param string|null $url
      *
      * @throws \LogicException
      *
      * @return $this
      */
-    public function setUrl(string $url): self
+    public function setUrl(?string $url): self
     {
         if ($this->style != Button::STYLE_LINK) {
             throw new \LogicException('You cannot set the URL of a non-link button.');
@@ -308,7 +308,7 @@ class Button extends Component
             throw new \LogicException('You cannot add a listener to a link button.');
         }
 
-        if (! $this->custom_id) {
+        if (! isset($this->custom_id)) {
             $this->custom_id = $this->generateUuid();
         }
 
@@ -376,7 +376,7 @@ class Button extends Component
      *
      * @return string|null
      */
-    public function getLabel(): string
+    public function getLabel(): ?string
     {
         return $this->label;
     }
@@ -386,7 +386,7 @@ class Button extends Component
      *
      * @return array|null
      */
-    public function getEmoji(): array
+    public function getEmoji(): ?array
     {
         return $this->emoji;
     }
@@ -396,7 +396,7 @@ class Button extends Component
      *
      * @return string|null
      */
-    public function getCustomId(): string
+    public function getCustomId(): ?string
     {
         return $this->custom_id;
     }
@@ -404,9 +404,9 @@ class Button extends Component
     /**
      * Returns the URL of the button. Only for link buttons.
      *
-     * @return string
+     * @return string|null
      */
-    public function getURL(): string
+    public function getURL(): ?string
     {
         return $this->url;
     }
@@ -431,24 +431,25 @@ class Button extends Component
             'style' => $this->style,
         ];
 
-        if ($this->label) {
+        if (isset($this->label)) {
             $content['label'] = $this->label;
         }
 
-        if ($this->emoji) {
+        if (isset($this->emoji)) {
             $content['emoji'] = $this->emoji;
         }
 
-        if ($this->custom_id) {
+        if (isset($this->custom_id)) {
             $content['custom_id'] = $this->custom_id;
         } elseif ($this->style != Button::STYLE_LINK) {
             throw new \DomainException('Buttons must have a `custom_id` field set.');
         }
 
-        if ($this->url) {
+        if ($this->style == Button::STYLE_LINK) {
+            if (! isset($this->url)) {
+                throw new \DomainException('Link buttons must have a `url` field set.');
+            }
             $content['url'] = $this->url;
-        } elseif ($this->style == Button::STYLE_LINK) {
-            throw new \DomainException('Link buttons must have a `url` field set.');
         }
 
         if ($this->disabled) {
