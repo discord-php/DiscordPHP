@@ -179,7 +179,7 @@ class SelectMenu extends Component
      */
     public function setPlaceholder(?string $placeholder): self
     {
-        if ($placeholder && strlen($placeholder) > 100) {
+        if (isset($placeholder) && strlen($placeholder) > 100) {
             throw new \LengthException('Placeholder string must be less than or equal to 100 characters.');
         }
 
@@ -200,7 +200,7 @@ class SelectMenu extends Component
      */
     public function setMinValues(?int $min_values): self
     {
-        if ($min_values && ($min_values < 0 || $min_values > 25)) {
+        if (isset($min_values) && ($min_values < 0 || $min_values > 25)) {
             throw new \LengthException('Number must be between 0 and 25 inclusive.');
         }
 
@@ -351,7 +351,7 @@ class SelectMenu extends Component
      *
      * @return string|null
      */
-    public function getPlaceholder(): string
+    public function getPlaceholder(): ?string
     {
         return $this->placeholder;
     }
@@ -361,7 +361,7 @@ class SelectMenu extends Component
      *
      * @return int|null
      */
-    public function getMinValues(): int
+    public function getMinValues(): ?int
     {
         return $this->min_values;
     }
@@ -371,7 +371,7 @@ class SelectMenu extends Component
      *
      * @return int|null
      */
-    public function getMaxValues(): int
+    public function getMaxValues(): ?int
     {
         return $this->max_values;
     }
@@ -381,7 +381,7 @@ class SelectMenu extends Component
      *
      * @return bool|null
      */
-    public function isDisabled(): bool
+    public function isDisabled(): ?bool
     {
         return $this->disabled;
     }
@@ -397,11 +397,11 @@ class SelectMenu extends Component
             'options' => $this->options,
         ];
 
-        if ($this->placeholder) {
+        if (isset($this->placeholder)) {
             $content['placeholder'] = $this->placeholder;
         }
 
-        if ($this->min_values) {
+        if (isset($this->min_values)) {
             if ($this->min_values > count($this->options)) {
                 throw new \OutOfBoundsException('There are less options than the minimum number of options to be selected.');
             }
