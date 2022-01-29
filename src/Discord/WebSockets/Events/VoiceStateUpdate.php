@@ -14,7 +14,6 @@ namespace Discord\WebSockets\Events;
 use Discord\Parts\WebSockets\VoiceStateUpdate as VoiceStateUpdatePart;
 use Discord\WebSockets\Event;
 use Discord\Helpers\Deferred;
-use Discord\Parts\User\User;
 
 class VoiceStateUpdate extends Event
 {
@@ -51,12 +50,7 @@ class VoiceStateUpdate extends Event
             $this->discord->guilds->offsetSet($state->guild->id, $state->guild);
         }
 
-        // User caching
-        if ($user = $this->discord->users->get('id', $data->member->user->id)) {
-            $user->fill((array) $data->member->user);
-        } else {
-            $this->discord->users->pushItem($this->factory->part(User::class, (array) $data->member->user, true));
-        }
+        $this->cacheUser($data->member->user);
 
         $deferred->resolve([$state, $old_state]);
     }

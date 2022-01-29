@@ -58,22 +58,14 @@ class InteractionCreate extends Event
             }
         }
 
-        // User caching from member
         if (isset($data->member->user)) {
-            if ($user = $this->discord->users->get('id', $data->member->user->id)) {
-                $user->fill((array) $data->member->user);
-            } else {
-                $this->discord->users->pushItem($this->factory->part(User::class, (array) $data->member->user, true));
-            }
+            // User caching from member
+            $this->cacheUser($data->member->user);
         }
 
-        // User caching
         if (isset($data->user)) {
-            if ($user = $this->discord->users->get('id', $data->user->id)) {
-                $user->fill((array) $data->user);
-            } else {
-                $this->discord->users->pushItem($this->factory->part(User::class, (array) $data->user, true));
-            }
+            // User caching from user dm
+            $this->cacheUser($data->user);
         }
 
         $deferred->resolve($interaction);

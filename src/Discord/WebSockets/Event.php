@@ -150,6 +150,21 @@ abstract class Event
      */
     abstract public function handle(Deferred &$deferred, $data);
 
+    /**
+     * Cache User repository from Event data
+     *
+     * @param object $userdata
+     */
+    protected function cacheUser($userdata)
+    {
+        // User caching
+        if ($user = $this->discord->users->get('id', $userdata->id)) {
+            $user->fill((array) $userdata);
+        } else {
+            $this->discord->users->pushItem($this->factory->part(\Discord\Parts\User\User::class, (array) $userdata, true));
+        }
+    }
+
     public function __debugInfo(): array
     {
         return [];
