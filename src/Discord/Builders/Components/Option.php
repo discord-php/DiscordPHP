@@ -66,7 +66,7 @@ class Option extends Component
             throw new \LengthException('Label must be less than or equal to 100 characters.');
         }
 
-        if ($value && poly_strlen($value) > 100) {
+        if (isset($value) && poly_strlen($value) > 100) {
             throw new \LengthException('Value must be less than or equal to 100 characters.');
         }
 
@@ -98,7 +98,7 @@ class Option extends Component
      */
     public function setDescription(?string $description): self
     {
-        if ($description && poly_strlen($description) > 100) {
+        if (isset($description) && poly_strlen($description) > 100) {
             throw new \LengthException('Description must be less than or equal to 100 characters.');
         }
 
@@ -190,7 +190,7 @@ class Option extends Component
      *
      * @return string|null
      */
-    public function getDescription(): string
+    public function getDescription(): ?string
     {
         return $this->description;
     }
@@ -200,7 +200,7 @@ class Option extends Component
      *
      * @return array|null
      */
-    public function getEmoji(): array
+    public function getEmoji(): ?array
     {
         return $this->emoji;
     }
@@ -225,11 +225,11 @@ class Option extends Component
             'value' => $this->value,
         ];
 
-        if ($this->description) {
+        if (isset($this->description)) {
             $content['description'] = $this->description;
         }
 
-        if ($this->emoji) {
+        if (isset($this->emoji)) {
             $content['emoji'] = $this->emoji;
         }
 
