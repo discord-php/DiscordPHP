@@ -30,7 +30,8 @@ class GuildMemberAdd extends Event
             ++$guild->member_count;
         }
 
-        $this->discord->users->push($member->user);
+        $this->cacheUser($data->user);
+
         $deferred->resolve($member);
     }
 }

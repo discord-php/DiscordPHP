@@ -31,6 +31,8 @@ class GuildMemberRemove extends Event
             $this->discord->guilds->push($guild);
         }
 
+        $this->cacheUser($data->user);
+
         $deferred->resolve($member);
     }
 }

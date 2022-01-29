@@ -30,6 +30,8 @@ class GuildScheduledEventUpdate extends Event
             $guild->guild_scheduled_events->push($scheduled_event);
         }
 
+        $this->cacheUser($data->creator);
+
         $deferred->resolve([$scheduled_event, $old]);
     }
 }

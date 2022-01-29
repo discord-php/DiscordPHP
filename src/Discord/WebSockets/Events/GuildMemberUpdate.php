@@ -34,9 +34,7 @@ class GuildMemberUpdate extends Event
             $guild->members->push($memberPart);
         }
 
-        if ($user = $this->discord->users->get('id', $data->user->id)) {
-            $user->fill((array) $data->user);
-        }
+        $this->cacheUser($data->user);
 
         $deferred->resolve([$memberPart, $old]);
     }

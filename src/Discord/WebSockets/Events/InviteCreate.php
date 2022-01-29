@@ -24,6 +24,16 @@ class InviteCreate extends Event
     {
         $invite = $this->factory->create(Invite::class, $data, true);
 
+        if (isset($data->inviter)) {
+            // User caching from inviter
+            $this->cacheUser($data->inviter);
+        }
+
+        if (isset($data->target_user)) {
+            // User caching from target user
+            $this->cacheUser($data->target_user);
+        }
+
         $deferred->resolve($invite);
     }
 }

@@ -29,13 +29,8 @@ class IntegrationCreate extends Event
             $guild->integrations->pushItem($integration);
         }
 
-        // User caching
-        if (! isset($data->user)) {
-            if ($user = $this->discord->users->get('id', $data->user->id)) {
-                $user->fill((array) $data->user);
-            } else {
-                $this->discord->users->pushItem($this->factory->part(User::class, (array) $data->user, true));
-            }
+        if (isset($data->user)) {
+            $this->cacheUser($data->user);
         }
 
         $deferred->resolve($integration);

@@ -32,7 +32,10 @@ class GuildEmojisUpdate extends Event
         }
 
         foreach ($data->emojis as $emoji) {
-            if (! isset($emoji->user) && $oldPart = $oldParts->offsetGet($emoji->id)) {
+            if (isset($emoji->user)) {
+                // User caching from emoji uploader
+                $this->cacheUser($emoji->user);
+            } elseif ($oldPart = $oldParts->offsetGet($emoji->id)) {
                 $emoji->user = $oldPart->user;
             }
             $emojiPart = $this->factory->create(Emoji::class, $emoji, true);

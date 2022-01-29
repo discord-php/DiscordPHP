@@ -29,6 +29,10 @@ class GuildScheduledEventDelete extends Event
             $guild->guild_scheduled_events->pull($scheduled_event->id);
         }
 
+        if (isset($data->creator)) {
+            $this->cacheUser($data->creator);
+        }
+
         $deferred->resolve($scheduled_event);
     }
 }

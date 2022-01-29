@@ -30,8 +30,7 @@ class InteractionCreate extends Event
             if ($userPart = $this->discord->users->get('id', $snowflake)) {
                 $userPart->fill((array) $user);
             } else {
-                $userPart = $this->factory->create(User::class, $user, true);
-                $this->discord->users->pushItem($userPart);
+                $this->discord->users->pushItem($this->factory->part(User::class, (array) $user, true));
             }
         }
 
@@ -57,6 +56,16 @@ class InteractionCreate extends Event
                     return;
                 }
             }
+        }
+
+        if (isset($data->member->user)) {
+            // User caching from member
+            $this->cacheUser($data->member->user);
+        }
+
+        if (isset($data->user)) {
+            // User caching from user dm
+            $this->cacheUser($data->user);
         }
 
         $deferred->resolve($interaction);

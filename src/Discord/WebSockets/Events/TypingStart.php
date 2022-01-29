@@ -24,6 +24,10 @@ class TypingStart extends Event
     {
         $typing = $this->factory->create(TypingStartPart::class, $data, true);
 
+        if (isset($data->member->user)) {
+            $this->cacheUser($data->member->user);
+        }
+
         $deferred->resolve($typing);
     }
 }

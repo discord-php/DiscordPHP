@@ -32,7 +32,10 @@ class GuildStickersUpdate extends Event
         }
 
         foreach ($data->stickers as $sticker) {
-            if (! isset($sticker->user) && $oldPart = $oldParts->offsetGet($sticker->id)) {
+            if (isset($sticker->user)) {
+                // User caching from sticker uploader
+                $this->cacheUser($sticker->user);
+            } elseif($oldPart = $oldParts->offsetGet($sticker->id)) {
                 $sticker->user = $oldPart->user;
             }
             $stickerPart = $this->factory->create(Sticker::class, $sticker, true);

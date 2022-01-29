@@ -14,7 +14,6 @@ namespace Discord\WebSockets\Events;
 use Discord\Parts\WebSockets\MessageReaction;
 use Discord\WebSockets\Event;
 use Discord\Helpers\Deferred;
-use Discord\Parts\Channel\Reaction;
 
 class MessageReactionAdd extends Event
 {
@@ -51,6 +50,10 @@ class MessageReactionAdd extends Event
                     ], true));
                 }
             }
+        }
+
+        if (isset($data->member->user)) {
+            $this->cacheUser($data->member->user);
         }
 
         $deferred->resolve($reaction);

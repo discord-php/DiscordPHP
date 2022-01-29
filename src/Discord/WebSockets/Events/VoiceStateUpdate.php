@@ -50,6 +50,8 @@ class VoiceStateUpdate extends Event
             $this->discord->guilds->offsetSet($state->guild->id, $state->guild);
         }
 
+        $this->cacheUser($data->member->user);
+
         $deferred->resolve([$state, $old_state]);
     }
 }
