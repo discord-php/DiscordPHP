@@ -24,19 +24,19 @@ $discord->on('ready', function (Discord $discord) {
   $iptoping = gethostbyname($matches[1]);  
 $start = microtime_float(); $fp = fsockopen($iptoping, 80, $errno, $errstr, 30); $end = microtime_float(); $ms = ($end - $start) * 1000;
 if ($ms < 25) {
-  $pingsymobl = "<:connectiongreat:937358383139397672> ";
+  $pingsymobl = "<:connectiongreat:937358383139397672> "; // Great connection
 }
 if ($ms > 25) {
-  $pingsymobl = "<:slowconnection:937358380853522482> ";
+  $pingsymobl = "<:slowconnection:937358380853522482> "; // Slow connection
 }
 if ($ms > 100) {
-  $pingsymobl = "<:badconnection:937358380799000597> ";
+  $pingsymobl = "<:badconnection:937358380799000597> "; // Bad connection
 }
 if ($ms > 1000) {
-  $pingsymobl = "<:noconnection:937358381553971200> ";
+  $pingsymobl = "<:noconnection:937358381553971200> "; // Allmost no connection
 }
 if ($ms > 2000) {
-  $pingsymobl = "<:none:937358380719300608> ";
+  $pingsymobl = "<:none:937358380719300608> "; // No connection
 }
 
     $embed = new Embed($discord);
