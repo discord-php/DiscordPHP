@@ -10,6 +10,7 @@ The class reference has moved. You can now access it [here](http://discord-php.g
 
 - PHP 7.4 CLI
     - Will not run on a webserver (FPM, CGI), you must run through CLI. A bot is a long-running process.
+    - x86 (32-bit) PHP requires ext-gmp extension enabled for handling new Permission values.
 - `ext-json` for JSON parsing.
 - `ext-zlib` for gateway packet compression.
 
@@ -17,6 +18,7 @@ The class reference has moved. You can now access it [here](http://discord-php.g
 
 - One of `ext-uv`, `ext-libev` or `evt-event` (in order of preference) for a faster, and more performant event loop.
 - `ext-mbstring` if you may handle non-english characters.
+- `ext-gmp` if running 32-bit PHP.
 
 #### Voice Requirements
 
