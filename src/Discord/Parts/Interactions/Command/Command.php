@@ -123,8 +123,6 @@ class Command extends Part
      *
      * @param Overwrite $overwrite An overwrite object.
      *
-     * @deprecated 7.0.0
-     *
      * @return ExtendedPromiseInterface
      */
     public function setOverwrite(Overwrite $overwrite): ExtendedPromiseInterface

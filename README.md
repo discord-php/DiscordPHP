@@ -47,7 +47,8 @@ The path to the caextract must be set in the [`php.ini`](https://secure.php.net/
 
 #### Voice Requirements
 
-- 64-bit Linux or Darwin based OS. Voice does not run on Windows.
+- 64-bit Linux or Darwin based OS.
+    - If you are running on Windows, you must be using PHP 8.0.
 - `ext-sodium`
 - FFmpeg
 
