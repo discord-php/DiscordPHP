@@ -7,7 +7,7 @@ on:
 jobs:
   docs:
     runs-on: ubuntu-latest
-    if: github.event_name == 'release' || contains(github.event.head_commit.message, 'build docs')
+    if: github.event_name == 'release' || contains(github.event.head_commit.message, 'build docs') || github.event_name == 'workflow_dispatch'
     steps:
       - name: Checkout
         uses: actions/checkout@v2
