@@ -578,7 +578,7 @@ class Channel extends Part
     /**
      * Deletes a given number of messages, in order of time sent.
      *
-     * @see @see https://discord.com/developers/docs/resources/channel#bulk-delete-messages
+     * @see https://discord.com/developers/docs/resources/channel#bulk-delete-messages
      *
      * @param int         $value
      * @param string|null $reason Reason for Audit Log (only for bulk messages).
