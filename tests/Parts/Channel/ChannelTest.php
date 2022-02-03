@@ -11,6 +11,7 @@ declare(strict_types=1);
  * with this source code in the LICENSE.md file.
  */
 
+use Discord\Builders\MessageBuilder;
 use Discord\Discord;
 use Discord\Helpers\Collection;
 use Discord\Parts\Channel\Channel;
@@ -81,7 +82,7 @@ final class ChannelTest extends DiscordTestCase
         return wait(function (Discord $discord, $resolve) {
             $this->channel()->sendMessage('testing get message')
                 ->then(function (Message $message) {
-                    return $this->channel()->getMessage($message->id)
+                    return $this->channel()->messages->fetch($message->id)
                         ->then(function (Message $getMessage) use ($message) {
                             $this->assertEquals($getMessage->id, $message->id);
                         });
@@ -215,7 +216,7 @@ final class ChannelTest extends DiscordTestCase
         return wait(function (Discord $discord, $resolve) {
             $this->channel()->sendMessage('testing edit through channel')
                 ->then(function (Message $message) {
-                    return $this->channel()->editMessage($message, 'new content')
+                    return $message->edit(MessageBuilder::new()->setContent('new content'))
                         ->then(function (Message $updatedMessage) use ($message) {
                             $this->assertEquals('new content', $updatedMessage->content);
                             $this->assertEquals($message->id, $updatedMessage->id);
@@ -233,7 +234,7 @@ final class ChannelTest extends DiscordTestCase
         return wait(function (Discord $discord, $resolve) {
             // upload readme
             $baseDir = dirname(dirname(dirname((new ReflectionClass(Discord::class))->getFileName())));
-            $this->channel()->sendFile($baseDir.DIRECTORY_SEPARATOR.'README.md')
+            $this->channel()->sendMessage(MessageBuilder::new()->addFile($baseDir.DIRECTORY_SEPARATOR.'README.md'))
                 ->then(function (Message $message) {
                     $this->assertEquals(1, count($message->attachments));
                 })

@@ -19,6 +19,9 @@ use React\Promise\PromiseInterface;
 
 use function Discord\poly_strlen;
 
+/**
+ * @see https://discord.com/developers/docs/interactions/message-components#buttons
+ */
 class Button extends Component
 {
     public const STYLE_PRIMARY = 1;
