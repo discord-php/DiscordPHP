@@ -38,6 +38,7 @@ $discord->on('ready', function (Discord $discord) {
 
         // If message is "discordstatus"
         if ($message->content == 'discordstatus') {
+
             // Get the $browser from global scope
             global $browser;
 
@@ -47,16 +48,16 @@ $discord->on('ready', function (Discord $discord) {
                     // Get response body
                     $result = (string) $response->getBody();
 
-                    // Parse JSON
-                    $discorstatus = json_decode($result);
-
                     // Uncomment to debug result
                     //var_dump($result);
+
+                    // Parse JSON
+                    $discorstatus = json_decode($result);
 
                     // Send reply about the discord status
                     $message->reply('Discord status: ' . $discorstatus->status->description);
                 },
-                function (Exception $e) use ($message) { // Request Failed
+                function (Exception $e) use ($message) { // Request failed
                     // Uncomment to debug exceptions
                     //var_dump($e);
 
