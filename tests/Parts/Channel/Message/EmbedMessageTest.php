@@ -56,7 +56,7 @@ final class EmbedMessageTest extends DiscordTestCase
                     $this->assertEquals('Embed Description', $embed->description);
                     $this->assertEquals(getColor('lightblue'), $embed->color);
 
-                    http://discord-php.github.io/DiscordPHP/reference/classes/Discord-Parts-Permissions-RolePermission.html          $this->assertInstanceOf(Author::class, $embed->author);
+                    $this->assertInstanceOf(Author::class, $embed->author);
                     $this->assertEquals('DiscordPHP Bot', $embed->author->name);
 
                     $this->assertInstanceOf(Footer::class, $embed->footer);

@@ -17,7 +17,7 @@ use Discord\Helpers\Collection;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Channel\Message;
 use Discord\Parts\Embed\Embed;
-use Discord\Parts\User\Member;
+use Discord\Parts\User\User;
 
 final class EmptyMessageTest extends DiscordTestCase
 {
@@ -141,7 +141,7 @@ final class EmptyMessageTest extends DiscordTestCase
      */
     public function testAuthorAttribute(Message $message)
     {
-        $this->assertInstanceOf(Member::class, $message->author);
+        $this->assertInstanceOf(User::class, $message->author);
         $this->assertEquals($message->author->id, DiscordSingleton::get()->id);
     }
 
