@@ -52,10 +52,10 @@ $discord->on('ready', function (Discord $discord) {
                     //var_dump($result);
 
                     // Parse JSON
-                    $discorstatus = json_decode($result);
+                    $discordstatus = json_decode($result);
 
                     // Send reply about the discord status
-                    $message->reply('Discord status: ' . $discorstatus->status->description);
+                    $message->reply('Discord status: ' . $discordstatus->status->description);
                 },
                 function (Exception $e) use ($message) { // Request failed
                     // Uncomment to debug exceptions
