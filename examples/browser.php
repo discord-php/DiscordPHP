@@ -62,7 +62,7 @@ $discord->on('ready', function (Discord $discord) {
 
                     // Send reply about the discord status
                     $message->reply('Unable to acesss the Discord status API :(');
-                },
+                }
             );
         }
 
