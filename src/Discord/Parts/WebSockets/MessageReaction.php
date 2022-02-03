@@ -187,8 +187,6 @@ class MessageReaction extends Part
     /**
      * Gets the member attribute.
      *
-     * @throws \Exception
-     *
      * @return Member|null
      */
     protected function getMemberAttribute(): ?Member
@@ -200,7 +198,7 @@ class MessageReaction extends Part
         }
 
         if (isset($this->attributes['member'])) {
-            return $this->factory->create(Member::class, $this->attributes['member'], true);
+            return $this->factory->part(Member::class, (array) $this->attributes['member'] + ['guild_id' => $this->guild_id], true);
         }
 
         return null;
