@@ -764,7 +764,7 @@ class Guild extends Part
             'query',
             'limit',
         ])
-        ->setDefaults(['limit' => 1])
+        ->setDefault('limit', 1)
         ->setAllowedTypes('query', 'string')
         ->setAllowedTypes('limit', 'int')
         ->setAllowedValues('limit', range(1, 1000));
@@ -788,6 +788,84 @@ class Guild extends Part
             }
 
             return $members;
+        });
+    }
+
+    /**
+     * Returns the number of members that would be removed in a prune operation.
+     * Requires the KICK_MEMBERS permission.
+     *
+     * @see https://discord.com/developers/docs/resources/guild#get-guild-prune-count
+     *
+     * @param array $options An array of options.
+     *                       days => number of days to count prune for (1-30)
+     *                       include_roles => role id(s) to include
+     *
+     * @return ExtendedPromiseInterface<int> The number of members that would be removed.
+     */
+    public function getPruneCount(array $options = []): ExtendedPromiseInterface
+    {
+        $resolver = new OptionsResolver();
+        $resolver->setDefined([
+            'days',
+            'include_roles',
+        ])
+        ->setDefault('days', 7)
+        ->setAllowedTypes('days', 'int')
+        ->setAllowedTypes('include_roles', 'array')
+        ->setAllowedValues('days', range(1, 30));
+
+        $options = $resolver->resolve($options);
+
+        $endpoint = Endpoint::bind(Endpoint::GUILD_PRUNE, $this->id);
+        $endpoint->addQuery('days', $options['days']);
+        if (isset($options['include_roles'])) {
+            $endpoint->addQuery('include_roles', implode(',', $options['include_roles']));
+        }
+
+        return $this->http->get($endpoint)->then(function ($response) {
+            return $response->pruned;
+        });
+    }
+
+    /**
+     * Begin a prune members operation.
+     * For large guilds it's recommended to set the compute_prune_count option to false, forcing 'pruned' to null.
+     * Requires the KICK_MEMBERS permission.
+     *
+     * @see https://discord.com/developers/docs/resources/guild#get-guild-prune-count
+     *
+     * @param array $options An array of options.
+     *                       days => number of days to count prune for (1-30)
+     *                       compute_prune_count => whether 'pruned' is returned, discouraged for large guilds
+     *                       include_roles => role id(s) to include
+     * @param string $reason Reason for Audit Log.
+     *
+     * @return ExtendedPromiseInterface<?int> The number of members that were removed in the prune operation.
+     */
+    public function beginPrune(array $options = [], ?string $reason = null): ExtendedPromiseInterface
+    {
+        $resolver = new OptionsResolver();
+        $resolver->setDefined([
+            'days',
+            'compute_prune_count',
+            'include_roles',
+        ])
+        ->setDefaults(['days' => 7, 'compute_prune_count' => true])
+        ->setAllowedTypes('days', 'int')
+        ->setAllowedTypes('compute_prune_count', 'bool')
+        ->setAllowedTypes('include_roles', 'array')
+        ->setAllowedValues('days', range(1, 30));
+
+        $options = $resolver->resolve($options);
+
+        $headers = [];
+        if (isset($reason)) {
+            $headers['X-Audit-Log-Reason'] = $reason;
+        }
+
+        return $this->http->post(Endpoint::bind(Endpoint::GUILD_PRUNE, $this->id), $options, $headers)->then(function ($response) {
+            return $response->pruned;
         });
     }
 
