@@ -11,6 +11,9 @@
 
 namespace Discord\Builders\Components;
 
+/**
+ * @see https://discord.com/developers/docs/interactions/message-components#action-rows
+ */
 class ActionRow extends Component
 {
     /**

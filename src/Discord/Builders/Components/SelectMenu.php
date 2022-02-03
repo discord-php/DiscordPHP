@@ -19,6 +19,9 @@ use React\Promise\PromiseInterface;
 
 use function Discord\poly_strlen;
 
+/**
+ * @see https://discord.com/developers/docs/interactions/message-components#select-menus
+ */
 class SelectMenu extends Component
 {
     /**

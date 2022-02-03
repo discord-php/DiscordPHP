@@ -348,7 +348,7 @@ class Channel extends Part
      *
      * @param string $id The message snowflake.
      *
-     * @deprecated 7.0.0 Use `$message->messages->fetch($id)`.
+     * @deprecated 7.0.0 Use `$channel->messages->fetch($id)`.
      *
      * @return ExtendedPromiseInterface
      */

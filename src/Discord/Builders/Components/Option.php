@@ -15,6 +15,9 @@ use Discord\Parts\Guild\Emoji;
 
 use function Discord\poly_strlen;
 
+/**
+ * @see https://discord.com/developers/docs/interactions/message-components#select-menu-object-select-option-structure
+ */
 class Option extends Component
 {
     /**

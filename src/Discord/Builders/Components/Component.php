@@ -13,6 +13,9 @@ namespace Discord\Builders\Components;
 
 use JsonSerializable;
 
+/**
+ * @see https://discord.com/developers/docs/interactions/message-components#what-is-a-component
+ */
 abstract class Component implements JsonSerializable
 {
     public const TYPE_ACTION_ROW = 1;
