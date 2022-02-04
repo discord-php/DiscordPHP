@@ -183,7 +183,7 @@ $discord->on(Event::THREAD_CREATE, function (Thread $thread, Discord $discord) {
 Called with a `Thread` object when a thread is updated.
 
 ```php
-$discord->on(Event::THREAD_UPDATE, function (?Thread $thread, Discord $discord, $oldScheduledEvent) {
+$discord->on(Event::THREAD_UPDATE, function (?Thread $thread, Discord $discord, ?Thread $oldThread) {
     // ...
 });
 ```
@@ -347,7 +347,7 @@ Called when a member is added to a guild scheduled event.
 Requires the `Intents::GUILD_SCHEDULED_EVENTS` intent.
 
 ```php
-$discord->on(Event::GUILD_SCHEDULED_EVENT_USER_ADD, function ($data, Discord $discord, $scheduledEvent, Guild $guild, $user) {
+$discord->on(Event::GUILD_SCHEDULED_EVENT_USER_ADD, function ($data, Discord $discord, ScheduledEvent $scheduledEvent, Guild $guild, $user) {
     // ...
 });
 ```
@@ -358,7 +358,7 @@ Called when a member is removed to a guild scheduled event.
 Requires the `Intents::GUILD_SCHEDULED_EVENTS` intent.
 
 ```php
-$discord->on(Event::GUILD_SCHEDULED_EVENT_USER_REMOVE, function ($data, Discord $discord, $scheduledEvent, Guild $guild, $user) {
+$discord->on(Event::GUILD_SCHEDULED_EVENT_USER_REMOVE, function ($data, Discord $discord, ScheduledEvent $scheduledEvent, Guild $guild, $user) {
     // ...
 });
 ```
