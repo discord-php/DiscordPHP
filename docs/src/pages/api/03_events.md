@@ -34,7 +34,7 @@ Discord does not provide a way to get deleted messages.
 Requires the `Intents::GUILD_MESSAGES` intent.
 
 ```php
-$discord->on(Event::MESSAGE_DELETE, function ($message, Discord $discord) {
+$discord->on(Event::MESSAGE_DELETE, function (?Message $message, Discord $discord) {
     if ($message instanceof Message) {
         // Message is present in cache
     }
@@ -148,7 +148,7 @@ Called with a `Channel` object when a channel is deleted.
 Requires the `Intents::GUILDS` intent.
 
 ```php
-$discord->on(Event::CHANNEL_DELETE, function (Channel $channel, Discord $discord) {
+$discord->on(Event::CHANNEL_DELETE, function (?Channel $channel, Discord $discord) {
     // ...
 });
 ```
@@ -245,7 +245,7 @@ Called with `StageInstance` objects when a stage instance is updated.
 Requires the `Intents::GUILDS` intent.
 
 ```php
-$discord->on(Event::STAGE_INSTANCE_UPDATE, function (StageInstance $stageInstance, Discord $discord, $oldStageInstance) {
+$discord->on(Event::STAGE_INSTANCE_UPDATE, function (StageInstance $stageInstance, Discord $discord, StageInstance $oldStageInstance) {
     // ...
 });
 ```
@@ -256,7 +256,7 @@ Called with an old `StageInstance` object when a stage instance is deleted.
 Requires the `Intents::GUILDS` intent.
 
 ```php
-$discord->on(Event::STAGE_INSTANCE_DELETE, function (StageInstance $oldStageInstance, Discord $discord) {
+$discord->on(Event::STAGE_INSTANCE_DELETE, function (?StageInstance $oldStageInstance, Discord $discord) {
     // ...
 });
 ```
@@ -298,7 +298,7 @@ Called with a `Guild` object in one of the following situations:
 Requires the `Intents::GUILDS` intent.
 
 ```php
-$discord->on(Event::GUILD_DELETE, function (Guild $guild, Discord $discord, bool $unavailable) {
+$discord->on(Event::GUILD_DELETE, function (?Guild $guild, Discord $discord, bool $unavailable) {
     // ...
     if ($unavailable) {
         // the guild is unavailabe due to an outage
@@ -325,7 +325,7 @@ Called with a `ScheduledEvent` object when a guild's scheduled event is updated.
 Requires the `Intents::GUILD_SCHEDULED_EVENTS` intent.
 
 ```php
-$discord->on(Event::GUILD_SCHEDULED_EVENT_UPDATE, function (ScheduledEvent $scheduledEvent, Discord $discord, $oldScheduledEvent) {
+$discord->on(Event::GUILD_SCHEDULED_EVENT_UPDATE, function (ScheduledEvent $scheduledEvent, Discord $discord, ScheduledEvent $oldScheduledEvent) {
     // ...
 });
 ```
@@ -446,7 +446,7 @@ Called with a `Role` object when a role is deleted in a guild.
 Requires the `Intents::GUILDS` intent.
 
 ```php
-$discord->on(Event::GUILD_ROLE_DELETE, function (Role $role, Discord $discord) {
+$discord->on(Event::GUILD_ROLE_DELETE, function (?Role $role, Discord $discord) {
     // ...
 });
 ```
