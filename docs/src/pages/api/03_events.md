@@ -292,6 +292,51 @@ $discord->on(Event::GUILD_INTEGRATIONS_UPDATE, function (Guild $guild, Discord $
 });
 ```
 
+### Integrations Create
+
+Called with a `Integration` object when a guild's integration is created.
+Requires the `Intents::GUILD_INTEGRATIONS` intent.
+
+```php
+$discord->on(Event::INTEGRATION_CREATE, function (Integration $integration, Discord $discord) {
+    // ...
+});
+```
+
+### Integrations Update
+
+Called with a `Integration` object when a guild's integration is updated.
+Requires the `Intents::GUILD_INTEGRATIONS` intent.
+
+```php
+$discord->on(Event::INTEGRATION_UPDATE, function (Integration $integration, Discord $discord) {
+    // ...
+});
+```
+
+### Integrations Delete
+
+Called with an old `Integration` object when a guild's integration is deleted.
+May return `null` when Integration is not cached.
+Requires the `Intents::GUILD_INTEGRATIONS` intent.
+
+```php
+$discord->on(Event::INTEGRATION_DELETE, function (?Integration $oldIntegration, Discord $discord) {
+    // ...
+});
+```
+
+### Webhooks Update
+
+Called with a `Guild` and `Channel` object when a guild's webhooks are updated.
+Requires the `Intents::GUILD_WEBHOOKS` intent.
+
+```php
+$discord->on(Event::WEBHOOKS_UPDATE, function ($guild, Discord $discord, $channel) {
+    // ...
+});
+```
+
 ### Invite Create
 
 Called with an `Invite` object when an invite is created.
