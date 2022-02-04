@@ -524,7 +524,7 @@ Called with a `Guild` and `Channel` object when a guild's webhooks are updated.
 Requires the `Intents::GUILD_WEBHOOKS` intent.
 
 ```php
-$discord->on(Event::WEBHOOKS_UPDATE, function (Guild $guild, Discord $discord, $channel) {
+$discord->on(Event::WEBHOOKS_UPDATE, function (Guild $guild, Discord $discord, Channel $channel) {
     // ...
 });
 ```
@@ -546,7 +546,7 @@ $discord->on(Event::INTERACTION_CREATE, function (Interaction $interaction, Disc
 Called with a `VoiceServerUpdate` object when a guild's voice server is updated.
 
 ```php
-$discord->on(Event::VOICE_SERVER_UPDATE, function (Guild $guild, Discord $discord, $channel) {
+$discord->on(Event::VOICE_SERVER_UPDATE, function (Guild $guild, Discord $discord, Channel $channel) {
     // ...
 });
 ```
