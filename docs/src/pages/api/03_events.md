@@ -341,24 +341,24 @@ $discord->on(Event::GUILD_SCHEDULED_EVENT_UPDATE, function (ScheduledEvent $sche
 });
 ```
 
-### Guild Scheduled Event Add
+### Guild Scheduled Event User Add
 
 Called when a member is added to a guild scheduled event.
 Requires the `Intents::GUILD_SCHEDULED_EVENTS` intent.
 
 ```php
-$discord->on(Event::GUILD_SCHEDULED_EVENT_USER_ADD, function ($data, Discord $discord, ScheduledEvent $scheduledEvent, Guild $guild, $user) {
+$discord->on(Event::GUILD_SCHEDULED_EVENT_USER_ADD, function ($data, Discord $discord) {
     // ...
 });
 ```
 
-### Guild Scheduled Event Remove
+### Guild Scheduled Event User Remove
 
 Called when a member is removed to a guild scheduled event.
 Requires the `Intents::GUILD_SCHEDULED_EVENTS` intent.
 
 ```php
-$discord->on(Event::GUILD_SCHEDULED_EVENT_USER_REMOVE, function ($data, Discord $discord, ScheduledEvent $scheduledEvent, Guild $guild, $user) {
+$discord->on(Event::GUILD_SCHEDULED_EVENT_USER_REMOVE, function ($data, Discord $discord) {
     // ...
 });
 ```
