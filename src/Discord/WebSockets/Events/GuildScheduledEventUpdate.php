@@ -36,7 +36,9 @@ class GuildScheduledEventUpdate extends Event
             $scheduledEvent = $this->factory->create(ScheduledEvent::class, $data, true);
         }
 
-        $this->cacheUser($data->creator);
+        if (isset($data->creator)) {
+            $this->cacheUser($data->creator);
+        }
 
         $deferred->resolve([$scheduledEvent, $oldScheduledEvent]);
     }
