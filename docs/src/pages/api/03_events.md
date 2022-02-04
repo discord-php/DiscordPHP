@@ -21,7 +21,7 @@ Discord does not provide a way to get message update history.
 Requires the `Intents::GUILD_MESSAGES` intent.
 
 ```php
-$discord->on(Event::MESSAGE_UPDATE, function (Message $newMessage, Discord $discord, $oldMessage) {
+$discord->on(Event::MESSAGE_UPDATE, function (Message $newMessage, Discord $discord, ?Message $oldMessage) {
     // ...
 });
 ```
@@ -137,7 +137,7 @@ Called with two `Channel` objects when a channel is updated.
 Requires the `Intents::GUILDS` intent.
 
 ```php
-$discord->on(Event::CHANNEL_UPDATE, function (Channel $new, Discord $discord, Channel $old) {
+$discord->on(Event::CHANNEL_UPDATE, function (Channel $new, Discord $discord, ?Channel $old) {
     // ...
 });
 ```
@@ -183,7 +183,7 @@ $discord->on(Event::THREAD_CREATE, function (Thread $thread, Discord $discord) {
 Called with a `Thread` object when a thread is updated.
 
 ```php
-$discord->on(Event::THREAD_UPDATE, function (?Thread $thread, Discord $discord, ?Thread $oldThread) {
+$discord->on(Event::THREAD_UPDATE, function (Thread $thread, Discord $discord, ?Thread $oldThread) {
     // ...
 });
 ```
@@ -245,7 +245,7 @@ Called with `StageInstance` objects when a stage instance is updated.
 Requires the `Intents::GUILDS` intent.
 
 ```php
-$discord->on(Event::STAGE_INSTANCE_UPDATE, function (StageInstance $stageInstance, Discord $discord, StageInstance $oldStageInstance) {
+$discord->on(Event::STAGE_INSTANCE_UPDATE, function (StageInstance $stageInstance, Discord $discord, ?StageInstance $oldStageInstance) {
     // ...
 });
 ```
@@ -283,7 +283,7 @@ Called with two `Guild` object when a guild is updated.
 Requires the `Intents::GUILDS` intent.
 
 ```php
-$discord->on(Event::GUILD_UPDATE, function (Guild $new, Discord $discord, Guild $old) {
+$discord->on(Event::GUILD_UPDATE, function (Guild $new, Discord $discord, ?Guild $old) {
     // ...
 });
 ```
@@ -325,7 +325,7 @@ Called with a `ScheduledEvent` object when a guild's scheduled event is updated.
 Requires the `Intents::GUILD_SCHEDULED_EVENTS` intent.
 
 ```php
-$discord->on(Event::GUILD_SCHEDULED_EVENT_UPDATE, function (ScheduledEvent $scheduledEvent, Discord $discord, ScheduledEvent $oldScheduledEvent) {
+$discord->on(Event::GUILD_SCHEDULED_EVENT_UPDATE, function (ScheduledEvent $scheduledEvent, Discord $discord, ?ScheduledEvent $oldScheduledEvent) {
     // ...
 });
 ```
@@ -380,7 +380,7 @@ Called with two `Member` objects when a member is updated in a guild. Note that 
 Requires the `Intents::GUILD_MEMBERS` intent. This intent is a priviliged intent, it must be enabled in your Discord bot developer settings.
 
 ```php
-$discord->on(Event::GUILD_MEMBER_UPDATE, function (Member $new, Discord $discord, $old) {
+$discord->on(Event::GUILD_MEMBER_UPDATE, function (Member $new, Discord $discord, ?Member $old) {
     // ...
 });
 ```
@@ -435,7 +435,7 @@ Called with two `Role` objects when a role is updated in a guild.
 Requires the `Intents::GUILDS` intent.
 
 ```php
-$discord->on(Event::GUILD_ROLE_UPDATE, function (Role $new, Discord $discord, Role $old) {
+$discord->on(Event::GUILD_ROLE_UPDATE, function (Role $new, Discord $discord, ?Role $old) {
     // ...
 });
 ```
@@ -615,7 +615,7 @@ $discord->on(Event::VOICE_STATE_UPDATE, function (VoiceStateUpdate $state, Disco
 Called with `User` object when your Bot User data updates.
 
 ```php
-$discord->on(Event::USER_UPDATE, function (User $user, Discord $discord, User $oldUser) {
+$discord->on(Event::USER_UPDATE, function (User $user, Discord $discord, ?User $oldUser) {
     // ...
 });
 ```
