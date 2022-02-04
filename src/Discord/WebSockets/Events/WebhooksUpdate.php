@@ -23,10 +23,10 @@ class WebhooksUpdate extends Event
      */
     public function handle(Deferred &$deferred, $data): void
     {
-        /** @var Guild */
-        if ($guild = $this->discord->guilds->offsetGet($data->guild_id)) {
-            /** @var Channel */
-            $channel = $guild->channels->offsetGet($data->channel_id);
+        $guild = $channel = null;
+
+        if ($guild = $this->discord->guilds->get('id', $data->guild_id)) {
+            $channel = $guild->channels->get('id', $data->channel_id);
         }
 
         $deferred->resolve([$guild, $channel]);

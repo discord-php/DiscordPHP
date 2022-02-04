@@ -22,17 +22,24 @@ class IntegrationUpdate extends Event
      */
     public function handle(Deferred &$deferred, $data): void
     {
-        $integration = $this->factory->part(Integration::class, (array) $data, true);
+        $oldIntegration = null;
 
-        /** @var Guild */
         if ($guild = $this->discord->guilds->get('id', $data->guild_id)) {
-            $guild->integrations->pushItem($integration);
+            if ($oldIntegration = $guild->integrations->get('id', $data->id)) {
+                $integration = clone $oldIntegration;
+                $integration->fill((array) $data);
+            }
+        }
+
+        if (! $oldIntegration) {
+            /** @var Integration */
+            $integration = $this->factory->create(Integration::class, $data, true);
         }
 
         if (isset($data->user)) {
             $this->cacheUser($data->user);
         }
 
-        $deferred->resolve($integration);
+        $deferred->resolve([$integration, $oldIntegration]);
     }
 }

@@ -22,16 +22,22 @@ class GuildScheduledEventUpdate extends Event
      */
     public function handle(Deferred &$deferred, $data): void
     {
-        /** @var ScheduledEvent */
-        $scheduled_event = $this->factory->create(ScheduledEvent::class, $data, true);
+        $oldScheduledEvent = null;
 
-        if ($guild = $this->discord->guilds->get('id', $scheduled_event->guild_id)) {
-            $old = $guild->guild_scheduled_events->get('id', $scheduled_event->id);
-            $guild->guild_scheduled_events->push($scheduled_event);
+        if ($guild = $this->discord->guilds->get('id', $data->guild_id)) {
+            if ($oldScheduledEvent = $guild->guild_scheduled_events->get('id', $data->id)) {
+                $scheduledEvent = clone $oldScheduledEvent;
+                $scheduledEvent->fill((array) $data);
+            }
+        }
+
+        if (! $oldScheduledEvent) {
+            /** @var ScheduledEvent */
+            $scheduledEvent = $this->factory->create(ScheduledEvent::class, $data, true);
         }
 
         $this->cacheUser($data->creator);
 
-        $deferred->resolve([$scheduled_event, $old]);
+        $deferred->resolve([$scheduledEvent, $oldScheduledEvent]);
     }
 }

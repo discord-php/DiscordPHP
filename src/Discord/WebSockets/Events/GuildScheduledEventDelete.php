@@ -22,17 +22,24 @@ class GuildScheduledEventDelete extends Event
      */
     public function handle(Deferred &$deferred, $data): void
     {
-        /** @var ScheduledEvent */
-        $scheduled_event = $this->factory->create(ScheduledEvent::class, $data);
+        $scheduledEvent = null;
 
-        if ($guild = $scheduled_event->guild) {
-            $guild->guild_scheduled_events->pull($scheduled_event->id);
+        if ($guild = $this->discord->guilds->get('id', $data->guild_id)) {
+            if ($scheduledEvent = $guild->guild_scheduled_events->pull($data->id)) {
+                $scheduledEvent->fill((array) $data);
+                $scheduledEvent->created = false;
+            }
+        }
+
+        if (! $scheduledEvent) {
+            /** @var ScheduledEvent */
+            $scheduledEvent = $this->factory->create(ScheduledEvent::class, $data);
         }
 
         if (isset($data->creator)) {
             $this->cacheUser($data->creator);
         }
 
-        $deferred->resolve($scheduled_event);
+        $deferred->resolve($scheduledEvent);
     }
 }

@@ -23,12 +23,12 @@ class StageInstanceCreate extends Event
     public function handle(Deferred &$deferred, $data): void
     {
         /** @var StageInstance */
-        $stage_instance = $this->factory->create(StageInstance::class, $data, true);
+        $stageInstance = $this->factory->create(StageInstance::class, $data, true);
 
-        if ($guild = $this->discord->guilds->get('id', $stage_instance->guild_id)) {
-            $guild->stage_instances->push($stage_instance);
+        if ($guild = $this->discord->guilds->get('id', $data->guild_id)) {
+            $guild->stage_instances->pushItem($stageInstance);
         }
 
-        $deferred->resolve($stage_instance);
+        $deferred->resolve($stageInstance);
     }
 }

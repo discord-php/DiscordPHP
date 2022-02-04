@@ -23,16 +23,16 @@ class GuildScheduledEventCreate extends Event
     public function handle(Deferred &$deferred, $data): void
     {
         /** @var ScheduledEvent */
-        $scheduled_event = $this->factory->create(ScheduledEvent::class, $data, true);
+        $scheduledEvent = $this->factory->create(ScheduledEvent::class, $data, true);
 
-        if ($guild = $this->discord->guilds->get('id', $scheduled_event->guild_id)) {
-            $guild->guild_scheduled_events->push($scheduled_event);
+        if ($guild = $this->discord->guilds->get('id', $data->guild_id)) {
+            $guild->guild_scheduled_events->pushItem($scheduledEvent);
         }
 
         if (isset($data->creator)) {
             $this->cacheUser($data->creator);
         }
 
-        $deferred->resolve($scheduled_event);
+        $deferred->resolve($scheduledEvent);
     }
 }

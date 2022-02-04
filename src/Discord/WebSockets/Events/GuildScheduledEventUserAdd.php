@@ -21,11 +21,14 @@ class GuildScheduledEventUserAdd extends Event
      */
     public function handle(Deferred &$deferred, $data): void
     {
+        $scheduledEvent = $user = null;
+
         if ($guild = $this->discord->guilds->get('id', $data->guild_id)) {
-            $scheduled_event = $guild->guild_scheduled_events->get('id', $data->guild_scheduled_event_id);
+            $scheduledEvent = $guild->guild_scheduled_events->get('id', $data->guild_scheduled_event_id);
             $user = $this->discord->users->get('id', $data->user_id);
         }
 
-        $deferred->resolve([$data, $scheduled_event, $guild, $user]);
+        // TODO: Create WebSockets Event Part
+        $deferred->resolve([$data, $scheduledEvent, $guild, $user]);
     }
 }
