@@ -13,7 +13,6 @@ namespace Discord\WebSockets\Events;
 
 use Discord\WebSockets\Event;
 use Discord\Helpers\Deferred;
-use Discord\Parts\Guild\Integration;
 
 class IntegrationDelete extends Event
 {
@@ -22,14 +21,13 @@ class IntegrationDelete extends Event
      */
     public function handle(Deferred &$deferred, $data): void
     {
-        $oldintegration = null;
+        $oldIntegration = null;
 
-        /** @var Guild */
         if ($guild = $this->discord->guilds->get('id', $data->guild_id)) {
-            /** @var Integration */
-            $oldintegration = $guild->integrations->pull($data->id);
+            $oldIntegration = $guild->integrations->pull($data->id);
+            $oldIntegration->created = false;
         }
 
-        $deferred->resolve($oldintegration);
+        $deferred->resolve($oldIntegration);
     }
 }

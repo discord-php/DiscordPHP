@@ -22,9 +22,9 @@ class IntegrationCreate extends Event
      */
     public function handle(Deferred &$deferred, $data): void
     {
-        $integration = $this->factory->part(Integration::class, (array) $data, true);
+        /** @var Integration */
+        $integration = $this->factory->create(Integration::class, $data, true);
 
-        /** @var Guild */
         if ($guild = $this->discord->guilds->get('id', $data->guild_id)) {
             $guild->integrations->pushItem($integration);
         }
