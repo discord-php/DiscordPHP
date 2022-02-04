@@ -337,6 +337,16 @@ $discord->on(Event::WEBHOOKS_UPDATE, function ($guild, Discord $discord, $channe
 });
 ```
 
+### Voice Server Update
+
+Called with a `VoiceServerUpdate` object when a guild's voice server is updated.
+
+```php
+$discord->on(Event::VOICE_SERVER_UPDATE, function ($guild, Discord $discord, $channel) {
+    // ...
+});
+```
+
 ### Invite Create
 
 Called with an `Invite` object when an invite is created.
@@ -392,6 +402,16 @@ Requires the `Intents::GUILD_VOICE_STATES` intent.
 
 ```php
 $discord->on(Event::VOICE_STATE_UPDATE, function (VoiceStateUpdate $state, Discord $discord) {
+    // ...
+});
+```
+
+### User Update
+
+Called with `User` object when your Bot User data updates.
+
+```php
+$discord->on(Event::USER_UPDATE, function (User $user, Discord $discord, User $oldUser) {
     // ...
 });
 ```
