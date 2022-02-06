@@ -22,13 +22,17 @@ class GuildMemberRemove extends Event
      */
     public function handle(Deferred &$deferred, $data): void
     {
-        $member = $this->factory->create(Member::class, $data, true);
+        $member = null;
 
-        if ($guild = $this->discord->guilds->get('id', $member->guild_id)) {
-            $guild->members->pull($member->user->id);
+        if ($guild = $this->discord->guilds->get('id', $data->guild_id)) {
+            $member = $guild->members->pull($data->user->id);
             --$guild->member_count;
+        }
 
-            $this->discord->guilds->push($guild);
+        if (! $member) {
+            /** @var Member */
+            $member = $this->factory->create(Member::class, $data, true);
+            $member->guild_id = $data->guild_id;
         }
 
         $this->cacheUser($data->user);
