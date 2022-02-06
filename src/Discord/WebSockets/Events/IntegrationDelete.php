@@ -14,6 +14,9 @@ namespace Discord\WebSockets\Events;
 use Discord\WebSockets\Event;
 use Discord\Helpers\Deferred;
 
+/**
+ * @see https://discord.com/developers/docs/topics/gateway#integration-delete
+ */
 class IntegrationDelete extends Event
 {
     /**
@@ -24,8 +27,9 @@ class IntegrationDelete extends Event
         $oldIntegration = null;
 
         if ($guild = $this->discord->guilds->get('id', $data->guild_id)) {
-            $oldIntegration = $guild->integrations->pull($data->id);
-            $oldIntegration->created = false;
+            if ($oldIntegration = $guild->integrations->pull($data->id)) {
+                $oldIntegration->created = false;
+            }
         }
 
         $deferred->resolve($oldIntegration);

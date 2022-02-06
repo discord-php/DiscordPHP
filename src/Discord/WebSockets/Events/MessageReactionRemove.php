@@ -15,6 +15,9 @@ use Discord\Parts\WebSockets\MessageReaction;
 use Discord\WebSockets\Event;
 use Discord\Helpers\Deferred;
 
+/**
+ * @see https://discord.com/developers/docs/topics/gateway#message-reaction-remove
+ */
 class MessageReactionRemove extends Event
 {
     /**

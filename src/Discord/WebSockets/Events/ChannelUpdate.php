@@ -15,6 +15,9 @@ use Discord\Parts\Channel\Channel;
 use Discord\WebSockets\Event;
 use Discord\Helpers\Deferred;
 
+/**
+ * @see https://discord.com/developers/docs/topics/gateway#channel-update
+ */
 class ChannelUpdate extends Event
 {
     /**
@@ -22,17 +25,29 @@ class ChannelUpdate extends Event
      */
     public function handle(Deferred &$deferred, $data): void
     {
-        $channel = $this->factory->create(Channel::class, $data, true);
+        $oldChannel = null;
 
-        if ($channel->is_private) {
-            $old = $this->discord->private_channels->get('id', $channel->id);
-            $this->discord->private_channels->push($channel);
-        } elseif ($guild = $this->discord->guilds->get('id', $channel->guild_id)) {
-            $old = $guild->channels->get('id', $channel->id);
-            $guild->channels->push($channel);
-            $this->discord->guilds->push($guild);
+        /** @var Channel */
+        $channelPart = $this->factory->create(Channel::class, $data, true);
+
+        if ($channelPart->is_private) {
+            if (! $oldChannel = $this->discord->private_channels->get('id', $data->id)) {
+                $this->discord->private_channels->pushItem($channelPart);
+            }
+        } elseif ($guild = $channelPart->guild) {
+            if (! $oldChannel = $guild->channels->get('id', $data->id)) {
+                $guild->channels->pushItem($channelPart);
+            }
         }
 
-        $deferred->resolve([$channel, $old]);
+        if ($oldChannel) {
+            // Swap
+            $channelPart = $oldChannel;
+            $oldChannel = clone $oldChannel;
+
+            $channelPart->fill((array) $data);
+        }
+
+        $deferred->resolve([$channelPart, $oldChannel]);
     }
 }

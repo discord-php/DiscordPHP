@@ -14,6 +14,9 @@ namespace Discord\WebSockets\Events;
 use Discord\Helpers\Deferred;
 use Discord\WebSockets\Event;
 
+/**
+ * @see https://discord.com/developers/docs/topics/gateway#guild-role-delete
+ */
 class GuildRoleDelete extends Event
 {
     /**
@@ -22,10 +25,9 @@ class GuildRoleDelete extends Event
     public function handle(Deferred &$deferred, $data): void
     {
         if ($guild = $this->discord->guilds->get('id', $data->guild_id)) {
-            $role = $guild->roles->pull($data->role_id);
-            $this->discord->guilds->push($guild);
+            $rolePart = $guild->roles->pull($data->role_id, $data);
 
-            $deferred->resolve($role);
+            $deferred->resolve($rolePart);
         } else {
             $deferred->resolve($data);
         }

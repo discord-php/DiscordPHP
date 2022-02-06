@@ -13,9 +13,10 @@ namespace Discord\WebSockets\Events;
 
 use Discord\WebSockets\Event;
 use Discord\Helpers\Deferred;
-use Discord\Parts\Channel\Channel;
-use Discord\Parts\Guild\Guild;
 
+/**
+ * @see https://discord.com/developers/docs/topics/gateway#webhooks-update
+ */
 class WebhooksUpdate extends Event
 {
     /**
@@ -23,7 +24,7 @@ class WebhooksUpdate extends Event
      */
     public function handle(Deferred &$deferred, $data): void
     {
-        $guild = $channel = null;
+        $channel = null;
 
         if ($guild = $this->discord->guilds->get('id', $data->guild_id)) {
             $channel = $guild->channels->get('id', $data->channel_id);

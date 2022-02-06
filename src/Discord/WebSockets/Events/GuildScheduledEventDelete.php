@@ -15,6 +15,9 @@ use Discord\WebSockets\Event;
 use Discord\Helpers\Deferred;
 use Discord\Parts\Guild\ScheduledEvent;
 
+/**
+ * @see https://discord.com/developers/docs/topics/gateway#guild-scheduled-event-delete
+ */
 class GuildScheduledEventDelete extends Event
 {
     /**
@@ -22,24 +25,24 @@ class GuildScheduledEventDelete extends Event
      */
     public function handle(Deferred &$deferred, $data): void
     {
-        $scheduledEvent = null;
+        $scheduledEventPart = null;
 
         if ($guild = $this->discord->guilds->get('id', $data->guild_id)) {
-            if ($scheduledEvent = $guild->guild_scheduled_events->pull($data->id)) {
-                $scheduledEvent->fill((array) $data);
-                $scheduledEvent->created = false;
+            if ($scheduledEventPart = $guild->guild_scheduled_events->pull($data->id)) {
+                $scheduledEventPart->fill((array) $data);
+                $scheduledEventPart->created = false;
             }
         }
 
-        if (! $scheduledEvent) {
+        if (! $scheduledEventPart) {
             /** @var ScheduledEvent */
-            $scheduledEvent = $this->factory->create(ScheduledEvent::class, $data);
+            $scheduledEventPart = $this->factory->create(ScheduledEvent::class, $data);
         }
 
         if (isset($data->creator)) {
             $this->cacheUser($data->creator);
         }
 
-        $deferred->resolve($scheduledEvent);
+        $deferred->resolve($scheduledEventPart);
     }
 }

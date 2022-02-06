@@ -15,6 +15,9 @@ use Discord\WebSockets\Event;
 use Discord\Helpers\Deferred;
 use Discord\Parts\WebSockets\MessageReaction;
 
+/**
+ * @see https://discord.com/developers/docs/topics/gateway#message-reaction-remove-emoji
+ */
 class MessageReactionRemoveEmoji extends Event
 {
     /**

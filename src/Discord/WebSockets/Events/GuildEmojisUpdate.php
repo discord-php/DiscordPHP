@@ -16,6 +16,9 @@ use Discord\WebSockets\Event;
 use Discord\Helpers\Deferred;
 use Discord\Parts\Guild\Emoji;
 
+/**
+ * @see https://discord.com/developers/docs/topics/gateway#guild-emojis-update
+ */
 class GuildEmojisUpdate extends Event
 {
     /**
@@ -23,11 +26,11 @@ class GuildEmojisUpdate extends Event
      */
     public function handle(Deferred &$deferred, $data): void
     {
-        $oldParts = Collection::for(Emoji::class);
+        $oldEmojis = Collection::for(Emoji::class);
         $emojiParts = Collection::for(Emoji::class);
 
         if ($guild = $this->discord->guilds->get('id', $data->guild_id)) {
-            $oldParts->merge($guild->emojis);
+            $oldEmojis->merge($guild->emojis);
             $guild->emojis->clear();
         }
 
@@ -35,9 +38,10 @@ class GuildEmojisUpdate extends Event
             if (isset($emoji->user)) {
                 // User caching from emoji uploader
                 $this->cacheUser($emoji->user);
-            } elseif ($oldPart = $oldParts->offsetGet($emoji->id)) {
-                $emoji->user = $oldPart->user;
+            } elseif ($oldEmoji = $oldEmojis->offsetGet($emoji->id)) {
+                $emoji->user = $oldEmoji->user;
             }
+            /** @var Emoji */
             $emojiPart = $this->factory->create(Emoji::class, $emoji, true);
             $emojiParts->pushItem($emojiPart);
         }
@@ -46,6 +50,6 @@ class GuildEmojisUpdate extends Event
             $guild->emojis->merge($emojiParts);
         }
 
-        $deferred->resolve([$emojiParts, $oldParts]);
+        $deferred->resolve([$emojiParts, $oldEmojis]);
     }
 }

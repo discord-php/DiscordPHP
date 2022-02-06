@@ -16,6 +16,9 @@ use Discord\Parts\Thread\Member;
 use Discord\Parts\Thread\Thread;
 use Discord\WebSockets\Event;
 
+/**
+ * @see https://discord.com/developers/docs/topics/gateway#thread-list-sync
+ */
 class ThreadListSync extends Event
 {
     public function handle(Deferred &$deferred, $data)

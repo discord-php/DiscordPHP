@@ -14,6 +14,9 @@ namespace Discord\WebSockets\Events;
 use Discord\Helpers\Deferred;
 use Discord\WebSockets\Event;
 
+/**
+ * @see https://discord.com/developers/docs/topics/gateway#thread-update
+ */
 class ThreadUpdate extends Event
 {
     public function handle(Deferred &$deferred, $data)

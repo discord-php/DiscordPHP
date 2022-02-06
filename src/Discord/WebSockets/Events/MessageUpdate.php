@@ -15,6 +15,9 @@ use Discord\Parts\Channel\Message;
 use Discord\WebSockets\Event;
 use Discord\Helpers\Deferred;
 
+/**
+ * @see https://discord.com/developers/docs/topics/gateway#message-update
+ */
 class MessageUpdate extends Event
 {
     /**
@@ -22,6 +25,7 @@ class MessageUpdate extends Event
      */
     public function handle(Deferred &$deferred, $data): void
     {
+        /** @var Message */
         $messagePart = $this->factory->create(Message::class, $data, true);
         $oldMessage = null;
 

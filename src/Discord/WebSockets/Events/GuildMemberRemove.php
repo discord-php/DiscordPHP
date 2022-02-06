@@ -15,6 +15,9 @@ use Discord\Parts\User\Member;
 use Discord\WebSockets\Event;
 use Discord\Helpers\Deferred;
 
+/**
+ * @see https://discord.com/developers/docs/topics/gateway#guild-member-remove
+ */
 class GuildMemberRemove extends Event
 {
     /**
@@ -22,21 +25,23 @@ class GuildMemberRemove extends Event
      */
     public function handle(Deferred &$deferred, $data): void
     {
-        $member = null;
+        $memberPart = null;
 
         if ($guild = $this->discord->guilds->get('id', $data->guild_id)) {
-            $member = $guild->members->pull($data->user->id);
+            $memberPart = $guild->members->pull($data->user->id);
             --$guild->member_count;
         }
 
-        if (! $member) {
+        if ($memberPart) {
+            $memberPart->created = false;
+        } else {
             /** @var Member */
-            $member = $this->factory->create(Member::class, $data, true);
-            $member->guild_id = $data->guild_id;
+            $memberPart = $this->factory->create(Member::class, $data);
+            $memberPart->guild_id = $data->guild_id;
         }
 
         $this->cacheUser($data->user);
 
-        $deferred->resolve($member);
+        $deferred->resolve($memberPart);
     }
 }

@@ -15,6 +15,9 @@ use Discord\Helpers\Deferred;
 use Discord\Parts\Thread\Member;
 use Discord\WebSockets\Event;
 
+/**
+ * @see https://discord.com/developers/docs/topics/gateway#thread-members-update
+ */
 class ThreadMembersUpdate extends Event
 {
     public function handle(Deferred &$deferred, $data)

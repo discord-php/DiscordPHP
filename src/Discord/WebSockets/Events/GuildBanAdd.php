@@ -15,6 +15,9 @@ use Discord\Parts\Guild\Ban;
 use Discord\WebSockets\Event;
 use Discord\Helpers\Deferred;
 
+/**
+ * @see https://discord.com/developers/docs/topics/gateway#guild-ban-add
+ */
 class GuildBanAdd extends Event
 {
     /**
@@ -22,15 +25,15 @@ class GuildBanAdd extends Event
      */
     public function handle(Deferred &$deferred, $data): void
     {
-        $ban = $this->factory->create(Ban::class, $data, true);
+        /** @var Ban */
+        $banPart = $this->factory->create(Ban::class, $data, true);
 
-        if ($guild = $ban->guild) {
-            $guild->bans->push($ban);
-            $this->discord->guilds->push($guild);
+        if ($guild = $banPart->guild) {
+            $guild->bans->pushItem($banPart);
         }
 
         $this->cacheUser($data->user);
 
-        $deferred->resolve($ban);
+        $deferred->resolve($banPart);
     }
 }

@@ -15,6 +15,9 @@ use Discord\Parts\Channel\Channel;
 use Discord\WebSockets\Event;
 use Discord\Helpers\Deferred;
 
+/**
+ * @see https://discord.com/developers/docs/topics/gateway#channel-delete
+ */
 class ChannelDelete extends Event
 {
     /**
@@ -22,14 +25,16 @@ class ChannelDelete extends Event
      */
     public function handle(Deferred &$deferred, $data): void
     {
-        $channel = $this->factory->create(Channel::class, $data);
+        /** @var Channel */
+        $channelPart = $this->factory->create(Channel::class, $data);
 
-        if ($guild = $channel->guild) {
-            $guild->channels->pull($channel->id);
-
-            $this->discord->guilds->push($guild);
+        if ($guild = $channelPart->guild) {
+            if ($channelPart = $guild->channels->pull($data->id)) {
+                $channelPart->fill((array) $data);
+                $channelPart->created = false;
+            }
         }
 
-        $deferred->resolve($channel);
+        $deferred->resolve($channelPart);
     }
 }

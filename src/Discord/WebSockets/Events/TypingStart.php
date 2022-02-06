@@ -15,6 +15,9 @@ use Discord\Parts\WebSockets\TypingStart as TypingStartPart;
 use Discord\WebSockets\Event;
 use Discord\Helpers\Deferred;
 
+/**
+ * @see https://discord.com/developers/docs/topics/gateway#typing-start
+ */
 class TypingStart extends Event
 {
     /**

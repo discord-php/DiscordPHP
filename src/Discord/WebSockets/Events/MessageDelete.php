@@ -14,6 +14,9 @@ namespace Discord\WebSockets\Events;
 use Discord\WebSockets\Event;
 use Discord\Helpers\Deferred;
 
+/**
+ * @see https://discord.com/developers/docs/topics/gateway#message-delete
+ */
 class MessageDelete extends Event
 {
     /**
@@ -21,20 +24,20 @@ class MessageDelete extends Event
      */
     public function handle(Deferred &$deferred, $data): void
     {
-        $message = null;
+        $messagePart = null;
 
         if (! isset($data->guild_id)) {
             if ($channel = $this->discord->private_channels->get('id', $data->channel_id)) {
-                $message = $channel->messages->pull($data->id);
+                $messagePart = $channel->messages->pull($data->id);
             }
         } else {
             if ($guild = $this->discord->guilds->get('id', $data->guild_id)) {
                 if ($channel = $guild->channels->get('id', $data->channel_id)) {
-                    $message = $channel->messages->pull($data->id);
+                    $messagePart = $channel->messages->pull($data->id);
                 }
             }
         }
 
-        $deferred->resolve(is_null($message) ? $data : $message);
+        $deferred->resolve(is_null($messagePart) ? $data : $messagePart);
     }
 }

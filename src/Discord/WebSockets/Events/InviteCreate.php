@@ -15,6 +15,9 @@ use Discord\Parts\Guild\Invite;
 use Discord\WebSockets\Event;
 use Discord\Helpers\Deferred;
 
+/**
+ * @see https://discord.com/developers/docs/topics/gateway#invite-create
+ */
 class InviteCreate extends Event
 {
     /**

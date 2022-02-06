@@ -15,6 +15,9 @@ use Discord\Parts\WebSockets\PresenceUpdate as PresenceUpdatePart;
 use Discord\WebSockets\Event;
 use Discord\Helpers\Deferred;
 
+/**
+ * @see https://discord.com/developers/docs/topics/gateway#presence-update
+ */
 class PresenceUpdate extends Event
 {
     /**
