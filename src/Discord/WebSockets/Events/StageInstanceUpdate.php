@@ -31,7 +31,7 @@ class StageInstanceUpdate extends Event
             if ($oldStageInstance = $guild->stage_instances->get('id', $data->id)) {
                 // Swap
                 $stageInstancePart = $oldStageInstance;
-                $oldStageInstance = clone $stageInstancePart;
+                $oldStageInstance = clone $oldStageInstance;
 
                 $stageInstancePart->fill((array) $data);
             }
