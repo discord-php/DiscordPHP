@@ -32,6 +32,9 @@ class MessageUpdate extends Event
         if ($channel = $messagePart->channel) {
             if ($oldMessage = $channel->messages->get('id', $messagePart->id)) {
                 $messagePart = $this->factory->create(Message::class, array_merge($oldMessage->getRawAttributes(), $messagePart->getRawAttributes()), true);
+
+                // Copy scriptData, because fill() approach is bad with partial
+                $messagePart->scriptData = $oldMessage->scriptData;
             }
 
             $channel->messages->offsetSet($messagePart->id, $messagePart);
