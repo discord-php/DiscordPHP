@@ -20,7 +20,11 @@ use React\Promise\PromiseInterface;
 use function Discord\poly_strlen;
 
 /**
- * @see https://discord.com/developers/docs/interactions/message-components#select-menus
+ * Select menus are another interactive component that renders on messages.
+ * On desktop, clicking on a select menu opens a dropdown-style UI
+ * On mobile, tapping a select menu opens up a half-sheet with the options.
+ *
+ *  @see https://discord.com/developers/docs/interactions/message-components#select-menus
  */
 class SelectMenu extends Component
 {
