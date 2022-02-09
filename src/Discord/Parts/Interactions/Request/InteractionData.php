@@ -28,6 +28,7 @@ use Discord\Repository\Interaction\OptionRepository;
  * @property int|null         $component_type Type of the component. Not used for slash commands.
  * @property string[]|null    $values         Values selected in a select menu.
  * @property string|null      $target_id      Id the of user or message targetted by a user or message command.
+ * @property object[]|null    $components     The values submitted by the user in modal.
  * @property string|null      $guild_id       ID of the guild passed from Interaction.
  */
 class InteractionData extends Part
