@@ -44,6 +44,7 @@ class Option extends Part
     public const ROLE = 8;
     public const MENTIONABLE = 9; // Includes users and roles
     public const NUMBER = 10; // Any double between -2^53 and 2^53
+    public const ATTACHMENT = 11;
 
     /**
      * @inheritdoc
@@ -108,7 +109,7 @@ class Option extends Part
      */
     public function setType(int $type): self
     {
-        if ($type < 1 || $type > 10) {
+        if ($type < 1 || $type > 11) {
             throw new \InvalidArgumentException('Invalid type provided.');
         }
 
