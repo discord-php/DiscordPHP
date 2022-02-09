@@ -80,10 +80,12 @@ abstract class AbstractRepository extends Collection
     /**
      * Freshens the repository collection.
      *
+     * @param array $queryparams Query string params to add to the request (no validation)
+     *
      * @return ExtendedPromiseInterface
      * @throws \Exception
      */
-    public function freshen(): ExtendedPromiseInterface
+    public function freshen(array $queryparams = []): ExtendedPromiseInterface
     {
         if (! isset($this->endpoints['all'])) {
             return \React\Promise\reject(new \Exception('You cannot freshen this repository.'));
@@ -91,6 +93,10 @@ abstract class AbstractRepository extends Collection
 
         $endpoint = new Endpoint($this->endpoints['all']);
         $endpoint->bindAssoc($this->vars);
+
+        foreach ($queryparams as $query => $param) {
+            $endpoint->addQuery($query, $param);
+        }
 
         return $this->http->get($endpoint)->then(function ($response) {
             $this->clear();

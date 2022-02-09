@@ -50,34 +50,6 @@ class ScheduledEventRepository extends AbstractRepository
      * 
      * @param bool $with_user_count Whether to include number of users subscribed to each event
      */
-    public function freshen(bool $with_user_count = false): ExtendedPromiseInterface
-    {
-        if (! $with_user_count) return parent::freshen();
-
-        $endpoint = new Endpoint($this->endpoints['all']);
-        $endpoint->bindAssoc($this->vars);
-
-        $endpoint->addQuery('with_user_count', $with_user_count);
-
-        return $this->http->get($endpoint)->then(function ($response) {
-            $this->clear();
-
-            foreach ($response as $value) {
-                $value = array_merge($this->vars, (array) $value);
-                $part = $this->factory->create($this->class, $value, true);
-
-                $this->push($part);
-            }
-
-            return $this;
-        });
-    }
-
-    /**
-     * @inheritdoc
-     * 
-     * @param bool $with_user_count Whether to include number of users subscribed to each event
-     */
     public function fetch(string $id, bool $fresh = false, bool $with_user_count = false): ExtendedPromiseInterface
     {
         if (! $with_user_count) return parent::fetch($id, $fresh);
