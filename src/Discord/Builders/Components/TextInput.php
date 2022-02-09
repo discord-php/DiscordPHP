@@ -45,7 +45,7 @@ class TextInput extends Component
     /**
      * Label for the text input.
      *
-     * @var string|null
+     * @var string
      */
     private $label;
 
@@ -163,15 +163,15 @@ class TextInput extends Component
     /**
      * Sets the label of the text input.
      *
-     * @param string|null $label Label of the text input. Maximum 80 characters.
+     * @param string $label Label of the text input. Maximum 80 characters.
      *
      * @throws \LengthException
      *
      * @return $this
      */
-    public function setLabel(?string $label): self
+    public function setLabel(string $label): self
     {
-        if (isset($label) && poly_strlen($label) > 80) {
+        if (poly_strlen($label) > 80) {
             throw new \LengthException('Label must be maximum 80 characters.');
         }
 
