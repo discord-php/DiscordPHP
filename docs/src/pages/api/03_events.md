@@ -310,61 +310,6 @@ $discord->on(Event::GUILD_DELETE, function (?Guild $guild, Discord $discord, boo
 });
 ```
 
-### Guild Scheduled Event Create
-
-Called with a `ScheduledEvent` object when a guild's scheduled event is created.
-Requires the `Intents::GUILD_SCHEDULED_EVENTS` intent.
-
-```php
-$discord->on(Event::GUILD_SCHEDULED_EVENT_CREATE, function (ScheduledEvent $scheduledEvent, Discord $discord) {
-    // ...
-});
-```
-
-### Guild Scheduled Event Update
-
-Called with a `ScheduledEvent` object when a guild's scheduled event is updated.
-Requires the `Intents::GUILD_SCHEDULED_EVENTS` intent.
-
-```php
-$discord->on(Event::GUILD_SCHEDULED_EVENT_UPDATE, function (ScheduledEvent $scheduledEvent, Discord $discord, ?ScheduledEvent $oldScheduledEvent) {
-    // ...
-});
-```
-
-### Guild Scheduled Event Delete
-
-Called with an old `ScheduledEvent` object when a guild's scheduled event is deleted.
-Requires the `Intents::GUILD_SCHEDULED_EVENTS` intent.
-
-```php
-$discord->on(Event::GUILD_SCHEDULED_EVENT_UPDATE, function (ScheduledEvent $scheduledEvent, Discord $discord) {
-    // ...
-});
-```
-
-### Guild Scheduled Event User Add
-
-Called when a member is added to a guild scheduled event.
-Requires the `Intents::GUILD_SCHEDULED_EVENTS` intent.
-
-```php
-$discord->on(Event::GUILD_SCHEDULED_EVENT_USER_ADD, function ($data, Discord $discord) {
-    // ...
-});
-```
-
-### Guild Scheduled Event User Remove
-
-Called when a member is removed to a guild scheduled event.
-Requires the `Intents::GUILD_SCHEDULED_EVENTS` intent.
-
-```php
-$discord->on(Event::GUILD_SCHEDULED_EVENT_USER_REMOVE, function ($data, Discord $discord) {
-    // ...
-});
-```
-
 ### Guild Member Add
 
 Called with a `Member` object when a member joins a guild.
@@ -531,24 +476,23 @@ $discord->on(Event::WEBHOOKS_UPDATE, function (?Guild $guild, Discord $discord, 
 });
 ```
 
-### Interaction Create
-
-Called with an `Interaction` object when an interaction is created.
-Application Command & Message component listeners are processed prior to this event.
-Useful if you want to create a customized callback or have interaction response persists after Bot restart.
-
-```php
-$discord->on(Event::INTERACTION_CREATE, function (Interaction $interaction, Discord $discord) {
-    // ...
-});
-```
-
 ### Voice Server Update
 
 Called with a `VoiceServerUpdate` object when a guild's voice server is updated.
 
 ```php
 $discord->on(Event::VOICE_SERVER_UPDATE, function (VoiceServerUpdate $guild, Discord $discord) {
+    // ...
+});
+```
+
+### Voice State Update
+
+Called with a `VoiceStateUpdate` object when a member joins, leaves or moves between voice channels.
+Requires the `Intents::GUILD_VOICE_STATES` intent.
+
+```php
+$discord->on(Event::VOICE_STATE_UPDATE, function (VoiceStateUpdate $state, Discord $discord, $oldstate) {
     // ...
 });
 ```
@@ -579,13 +523,69 @@ $discord->on(Event::INVITE_DELETE, function ($invite, Discord $discord) {
 });
 ```
 
-### Presence Update
+### Guild Scheduled Event Create
 
-Called with a `PresenceUpdate` object when a members presence is updated.
-Requires the `Intents::GUILD_PRESENCES` intent. This intent is a priviliged intent, it must be enabled in your Discord bot developer settings.
+Called with a `ScheduledEvent` object when a guild's scheduled event is created.
+Requires the `Intents::GUILD_SCHEDULED_EVENTS` intent.
 
 ```php
-$discord->on(Event::PRESENCE_UPDATE, function (PresenceUpdate $presence, Discord $discord) {
+$discord->on(Event::GUILD_SCHEDULED_EVENT_CREATE, function (ScheduledEvent $scheduledEvent, Discord $discord) {
+    // ...
+});
+```
+
+### Guild Scheduled Event Update
+
+Called with a `ScheduledEvent` object when a guild's scheduled event is updated.
+Requires the `Intents::GUILD_SCHEDULED_EVENTS` intent.
+
+```php
+$discord->on(Event::GUILD_SCHEDULED_EVENT_UPDATE, function (ScheduledEvent $scheduledEvent, Discord $discord, ?ScheduledEvent $oldScheduledEvent) {
+    // ...
+});
+```
+
+### Guild Scheduled Event Delete
+
+Called with an old `ScheduledEvent` object when a guild's scheduled event is deleted.
+Requires the `Intents::GUILD_SCHEDULED_EVENTS` intent.
+
+```php
+$discord->on(Event::GUILD_SCHEDULED_EVENT_UPDATE, function (ScheduledEvent $scheduledEvent, Discord $discord) {
+    // ...
+});
+```
+
+### Guild Scheduled Event User Add
+
+Called when a member is added to a guild scheduled event.
+Requires the `Intents::GUILD_SCHEDULED_EVENTS` intent.
+
+```php
+$discord->on(Event::GUILD_SCHEDULED_EVENT_USER_ADD, function ($data, Discord $discord) {
+    // ...
+});
+```
+
+### Guild Scheduled Event User Remove
+
+Called when a member is removed to a guild scheduled event.
+Requires the `Intents::GUILD_SCHEDULED_EVENTS` intent.
+
+```php
+$discord->on(Event::GUILD_SCHEDULED_EVENT_USER_REMOVE, function ($data, Discord $discord) {
+    // ...
+});
+```
+
+### Interaction Create
+
+Called with an `Interaction` object when an interaction is created.
+Application Command & Message component listeners are processed prior to this event.
+Useful if you want to create a customized callback or have interaction response persists after Bot restart.
+
+```php
+$discord->on(Event::INTERACTION_CREATE, function (Interaction $interaction, Discord $discord) {
     // ...
 });
 ```
@@ -601,13 +601,13 @@ $discord->on(Event::TYPING_START, function (TypingStart $typing, Discord $discor
 });
 ```
 
-### Voice State Update
+### Presence Update
 
-Called with a `VoiceStateUpdate` object when a member joins, leaves or moves between voice channels.
-Requires the `Intents::GUILD_VOICE_STATES` intent.
+Called with a `PresenceUpdate` object when a members presence is updated.
+Requires the `Intents::GUILD_PRESENCES` intent. This intent is a priviliged intent, it must be enabled in your Discord bot developer settings.
 
 ```php
-$discord->on(Event::VOICE_STATE_UPDATE, function (VoiceStateUpdate $state, Discord $discord, $oldstate) {
+$discord->on(Event::PRESENCE_UPDATE, function (PresenceUpdate $presence, Discord $discord) {
     // ...
 });
 ```
