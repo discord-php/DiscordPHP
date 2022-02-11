@@ -73,8 +73,8 @@ echo $url; // https://cdn.discordapp.com/avatars/:user_id/:avatar_hash.png?size=
 
 ### Get banner URL
 
-Gets the banner URL for the user. Only call this function if you need to change the format or size of the image, otherwise use `$user->banner`. Returns a string.
-Returns `null` if user has no banner image set.
+Gets the banner URL for the user. Only call this function if you need to change the format or size of the image, otherwise use `$user->banner`.
+Returns a string or `null` if user has no banner image set.
 
 #### Parameters
 
