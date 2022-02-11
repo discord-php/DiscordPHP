@@ -11,8 +11,6 @@
 
 namespace Discord\Builders\Components;
 
-use Discord\Discord;
-
 use function Discord\poly_strlen;
 
 /**
@@ -37,7 +35,7 @@ class TextInput extends Component
      *
      * @var int
      */
-    private $style = 1;
+    private $style;
 
     /**
      * Label for the text input.
@@ -80,20 +78,6 @@ class TextInput extends Component
      * @var string|null
      */
     private $placeholder;
-
-    /**
-     * Callback used to listen for `INTERACTION_CREATE` events.
-     *
-     * @var callable|null
-     */
-    private $listener;
-
-    /**
-     * Discord instance when the listener is set.
-     *
-     * @var Discord|null
-     */
-    private $discord;
 
     /**
      * Creates a new text input.
@@ -154,7 +138,7 @@ class TextInput extends Component
      */
     public function setStyle(int $style): self
     {
-        if (! in_array($style, [self::STYLE_SHORT, self::STYLE_PARAGRAPH])) {
+        if ($style < 1 || $style > 2) {
             throw new \InvalidArgumentException('Invalid text input style.');
         }
 

@@ -281,10 +281,6 @@ class MessageBuilder implements JsonSerializable
             throw new \InvalidArgumentException('You can only add action rows and select menus as components to messages. Put your other components inside an action row.');
         }
 
-        if ($component instanceof TextInput) {
-            throw new \InvalidArgumentException('You cannot add text input for message.');
-        }
-
         if (count($this->components) >= 5) {
             throw new \OverflowException('You can only add 5 components to a message');
         }

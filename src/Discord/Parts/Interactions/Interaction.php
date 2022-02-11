@@ -526,7 +526,7 @@ class Interaction extends Part
      *
      * @param string            $title      The title of the popup modal
      * @param string            $custom_id  A developer-defined identifier for the component, max 100 characters
-     * @param array|Component[] $components Action row containing between 1 and 5 (inclusive) components that make up the modal
+     * @param array|Component[] $components Between 1 and 5 (inclusive) components that make up the modal contained in Action Row
      * @param callable|null     $submit     The function to call once modal is submitted.
      * 
      * @throws \LogicException
