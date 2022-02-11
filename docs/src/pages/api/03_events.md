@@ -148,7 +148,7 @@ Called with a `Channel` object when a channel is deleted.
 Requires the `Intents::GUILDS` intent.
 
 ```php
-$discord->on(Event::CHANNEL_DELETE, function (?Channel $channel, Discord $discord) {
+$discord->on(Event::CHANNEL_DELETE, function (Channel $channel, Discord $discord) {
     // ...
 });
 ```
@@ -183,7 +183,7 @@ $discord->on(Event::THREAD_CREATE, function (Thread $thread, Discord $discord) {
 Called with a `Thread` object when a thread is updated.
 
 ```php
-$discord->on(Event::THREAD_UPDATE, function (Thread $thread, Discord $discord, ?Thread $oldThread) {
+$discord->on(Event::THREAD_UPDATE, function (?Thread $thread, Discord $discord) {
     // ...
 });
 ```
@@ -213,6 +213,8 @@ $discord->on(Event::THREAD_LIST_SYNC, function (Discord $discord) {
 Called when a thread member is updated.
 
 ```php
+// use Discord\Parts\Thread\Member;
+
 $discord->on(Event::THREAD_MEMBER_UPDATE, function (Member $threadmember, Discord $discord) {
     // ...
 });
@@ -256,7 +258,7 @@ Called with an old `StageInstance` object when a stage instance is deleted.
 Requires the `Intents::GUILDS` intent.
 
 ```php
-$discord->on(Event::STAGE_INSTANCE_DELETE, function (?StageInstance $oldStageInstance, Discord $discord) {
+$discord->on(Event::STAGE_INSTANCE_DELETE, function (StageInstance $oldStageInstance, Discord $discord) {
     // ...
 });
 ```
@@ -376,18 +378,18 @@ $discord->on(Event::GUILD_MEMBER_ADD, function (Member $member, Discord $discord
 
 ### Guild Member Update
 
-Called with two `Member` objects when a member is updated in a guild. Note that the old version of the member _may_ be null if `loadAllMembers` is disabled.
+Called with two `Member` objects when a member is updated in a guild. Note that the old version of the member _may_ be `null` if `loadAllMembers` is disabled.
 Requires the `Intents::GUILD_MEMBERS` intent. This intent is a priviliged intent, it must be enabled in your Discord bot developer settings.
 
 ```php
-$discord->on(Event::GUILD_MEMBER_UPDATE, function (Member $new, Discord $discord, ?Member $old) {
+$discord->on(Event::GUILD_MEMBER_UPDATE, function (Member $new, Discord $discord, Member $old) {
     // ...
 });
 ```
 
 ### Guild Member Remove
 
-Called with a `Member` object when a member leaves a guild (leave/kick/ban). Note the member object may be null if `loadAllMembers` is disabled.
+Called with a `Member` object when a member leaves a guild (leave/kick/ban). Note that the old version of the member _may_ only have `User` data if `loadAllMembers` is disabled.
 Requires the `Intents::GUILD_MEMBERS` intent. This intent is a priviliged intent, it must be enabled in your Discord bot developer settings.
 
 ```php
@@ -431,7 +433,7 @@ $discord->on(Event::GUILD_ROLE_CREATE, function (Role $role, Discord $discord) {
 
 ### Guild Role Update
 
-Called with two `Role` objects when a role is updated in a guild.
+Called with two `Role` objects when a role is updated in a guild. 
 Requires the `Intents::GUILDS` intent.
 
 ```php
@@ -442,33 +444,33 @@ $discord->on(Event::GUILD_ROLE_UPDATE, function (Role $new, Discord $discord, ?R
 
 ### Guild Role Delete
 
-Called with a `Role` object when a role is deleted in a guild.
+Called with a `Role` object when a role is deleted in a guild. `$role` may return `Role` object if it was cached.
 Requires the `Intents::GUILDS` intent.
 
 ```php
-$discord->on(Event::GUILD_ROLE_DELETE, function (?Role $role, Discord $discord) {
+$discord->on(Event::GUILD_ROLE_DELETE, function ($role, Discord $discord) {
     // ...
 });
 ```
 
 ### Guild Emojis Update
 
-Called with Collections of `Emoji` object when a guild's emojis are added/updated/deleted.
+Called with Collections of `Emoji` object when a guild's emojis are added/updated/deleted. `$oldEmojis` _may_ be empty if it was not cached or there was previously no emojis.
 Requires the `Intents::GUILD_EMOJIS_AND_STICKERS` intent.
 
 ```php
-$discord->on(Event::GUILD_EMOJIS_UPDATE, function ($emojis, Discord $discord, $oldemojis) {
+$discord->on(Event::GUILD_EMOJIS_UPDATE, function (Collection $emojis, Discord $discord, Collection $oldEmojis) {
     // ...
 });
 ```
 
 ### Guild Stickers Update
 
-Called with Collections of `Sticker` object when a guild's stickers are added/updated/deleted.
+Called with Collections of `Sticker` object when a guild's stickers are added/updated/deleted. `$oldStickers` _may_ be empty if it was not cached or there was previously no stickers.
 Requires the `Intents::GUILD_EMOJIS_AND_STICKERS` intent.
 
 ```php
-$discord->on(Event::GUILD_STICKERS_UPDATE, function ($stickers, Discord $discord, $oldstickers) {
+$discord->on(Event::GUILD_STICKERS_UPDATE, function (Collection $stickers, Discord $discord, Collecetion $oldStickers) {
     // ...
 });
 ```
@@ -479,14 +481,14 @@ Called with a `Guild` object when a guild's integrations are updated.
 Requires the `Intents::GUILD_INTEGRATIONS` intent.
 
 ```php
-$discord->on(Event::GUILD_INTEGRATIONS_UPDATE, function (Guild $guild, Discord $discord) {
+$discord->on(Event::GUILD_INTEGRATIONS_UPDATE, function (?Guild $guild, Discord $discord) {
     // ...
 });
 ```
 
-### Integrations Create
+### Integration Create
 
-Called with a `Integration` object when a guild's integration is created.
+Called with an `Integration` object when a guild's integration is created.
 Requires the `Intents::GUILD_INTEGRATIONS` intent.
 
 ```php
@@ -495,21 +497,21 @@ $discord->on(Event::INTEGRATION_CREATE, function (Integration $integration, Disc
 });
 ```
 
-### Integrations Update
+### Integration Update
 
-Called with a `Integration` object when a guild's integration is updated.
+Called with an `Integration` object when a guild's integration is updated.
 Requires the `Intents::GUILD_INTEGRATIONS` intent.
 
 ```php
-$discord->on(Event::INTEGRATION_UPDATE, function (Integration $integration, Discord $discord) {
+$discord->on(Event::INTEGRATION_UPDATE, function (Integration $integration, Discord $discord, ?Integration $oldIntegration) {
     // ...
 });
 ```
 
-### Integrations Delete
+### Integration Delete
 
 Called with an old `Integration` object when a guild's integration is deleted.
-May return `null` when Integration is not cached.
+`$oldIntegration` _may_ be `null` when Integration is not cached.
 Requires the `Intents::GUILD_INTEGRATIONS` intent.
 
 ```php
@@ -524,7 +526,7 @@ Called with a `Guild` and `Channel` object when a guild's webhooks are updated.
 Requires the `Intents::GUILD_WEBHOOKS` intent.
 
 ```php
-$discord->on(Event::WEBHOOKS_UPDATE, function (Guild $guild, Discord $discord, Channel $channel) {
+$discord->on(Event::WEBHOOKS_UPDATE, function (?Guild $guild, Discord $discord, ?Channel $channel) {
     // ...
 });
 ```
@@ -533,7 +535,7 @@ $discord->on(Event::WEBHOOKS_UPDATE, function (Guild $guild, Discord $discord, C
 
 Called with an `Interaction` object when an interaction is created.
 Application Command & Message component listeners are processed prior to this event.
-Useful if you want to create a customized callback or have message component response after Bot restart.
+Useful if you want to create a customized callback or have interaction response persists after Bot restart.
 
 ```php
 $discord->on(Event::INTERACTION_CREATE, function (Interaction $interaction, Discord $discord) {
@@ -546,7 +548,7 @@ $discord->on(Event::INTERACTION_CREATE, function (Interaction $interaction, Disc
 Called with a `VoiceServerUpdate` object when a guild's voice server is updated.
 
 ```php
-$discord->on(Event::VOICE_SERVER_UPDATE, function (Guild $guild, Discord $discord, Channel $channel) {
+$discord->on(Event::VOICE_SERVER_UPDATE, function (VoiceServerUpdate $guild, Discord $discord) {
     // ...
 });
 ```
@@ -605,7 +607,7 @@ Called with a `VoiceStateUpdate` object when a member joins, leaves or moves bet
 Requires the `Intents::GUILD_VOICE_STATES` intent.
 
 ```php
-$discord->on(Event::VOICE_STATE_UPDATE, function (VoiceStateUpdate $state, Discord $discord) {
+$discord->on(Event::VOICE_STATE_UPDATE, function (VoiceStateUpdate $state, Discord $discord, $oldstate) {
     // ...
 });
 ```
