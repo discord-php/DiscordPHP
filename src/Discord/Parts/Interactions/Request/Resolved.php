@@ -12,6 +12,7 @@
 namespace Discord\Parts\Interactions\Request;
 
 use Discord\Helpers\Collection;
+use Discord\Parts\Channel\Attachment;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Channel\Message;
 use Discord\Parts\Guild\Role;
@@ -25,19 +26,20 @@ use Discord\Parts\User\User;
  *
  * @see https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-resolved-data-structure
  *
- * @property Collection|User[]|null             $users    The ids and User objects.
- * @property Collection|Member[]|null           $members  The ids and partial Member objects.
- * @property Collection|Role[]|null             $roles    The ids and Role objects.
- * @property Collection|Channel[]|Thread[]|null $channels The ids and partial Channel objects.
- * @property Collection|Message[]|null          $messages The ids and partial Message objects.
- * @property string|null                        $guild_id ID of the guild passed from Interaction.
+ * @property Collection|User[]|null             $users       The ids and User objects.
+ * @property Collection|Member[]|null           $members     The ids and partial Member objects.
+ * @property Collection|Role[]|null             $roles       The ids and Role objects.
+ * @property Collection|Channel[]|Thread[]|null $channels    The ids and partial Channel objects.
+ * @property Collection|Message[]|null          $messages    The ids and partial Message objects.
+ * @property Collection|Attachment[]|null       $attachments The ids and partial Attachment objects.
+ * @property string|null                        $guild_id    ID of the guild passed from Interaction.
  */
 class Resolved extends Part
 {
     /**
      * @inheritdoc
      */
-    protected $fillable = ['users', 'members', 'roles', 'channels', 'messages', 'guild_id'];
+    protected $fillable = ['users', 'members', 'roles', 'channels', 'messages', 'attachments', 'guild_id'];
 
     /**
      * Returns a collection of resolved users.
@@ -185,5 +187,25 @@ class Resolved extends Part
         }
 
         return $collection;
+    }
+
+    /**
+     * Returns a collection of resolved attachments.
+     *
+     * @return Collection|Attachment[]|null Map of Snowflakes to attachments objects
+     */
+    protected function getAttachmentsAttribute(): ?Collection
+    {
+        if (! isset($this->attributes['attachments'])) {
+            return null;
+        }
+
+        $attachments = Collection::for(Attachment::class);
+
+        foreach ($this->attributes['attachments'] as $attachment) {
+            $attachments->pushItem($this->factory->create(Attachment::class, $attachment, true));
+        }
+
+        return $attachments;
     }
 }

@@ -14,6 +14,7 @@ namespace Discord\Builders;
 use Discord\Builders\Components\ActionRow;
 use Discord\Builders\Components\Component;
 use Discord\Builders\Components\SelectMenu;
+use Discord\Builders\Components\TextInput;
 use Discord\Exceptions\FileNotFoundException;
 use Discord\Helpers\Multipart;
 use Discord\Http\Exceptions\RequestFailedException;
