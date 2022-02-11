@@ -142,7 +142,7 @@ $select->setListener(function (Interaction $interaction, Collection $options) {
 Text inputs are an interactive component that render on modals.
 
 ```php
-$textInput = TextInput::new('Name', TextInput::TYPE_SHORT, 'name')
+$textInput = TextInput::new('Label', TextInput::TYPE_SHORT, 'custom id')
     ->setRequired(true);
 ```
 
