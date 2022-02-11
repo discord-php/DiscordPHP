@@ -13,6 +13,7 @@ namespace Discord\Parts\Interactions;
 
 use Discord\Builders\Components\Component;
 use Discord\Builders\MessageBuilder;
+use Discord\Helpers\Collection;
 use Discord\Helpers\Multipart;
 use Discord\Http\Endpoint;
 use Discord\InteractionResponseType;
@@ -21,10 +22,12 @@ use Discord\Parts\Channel\Channel;
 use Discord\Parts\Channel\Message;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Interactions\Command\Choice;
+use Discord\Parts\Interactions\Request\Component as RequestComponent;
 use Discord\Parts\Interactions\Request\InteractionData;
 use Discord\Parts\Part;
 use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
+use Discord\WebSockets\Event;
 use React\Promise\ExtendedPromiseInterface;
 
 use function React\Promise\reject;
@@ -524,12 +527,13 @@ class Interaction extends Part
      * @param string            $title      The title of the popup modal
      * @param string            $custom_id  A developer-defined identifier for the component, max 100 characters
      * @param array|Component[] $components Action row containing between 1 and 5 (inclusive) components that make up the modal
-     *
+     * @param callable|null     $submit     The function to call once modal is submitted.
+     * 
      * @throws \LogicException
      *
      * @return ExtendedPromiseInterface
      */
-    public function showModal(string $title, string $custom_id, array $components): ExtendedPromiseInterface
+    public function showModal(string $title, string $custom_id, array $components, ?callable $submit = null): ExtendedPromiseInterface
     {
         if (in_array($this->type, [InteractionType::PING, InteractionType::MODAL_SUBMIT])) {
             return reject(new \LogicException('You cannot pop up a modal from a ping or modal submit interaction.'));
@@ -542,6 +546,22 @@ class Interaction extends Part
                 'custom_id' => $custom_id,
                 'components' => $components
             ],
-        ]);
+        ])->then(function () use ($custom_id, $submit) {
+            if ($submit) {
+                $this->discord->once(Event::INTERACTION_CREATE, function (Interaction $interaction) use ($custom_id, $submit) {
+                    if ($interaction->type == InteractionType::MODAL_SUBMIT && $interaction->data->custom_id == $custom_id) {
+                        $components = Collection::for(RequestComponent::class, 'custom_id');
+                        foreach ($interaction->data->components as $actionrow) {
+                            if ($actionrow->type == Component::TYPE_ACTION_ROW) {
+                                foreach ($actionrow->components as $component) {
+                                    $components->pushItem($component);
+                                }
+                            }
+                        }
+                        $submit($interaction, $components);
+                    }
+                });
+            }
+        });
     }
 }
