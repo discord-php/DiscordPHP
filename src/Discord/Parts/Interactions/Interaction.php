@@ -192,8 +192,8 @@ class Interaction extends Part
             return $this->acknowledgeWithResponse();
         }
 
-        if ($this->type != InteractionType::MESSAGE_COMPONENT) {
-            return reject(new \LogicException('You can only acknowledge message component interactions.'));
+        if (! in_array($this->type, [InteractionType::MESSAGE_COMPONENT, InteractionType::MODAL_SUBMIT])) {
+            return reject(new \LogicException('You can only acknowledge message component or modal submit interactions.'));
         }
 
         return $this->respond([
@@ -215,8 +215,8 @@ class Interaction extends Part
      */
     public function acknowledgeWithResponse(bool $ephemeral = false): ExtendedPromiseInterface
     {
-        if (! in_array($this->type, [InteractionType::APPLICATION_COMMAND, InteractionType::MESSAGE_COMPONENT])) {
-            return reject(new \LogicException('You can only acknowledge application command or message component interactions.'));
+        if (! in_array($this->type, [InteractionType::APPLICATION_COMMAND, InteractionType::MESSAGE_COMPONENT, InteractionType::MODAL_SUBMIT])) {
+            return reject(new \LogicException('You can only acknowledge application command, message component, or modal submit interactions.'));
         }
 
         return $this->respond([
@@ -367,8 +367,8 @@ class Interaction extends Part
      */
     public function respondWithMessage(MessageBuilder $builder, bool $ephemeral = false): ExtendedPromiseInterface
     {
-        if (! in_array($this->type, [InteractionType::APPLICATION_COMMAND, InteractionType::MESSAGE_COMPONENT])) {
-            return reject(new \LogicException('You can only acknowledge application command or message component interactions.'));
+        if (! in_array($this->type, [InteractionType::APPLICATION_COMMAND, InteractionType::MESSAGE_COMPONENT, InteractionType::MODAL_SUBMIT])) {
+            return reject(new \LogicException('You can only acknowledge application command, message component, or modal submit interactions.'));
         }
 
         if ($ephemeral) {
