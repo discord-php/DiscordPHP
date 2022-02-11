@@ -43,8 +43,7 @@ class TypingStart extends Part
     /**
      * @inheritdoc
      */
-    protected $visible = ['channel', 'guild', 'user', 'member'];
-
+    protected $visible = ['channel', 'guild', 'user'];
 
     /**
      * Gets the channel attribute.

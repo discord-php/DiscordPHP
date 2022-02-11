@@ -35,7 +35,7 @@ use Discord\Repository\Interaction\ComponentRepository;
  * @property int|null            $min_length  The minimum input length for a text input. (Text Inputs)
  * @property int|null            $max_length  The maximum input length for a text input. (Text Inputs)
  * @property bool|null           $required    Whether this component is required to be filled. (Text Inputs)
- * @property string|null         $value       A pre-filled value for this component. (Text Inputs)
+ * @property string|null         $value       Value for this component. (Text Inputs)
  */
 class Component extends Part
 {
