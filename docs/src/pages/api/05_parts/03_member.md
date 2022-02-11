@@ -17,23 +17,28 @@ $discord->on(Event::MESSAGE_CREATE, function (Message $message) {
 
 ### Properties
 
-| name          | type                                  | description                                 |
-| ------------- | ------------------------------------- | ------------------------------------------- |
-| id            | string                                | the user ID of the member                   |
-| username      | string                                | the username of the member                  |
-| discriminator | string                                | the four digit discriminator of the member  |
-| user          | [User](#user)                         | the user part of the member                 |
-| roles         | Collection of [Roles](#role)          | roles the member is a part of               |
-| deaf          | bool                                  | whether the member is deafened              |
-| mute          | bool                                  | whether the member is muted                 |
-| joined_at     | `Carbon` timestamp                    | when the member joined the guild            |
-| guild         | [Guild](#guild)                       | the guild the member is a part of           |
-| guild_id      | string                                | the id of the guild the member is a part of |
-| string        | status                                | the status of the member                    |
-| game          | [Activity](#activity)                 | the current activity of the member          |
-| nick          | string                                | the nickname of the member                  |
-| premium_since | `Carbon` timestamp                    | when the member started boosting the guild  |
-| activities    | Collection of [Activities](#activity) | the current activities of the member        |
+| name                         | type                                  | description                                                                                                                                              |
+| ---------------------------- | ------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| user                         | [User](#user)                         | the user part of the member                                                                                                                              |
+| nick                         | string                                | the nickname of the member                                                                                                                               |
+| avatar                       | ?string                               | The guild avatar URL of the member                                                                                                                       |
+| avatar_hash                  | ?string                               | The guild avatar hash of the member                                                                                                                      |
+| roles                        | Collection of [Roles](#role)          | roles the member is a part of                                                                                                                            |
+| joined_at                    | `Carbon` timestamp                    | when the member joined the guild                                                                                                                         |
+| deaf                         | bool                                  | whether the member is deafened                                                                                                                           |
+| mute                         | bool                                  | whether the member is muted                                                                                                                              |
+| pending                      | ?string                               | whether the user has not yet passed the guild's Membership Screening requirements                                                                        |
+| communication_disabled_until | `?Carbon`                             | when the user's timeout will expire and the user will be able to communicate in the guild again, null or a time in the past if the user is not timed out |
+| id                           | string                                | the user ID of the member                                                                                                                                |
+| username                     | string                                | the username of the member                                                                                                                               |
+| discriminator                | string                                | the four digit discriminator of the member                                                                                                               |
+| displayname                  | string                                | nick/username#discriminator                                                                                                                              |
+| guild                        | [Guild](#guild)                       | the guild the member is a part of                                                                                                                        |
+| guild_id                     | string                                | the id of the guild the member is a part of                                                                                                              |
+| string                       | status                                | the status of the member                                                                                                                                 |
+| game                         | [Activity](#activity)                 | the current activity of the member                                                                                                                       |
+| premium_since                | `Carbon` timestamp                    | when the member started boosting the guild                                                                                                               |
+| activities                   | Collection of [Activities](#activity) | the current activities of the member                                                                                                                     |
 
 ### Ban the member
 
@@ -54,7 +59,7 @@ $member->ban(5, 'bad person')->done(function (Ban $ban) {
 
 ### Set the nickname of the member
 
-Sets the nickname of the member. Requires the `MANAGE_NICKNAMES` permission. Returns nothing in a promise.
+Sets the nickname of the member. Requires the `MANAGE_NICKNAMES` permission or `CHANGE_NICKNAME` if changing self nickname. Returns nothing in a promise.
 
 #### Parameters
 
@@ -134,6 +139,27 @@ $member->removeRole('1231231231')->done(function () {
 });
 ```
 
+### Timeout member
+
+Times out the member in the server. Takes a carbon or null to remove. Returns nothing in a promise.
+
+#### Parameters
+
+| name                         | type               | description                      |
+| ---------------------------- | ------------------ | -------------------------------- |
+| communication_disabled_until | `Carbon` or `null` | the time for timeout to lasts on |
+
+```php
+$member->timeoutMember(new Carbon('6 hours'))->done(function () {
+    // ...
+});
+
+// to remove
+$member->timeoutMember()->done(function () {
+    // ...
+});
+```
+
 ### Get permissions of member
 
 Gets the effective permissions of the member:
@@ -158,4 +184,20 @@ $member->getPermissions($channel)->done(function (RolePermission $permission) {
 $member->getPermissions()->done(function (RolePermission $permission) {
     // ...
 });
+```
+
+### Get guild specific avatar URL
+
+Gets the server-specific avatar URL for the member. Only call this function if you need to change the format or size of the image, otherwise use `$member->avatar`. Returns a string.
+
+#### Parameters
+
+| name   | type   | description                                               |
+| ------ | ------ | --------------------------------------------------------- |
+| format | string | format of the image, one of png, jpg or webp, default jpg |
+| size   | int    | size of the image, default 1024                           |
+
+```php
+$url = $member->getAvatarAttribute('png', 2048);
+echo $url; // https://cdn.discordapp.com/guilds/:guild_id/users/:id/avatars/:avatar_hash.png?size=2048
 ```
