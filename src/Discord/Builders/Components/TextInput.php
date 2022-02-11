@@ -12,9 +12,6 @@
 namespace Discord\Builders\Components;
 
 use Discord\Discord;
-use Discord\Parts\Interactions\Interaction;
-use Discord\WebSockets\Event;
-use React\Promise\PromiseInterface;
 
 use function Discord\poly_strlen;
 
