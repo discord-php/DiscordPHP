@@ -29,7 +29,7 @@ class GuildBanRemove extends Event
         $banPart = $this->factory->create(Ban::class, $data);
 
         if ($guild = $banPart->guild) {
-            if ($banPart = $guild->bans->pull($data->user_id)) {
+            if ($banPart = $guild->bans->pull($data->user->id)) {
                 $banPart->fill((array) $data);
                 $banPart->created = false;
             }
