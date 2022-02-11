@@ -26,6 +26,9 @@ The locale list can be seen on [Discord API reference](https://discord.com/devel
 
 ## Functions on interaction create
 
+The following functions are used to respond an interaction after being created `Event::INTERACTION_CREATE`,
+responding interaction with wrong type throws a `LogicException`
+
 | name                                                                                       | description                                                                 | valid for interaction type                                 |
 | ------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------- | ---------------------------------------------------------- |
 | `acknowledgeWithResponse(?bool $ephemeral)`                                                | acknowledges the interaction, creating a placeholder response to be updated | `APPLICATION_COMMAND`, `MESSAGE_COMPONENT`, `MODAL_SUBMIT` |
@@ -36,13 +39,16 @@ The locale list can be seen on [Discord API reference](https://discord.com/devel
 
 ## Functions after interaction response
 
-| name                                                               | description                                                                                    | return             |
-| ------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------- | ------------------ |
-| `updateMessage(MessageBuilder $message)`                           | updates the message the interaction was triggered from. only for message component interaction | `Promise<void>`    |
-| `getOriginalResponse()`                                            | gets the original interaction response                                                         | `Promise<Message>` |
-| `updateOriginalResponse(MessageBuilder $message)`                  | updates the original interaction response                                                      | `Promise<Message>` |
-| `deleteOriginalResponse()`                                         | deletes the original interaction response                                                      | `Promise<void>`    |
-| `sendFollowUpMessage(MessageBuilder $builder, ?bool $ephemeral)`   | sends a follow up message to the interaction. ephemeral is defalt false                        | `Promise<Message>` |
-| `getFollowUpMessage(MessageBuilder $builder, ?bool $ephemeral)`    | gets a non ephemeral follow up message from the interaction                                    | `Promise<Message>` |
-| `updateFollowUpMessage(MessageBuilder $builder, ?bool $ephemeral)` | updates the follow up message of the interaction                                               | `Promise<Message>` |
-| `deleteFollowUpMessage(MessageBuilder $builder, ?bool $ephemeral)` | deletes a non ephemeral follow up message from the interaction                                 | `Promise<void>`    |
+The following functions can be only used after interaction respond above,
+otherwise throws a `RuntimeException` "Interaction has not been responded to."
+
+| name                                                                 | description                                                                                    | return             |
+| -------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | ------------------ |
+| `updateMessage(MessageBuilder $message)`                             | updates the message the interaction was triggered from. only for message component interaction | `Promise<void>`    |
+| `getOriginalResponse()`                                              | gets the original interaction response                                                         | `Promise<Message>` |
+| `updateOriginalResponse(MessageBuilder $message)`                    | updates the original interaction response                                                      | `Promise<Message>` |
+| `deleteOriginalResponse()`                                           | deletes the original interaction response                                                      | `Promise<void>`    |
+| `sendFollowUpMessage(MessageBuilder $builder, ?bool $ephemeral)`     | sends a follow up message to the interaction. ephemeral is defalt false                        | `Promise<Message>` |
+| `getFollowUpMessage(string $message_id)`                             | gets a non ephemeral follow up message from the interaction                                    | `Promise<Message>` |
+| `updateFollowUpMessage(string $message_id, MessageBuilder $builder)` | updates the follow up message of the interaction                                               | `Promise<Message>` |
+| `deleteFollowUpMessage(string $message_id)`                          | deletes a non ephemeral follow up message from the interaction                                 | `Promise<void>`    |
