@@ -14,6 +14,7 @@ namespace Discord\Builders;
 use Discord\Builders\Components\ActionRow;
 use Discord\Builders\Components\Component;
 use Discord\Builders\Components\SelectMenu;
+use Discord\Builders\Components\TextInput;
 use Discord\Exceptions\FileNotFoundException;
 use Discord\Helpers\Multipart;
 use Discord\Http\Exceptions\RequestFailedException;
@@ -278,6 +279,10 @@ class MessageBuilder implements JsonSerializable
     {
         if (! ($component instanceof ActionRow || $component instanceof SelectMenu)) {
             throw new \InvalidArgumentException('You can only add action rows and select menus as components to messages. Put your other components inside an action row.');
+        }
+
+        if ($component instanceof TextInput) {
+            throw new \InvalidArgumentException('You cannot add text input for message.');
         }
 
         if (count($this->components) >= 5) {

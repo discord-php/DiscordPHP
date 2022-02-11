@@ -11,6 +11,7 @@
 
 namespace Discord\Parts\Interactions;
 
+use Discord\Builders\Components\Component;
 use Discord\Builders\MessageBuilder;
 use Discord\Helpers\Multipart;
 use Discord\Http\Endpoint;
@@ -512,6 +513,35 @@ class Interaction extends Part
         return $this->respond([
             'type' => InteractionResponseType::APPLICATION_COMMAND_AUTOCOMPLETE_RESULT,
             'data' => ['choices' => $choices],
+        ]);
+    }
+
+    /**
+     * Responds to the interaction with a popup modal.
+     *
+     * @see https://discord.com/developers/docs/interactions/receiving-and-responding#responding-to-an-interaction
+     *
+     * @param string            $title      The title of the popup modal
+     * @param string            $custom_id  A developer-defined identifier for the component, max 100 characters
+     * @param array|Component[] $components Action row containing between 1 and 5 (inclusive) components that make up the modal
+     *
+     * @throws \LogicException
+     *
+     * @return ExtendedPromiseInterface
+     */
+    public function showModal(string $title, string $custom_id, array $components): ExtendedPromiseInterface
+    {
+        if (in_array($this->type, [InteractionType::PING, InteractionType::MODAL_SUBMIT])) {
+            return reject(new \LogicException('You cannot pop up a modal from a ping or modal submit interaction.'));
+        }
+
+        return $this->respond([
+            'type' => InteractionResponseType::MODAL,
+            'data' => [
+                'title' => $title,
+                'custom_id' => $custom_id,
+                'components' => $components
+            ],
         ]);
     }
 }
