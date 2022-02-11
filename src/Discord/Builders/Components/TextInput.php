@@ -101,23 +101,29 @@ class TextInput extends Component
     /**
      * Creates a new text input.
      *
+     * @param string      $label     The label of the text input.
+     * @param int         $style     The style of the text input.
      * @param string|null $custom_id The custom ID of the text input. If not given, an UUID will be used
      */
-    public function __construct(?string $custom_id)
+    public function __construct(string $label, int $style, ?string $custom_id)
     {
+        $this->setLabel($label);
+        $this->setStyle($style);
         $this->setCustomId($custom_id ?? $this->generateUuid());
     }
 
     /**
      * Creates a new text input.
      *
+     * @param string      $label     The label of the text input.
+     * @param int         $style     The style of the text input.
      * @param string|null $custom_id The custom ID of the text input.
      *
      * @return self
      */
-    public static function new(?string $custom_id = null): self
+    public static function new(string $label, int $style, ?string $custom_id = null): self
     {
-        return new self($custom_id);
+        return new self($label, $style, $custom_id);
     }
 
     /**
@@ -141,7 +147,7 @@ class TextInput extends Component
     }
 
     /**
-     * Sets the style of the text button.
+     * Sets the style of the text input.
      *
      * @param int $style
      *
@@ -275,82 +281,6 @@ class TextInput extends Component
         $this->value = $value;
 
         return $this;
-    }
-
-    /**
-     * Sets the callable listener for the text input. The `$callback` will be called when submitted.
-     *
-     * If you do not respond to or acknowledge the `Interaction`, it will be acknowledged for you.
-     * Note that if you intend to respond to or acknowledge the interaction inside a promise, you should
-     * return a promise that resolves *after* you respond or acknowledge.
-     *
-     * The callback will only be called once with the `$oneOff` parameter set to true.
-     * This can be changed to false, and the callback will be called each time the text input is submitted.
-     * To remove the listener, you can pass `$callback` as null.
-     *
-     * The text input listener will not persist when the bot restarts.
-     *
-     * @param callable $callback Callback to call when the text input is submitted. Will be called with the interaction object.
-     * @param Discord  $discord  Discord client.
-     * @param bool     $oneOff   Whether the listener should be removed after the text input is submitted for the first time.
-     *
-     * @throws \LogicException
-     *
-     * @return $this
-     */
-    public function setListener(?callable $callback, Discord $discord, bool $oneOff = false): self
-    {
-        if (! isset($this->custom_id)) {
-            $this->custom_id = $this->generateUuid();
-        }
-
-        // Remove any existing listener
-        if ($this->listener) {
-            $this->discord->removeListener(Event::INTERACTION_CREATE, $this->listener);
-        }
-
-        $this->discord = $discord;
-
-        if ($callback == null) {
-            return $this;
-        }
-
-        $this->listener = function (Interaction $interaction) use ($callback, $oneOff) {
-            if ($interaction->data->component_type == Component::TYPE_TEXT_INPUT && $interaction->data->custom_id == $this->custom_id) {
-                $response = $callback($interaction);
-                $ack = function () use ($interaction) {
-                    // attempt to acknowledge interaction if it has not already been responded to.
-                    try {
-                        $interaction->acknowledge();
-                    } catch (\Exception $e) {
-                    }
-                };
-
-                if ($response instanceof PromiseInterface) {
-                    $response->then($ack);
-                } else {
-                    $ack();
-                }
-
-                if ($oneOff) {
-                    $this->removeListener();
-                }
-            }
-        };
-
-        $discord->on(Event::INTERACTION_CREATE, $this->listener);
-
-        return $this;
-    }
-
-    /**
-     * Removes the listener from the text input.
-     *
-     * @return $this
-     */
-    public function removeListener(): self
-    {
-        return $this->setListener(null, $this->discord);
     }
 
     /**
