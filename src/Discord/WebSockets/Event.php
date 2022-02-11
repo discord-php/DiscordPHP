@@ -161,7 +161,7 @@ abstract class Event
         if ($user = $this->discord->users->get('id', $userdata->id)) {
             $user->fill((array) $userdata);
         } else {
-            $this->discord->users->pushItem($this->factory->part(\Discord\Parts\User\User::class, (array) $userdata, true));
+            $this->discord->users->pushItem($this->factory->create(\Discord\Parts\User\User::class, $userdata, true));
         }
     }
 

@@ -100,6 +100,8 @@ class Integration extends Part
     /**
      * Returns the application attribute.
      *
+     * @todo return correct Application structure https://discord.com/developers/docs/resources/guild#integration-application-object
+     *
      * @return Application|null
      */
     protected function getApplicationAttribute(): ?Application

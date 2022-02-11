@@ -22,16 +22,16 @@ class UserUpdate extends Event
      */
     public function handle(Deferred &$deferred, $data): void
     {
-        $olduser = null;
+        $oldUser = null;
 
         /** @var User */
-        if ($olduser = $this->discord->users->offsetGet($data->id)) {
-            $user = clone $olduser;
-            $user->fill((array) $data);
+        if ($oldUser = $this->discord->users->offsetGet($data->id)) {
+            $userPart = clone $oldUser;
+            $userPart->fill((array) $data);
         } else {
-            $user = $this->factory->part(User::class, (array) $data, true);
+            $userPart = $this->factory->create(User::class, $data, true);
         }
 
-        $deferred->resolve([$user, $olduser]);
+        $deferred->resolve([$userPart, $oldUser]);
     }
 }

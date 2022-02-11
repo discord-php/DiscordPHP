@@ -15,6 +15,9 @@ use Discord\WebSockets\Event;
 use Discord\Helpers\Deferred;
 use Discord\Parts\Guild\ScheduledEvent;
 
+/**
+ * @see https://discord.com/developers/docs/topics/gateway#guild-scheduled-event-create
+ */
 class GuildScheduledEventCreate extends Event
 {
     /**
@@ -23,16 +26,16 @@ class GuildScheduledEventCreate extends Event
     public function handle(Deferred &$deferred, $data): void
     {
         /** @var ScheduledEvent */
-        $scheduledEvent = $this->factory->create(ScheduledEvent::class, $data, true);
+        $scheduledEventPart = $this->factory->create(ScheduledEvent::class, $data, true);
 
         if ($guild = $this->discord->guilds->get('id', $data->guild_id)) {
-            $guild->guild_scheduled_events->pushItem($scheduledEvent);
+            $guild->guild_scheduled_events->pushItem($scheduledEventPart);
         }
 
         if (isset($data->creator)) {
             $this->cacheUser($data->creator);
         }
 
-        $deferred->resolve($scheduledEvent);
+        $deferred->resolve($scheduledEventPart);
     }
 }

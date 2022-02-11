@@ -23,11 +23,11 @@ class GuildStickersUpdate extends Event
      */
     public function handle(Deferred &$deferred, $data): void
     {
-        $oldParts = Collection::for(Sticker::class);
+        $oldStickers = Collection::for(Sticker::class);
         $stickerParts = Collection::for(Sticker::class);
 
         if ($guild = $this->discord->guilds->get('id', $data->guild_id)) {
-            $oldParts->merge($guild->stickers);
+            $oldStickers->merge($guild->stickers);
             $guild->stickers->clear();
         }
 
@@ -35,9 +35,10 @@ class GuildStickersUpdate extends Event
             if (isset($sticker->user)) {
                 // User caching from sticker uploader
                 $this->cacheUser($sticker->user);
-            } elseif($oldPart = $oldParts->offsetGet($sticker->id)) {
-                $sticker->user = $oldPart->user;
+            } elseif($oldSticker = $oldStickers->offsetGet($sticker->id)) {
+                $sticker->user = $oldSticker->user;
             }
+            /** @var Sticker */
             $stickerPart = $this->factory->create(Sticker::class, $sticker, true);
             $stickerParts->pushItem($stickerPart);
         }
@@ -46,6 +47,6 @@ class GuildStickersUpdate extends Event
             $guild->stickers->merge($stickerParts);
         }
 
-        $deferred->resolve([$stickerParts, $oldParts]);
+        $deferred->resolve([$stickerParts, $oldStickers]);
     }
 }

@@ -14,6 +14,9 @@ namespace Discord\WebSockets\Events;
 use Discord\WebSockets\Event;
 use Discord\Helpers\Deferred;
 
+/**
+ * @see https://discord.com/developers/docs/topics/gateway#invite-delete
+ */
 class InviteDelete extends Event
 {
     /**

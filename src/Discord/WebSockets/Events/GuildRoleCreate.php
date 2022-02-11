@@ -15,6 +15,9 @@ use Discord\Parts\Guild\Role;
 use Discord\WebSockets\Event;
 use Discord\Helpers\Deferred;
 
+/**
+ * @see https://discord.com/developers/docs/topics/gateway#guild-role-create
+ */
 class GuildRoleCreate extends Event
 {
     /**
@@ -25,11 +28,11 @@ class GuildRoleCreate extends Event
         $adata = (array) $data->role;
         $adata['guild_id'] = $data->guild_id;
 
+        /** @var Role */
         $rolePart = $this->factory->create(Role::class, $adata, true);
 
-        if ($guild = $this->discord->guilds->get('id', $rolePart->guild_id)) {
-            $guild->roles->push($rolePart);
-            $this->discord->guilds->push($guild);
+        if ($guild = $this->discord->guilds->get('id', $data->guild_id)) {
+            $guild->roles->pushItem($rolePart);
         }
 
         $deferred->resolve($rolePart);

@@ -15,6 +15,9 @@ use Discord\Parts\Channel\StageInstance;
 use Discord\WebSockets\Event;
 use Discord\Helpers\Deferred;
 
+/**
+ * @see https://discord.com/developers/docs/topics/gateway#stage-instance-update
+ */
 class StageInstanceUpdate extends Event
 {
     /**
@@ -26,16 +29,19 @@ class StageInstanceUpdate extends Event
 
         if ($guild = $this->discord->guilds->get('id', $data->guild_id)) {
             if ($oldStageInstance = $guild->stage_instances->get('id', $data->id)) {
-                $stageInstance = clone $oldStageInstance;
-                $stageInstance->fill((array) $data);
+                // Swap
+                $stageInstancePart = $oldStageInstance;
+                $oldStageInstance = clone $oldStageInstance;
+
+                $stageInstancePart->fill((array) $data);
             }
         }
 
         if (! $oldStageInstance) {
             /** @var StageInstance */
-            $stageInstance = $this->factory->create(StageInstance::class, $data, true);
+            $stageInstancePart = $this->factory->create(StageInstance::class, $data, true);
         }
 
-        $deferred->resolve([$stageInstance, $oldStageInstance]);
+        $deferred->resolve([$stageInstancePart, $oldStageInstance]);
     }
 }

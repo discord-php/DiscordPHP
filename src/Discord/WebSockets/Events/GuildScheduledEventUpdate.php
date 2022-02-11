@@ -15,6 +15,9 @@ use Discord\WebSockets\Event;
 use Discord\Helpers\Deferred;
 use Discord\Parts\Guild\ScheduledEvent;
 
+/**
+ * @see https://discord.com/developers/docs/topics/gateway#guild-scheduled-event-update
+ */
 class GuildScheduledEventUpdate extends Event
 {
     /**
@@ -26,20 +29,23 @@ class GuildScheduledEventUpdate extends Event
 
         if ($guild = $this->discord->guilds->get('id', $data->guild_id)) {
             if ($oldScheduledEvent = $guild->guild_scheduled_events->get('id', $data->id)) {
-                $scheduledEvent = clone $oldScheduledEvent;
-                $scheduledEvent->fill((array) $data);
+                // Swap
+                $scheduledEventPart = $oldScheduledEvent;
+                $oldScheduledEvent = clone $oldScheduledEvent;
+
+                $scheduledEventPart->fill((array) $data);
             }
         }
 
         if (! $oldScheduledEvent) {
             /** @var ScheduledEvent */
-            $scheduledEvent = $this->factory->create(ScheduledEvent::class, $data, true);
+            $scheduledEventPart = $this->factory->create(ScheduledEvent::class, $data, true);
         }
 
         if (isset($data->creator)) {
             $this->cacheUser($data->creator);
         }
 
-        $deferred->resolve([$scheduledEvent, $oldScheduledEvent]);
+        $deferred->resolve([$scheduledEventPart, $oldScheduledEvent]);
     }
 }

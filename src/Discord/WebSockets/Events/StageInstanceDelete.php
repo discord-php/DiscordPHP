@@ -15,6 +15,9 @@ use Discord\Parts\Channel\StageInstance;
 use Discord\WebSockets\Event;
 use Discord\Helpers\Deferred;
 
+/**
+ * @see https://discord.com/developers/docs/topics/gateway#stage-instance-delete
+ */
 class StageInstanceDelete extends Event
 {
     /**
@@ -22,20 +25,20 @@ class StageInstanceDelete extends Event
      */
     public function handle(Deferred &$deferred, $data): void
     {
-        $stageInstance = null;
+        $stageInstancePart = null;
 
         if ($guild = $this->discord->guilds->get('id', $data->guild_id)) {
-            if ($stageInstance = $guild->stage_instances->pull($data->id)) {
-                $stageInstance->fill((array) $data);
-                $stageInstance->created = false;
+            if ($stageInstancePart = $guild->stage_instances->pull($data->id)) {
+                $stageInstancePart->fill((array) $data);
+                $stageInstancePart->created = false;
             }
         }
 
-        if (! $stageInstance) {
+        if (! $stageInstancePart) {
             /** @var StageInstance */
-            $stageInstance = $this->factory->create(StageInstance::class, $data);
+            $stageInstancePart = $this->factory->create(StageInstance::class, $data);
         }
 
-        $deferred->resolve($stageInstance);
+        $deferred->resolve($stageInstancePart);
     }
 }

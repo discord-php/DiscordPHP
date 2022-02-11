@@ -15,6 +15,9 @@ use Discord\Parts\WebSockets\VoiceStateUpdate as VoiceStateUpdatePart;
 use Discord\WebSockets\Event;
 use Discord\Helpers\Deferred;
 
+/**
+ * @see https://discord.com/developers/docs/topics/gateway#voice-state-update
+ */
 class VoiceStateUpdate extends Event
 {
     /**

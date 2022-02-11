@@ -16,6 +16,9 @@ use Discord\Parts\Thread\Member;
 use Discord\Parts\Thread\Thread;
 use Discord\WebSockets\Event;
 
+/**
+ * @see https://discord.com/developers/docs/topics/gateway#thread-create
+ */
 class ThreadCreate extends Event
 {
     /**

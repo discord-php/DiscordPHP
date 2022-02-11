@@ -15,6 +15,9 @@ use Discord\Parts\Guild\Role;
 use Discord\WebSockets\Event;
 use Discord\Helpers\Deferred;
 
+/**
+ * @see https://discord.com/developers/docs/topics/gateway#guild-role-update
+ */
 class GuildRoleUpdate extends Event
 {
     /**
@@ -24,18 +27,24 @@ class GuildRoleUpdate extends Event
     {
         $adata = (array) $data->role;
         $adata['guild_id'] = $data->guild_id;
+        $oldRole = null;
 
-        $rolePart = $this->factory->create(Role::class, $adata, true);
+        if ($guild = $this->discord->guilds->get('id', $data->guild_id)) {
+            if ($oldRole = $guild->roles->get('id', $data->role->id)) {
+                // Swap
+                $rolePart = $oldRole;
+                $oldRole = clone $oldRole;
 
-        if ($guild = $this->discord->guilds->get('id', $rolePart->guild_id)) {
-            $old = $guild->roles->get('id', $rolePart->id);
-            $guild->roles->push($rolePart);
-
-            $this->discord->guilds->push($guild);
-        } else {
-            $old = null;
+                $rolePart->fill($adata);
+            }
         }
 
-        $deferred->resolve([$rolePart, $old]);
+        if (! $oldRole) {
+            /** @var Role */
+            $rolePart = $this->factory->create(Role::class, $adata, true);
+            $guild->roles->pushItem($rolePart);
+        }
+
+        $deferred->resolve([$rolePart, $oldRole]);
     }
 }

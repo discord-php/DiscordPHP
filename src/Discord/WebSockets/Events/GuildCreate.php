@@ -24,6 +24,9 @@ use Discord\Http\Endpoint;
 use Discord\Parts\Thread\Member as ThreadMember;
 use Discord\Parts\Thread\Thread;
 
+/**
+ * @see https://discord.com/developers/docs/topics/gateway#guild-create
+ */
 class GuildCreate extends Event
 {
     /**

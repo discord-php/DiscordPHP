@@ -16,6 +16,9 @@ use Discord\WebSockets\Event;
 use Discord\Helpers\Deferred;
 use Discord\Parts\Channel\Channel;
 
+/**
+ * @see https://discord.com/developers/docs/topics/gateway#message-create
+ */
 class MessageCreate extends Event
 {
     /**
@@ -24,26 +27,31 @@ class MessageCreate extends Event
     public function handle(Deferred &$deferred, $data): void
     {
         /** @var Message */
-        $message = $this->factory->create(Message::class, $data, true);
+        $messagePart = $this->factory->create(Message::class, $data, true);
 
         // assume it is a private channel
-        if ($message->channel === null) {
+        if ($messagePart->channel === null) {
+            /** @var Channel */
             $channel = $this->factory->create(Channel::class, [
-                'id' => $message->channel_id,
+                'id' => $messagePart->channel_id,
                 'type' => Channel::TYPE_DM,
-                'last_message_id' => $message->id,
-                'recipients' => [$message->author],
+                'last_message_id' => $messagePart->id,
+                'recipients' => [$messagePart->author],
             ], true);
 
-            $this->discord->private_channels->push($channel);
+            $this->discord->private_channels->pushItem($channel);
         }
 
         if ($this->discord->options['storeMessages']) {
-            if ($channel = $message->channel) {
-                $channel->messages->push($message);
+            if ($channel = $messagePart->channel) {
+                $channel->messages->pushItem($messagePart);
             }
         }
 
-        $deferred->resolve($message);
+        if (isset($data->author) && ! isset($data->webhook_id)) {
+            $this->cacheUser($data->author);
+        }
+
+        $deferred->resolve($messagePart);
     }
 }
