@@ -150,8 +150,8 @@ They can be used to collect short-form or long-form text:
 
 | style                  | constant                     |
 | ---------------------- | ---------------------------- |
-| Single line (short)    | `TextInput::STYLE_SHORT`     |
-| Multi line (paragraph) | `TextInput::STYLE_PARAGRAPH` |
+| Short (single line)    | `TextInput::STYLE_SHORT`     |
+| Paragraph (multi line) | `TextInput::STYLE_PARAGRAPH` |
 
 ### Functions
 
