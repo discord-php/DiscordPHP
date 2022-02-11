@@ -45,7 +45,7 @@ use function React\Promise\reject;
  * @property bool                  $deaf                         Whether the member is deaf.
  * @property bool                  $mute                         Whether the member is mute.
  * @property bool                  $pending                      Whether the user has not yet passed the guild's Membership Screening requirements.
- * @property string|null           $permissions
+ * @property RolePermission|null   $permissions                  Total permissions of the member in the channel, including overwrites, returned when in the interaction object.
  * @property Carbon|null           $communication_disabled_until When the user's timeout will expire and the user will be able to communicate in the guild again, null or a time in the past if the user is not timed out.
  * @property string                $id                           The unique identifier of the member.
  * @property string                $username                     The username of the member.
@@ -76,9 +76,10 @@ class Member extends Part
         'deaf',
         'mute',
         'pending',
+        'permissions',
+        'communication_disabled_until',
         'guild_id',
         'status',
-        'communication_disabled_until',
         'id',
         'activities',
         'client_status',
@@ -576,6 +577,23 @@ class Member extends Part
         }
 
         return Carbon::parse($this->attributes['premium_since']);
+    }
+
+    /**
+     * Returns the permissions attribute.
+     * This is only available from Interaction, use Member::getPermissions() for normal permissions
+     *
+     * @see Member::getPermissions()
+     *
+     * @return RolePermission|null The total calculated permissions, only available from Interaction.
+     */
+    protected function getPermissionsAttribute(): ?RolePermission
+    {
+        if (! isset($this->attributes['permissions'])) {
+            return null;
+        }
+
+        return $this->factory->part(RolePermission::class, ['bitwise' => $this->attributes['permissions']], true);
     }
 
     /**
