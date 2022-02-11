@@ -22,7 +22,7 @@ $channel->sendMessage(MessageBuilder::new()
 
 #### Setting content
 
-Sets the text content of the message. Throws an `InvalidArgumentException` if the content is greater than 2000 characters.
+Sets the text content of the message. Throws an `LengthException` if the content is greater than 2000 characters.
 
 ```php
 $builder->setContent('Hello, world!');
@@ -86,9 +86,31 @@ $builder->clearFiles();
 
 There is no limit on the number of files you can upload, but the whole request must be less than 8MB (including headers and JSON payload).
 
+#### Adding sticker
+
+You can add up to 3 stickers to a message. The function takes `Sticker` object.
+
+```php
+$builder->addSticker($sticker);
+```
+
+To remove a sticker:
+```php
+$builder->removeSticker($sticker);
+```
+
+You can also set the stickers from another array of stickers. Note this will remove the current stickers from the message.
+
+```php
+$stickers = [...];
+$builder->setStickers($stickers);
+```
+
 #### Adding message components
 
-Adds a message component to the message. You can only add `ActionRow` and `SelectMenu` objects. To add buttons, wrap the button in an `ActionRow` object. Throws an `InvalidArgumentException` if the given component is not an `ActionRow` or `SelectMenu`, or if you already have 5 components in the message.
+Adds a message component to the message. You can only add `ActionRow` and `SelectMenu` objects. To add buttons, wrap the button in an `ActionRow` object.
+Throws an `InvalidArgumentException` if the given component is not an `ActionRow` or `SelectMenu`
+Throws an `OverflowException` if you already have 5 components in the message.
 
 ```php
 $component = SelectMenu::new();
