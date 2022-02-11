@@ -342,7 +342,7 @@ class TextInput extends Component
             $content['required'] = true;
         }
 
-        if (isset($value)) {
+        if (isset($this->value)) {
             $content['value'] = $this->value;
         }
 
