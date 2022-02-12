@@ -31,7 +31,7 @@ use React\Promise\ExtendedPromiseInterface;
  * @property string                   $name               1-32 character name of the command.
  * @property string                   $description        1-100 character description for CHAT_INPUT commands, empty string for USER and MESSAGE commands.
  * @property Collection|Option[]|null $options            The parameters for the command, max 25. Only for Slash command (CHAT_INPUT).
- * @property boolean                  $default_permission Whether the command is enabled by default when the app is added to a guild.
+ * @property bool                     $default_permission Whether the command is enabled by default when the app is added to a guild.
  * @property string                   $version            Autoincrementing version identifier updated during substantial record changes.
  * @property OverwriteRepository      $overwrites         Permission overwrites.
  */
@@ -58,14 +58,14 @@ class Command extends Part
         'description',
         'options',
         'default_permission',
-        'version'
+        'version',
     ];
 
     /**
      * @inheritdoc
      */
     protected $repositories = [
-        'overwrites' => OverwriteRepository::class
+        'overwrites' => OverwriteRepository::class,
     ];
 
     /**

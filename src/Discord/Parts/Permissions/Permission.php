@@ -30,7 +30,7 @@ abstract class Permission extends Part
 {
     /**
      * Array of permissions that only apply to stage channels.
-     * i.e. indicated S in documentation
+     * i.e. indicated S in documentation.
      *
      * @var array
      */
@@ -45,7 +45,7 @@ abstract class Permission extends Part
 
     /**
      * Array of permissions that only apply to voice channels.
-     * i.e. indicated V in documentation
+     * i.e. indicated V in documentation.
      *
      * @var array
      */
@@ -64,7 +64,7 @@ abstract class Permission extends Part
 
     /**
      * Array of permissions that only apply to text channels.
-     * i.e. indicated T in documentation
+     * i.e. indicated T in documentation.
      *
      * @var array
      */
@@ -89,7 +89,7 @@ abstract class Permission extends Part
 
     /**
      * Array of permissions that can only be applied to roles.
-     * i.e. indicated empty in documentation
+     * i.e. indicated empty in documentation.
      *
      * @var array
      */
@@ -108,7 +108,7 @@ abstract class Permission extends Part
 
     /**
      * Array of permissions for all roles.
-     * i.e. indicated T,V,S in documentation
+     * i.e. indicated T,V,S in documentation.
      *
      * @var array
      */

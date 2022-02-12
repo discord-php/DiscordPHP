@@ -528,7 +528,7 @@ class Interaction extends Part
      * @param string            $custom_id  A developer-defined identifier for the component, max 100 characters
      * @param array|Component[] $components Between 1 and 5 (inclusive) components that make up the modal contained in Action Row
      * @param callable|null     $submit     The function to call once modal is submitted.
-     * 
+     *
      * @throws \LogicException
      *
      * @return ExtendedPromiseInterface
@@ -544,7 +544,7 @@ class Interaction extends Part
             'data' => [
                 'title' => $title,
                 'custom_id' => $custom_id,
-                'components' => $components
+                'components' => $components,
             ],
         ])->then(function () use ($custom_id, $submit) {
             if ($submit) {

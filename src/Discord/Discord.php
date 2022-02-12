@@ -1064,13 +1064,13 @@ class Discord
     /**
      * Updates the clients presence.
      *
-     * @param  Activity|null $activity The current client activity, or null.
-     *                                 Note: The activity type _cannot_ be custom, and the only valid fields are `name`, `type` and `url`.
-     * @param  bool          $idle     Whether the client is idle.
-     * @param  string        $status   The current status of the client.
-     *                                 Must be one of the following:
-     *                                 online, dnd, idle, invisible, offline
-     * @param  bool          $afk      Whether the client is AFK.
+     * @param Activity|null $activity The current client activity, or null.
+     *                                Note: The activity type _cannot_ be custom, and the only valid fields are `name`, `type` and `url`.
+     * @param bool          $idle     Whether the client is idle.
+     * @param string        $status   The current status of the client.
+     *                                Must be one of the following:
+     *                                online, dnd, idle, invisible, offline
+     * @param bool          $afk      Whether the client is AFK.
      *
      * @throws \UnexpectedValueException
      */
@@ -1090,7 +1090,7 @@ class Discord
 
         $allowed = ['online', 'dnd', 'idle', 'invisible', 'offline'];
 
-		if (! in_array($status, $allowed)) {
+        if (! in_array($status, $allowed)) {
             $status = 'online';
         }
 
@@ -1553,6 +1553,7 @@ class Discord
         if (! isset($this->application_commands[$baseCommand])) {
             $this->listenCommand($baseCommand);
         }
+
         return $this->application_commands[$baseCommand]->addSubCommand($name, $callback, $autocomplete_callback);
     }
 

@@ -17,7 +17,7 @@ use Discord\Parts\Part;
 use React\Promise\ExtendedPromiseInterface;
 
 /**
- * A Widget of a Guild
+ * A Widget of a Guild.
  *
  * @see https://discord.com/developers/docs/resources/guild#get-guild-widget-object
  *
@@ -41,7 +41,7 @@ class Widget extends Part
         'instant_invite',
         'channels',
         'members',
-        'presence_count'
+        'presence_count',
     ];
 
     public const STYLE = [
@@ -70,7 +70,7 @@ class Widget extends Part
     }
 
     /**
-     * Returns the guild attribute
+     * Returns the guild attribute.
      *
      * @return Guild|null
      */
@@ -94,6 +94,6 @@ class Widget extends Part
             $endpoint->addQuery('style', $style);
         }
 
-        return Http::BASE_URL . '/' . $endpoint;
+        return Http::BASE_URL.'/'.$endpoint;
     }
 }

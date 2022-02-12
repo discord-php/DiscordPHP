@@ -15,7 +15,7 @@ use Discord\Helpers\Collection;
 use Discord\Parts\Part;
 
 /**
- * A Welcome Screen of a Guild
+ * A Welcome Screen of a Guild.
  *
  * @see https://discord.com/developers/docs/resources/guild#welcome-screen-object-welcome-screen-structure
  *
@@ -30,7 +30,7 @@ class WelcomeScreen extends Part
     protected $fillable = ['description', 'welcome_channels'];
 
     /**
-     * Returns the Welcome Channels of the Welcome Screen
+     * Returns the Welcome Channels of the Welcome Screen.
      *
      * @return Collection|WelcomeChannel[] The channels of welcome screen.
      */

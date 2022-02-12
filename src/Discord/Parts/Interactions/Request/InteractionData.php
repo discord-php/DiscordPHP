@@ -48,7 +48,7 @@ class InteractionData extends Part
         'values',
         'target_id',
         'components',
-        'guild_id'
+        'guild_id',
     ];
 
     /**

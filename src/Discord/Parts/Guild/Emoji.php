@@ -37,15 +37,15 @@ class Emoji extends Part
      * @inheritdoc
      */
     protected $fillable = [
-        'id', 
-        'name', 
-        'roles', 
-        'user', 
-        'require_colons', 
-        'managed', 
-        'animated', 
-        'available', 
-        'guild_id'
+        'id',
+        'name',
+        'roles',
+        'user',
+        'require_colons',
+        'managed',
+        'animated',
+        'available',
+        'guild_id',
     ];
 
     /**

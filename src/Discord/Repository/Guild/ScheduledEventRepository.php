@@ -47,12 +47,14 @@ class ScheduledEventRepository extends AbstractRepository
 
     /**
      * @inheritdoc
-     * 
+     *
      * @param bool $with_user_count Whether to include number of users subscribed to each event
      */
     public function fetch(string $id, bool $fresh = false, bool $with_user_count = false): ExtendedPromiseInterface
     {
-        if (! $with_user_count) return parent::fetch($id, $fresh);
+        if (! $with_user_count) {
+            return parent::fetch($id, $fresh);
+        }
 
         if (! $fresh && $part = $this->get($this->discrim, $id)) {
             if (isset($part->user_count)) {

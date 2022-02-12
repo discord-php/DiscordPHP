@@ -15,7 +15,7 @@ use Discord\Helpers\Collection;
 use Discord\Parts\Part;
 
 /**
- * Guild Application Command Permissions Overwrite Class
+ * Guild Application Command Permissions Overwrite Class.
  *
  * @see https://discord.com/developers/docs/interactions/application-commands#application-command-permissions-object-guild-application-command-permissions-structure
  *

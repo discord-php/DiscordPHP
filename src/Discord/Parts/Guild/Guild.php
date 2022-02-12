@@ -549,7 +549,7 @@ class Guild extends Part
      *
      * @see https://discord.com/developers/docs/resources/emoji#create-guild-emoji
      *
-     * @param array $options        An array of options.
+     * @param array       $options  An array of options.
      *                              name => name of the emoji
      *                              image => the 128x128 emoji image
      *                              roles => roles allowed to use this emoji
@@ -583,7 +583,9 @@ class Guild extends Part
             }
 
             $extension = strtolower(pathinfo($filepath, PATHINFO_EXTENSION));
-            if ($extension == 'jpg') $extension = 'jpeg';
+            if ($extension == 'jpg') {
+                $extension = 'jpeg';
+            }
             $contents = file_get_contents($filepath);
 
             $options['image'] = "data:image/{$extension};base64,".base64_encode($contents);
@@ -837,11 +839,11 @@ class Guild extends Part
      *
      * @see https://discord.com/developers/docs/resources/guild#get-guild-prune-count
      *
-     * @param array $options An array of options.
-     *                       days => number of days to count prune for (1-30)
-     *                       compute_prune_count => whether 'pruned' is returned, discouraged for large guilds
-     *                       include_roles => role id(s) to include
-     * @param string $reason Reason for Audit Log.
+     * @param array  $options An array of options.
+     *                        days => number of days to count prune for (1-30)
+     *                        compute_prune_count => whether 'pruned' is returned, discouraged for large guilds
+     *                        include_roles => role id(s) to include
+     * @param string $reason  Reason for Audit Log.
      *
      * @return ExtendedPromiseInterface<?int> The number of members that were removed in the prune operation.
      */
@@ -925,7 +927,7 @@ class Guild extends Part
         $resolver->setDefined([
             'enabled',
             'welcome_channels',
-            'description'
+            'description',
         ])
         ->setAllowedTypes('enabled', 'string')
         ->setAllowedTypes('welcome_channels', 'array')
@@ -1025,7 +1027,7 @@ class Guild extends Part
         });
 
         if (! $channel) {
-            return reject(new \RuntimeException("No channels found to create an Invite to the specified guild."));
+            return reject(new \RuntimeException('No channels found to create an Invite to the specified guild.'));
         }
 
         return $channel->createInvite($args);

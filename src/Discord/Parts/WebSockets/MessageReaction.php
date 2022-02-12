@@ -215,7 +215,7 @@ class MessageReaction extends Part
     }
 
     /**
-     * Delete this reaction
+     * Delete this reaction.
      *
      * @see Message::deleteReaction()
      *

@@ -17,7 +17,7 @@ use Discord\Parts\Part;
 use Discord\Parts\User\User;
 
 /**
- * An Integration is a guild integrations for Twitch, Youtube, Bot and Apps
+ * An Integration is a guild integrations for Twitch, Youtube, Bot and Apps.
  *
  * @see https://discord.com/developers/docs/resources/guild#integration-object
  *
@@ -115,6 +115,7 @@ class Integration extends Part
         }
 
         $application = $this->factory->part(Application::class, (array) $this->attributes['application'], true);
+
         return $application;
     }
 

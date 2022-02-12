@@ -75,7 +75,7 @@ class Role extends Part
     /**
      * Sets the permissions attribute.
      *
-     * @param  RolePermission|int $permission The permissions to set.
+     * @param RolePermission|int $permission The permissions to set.
      *
      * @throws \Exception
      */

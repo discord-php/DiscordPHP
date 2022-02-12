@@ -14,7 +14,6 @@ namespace Discord\Builders;
 use Discord\Builders\Components\ActionRow;
 use Discord\Builders\Components\Component;
 use Discord\Builders\Components\SelectMenu;
-use Discord\Builders\Components\TextInput;
 use Discord\Exceptions\FileNotFoundException;
 use Discord\Helpers\Multipart;
 use Discord\Http\Exceptions\RequestFailedException;
@@ -89,7 +88,7 @@ class MessageBuilder implements JsonSerializable
     private $allowed_mentions;
 
     /**
-     * IDs of up to 3 stickers in the server to send in the message
+     * IDs of up to 3 stickers in the server to send in the message.
      *
      * @var array|null
      */

@@ -45,14 +45,14 @@ class TextInput extends Component
     private $label;
 
     /**
-     * Minimum input length for a text input, min 0, max 4000
+     * Minimum input length for a text input, min 0, max 4000.
      *
      * @var int|null
      */
     private $min_length;
 
     /**
-     * Maximum input length for a text input, min 1, max 4000
+     * Maximum input length for a text input, min 1, max 4000.
      *
      * @var int|null
      */
@@ -66,7 +66,7 @@ class TextInput extends Component
     private $required = false;
 
     /**
-     * Pre-filled value for text input. Max 4000 characters
+     * Pre-filled value for text input. Max 4000 characters.
      *
      * @var string|null
      */
@@ -108,7 +108,7 @@ class TextInput extends Component
     }
 
     /**
-     * Sets the custom ID for the text input
+     * Sets the custom ID for the text input.
      *
      * @param string $custom_id
      *

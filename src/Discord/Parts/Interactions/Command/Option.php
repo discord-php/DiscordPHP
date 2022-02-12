@@ -59,7 +59,7 @@ class Option extends Part
         'channel_types',
         'min_value',
         'max_value',
-        'autocomplete'
+        'autocomplete',
     ];
 
     /**
@@ -316,7 +316,7 @@ class Option extends Part
     public function setAutoComplete(bool $autocomplete): self
     {
         if ($autocomplete) {
-            if (!empty($this->attributes['choices'])) {
+            if (! empty($this->attributes['choices'])) {
                 throw new \InvalidArgumentException('Autocomplete may not be set to true if choices are present.');
             }
 

@@ -16,7 +16,7 @@ use Discord\Parts\Guild\Emoji;
 use function Discord\poly_strlen;
 
 /**
- * Option for select menu component
+ * Option for select menu component.
  *
  * @see https://discord.com/developers/docs/interactions/message-components#select-menu-object-select-option-structure
  */

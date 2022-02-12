@@ -250,8 +250,8 @@ function normalizePartId($id_field = 'id')
  * _Italics_, **Bold**, __Underline__, ~~Strikethrough~~, ||spoiler||
  * `Code`, ```Code block```, > Quotes, >>> Block quotes
  * #Channel @User
- * A backslash will be added before the each formatting symbol
- * 
+ * A backslash will be added before the each formatting symbol.
+ *
  * @return string the escaped string unformatted as plain text
  */
 function escapeMarkdown(string $text): string

@@ -14,8 +14,8 @@ namespace Discord\Parts\Interactions\Command;
 use Discord\Parts\Part;
 
 /**
- * Application Command Permissions Class
- * 
+ * Application Command Permissions Class.
+ *
  * @see https://discord.com/developers/docs/interactions/application-commands#application-command-permissions-object-application-command-permissions-structure
  *
  * @property string $id         The id of the role or user
