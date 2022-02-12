@@ -183,7 +183,7 @@ $discord->on(Event::THREAD_CREATE, function (Thread $thread, Discord $discord) {
 Called with a `Thread` object when a thread is updated.
 
 ```php
-$discord->on(Event::THREAD_UPDATE, function (?Thread $thread, Discord $discord) {
+$discord->on(Event::THREAD_UPDATE, function (Thread $thread, Discord $discord, ?Thread $oldThread) {
     // ...
 });
 ```
@@ -203,7 +203,7 @@ $discord->on(Event::THREAD_DELETE, function (?Thread $oldthread, Discord $discor
 Called when list of threads are synced.
 
 ```php
-$discord->on(Event::THREAD_LIST_SYNC, function (Discord $discord) {
+$discord->on(Event::THREAD_LIST_SYNC, function (Collection $threads, Discord $discord) {
     // ...
 });
 ```
