@@ -15,6 +15,17 @@ This release contains breaking changes regarding messages.
 - Added [guild feature flags](https://github.com/discord-php/DiscordPHP/blob/28d741c47e81f9957a3b0d92c2f187d81d26c9c8/src/Discord/Parts/Guild/Guild.php#L75-L95).
 - Removed `premium_since` attribute from the `PresenceUpdate` object.
     - This would have been null since v6 anyway.
+- `$message->author` is now only return an `User` object and no longer return a `Member` object. `$message->user` is removed in favour of `$message->author`
+- `Message::stickers` is now `Message::sticker_items`
+- Deprecated old permission names: (#661)
+  - `use_slash_commands` is now `use_application_commands`
+  - `use_public_threads` is now `create_public_threads`
+  - `use_private_threads` is now `create_private_threads`
+  - `manage_emojis` is now `manage_emojis_and_stickers`
+- `Guild::region` is deprecated and may be removed in future release
+- Sticker `use Discord\Parts\Channel\Sticker` is now `use Discord\Parts\Guild\Sticker`
+- Invite `use Discord\Parts\Guild\Invite` is now `use Discord\Parts\Channel\Invite`
+- Some event handler arguments have been updated, check out the documentation.
 
 ## Version 6.0.2
 
