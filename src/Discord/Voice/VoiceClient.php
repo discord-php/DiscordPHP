@@ -785,7 +785,7 @@ class VoiceClient extends EventEmitter
                     foreach ($process->pipes as $pipe) {
                         $pipe->close();
                     }
-                    $process->terminate(9);
+                    $process->terminate(15);
                 }
 
                 $this->reset();
