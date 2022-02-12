@@ -24,6 +24,14 @@ class InviteDelete extends Event
      */
     public function handle(Deferred &$deferred, $data): void
     {
-        $deferred->resolve($data);
+        $invitePart = null;
+
+        if ($guild = $this->discord->guilds->get('id', $data->guild_id)) {
+            if ($channel = $guild->channels->get('id', $data->channel_id)) {
+                $invitePart = $channel->invites->pull($data->code);
+            }
+        }
+
+        $deferred->resolve($invitePart ?? $data);
     }
 }
