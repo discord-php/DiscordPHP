@@ -148,7 +148,7 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Request/Resolved.php"><a href="files/src-discord-parts-interactions-request-resolved.html"><abbr title="src/Discord/Parts/Interactions/Request/Resolved.php">Resolved.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">35</span>
+    <span class="phpdocumentor-element-found-in__line">37</span>
 
     </aside>
 
@@ -183,6 +183,13 @@
 
 <dl class="phpdocumentor-table-of-contents">
                     <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a href="classes/Discord-Parts-Interactions-Request-Resolved.html#property_attachments">$attachments</a>
+    <span>
+                        &nbsp;: <a href="classes/Discord-Helpers-Collection.html"><abbr title="\Discord\Helpers\Collection">Collection</abbr></a>|array&lt;string|int, <a href="classes/Discord-Parts-Channel-Attachment.html"><abbr title="\Discord\Parts\Channel\Attachment">Attachment</abbr></a>&gt;|null            </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
     <a href="classes/Discord-Parts-Interactions-Request-Resolved.html#property_channels">$channels</a>
     <span>
                         &nbsp;: <a href="classes/Discord-Helpers-Collection.html"><abbr title="\Discord\Helpers\Collection">Collection</abbr></a>|array&lt;string|int, <a href="classes/Discord-Parts-Channel-Channel.html"><abbr title="\Discord\Parts\Channel\Channel">Channel</abbr></a>&gt;|array&lt;string|int, <a href="classes/Discord-Parts-Thread-Thread.html"><abbr title="\Discord\Parts\Thread\Thread">Thread</abbr></a>&gt;|null            </span>
@@ -467,6 +474,13 @@ JSON. Used for JsonSerializable.</dd>
 <dd>Called after the part has been constructed.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
+    <a href="classes/Discord-Parts-Interactions-Request-Resolved.html#method_getAttachmentsAttribute">getAttachmentsAttribute()</a>
+    <span>
+                                &nbsp;: <a href="classes/Discord-Helpers-Collection.html"><abbr title="\Discord\Helpers\Collection">Collection</abbr></a>|array&lt;string|int, <a href="classes/Discord-Parts-Channel-Attachment.html"><abbr title="\Discord\Parts\Channel\Attachment">Attachment</abbr></a>&gt;|null    </span>
+</dt>
+<dd>Returns a collection of resolved attachments.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -protected">
     <a href="classes/Discord-Parts-Interactions-Request-Resolved.html#method_getChannelsAttribute">getChannelsAttribute()</a>
     <span>
                                 &nbsp;: <a href="classes/Discord-Helpers-Collection.html"><abbr title="\Discord\Helpers\Collection">Collection</abbr></a>|array&lt;string|int, <a href="classes/Discord-Parts-Channel-Channel.html"><abbr title="\Discord\Parts\Channel\Channel">Channel</abbr></a>&gt;|array&lt;string|int, <a href="classes/Discord-Parts-Thread-Thread.html"><abbr title="\Discord\Parts\Thread\Thread">Thread</abbr></a>&gt;|null    </span>
@@ -534,6 +548,41 @@ JSON. Used for JsonSerializable.</dd>
             Properties
             <a href="classes/Discord-Parts-Interactions-Request-Resolved.html#properties" class="headerlink"><i class="fas fa-link"></i></a>
         </h3>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="property_attachments">
+        $attachments
+        <a href="classes/Discord-Parts-Interactions-Request-Resolved.html#property_attachments" class="headerlink"><i class="fas fa-link"></i></a>
+        <span class="phpdocumentor-element__modifiers">
+                                </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Request/Resolved.php"><a href="files/src-discord-parts-interactions-request-resolved.html"><abbr title="src/Discord/Parts/Interactions/Request/Resolved.php">Resolved.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">0</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type"><a href="classes/Discord-Helpers-Collection.html"><abbr title="\Discord\Helpers\Collection">Collection</abbr></a>|array&lt;string|int, <a href="classes/Discord-Parts-Channel-Attachment.html"><abbr title="\Discord\Parts\Channel\Attachment">Attachment</abbr></a>&gt;|null</span>
+    <span class="phpdocumentor-signature__name">$attachments</span>
+    </code>
+
+        <section class="phpdocumentor-description"><p>The ids and partial Attachment objects.</p>
+</section>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
                     <article
         class="
             phpdocumentor-element
@@ -935,7 +984,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Request/Resolved.php"><a href="files/src-discord-parts-interactions-request-resolved.html"><abbr title="src/Discord/Parts/Interactions/Request/Resolved.php">Resolved.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">40</span>
+    <span class="phpdocumentor-element-found-in__line">42</span>
 
     </aside>
 
@@ -945,7 +994,7 @@ JSON. Used for JsonSerializable.</dd>
     <span class="phpdocumentor-signature__visibility">protected</span>
         <span class="phpdocumentor-signature__type">array&lt;string|int, mixed&gt;</span>
     <span class="phpdocumentor-signature__name">$fillable</span>
-     = <span class="phpdocumentor-signature__default-value">[&#039;users&#039;, &#039;members&#039;, &#039;roles&#039;, &#039;channels&#039;, &#039;messages&#039;, &#039;guild_id&#039;]</span></code>
+     = <span class="phpdocumentor-signature__default-value">[&#039;users&#039;, &#039;members&#039;, &#039;roles&#039;, &#039;channels&#039;, &#039;messages&#039;, &#039;attachments&#039;, &#039;guild_id&#039;]</span></code>
 
     
         <section class="phpdocumentor-description"><p>The array of attributes that can be mass-assigned.</p>
@@ -2278,6 +2327,41 @@ JSON. Used for JsonSerializable.</p>
             -protected
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_getAttachmentsAttribute">
+        getAttachmentsAttribute()
+        <a href="classes/Discord-Parts-Interactions-Request-Resolved.html#method_getAttachmentsAttribute" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Request/Resolved.php"><a href="files/src-discord-parts-interactions-request-resolved.html"><abbr title="src/Discord/Parts/Interactions/Request/Resolved.php">Resolved.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">196</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Returns a collection of resolved attachments.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">protected</span>
+                <span class="phpdocumentor-signature__name">getAttachmentsAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Helpers-Collection.html"><abbr title="\Discord\Helpers\Collection">Collection</abbr></a>|array&lt;string|int, <a href="classes/Discord-Parts-Channel-Attachment.html"><abbr title="\Discord\Parts\Channel\Attachment">Attachment</abbr></a>&gt;|null</span></code>
+
+    
+    
+    
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Helpers-Collection.html"><abbr title="\Discord\Helpers\Collection">Collection</abbr></a>|array&lt;string|int, <a href="classes/Discord-Parts-Channel-Attachment.html"><abbr title="\Discord\Parts\Channel\Attachment">Attachment</abbr></a>&gt;|null</span>
+            &mdash;
+            <section class="phpdocumentor-description"><p>Map of Snowflakes to attachments objects</p>
+</section>
+
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -protected
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_getChannelsAttribute">
         getChannelsAttribute()
         <a href="classes/Discord-Parts-Interactions-Request-Resolved.html#method_getChannelsAttribute" class="headerlink"><i class="fas fa-link"></i></a>
@@ -2285,7 +2369,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Request/Resolved.php"><a href="files/src-discord-parts-interactions-request-resolved.html"><abbr title="src/Discord/Parts/Interactions/Request/Resolved.php">Resolved.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">133</span>
+    <span class="phpdocumentor-element-found-in__line">134</span>
 
     </aside>
 
@@ -2322,7 +2406,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Request/Resolved.php"><a href="files/src-discord-parts-interactions-request-resolved.html"><abbr title="src/Discord/Parts/Interactions/Request/Resolved.php">Resolved.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">73</span>
+    <span class="phpdocumentor-element-found-in__line">75</span>
 
     </aside>
 
@@ -2359,7 +2443,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Request/Resolved.php"><a href="files/src-discord-parts-interactions-request-resolved.html"><abbr title="src/Discord/Parts/Interactions/Request/Resolved.php">Resolved.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">165</span>
+    <span class="phpdocumentor-element-found-in__line">166</span>
 
     </aside>
 
@@ -2394,7 +2478,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Request/Resolved.php"><a href="files/src-discord-parts-interactions-request-resolved.html"><abbr title="src/Discord/Parts/Interactions/Request/Resolved.php">Resolved.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">102</span>
+    <span class="phpdocumentor-element-found-in__line">104</span>
 
     </aside>
 
@@ -2429,7 +2513,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Request/Resolved.php"><a href="files/src-discord-parts-interactions-request-resolved.html"><abbr title="src/Discord/Parts/Interactions/Request/Resolved.php">Resolved.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">47</span>
+    <span class="phpdocumentor-element-found-in__line">49</span>
 
     </aside>
 

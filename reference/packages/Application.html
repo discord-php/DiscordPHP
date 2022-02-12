@@ -141,15 +141,17 @@ by returning an extended promise.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Discord-Builders-CommandBuilder.html"><abbr title="\Discord\Builders\CommandBuilder">CommandBuilder</abbr></a></dt>
         <dd>Helper class used to build application commands.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Discord-Builders-Components-ActionRow.html"><abbr title="\Discord\Builders\Components\ActionRow">ActionRow</abbr></a></dt>
-        <dd></dd>
+        <dd>An Action Row is a non-interactive container component for other types of components.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Discord-Builders-Components-Button.html"><abbr title="\Discord\Builders\Components\Button">Button</abbr></a></dt>
-        <dd></dd>
+        <dd>Buttons are interactive components that render on messages.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Discord-Builders-Components-Component.html"><abbr title="\Discord\Builders\Components\Component">Component</abbr></a></dt>
-        <dd></dd>
+        <dd>Components are a new field on the message object, so you can use them whether you&#039;re sending messages or responding to a slash command or other interaction.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Discord-Builders-Components-Option.html"><abbr title="\Discord\Builders\Components\Option">Option</abbr></a></dt>
-        <dd></dd>
+        <dd>Option for select menu component.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Discord-Builders-Components-SelectMenu.html"><abbr title="\Discord\Builders\Components\SelectMenu">SelectMenu</abbr></a></dt>
-        <dd></dd>
+        <dd>Select menus are another interactive component that renders on messages.</dd>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Discord-Builders-Components-TextInput.html"><abbr title="\Discord\Builders\Components\TextInput">TextInput</abbr></a></dt>
+        <dd>Text inputs are an interactive component that render on modals. They can be used to collect short-form or long-form text.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Discord-Builders-MessageBuilder.html"><abbr title="\Discord\Builders\MessageBuilder">MessageBuilder</abbr></a></dt>
         <dd>Helper class used to build messages.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Discord-CommandClient-Command.html"><abbr title="\Discord\CommandClient\Command">Command</abbr></a></dt>
@@ -182,7 +184,7 @@ was specified.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Discord-Factory-Factory.html"><abbr title="\Discord\Factory\Factory">Factory</abbr></a></dt>
         <dd>Exposes an interface to build part objects without the other requirements.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Discord-Helpers-Bitwise.html"><abbr title="\Discord\Helpers\Bitwise">Bitwise</abbr></a></dt>
-        <dd>Polyfill to handle bitwise operation in 32 bit php using ext-gmp</dd>
+        <dd>Polyfill to handle bitwise operation in 32 bit php using ext-gmp.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Discord-Helpers-Buffer.html"><abbr title="\Discord\Helpers\Buffer">Buffer</abbr></a></dt>
         <dd></dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Discord-Helpers-Collection.html"><abbr title="\Discord\Helpers\Collection">Collection</abbr></a></dt>
@@ -195,8 +197,12 @@ was specified.</dd>
         <dd>RegisteredCommand represents a command that has been registered
 with the Discord servers and has a handler to handle when the
 command is triggered.</dd>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Discord-Parts-Channel-Attachment.html"><abbr title="\Discord\Parts\Channel\Attachment">Attachment</abbr></a></dt>
+        <dd>A message attachment.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Discord-Parts-Channel-Channel.html"><abbr title="\Discord\Parts\Channel\Channel">Channel</abbr></a></dt>
         <dd>A Channel can be either a text or voice channel on a Discord guild.</dd>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Discord-Parts-Channel-Invite.html"><abbr title="\Discord\Parts\Channel\Invite">Invite</abbr></a></dt>
+        <dd>An invite to a Channel and Guild.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Discord-Parts-Channel-Message.html"><abbr title="\Discord\Parts\Channel\Message">Message</abbr></a></dt>
         <dd>A message which is posted to a Discord text channel.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Discord-Parts-Channel-Overwrite.html"><abbr title="\Discord\Parts\Channel\Overwrite">Overwrite</abbr></a></dt>
@@ -234,9 +240,7 @@ command is triggered.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Discord-Parts-Guild-GuildTemplate.html"><abbr title="\Discord\Parts\Guild\GuildTemplate">GuildTemplate</abbr></a></dt>
         <dd>A Guild Template is a code that when used, creates a guild based on a snapshot of an existing guild.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Discord-Parts-Guild-Integration.html"><abbr title="\Discord\Parts\Guild\Integration">Integration</abbr></a></dt>
-        <dd>An Integration is a guild integrations for Twitch, Youtube, Bot and Apps</dd>
-            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Discord-Parts-Guild-Invite.html"><abbr title="\Discord\Parts\Guild\Invite">Invite</abbr></a></dt>
-        <dd>An invite to a Channel and Guild.</dd>
+        <dd>An Integration is a guild integrations for Twitch, Youtube, Bot and Apps.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Discord-Parts-Guild-Role.html"><abbr title="\Discord\Parts\Guild\Role">Role</abbr></a></dt>
         <dd>A role defines permissions for the guild. Members can be added to the role. The role belongs to a guild.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Discord-Parts-Guild-ScheduledEvent.html"><abbr title="\Discord\Parts\Guild\ScheduledEvent">ScheduledEvent</abbr></a></dt>
@@ -244,11 +248,11 @@ command is triggered.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Discord-Parts-Guild-Sticker.html"><abbr title="\Discord\Parts\Guild\Sticker">Sticker</abbr></a></dt>
         <dd>A sticker that can be sent in a Discord message.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Discord-Parts-Guild-WelcomeChannel.html"><abbr title="\Discord\Parts\Guild\WelcomeChannel">WelcomeChannel</abbr></a></dt>
-        <dd>A Welcome Channel of a Guild</dd>
+        <dd>A Welcome Channel of a Guild.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Discord-Parts-Guild-WelcomeScreen.html"><abbr title="\Discord\Parts\Guild\WelcomeScreen">WelcomeScreen</abbr></a></dt>
-        <dd>A Welcome Screen of a Guild</dd>
+        <dd>A Welcome Screen of a Guild.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Discord-Parts-Guild-Widget.html"><abbr title="\Discord\Parts\Guild\Widget">Widget</abbr></a></dt>
-        <dd>A Widget of a Guild</dd>
+        <dd>A Widget of a Guild.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Discord-Parts-Interactions-Command-Choice.html"><abbr title="\Discord\Parts\Interactions\Command\Choice">Choice</abbr></a></dt>
         <dd>Choice represents a choice that can be given to a command.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Discord-Parts-Interactions-Command-Command.html"><abbr title="\Discord\Parts\Interactions\Command\Command">Command</abbr></a></dt>
@@ -256,11 +260,13 @@ command is triggered.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Discord-Parts-Interactions-Command-Option.html"><abbr title="\Discord\Parts\Interactions\Command\Option">Option</abbr></a></dt>
         <dd>Option represents an array of options that can be given to a command.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Discord-Parts-Interactions-Command-Overwrite.html"><abbr title="\Discord\Parts\Interactions\Command\Overwrite">Overwrite</abbr></a></dt>
-        <dd>Guild Application Command Permissions Overwrite Class</dd>
+        <dd>Guild Application Command Permissions Overwrite Class.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Discord-Parts-Interactions-Command-Permission.html"><abbr title="\Discord\Parts\Interactions\Command\Permission">Permission</abbr></a></dt>
-        <dd>Application Command Permissions Class</dd>
+        <dd>Application Command Permissions Class.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Discord-Parts-Interactions-Interaction.html"><abbr title="\Discord\Parts\Interactions\Interaction">Interaction</abbr></a></dt>
         <dd>Represents an interaction from Discord.</dd>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Discord-Parts-Interactions-Request-Component.html"><abbr title="\Discord\Parts\Interactions\Request\Component">Component</abbr></a></dt>
+        <dd>Represents a component received with a message or interaction.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Discord-Parts-Interactions-Request-InteractionData.html"><abbr title="\Discord\Parts\Interactions\Request\InteractionData">InteractionData</abbr></a></dt>
         <dd>Represents the data associated with an interaction.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Discord-Parts-Interactions-Request-Option.html"><abbr title="\Discord\Parts\Interactions\Request\Option">Option</abbr></a></dt>
@@ -346,6 +352,8 @@ information such as when the event was fired and then channel it was fired in.</
         <dd>Contains stickers that belong to guilds.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Discord-Repository-GuildRepository.html"><abbr title="\Discord\Repository\GuildRepository">GuildRepository</abbr></a></dt>
         <dd>Contains guilds that the user is in.</dd>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Discord-Repository-Interaction-ComponentRepository.html"><abbr title="\Discord\Repository\Interaction\ComponentRepository">ComponentRepository</abbr></a></dt>
+        <dd>Repositories provide a way to store and update parts on the Discord server.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Discord-Repository-Interaction-GlobalCommandRepository.html"><abbr title="\Discord\Repository\Interaction\GlobalCommandRepository">GlobalCommandRepository</abbr></a></dt>
         <dd>Contains application global commands.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Discord-Repository-Interaction-OptionRepository.html"><abbr title="\Discord\Repository\Interaction\OptionRepository">OptionRepository</abbr></a></dt>
@@ -606,7 +614,7 @@ was generated.</dd>
 _Italics_, **Bold**, __Underline__, ~~Strikethrough~~, ||spoiler||
 `Code`, ```Code block```, &gt; Quotes, &gt;&gt;&gt; Block quotes
 #Channel @User
-A backslash will be added before the each formatting symbol</dd>
+A backslash will be added before the each formatting symbol.</dd>
 
     </dl>
 
@@ -980,7 +988,7 @@ was generated.</p>
 _Italics_, **Bold**, __Underline__, ~~Strikethrough~~, ||spoiler||
 `Code`, ```Code block```, &gt; Quotes, &gt;&gt;&gt; Block quotes
 #Channel @User
-A backslash will be added before the each formatting symbol</p>
+A backslash will be added before the each formatting symbol.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility"></span>

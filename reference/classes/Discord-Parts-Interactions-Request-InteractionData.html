@@ -148,7 +148,7 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Request/InteractionData.php"><a href="files/src-discord-parts-interactions-request-interactiondata.html"><abbr title="src/Discord/Parts/Interactions/Request/InteractionData.php">InteractionData.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">33</span>
+    <span class="phpdocumentor-element-found-in__line">35</span>
 
     </aside>
 
@@ -186,6 +186,13 @@
     <a href="classes/Discord-Parts-Interactions-Request-InteractionData.html#property_component_type">$component_type</a>
     <span>
                         &nbsp;: int|null            </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a href="classes/Discord-Parts-Interactions-Request-InteractionData.html#property_components">$components</a>
+    <span>
+                        &nbsp;: <a href="classes/Discord-Repository-Interaction-ComponentRepository.html"><abbr title="\Discord\Repository\Interaction\ComponentRepository">ComponentRepository</abbr></a>            </span>
 </dt>
 <dd></dd>
 
@@ -337,7 +344,7 @@
 <dd>An array of repositories.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a href="classes/Discord-Parts-Interactions-Request-InteractionData.html#property_visible">$visible</a>
+    <a href="classes/Discord-Parts-Part.html#property_visible">$visible</a>
     <span>
                         &nbsp;: array&lt;string|int, mixed&gt;            </span>
 </dt>
@@ -502,6 +509,13 @@ JSON. Used for JsonSerializable.</dd>
 <dd>Returns a collection of resolved data.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
+    <a href="classes/Discord-Parts-Interactions-Request-InteractionData.html#method_setComponentsAttribute">setComponentsAttribute()</a>
+    <span>
+                                &nbsp;: mixed    </span>
+</dt>
+<dd>Sets the components of the interaction.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -protected">
     <a href="classes/Discord-Parts-Interactions-Request-InteractionData.html#method_setOptionsAttribute">setOptionsAttribute()</a>
     <span>
                                 &nbsp;: mixed    </span>
@@ -569,6 +583,41 @@ JSON. Used for JsonSerializable.</dd>
     </code>
 
         <section class="phpdocumentor-description"><p>Type of the component. Not used for slash commands.</p>
+</section>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="property_components">
+        $components
+        <a href="classes/Discord-Parts-Interactions-Request-InteractionData.html#property_components" class="headerlink"><i class="fas fa-link"></i></a>
+        <span class="phpdocumentor-element__modifiers">
+                                </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Request/InteractionData.php"><a href="files/src-discord-parts-interactions-request-interactiondata.html"><abbr title="src/Discord/Parts/Interactions/Request/InteractionData.php">InteractionData.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">0</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type"><a href="classes/Discord-Repository-Interaction-ComponentRepository.html"><abbr title="\Discord\Repository\Interaction\ComponentRepository">ComponentRepository</abbr></a></span>
+    <span class="phpdocumentor-signature__name">$components</span>
+    </code>
+
+        <section class="phpdocumentor-description"><p>The values submitted by the user in modal.</p>
 </section>
 
         <section class="phpdocumentor-description"></section>
@@ -1082,7 +1131,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Request/InteractionData.php"><a href="files/src-discord-parts-interactions-request-interactiondata.html"><abbr title="src/Discord/Parts/Interactions/Request/InteractionData.php">InteractionData.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">38</span>
+    <span class="phpdocumentor-element-found-in__line">40</span>
 
     </aside>
 
@@ -1092,7 +1141,7 @@ JSON. Used for JsonSerializable.</dd>
     <span class="phpdocumentor-signature__visibility">protected</span>
         <span class="phpdocumentor-signature__type">array&lt;string|int, mixed&gt;</span>
     <span class="phpdocumentor-signature__name">$fillable</span>
-     = <span class="phpdocumentor-signature__default-value">[&#039;id&#039;, &#039;name&#039;, &#039;type&#039;, &#039;resolved&#039;, &#039;options&#039;, &#039;custom_id&#039;, &#039;component_type&#039;, &#039;values&#039;, &#039;target_id&#039;, &#039;guild_id&#039;]</span></code>
+     = <span class="phpdocumentor-signature__default-value">[&#039;id&#039;, &#039;name&#039;, &#039;type&#039;, &#039;resolved&#039;, &#039;options&#039;, &#039;custom_id&#039;, &#039;component_type&#039;, &#039;values&#039;, &#039;target_id&#039;, &#039;components&#039;, &#039;guild_id&#039;]</span></code>
 
     
         <section class="phpdocumentor-description"><p>The array of attributes that can be mass-assigned.</p>
@@ -1270,7 +1319,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Request/InteractionData.php"><a href="files/src-discord-parts-interactions-request-interactiondata.html"><abbr title="src/Discord/Parts/Interactions/Request/InteractionData.php">InteractionData.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">48</span>
+    <span class="phpdocumentor-element-found-in__line">57</span>
 
     </aside>
 
@@ -1280,7 +1329,7 @@ JSON. Used for JsonSerializable.</dd>
     <span class="phpdocumentor-signature__visibility">protected</span>
         <span class="phpdocumentor-signature__type">array&lt;string|int, mixed&gt;</span>
     <span class="phpdocumentor-signature__name">$repositories</span>
-     = <span class="phpdocumentor-signature__default-value">[&#039;options&#039; =&gt; \Discord\Repository\Interaction\OptionRepository::class]</span></code>
+     = <span class="phpdocumentor-signature__default-value">[&#039;options&#039; =&gt; \Discord\Repository\Interaction\OptionRepository::class, &#039;components&#039; =&gt; \Discord\Repository\Interaction\ComponentRepository::class]</span></code>
 
     
         <section class="phpdocumentor-description"><p>Repositories.</p>
@@ -1344,14 +1393,14 @@ JSON. Used for JsonSerializable.</dd>
 >
     <h4 class="phpdocumentor-element__name" id="property_visible">
         $visible
-        <a href="classes/Discord-Parts-Interactions-Request-InteractionData.html#property_visible" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Parts-Part.html#property_visible" class="headerlink"><i class="fas fa-link"></i></a>
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Request/InteractionData.php"><a href="files/src-discord-parts-interactions-request-interactiondata.html"><abbr title="src/Discord/Parts/Interactions/Request/InteractionData.php">InteractionData.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Part.php"><a href="files/src-discord-parts-part.html"><abbr title="src/Discord/Parts/Part.php">Part.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">43</span>
+    <span class="phpdocumentor-element-found-in__line">78</span>
 
     </aside>
 
@@ -1361,24 +1410,11 @@ JSON. Used for JsonSerializable.</dd>
     <span class="phpdocumentor-signature__visibility">protected</span>
         <span class="phpdocumentor-signature__type">array&lt;string|int, mixed&gt;</span>
     <span class="phpdocumentor-signature__name">$visible</span>
-     = <span class="phpdocumentor-signature__default-value">[&#039;options&#039;]</span></code>
+     = <span class="phpdocumentor-signature__default-value">[]</span></code>
 
     
     
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">inheritdoc</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                                
-                                             
-                                    </dd>
-                        </dl>
 
 </article>
             </section>
@@ -2458,7 +2494,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Request/InteractionData.php"><a href="files/src-discord-parts-interactions-request-interactiondata.html"><abbr title="src/Discord/Parts/Interactions/Request/InteractionData.php">InteractionData.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">69</span>
+    <span class="phpdocumentor-element-found-in__line">91</span>
 
     </aside>
 
@@ -2484,6 +2520,49 @@ JSON. Used for JsonSerializable.</p>
             -protected
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_setComponentsAttribute">
+        setComponentsAttribute()
+        <a href="classes/Discord-Parts-Interactions-Request-InteractionData.html#method_setComponentsAttribute" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Request/InteractionData.php"><a href="files/src-discord-parts-interactions-request-interactiondata.html"><abbr title="src/Discord/Parts/Interactions/Request/InteractionData.php">InteractionData.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">79</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Sets the components of the interaction.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">protected</span>
+                <span class="phpdocumentor-signature__name">setComponentsAttribute</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$components</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$components</span>
+                : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+            </dl>
+
+    
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type">mixed</span>
+            &mdash;
+        
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -protected
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_setOptionsAttribute">
         setOptionsAttribute()
         <a href="classes/Discord-Parts-Interactions-Request-InteractionData.html#method_setOptionsAttribute" class="headerlink"><i class="fas fa-link"></i></a>
@@ -2491,7 +2570,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Request/InteractionData.php"><a href="files/src-discord-parts-interactions-request-interactiondata.html"><abbr title="src/Discord/Parts/Interactions/Request/InteractionData.php">InteractionData.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">57</span>
+    <span class="phpdocumentor-element-found-in__line">67</span>
 
     </aside>
 
