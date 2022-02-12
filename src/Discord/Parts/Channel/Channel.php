@@ -473,11 +473,14 @@ class Channel extends Part
      *
      * @see https://discord.com/developers/docs/resources/channel#create-channel-invite
      *
-     * @param array $options An array of options. All fields are optional.
-     * @param int   $options['max_age']   The time that the invite will be valid in seconds.
-     * @param int   $options['max_uses']  The amount of times the invite can be used.
-     * @param bool  $options['temporary'] Whether the invite is for temporary membership.
-     * @param bool  $options['unique']    Whether the invite code should be unique (useful for creating many unique one time use invites).
+     * @param array  $options                          An array of options. All fields are optional.
+     * @param int    $options['max_age']               The time that the invite will be valid in seconds.
+     * @param int    $options['max_uses']              The amount of times the invite can be used.
+     * @param bool   $options['temporary']             Whether the invite is for temporary membership.
+     * @param bool   $options['unique']                Whether the invite code should be unique (useful for creating many unique one time use invites).
+     * @param int    $options['target_type']           The type of target for this voice channel invite.
+     * @param string $options['target_user_id']        The id of the user whose stream to display for this invite, required if target_type is `Invite::TARGET_TYPE_STREAM`, the user must be streaming in the channel.
+     * @param string $options['target_application_id'] The id of the embedded application to open for this invite, required if target_type is `Invite::TARGET_TYPE_EMBEDDED_APPLICATION`, the application must have the EMBEDDED flag.
      *
      * @throws NoPermissionsException
      *
@@ -500,11 +503,17 @@ class Channel extends Part
                 'max_uses',
                 'temporary',
                 'unique',
+                'target_type',
+                'target_user_id',
+                'target_application_id',
             ])
             ->setAllowedTypes('max_age', 'int')
             ->setAllowedTypes('max_uses', 'int')
             ->setAllowedTypes('temporary', 'bool')
             ->setAllowedTypes('unique', 'bool')
+            ->setAllowedTypes('target_type', 'int')
+            ->setAllowedTypes('target_user_id', ['string', 'int'])
+            ->setAllowedTypes('target_application_id', ['string', 'int'])
             ->setAllowedValues('max_age', range(0, 604800))
             ->setAllowedValues('max_uses', range(0, 100));
 
