@@ -11,6 +11,7 @@
 
 namespace Discord\WebSockets\Events;
 
+use Discord\Helpers\Collection;
 use Discord\Helpers\Deferred;
 use Discord\Parts\Thread\Member;
 use Discord\Parts\Thread\Thread;
@@ -24,22 +25,33 @@ class ThreadListSync extends Event
     public function handle(Deferred &$deferred, $data)
     {
         $guild = $this->discord->guilds->get('id', $data->guild_id);
+        $threads = Collection::for(Thread::class);
         $members = (array) $data->members;
 
         foreach ($data->threads as $thread) {
-            /** @var Thread */
-            $thread = $this->factory->create(Thread::class, $thread, true);
-
-            foreach ($members as $member) {
-                if ($member->id == $thread->id) {
-                    $thread->members->push($this->factory->create(Member::class, $members[$thread->id], true));
-                    break;
+            if ($channel = $guild->channels->get('id', $thread->parent_id)) {
+                if ($threadPart = $channel->threads->get('id', $thread->id)) {
+                    $threadPart->fill((array) $thread);
                 }
             }
 
-            $guild->threads->push($thread);
+            if (! $threadPart) {
+                /** @var Thread */
+                $threadPart = $this->factory->create(Thread::class, $thread, true);
+                if ($channel = $threadPart->parent) {
+                    $channel->threads->pushItem($threadPart);
+                }
+            }
+
+            foreach ($members as $member) {
+                if ($member->id == $thread->id) {
+                    $threadPart->members->pushItem($this->factory->create(Member::class, $member, true));
+                }
+            }
+
+            $threads->pushItem($threadPart);
         }
 
-        $deferred->resolve();
+        $deferred->resolve($threads);
     }
 }

@@ -40,6 +40,9 @@ class StageInstanceUpdate extends Event
         if (! $oldStageInstance) {
             /** @var StageInstance */
             $stageInstancePart = $this->factory->create(StageInstance::class, $data, true);
+            if ($guild = $stageInstancePart->guild) {
+                $guild->stage_instances->pushItem($stageInstancePart);
+            }
         }
 
         $deferred->resolve([$stageInstancePart, $oldStageInstance]);
