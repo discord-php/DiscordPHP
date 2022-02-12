@@ -6,14 +6,20 @@ Guilds represent Discord 'servers'.
 
 ### Repositories
 
-| name     | type                | notes                                                                        |
-| -------- | ------------------- | ---------------------------------------------------------------------------- |
-| channels | [Channel](#channel) |                                                                              |
-| members  | [Member](#member)   | May not contain offline members, see the [`loadAllMembers` option](#basics). |
-| roles    | [Role](#role)       |                                                                              |
-| bans     | [Ban](#ban)         |                                                                              |
-| invites  | [Invite](#invite)   |                                                                              |
-| emojis   | [Emoji](#emoji)     |                                                                              |
+| name                   | type                               | notes                                                                       |
+| ---------------------- | ---------------------------------- | --------------------------------------------------------------------------- |
+| roles                  | [Role](#role)                      |                                                                             |
+| emojis                 | [Emoji](#emoji)                    |                                                                             |
+| members                | [Member](#member)                  | May not contain offline members, see the [`loadAllMembers` option](#basics) |
+| channels               | [Channel](#channel)                |                                                                             |
+| stage_instances        | [StageInstance](#stage_instance)   |                                                                             |
+| guild_scheduled_events | [ScheduledEvent](#scheduled_event) |                                                                             |
+| stickers               | [Sticker](#sticker)                |                                                                             |
+| invites                | [Invite](#invite)                  | Not initially loaded                                                        |
+| bans                   | [Ban](#ban)                        | Not initially loaded without [`retrieveBans` option](#basics)               |
+| commands               | [Command](#command)                | Not initially loaded                                                        |
+| templates              | [GuildTemplate](#guild_template)   | Not initially loaded                                                        |
+| integrations           | [Integration](#integration)        | Not initially loaded                                                        |
 
 ### Creating a role
 
@@ -21,13 +27,15 @@ Shortcut for `$guild->roles->save($role);`. Takes an array of parameters for a r
 
 #### Parameters
 
-| name        | type    | description                  | default               |
-| ----------- | ------- | ---------------------------- | --------------------- |
-| name        | string  | Role name                    | new role              |
-| color       | integer | RGB color value              | 0                     |
-| permissions | string  | Bitwise value of permissions | @everyone permissions |
-| hoist       | bool    | Hoisted role?                | false                 |
-| mentionable | bool    | Mentionable role?            | false                 |
+| name          | type    | description                  | default               |
+| ------------- | ------- | ---------------------------- | --------------------- |
+| name          | string  | Role name                    | new role              |
+| permissions   | string  | Bitwise value of permissions | @everyone permissions |
+| color         | integer | RGB color value              | 0                     |
+| hoist         | bool    | Hoisted role?                | false                 |
+| icon          | string  | image data for Role icon     | null                  |
+| unicode_emoji | string  | unicode emoji for Role icon  | null                  |
+| mentionable   | bool    | Mentionable role?            | false                 |
 
 ```php
 $guild->createRole([
@@ -47,6 +55,7 @@ Transfers the ownership of the guild to another member. The bot must own the gui
 | name   | type                | description                 |
 | ------ | ------------------- | --------------------------- |
 | member | Member or member ID | The member to get ownership |
+| reason | string              | Reason for Audit Log        |
 
 ```php
 $guild->transferOwnership($member)->done(...);
@@ -93,5 +102,30 @@ $guild->getAuditLog([
     foreach ($auditLog->audit_log_entries as $entry) {
         // $entry->...
     }
+});
+```
+
+### Creating an Emoji
+
+Takes an array of parameters for an emoji and returns an emoji part in a promise.
+Use the second parameter to specify local file path instead.
+
+#### Parameters
+
+| name  | type   | description                                                      | default    |
+| ----- | ------ | ---------------------------------------------------------------- | ---------- |
+| name  | string | Emoji name                                                       | _required_ |
+| image | string | image data with base64 format, ignored if file path is specified |            |
+| roles | array  | Role IDs that are allowed to use the emoji                       | []         |
+
+```php
+$guild->createEmoji([
+    'name' => 'elephpant',
+    // ...
+],
+'/path/to/file.jpg',
+'audit-log reason'
+)->done(function (Emoji $emoji) {
+    // ...
 });
 ```
