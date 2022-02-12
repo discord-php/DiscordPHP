@@ -1085,6 +1085,16 @@ class Channel extends Part
     }
 
     /**
+     * Returns if allow invite.
+     *
+     * @return bool if we can make invite or not.
+     */
+    public function allowInvite()
+    {
+        return in_array($this->type, [self::TYPE_TEXT, self::TYPE_VOICE, self::TYPE_NEWS, self::TYPE_STAGE_CHANNEL]);
+    }
+
+    /**
      * @inheritdoc
      */
     public function getCreatableAttributes(): array
