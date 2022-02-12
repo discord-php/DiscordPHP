@@ -151,7 +151,7 @@ abstract class Event
     abstract public function handle(Deferred &$deferred, $data);
 
     /**
-     * Cache User repository from Event data
+     * Cache User repository from Event data.
      *
      * @param object $userdata
      */

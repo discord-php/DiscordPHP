@@ -192,7 +192,7 @@ class RegisteredCommand
     }
 
     /**
-     * Get command name
+     * Get command name.
      *
      * @return string
      */
@@ -202,7 +202,7 @@ class RegisteredCommand
     }
 
     /**
-     * Get sub commands
+     * Get sub commands.
      *
      * @return RegisteredCommand[]|null
      */

@@ -68,7 +68,7 @@ class GuildTemplate extends Part
     /**
      * Returns the source guild attribute.
      *
-     * @return Guild      The guild snapshot this template contains.
+     * @return Guild The guild snapshot this template contains.
      */
     protected function getSourceGuildAttribute(): Guild
     {
@@ -96,7 +96,7 @@ class GuildTemplate extends Part
     /**
      * Returns the created at attribute.
      *
-     * @return Carbon     The time that the guild template was created.
+     * @return Carbon The time that the guild template was created.
      *
      * @throws \Exception
      */
@@ -108,7 +108,7 @@ class GuildTemplate extends Part
     /**
      * Returns the updated at attribute.
      *
-     * @return Carbon     The time that the guild template was updated.
+     * @return Carbon The time that the guild template was updated.
      *
      * @throws \Exception
      */
@@ -122,7 +122,7 @@ class GuildTemplate extends Part
      *
      * @see https://discord.com/developers/docs/resources/guild-template#create-guild-from-guild-template
      *
-     * @param array       $options An array of options.
+     * @param array       $options         An array of options.
      * @param string      $options['name'] The name of the guild (2-100 characters).
      * @param string|null $options['icon'] The base64 128x128 image for the guild icon.
      *

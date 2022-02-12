@@ -35,7 +35,7 @@ class GuildStickersUpdate extends Event
             if (isset($sticker->user)) {
                 // User caching from sticker uploader
                 $this->cacheUser($sticker->user);
-            } elseif($oldSticker = $oldStickers->offsetGet($sticker->id)) {
+            } elseif ($oldSticker = $oldStickers->offsetGet($sticker->id)) {
                 $sticker->user = $oldSticker->user;
             }
             /** @var Sticker */

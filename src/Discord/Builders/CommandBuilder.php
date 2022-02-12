@@ -16,6 +16,7 @@ use Discord\Parts\Interactions\Command\Option;
 use JsonSerializable;
 
 use function Discord\poly_strlen;
+
 /**
  * Helper class used to build application commands.
  *
@@ -24,7 +25,7 @@ use function Discord\poly_strlen;
 class CommandBuilder implements JsonSerializable
 {
     /**
-     * Type of the command. The type defaults to 1
+     * Type of the command. The type defaults to 1.
      *
      * @var int
      */
@@ -38,7 +39,7 @@ class CommandBuilder implements JsonSerializable
     protected string $name;
 
     /**
-     * Description of the command. should be emtpy if the type is not CHAT_INPUT
+     * Description of the command. should be emtpy if the type is not CHAT_INPUT.
      *
      * @var string
      */
@@ -52,7 +53,7 @@ class CommandBuilder implements JsonSerializable
     protected array $options = [];
 
     /**
-     * The default permission of the command. If true the command is enabled when the app is added to the guild
+     * The default permission of the command. If true the command is enabled when the app is added to the guild.
      *
      * @var bool
      */
@@ -84,6 +85,7 @@ class CommandBuilder implements JsonSerializable
         }
 
         $this->type = $type;
+
         return $this;
     }
 
@@ -103,6 +105,7 @@ class CommandBuilder implements JsonSerializable
         }
 
         $this->name = $name;
+
         return $this;
     }
 
@@ -122,6 +125,7 @@ class CommandBuilder implements JsonSerializable
         }
 
         $this->description = $description;
+
         return $this;
     }
 
@@ -135,6 +139,7 @@ class CommandBuilder implements JsonSerializable
     public function setDefaultPermission(bool $permission): self
     {
         $this->default_permission = $permission;
+
         return $this;
     }
 
@@ -154,6 +159,7 @@ class CommandBuilder implements JsonSerializable
         }
 
         $this->options[] = $option;
+
         return $this;
     }
 
@@ -213,10 +219,10 @@ class CommandBuilder implements JsonSerializable
             'description' => $this->description,
             'type' => $this->type,
             'options' => [],
-            'default_permission' => $this->default_permission
+            'default_permission' => $this->default_permission,
         ];
 
-        foreach ($this->options AS $option) {
+        foreach ($this->options as $option) {
             $arrCommand['options'][] = $option->getRawAttributes();
         }
 

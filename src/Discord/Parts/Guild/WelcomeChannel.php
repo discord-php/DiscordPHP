@@ -15,7 +15,7 @@ use Discord\Parts\Channel\Channel;
 use Discord\Parts\Part;
 
 /**
- * A Welcome Channel of a Guild
+ * A Welcome Channel of a Guild.
  *
  * @see https://discord.com/developers/docs/resources/guild#welcome-screen-object-welcome-screen-channel-structure
  *

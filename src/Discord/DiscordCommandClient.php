@@ -184,8 +184,7 @@ class DiscordCommandClient extends Discord
                 }
                 // Use embed fields in case commands count is below limit
                 if (count($embedfields) <= 25) {
-                    foreach ($embedfields as $field)
-                    {
+                    foreach ($embedfields as $field) {
                         $embed->addField($field);
                     }
                     $commandsDescription = '';

@@ -68,6 +68,7 @@ class Sticker extends Part
         });
 
         sort($partial);
+
         return array_keys($partial) == ['format_type', 'name', 'id'];
     }
 
@@ -118,7 +119,7 @@ class Sticker extends Part
     }
 
     /**
-     * Returns the URL for the sticker
+     * Returns the URL for the sticker.
      *
      * @return string The URL to the sticker.
      */
@@ -153,11 +154,12 @@ class Sticker extends Part
         if ($this->type == self::TYPE_GUILD) {
             return [
                 'sticker_id' => $this->id,
-                'guild_id' => $this->guild_id
+                'guild_id' => $this->guild_id,
             ];
         }
+
         return [
-            'sticker_id' => $this->id
+            'sticker_id' => $this->id,
         ];
     }
 }

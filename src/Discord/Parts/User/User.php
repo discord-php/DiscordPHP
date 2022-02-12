@@ -87,7 +87,7 @@ class User extends Part
         'banner',
         'accent_color',
         'premium_type',
-        'public_flags'
+        'public_flags',
     ];
 
     /**
@@ -157,7 +157,7 @@ class User extends Part
      */
     protected function getDisplaynameAttribute(): string
     {
-        return $this->username . '#' . $this->discriminator;
+        return $this->username.'#'.$this->discriminator;
     }
 
     /**

@@ -14,7 +14,7 @@ namespace Discord\Parts\Channel;
 use Discord\Parts\Part;
 
 /**
- * A message attachment
+ * A message attachment.
  *
  * @see https://discord.com/developers/docs/resources/channel#attachment-object
  *
@@ -44,6 +44,6 @@ class Attachment extends Part
         'proxy_url',
         'height',
         'width',
-        'ephemeral'
+        'ephemeral',
     ];
 }

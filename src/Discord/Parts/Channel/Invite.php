@@ -155,7 +155,7 @@ class Invite extends Part
      *
      * @throws \Exception
      *
-     * @return Channel    The Channel that you have been invited to.
+     * @return Channel The Channel that you have been invited to.
      */
     protected function getChannelAttribute(): Channel
     {
@@ -205,7 +205,7 @@ class Invite extends Part
      *
      * @throws \Exception
      *
-     * @return Carbon     The time that the invite was created.
+     * @return Carbon The time that the invite was created.
      */
     protected function getCreatedAtAttribute(): Carbon
     {
@@ -217,7 +217,7 @@ class Invite extends Part
      *
      * @throws \Exception
      *
-     * @return User|null  The user whose stream to display for this voice channel stream invite.
+     * @return User|null The user whose stream to display for this voice channel stream invite.
      */
     protected function getTargetUserAttribute(): ?User
     {

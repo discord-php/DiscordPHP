@@ -33,7 +33,7 @@ class OverwriteRepository extends AbstractRepository
      */
     protected $endpoints = [
         'all' => Endpoint::GUILD_APPLICATION_COMMANDS_PERMISSIONS,
-        'get' => Endpoint::GUILD_APPLICATION_COMMAND_PERMISSIONS
+        'get' => Endpoint::GUILD_APPLICATION_COMMAND_PERMISSIONS,
     ];
 
     /**

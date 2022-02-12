@@ -35,8 +35,8 @@ class Choice extends Part
      * Creates a new Choice builder.
      *
      * @param Discord          $discord
-     * @param string           $name name of the choice
-     * @param string|int|float $value value of the choice
+     * @param string           $name    name of the choice
+     * @param string|int|float $value   value of the choice
      *
      * @return $this
      */

@@ -105,7 +105,7 @@ class TypingStart extends Part
      *
      * @throws \Exception
      *
-     * @return Carbon     The time that the user started typing.
+     * @return Carbon The time that the user started typing.
      */
     protected function getTimestampAttribute(): Carbon
     {

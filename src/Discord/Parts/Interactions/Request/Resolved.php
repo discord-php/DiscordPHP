@@ -97,10 +97,10 @@ class Resolved extends Part
     }
 
     /**
-    * Returns a collection of resolved roles.
-    *
-    * @return Collection|Role[]|null Map of Snowflakes to role objects
-    */
+     * Returns a collection of resolved roles.
+     *
+     * @return Collection|Role[]|null Map of Snowflakes to role objects
+     */
     protected function getRolesAttribute(): ?Collection
     {
         if (! isset($this->attributes['roles'])) {
@@ -123,7 +123,6 @@ class Resolved extends Part
 
         return $collection;
     }
-
 
     /**
      * Returns a collection of resolved channels.
