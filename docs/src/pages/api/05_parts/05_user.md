@@ -61,10 +61,10 @@ Gets the avatar URL for the user. Only call this function if you need to change 
 
 #### Parameters
 
-| name   | type   | description                                               |
-| ------ | ------ | --------------------------------------------------------- |
-| format | string | format of the image, one of png, jpg or webp, default jpg |
-| size   | int    | size of the image, default 1024                           |
+| name   | type   | description                                                                   |
+| ------ | ------ | ----------------------------------------------------------------------------- |
+| format | string | format of the image, one of png, jpg or webp, default webp or gif if animated |
+| size   | int    | size of the image, default 1024                                               |
 
 ```php
 $url = $user->getAvatarAttribute('png', 2048);
@@ -78,10 +78,10 @@ Returns a string or `null` if user has no banner image set.
 
 #### Parameters
 
-| name   | type   | description                                               |
-| ------ | ------ | --------------------------------------------------------- |
-| format | string | format of the image, one of png, jpg or webp, default jpg |
-| size   | int    | size of the image, default 600                            |
+| name   | type   | description                                                                  |
+| ------ | ------ | ---------------------------------------------------------------------------- |
+| format | string | format of the image, one of png, jpg or webp, default png or gif if animated |
+| size   | int    | size of the image, default 600                                               |
 
 ```php
 $url = $user->getBannerAttribute('png', 1024);

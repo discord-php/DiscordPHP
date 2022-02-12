@@ -34,7 +34,7 @@ Discord does not provide a way to get deleted messages.
 Requires the `Intents::GUILD_MESSAGES` intent.
 
 ```php
-$discord->on(Event::MESSAGE_DELETE, function (?Message $message, Discord $discord) {
+$discord->on(Event::MESSAGE_DELETE, function ($message, Discord $discord) {
     if ($message instanceof Message) {
         // Message is present in cache
     }

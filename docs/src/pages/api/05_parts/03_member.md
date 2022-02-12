@@ -192,10 +192,10 @@ Gets the server-specific avatar URL for the member. Only call this function if y
 
 #### Parameters
 
-| name   | type   | description                                               |
-| ------ | ------ | --------------------------------------------------------- |
-| format | string | format of the image, one of png, jpg or webp, default jpg |
-| size   | int    | size of the image, default 1024                           |
+| name   | type   | description                                                                    |
+| ------ | ------ | ------------------------------------------------------------------------------ |
+| format | string | format of the image, one of png, jpg or webp, default webp and gif if animated |
+| size   | int    | size of the image, default 1024                                                |
 
 ```php
 $url = $member->getAvatarAttribute('png', 2048);
