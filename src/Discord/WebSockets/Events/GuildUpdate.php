@@ -33,6 +33,7 @@ class GuildUpdate extends Event
         } else {
             /** @var Guild */
             $guildPart = $this->factory->create(Guild::class, $data, true);
+            $this->discord->guilds->pushItem($guildPart);
         }
 
         $deferred->resolve([$guildPart, $oldGuild]);

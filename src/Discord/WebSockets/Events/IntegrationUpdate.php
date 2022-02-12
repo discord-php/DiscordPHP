@@ -40,6 +40,9 @@ class IntegrationUpdate extends Event
         if (! $oldIntegration) {
             /** @var Integration */
             $integrationPart = $this->factory->create(Integration::class, $data, true);
+            if ($guild = $integrationPart->guild) {
+                $guild->integrations->pushItem($integrationPart);
+            }
         }
 
         if (isset($data->user)) {

@@ -44,6 +44,6 @@ class ThreadUpdate extends Event
             }
         }
 
-        $deferred->resolve($oldThread);
+        $deferred->resolve([$threadPart, $oldThread]);
     }
 }
