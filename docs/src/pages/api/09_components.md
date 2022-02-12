@@ -3,7 +3,7 @@ title: "Message Components"
 ---
 
 Message components are new components you can add to messages, such as buttons and select menus.
-There are currently three different types of message components:
+There are currently four different types of message components:
 
 ## `ActionRow`
 
@@ -136,3 +136,32 @@ $select->setListener(function (Interaction $interaction, Collection $options) {
     $interaction->respondWithMessage(MessageBuilder::new()->setContent('thanks!'));
 }, $discord);
 ```
+
+## `TextInput`
+
+Text inputs are an interactive component that render on modals.
+
+```php
+$textInput = TextInput::new('Label', TextInput::TYPE_SHORT, 'custom id')
+    ->setRequired(true);
+```
+
+They can be used to collect short-form or long-form text:
+
+| style                  | constant                     |
+| ---------------------- | ---------------------------- |
+| Short (single line)    | `TextInput::STYLE_SHORT`     |
+| Paragraph (multi line) | `TextInput::STYLE_PARAGRAPH` |
+
+### Functions
+
+| name                           | description                                                                                                 |
+| ------------------------------ | ----------------------------------------------------------------------------------------------------------- |
+| `setCustomId($custom_id)`      | sets the custom ID of the text input. maximum 100 characters. will be automatically generated if left null. |
+| `setStyle($style)`             | sets the style of the text input. must be one of the above constants.                                       |
+| `setLabel($label)`             | sets the label of the button. maximum 80 characters.                                                        |
+| `setMinLength($min_length)`    | the minimum length of value. between 0 and 4000, default 0.                                                 |
+| `setMaxLength($max_length)`    | the maximum length of value. between 1 and 4000, default 4000.                                              |
+| `setValue($value)`             | sets a pre-filled value for the text input. maximum 4000 characters.                                        |
+| `setPlaceholder($placeholder)` | sets a placeholder string to be displayed when text input is empty. max 100 characters.                     |
+| `setRequired($required)`       | sets whether the text input is required or not.                                                             |

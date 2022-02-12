@@ -6,37 +6,42 @@ Channels represent a Discord channel, whether it be a direct message channel, gr
 
 ### Properties
 
-| name                | type                         | description                                                        |
-| ------------------- | ---------------------------- | ------------------------------------------------------------------ |
-| id                  | string                       | id of the channel                                                  |
-| name                | string                       | name of the channel                                                |
-| type                | int                          | type of the channel, see Channel constants                         |
-| topic               | string                       | topic of the channel                                               |
-| guild_id            | string or null               | id of the guild the channel belongs to, null if direct message     |
-| guild               | Guild or null                | guild the channel belongs to, null if direct message               |
-| position            | int                          | position of the channel in the Discord client                      |
-| is_private          | bool                         | whether the message is a private direct message channel            |
-| last_message_id     | string                       | id of the last message sent in the channel                         |
-| bitrate             | int                          | bitrate of the voice channel                                       |
-| recipient           | [User](#user)                | recipient of the direct message, only for direct message channel   |
-| recipients          | Collection of [Users](#user) | recipients of the group direct message, only for group dm channels |
-| nsfw                | bool                         | whether the channel is set as NSFW                                 |
-| user_limit          | int                          | user limit of the channel for voice channels                       |
-| rate_limit_per_user | int                          | amount of time in seconds a user has to wait between messages      |
-| icon                | string                       | channel icon hash                                                  |
-| owner_id            | string                       | owner of the group DM                                              |
-| application_id      | string                       | id of the group dm creator if it was via an oauth application      |
-| parent_id           | string                       | id of the parent of the channel if it is in a group                |
-| last_pin_timestamp  | `Carbon` timestamp           | when the last message was pinned in the channel                    |
+| name                          | type                         | description                                                                                                                                              |
+| -------------------           | ---------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| id                            | string                       | id of the channel                                                                                                                                        |
+| name                          | string                       | name of the channel                                                                                                                                      |
+| type                          | int                          | type of the channel, see Channel constants                                                                                                               |
+| topic                         | string                       | topic of the channel                                                                                                                                     |
+| guild_id                      | string or null               | id of the guild the channel belongs to, null if direct message                                                                                           |
+| guild                         | Guild or null                | guild the channel belongs to, null if direct message                                                                                                     |
+| position                      | int                          | position of the channel in the Discord client                                                                                                            |
+| is_private                    | bool                         | whether the message is a private direct message channel                                                                                                  |
+| last_message_id               | string                       | id of the last message sent in the channel                                                                                                               |
+| bitrate                       | int                          | bitrate of the voice channel                                                                                                                             |
+| recipient                     | [User](#user)                | recipient of the direct message, only for direct message channel                                                                                         |
+| recipients                    | Collection of [Users](#user) | recipients of the group direct message, only for group dm channels                                                                                       |
+| nsfw                          | bool                         | whether the channel is set as NSFW                                                                                                                       |
+| user_limit                    | int                          | user limit of the channel for voice channels                                                                                                             |
+| rate_limit_per_user           | int                          | amount of time in seconds a user has to wait between messages                                                                                            |
+| icon                          | string                       | channel icon hash                                                                                                                                        |
+| owner_id                      | string                       | owner of the group DM                                                                                                                                    |
+| application_id                | string                       | id of the group dm creator if it was via an oauth application                                                                                            |
+| parent_id                     | string                       | id of the parent of the channel if it is in a group                                                                                                      |
+| last_pin_timestamp            | `Carbon` timestamp           | when the last message was pinned in the channel                                                                                                          |
+| rtc_region                    | string                       | Voice region id for the voice channel, automatic when set to null.                                                                                       |
+| video_quality_mode            | int                          | The camera video quality mode of the voice channel, 1 when not present.                                                                                  |
+| default_auto_archive_duration | int                          | Default duration for newly created threads, in minutes, to automatically archive the thread after recent activity, can be set to: 60, 1440, 4320, 10080. |
 
 ### Repositories
 
-| name       | type                    | notes                                            |
-| ---------- | ----------------------- | ------------------------------------------------ |
-| members    | VoiceStateUpdate        | Only for voice channels. Contains voice members. |
-| messages   | [Message](#message)     |                                                  |
-| overwrites | [Overwrite](#overwrite) | Contains permissioon overwrites.                 |
-| webhooks   | [Webhook](#webhook)     |                                                  |
+| name       | type                    | notes                                           |
+| ---------- | ----------------------- | ----------------------------------------------- |
+| overwrites | [Overwrite](#overwrite) | Contains permission overwrites                  |
+| members    | VoiceStateUpdate        | Only for voice channels. Contains voice members |
+| messages   | [Message](#message)     |                                                 |
+| webhooks   | [Webhook](#webhook)     | Only available in text channels                 |
+| threads    | [Thread](#thread)       | Only available in text channels                 |
+| invites    | [Invite](#invite)       |
 
 ### Set permissions of a member or role
 
@@ -148,12 +153,15 @@ Creates an invite for a channel. Takes an array of options and returns the new i
 
 Parameters are in an array.
 
-| name      | type | description                                    | default   |
-| --------- | ---- | ---------------------------------------------- | --------- |
-| max_age   | int  | Maximum age of the invite in seconds           | 24 hours  |
-| max_uses  | int  | Maximum uses of the invite                     | unlimited |
-| temporary | bool | Whether the invite grants temporary membership | false     |
-| unique    | bool | Whether the invite should be unique            | false     |
+| name                  | type   | description                                                                                                                                                                    | default   |
+| --------------------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------- |
+| max_age               | int    | Maximum age of the invite in seconds                                                                                                                                           | 24 hours  |
+| max_uses              | int    | Maximum uses of the invite                                                                                                                                                     | unlimited |
+| temporary             | bool   | Whether the invite grants temporary membership                                                                                                                                 | false     |
+| unique                | bool   | Whether the invite should be unique                                                                                                                                            | false     |
+| target_type           | int    | The type of target for this voice channel invite                                                                                                                               |           |
+| target_user_id        | string | The id of the user whose stream to display for this invite, required if target_type is `Invite::TARGET_TYPE_STREAM`, the user must be streaming in the channel                 |           |
+| target_application_id | string | The id of the embedded application to open for this invite, required if target_type is `Invite::TARGET_TYPE_EMBEDDED_APPLICATION`, the application must have the EMBEDDED flag |           |
 
 ```php
 $channel->createInvite([
@@ -173,6 +181,7 @@ Deletes many messages at once. Takes an array of messages and/or message IDs and
 | name     | type                                               | description            | default |
 | -------- | -------------------------------------------------- | ---------------------- | ------- |
 | messages | array or collection of messages and/or message IDs | The messages to delete | default |
+| reason   | string                                             | Reason for Audit Log   |         |
 
 ```php
 $channel->deleteMessages([
@@ -215,9 +224,11 @@ Deletes a number of messages, in order from the last one sent. Takes an integer 
 
 #### Parameters
 
-| name  | type | description                  | default  |
-| ----- | ---- | ---------------------------- | -------- |
-| value | int  | number of messages to delete, in the range 1-100 | required |
+| name   | type   | description                                      | default  |
+| ------ | ------ | ------------------------------------------------ | -------- |
+| value  | int    | number of messages to delete, in the range 1-100 | required |
+| reason | string | Reason for Audit Log                             |          |
+
 
 ```php
 // deletes the last 15 messages
@@ -232,9 +243,10 @@ Pins or unpins a message from the channel pinboard. Takes a message object and r
 
 #### Parameters
 
-| name    | type                | description        | default  |
-| ------- | ------------------- | ------------------ | -------- |
+| name    | type                | description              | default  |
+| ------- | ------------------- | ------------------------ | -------- |
 | message | [Message](#message) | The message to pin/unpin | required |
+| reason  | string              | Reason for Audit Log     |          |
 
 ```php
 // to pin
@@ -268,7 +280,7 @@ Sends a message to the channel. Takes a message builder. Returns the message in 
 
 | name    | type                           | description                | default  |
 | ------- | ------------------------------ | -------------------------- | -------- |
-| message | MessageBuilder                 | Message content            | required         |
+| message | MessageBuilder                 | Message content            | required |
 
 ```php
 $message = MessageBuilder::new()

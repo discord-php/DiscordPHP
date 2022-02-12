@@ -6,37 +6,50 @@ Messages are present in channels and can be anything from a cross post to a repl
 
 ### Properties
 
-| name                   | type                               | description                                                                                          |
-| ---------------------- | ---------------------------------- | ---------------------------------------------------------------------------------------------------- |
-| id                     | string                             | id of the message                                                                                    |
-| channel_id             | string                             | id of the channel the message was sent in                                                            |
-| channel                | [Channel](#channel)                | channel the message was sent in                                                                      |
-| content                | string                             | content of the message                                                                               |
-| type                   | int, [Message](#message) constants | type of the message                                                                                  |
-| mentions               | Collection of [Users](#user)       | users mentioned in the message                                                                       |
-| author                 | [Member](#member) or [User](#user) | the author of the message, a member object in a guild channel and a user object in a private channel |
-| user_id                | string                             | id of the user that sent the message                                                                 |
-| mention_everyone       | bool                               | whether @everyone was mentioned                                                                      |
-| timestamp              | `Carbon` timestamp                 | the time the message was sent                                                                        |
-| edited_timestamp       | `Carbon` timestamp or null         | the time the message was edited or null if it hasn't been edited                                     |
-| tts                    | bool                               | whether text to speech was set when the message was sent                                             |
-| attachments            | array                              | array of attachments                                                                                 |
-| embeds                 | Collection of [Embeds](#embed)     | embeds contained in the message                                                                      |
-| nonce                  | string                             | randomly generated string for client                                                                 |
-| mention_roles          | Collection of [Roles](#role)       | any roles that were mentioned in the message                                                         |
-| mention_channels       | Collection of [Channels](#channel) | any channels that were mentioned in the message                                                      |
-| pinned                 | bool                               | whether the message is pinned                                                                        |
-| reactions              | reaction repository                | any reactions on the message                                                                         |
-| webhook_id             | string                             | id of the webhook that sent the message                                                              |
-| activity               | object                             | current message activity, requires rich present                                                      |
-| application            | object                             | application of the message, requires rich presence                                                   |
-| message_reference      | object                             | message that is referenced by the message                                                            |
-| flags                  | int                                | message flags, see below 5 properties                                                                |
-| crossposted            | bool                               | whether the message has been crossposted                                                             |
-| is_crosspost           | bool                               | whetehr the message is a crosspost                                                                   |
-| suppress_emeds         | bool                               | whether embeds have been supressed                                                                   |
-| source_message_deleted | bool                               | whether the source message has been deleted e.g. crosspost                                           |
-| urgent                 | bool                               | whetehr message is urgent                                                                            |
+| name                                   | type                                     | description                                                                                        |
+| -------------------------------------- | ---------------------------------------- | -------------------------------------------------------------------------------------------------- |
+| id                                     | string                                   | id of the message                                                                                  |
+| channel_id                             | string                                   | id of the channel the message was sent in                                                          |
+| channel                                | [Channel](#channel)                      | channel the message was sent in                                                                    |
+| guild_id                               | string or null                           | the unique identifier of the guild that the channel the message was sent in belongs to             |
+| guild                                  | [Guild](#guild) or null                  | the guild that the message was sent in                                                             |
+| content                                | string                                   | content of the message                                                                             |
+| type                                   | int, [Message](#message) constants       | type of the message                                                                                |
+| mentions                               | Collection of [Users](#user)             | users mentioned in the message                                                                     |
+| author                                 | [User](#user)                            | the author of the message                                                                          |
+| user_id                                | string                                   | id of the user that sent the message                                                               |
+| member                                 | [Member](#member)                        | the member that sent this message, or null if it was in a private message                          |
+| mention_everyone                       | bool                                     | whether @everyone was mentioned                                                                    |
+| timestamp                              | `Carbon` timestamp                       | the time the message was sent                                                                      |
+| edited_timestamp                       | `Carbon` timestamp or null               | the time the message was edited or null if it hasn't been edited                                   |
+| tts                                    | bool                                     | whether text to speech was set when the message was sent                                           |
+| attachments                            | Collection of [Attachments](#attachment) | array of attachments                                                                               |
+| embeds                                 | Collection of [Embeds](#embed)           | embeds contained in the message                                                                    |
+| nonce                                  | string                                   | randomly generated string for client                                                               |
+| mention_roles                          | Collection of [Roles](#role)             | any roles that were mentioned in the message                                                       |
+| mention_channels                       | Collection of [Channels](#channel)       | any channels that were mentioned in the message                                                    |
+| pinned                                 | bool                                     | whether the message is pinned                                                                      |
+| reactions                              | reaction repository                      | any reactions on the message                                                                       |
+| webhook_id                             | string                                   | id of the webhook that sent the message                                                            |
+| activity                               | object                                   | current message activity, requires rich present                                                    |
+| application                            | object                                   | application of the message, requires rich presence                                                 |
+| application_id                         | string                                   | if the message is a response to an Interaction, this is the id of the interaction's application    |
+| message_reference                      | object                                   | message that is referenced by the message                                                          |
+| referenced_message                     | [Message](#message)                      | the message that is referenced in a reply                                                          |
+| interaction                            | object                                   | the interaction which triggered the message (application commands)                                 |
+| thread                                 | [Thread](#thread)                        | the thread that the message was sent in                                                            |
+| components                             | [Component](#component)                  | sent if the message contains components like buttons, action rows, or other interactive components |
+| sticker_items                          | [Sticker](#sticker)                      | stickers attached to the message                                                                   |
+| flags                                  | int                                      | message flags, see below 5 properties                                                              |
+| crossposted                            | bool                                     | whether the message has been crossposted                                                           |
+| is_crosspost                           | bool                                     | whether the message is a crosspost                                                                 |
+| suppress_emeds                         | bool                                     | whether embeds have been supressed                                                                 |
+| source_message_deleted                 | bool                                     | whether the source message has been deleted e.g. crosspost                                         |
+| urgent                                 | bool                                     | whether message is urgent                                                                          |
+| has_thread                             | bool                                     | whether this message has an associated thread, with the same id as the message                     |
+| ephemeral                              | bool                                     | whether this message is only visible to the user who invoked the Interaction                       |
+| loading                                | bool                                     | whether this message is an Interaction Response and the bot is "thinking"                          |
+| failed_to_mention_some_roles_in_thread | bool                                     | this message failed to mention some roles and add their members to the thread                      |
 
 ### Reply to a message
 

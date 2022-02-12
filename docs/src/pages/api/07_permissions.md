@@ -13,7 +13,6 @@ There are two types of permissions - channel permissions and role permissions. T
 | manage\_channels        | bool |                        |
 | view\_channel           | bool |                        |
 | manage\_roles           | bool |                        |
-| manage\_webhooks        | bool |                        |
 
 The rest of the properties are listed under each permission type, all are type of `bool`.
 
@@ -26,30 +25,14 @@ Returns a list of valid permissions, in key value form. Static method.
 ```php
 var_dump(ChannelPermission::getPermissions());
 // [
-//     'priority_speaker' => 0x123,
+//     'priority_speaker' => 8,
 //     // ...
 // ]
 ```
 
 ### Channel Permission
 
-Represents permissions for voice and text channels.
-
-#### Voice Channel Permissions
-
-- `create_instant_invite`
-- `manage_channels`
-- `view_channel`
-- `manage_roles`
-- `manage_webhooks`
-- `priority_speaker`
-- `stream`
-- `connect`
-- `speak`
-- `mute_members`
-- `deafen_members`
-- `move_members`
-- `use_vad`
+Represents permissions for text, voice, and stage instance channels.
 
 #### Text Channel Permissions
 
@@ -57,7 +40,6 @@ Represents permissions for voice and text channels.
 - `manage_channels`
 - `view_channel`
 - `manage_roles`
-- `manage_webhooks`
 - `add_reactions`
 - `send_messages`
 - `send_tts_messages`
@@ -67,6 +49,43 @@ Represents permissions for voice and text channels.
 - `read_message_history`
 - `mention_everyone`
 - `use_external_emojis`
+- `manage_webhooks`
+- `use_application_commands`
+- `manage_threads`
+- `create_public_threads`
+- `create_private_threads`
+- `use_external_stickers`
+- `send_messages_in_threads`
+
+#### Voice Channel Permissions
+
+- `create_instant_invite`
+- `manage_channels`
+- `view_channel`
+- `manage_roles`
+- `priority_speaker`
+- `stream`
+- `connect`
+- `speak`
+- `mute_members`
+- `deafen_members`
+- `move_members`
+- `use_vad`
+- `manage_events`
+- `start_embedded_activities`
+
+#### Stage Instance Channel Permissions
+
+- `create_instant_invite`
+- `manage_channels`
+- `view_channel`
+- `manage_roles`
+- `connect`
+- `mute_members`
+- `deafen_members`
+- `move_members`
+- `request_to_speak`
+- `manage_events`
 
 ### Role Permissions
 
@@ -78,13 +97,13 @@ Represents permissions for roles.
 - `manage_channels`
 - `view_channel`
 - `manage_roles`
-- `manage_webhooks`
 - `kick_members`
 - `ban_members`
 - `administrator`
 - `manage_guild`
 - `view_audit_log`
 - `view_guild_insights`
-- `change_nicknames`
+- `change_nickname`
 - `manage_nicknames`
 - `manage_emojis_and_stickers`
+- `moderate_members`
