@@ -34,7 +34,6 @@ class InviteRepository extends AbstractRepository
     protected $endpoints = [
         'all' => Endpoint::GUILD_INVITES,
         'get' => Endpoint::INVITE,
-        'create' => Endpoint::GUILD_INVITES,
         'delete' => Endpoint::INVITE,
     ];
 
