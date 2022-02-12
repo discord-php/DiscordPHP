@@ -9,11 +9,12 @@
  * with this source code in the LICENSE.md file.
  */
 
-namespace Discord\Parts\Guild;
+namespace Discord\Parts\Channel;
 
 use Carbon\Carbon;
 use Discord\Http\Endpoint;
-use Discord\Parts\Channel\Channel;
+use Discord\Parts\Guild\Guild;
+use Discord\Parts\Guild\ScheduledEvent;
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
 use React\Promise\ExtendedPromiseInterface;
@@ -156,7 +157,7 @@ class Invite extends Part
      *
      * @return Channel    The Channel that you have been invited to.
      */
-    protected function getChannelAttribute(): ?Channel
+    protected function getChannelAttribute(): Channel
     {
         if (isset($this->attributes['channel_id']) && $channel = $this->discord->getChannel($this->attributes['channel_id'])) {
             return $channel;

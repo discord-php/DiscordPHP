@@ -32,6 +32,7 @@ use Discord\Helpers\Deferred;
 use Discord\Http\Endpoint;
 use Discord\Http\Exceptions\NoPermissionsException;
 use Discord\Parts\Thread\Thread;
+use Discord\Repository\Channel\InviteRepository;
 use Discord\Repository\Channel\ThreadRepository;
 use React\Promise\ExtendedPromiseInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -76,6 +77,7 @@ use function React\Promise\resolve;
  * @property MessageRepository   $messages                      Text channel only - messages sent in the channel.
  * @property WebhookRepository   $webhooks                      Webhooks in the channel.
  * @property ThreadRepository    $threads                       Threads that belong to the channel.
+ * @property InviteRepository    $invites                       Invites in the channel.
  *
  * @method ExtendedPromiseInterface sendMessage(MessageBuilder $builder)
  * @method ExtendedPromiseInterface sendMessage(string $text, bool $tts = false, Embed|array $embed = null, array $allowed_mentions = null, ?Message $replyTo = null)
@@ -135,6 +137,7 @@ class Channel extends Part
         'messages' => MessageRepository::class,
         'webhooks' => WebhookRepository::class,
         'threads' => ThreadRepository::class,
+        'invites' => InviteRepository::class,
     ];
 
     /**
@@ -1079,6 +1082,16 @@ class Channel extends Part
     public function allowVoice()
     {
         return in_array($this->type, [self::TYPE_VOICE, self::TYPE_STAGE_CHANNEL]);
+    }
+
+    /**
+     * Returns if allow invite.
+     *
+     * @return bool if we can make invite or not.
+     */
+    public function allowInvite()
+    {
+        return in_array($this->type, [self::TYPE_TEXT, self::TYPE_VOICE, self::TYPE_NEWS, self::TYPE_STAGE_CHANNEL]);
     }
 
     /**

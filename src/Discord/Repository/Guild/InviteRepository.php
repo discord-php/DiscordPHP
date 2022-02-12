@@ -12,7 +12,7 @@
 namespace Discord\Repository\Guild;
 
 use Discord\Http\Endpoint;
-use Discord\Parts\Guild\Invite;
+use Discord\Parts\Channel\Invite;
 use Discord\Repository\AbstractRepository;
 
 /**

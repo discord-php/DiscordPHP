@@ -11,9 +11,9 @@
 
 namespace Discord\WebSockets\Events;
 
-use Discord\Parts\Guild\Invite;
 use Discord\WebSockets\Event;
 use Discord\Helpers\Deferred;
+use Discord\Parts\Channel\Invite;
 
 /**
  * @see https://discord.com/developers/docs/topics/gateway#invite-create
@@ -25,7 +25,12 @@ class InviteCreate extends Event
      */
     public function handle(Deferred &$deferred, $data): void
     {
+        /** @var Invite */
         $invite = $this->factory->create(Invite::class, $data, true);
+
+        if ($channel = $invite->channel) {
+            $channel->invites->pushItem($invite);
+        }
 
         if (isset($data->inviter)) {
             // User caching from inviter

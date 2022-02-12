@@ -16,6 +16,8 @@ use Discord\Exceptions\FileNotFoundException;
 use Discord\Helpers\Collection;
 use Discord\Http\Endpoint;
 use Discord\Http\Exceptions\NoPermissionsException;
+use Discord\Parts\Channel\Channel;
+use Discord\Parts\Channel\Invite;
 use Discord\Parts\Part;
 use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
@@ -1002,6 +1004,31 @@ class Guild extends Part
     public function getWidget(): ExtendedPromiseInterface
     {
         return $this->factory->part(Widget::class, ['id' => $this->id])->fetch();
+    }
+
+    /**
+     * Attempts to create an Invite to a channel in this guild where possible.
+     *
+     * @see Channel::createInvite()
+     *
+     * @throws \RuntimeException
+     * @throws NoPermissionsException
+     *
+     * @return ExtendedPromiseInterface<Invite>
+     */
+    public function createInvite(...$args): ExtendedPromiseInterface
+    {
+        /** @var Member */
+        $botMember = $this->members->offsetGet($this->discord->id);
+        $channel = $this->channels->find(function (Channel $channel) use ($botMember) {
+            return $channel->allowInvite() && $botMember->getPermissions($channel)->create_instant_invite;
+        });
+
+        if (! $channel) {
+            return reject(new \RuntimeException("No channels found to create an Invite to the specified guild."));
+        }
+
+        return $channel->createInvite($args);
     }
 
     /**
