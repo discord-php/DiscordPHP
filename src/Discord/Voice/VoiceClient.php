@@ -735,6 +735,8 @@ class VoiceClient extends EventEmitter
     {
         $deferred = new Deferred();
 
+        $process = false;
+
         if (! $this->isReady()) {
             $deferred->reject(new Exception('Voice client is not ready yet.'));
 
@@ -750,6 +752,7 @@ class VoiceClient extends EventEmitter
                 $this->emit('stderr', [$d, $this]);
             });
 
+            $process = $stream;
             $stream = $stream->stdout;
         }
 
@@ -769,7 +772,7 @@ class VoiceClient extends EventEmitter
         });
 
         $count = 0;
-        $readOpus = function () use ($buffer, $deferred, &$readOpus, &$count) {
+        $readOpus = function () use ($buffer, $deferred, &$readOpus, &$count, $process) {
             // If the client is paused, delay by frame size and check again.
             if ($this->isPaused) {
                 $this->loop->addTimer($this->frameSize / 1000, $readOpus);
@@ -778,6 +781,13 @@ class VoiceClient extends EventEmitter
             }
 
             if ($this->stopAudio) {
+                if ($process instanceof Process) {
+                    foreach ($process->pipes as $pipe) {
+                        $pipe->close();
+                    }
+                    $process->terminate(9);
+                }
+
                 $this->reset();
                 $deferred->resolve();
 
