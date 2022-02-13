@@ -89,6 +89,13 @@ Useful if you want to use other React components. By default, a new loop is crea
     'logger' => new \Monolog\Logger('New logger'),
 ```
 
+`dnsConfig` is an instace of `Config` or a string of name server address. By default, 8.8.8.8 is used. Currently only used for VoiceClient.
+
+```php
+    'dnsConfig' => '1.1.1.1',
+```
+
+
 <hr>
 
 The following options should only be used by large bots that require sharding. If you plan to use sharding, [read up](https://discord.com/developers/docs/topics/gateway#sharding) on how Discord implements it.
