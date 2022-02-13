@@ -210,7 +210,7 @@ class TextInput extends Component
     }
 
     /**
-     * Sets the placeholder string to display if nothing is selected.
+     * Sets the placeholder string to display if text input is empty.
      * Maximum 100 characters. Null to clear placeholder.
      *
      * @param string|null $placeholder
@@ -285,7 +285,7 @@ class TextInput extends Component
     }
 
     /**
-     * Returns the minimum number of options that must be selected.
+     * Returns the minimum length of the text input.
      *
      * @return int|null
      */
@@ -295,7 +295,7 @@ class TextInput extends Component
     }
 
     /**
-     * Returns the maximum number of options that must be selected.
+     * Returns the maximum length of the text input.
      *
      * @return int|null
      */
