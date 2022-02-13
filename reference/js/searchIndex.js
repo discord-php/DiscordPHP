@@ -568,7 +568,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\TextInput\u003A\u003AsetPlaceholder\u0028\u0029",
             "name": "setPlaceholder",
-            "summary": "Sets\u0020the\u0020placeholder\u0020string\u0020to\u0020display\u0020if\u0020nothing\u0020is\u0020selected.",
+            "summary": "Sets\u0020the\u0020placeholder\u0020string\u0020to\u0020display\u0020if\u0020text\u0020input\u0020is\u0020empty.",
             "url": "classes/Discord-Builders-Components-TextInput.html#method_setPlaceholder"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\TextInput\u003A\u003AsetRequired\u0028\u0029",
@@ -593,12 +593,12 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\TextInput\u003A\u003AgetMinLength\u0028\u0029",
             "name": "getMinLength",
-            "summary": "Returns\u0020the\u0020minimum\u0020number\u0020of\u0020options\u0020that\u0020must\u0020be\u0020selected.",
+            "summary": "Returns\u0020the\u0020minimum\u0020length\u0020of\u0020the\u0020text\u0020input.",
             "url": "classes/Discord-Builders-Components-TextInput.html#method_getMinLength"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\TextInput\u003A\u003AgetMaxLength\u0028\u0029",
             "name": "getMaxLength",
-            "summary": "Returns\u0020the\u0020maximum\u0020number\u0020of\u0020options\u0020that\u0020must\u0020be\u0020selected.",
+            "summary": "Returns\u0020the\u0020maximum\u0020length\u0020of\u0020the\u0020text\u0020input.",
             "url": "classes/Discord-Builders-Components-TextInput.html#method_getMaxLength"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\TextInput\u003A\u003AisRequired\u0028\u0029",
@@ -7250,6 +7250,11 @@ Search.appendIndex(
             "name": "version",
             "summary": "The\u0020Discord\u0020voice\u0020gateway\u0020version.",
             "url": "classes/Discord-Voice-VoiceClient.html#property_version"
+        },                {
+            "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003A\u0024dnsConfig",
+            "name": "dnsConfig",
+            "summary": "The\u0020Config\u0020for\u0020DNS\u0020Resolver",
+            "url": "classes/Discord-Voice-VoiceClient.html#property_dnsConfig"
         },                {
             "fqsen": "\\Discord\\Voice\\VoicePacket",
             "name": "VoicePacket",
