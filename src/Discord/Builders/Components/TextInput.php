@@ -63,7 +63,7 @@ class TextInput extends Component
      *
      * @var bool
      */
-    private $required = false;
+    private $required;
 
     /**
      * Pre-filled value for text input. Max 4000 characters.
@@ -338,8 +338,8 @@ class TextInput extends Component
             $content['max_length'] = $this->max_length;
         }
 
-        if ($this->required) {
-            $content['required'] = true;
+        if (isset($this->required)) {
+            $content['required'] = $this->required;
         }
 
         if (isset($this->value)) {
