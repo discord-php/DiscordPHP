@@ -1171,6 +1171,7 @@ class Discord
 
             $data['token'] = $vs->token;
             $data['endpoint'] = $vs->endpoint;
+            $data['dnsConfig'] = $discord->options['dnsConfig'];
             $this->logger->info('received token and endpoint for voice session', ['guild' => $channel->guild_id, 'token' => $vs->token, 'endpoint' => $vs->endpoint]);
 
             if (is_null($logger)) {
@@ -1299,6 +1300,7 @@ class Discord
                 'retrieveBans',
                 'intents',
                 'socket_options',
+                'dnsConfig',
             ])
             ->setDefaults([
                 'loop' => LoopFactory::create(),
@@ -1310,6 +1312,7 @@ class Discord
                 'retrieveBans' => false,
                 'intents' => Intents::getDefaultIntents(),
                 'socket_options' => [],
+                'dnsConfig' => '8.8.8.8'
             ])
             ->setAllowedTypes('token', 'string')
             ->setAllowedTypes('logger', ['null', LoggerInterface::class])
@@ -1320,7 +1323,8 @@ class Discord
             ->setAllowedTypes('storeMessages', 'bool')
             ->setAllowedTypes('retrieveBans', 'bool')
             ->setAllowedTypes('intents', ['array', 'int'])
-            ->setAllowedTypes('socket_options', 'array');
+            ->setAllowedTypes('socket_options', 'array')
+            ->setAllowedTypes('dnsConfig', ['string', \React\Dns\Config\Config::class]);
 
         $options = $resolver->resolve($options);
 
