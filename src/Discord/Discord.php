@@ -1324,7 +1324,7 @@ class Discord
             ->setAllowedTypes('retrieveBans', 'bool')
             ->setAllowedTypes('intents', ['array', 'int'])
             ->setAllowedTypes('socket_options', 'array')
-            ->setAllowedTypes('dnsConfig', ['string', \React\Dns\Config::class]);
+            ->setAllowedTypes('dnsConfig', ['string', \React\Dns\Config\Config::class]);
 
         $options = $resolver->resolve($options);
 
