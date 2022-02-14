@@ -1312,7 +1312,6 @@ class Discord
                 'retrieveBans' => false,
                 'intents' => Intents::getDefaultIntents(),
                 'socket_options' => [],
-                'dnsConfig' => '8.8.8.8'
             ])
             ->setAllowedTypes('token', 'string')
             ->setAllowedTypes('logger', ['null', LoggerInterface::class])
@@ -1332,6 +1331,15 @@ class Discord
             $logger = new Monolog('DiscordPHP');
             $logger->pushHandler(new StreamHandler('php://stdout', Monolog::DEBUG));
             $options['logger'] = $logger;
+        }
+
+        if (! isset($options['dnsConfig'])) {
+            $dnsConfig = \React\Dns\Config\Config::loadSystemConfigBlocking();
+            if (! $dnsConfig->nameservers) {
+                $dnsConfig->nameservers[] = '8.8.8.8';
+            }
+
+            $options['dnsConfig'] = $dnsConfig;
         }
 
         if (is_array($options['intents'])) {
