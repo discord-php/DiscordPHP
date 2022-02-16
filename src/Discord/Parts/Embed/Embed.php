@@ -13,6 +13,7 @@ namespace Discord\Parts\Embed;
 
 use Carbon\Carbon;
 use Discord\Helpers\Collection;
+use Discord\Parts\Channel\Attachment;
 use Discord\Parts\Part;
 use function Discord\poly_strlen;
 
@@ -385,13 +386,17 @@ class Embed extends Part
     /**
      * Set the image of this embed.
      *
-     * @param string $url
+     * @param string|Attachment $url
      *
      * @return $this
      */
     public function setImage($url): self
     {
-        $this->image = ['url' => (string) $url];
+        if ($url instanceof Attachment) {
+            $this->image = ['url' => 'attachment://'.$url->filename];
+        } else {
+            $this->image = ['url' => (string) $url];
+        }
 
         return $this;
     }

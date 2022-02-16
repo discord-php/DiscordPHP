@@ -36,7 +36,6 @@ use React\Promise\ExtendedPromiseInterface;
  * @property int|null            $approximate_presence_count Approximate count of online members, returned from the GET /invites/<code> endpoint when with_counts is true.
  * @property int|null            $approximate_member_count   Approximate count of total members, returned from the GET /invites/<code> endpoint when with_counts is true.
  * @property Carbon|null         $expires_at                 The expiration date of this invite, returned from the GET /invites/<code> endpoint when with_expiration is true.
- * @property object|null         $stage_instance             Stage instance data if there is a public Stage instance in the Stage channel this invite is for.
  * @property ScheduledEvent|null $guild_scheduled_event      Guild scheduled event data, only included if guild_scheduled_event_id contains a valid guild scheduled event id.
  * @property int                 $uses                       How many times the invite has been used.
  * @property int                 $max_uses                   How many times the invite can be used.
@@ -60,7 +59,7 @@ class Invite extends Part
         'approximate_presence_count',
         'approximate_member_count',
         'expires_at',
-        'stage_instance',
+        'stage_instance', // deprecated
         'guild_scheduled_event',
 
         // Extra metadata
