@@ -741,6 +741,21 @@ Search.appendIndex(
             "summary": "Returns\u0020all\u0020the\u0020components\u0020in\u0020the\u0020message.",
             "url": "classes/Discord-Builders-MessageBuilder.html#method_getComponents"
         },                {
+            "fqsen": "\\Discord\\Builders\\MessageBuilder\u003A\u003AaddAttachment\u0028\u0029",
+            "name": "addAttachment",
+            "summary": "Adds\u0020attachment\u0028s\u0029\u0020to\u0020the\u0020message.",
+            "url": "classes/Discord-Builders-MessageBuilder.html#method_addAttachment"
+        },                {
+            "fqsen": "\\Discord\\Builders\\MessageBuilder\u003A\u003AgetAttachments\u0028\u0029",
+            "name": "getAttachments",
+            "summary": "Returns\u0020all\u0020the\u0020attachments\u0020in\u0020the\u0020message.",
+            "url": "classes/Discord-Builders-MessageBuilder.html#method_getAttachments"
+        },                {
+            "fqsen": "\\Discord\\Builders\\MessageBuilder\u003A\u003AclearAttachments\u0028\u0029",
+            "name": "clearAttachments",
+            "summary": "Removes\u0020all\u0020attachments\u0020from\u0020the\u0020message.",
+            "url": "classes/Discord-Builders-MessageBuilder.html#method_clearAttachments"
+        },                {
             "fqsen": "\\Discord\\Builders\\MessageBuilder\u003A\u003AsetAllowedMentions\u0028\u0029",
             "name": "setAllowedMentions",
             "summary": "Sets\u0020the\u0020allowed\u0020mentions\u0020object\u0020of\u0020the\u0020message.",
@@ -800,6 +815,11 @@ Search.appendIndex(
             "name": "files",
             "summary": "Files\u0020to\u0020send\u0020with\u0020this\u0020message.",
             "url": "classes/Discord-Builders-MessageBuilder.html#property_files"
+        },                {
+            "fqsen": "\\Discord\\Builders\\MessageBuilder\u003A\u003A\u0024attachments",
+            "name": "attachments",
+            "summary": "Attachments\u0020to\u0020send\u0020with\u0020this\u0020message.",
+            "url": "classes/Discord-Builders-MessageBuilder.html#property_attachments"
         },                {
             "fqsen": "\\Discord\\Builders\\MessageBuilder\u003A\u003A\u0024components",
             "name": "components",
@@ -5336,6 +5356,21 @@ Search.appendIndex(
             "summary": "Returns\u0020the\u0020ID\u0020of\u0020the\u0020user\u0020who\u0020archived\u0020the\u0020thread.",
             "url": "classes/Discord-Parts-Thread-Thread.html#method_getArchiverIdAttribute"
         },                {
+            "fqsen": "\\Discord\\Parts\\Thread\\Thread\u003A\u003AsetArchivedAttribute\u0028\u0029",
+            "name": "setArchivedAttribute",
+            "summary": "Set\u0020whether\u0020the\u0020thread\u0020is\u0020archived.",
+            "url": "classes/Discord-Parts-Thread-Thread.html#method_setArchivedAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Thread\\Thread\u003A\u003AsetLockedAttribute\u0028\u0029",
+            "name": "setLockedAttribute",
+            "summary": "Set\u0020whether\u0020the\u0020thread\u0020is\u0020locked.",
+            "url": "classes/Discord-Parts-Thread-Thread.html#method_setLockedAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Thread\\Thread\u003A\u003AsetAutoArchiveDurationAttribute\u0028\u0029",
+            "name": "setAutoArchiveDurationAttribute",
+            "summary": "Set\u0020the\u0020number\u0020of\u0020minutes\u0020of\u0020inactivity\u0020required\u0020for\u0020the\u0020thread\u0020to\u0020auto\u0020archive.",
+            "url": "classes/Discord-Parts-Thread-Thread.html#method_setAutoArchiveDurationAttribute"
+        },                {
             "fqsen": "\\Discord\\Parts\\Thread\\Thread\u003A\u003AgetArchiverAttribute\u0028\u0029",
             "name": "getArchiverAttribute",
             "summary": "Returns\u0020the\u0020user\u0020who\u0020archived\u0020the\u0020thread.",
@@ -5371,6 +5406,11 @@ Search.appendIndex(
             "summary": "Attempts\u0020to\u0020remove\u0020a\u0020user\u0020from\u0020the\u0020thread.",
             "url": "classes/Discord-Parts-Thread-Thread.html#method_removeMember"
         },                {
+            "fqsen": "\\Discord\\Parts\\Thread\\Thread\u003A\u003Arename\u0028\u0029",
+            "name": "rename",
+            "summary": "Rename\u0020the\u0020thread.",
+            "url": "classes/Discord-Parts-Thread-Thread.html#method_rename"
+        },                {
             "fqsen": "\\Discord\\Parts\\Thread\\Thread\u003A\u003Aarchive\u0028\u0029",
             "name": "archive",
             "summary": "Archive\u0020the\u0020thread.",
@@ -5380,6 +5420,11 @@ Search.appendIndex(
             "name": "unarchive",
             "summary": "Unarchive\u0020the\u0020thread.",
             "url": "classes/Discord-Parts-Thread-Thread.html#method_unarchive"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Thread\\Thread\u003A\u003AsetAutoArchiveDuration\u0028\u0029",
+            "name": "setAutoArchiveDuration",
+            "summary": "Set\u0020auto\u0020archive\u0020duration\u0020of\u0020the\u0020thread.",
+            "url": "classes/Discord-Parts-Thread-Thread.html#method_setAutoArchiveDuration"
         },                {
             "fqsen": "\\Discord\\Parts\\Thread\\Thread\u003A\u003AgetPinnedMessages\u0028\u0029",
             "name": "getPinnedMessages",
@@ -5420,6 +5465,11 @@ Search.appendIndex(
             "name": "createMessageCollector",
             "summary": "Creates\u0020a\u0020message\u0020collector\u0020for\u0020the\u0020channel.",
             "url": "classes/Discord-Parts-Thread-Thread.html#method_createMessageCollector"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Thread\\Thread\u003A\u003AgetUpdatableAttributes\u0028\u0029",
+            "name": "getUpdatableAttributes",
+            "summary": "Returns\u0020the\u0020updatable\u0020attributes.",
+            "url": "classes/Discord-Parts-Thread-Thread.html#method_getUpdatableAttributes"
         },                {
             "fqsen": "\\Discord\\Parts\\Thread\\Thread\u003A\u003AgetRepositoryAttributes\u0028\u0029",
             "name": "getRepositoryAttributes",
