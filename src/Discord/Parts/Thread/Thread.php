@@ -209,6 +209,36 @@ class Thread extends Part
     }
 
     /**
+     * Set whether the thread is archived.
+     *
+     * @param bool $value
+     */
+    protected function setArchivedAttribute(bool $value)
+    {
+        $this->thread_metadata->archived = $value;
+    }
+
+    /**
+     * Set whether the thread is locked.
+     *
+     * @param bool $value
+     */
+    protected function setLockedAttribute(bool $value)
+    {
+        $this->thread_metadata->locked = $value;
+    }
+
+    /**
+     * Set the number of minutes of inactivity required for the thread to auto archive.
+     *
+     * @param bool $value
+     */
+    protected function setAutoArchiveDurationAttribute($value)
+    {
+        $this->thread_metadata->auto_archive_duration = $value;
+    }
+
+    /**
      * Returns the user who archived the thread.
      *
      * @return User|null
@@ -312,23 +342,73 @@ class Thread extends Part
     }
 
     /**
-     * Archive the thread.
+     * Rename the thread.
+     *
+     * @param string      $name   New thread name.
+     * @param string|null $reason Reason for Audit Log.
      *
      * @return ExtendedPromiseInterface
      */
-    public function archive(): ExtendedPromiseInterface
+    public function rename(string $name, ?string $reason = null): ExtendedPromiseInterface
     {
-        return $this->http->patch(Endpoint::bind(Endpoint::THREAD, $this->id), ['archived' => true]);
+        $headers = [];
+        if (isset($reason)) {
+            $headers['X-Audit-Log-Reason'] = $reason;
+        }
+
+        return $this->http->patch(Endpoint::bind(Endpoint::THREAD, $this->id), ['name' => $name], $headers);
+    }
+
+    /**
+     * Archive the thread.
+     *
+     * @param string|null $reason Reason for Audit Log.
+     *
+     * @return ExtendedPromiseInterface
+     */
+    public function archive(?string $reason = null): ExtendedPromiseInterface
+    {
+        $headers = [];
+        if (isset($reason)) {
+            $headers['X-Audit-Log-Reason'] = $reason;
+        }
+
+        return $this->http->patch(Endpoint::bind(Endpoint::THREAD, $this->id), ['archived' => true], $headers);
     }
 
     /**
      * Unarchive the thread.
      *
+     * @param string|null $reason Reason for Audit Log.
+     *
      * @return ExtendedPromiseInterface
      */
-    public function unarchive(): ExtendedPromiseInterface
+    public function unarchive(?string $reason = null): ExtendedPromiseInterface
     {
-        return $this->http->patch(Endpoint::bind(Endpoint::THREAD, $this->id), ['archived' => false]);
+        $headers = [];
+        if (isset($reason)) {
+            $headers['X-Audit-Log-Reason'] = $reason;
+        }
+
+        return $this->http->patch(Endpoint::bind(Endpoint::THREAD, $this->id), ['archived' => false], $headers);
+    }
+
+    /**
+     * Set auto archive duration of the thread.
+     *
+     * @param int         $duration Duration in minutes.
+     * @param string|null $reason   Reason for Audit Log.
+     *
+     * @return ExtendedPromiseInterface
+     */
+    public function setAutoArchiveDuration(int $duration, ?string $reason = null): ExtendedPromiseInterface
+    {
+        $headers = [];
+        if (isset($reason)) {
+            $headers['X-Audit-Log-Reason'] = $reason;
+        }
+
+        return $this->http->patch(Endpoint::bind(Endpoint::THREAD, $this->id), ['auto_archive_duration' => $duration], $headers);
     }
 
     /**
@@ -654,6 +734,20 @@ class Thread extends Part
         }
 
         return $deferred->promise();
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getUpdatableAttributes(): array
+    {
+        return [
+            'name' => $this->name,
+            'rate_limit_per_user' => $this->rate_limit_per_user,
+            'archived' => $this->archived,
+            'auto_archive_duration' => $this->auto_archive_duration,
+            'locked' => $this->locked,
+        ];
     }
 
     /**

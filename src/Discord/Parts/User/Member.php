@@ -159,8 +159,8 @@ class Member extends Part
     /**
      * Moves the member to another voice channel.
      *
-     * @param Channel|string $channel The channel to move the member to.
-     * @param string|null    $reason  Reason for Audit Log.
+     * @param Channel|string|null $channel The channel to move the member to.
+     * @param string|null         $reason  Reason for Audit Log.
      *
      * @return ExtendedPromiseInterface
      */
