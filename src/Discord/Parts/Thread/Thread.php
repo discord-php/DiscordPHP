@@ -231,9 +231,9 @@ class Thread extends Part
     /**
      * Set the number of minutes of inactivity required for the thread to auto archive.
      *
-     * @param bool $value
+     * @param int $value
      */
-    protected function setAutoArchiveDurationAttribute($value)
+    protected function setAutoArchiveDurationAttribute(int $value)
     {
         $this->thread_metadata->auto_archive_duration = $value;
     }
