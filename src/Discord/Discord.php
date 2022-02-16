@@ -1398,7 +1398,7 @@ class Discord
     public function close(bool $closeLoop = true): void
     {
         $this->closing = true;
-        $this->ws->close(Op::CLOSE_UNKNOWN_ERROR, 'discordphp closing...');
+        $this->ws->close($closeLoop ? Op::CLOSE_UNKNOWN_ERROR : Op::CLOSE_NORMAL, 'discordphp closing...');
         $this->emit('closed', [$this]);
         $this->logger->info('discord closed');
 
