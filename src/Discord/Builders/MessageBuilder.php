@@ -17,6 +17,7 @@ use Discord\Builders\Components\SelectMenu;
 use Discord\Exceptions\FileNotFoundException;
 use Discord\Helpers\Multipart;
 use Discord\Http\Exceptions\RequestFailedException;
+use Discord\Parts\Channel\Attachment;
 use Discord\Parts\Channel\Message;
 use Discord\Parts\Embed\Embed;
 use Discord\Parts\Guild\Sticker;
@@ -65,6 +66,13 @@ class MessageBuilder implements JsonSerializable
      * @var array[]
      */
     private $files = [];
+
+    /**
+     * Attachments to send with this message.
+     * 
+     * @var Attachment[]
+     */
+    private $attachments = [];
 
     /**
      * Components to send with this message.
@@ -334,6 +342,50 @@ class MessageBuilder implements JsonSerializable
     }
 
     /**
+     * Adds attachment(s) to the message.
+     *
+     * @param Attachment|string|int $attachment Attachment objects or IDs to add
+     *
+     * @return $this
+     */
+    public function addAttachment(...$attachments): self
+    {
+        foreach ($attachments as $attachment) {
+            if ($attachment instanceof Attachment) {
+                $attachment = $attachment->getRawAttributes();
+            } else {
+                $attachment = ['id' => $attachment];
+            }
+
+            $this->attachments[] = $attachment;
+        }
+
+        return $this;
+    }
+
+    /**
+     * Returns all the attachments in the message.
+     *
+     * @return Attachment[]
+     */
+    public function getAttachments(): array
+    {
+        return $this->attachments;
+    }
+
+    /**
+     * Removes all attachments from the message.
+     *
+     * @return $this
+     */
+    public function clearAttachments(): self
+    {
+        $this->attachments = [];
+
+        return $this;
+    }
+
+    /**
      * Sets the allowed mentions object of the message.
      *
      * @param array $allowed_mentions
@@ -522,6 +574,10 @@ class MessageBuilder implements JsonSerializable
                 'message_id' => $this->replyTo->id,
                 'channel_id' => $this->replyTo->channel_id,
             ];
+        }
+
+        if ($this->attachments) {
+            $content['attachments'] = $this->attachments;
         }
 
         if ($empty) {
