@@ -262,7 +262,7 @@ class Member extends Part
             $headers['X-Audit-Log-Reason'] = $reason;
         }
 
-        return $this->http->put(Endpoint::bind(Endpoint::GUILD_MEMBER, $this->guild_id, $this->id, $roles), null, $headers);
+        return $this->http->patch(Endpoint::bind(Endpoint::GUILD_MEMBER, $this->guild_id, $this->id), ['roles' => $roles], $headers);
     }
 
     /**
