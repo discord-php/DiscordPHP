@@ -25,7 +25,7 @@ class GuildScheduledEventUpdate extends Event
      */
     public function handle(Deferred &$deferred, $data): void
     {
-        $oldScheduledEvent = null;
+        $scheduledEventPart = $oldScheduledEvent = null;
 
         if ($guild = $this->discord->guilds->get('id', $data->guild_id)) {
             if ($oldScheduledEvent = $guild->guild_scheduled_events->get('id', $data->id)) {
@@ -37,7 +37,7 @@ class GuildScheduledEventUpdate extends Event
             }
         }
 
-        if (! $oldScheduledEvent) {
+        if (! $scheduledEventPart) {
             /** @var ScheduledEvent */
             $scheduledEventPart = $this->factory->create(ScheduledEvent::class, $data, true);
             if ($guild = $scheduledEventPart->guild) {

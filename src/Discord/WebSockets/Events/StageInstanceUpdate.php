@@ -25,7 +25,7 @@ class StageInstanceUpdate extends Event
      */
     public function handle(Deferred &$deferred, $data): void
     {
-        $oldStageInstance = null;
+        $stageInstancePart = $oldStageInstance = null;
 
         if ($guild = $this->discord->guilds->get('id', $data->guild_id)) {
             if ($oldStageInstance = $guild->stage_instances->get('id', $data->id)) {
@@ -37,7 +37,7 @@ class StageInstanceUpdate extends Event
             }
         }
 
-        if (! $oldStageInstance) {
+        if (! $stageInstancePart) {
             /** @var StageInstance */
             $stageInstancePart = $this->factory->create(StageInstance::class, $data, true);
             if ($guild = $stageInstancePart->guild) {
