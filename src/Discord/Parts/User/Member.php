@@ -244,10 +244,10 @@ class Member extends Part
      *
      * @see https://discord.com/developers/docs/resources/guild#modify-guild-member
      *
-     * @param Role[]|array<string> $roles  The roles to set to the member.
-     * @param string|null          $reason Reason for Audit Log.
+     * @param Role[]|string[] $roles  The roles to set to the member.
+     * @param string|null     $reason Reason for Audit Log.
      *
-     * @return ExtendedPromiseInterface
+     * @return ExtendedPromiseInterface<Member>
      */
     public function setRoles(array $roles, ?string $reason = null): ExtendedPromiseInterface
     {
