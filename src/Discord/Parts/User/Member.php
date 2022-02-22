@@ -240,6 +240,32 @@ class Member extends Part
     }
 
     /**
+     * Updates member roles.
+     *
+     * @see https://discord.com/developers/docs/resources/guild#modify-guild-member
+     *
+     * @param Role[]|array<string> $roles  The roles to set to the member.
+     * @param string|null          $reason Reason for Audit Log.
+     *
+     * @return ExtendedPromiseInterface
+     */
+    public function setRoles(array $roles, ?string $reason = null): ExtendedPromiseInterface
+    {
+        foreach ($roles as $i => $role) {
+            if ($role instanceof Role) {
+                $roles[$i] = $role->id;
+            }
+        }
+
+        $headers = [];
+        if (isset($reason)) {
+            $headers['X-Audit-Log-Reason'] = $reason;
+        }
+
+        return $this->http->put(Endpoint::bind(Endpoint::GUILD_MEMBER, $this->guild_id, $this->id, $roles), null, $headers);
+    }
+
+    /**
      * Sends a message to the member.
      *
      * Takes a `MessageBuilder` or content of the message for the first parameter. If the first parameter
