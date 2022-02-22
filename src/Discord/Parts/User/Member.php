@@ -118,7 +118,7 @@ class Member extends Part
      * @see BanRepository::ban()
      *
      * @param int|null    $daysToDeleteMessages The amount of days to delete messages from.
-     * @param string|null $reason
+     * @param string|null $reason               Reason of the Ban.
      *
      * @throws \Exception
      *
@@ -237,6 +237,32 @@ class Member extends Part
         }
 
         return reject(new \RuntimeException('Member does not have role.'));
+    }
+
+    /**
+     * Updates member roles.
+     *
+     * @see https://discord.com/developers/docs/resources/guild#modify-guild-member
+     *
+     * @param Role[]|string[] $roles  The roles to set to the member.
+     * @param string|null     $reason Reason for Audit Log.
+     *
+     * @return ExtendedPromiseInterface<Member>
+     */
+    public function setRoles(array $roles, ?string $reason = null): ExtendedPromiseInterface
+    {
+        foreach ($roles as $i => $role) {
+            if ($role instanceof Role) {
+                $roles[$i] = $role->id;
+            }
+        }
+
+        $headers = [];
+        if (isset($reason)) {
+            $headers['X-Audit-Log-Reason'] = $reason;
+        }
+
+        return $this->http->patch(Endpoint::bind(Endpoint::GUILD_MEMBER, $this->guild_id, $this->id), ['roles' => $roles], $headers);
     }
 
     /**
@@ -371,12 +397,13 @@ class Member extends Part
      * Sets timeout on a member.
      *
      * @param Carbon|null $communication_disabled_until When the user's timeout will expire and the user will be able to communicate in the guild again, null or a time in the past if the user is not timed out.
+     * @param string|null $reason                       Reason for Audit Log.
      *
      * @throws NoPermissionsException
      *
      * @return ExtendedPromiseInterface
      */
-    public function timeoutMember(?Carbon $communication_disabled_until): ExtendedPromiseInterface
+    public function timeoutMember(?Carbon $communication_disabled_until, ?string $reason = null): ExtendedPromiseInterface
     {
         $botperms = $this->guild->members->offsetGet($this->discord->id)->getPermissions();
 
@@ -384,7 +411,12 @@ class Member extends Part
             return reject(new NoPermissionsException('You do not have permission to time out members in the specified guild.'));
         }
 
-        return $this->http->patch(Endpoint::bind(Endpoint::GUILD_MEMBER, $this->guild_id, $this->id), ['communication_disabled_until' => isset($communication_disabled_until) ? $communication_disabled_until->toIso8601ZuluString() : null]);
+        $headers = [];
+        if (isset($reason)) {
+            $headers['X-Audit-Log-Reason'] = $reason;
+        }
+
+        return $this->http->patch(Endpoint::bind(Endpoint::GUILD_MEMBER, $this->guild_id, $this->id), ['communication_disabled_until' => isset($communication_disabled_until) ? $communication_disabled_until->toIso8601ZuluString() : null], $headers);
     }
 
     /**

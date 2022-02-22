@@ -22,7 +22,7 @@ class ThreadUpdate extends Event
 {
     public function handle(Deferred &$deferred, $data)
     {
-        $oldThread = null;
+        $threadPart = $oldThread = null;
 
         if ($guild = $this->discord->guilds->get('id', $data->guild_id)) {
             if ($parent = $guild->channels->get('id', $data->parent_id)) {
@@ -36,7 +36,7 @@ class ThreadUpdate extends Event
             }
         }
 
-        if (! $oldThread) {
+        if (! $threadPart) {
             /** @var Thread */
             $threadPart = $this->factory->create(Thread::class, $data, true);
             if ($parent = $threadPart->parent) {

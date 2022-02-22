@@ -25,7 +25,7 @@ class GuildMemberUpdate extends Event
      */
     public function handle(Deferred &$deferred, $data): void
     {
-        $oldMember = null;
+        $memberPart = $oldMember = null;
 
         if ($guild = $this->discord->guilds->get('id', $data->guild_id)) {
             if ($oldMember = $guild->members->get('id', $data->user->id)) {
@@ -37,10 +37,12 @@ class GuildMemberUpdate extends Event
             }
         }
 
-        if (! $oldMember) {
+        if (! $memberPart) {
             /** @var Member */
             $memberPart = $this->factory->create(Member::class, $data, true);
-            $guild->members->pushItem($memberPart);
+            if ($guild = $memberPart->guild) {
+                $guild->members->pushItem($memberPart);
+            }
         }
 
         $this->cacheUser($data->user);

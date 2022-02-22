@@ -27,7 +27,7 @@ class GuildRoleUpdate extends Event
     {
         $adata = (array) $data->role;
         $adata['guild_id'] = $data->guild_id;
-        $oldRole = null;
+        $rolePart = $oldRole = null;
 
         if ($guild = $this->discord->guilds->get('id', $data->guild_id)) {
             if ($oldRole = $guild->roles->get('id', $data->role->id)) {
@@ -39,10 +39,12 @@ class GuildRoleUpdate extends Event
             }
         }
 
-        if (! $oldRole) {
+        if (! $rolePart) {
             /** @var Role */
             $rolePart = $this->factory->create(Role::class, $adata, true);
-            $guild->roles->pushItem($rolePart);
+            if ($guild = $rolePart->guild) {
+                $guild->roles->pushItem($rolePart);
+            }
         }
 
         $deferred->resolve([$rolePart, $oldRole]);

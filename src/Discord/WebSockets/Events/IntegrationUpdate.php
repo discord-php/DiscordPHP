@@ -25,7 +25,7 @@ class IntegrationUpdate extends Event
      */
     public function handle(Deferred &$deferred, $data): void
     {
-        $oldIntegration = null;
+        $integrationPart = $oldIntegration = null;
 
         if ($guild = $this->discord->guilds->get('id', $data->guild_id)) {
             if ($oldIntegration = $guild->integrations->get('id', $data->id)) {
@@ -37,7 +37,7 @@ class IntegrationUpdate extends Event
             }
         }
 
-        if (! $oldIntegration) {
+        if (! $integrationPart) {
             /** @var Integration */
             $integrationPart = $this->factory->create(Integration::class, $data, true);
             if ($guild = $integrationPart->guild) {
