@@ -534,7 +534,7 @@ class Channel extends Part
      * @see https://discord.com/developers/docs/resources/channel#bulk-delete-messages
      *
      * @param array|Traversable $messages An array of messages to delete.
-     * @param string|null       $reason   Reason for Audit Log (only for bulk messages).
+     * @param string|null       $reason   Reason for Audit Log.
      *
      * @throws \UnexpectedValueException
      *
@@ -546,6 +546,11 @@ class Channel extends Part
             return reject(new \UnexpectedValueException('$messages must be an array or implement Traversable.'));
         }
 
+        $headers = [];
+        if (isset($reason)) {
+            $headers['X-Audit-Log-Reason'] = $reason;
+        }
+
         $count = count($messages);
 
         if ($count == 0) {
@@ -555,27 +560,27 @@ class Channel extends Part
                 if ($message instanceof Message ||
                     $message = $this->messages->get('id', $message)
                 ) {
-                    return $message->delete();
+                    return $message->delete($reason);
                 }
 
-                return $this->http->delete(Endpoint::bind(Endpoint::CHANNEL_MESSAGE, $this->id, $message));
+                return $this->http->delete(Endpoint::bind(Endpoint::CHANNEL_MESSAGE, $this->id, $message), $headers);
             }
         } else {
             $messageID = [];
+            $promises = [];
 
             foreach ($messages as $message) {
                 if ($message instanceof Message) {
-                    $messageID[] = $message->id;
+                    if(strtotime($message->timestamp) < time()-1209600) {
+                        $promises[] = $message->delete($reason);
+                    } else {
+                        $messageID[] = $message->id;
+                    }
+                } elseif (getSnowflakeTimestamp($message) < time()-1209600) {
+                    $promises[] = $this->http->delete(Endpoint::bind(Endpoint::CHANNEL_MESSAGE, $this->id, $message), $headers);
                 } else {
                     $messageID[] = $message;
                 }
-            }
-
-            $promises = [];
-
-            $headers = [];
-            if (isset($reason)) {
-                $headers['X-Audit-Log-Reason'] = $reason;
             }
 
             while (! empty($messageID)) {

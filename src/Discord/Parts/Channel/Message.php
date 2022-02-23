@@ -788,11 +788,18 @@ class Message extends Part
      *
      * @see https://discord.com/developers/docs/resources/channel#delete-message
      *
+     * @param string|null $reason Reason for Audit Log.
+     *
      * @return ExtendedPromiseInterface
      */
-    public function delete(): ExtendedPromiseInterface
+    public function delete(?string $reason = null): ExtendedPromiseInterface
     {
-        return $this->http->delete(Endpoint::bind(Endpoint::CHANNEL_MESSAGE, $this->channel_id, $this->id));
+        $headers = [];
+        if (isset($reason)) {
+            $headers['X-Audit-Log-Reason'] = $reason;
+        }
+
+        return $this->http->delete(Endpoint::bind(Endpoint::CHANNEL_MESSAGE, $this->channel_id, $this->id), $headers);
     }
 
     /**
