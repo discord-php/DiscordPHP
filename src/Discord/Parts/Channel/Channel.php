@@ -38,6 +38,7 @@ use React\Promise\ExtendedPromiseInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Traversable;
 
+use function Discord\getSnowflakeTimestamp;
 use function React\Promise\all;
 use function React\Promise\reject;
 use function React\Promise\resolve;
@@ -546,11 +547,6 @@ class Channel extends Part
             return reject(new \UnexpectedValueException('$messages must be an array or implement Traversable.'));
         }
 
-        $headers = [];
-        if (isset($reason)) {
-            $headers['X-Audit-Log-Reason'] = $reason;
-        }
-
         $count = count($messages);
 
         if ($count == 0) {
@@ -560,24 +556,29 @@ class Channel extends Part
                 if ($message instanceof Message ||
                     $message = $this->messages->get('id', $message)
                 ) {
-                    return $message->delete($reason);
+                    return $message->delete();
                 }
 
-                return $this->http->delete(Endpoint::bind(Endpoint::CHANNEL_MESSAGE, $this->id, $message), $headers);
+                return $this->http->delete(Endpoint::bind(Endpoint::CHANNEL_MESSAGE, $this->id, $message));
             }
         } else {
             $messageID = [];
             $promises = [];
 
+            $headers = [];
+            if (isset($reason)) {
+                $headers['X-Audit-Log-Reason'] = $reason;
+            }
+
             foreach ($messages as $message) {
                 if ($message instanceof Message) {
-                    if(strtotime($message->timestamp) < time()-1209600) {
-                        $promises[] = $message->delete($reason);
+                    if($message->timestamp->timestamp < time()-1209600) {
+                        $promises[] = $message->delete();
                     } else {
                         $messageID[] = $message->id;
                     }
                 } elseif (getSnowflakeTimestamp($message) < time()-1209600) {
-                    $promises[] = $this->http->delete(Endpoint::bind(Endpoint::CHANNEL_MESSAGE, $this->id, $message), $headers);
+                    $promises[] = $this->http->delete(Endpoint::bind(Endpoint::CHANNEL_MESSAGE, $this->id, $message));
                 } else {
                     $messageID[] = $message;
                 }

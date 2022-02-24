@@ -44,7 +44,7 @@ use function React\Promise\reject;
  * @property string|null                 $guild_id                               The unique identifier of the guild that the channel the message was sent in belongs to.
  * @property Guild|null                  $guild                                  The guild that the message was sent in.
  * @property User|null                   $author                                 The author of the message. Will be a webhook if sent from one.
- * @property string                      $user_id                                The user id of the author.
+ * @property string|null                 $user_id                                The user id of the author.
  * @property Member|null                 $member                                 The member that sent this message, or null if it was in a private message.
  * @property string                      $content                                The content of the message if it is a normal message.
  * @property Carbon                      $timestamp                              A timestamp of when the message was sent.
@@ -788,18 +788,11 @@ class Message extends Part
      *
      * @see https://discord.com/developers/docs/resources/channel#delete-message
      *
-     * @param string|null $reason Reason for Audit Log.
-     *
      * @return ExtendedPromiseInterface
      */
-    public function delete(?string $reason = null): ExtendedPromiseInterface
+    public function delete(): ExtendedPromiseInterface
     {
-        $headers = [];
-        if (isset($reason)) {
-            $headers['X-Audit-Log-Reason'] = $reason;
-        }
-
-        return $this->http->delete(Endpoint::bind(Endpoint::CHANNEL_MESSAGE, $this->channel_id, $this->id), $headers);
+        return $this->http->delete(Endpoint::bind(Endpoint::CHANNEL_MESSAGE, $this->channel_id, $this->id));
     }
 
     /**
