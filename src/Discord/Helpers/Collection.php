@@ -239,6 +239,7 @@ class Collection implements ArrayAccess, JsonSerializable, IteratorAggregate, Co
 
         if ($last !== false) {
             reset($this->items);
+
             return $last;
         }
 

@@ -557,7 +557,7 @@ class Channel extends Part
                 $message = $message->id;
             }
 
-            if ($this->is_private || getSnowflakeTimestamp($message) < time()-1209600) {
+            if ($this->is_private || getSnowflakeTimestamp($message) < time() - 1209600) {
                 $messagesSingle[] = $message;
             } else {
                 $messagesBulk[] = $message;

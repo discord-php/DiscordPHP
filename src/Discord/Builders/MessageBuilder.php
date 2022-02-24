@@ -69,7 +69,7 @@ class MessageBuilder implements JsonSerializable
 
     /**
      * Attachments to send with this message.
-     * 
+     *
      * @var Attachment[]
      */
     private $attachments = [];
