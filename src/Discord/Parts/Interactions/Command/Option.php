@@ -217,7 +217,7 @@ class Option extends Part
      */
     public function addChoice(Choice $choice): self
     {
-        if (count($this->choices) >= 25) {
+        if (count($this->choices ?? []) >= 25) {
             throw new \OverflowException('Option can only have a maximum of 25 Choices.');
         }
 
