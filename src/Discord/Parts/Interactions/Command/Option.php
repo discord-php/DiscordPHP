@@ -65,12 +65,12 @@ class Option extends Part
     /**
      * Gets the choices attribute.
      *
-     * @return Collection|Choice[]|null A collection of choices.
+     * @return Collection|Choice[] A collection of choices.
      */
-    protected function getChoicesAttribute(): ?Collection
+    protected function getChoicesAttribute(): iterable
     {
         if (! isset($this->attributes['choices'])) {
-            return null;
+            return [];
         }
 
         $choices = Collection::for(Choice::class, null);
