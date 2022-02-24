@@ -207,7 +207,7 @@ class Option extends Part
     }
 
     /**
-     * Adds a choice to the option (only for slash commands).
+     * Adds a choice to the option (Only for slash commands).
      *
      * @param Choice $choice The choice
      *
