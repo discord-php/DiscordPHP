@@ -535,7 +535,7 @@ class Channel extends Part
      * @see https://discord.com/developers/docs/resources/channel#bulk-delete-messages
      *
      * @param array|Traversable $messages An array of messages to delete.
-     * @param string|null       $reason   Reason for Audit Log.
+     * @param string|null       $reason   Reason for Audit Log (only for bulk messages).
      *
      * @throws \UnexpectedValueException
      *
