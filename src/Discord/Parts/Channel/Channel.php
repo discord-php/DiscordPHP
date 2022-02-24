@@ -551,7 +551,9 @@ class Channel extends Part
 
         if ($count == 0) {
             return resolve();
-        } elseif ($count == 1 || $this->is_private) {
+        }
+
+        if ($count == 1 || $this->is_private) {
             foreach ($messages as $message) {
                 if ($message instanceof Message) {
                     return $message->delete();
@@ -583,16 +585,14 @@ class Channel extends Part
                 }
             }
 
-            if (count($messageID) == 1) {
-                // this is not older than 2 weeks, but need to delete it in individual endpoint
-                $oldMessageID[] = $messageID[0];
-                // empty the bulk
-                $messageID = [];
-            }
-
-            while (! empty($messageID)) {
+            while (count($messageID) > 1) {
                 $promises[] = $this->http->post(Endpoint::bind(Endpoint::CHANNEL_MESSAGES_BULK_DELETE, $this->id), ['messages' => array_slice($messageID, 0, 100)], $headers);
                 $messageID = array_slice($messageID, 100);
+            }
+
+            if (count($messageID) == 1) {
+                // This remaining message is not older than 2 weeks, but need to delete it in individual endpoint
+                $oldMessageID[] = array_pop($messageID);
             }
 
             foreach ($oldMessageID as $oldMessage) {
