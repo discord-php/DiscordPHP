@@ -97,7 +97,7 @@ class Button extends Component
      *
      * @throws \InvalidArgumentException
      */
-    public function __construct(int $style, ?string $custom_id)
+    public function __construct(int $style, ?string $custom_id = null)
     {
         if (! in_array($style, [
             self::STYLE_PRIMARY,
