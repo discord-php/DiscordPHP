@@ -547,60 +547,35 @@ class Channel extends Part
             return reject(new \UnexpectedValueException('$messages must be an array or implement Traversable.'));
         }
 
-        $count = count($messages);
-
-        if ($count == 0) {
-            return resolve();
+        $headers = $promises = $messagesBulk = $messagesSingle = [];
+        if (isset($reason)) {
+            $headers['X-Audit-Log-Reason'] = $reason;
         }
 
-        if ($count == 1 || $this->is_private) {
-            foreach ($messages as $message) {
-                if ($message instanceof Message) {
-                    return $message->delete();
-                }
-
-                return $this->http->delete(Endpoint::bind(Endpoint::CHANNEL_MESSAGE, $this->id, $message));
-            }
-        } else {
-            $messageID = [];
-            $oldMessageID = [];
-            $promises = [];
-
-            $headers = [];
-            if (isset($reason)) {
-                $headers['X-Audit-Log-Reason'] = $reason;
+        foreach ($messages as $message) {
+            if ($message instanceof Message) {
+                $message = $message->id;
             }
 
-            foreach ($messages as $message) {
-                if ($message instanceof Message) {
-                    if ($message->timestamp->timestamp < time()-1209600) {
-                        $oldMessageID[] = $message->id;
-                    } else {
-                        $messageID[] = $message->id;
-                    }
-                } elseif (getSnowflakeTimestamp($message) < time()-1209600) {
-                    $oldMessageID[] = $message;
-                } else {
-                    $messageID[] = $message;
-                }
+            if ($this->is_private || getSnowflakeTimestamp($message) < time()-1209600) {
+                $messagesSingle[] = $message;
+            } else {
+                $messagesBulk[] = $message;
             }
-
-            while (count($messageID) > 1) {
-                $promises[] = $this->http->post(Endpoint::bind(Endpoint::CHANNEL_MESSAGES_BULK_DELETE, $this->id), ['messages' => array_slice($messageID, 0, 100)], $headers);
-                $messageID = array_slice($messageID, 100);
-            }
-
-            if (count($messageID) == 1) {
-                // This remaining message is not older than 2 weeks, but need to delete it in individual endpoint
-                $oldMessageID[] = array_pop($messageID);
-            }
-
-            foreach ($oldMessageID as $oldMessage) {
-                $promises[] = $this->http->delete(Endpoint::bind(Endpoint::CHANNEL_MESSAGE, $this->id, $oldMessage));
-            }
-
-            return all($promises);
         }
+
+        while (count($messagesBulk) > 1) {
+            $promises[] = $this->http->post(Endpoint::bind(Endpoint::CHANNEL_MESSAGES_BULK_DELETE, $this->id), ['messages' => array_slice($messagesBulk, 0, 100)], $headers);
+            $messagesBulk = array_slice($messagesBulk, 100);
+        }
+
+        $messagesSingle = array_merge($messagesSingle, $messagesBulk);
+
+        foreach ($messagesSingle as $message) {
+            $promises[] = $this->http->delete(Endpoint::bind(Endpoint::CHANNEL_MESSAGE, $this->id, $message));
+        }
+
+        return all($promises);
     }
 
     /**
