@@ -583,6 +583,13 @@ class Channel extends Part
                 }
             }
 
+            if (count($messageID) == 1) {
+                // this is not older than 2 weeks, but need to delete it in individual endpoint
+                $oldMessageID[] = $messageID[0];
+                // empty the bulk
+                $messageID = [];
+            }
+
             while (! empty($messageID)) {
                 $promises[] = $this->http->post(Endpoint::bind(Endpoint::CHANNEL_MESSAGES_BULK_DELETE, $this->id), ['messages' => array_slice($messageID, 0, 100)], $headers);
                 $messageID = array_slice($messageID, 100);
