@@ -553,9 +553,7 @@ class Channel extends Part
             return resolve();
         } elseif ($count == 1 || $this->is_private) {
             foreach ($messages as $message) {
-                if ($message instanceof Message ||
-                    $message = $this->messages->get('id', $message)
-                ) {
+                if ($message instanceof Message) {
                     return $message->delete();
                 }
 
