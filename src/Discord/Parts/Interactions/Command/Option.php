@@ -25,7 +25,7 @@ use function Discord\poly_strlen;
  * @property string                   $name          Name of the option.
  * @property string                   $description   1-100 character description.
  * @property bool                     $required      If the parameter is required or optional--default false.
- * @property Collection|Choice[]|null $choices       Choices for STRING, INTEGER, and NUMBER types for the user to pick from, max 25.
+ * @property Collection|Choice[]|null $choices       Choices for STRING, INTEGER, and NUMBER types for the user to pick from, max 25. Only for slash commands.
  * @property Collection|Option[]      $options       Sub-options if applicable.
  * @property array                    $channel_types If the option is a channel type, the channels shown will be restricted to these types.
  * @property int|float                $min_value     If the option is an INTEGER or NUMBER type, the minimum value permitted.
@@ -207,7 +207,7 @@ class Option extends Part
     }
 
     /**
-     * Adds a choice to the option.
+     * Adds a choice to the option (only for slash commands).
      *
      * @param Choice $choice The choice
      *
@@ -252,7 +252,7 @@ class Option extends Part
     }
 
     /**
-     * Removes a choice.
+     * Removes a choice (Only for slash commands).
      *
      * @param string|Choice $choice Choice object or name to remove.
      *
