@@ -561,6 +561,7 @@ class Channel extends Part
             }
         } else {
             $messageID = [];
+            $oldMessageID = [];
             $promises = [];
 
             $headers = [];
@@ -570,13 +571,13 @@ class Channel extends Part
 
             foreach ($messages as $message) {
                 if ($message instanceof Message) {
-                    if($message->timestamp->timestamp < time()-1209600) {
-                        $promises[] = $message->delete();
+                    if ($message->timestamp->timestamp < time()-1209600) {
+                        $oldMessageID[] = $message->id;
                     } else {
                         $messageID[] = $message->id;
                     }
                 } elseif (getSnowflakeTimestamp($message) < time()-1209600) {
-                    $promises[] = $this->http->delete(Endpoint::bind(Endpoint::CHANNEL_MESSAGE, $this->id, $message));
+                    $oldMessageID[] = $message;
                 } else {
                     $messageID[] = $message;
                 }
@@ -585,6 +586,10 @@ class Channel extends Part
             while (! empty($messageID)) {
                 $promises[] = $this->http->post(Endpoint::bind(Endpoint::CHANNEL_MESSAGES_BULK_DELETE, $this->id), ['messages' => array_slice($messageID, 0, 100)], $headers);
                 $messageID = array_slice($messageID, 100);
+            }
+
+            foreach ($oldMessageID as $oldMessage) {
+                $promises[] = $this->http->delete(Endpoint::bind(Endpoint::CHANNEL_MESSAGE, $this->id, $oldMessage));
             }
 
             return all($promises);
