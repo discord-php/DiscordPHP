@@ -1741,6 +1741,11 @@ Search.appendIndex(
             "summary": "Returns\u0020the\u0020first\u0020element\u0020of\u0020the\u0020collection.",
             "url": "classes/Discord-Helpers-Collection.html#method_first"
         },                {
+            "fqsen": "\\Discord\\Helpers\\Collection\u003A\u003Alast\u0028\u0029",
+            "name": "last",
+            "summary": "Returns\u0020the\u0020last\u0020element\u0020of\u0020the\u0020collection.",
+            "url": "classes/Discord-Helpers-Collection.html#method_last"
+        },                {
             "fqsen": "\\Discord\\Helpers\\Collection\u003A\u003Aisset\u0028\u0029",
             "name": "isset",
             "summary": "If\u0020the\u0020collection\u0020has\u0020an\u0020offset.",
@@ -5701,6 +5706,11 @@ Search.appendIndex(
             "summary": "Removes\u0020a\u0020role\u0020from\u0020the\u0020member.",
             "url": "classes/Discord-Parts-User-Member.html#method_removeRole"
         },                {
+            "fqsen": "\\Discord\\Parts\\User\\Member\u003A\u003AsetRoles\u0028\u0029",
+            "name": "setRoles",
+            "summary": "Updates\u0020member\u0020roles.",
+            "url": "classes/Discord-Parts-User-Member.html#method_setRoles"
+        },                {
             "fqsen": "\\Discord\\Parts\\User\\Member\u003A\u003AsendMessage\u0028\u0029",
             "name": "sendMessage",
             "summary": "Sends\u0020a\u0020message\u0020to\u0020the\u0020member.",
@@ -7303,7 +7313,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003A\u0024dnsConfig",
             "name": "dnsConfig",
-            "summary": "The\u0020Config\u0020for\u0020DNS\u0020Resolver",
+            "summary": "The\u0020Config\u0020for\u0020DNS\u0020Resolver.",
             "url": "classes/Discord-Voice-VoiceClient.html#property_dnsConfig"
         },                {
             "fqsen": "\\Discord\\Voice\\VoicePacket",
