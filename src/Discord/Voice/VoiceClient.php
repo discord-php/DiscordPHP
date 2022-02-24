@@ -319,7 +319,7 @@ class VoiceClient extends EventEmitter
     protected $version = 4;
 
     /**
-     * The Config for DNS Resolver
+     * The Config for DNS Resolver.
      *
      * @var string|\React\Dns\Config\Config
      */

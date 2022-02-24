@@ -229,6 +229,24 @@ class Collection implements ArrayAccess, JsonSerializable, IteratorAggregate, Co
     }
 
     /**
+     * Returns the last element of the collection.
+     *
+     * @return mixed
+     */
+    public function last()
+    {
+        $last = end($this->items);
+
+        if ($last !== false) {
+            reset($this->items);
+
+            return $last;
+        }
+
+        return null;
+    }
+
+    /**
      * If the collection has an offset.
      *
      * @param mixed $offset

@@ -38,6 +38,7 @@ use React\Promise\ExtendedPromiseInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Traversable;
 
+use function Discord\getSnowflakeTimestamp;
 use function React\Promise\all;
 use function React\Promise\reject;
 use function React\Promise\resolve;
@@ -546,45 +547,35 @@ class Channel extends Part
             return reject(new \UnexpectedValueException('$messages must be an array or implement Traversable.'));
         }
 
-        $count = count($messages);
-
-        if ($count == 0) {
-            return resolve();
-        } elseif ($count == 1 || $this->is_private) {
-            foreach ($messages as $message) {
-                if ($message instanceof Message ||
-                    $message = $this->messages->get('id', $message)
-                ) {
-                    return $message->delete();
-                }
-
-                return $this->http->delete(Endpoint::bind(Endpoint::CHANNEL_MESSAGE, $this->id, $message));
-            }
-        } else {
-            $messageID = [];
-
-            foreach ($messages as $message) {
-                if ($message instanceof Message) {
-                    $messageID[] = $message->id;
-                } else {
-                    $messageID[] = $message;
-                }
-            }
-
-            $promises = [];
-
-            $headers = [];
-            if (isset($reason)) {
-                $headers['X-Audit-Log-Reason'] = $reason;
-            }
-
-            while (! empty($messageID)) {
-                $promises[] = $this->http->post(Endpoint::bind(Endpoint::CHANNEL_MESSAGES_BULK_DELETE, $this->id), ['messages' => array_slice($messageID, 0, 100)], $headers);
-                $messageID = array_slice($messageID, 100);
-            }
-
-            return all($promises);
+        $headers = $promises = $messagesBulk = $messagesSingle = [];
+        if (isset($reason)) {
+            $headers['X-Audit-Log-Reason'] = $reason;
         }
+
+        foreach ($messages as $message) {
+            if ($message instanceof Message) {
+                $message = $message->id;
+            }
+
+            if ($this->is_private || getSnowflakeTimestamp($message) < time() - 1209600) {
+                $messagesSingle[] = $message;
+            } else {
+                $messagesBulk[] = $message;
+            }
+        }
+
+        while (count($messagesBulk) > 1) {
+            $promises[] = $this->http->post(Endpoint::bind(Endpoint::CHANNEL_MESSAGES_BULK_DELETE, $this->id), ['messages' => array_slice($messagesBulk, 0, 100)], $headers);
+            $messagesBulk = array_slice($messagesBulk, 100);
+        }
+
+        $messagesSingle = array_merge($messagesSingle, $messagesBulk);
+
+        foreach ($messagesSingle as $message) {
+            $promises[] = $this->http->delete(Endpoint::bind(Endpoint::CHANNEL_MESSAGE, $this->id, $message));
+        }
+
+        return all($promises);
     }
 
     /**
