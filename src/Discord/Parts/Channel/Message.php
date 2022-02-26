@@ -630,14 +630,18 @@ class Message extends Part
      *
      * @see https://discord.com/developers/docs/resources/channel#create-message
      *
-     * @param string $text The text to reply with.
+     * @param string|MessageBuilder $message The reply message.
      *
      * @return ExtendedPromiseInterface<Message>
      */
-    public function reply(string $text): ExtendedPromiseInterface
+    public function reply($message): ExtendedPromiseInterface
     {
+        if ($message instanceof MessageBuilder) {
+            return $this->channel->sendMessage($message->setReplyTo($this));
+        }
+
         return $this->channel->sendMessage(MessageBuilder::new()
-            ->setContent($text)
+            ->setContent($message)
             ->setReplyTo($this));
     }
 
@@ -660,17 +664,17 @@ class Message extends Part
      *
      * @see Message::reply()
      *
-     * @param string $text  Text to send after delay.
-     * @param int    $delay Delay after text will be sent in milliseconds.
+     * @param string|MessageBuilder $message Reply message to send after delay.
+     * @param int                   $delay   Delay after text will be sent in milliseconds.
      *
      * @return ExtendedPromiseInterface<Message>
      */
-    public function delayedReply(string $text, int $delay): ExtendedPromiseInterface
+    public function delayedReply($message, int $delay): ExtendedPromiseInterface
     {
         $deferred = new Deferred();
 
-        $this->discord->getLoop()->addTimer($delay / 1000, function () use ($text, $deferred) {
-            $this->reply($text)->done([$deferred, 'resolve'], [$deferred, 'reject']);
+        $this->discord->getLoop()->addTimer($delay / 1000, function () use ($message, $deferred) {
+            $this->reply($message)->done([$deferred, 'resolve'], [$deferred, 'reject']);
         });
 
         return $deferred->promise();
