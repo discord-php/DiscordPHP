@@ -310,7 +310,7 @@ class Channel extends Part
      */
     public function setOverwrite(Part $part, Overwrite $overwrite, ?string $reason = null): ExtendedPromiseInterface
     {
-        if (! $this->is_private) {
+        if ($this->guild) {
             $botperms = $this->guild->members->offsetGet($this->discord->id)->getPermissions($this);
 
             if (! $botperms->manage_roles) {
@@ -378,12 +378,10 @@ class Channel extends Part
             return reject(new \RuntimeException('You cannot move a member in a text channel.'));
         }
 
-        if (! $this->is_private) {
-            $botperms = $this->guild->members->offsetGet($this->discord->id)->getPermissions($this);
+        $botperms = $this->guild->members->offsetGet($this->discord->id)->getPermissions($this);
 
-            if (! $botperms->move_members) {
-                return reject(new NoPermissionsException('You do not have permission to move members in the specified channel.'));
-            }
+        if (! $botperms->move_members) {
+            return reject(new NoPermissionsException('You do not have permission to move members in the specified channel.'));
         }
 
         if ($member instanceof Member) {
@@ -415,12 +413,10 @@ class Channel extends Part
             return reject(new \RuntimeException('You cannot mute a member in a text channel.'));
         }
 
-        if (! $this->is_private) {
-            $botperms = $this->guild->members->offsetGet($this->discord->id)->getPermissions($this);
+        $botperms = $this->guild->members->offsetGet($this->discord->id)->getPermissions($this);
 
-            if (! $botperms->mute_members) {
-                return reject(new NoPermissionsException('You do not have permission to mute members in the specified channel.'));
-            }
+        if (! $botperms->mute_members) {
+            return reject(new NoPermissionsException('You do not have permission to mute members in the specified channel.'));
         }
 
         if ($member instanceof Member) {
@@ -452,12 +448,10 @@ class Channel extends Part
             return reject(new \RuntimeException('You cannot unmute a member in a text channel.'));
         }
 
-        if (! $this->is_private) {
-            $botperms = $this->guild->members->offsetGet($this->discord->id)->getPermissions($this);
+        $botperms = $this->guild->members->offsetGet($this->discord->id)->getPermissions($this);
 
-            if (! $botperms->mute_members) {
-                return reject(new NoPermissionsException('You do not have permission to unmute members in the specified channel.'));
-            }
+        if (! $botperms->mute_members) {
+            return reject(new NoPermissionsException('You do not have permission to unmute members in the specified channel.'));
         }
 
         if ($member instanceof Member) {
@@ -492,12 +486,14 @@ class Channel extends Part
      */
     public function createInvite($options = []): ExtendedPromiseInterface
     {
-        if (! $this->is_private) {
-            $botperms = $this->guild->members->offsetGet($this->discord->id)->getPermissions($this);
+        if (! $this->allowInvite()) {
+            return reject(new \RuntimeException('You cannot create invite in this type of channel.'));
+        }
 
-            if (! $botperms->create_instant_invite) {
-                return reject(new NoPermissionsException('You do not have permission to create an invite for the specified channel.'));
-            }
+        $botperms = $this->guild->members->offsetGet($this->discord->id)->getPermissions($this);
+
+        if (! $botperms->create_instant_invite) {
+            return reject(new NoPermissionsException('You do not have permission to create an invite for the specified channel.'));
         }
 
         $resolver = new OptionsResolver();
