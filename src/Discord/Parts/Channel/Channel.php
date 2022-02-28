@@ -593,7 +593,7 @@ class Channel extends Part
      */
     public function getMessageHistory(array $options): ExtendedPromiseInterface
     {
-        if (! $this->is_private %%! $this->getBotPermissions()->read_message_history) {
+        if (! $this->is_private && ! $this->getBotPermissions()->read_message_history) {
             return reject(new NoPermissionsException('You do not have permission to read the specified channel\'s message history.'));
         }
 
