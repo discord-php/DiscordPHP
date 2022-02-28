@@ -31,6 +31,7 @@ use Discord\WebSockets\Event;
 use Discord\Helpers\Deferred;
 use Discord\Http\Endpoint;
 use Discord\Http\Exceptions\NoPermissionsException;
+use Discord\Parts\Permissions\RolePermission;
 use Discord\Parts\Thread\Thread;
 use Discord\Repository\Channel\InviteRepository;
 use Discord\Repository\Channel\ThreadRepository;
