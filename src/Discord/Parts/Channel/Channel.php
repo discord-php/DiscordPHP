@@ -693,7 +693,7 @@ class Channel extends Part
      */
     public function unpinMessage(Message $message, ?string $reason = null): ExtendedPromiseInterface
     {
-        if (! $this->is_private && ! $this->getBotPermissions()manage_messages) {
+        if (! $this->is_private && ! $this->getBotPermissions()->manage_messages) {
             return reject(new NoPermissionsException('You do not have permission to unpin messages in the specified channel.'));
         }
 
