@@ -311,7 +311,7 @@ class Channel extends Part
     public function setOverwrite(Part $part, Overwrite $overwrite, ?string $reason = null): ExtendedPromiseInterface
     {
         if ($this->guild) {
-            $botperms = $this->guild->members->offsetGet($this->discord->id)->getPermissions($this);
+            $botperms = $this->getBotPermissions();
 
             if (! $botperms->manage_roles) {
                 return reject(new NoPermissionsException('You do not have permission to edit roles in the specified channel.'));
@@ -378,7 +378,7 @@ class Channel extends Part
             return reject(new \RuntimeException('You cannot move a member in a text channel.'));
         }
 
-        $botperms = $this->guild->members->offsetGet($this->discord->id)->getPermissions($this);
+        $botperms = $this->getBotPermissions();
 
         if (! $botperms->move_members) {
             return reject(new NoPermissionsException('You do not have permission to move members in the specified channel.'));
@@ -413,7 +413,7 @@ class Channel extends Part
             return reject(new \RuntimeException('You cannot mute a member in a text channel.'));
         }
 
-        $botperms = $this->guild->members->offsetGet($this->discord->id)->getPermissions($this);
+        $botperms = $this->getBotPermissions();
 
         if (! $botperms->mute_members) {
             return reject(new NoPermissionsException('You do not have permission to mute members in the specified channel.'));
@@ -448,7 +448,7 @@ class Channel extends Part
             return reject(new \RuntimeException('You cannot unmute a member in a text channel.'));
         }
 
-        $botperms = $this->guild->members->offsetGet($this->discord->id)->getPermissions($this);
+        $botperms = $this->getBotPermissions();
 
         if (! $botperms->mute_members) {
             return reject(new NoPermissionsException('You do not have permission to unmute members in the specified channel.'));
@@ -490,7 +490,7 @@ class Channel extends Part
             return reject(new \RuntimeException('You cannot create invite in this type of channel.'));
         }
 
-        $botperms = $this->guild->members->offsetGet($this->discord->id)->getPermissions($this);
+        $botperms = $this->getBotPermissions();
 
         if (! $botperms->create_instant_invite) {
             return reject(new NoPermissionsException('You do not have permission to create an invite for the specified channel.'));
@@ -606,7 +606,7 @@ class Channel extends Part
     public function getMessageHistory(array $options): ExtendedPromiseInterface
     {
         if (! $this->is_private) {
-            $botperms = $this->guild->members->offsetGet($this->discord->id)->getPermissions($this);
+            $botperms = $this->getBotPermissions();
 
             if (! $botperms->read_message_history) {
                 return reject(new NoPermissionsException('You do not have permission to read the specified channel\'s message history.'));
@@ -671,7 +671,7 @@ class Channel extends Part
     public function pinMessage(Message $message, ?string $reason = null): ExtendedPromiseInterface
     {
         if (! $this->is_private) {
-            $botperms = $this->guild->members->offsetGet($this->discord->id)->getPermissions($this);
+            $botperms = $this->getBotPermissions();
 
             if (! $botperms->manage_messages) {
                 return reject(new NoPermissionsException('You do not have permission to pin messages in the specified channel.'));
@@ -714,7 +714,7 @@ class Channel extends Part
     public function unpinMessage(Message $message, ?string $reason = null): ExtendedPromiseInterface
     {
         if (! $this->is_private) {
-            $botperms = $this->guild->members->offsetGet($this->discord->id)->getPermissions($this);
+            $botperms = $this->getBotPermissions();
 
             if (! $botperms->manage_messages) {
                 return reject(new NoPermissionsException('You do not have permission to unpin messages in the specified channel.'));
@@ -892,7 +892,7 @@ class Channel extends Part
         }
 
         if (! $this->is_private && $member = $this->guild->members->offsetGet($this->discord->id)) {
-            $botperms = $member->getPermissions($this);
+            $botperms = $this->getBotPermissions();
 
             if (! $botperms->send_messages) {
                 return reject(new NoPermissionsException('You do not have permission to send messages in the specified channel.'));
@@ -1079,6 +1079,16 @@ class Channel extends Part
     public function allowInvite()
     {
         return in_array($this->type, [self::TYPE_TEXT, self::TYPE_VOICE, self::TYPE_NEWS, self::TYPE_STAGE_CHANNEL]);
+    }
+
+    /**
+     * Returns the bot's permissions in the channel.
+     *
+     * @return RolePermission
+     */
+    public function getBotPermissions(): RolePermission
+    {
+        return $this->guild->members->offsetGet($this->discord->id)->getPermissions($this);
     }
 
     /**

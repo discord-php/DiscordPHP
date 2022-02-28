@@ -1021,9 +1021,8 @@ class Guild extends Part
     public function createInvite(...$args): ExtendedPromiseInterface
     {
         /** @var Member */
-        $botMember = $this->members->offsetGet($this->discord->id);
-        $channel = $this->channels->find(function (Channel $channel) use ($botMember) {
-            return $channel->allowInvite() && $botMember->getPermissions($channel)->create_instant_invite;
+        $channel = $this->channels->find(function (Channel $channel) {
+            return $channel->allowInvite() && $channel->getBotPermissions()->create_instant_invite;
         });
 
         if (! $channel) {
