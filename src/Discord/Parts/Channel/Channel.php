@@ -310,7 +310,7 @@ class Channel extends Part
      */
     public function setOverwrite(Part $part, Overwrite $overwrite, ?string $reason = null): ExtendedPromiseInterface
     {
-        if ($this->guild && ! $this->is_private) {
+        if ($this->guild) {
             $botperms = $this->guild->members->offsetGet($this->discord->id)->getPermissions($this);
 
             if (! $botperms->manage_roles) {
