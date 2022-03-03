@@ -22,20 +22,15 @@ use Discord\Repository\Interaction\OptionRepository;
  * @property string           $name    Name of the option.
  * @property int              $type    Type of the option.
  * @property mixed            $value   Value of the option.
- * @property bool             $focused Whether this option is the currently focused option for autocomplete.
  * @property OptionRepository $options Sub-options if applicable.
+ * @property bool             $focused Whether this option is the currently focused option for autocomplete.
  */
 class Option extends Part
 {
     /**
      * @inheritdoc
      */
-    protected $fillable = ['name', 'type', 'value', 'focused'];
-
-    /**
-     * @inheritdoc
-     */
-    protected $visible = ['options'];
+    protected $fillable = ['name', 'type', 'value', 'options', 'focused'];
 
     /**
      * @inheritdoc
