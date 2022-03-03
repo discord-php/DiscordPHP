@@ -2171,6 +2171,11 @@ Search.appendIndex(
             "summary": "Returns\u0020if\u0020allow\u0020invite.",
             "url": "classes/Discord-Parts-Channel-Channel.html#method_allowInvite"
         },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Channel\u003A\u003AgetBotPermissions\u0028\u0029",
+            "name": "getBotPermissions",
+            "summary": "Returns\u0020the\u0020bot\u0027s\u0020permissions\u0020in\u0020the\u0020channel.",
+            "url": "classes/Discord-Parts-Channel-Channel.html#method_getBotPermissions"
+        },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Channel\u003A\u003AgetCreatableAttributes\u0028\u0029",
             "name": "getCreatableAttributes",
             "summary": "Returns\u0020the\u0020attributes\u0020needed\u0020to\u0020create.",
@@ -4508,7 +4513,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Parts\\Interactions\\Command\\Option\u003A\u003AaddChoice\u0028\u0029",
             "name": "addChoice",
-            "summary": "Adds\u0020a\u0020choice\u0020to\u0020the\u0020option.",
+            "summary": "Adds\u0020a\u0020choice\u0020to\u0020the\u0020option\u0020\u0028Only\u0020for\u0020slash\u0020commands\u0029.",
             "url": "classes/Discord-Parts-Interactions-Command-Option.html#method_addChoice"
         },                {
             "fqsen": "\\Discord\\Parts\\Interactions\\Command\\Option\u003A\u003AremoveOption\u0028\u0029",
@@ -4518,7 +4523,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Parts\\Interactions\\Command\\Option\u003A\u003AremoveChoice\u0028\u0029",
             "name": "removeChoice",
-            "summary": "Removes\u0020a\u0020choice.",
+            "summary": "Removes\u0020a\u0020choice\u0020\u0028Only\u0020for\u0020slash\u0020commands\u0029.",
             "url": "classes/Discord-Parts-Interactions-Command-Option.html#method_removeChoice"
         },                {
             "fqsen": "\\Discord\\Parts\\Interactions\\Command\\Option\u003A\u003AsetMinValue\u0028\u0029",
@@ -4840,11 +4845,6 @@ Search.appendIndex(
             "name": "fillable",
             "summary": "The\u0020parts\u0020fillable\u0020attributes.",
             "url": "classes/Discord-Parts-Interactions-Request-Option.html#property_fillable"
-        },                {
-            "fqsen": "\\Discord\\Parts\\Interactions\\Request\\Option\u003A\u003A\u0024visible",
-            "name": "visible",
-            "summary": "Attributes\u0020which\u0020are\u0020visible\u0020from\u0020debug\u0020info.",
-            "url": "classes/Discord-Parts-Interactions-Request-Option.html#property_visible"
         },                {
             "fqsen": "\\Discord\\Parts\\Interactions\\Request\\Option\u003A\u003A\u0024repositories",
             "name": "repositories",
