@@ -1174,7 +1174,7 @@ class VoiceClient extends EventEmitter
      */
     public function isSpeaking(string $id): bool
     {
-        if {$id == $this->channel->discord->id) {
+        if ($id == $this->channel->discord->id) {
             return $this->speaking;
         } elseif ($user = $this->speakingStatus->get('user_id', $id)) {
             return $user->speaking;
