@@ -776,11 +776,12 @@ class VoiceClient extends EventEmitter
 
         $buffer = new RealBuffer($this->loop);
         $stream->on('data', function ($d) use ($buffer) {
-            $buffer->write($d);
+            if (! $this->stopAudio) {
+                $buffer->write($d);
+            }
         });
 
-        $count = 0;
-        $readOpus = function () use ($buffer, $deferred, &$readOpus, &$count, $process) {
+        $readOpus = function () use ($buffer, $deferred, &$readOpus, $process) {
             // If the client is paused, delay by frame size and check again.
             if ($this->isPaused) {
                 $this->loop->addTimer($this->frameSize / 1000, $readOpus);
@@ -797,17 +798,18 @@ class VoiceClient extends EventEmitter
                 }
 
                 $this->reset();
+                $buffer->end();
                 $deferred->resolve();
 
-                return;
+                // https://discord.com/developers/docs/topics/voice-connections#voice-data-interpolation
+                return pack('c*', 0xF8, 0xFF, 0xFE, 0xF8, 0xFF, 0xFE, 0xF8, 0xFF, 0xFE, 0xF8, 0xFF, 0xFE, 0xF8, 0xFF, 0xFE);
             }
 
             // Read opus length
             $buffer->readInt16(1000)->then(function ($opusLength) use ($buffer) {
                 // Read opus data
                 return $buffer->read($opusLength, null, 1000);
-            })->then(function ($opus) use (&$readOpus, &$count) {
-                ++$count;
+            })->then(function ($opus) use (&$readOpus) {
                 $this->sendBuffer($opus);
 
                 // increment sequence
@@ -824,7 +826,6 @@ class VoiceClient extends EventEmitter
 
                 $this->loop->addTimer(($this->frameSize - 1) / 1000, $readOpus);
             }, function () use ($deferred) {
-                $this->setSpeaking(false);
                 $this->reset();
                 $deferred->resolve();
             });
