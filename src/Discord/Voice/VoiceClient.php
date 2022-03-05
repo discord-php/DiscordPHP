@@ -51,6 +51,13 @@ class VoiceClient extends EventEmitter
     public const DCA_VERSION = 'DCA1';
 
     /**
+     * Silence Frame for Interpolation.
+     *
+     * @var string The silence frame.
+     */
+    public const SILENCE_FRAME = pack('c*', 0xF8, 0xFF, 0xFE);
+
+    /**
      * Is the voice client ready?
      *
      * @var bool Whether the voice client is ready.
@@ -324,6 +331,13 @@ class VoiceClient extends EventEmitter
      * @var string|\React\Dns\Config\Config
      */
     protected $dnsConfig;
+
+    /**
+     * The amount of interpolation frames to insert.
+     *
+     * @var int The count of interpolation frames remaining.
+     */
+    protected $interpolation = 5;
 
     /**
      * Constructs the Voice Client instance.
@@ -784,12 +798,25 @@ class VoiceClient extends EventEmitter
         $readOpus = function () use ($buffer, $deferred, &$readOpus, $process) {
             // If the client is paused, delay by frame size and check again.
             if ($this->isPaused) {
+                // https://discord.com/developers/docs/topics/voice-connections#voice-data-interpolation
+                if ($this->interpolation--) {
+                     $this->sendBuffer(self::SILENCE_FRAME);
+                }
+
                 $this->loop->addTimer($this->frameSize / 1000, $readOpus);
 
                 return;
             }
 
             if ($this->stopAudio) {
+                // https://discord.com/developers/docs/topics/voice-connections#voice-data-interpolation
+                if ($this->interpolation--) {
+                    $this->sendBuffer(self::SILENCE_FRAME);
+                    $this->loop->addTimer($this->frameSize / 1000, $readOpus);
+
+                    return;
+                }
+
                 if ($process instanceof Process) {
                     foreach ($process->pipes as $pipe) {
                         $pipe->close();
@@ -801,9 +828,10 @@ class VoiceClient extends EventEmitter
                 $buffer->end();
                 $deferred->resolve();
 
-                // https://discord.com/developers/docs/topics/voice-connections#voice-data-interpolation
-                return pack('c*', 0xF8, 0xFF, 0xFE, 0xF8, 0xFF, 0xFE, 0xF8, 0xFF, 0xFE, 0xF8, 0xFF, 0xFE, 0xF8, 0xFF, 0xFE);
+                return;
             }
+
+            $this->interpolation = 5;
 
             // Read opus length
             $buffer->readInt16(1000)->then(function ($opusLength) use ($buffer) {
