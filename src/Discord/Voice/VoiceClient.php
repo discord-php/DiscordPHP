@@ -1168,7 +1168,7 @@ class VoiceClient extends EventEmitter
     /**
      * Checks if the user is speaking.
      *
-     * @param string|int||null $id Either the User ID or SSRC (if null, return bots speaking status).
+     * @param string|int|null $id Either the User ID or SSRC (if null, return bots speaking status).
      *
      * @return bool Whether the user is speaking.
      */
