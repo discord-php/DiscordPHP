@@ -1168,13 +1168,13 @@ class VoiceClient extends EventEmitter
     /**
      * Checks if the user is speaking.
      *
-     * @param int $id Either the User ID or SSRC.
+     * @param int|null $id Either the User ID or SSRC (if null, return bots speaking status).
      *
      * @return bool Whether the user is speaking.
      */
-    public function isSpeaking(string $id): bool
+    public function isSpeaking(?string $id = null): bool
     {
-        if ($id == $this->channel->discord->id) {
+        if (! isset($id)) {
             return $this->speaking;
         } elseif ($user = $this->speakingStatus->get('user_id', $id)) {
             return $user->speaking;
