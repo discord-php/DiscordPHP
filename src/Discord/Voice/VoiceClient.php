@@ -1168,11 +1168,11 @@ class VoiceClient extends EventEmitter
     /**
      * Checks if the user is speaking.
      *
-     * @param string|null $id Either the User ID or SSRC (if null, return bots speaking status).
+     * @param string|int||null $id Either the User ID or SSRC (if null, return bots speaking status).
      *
      * @return bool Whether the user is speaking.
      */
-    public function isSpeaking(?string $id = null): bool
+    public function isSpeaking($id = null): bool
     {
         if (! isset($id)) {
             return $this->speaking;
