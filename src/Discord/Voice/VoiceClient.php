@@ -831,8 +831,6 @@ class VoiceClient extends EventEmitter
                 return;
             }
 
-            $this->interpolation = 5;
-
             // Read opus length
             $buffer->readInt16(1000)->then(function ($opusLength) use ($buffer) {
                 // Read opus data
@@ -1112,6 +1110,7 @@ class VoiceClient extends EventEmitter
         }
 
         $this->isPaused = true;
+        $this->interpolation = 5;
     }
 
     /**
@@ -1141,6 +1140,7 @@ class VoiceClient extends EventEmitter
         }
 
         $this->stopAudio = true;
+        $this->interpolation = 5;
     }
 
     /**
