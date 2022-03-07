@@ -51,11 +51,11 @@ class VoiceClient extends EventEmitter
     public const DCA_VERSION = 'DCA1';
 
     /**
-     * Silence Frame for Interpolation.
+     * The Opus Silence Frame.
      *
      * @var string The silence frame.
      */
-    public const SILENCE_FRAME = pack('c*', 0xF8, 0xFF, 0xFE);
+    public const SILENCE_FRAME = "\xF8\xFF\xFE";
 
     /**
      * Is the voice client ready?
@@ -205,13 +205,6 @@ class VoiceClient extends EventEmitter
     protected $speaking = false;
 
     /**
-     * Should we stop the current playing audio?
-     *
-     * @var bool Whether we should stop the current playing audio.
-     */
-    protected $stopAudio = false;
-
-    /**
      * Whether we are set as mute.
      *
      * @var bool Whether we are set as mute.
@@ -333,11 +326,25 @@ class VoiceClient extends EventEmitter
     protected $dnsConfig;
 
     /**
-     * The amount of interpolation frames to insert.
+     * Silence Frame Remain Count
      *
-     * @var int The count of interpolation frames remaining.
+     * @var int Amount of silence frames remaining.
      */
-    protected $interpolation = 5;
+    protected $silenceRemaining = 5;
+
+    /**
+     * readopus Timer
+     *
+     * @var TimerInterface Timer
+     */
+    protected $readOpusTimer;
+
+    /**
+     * Audio Buffer
+     *
+     * @var Buffer The Audio Buffer
+     */
+    protected $buffer;
 
     /**
      * Constructs the Voice Client instance.
@@ -441,7 +448,7 @@ class VoiceClient extends EventEmitter
 
                     $this->udpHeartbeat = $this->loop->addPeriodicTimer(5, function () use ($client) {
                         $buffer = new Buffer(9);
-                        $buffer[0] = pack('c', 0xC9);
+                        $buffer[0] = "\xC9";
                         $buffer->writeUInt64LE($this->heartbeatSeq, 1);
                         ++$this->heartbeatSeq;
 
@@ -507,17 +514,6 @@ class VoiceClient extends EventEmitter
                     $end = microtime(true);
                     $start = $data->d;
                     $diff = ($end - $start) * 1000;
-
-                    // dont know what this is
-                    // dynamic frame size obviously
-                    // doesnt work
-                    // if ($diff <= 10) { // set to 20ms
-                    //     $this->setFrameSize(20);
-                    // } elseif ($diff <= 20) { // set to 40ms
-                    //     $this->setFrameSize(40);
-                    // } else { // set to 60ms
-                    //     $this->setFrameSize(60);
-                    // }
 
                     $this->logger->debug('received heartbeat ack', ['response_time' => $diff]);
                     $this->emit('ws-ping', [$diff]);
@@ -702,6 +698,12 @@ class VoiceClient extends EventEmitter
             return $deferred->promise();
         }
 
+        if ($this->speaking) {
+            $deferred->reject(new \Exception('Audio already playing.'));
+
+            return $deferred->promise();
+        }
+
         $process = $this->dcaEncode($file, $channels);
         $process->start($this->loop);
 
@@ -723,6 +725,12 @@ class VoiceClient extends EventEmitter
 
         if (! $this->ready) {
             $deferred->reject(new \Exception('Voice Client is not ready.'));
+
+            return $deferred->promise();
+        }
+
+        if ($this->speaking) {
+            $deferred->reject(new \Exception('Audio already playing.'));
 
             return $deferred->promise();
         }
@@ -757,10 +765,14 @@ class VoiceClient extends EventEmitter
     {
         $deferred = new Deferred();
 
-        $process = false;
-
         if (! $this->isReady()) {
             $deferred->reject(new Exception('Voice client is not ready yet.'));
+
+            return $deferred->promise();
+        }
+
+        if ($this->speaking) {
+            $deferred->reject(new \Exception('Audio already playing.'));
 
             return $deferred->promise();
         }
@@ -774,7 +786,6 @@ class VoiceClient extends EventEmitter
                 $this->emit('stderr', [$d, $this]);
             });
 
-            $process = $stream;
             $stream = $stream->stdout;
         }
 
@@ -788,53 +799,26 @@ class VoiceClient extends EventEmitter
             return $deferred->promise();
         }
 
-        $buffer = new RealBuffer($this->loop);
-        $stream->on('data', function ($d) use ($buffer) {
-            if (! $this->stopAudio) {
-                $buffer->write($d);
-            }
+        $this->buffer = new RealBuffer($this->loop);
+        $stream->on('data', function ($d) {
+            $this->buffer->write($d);
         });
 
-        $readOpus = function () use ($buffer, $deferred, &$readOpus, $process) {
+        $readOpus = function () use ($deferred, &$readOpus) {
+            $this->readOpusTimer = null;
+
             // If the client is paused, delay by frame size and check again.
             if ($this->isPaused) {
-                // https://discord.com/developers/docs/topics/voice-connections#voice-data-interpolation
-                if ($this->interpolation--) {
-                     $this->sendBuffer(self::SILENCE_FRAME);
-                }
-
-                $this->loop->addTimer($this->frameSize / 1000, $readOpus);
-
-                return;
-            }
-
-            if ($this->stopAudio) {
-                // https://discord.com/developers/docs/topics/voice-connections#voice-data-interpolation
-                if ($this->interpolation--) {
-                    $this->sendBuffer(self::SILENCE_FRAME);
-                    $this->loop->addTimer($this->frameSize / 1000, $readOpus);
-
-                    return;
-                }
-
-                if ($process instanceof Process) {
-                    foreach ($process->pipes as $pipe) {
-                        $pipe->close();
-                    }
-                    $process->terminate(15);
-                }
-
-                $this->reset();
-                $buffer->end();
-                $deferred->resolve();
+                $this->insertSilence();
+                $this->readOpusTimer = $this->loop->addTimer($this->frameSize / 1000, $readOpus);
 
                 return;
             }
 
             // Read opus length
-            $buffer->readInt16(1000)->then(function ($opusLength) use ($buffer) {
+            $this->buffer->readInt16(1000)->then(function ($opusLength) {
                 // Read opus data
-                return $buffer->read($opusLength, null, 1000);
+                return $this->buffer->read($opusLength, null, 1000);
             })->then(function ($opus) use (&$readOpus) {
                 $this->sendBuffer($opus);
 
@@ -850,7 +834,7 @@ class VoiceClient extends EventEmitter
                     $this->timestamp = 0;
                 }
 
-                $this->loop->addTimer(($this->frameSize - 1) / 1000, $readOpus);
+                $this->readOpusTimer = $this->loop->addTimer(($this->frameSize - 1) / 1000, $readOpus);
             }, function () use ($deferred) {
                 $this->reset();
                 $deferred->resolve();
@@ -860,16 +844,16 @@ class VoiceClient extends EventEmitter
         $this->setSpeaking(true);
 
         // Read magic byte header
-        $buffer->read(4)->then(function ($mb) use ($buffer) {
+        $this->buffer->read(4)->then(function ($mb) {
             if ($mb !== self::DCA_VERSION) {
                 throw new OutdatedDCAException('The DCA magic byte header was not correct.');
             }
 
             // Read JSON length
-            return $buffer->readInt32();
-        })->then(function ($jsonLength) use ($buffer) {
+            return $this->buffer->readInt32();
+        })->then(function ($jsonLength) {
             // Read JSON content
-            return $buffer->read($jsonLength);
+            return $this->buffer->read($jsonLength);
         })->then(function ($metadata) use ($readOpus) {
             $metadata = json_decode($metadata, true);
 
@@ -878,7 +862,7 @@ class VoiceClient extends EventEmitter
             }
 
             $this->startTime = microtime(true) + 0.5;
-            $this->loop->addTimer(0.5, $readOpus);
+            $this->readOpusTimer = $this->loop->addTimer(0.5, $readOpus);
         });
 
         return $deferred->promise();
@@ -887,13 +871,20 @@ class VoiceClient extends EventEmitter
     /**
      * Resets the voice client.
      */
-    private function reset()
+    private function reset(): void
     {
+        if ($this->readOpusTimer) {
+             $this->loop->cancelTimer($this->readOpusTimer);
+             $this->readOpusTimer = null;
+        }
+
         $this->setSpeaking(false);
         $this->seq = 0;
         $this->timestamp = 0;
         $this->streamTime = 0;
         $this->startTime = 0;
+        $this->isPaused = false;
+        $this->silenceRemaining = 5;
     }
 
     /**
@@ -1110,7 +1101,7 @@ class VoiceClient extends EventEmitter
         }
 
         $this->isPaused = true;
-        $this->interpolation = 5;
+        $this->silenceRemaining = 5;
     }
 
     /**
@@ -1128,19 +1119,27 @@ class VoiceClient extends EventEmitter
 
     /**
      * Stops the current sound.
+     *
+     * @return ExtendedPromiseInterface
+     * @throws \Exception
      */
-    public function stop(): void
+    public function stop(): ExtendedPromiseInterface
     {
-        if ($this->stopAudio) {
-            throw new \Exception('Audio is already being stopped.');
-        }
+        $deferred = new Deferred();
 
         if (! $this->speaking) {
-            throw new \Exception('Audio must be playing to stop it.');
+            $deferred->reject(new \Exception('Audio must be playing to stop it.'));
+
+            return $deferred->promise();
         }
 
-        $this->stopAudio = true;
-        $this->interpolation = 5;
+        $this->buffer->end();
+        $this->insertSilence();
+        $this->reset();
+
+        $deferred->resolve();
+
+        return $deferred->promise();
     }
 
     /**
@@ -1197,13 +1196,15 @@ class VoiceClient extends EventEmitter
     /**
      * Checks if the user is speaking.
      *
-     * @param int $id Either the User ID or SSRC.
+     * @param string|int|null $id Either the User ID or SSRC (if null, return bots speaking status).
      *
      * @return bool Whether the user is speaking.
      */
-    public function isSpeaking(string $id): bool
+    public function isSpeaking($id = null): bool
     {
-        if ($user = $this->speakingStatus->get('user_id', $id)) {
+        if (! isset($id)) {
+            return $this->speaking;
+        } elseif ($user = $this->speakingStatus->get('user_id', $id)) {
             return $user->speaking;
         } elseif ($ssrc = $this->speakingStatus->get('ssrc', $id)) {
             return $ssrc->speaking;
@@ -1520,5 +1521,17 @@ class VoiceClient extends EventEmitter
     public function getChannel(): Channel
     {
         return $this->channel;
+    }
+
+    /**
+     * Insert 5 frames of silence.
+     *
+     */
+    private function insertSilence(): void
+    {
+        // https://discord.com/developers/docs/topics/voice-connections#voice-data-interpolation
+        while ($silenceRemaining--) {
+             $this->sendBuffer(self::SILENCE_FRAME);
+        }
     }
 }
