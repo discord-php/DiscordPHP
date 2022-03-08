@@ -1119,27 +1119,18 @@ class VoiceClient extends EventEmitter
 
     /**
      * Stops the current sound.
-     *
-     * @return ExtendedPromiseInterface
-     * @throws \Exception
      */
-    public function stop(): ExtendedPromiseInterface
+    public function stop(): void
     {
-        $deferred = new Deferred();
-
         if (! $this->speaking) {
-            $deferred->reject(new \Exception('Audio must be playing to stop it.'));
+            throw new \Exception('Audio must be playing to stop it.'));
 
-            return $deferred->promise();
+            return;
         }
 
         $this->buffer->end();
         $this->insertSilence();
         $this->reset();
-
-        $deferred->resolve();
-
-        return $deferred->promise();
     }
 
     /**
