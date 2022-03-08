@@ -1123,7 +1123,7 @@ class VoiceClient extends EventEmitter
     public function stop(): void
     {
         if (! $this->speaking) {
-            throw new \Exception('Audio must be playing to stop it.'));
+            throw new \Exception('Audio must be playing to stop it.');
 
             return;
         }
