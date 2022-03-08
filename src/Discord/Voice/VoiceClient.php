@@ -1529,7 +1529,7 @@ class VoiceClient extends EventEmitter
     private function insertSilence(): void
     {
         // https://discord.com/developers/docs/topics/voice-connections#voice-data-interpolation
-        while ($silenceRemaining--) {
+        while ($this->silenceRemaining--) {
              $this->sendBuffer(self::SILENCE_FRAME);
         }
     }
