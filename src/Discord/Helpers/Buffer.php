@@ -213,6 +213,7 @@ class Buffer extends EventEmitter implements WritableStreamInterface
 
         $this->buffer = [];
         $this->closed = true;
+        $this->readPointer = 0;
         $this->emit('close');
     }
 }
