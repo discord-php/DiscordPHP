@@ -1525,7 +1525,6 @@ class VoiceClient extends EventEmitter
 
     /**
      * Insert 5 frames of silence.
-     *
      */
     private function insertSilence(): void
     {
