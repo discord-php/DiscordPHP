@@ -25,6 +25,7 @@ use Discord\Parts\Guild\Role;
 use Discord\Parts\Part;
 use Discord\Parts\Permissions\Permission;
 use Discord\Parts\Permissions\RolePermission;
+use Discord\Parts\Thread\Thread;
 use Discord\Parts\WebSockets\PresenceUpdate;
 use React\Promise\ExtendedPromiseInterface;
 
@@ -305,8 +306,13 @@ class Member extends Part
      *
      * @return RolePermission
      */
-    public function getPermissions(?Channel $channel = null): RolePermission
+    public function getPermissions($channel = null): RolePermission
     {
+        if ($channel instanceof thread) {
+            $channel = $this->guild->channels->get('id', $channel->parent_id);
+        } elseif (!($channel instanceof channel)) {
+            return reject(new \RuntimeException('Must be an instace of Channel or Thread.'));
+        }
         // Get @everyone role guild permission
         $bitwise = $this->guild->roles->get('id', $this->guild_id)->permissions->bitwise;
 
