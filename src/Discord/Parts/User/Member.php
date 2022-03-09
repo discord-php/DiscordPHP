@@ -311,7 +311,7 @@ class Member extends Part
         if ($channel instanceof thread) {
             $channel = $this->guild->channels->get('id', $channel->parent_id);
         } elseif (!($channel instanceof channel)) {
-            return reject(new \RuntimeException('Must be an instace of Channel or Thread.'));
+           return $this->factory->part(RolePermission::class, ['bitwise' => 0]);
         }
         // Get @everyone role guild permission
         $bitwise = $this->guild->roles->get('id', $this->guild_id)->permissions->bitwise;
