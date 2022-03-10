@@ -309,7 +309,7 @@ class Member extends Part
     public function getPermissions($channel = null): RolePermission
     {
         if ($channel && !($channel instanceof Channel)) {
-            return $this->factory->part(RolePermission::class, ['bitwise' => 0]);
+            throw new \InvalidArgumentException('$channel must be an instance of Channel, Thread or null.');
         } elseif ($channel instanceof Thread) {
             $channel = $this->guild->channels->get('id', $channel->parent_id);
         }
