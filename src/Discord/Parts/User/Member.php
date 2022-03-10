@@ -304,6 +304,8 @@ class Member extends Part
      *
      * @param Channel|Thread|null $channel
      *
+     * @throws \InvalidArgumentException
+     *
      * @return RolePermission
      */
     public function getPermissions($channel = null): RolePermission
