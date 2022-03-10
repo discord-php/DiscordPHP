@@ -302,16 +302,16 @@ class Member extends Part
      *
      * @see https://discord.com/developers/docs/topics/permissions
      *
-     * @param Channel|null $channel
+     * @param Channel|Thread|null $channel
      *
      * @return RolePermission
      */
     public function getPermissions($channel = null): RolePermission
     {
-        if ($channel instanceof thread) {
+        if ($channel instanceof Thread) {
             $channel = $this->guild->channels->get('id', $channel->parent_id);
-        } elseif (!($channel instanceof channel)) {
-           return $this->factory->part(RolePermission::class, ['bitwise' => 0]);
+        } elseif ($channel && !($channel instanceof channel)) {
+            return $this->factory->part(RolePermission::class, ['bitwise' => 0]);
         }
         // Get @everyone role guild permission
         $bitwise = $this->guild->roles->get('id', $this->guild_id)->permissions->bitwise;
