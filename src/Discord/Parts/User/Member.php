@@ -25,6 +25,7 @@ use Discord\Parts\Guild\Role;
 use Discord\Parts\Part;
 use Discord\Parts\Permissions\Permission;
 use Discord\Parts\Permissions\RolePermission;
+use Discord\Parts\Thread\Thread;
 use Discord\Parts\WebSockets\PresenceUpdate;
 use React\Promise\ExtendedPromiseInterface;
 
@@ -301,12 +302,21 @@ class Member extends Part
      *
      * @see https://discord.com/developers/docs/topics/permissions
      *
-     * @param Channel|null $channel
+     * @param Channel|Thread|null $channel
+     *
+     * @throws \InvalidArgumentException
      *
      * @return RolePermission
      */
-    public function getPermissions(?Channel $channel = null): RolePermission
+    public function getPermissions($channel = null): RolePermission
     {
+        if ($channel) {
+            if ($channel instanceof Thread) {
+                $channel = $this->guild->channels->get('id', $channel->parent_id);
+            } elseif (!($channel instanceof Channel)) {
+                throw new \InvalidArgumentException('$channel must be an instance of Channel, Thread or null.');
+            }
+        }
         // Get @everyone role guild permission
         $bitwise = $this->guild->roles->get('id', $this->guild_id)->permissions->bitwise;
 
