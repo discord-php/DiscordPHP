@@ -308,10 +308,12 @@ class Member extends Part
      */
     public function getPermissions($channel = null): RolePermission
     {
-        if ($channel && !($channel instanceof Channel)) {
-            throw new \InvalidArgumentException('$channel must be an instance of Channel, Thread or null.');
-        } elseif ($channel instanceof Thread) {
-            $channel = $this->guild->channels->get('id', $channel->parent_id);
+        if ($channel) {
+            if ($channel instanceof Thread) {
+                $channel = $this->guild->channels->get('id', $channel->parent_id);
+            } elseif (!($channel instanceof Channel)) {
+                throw new \InvalidArgumentException('$channel must be an instance of Channel, Thread or null.');
+            }
         }
         // Get @everyone role guild permission
         $bitwise = $this->guild->roles->get('id', $this->guild_id)->permissions->bitwise;
