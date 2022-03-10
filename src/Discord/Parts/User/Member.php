@@ -308,10 +308,10 @@ class Member extends Part
      */
     public function getPermissions($channel = null): RolePermission
     {
-        if ($channel instanceof Thread) {
-            $channel = $this->guild->channels->get('id', $channel->parent_id);
-        } elseif ($channel && !($channel instanceof channel)) {
+        if ($channel && !($channel instanceof Channel)) {
             return $this->factory->part(RolePermission::class, ['bitwise' => 0]);
+        } elseif ($channel instanceof Thread) {
+            $channel = $this->guild->channels->get('id', $channel->parent_id);
         }
         // Get @everyone role guild permission
         $bitwise = $this->guild->roles->get('id', $this->guild_id)->permissions->bitwise;
