@@ -332,6 +332,8 @@ class Discord
         $this->loop = $options['loop'];
         $this->logger = $options['logger'];
 
+        $this->logger->debug('Initializing DiscordPHP '.self::VERSION.' (DiscordPHP-Http: '.Http::VERSION.' & Gateway: v'.self::GATEWAY_VERSION.') on PHP '.PHP_VERSION);
+
         $connector = new SocketConnector($this->loop, $options['socket_options']);
         $this->wsFactory = new Connector($this->loop, $connector);
         $this->handlers = new Handlers();
