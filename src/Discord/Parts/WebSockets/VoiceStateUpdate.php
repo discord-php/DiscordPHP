@@ -78,7 +78,7 @@ class VoiceStateUpdate extends Part
      */
     protected function getChannelAttribute(): ?Channel
     {
-        if (! $this->channel_id) {
+        if (! isset($this->attributes['channel_id'])) {
             return null;
         }
 
