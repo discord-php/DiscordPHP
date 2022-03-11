@@ -498,7 +498,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\SelectMenu\u003A\u003A\u0024placeholder",
             "name": "placeholder",
-            "summary": "Placeholder\u0020string\u0020to\u0020display\u0020if\u0020nothing\u0020is\u0020selected.\u0020Maximum\u0020100\u0020characters.",
+            "summary": "Placeholder\u0020string\u0020to\u0020display\u0020if\u0020nothing\u0020is\u0020selected.\u0020Maximum\u0020150\u0020characters.",
             "url": "classes/Discord-Builders-Components-SelectMenu.html#property_placeholder"
         },                {
             "fqsen": "\\Discord\\Builders\\Components\\SelectMenu\u003A\u003A\u0024min_values",
@@ -5206,6 +5206,16 @@ Search.appendIndex(
             "summary": "Sets\u0020the\u0020bitwise\u0020attribute\u0020of\u0020the\u0020permission.",
             "url": "classes/Discord-Parts-Permissions-Permission.html#method_setBitwiseAttribute"
         },                {
+            "fqsen": "\\Discord\\Parts\\Permissions\\Permission\u003A\u003AgetUseEmbeddedActivitiesAttribute\u0028\u0029",
+            "name": "getUseEmbeddedActivitiesAttribute",
+            "summary": "",
+            "url": "classes/Discord-Parts-Permissions-Permission.html#method_getUseEmbeddedActivitiesAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Permissions\\Permission\u003A\u003AsetUseEmbeddedActivitiesAttribute\u0028\u0029",
+            "name": "setUseEmbeddedActivitiesAttribute",
+            "summary": "",
+            "url": "classes/Discord-Parts-Permissions-Permission.html#method_setUseEmbeddedActivitiesAttribute"
+        },                {
             "fqsen": "\\Discord\\Parts\\Permissions\\Permission\u003A\u003AgetUseSlashCommandsAttribute\u0028\u0029",
             "name": "getUseSlashCommandsAttribute",
             "summary": "",
@@ -7116,10 +7126,20 @@ Search.appendIndex(
             "summary": "Returns\u0020the\u0020connected\u0020channel.",
             "url": "classes/Discord-Voice-VoiceClient.html#method_getChannel"
         },                {
+            "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003AinsertSilence\u0028\u0029",
+            "name": "insertSilence",
+            "summary": "Insert\u00205\u0020frames\u0020of\u0020silence.",
+            "url": "classes/Discord-Voice-VoiceClient.html#method_insertSilence"
+        },                {
             "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003ADCA_VERSION",
             "name": "DCA_VERSION",
             "summary": "The\u0020DCA\u0020version\u0020the\u0020client\u0020is\u0020using.",
             "url": "classes/Discord-Voice-VoiceClient.html#constant_DCA_VERSION"
+        },                {
+            "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003ASILENCE_FRAME",
+            "name": "SILENCE_FRAME",
+            "summary": "The\u0020Opus\u0020Silence\u0020Frame.",
+            "url": "classes/Discord-Voice-VoiceClient.html#constant_SILENCE_FRAME"
         },                {
             "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003A\u0024ready",
             "name": "ready",
@@ -7226,11 +7246,6 @@ Search.appendIndex(
             "summary": "Are\u0020we\u0020currently\u0020set\u0020as\u0020speaking\u003F",
             "url": "classes/Discord-Voice-VoiceClient.html#property_speaking"
         },                {
-            "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003A\u0024stopAudio",
-            "name": "stopAudio",
-            "summary": "Should\u0020we\u0020stop\u0020the\u0020current\u0020playing\u0020audio\u003F",
-            "url": "classes/Discord-Voice-VoiceClient.html#property_stopAudio"
-        },                {
             "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003A\u0024mute",
             "name": "mute",
             "summary": "Whether\u0020we\u0020are\u0020set\u0020as\u0020mute.",
@@ -7315,6 +7330,21 @@ Search.appendIndex(
             "name": "dnsConfig",
             "summary": "The\u0020Config\u0020for\u0020DNS\u0020Resolver.",
             "url": "classes/Discord-Voice-VoiceClient.html#property_dnsConfig"
+        },                {
+            "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003A\u0024silenceRemaining",
+            "name": "silenceRemaining",
+            "summary": "Silence\u0020Frame\u0020Remain\u0020Count.",
+            "url": "classes/Discord-Voice-VoiceClient.html#property_silenceRemaining"
+        },                {
+            "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003A\u0024readOpusTimer",
+            "name": "readOpusTimer",
+            "summary": "readopus\u0020Timer.",
+            "url": "classes/Discord-Voice-VoiceClient.html#property_readOpusTimer"
+        },                {
+            "fqsen": "\\Discord\\Voice\\VoiceClient\u003A\u003A\u0024buffer",
+            "name": "buffer",
+            "summary": "Audio\u0020Buffer.",
+            "url": "classes/Discord-Voice-VoiceClient.html#property_buffer"
         },                {
             "fqsen": "\\Discord\\Voice\\VoicePacket",
             "name": "VoicePacket",
