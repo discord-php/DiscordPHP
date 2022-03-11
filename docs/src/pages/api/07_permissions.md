@@ -72,7 +72,7 @@ Represents permissions for text, voice, and stage instance channels.
 - `move_members`
 - `use_vad`
 - `manage_events`
-- `start_embedded_activities`
+- `use_embedded_activities` was `start_embedded_activities`
 
 #### Stage Instance Channel Permissions
 
