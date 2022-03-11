@@ -326,21 +326,21 @@ class VoiceClient extends EventEmitter
     protected $dnsConfig;
 
     /**
-     * Silence Frame Remain Count
+     * Silence Frame Remain Count.
      *
      * @var int Amount of silence frames remaining.
      */
     protected $silenceRemaining = 5;
 
     /**
-     * readopus Timer
+     * readopus Timer.
      *
      * @var TimerInterface Timer
      */
     protected $readOpusTimer;
 
     /**
-     * Audio Buffer
+     * Audio Buffer.
      *
      * @var Buffer The Audio Buffer
      */
@@ -874,8 +874,8 @@ class VoiceClient extends EventEmitter
     private function reset(): void
     {
         if ($this->readOpusTimer) {
-             $this->loop->cancelTimer($this->readOpusTimer);
-             $this->readOpusTimer = null;
+            $this->loop->cancelTimer($this->readOpusTimer);
+            $this->readOpusTimer = null;
         }
 
         $this->setSpeaking(false);
@@ -1519,7 +1519,7 @@ class VoiceClient extends EventEmitter
     {
         // https://discord.com/developers/docs/topics/voice-connections#voice-data-interpolation
         while ($this->silenceRemaining--) {
-             $this->sendBuffer(self::SILENCE_FRAME);
+            $this->sendBuffer(self::SILENCE_FRAME);
         }
     }
 }

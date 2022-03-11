@@ -313,7 +313,7 @@ class Member extends Part
         if ($channel) {
             if ($channel instanceof Thread) {
                 $channel = $this->guild->channels->get('id', $channel->parent_id);
-            } elseif (!($channel instanceof Channel)) {
+            } elseif (! ($channel instanceof Channel)) {
                 throw new \InvalidArgumentException('$channel must be an instance of Channel, Thread or null.');
             }
         }
