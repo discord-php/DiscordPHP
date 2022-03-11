@@ -43,7 +43,7 @@ class SelectMenu extends Component
     private $options = [];
 
     /**
-     * Placeholder string to display if nothing is selected. Maximum 100 characters.
+     * Placeholder string to display if nothing is selected. Maximum 150 characters.
      *
      * @var string|null
      */
@@ -176,7 +176,7 @@ class SelectMenu extends Component
 
     /**
      * Sets the placeholder string to display if nothing is selected.
-     * Maximum 100 characters. Null to clear placeholder.
+     * Maximum 150 characters. Null to clear placeholder.
      *
      * @param string|null $placeholder
      *
@@ -186,8 +186,8 @@ class SelectMenu extends Component
      */
     public function setPlaceholder(?string $placeholder): self
     {
-        if (isset($placeholder) && strlen($placeholder) > 100) {
-            throw new \LengthException('Placeholder string must be less than or equal to 100 characters.');
+        if (isset($placeholder) && poly_strlen($placeholder) > 150) {
+            throw new \LengthException('Placeholder string must be less than or equal to 150 characters.');
         }
 
         $this->placeholder = $placeholder;

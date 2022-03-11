@@ -86,7 +86,7 @@ class Discord
      *
      * @var string Version.
      */
-    public const VERSION = 'v7.0.4';
+    public const VERSION = 'v7.0.5';
 
     /**
      * The logger.
@@ -331,6 +331,8 @@ class Discord
         $this->token = $options['token'];
         $this->loop = $options['loop'];
         $this->logger = $options['logger'];
+
+        $this->logger->debug('Initializing DiscordPHP '.self::VERSION.' (DiscordPHP-Http: '.Http::VERSION.' & Gateway: v'.self::GATEWAY_VERSION.') on PHP '.PHP_VERSION);
 
         $connector = new SocketConnector($this->loop, $options['socket_options']);
         $this->wsFactory = new Connector($this->loop, $connector);

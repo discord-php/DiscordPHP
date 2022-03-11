@@ -105,7 +105,7 @@ $select = SelectMenu::new()
 | ---------------------------------- | ------------------------------------------------------------------------------------------------------ |
 | `addOption($option)`               | adds an option to the select menu. maximum 25 options per menu. options must have unique values.       |
 | `removeOption($option)`            | removes an option from the select menu.                                                                |
-| `setPlaceholder($placeholder)`     | sets a placeholder string to be displayed when nothing is selected. null to clear. max 100 characters. |
+| `setPlaceholder($placeholder)`     | sets a placeholder string to be displayed when nothing is selected. null to clear. max 150 characters. |
 | `setMinValues($min_values)`        | the number of values which must be selected to submit the menu. between 0 and 25, default 1.           |
 | `setMaxValues($max_values)`        | the maximum number of values which can be selected. maximum 25, default 1.                             |
 | `setDisabled($disabled)`           | sets whether the menu is disabled or not.                                                              |
