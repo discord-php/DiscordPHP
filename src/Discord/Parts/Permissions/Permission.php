@@ -212,6 +212,16 @@ abstract class Permission extends Part
     /**
      * @inheritdoc
      *
+     * @todo replace start_embedded_activities in next major version
+     */
+    protected function setUseEmbeddedActivitiesAttribute($value)
+    {
+        $this->attributes['start_embedded_activities'] = $value;
+    }
+
+    /**
+     * @inheritdoc
+     *
      * @deprecated 7.0.0 Use `use_application_commands`
      */
     protected function getUseSlashCommandsAttribute()

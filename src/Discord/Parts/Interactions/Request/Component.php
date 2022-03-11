@@ -28,7 +28,7 @@ use Discord\Repository\Interaction\ComponentRepository;
  * @property Emoji|null          $emoji       Name, id, and animated. (Buttons)
  * @property string|null         $url         A url for link-style buttons. (Buttons)
  * @property object[]|null       $options     The choices in the select, max 25. (Select Menus)
- * @property string|null         $placeholder Custom placeholder text if nothing is selected, max 100 characters. (Select Menus, Text Inputs)
+ * @property string|null         $placeholder Custom placeholder text if nothing is selected, max 150 characters. (Select Menus, Text Inputs)
  * @property int|null            $min_values  The minimum number of items that must be chosen; default 1, min 0, max 25. (Select Menus)
  * @property int|null            $max_values  The maximum number of items that can be chosen; default 1, max 25. (Select Menus)
  * @property ComponentRepository $components  A list of child components. (Action Rows)
