@@ -59,7 +59,7 @@ abstract class Permission extends Part
         'move_members' => 24,
         'use_vad' => 25,
         'manage_events' => 33,
-        'start_embedded_activities' => 39,
+        'start_embedded_activities' => 39, // @todo use_embedded_activities
     ];
 
     /**
@@ -197,6 +197,16 @@ abstract class Permission extends Part
                 $this->attributes[$permission] = false;
             }
         }
+    }
+
+    /**
+     * @inheritdoc
+     *
+     * @todo replace start_embedded_activities in next major version
+     */
+    protected function getUseEmbeddedActivitiesAttribute()
+    {
+        return $this->attributes['start_embedded_activities'] ?? null;
     }
 
     /**

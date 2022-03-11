@@ -30,7 +30,7 @@ namespace Discord\Parts\Permissions;
  * @property bool $move_members
  * @property bool $use_vad
  * @property bool $manage_events
- * @property bool $start_embedded_activities
+ * @property bool $start_embedded_activities @todo $use_embedded_activities
  *
  * @property bool $add_reactions
  * @property bool $send_messages
