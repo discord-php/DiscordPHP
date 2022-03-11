@@ -186,7 +186,7 @@ class SelectMenu extends Component
      */
     public function setPlaceholder(?string $placeholder): self
     {
-        if (isset($placeholder) && strlen($placeholder) > 150) {
+        if (isset($placeholder) && poly_strlen($placeholder) > 150) {
             throw new \LengthException('Placeholder string must be less than or equal to 150 characters.');
         }
 
