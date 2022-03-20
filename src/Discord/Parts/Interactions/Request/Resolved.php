@@ -86,7 +86,7 @@ class Resolved extends Part
             }
 
             if (! $memberPart) {
-                $member->user = $this->attributes['users'][$snowflake];
+                $member->user = $this->attributes['users']->$snowflake;
                 $memberPart = $this->factory->create(Member::class, $member, true);
             }
 
