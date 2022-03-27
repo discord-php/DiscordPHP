@@ -989,7 +989,7 @@ class VoiceClient extends EventEmitter
     public function setBitrate(int $bitrate): void
     {
         if ($bitrate > 128000 || $bitrate < 8000) {
-            throw new \InvalidArgumentException("{$bitrate} is not a valid option. The bitrate must be between 8,000bpm and 128,000bpm.");
+            throw new \InvalidArgumentException("{$bitrate} is not a valid option. The bitrate must be between 8,000bps and 128,000bps.");
         }
 
         if ($this->speaking) {
