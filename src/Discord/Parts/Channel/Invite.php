@@ -80,6 +80,8 @@ class Invite extends Part
     /**
      * Accepts the invite.
      *
+     * @deprecated 7.0.6
+     *
      * @return ExtendedPromiseInterface
      */
     public function accept(): ExtendedPromiseInterface

@@ -43,7 +43,7 @@ class StageInstance extends Part
         'channel_id',
         'topic',
         'privacy_level',
-        'discoverable_disabled',
+        'discoverable_disabled', // deprecated
         'guild_scheduled_event_id',
     ];
 
