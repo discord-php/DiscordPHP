@@ -14,6 +14,7 @@ namespace Discord\Parts\Guild;
 use Carbon\Carbon;
 use Discord\Exceptions\FileNotFoundException;
 use Discord\Helpers\Collection;
+use Discord\Helpers\Multipart;
 use Discord\Http\Endpoint;
 use Discord\Http\Exceptions\NoPermissionsException;
 use Discord\Parts\Channel\Channel;
@@ -35,10 +36,12 @@ use Discord\Repository\Guild\ScheduledEventRepository;
 use Discord\Repository\Guild\GuildTemplateRepository;
 use Discord\Repository\Guild\IntegrationRepository;
 use Discord\Repository\Guild\StageInstanceRepository;
+use LengthException;
 use React\Promise\ExtendedPromiseInterface;
 use ReflectionClass;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+use function Discord\poly_strlen;
 use function React\Promise\reject;
 use function React\Promise\resolve;
 
@@ -606,7 +609,7 @@ class Guild extends Part
 
         if (isset($filepath)) {
             if (! file_exists($filepath)) {
-                throw new FileNotFoundException("File does not exist at path {$filepath}.");
+                return reject(new FileNotFoundException("File does not exist at path {$filepath}."));
             }
 
             $extension = strtolower(pathinfo($filepath, PATHINFO_EXTENSION));
@@ -629,6 +632,72 @@ class Guild extends Part
                 $this->emojis->push($emoji);
 
                 return $emoji;
+            });
+    }
+
+    /**
+     * Creates an Sticker for the guild.
+     *
+     * @see https://discord.com/developers/docs/resources/sticker#create-guild-sticker
+     *
+     * @param array       $options  An array of options.
+     *                              name => Name of the sticker.
+     *                              description => Description of the sticker (empty or 2-100 characters).
+     *                              tags => Autocomplete/suggestion tags for the sticker (max 200 characters).
+     * @param string      $filepath The sticker file to upload, must be a PNG, APNG, or Lottie JSON file, max 500 KB.
+     * @param string|null $reason   Reason for Audit Log.
+     *
+     * @throws FileNotFoundException Thrown when the file does not exist.
+     *
+     * @return ExtendedPromiseInterface<Sticker>
+     */
+    public function createSticker(array $options, string $filepath, ?string $reason = null): ExtendedPromiseInterface
+    {
+        $resolver = new OptionsResolver();
+        $resolver
+            ->setDefined([
+                'name',
+                'description',
+                'tags',
+            ])
+            ->setRequired(['name', 'tags'])
+            ->setAllowedTypes('name', 'string')
+            ->setAllowedTypes('description', 'string')
+            ->setAllowedTypes('tags', 'string')
+            ->setDefault('description', '');
+
+        $options = $resolver->resolve($options);
+
+        if (! file_exists($filepath)) {
+            return reject(new FileNotFoundException("File does not exist at path {$filepath}."));
+        }
+
+        $descLength = poly_strlen($options['description']);
+        if ($descLength > 100 || $descLength == 1) {
+            return reject (new \LengthException());
+        }
+
+        $contents = file_get_contents($filepath);
+
+        // TODO fix structure
+        $multipart = new Multipart([
+            'name' => $options['name'],
+            'description' => $options['description'],
+            'tags' => $options['tags'],
+            'file' => $contents,
+        ]);
+
+        $headers = $multipart->getHeaders();
+        if (isset($reason)) {
+            $headers['X-Audit-Log-Reason'] = $reason;
+        }
+
+        return $this->http->post(Endpoint::bind(Endpoint::GUILD_STICKERS, $this->id), (string) $multipart, $headers)
+            ->then(function ($response) {
+                $sticker = $this->factory->create(Sticker::class, $response, true);
+                $this->stickers->push($sticker);
+
+                return $sticker;
             });
     }
 
