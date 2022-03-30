@@ -41,6 +41,9 @@ use Discord\Repository\Interaction\GlobalCommandRepository;
  * @property string|null             $cover_image            The application's default rich presence invite cover image URL.
  * @property string|null             $cover_image_hash       The application's default rich presence invite cover image hash.
  * @property int                     $flags                  The application's public flags.
+ * @property string[]|null           $tags                   Up to 5 tags describing the content and functionality of the application.
+ * @property object|null             $install_params         Settings for the application's default in-app authorization link, if enabled.
+ * @property string|null             $custom_install_url     The application's default custom authorization link, if enabled.
  * @property string                  $invite_url             The invite URL to invite the bot to a guild.
  * @property GlobalCommandRepository $commands               The application global commands.
  */
@@ -68,6 +71,9 @@ class Application extends Part
         'terms_of_service_url',
         'privacy_policy_url',
         'flags',
+        'tags',
+        'install_params',
+        'custom_install_url',
     ];
 
     public const GATEWAY_PRESENCE = (1 << 12);
