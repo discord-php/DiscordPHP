@@ -893,6 +893,11 @@ class Channel extends Part
 
             return $this->http->post(Endpoint::bind(Endpoint::CHANNEL_MESSAGES, $this->id), $message);
         })()->then(function ($response) {
+            // Workaround for sendMessage() no guild_id
+            if ($this->guild_id && ! isset($response->guild_id)) {
+                $response->guild_id = $this->guild_id;
+            }
+
             return $this->factory->create(Message::class, $response, true);
         });
     }
