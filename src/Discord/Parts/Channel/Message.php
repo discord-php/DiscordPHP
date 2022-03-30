@@ -363,10 +363,18 @@ class Message extends Part
             return $guild;
         }
 
-        // Workaround for Channel::sendMessage() no guild_id
-        return $this->discord->guilds->find(function (Guild $guild) {
-            return $guild->channels->has($this->channel_id);
-        });
+        if ($guild = $this->channel->guild) {
+            return $guild;
+        }
+
+        if ($this->channel_id) {
+            // Workaround for Channel::sendMessage() no guild_id
+            return $this->discord->guilds->find(function (Guild $guild) {
+                return $guild->channels->has($this->channel_id);
+            });
+        }
+
+        return null;
     }
 
     /**
