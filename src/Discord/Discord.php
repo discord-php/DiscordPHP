@@ -1602,6 +1602,8 @@ class Discord
 
         unset($config['loop'], $config['logger']);
 
+        $config[] = $this->client;
+
         return $config;
     }
 }

@@ -22,7 +22,7 @@ use function Discord\poly_strlen;
  * @see https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-option-structure
  *
  * @property int                      $type          Type of the option.
- * @property string                   $name          Name of the option.
+ * @property string                   $name          Name of the option. CHAT_INPUT option name is lowercase.
  * @property string                   $description   1-100 character description.
  * @property bool                     $required      If the parameter is required or optional--default false.
  * @property Collection|Choice[]|null $choices       Choices for STRING, INTEGER, and NUMBER types for the user to pick from, max 25. Only for slash commands.
@@ -120,8 +120,11 @@ class Option extends Part
 
     /**
      * Sets the name of the option.
+     * CHAT_INPUT command option names must match the following regex ^[\w-]{1,32}$ with the unicode flag set.
+     * If there is a lowercase variant of any letters used, you must use those.
+     * Characters with no lowercase variants and/or uncased letters are still allowed.
      *
-     * @param string $name name of the option
+     * @param string $name name of the option. Slash command option names are lowercase.
      *
      * @throws \LengthException
      *

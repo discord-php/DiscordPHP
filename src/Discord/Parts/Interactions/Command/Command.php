@@ -28,7 +28,7 @@ use React\Promise\ExtendedPromiseInterface;
  * @property string                   $application_id     The unique identifier of the parent Application that made the command, if made by one.
  * @property string|null              $guild_id           The unique identifier of the guild that the command belongs to. Null if global.
  * @property Guild|null               $guild              The guild that the command belongs to. Null if global.
- * @property string                   $name               1-32 character name of the command.
+ * @property string                   $name               1-32 character name of the command. CHAT_INPUT command name is lowercase.
  * @property string                   $description        1-100 character description for CHAT_INPUT commands, empty string for USER and MESSAGE commands.
  * @property Collection|Option[]|null $options            The parameters for the command, max 25. Only for Slash command (CHAT_INPUT).
  * @property bool                     $default_permission Whether the command is enabled by default when the app is added to a guild.

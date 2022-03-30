@@ -30,6 +30,7 @@ use Discord\Parts\User\User;
 use Discord\WebSockets\Event;
 use React\Promise\ExtendedPromiseInterface;
 
+use function Discord\poly_strlen;
 use function React\Promise\reject;
 
 /**
@@ -327,7 +328,7 @@ class Interaction extends Part
      * @see https://discord.com/developers/docs/interactions/receiving-and-responding#create-followup-message
      *
      * @param MessageBuilder $builder   Message to send.
-     * @param bool           $ephemeral Whether the created follow-up should be ephemeral.
+     * @param bool           $ephemeral Whether the created follow-up should be ephemeral. Will be ignored if the respond is previously ephemeral.
      *
      * @throws \RuntimeException
      *
@@ -524,12 +525,13 @@ class Interaction extends Part
      *
      * @see https://discord.com/developers/docs/interactions/receiving-and-responding#responding-to-an-interaction
      *
-     * @param string            $title      The title of the popup modal
+     * @param string            $title      The title of the popup modal, max 45 characters
      * @param string            $custom_id  A developer-defined identifier for the component, max 100 characters
      * @param array|Component[] $components Between 1 and 5 (inclusive) components that make up the modal contained in Action Row
      * @param callable|null     $submit     The function to call once modal is submitted.
      *
      * @throws \LogicException
+     * @throws \LengthException
      *
      * @return ExtendedPromiseInterface
      */
@@ -537,6 +539,10 @@ class Interaction extends Part
     {
         if (in_array($this->type, [InteractionType::PING, InteractionType::MODAL_SUBMIT])) {
             return reject(new \LogicException('You cannot pop up a modal from a ping or modal submit interaction.'));
+        }
+
+        if (poly_strlen($title) > 45) {
+            return reject(new \LengthException('Modal title must be less than or equal to 45 characters.'));
         }
 
         return $this->respond([
