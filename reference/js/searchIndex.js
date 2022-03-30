@@ -7498,7 +7498,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\WebSockets\\Event\u003A\u003AREADY",
             "name": "READY",
-            "summary": "",
+            "summary": "Not\u0020to\u0020be\u0020confused\u0020with\u0020\u0027ready\u0027",
             "url": "classes/Discord-WebSockets-Event.html#constant_READY"
         },                {
             "fqsen": "\\Discord\\WebSockets\\Event\u003A\u003ARESUMED",
