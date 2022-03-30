@@ -531,6 +531,7 @@ class Interaction extends Part
      * @param callable|null     $submit     The function to call once modal is submitted.
      *
      * @throws \LogicException
+     * @throws \LengthException
      *
      * @return ExtendedPromiseInterface
      */
