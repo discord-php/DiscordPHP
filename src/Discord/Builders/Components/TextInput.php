@@ -86,7 +86,7 @@ class TextInput extends Component
      * @param int         $style     The style of the text input.
      * @param string|null $custom_id The custom ID of the text input. If not given, an UUID will be used
      */
-    public function __construct(string $label, int $style, ?string $custom_id)
+    public function __construct(string $label, int $style, ?string $custom_id = null)
     {
         $this->setLabel($label);
         $this->setStyle($style);
