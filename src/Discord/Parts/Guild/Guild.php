@@ -95,6 +95,7 @@ use function React\Promise\resolve;
  * @property StickerRepository        $stickers                                 Custom guild stickers.
  * @property ScheduledeventRepository $guild_scheduled_events                   The scheduled events in the guild.
  * @property bool                     $premium_progress_bar_enabled             Whether the guild has the boost progress bar enabled.
+ * @property int|null                 $hub_type                                 The type of Student Hub the guild is.
  * @property bool                     $feature_animated_banner                  Guild has access to set an animated guild banner image.
  * @property bool                     $feature_animated_icon                    Guild has access to set an animated guild icon.
  * @property bool                     $feature_banner                           Guild has access to set a guild banner image.
@@ -102,7 +103,9 @@ use function React\Promise\resolve;
  * @property bool                     $feature_community                        Guild can enable welcome screen, Membership Screening, stage channels and discovery, and receives community updates.
  * @property bool                     $feature_discoverable                     Guild is able to be discovered in the directory.
  * @property bool                     $feature_featurable                       Guild is able to be featured in the directory.
+ * @property bool                     $feature_has_directory_entry              Guild is listed in a directory channel.
  * @property bool                     $feature_invite_splash                    Guild has access to set an invite splash background.
+ * @property bool                     $feature_linked_to_hub                    Guild is in a Student Hub.
  * @property bool                     $feature_member_verification_gate_enabled Guild has enabled membership screening.
  * @property bool                     $feature_monetization_enabled             Guild has enabled monetization.
  * @property bool                     $feature_more_stickers                    Guild has increased custom sticker slots.
@@ -159,6 +162,10 @@ class Guild extends Part
     public const SUPPRESS_GUILD_REMINDER_NOTIFICATIONS = (1 << 2);
     public const SUPPRESS_JOIN_NOTIFICATION_REPLIES = (1 << 3);
 
+    public const HUB_TYPE_DEFAULT = 0;
+    public const HUB_TYPE_HIGH_SCHOOL = 1;
+    public const HUB_TYPE_COLLEGE = 2;
+
     /**
      * @inheritdoc
      */
@@ -185,6 +192,7 @@ class Guild extends Part
         'verification_level',
         'roles',
         'default_message_notifications',
+        'hub_type',
         'mfa_level',
         'explicit_content_filter',
         'max_presences',
@@ -221,7 +229,9 @@ class Guild extends Part
         'feature_community',
         'feature_discoverable',
         'feature_featurable',
+        'feature_has_directory_entry',
         'feature_invite_splash',
+        'feature_linked_to_hub',
         'feature_member_verification_gate_enabled',
         'feature_monetization_enabled',
         'feature_more_stickers',
@@ -427,9 +437,19 @@ class Guild extends Part
         return in_array('FEATURABLE', $this->features);
     }
 
+    protected function getFeatureHasDirectoryEntryAttribute(): bool
+    {
+        return in_array('HAS_DIRECTORY_ENTRY', $this->features);
+    }
+
     protected function getFeatureInviteSplashAttribute(): bool
     {
         return in_array('INVITE_SPLASH', $this->features);
+    }
+
+    protected function getFeatureLinkedToHubAttribute(): bool
+    {
+        return in_array('LINKED_TO_HUB', $this->features);
     }
 
     protected function getFeatureMemberVerificationGateEnabledAttribute(): bool
