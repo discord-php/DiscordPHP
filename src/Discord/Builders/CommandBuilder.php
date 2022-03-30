@@ -92,7 +92,7 @@ class CommandBuilder implements JsonSerializable
     /**
      * Sets the name of the command.
      *
-     * @param string $description Name of the command
+     * @param string $description Name of the command. Slash command names are lowercase.
      *
      * @throws \LengthException
      *

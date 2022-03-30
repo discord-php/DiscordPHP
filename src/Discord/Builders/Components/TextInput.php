@@ -86,7 +86,7 @@ class TextInput extends Component
      * @param int         $style     The style of the text input.
      * @param string|null $custom_id The custom ID of the text input. If not given, an UUID will be used
      */
-    public function __construct(string $label, int $style, ?string $custom_id)
+    public function __construct(string $label, int $style, ?string $custom_id = null)
     {
         $this->setLabel($label);
         $this->setStyle($style);
@@ -150,7 +150,7 @@ class TextInput extends Component
     /**
      * Sets the label of the text input.
      *
-     * @param string $label Label of the text input. Maximum 80 characters.
+     * @param string $label Label of the text input. Maximum 45 characters.
      *
      * @throws \LengthException
      *
@@ -158,8 +158,8 @@ class TextInput extends Component
      */
     public function setLabel(string $label): self
     {
-        if (poly_strlen($label) > 80) {
-            throw new \LengthException('Label must be maximum 80 characters.');
+        if (poly_strlen($label) > 45) {
+            throw new \LengthException('Label must be maximum 45 characters.');
         }
 
         $this->label = $label;

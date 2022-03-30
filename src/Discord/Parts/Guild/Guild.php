@@ -81,7 +81,7 @@ use function React\Promise\resolve;
  * @property int|null                 $max_presences                            Maximum amount of presences allowed in the guild.
  * @property int|null                 $max_members                              Maximum amount of members allowed in the guild.
  * @property string                   $vanity_url_code                          Vanity URL code for the guild.
- * @property string                   $description                              Guild description if it is discoverable.
+ * @property string                   $description                              Guild description of a guild.
  * @property string                   $banner                                   Banner hash.
  * @property int                      $premium_tier                             Server boost level.
  * @property int|null                 $premium_subscription_count               Number of boosts in the guild.

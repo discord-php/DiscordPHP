@@ -32,7 +32,6 @@ use Discord\Repository\Interaction\GlobalCommandRepository;
  * @property string|null             $terms_of_service_url   The url of the app's terms of service.
  * @property string|null             $privacy_policy_url     The url of the app's privacy policy
  * @property User|null               $owner                  The owner of the OAuth application.
- * @property string                  $summary                If this application is a game sold on Discord, this field will be the summary field for the store page of its primary sku.
  * @property string                  $verify_key             The hex encoded key for verification in interactions and the GameSDK's GetTicket.
  * @property object|null             $team                   If the application belongs to a team, this will be a list of the members of that team.
  * @property string|null             $guild_id               If this application is a game sold on Discord, this field will be the guild to which it has been linked.
@@ -64,7 +63,7 @@ class Application extends Part
         'owner',
         'primary_sku_id',
         'slug',
-        'summary',
+        'summary', // deprecated, is now empty, used to be same as description
         'team',
         'verify_key',
         'rpc_origins',
