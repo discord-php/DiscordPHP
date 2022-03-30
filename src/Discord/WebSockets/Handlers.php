@@ -29,7 +29,6 @@ class Handlers
     public function __construct()
     {
         // General
-        $this->addHandler(Event::READY, \Discord\WebSockets\Events\Ready::class);
         $this->addHandler(Event::PRESENCE_UPDATE, \Discord\WebSockets\Events\PresenceUpdate::class);
         $this->addHandler(Event::TYPING_START, \Discord\WebSockets\Events\TypingStart::class);
         $this->addHandler(Event::VOICE_STATE_UPDATE, \Discord\WebSockets\Events\VoiceStateUpdate::class);
