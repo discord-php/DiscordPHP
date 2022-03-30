@@ -95,6 +95,7 @@ use function React\Promise\resolve;
  * @property StickerRepository        $stickers                                 Custom guild stickers.
  * @property ScheduledeventRepository $guild_scheduled_events                   The scheduled events in the guild.
  * @property bool                     $premium_progress_bar_enabled             Whether the guild has the boost progress bar enabled.
+ * @property bool                     $feature_animated_banner                  Guild has access to set an animated guild banner image.
  * @property bool                     $feature_animated_icon                    Guild has access to set an animated guild icon.
  * @property bool                     $feature_banner                           Guild has access to set a guild banner image.
  * @property bool                     $feature_commerce                         Guild has access to use commerce features (create store channels).
@@ -213,6 +214,7 @@ class Guild extends Part
      * @inheritDoc
      */
     protected $visible = [
+        'feature_animated_banner',
         'feature_animated_icon',
         'feature_banner',
         'feature_commerce',
@@ -393,6 +395,11 @@ class Guild extends Part
     protected function getSplashHashAttribute(): ?string
     {
         return $this->attributes['splash'];
+    }
+
+    protected function getFeatureAnimatedBannerAttribute(): bool
+    {
+        return in_array('ANIMATED_BANNER', $this->features);
     }
 
     protected function getFeatureAnimatedIconAttribute(): bool
@@ -1020,7 +1027,6 @@ class Guild extends Part
      */
     public function createInvite(...$args): ExtendedPromiseInterface
     {
-        /** @var Member */
         $channel = $this->channels->find(function (Channel $channel) {
             return $channel->allowInvite() && $channel->getBotPermissions()->create_instant_invite;
         });
