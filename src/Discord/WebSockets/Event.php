@@ -27,6 +27,7 @@ abstract class Event
     use EventEmitterTrait;
 
     // General
+    /** Not to be confused with 'ready' */
     public const READY = 'READY';
     public const RESUMED = 'RESUMED';
     public const PRESENCE_UPDATE = 'PRESENCE_UPDATE';
@@ -76,7 +77,7 @@ abstract class Event
     public const CHANNEL_DELETE = 'CHANNEL_DELETE';
     public const CHANNEL_UPDATE = 'CHANNEL_UPDATE';
     public const CHANNEL_PINS_UPDATE = 'CHANNEL_PINS_UPDATE';
-    
+
     // Threads
     public const THREAD_CREATE = 'THREAD_CREATE';
     public const THREAD_UPDATE = 'THREAD_UPDATE';
