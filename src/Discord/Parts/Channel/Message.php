@@ -359,7 +359,14 @@ class Message extends Part
      */
     protected function getGuildAttribute(): ?Guild
     {
-        return $this->discord->guilds->get('id', $this->guild_id);
+        if ($guild = $this->discord->guilds->get('id', $this->guild_id)) {
+            return $guild;
+        }
+
+        // Workaround for Channel::sendMessage() no guild_id
+        return $this->discord->guilds->find(function (Guild $guild) {
+            return $guild->channels->has($this->channel_id);
+        });
     }
 
     /**

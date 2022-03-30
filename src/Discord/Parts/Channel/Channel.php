@@ -868,6 +868,8 @@ class Channel extends Part
             return reject(new \RuntimeException('You can only send messages to text channels.'));
         }
 
+        $guild_id = $this->guild_id;
+
         if (! $this->is_private) {
             $botperms = $this->getBotPermissions();
 
@@ -892,7 +894,12 @@ class Channel extends Part
             }
 
             return $this->http->post(Endpoint::bind(Endpoint::CHANNEL_MESSAGES, $this->id), $message);
-        })()->then(function ($response) {
+        })()->then(function ($response) use ($guild_id) {
+            // Workaround for sendMessage() no guild_id
+            if ($guild_id && ! isset($response->guild_id)) {
+                $response->guild_id = $guild_id;
+            }
+
             return $this->factory->create(Message::class, $response, true);
         });
     }
