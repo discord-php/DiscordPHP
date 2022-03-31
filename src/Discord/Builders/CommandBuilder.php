@@ -15,8 +15,6 @@ use Discord\Parts\Interactions\Command\Command;
 use Discord\Parts\Interactions\Command\Option;
 use JsonSerializable;
 
-use function Discord\poly_strlen;
-
 /**
  * Helper class used to build application commands.
  *
@@ -86,6 +84,16 @@ class CommandBuilder implements JsonSerializable
     }
 
     /**
+     * Returns all the options in the command.
+     *
+     * @return Option[]
+     */
+    public function getOptions(): array
+    {
+        return $this->options;
+    }
+
+    /**
      * Returns an array with all the options.
      *
      * @throws \LengthException
@@ -95,21 +103,6 @@ class CommandBuilder implements JsonSerializable
      */
     public function toArray(): array
     {
-        if (poly_strlen($this->name) < 1) {
-            throw new \LengthException('Command name must be greater than or equal to 1 character.');
-        }
-
-        $desclen = poly_strlen($this->description);
-        if ($this->type == Command::CHAT_INPUT) {
-            if ($desclen < 1) {
-                throw new \LengthException('Description must be greater than or equal to 1 character.');
-            }
-        } elseif ($this->type == Command::USER || $this->type == Command::MESSAGE) {
-            if ($desclen) {
-                throw new \DomainException('Only a command with type CHAT_INPUT accepts a description.');
-            }
-        }
-
         $arrCommand = [
             'name' => $this->name,
             'name_localizations' => $this->name_localizations,

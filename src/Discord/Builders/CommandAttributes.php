@@ -21,12 +21,20 @@ use function Discord\poly_strlen;
  *
  * @see Discord\Builders\CommandBuilder
  * @see Discord\Parts\Interactions\Command\Command
+ *
+ * @property int                      $type                      The type of the command, defaults 1 if not set.
+ * @property string                   $name                      1-32 character name of the command.
+ * @property string[]|null            $name_localizations        Localization dictionary for the name field. Values follow the same restrictions as name.
+ * @property string                   $description               1-100 character description for CHAT_INPUT commands, empty string for USER and MESSAGE commands.
+ * @property string[]|null            $description_localizations Localization dictionary for the description field. Values follow the same restrictions as description.
+ * @property Collection|Option[]|null $options                   The parameters for the command, max 25. Only for Slash command (CHAT_INPUT).
+ * @property bool                     $default_permission        Whether the command is enabled by default when the app is added to a guild.
  */
 trait CommandAttributes {
     /**
      * Sets the type of the command.
      *
-     * @param int $type Type of the command
+     * @param int $type Type of the command.
      *
      * @throws \InvalidArgumentException
      *
@@ -46,7 +54,7 @@ trait CommandAttributes {
     /**
      * Sets the name of the command.
      *
-     * @param string $description Name of the command. Slash command names are lowercase.
+     * @param string $name Name of the command. Slash command names are lowercase.
      *
      * @throws \LengthException
      *
@@ -54,11 +62,36 @@ trait CommandAttributes {
      */
     public function setName(string $name): self
     {
-        if (poly_strlen($name) > 100) {
-            throw new \LengthException('Command name must be less than or equal to 32 characters.');
+        $nameLen = poly_strlen($name);
+        if ($nameLen < 1 || $nameLen > 100) {
+            throw new \LengthException('Command name can be only 1 to 32 characters long.');
         }
 
         $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Sets the name of the command in another language.
+     *
+     * @param string      $locale Discord locale code.
+     * @param string|null $name   Localized name of the command. Slash command names are lowercase.
+     *
+     * @throws \LengthException
+     *
+     * @return $this
+     */
+    public function setNameLocalization(string $locale, ?string $name): self
+    {
+        if (isset($name)) {
+            $nameLen = poly_strlen($name);
+            if ($nameLen < 1 || $nameLen > 100) {
+                throw new \LengthException('Command name can be only 1 to 32 characters long.');
+            }
+        }
+
+        $this->name_localizations[$locale] = $name;
 
         return $this;
     }
@@ -74,8 +107,9 @@ trait CommandAttributes {
      */
     public function setDescription(string $description): self
     {
-        if ($this->type == Command::CHAT_INPUT && poly_strlen($description) > 100) {
-            throw new \LengthException('Command description must be less than or equal to 100 characters.');
+        $descriptionLen = poly_strlen($description);
+        if ($descriptionLen < 1 || $descriptionLen > 100) {
+            throw new \LengthException('Command Description can be only 1 to 100 characters long.');
         }
 
         $this->description = $description;
@@ -152,15 +186,5 @@ trait CommandAttributes {
         }
 
         return $this;
-    }
-
-    /**
-     * Returns all the options in the command.
-     *
-     * @return Option[]
-     */
-    public function getOptions(): array
-    {
-        return $this->options;
     }
 }
