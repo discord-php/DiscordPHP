@@ -62,9 +62,9 @@ class CommandBuilder implements JsonSerializable
     /**
      * array with options.
      *
-     * @var Option[]
+     * @var Option[]|null
      */
-    protected array $options = [];
+    protected array $options;
 
     /**
      * The default permission of the command. If true the command is enabled when the app is added to the guild.
@@ -86,11 +86,11 @@ class CommandBuilder implements JsonSerializable
     /**
      * Returns all the options in the command.
      *
-     * @return Option[]
+     * @return Option[]|null
      */
-    public function getOptions(): array
+    public function getOptions(): ?array
     {
-        return $this->options;
+        return $this->options ?? null;
     }
 
     /**
@@ -112,7 +112,7 @@ class CommandBuilder implements JsonSerializable
             'default_permission' => $this->default_permission,
         ];
 
-        foreach ($this->options as $option) {
+        foreach ($this->options ?? [] as $option) {
             $arrCommand['options'][] = $option->getRawAttributes();
         }
 
