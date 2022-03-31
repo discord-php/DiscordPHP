@@ -681,10 +681,23 @@ class Guild extends Part
 
         // TODO fix structure
         $multipart = new Multipart([
-            'name' => $options['name'],
-            'description' => $options['description'],
-            'tags' => $options['tags'],
-            'file' => $contents,
+            [
+                'name' => 'name',
+                'content' => $options['name'],
+            ],
+            [
+                'name' => 'description',
+                'content' => $options['description'],
+            ],
+            [
+                'name' => 'tags',
+                'content' => $options['tags'],
+            ],
+            [
+                'name' => 'file',
+                'filename' => basename($filepath),
+                'content' => $contents,
+            ],
         ]);
 
         $headers = $multipart->getHeaders();
