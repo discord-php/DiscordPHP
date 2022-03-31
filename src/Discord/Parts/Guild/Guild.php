@@ -678,8 +678,6 @@ class Guild extends Part
             return reject(new \LengthException('Description must be 2 to 100 characters'));
         }
 
-        $contents = file_get_contents($filepath);
-
         if (function_exists('mime_content_type')) {
             $contentType = \mime_content_type($filepath);
         } else {
@@ -696,6 +694,8 @@ class Guild extends Part
 
             $contentType = $contentTypes[$extension];
         }
+
+        $contents = file_get_contents($filepath);
 
         $multipart = new Multipart([
             [
