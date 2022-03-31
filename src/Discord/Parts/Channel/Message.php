@@ -363,14 +363,10 @@ class Message extends Part
             return $guild;
         }
 
-        if ($guild = $this->channel->guild) {
-            return $guild;
-        }
-
+        // Workaround for Channel::sendMessage() no guild_id
         if ($this->channel_id) {
-            // Workaround for Channel::sendMessage() no guild_id
             return $this->discord->guilds->find(function (Guild $guild) {
-                return $guild->channels->has($this->channel_id);
+                return $guild->channels->offsetExists($this->channel_id);
             });
         }
 
