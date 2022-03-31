@@ -36,7 +36,6 @@ use Discord\Repository\Guild\ScheduledEventRepository;
 use Discord\Repository\Guild\GuildTemplateRepository;
 use Discord\Repository\Guild\IntegrationRepository;
 use Discord\Repository\Guild\StageInstanceRepository;
-use LengthException;
 use React\Promise\ExtendedPromiseInterface;
 use ReflectionClass;
 use Symfony\Component\OptionsResolver\OptionsResolver;
