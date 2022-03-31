@@ -152,7 +152,7 @@ class Option extends Part
      * Characters with no lowercase variants and/or uncased letters are still allowed.
      *
      * @param string      $locale Discord locale code.
-     * @param string|null $name   Name of the option. Slash command option names are lowercase.
+     * @param string|null $name   Localized name of the option. Slash command option names are lowercase.
      *
      * @throws \LengthException
      *
@@ -192,8 +192,8 @@ class Option extends Part
     /**
      * Sets the description of the option in another language.
      *
-     * @param string      $locale Discord locale code.
-     * @param string|null $description description of the option.
+     * @param string      $locale      Discord locale code.
+     * @param string|null $description Localized description of the option.
      *
      * @throws \LengthException
      *

@@ -39,6 +39,8 @@ use React\Promise\ExtendedPromiseInterface;
  */
 class Command extends Part
 {
+    use \Discord\Builders\CommandAttributes;
+
     /** Slash commands; a text-based command that shows up when a user types / */
     public const CHAT_INPUT = 1;
 

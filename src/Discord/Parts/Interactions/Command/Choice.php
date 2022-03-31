@@ -73,7 +73,7 @@ class Choice extends Part
      * Sets the name of the choice in another language.
      *
      * @param string      $locale Discord locale code.
-     * @param string|null $name   Name of the choice.
+     * @param string|null $name   Localized name of the choice.
      *
      * @throws \LengthException
      *
