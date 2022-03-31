@@ -14,6 +14,7 @@ namespace Discord\Parts\Permissions;
 /**
  * @inheritdoc
  *
+ * @property bool $mention_everyone
  * @property bool $connect
  * @property bool $mute_members
  * @property bool $deafen_members

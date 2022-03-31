@@ -35,6 +35,7 @@ abstract class Permission extends Part
      * @var array
      */
     public const STAGE_PERMISSIONS = [
+        'mention_everyone' => 17,
         'connect' => 20,
         'mute_members' => 22,
         'deafen_members' => 23,
