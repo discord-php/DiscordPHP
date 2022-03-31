@@ -109,7 +109,6 @@ class CommandBuilder implements JsonSerializable
             'description' => $this->description,
             'description_localizations' => $this->name_localizations,
             'type' => $this->type,
-            'options' => [],
             'default_permission' => $this->default_permission,
         ];
 

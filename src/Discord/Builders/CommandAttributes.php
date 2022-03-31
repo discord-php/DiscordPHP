@@ -157,12 +157,17 @@ trait CommandAttributes {
      *
      * @param Option $option The option
      *
+     * @throws \DomainException
      * @throws \OverflowException
      *
      * @return $this
      */
     public function addOption(Option $option): self
     {
+        if ($this->type != Command::CHAT_INPUT) {
+            throw new \DomainException('Only CHAT_INPUT Command type can have option.');
+        }
+
         if (count($this->options) >= 25) {
             throw new \OverflowException('Command can only have a maximum of 25 options.');
         }
@@ -177,13 +182,33 @@ trait CommandAttributes {
      *
      * @param Option $option Option to remove.
      *
+     * @throws \DomainException
+     *
      * @return $this
      */
     public function removeOption(Option $option): self
     {
+        if ($this->type != Command::CHAT_INPUT) {
+            throw new \DomainException('Only CHAT_INPUT Command type can have option.');
+        }
+
         if (($idx = array_search($option, $this->option)) !== null) {
             array_splice($this->options, $idx, 1);
         }
+
+        return $this;
+    }
+
+    /**
+     * Clear all options from the command.
+     *
+     * @throws \DomainException
+     *
+     * @return $this
+     */
+    public function clearOptions(): self
+    {
+        $this->options = null;
 
         return $this;
     }
