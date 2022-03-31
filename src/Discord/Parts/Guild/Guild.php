@@ -648,6 +648,8 @@ class Guild extends Part
      * @param string|null $reason   Reason for Audit Log.
      *
      * @throws FileNotFoundException Thrown when the file does not exist.
+     * @throws \LengthException
+     * @throws \DomainException
      *
      * @return ExtendedPromiseInterface<Sticker>
      */
@@ -674,12 +676,28 @@ class Guild extends Part
 
         $descLength = poly_strlen($options['description']);
         if ($descLength > 100 || $descLength == 1) {
-            return reject (new \LengthException());
+            return reject(new \LengthException('Description must be 2 to 100 characters'));
         }
 
         $contents = file_get_contents($filepath);
 
-        // TODO fix structure
+        if (function_exists('mime_content_type')) {
+            $contentType = \mime_content_type($filepath);
+        } else {
+            $extension = strtolower(pathinfo($filepath, PATHINFO_EXTENSION));
+            $contentTypes = [
+                'png' => 'image/png',
+                'apng' => 'image/apng',
+                'lottie' => 'application/json',
+            ];
+
+            if (! array_key_exists($extension, $contentTypes)) {
+                return reject(new \DomainException('File format must be PNG, APNG, or Lottie JSON'));
+            }
+
+            $contentType = $contentTypes[$extension];
+        }
+
         $multipart = new Multipart([
             [
                 'name' => 'name',
@@ -697,6 +715,9 @@ class Guild extends Part
                 'name' => 'file',
                 'filename' => basename($filepath),
                 'content' => $contents,
+                'headers' => [
+                    'Content-Type' => $contentType
+                ]
             ],
         ]);
 
