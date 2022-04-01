@@ -119,18 +119,27 @@ class GuildCreate extends Event
         };
 
         if ($this->discord->options['retrieveBans']) {
-            $this->http->get(Endpoint::bind(Endpoint::GUILD_BANS, $guildPart->id))->done(function ($rawBans) use (&$guildPart, $resolve) {
-                foreach ($rawBans as $ban) {
-                    $ban = (array) $ban;
-                    $ban['guild'] = $guildPart;
+            $banPagination = function ($lastUserId) use (&$banPagination, $guildPart, $resolve) {
+                $bind = Endpoint::bind(Endpoint::GUILD_BANS, $guildPart->id);
+                $bind->addQuery('after', $lastUserId);
+                $this->http->get($bind)->then(function ($rawBans) use ($banPagination, $guildPart, $resolve) {
+                    if (empty($rawBans)) {
+                        $resolve();
+                        return;
+                    }
 
-                    $banPart = $this->factory->create(Ban::class, $ban, true);
+                    foreach ($rawBans as $ban) {
+                        $ban = (array) $ban;
+                        $ban['guild'] = $guildPart;
 
-                    $guildPart->bans->offsetSet($banPart->id, $banPart);
-                }
+                        $banPart = $this->factory->create(Ban::class, $ban, true);
 
-                $resolve();
-            }, $resolve);
+                        $guildPart->bans->offsetSet($banPart->id, $banPart);
+                    }
+
+                    $banPagination($guildPart->bans->last());
+                }, $resolve);
+            };
         } else {
             $resolve();
         }
