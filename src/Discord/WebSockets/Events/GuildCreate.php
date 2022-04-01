@@ -132,11 +132,11 @@ class GuildCreate extends Event
 
                     foreach ($rawBans as $ban) {
                         $ban = (array) $ban;
-                        $ban['guild'] = $guildPart;
+                        $ban['guild_id'] = $guildPart->id;
 
                         $banPart = $this->factory->create(Ban::class, $ban, true);
 
-                        $guildPart->bans->offsetSet($banPart->id, $banPart);
+                        $guildPart->bans->offsetSet($banPart->user->id, $banPart);
                     }
 
                     $banPagination($guildPart->bans->last()->user->id);

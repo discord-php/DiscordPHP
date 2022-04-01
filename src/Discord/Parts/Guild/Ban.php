@@ -19,18 +19,25 @@ use Discord\Parts\User\User;
  *
  * @see https://discord.com/developers/docs/resources/guild#ban-object
  *
- * @property string     $reason   The reason for the ban.
- * @property User       $user     The banned user.
- * @property string     $user_id
- * @property string     $guild_id
- * @property Guild|null $guild
+ * @property string      $reason   The reason for the ban.
+ * @property User        $user     The banned user.
+ * @property string      $user_id
+ * @property string|null $guild_id
+ * @property Guild|null  $guild
  */
 class Ban extends Part
 {
     /**
      * @inheritdoc
      */
-    protected $fillable = ['reason', 'user', 'user_id', 'guild_id'];
+    protected $fillable = [
+        'reason',
+        'user',
+
+        // internally used
+        'user_id',
+        'guild_id'
+    ];
 
     /**
      * Returns the user id of the ban.
@@ -70,7 +77,7 @@ class Ban extends Part
         if (isset($this->attributes['user_id'])) {
             return $this->discord->users->get('id', $this->attributes['user_id']);
         }
-        
+
         if ($user = $this->discord->users->get('id', $this->attributes['user']->id)) {
             return $user;
         }
