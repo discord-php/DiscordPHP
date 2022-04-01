@@ -26,6 +26,7 @@ use Discord\Parts\Part;
  * @property Channel     $channel                  The channel that the stage instance associated to.
  * @property string      $topic                    The topic of the Stage instance (1-120 characters).
  * @property int         $privacy_level            The privacy level of the Stage instance.
+ * @property bool        $send_start_notification  Notify @everyone that a Stage instance has started.
  * @property string|null $guild_scheduled_event_id The id of the scheduled event.
  */
 class StageInstance extends Part
@@ -43,6 +44,7 @@ class StageInstance extends Part
         'channel_id',
         'topic',
         'privacy_level',
+        'send_start_notification',
         'discoverable_disabled', // deprecated
         'guild_scheduled_event_id',
     ];
@@ -84,6 +86,7 @@ class StageInstance extends Part
             'channel_id' => $this->channel_id,
             'topic' => $this->topic,
             'privacy_level' => $this->privacy_level,
+            'send_start_notification' => $this->send_start_notification,
         ];
     }
 

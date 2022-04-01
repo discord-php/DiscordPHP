@@ -21,15 +21,16 @@ use function Discord\poly_strlen;
  *
  * @see https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-option-choice-structure
  *
- * @property string           $name  1-100 character choice name.
- * @property string|int|float $value Value of the choice, up to 100 characters if string.
+ * @property string           $name               1-100 character choice name.
+ * @property string[]|null    $name_localizations Localization dictionary for the name field. Values follow the same restrictions as name.
+ * @property string|int|float $value              Value of the choice, up to 100 characters if string.
  */
 class Choice extends Part
 {
     /**
      * @inheritdoc
      */
-    protected $fillable = ['name', 'value'];
+    protected $fillable = ['name', 'name_localizations', 'value'];
 
     /**
      * Creates a new Choice builder.
@@ -64,6 +65,32 @@ class Choice extends Part
         }
 
         $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Sets the name of the choice in another language.
+     *
+     * @param string      $locale Discord locale code.
+     * @param string|null $name   Localized name of the choice.
+     *
+     * @throws \LengthException
+     *
+     * @return $this
+     */
+    public function setNameLocalization(string $locale, ?string $name): self
+    {
+        if (isset($name)) {
+            $namelen = poly_strlen($name);
+            if ($namelen < 1) {
+                throw new \LengthException('Choice name can not be empty.');
+            } elseif ($namelen > 100) {
+                throw new \LengthException('Choice name must be less than or equal to 100 characters.');
+            }
+        }
+
+        $this->name_localizations[$locale] = $name;
 
         return $this;
     }

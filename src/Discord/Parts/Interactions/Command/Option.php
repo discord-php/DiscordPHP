@@ -21,16 +21,18 @@ use function Discord\poly_strlen;
  *
  * @see https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-option-structure
  *
- * @property int                      $type          Type of the option.
- * @property string                   $name          Name of the option. CHAT_INPUT option name is lowercase.
- * @property string                   $description   1-100 character description.
- * @property bool                     $required      If the parameter is required or optional--default false.
- * @property Collection|Choice[]|null $choices       Choices for STRING, INTEGER, and NUMBER types for the user to pick from, max 25. Only for slash commands.
- * @property Collection|Option[]      $options       Sub-options if applicable.
- * @property array                    $channel_types If the option is a channel type, the channels shown will be restricted to these types.
- * @property int|float                $min_value     If the option is an INTEGER or NUMBER type, the minimum value permitted.
- * @property int|float                $max_value     If the option is an INTEGER or NUMBER type, the maximum value permitted.
- * @property bool                     $autocomplete  Enable autocomplete interactions for this option.
+ * @property int                      $type                      Type of the option.
+ * @property string                   $name                      Name of the option.
+ * @property string[]|null            $name_localizations        Localization dictionary for the name field. Values follow the same restrictions as name.
+ * @property string                   $description               1-100 character description.
+ * @property string[]|null            $description_localizations Localization dictionary for the description field. Values follow the same restrictions as description.
+ * @property bool                     $required                  If the parameter is required or optional--default false.
+ * @property Collection|Choice[]|null $choices                   Choices for STRING, INTEGER, and NUMBER types for the user to pick from, max 25. Only for slash commands.
+ * @property Collection|Option[]      $options                   Sub-options if applicable.
+ * @property array                    $channel_types             If the option is a channel type, the channels shown will be restricted to these types.
+ * @property int|float                $min_value                 If the option is an INTEGER or NUMBER type, the minimum value permitted.
+ * @property int|float                $max_value                 If the option is an INTEGER or NUMBER type, the maximum value permitted.
+ * @property bool                     $autocomplete              Enable autocomplete interactions for this option.
  */
 class Option extends Part
 {
@@ -52,7 +54,9 @@ class Option extends Part
     protected $fillable = [
         'type',
         'name',
+        'name_localizations',
         'description',
+        'description_localizations',
         'required',
         'choices',
         'options',
@@ -132,11 +136,35 @@ class Option extends Part
      */
     public function setName(string $name): self
     {
-        if ($name && poly_strlen($name) > 32) {
+        if (poly_strlen($name) > 32) {
             throw new \LengthException('Name must be less than or equal to 32 characters.');
         }
 
         $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Sets the name of the option in another language.
+     * CHAT_INPUT command option names must match the following regex ^[\w-]{1,32}$ with the unicode flag set.
+     * If there is a lowercase variant of any letters used, you must use those.
+     * Characters with no lowercase variants and/or uncased letters are still allowed.
+     *
+     * @param string      $locale Discord locale code.
+     * @param string|null $name   Localized name of the option. Slash command option names are lowercase.
+     *
+     * @throws \LengthException
+     *
+     * @return $this
+     */
+    public function setNameLocalization(string $locale, ?string $name): self
+    {
+        if (isset($name) && poly_strlen($name) > 32) {
+            throw new \LengthException('Name must be less than or equal to 32 characters.');
+        }
+
+        $this->name_localizations[$locale] = $name;
 
         return $this;
     }
@@ -152,11 +180,32 @@ class Option extends Part
      */
     public function setDescription(string $description): self
     {
-        if ($description && poly_strlen($description) > 100) {
+        if (poly_strlen($description) > 100) {
             throw new \LengthException('Description must be less than or equal to 100 characters.');
         }
 
         $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Sets the description of the option in another language.
+     *
+     * @param string      $locale      Discord locale code.
+     * @param string|null $description Localized description of the option.
+     *
+     * @throws \LengthException
+     *
+     * @return $this
+     */
+    public function setDescriptionLocalization(string $locale, ?string $description): self
+    {
+        if (isset($description) && poly_strlen($description) > 100) {
+            throw new \LengthException('Description must be less than or equal to 100 characters.');
+        }
+
+        $this->description_localizations[$locale] = $description;
 
         return $this;
     }

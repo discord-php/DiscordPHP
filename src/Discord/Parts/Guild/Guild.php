@@ -14,6 +14,7 @@ namespace Discord\Parts\Guild;
 use Carbon\Carbon;
 use Discord\Exceptions\FileNotFoundException;
 use Discord\Helpers\Collection;
+use Discord\Helpers\Multipart;
 use Discord\Http\Endpoint;
 use Discord\Http\Exceptions\NoPermissionsException;
 use Discord\Parts\Channel\Channel;
@@ -39,6 +40,7 @@ use React\Promise\ExtendedPromiseInterface;
 use ReflectionClass;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+use function Discord\poly_strlen;
 use function React\Promise\reject;
 use function React\Promise\resolve;
 
@@ -95,13 +97,17 @@ use function React\Promise\resolve;
  * @property StickerRepository        $stickers                                 Custom guild stickers.
  * @property ScheduledeventRepository $guild_scheduled_events                   The scheduled events in the guild.
  * @property bool                     $premium_progress_bar_enabled             Whether the guild has the boost progress bar enabled.
+ * @property int|null                 $hub_type                                 The type of Student Hub the guild is.
+ * @property bool                     $feature_animated_banner                  Guild has access to set an animated guild banner image.
  * @property bool                     $feature_animated_icon                    Guild has access to set an animated guild icon.
  * @property bool                     $feature_banner                           Guild has access to set a guild banner image.
  * @property bool                     $feature_commerce                         Guild has access to use commerce features (create store channels).
  * @property bool                     $feature_community                        Guild can enable welcome screen, Membership Screening, stage channels and discovery, and receives community updates.
  * @property bool                     $feature_discoverable                     Guild is able to be discovered in the directory.
  * @property bool                     $feature_featurable                       Guild is able to be featured in the directory.
+ * @property bool                     $feature_has_directory_entry              Guild is listed in a directory channel.
  * @property bool                     $feature_invite_splash                    Guild has access to set an invite splash background.
+ * @property bool                     $feature_linked_to_hub                    Guild is in a Student Hub.
  * @property bool                     $feature_member_verification_gate_enabled Guild has enabled membership screening.
  * @property bool                     $feature_monetization_enabled             Guild has enabled monetization.
  * @property bool                     $feature_more_stickers                    Guild has increased custom sticker slots.
@@ -158,6 +164,10 @@ class Guild extends Part
     public const SUPPRESS_GUILD_REMINDER_NOTIFICATIONS = (1 << 2);
     public const SUPPRESS_JOIN_NOTIFICATION_REPLIES = (1 << 3);
 
+    public const HUB_TYPE_DEFAULT = 0;
+    public const HUB_TYPE_HIGH_SCHOOL = 1;
+    public const HUB_TYPE_COLLEGE = 2;
+
     /**
      * @inheritdoc
      */
@@ -184,6 +194,7 @@ class Guild extends Part
         'verification_level',
         'roles',
         'default_message_notifications',
+        'hub_type',
         'mfa_level',
         'explicit_content_filter',
         'max_presences',
@@ -213,13 +224,16 @@ class Guild extends Part
      * @inheritDoc
      */
     protected $visible = [
+        'feature_animated_banner',
         'feature_animated_icon',
         'feature_banner',
         'feature_commerce',
         'feature_community',
         'feature_discoverable',
         'feature_featurable',
+        'feature_has_directory_entry',
         'feature_invite_splash',
+        'feature_linked_to_hub',
         'feature_member_verification_gate_enabled',
         'feature_monetization_enabled',
         'feature_more_stickers',
@@ -395,6 +409,11 @@ class Guild extends Part
         return $this->attributes['splash'];
     }
 
+    protected function getFeatureAnimatedBannerAttribute(): bool
+    {
+        return in_array('ANIMATED_BANNER', $this->features);
+    }
+
     protected function getFeatureAnimatedIconAttribute(): bool
     {
         return in_array('ANIMATED_ICON', $this->features);
@@ -420,9 +439,19 @@ class Guild extends Part
         return in_array('FEATURABLE', $this->features);
     }
 
+    protected function getFeatureHasDirectoryEntryAttribute(): bool
+    {
+        return in_array('HAS_DIRECTORY_ENTRY', $this->features);
+    }
+
     protected function getFeatureInviteSplashAttribute(): bool
     {
         return in_array('INVITE_SPLASH', $this->features);
+    }
+
+    protected function getFeatureLinkedToHubAttribute(): bool
+    {
+        return in_array('LINKED_TO_HUB', $this->features);
     }
 
     protected function getFeatureMemberVerificationGateEnabledAttribute(): bool
@@ -579,7 +608,7 @@ class Guild extends Part
 
         if (isset($filepath)) {
             if (! file_exists($filepath)) {
-                throw new FileNotFoundException("File does not exist at path {$filepath}.");
+                return reject(new FileNotFoundException("File does not exist at path {$filepath}."));
             }
 
             $extension = strtolower(pathinfo($filepath, PATHINFO_EXTENSION));
@@ -602,6 +631,106 @@ class Guild extends Part
                 $this->emojis->push($emoji);
 
                 return $emoji;
+            });
+    }
+
+    /**
+     * Creates an Sticker for the guild.
+     *
+     * @see https://discord.com/developers/docs/resources/sticker#create-guild-sticker
+     *
+     * @param array       $options  An array of options.
+     *                              name => Name of the sticker.
+     *                              description => Description of the sticker (empty or 2-100 characters).
+     *                              tags => Autocomplete/suggestion tags for the sticker (max 200 characters).
+     * @param string      $filepath The sticker file to upload, must be a PNG, APNG, or Lottie JSON file, max 500 KB.
+     * @param string|null $reason   Reason for Audit Log.
+     *
+     * @throws FileNotFoundException Thrown when the file does not exist.
+     * @throws \LengthException
+     * @throws \DomainException
+     *
+     * @return ExtendedPromiseInterface<Sticker>
+     */
+    public function createSticker(array $options, string $filepath, ?string $reason = null): ExtendedPromiseInterface
+    {
+        $resolver = new OptionsResolver();
+        $resolver
+            ->setDefined([
+                'name',
+                'description',
+                'tags',
+            ])
+            ->setRequired(['name', 'tags'])
+            ->setAllowedTypes('name', 'string')
+            ->setAllowedTypes('description', 'string')
+            ->setAllowedTypes('tags', 'string')
+            ->setDefault('description', '');
+
+        $options = $resolver->resolve($options);
+
+        if (! file_exists($filepath)) {
+            return reject(new FileNotFoundException("File does not exist at path {$filepath}."));
+        }
+
+        $descLength = poly_strlen($options['description']);
+        if ($descLength > 100 || $descLength == 1) {
+            return reject(new \LengthException('Description must be 2 to 100 characters'));
+        }
+
+        if (function_exists('mime_content_type')) {
+            $contentType = \mime_content_type($filepath);
+        } else {
+            $extension = strtolower(pathinfo($filepath, PATHINFO_EXTENSION));
+            $contentTypes = [
+                'png' => 'image/png',
+                'apng' => 'image/apng',
+                'lottie' => 'application/json',
+            ];
+
+            if (! array_key_exists($extension, $contentTypes)) {
+                return reject(new \DomainException('File format must be PNG, APNG, or Lottie JSON'));
+            }
+
+            $contentType = $contentTypes[$extension];
+        }
+
+        $contents = file_get_contents($filepath);
+
+        $multipart = new Multipart([
+            [
+                'name' => 'name',
+                'content' => $options['name'],
+            ],
+            [
+                'name' => 'description',
+                'content' => $options['description'],
+            ],
+            [
+                'name' => 'tags',
+                'content' => $options['tags'],
+            ],
+            [
+                'name' => 'file',
+                'filename' => basename($filepath),
+                'content' => $contents,
+                'headers' => [
+                    'Content-Type' => $contentType
+                ]
+            ],
+        ]);
+
+        $headers = $multipart->getHeaders();
+        if (isset($reason)) {
+            $headers['X-Audit-Log-Reason'] = $reason;
+        }
+
+        return $this->http->post(Endpoint::bind(Endpoint::GUILD_STICKERS, $this->id), (string) $multipart, $headers)
+            ->then(function ($response) {
+                $sticker = $this->factory->create(Sticker::class, $response, true);
+                $this->stickers->push($sticker);
+
+                return $sticker;
             });
     }
 

@@ -23,20 +23,17 @@ use React\Promise\ExtendedPromiseInterface;
  *
  * @see https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-structure
  *
- * @property string                   $id                 The unique identifier of the command.
- * @property int                      $type               The type of the command, defaults 1 if not set.
- * @property string                   $application_id     The unique identifier of the parent Application that made the command, if made by one.
- * @property string|null              $guild_id           The unique identifier of the guild that the command belongs to. Null if global.
- * @property Guild|null               $guild              The guild that the command belongs to. Null if global.
- * @property string                   $name               1-32 character name of the command. CHAT_INPUT command name is lowercase.
- * @property string                   $description        1-100 character description for CHAT_INPUT commands, empty string for USER and MESSAGE commands.
- * @property Collection|Option[]|null $options            The parameters for the command, max 25. Only for Slash command (CHAT_INPUT).
- * @property bool                     $default_permission Whether the command is enabled by default when the app is added to a guild.
- * @property string                   $version            Autoincrementing version identifier updated during substantial record changes.
- * @property OverwriteRepository      $overwrites         Permission overwrites.
+ * @property string                   $id             The unique identifier of the command.
+ * @property string                   $application_id The unique identifier of the parent Application that made the command, if made by one.
+ * @property string|null              $guild_id       The unique identifier of the guild that the command belongs to. Null if global.
+ * @property Guild|null               $guild          The guild that the command belongs to. Null if global.
+ * @property string                   $version        Autoincrementing version identifier updated during substantial record changes.
+ * @property OverwriteRepository      $overwrites     Permission overwrites.
  */
 class Command extends Part
 {
+    use \Discord\Builders\CommandAttributes;
+
     /** Slash commands; a text-based command that shows up when a user types / */
     public const CHAT_INPUT = 1;
 
@@ -55,7 +52,9 @@ class Command extends Part
         'application_id',
         'guild_id',
         'name',
+        'name_localizations',
         'description',
+        'description_localizations',
         'options',
         'default_permission',
         'version',
@@ -138,7 +137,9 @@ class Command extends Part
         return [
             'guild_id' => $this->guild_id ?? null,
             'name' => $this->name,
+            'name_localizations' => $this->name_localizations,
             'description' => $this->description,
+            'description_localizations' => $this->description_localizations,
             'options' => $this->attributes['options'] ?? null,
             'default_permission' => $this->default_permission,
             'type' => $this->type,
@@ -153,7 +154,9 @@ class Command extends Part
         return [
             'guild_id' => $this->guild_id ?? null,
             'name' => $this->name,
+            'name_localizations' => $this->name_localizations,
             'description' => $this->description,
+            'description_localizations' => $this->description_localizations,
             'options' => $this->attributes['options'] ?? null,
             'default_permission' => $this->default_permission,
             'type' => $this->type,
