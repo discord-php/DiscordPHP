@@ -196,9 +196,9 @@ function imageToBase64(string $filepath): string
  * Takes a snowflake and calculates the time that the snowflake
  * was generated.
  *
- * @param string|int $snowflake
+ * @param string|float $snowflake
  *
- * @return int
+ * @return float
  */
 function getSnowflakeTimestamp(string $snowflake)
 {
