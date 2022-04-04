@@ -1,6 +1,56 @@
 Search.appendIndex(
     [
                 {
+            "fqsen": "\\Discord\\Builders\\CommandAttributes",
+            "name": "CommandAttributes",
+            "summary": "Application\u0020Command\u0020attributes",
+            "url": "classes/Discord-Builders-CommandAttributes.html"
+        },                {
+            "fqsen": "\\Discord\\Builders\\CommandAttributes\u003A\u003AsetType\u0028\u0029",
+            "name": "setType",
+            "summary": "Sets\u0020the\u0020type\u0020of\u0020the\u0020command.",
+            "url": "classes/Discord-Builders-CommandAttributes.html#method_setType"
+        },                {
+            "fqsen": "\\Discord\\Builders\\CommandAttributes\u003A\u003AsetName\u0028\u0029",
+            "name": "setName",
+            "summary": "Sets\u0020the\u0020name\u0020of\u0020the\u0020command.",
+            "url": "classes/Discord-Builders-CommandAttributes.html#method_setName"
+        },                {
+            "fqsen": "\\Discord\\Builders\\CommandAttributes\u003A\u003AsetNameLocalization\u0028\u0029",
+            "name": "setNameLocalization",
+            "summary": "Sets\u0020the\u0020name\u0020of\u0020the\u0020command\u0020in\u0020another\u0020language.",
+            "url": "classes/Discord-Builders-CommandAttributes.html#method_setNameLocalization"
+        },                {
+            "fqsen": "\\Discord\\Builders\\CommandAttributes\u003A\u003AsetDescription\u0028\u0029",
+            "name": "setDescription",
+            "summary": "Sets\u0020the\u0020description\u0020of\u0020the\u0020command.",
+            "url": "classes/Discord-Builders-CommandAttributes.html#method_setDescription"
+        },                {
+            "fqsen": "\\Discord\\Builders\\CommandAttributes\u003A\u003AsetDescriptionLocalization\u0028\u0029",
+            "name": "setDescriptionLocalization",
+            "summary": "Sets\u0020the\u0020description\u0020of\u0020the\u0020command\u0020in\u0020another\u0020language.",
+            "url": "classes/Discord-Builders-CommandAttributes.html#method_setDescriptionLocalization"
+        },                {
+            "fqsen": "\\Discord\\Builders\\CommandAttributes\u003A\u003AsetDefaultPermission\u0028\u0029",
+            "name": "setDefaultPermission",
+            "summary": "Sets\u0020the\u0020default\u0020permission\u0020of\u0020the\u0020command.",
+            "url": "classes/Discord-Builders-CommandAttributes.html#method_setDefaultPermission"
+        },                {
+            "fqsen": "\\Discord\\Builders\\CommandAttributes\u003A\u003AaddOption\u0028\u0029",
+            "name": "addOption",
+            "summary": "Adds\u0020an\u0020option\u0020to\u0020the\u0020command.",
+            "url": "classes/Discord-Builders-CommandAttributes.html#method_addOption"
+        },                {
+            "fqsen": "\\Discord\\Builders\\CommandAttributes\u003A\u003AremoveOption\u0028\u0029",
+            "name": "removeOption",
+            "summary": "Removes\u0020an\u0020option\u0020from\u0020the\u0020command.",
+            "url": "classes/Discord-Builders-CommandAttributes.html#method_removeOption"
+        },                {
+            "fqsen": "\\Discord\\Builders\\CommandAttributes\u003A\u003AclearOptions\u0028\u0029",
+            "name": "clearOptions",
+            "summary": "Clear\u0020all\u0020options\u0020from\u0020the\u0020command.",
+            "url": "classes/Discord-Builders-CommandAttributes.html#method_clearOptions"
+        },                {
             "fqsen": "\\Discord\\Builders\\CommandBuilder",
             "name": "CommandBuilder",
             "summary": "Helper\u0020class\u0020used\u0020to\u0020build\u0020application\u0020commands.",
@@ -10,36 +60,6 @@ Search.appendIndex(
             "name": "new",
             "summary": "Creates\u0020a\u0020new\u0020command\u0020builder.",
             "url": "classes/Discord-Builders-CommandBuilder.html#method_new"
-        },                {
-            "fqsen": "\\Discord\\Builders\\CommandBuilder\u003A\u003AsetType\u0028\u0029",
-            "name": "setType",
-            "summary": "Sets\u0020the\u0020type\u0020of\u0020the\u0020command.",
-            "url": "classes/Discord-Builders-CommandBuilder.html#method_setType"
-        },                {
-            "fqsen": "\\Discord\\Builders\\CommandBuilder\u003A\u003AsetName\u0028\u0029",
-            "name": "setName",
-            "summary": "Sets\u0020the\u0020name\u0020of\u0020the\u0020command.",
-            "url": "classes/Discord-Builders-CommandBuilder.html#method_setName"
-        },                {
-            "fqsen": "\\Discord\\Builders\\CommandBuilder\u003A\u003AsetDescription\u0028\u0029",
-            "name": "setDescription",
-            "summary": "Sets\u0020the\u0020description\u0020of\u0020the\u0020command.",
-            "url": "classes/Discord-Builders-CommandBuilder.html#method_setDescription"
-        },                {
-            "fqsen": "\\Discord\\Builders\\CommandBuilder\u003A\u003AsetDefaultPermission\u0028\u0029",
-            "name": "setDefaultPermission",
-            "summary": "Sets\u0020the\u0020default\u0020permission\u0020of\u0020the\u0020command.",
-            "url": "classes/Discord-Builders-CommandBuilder.html#method_setDefaultPermission"
-        },                {
-            "fqsen": "\\Discord\\Builders\\CommandBuilder\u003A\u003AaddOption\u0028\u0029",
-            "name": "addOption",
-            "summary": "Adds\u0020an\u0020option\u0020to\u0020the\u0020command.",
-            "url": "classes/Discord-Builders-CommandBuilder.html#method_addOption"
-        },                {
-            "fqsen": "\\Discord\\Builders\\CommandBuilder\u003A\u003AremoveOption\u0028\u0029",
-            "name": "removeOption",
-            "summary": "Removes\u0020an\u0020option\u0020from\u0020the\u0020command.",
-            "url": "classes/Discord-Builders-CommandBuilder.html#method_removeOption"
         },                {
             "fqsen": "\\Discord\\Builders\\CommandBuilder\u003A\u003AgetOptions\u0028\u0029",
             "name": "getOptions",
@@ -66,10 +86,20 @@ Search.appendIndex(
             "summary": "Name\u0020of\u0020the\u0020command.",
             "url": "classes/Discord-Builders-CommandBuilder.html#property_name"
         },                {
+            "fqsen": "\\Discord\\Builders\\CommandBuilder\u003A\u003A\u0024name_localizations",
+            "name": "name_localizations",
+            "summary": "Localization\u0020dictionary\u0020for\u0020the\u0020name\u0020field.\u0020Values\u0020follow\u0020the\u0020same\u0020restrictions\u0020as\u0020name.",
+            "url": "classes/Discord-Builders-CommandBuilder.html#property_name_localizations"
+        },                {
             "fqsen": "\\Discord\\Builders\\CommandBuilder\u003A\u003A\u0024description",
             "name": "description",
             "summary": "Description\u0020of\u0020the\u0020command.\u0020should\u0020be\u0020emtpy\u0020if\u0020the\u0020type\u0020is\u0020not\u0020CHAT_INPUT.",
             "url": "classes/Discord-Builders-CommandBuilder.html#property_description"
+        },                {
+            "fqsen": "\\Discord\\Builders\\CommandBuilder\u003A\u003A\u0024description_localizations",
+            "name": "description_localizations",
+            "summary": "Localization\u0020dictionary\u0020for\u0020the\u0020description\u0020field.\u0020Values\u0020follow\u0020the\u0020same\u0020restrictions\u0020as\u0020description.",
+            "url": "classes/Discord-Builders-CommandBuilder.html#property_description_localizations"
         },                {
             "fqsen": "\\Discord\\Builders\\CommandBuilder\u003A\u003A\u0024options",
             "name": "options",
@@ -2251,6 +2281,11 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Discord-Parts-Channel-Channel.html#constant_TYPE_STAGE_CHANNEL"
         },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Channel\u003A\u003ATYPE_DIRECTORY",
+            "name": "TYPE_DIRECTORY",
+            "summary": "",
+            "url": "classes/Discord-Parts-Channel-Channel.html#constant_TYPE_DIRECTORY"
+        },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Channel\u003A\u003AVIDEO_QUALITY_AUTO",
             "name": "VIDEO_QUALITY_AUTO",
             "summary": "",
@@ -3621,6 +3656,11 @@ Search.appendIndex(
             "summary": "Returns\u0020the\u0020guild\u0020splash\u0020hash.",
             "url": "classes/Discord-Parts-Guild-Guild.html#method_getSplashHashAttribute"
         },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AgetFeatureAnimatedBannerAttribute\u0028\u0029",
+            "name": "getFeatureAnimatedBannerAttribute",
+            "summary": "",
+            "url": "classes/Discord-Parts-Guild-Guild.html#method_getFeatureAnimatedBannerAttribute"
+        },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AgetFeatureAnimatedIconAttribute\u0028\u0029",
             "name": "getFeatureAnimatedIconAttribute",
             "summary": "",
@@ -3646,10 +3686,20 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Discord-Parts-Guild-Guild.html#method_getFeatureFeaturableAttribute"
         },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AgetFeatureHasDirectoryEntryAttribute\u0028\u0029",
+            "name": "getFeatureHasDirectoryEntryAttribute",
+            "summary": "",
+            "url": "classes/Discord-Parts-Guild-Guild.html#method_getFeatureHasDirectoryEntryAttribute"
+        },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AgetFeatureInviteSplashAttribute\u0028\u0029",
             "name": "getFeatureInviteSplashAttribute",
             "summary": "",
             "url": "classes/Discord-Parts-Guild-Guild.html#method_getFeatureInviteSplashAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AgetFeatureLinkedToHubAttribute\u0028\u0029",
+            "name": "getFeatureLinkedToHubAttribute",
+            "summary": "",
+            "url": "classes/Discord-Parts-Guild-Guild.html#method_getFeatureLinkedToHubAttribute"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AgetFeatureMemberVerificationGateEnabledAttribute\u0028\u0029",
             "name": "getFeatureMemberVerificationGateEnabledAttribute",
@@ -3740,6 +3790,11 @@ Search.appendIndex(
             "name": "createEmoji",
             "summary": "Creates\u0020an\u0020Emoji\u0020for\u0020the\u0020guild.",
             "url": "classes/Discord-Parts-Guild-Guild.html#method_createEmoji"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AcreateSticker\u0028\u0029",
+            "name": "createSticker",
+            "summary": "Creates\u0020an\u0020Sticker\u0020for\u0020the\u0020guild.",
+            "url": "classes/Discord-Parts-Guild-Guild.html#method_createSticker"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003Aleave\u0028\u0029",
             "name": "leave",
@@ -3960,6 +4015,21 @@ Search.appendIndex(
             "name": "SUPPRESS_JOIN_NOTIFICATION_REPLIES",
             "summary": "",
             "url": "classes/Discord-Parts-Guild-Guild.html#constant_SUPPRESS_JOIN_NOTIFICATION_REPLIES"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AHUB_TYPE_DEFAULT",
+            "name": "HUB_TYPE_DEFAULT",
+            "summary": "",
+            "url": "classes/Discord-Parts-Guild-Guild.html#constant_HUB_TYPE_DEFAULT"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AHUB_TYPE_HIGH_SCHOOL",
+            "name": "HUB_TYPE_HIGH_SCHOOL",
+            "summary": "",
+            "url": "classes/Discord-Parts-Guild-Guild.html#constant_HUB_TYPE_HIGH_SCHOOL"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AHUB_TYPE_COLLEGE",
+            "name": "HUB_TYPE_COLLEGE",
+            "summary": "",
+            "url": "classes/Discord-Parts-Guild-Guild.html#constant_HUB_TYPE_COLLEGE"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003A\u0024fillable",
             "name": "fillable",
@@ -4391,6 +4461,11 @@ Search.appendIndex(
             "summary": "Sets\u0020the\u0020name\u0020of\u0020the\u0020choice.",
             "url": "classes/Discord-Parts-Interactions-Command-Choice.html#method_setName"
         },                {
+            "fqsen": "\\Discord\\Parts\\Interactions\\Command\\Choice\u003A\u003AsetNameLocalization\u0028\u0029",
+            "name": "setNameLocalization",
+            "summary": "Sets\u0020the\u0020name\u0020of\u0020the\u0020choice\u0020in\u0020another\u0020language.",
+            "url": "classes/Discord-Parts-Interactions-Command-Choice.html#method_setNameLocalization"
+        },                {
             "fqsen": "\\Discord\\Parts\\Interactions\\Command\\Choice\u003A\u003AsetValue\u0028\u0029",
             "name": "setValue",
             "summary": "Sets\u0020the\u0020value\u0020of\u0020the\u0020choice.",
@@ -4491,10 +4566,20 @@ Search.appendIndex(
             "summary": "Sets\u0020the\u0020name\u0020of\u0020the\u0020option.",
             "url": "classes/Discord-Parts-Interactions-Command-Option.html#method_setName"
         },                {
+            "fqsen": "\\Discord\\Parts\\Interactions\\Command\\Option\u003A\u003AsetNameLocalization\u0028\u0029",
+            "name": "setNameLocalization",
+            "summary": "Sets\u0020the\u0020name\u0020of\u0020the\u0020option\u0020in\u0020another\u0020language.",
+            "url": "classes/Discord-Parts-Interactions-Command-Option.html#method_setNameLocalization"
+        },                {
             "fqsen": "\\Discord\\Parts\\Interactions\\Command\\Option\u003A\u003AsetDescription\u0028\u0029",
             "name": "setDescription",
             "summary": "Sets\u0020the\u0020description\u0020of\u0020the\u0020option.",
             "url": "classes/Discord-Parts-Interactions-Command-Option.html#method_setDescription"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Interactions\\Command\\Option\u003A\u003AsetDescriptionLocalization\u0028\u0029",
+            "name": "setDescriptionLocalization",
+            "summary": "Sets\u0020the\u0020description\u0020of\u0020the\u0020option\u0020in\u0020another\u0020language.",
+            "url": "classes/Discord-Parts-Interactions-Command-Option.html#method_setDescriptionLocalization"
         },                {
             "fqsen": "\\Discord\\Parts\\Interactions\\Command\\Option\u003A\u003AsetRequired\u0028\u0029",
             "name": "setRequired",

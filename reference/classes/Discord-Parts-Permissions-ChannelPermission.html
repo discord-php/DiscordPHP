@@ -147,7 +147,7 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Permissions/ChannelPermission.php"><a href="files/src-discord-parts-permissions-channelpermission.html"><abbr title="src/Discord/Parts/Permissions/ChannelPermission.php">ChannelPermission.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">52</span>
+    <span class="phpdocumentor-element-found-in__line">53</span>
 
     </aside>
 
@@ -197,7 +197,7 @@
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a href="classes/Discord-Parts-Permissions-Permission.html#constant_STAGE_PERMISSIONS">STAGE_PERMISSIONS</a>
     <span>
-        &nbsp;= [&#039;connect&#039; =&gt; 20, &#039;mute_members&#039; =&gt; 22, &#039;deafen_members&#039; =&gt; 23, &#039;move_members&#039; =&gt; 24, &#039;request_to_speak&#039; =&gt; 32, &#039;manage_events&#039; =&gt; 33]                            </span>
+        &nbsp;= [&#039;mention_everyone&#039; =&gt; 17, &#039;connect&#039; =&gt; 20, &#039;mute_members&#039; =&gt; 22, &#039;deafen_members&#039; =&gt; 23, &#039;move_members&#039; =&gt; 24, &#039;request_to_speak&#039; =&gt; 32, &#039;manage_events&#039; =&gt; 33]                            </span>
 </dt>
 <dd>Array of permissions that only apply to stage channels.</dd>
 
@@ -343,6 +343,13 @@
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
     <a href="classes/Discord-Parts-Permissions-ChannelPermission.html#property_manage_webhooks">$manage_webhooks</a>
+    <span>
+                        &nbsp;: bool            </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a href="classes/Discord-Parts-Permissions-ChannelPermission.html#property_mention_everyone">$mention_everyone</a>
     <span>
                         &nbsp;: bool            </span>
 </dt>
@@ -854,7 +861,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Permissions/Permission.php"><a href="files/src-discord-parts-permissions-permission.html"><abbr title="src/Discord/Parts/Permissions/Permission.php">Permission.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">115</span>
+    <span class="phpdocumentor-element-found-in__line">116</span>
 
     </aside>
 
@@ -884,7 +891,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Permissions/Permission.php"><a href="files/src-discord-parts-permissions-permission.html"><abbr title="src/Discord/Parts/Permissions/Permission.php">Permission.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">96</span>
+    <span class="phpdocumentor-element-found-in__line">97</span>
 
     </aside>
 
@@ -924,7 +931,7 @@ JSON. Used for JsonSerializable.</dd>
     <span class="phpdocumentor-signature__visibility">public</span>
         <span class="phpdocumentor-signature__type">array&lt;string|int, mixed&gt;</span>
     <span class="phpdocumentor-signature__name">STAGE_PERMISSIONS</span>
-    = <span class="phpdocumentor-signature__default-value">[&#039;connect&#039; =&gt; 20, &#039;mute_members&#039; =&gt; 22, &#039;deafen_members&#039; =&gt; 23, &#039;move_members&#039; =&gt; 24, &#039;request_to_speak&#039; =&gt; 32, &#039;manage_events&#039; =&gt; 33]</span>
+    = <span class="phpdocumentor-signature__default-value">[&#039;mention_everyone&#039; =&gt; 17, &#039;connect&#039; =&gt; 20, &#039;mute_members&#039; =&gt; 22, &#039;deafen_members&#039; =&gt; 23, &#039;move_members&#039; =&gt; 24, &#039;request_to_speak&#039; =&gt; 32, &#039;manage_events&#039; =&gt; 33]</span>
 </code>
 
 
@@ -944,7 +951,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Permissions/Permission.php"><a href="files/src-discord-parts-permissions-permission.html"><abbr title="src/Discord/Parts/Permissions/Permission.php">Permission.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">71</span>
+    <span class="phpdocumentor-element-found-in__line">72</span>
 
     </aside>
 
@@ -974,7 +981,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Permissions/Permission.php"><a href="files/src-discord-parts-permissions-permission.html"><abbr title="src/Discord/Parts/Permissions/Permission.php">Permission.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">52</span>
+    <span class="phpdocumentor-element-found-in__line">53</span>
 
     </aside>
 
@@ -1624,6 +1631,39 @@ JSON. Used for JsonSerializable.</dd>
     <span class="phpdocumentor-signature__visibility">public</span>
         <span class="phpdocumentor-signature__type">bool</span>
     <span class="phpdocumentor-signature__name">$manage_webhooks</span>
+    </code>
+
+    
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="property_mention_everyone">
+        $mention_everyone
+        <a href="classes/Discord-Parts-Permissions-ChannelPermission.html#property_mention_everyone" class="headerlink"><i class="fas fa-link"></i></a>
+        <span class="phpdocumentor-element__modifiers">
+                                </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Permissions/ChannelPermission.php"><a href="files/src-discord-parts-permissions-channelpermission.html"><abbr title="src/Discord/Parts/Permissions/ChannelPermission.php">ChannelPermission.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">0</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">bool</span>
+    <span class="phpdocumentor-signature__name">$mention_everyone</span>
     </code>
 
     
@@ -2693,7 +2733,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Permissions/Permission.php"><a href="files/src-discord-parts-permissions-permission.html"><abbr title="src/Discord/Parts/Permissions/Permission.php">Permission.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">127</span>
+    <span class="phpdocumentor-element-found-in__line">128</span>
 
     </aside>
 
@@ -3276,7 +3316,7 @@ the part from Discord&#039;s servers.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Permissions/ChannelPermission.php"><a href="files/src-discord-parts-permissions-channelpermission.html"><abbr title="src/Discord/Parts/Permissions/ChannelPermission.php">ChannelPermission.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">57</span>
+    <span class="phpdocumentor-element-found-in__line">58</span>
 
     </aside>
 
@@ -3833,7 +3873,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Permissions/Permission.php"><a href="files/src-discord-parts-permissions-permission.html"><abbr title="src/Discord/Parts/Permissions/Permission.php">Permission.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">159</span>
+    <span class="phpdocumentor-element-found-in__line">160</span>
 
     </aside>
 
@@ -3866,7 +3906,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Permissions/Permission.php"><a href="files/src-discord-parts-permissions-permission.html"><abbr title="src/Discord/Parts/Permissions/Permission.php">Permission.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">257</span>
+    <span class="phpdocumentor-element-found-in__line">258</span>
 
     </aside>
 
@@ -3921,7 +3961,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Permissions/Permission.php"><a href="files/src-discord-parts-permissions-permission.html"><abbr title="src/Discord/Parts/Permissions/Permission.php">Permission.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">207</span>
+    <span class="phpdocumentor-element-found-in__line">208</span>
 
     </aside>
 
@@ -3975,7 +4015,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Permissions/Permission.php"><a href="files/src-discord-parts-permissions-permission.html"><abbr title="src/Discord/Parts/Permissions/Permission.php">Permission.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">247</span>
+    <span class="phpdocumentor-element-found-in__line">248</span>
 
     </aside>
 
@@ -4030,7 +4070,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Permissions/Permission.php"><a href="files/src-discord-parts-permissions-permission.html"><abbr title="src/Discord/Parts/Permissions/Permission.php">Permission.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">237</span>
+    <span class="phpdocumentor-element-found-in__line">238</span>
 
     </aside>
 
@@ -4085,7 +4125,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Permissions/Permission.php"><a href="files/src-discord-parts-permissions-permission.html"><abbr title="src/Discord/Parts/Permissions/Permission.php">Permission.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">227</span>
+    <span class="phpdocumentor-element-found-in__line">228</span>
 
     </aside>
 
@@ -4140,7 +4180,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Permissions/Permission.php"><a href="files/src-discord-parts-permissions-permission.html"><abbr title="src/Discord/Parts/Permissions/Permission.php">Permission.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">187</span>
+    <span class="phpdocumentor-element-found-in__line">188</span>
 
     </aside>
 
@@ -4183,7 +4223,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Permissions/Permission.php"><a href="files/src-discord-parts-permissions-permission.html"><abbr title="src/Discord/Parts/Permissions/Permission.php">Permission.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">297</span>
+    <span class="phpdocumentor-element-found-in__line">298</span>
 
     </aside>
 
@@ -4249,7 +4289,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Permissions/Permission.php"><a href="files/src-discord-parts-permissions-permission.html"><abbr title="src/Discord/Parts/Permissions/Permission.php">Permission.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">217</span>
+    <span class="phpdocumentor-element-found-in__line">218</span>
 
     </aside>
 
@@ -4314,7 +4354,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Permissions/Permission.php"><a href="files/src-discord-parts-permissions-permission.html"><abbr title="src/Discord/Parts/Permissions/Permission.php">Permission.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">287</span>
+    <span class="phpdocumentor-element-found-in__line">288</span>
 
     </aside>
 
@@ -4380,7 +4420,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Permissions/Permission.php"><a href="files/src-discord-parts-permissions-permission.html"><abbr title="src/Discord/Parts/Permissions/Permission.php">Permission.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">277</span>
+    <span class="phpdocumentor-element-found-in__line">278</span>
 
     </aside>
 
@@ -4446,7 +4486,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Permissions/Permission.php"><a href="files/src-discord-parts-permissions-permission.html"><abbr title="src/Discord/Parts/Permissions/Permission.php">Permission.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">267</span>
+    <span class="phpdocumentor-element-found-in__line">268</span>
 
     </aside>
 
