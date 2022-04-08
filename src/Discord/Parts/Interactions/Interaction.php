@@ -88,6 +88,14 @@ class Interaction extends Part
     protected $responded = false;
 
     /**
+     * Returns true if this interaction has been internally responded.
+     */
+    public function isResponded(): bool
+    {
+        return $this->responded;
+    }
+
+    /**
      * Returns the data associated with the interaction.
      *
      * @return InteractionData|null
@@ -99,7 +107,7 @@ class Interaction extends Part
         }
 
         $adata = $this->attributes['data'];
-        if (isset($this->attributes['guild_id'])) {
+        if (! isset($adata->guild_id) && isset($this->attributes['guild_id'])) {
             $adata->guild_id = $this->guild_id;
         }
 
@@ -341,7 +349,7 @@ class Interaction extends Part
         }
 
         if ($ephemeral) {
-            $builder->_setFlags(64);
+            $builder->_setFlags(Message::FLAG_EPHEMERAL);
         }
 
         return (function () use ($builder): ExtendedPromiseInterface {
@@ -376,7 +384,7 @@ class Interaction extends Part
         }
 
         if ($ephemeral) {
-            $builder->_setFlags(64);
+            $builder->_setFlags(Message::FLAG_EPHEMERAL);
         }
 
         return $this->respond([

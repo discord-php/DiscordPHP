@@ -57,7 +57,7 @@ use function React\Promise\resolve;
  * @property string|null         $name                          The name of the channel.
  * @property string|null         $topic                         The topic of the channel.
  * @property bool|null           $nsfw                          Whether the channel is NSFW.
- * @property string|null         $last_message_id               The unique identifier of the last message sent in the channel.
+ * @property string|null         $last_message_id               The unique identifier of the last message sent in the channel (or thread for forum channels) (may not point to an existing or valid message or thread).
  * @property int|null            $bitrate                       The bitrate of the channel. Only for voice channels.
  * @property int|null            $user_limit                    The user limit of the channel.
  * @property int|null            $rate_limit_per_user           Amount of seconds a user has to wait before sending a new message.
@@ -72,6 +72,7 @@ use function React\Promise\resolve;
  * @property string|null         $rtc_region                    Voice region id for the voice channel, automatic when set to null.
  * @property int|null            $video_quality_mode            The camera video quality mode of the voice channel, 1 when not present.
  * @property int|null            $default_auto_archive_duration Default duration for newly created threads, in minutes, to automatically archive the thread after recent activity, can be set to: 60, 1440, 4320, 10080.
+ * @property int|null            $flags                         Channel flags combined as a bitfield.
  * @property string|null         $permissions                   Computed permissions for the invoking user in the channel, including overwrites, only included when part of the resolved data received on a slash command interaction.
  * @property bool                $is_private                    Whether the channel is a private channel.
  * @property MemberRepository    $members                       Voice channel only - members in the channel.
@@ -98,9 +99,12 @@ class Channel extends Part
     public const TYPE_PRIVATE_THREAD = 12;
     public const TYPE_STAGE_CHANNEL = 13;
     public const TYPE_DIRECTORY = 14;
+    public const TYPE_FORUM = 15;
 
     public const VIDEO_QUALITY_AUTO = 1;
     public const VIDEO_QUALITY_FULL = 2;
+
+    public const FLAG_PINNED = (1 << 1);
 
     /**
      * @inheritdoc
@@ -128,6 +132,7 @@ class Channel extends Part
         'video_quality_mode',
         'default_auto_archive_duration',
         'permissions',
+        'flags',
         'is_private',
     ];
 
@@ -763,9 +768,9 @@ class Channel extends Part
      *
      * @see https://discord.com/developers/docs/resources/channel#start-thread-without-message
      *
-     * @param string      $name                  the name of the thread.
-     * @param bool        $private               whether the thread should be private. cannot start a private thread in a news channel.
-     * @param int         $auto_archive_duration number of minutes of inactivity until the thread is auto-archived. one of 60, 1440, 4320, 10080.
+     * @param string      $name                  The name of the thread.
+     * @param bool        $private               Whether the thread should be private. cannot start a private thread in a news channel or forum channel.
+     * @param int         $auto_archive_duration Number of minutes of inactivity until the thread is auto-archived. one of 60, 1440, 4320, 10080.
      * @param string|null $reason                Reason for Audit Log.
      *
      * @throws \RuntimeException
@@ -787,6 +792,8 @@ class Channel extends Part
             $type = Channel::TYPE_NEWS_THREAD;
         } elseif ($this->type == Channel::TYPE_TEXT) {
             $type = $private ? Channel::TYPE_PRIVATE_THREAD : Channel::TYPE_PUBLIC_THREAD;
+        } elseif ($this->type == Channel::TYPE_FORUM) {
+            $type = Channel::TYPE_PUBLIC_THREAD;
         } else {
             return reject(new \RuntimeException('You cannot start a thread in this type of channel.'));
         }
@@ -1061,7 +1068,7 @@ class Channel extends Part
      */
     public function allowInvite()
     {
-        return in_array($this->type, [self::TYPE_TEXT, self::TYPE_VOICE, self::TYPE_NEWS, self::TYPE_STAGE_CHANNEL]);
+        return in_array($this->type, [self::TYPE_TEXT, self::TYPE_VOICE, self::TYPE_NEWS, self::TYPE_STAGE_CHANNEL, self::TYPE_FORUM]);
     }
 
     /**

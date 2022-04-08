@@ -474,7 +474,7 @@ class MessageBuilder implements JsonSerializable
     /**
      * Sets the flags of the message.
      *
-     * @internal You cannot set flags except for when sending webhooks. Use the APIs given.
+     * @internal You cannot set flags except for when sending webhooks or interaction. Use the APIs given.
      *
      * @param int $flags
      *
