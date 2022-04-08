@@ -13,7 +13,6 @@ namespace Discord\Parts;
 
 use ArrayAccess;
 use Carbon\Carbon;
-use function Discord\studly;
 use Discord\Discord;
 use Discord\Factory\Factory;
 use Discord\Http\Http;
@@ -21,6 +20,8 @@ use JsonSerializable;
 use React\Promise\ExtendedPromiseInterface;
 use RuntimeException;
 use Serializable;
+
+use function Discord\studly;
 
 /**
  * This class is the base of all objects that are returned. All "Parts" extend off this
