@@ -679,10 +679,6 @@ class Member extends Part
      */
     public function __toString(): string
     {
-        if ($this->nick) {
-            return "<@!{$this->id}>";
-        }
-
         return "<@{$this->id}>";
     }
 }
