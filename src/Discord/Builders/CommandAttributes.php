@@ -63,8 +63,10 @@ trait CommandAttributes {
     public function setName(string $name): self
     {
         $nameLen = poly_strlen($name);
-        if ($nameLen < 1 || $nameLen > 100) {
-            throw new \LengthException('Command name can be only 1 to 32 characters long.');
+        if ($nameLen < 1) {
+            throw new \LengthException('Command name can not be empty.');
+        } elseif ($nameLen > 100) {
+            throw new \LengthException('Command name can be only up to 32 characters long.');
         }
 
         $this->name = $name;
@@ -86,8 +88,10 @@ trait CommandAttributes {
     {
         if (isset($name)) {
             $nameLen = poly_strlen($name);
-            if ($nameLen < 1 || $nameLen > 100) {
-                throw new \LengthException('Command name can be only 1 to 32 characters long.');
+            if ($nameLen < 1) {
+                throw new \LengthException('Command name can not be empty.');
+            } elseif ($nameLen > 100) {
+                throw new \LengthException('Command name can be only up to 32 characters long.');
             }
         }
 
@@ -108,8 +112,10 @@ trait CommandAttributes {
     public function setDescription(string $description): self
     {
         $descriptionLen = poly_strlen($description);
-        if ($descriptionLen < 1 || $descriptionLen > 100) {
-            throw new \LengthException('Command Description can be only 1 to 100 characters long.');
+        if ($descriptionLen < 1) {
+            throw new \LengthException('Command description can not be empty.');
+        } elseif ($descriptionLen > 100) {
+            throw new \LengthException('Command description can be only up to 100 characters long.');
         }
 
         $this->description = $description;
@@ -201,8 +207,6 @@ trait CommandAttributes {
 
     /**
      * Clear all options from the command.
-     *
-     * @throws \DomainException
      *
      * @return $this
      */
