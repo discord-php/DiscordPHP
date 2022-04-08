@@ -480,27 +480,11 @@ class MessageBuilder implements JsonSerializable
      *
      * @return $this
      */
-    public function setFlags(int $flags): self
+    public function _setFlags(int $flags): self
     {
         $this->flags = $flags;
 
         return $this;
-    }
-
-    /**
-     * Alias for old setFlags()
-     *
-     * @deprecated 7.1.0 Use setFlags() instead
-     *
-     * @internal You cannot set flags except for when sending webhooks or interaction. Use the APIs given.
-     *
-     * @param int $flags
-     *
-     * @return $this
-     */
-    public function _setFlags(int $flags): self
-    {
-        return $this->setFlags($flags);
     }
 
     /**

@@ -65,7 +65,7 @@ trait CommandAttributes {
         $nameLen = poly_strlen($name);
         if ($nameLen < 1) {
             throw new \LengthException('Command name can not be empty.');
-        } elseif ($nameLen > 100) {
+        } elseif ($nameLen > 32) {
             throw new \LengthException('Command name can be only up to 32 characters long.');
         }
 
@@ -90,7 +90,7 @@ trait CommandAttributes {
             $nameLen = poly_strlen($name);
             if ($nameLen < 1) {
                 throw new \LengthException('Command name can not be empty.');
-            } elseif ($nameLen > 100) {
+            } elseif ($nameLen > 32) {
                 throw new \LengthException('Command name can be only up to 32 characters long.');
             }
         }
