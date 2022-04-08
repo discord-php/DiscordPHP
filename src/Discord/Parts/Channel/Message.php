@@ -118,6 +118,9 @@ class Message extends Part
     public const REACT_DELETE_ID = 2;
     public const REACT_DELETE_EMOJI = 3;
 
+    public const FLAG_SUPPRESS_EMBED = (1 << 2);
+    public const FLAG_EPHEMERAL = (1 << 6);
+
     /**
      * @inheritdoc
      */
@@ -188,7 +191,7 @@ class Message extends Part
      */
     protected function getSuppressEmbedsAttribute(): bool
     {
-        return (bool) ($this->flags & (1 << 2));
+        return (bool) ($this->flags & self::FLAG_SUPPRESS_EMBED);
     }
 
     /**
@@ -228,7 +231,7 @@ class Message extends Part
      */
     protected function getEphemeralAttribute(): bool
     {
-        return (bool) ($this->flags & (1 << 6));
+        return (bool) ($this->flags & self::FLAG_EPHEMERAL);
     }
 
     /**
