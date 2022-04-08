@@ -13,6 +13,7 @@ namespace Discord\Parts;
 
 use ArrayAccess;
 use Carbon\Carbon;
+use function Discord\studly;
 use Discord\Discord;
 use Discord\Factory\Factory;
 use Discord\Http\Http;
@@ -194,7 +195,7 @@ abstract class Part implements ArrayAccess, JsonSerializable
      */
     private function checkForMutator(string $key, string $type)
     {
-        $str = $type.\Discord\studly($key).'Attribute';
+        $str = $type.studly($key).'Attribute';
 
         if (is_callable([$this, $str])) {
             return $str;
