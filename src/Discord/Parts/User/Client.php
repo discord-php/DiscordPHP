@@ -27,7 +27,7 @@ use React\Promise\ExtendedPromiseInterface;
  * @property string                   $username         The username of the client.
  * @property string                   $discriminator    The unique discriminator of the client.
  * @property string                   $avatar           The avatar URL of the client.
- * @property string                   $avatar_hash      The avatar hash of the client.
+ * @property string|null              $avatar_hash      The avatar hash of the client.
  * @property bool                     $bot              Whether the client is a bot.
  * @property bool|null                $mfa_enabled      Whether the Bot owner has two factor enabled on their account.
  * @property bool                     $verified         Whether the client has verified their email.
@@ -122,7 +122,7 @@ class Client extends Part
     }
 
     /**
-     * @return string The avatar hash for the client.
+     * @return string|null The avatar hash for the client.
      */
     protected function getAvatarHashAttribute(): ?string
     {
