@@ -196,7 +196,7 @@ class User extends Part
      *
      * @return string The client avatar's hash.
      */
-    protected function getAvatarHashAttribute(): string
+    protected function getAvatarHashAttribute(): ?string
     {
         return $this->attributes['avatar'];
     }
