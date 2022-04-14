@@ -30,7 +30,7 @@ use function React\Promise\resolve;
  * @property string      $discriminator The discriminator of the user.
  * @property string      $displayname   The username and discriminator of the user.
  * @property string      $avatar        The avatar URL of the user.
- * @property string      $avatar_hash   The avatar hash of the user.
+ * @property string|null $avatar_hash   The avatar hash of the user.
  * @property bool|null   $bot           Whether the user is a bot.
  * @property bool|null   $system        Whether the user is a Discord system user.
  * @property bool|null   $mfa_enabled   Whether MFA is enabled.
@@ -194,7 +194,7 @@ class User extends Part
     /**
      * Returns the avatar hash for the client.
      *
-     * @return string The client avatar's hash.
+     * @return string|null The client avatar's hash.
      */
     protected function getAvatarHashAttribute(): ?string
     {
