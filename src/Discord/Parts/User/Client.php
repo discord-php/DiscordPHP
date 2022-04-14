@@ -124,7 +124,7 @@ class Client extends Part
     /**
      * @return string The avatar hash for the client.
      */
-    protected function getAvatarHashAttribute(): string
+    protected function getAvatarHashAttribute(): ?string
     {
         return $this->attributes['avatar'];
     }
