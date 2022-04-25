@@ -11,45 +11,46 @@
 
 namespace Discord;
 
-use Discord\Exceptions\IntentException;
+use Discord\Http\Http;
+use Discord\Parts\Part;
+use Discord\Http\Endpoint;
+use Discord\WebSockets\Op;
 use Discord\Factory\Factory;
 use Discord\Helpers\Bitwise;
-use Discord\Http\Http;
-use Discord\Parts\Guild\Guild;
-use Discord\Parts\OAuth\Application;
-use Discord\Parts\Part;
-use Discord\Repository\AbstractRepository;
-use Discord\Repository\GuildRepository;
-use Discord\Repository\PrivateChannelRepository;
-use Discord\Repository\UserRepository;
-use Discord\Parts\Channel\Channel;
-use Discord\Parts\User\Activity;
-use Discord\Parts\User\Client;
-use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
-use Discord\Voice\VoiceClient;
+use Psr\Log\LoggerInterface;
+use Discord\Helpers\Deferred;
 use Discord\WebSockets\Event;
-use Discord\WebSockets\Events\GuildCreate;
-use Discord\WebSockets\Handlers;
-use Discord\WebSockets\Intents;
-use Discord\WebSockets\Op;
-use Monolog\Handler\StreamHandler;
-use Monolog\Logger as Monolog;
+use InvalidArgumentException;
 use Ratchet\Client\Connector;
 use Ratchet\Client\WebSocket;
-use Ratchet\RFC6455\Messaging\Message;
-use React\EventLoop\Factory as LoopFactory;
+use Discord\Parts\Guild\Guild;
+use Discord\Parts\User\Client;
+use Discord\Parts\User\Member;
+use Discord\Voice\VoiceClient;
+use Monolog\Logger as Monolog;
+use Discord\Http\Drivers\React;
+use Discord\WebSockets\Intents;
+use Discord\Parts\User\Activity;
+use Discord\WebSockets\Handlers;
+use Evenement\EventEmitterTrait;
+use Discord\Parts\Channel\Channel;
+use Monolog\Handler\StreamHandler;
 use React\EventLoop\LoopInterface;
 use React\EventLoop\TimerInterface;
-use Discord\Helpers\Deferred;
-use Discord\Helpers\RegisteredCommand;
-use Discord\Http\Drivers\React;
-use Discord\Http\Endpoint;
-use Evenement\EventEmitterTrait;
-use Psr\Log\LoggerInterface;
-use React\Promise\ExtendedPromiseInterface;
 use React\Promise\PromiseInterface;
+use Discord\Parts\OAuth\Application;
+use Discord\Helpers\RegisteredCommand;
+use Discord\Repository\UserRepository;
+use Ratchet\RFC6455\Messaging\Message;
+use Discord\Exceptions\IntentException;
+use Discord\Repository\GuildRepository;
+use Discord\Repository\AbstractRepository;
+use Discord\WebSockets\Events\GuildCreate;
+use React\EventLoop\Factory as LoopFactory;
+use React\Promise\ExtendedPromiseInterface;
 use React\Socket\Connector as SocketConnector;
+use Discord\Repository\PrivateChannelRepository;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -1567,6 +1568,29 @@ class Discord
         }
 
         return $this->application_commands[$baseCommand]->addSubCommand($name, $callback, $autocomplete_callback);
+    }
+
+    /**
+     * Allows the addition of many listeners at once.
+     *
+     * @param string $event
+     * @param array $manyListeners
+     * @return self
+     */
+    public function manyOn($event, array $manyListeners)
+    {
+        if ($event === null) {
+            throw new InvalidArgumentException('event name must not be null');
+        }
+
+        $result = array_map(fn ($listener) => is_callable($listener), $manyListeners);
+        if (array_unique($result) !== [true]) {
+            throw new InvalidArgumentException('all listeners must be callable');
+        }
+
+        $this->listeners[$event] = array_merge($this->listeners[$event] ?? [], $manyListeners);
+
+        return $this;
     }
 
     /**
