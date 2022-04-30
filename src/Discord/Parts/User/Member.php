@@ -660,7 +660,7 @@ class Member extends Part
     public function getVoiceChannel(): ?Channel
     {
         return $this->guild->channels->find(function (Channel $channel) {
-            return $channel->allowVoice() && $channel->members->has($this->id);
+            return $channel->allowVoice() && isset($channel->members[$this->id]);
 	    });
     }
 
