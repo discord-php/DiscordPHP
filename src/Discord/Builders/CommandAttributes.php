@@ -22,13 +22,15 @@ use function Discord\poly_strlen;
  * @see Discord\Builders\CommandBuilder
  * @see Discord\Parts\Interactions\Command\Command
  *
- * @property int                      $type                      The type of the command, defaults 1 if not set.
- * @property string                   $name                      1-32 character name of the command.
- * @property string[]|null            $name_localizations        Localization dictionary for the name field. Values follow the same restrictions as name.
- * @property string                   $description               1-100 character description for CHAT_INPUT commands, empty string for USER and MESSAGE commands.
- * @property string[]|null            $description_localizations Localization dictionary for the description field. Values follow the same restrictions as description.
- * @property Collection|Option[]|null $options                   The parameters for the command, max 25. Only for Slash command (CHAT_INPUT).
- * @property bool                     $default_permission        Whether the command is enabled by default when the app is added to a guild.
+ * @property int                      $type                       The type of the command, defaults 1 if not set.
+ * @property string                   $name                       1-32 character name of the command.
+ * @property string[]|null            $name_localizations         Localization dictionary for the name field. Values follow the same restrictions as name.
+ * @property string                   $description                1-100 character description for CHAT_INPUT commands, empty string for USER and MESSAGE commands.
+ * @property string[]|null            $description_localizations  Localization dictionary for the description field. Values follow the same restrictions as description.
+ * @property Collection|Option[]|null $options                    The parameters for the command, max 25. Only for Slash command (CHAT_INPUT).
+ * @property bool                     $default_permission         Whether the command is enabled by default when the app is added to a guild. SOON DEPRECATED.
+ * @property int                      $default_member_permissions Set of permissions represented as a bit set.
+ * @property bool                     $dm_permission              Indicates whether the command is available in DMs with the app, only for globally-scoped commands. By default, commands are visible.
  */
 trait CommandAttributes {
     /**
@@ -154,6 +156,34 @@ trait CommandAttributes {
     public function setDefaultPermission(bool $permission): self
     {
         $this->default_permission = $permission;
+
+        return $this;
+    }
+
+    /**
+     * Sets the default member permission of the command.
+     *
+     * @param bool $permission Default member permission of the command
+     *
+     * @return $this
+     */
+    public function setDefaultMemberPermission(int $permission): self
+    {
+        $this->default_member_permission = $permission;
+
+        return $this;
+    }
+
+    /**
+     * Sets the dm permission of the command.
+     *
+     * @param bool $permission DM permission of the command
+     *
+     * @return $this
+     */
+    public function setDmPermission(bool $permission): self
+    {
+        $this->dm_permission = $permission;
 
         return $this;
     }
