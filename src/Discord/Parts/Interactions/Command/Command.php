@@ -57,6 +57,8 @@ class Command extends Part
         'description_localizations',
         'options',
         'default_permission',
+        'default_member_permission',
+        'dm_permission',
         'version',
     ];
 
@@ -142,6 +144,8 @@ class Command extends Part
             'description_localizations' => $this->description_localizations,
             'options' => $this->attributes['options'] ?? null,
             'default_permission' => $this->default_permission,
+            'default_member_permission' => $this->default_member_permission,
+            'dm_permission' => $this->dm_permission,
             'type' => $this->type,
         ];
     }
@@ -159,6 +163,8 @@ class Command extends Part
             'description_localizations' => $this->description_localizations,
             'options' => $this->attributes['options'] ?? null,
             'default_permission' => $this->default_permission,
+            'default_member_permission' => $this->default_member_permission,
+            'dm_permission' => $this->dm_permission,
             'type' => $this->type,
         ];
     }
