@@ -29,7 +29,7 @@ use function Discord\poly_strlen;
  * @property string[]|null            $description_localizations  Localization dictionary for the description field. Values follow the same restrictions as description.
  * @property Collection|Option[]|null $options                    The parameters for the command, max 25. Only for Slash command (CHAT_INPUT).
  * @property bool                     $default_permission         Whether the command is enabled by default when the app is added to a guild. SOON DEPRECATED.
- * @property int                      $default_member_permissions Set of permissions represented as a bit set.
+ * @property string                   $default_member_permissions Set of permissions represented as a bit set.
  * @property bool                     $dm_permission              Indicates whether the command is available in DMs with the app, only for globally-scoped commands. By default, commands are visible.
  */
 trait CommandAttributes {
@@ -155,21 +155,21 @@ trait CommandAttributes {
      */
     public function setDefaultPermission(bool $permission): self
     {
-        $this->default_permission = $permission;
+        $this->default_member_permissions = (int) $permission
 
         return $this;
     }
 
     /**
-     * Sets the default member permission of the command.
+     * Sets the default member permissions of the command.
      *
-     * @param bool $permission Default member permission of the command
+     * @param string|int $permissions Default member permission bits of the command
      *
      * @return $this
      */
-    public function setDefaultMemberPermission(int $permission): self
+    public function setDefaultMemberPermissions($permissions): self
     {
-        $this->default_member_permission = $permission;
+        $this->default_member_permissions = (string) $permissions;
 
         return $this;
     }
