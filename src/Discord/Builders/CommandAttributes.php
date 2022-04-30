@@ -28,9 +28,9 @@ use function Discord\poly_strlen;
  * @property string                   $description                1-100 character description for CHAT_INPUT commands, empty string for USER and MESSAGE commands.
  * @property string[]|null            $description_localizations  Localization dictionary for the description field. Values follow the same restrictions as description.
  * @property Collection|Option[]|null $options                    The parameters for the command, max 25. Only for Slash command (CHAT_INPUT).
- * @property bool                     $default_permission         Whether the command is enabled by default when the app is added to a guild. SOON DEPRECATED.
  * @property string                   $default_member_permissions Set of permissions represented as a bit set.
  * @property bool                     $dm_permission              Indicates whether the command is available in DMs with the app, only for globally-scoped commands. By default, commands are visible.
+ * @property bool                     $default_permission         Whether the command is enabled by default when the app is added to a guild. SOON DEPRECATED.
  */
 trait CommandAttributes {
     
