@@ -167,7 +167,7 @@ trait CommandAttributes {
      */
     public function setDefaultPermission(bool $permission): self
     {
-        $this->default_permission = $permission
+        $this->default_permission = $permission;
 
         return $this;
     }
