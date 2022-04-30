@@ -187,7 +187,7 @@ trait CommandAttributes {
     }
 
     /**
-     * Sets the dm permission of the command.
+     * Sets the DM permission of the command.
      *
      * @param bool $permission DM permission of the command
      *
