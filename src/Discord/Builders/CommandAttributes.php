@@ -33,6 +33,16 @@ use function Discord\poly_strlen;
  * @property bool                     $dm_permission              Indicates whether the command is available in DMs with the app, only for globally-scoped commands. By default, commands are visible.
  */
 trait CommandAttributes {
+    
+    /**
+     * Whether the command is enabled by default when the app is added to a guild. SOON DEPRECATED.
+     *
+     * @deprecated 7.1.0 See CommandAttributes::default_member_permissions
+     *
+     * @var bool
+     */
+    public $default_permission;
+
     /**
      * Sets the type of the command.
      *
@@ -149,13 +159,15 @@ trait CommandAttributes {
     /**
      * Sets the default permission of the command.
      *
+     * @deprecated 7.1.0 See CommandAttributes::setDefaultMemberPermissions()
+     *
      * @param bool $permission Default permission of the command
      *
      * @return $this
      */
     public function setDefaultPermission(bool $permission): self
     {
-        $this->default_member_permissions = (int) $permission
+        $this->default_permission = $permission
 
         return $this;
     }
