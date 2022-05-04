@@ -88,7 +88,7 @@ class RegisteredCommand
     {
         foreach ($options as $option) {
             if (isset($this->subCommands[$option['name']])) {
-                if ($this->subCommands[$option['name']]->execute($option['options'] ?? [], $interaction)) {
+                if ($this->subCommands[$option['name']]->execute($option['options'] ? $option['options']->toArray() : [], $interaction)) {
                     return true;
                 }
             }
