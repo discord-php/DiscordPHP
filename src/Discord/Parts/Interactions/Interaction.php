@@ -272,12 +272,13 @@ class Interaction extends Part
      */
     public function getOriginalResponse(): ExtendedPromiseInterface
     {
-        if (! $this->responded) {
-            return reject(new \RuntimeException('Interaction has not been responded to.'));
+        if (! $this->created) {
+            return reject(new \RuntimeException('Interaction has not been created yet.'));
         }
 
         return $this->http->get(Endpoint::bind(Endpoint::ORIGINAL_INTERACTION_RESPONSE, $this->application_id, $this->token))
             ->then(function ($response) {
+                $this->responded = true;
                 return $this->factory->create(Message::class, $response, true);
             });
     }
@@ -475,12 +476,13 @@ class Interaction extends Part
      */
     public function getFollowUpMessage(string $message_id): ExtendedPromiseInterface
     {
-        if (! $this->responded) {
-            return reject(new \RuntimeException('Interaction has not been responded to.'));
+        if (! $this->created) {
+            return reject(new \RuntimeException('Interaction has not been created yet.'));
         }
 
         return $this->http->get(Endpoint::bind(Endpoint::INTERACTION_FOLLOW_UP, $this->application_id, $this->token, $message_id))
             ->then(function ($response) {
+                $this->responded = true;
                 return $this->factory->create(Message::class, $response, true);
             });
     }
