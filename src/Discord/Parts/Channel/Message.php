@@ -613,19 +613,6 @@ class Message extends Part
             return reject(new \UnexpectedValueException('`auto_archive_duration` must be one of 60, 1440, 4320, 10080.'));
         }
 
-        switch ($auto_archive_duration) {
-            case 4320:
-                if (! $this->guild->feature_three_day_thread_archive) {
-                    return reject(new \RuntimeException('Guild does not have access to three day thread archive.'));
-                }
-                break;
-            case 10080:
-                if (! $this->guild->feature_seven_day_thread_archive) {
-                    return reject(new \RuntimeException('Guild does not have access to seven day thread archive.'));
-                }
-                break;
-        }
-
         $headers = [];
         if (isset($reason)) {
             $headers['X-Audit-Log-Reason'] = $reason;
