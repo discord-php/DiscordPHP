@@ -76,7 +76,7 @@ class Overwrite extends Part
      *
      * @return string The permission ID for all channels (i.e. guild_id - 1)
      */
-    final public function allChannelConstant(): string
+    final public function allChannelsConstant(): string
     {
         if (PHP_INT_SIZE === 4) {
             return (string) \gmp_sub($this->guild_id, 1);
