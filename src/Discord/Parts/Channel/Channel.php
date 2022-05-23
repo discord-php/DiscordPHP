@@ -769,7 +769,7 @@ class Channel extends Part
      * @see https://discord.com/developers/docs/resources/channel#start-thread-without-message
      *
      * @param string      $name                  The name of the thread.
-     * @param bool        $private               Whether the thread should be private. cannot start a private thread in a news channel or forum channel.
+     * @param bool        $private               Whether the thread should be private. cannot start a private thread in a news channel channel.
      * @param int         $auto_archive_duration Number of minutes of inactivity until the thread is auto-archived. one of 60, 1440, 4320, 10080.
      * @param string|null $reason                Reason for Audit Log.
      *
@@ -792,8 +792,6 @@ class Channel extends Part
             $type = Channel::TYPE_NEWS_THREAD;
         } elseif ($this->type == Channel::TYPE_TEXT) {
             $type = $private ? Channel::TYPE_PRIVATE_THREAD : Channel::TYPE_PUBLIC_THREAD;
-        } elseif ($this->type == Channel::TYPE_FORUM) {
-            $type = Channel::TYPE_PUBLIC_THREAD;
         } else {
             return reject(new \RuntimeException('You cannot start a thread in this type of channel.'));
         }
