@@ -1097,6 +1097,7 @@ class Channel extends Part
             'position' => $this->position,
             'parent_id' => $this->parent_id,
             'nsfw' => $this->nsfw,
+            'default_auto_archive_duration' => $this->default_auto_archive_duration,
         ];
     }
 
