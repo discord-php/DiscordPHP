@@ -163,7 +163,7 @@ class Command extends Part
             'description_localizations' => $this->description_localizations,
             'options' => $this->attributes['options'] ?? null,
             'default_member_permissions' => $this->default_member_permissions,
-            'dm_permissions' => $this->dm_permission,
+            'dm_permission' => $this->dm_permission,
             'default_permission' => $this->default_permission,
             'type' => $this->type,
         ];

@@ -45,6 +45,7 @@ class Handlers
         $this->addHandler(Event::INTEGRATION_UPDATE, \Discord\WebSockets\Events\IntegrationUpdate::class);
         $this->addHandler(Event::INTEGRATION_DELETE, \Discord\WebSockets\Events\IntegrationDelete::class);
         $this->addHandler(Event::WEBHOOKS_UPDATE, \Discord\WebSockets\Events\WebhooksUpdate::class);
+        $this->addHandler(Event::APPLICATION_COMMAND_PERMISSIONS_UPDATE, \Discord\WebSockets\Events\ApplicationCommandPermissionsUpdate::class);
 
         // Invite handlers
         $this->addHandler(Event::INVITE_CREATE, \Discord\WebSockets\Events\InviteCreate::class);

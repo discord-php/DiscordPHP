@@ -18,14 +18,15 @@ use Discord\Parts\Part;
  *
  * @see https://discord.com/developers/docs/interactions/application-commands#application-command-permissions-object-application-command-permissions-structure
  *
- * @property string $id         The id of the role or user
- * @property int    $type       Role or user
+ * @property string $id         The id of the role or user or channel
+ * @property int    $type       Role or user or channel
  * @property bool   $permission True to allow, false, to disallow
  */
 class Permission extends Part
 {
     public const TYPE_ROLE = 1;
     public const TYPE_USER = 2;
+    public const TYPE_CHANNEL = 3;
 
     /**
      * @inheritdoc
