@@ -37,6 +37,7 @@ class ThreadRepository extends AbstractRepository
         'get' => Endpoint::THREAD,
         'update' => Endpoint::THREAD,
         'delete' => Endpoint::THREAD,
+        'create' => Endpoint::CHANNEL_THREADS
     ];
 
     /**
