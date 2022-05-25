@@ -89,6 +89,8 @@ class Interaction extends Part
 
     /**
      * Returns true if this interaction has been internally responded.
+     * 
+     * @return bool The interaction is responded
      */
     public function isResponded(): bool
     {
