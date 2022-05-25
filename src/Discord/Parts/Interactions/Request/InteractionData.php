@@ -30,7 +30,7 @@ use Discord\Repository\Interaction\OptionRepository;
  * @property string[]|null       $values         Values selected in a select menu.
  * @property string|null         $target_id      Id the of user or message targetted by a user or message command.
  * @property ComponentRepository $components     The values submitted by the user in modal.
- * @property string|null         $guild_id       ID of the guild passed from Interaction or ID of the guild the command belongs to.
+ * @property string|null         $guild_id       ID of the guild internally passed from Interaction or ID of the guild the command belongs to.
  */
 class InteractionData extends Part
 {
@@ -50,6 +50,11 @@ class InteractionData extends Part
         'components',
         'guild_id',
     ];
+
+    /**
+     * @inheritdoc
+     */
+    protected $hidden = ['guild_id'];
 
     /**
      * @inheritdoc

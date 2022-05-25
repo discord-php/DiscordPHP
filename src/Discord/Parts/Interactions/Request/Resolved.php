@@ -32,7 +32,7 @@ use Discord\Parts\User\User;
  * @property Collection|Channel[]|Thread[]|null $channels    The ids and partial Channel objects.
  * @property Collection|Message[]|null          $messages    The ids and partial Message objects.
  * @property Collection|Attachment[]|null       $attachments The ids and partial Attachment objects.
- * @property string|null                        $guild_id    ID of the guild passed from Interaction.
+ * @property string|null                        $guild_id    ID of the guild internally passed from Interaction.
  */
 class Resolved extends Part
 {
@@ -40,6 +40,11 @@ class Resolved extends Part
      * @inheritdoc
      */
     protected $fillable = ['users', 'members', 'roles', 'channels', 'messages', 'attachments', 'guild_id'];
+
+    /**
+     * @inheritdoc
+     */
+    protected $hidden = ['guild_id'];
 
     /**
      * Returns a collection of resolved users.
