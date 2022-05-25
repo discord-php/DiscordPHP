@@ -266,6 +266,20 @@ class Discord
     protected $encoding = 'json';
 
     /**
+     * Cache compressed message payloads
+     *
+     * @var string Buffer.
+     */
+    protected $payloadBuffer;
+
+    /**
+     * zlib decompressor
+     *
+     * @var \Clue\React\Zlib\Decompressor
+     */
+    protected $zlibDecompressor;
+
+    /**
      * Tracks the number of payloads the client
      * has sent in the past 60 seconds.
      *
@@ -577,12 +591,37 @@ class Discord
      */
     public function handleWsMessage(Message $message): void
     {
-        if ($message->isBinary()) {
-            $data = zlib_decode($message->getPayload());
-        } else {
-            $data = $message->getPayload();
-        }
+        $payload = $message->getPayload();
 
+        if ($message->isBinary()) {
+            if ($this->zlibDecompressor) {
+                $this->payloadBuffer .= $payload;
+
+                if ($message->getPayloadLength() < 4 || substr($payload, -4) != "\x00\x00\xff\xff") {
+                    return;
+                }
+
+                $this->zlibDecompressor->once('data', function ($data) {
+                    $this->processWsMessage($data);
+                    $this->payloadBuffer = '';
+                });
+
+                $this->zlibDecompressor->write($this->payloadBuffer);
+            } else {
+                $this->processWsMessage(zlib_decode($payload));
+            }
+        } else {
+            $this->processWsMessage($payload);
+        }
+    }
+
+    /**
+     * Process WebSocket messages payloads.
+     *
+     * @param string $data Message payload.
+     */
+    protected function processWsMessage(string $data): void
+    {
         $data = json_decode($data);
         $this->emit('raw', [$data, $this]);
 
@@ -1240,11 +1279,22 @@ class Discord
             'max_concurrency' => 1,
         ];
 
+        if ($this->options['compress'] == 'zlib-stream') {
+            if (class_exists('\Clue\React\Zlib\Decompressor')) {
+                $this->logger->warning('Experimental zlib-stream compressed gateway message is enabled');
+                $this->zlibDecompressor = new \Clue\React\Zlib\Decompressor(ZLIB_ENCODING_DEFLATE);
+            } else {
+                $this->logger->error('The `clue/reactphp-zlib` package is missing, reverting to uncompressed options.');
+                $this->options['compress'] = null;
+            }
+        }
+
         $buildParams = function ($gateway, $session = null) use ($deferred, $defaultSession) {
             $session = $session ?? $defaultSession;
             $params = [
                 'v' => self::GATEWAY_VERSION,
                 'encoding' => $this->encoding,
+                'compress' => $this->options['compress']
             ];
 
             $query = http_build_query($params);
@@ -1303,6 +1353,7 @@ class Discord
                 'intents',
                 'socket_options',
                 'dnsConfig',
+                'compress',
             ])
             ->setDefaults([
                 'loop' => LoopFactory::create(),
@@ -1314,6 +1365,7 @@ class Discord
                 'retrieveBans' => false,
                 'intents' => Intents::getDefaultIntents(),
                 'socket_options' => [],
+                'compress' => 'zlib-stream',
             ])
             ->setAllowedTypes('token', 'string')
             ->setAllowedTypes('logger', ['null', LoggerInterface::class])
@@ -1325,7 +1377,8 @@ class Discord
             ->setAllowedTypes('retrieveBans', 'bool')
             ->setAllowedTypes('intents', ['array', 'int'])
             ->setAllowedTypes('socket_options', 'array')
-            ->setAllowedTypes('dnsConfig', ['string', \React\Dns\Config\Config::class]);
+            ->setAllowedTypes('dnsConfig', ['string', \React\Dns\Config\Config::class])
+            ->setAllowedTypes('compress', 'string');
 
         $options = $resolver->resolve($options);
 
