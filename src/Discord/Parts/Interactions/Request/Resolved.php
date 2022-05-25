@@ -86,11 +86,7 @@ class Resolved extends Part
             }
 
             if (! $memberPart) {
-                if (! $userPart = $this->discord->users->get('id', $snowflake)) {
-                    $userPart = $this->factory->create(User::class, $this->attributes['users']->$snowflake, true);
-                }
-
-                $member->user = $userPart;
+                $member->user = $this->attributes['users']->$snowflake;
                 $member->guild_id = $this->guild_id;
                 $memberPart = $this->factory->create(Member::class, $member, true);
             }
