@@ -89,6 +89,8 @@ class Interaction extends Part
 
     /**
      * Returns true if this interaction has been internally responded.
+     * 
+     * @return bool The interaction is responded
      */
     public function isResponded(): bool
     {
@@ -562,7 +564,7 @@ class Interaction extends Part
                 'custom_id' => $custom_id,
                 'components' => $components,
             ],
-        ])->then(function () use ($custom_id, $submit) {
+        ])->then(function ($response) use ($custom_id, $submit) {
             if ($submit) {
                 $this->discord->once(Event::INTERACTION_CREATE, function (Interaction $interaction) use ($custom_id, $submit) {
                     if ($interaction->type == InteractionType::MODAL_SUBMIT && $interaction->data->custom_id == $custom_id) {
@@ -578,6 +580,8 @@ class Interaction extends Part
                     }
                 });
             }
+
+            return $response;
         });
     }
 }
