@@ -1378,7 +1378,7 @@ class Discord
             ->setAllowedTypes('intents', ['array', 'int'])
             ->setAllowedTypes('socket_options', 'array')
             ->setAllowedTypes('dnsConfig', ['string', \React\Dns\Config\Config::class])
-            ->setAllowedTypes('compress', 'string');
+            ->setAllowedTypes('compress', ['null', 'string']);
 
         $options = $resolver->resolve($options);
 
