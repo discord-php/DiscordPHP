@@ -161,7 +161,7 @@ class Command extends Part
      */
     public function getUpdatableAttributes(): array
     {
-        $attr = [
+        return [
             'guild_id' => $this->guild_id ?? null,
             'name' => $this->name,
             'name_localizations' => $this->name_localizations,
@@ -169,16 +169,10 @@ class Command extends Part
             'description_localizations' => $this->description_localizations,
             'options' => $this->attributes['options'] ?? null,
             'default_member_permissions' => $this->default_member_permissions,
+            'dm_permission' => $this->dm_permission,
             'default_permission' => $this->default_permission,
             'type' => $this->type,
         ];
-
-        // Guild command might omit this fillable
-        if (array_key_exists('dm_permission', $this->attributes)) {
-            $attr['dm_permission'] = $this->dm_permission;
-        }
-
-        return $attr;
     }
 
     /**
