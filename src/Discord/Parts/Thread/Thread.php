@@ -52,7 +52,7 @@ use Traversable;
  * @property bool              $archived              Whether the thread has been archived.
  * @property bool              $locked                Whether the thread has been locked.
  * @property int|null          $auto_archive_duration The number of minutes of inactivity until the thread is automatically archived.
- * @property int|null          $flags                 Channel flags combined as a bitfield.
+ * @property int|null          $flags                 Channel flags combined as a bitfield. `PINNED` can only be set for threads in forum channels.
  * @property Carbon            $archive_timestamp     The time that the thread's archive status was changed.
  * @property MessageRepository $messages              Repository of messages sent in the thread.
  * @property MemberRepository  $members               Repository of members in the thread.
@@ -781,6 +781,7 @@ class Thread extends Part
             'archived' => $this->archived,
             'auto_archive_duration' => $this->auto_archive_duration,
             'locked' => $this->locked,
+            'flags' => $this->flags,
         ];
 
         if ($this->type == Channel::TYPE_PRIVATE_THREAD) {
