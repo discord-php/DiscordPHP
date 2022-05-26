@@ -266,14 +266,14 @@ class Discord
     protected $encoding = 'json';
 
     /**
-     * Cache compressed message payloads
+     * Gateway compressed message payload buffer.
      *
      * @var string Buffer.
      */
-    protected $payloadBuffer;
+    protected $payloadBuffer = '';
 
     /**
-     * zlib decompressor
+     * zlib decompressor.
      *
      * @var \Clue\React\Zlib\Decompressor
      */
@@ -616,7 +616,7 @@ class Discord
     }
 
     /**
-     * Process WebSocket messages payloads.
+     * Process WebSocket message payloads.
      *
      * @param string $data Message payload.
      */
@@ -1279,23 +1279,19 @@ class Discord
             'max_concurrency' => 1,
         ];
 
-        if ($this->options['compress'] == 'zlib-stream') {
-            if (class_exists('\Clue\React\Zlib\Decompressor')) {
-                $this->logger->warning('Experimental zlib-stream compressed gateway message is enabled');
-                $this->zlibDecompressor = new \Clue\React\Zlib\Decompressor(ZLIB_ENCODING_DEFLATE);
-            } else {
-                $this->logger->error('The `clue/reactphp-zlib` package is missing, reverting to uncompressed options.');
-                $this->options['compress'] = null;
-            }
-        }
-
         $buildParams = function ($gateway, $session = null) use ($deferred, $defaultSession) {
             $session = $session ?? $defaultSession;
             $params = [
                 'v' => self::GATEWAY_VERSION,
                 'encoding' => $this->encoding,
-                'compress' => $this->options['compress']
             ];
+
+            
+            if (class_exists('\Clue\React\Zlib\Decompressor')) {
+                $this->logger->warning('The `clue/reactphp-zlib` is present, Enabling experimental zlib-stream compressed gateway message.');
+                $this->zlibDecompressor = new \Clue\React\Zlib\Decompressor(ZLIB_ENCODING_DEFLATE);
+                $params['compress'] = 'zlib-stream';
+            }
 
             $query = http_build_query($params);
             $this->gateway = trim($gateway, '/').'/?'.$query;
@@ -1353,7 +1349,6 @@ class Discord
                 'intents',
                 'socket_options',
                 'dnsConfig',
-                'compress',
             ])
             ->setDefaults([
                 'loop' => LoopFactory::create(),
@@ -1365,7 +1360,6 @@ class Discord
                 'retrieveBans' => false,
                 'intents' => Intents::getDefaultIntents(),
                 'socket_options' => [],
-                'compress' => 'zlib-stream',
             ])
             ->setAllowedTypes('token', 'string')
             ->setAllowedTypes('logger', ['null', LoggerInterface::class])
@@ -1377,8 +1371,7 @@ class Discord
             ->setAllowedTypes('retrieveBans', 'bool')
             ->setAllowedTypes('intents', ['array', 'int'])
             ->setAllowedTypes('socket_options', 'array')
-            ->setAllowedTypes('dnsConfig', ['string', \React\Dns\Config\Config::class])
-            ->setAllowedTypes('compress', ['null', 'string']);
+            ->setAllowedTypes('dnsConfig', ['string', \React\Dns\Config\Config::class]);
 
         $options = $resolver->resolve($options);
 
