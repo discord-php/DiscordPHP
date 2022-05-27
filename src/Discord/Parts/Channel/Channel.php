@@ -1082,6 +1082,8 @@ class Channel extends Part
             'position' => $this->position,
             'parent_id' => $this->parent_id,
             'nsfw' => $this->nsfw,
+            'rtc_region' => $this->rtc_region,
+            'video_quality_mode' => $this->video_quality_mode,
             'default_auto_archive_duration' => $this->default_auto_archive_duration,
         ];
     }
