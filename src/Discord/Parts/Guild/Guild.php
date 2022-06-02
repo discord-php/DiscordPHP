@@ -100,6 +100,7 @@ use function React\Promise\resolve;
  * @property int|null                 $hub_type                                 The type of Student Hub the guild is.
  * @property bool                     $feature_animated_banner                  Guild has access to set an animated guild banner image.
  * @property bool                     $feature_animated_icon                    Guild has access to set an animated guild icon.
+ * @property bool                     $feature_auto_moderation                  Guild has set up auto moderation rules.
  * @property bool                     $feature_banner                           Guild has access to set a guild banner image.
  * @property bool                     $feature_commerce                         Guild has access to use commerce features (create store channels).
  * @property bool                     $feature_community                        Guild can enable welcome screen, Membership Screening, stage channels and discovery, and receives community updates.
@@ -226,6 +227,7 @@ class Guild extends Part
     protected $visible = [
         'feature_animated_banner',
         'feature_animated_icon',
+        'feature_auto_moderation',
         'feature_banner',
         'feature_commerce',
         'feature_community',
@@ -417,6 +419,11 @@ class Guild extends Part
     protected function getFeatureAnimatedIconAttribute(): bool
     {
         return in_array('ANIMATED_ICON', $this->features);
+    }
+
+    protected function getFeatureAutoModerationAttribute(): bool
+    {
+        return in_array('AUTO_MODERATION', $this->features);
     }
 
     protected function getFeatureBannerAttribute(): bool
