@@ -35,7 +35,6 @@ abstract class Permission extends Part
      * @var array
      */
     public const STAGE_PERMISSIONS = [
-        'mention_everyone' => 17,
         'connect' => 20,
         'mute_members' => 22,
         'deafen_members' => 23,
@@ -60,7 +59,6 @@ abstract class Permission extends Part
         'embed_links' => 14,
         'attach_files' => 15,
         'read_message_history' => 16,
-        'mention_everyone' => 17,
         'use_external_emojis' => 18,
         'connect' => 20,
         'speak' => 21,
@@ -88,7 +86,6 @@ abstract class Permission extends Part
         'embed_links' => 14,
         'attach_files' => 15,
         'read_message_history' => 16,
-        'mention_everyone' => 17,
         'use_external_emojis' => 18,
         'manage_webhooks' => 29,
         'use_application_commands' => 31,
@@ -128,6 +125,7 @@ abstract class Permission extends Part
         'create_instant_invite' => 0,
         'manage_channels' => 4,
         'view_channel' => 10,
+        'mention_everyone' => 17,
         'manage_roles' => 28,
     ];
 
