@@ -165,6 +165,8 @@ abstract class Permission extends Part
     /**
      * Gets the bitwise attribute of the permission.
      *
+     * @see https://discord.com/developers/docs/topics/permissions#permissions-bitwise-permission-flags
+     *
      * @return int|string
      */
     protected function getBitwiseAttribute()
@@ -192,6 +194,8 @@ abstract class Permission extends Part
 
     /**
      * Sets the bitwise attribute of the permission.
+     *
+     * @see https://discord.com/developers/docs/topics/permissions#permissions-bitwise-permission-flags
      *
      * @param int|string $bitwise
      */
