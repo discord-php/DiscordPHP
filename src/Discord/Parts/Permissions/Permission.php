@@ -51,15 +51,26 @@ abstract class Permission extends Part
      * @var array
      */
     public const VOICE_PERMISSIONS = [
+        'add_reactions' => 6,
         'priority_speaker' => 8,
         'stream' => 9,
+        'send_messages' => 11,
+        'send_tts_messages' => 12,
+        'manage_messages' => 13,
+        'embed_links' => 14,
+        'attach_files' => 15,
+        'read_message_history' => 16,
+        'mention_everyone' => 17,
+        'use_external_emojis' => 18,
         'connect' => 20,
         'speak' => 21,
         'mute_members' => 22,
         'deafen_members' => 23,
         'move_members' => 24,
         'use_vad' => 25,
+        'manage_webhooks' => 29,
         'manage_events' => 33,
+        'use_external_stickers' => 37,
         'start_embedded_activities' => 39, // @todo use_embedded_activities
     ];
 
