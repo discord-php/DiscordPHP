@@ -79,6 +79,7 @@ class Entry extends Part
     public const THREAD_CREATE = 110;
     public const THREAD_UPDATE = 111;
     public const THREAD_DELETE = 112;
+    public const APPLICATION_COMMAND_PERMISSION_UPDATE = 121;
     // AUDIT LOG ENTRY TYPES
 
     /**
