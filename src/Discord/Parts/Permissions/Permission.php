@@ -24,6 +24,7 @@ use Discord\Parts\Part;
  * @property bool       $create_instant_invite
  * @property bool       $manage_channels
  * @property bool       $view_channel
+ * @property bool       $mention_everyone
  * @property bool       $manage_roles
  */
 abstract class Permission extends Part
