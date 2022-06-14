@@ -35,7 +35,7 @@ use function React\Promise\resolve;
  * @property string         $message_id The message ID the reaction is for.
  * @property Message|null   $message    The message the reaction is for.
  * @property string         $channel_id The channel ID that the message belongs in.
- * @property Channel|Thread $channel    The channel that the message belongs tol
+ * @property Channel|Thread $channel    The channel that the message belongs to.
  * @property string|null    $guild_id   The guild ID of the guild that owns the channel the message belongs in.
  * @property Guild|null     $guild      The guild that owns the channel the message belongs in.
  */
