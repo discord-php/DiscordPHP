@@ -1161,7 +1161,7 @@ class Guild extends Part
     }
 
     /**
-     * Modify the Guild `mfa_level`
+     * Modify the Guild `mfa_level`, requires guild ownership.
      *
      * @see https://discord.com/developers/docs/resources/guild#modify-guild-mfa-level
      *
