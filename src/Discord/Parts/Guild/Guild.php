@@ -1167,7 +1167,7 @@ class Guild extends Part
      *
      * @param int $level The new MFA level `Guild::MFA_NONE` or `Guild::MFA_ELEVATED`.
      *
-     * @return ExtendedPromiseInterface
+     * @return ExtendedPromiseInterface<Guild> This guild.
      */
     public function updateMFALevel(int $level): ExtendedPromiseInterface
     {
