@@ -1161,6 +1161,24 @@ class Guild extends Part
     }
 
     /**
+     * Modify the Guild `mfa_level`
+     *
+     * @see https://discord.com/developers/docs/resources/guild#modify-guild-mfa-level
+     *
+     * @param int $level The new MFA level `Guild::MFA_NONE` or `Guild::MFA_ELEVATED`.
+     *
+     * @return ExtendedPromiseInterface
+     */
+    public function updateMFALevel(int $level): ExtendedPromiseInterface
+    {
+        return $this->http->post(Endpoint::bind(Endpoint::GUILD_MFA, $this->id), ['level' => $level])->then(function ($response) {
+            $this->mfa_level = $response->level;
+
+            return $this;
+        });
+    }
+
+    /**
      * @inheritdoc
      */
     public function getCreatableAttributes(): array
