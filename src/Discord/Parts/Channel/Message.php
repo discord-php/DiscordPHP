@@ -595,7 +595,7 @@ class Message extends Part
      * @see https://discord.com/developers/docs/resources/channel#start-thread-with-message
      *
      * @param string      $name                  The name of the thread.
-     * @param int|null    $auto_archive_duration Number of minutes of inactivity until the thread is auto-archived. null for never or one of 60, 1440, 4320, 10080.
+     * @param int         $auto_archive_duration Number of minutes of inactivity until the thread is auto-archived. One of 60, 1440, 4320, 10080.
      * @param string|null $reason                Reason for Audit Log.
      *
      * @throws \RuntimeException
@@ -603,14 +603,14 @@ class Message extends Part
      *
      * @return ExtendedPromiseInterface<Thread>
      */
-    public function startThread(string $name, ?int $auto_archive_duration = null, ?string $reason = null): ExtendedPromiseInterface
+    public function startThread(string $name, int $auto_archive_duration = 1440, ?string $reason = null): ExtendedPromiseInterface
     {
         if (! in_array($this->channel->type, [Channel::TYPE_TEXT, Channel::TYPE_NEWS])) {
             return reject(new \RuntimeException('You can only start threads on guild text channels or news channels.'));
         }
 
-        if (! in_array($auto_archive_duration, [null, 60, 1440, 4320, 10080])) {
-            return reject(new \UnexpectedValueException('`auto_archive_duration` must be null or one of 60, 1440, 4320, 10080.'));
+        if (! in_array($auto_archive_duration, [60, 1440, 4320, 10080])) {
+            return reject(new \UnexpectedValueException('`auto_archive_duration` must be one of 60, 1440, 4320, 10080.'));
         }
 
         $headers = [];
