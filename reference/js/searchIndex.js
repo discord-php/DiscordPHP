@@ -36,6 +36,16 @@ Search.appendIndex(
             "summary": "Sets\u0020the\u0020default\u0020permission\u0020of\u0020the\u0020command.",
             "url": "classes/Discord-Builders-CommandAttributes.html#method_setDefaultPermission"
         },                {
+            "fqsen": "\\Discord\\Builders\\CommandAttributes\u003A\u003AsetDefaultMemberPermissions\u0028\u0029",
+            "name": "setDefaultMemberPermissions",
+            "summary": "Sets\u0020the\u0020default\u0020member\u0020permissions\u0020of\u0020the\u0020command.",
+            "url": "classes/Discord-Builders-CommandAttributes.html#method_setDefaultMemberPermissions"
+        },                {
+            "fqsen": "\\Discord\\Builders\\CommandAttributes\u003A\u003AsetDmPermission\u0028\u0029",
+            "name": "setDmPermission",
+            "summary": "Sets\u0020the\u0020DM\u0020permission\u0020of\u0020the\u0020command.",
+            "url": "classes/Discord-Builders-CommandAttributes.html#method_setDmPermission"
+        },                {
             "fqsen": "\\Discord\\Builders\\CommandAttributes\u003A\u003AaddOption\u0028\u0029",
             "name": "addOption",
             "summary": "Adds\u0020an\u0020option\u0020to\u0020the\u0020command.",
@@ -50,6 +60,11 @@ Search.appendIndex(
             "name": "clearOptions",
             "summary": "Clear\u0020all\u0020options\u0020from\u0020the\u0020command.",
             "url": "classes/Discord-Builders-CommandAttributes.html#method_clearOptions"
+        },                {
+            "fqsen": "\\Discord\\Builders\\CommandAttributes\u003A\u003A\u0024default_permission",
+            "name": "default_permission",
+            "summary": "Whether\u0020the\u0020command\u0020is\u0020enabled\u0020by\u0020default\u0020when\u0020the\u0020app\u0020is\u0020added\u0020to\u0020a\u0020guild.\u0020SOON\u0020DEPRECATED.",
+            "url": "classes/Discord-Builders-CommandAttributes.html#property_default_permission"
         },                {
             "fqsen": "\\Discord\\Builders\\CommandBuilder",
             "name": "CommandBuilder",
@@ -1571,15 +1586,15 @@ Search.appendIndex(
             "summary": "Escape\u0020various\u0020Discord\u0020formatting\u0020and\u0020markdown\u0020into\u0020a\u0020plain\u0020text\u003A\n_Italics_,\u0020\u002A\u002ABold\u002A\u002A,\u0020__Underline__,\u0020\u007E\u007EStrikethrough\u007E\u007E,\u0020\u007C\u007Cspoiler\u007C\u007C\n\u0060Code\u0060,\u0020\u0060\u0060\u0060Code\u0020block\u0060\u0060\u0060,\u0020\u003E\u0020Quotes,\u0020\u003E\u003E\u003E\u0020Block\u0020quotes\n\u0023Channel\u0020\u0040User\nA\u0020backslash\u0020will\u0020be\u0020added\u0020before\u0020the\u0020each\u0020formatting\u0020symbol.",
             "url": "namespaces/discord.html#function_escapeMarkdown"
         },                {
+            "fqsen": "\\Discord\\deferFind\u0028\u0029",
+            "name": "deferFind",
+            "summary": "Run\u0020a\u0020deferred\u0020search\u0020in\u0020array",
+            "url": "namespaces/discord.html#function_deferFind"
+        },                {
             "fqsen": "\\Discord\\Helpers\\Bitwise",
             "name": "Bitwise",
             "summary": "Polyfill\u0020to\u0020handle\u0020bitwise\u0020operation\u0020in\u002032\u0020bit\u0020php\u0020using\u0020ext\u002Dgmp.",
             "url": "classes/Discord-Helpers-Bitwise.html"
-        },                {
-            "fqsen": "\\Discord\\Helpers\\Bitwise\u003A\u003Ainit\u0028\u0029",
-            "name": "init",
-            "summary": "Run\u0020a\u0020single\u0020check\u0020whether\u0020the\u0020GMP\u0020extension\u0020is\u0020loaded,\u0020internally\u0020used\nduring\u0020Discord\u0020class\u0020construct.",
-            "url": "classes/Discord-Helpers-Bitwise.html#method_init"
         },                {
             "fqsen": "\\Discord\\Helpers\\Bitwise\u003A\u003Aand\u0028\u0029",
             "name": "and",
@@ -2286,6 +2301,11 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Discord-Parts-Channel-Channel.html#constant_TYPE_DIRECTORY"
         },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Channel\u003A\u003ATYPE_FORUM",
+            "name": "TYPE_FORUM",
+            "summary": "",
+            "url": "classes/Discord-Parts-Channel-Channel.html#constant_TYPE_FORUM"
+        },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Channel\u003A\u003AVIDEO_QUALITY_AUTO",
             "name": "VIDEO_QUALITY_AUTO",
             "summary": "",
@@ -2295,6 +2315,11 @@ Search.appendIndex(
             "name": "VIDEO_QUALITY_FULL",
             "summary": "",
             "url": "classes/Discord-Parts-Channel-Channel.html#constant_VIDEO_QUALITY_FULL"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Channel\u003A\u003AFLAG_PINNED",
+            "name": "FLAG_PINNED",
+            "summary": "",
+            "url": "classes/Discord-Parts-Channel-Channel.html#constant_FLAG_PINNED"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Channel\u003A\u003A\u0024fillable",
             "name": "fillable",
@@ -2760,6 +2785,16 @@ Search.appendIndex(
             "name": "REACT_DELETE_EMOJI",
             "summary": "",
             "url": "classes/Discord-Parts-Channel-Message.html#constant_REACT_DELETE_EMOJI"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\u003A\u003AFLAG_SUPPRESS_EMBED",
+            "name": "FLAG_SUPPRESS_EMBED",
+            "summary": "",
+            "url": "classes/Discord-Parts-Channel-Message.html#constant_FLAG_SUPPRESS_EMBED"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\u003A\u003AFLAG_EPHEMERAL",
+            "name": "FLAG_EPHEMERAL",
+            "summary": "",
+            "url": "classes/Discord-Parts-Channel-Message.html#constant_FLAG_EPHEMERAL"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\u003A\u003A\u0024fillable",
             "name": "fillable",
@@ -3516,6 +3551,11 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Discord-Parts-Guild-AuditLog-Entry.html#constant_THREAD_DELETE"
         },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\AuditLog\\Entry\u003A\u003AAPPLICATION_COMMAND_PERMISSION_UPDATE",
+            "name": "APPLICATION_COMMAND_PERMISSION_UPDATE",
+            "summary": "",
+            "url": "classes/Discord-Parts-Guild-AuditLog-Entry.html#constant_APPLICATION_COMMAND_PERMISSION_UPDATE"
+        },                {
             "fqsen": "\\Discord\\Parts\\Guild\\AuditLog\\Entry\u003A\u003A\u0024fillable",
             "name": "fillable",
             "summary": "The\u0020parts\u0020fillable\u0020attributes.",
@@ -3870,6 +3910,11 @@ Search.appendIndex(
             "name": "createInvite",
             "summary": "Attempts\u0020to\u0020create\u0020an\u0020Invite\u0020to\u0020a\u0020channel\u0020in\u0020this\u0020guild\u0020where\u0020possible.",
             "url": "classes/Discord-Parts-Guild-Guild.html#method_createInvite"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AupdateMFALevel\u0028\u0029",
+            "name": "updateMFALevel",
+            "summary": "Modify\u0020the\u0020Guild\u0020\u0060mfa_level\u0060,\u0020requires\u0020guild\u0020ownership.",
+            "url": "classes/Discord-Parts-Guild-Guild.html#method_updateMFALevel"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AgetCreatableAttributes\u0028\u0029",
             "name": "getCreatableAttributes",
@@ -4706,6 +4751,11 @@ Search.appendIndex(
             "summary": "Gets\u0020the\u0020attributes\u0020to\u0020pass\u0020to\u0020repositories.",
             "url": "classes/Discord-Parts-Interactions-Command-Overwrite.html#method_getRepositoryAttributes"
         },                {
+            "fqsen": "\\Discord\\Parts\\Interactions\\Command\\Overwrite\u003A\u003AallChannelsConstant\u0028\u0029",
+            "name": "allChannelsConstant",
+            "summary": "Get\u0020the\u0020permission\u0020ID\u0020constant\u0020for\u0020All\u0020Channels\u0020in\u0020the\u0020guild\u0020\u0028i.e.\u0020guild_id\u0020\u002D\u00201\u0029\nRequires\u0020GMP\u0020extension\u0020loaded\u0020on\u002032\u0020bits\u0020PHP",
+            "url": "classes/Discord-Parts-Interactions-Command-Overwrite.html#method_allChannelsConstant"
+        },                {
             "fqsen": "\\Discord\\Parts\\Interactions\\Command\\Overwrite\u003A\u003A\u0024fillable",
             "name": "fillable",
             "summary": "The\u0020parts\u0020fillable\u0020attributes.",
@@ -4726,6 +4776,11 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Discord-Parts-Interactions-Command-Permission.html#constant_TYPE_USER"
         },                {
+            "fqsen": "\\Discord\\Parts\\Interactions\\Command\\Permission\u003A\u003ATYPE_CHANNEL",
+            "name": "TYPE_CHANNEL",
+            "summary": "",
+            "url": "classes/Discord-Parts-Interactions-Command-Permission.html#constant_TYPE_CHANNEL"
+        },                {
             "fqsen": "\\Discord\\Parts\\Interactions\\Command\\Permission\u003A\u003A\u0024fillable",
             "name": "fillable",
             "summary": "The\u0020parts\u0020fillable\u0020attributes.",
@@ -4735,6 +4790,11 @@ Search.appendIndex(
             "name": "Interaction",
             "summary": "Represents\u0020an\u0020interaction\u0020from\u0020Discord.",
             "url": "classes/Discord-Parts-Interactions-Interaction.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Interactions\\Interaction\u003A\u003AisResponded\u0028\u0029",
+            "name": "isResponded",
+            "summary": "Returns\u0020true\u0020if\u0020this\u0020interaction\u0020has\u0020been\u0020internally\u0020responded.",
+            "url": "classes/Discord-Parts-Interactions-Interaction.html#method_isResponded"
         },                {
             "fqsen": "\\Discord\\Parts\\Interactions\\Interaction\u003A\u003AgetDataAttribute\u0028\u0029",
             "name": "getDataAttribute",
@@ -4906,6 +4966,11 @@ Search.appendIndex(
             "summary": "The\u0020parts\u0020fillable\u0020attributes.",
             "url": "classes/Discord-Parts-Interactions-Request-InteractionData.html#property_fillable"
         },                {
+            "fqsen": "\\Discord\\Parts\\Interactions\\Request\\InteractionData\u003A\u003A\u0024hidden",
+            "name": "hidden",
+            "summary": "Attributes\u0020that\u0020are\u0020hidden\u0020from\u0020debug\u0020info.",
+            "url": "classes/Discord-Parts-Interactions-Request-InteractionData.html#property_hidden"
+        },                {
             "fqsen": "\\Discord\\Parts\\Interactions\\Request\\InteractionData\u003A\u003A\u0024repositories",
             "name": "repositories",
             "summary": "An\u0020array\u0020of\u0020repositories\u0020that\u0020can\u0020exist\u0020in\u0020a\u0020part.",
@@ -4975,6 +5040,11 @@ Search.appendIndex(
             "name": "fillable",
             "summary": "The\u0020parts\u0020fillable\u0020attributes.",
             "url": "classes/Discord-Parts-Interactions-Request-Resolved.html#property_fillable"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Interactions\\Request\\Resolved\u003A\u003A\u0024hidden",
+            "name": "hidden",
+            "summary": "Attributes\u0020that\u0020are\u0020hidden\u0020from\u0020debug\u0020info.",
+            "url": "classes/Discord-Parts-Interactions-Request-Resolved.html#property_hidden"
         },                {
             "fqsen": "\\Discord\\Parts\\OAuth\\Application",
             "name": "Application",
@@ -5446,6 +5516,11 @@ Search.appendIndex(
             "summary": "Returns\u0020whether\u0020the\u0020thread\u0020has\u0020been\u0020locked.",
             "url": "classes/Discord-Parts-Thread-Thread.html#method_getLockedAttribute"
         },                {
+            "fqsen": "\\Discord\\Parts\\Thread\\Thread\u003A\u003AgetInvitableAttribute\u0028\u0029",
+            "name": "getInvitableAttribute",
+            "summary": "Returns\u0020whether\u0020the\u0020thread\u0020is\u0020archived.",
+            "url": "classes/Discord-Parts-Thread-Thread.html#method_getInvitableAttribute"
+        },                {
             "fqsen": "\\Discord\\Parts\\Thread\\Thread\u003A\u003AgetAutoArchiveDurationAttribute\u0028\u0029",
             "name": "getAutoArchiveDurationAttribute",
             "summary": "Returns\u0020the\u0020number\u0020of\u0020minutes\u0020of\u0020inactivity\u0020required\u0020for\u0020the\u0020thread\nto\u0020auto\u0020archive.",
@@ -5565,6 +5640,11 @@ Search.appendIndex(
             "name": "createMessageCollector",
             "summary": "Creates\u0020a\u0020message\u0020collector\u0020for\u0020the\u0020channel.",
             "url": "classes/Discord-Parts-Thread-Thread.html#method_createMessageCollector"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Thread\\Thread\u003A\u003AgetCreatableAttributes\u0028\u0029",
+            "name": "getCreatableAttributes",
+            "summary": "Returns\u0020the\u0020attributes\u0020needed\u0020to\u0020create.",
+            "url": "classes/Discord-Parts-Thread-Thread.html#method_getCreatableAttributes"
         },                {
             "fqsen": "\\Discord\\Parts\\Thread\\Thread\u003A\u003AgetUpdatableAttributes\u0028\u0029",
             "name": "getUpdatableAttributes",
@@ -5895,6 +5975,11 @@ Search.appendIndex(
             "name": "getCommunicationDisabledUntilAttribute",
             "summary": "Returns\u0020the\u0020communication\u0020disabled\u0020until\u0020attribute.",
             "url": "classes/Discord-Parts-User-Member.html#method_getCommunicationDisabledUntilAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\User\\Member\u003A\u003AgetVoiceChannel\u0028\u0029",
+            "name": "getVoiceChannel",
+            "summary": "Returns\u0020the\u0020voicechannel\u0020of\u0020the\u0020member.",
+            "url": "classes/Discord-Parts-User-Member.html#method_getVoiceChannel"
         },                {
             "fqsen": "\\Discord\\Parts\\User\\Member\u003A\u003AgetUpdatableAttributes\u0028\u0029",
             "name": "getUpdatableAttributes",
@@ -7741,6 +7826,11 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Discord-WebSockets-Event.html#constant_WEBHOOKS_UPDATE"
         },                {
+            "fqsen": "\\Discord\\WebSockets\\Event\u003A\u003AAPPLICATION_COMMAND_PERMISSIONS_UPDATE",
+            "name": "APPLICATION_COMMAND_PERMISSIONS_UPDATE",
+            "summary": "",
+            "url": "classes/Discord-WebSockets-Event.html#constant_APPLICATION_COMMAND_PERMISSIONS_UPDATE"
+        },                {
             "fqsen": "\\Discord\\WebSockets\\Event\u003A\u003AINVITE_CREATE",
             "name": "INVITE_CREATE",
             "summary": "",
@@ -7880,6 +7970,16 @@ Search.appendIndex(
             "name": "discord",
             "summary": "The\u0020Discord\u0020client\u0020instance.",
             "url": "classes/Discord-WebSockets-Event.html#property_discord"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Events\\ApplicationCommandPermissionsUpdate",
+            "name": "ApplicationCommandPermissionsUpdate",
+            "summary": "Contains\u0020constants\u0020for\u0020WebSocket\u0020events\u0020as\u0020well\u0020as\u0020handlers\nfor\u0020the\u0020events.",
+            "url": "classes/Discord-WebSockets-Events-ApplicationCommandPermissionsUpdate.html"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Events\\ApplicationCommandPermissionsUpdate\u003A\u003Ahandle\u0028\u0029",
+            "name": "handle",
+            "summary": "Transforms\u0020the\u0020given\u0020data,\u0020and\u0020updates\u0020the\nDiscord\u0020instance\u0020if\u0020necessary.",
+            "url": "classes/Discord-WebSockets-Events-ApplicationCommandPermissionsUpdate.html#method_handle"
         },                {
             "fqsen": "\\Discord\\WebSockets\\Events\\ChannelCreate",
             "name": "ChannelCreate",

@@ -133,7 +133,7 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/CommandAttributes.php"><a href="files/src-discord-builders-commandattributes.html"><abbr title="src/Discord/Builders/CommandAttributes.php">CommandAttributes.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">33</span>
+    <span class="phpdocumentor-element-found-in__line">35</span>
 
     </aside>
 
@@ -176,11 +176,25 @@
 
 <dl class="phpdocumentor-table-of-contents">
                     <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a href="classes/Discord-Builders-CommandAttributes.html#property_default_member_permissions">$default_member_permissions</a>
+    <span>
+                        &nbsp;: string            </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
     <a href="classes/Discord-Builders-CommandAttributes.html#property_default_permission">$default_permission</a>
     <span>
                         &nbsp;: bool            </span>
 </dt>
 <dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a href="classes/Discord-Builders-CommandAttributes.html#property_default_permission">$default_permission</a>
+    <span>
+                        &nbsp;: bool            </span>
+</dt>
+<dd>Whether the command is enabled by default when the app is added to a guild. SOON DEPRECATED.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
     <a href="classes/Discord-Builders-CommandAttributes.html#property_description">$description</a>
@@ -193,6 +207,13 @@
     <a href="classes/Discord-Builders-CommandAttributes.html#property_description_localizations">$description_localizations</a>
     <span>
                         &nbsp;: array&lt;string|int, string&gt;|null            </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a href="classes/Discord-Builders-CommandAttributes.html#property_dm_permission">$dm_permission</a>
+    <span>
+                        &nbsp;: bool|null            </span>
 </dt>
 <dd></dd>
 
@@ -246,6 +267,13 @@
 <dd>Removes an option from the command.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/Discord-Builders-CommandAttributes.html#method_setDefaultMemberPermissions">setDefaultMemberPermissions()</a>
+    <span>
+                                &nbsp;: $this    </span>
+</dt>
+<dd>Sets the default member permissions of the command.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Discord-Builders-CommandAttributes.html#method_setDefaultPermission">setDefaultPermission()</a>
     <span>
                                 &nbsp;: $this    </span>
@@ -265,6 +293,13 @@
                                 &nbsp;: $this    </span>
 </dt>
 <dd>Sets the description of the command in another language.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/Discord-Builders-CommandAttributes.html#method_setDmPermission">setDmPermission()</a>
+    <span>
+                                &nbsp;: $this    </span>
+</dt>
+<dd>Sets the DM permission of the command.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Discord-Builders-CommandAttributes.html#method_setName">setName()</a>
@@ -304,6 +339,41 @@
             -public
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="property_default_member_permissions">
+        $default_member_permissions
+        <a href="classes/Discord-Builders-CommandAttributes.html#property_default_member_permissions" class="headerlink"><i class="fas fa-link"></i></a>
+        <span class="phpdocumentor-element__modifiers">
+                                </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/CommandAttributes.php"><a href="files/src-discord-builders-commandattributes.html"><abbr title="src/Discord/Builders/CommandAttributes.php">CommandAttributes.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">0</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">string</span>
+    <span class="phpdocumentor-signature__name">$default_member_permissions</span>
+    </code>
+
+        <section class="phpdocumentor-description"><p>Set of permissions represented as a bit set.</p>
+</section>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="property_default_permission">
         $default_permission
         <a href="classes/Discord-Builders-CommandAttributes.html#property_default_permission" class="headerlink"><i class="fas fa-link"></i></a>
@@ -324,12 +394,61 @@
     <span class="phpdocumentor-signature__name">$default_permission</span>
     </code>
 
-        <section class="phpdocumentor-description"><p>Whether the command is enabled by default when the app is added to a guild.</p>
+        <section class="phpdocumentor-description"><p>Whether the command is enabled by default when the app is added to a guild. SOON DEPRECATED.</p>
 </section>
 
         <section class="phpdocumentor-description"></section>
 
     
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                        -deprecated                                "
+>
+    <h4 class="phpdocumentor-element__name" id="property_default_permission">
+        $default_permission
+        <a href="classes/Discord-Builders-CommandAttributes.html#property_default_permission" class="headerlink"><i class="fas fa-link"></i></a>
+        <span class="phpdocumentor-element__modifiers">
+                                </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/CommandAttributes.php"><a href="files/src-discord-builders-commandattributes.html"><abbr title="src/Discord/Builders/CommandAttributes.php">CommandAttributes.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">44</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Whether the command is enabled by default when the app is added to a guild. SOON DEPRECATED.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature -deprecated">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">bool</span>
+    <span class="phpdocumentor-signature__name">$default_permission</span>
+    </code>
+
+    
+    
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">deprecated</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">7.1.0</span>
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>See CommandAttributes::default_member_permissions</p>
+</section>
+
+                                    </dd>
+                        </dl>
 
 </article>
                     <article
@@ -395,6 +514,41 @@
     </code>
 
         <section class="phpdocumentor-description"><p>Localization dictionary for the description field. Values follow the same restrictions as description.</p>
+</section>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="property_dm_permission">
+        $dm_permission
+        <a href="classes/Discord-Builders-CommandAttributes.html#property_dm_permission" class="headerlink"><i class="fas fa-link"></i></a>
+        <span class="phpdocumentor-element__modifiers">
+                                </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/CommandAttributes.php"><a href="files/src-discord-builders-commandattributes.html"><abbr title="src/Discord/Builders/CommandAttributes.php">CommandAttributes.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">0</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">bool|null</span>
+    <span class="phpdocumentor-signature__name">$dm_permission</span>
+    </code>
+
+        <section class="phpdocumentor-description"><p>Indicates whether the command is available in DMs with the app, only for globally-scoped commands. By default, commands are visible.</p>
 </section>
 
         <section class="phpdocumentor-description"></section>
@@ -562,7 +716,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/CommandAttributes.php"><a href="files/src-discord-builders-commandattributes.html"><abbr title="src/Discord/Builders/CommandAttributes.php">CommandAttributes.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">165</span>
+    <span class="phpdocumentor-element-found-in__line">213</span>
 
     </aside>
 
@@ -629,7 +783,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/CommandAttributes.php"><a href="files/src-discord-builders-commandattributes.html"><abbr title="src/Discord/Builders/CommandAttributes.php">CommandAttributes.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">209</span>
+    <span class="phpdocumentor-element-found-in__line">255</span>
 
     </aside>
 
@@ -642,20 +796,6 @@
     
     
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">throws</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                <span class="phpdocumentor-tag-link"><abbr title="\DomainException">DomainException</abbr></span>
-                                                            
-                                             
-                                    </dd>
-                        </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
     <span class="phpdocumentor-signature__response_type">$this</span>
@@ -676,7 +816,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/CommandAttributes.php"><a href="files/src-discord-builders-commandattributes.html"><abbr title="src/Discord/Builders/CommandAttributes.php">CommandAttributes.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">189</span>
+    <span class="phpdocumentor-element-found-in__line">237</span>
 
     </aside>
 
@@ -728,6 +868,51 @@
             -public
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_setDefaultMemberPermissions">
+        setDefaultMemberPermissions()
+        <a href="classes/Discord-Builders-CommandAttributes.html#method_setDefaultMemberPermissions" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/CommandAttributes.php"><a href="files/src-discord-builders-commandattributes.html"><abbr title="src/Discord/Builders/CommandAttributes.php">CommandAttributes.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">182</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Sets the default member permissions of the command.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">setDefaultMemberPermissions</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string|int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$permissions</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">$this</span></code>
+
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$permissions</span>
+                : <span class="phpdocumentor-signature__argument__return-type">string|int</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>Default member permission bits of the command</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type">$this</span>
+            &mdash;
+        
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+            -deprecated                                            "
+>
     <h4 class="phpdocumentor-element__name" id="method_setDefaultPermission">
         setDefaultPermission()
         <a href="classes/Discord-Builders-CommandAttributes.html#method_setDefaultPermission" class="headerlink"><i class="fas fa-link"></i></a>
@@ -735,13 +920,13 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/CommandAttributes.php"><a href="files/src-discord-builders-commandattributes.html"><abbr title="src/Discord/Builders/CommandAttributes.php">CommandAttributes.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">148</span>
+    <span class="phpdocumentor-element-found-in__line">168</span>
 
     </aside>
 
         <p class="phpdocumentor-summary">Sets the default permission of the command.</p>
 
-    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <code class="phpdocumentor-code phpdocumentor-signature -deprecated">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">setDefaultPermission</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">bool&nbsp;</span><span class="phpdocumentor-signature__argument__name">$permission</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">$this</span></code>
 
@@ -760,6 +945,22 @@
             </dl>
 
     
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">deprecated</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">7.1.0</span>
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>See CommandAttributes::setDefaultMemberPermissions()</p>
+</section>
+
+                                    </dd>
+                        </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
     <span class="phpdocumentor-signature__response_type">$this</span>
@@ -780,7 +981,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/CommandAttributes.php"><a href="files/src-discord-builders-commandattributes.html"><abbr title="src/Discord/Builders/CommandAttributes.php">CommandAttributes.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">108</span>
+    <span class="phpdocumentor-element-found-in__line">124</span>
 
     </aside>
 
@@ -839,7 +1040,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/CommandAttributes.php"><a href="files/src-discord-builders-commandattributes.html"><abbr title="src/Discord/Builders/CommandAttributes.php">CommandAttributes.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">130</span>
+    <span class="phpdocumentor-element-found-in__line">148</span>
 
     </aside>
 
@@ -900,6 +1101,51 @@
             -public
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_setDmPermission">
+        setDmPermission()
+        <a href="classes/Discord-Builders-CommandAttributes.html#method_setDmPermission" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/CommandAttributes.php"><a href="files/src-discord-builders-commandattributes.html"><abbr title="src/Discord/Builders/CommandAttributes.php">CommandAttributes.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">196</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Sets the DM permission of the command.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">setDmPermission</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">bool&nbsp;</span><span class="phpdocumentor-signature__argument__name">$permission</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">$this</span></code>
+
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$permission</span>
+                : <span class="phpdocumentor-signature__argument__return-type">bool</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>DM permission of the command</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type">$this</span>
+            &mdash;
+        
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_setName">
         setName()
         <a href="classes/Discord-Builders-CommandAttributes.html#method_setName" class="headerlink"><i class="fas fa-link"></i></a>
@@ -907,7 +1153,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/CommandAttributes.php"><a href="files/src-discord-builders-commandattributes.html"><abbr title="src/Discord/Builders/CommandAttributes.php">CommandAttributes.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">63</span>
+    <span class="phpdocumentor-element-found-in__line">75</span>
 
     </aside>
 
@@ -966,7 +1212,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/CommandAttributes.php"><a href="files/src-discord-builders-commandattributes.html"><abbr title="src/Discord/Builders/CommandAttributes.php">CommandAttributes.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">85</span>
+    <span class="phpdocumentor-element-found-in__line">99</span>
 
     </aside>
 
@@ -1034,7 +1280,7 @@
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/CommandAttributes.php"><a href="files/src-discord-builders-commandattributes.html"><abbr title="src/Discord/Builders/CommandAttributes.php">CommandAttributes.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">43</span>
+    <span class="phpdocumentor-element-found-in__line">55</span>
 
     </aside>
 
