@@ -42,6 +42,14 @@ class MessageCreate extends Event
             $this->discord->private_channels->pushItem($channel);
         }
 
+        if ($channel = $messagePart->channel) {
+          if ($channel->type == Channel::TYPE_DM) {
+            if (!$this->discord->private_channels->find(function($x) use ($channel) { $x->id == $channel->id; })) {
+              $this->discord->private_channels->pushItem($channel);
+            }
+          }
+        }
+
         if ($this->discord->options['storeMessages']) {
             if ($channel = $messagePart->channel) {
                 $channel->messages->pushItem($messagePart);
