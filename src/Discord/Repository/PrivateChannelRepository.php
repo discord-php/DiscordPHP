@@ -28,7 +28,9 @@ class PrivateChannelRepository extends AbstractRepository
     /**
      * @inheritdoc
      */
-    protected $endpoints = [];
+    protected $endpoints = [
+        'get' => Endpoint::CHANNEL,
+    ];
 
     /**
      * @inheritdoc

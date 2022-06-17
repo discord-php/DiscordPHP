@@ -653,6 +653,18 @@ class Member extends Part
     }
 
     /**
+     * Returns the voicechannel of the member.
+     *
+     * @return Channel|null
+     */
+    public function getVoiceChannel(): ?Channel
+    {
+        return $this->guild->channels->find(function (Channel $channel) {
+            return $channel->allowVoice() && isset($channel->members[$this->id]);
+	    });
+    }
+
+    /**
      * @inheritdoc
      */
     public function getUpdatableAttributes(): array

@@ -769,7 +769,7 @@ class Channel extends Part
      * @see https://discord.com/developers/docs/resources/channel#start-thread-without-message
      *
      * @param string      $name                  The name of the thread.
-     * @param bool        $private               Whether the thread should be private. cannot start a private thread in a news channel or forum channel.
+     * @param bool        $private               Whether the thread should be private. cannot start a private thread in a news channel channel.
      * @param int         $auto_archive_duration Number of minutes of inactivity until the thread is auto-archived. one of 60, 1440, 4320, 10080.
      * @param string|null $reason                Reason for Audit Log.
      *
@@ -792,27 +792,12 @@ class Channel extends Part
             $type = Channel::TYPE_NEWS_THREAD;
         } elseif ($this->type == Channel::TYPE_TEXT) {
             $type = $private ? Channel::TYPE_PRIVATE_THREAD : Channel::TYPE_PUBLIC_THREAD;
-        } elseif ($this->type == Channel::TYPE_FORUM) {
-            $type = Channel::TYPE_PUBLIC_THREAD;
         } else {
             return reject(new \RuntimeException('You cannot start a thread in this type of channel.'));
         }
 
         if (! in_array($auto_archive_duration, [60, 1440, 4320, 10080])) {
             return reject(new \UnexpectedValueException('`auto_archive_duration` must be one of 60, 1440, 4320, 10080.'));
-        }
-
-        switch ($auto_archive_duration) {
-            case 4320:
-                if (! $this->guild->feature_three_day_thread_archive) {
-                    return reject(new \RuntimeException('Guild does not have access to three day thread archive.'));
-                }
-                break;
-            case 10080:
-                if (! $this->guild->feature_seven_day_thread_archive) {
-                    return reject(new \RuntimeException('Guild does not have access to seven day thread archive.'));
-                }
-                break;
         }
 
         $headers = [];
@@ -1097,6 +1082,9 @@ class Channel extends Part
             'position' => $this->position,
             'parent_id' => $this->parent_id,
             'nsfw' => $this->nsfw,
+            'rtc_region' => $this->rtc_region,
+            'video_quality_mode' => $this->video_quality_mode,
+            'default_auto_archive_duration' => $this->default_auto_archive_duration,
         ];
     }
 

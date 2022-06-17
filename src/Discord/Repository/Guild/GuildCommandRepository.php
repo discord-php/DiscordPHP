@@ -49,6 +49,8 @@ class GuildCommandRepository extends AbstractRepository
     /**
      * Sets overwrite to all application commands in the guild.
      *
+     * @deprecated 7.1.0 Removed on Permissions v2
+     *
      * @see https://discord.com/developers/docs/interactions/application-commands#batch-edit-application-command-permissions
      *
      * @param Overwrite $overwrite An overwrite object.
@@ -57,6 +59,6 @@ class GuildCommandRepository extends AbstractRepository
      */
     public function setOverwrite(Overwrite $overwrite): ExtendedPromiseInterface
     {
-        return $this->http->put(Endpoint::bind(Endpoint::GUILD_APPLICATION_COMMANDS_PERMISSIONS, $this->vars['application_id'], $this->vars['guild_id']), $overwrite->getRawAttributes());
+        return \React\Promise\reject(new \RuntimeException('This function is no longer usable by Bots'));
     }
 }

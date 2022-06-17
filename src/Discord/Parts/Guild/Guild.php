@@ -1104,6 +1104,7 @@ class Guild extends Part
      * @param array $options An array of options.
      *                       enabled => whether the widget is enabled
      *                       channel_id => the widget channel id
+     * @param string $reason Reason for Audit Log.
      *
      * @return ExtendedPromiseInterface The updated guild widget object.
      */
@@ -1124,7 +1125,7 @@ class Guild extends Part
             $headers['X-Audit-Log-Reason'] = $reason;
         }
 
-        return $this->http->patch(Endpoint::bind(Endpoint::GUILD_WIDGET_SETTINGS, $this->id), $options)->then(function ($response) {
+        return $this->http->patch(Endpoint::bind(Endpoint::GUILD_WIDGET_SETTINGS, $this->id), $options, $headers)->then(function ($response) {
             $this->widget_enabled = $response->enabled;
             $this->widget_channel_id = $response->channel_id;
 
@@ -1165,6 +1166,30 @@ class Guild extends Part
         }
 
         return $channel->createInvite($args);
+    }
+
+    /**
+     * Modify the Guild `mfa_level`, requires guild ownership.
+     *
+     * @see https://discord.com/developers/docs/resources/guild#modify-guild-mfa-level
+     *
+     * @param int    $level  The new MFA level `Guild::MFA_NONE` or `Guild::MFA_ELEVATED`.
+     * @param string $reason Reason for Audit Log.
+     *
+     * @return ExtendedPromiseInterface<Guild> This guild.
+     */
+    public function updateMFALevel(int $level, ?string $reason = null): ExtendedPromiseInterface
+    {
+        $headers = [];
+        if (isset($reason)) {
+            $headers['X-Audit-Log-Reason'] = $reason;
+        }
+
+        return $this->http->post(Endpoint::bind(Endpoint::GUILD_MFA, $this->id), ['level' => $level], $headers)->then(function ($response) {
+            $this->mfa_level = $response->level;
+
+            return $this;
+        });
     }
 
     /**

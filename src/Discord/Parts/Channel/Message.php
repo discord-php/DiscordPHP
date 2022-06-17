@@ -607,25 +607,12 @@ class Message extends Part
      */
     public function startThread(string $name, int $auto_archive_duration = 1440, ?string $reason = null): ExtendedPromiseInterface
     {
-        if (! $this->guild) {
-            return reject(new \RuntimeException('You can only start threads on guild text channels.'));
+        if (! in_array($this->channel->type, [Channel::TYPE_TEXT, Channel::TYPE_NEWS])) {
+            return reject(new \RuntimeException('You can only start threads on guild text channels or news channels.'));
         }
 
         if (! in_array($auto_archive_duration, [60, 1440, 4320, 10080])) {
             return reject(new \UnexpectedValueException('`auto_archive_duration` must be one of 60, 1440, 4320, 10080.'));
-        }
-
-        switch ($auto_archive_duration) {
-            case 4320:
-                if (! $this->guild->feature_three_day_thread_archive) {
-                    return reject(new \RuntimeException('Guild does not have access to three day thread archive.'));
-                }
-                break;
-            case 10080:
-                if (! $this->guild->feature_seven_day_thread_archive) {
-                    return reject(new \RuntimeException('Guild does not have access to seven day thread archive.'));
-                }
-                break;
         }
 
         $headers = [];

@@ -21,6 +21,8 @@ use React\Promise\ExtendedPromiseInterface;
 use RuntimeException;
 use Serializable;
 
+use function Discord\studly;
+
 /**
  * This class is the base of all objects that are returned. All "Parts" extend off this
  * base class.
@@ -194,7 +196,7 @@ abstract class Part implements ArrayAccess, JsonSerializable
      */
     private function checkForMutator(string $key, string $type)
     {
-        $str = $type.\Discord\studly($key).'Attribute';
+        $str = $type.studly($key).'Attribute';
 
         if (is_callable([$this, $str])) {
             return $str;
