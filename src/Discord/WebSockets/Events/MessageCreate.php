@@ -30,7 +30,7 @@ class MessageCreate extends Event
         $messagePart = $this->factory->create(Message::class, $data, true);
 
         // assume it is a private channel
-        if ($messagePart->channel === null) {
+        if (! isset($data->channel, $messagePart->guild)) {
             /** @var Channel */
             $channel = $this->factory->create(Channel::class, [
                 'id' => $messagePart->channel_id,
@@ -40,14 +40,6 @@ class MessageCreate extends Event
             ], true);
 
             $this->discord->private_channels->pushItem($channel);
-        }
-
-        if ($channel = $messagePart->channel) {
-          if ($channel->type == Channel::TYPE_DM) {
-            if (!$this->discord->private_channels->find(function($x) use ($channel) { $x->id == $channel->id; })) {
-              $this->discord->private_channels->pushItem($channel);
-            }
-          }
         }
 
         if ($this->discord->options['storeMessages']) {
