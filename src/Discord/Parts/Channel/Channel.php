@@ -1033,7 +1033,7 @@ class Channel extends Part
      */
     public function allowText()
     {
-        return in_array($this->type, [self::TYPE_TEXT, self::TYPE_DM, self::TYPE_GROUP, self::TYPE_NEWS]);
+        return in_array($this->type, [self::TYPE_TEXT, self::TYPE_DM, self::TYPE_VOICE, self::TYPE_GROUP, self::TYPE_NEWS]);
     }
 
     /**
