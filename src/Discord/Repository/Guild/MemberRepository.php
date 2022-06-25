@@ -78,7 +78,7 @@ class MemberRepository extends AbstractRepository
 
         $deferred = new Deferred();
 
-        $paginate = function ($afterId = 0) use (&$paginate, $deferred, $endpoint) {
+        ($paginate = function ($afterId = 0) use (&$paginate, $deferred, $endpoint) {
             $endpoint->addQuery('limit', 1000);
             $endpoint->addQuery('after', $afterId);
 
@@ -99,9 +99,7 @@ class MemberRepository extends AbstractRepository
 
                 $paginate($part->id);
             }, [$deferred, 'reject']);
-        };
-
-        $paginate();
+        })();
 
         return $deferred->promise();
     }
