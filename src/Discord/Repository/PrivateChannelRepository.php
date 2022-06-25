@@ -12,6 +12,7 @@
 namespace Discord\Repository;
 
 use Discord\Parts\Channel\Channel;
+use Discord\Http\Endpoint;
 
 /**
  * Contains private channels and groups that the user has access to.
