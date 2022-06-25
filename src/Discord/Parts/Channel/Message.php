@@ -668,11 +668,11 @@ class Message extends Part
      *
      * @param string|MessageBuilder $message Reply message to send after delay.
      * @param int                   $delay   Delay after text will be sent in milliseconds.
-     * @param ?TimerInterface       &$timer  Delay timer passed by reference.
+     * @param TimerInterface        &$timer  Delay timer passed by reference.
      *
      * @return ExtendedPromiseInterface<Message>
      */
-    public function delayedReply($message, int $delay, ?TimerInterface &$timer = null): ExtendedPromiseInterface
+    public function delayedReply($message, int $delay, TimerInterface &$timer = null): ExtendedPromiseInterface
     {
         $deferred = new Deferred();
 
@@ -688,12 +688,12 @@ class Message extends Part
      *
      * @see Message::deleteMessage()
      *
-     * @param int             $delay  Time to delay the delete by, in milliseconds.
-     * @param ?TimerInterface &$timer Delay timer passed by reference.
+     * @param int            $delay  Time to delay the delete by, in milliseconds.
+     * @param TimerInterface &$timer Delay timer passed by reference.
      *
      * @return ExtendedPromseInterface
      */
-    public function delayedDelete(int $delay, ?TimerInterface &$timer = null): ExtendedPromiseInterface
+    public function delayedDelete(int $delay, TimerInterface &$timer = null): ExtendedPromiseInterface
     {
         $deferred = new Deferred();
 
