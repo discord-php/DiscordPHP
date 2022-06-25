@@ -33,7 +33,7 @@ use function Discord\poly_strlen;
  * @property bool                     $default_permission         Whether the command is enabled by default when the app is added to a guild. SOON DEPRECATED.
  */
 trait CommandAttributes {
-    
+
     /**
      * Whether the command is enabled by default when the app is added to a guild. SOON DEPRECATED.
      *
@@ -48,7 +48,7 @@ trait CommandAttributes {
      *
      * @param int $type Type of the command.
      *
-     * @throws \InvalidArgumentException
+     * @throws \InvalidArgumentException `$type` is not 1-3.
      *
      * @return $this
      */
@@ -68,7 +68,8 @@ trait CommandAttributes {
      *
      * @param string $name Name of the command. Slash command names are lowercase.
      *
-     * @throws \LengthException
+     * @throws \LengthException `$name` is not 1-32 characters long.
+     * @throws \DomainException `$name` contains invalid characters.
      *
      * @return $this
      */
@@ -79,6 +80,10 @@ trait CommandAttributes {
             throw new \LengthException('Command name can not be empty.');
         } elseif ($nameLen > 32) {
             throw new \LengthException('Command name can be only up to 32 characters long.');
+        }
+
+        if ($this->type == Command::CHAT_INPUT && ! preg_match('/^[-_\p{L}\p{N}\p{Devanagari}\p{Thai}]{1,32}$/', $name)) {
+            throw new \DomainException('Slash command name contains invalid characters.');
         }
 
         $this->name = $name;
@@ -92,7 +97,8 @@ trait CommandAttributes {
      * @param string      $locale Discord locale code.
      * @param string|null $name   Localized name of the command. Slash command names are lowercase.
      *
-     * @throws \LengthException
+     * @throws \LengthException `$name` is not 1-32 characters long.
+     * @throws \DomainException `$name` contains invalid characters.
      *
      * @return $this
      */
@@ -104,6 +110,10 @@ trait CommandAttributes {
                 throw new \LengthException('Command name can not be empty.');
             } elseif ($nameLen > 32) {
                 throw new \LengthException('Command name can be only up to 32 characters long.');
+            }
+
+            if ($this->type == Command::CHAT_INPUT && ! preg_match('/^[-_\p{L}\p{N}\p{Devanagari}\p{Thai}]{1,32}$/', $name)) {
+                throw new \DomainException('Slash command localized name contains invalid characters.');
             }
         }
 
@@ -117,7 +127,7 @@ trait CommandAttributes {
      *
      * @param string $description Description of the command
      *
-     * @throws \LengthException
+     * @throws \LengthException `$description` is not 1-100 characters long.
      *
      * @return $this
      */
@@ -141,7 +151,7 @@ trait CommandAttributes {
      * @param string      $locale      Discord locale code.
      * @param string|null $description Localized description of the command.
      *
-     * @throws \LengthException
+     * @throws \LengthException `$description` is not 1-100 characters long.
      *
      * @return $this
      */
@@ -205,8 +215,8 @@ trait CommandAttributes {
      *
      * @param Option $option The option
      *
-     * @throws \DomainException
-     * @throws \OverflowException
+     * @throws \DomainException   Command type is not CHAT_INPUT (1)
+     * @throws \OverflowException Command exceeds maximum 25 options
      *
      * @return $this
      */
@@ -230,7 +240,7 @@ trait CommandAttributes {
      *
      * @param Option $option Option to remove.
      *
-     * @throws \DomainException
+     * @throws \DomainException Command type is not CHAT_INPUT (1)
      *
      * @return $this
      */
