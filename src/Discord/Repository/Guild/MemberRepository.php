@@ -11,9 +11,11 @@
 
 namespace Discord\Repository\Guild;
 
+use Discord\Helpers\Deferred;
 use Discord\Http\Endpoint;
 use Discord\Parts\User\Member;
 use Discord\Repository\AbstractRepository;
+use React\Promise\ExtendedPromiseInterface;
 use React\Promise\PromiseInterface;
 
 /**
@@ -58,5 +60,47 @@ class MemberRepository extends AbstractRepository
     public function kick(Member $member): PromiseInterface
     {
         return $this->delete($member);
+    }
+
+    /**
+     * @inheritdoc
+     *
+     * @param array $queryparams Query string params to add to the request, leave null to paginate all members (Warning: Be careful to use this on very large guild)
+     */
+    public function freshen(array $queryparams = null): ExtendedPromiseInterface
+    {
+        if (isset($queryparams)) {
+            return parent::freshen($queryparams);
+        }
+
+        $endpoint = new Endpoint($this->endpoints['all']);
+        $endpoint->bindAssoc($this->vars);
+
+        $deferred = new Deferred();
+
+        ($paginate = function ($afterId = 0) use (&$paginate, $deferred, $endpoint) {
+            $endpoint->addQuery('limit', 1000);
+            $endpoint->addQuery('after', $afterId);
+
+            $this->http->get($endpoint)->then(function ($response) use ($paginate, $deferred, $afterId) {
+                if (empty($response)) {
+                    $deferred->resolve($this);
+                    return;
+                } elseif (! $afterId) {
+                    $this->clear();
+                }
+
+                foreach ($response as $value) {
+                    $value = array_merge($this->vars, (array) $value);
+                    $part = $this->factory->create($this->class, $value, true);
+
+                    $this->pushItem($part);
+                }
+
+                $paginate($part->id);
+            }, [$deferred, 'reject']);
+        })();
+
+        return $deferred->promise();
     }
 }
