@@ -672,7 +672,7 @@ class Message extends Part
      *
      * @return ExtendedPromiseInterface<Message>
      */
-    public function delayedReply($message, int $delay, TimerInterface &$timer = null): ExtendedPromiseInterface
+    public function delayedReply($message, int $delay, &$timer = null): ExtendedPromiseInterface
     {
         $deferred = new Deferred();
 
@@ -693,7 +693,7 @@ class Message extends Part
      *
      * @return ExtendedPromseInterface
      */
-    public function delayedDelete(int $delay, TimerInterface &$timer = null): ExtendedPromiseInterface
+    public function delayedDelete(int $delay, &$timer = null): ExtendedPromiseInterface
     {
         $deferred = new Deferred();
 
