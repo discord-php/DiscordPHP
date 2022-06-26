@@ -29,7 +29,6 @@ use Discord\Parts\Guild\Sticker;
 use Discord\Parts\Interactions\Request\Component;
 use Discord\Parts\Thread\Thread;
 use Discord\Repository\Channel\ReactionRepository;
-use React\EventLoop\TimerInterface;
 use React\Promise\ExtendedPromiseInterface;
 
 use function React\Promise\reject;
@@ -666,9 +665,9 @@ class Message extends Part
      *
      * @see Message::reply()
      *
-     * @param string|MessageBuilder $message Reply message to send after delay.
-     * @param int                   $delay   Delay after text will be sent in milliseconds.
-     * @param TimerInterface        &$timer  Delay timer passed by reference.
+     * @param string|MessageBuilder           $message Reply message to send after delay.
+     * @param int                             $delay   Delay after text will be sent in milliseconds.
+     * @param \React\EventLoop\TimerInterface &$timer  Delay timer passed by reference.
      *
      * @return ExtendedPromiseInterface<Message>
      */
@@ -688,8 +687,8 @@ class Message extends Part
      *
      * @see Message::deleteMessage()
      *
-     * @param int            $delay  Time to delay the delete by, in milliseconds.
-     * @param TimerInterface &$timer Delay timer passed by reference.
+     * @param int                             $delay  Time to delay the delete by, in milliseconds.
+     * @param \React\EventLoop\TimerInterface &$timer Delay timer passed by reference.
      *
      * @return ExtendedPromseInterface
      */
