@@ -29,6 +29,7 @@ use Discord\Parts\Guild\Sticker;
 use Discord\Parts\Interactions\Request\Component;
 use Discord\Parts\Thread\Thread;
 use Discord\Repository\Channel\ReactionRepository;
+use React\EventLoop\TimerInterface;
 use React\Promise\ExtendedPromiseInterface;
 
 use function React\Promise\reject;
