@@ -729,7 +729,7 @@ class Channel extends Part
      *
      * @see https://discord.com/developers/docs/resources/channel#get-channel-invites
      *
-     * @deprecated 7.1.0 Use `$channel->invites->::freshen()`
+     * @deprecated 7.1.0 Use `$channel->invites->freshen()`
      *
      * @return ExtendedPromiseInterface<Collection<Invite>>
      */
