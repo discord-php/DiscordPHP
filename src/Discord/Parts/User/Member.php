@@ -263,7 +263,7 @@ class Member extends Part
      * @param Role[]|string[] $roles  The roles to set to the member.
      * @param string|null     $reason Reason for Audit Log.
      *
-     * @return ExtendedPromiseInterface<Member>
+     * @return ExtendedPromiseInterface
      */
     public function setRoles(array $roles, ?string $reason = null): ExtendedPromiseInterface
     {
