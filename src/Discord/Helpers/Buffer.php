@@ -71,7 +71,7 @@ class Buffer extends EventEmitter implements WritableStreamInterface
             return false;
         }
 
-        for ($i = 0; $i < strlen($data); $i++) {
+        for ($i = 0; $i < strlen((string) $data); $i++) {
             $this->buffer[] = $data[$i];
         }
 
