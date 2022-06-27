@@ -154,7 +154,12 @@ class Member extends Part
             return $this->http->patch(Endpoint::bind(Endpoint::GUILD_MEMBER_SELF, $this->guild_id), $payload, $headers);
         }
 
-        return $this->http->patch(Endpoint::bind(Endpoint::GUILD_MEMBER, $this->guild_id, $this->id), $payload, $headers);
+        return $this->http->patch(Endpoint::bind(Endpoint::GUILD_MEMBER, $this->guild_id, $this->id), $payload, $headers)
+            ->then(function ($response) {
+                $this->nick = $response->nick;
+
+                return $response;
+            });
     }
 
     /**
@@ -207,7 +212,12 @@ class Member extends Part
             $headers['X-Audit-Log-Reason'] = $reason;
         }
 
-        return $this->http->put(Endpoint::bind(Endpoint::GUILD_MEMBER_ROLE, $this->guild_id, $this->id, $role), null, $headers);
+        return $this->http->put(Endpoint::bind(Endpoint::GUILD_MEMBER_ROLE, $this->guild_id, $this->id, $role), null, $headers)
+            ->then(function () use ($role) {
+                if (in_array($role, $this->attributes['roles'])) {
+                    $this->attributes['roles'][] = $role;
+                }
+            });
     }
 
     /**
@@ -234,7 +244,12 @@ class Member extends Part
                 $headers['X-Audit-Log-Reason'] = $reason;
             }
 
-            return $this->http->delete(Endpoint::bind(Endpoint::GUILD_MEMBER_ROLE, $this->guild_id, $this->id, $role), null, $headers);
+            return $this->http->delete(Endpoint::bind(Endpoint::GUILD_MEMBER_ROLE, $this->guild_id, $this->id, $role), null, $headers)
+                ->then(function () use ($role) {
+                    if ($removeRole = array_search($role, $this->attributes['roles']) !== false) {
+                        unset($this->attributes['roles'][$removeRole]);
+                    }
+                });
         }
 
         return reject(new \RuntimeException('Member does not have role.'));
@@ -263,7 +278,12 @@ class Member extends Part
             $headers['X-Audit-Log-Reason'] = $reason;
         }
 
-        return $this->http->patch(Endpoint::bind(Endpoint::GUILD_MEMBER, $this->guild_id, $this->id), ['roles' => $roles], $headers);
+        return $this->http->patch(Endpoint::bind(Endpoint::GUILD_MEMBER, $this->guild_id, $this->id), ['roles' => $roles], $headers)
+            ->then(function ($response) {
+                $this->attributes['roles'] = $response->roles;
+
+                return $response;
+            });
     }
 
     /**
@@ -426,7 +446,12 @@ class Member extends Part
             $headers['X-Audit-Log-Reason'] = $reason;
         }
 
-        return $this->http->patch(Endpoint::bind(Endpoint::GUILD_MEMBER, $this->guild_id, $this->id), ['communication_disabled_until' => isset($communication_disabled_until) ? $communication_disabled_until->toIso8601ZuluString() : null], $headers);
+        return $this->http->patch(Endpoint::bind(Endpoint::GUILD_MEMBER, $this->guild_id, $this->id), ['communication_disabled_until' => isset($communication_disabled_until) ? $communication_disabled_until->toIso8601ZuluString() : null], $headers)
+            ->then(function ($response) {
+                $this->attributes['communication_disabled_until'] = $response->communication_disabled_until;
+
+                return $response;
+            });
     }
 
     /**
