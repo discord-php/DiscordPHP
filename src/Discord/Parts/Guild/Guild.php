@@ -874,7 +874,16 @@ class Guild extends Part
         }
 
         return $this->http->patch(Endpoint::bind(Endpoint::GUILD_ROLES, $this->id), $payload)
-            ->then(function () {
+            ->then(function ($response) {
+                foreach ($response as $role) {
+                    if ($rolePart = $this->roles->get('id', $role->id)) {
+                        $rolePart->fill((array) $role);
+                    } else {
+                        $rolePart = $this->factory->create(Role::class, $role, true);
+                        $this->roles->pushItem($rolePart);
+                    }
+                }
+
                 return $this;
             });
     }
