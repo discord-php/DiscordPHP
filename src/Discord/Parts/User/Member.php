@@ -136,7 +136,7 @@ class Member extends Part
      * @param string|null $nick   The nickname of the member.
      * @param string|null $reason Reason for Audit Log.
      *
-     * @return ExtendedPromiseInterface
+     * @return ExtendedPromiseInterface<Member>
      */
     public function setNickname(?string $nick = null, ?string $reason = null): ExtendedPromiseInterface
     {
@@ -158,7 +158,7 @@ class Member extends Part
             ->then(function ($response) {
                 $this->nick = $response->nick;
 
-                return $response;
+                return $this;
             });
     }
 
@@ -263,7 +263,7 @@ class Member extends Part
      * @param Role[]|string[] $roles  The roles to set to the member.
      * @param string|null     $reason Reason for Audit Log.
      *
-     * @return ExtendedPromiseInterface
+     * @return ExtendedPromiseInterface<Member>
      */
     public function setRoles(array $roles, ?string $reason = null): ExtendedPromiseInterface
     {
@@ -282,7 +282,7 @@ class Member extends Part
             ->then(function ($response) {
                 $this->attributes['roles'] = $response->roles;
 
-                return $response;
+                return $this;
             });
     }
 
@@ -431,7 +431,7 @@ class Member extends Part
      *
      * @throws NoPermissionsException
      *
-     * @return ExtendedPromiseInterface
+     * @return ExtendedPromiseInterface<Member>
      */
     public function timeoutMember(?Carbon $communication_disabled_until, ?string $reason = null): ExtendedPromiseInterface
     {
@@ -450,7 +450,7 @@ class Member extends Part
             ->then(function ($response) {
                 $this->attributes['communication_disabled_until'] = $response->communication_disabled_until;
 
-                return $response;
+                return $this;
             });
     }
 

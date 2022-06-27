@@ -362,7 +362,7 @@ class Thread extends Part
      * @param string      $name   New thread name.
      * @param string|null $reason Reason for Audit Log.
      *
-     * @return ExtendedPromiseInterface
+     * @return ExtendedPromiseInterface<Thread>
      */
     public function rename(string $name, ?string $reason = null): ExtendedPromiseInterface
     {
@@ -375,7 +375,7 @@ class Thread extends Part
             ->then(function ($response) {
                 $this->attributes['name'] = $response->name;
 
-                return $response;
+                return $this;
             });
     }
 
@@ -384,7 +384,7 @@ class Thread extends Part
      *
      * @param string|null $reason Reason for Audit Log.
      *
-     * @return ExtendedPromiseInterface
+     * @return ExtendedPromiseInterface<Thread>
      */
     public function archive(?string $reason = null): ExtendedPromiseInterface
     {
@@ -397,7 +397,7 @@ class Thread extends Part
             ->then(function ($response) {
                 $this->archived = $response->thread_metadata->archived;
 
-                return $response;
+                return $this;
             });
     }
 
@@ -406,7 +406,7 @@ class Thread extends Part
      *
      * @param string|null $reason Reason for Audit Log.
      *
-     * @return ExtendedPromiseInterface
+     * @return ExtendedPromiseInterface<Thread>
      */
     public function unarchive(?string $reason = null): ExtendedPromiseInterface
     {
@@ -419,7 +419,7 @@ class Thread extends Part
             ->then(function ($response) {
                 $this->archived = $response->thread_metadata->archived;
 
-                return $response;
+                return $this;
             });
     }
 
@@ -429,7 +429,7 @@ class Thread extends Part
      * @param int         $duration Duration in minutes.
      * @param string|null $reason   Reason for Audit Log.
      *
-     * @return ExtendedPromiseInterface
+     * @return ExtendedPromiseInterface<Thread>
      */
     public function setAutoArchiveDuration(int $duration, ?string $reason = null): ExtendedPromiseInterface
     {
@@ -442,7 +442,7 @@ class Thread extends Part
             ->then(function ($response) {
                 $this->auto_archive_duration = $response->thread_metadata->auto_archive_duration;
 
-                return $response;
+                return $this;
             });
     }
 
