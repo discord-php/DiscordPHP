@@ -1067,7 +1067,7 @@ class Guild extends Part
             'welcome_channels',
             'description',
         ])
-        ->setAllowedTypes('enabled', 'string')
+        ->setAllowedTypes('enabled', 'bool')
         ->setAllowedTypes('welcome_channels', 'array')
         ->setAllowedTypes('description', 'string');
 

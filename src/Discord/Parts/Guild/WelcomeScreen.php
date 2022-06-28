@@ -36,7 +36,7 @@ class WelcomeScreen extends Part
      */
     protected function getWelcomeChannelsAttribute(): Collection
     {
-        $collection = Collection::for(WelcomeChannel::class, 'channel_id');
+        $collection = Collection::for(WelcomeChannel::class, null);
 
         foreach ($this->attributes['welcome_channels'] ?? [] as $welcome_channel) {
             $collection->push($this->factory->part(WelcomeChannel::class, (array) $welcome_channel, true));
