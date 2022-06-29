@@ -105,7 +105,7 @@ class Option extends Part
     /**
      * Sets the type of the option.
      *
-     * @param int $type type of the option
+     * @param int $type type of the option.
      *
      * @throws \InvalidArgumentException `$type` is not 1-11.
      *
@@ -172,7 +172,7 @@ class Option extends Part
     /**
      * Sets the description of the option.
      *
-     * @param string $description description of the option
+     * @param string $description description of the option.
      *
      * @throws \LengthException `$description` is more than 100 characters.
      *
@@ -213,7 +213,7 @@ class Option extends Part
     /**
      * Sets the requirement of the option.
      *
-     * @param bool $required requirement of the option
+     * @param bool $required requirement of the option.
      *
      * @return $this
      */
@@ -227,7 +227,7 @@ class Option extends Part
     /**
      * Sets the channel types of the option.
      *
-     * @param array $types types of the channel
+     * @param array $types types of the channel.
      *
      * @return $this
      */
@@ -241,7 +241,7 @@ class Option extends Part
     /**
      * Adds an option to the option.
      *
-     * @param Option $option The option
+     * @param Option $option The option.
      *
      * @throws \OverflowException Command exceeds maximum 25 sub options.
      *
@@ -261,7 +261,7 @@ class Option extends Part
     /**
      * Adds a choice to the option (Only for slash commands).
      *
-     * @param Choice $choice The choice
+     * @param Choice $choice The choice.
      *
      * @throws \OverflowException Command exceeds maximum 25 choices.
      *
@@ -331,7 +331,7 @@ class Option extends Part
     /**
      * Sets the minimum value permitted.
      *
-     * @param int|float $min_value integer for INTEGER options, double for NUMBER options
+     * @param int|float $min_value integer for INTEGER options, double for NUMBER options.
      *
      * @return $this
      */
@@ -345,7 +345,7 @@ class Option extends Part
     /**
      * Sets the minimum value permitted.
      *
-     * @param int|float $min_value integer for INTEGER options, double for NUMBER options
+     * @param int|float $min_value integer for INTEGER options, double for NUMBER options.
      *
      * @return $this
      */
@@ -359,9 +359,9 @@ class Option extends Part
     /**
      * Sets the autocomplete interactions for this option.
      *
-     * @param bool $autocomplete enable autocomplete interactions for this option
+     * @param bool $autocomplete enable autocomplete interactions for this option.
      *
-     * @throws \InvalidArgumentException Command option type is not string/integer/number
+     * @throws \InvalidArgumentException Command option type is not string/integer/number.
      *
      * @return $this
      */

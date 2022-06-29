@@ -37,7 +37,7 @@ trait CommandAttributes {
     /**
      * Whether the command is enabled by default when the app is added to a guild. SOON DEPRECATED.
      *
-     * @deprecated 7.1.0 See CommandAttributes::default_member_permissions
+     * @deprecated 7.1.0 See `CommandAttributes::default_member_permissions`.
      *
      * @var bool
      */
@@ -169,9 +169,9 @@ trait CommandAttributes {
     /**
      * Sets the default permission of the command.
      *
-     * @deprecated 7.1.0 See CommandAttributes::setDefaultMemberPermissions()
+     * @deprecated 7.1.0 See `CommandAttributes::setDefaultMemberPermissions()`.
      *
-     * @param bool $permission Default permission of the command
+     * @param bool $permission Default permission of the command.
      *
      * @return $this
      */
@@ -185,7 +185,7 @@ trait CommandAttributes {
     /**
      * Sets the default member permissions of the command.
      *
-     * @param string|int $permissions Default member permission bits of the command
+     * @param string|int $permissions Default member permission bits of the command.
      *
      * @return $this
      */
@@ -199,7 +199,7 @@ trait CommandAttributes {
     /**
      * Sets the DM permission of the command.
      *
-     * @param bool $permission DM permission of the command
+     * @param bool $permission DM permission of the command.
      *
      * @return $this
      */
@@ -213,10 +213,10 @@ trait CommandAttributes {
     /**
      * Adds an option to the command.
      *
-     * @param Option $option The option
+     * @param Option $option The option.
      *
-     * @throws \DomainException   Command type is not CHAT_INPUT (1)
-     * @throws \OverflowException Command exceeds maximum 25 options
+     * @throws \DomainException   Command type is not CHAT_INPUT (1).
+     * @throws \OverflowException Command exceeds maximum 25 options.
      *
      * @return $this
      */
@@ -240,7 +240,7 @@ trait CommandAttributes {
      *
      * @param Option $option Option to remove.
      *
-     * @throws \DomainException Command type is not CHAT_INPUT (1)
+     * @throws \DomainException Command type is not CHAT_INPUT (1).
      *
      * @return $this
      */
