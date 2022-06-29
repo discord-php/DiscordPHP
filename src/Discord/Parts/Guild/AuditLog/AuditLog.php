@@ -142,7 +142,7 @@ class AuditLog extends Part
         $collection = Collection::for(Rule::class);
 
         foreach ($this->attributes['auto_moderation_rules'] ?? [] as $rule) {
-            $collection->pushItem($this->factory->create(Entry::class, $rule, true));
+            $collection->pushItem($this->factory->create(Rule::class, $rule, true));
         }
 
         return $collection;
