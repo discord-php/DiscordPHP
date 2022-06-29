@@ -91,11 +91,11 @@ class Message extends Part
     public const TYPE_CHANNEL_NAME_CHANGE = 4;
     public const TYPE_CHANNEL_ICON_CHANGE = 5;
     public const CHANNEL_PINNED_MESSAGE = 6;
-    public const GUILD_MEMBER_JOIN = 7;
-    public const USER_PREMIUM_GUILD_SUBSCRIPTION = 8;
-    public const USER_PREMIUM_GUILD_SUBSCRIPTION_TIER_1 = 9;
-    public const USER_PREMIUM_GUILD_SUBSCRIPTION_TIER_2 = 10;
-    public const USER_PREMIUM_GUILD_SUBSCRIPTION_TIER_3 = 11;
+    public const TYPE_USER_JOIN = 7;
+    public const TYPE_GUILD_BOOST = 8;
+    public const TYPE_GUILD_BOOST_TIER_1 = 9;
+    public const TYPE_GUILD_BOOST_TIER_2 = 10;
+    public const TYPE_GUILD_BOOST_TIER_3 = 11;
     public const CHANNEL_FOLLOW_ADD = 12;
     public const GUILD_DISCOVERY_DISQUALIFIED = 14;
     public const GUILD_DISCOVERY_REQUALIFIED = 15;
@@ -107,6 +107,17 @@ class Message extends Part
     public const TYPE_THREAD_STARTER_MESSAGE = 21;
     public const TYPE_GUILD_INVITE_REMINDER = 22;
     public const TYPE_CONTEXT_MENU_COMMAND = 23;
+
+    /** @deprecated 7.1.0 Use `Message::TYPE_USER_JOIN` */
+    public const GUILD_MEMBER_JOIN = 7;
+    /** @deprecated 7.1.0 Use `Message::TYPE_GUILD_BOOST` */
+    public const USER_PREMIUM_GUILD_SUBSCRIPTION = 8;
+    /** @deprecated 7.1.0 Use `Message::TYPE_GUILD_BOOST_TIER_1` */
+    public const USER_PREMIUM_GUILD_SUBSCRIPTION_TIER_1 = 9;
+    /** @deprecated 7.1.0 Use `Message::TYPE_GUILD_BOOST_TIER_2` */
+    public const USER_PREMIUM_GUILD_SUBSCRIPTION_TIER_2 = 10;
+    /** @deprecated 7.1.0 Use `Message::TYPE_GUILD_BOOST_TIER_3` */
+    public const USER_PREMIUM_GUILD_SUBSCRIPTION_TIER_3 = 11;
 
     public const ACTIVITY_JOIN = 1;
     public const ACTIVITY_SPECTATE = 2;
