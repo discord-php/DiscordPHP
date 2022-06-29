@@ -32,7 +32,7 @@ use Discord\Parts\User\User;
  * @property int                 $trigger_type     The rule trigger type.
  * @property object              $trigger_metadata The rule trigger metadata (contains `keyword_filter` and `presets`).
  * @property Collection|Action[] $actions          The actions which will execute when the rule is triggered.
- * @property bool                $enabled whether  The rule is enabled.
+ * @property bool                $enabled          Whether the rule is enabled.
  * @property array               $exempt_roles     The role ids that should not be affected by the rule (Maximum of 20).
  * @property array               $exempt_channels  The channel ids that should not be affected by the rule (Maximum of 50).
  */
@@ -114,10 +114,21 @@ class Rule extends Part
             'actions' => $this->actions,
         ];
 
-        if (isset($this->attributes['trigger_metadata'])) $attr['trigger_metadata'] = $this->trigger_metadata;
-        if (isset($this->attributes['enabled'])) $attr['enabled'] = $this->enabled;
-        if (isset($this->attributes['exempt_roles'])) $attr['exempt_roles'] = $this->exempt_roles;
-        if (isset($this->attributes['exempt_channels'])) $attr['exempt_channels'] = $this->exempt_channels;
+        if (in_array($this->trigger_type, [self::TRIGGER_TYPE_KEYWORD, self::TRIGGER_TYPE_KEYWORD_PRESET])) {
+            $attr['trigger_metadata'] = $this->trigger_metadata;
+        }
+
+        if (isset($this->attributes['enabled'])) {
+            $attr['enabled'] = $this->enabled;
+        }
+
+        if (isset($this->attributes['exempt_roles'])) {
+            $attr['exempt_roles'] = $this->attributes['exempt_roles'];
+        }
+
+        if (isset($this->attributes['exempt_channels'])) {
+            $attr['exempt_channels'] = $this->attributes['exempt_channels'];
+        }
 
         return $attr;
     }
@@ -132,11 +143,13 @@ class Rule extends Part
             'event_type' => $this->event_type,
             'actions' => $this->actions,
             'enabled' => $this->enabled,
-            'exempt_roles' => $this->exempt_roles,
-            'exempt_channels' => $this->exempt_channels,
+            'exempt_roles' => $this->attributes['exempt_roles'],
+            'exempt_channels' => $this->attributes['exempt_channels'],
         ];
 
-        if (isset($this->attributes['trigger_metadata'])) $attr['trigger_metadata'] = $this->trigger_metadata;
+        if (in_array($this->trigger_type, [self::TRIGGER_TYPE_KEYWORD, self::TRIGGER_TYPE_KEYWORD_PRESET])) {
+            $attr['trigger_metadata'] = $this->trigger_metadata;
+        }
 
         return $attr;
     }
