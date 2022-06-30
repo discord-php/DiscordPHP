@@ -19,7 +19,7 @@ use Discord\Parts\Part;
  * @see https://discord.com/developers/docs/resources/auto-moderation#auto-moderation-action-object
  *
  * @property int         $type     The type of action.
- * @property object|null $metadata Additional metadata needed during execution for this specific action type (contains `channel_id` and `duration_seconds`).
+ * @property object|null $metadata Additional metadata needed during execution for this specific action type (may contain `channel_id` and `duration_seconds`).
  */
 class Action extends Part
 {
