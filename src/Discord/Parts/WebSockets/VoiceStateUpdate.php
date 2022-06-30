@@ -25,7 +25,7 @@ use Discord\Parts\User\User;
  *
  * @property string|null  $guild_id                   Guild ID that the voice state came from, or null if it is for a DM channel.
  * @property Guild|null   $guild                      Guild that the voice state came from, or null if it is for a DM channel.
- * @property string|null  $channel_id                 Channel ID that the voice state came from, or null if the user is leaving a channel.
+ * @property ?string|null $channel_id                 Channel ID that the voice state came from, or null if the user is leaving a channel.
  * @property Channel|null $channel                    Channel that the voice state came from, or null if the user is leaving a channel.
  * @property string       $user_id                    User ID the voice state is for.
  * @property User|null    $user                       User the voice state is for, or null if it is not cached.

@@ -23,15 +23,15 @@ use function Discord\poly_strlen;
  *
  * @property int                      $type                      Type of the option.
  * @property string                   $name                      Name of the option.
- * @property string[]|null            $name_localizations        Localization dictionary for the name field. Values follow the same restrictions as name.
+ * @property ?string[]|null           $name_localizations        Localization dictionary for the name field. Values follow the same restrictions as name.
  * @property string                   $description               1-100 character description.
- * @property string[]|null            $description_localizations Localization dictionary for the description field. Values follow the same restrictions as description.
- * @property bool                     $required                  If the parameter is required or optional--default false.
+ * @property ?string[]|null           $description_localizations Localization dictionary for the description field. Values follow the same restrictions as description.
+ * @property bool|null                $required                  If the parameter is required or optional--default false.
  * @property Collection|Choice[]|null $choices                   Choices for STRING, INTEGER, and NUMBER types for the user to pick from, max 25. Only for slash commands.
  * @property Collection|Option[]      $options                   Sub-options if applicable.
- * @property array                    $channel_types             If the option is a channel type, the channels shown will be restricted to these types.
- * @property int|float                $min_value                 If the option is an INTEGER or NUMBER type, the minimum value permitted.
- * @property int|float                $max_value                 If the option is an INTEGER or NUMBER type, the maximum value permitted.
+ * @property array|null               $channel_types             If the option is a channel type, the channels shown will be restricted to these types.
+ * @property int|float|null           $min_value                 If the option is an INTEGER or NUMBER type, the minimum value permitted.
+ * @property int|float|null           $max_value                 If the option is an INTEGER or NUMBER type, the maximum value permitted.
  * @property bool                     $autocomplete              Enable autocomplete interactions for this option.
  */
 class Option extends Part
