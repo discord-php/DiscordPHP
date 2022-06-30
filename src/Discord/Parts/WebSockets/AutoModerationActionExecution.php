@@ -32,11 +32,11 @@ use Discord\Parts\User\User;
  * @property string       $user_id                 The id of the user which generated the content which triggered the rule.
  * @property User|null    $user                    The user which generated the content which triggered the rule.
  * @property Member|null  $member                  Cached member which generated the content which triggered the rule.
- * @property ?string      $channel_id              The id of the channel in which user content was posted.
+ * @property string|null  $channel_id              The id of the channel in which user content was posted.
  * @property Channel|null $channel                 Cached channel in which user content was posted.
- * @property ?string      $message_id              The id of any user message which content belongs to (will not exist if message was blocked by automod or content was not part of any message)
+ * @property string|null  $message_id              The id of any user message which content belongs to (will not exist if message was blocked by automod or content was not part of any message)
  * @property Message|null $message                 Cached user message which content belongs to (will not exist if message was blocked by automod or content was not part of any message)
- * @property ?string      $alert_system_message_id The id of any system auto moderation messages posted as a result of this action (will not exist if this event does not correspond to an action with type `SEND_ALERT_MESSAGE`)
+ * @property string|null  $alert_system_message_id The id of any system auto moderation messages posted as a result of this action (will not exist if this event does not correspond to an action with type `SEND_ALERT_MESSAGE`)
  * @property Message|null $alert_system_message    Cached system auto moderation messages posted as a result of this action.
  * @property string       $content                 The user generated text content.
  * @property string|null  $matched_keyword         The word or phrase configured in the rule that triggered the rule. (empty without message content intent)
