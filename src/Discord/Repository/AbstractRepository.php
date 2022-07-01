@@ -131,12 +131,13 @@ abstract class AbstractRepository extends Collection
     /**
      * Attempts to save a part to the Discord servers.
      *
-     * @param Part $part The part to save.
+     * @param Part                $part The part to save.
+     * @param string|null $reason Reason for Audit Log (if supported).
      *
      * @return ExtendedPromiseInterface
      * @throws \Exception
      */
-    public function save(Part $part): ExtendedPromiseInterface
+    public function save(Part $part, ?string $reason = null): ExtendedPromiseInterface
     {
         if ($part->created) {
             if (! isset($this->endpoints['update'])) {
@@ -158,7 +159,12 @@ abstract class AbstractRepository extends Collection
             $attributes = $part->getCreatableAttributes();
         }
 
-        return $this->http->{$method}($endpoint, $attributes)->then(function ($response) use (&$part) {
+        $headers = [];
+        if (isset($reason)) {
+            $headers['X-Audit-Log-Reason'] = $reason;
+        }
+
+        return $this->http->{$method}($endpoint, $attributes, $headers)->then(function ($response) use (&$part) {
             $part->fill((array) $response);
             $part->created = true;
             $part->deleted = false;
@@ -172,12 +178,13 @@ abstract class AbstractRepository extends Collection
     /**
      * Attempts to delete a part on the Discord servers.
      *
-     * @param Part|snowflake $part The part to delete.
+     * @param Part|string $part   The part to delete.
+     * @param string|null $reason Reason for Audit Log (if supported).
      *
      * @return ExtendedPromiseInterface
      * @throws \Exception
      */
-    public function delete($part): ExtendedPromiseInterface
+    public function delete($part, ?string $reason = null): ExtendedPromiseInterface
     {
         if (! ($part instanceof Part)) {
             $part = $this->factory->part($this->class, [$this->discrim => $part], true);
@@ -194,7 +201,12 @@ abstract class AbstractRepository extends Collection
         $endpoint = new Endpoint($this->endpoints['delete']);
         $endpoint->bindAssoc(array_merge($part->getRepositoryAttributes(), $this->vars));
 
-        return $this->http->delete($endpoint)->then(function ($response) use (&$part) {
+        $headers = [];
+        if (isset($reason)) {
+            $headers['X-Audit-Log-Reason'] = $reason;
+        }
+
+        return $this->http->delete($endpoint, null, $headers)->then(function ($response) use (&$part) {
             $part->created = false;
 
             return $part;
@@ -204,12 +216,13 @@ abstract class AbstractRepository extends Collection
     /**
      * Returns a part with fresh values.
      *
-     * @param Part $part The part to get fresh values.
+     * @param Part  $part        The part to get fresh values.
+     * @param array $queryparams Query string params to add to the request (no validation)
      *
      * @return ExtendedPromiseInterface
      * @throws \Exception
      */
-    public function fresh(Part $part): ExtendedPromiseInterface
+    public function fresh(Part $part, array $queryparams = []): ExtendedPromiseInterface
     {
         if (! $part->created) {
             return \React\Promise\reject(new \Exception('You cannot get a non-existant part.'));
@@ -221,6 +234,10 @@ abstract class AbstractRepository extends Collection
 
         $endpoint = new Endpoint($this->endpoints['get']);
         $endpoint->bindAssoc(array_merge($part->getRepositoryAttributes(), $this->vars));
+
+        foreach ($queryparams as $query => $param) {
+            $endpoint->addQuery($query, $param);
+        }
 
         return $this->http->get($endpoint)->then(function ($response) use (&$part) {
             $part->fill((array) $response);

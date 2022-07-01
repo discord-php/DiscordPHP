@@ -556,13 +556,14 @@ class Guild extends Part
      *
      * @see https://discord.com/developers/docs/resources/guild#create-guild-role
      *
-     * @param array $data The data to fill the role with.
+     * @param array       $data The data to fill the role with.
+     * @param string|null $reason Reason for Audit Log.
      *
      * @throws NoPermissionsException
      *
      * @return ExtendedPromiseInterface<Role>
      */
-    public function createRole(array $data = []): ExtendedPromiseInterface
+    public function createRole(array $data = [], ?string $reason = null): ExtendedPromiseInterface
     {
         $botperms = $this->members->offsetGet($this->discord->id)->getPermissions();
 
@@ -570,7 +571,7 @@ class Guild extends Part
             return reject(new NoPermissionsException('You do not have permission to manage roles in the specified guild.'));
         }
 
-        return $this->roles->save($this->factory->create(Role::class, $data));
+        return $this->roles->save($this->factory->create(Role::class, $data), $reason);
     }
 
     /**
@@ -780,7 +781,7 @@ class Guild extends Part
      *
      * @return ExtendedPromiseInterface
      *
-     * @see self::REGION_DEFAULT The default region.
+     * @see Guild::REGION_DEFAULT The default region.
      */
     public function validateRegion(): ExtendedPromiseInterface
     {
