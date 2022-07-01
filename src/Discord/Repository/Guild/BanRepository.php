@@ -15,6 +15,7 @@ use Discord\Helpers\Deferred;
 use Discord\Http\Endpoint;
 use Discord\Parts\Guild\Ban;
 use Discord\Parts\User\Member;
+use Discord\Parts\User\User;
 use Discord\Repository\AbstractRepository;
 use React\Promise\ExtendedPromiseInterface;
 
@@ -97,18 +98,18 @@ class BanRepository extends AbstractRepository
      *
      * @see https://discord.com/developers/docs/resources/guild#remove-guild-ban
      *
-     * @param Member|Ban|string $member
+     * @param User|Ban|string $user User or Ban Part, or User ID
      *
      * @return ExtendedPromiseInterface
      */
-    public function unban($member): ExtendedPromiseInterface
+    public function unban($user): ExtendedPromiseInterface
     {
-        if ($member instanceof Member) {
-            $member = $member->id;
-        } elseif ($member instanceof Ban) {
-            $member = $member->user_id;
+        if ($user instanceof User || $user instanceof Member) {
+            $user = $user->id;
+        } elseif ($user instanceof Ban) {
+            $user = $user->user_id;
         }
 
-        return $this->delete($member);
+        return $this->delete($user);
     }
 }
