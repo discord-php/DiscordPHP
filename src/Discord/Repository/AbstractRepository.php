@@ -207,6 +207,10 @@ abstract class AbstractRepository extends Collection
         }
 
         return $this->http->delete($endpoint, null, $headers)->then(function ($response) use (&$part) {
+            if ($response) {
+                $part->fill((array) $response);
+            }
+
             $part->created = false;
 
             return $part;
