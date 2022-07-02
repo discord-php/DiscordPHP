@@ -52,6 +52,10 @@ class MessageCreate extends Event
             $this->cacheUser($data->author);
         }
 
+        if (isset($data->interaction->user)) {
+            $this->cacheUser($data->interaction->user);
+        }
+
         $deferred->resolve($messagePart);
     }
 }
