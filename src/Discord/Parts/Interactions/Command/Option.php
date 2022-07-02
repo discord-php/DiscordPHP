@@ -32,6 +32,8 @@ use function Discord\poly_strlen;
  * @property array|null               $channel_types             If the option is a channel type, the channels shown will be restricted to these types.
  * @property int|float|null           $min_value                 If the option is an INTEGER or NUMBER type, the minimum value permitted.
  * @property int|float|null           $max_value                 If the option is an INTEGER or NUMBER type, the maximum value permitted.
+ * @property int|null                 $min_length                For option type `STRING`, the minimum allowed length (minimum of `0`).
+ * @property int|null                 $max_length                For option type `STRING`, the maximum allowed length (minimum of `1`).
  * @property bool                     $autocomplete              Enable autocomplete interactions for this option.
  */
 class Option extends Part
@@ -63,6 +65,8 @@ class Option extends Part
         'channel_types',
         'min_value',
         'max_value',
+        'min_length',
+        'max_length',
         'autocomplete',
     ];
 
@@ -352,6 +356,52 @@ class Option extends Part
     public function setMaxValue($max_value): self
     {
         $this->max_value = $max_value;
+
+        return $this;
+    }
+
+    /**
+     * Sets the minimum length permitted.
+     *
+     * @param int $min_length For option type `STRING`, the minimum allowed length (minimum of `0`).
+     *
+     * @throws \LogicException
+     * @throws \LengthException
+     *
+     * @return $this
+     */
+    public function setMinLength(int $min_length): self
+    {
+        if ($this->type != self::STRING) {
+            throw new \LogicException('Minimum length can be only set on Option type STRING.');
+        } elseif ($min_length < 0) {
+            throw new \LengthException('Minimum length must be greater than or equal to 0.');
+        }
+
+        $this->min_length = $min_length;
+
+        return $this;
+    }
+
+    /**
+     * Sets the maximum length permitted.
+     *
+     * @param int $max_length For option type `STRING`, the maximum allowed length (minimum of `1`).
+     *
+     * @throws \LogicException
+     * @throws \LengthException
+     *
+     * @return $this
+     */
+    public function setMaxLength(int $max_length): self
+    {
+        if ($this->type != self::STRING) {
+            throw new \LogicException('Maximum length can be only set on Option type STRING.');
+        } elseif ($max_length < 1) {
+            throw new \LengthException('Maximum length must be greater than or equal to 1.');
+        }
+
+        $this->max_length = $max_length;
 
         return $this;
     }
