@@ -55,9 +55,7 @@ class ThreadRepository extends AbstractRepository
     public function active(): ExtendedPromiseInterface
     {
         return $this->http->get(Endpoint::bind(Endpoint::CHANNEL_THREADS_ACTIVE, $this->vars['channel_id']))
-            ->then(function ($response) {
-                return $this->handleThreadPaginationResponse($response);
-            });
+            ->then(fn ($response) => $this->handleThreadPaginationResponse($response));
     }
 
     /**
@@ -105,9 +103,7 @@ class ThreadRepository extends AbstractRepository
         }
 
         return $this->http->get(Endpoint::bind($endpoint, $this->vars['channel_id']))
-            ->then(function ($response) {
-                return $this->handleThreadPaginationResponse($response);
-            });
+            ->then(fn ($response) => $this->handleThreadPaginationResponse($response));
     }
 
     /**

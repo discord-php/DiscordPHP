@@ -436,19 +436,11 @@ class Thread extends Part
     public function getPinnedMessages(): ExtendedPromiseInterface
     {
         return $this->http->get(Endpoint::bind(Endpoint::CHANNEL_PINS, $this->id))
-            ->then(function ($responses) {
-                $messages = Collection::for(Message::class);
-
-                foreach ($responses as $response) {
-                    if (! $message = $this->messages->get('id', $response->id)) {
-                        $message = $this->factory->create(Message::class, $response, true);
-                    }
-
-                    $messages->push($message);
-                }
-
-                return $messages;
-            });
+            ->then(fn ($responses) => Collection::for(Message::class)->fill(array_map(
+                fn ($response) => $this->messages->get('id', $response->id)
+                    ?: $this->messages->get('id', $response->id),
+                $responses,
+            )));
     }
 
     /**
@@ -676,9 +668,7 @@ class Thread extends Part
             }
 
             return $this->http->post(Endpoint::bind(Endpoint::CHANNEL_MESSAGES, $this->id), $message);
-        })()->then(function ($response) {
-            return $this->factory->create(Message::class, $response, true);
-        });
+        })()->then(fn ($response) => $this->factory->create(Message::class, $response, true));
     }
 
     /**

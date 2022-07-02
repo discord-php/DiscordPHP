@@ -245,19 +245,11 @@ class Channel extends Part
     public function getPinnedMessages(): ExtendedPromiseInterface
     {
         return $this->http->get(Endpoint::bind(Endpoint::CHANNEL_PINS, $this->id))
-        ->then(function ($responses) {
-            $messages = new Collection();
-
-            foreach ($responses as $response) {
-                if (! $message = $this->messages->get('id', $response->id)) {
-                    $message = $this->factory->create(Message::class, $response, true);
-                }
-
-                $messages->push($message);
-            }
-
-            return $messages;
-        });
+            ->then(fn ($responses) => new Collection(array_map(
+                fn ($response) => $this->messages->get('id', $response->id)
+                    ?: $this->factory->create(Message::class, $response, true),
+                $responses,
+            )));
     }
 
     /**
@@ -515,9 +507,7 @@ class Channel extends Part
         $options = $resolver->resolve($options);
 
         return $this->http->post(Endpoint::bind(Endpoint::CHANNEL_INVITES, $this->id), $options)
-            ->then(function ($response) {
-                return $this->factory->create(Invite::class, $response, true);
-            });
+            ->then(fn ($response) => $this->factory->create(Invite::class, $response, true));
     }
 
     /**
@@ -581,9 +571,8 @@ class Channel extends Part
      */
     public function limitDelete(int $value, ?string $reason = null): ExtendedPromiseInterface
     {
-        return $this->getMessageHistory(['limit' => $value])->then(function ($messages) use ($reason) {
-            return $this->deleteMessages($messages, $reason);
-        });
+        return $this->getMessageHistory(['limit' => $value])
+            ->then(fn ($messages) => $this->deleteMessages($messages, $reason));
     }
 
     /**
@@ -632,18 +621,12 @@ class Channel extends Part
             $endpoint->addQuery('around', $options['around'] instanceof Message ? $options['around']->id : $options['around']);
         }
 
-        return $this->http->get($endpoint)->then(function ($responses) {
-            $messages = new Collection();
-
-            foreach ($responses as $response) {
-                if (! $message = $this->messages->get('id', $response->id)) {
-                    $message = $this->factory->create(Message::class, $response, true);
-                }
-                $messages->push($message);
-            }
-
-            return $messages;
-        });
+        return $this->http->get($endpoint)
+            ->then(fn ($responses) => new Collection(array_map(
+                fn ($response) => $this->messages->get('id', $response->id)
+                    ?: $this->factory->create(Message::class, $response, true),
+                $responses,
+            )));
     }
 
     /**
@@ -733,15 +716,11 @@ class Channel extends Part
      */
     public function getInvites(): ExtendedPromiseInterface
     {
-        return $this->http->get(Endpoint::bind(Endpoint::CHANNEL_INVITES, $this->id))->then(function ($response) {
-            $invites = new Collection();
-
-            foreach ($response as $invite) {
-                $invites->push($this->factory->create(Invite::class, $invite, true));
-            }
-
-            return $invites;
-        });
+        return $this->http->get(Endpoint::bind(Endpoint::CHANNEL_INVITES, $this->id))
+            ->then(fn ($response) => new Collection(array_map(
+                fn ($invite) => $this->factory->create(Invite::class, $invite, true),
+                $response,
+            )));
     }
 
     /**
@@ -806,12 +785,11 @@ class Channel extends Part
         }
 
         return $this->http->post(Endpoint::bind(Endpoint::CHANNEL_THREADS, $this->id), [
-            'name' => $name,
-            'auto_archive_duration' => $auto_archive_duration,
-            'type' => $type,
-        ], $headers)->then(function ($response) {
-            return $this->factory->create(Thread::class, $response, true);
-        });
+                'name' => $name,
+                'auto_archive_duration' => $auto_archive_duration,
+                'type' => $type,
+            ], $headers)
+            ->then(fn ($response) => $this->factory->create(Thread::class, $response, true));
     }
 
     /**
@@ -1105,9 +1083,10 @@ class Channel extends Part
             'parent_id' => $this->parent_id,
             'rtc_region' => $this->rtc_region,
             'video_quality_mode' => $this->video_quality_mode,
-            'permission_overwrites' => array_values($this->overwrites->map(function (Overwrite $overwrite) {
-                return $overwrite->getUpdatableAttributes();
-            })->toArray()),
+            'permission_overwrites' => array_values($this->overwrites
+                ->map(fn (Overwrite $overwrite) => $overwrite->getUpdatableAttributes())
+                ->toArray(),
+            ),
             'default_auto_archive_duration' => $this->default_auto_archive_duration,
         ];
     }

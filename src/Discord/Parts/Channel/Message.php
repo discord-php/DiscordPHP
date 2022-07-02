@@ -368,9 +368,8 @@ class Message extends Part
 
         // Workaround for Channel::sendMessage() no guild_id
         if ($this->channel_id) {
-            return $this->discord->guilds->find(function (Guild $guild) {
-                return $guild->channels->offsetExists($this->channel_id);
-            });
+            return $this->discord->guilds
+                ->find(fn (Guild $guild) => $guild->channels->offsetExists($this->channel_id));
         }
 
         return null;
@@ -619,11 +618,10 @@ class Message extends Part
         }
 
         return $this->http->post(Endpoint::bind(Endpoint::CHANNEL_MESSAGE_THREADS, $this->channel_id, $this->id), [
-            'name' => $name,
-            'auto_archive_duration' => $auto_archive_duration,
-        ], $headers)->then(function ($response) {
-            return $this->factory->create(Thread::class, $response, true);
-        });
+                'name' => $name,
+                'auto_archive_duration' => $auto_archive_duration,
+            ], $headers)
+            ->then(fn ($response) => $this->factory->create(Thread::class, $response, true));
     }
 
     /**
@@ -655,9 +653,8 @@ class Message extends Part
      */
     public function crosspost(): ExtendedPromiseInterface
     {
-        return $this->http->post(Endpoint::bind(Endpoint::CHANNEL_CROSSPOST_MESSAGE, $this->channel_id, $this->id))->then(function ($response) {
-            return $this->factory->create(Message::class, $response, true);
-        });
+        return $this->http->post(Endpoint::bind(Endpoint::CHANNEL_CROSSPOST_MESSAGE, $this->channel_id, $this->id))
+            ->then(fn ($response) => $this->factory->create(Message::class, $response, true));
     }
 
     /**

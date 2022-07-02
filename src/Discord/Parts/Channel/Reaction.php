@@ -111,19 +111,11 @@ class Reaction extends Part
         }
 
         return $this->http->get($query)
-        ->then(function ($response) {
-            $users = new Collection([], 'id', User::class);
-
-            foreach ((array) $response as $user) {
-                if ($part = $this->discord->users->get('id', $user->id)) {
-                    $users->push($part);
-                } else {
-                    $users->push(new User($this->discord, (array) $user, true));
-                }
-            }
-
-            return $users;
-        });
+            ->then(fn ($response) => new Collection(array_map(
+                    fn ($user) => $this->discord->users->get('id', $user->id)
+                        ?: new User($this->discord, (array) $user, true),
+                    (array) $response,
+                ), 'id', User::class));
     }
 
     /**

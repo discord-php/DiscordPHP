@@ -72,9 +72,7 @@ class MessageReaction extends Part
 
         if ($this->member == null) {
             $promise = $promise
-                ->then(function () {
-                    return $this->http->get(Endpoint::bind(Endpoint::GUILD_MEMBER, $this->guild_id, $this->user_id));
-                })
+                ->then(fn () => $this->http->get(Endpoint::bind(Endpoint::GUILD_MEMBER, $this->guild_id, $this->user_id)))
                 ->then(function ($member) {
                     $this->attributes['member'] = $this->factory->create(Member::class, $member, true);
                 });
@@ -82,17 +80,13 @@ class MessageReaction extends Part
 
         if ($this->message == null) {
             $promise = $promise
-                ->then(function () {
-                    return $this->http->get(Endpoint::bind(Endpoint::CHANNEL_MESSAGE, $this->channel_id, $this->message_id));
-                })
+                ->then(fn () => $this->http->get(Endpoint::bind(Endpoint::CHANNEL_MESSAGE, $this->channel_id, $this->message_id)))
                 ->then(function ($message) {
                     $this->attributes['message'] = $this->factory->create(Message::class, $message, true);
                 });
         }
 
-        return $promise->then(function () {
-            return $this;
-        });
+        return $promise->then(fn () => $this);
     }
 
     /**
