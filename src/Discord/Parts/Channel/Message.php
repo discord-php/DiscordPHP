@@ -28,6 +28,7 @@ use Discord\Parts\Guild\Guild;
 use Discord\Parts\Guild\Sticker;
 use Discord\Parts\Interactions\Request\Component;
 use Discord\Parts\Thread\Thread;
+use Discord\Parts\WebSockets\MessageInteraction;
 use Discord\Repository\Channel\ReactionRepository;
 use React\Promise\ExtendedPromiseInterface;
 
@@ -67,7 +68,7 @@ use function React\Promise\reject;
  * @property object|null                 $message_reference                      Message that is referenced by this message.
  * @property int|null                    $flags                                  Message flags.
  * @property Message|null                $referenced_message                     The message that is referenced in a reply.
- * @property object|null                 $interaction                            The interaction which triggered the message (application commands).
+ * @property MessageInteraction|null     $interaction                            Sent if the message is a response to an Interaction.
  * @property Thread|null                 $thread                                 The thread that the message was sent in.
  * @property Collection|Component[]|null $components                             Sent if the message contains components like buttons, action rows, or other interactive components.
  * @property Collection|Sticker[]|null   $sticker_items                          Stickers attached to the message.
@@ -480,6 +481,20 @@ class Message extends Part
         }
 
         return $embeds;
+    }
+
+    /**
+     * Gets the interaction which triggered the message (application commands).
+     *
+     * @return MessageInteraction|null
+     */
+    protected function getInteractionAttribute(): ?MessageInteraction
+    {
+        if (isset($this->attributes['interaction'])) {
+            return $this->factory->part(MessageInteraction::class, (array) $this->attributes['interaction'] + ['guild_id' => $this->guild_id], true);
+        }
+
+        return null;
     }
 
     /**
