@@ -55,13 +55,11 @@ class Embed extends Part
      */
     protected function getTimestampAttribute(): Carbon
     {
-        if (! array_key_exists('timestamp', $this->attributes)) {
+        if (empty($this->attributes['timestamp'])) {
             return Carbon::now();
         }
 
-        if (! empty($this->attributes['timestamp'])) {
-            return Carbon::parse($this->attributes['timestamp']);
-        }
+        return Carbon::parse($this->attributes['timestamp']);
     }
 
     /**
@@ -426,7 +424,7 @@ class Embed extends Part
      */
     public function setTimestamp(?int $timestamp = null): self
     {
-        $this->timestamp = (new Carbon(($timestamp !== null ? '@'.$timestamp : 'now')))->format('c');
+        $this->timestamp = (new Carbon($timestamp ?? 'now'))->format('c');
 
         return $this;
     }
