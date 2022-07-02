@@ -578,6 +578,51 @@ $discord->on(Event::GUILD_SCHEDULED_EVENT_USER_REMOVE, function ($data, Discord 
 });
 ```
 
+### Auto Moderation Rule Create
+
+Called with an `Rule` object when a guild's auto moderation rule is created.
+Requires the `Intents::AUTO_MODERATION_CONFIGURATION` intent.
+
+```php
+$discord->on(Event::AUTO_MODERATION_RULE_CREATE, function (Rule $rule, Discord $discord) {
+    // ...
+});
+```
+
+### Auto Moderation Rule Update
+
+Called with an `Rule` object when a guild's auto moderation rule is updated.
+Requires the `Intents::AUTO_MODERATION_CONFIGURATION` intent.
+
+```php
+$discord->on(Event::AUTO_MODERATION_RULE_UPDATE, function (Rule $rule, Discord $discord, Rule $oldRule) {
+    // ...
+});
+```
+
+### Auto Moderation Rule Delete
+
+Called with an old `Rule` object when a guild's auto moderation rule is deleted.
+Requires the `Intents::AUTO_MODERATION_CONFIGURATION` intent.
+
+```php
+$discord->on(Event::AUTO_MODERATION_RULE_DELETE, function (Rule $oldRule, Discord $discord) {
+    // ...
+});
+```
+
+### Auto Moderation Action Execution
+
+Called with an `AutoModerationActionExecution` object when a guild's auto moderation rule triggered and an action is executed (e.g. message is blocked).
+Requires the `Intents::AUTO_MODERATION_EXECUTION` intent.
+Note: Be sure to use the correct import `Discord\Parts\WebSockets\AutoModerationActionExecution`
+
+```php
+$discord->on(Event::AUTO_MODERATION_ACTION_EXECUTION, function (AutoModerationActionExecution $actionExecution, Discord $discord) {
+    // ...
+});
+```
+
 ### Interaction Create
 
 Called with an `Interaction` object when an interaction is created.

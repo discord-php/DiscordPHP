@@ -13,6 +13,7 @@ namespace Discord\Parts\Guild\AuditLog;
 
 use Discord\Helpers\Collection;
 use Discord\Parts\Channel\Webhook;
+use Discord\Parts\Guild\AutoModeration\Rule;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Guild\ScheduledEvent;
 use Discord\Parts\Part;
@@ -26,11 +27,12 @@ use ReflectionClass;
  * @see https://discord.com/developers/docs/resources/audit-log#audit-log-object
  *
  * @property Collection|Entry[]               $audit_log_entries      List of audit log entries.
- * @property Collection|GuildScheduledEvent[] $guild_scheduled_events List of guild scheduled events found in the audit log.
+ * @property Collection|Rule[]                $auto_moderation_rules  List of auto moderation rules referenced in the audit log.
+ * @property Collection|GuildScheduledEvent[] $guild_scheduled_events List of guild scheduled events referenced in the audit log.
  * @property Collection                       $integrations           List of partial integration objects.
- * @property Collection|Threads[]             $threads                List of threads found in the audit log.
- * @property Collection|User[]                $users                  List of users found in the audit log.
- * @property Collection|Webhook[]             $webhooks               List of webhooks found in the audit log.
+ * @property Collection|Threads[]             $threads                List of threads referenced in the audit log.
+ * @property Collection|User[]                $users                  List of users referenced in the audit log.
+ * @property Collection|Webhook[]             $webhooks               List of webhooks referenced in the audit log.
  * @property string                           $guild_id
  * @property Guild                            $guild
  */
@@ -41,11 +43,14 @@ class AuditLog extends Part
      */
     protected $fillable = [
         'webhooks',
+        'auto_moderation_rules',
         'guild_scheduled_events',
         'users',
         'audit_log_entries',
         'integrations',
         'threads',
+
+        // Internal
         'guild_id',
     ];
 
@@ -122,6 +127,22 @@ class AuditLog extends Part
 
         foreach ($this->attributes['audit_log_entries'] ?? [] as $entry) {
             $collection->push($this->factory->create(Entry::class, $entry, true));
+        }
+
+        return $collection;
+    }
+
+    /**
+     * Returns a collection of auto moderation rules found in the audit log.
+     *
+     * @return Collection|Rule[]
+     */
+    protected function getAutoModerationRulesAttribute(): Collection
+    {
+        $collection = Collection::for(Rule::class);
+
+        foreach ($this->attributes['auto_moderation_rules'] ?? [] as $rule) {
+            $collection->pushItem($this->factory->create(Rule::class, $rule, true));
         }
 
         return $collection;
