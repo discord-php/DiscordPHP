@@ -686,7 +686,7 @@ class Member extends Part
     {
         return $this->guild->channels->find(function (Channel $channel) {
             return $channel->allowVoice() && isset($channel->members[$this->id]);
-	    });
+        });
     }
 
     /**

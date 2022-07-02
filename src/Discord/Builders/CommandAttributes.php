@@ -17,7 +17,7 @@ use Discord\Parts\Interactions\Command\Option;
 use function Discord\poly_strlen;
 
 /**
- * Application Command attributes
+ * Application Command attributes.
  *
  * @see Discord\Builders\CommandBuilder
  * @see Discord\Parts\Interactions\Command\Command
@@ -32,8 +32,8 @@ use function Discord\poly_strlen;
  * @property bool|null                $dm_permission              Indicates whether the command is available in DMs with the app, only for globally-scoped commands. By default, commands are visible.
  * @property ?bool                    $default_permission         Whether the command is enabled by default when the app is added to a guild. SOON DEPRECATED.
  */
-trait CommandAttributes {
-
+trait CommandAttributes
+{
     /**
      * Whether the command is enabled by default when the app is added to a guild. SOON DEPRECATED.
      *

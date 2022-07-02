@@ -40,7 +40,7 @@ class MessageBuilder implements JsonSerializable
     private $content;
 
     /**
-     * A nonce that can be used for message roundtrips with the gateway (up to 25 characters)
+     * A nonce that can be used for message roundtrips with the gateway (up to 25 characters).
      *
      * @var int|string|null
      */

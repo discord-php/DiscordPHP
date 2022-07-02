@@ -36,7 +36,7 @@ class Ban extends Part
 
         // internally used
         'user_id',
-        'guild_id'
+        'guild_id',
     ];
 
     /**

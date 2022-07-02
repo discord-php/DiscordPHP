@@ -91,7 +91,7 @@ class Interaction extends Part
 
     /**
      * Returns true if this interaction has been internally responded.
-     * 
+     *
      * @return bool The interaction is responded
      */
     public function isResponded(): bool
@@ -283,6 +283,7 @@ class Interaction extends Part
         return $this->http->get(Endpoint::bind(Endpoint::ORIGINAL_INTERACTION_RESPONSE, $this->application_id, $this->token))
             ->then(function ($response) {
                 $this->responded = true;
+
                 return $this->factory->create(Message::class, $response, true);
             });
     }
@@ -487,6 +488,7 @@ class Interaction extends Part
         return $this->http->get(Endpoint::bind(Endpoint::INTERACTION_FOLLOW_UP, $this->application_id, $this->token, $message_id))
             ->then(function ($response) {
                 $this->responded = true;
+
                 return $this->factory->create(Message::class, $response, true);
             });
     }

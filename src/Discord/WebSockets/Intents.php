@@ -164,7 +164,7 @@ class Intents
 
     /**
      * Auto moderation rule events:.
-     * 
+     *
      * - AUTO_MODERATION_RULE_CREATE
      * - AUTO_MODERATION_RULE_UPDATE
      * - AUTO_MODERATION_RULE_DELETE
@@ -172,8 +172,8 @@ class Intents
     public const AUTO_MODERATION_CONFIGURATION = (1 << 20);
 
     /**
-     * Auto moderation execution events:
-     * 
+     * Auto moderation execution events:.
+     *
      * - AUTO_MODERATION_ACTION_EXECUTION
      */
     public const AUTO_MODERATION_EXECUTION = (1 << 21);

@@ -98,7 +98,7 @@ class BanRepository extends AbstractRepository
      *
      * @see https://discord.com/developers/docs/resources/guild#remove-guild-ban
      *
-     * @param User|Ban|string $user User or Ban Part, or User ID
+     * @param User|Ban|string $user   User or Ban Part, or User ID
      * @param string|null     $reason Reason for Audit Log.
      *
      * @return ExtendedPromiseInterface

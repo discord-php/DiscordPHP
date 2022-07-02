@@ -84,6 +84,7 @@ class MemberRepository extends AbstractRepository
             $this->http->get($endpoint)->then(function ($response) use ($paginate, $deferred, $afterId) {
                 if (empty($response)) {
                     $deferred->resolve($this);
+
                     return;
                 } elseif (! $afterId) {
                     $this->clear();
