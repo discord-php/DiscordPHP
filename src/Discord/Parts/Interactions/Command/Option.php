@@ -363,21 +363,19 @@ class Option extends Part
     /**
      * Sets the minimum length permitted.
      *
-     * @param int|null $min_length For option type `STRING`, the minimum allowed length (minimum of `0`).
+     * @param int $min_length For option type `STRING`, the minimum allowed length (minimum of `0`).
      *
      * @throws \LogicException
      * @throws \LengthException
      *
      * @return $this
      */
-    public function setMinLength($min_length): self
+    public function setMinLength(int $min_length): self
     {
-        if (isset($min_length)) {
-            if ($this->type != self::STRING) {
-                throw new \LogicException('Minimum length can be only set on Option type STRING.');
-            } elseif ($min_length < 0) {
-                throw new \LengthException('Minimum length must be greater than or equal to 0.');
-            }
+        if ($this->type != self::STRING) {
+            throw new \LogicException('Minimum length can be only set on Option type STRING.');
+        } elseif ($min_length < 0) {
+            throw new \LengthException('Minimum length must be greater than or equal to 0.');
         }
 
         $this->min_length = $min_length;
@@ -388,21 +386,19 @@ class Option extends Part
     /**
      * Sets the maximum length permitted.
      *
-     * @param int|null $max_length For option type `STRING`, the maximum allowed length (minimum of `1`).
+     * @param int $max_length For option type `STRING`, the maximum allowed length (minimum of `1`).
      *
      * @throws \LogicException
      * @throws \LengthException
      *
      * @return $this
      */
-    public function setMaxLength($max_length): self
+    public function setMaxLength(int $max_length): self
     {
-        if (isset($max_length) ) {
-            if ($this->type != self::STRING) {
-                throw new \LogicException('Maximum length can be only set on Option type STRING.');
-            } elseif ($max_length < 1) {
-                throw new \LengthException('Maximum length must be greater than or equal to 1.');
-            }
+        if ($this->type != self::STRING) {
+            throw new \LogicException('Maximum length can be only set on Option type STRING.');
+        } elseif ($max_length < 1) {
+            throw new \LengthException('Maximum length must be greater than or equal to 1.');
         }
 
         $this->max_length = $max_length;
