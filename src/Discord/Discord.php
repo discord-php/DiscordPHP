@@ -833,11 +833,11 @@ class Discord
                 'd' => [
                     'token' => $this->token,
                     'properties' => [
-                        '$os' => PHP_OS,
-                        '$browser' => $this->http->getUserAgent(),
-                        '$device' => $this->http->getUserAgent(),
-                        '$referrer' => 'https://github.com/discord-php/DiscordPHP',
-                        '$referring_domain' => 'https://github.com/discord-php/DiscordPHP',
+                        'os' => PHP_OS,
+                        'browser' => $this->http->getUserAgent(),
+                        'device' => $this->http->getUserAgent(),
+                        'referrer' => 'https://github.com/discord-php/DiscordPHP',
+                        'referring_domain' => 'https://github.com/discord-php/DiscordPHP',
                     ],
                     'compress' => true,
                     'intents' => $this->options['intents'],

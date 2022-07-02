@@ -37,9 +37,9 @@ use function React\Promise\reject;
  * @see https://discord.com/developers/docs/resources/guild#guild-member-object
  *
  * @property User|null             $user                         The user part of the member.
- * @property string|null           $nick                         The nickname of the member.
+ * @property ?string|null          $nick                         The nickname of the member.
  * @property string|null           $avatar                       The avatar URL of the member or null if member has no guild avatar.
- * @property string|null           $avatar_hash                  The avatar hash of the member or null if member has no guild avatar.
+ * @property ?string|null          $avatar_hash                  The avatar hash of the member or null if member has no guild avatar.
  * @property Collection|Role[]     $roles                        A collection of Roles that the member has.
  * @property Carbon|null           $joined_at                    A timestamp of when the member joined the guild.
  * @property Carbon|null           $premium_since                When the user started boosting the server.
@@ -133,8 +133,8 @@ class Member extends Part
     /**
      * Sets the nickname of the member.
      *
-     * @param string|null $nick   The nickname of the member.
-     * @param string|null $reason Reason for Audit Log.
+     * @param ?string|null $nick   The nickname of the member.
+     * @param string|null  $reason Reason for Audit Log.
      *
      * @return ExtendedPromiseInterface<Member>
      */
@@ -625,7 +625,7 @@ class Member extends Part
     /**
      * Returns the guild avatar hash for the member.
      *
-     * @return string|null The member avatar's hash or null.
+     * @return ?string|null The member avatar's hash or null.
      */
     protected function getAvatarHashAttribute(): ?string
     {
