@@ -47,19 +47,18 @@ class MemberRepository extends AbstractRepository
     protected $class = Member::class;
 
     /**
-     * Alias for delete.
+     * Alias for `$member->delete()`.
      *
      * @see https://discord.com/developers/docs/resources/guild#remove-guild-member
      *
-     * @param Member $member The member to kick.
+     * @param Member      $member The member to kick.
+     * @param string|null $reason Reason for Audit Log.
      *
      * @return PromiseInterface
-     *
-     * @see self::delete()
      */
-    public function kick(Member $member): PromiseInterface
+    public function kick(Member $member, ?string $reason = null): PromiseInterface
     {
-        return $this->delete($member);
+        return $this->delete($member, $reason);
     }
 
     /**
