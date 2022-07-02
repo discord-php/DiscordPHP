@@ -24,7 +24,7 @@ use function Discord\poly_strlen;
  * @property string|null        $type        The type of the embed.
  * @property string|null        $description A description of the embed.
  * @property string|null        $url         The URL of the embed.
- * @property Carbon|string|null $timestamp   A timestamp of the embed.
+ * @property Carbon|null        $timestamp   A timestamp of the embed.
  * @property int|null           $color       The color of the embed.
  * @property Footer|null        $footer      The footer of the embed.
  * @property Image|null         $image       The image of the embed.
@@ -51,17 +51,15 @@ class Embed extends Part
     /**
      * Gets the timestamp attribute.
      *
-     * @return Carbon The timestamp attribute.
+     * @return Carbon|null The timestamp attribute.
      */
-    protected function getTimestampAttribute(): Carbon
+    protected function getTimestampAttribute(): ?Carbon
     {
-        if (! array_key_exists('timestamp', $this->attributes)) {
-            return Carbon::now();
+        if (! isset($this->attributes['timestamp'])) {
+            return null;
         }
 
-        if (! empty($this->attributes['timestamp'])) {
-            return Carbon::parse($this->attributes['timestamp']);
-        }
+        return Carbon::parse($this->attributes['timestamp']);
     }
 
     /**
@@ -426,7 +424,7 @@ class Embed extends Part
      */
     public function setTimestamp(?int $timestamp = null): self
     {
-        $this->timestamp = (new Carbon(($timestamp !== null ? '@'.$timestamp : 'now')))->format('c');
+        $this->timestamp = Carbon::parse($timestamp)->format('c');
 
         return $this;
     }
