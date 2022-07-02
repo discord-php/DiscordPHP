@@ -424,7 +424,7 @@ class Embed extends Part
      */
     public function setTimestamp(?int $timestamp = null): self
     {
-        $this->timestamp = (new Carbon($timestamp ?? 'now'))->format('c');
+        $this->timestamp = Carbon::parse($timestamp)->format('c');
 
         return $this;
     }
