@@ -99,10 +99,11 @@ class BanRepository extends AbstractRepository
      * @see https://discord.com/developers/docs/resources/guild#remove-guild-ban
      *
      * @param User|Ban|string $user User or Ban Part, or User ID
+     * @param string|null     $reason Reason for Audit Log.
      *
      * @return ExtendedPromiseInterface
      */
-    public function unban($user): ExtendedPromiseInterface
+    public function unban($member, ?string $reason = null): ExtendedPromiseInterface
     {
         if ($user instanceof User || $user instanceof Member) {
             $user = $user->id;
@@ -110,6 +111,6 @@ class BanRepository extends AbstractRepository
             $user = $user->user_id;
         }
 
-        return $this->delete($user);
+        return $this->delete($member, $reason);
     }
 }

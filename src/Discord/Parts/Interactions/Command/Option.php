@@ -105,9 +105,9 @@ class Option extends Part
     /**
      * Sets the type of the option.
      *
-     * @param int $type type of the option
+     * @param int $type type of the option.
      *
-     * @throws \InvalidArgumentException
+     * @throws \InvalidArgumentException `$type` is not 1-11.
      *
      * @return $this
      */
@@ -130,7 +130,7 @@ class Option extends Part
      *
      * @param string $name name of the option. Slash command option names are lowercase.
      *
-     * @throws \LengthException
+     * @throws \LengthException `$name` is more than 32 characters.
      *
      * @return $this
      */
@@ -154,7 +154,7 @@ class Option extends Part
      * @param string      $locale Discord locale code.
      * @param string|null $name   Localized name of the option. Slash command option names are lowercase.
      *
-     * @throws \LengthException
+     * @throws \LengthException `$name` is more than 32 characters.
      *
      * @return $this
      */
@@ -172,9 +172,9 @@ class Option extends Part
     /**
      * Sets the description of the option.
      *
-     * @param string $description description of the option
+     * @param string $description description of the option.
      *
-     * @throws \LengthException
+     * @throws \LengthException `$description` is more than 100 characters.
      *
      * @return $this
      */
@@ -195,7 +195,7 @@ class Option extends Part
      * @param string      $locale      Discord locale code.
      * @param string|null $description Localized description of the option.
      *
-     * @throws \LengthException
+     * @throws \LengthException `$description` is more than 100 characters.
      *
      * @return $this
      */
@@ -227,7 +227,7 @@ class Option extends Part
     /**
      * Sets the channel types of the option.
      *
-     * @param array $types types of the channel
+     * @param array $types types of the channel.
      *
      * @return $this
      */
@@ -241,9 +241,9 @@ class Option extends Part
     /**
      * Adds an option to the option.
      *
-     * @param Option $option The option
+     * @param Option $option The option.
      *
-     * @throws \OverflowException
+     * @throws \OverflowException Command exceeds maximum 25 sub options.
      *
      * @return $this
      */
@@ -261,9 +261,9 @@ class Option extends Part
     /**
      * Adds a choice to the option (Only for slash commands).
      *
-     * @param Choice $choice The choice
+     * @param Choice $choice The choice.
      *
-     * @throws \OverflowException
+     * @throws \OverflowException Command exceeds maximum 25 choices.
      *
      * @return $this
      */
@@ -331,7 +331,7 @@ class Option extends Part
     /**
      * Sets the minimum value permitted.
      *
-     * @param int|float $min_value integer for INTEGER options, double for NUMBER options
+     * @param int|float $min_value integer for INTEGER options, double for NUMBER options.
      *
      * @return $this
      */
@@ -359,9 +359,9 @@ class Option extends Part
     /**
      * Sets the autocomplete interactions for this option.
      *
-     * @param bool $autocomplete enable autocomplete interactions for this option
+     * @param bool $autocomplete enable autocomplete interactions for this option.
      *
-     * @throws \InvalidArgumentException
+     * @throws \InvalidArgumentException Command option type is not string/integer/number.
      *
      * @return $this
      */

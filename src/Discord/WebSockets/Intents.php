@@ -163,6 +163,22 @@ class Intents
     public const GUILD_SCHEDULED_EVENTS = (1 << 16);
 
     /**
+     * Auto moderation rule events:.
+     * 
+     * - AUTO_MODERATION_RULE_CREATE
+     * - AUTO_MODERATION_RULE_UPDATE
+     * - AUTO_MODERATION_RULE_DELETE
+     */
+    public const AUTO_MODERATION_CONFIGURATION = (1 << 20);
+
+    /**
+     * Auto moderation execution events:
+     * 
+     * - AUTO_MODERATION_ACTION_EXECUTION
+     */
+    public const AUTO_MODERATION_EXECUTION = (1 << 21);
+
+    /**
      * Returns an array of valid intents.
      *
      * @return array
