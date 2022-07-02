@@ -223,7 +223,7 @@
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
     <a href="classes/Discord-Builders-CommandAttributes.html#property_default_permission">$default_permission</a>
     <span>
-                        &nbsp;: bool            </span>
+                        &nbsp;: bool|null            </span>
 </dt>
 <dd>Whether the command is enabled by default when the app is added to a guild. SOON DEPRECATED.</dd>
 
@@ -822,7 +822,7 @@ JSON. Used for JsonSerializable.</dd>
 
     <code class="phpdocumentor-code phpdocumentor-signature -deprecated">
     <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">bool</span>
+        <span class="phpdocumentor-signature__type">bool|null</span>
     <span class="phpdocumentor-signature__name">$default_permission</span>
     </code>
 
@@ -2101,7 +2101,7 @@ the part from Discord&#039;s servers.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Command/Command.php"><a href="files/src-discord-parts-interactions-command-command.html"><abbr title="src/Discord/Parts/Interactions/Command/Command.php">Command.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">137</span>
+    <span class="phpdocumentor-element-found-in__line">139</span>
 
     </aside>
 
@@ -2231,7 +2231,7 @@ the part from Discord&#039;s servers.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Command/Command.php"><a href="files/src-discord-parts-interactions-command-command.html"><abbr title="src/Discord/Parts/Interactions/Command/Command.php">Command.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">181</span>
+    <span class="phpdocumentor-element-found-in__line">183</span>
 
     </aside>
 
@@ -2279,7 +2279,7 @@ the part from Discord&#039;s servers.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Command/Command.php"><a href="files/src-discord-parts-interactions-command-command.html"><abbr title="src/Discord/Parts/Interactions/Command/Command.php">Command.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">162</span>
+    <span class="phpdocumentor-element-found-in__line">164</span>
 
     </aside>
 
@@ -2765,17 +2765,17 @@ JSON. Used for JsonSerializable.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature -deprecated">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">setDefaultPermission</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">bool&nbsp;</span><span class="phpdocumentor-signature__argument__name">$permission</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">$this</span></code>
+                    <span class="phpdocumentor-signature__name">setDefaultPermission</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">bool|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$permission</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">$this</span></code>
 
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$permission</span>
-                : <span class="phpdocumentor-signature__argument__return-type">bool</span>
+                : <span class="phpdocumentor-signature__argument__return-type">bool|null</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>Default permission of the command.</p>
+                    <section class="phpdocumentor-description"><p>Default permission of the command</p>
 </section>
 
             </dd>
@@ -3136,7 +3136,7 @@ JSON. Used for JsonSerializable.</p>
         class="phpdocumentor-element
             -method
             -public
-                                                        "
+            -deprecated                                            "
 >
     <h4 class="phpdocumentor-element__name" id="method_setOverwrite">
         setOverwrite()
@@ -3145,13 +3145,13 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Command/Command.php"><a href="files/src-discord-parts-interactions-command-command.html"><abbr title="src/Discord/Parts/Interactions/Command/Command.php">Command.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">129</span>
+    <span class="phpdocumentor-element-found-in__line">131</span>
 
     </aside>
 
         <p class="phpdocumentor-summary">Sets an overwrite to the guild application command.</p>
 
-    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <code class="phpdocumentor-code phpdocumentor-signature -deprecated">
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">setOverwrite</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Discord-Parts-Interactions-Command-Overwrite.html"><abbr title="\Discord\Parts\Interactions\Command\Overwrite">Overwrite</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$overwrite</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\ExtendedPromiseInterface">ExtendedPromiseInterface</abbr></span></code>
 
@@ -3182,6 +3182,16 @@ JSON. Used for JsonSerializable.</p>
                                                                                     <span class="phpdocumentor-tag-link"><a href="https://discord.com/developers/docs/interactions/application-commands#edit-application-command-permissions"><abbr title="https://discord.com/developers/docs/interactions/application-commands#edit-application-command-permissions">https://discord.com/developers/docs/interactions/application-commands#edit-application-command-permissions</abbr></a></span>
                                         
                                              
+                                    </dd>
+                                                <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">deprecated</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">7.1.0</span>
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>Requires Bearer token on Permissions v2</p>
+</section>
+
                                     </dd>
                         </dl>
 

@@ -137,7 +137,7 @@
 
     </aside>
 
-            <p class="phpdocumentor-summary">Application Command attributes</p>
+            <p class="phpdocumentor-summary">Application Command attributes.</p>
 
 
 
@@ -178,21 +178,21 @@
                     <dt class="phpdocumentor-table-of-contents__entry -property -public">
     <a href="classes/Discord-Builders-CommandAttributes.html#property_default_member_permissions">$default_member_permissions</a>
     <span>
-                        &nbsp;: string            </span>
+                        &nbsp;: string|null            </span>
 </dt>
 <dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
     <a href="classes/Discord-Builders-CommandAttributes.html#property_default_permission">$default_permission</a>
     <span>
-                        &nbsp;: bool            </span>
+                        &nbsp;: bool|null            </span>
 </dt>
 <dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
     <a href="classes/Discord-Builders-CommandAttributes.html#property_default_permission">$default_permission</a>
     <span>
-                        &nbsp;: bool            </span>
+                        &nbsp;: bool|null            </span>
 </dt>
 <dd>Whether the command is enabled by default when the app is added to a guild. SOON DEPRECATED.</dd>
 
@@ -206,7 +206,7 @@
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
     <a href="classes/Discord-Builders-CommandAttributes.html#property_description_localizations">$description_localizations</a>
     <span>
-                        &nbsp;: array&lt;string|int, string&gt;|null            </span>
+                        &nbsp;: array&lt;string|int, ?string&gt;|null            </span>
 </dt>
 <dd></dd>
 
@@ -227,7 +227,7 @@
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
     <a href="classes/Discord-Builders-CommandAttributes.html#property_name_localizations">$name_localizations</a>
     <span>
-                        &nbsp;: array&lt;string|int, string&gt;|null            </span>
+                        &nbsp;: array&lt;string|int, ?string&gt;|null            </span>
 </dt>
 <dd></dd>
 
@@ -355,7 +355,7 @@
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">string</span>
+        <span class="phpdocumentor-signature__type">string|null</span>
     <span class="phpdocumentor-signature__name">$default_member_permissions</span>
     </code>
 
@@ -390,7 +390,7 @@
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">bool</span>
+        <span class="phpdocumentor-signature__type">bool|null</span>
     <span class="phpdocumentor-signature__name">$default_permission</span>
     </code>
 
@@ -426,7 +426,7 @@
 
     <code class="phpdocumentor-code phpdocumentor-signature -deprecated">
     <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">bool</span>
+        <span class="phpdocumentor-signature__type">bool|null</span>
     <span class="phpdocumentor-signature__name">$default_permission</span>
     </code>
 
@@ -509,7 +509,7 @@
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">array&lt;string|int, string&gt;|null</span>
+        <span class="phpdocumentor-signature__type">array&lt;string|int, ?string&gt;|null</span>
     <span class="phpdocumentor-signature__name">$description_localizations</span>
     </code>
 
@@ -614,7 +614,7 @@
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">array&lt;string|int, string&gt;|null</span>
+        <span class="phpdocumentor-signature__type">array&lt;string|int, ?string&gt;|null</span>
     <span class="phpdocumentor-signature__name">$name_localizations</span>
     </code>
 
@@ -934,17 +934,17 @@
 
     <code class="phpdocumentor-code phpdocumentor-signature -deprecated">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">setDefaultPermission</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">bool&nbsp;</span><span class="phpdocumentor-signature__argument__name">$permission</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">$this</span></code>
+                    <span class="phpdocumentor-signature__name">setDefaultPermission</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">bool|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$permission</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">$this</span></code>
 
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$permission</span>
-                : <span class="phpdocumentor-signature__argument__return-type">bool</span>
+                : <span class="phpdocumentor-signature__argument__return-type">bool|null</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>Default permission of the command.</p>
+                    <section class="phpdocumentor-description"><p>Default permission of the command</p>
 </section>
 
             </dd>

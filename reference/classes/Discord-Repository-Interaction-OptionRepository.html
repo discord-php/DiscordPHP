@@ -1078,7 +1078,7 @@ returns the first item where the callback returns
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/AbstractRepository.php"><a href="files/src-discord-repository-abstractrepository.html"><abbr title="src/Discord/Repository/AbstractRepository.php">AbstractRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">180</span>
+    <span class="phpdocumentor-element-found-in__line">187</span>
 
     </aside>
 
@@ -1086,17 +1086,26 @@ returns the first item where the callback returns
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">delete</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Discord-Parts-Part.html"><abbr title="\Discord\Parts\Part">Part</abbr></a>|<abbr title="\Discord\Repository\snowflake">snowflake</abbr>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$part</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\ExtendedPromiseInterface">ExtendedPromiseInterface</abbr></span></code>
+                    <span class="phpdocumentor-signature__name">delete</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Discord-Parts-Part.html"><abbr title="\Discord\Parts\Part">Part</abbr></a>|string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$part</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$reason</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\ExtendedPromiseInterface">ExtendedPromiseInterface</abbr></span></code>
 
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$part</span>
-                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Discord-Parts-Part.html"><abbr title="\Discord\Parts\Part">Part</abbr></a>|<abbr title="\Discord\Repository\snowflake">snowflake</abbr></span>
+                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Discord-Parts-Part.html"><abbr title="\Discord\Parts\Part">Part</abbr></a>|string</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
                     <section class="phpdocumentor-description"><p>The part to delete.</p>
+</section>
+
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$reason</span>
+                : <span class="phpdocumentor-signature__argument__return-type">string|null</span>
+                 = <span class="phpdocumentor-signature__argument__default-value">null</span>            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>Reason for Audit Log (if supported).</p>
 </section>
 
             </dd>
@@ -1137,7 +1146,7 @@ returns the first item where the callback returns
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/AbstractRepository.php"><a href="files/src-discord-repository-abstractrepository.html"><abbr title="src/Discord/Repository/AbstractRepository.php">AbstractRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">241</span>
+    <span class="phpdocumentor-element-found-in__line">262</span>
 
     </aside>
 
@@ -1424,7 +1433,7 @@ the callback.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/AbstractRepository.php"><a href="files/src-discord-repository-abstractrepository.html"><abbr title="src/Discord/Repository/AbstractRepository.php">AbstractRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">212</span>
+    <span class="phpdocumentor-element-found-in__line">229</span>
 
     </aside>
 
@@ -1432,7 +1441,7 @@ the callback.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">fresh</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Discord-Parts-Part.html"><abbr title="\Discord\Parts\Part">Part</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$part</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\ExtendedPromiseInterface">ExtendedPromiseInterface</abbr></span></code>
+                    <span class="phpdocumentor-signature__name">fresh</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Discord-Parts-Part.html"><abbr title="\Discord\Parts\Part">Part</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$part</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$queryparams</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">[]</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\ExtendedPromiseInterface">ExtendedPromiseInterface</abbr></span></code>
 
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
@@ -1443,6 +1452,15 @@ the callback.</p>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
                     <section class="phpdocumentor-description"><p>The part to get fresh values.</p>
+</section>
+
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$queryparams</span>
+                : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;</span>
+                 = <span class="phpdocumentor-signature__argument__default-value">[]</span>            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>Query string params to add to the request (no validation)</p>
 </section>
 
             </dd>
@@ -2236,7 +2254,7 @@ the callback.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/AbstractRepository.php"><a href="files/src-discord-repository-abstractrepository.html"><abbr title="src/Discord/Repository/AbstractRepository.php">AbstractRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">139</span>
+    <span class="phpdocumentor-element-found-in__line">140</span>
 
     </aside>
 
@@ -2244,7 +2262,7 @@ the callback.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">save</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Discord-Parts-Part.html"><abbr title="\Discord\Parts\Part">Part</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$part</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\ExtendedPromiseInterface">ExtendedPromiseInterface</abbr></span></code>
+                    <span class="phpdocumentor-signature__name">save</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Discord-Parts-Part.html"><abbr title="\Discord\Parts\Part">Part</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$part</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$reason</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\ExtendedPromiseInterface">ExtendedPromiseInterface</abbr></span></code>
 
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
@@ -2255,6 +2273,15 @@ the callback.</p>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
                     <section class="phpdocumentor-description"><p>The part to save.</p>
+</section>
+
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$reason</span>
+                : <span class="phpdocumentor-signature__argument__return-type">string|null</span>
+                 = <span class="phpdocumentor-signature__argument__default-value">null</span>            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>Reason for Audit Log (if supported).</p>
 </section>
 
             </dd>

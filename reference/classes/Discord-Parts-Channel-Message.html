@@ -147,7 +147,7 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message.php"><a href="files/src-discord-parts-channel-message.html"><abbr title="src/Discord/Parts/Channel/Message.php">Message.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">85</span>
+    <span class="phpdocumentor-element-found-in__line">86</span>
 
     </aside>
 
@@ -343,6 +343,34 @@
 <dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a href="classes/Discord-Parts-Channel-Message.html#constant_TYPE_GUILD_BOOST">TYPE_GUILD_BOOST</a>
+    <span>
+        &nbsp;= 8                            </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a href="classes/Discord-Parts-Channel-Message.html#constant_TYPE_GUILD_BOOST_TIER_1">TYPE_GUILD_BOOST_TIER_1</a>
+    <span>
+        &nbsp;= 9                            </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a href="classes/Discord-Parts-Channel-Message.html#constant_TYPE_GUILD_BOOST_TIER_2">TYPE_GUILD_BOOST_TIER_2</a>
+    <span>
+        &nbsp;= 10                            </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a href="classes/Discord-Parts-Channel-Message.html#constant_TYPE_GUILD_BOOST_TIER_3">TYPE_GUILD_BOOST_TIER_3</a>
+    <span>
+        &nbsp;= 11                            </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
     <a href="classes/Discord-Parts-Channel-Message.html#constant_TYPE_GUILD_INVITE_REMINDER">TYPE_GUILD_INVITE_REMINDER</a>
     <span>
         &nbsp;= 22                            </span>
@@ -381,6 +409,13 @@
     <a href="classes/Discord-Parts-Channel-Message.html#constant_TYPE_USER_ADDED">TYPE_USER_ADDED</a>
     <span>
         &nbsp;= 1                            </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -constant -public">
+    <a href="classes/Discord-Parts-Channel-Message.html#constant_TYPE_USER_JOIN">TYPE_USER_JOIN</a>
+    <span>
+        &nbsp;= 7                            </span>
 </dt>
 <dd></dd>
 
@@ -562,7 +597,7 @@
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
     <a href="classes/Discord-Parts-Channel-Message.html#property_interaction">$interaction</a>
     <span>
-                        &nbsp;: object|null            </span>
+                        &nbsp;: <a href="classes/Discord-Parts-WebSockets-MessageInteraction.html"><abbr title="\Discord\Parts\WebSockets\MessageInteraction">MessageInteraction</abbr></a>|null            </span>
 </dt>
 <dd></dd>
 
@@ -1124,6 +1159,13 @@ JSON. Used for JsonSerializable.</dd>
 <dd>Gets the has thread attribute.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -protected">
+    <a href="classes/Discord-Parts-Channel-Message.html#method_getInteractionAttribute">getInteractionAttribute()</a>
+    <span>
+                                &nbsp;: <a href="classes/Discord-Parts-WebSockets-MessageInteraction.html"><abbr title="\Discord\Parts\WebSockets\MessageInteraction">MessageInteraction</abbr></a>|null    </span>
+</dt>
+<dd>Gets the interaction which triggered the message (application commands).</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -protected">
     <a href="classes/Discord-Parts-Channel-Message.html#method_getIsCrosspostAttribute">getIsCrosspostAttribute()</a>
     <span>
                                 &nbsp;: bool    </span>
@@ -1275,7 +1317,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message.php"><a href="files/src-discord-parts-channel-message.html"><abbr title="src/Discord/Parts/Channel/Message.php">Message.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">113</span>
+    <span class="phpdocumentor-element-found-in__line">125</span>
 
     </aside>
 
@@ -1304,7 +1346,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message.php"><a href="files/src-discord-parts-channel-message.html"><abbr title="src/Discord/Parts/Channel/Message.php">Message.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">116</span>
+    <span class="phpdocumentor-element-found-in__line">128</span>
 
     </aside>
 
@@ -1333,7 +1375,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message.php"><a href="files/src-discord-parts-channel-message.html"><abbr title="src/Discord/Parts/Channel/Message.php">Message.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">115</span>
+    <span class="phpdocumentor-element-found-in__line">127</span>
 
     </aside>
 
@@ -1362,7 +1404,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message.php"><a href="files/src-discord-parts-channel-message.html"><abbr title="src/Discord/Parts/Channel/Message.php">Message.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">114</span>
+    <span class="phpdocumentor-element-found-in__line">126</span>
 
     </aside>
 
@@ -1391,7 +1433,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message.php"><a href="files/src-discord-parts-channel-message.html"><abbr title="src/Discord/Parts/Channel/Message.php">Message.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">100</span>
+    <span class="phpdocumentor-element-found-in__line">101</span>
 
     </aside>
 
@@ -1420,7 +1462,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message.php"><a href="files/src-discord-parts-channel-message.html"><abbr title="src/Discord/Parts/Channel/Message.php">Message.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">94</span>
+    <span class="phpdocumentor-element-found-in__line">95</span>
 
     </aside>
 
@@ -1449,7 +1491,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message.php"><a href="files/src-discord-parts-channel-message.html"><abbr title="src/Discord/Parts/Channel/Message.php">Message.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">124</span>
+    <span class="phpdocumentor-element-found-in__line">136</span>
 
     </aside>
 
@@ -1478,7 +1520,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message.php"><a href="files/src-discord-parts-channel-message.html"><abbr title="src/Discord/Parts/Channel/Message.php">Message.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">123</span>
+    <span class="phpdocumentor-element-found-in__line">135</span>
 
     </aside>
 
@@ -1507,7 +1549,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message.php"><a href="files/src-discord-parts-channel-message.html"><abbr title="src/Discord/Parts/Channel/Message.php">Message.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">101</span>
+    <span class="phpdocumentor-element-found-in__line">102</span>
 
     </aside>
 
@@ -1536,7 +1578,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message.php"><a href="files/src-discord-parts-channel-message.html"><abbr title="src/Discord/Parts/Channel/Message.php">Message.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">104</span>
+    <span class="phpdocumentor-element-found-in__line">105</span>
 
     </aside>
 
@@ -1565,7 +1607,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message.php"><a href="files/src-discord-parts-channel-message.html"><abbr title="src/Discord/Parts/Channel/Message.php">Message.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">103</span>
+    <span class="phpdocumentor-element-found-in__line">104</span>
 
     </aside>
 
@@ -1594,7 +1636,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message.php"><a href="files/src-discord-parts-channel-message.html"><abbr title="src/Discord/Parts/Channel/Message.php">Message.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">102</span>
+    <span class="phpdocumentor-element-found-in__line">103</span>
 
     </aside>
 
@@ -1614,7 +1656,7 @@ JSON. Used for JsonSerializable.</dd>
     
 
 </article>
-                    <article class="phpdocumentor-element -constant -public ">
+                    <article class="phpdocumentor-element -constant -public -deprecated">
     <h4 class="phpdocumentor-element__name" id="constant_GUILD_MEMBER_JOIN">
         GUILD_MEMBER_JOIN
         <a href="classes/Discord-Parts-Channel-Message.html#constant_GUILD_MEMBER_JOIN" class="headerlink"><i class="fas fa-link"></i></a>
@@ -1623,12 +1665,12 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message.php"><a href="files/src-discord-parts-channel-message.html"><abbr title="src/Discord/Parts/Channel/Message.php">Message.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">95</span>
+    <span class="phpdocumentor-element-found-in__line">115</span>
 
     </aside>
 
     
-    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <code class="phpdocumentor-signature phpdocumentor-code -deprecated">
     <span class="phpdocumentor-signature__visibility">public</span>
         <span class="phpdocumentor-signature__type">mixed</span>
     <span class="phpdocumentor-signature__name">GUILD_MEMBER_JOIN</span>
@@ -1636,11 +1678,26 @@ JSON. Used for JsonSerializable.</dd>
 </code>
 
 
-        <section class="phpdocumentor-description"></section>
-
+    
         <section class="phpdocumentor-description"></section>
 
     
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">deprecated</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">7.1.0</span>
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>Use <code class="prettyprint">Message::TYPE_USER_JOIN</code></p>
+</section>
+
+                                    </dd>
+                        </dl>
 
 </article>
                     <article class="phpdocumentor-element -constant -public ">
@@ -1652,7 +1709,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message.php"><a href="files/src-discord-parts-channel-message.html"><abbr title="src/Discord/Parts/Channel/Message.php">Message.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">118</span>
+    <span class="phpdocumentor-element-found-in__line">130</span>
 
     </aside>
 
@@ -1681,7 +1738,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message.php"><a href="files/src-discord-parts-channel-message.html"><abbr title="src/Discord/Parts/Channel/Message.php">Message.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">121</span>
+    <span class="phpdocumentor-element-found-in__line">133</span>
 
     </aside>
 
@@ -1710,7 +1767,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message.php"><a href="files/src-discord-parts-channel-message.html"><abbr title="src/Discord/Parts/Channel/Message.php">Message.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">120</span>
+    <span class="phpdocumentor-element-found-in__line">132</span>
 
     </aside>
 
@@ -1739,7 +1796,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message.php"><a href="files/src-discord-parts-channel-message.html"><abbr title="src/Discord/Parts/Channel/Message.php">Message.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">119</span>
+    <span class="phpdocumentor-element-found-in__line">131</span>
 
     </aside>
 
@@ -1768,7 +1825,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message.php"><a href="files/src-discord-parts-channel-message.html"><abbr title="src/Discord/Parts/Channel/Message.php">Message.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">107</span>
+    <span class="phpdocumentor-element-found-in__line">108</span>
 
     </aside>
 
@@ -1797,7 +1854,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message.php"><a href="files/src-discord-parts-channel-message.html"><abbr title="src/Discord/Parts/Channel/Message.php">Message.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">111</span>
+    <span class="phpdocumentor-element-found-in__line">112</span>
 
     </aside>
 
@@ -1826,7 +1883,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message.php"><a href="files/src-discord-parts-channel-message.html"><abbr title="src/Discord/Parts/Channel/Message.php">Message.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">91</span>
+    <span class="phpdocumentor-element-found-in__line">92</span>
 
     </aside>
 
@@ -1855,7 +1912,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message.php"><a href="files/src-discord-parts-channel-message.html"><abbr title="src/Discord/Parts/Channel/Message.php">Message.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">93</span>
+    <span class="phpdocumentor-element-found-in__line">94</span>
 
     </aside>
 
@@ -1884,7 +1941,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message.php"><a href="files/src-discord-parts-channel-message.html"><abbr title="src/Discord/Parts/Channel/Message.php">Message.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">92</span>
+    <span class="phpdocumentor-element-found-in__line">93</span>
 
     </aside>
 
@@ -1913,7 +1970,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message.php"><a href="files/src-discord-parts-channel-message.html"><abbr title="src/Discord/Parts/Channel/Message.php">Message.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">110</span>
+    <span class="phpdocumentor-element-found-in__line">111</span>
 
     </aside>
 
@@ -1934,6 +1991,122 @@ JSON. Used for JsonSerializable.</dd>
 
 </article>
                     <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_TYPE_GUILD_BOOST">
+        TYPE_GUILD_BOOST
+        <a href="classes/Discord-Parts-Channel-Message.html#constant_TYPE_GUILD_BOOST" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message.php"><a href="files/src-discord-parts-channel-message.html"><abbr title="src/Discord/Parts/Channel/Message.php">Message.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">97</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">TYPE_GUILD_BOOST</span>
+    = <span class="phpdocumentor-signature__default-value">8</span>
+</code>
+
+
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_TYPE_GUILD_BOOST_TIER_1">
+        TYPE_GUILD_BOOST_TIER_1
+        <a href="classes/Discord-Parts-Channel-Message.html#constant_TYPE_GUILD_BOOST_TIER_1" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message.php"><a href="files/src-discord-parts-channel-message.html"><abbr title="src/Discord/Parts/Channel/Message.php">Message.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">98</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">TYPE_GUILD_BOOST_TIER_1</span>
+    = <span class="phpdocumentor-signature__default-value">9</span>
+</code>
+
+
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_TYPE_GUILD_BOOST_TIER_2">
+        TYPE_GUILD_BOOST_TIER_2
+        <a href="classes/Discord-Parts-Channel-Message.html#constant_TYPE_GUILD_BOOST_TIER_2" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message.php"><a href="files/src-discord-parts-channel-message.html"><abbr title="src/Discord/Parts/Channel/Message.php">Message.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">99</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">TYPE_GUILD_BOOST_TIER_2</span>
+    = <span class="phpdocumentor-signature__default-value">10</span>
+</code>
+
+
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_TYPE_GUILD_BOOST_TIER_3">
+        TYPE_GUILD_BOOST_TIER_3
+        <a href="classes/Discord-Parts-Channel-Message.html#constant_TYPE_GUILD_BOOST_TIER_3" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message.php"><a href="files/src-discord-parts-channel-message.html"><abbr title="src/Discord/Parts/Channel/Message.php">Message.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">100</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">TYPE_GUILD_BOOST_TIER_3</span>
+    = <span class="phpdocumentor-signature__default-value">11</span>
+</code>
+
+
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public ">
     <h4 class="phpdocumentor-element__name" id="constant_TYPE_GUILD_INVITE_REMINDER">
         TYPE_GUILD_INVITE_REMINDER
         <a href="classes/Discord-Parts-Channel-Message.html#constant_TYPE_GUILD_INVITE_REMINDER" class="headerlink"><i class="fas fa-link"></i></a>
@@ -1942,7 +2115,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message.php"><a href="files/src-discord-parts-channel-message.html"><abbr title="src/Discord/Parts/Channel/Message.php">Message.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">109</span>
+    <span class="phpdocumentor-element-found-in__line">110</span>
 
     </aside>
 
@@ -1971,7 +2144,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message.php"><a href="files/src-discord-parts-channel-message.html"><abbr title="src/Discord/Parts/Channel/Message.php">Message.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">88</span>
+    <span class="phpdocumentor-element-found-in__line">89</span>
 
     </aside>
 
@@ -2000,7 +2173,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message.php"><a href="files/src-discord-parts-channel-message.html"><abbr title="src/Discord/Parts/Channel/Message.php">Message.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">106</span>
+    <span class="phpdocumentor-element-found-in__line">107</span>
 
     </aside>
 
@@ -2029,7 +2202,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message.php"><a href="files/src-discord-parts-channel-message.html"><abbr title="src/Discord/Parts/Channel/Message.php">Message.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">105</span>
+    <span class="phpdocumentor-element-found-in__line">106</span>
 
     </aside>
 
@@ -2058,7 +2231,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message.php"><a href="files/src-discord-parts-channel-message.html"><abbr title="src/Discord/Parts/Channel/Message.php">Message.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">108</span>
+    <span class="phpdocumentor-element-found-in__line">109</span>
 
     </aside>
 
@@ -2087,7 +2260,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message.php"><a href="files/src-discord-parts-channel-message.html"><abbr title="src/Discord/Parts/Channel/Message.php">Message.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">89</span>
+    <span class="phpdocumentor-element-found-in__line">90</span>
 
     </aside>
 
@@ -2108,6 +2281,35 @@ JSON. Used for JsonSerializable.</dd>
 
 </article>
                     <article class="phpdocumentor-element -constant -public ">
+    <h4 class="phpdocumentor-element__name" id="constant_TYPE_USER_JOIN">
+        TYPE_USER_JOIN
+        <a href="classes/Discord-Parts-Channel-Message.html#constant_TYPE_USER_JOIN" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message.php"><a href="files/src-discord-parts-channel-message.html"><abbr title="src/Discord/Parts/Channel/Message.php">Message.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">96</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">mixed</span>
+    <span class="phpdocumentor-signature__name">TYPE_USER_JOIN</span>
+    = <span class="phpdocumentor-signature__default-value">7</span>
+</code>
+
+
+        <section class="phpdocumentor-description"></section>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+                    <article class="phpdocumentor-element -constant -public ">
     <h4 class="phpdocumentor-element__name" id="constant_TYPE_USER_REMOVED">
         TYPE_USER_REMOVED
         <a href="classes/Discord-Parts-Channel-Message.html#constant_TYPE_USER_REMOVED" class="headerlink"><i class="fas fa-link"></i></a>
@@ -2116,7 +2318,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message.php"><a href="files/src-discord-parts-channel-message.html"><abbr title="src/Discord/Parts/Channel/Message.php">Message.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">90</span>
+    <span class="phpdocumentor-element-found-in__line">91</span>
 
     </aside>
 
@@ -2136,7 +2338,7 @@ JSON. Used for JsonSerializable.</dd>
     
 
 </article>
-                    <article class="phpdocumentor-element -constant -public ">
+                    <article class="phpdocumentor-element -constant -public -deprecated">
     <h4 class="phpdocumentor-element__name" id="constant_USER_PREMIUM_GUILD_SUBSCRIPTION">
         USER_PREMIUM_GUILD_SUBSCRIPTION
         <a href="classes/Discord-Parts-Channel-Message.html#constant_USER_PREMIUM_GUILD_SUBSCRIPTION" class="headerlink"><i class="fas fa-link"></i></a>
@@ -2145,12 +2347,12 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message.php"><a href="files/src-discord-parts-channel-message.html"><abbr title="src/Discord/Parts/Channel/Message.php">Message.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">96</span>
+    <span class="phpdocumentor-element-found-in__line">117</span>
 
     </aside>
 
     
-    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <code class="phpdocumentor-signature phpdocumentor-code -deprecated">
     <span class="phpdocumentor-signature__visibility">public</span>
         <span class="phpdocumentor-signature__type">mixed</span>
     <span class="phpdocumentor-signature__name">USER_PREMIUM_GUILD_SUBSCRIPTION</span>
@@ -2158,14 +2360,29 @@ JSON. Used for JsonSerializable.</dd>
 </code>
 
 
-        <section class="phpdocumentor-description"></section>
-
+    
         <section class="phpdocumentor-description"></section>
 
     
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">deprecated</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">7.1.0</span>
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>Use <code class="prettyprint">Message::TYPE_GUILD_BOOST</code></p>
+</section>
+
+                                    </dd>
+                        </dl>
 
 </article>
-                    <article class="phpdocumentor-element -constant -public ">
+                    <article class="phpdocumentor-element -constant -public -deprecated">
     <h4 class="phpdocumentor-element__name" id="constant_USER_PREMIUM_GUILD_SUBSCRIPTION_TIER_1">
         USER_PREMIUM_GUILD_SUBSCRIPTION_TIER_1
         <a href="classes/Discord-Parts-Channel-Message.html#constant_USER_PREMIUM_GUILD_SUBSCRIPTION_TIER_1" class="headerlink"><i class="fas fa-link"></i></a>
@@ -2174,12 +2391,12 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message.php"><a href="files/src-discord-parts-channel-message.html"><abbr title="src/Discord/Parts/Channel/Message.php">Message.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">97</span>
+    <span class="phpdocumentor-element-found-in__line">119</span>
 
     </aside>
 
     
-    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <code class="phpdocumentor-signature phpdocumentor-code -deprecated">
     <span class="phpdocumentor-signature__visibility">public</span>
         <span class="phpdocumentor-signature__type">mixed</span>
     <span class="phpdocumentor-signature__name">USER_PREMIUM_GUILD_SUBSCRIPTION_TIER_1</span>
@@ -2187,14 +2404,29 @@ JSON. Used for JsonSerializable.</dd>
 </code>
 
 
-        <section class="phpdocumentor-description"></section>
-
+    
         <section class="phpdocumentor-description"></section>
 
     
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">deprecated</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">7.1.0</span>
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>Use <code class="prettyprint">Message::TYPE_GUILD_BOOST_TIER_1</code></p>
+</section>
+
+                                    </dd>
+                        </dl>
 
 </article>
-                    <article class="phpdocumentor-element -constant -public ">
+                    <article class="phpdocumentor-element -constant -public -deprecated">
     <h4 class="phpdocumentor-element__name" id="constant_USER_PREMIUM_GUILD_SUBSCRIPTION_TIER_2">
         USER_PREMIUM_GUILD_SUBSCRIPTION_TIER_2
         <a href="classes/Discord-Parts-Channel-Message.html#constant_USER_PREMIUM_GUILD_SUBSCRIPTION_TIER_2" class="headerlink"><i class="fas fa-link"></i></a>
@@ -2203,12 +2435,12 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message.php"><a href="files/src-discord-parts-channel-message.html"><abbr title="src/Discord/Parts/Channel/Message.php">Message.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">98</span>
+    <span class="phpdocumentor-element-found-in__line">121</span>
 
     </aside>
 
     
-    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <code class="phpdocumentor-signature phpdocumentor-code -deprecated">
     <span class="phpdocumentor-signature__visibility">public</span>
         <span class="phpdocumentor-signature__type">mixed</span>
     <span class="phpdocumentor-signature__name">USER_PREMIUM_GUILD_SUBSCRIPTION_TIER_2</span>
@@ -2216,14 +2448,29 @@ JSON. Used for JsonSerializable.</dd>
 </code>
 
 
-        <section class="phpdocumentor-description"></section>
-
+    
         <section class="phpdocumentor-description"></section>
 
     
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">deprecated</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">7.1.0</span>
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>Use <code class="prettyprint">Message::TYPE_GUILD_BOOST_TIER_2</code></p>
+</section>
+
+                                    </dd>
+                        </dl>
 
 </article>
-                    <article class="phpdocumentor-element -constant -public ">
+                    <article class="phpdocumentor-element -constant -public -deprecated">
     <h4 class="phpdocumentor-element__name" id="constant_USER_PREMIUM_GUILD_SUBSCRIPTION_TIER_3">
         USER_PREMIUM_GUILD_SUBSCRIPTION_TIER_3
         <a href="classes/Discord-Parts-Channel-Message.html#constant_USER_PREMIUM_GUILD_SUBSCRIPTION_TIER_3" class="headerlink"><i class="fas fa-link"></i></a>
@@ -2232,12 +2479,12 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message.php"><a href="files/src-discord-parts-channel-message.html"><abbr title="src/Discord/Parts/Channel/Message.php">Message.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">99</span>
+    <span class="phpdocumentor-element-found-in__line">123</span>
 
     </aside>
 
     
-    <code class="phpdocumentor-signature phpdocumentor-code ">
+    <code class="phpdocumentor-signature phpdocumentor-code -deprecated">
     <span class="phpdocumentor-signature__visibility">public</span>
         <span class="phpdocumentor-signature__type">mixed</span>
     <span class="phpdocumentor-signature__name">USER_PREMIUM_GUILD_SUBSCRIPTION_TIER_3</span>
@@ -2245,11 +2492,26 @@ JSON. Used for JsonSerializable.</dd>
 </code>
 
 
-        <section class="phpdocumentor-description"></section>
-
+    
         <section class="phpdocumentor-description"></section>
 
     
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">deprecated</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">7.1.0</span>
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>Use <code class="prettyprint">Message::TYPE_GUILD_BOOST_TIER_3</code></p>
+</section>
+
+                                    </dd>
+                        </dl>
 
 </article>
             </section>
@@ -2983,11 +3245,11 @@ JSON. Used for JsonSerializable.</dd>
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">object|null</span>
+        <span class="phpdocumentor-signature__type"><a href="classes/Discord-Parts-WebSockets-MessageInteraction.html"><abbr title="\Discord\Parts\WebSockets\MessageInteraction">MessageInteraction</abbr></a>|null</span>
     <span class="phpdocumentor-signature__name">$interaction</span>
     </code>
 
-        <section class="phpdocumentor-description"><p>The interaction which triggered the message (application commands).</p>
+        <section class="phpdocumentor-description"><p>Sent if the message is a response to an Interaction.</p>
 </section>
 
         <section class="phpdocumentor-description"></section>
@@ -3956,7 +4218,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message.php"><a href="files/src-discord-parts-channel-message.html"><abbr title="src/Discord/Parts/Channel/Message.php">Message.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">129</span>
+    <span class="phpdocumentor-element-found-in__line">141</span>
 
     </aside>
 
@@ -4144,7 +4406,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message.php"><a href="files/src-discord-parts-channel-message.html"><abbr title="src/Discord/Parts/Channel/Message.php">Message.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">165</span>
+    <span class="phpdocumentor-element-found-in__line">177</span>
 
     </aside>
 
@@ -4680,7 +4942,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message.php"><a href="files/src-discord-parts-channel-message.html"><abbr title="src/Discord/Parts/Channel/Message.php">Message.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">867</span>
+    <span class="phpdocumentor-element-found-in__line">893</span>
 
     </aside>
 
@@ -4723,7 +4985,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message.php"><a href="files/src-discord-parts-channel-message.html"><abbr title="src/Discord/Parts/Channel/Message.php">Message.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">816</span>
+    <span class="phpdocumentor-element-found-in__line">842</span>
 
     </aside>
 
@@ -4776,7 +5038,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message.php"><a href="files/src-discord-parts-channel-message.html"><abbr title="src/Discord/Parts/Channel/Message.php">Message.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">658</span>
+    <span class="phpdocumentor-element-found-in__line">684</span>
 
     </aside>
 
@@ -4823,7 +5085,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message.php"><a href="files/src-discord-parts-channel-message.html"><abbr title="src/Discord/Parts/Channel/Message.php">Message.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">697</span>
+    <span class="phpdocumentor-element-found-in__line">723</span>
 
     </aside>
 
@@ -4891,7 +5153,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message.php"><a href="files/src-discord-parts-channel-message.html"><abbr title="src/Discord/Parts/Channel/Message.php">Message.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">676</span>
+    <span class="phpdocumentor-element-found-in__line">702</span>
 
     </aside>
 
@@ -4968,7 +5230,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message.php"><a href="files/src-discord-parts-channel-message.html"><abbr title="src/Discord/Parts/Channel/Message.php">Message.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">802</span>
+    <span class="phpdocumentor-element-found-in__line">828</span>
 
     </aside>
 
@@ -5015,7 +5277,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message.php"><a href="files/src-discord-parts-channel-message.html"><abbr title="src/Discord/Parts/Channel/Message.php">Message.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">738</span>
+    <span class="phpdocumentor-element-found-in__line">764</span>
 
     </aside>
 
@@ -5100,7 +5362,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message.php"><a href="files/src-discord-parts-channel-message.html"><abbr title="src/Discord/Parts/Channel/Message.php">Message.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">775</span>
+    <span class="phpdocumentor-element-found-in__line">801</span>
 
     </aside>
 
@@ -5254,7 +5516,7 @@ the part from Discord&#039;s servers.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message.php"><a href="files/src-discord-parts-channel-message.html"><abbr title="src/Discord/Parts/Channel/Message.php">Message.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">876</span>
+    <span class="phpdocumentor-element-found-in__line">902</span>
 
     </aside>
 
@@ -5300,7 +5562,7 @@ the part from Discord&#039;s servers.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message.php"><a href="files/src-discord-parts-channel-message.html"><abbr title="src/Discord/Parts/Channel/Message.php">Message.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">585</span>
+    <span class="phpdocumentor-element-found-in__line">611</span>
 
     </aside>
 
@@ -5417,7 +5679,7 @@ the part from Discord&#039;s servers.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message.php"><a href="files/src-discord-parts-channel-message.html"><abbr title="src/Discord/Parts/Channel/Message.php">Message.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">895</span>
+    <span class="phpdocumentor-element-found-in__line">921</span>
 
     </aside>
 
@@ -5465,7 +5727,7 @@ the part from Discord&#039;s servers.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message.php"><a href="files/src-discord-parts-channel-message.html"><abbr title="src/Discord/Parts/Channel/Message.php">Message.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">884</span>
+    <span class="phpdocumentor-element-found-in__line">910</span>
 
     </aside>
 
@@ -5837,7 +6099,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message.php"><a href="files/src-discord-parts-channel-message.html"><abbr title="src/Discord/Parts/Channel/Message.php">Message.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">717</span>
+    <span class="phpdocumentor-element-found-in__line">743</span>
 
     </aside>
 
@@ -5896,7 +6158,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message.php"><a href="files/src-discord-parts-channel-message.html"><abbr title="src/Discord/Parts/Channel/Message.php">Message.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">640</span>
+    <span class="phpdocumentor-element-found-in__line">666</span>
 
     </aside>
 
@@ -5955,7 +6217,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message.php"><a href="files/src-discord-parts-channel-message.html"><abbr title="src/Discord/Parts/Channel/Message.php">Message.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">608</span>
+    <span class="phpdocumentor-element-found-in__line">634</span>
 
     </aside>
 
@@ -6081,7 +6343,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message.php"><a href="files/src-discord-parts-channel-message.html"><abbr title="src/Discord/Parts/Channel/Message.php">Message.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">292</span>
+    <span class="phpdocumentor-element-found-in__line">304</span>
 
     </aside>
 
@@ -6116,7 +6378,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message.php"><a href="files/src-discord-parts-channel-message.html"><abbr title="src/Discord/Parts/Channel/Message.php">Message.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">435</span>
+    <span class="phpdocumentor-element-found-in__line">447</span>
 
     </aside>
 
@@ -6151,7 +6413,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message.php"><a href="files/src-discord-parts-channel-message.html"><abbr title="src/Discord/Parts/Channel/Message.php">Message.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">322</span>
+    <span class="phpdocumentor-element-found-in__line">334</span>
 
     </aside>
 
@@ -6186,7 +6448,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message.php"><a href="files/src-discord-parts-channel-message.html"><abbr title="src/Discord/Parts/Channel/Message.php">Message.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">545</span>
+    <span class="phpdocumentor-element-found-in__line">571</span>
 
     </aside>
 
@@ -6219,7 +6481,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message.php"><a href="files/src-discord-parts-channel-message.html"><abbr title="src/Discord/Parts/Channel/Message.php">Message.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">174</span>
+    <span class="phpdocumentor-element-found-in__line">186</span>
 
     </aside>
 
@@ -6252,7 +6514,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message.php"><a href="files/src-discord-parts-channel-message.html"><abbr title="src/Discord/Parts/Channel/Message.php">Message.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">531</span>
+    <span class="phpdocumentor-element-found-in__line">557</span>
 
     </aside>
 
@@ -6287,7 +6549,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message.php"><a href="files/src-discord-parts-channel-message.html"><abbr title="src/Discord/Parts/Channel/Message.php">Message.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">474</span>
+    <span class="phpdocumentor-element-found-in__line">486</span>
 
     </aside>
 
@@ -6322,7 +6584,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message.php"><a href="files/src-discord-parts-channel-message.html"><abbr title="src/Discord/Parts/Channel/Message.php">Message.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">234</span>
+    <span class="phpdocumentor-element-found-in__line">246</span>
 
     </aside>
 
@@ -6355,7 +6617,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message.php"><a href="files/src-discord-parts-channel-message.html"><abbr title="src/Discord/Parts/Channel/Message.php">Message.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">254</span>
+    <span class="phpdocumentor-element-found-in__line">266</span>
 
     </aside>
 
@@ -6388,7 +6650,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message.php"><a href="files/src-discord-parts-channel-message.html"><abbr title="src/Discord/Parts/Channel/Message.php">Message.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">365</span>
+    <span class="phpdocumentor-element-found-in__line">377</span>
 
     </aside>
 
@@ -6421,7 +6683,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message.php"><a href="files/src-discord-parts-channel-message.html"><abbr title="src/Discord/Parts/Channel/Message.php">Message.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">224</span>
+    <span class="phpdocumentor-element-found-in__line">236</span>
 
     </aside>
 
@@ -6447,6 +6709,39 @@ JSON. Used for JsonSerializable.</p>
             -protected
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_getInteractionAttribute">
+        getInteractionAttribute()
+        <a href="classes/Discord-Parts-Channel-Message.html#method_getInteractionAttribute" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message.php"><a href="files/src-discord-parts-channel-message.html"><abbr title="src/Discord/Parts/Channel/Message.php">Message.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">502</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Gets the interaction which triggered the message (application commands).</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">protected</span>
+                    <span class="phpdocumentor-signature__name">getInteractionAttribute</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-WebSockets-MessageInteraction.html"><abbr title="\Discord\Parts\WebSockets\MessageInteraction">MessageInteraction</abbr></a>|null</span></code>
+
+    
+    
+    
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-WebSockets-MessageInteraction.html"><abbr title="\Discord\Parts\WebSockets\MessageInteraction">MessageInteraction</abbr></a>|null</span>
+            &mdash;
+        
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -protected
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_getIsCrosspostAttribute">
         getIsCrosspostAttribute()
         <a href="classes/Discord-Parts-Channel-Message.html#method_getIsCrosspostAttribute" class="headerlink"><i class="fas fa-link"></i></a>
@@ -6454,7 +6749,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message.php"><a href="files/src-discord-parts-channel-message.html"><abbr title="src/Discord/Parts/Channel/Message.php">Message.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">184</span>
+    <span class="phpdocumentor-element-found-in__line">196</span>
 
     </aside>
 
@@ -6487,7 +6782,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message.php"><a href="files/src-discord-parts-channel-message.html"><abbr title="src/Discord/Parts/Channel/Message.php">Message.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">244</span>
+    <span class="phpdocumentor-element-found-in__line">256</span>
 
     </aside>
 
@@ -6520,7 +6815,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message.php"><a href="files/src-discord-parts-channel-message.html"><abbr title="src/Discord/Parts/Channel/Message.php">Message.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">453</span>
+    <span class="phpdocumentor-element-found-in__line">465</span>
 
     </aside>
 
@@ -6555,7 +6850,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message.php"><a href="files/src-discord-parts-channel-message.html"><abbr title="src/Discord/Parts/Channel/Message.php">Message.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">264</span>
+    <span class="phpdocumentor-element-found-in__line">276</span>
 
     </aside>
 
@@ -6588,7 +6883,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message.php"><a href="files/src-discord-parts-channel-message.html"><abbr title="src/Discord/Parts/Channel/Message.php">Message.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">386</span>
+    <span class="phpdocumentor-element-found-in__line">398</span>
 
     </aside>
 
@@ -6623,7 +6918,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message.php"><a href="files/src-discord-parts-channel-message.html"><abbr title="src/Discord/Parts/Channel/Message.php">Message.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">406</span>
+    <span class="phpdocumentor-element-found-in__line">418</span>
 
     </aside>
 
@@ -6658,7 +6953,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message.php"><a href="files/src-discord-parts-channel-message.html"><abbr title="src/Discord/Parts/Channel/Message.php">Message.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">490</span>
+    <span class="phpdocumentor-element-found-in__line">516</span>
 
     </aside>
 
@@ -6691,7 +6986,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message.php"><a href="files/src-discord-parts-channel-message.html"><abbr title="src/Discord/Parts/Channel/Message.php">Message.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">204</span>
+    <span class="phpdocumentor-element-found-in__line">216</span>
 
     </aside>
 
@@ -6724,7 +7019,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message.php"><a href="files/src-discord-parts-channel-message.html"><abbr title="src/Discord/Parts/Channel/Message.php">Message.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">565</span>
+    <span class="phpdocumentor-element-found-in__line">591</span>
 
     </aside>
 
@@ -6757,7 +7052,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message.php"><a href="files/src-discord-parts-channel-message.html"><abbr title="src/Discord/Parts/Channel/Message.php">Message.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">194</span>
+    <span class="phpdocumentor-element-found-in__line">206</span>
 
     </aside>
 
@@ -6790,7 +7085,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message.php"><a href="files/src-discord-parts-channel-message.html"><abbr title="src/Discord/Parts/Channel/Message.php">Message.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">347</span>
+    <span class="phpdocumentor-element-found-in__line">359</span>
 
     </aside>
 
@@ -6823,7 +7118,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message.php"><a href="files/src-discord-parts-channel-message.html"><abbr title="src/Discord/Parts/Channel/Message.php">Message.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">517</span>
+    <span class="phpdocumentor-element-found-in__line">543</span>
 
     </aside>
 
@@ -6858,7 +7153,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message.php"><a href="files/src-discord-parts-channel-message.html"><abbr title="src/Discord/Parts/Channel/Message.php">Message.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">214</span>
+    <span class="phpdocumentor-element-found-in__line">226</span>
 
     </aside>
 
@@ -6891,7 +7186,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message.php"><a href="files/src-discord-parts-channel-message.html"><abbr title="src/Discord/Parts/Channel/Message.php">Message.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">425</span>
+    <span class="phpdocumentor-element-found-in__line">437</span>
 
     </aside>
 
@@ -6924,7 +7219,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message.php"><a href="files/src-discord-parts-channel-message.html"><abbr title="src/Discord/Parts/Channel/Message.php">Message.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">308</span>
+    <span class="phpdocumentor-element-found-in__line">320</span>
 
     </aside>
 
@@ -6967,7 +7262,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Channel/Message.php"><a href="files/src-discord-parts-channel-message.html"><abbr title="src/Discord/Parts/Channel/Message.php">Message.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">784</span>
+    <span class="phpdocumentor-element-found-in__line">810</span>
 
     </aside>
 

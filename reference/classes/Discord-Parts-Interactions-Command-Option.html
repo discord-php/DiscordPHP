@@ -148,7 +148,7 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Command/Option.php"><a href="files/src-discord-parts-interactions-command-option.html"><abbr title="src/Discord/Parts/Interactions/Command/Option.php">Option.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">37</span>
+    <span class="phpdocumentor-element-found-in__line">39</span>
 
     </aside>
 
@@ -269,7 +269,7 @@
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
     <a href="classes/Discord-Parts-Interactions-Command-Option.html#property_channel_types">$channel_types</a>
     <span>
-                        &nbsp;: array&lt;string|int, mixed&gt;            </span>
+                        &nbsp;: array&lt;string|int, mixed&gt;|null            </span>
 </dt>
 <dd></dd>
 
@@ -297,21 +297,35 @@
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
     <a href="classes/Discord-Parts-Interactions-Command-Option.html#property_description_localizations">$description_localizations</a>
     <span>
-                        &nbsp;: array&lt;string|int, string&gt;|null            </span>
+                        &nbsp;: array&lt;string|int, ?string&gt;|null            </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a href="classes/Discord-Parts-Interactions-Command-Option.html#property_max_length">$max_length</a>
+    <span>
+                        &nbsp;: int|null            </span>
 </dt>
 <dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
     <a href="classes/Discord-Parts-Interactions-Command-Option.html#property_max_value">$max_value</a>
     <span>
-                        &nbsp;: int|float            </span>
+                        &nbsp;: int|float|null            </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a href="classes/Discord-Parts-Interactions-Command-Option.html#property_min_length">$min_length</a>
+    <span>
+                        &nbsp;: int|null            </span>
 </dt>
 <dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
     <a href="classes/Discord-Parts-Interactions-Command-Option.html#property_min_value">$min_value</a>
     <span>
-                        &nbsp;: int|float            </span>
+                        &nbsp;: int|float|null            </span>
 </dt>
 <dd></dd>
 
@@ -325,7 +339,7 @@
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
     <a href="classes/Discord-Parts-Interactions-Command-Option.html#property_name_localizations">$name_localizations</a>
     <span>
-                        &nbsp;: array&lt;string|int, string&gt;|null            </span>
+                        &nbsp;: array&lt;string|int, ?string&gt;|null            </span>
 </dt>
 <dd></dd>
 
@@ -339,7 +353,7 @@
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
     <a href="classes/Discord-Parts-Interactions-Command-Option.html#property_required">$required</a>
     <span>
-                        &nbsp;: bool            </span>
+                        &nbsp;: bool|null            </span>
 </dt>
 <dd></dd>
 
@@ -635,11 +649,25 @@ JSON. Used for JsonSerializable.</dd>
 <dd>Sets the description of the option in another language.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/Discord-Parts-Interactions-Command-Option.html#method_setMaxLength">setMaxLength()</a>
+    <span>
+                                &nbsp;: $this    </span>
+</dt>
+<dd>Sets the maximum length permitted.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Discord-Parts-Interactions-Command-Option.html#method_setMaxValue">setMaxValue()</a>
     <span>
                                 &nbsp;: $this    </span>
 </dt>
-<dd>Sets the minimum value permitted.</dd>
+<dd>Sets the maximum value permitted.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/Discord-Parts-Interactions-Command-Option.html#method_setMinLength">setMinLength()</a>
+    <span>
+                                &nbsp;: $this    </span>
+</dt>
+<dd>Sets the minimum length permitted.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Discord-Parts-Interactions-Command-Option.html#method_setMinValue">setMinValue()</a>
@@ -737,7 +765,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Command/Option.php"><a href="files/src-discord-parts-interactions-command-option.html"><abbr title="src/Discord/Parts/Interactions/Command/Option.php">Option.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">49</span>
+    <span class="phpdocumentor-element-found-in__line">51</span>
 
     </aside>
 
@@ -766,7 +794,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Command/Option.php"><a href="files/src-discord-parts-interactions-command-option.html"><abbr title="src/Discord/Parts/Interactions/Command/Option.php">Option.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">43</span>
+    <span class="phpdocumentor-element-found-in__line">45</span>
 
     </aside>
 
@@ -795,7 +823,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Command/Option.php"><a href="files/src-discord-parts-interactions-command-option.html"><abbr title="src/Discord/Parts/Interactions/Command/Option.php">Option.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">45</span>
+    <span class="phpdocumentor-element-found-in__line">47</span>
 
     </aside>
 
@@ -824,7 +852,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Command/Option.php"><a href="files/src-discord-parts-interactions-command-option.html"><abbr title="src/Discord/Parts/Interactions/Command/Option.php">Option.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">42</span>
+    <span class="phpdocumentor-element-found-in__line">44</span>
 
     </aside>
 
@@ -853,7 +881,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Command/Option.php"><a href="files/src-discord-parts-interactions-command-option.html"><abbr title="src/Discord/Parts/Interactions/Command/Option.php">Option.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">47</span>
+    <span class="phpdocumentor-element-found-in__line">49</span>
 
     </aside>
 
@@ -882,7 +910,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Command/Option.php"><a href="files/src-discord-parts-interactions-command-option.html"><abbr title="src/Discord/Parts/Interactions/Command/Option.php">Option.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">48</span>
+    <span class="phpdocumentor-element-found-in__line">50</span>
 
     </aside>
 
@@ -911,7 +939,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Command/Option.php"><a href="files/src-discord-parts-interactions-command-option.html"><abbr title="src/Discord/Parts/Interactions/Command/Option.php">Option.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">46</span>
+    <span class="phpdocumentor-element-found-in__line">48</span>
 
     </aside>
 
@@ -940,7 +968,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Command/Option.php"><a href="files/src-discord-parts-interactions-command-option.html"><abbr title="src/Discord/Parts/Interactions/Command/Option.php">Option.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">41</span>
+    <span class="phpdocumentor-element-found-in__line">43</span>
 
     </aside>
 
@@ -969,7 +997,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Command/Option.php"><a href="files/src-discord-parts-interactions-command-option.html"><abbr title="src/Discord/Parts/Interactions/Command/Option.php">Option.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">39</span>
+    <span class="phpdocumentor-element-found-in__line">41</span>
 
     </aside>
 
@@ -998,7 +1026,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Command/Option.php"><a href="files/src-discord-parts-interactions-command-option.html"><abbr title="src/Discord/Parts/Interactions/Command/Option.php">Option.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">40</span>
+    <span class="phpdocumentor-element-found-in__line">42</span>
 
     </aside>
 
@@ -1027,7 +1055,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Command/Option.php"><a href="files/src-discord-parts-interactions-command-option.html"><abbr title="src/Discord/Parts/Interactions/Command/Option.php">Option.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">44</span>
+    <span class="phpdocumentor-element-found-in__line">46</span>
 
     </aside>
 
@@ -1113,7 +1141,7 @@ JSON. Used for JsonSerializable.</dd>
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">array&lt;string|int, mixed&gt;</span>
+        <span class="phpdocumentor-signature__type">array&lt;string|int, mixed&gt;|null</span>
     <span class="phpdocumentor-signature__name">$channel_types</span>
     </code>
 
@@ -1253,11 +1281,46 @@ JSON. Used for JsonSerializable.</dd>
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">array&lt;string|int, string&gt;|null</span>
+        <span class="phpdocumentor-signature__type">array&lt;string|int, ?string&gt;|null</span>
     <span class="phpdocumentor-signature__name">$description_localizations</span>
     </code>
 
         <section class="phpdocumentor-description"><p>Localization dictionary for the description field. Values follow the same restrictions as description.</p>
+</section>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="property_max_length">
+        $max_length
+        <a href="classes/Discord-Parts-Interactions-Command-Option.html#property_max_length" class="headerlink"><i class="fas fa-link"></i></a>
+        <span class="phpdocumentor-element__modifiers">
+                                </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Command/Option.php"><a href="files/src-discord-parts-interactions-command-option.html"><abbr title="src/Discord/Parts/Interactions/Command/Option.php">Option.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">0</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">int|null</span>
+    <span class="phpdocumentor-signature__name">$max_length</span>
+    </code>
+
+        <section class="phpdocumentor-description"><p>For option type <code class="prettyprint">STRING</code>, the maximum allowed length (minimum of <code class="prettyprint">1</code>).</p>
 </section>
 
         <section class="phpdocumentor-description"></section>
@@ -1288,11 +1351,46 @@ JSON. Used for JsonSerializable.</dd>
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">int|float</span>
+        <span class="phpdocumentor-signature__type">int|float|null</span>
     <span class="phpdocumentor-signature__name">$max_value</span>
     </code>
 
         <section class="phpdocumentor-description"><p>If the option is an INTEGER or NUMBER type, the maximum value permitted.</p>
+</section>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="property_min_length">
+        $min_length
+        <a href="classes/Discord-Parts-Interactions-Command-Option.html#property_min_length" class="headerlink"><i class="fas fa-link"></i></a>
+        <span class="phpdocumentor-element__modifiers">
+                                </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Command/Option.php"><a href="files/src-discord-parts-interactions-command-option.html"><abbr title="src/Discord/Parts/Interactions/Command/Option.php">Option.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">0</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type">int|null</span>
+    <span class="phpdocumentor-signature__name">$min_length</span>
+    </code>
+
+        <section class="phpdocumentor-description"><p>For option type <code class="prettyprint">STRING</code>, the minimum allowed length (minimum of <code class="prettyprint">0</code>).</p>
 </section>
 
         <section class="phpdocumentor-description"></section>
@@ -1323,7 +1421,7 @@ JSON. Used for JsonSerializable.</dd>
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">int|float</span>
+        <span class="phpdocumentor-signature__type">int|float|null</span>
     <span class="phpdocumentor-signature__name">$min_value</span>
     </code>
 
@@ -1393,7 +1491,7 @@ JSON. Used for JsonSerializable.</dd>
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">array&lt;string|int, string&gt;|null</span>
+        <span class="phpdocumentor-signature__type">array&lt;string|int, ?string&gt;|null</span>
     <span class="phpdocumentor-signature__name">$name_localizations</span>
     </code>
 
@@ -1463,7 +1561,7 @@ JSON. Used for JsonSerializable.</dd>
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">bool</span>
+        <span class="phpdocumentor-signature__type">bool|null</span>
     <span class="phpdocumentor-signature__name">$required</span>
     </code>
 
@@ -1666,7 +1764,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Command/Option.php"><a href="files/src-discord-parts-interactions-command-option.html"><abbr title="src/Discord/Parts/Interactions/Command/Option.php">Option.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">54</span>
+    <span class="phpdocumentor-element-found-in__line">56</span>
 
     </aside>
 
@@ -1676,7 +1774,7 @@ JSON. Used for JsonSerializable.</dd>
     <span class="phpdocumentor-signature__visibility">protected</span>
         <span class="phpdocumentor-signature__type">array&lt;string|int, mixed&gt;</span>
     <span class="phpdocumentor-signature__name">$fillable</span>
-     = <span class="phpdocumentor-signature__default-value">[&#039;type&#039;, &#039;name&#039;, &#039;name_localizations&#039;, &#039;description&#039;, &#039;description_localizations&#039;, &#039;required&#039;, &#039;choices&#039;, &#039;options&#039;, &#039;channel_types&#039;, &#039;min_value&#039;, &#039;max_value&#039;, &#039;autocomplete&#039;]</span></code>
+     = <span class="phpdocumentor-signature__default-value">[&#039;type&#039;, &#039;name&#039;, &#039;name_localizations&#039;, &#039;description&#039;, &#039;description_localizations&#039;, &#039;required&#039;, &#039;choices&#039;, &#039;options&#039;, &#039;channel_types&#039;, &#039;min_value&#039;, &#039;max_value&#039;, &#039;min_length&#039;, &#039;max_length&#039;, &#039;autocomplete&#039;]</span></code>
 
     
         <section class="phpdocumentor-description"><p>The array of attributes that can be mass-assigned.</p>
@@ -2377,7 +2475,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Command/Option.php"><a href="files/src-discord-parts-interactions-command-option.html"><abbr title="src/Discord/Parts/Interactions/Command/Option.php">Option.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">270</span>
+    <span class="phpdocumentor-element-found-in__line">274</span>
 
     </aside>
 
@@ -2438,7 +2536,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Command/Option.php"><a href="files/src-discord-parts-interactions-command-option.html"><abbr title="src/Discord/Parts/Interactions/Command/Option.php">Option.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">250</span>
+    <span class="phpdocumentor-element-found-in__line">254</span>
 
     </aside>
 
@@ -3105,7 +3203,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Command/Option.php"><a href="files/src-discord-parts-interactions-command-option.html"><abbr title="src/Discord/Parts/Interactions/Command/Option.php">Option.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">313</span>
+    <span class="phpdocumentor-element-found-in__line">317</span>
 
     </aside>
 
@@ -3150,7 +3248,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Command/Option.php"><a href="files/src-discord-parts-interactions-command-option.html"><abbr title="src/Discord/Parts/Interactions/Command/Option.php">Option.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">288</span>
+    <span class="phpdocumentor-element-found-in__line">292</span>
 
     </aside>
 
@@ -3195,7 +3293,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Command/Option.php"><a href="files/src-discord-parts-interactions-command-option.html"><abbr title="src/Discord/Parts/Interactions/Command/Option.php">Option.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">368</span>
+    <span class="phpdocumentor-element-found-in__line">418</span>
 
     </aside>
 
@@ -3256,7 +3354,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Command/Option.php"><a href="files/src-discord-parts-interactions-command-option.html"><abbr title="src/Discord/Parts/Interactions/Command/Option.php">Option.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">234</span>
+    <span class="phpdocumentor-element-found-in__line">238</span>
 
     </aside>
 
@@ -3301,7 +3399,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Command/Option.php"><a href="files/src-discord-parts-interactions-command-option.html"><abbr title="src/Discord/Parts/Interactions/Command/Option.php">Option.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">181</span>
+    <span class="phpdocumentor-element-found-in__line">185</span>
 
     </aside>
 
@@ -3362,7 +3460,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Command/Option.php"><a href="files/src-discord-parts-interactions-command-option.html"><abbr title="src/Discord/Parts/Interactions/Command/Option.php">Option.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">202</span>
+    <span class="phpdocumentor-element-found-in__line">206</span>
 
     </aside>
 
@@ -3425,6 +3523,73 @@ JSON. Used for JsonSerializable.</p>
             -public
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_setMaxLength">
+        setMaxLength()
+        <a href="classes/Discord-Parts-Interactions-Command-Option.html#method_setMaxLength" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Command/Option.php"><a href="files/src-discord-parts-interactions-command-option.html"><abbr title="src/Discord/Parts/Interactions/Command/Option.php">Option.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">396</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Sets the maximum length permitted.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">setMaxLength</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$max_length</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">$this</span></code>
+
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$max_length</span>
+                : <span class="phpdocumentor-signature__argument__return-type">int</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>For option type <code class="prettyprint">STRING</code>, the maximum allowed length (minimum of <code class="prettyprint">1</code>).</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">throws</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                <span class="phpdocumentor-tag-link"><abbr title="\LogicException">LogicException</abbr></span>
+                                                            
+                                             
+                                    </dd>
+                            <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">throws</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                <span class="phpdocumentor-tag-link"><abbr title="\LengthException">LengthException</abbr></span>
+                                                            
+                                             
+                                    </dd>
+                        </dl>
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type">$this</span>
+            &mdash;
+        
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_setMaxValue">
         setMaxValue()
         <a href="classes/Discord-Parts-Interactions-Command-Option.html#method_setMaxValue" class="headerlink"><i class="fas fa-link"></i></a>
@@ -3432,30 +3597,98 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Command/Option.php"><a href="files/src-discord-parts-interactions-command-option.html"><abbr title="src/Discord/Parts/Interactions/Command/Option.php">Option.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">352</span>
+    <span class="phpdocumentor-element-found-in__line">356</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Sets the minimum value permitted.</p>
+        <p class="phpdocumentor-summary">Sets the maximum value permitted.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">setMaxValue</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$max_value</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">$this</span></code>
+                    <span class="phpdocumentor-signature__name">setMaxValue</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">int|float&nbsp;</span><span class="phpdocumentor-signature__argument__name">$max_value</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">$this</span></code>
 
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
     <dl class="phpdocumentor-argument-list">
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$max_value</span>
-                : <span class="phpdocumentor-signature__argument__return-type">mixed</span>
+                : <span class="phpdocumentor-signature__argument__return-type">int|float</span>
                             </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
+                    <section class="phpdocumentor-description"><p>integer for INTEGER options, double for NUMBER options</p>
+</section>
 
             </dd>
             </dl>
 
     
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type">$this</span>
+            &mdash;
+        
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_setMinLength">
+        setMinLength()
+        <a href="classes/Discord-Parts-Interactions-Command-Option.html#method_setMinLength" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Command/Option.php"><a href="files/src-discord-parts-interactions-command-option.html"><abbr title="src/Discord/Parts/Interactions/Command/Option.php">Option.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">373</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Sets the minimum length permitted.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">setMinLength</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$min_length</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">$this</span></code>
+
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$min_length</span>
+                : <span class="phpdocumentor-signature__argument__return-type">int</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>For option type <code class="prettyprint">STRING</code>, the minimum allowed length (minimum of <code class="prettyprint">0</code>).</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">throws</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                <span class="phpdocumentor-tag-link"><abbr title="\LogicException">LogicException</abbr></span>
+                                                            
+                                             
+                                    </dd>
+                            <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">throws</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                <span class="phpdocumentor-tag-link"><abbr title="\LengthException">LengthException</abbr></span>
+                                                            
+                                             
+                                    </dd>
+                        </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
     <span class="phpdocumentor-signature__response_type">$this</span>
@@ -3476,7 +3709,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Command/Option.php"><a href="files/src-discord-parts-interactions-command-option.html"><abbr title="src/Discord/Parts/Interactions/Command/Option.php">Option.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">338</span>
+    <span class="phpdocumentor-element-found-in__line">342</span>
 
     </aside>
 
@@ -3521,7 +3754,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Command/Option.php"><a href="files/src-discord-parts-interactions-command-option.html"><abbr title="src/Discord/Parts/Interactions/Command/Option.php">Option.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">137</span>
+    <span class="phpdocumentor-element-found-in__line">141</span>
 
     </aside>
 
@@ -3586,7 +3819,7 @@ Characters with no lowercase variants and/or uncased letters are still allowed.<
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Command/Option.php"><a href="files/src-discord-parts-interactions-command-option.html"><abbr title="src/Discord/Parts/Interactions/Command/Option.php">Option.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">161</span>
+    <span class="phpdocumentor-element-found-in__line">165</span>
 
     </aside>
 
@@ -3660,7 +3893,7 @@ Characters with no lowercase variants and/or uncased letters are still allowed.<
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Command/Option.php"><a href="files/src-discord-parts-interactions-command-option.html"><abbr title="src/Discord/Parts/Interactions/Command/Option.php">Option.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">220</span>
+    <span class="phpdocumentor-element-found-in__line">224</span>
 
     </aside>
 
@@ -3668,7 +3901,7 @@ Characters with no lowercase variants and/or uncased letters are still allowed.<
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">setRequired</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">bool&nbsp;</span><span class="phpdocumentor-signature__argument__name">$required</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">$this</span></code>
+                    <span class="phpdocumentor-signature__name">setRequired</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">bool&nbsp;</span><span class="phpdocumentor-signature__argument__name">$required</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">false</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">$this</span></code>
 
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
@@ -3676,9 +3909,9 @@ Characters with no lowercase variants and/or uncased letters are still allowed.<
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$required</span>
                 : <span class="phpdocumentor-signature__argument__return-type">bool</span>
-                            </dt>
+                 = <span class="phpdocumentor-signature__argument__default-value">false</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>requirement of the option.</p>
+                    <section class="phpdocumentor-description"><p>requirement of the option (default false)</p>
 </section>
 
             </dd>
@@ -3705,7 +3938,7 @@ Characters with no lowercase variants and/or uncased letters are still allowed.<
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Command/Option.php"><a href="files/src-discord-parts-interactions-command-option.html"><abbr title="src/Discord/Parts/Interactions/Command/Option.php">Option.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">114</span>
+    <span class="phpdocumentor-element-found-in__line">118</span>
 
     </aside>
 
@@ -3799,7 +4032,7 @@ Characters with no lowercase variants and/or uncased letters are still allowed.<
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Command/Option.php"><a href="files/src-discord-parts-interactions-command-option.html"><abbr title="src/Discord/Parts/Interactions/Command/Option.php">Option.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">74</span>
+    <span class="phpdocumentor-element-found-in__line">78</span>
 
     </aside>
 
@@ -3834,7 +4067,7 @@ Characters with no lowercase variants and/or uncased letters are still allowed.<
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Command/Option.php"><a href="files/src-discord-parts-interactions-command-option.html"><abbr title="src/Discord/Parts/Interactions/Command/Option.php">Option.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">94</span>
+    <span class="phpdocumentor-element-found-in__line">98</span>
 
     </aside>
 
