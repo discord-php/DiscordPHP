@@ -62,7 +62,7 @@ class MessageInteraction extends Part
     }
 
     /**
-     * Returns the member who invoked the interaction. Null when invoked via DM.
+     * Returns the partial Member who invoked the interaction.
      *
      * @return Member|null
      */
