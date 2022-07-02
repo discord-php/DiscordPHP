@@ -124,6 +124,8 @@ class Command extends Part
      *
      * @param Overwrite $overwrite An overwrite object.
      *
+     * @deprecated 7.1.0 Requires Bearer token on Permissions v2
+     *
      * @return ExtendedPromiseInterface
      */
     public function setOverwrite(Overwrite $overwrite): ExtendedPromiseInterface
