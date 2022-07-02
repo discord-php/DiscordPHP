@@ -39,7 +39,7 @@ class MessageInteraction extends Part
         'member',
 
         // internal
-        'guild_id'
+        'guild_id',
     ];
 
     /**

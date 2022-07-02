@@ -264,7 +264,7 @@ function escapeMarkdown(string $text): string
 }
 
 /**
- * Run a deferred search in array
+ * Run a deferred search in array.
  *
  * @param array|object  $array     Traversable, use $collection->getIterator() if searching in Collection
  * @param callable      $callback  The filter function to run
@@ -282,6 +282,7 @@ function deferFind($array, callable $callback, $loop, ?callable $canceller = nul
         if (! $iterator->valid()) {
             $loop->cancelTimer($timer);
             $deferred->reject();
+
             return;
         }
 
@@ -289,6 +290,7 @@ function deferFind($array, callable $callback, $loop, ?callable $canceller = nul
         if ($callback($current)) {
             $loop->cancelTimer($timer);
             $deferred->resolve($current);
+
             return;
         }
 

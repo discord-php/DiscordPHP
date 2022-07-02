@@ -1274,7 +1274,6 @@ class Discord
                 'encoding' => $this->encoding,
             ];
 
-            
             if (class_exists('\Clue\React\Zlib\Decompressor')) {
                 $this->logger->warning('The `clue/reactphp-zlib` is present, Enabling experimental zlib-stream compressed gateway message.');
                 $this->zlibDecompressor = new \Clue\React\Zlib\Decompressor(ZLIB_ENCODING_DEFLATE);

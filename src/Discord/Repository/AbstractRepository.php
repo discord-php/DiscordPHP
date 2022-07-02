@@ -131,7 +131,7 @@ abstract class AbstractRepository extends Collection
     /**
      * Attempts to save a part to the Discord servers.
      *
-     * @param Part                $part The part to save.
+     * @param Part        $part   The part to save.
      * @param string|null $reason Reason for Audit Log (if supported).
      *
      * @return ExtendedPromiseInterface

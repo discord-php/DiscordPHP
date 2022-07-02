@@ -70,7 +70,7 @@ class Overwrite extends Part
 
     /**
      * Get the permission ID constant for All Channels in the guild (i.e. guild_id - 1)
-     * Requires GMP extension loaded on 32 bits PHP
+     * Requires GMP extension loaded on 32 bits PHP.
      *
      * @see https://discord.com/developers/docs/interactions/application-commands#application-command-permissions-object-application-command-permissions-constants
      *

@@ -19,7 +19,7 @@ class Bitwise
     private static bool $is_32_gmp = false;
 
     /**
-     * Run a single check whether the GMP extension is loaded
+     * Run a single check whether the GMP extension is loaded.
      *
      * @internal internally used during Discord class construct.
      *

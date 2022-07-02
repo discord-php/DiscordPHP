@@ -145,6 +145,7 @@ class GuildCreate extends Event
                 $this->http->get($bind)->done(function ($rawBans) use (&$banPagination, $guildPart, $resolve) {
                     if (empty($rawBans)) {
                         $resolve();
+
                         return;
                     }
 
