@@ -213,11 +213,11 @@ class Option extends Part
     /**
      * Sets the requirement of the option.
      *
-     * @param bool $required requirement of the option
+     * @param bool $required requirement of the option (default false)
      *
      * @return $this
      */
-    public function setRequired(bool $required): self
+    public function setRequired(bool $required = false): self
     {
         $this->required = $required;
 
@@ -343,9 +343,9 @@ class Option extends Part
     }
 
     /**
-     * Sets the minimum value permitted.
+     * Sets the maximum value permitted.
      *
-     * @param int|float $min_value integer for INTEGER options, double for NUMBER options
+     * @param int|float $max_value integer for INTEGER options, double for NUMBER options
      *
      * @return $this
      */
