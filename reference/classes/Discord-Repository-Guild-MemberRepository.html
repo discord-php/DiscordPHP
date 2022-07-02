@@ -147,7 +147,7 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/Guild/MemberRepository.php"><a href="files/src-discord-repository-guild-memberrepository.html"><abbr title="src/Discord/Repository/Guild/MemberRepository.php">MemberRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">30</span>
+    <span class="phpdocumentor-element-found-in__line">32</span>
 
     </aside>
 
@@ -362,7 +362,7 @@ returns the first item where the callback returns
 <dd>Returns a part with fresh values.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Discord-Repository-AbstractRepository.html#method_freshen">freshen()</a>
+    <a href="classes/Discord-Repository-Guild-MemberRepository.html#method_freshen">freshen()</a>
     <span>
                                 &nbsp;: <abbr title="\React\Promise\ExtendedPromiseInterface">ExtendedPromiseInterface</abbr>    </span>
 </dt>
@@ -564,7 +564,7 @@ returns the first item where the callback returns
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/Guild/MemberRepository.php"><a href="files/src-discord-repository-guild-memberrepository.html"><abbr title="src/Discord/Repository/Guild/MemberRepository.php">MemberRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">45</span>
+    <span class="phpdocumentor-element-found-in__line">47</span>
 
     </aside>
 
@@ -643,7 +643,7 @@ returns the first item where the callback returns
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/Guild/MemberRepository.php"><a href="files/src-discord-repository-guild-memberrepository.html"><abbr title="src/Discord/Repository/Guild/MemberRepository.php">MemberRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">35</span>
+    <span class="phpdocumentor-element-found-in__line">37</span>
 
     </aside>
 
@@ -1612,12 +1612,12 @@ the callback.</p>
 >
     <h4 class="phpdocumentor-element__name" id="method_freshen">
         freshen()
-        <a href="classes/Discord-Repository-AbstractRepository.html#method_freshen" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Repository-Guild-MemberRepository.html#method_freshen" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/AbstractRepository.php"><a href="files/src-discord-repository-abstractrepository.html"><abbr title="src/Discord/Repository/AbstractRepository.php">AbstractRepository.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/Guild/MemberRepository.php"><a href="files/src-discord-repository-guild-memberrepository.html"><abbr title="src/Discord/Repository/Guild/MemberRepository.php">MemberRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">88</span>
+    <span class="phpdocumentor-element-found-in__line">70</span>
 
     </aside>
 
@@ -1625,7 +1625,7 @@ the callback.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">freshen</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$queryparams</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">[]</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\ExtendedPromiseInterface">ExtendedPromiseInterface</abbr></span></code>
+                    <span class="phpdocumentor-signature__name">freshen</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$queryparams</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\ExtendedPromiseInterface">ExtendedPromiseInterface</abbr></span></code>
 
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
@@ -1633,9 +1633,9 @@ the callback.</p>
                     <dt class="phpdocumentor-argument-list__entry">
                 <span class="phpdocumentor-signature__argument__name">$queryparams</span>
                 : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;</span>
-                 = <span class="phpdocumentor-signature__argument__default-value">[]</span>            </dt>
+                 = <span class="phpdocumentor-signature__argument__default-value">null</span>            </dt>
             <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>Query string params to add to the request (no validation)</p>
+                    <section class="phpdocumentor-description"><p>Query string params to add to the request, leave null to paginate all members (Warning: Be careful to use this on very large guild)</p>
 </section>
 
             </dd>
@@ -1648,11 +1648,10 @@ the callback.</p>
     </h5>
     <dl class="phpdocumentor-tag-list">
                                     <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">throws</span>
+                    <span class="phpdocumentor-tag__name">inheritdoc</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
-                                                                <span class="phpdocumentor-tag-link"><abbr title="\Exception">Exception</abbr></span>
-                                                            
+                                                                                
                                              
                                     </dd>
                         </dl>
@@ -1988,7 +1987,7 @@ the callback.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/Guild/MemberRepository.php"><a href="files/src-discord-repository-guild-memberrepository.html"><abbr title="src/Discord/Repository/Guild/MemberRepository.php">MemberRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">58</span>
+    <span class="phpdocumentor-element-found-in__line">60</span>
 
     </aside>
 

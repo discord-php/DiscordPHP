@@ -2746,6 +2746,11 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Discord-Parts-Channel-Message.html#constant_TYPE_CONTEXT_MENU_COMMAND"
         },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\u003A\u003ATYPE_AUTO_MODERATION_ACTION",
+            "name": "TYPE_AUTO_MODERATION_ACTION",
+            "summary": "",
+            "url": "classes/Discord-Parts-Channel-Message.html#constant_TYPE_AUTO_MODERATION_ACTION"
+        },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\u003A\u003AACTIVITY_JOIN",
             "name": "ACTIVITY_JOIN",
             "summary": "",
@@ -3276,6 +3281,11 @@ Search.appendIndex(
             "summary": "Returns\u0020a\u0020collection\u0020of\u0020audit\u0020log\u0020entries.",
             "url": "classes/Discord-Parts-Guild-AuditLog-AuditLog.html#method_getAuditLogEntriesAttribute"
         },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\AuditLog\\AuditLog\u003A\u003AgetAutoModerationRulesAttribute\u0028\u0029",
+            "name": "getAutoModerationRulesAttribute",
+            "summary": "Returns\u0020a\u0020collection\u0020of\u0020auto\u0020moderation\u0020rules\u0020found\u0020in\u0020the\u0020audit\u0020log.",
+            "url": "classes/Discord-Parts-Guild-AuditLog-AuditLog.html#method_getAutoModerationRulesAttribute"
+        },                {
             "fqsen": "\\Discord\\Parts\\Guild\\AuditLog\\AuditLog\u003A\u003AgetIntegrationsAttribute\u0028\u0029",
             "name": "getIntegrationsAttribute",
             "summary": "Returns\u0020a\u0020collection\u0020of\u0020integrations\u0020found\u0020in\u0020the\u0020audit\u0020log.",
@@ -3556,6 +3566,26 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Discord-Parts-Guild-AuditLog-Entry.html#constant_APPLICATION_COMMAND_PERMISSION_UPDATE"
         },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\AuditLog\\Entry\u003A\u003AAUTO_MODERATION_RULE_CREATE",
+            "name": "AUTO_MODERATION_RULE_CREATE",
+            "summary": "",
+            "url": "classes/Discord-Parts-Guild-AuditLog-Entry.html#constant_AUTO_MODERATION_RULE_CREATE"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\AuditLog\\Entry\u003A\u003AAUTO_MODERATION_RULE_UPDATE",
+            "name": "AUTO_MODERATION_RULE_UPDATE",
+            "summary": "",
+            "url": "classes/Discord-Parts-Guild-AuditLog-Entry.html#constant_AUTO_MODERATION_RULE_UPDATE"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\AuditLog\\Entry\u003A\u003AAUTO_MODERATION_RULE_DELETE",
+            "name": "AUTO_MODERATION_RULE_DELETE",
+            "summary": "",
+            "url": "classes/Discord-Parts-Guild-AuditLog-Entry.html#constant_AUTO_MODERATION_RULE_DELETE"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\AuditLog\\Entry\u003A\u003AAUTO_MODERATION_BLOCK_MESSAGE",
+            "name": "AUTO_MODERATION_BLOCK_MESSAGE",
+            "summary": "",
+            "url": "classes/Discord-Parts-Guild-AuditLog-Entry.html#constant_AUTO_MODERATION_BLOCK_MESSAGE"
+        },                {
             "fqsen": "\\Discord\\Parts\\Guild\\AuditLog\\Entry\u003A\u003A\u0024fillable",
             "name": "fillable",
             "summary": "The\u0020parts\u0020fillable\u0020attributes.",
@@ -3570,6 +3600,111 @@ Search.appendIndex(
             "name": "fillable",
             "summary": "The\u0020parts\u0020fillable\u0020attributes.",
             "url": "classes/Discord-Parts-Guild-AuditLog-Options.html#property_fillable"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\AutoModeration\\Action",
+            "name": "Action",
+            "summary": "An\u0020action\u0020which\u0020will\u0020execute\u0020whenever\u0020a\u0020rule\u0020is\u0020triggered.",
+            "url": "classes/Discord-Parts-Guild-AutoModeration-Action.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\AutoModeration\\Action\u003A\u003ATYPE_BLOCK_MESSAGE",
+            "name": "TYPE_BLOCK_MESSAGE",
+            "summary": "",
+            "url": "classes/Discord-Parts-Guild-AutoModeration-Action.html#constant_TYPE_BLOCK_MESSAGE"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\AutoModeration\\Action\u003A\u003ATYPE_SEND_ALERT_MESSAGE",
+            "name": "TYPE_SEND_ALERT_MESSAGE",
+            "summary": "",
+            "url": "classes/Discord-Parts-Guild-AutoModeration-Action.html#constant_TYPE_SEND_ALERT_MESSAGE"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\AutoModeration\\Action\u003A\u003ATYPE_TIMEOUT",
+            "name": "TYPE_TIMEOUT",
+            "summary": "",
+            "url": "classes/Discord-Parts-Guild-AutoModeration-Action.html#constant_TYPE_TIMEOUT"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\AutoModeration\\Action\u003A\u003A\u0024fillable",
+            "name": "fillable",
+            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
+            "url": "classes/Discord-Parts-Guild-AutoModeration-Action.html#property_fillable"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\AutoModeration\\Rule",
+            "name": "Rule",
+            "summary": "Auto\u0020Moderation\u0020is\u0020a\u0020feature\u0020which\u0020allows\u0020each\u0020guild\u0020to\u0020set\u0020up\u0020rules\u0020that\u0020trigger\u0020based\u0020on\u0020some\u0020criteria.\u0020For\u0020example,\u0020a\u0020rule\u0020can\u0020trigger\u0020whenever\u0020a\u0020message\u0020contains\u0020a\u0020specific\u0020keyword.",
+            "url": "classes/Discord-Parts-Guild-AutoModeration-Rule.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\AutoModeration\\Rule\u003A\u003AgetGuildAttribute\u0028\u0029",
+            "name": "getGuildAttribute",
+            "summary": "Returns\u0020the\u0020guild\u0020attribute.",
+            "url": "classes/Discord-Parts-Guild-AutoModeration-Rule.html#method_getGuildAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\AutoModeration\\Rule\u003A\u003AgetCreatorAttribute\u0028\u0029",
+            "name": "getCreatorAttribute",
+            "summary": "Returns\u0020the\u0020user\u0020attribute.",
+            "url": "classes/Discord-Parts-Guild-AutoModeration-Rule.html#method_getCreatorAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\AutoModeration\\Rule\u003A\u003AgetActionsAttribute\u0028\u0029",
+            "name": "getActionsAttribute",
+            "summary": "Returns\u0020the\u0020actions\u0020attribute.",
+            "url": "classes/Discord-Parts-Guild-AutoModeration-Rule.html#method_getActionsAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\AutoModeration\\Rule\u003A\u003AgetCreatableAttributes\u0028\u0029",
+            "name": "getCreatableAttributes",
+            "summary": "Returns\u0020the\u0020attributes\u0020needed\u0020to\u0020create.",
+            "url": "classes/Discord-Parts-Guild-AutoModeration-Rule.html#method_getCreatableAttributes"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\AutoModeration\\Rule\u003A\u003AgetUpdatableAttributes\u0028\u0029",
+            "name": "getUpdatableAttributes",
+            "summary": "Returns\u0020the\u0020updatable\u0020attributes.",
+            "url": "classes/Discord-Parts-Guild-AutoModeration-Rule.html#method_getUpdatableAttributes"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\AutoModeration\\Rule\u003A\u003AgetRepositoryAttributes\u0028\u0029",
+            "name": "getRepositoryAttributes",
+            "summary": "Gets\u0020the\u0020attributes\u0020to\u0020pass\u0020to\u0020repositories.",
+            "url": "classes/Discord-Parts-Guild-AutoModeration-Rule.html#method_getRepositoryAttributes"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\AutoModeration\\Rule\u003A\u003ATRIGGER_TYPE_KEYWORD",
+            "name": "TRIGGER_TYPE_KEYWORD",
+            "summary": "",
+            "url": "classes/Discord-Parts-Guild-AutoModeration-Rule.html#constant_TRIGGER_TYPE_KEYWORD"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\AutoModeration\\Rule\u003A\u003ATRIGGER_TYPE_HARMFUL_LINK",
+            "name": "TRIGGER_TYPE_HARMFUL_LINK",
+            "summary": "",
+            "url": "classes/Discord-Parts-Guild-AutoModeration-Rule.html#constant_TRIGGER_TYPE_HARMFUL_LINK"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\AutoModeration\\Rule\u003A\u003ATRIGGER_TYPE_SPAM",
+            "name": "TRIGGER_TYPE_SPAM",
+            "summary": "",
+            "url": "classes/Discord-Parts-Guild-AutoModeration-Rule.html#constant_TRIGGER_TYPE_SPAM"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\AutoModeration\\Rule\u003A\u003ATRIGGER_TYPE_KEYWORD_PRESET",
+            "name": "TRIGGER_TYPE_KEYWORD_PRESET",
+            "summary": "",
+            "url": "classes/Discord-Parts-Guild-AutoModeration-Rule.html#constant_TRIGGER_TYPE_KEYWORD_PRESET"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\AutoModeration\\Rule\u003A\u003AKEYWORD_PRESET_TYPE_PROFANITY",
+            "name": "KEYWORD_PRESET_TYPE_PROFANITY",
+            "summary": "",
+            "url": "classes/Discord-Parts-Guild-AutoModeration-Rule.html#constant_KEYWORD_PRESET_TYPE_PROFANITY"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\AutoModeration\\Rule\u003A\u003AKEYWORD_PRESET_TYPE_SEXUAL_CONTENT",
+            "name": "KEYWORD_PRESET_TYPE_SEXUAL_CONTENT",
+            "summary": "",
+            "url": "classes/Discord-Parts-Guild-AutoModeration-Rule.html#constant_KEYWORD_PRESET_TYPE_SEXUAL_CONTENT"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\AutoModeration\\Rule\u003A\u003AKEYWORD_PRESET_TYPE_SLURS",
+            "name": "KEYWORD_PRESET_TYPE_SLURS",
+            "summary": "",
+            "url": "classes/Discord-Parts-Guild-AutoModeration-Rule.html#constant_KEYWORD_PRESET_TYPE_SLURS"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\AutoModeration\\Rule\u003A\u003AEVENT_TYPE_MESSAGE_SEND",
+            "name": "EVENT_TYPE_MESSAGE_SEND",
+            "summary": "",
+            "url": "classes/Discord-Parts-Guild-AutoModeration-Rule.html#constant_EVENT_TYPE_MESSAGE_SEND"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\AutoModeration\\Rule\u003A\u003A\u0024fillable",
+            "name": "fillable",
+            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
+            "url": "classes/Discord-Parts-Guild-AutoModeration-Rule.html#property_fillable"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Ban",
             "name": "Ban",
@@ -3705,6 +3840,11 @@ Search.appendIndex(
             "name": "getFeatureAnimatedIconAttribute",
             "summary": "",
             "url": "classes/Discord-Parts-Guild-Guild.html#method_getFeatureAnimatedIconAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AgetFeatureAutoModerationAttribute\u0028\u0029",
+            "name": "getFeatureAutoModerationAttribute",
+            "summary": "",
+            "url": "classes/Discord-Parts-Guild-Guild.html#method_getFeatureAutoModerationAttribute"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AgetFeatureBannerAttribute\u0028\u0029",
             "name": "getFeatureBannerAttribute",
@@ -6161,6 +6301,51 @@ Search.appendIndex(
             "summary": "The\u0020parts\u0020fillable\u0020attributes.",
             "url": "classes/Discord-Parts-User-User.html#property_fillable"
         },                {
+            "fqsen": "\\Discord\\Parts\\WebSockets\\AutoModerationActionExecution",
+            "name": "AutoModerationActionExecution",
+            "summary": "Sent\u0020when\u0020a\u0020rule\u0020is\u0020triggered\u0020and\u0020an\u0020action\u0020is\u0020executed\u0020\u0028e.g.\u0020when\u0020a\u0020message\u0020is\u0020blocked\u0029.",
+            "url": "classes/Discord-Parts-WebSockets-AutoModerationActionExecution.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\WebSockets\\AutoModerationActionExecution\u003A\u003AgetGuildAttribute\u0028\u0029",
+            "name": "getGuildAttribute",
+            "summary": "Returns\u0020the\u0020guild\u0020attribute.",
+            "url": "classes/Discord-Parts-WebSockets-AutoModerationActionExecution.html#method_getGuildAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\WebSockets\\AutoModerationActionExecution\u003A\u003AgetActionAttribute\u0028\u0029",
+            "name": "getActionAttribute",
+            "summary": "Returns\u0020the\u0020action\u0020attribute.",
+            "url": "classes/Discord-Parts-WebSockets-AutoModerationActionExecution.html#method_getActionAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\WebSockets\\AutoModerationActionExecution\u003A\u003AgetUserAttribute\u0028\u0029",
+            "name": "getUserAttribute",
+            "summary": "Returns\u0020the\u0020user\u0020attribute.",
+            "url": "classes/Discord-Parts-WebSockets-AutoModerationActionExecution.html#method_getUserAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\WebSockets\\AutoModerationActionExecution\u003A\u003AgetMemberAttribute\u0028\u0029",
+            "name": "getMemberAttribute",
+            "summary": "Returns\u0020the\u0020member\u0020attribute.",
+            "url": "classes/Discord-Parts-WebSockets-AutoModerationActionExecution.html#method_getMemberAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\WebSockets\\AutoModerationActionExecution\u003A\u003AgetChannelAttribute\u0028\u0029",
+            "name": "getChannelAttribute",
+            "summary": "Returns\u0020the\u0020channel\u0020attribute.",
+            "url": "classes/Discord-Parts-WebSockets-AutoModerationActionExecution.html#method_getChannelAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\WebSockets\\AutoModerationActionExecution\u003A\u003AgetMessageAttribute\u0028\u0029",
+            "name": "getMessageAttribute",
+            "summary": "Returns\u0020the\u0020message\u0020attribute.",
+            "url": "classes/Discord-Parts-WebSockets-AutoModerationActionExecution.html#method_getMessageAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\WebSockets\\AutoModerationActionExecution\u003A\u003AgetAlertSystemMessageAttribute\u0028\u0029",
+            "name": "getAlertSystemMessageAttribute",
+            "summary": "Returns\u0020the\u0020alert\u0020system\u0020message\u0020attribute.",
+            "url": "classes/Discord-Parts-WebSockets-AutoModerationActionExecution.html#method_getAlertSystemMessageAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\WebSockets\\AutoModerationActionExecution\u003A\u003A\u0024fillable",
+            "name": "fillable",
+            "summary": "The\u0020parts\u0020fillable\u0020attributes.",
+            "url": "classes/Discord-Parts-WebSockets-AutoModerationActionExecution.html#property_fillable"
+        },                {
             "fqsen": "\\Discord\\Parts\\WebSockets\\MessageReaction",
             "name": "MessageReaction",
             "summary": "Represents\u0020a\u0020specific\u0020reaction\u0020to\u0020a\u0020message\u0020by\u0020a\u0020specific\u0020user.",
@@ -6571,6 +6756,21 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Discord-Repository-Channel-WebhookRepository.html#property_class"
         },                {
+            "fqsen": "\\Discord\\Repository\\Guild\\AutoModerationRuleRepository",
+            "name": "AutoModerationRuleRepository",
+            "summary": "Contains\u0020auto\u0020moderation\u0020rules\u0020that\u0020belong\u0020to\u0020guilds.",
+            "url": "classes/Discord-Repository-Guild-AutoModerationRuleRepository.html"
+        },                {
+            "fqsen": "\\Discord\\Repository\\Guild\\AutoModerationRuleRepository\u003A\u003A\u0024endpoints",
+            "name": "endpoints",
+            "summary": "Endpoints\u0020for\u0020interacting\u0020with\u0020the\u0020Discord\u0020servers.",
+            "url": "classes/Discord-Repository-Guild-AutoModerationRuleRepository.html#property_endpoints"
+        },                {
+            "fqsen": "\\Discord\\Repository\\Guild\\AutoModerationRuleRepository\u003A\u003A\u0024class",
+            "name": "class",
+            "summary": "",
+            "url": "classes/Discord-Repository-Guild-AutoModerationRuleRepository.html#property_class"
+        },                {
             "fqsen": "\\Discord\\Repository\\Guild\\BanRepository",
             "name": "BanRepository",
             "summary": "Contains\u0020bans\u0020on\u0020users.",
@@ -6715,6 +6915,11 @@ Search.appendIndex(
             "name": "kick",
             "summary": "Alias\u0020for\u0020delete.",
             "url": "classes/Discord-Repository-Guild-MemberRepository.html#method_kick"
+        },                {
+            "fqsen": "\\Discord\\Repository\\Guild\\MemberRepository\u003A\u003Afreshen\u0028\u0029",
+            "name": "freshen",
+            "summary": "Freshens\u0020the\u0020repository\u0020collection.",
+            "url": "classes/Discord-Repository-Guild-MemberRepository.html#method_freshen"
         },                {
             "fqsen": "\\Discord\\Repository\\Guild\\MemberRepository\u003A\u003A\u0024endpoints",
             "name": "endpoints",
@@ -7841,6 +8046,26 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Discord-WebSockets-Event.html#constant_INVITE_DELETE"
         },                {
+            "fqsen": "\\Discord\\WebSockets\\Event\u003A\u003AAUTO_MODERATION_RULE_CREATE",
+            "name": "AUTO_MODERATION_RULE_CREATE",
+            "summary": "",
+            "url": "classes/Discord-WebSockets-Event.html#constant_AUTO_MODERATION_RULE_CREATE"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Event\u003A\u003AAUTO_MODERATION_RULE_UPDATE",
+            "name": "AUTO_MODERATION_RULE_UPDATE",
+            "summary": "",
+            "url": "classes/Discord-WebSockets-Event.html#constant_AUTO_MODERATION_RULE_UPDATE"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Event\u003A\u003AAUTO_MODERATION_RULE_DELETE",
+            "name": "AUTO_MODERATION_RULE_DELETE",
+            "summary": "",
+            "url": "classes/Discord-WebSockets-Event.html#constant_AUTO_MODERATION_RULE_DELETE"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Event\u003A\u003AAUTO_MODERATION_ACTION_EXECUTION",
+            "name": "AUTO_MODERATION_ACTION_EXECUTION",
+            "summary": "",
+            "url": "classes/Discord-WebSockets-Event.html#constant_AUTO_MODERATION_ACTION_EXECUTION"
+        },                {
             "fqsen": "\\Discord\\WebSockets\\Event\u003A\u003ACHANNEL_CREATE",
             "name": "CHANNEL_CREATE",
             "summary": "",
@@ -7980,6 +8205,46 @@ Search.appendIndex(
             "name": "handle",
             "summary": "Transforms\u0020the\u0020given\u0020data,\u0020and\u0020updates\u0020the\nDiscord\u0020instance\u0020if\u0020necessary.",
             "url": "classes/Discord-WebSockets-Events-ApplicationCommandPermissionsUpdate.html#method_handle"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Events\\AutoModerationActionExecution",
+            "name": "AutoModerationActionExecution",
+            "summary": "Contains\u0020constants\u0020for\u0020WebSocket\u0020events\u0020as\u0020well\u0020as\u0020handlers\nfor\u0020the\u0020events.",
+            "url": "classes/Discord-WebSockets-Events-AutoModerationActionExecution.html"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Events\\AutoModerationActionExecution\u003A\u003Ahandle\u0028\u0029",
+            "name": "handle",
+            "summary": "Transforms\u0020the\u0020given\u0020data,\u0020and\u0020updates\u0020the\nDiscord\u0020instance\u0020if\u0020necessary.",
+            "url": "classes/Discord-WebSockets-Events-AutoModerationActionExecution.html#method_handle"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Events\\AutoModerationRuleCreate",
+            "name": "AutoModerationRuleCreate",
+            "summary": "Contains\u0020constants\u0020for\u0020WebSocket\u0020events\u0020as\u0020well\u0020as\u0020handlers\nfor\u0020the\u0020events.",
+            "url": "classes/Discord-WebSockets-Events-AutoModerationRuleCreate.html"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Events\\AutoModerationRuleCreate\u003A\u003Ahandle\u0028\u0029",
+            "name": "handle",
+            "summary": "Transforms\u0020the\u0020given\u0020data,\u0020and\u0020updates\u0020the\nDiscord\u0020instance\u0020if\u0020necessary.",
+            "url": "classes/Discord-WebSockets-Events-AutoModerationRuleCreate.html#method_handle"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Events\\AutoModerationRuleDelete",
+            "name": "AutoModerationRuleDelete",
+            "summary": "Contains\u0020constants\u0020for\u0020WebSocket\u0020events\u0020as\u0020well\u0020as\u0020handlers\nfor\u0020the\u0020events.",
+            "url": "classes/Discord-WebSockets-Events-AutoModerationRuleDelete.html"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Events\\AutoModerationRuleDelete\u003A\u003Ahandle\u0028\u0029",
+            "name": "handle",
+            "summary": "Transforms\u0020the\u0020given\u0020data,\u0020and\u0020updates\u0020the\nDiscord\u0020instance\u0020if\u0020necessary.",
+            "url": "classes/Discord-WebSockets-Events-AutoModerationRuleDelete.html#method_handle"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Events\\AutoModerationRuleUpdate",
+            "name": "AutoModerationRuleUpdate",
+            "summary": "Contains\u0020constants\u0020for\u0020WebSocket\u0020events\u0020as\u0020well\u0020as\u0020handlers\nfor\u0020the\u0020events.",
+            "url": "classes/Discord-WebSockets-Events-AutoModerationRuleUpdate.html"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Events\\AutoModerationRuleUpdate\u003A\u003Ahandle\u0028\u0029",
+            "name": "handle",
+            "summary": "Transforms\u0020the\u0020given\u0020data,\u0020and\u0020updates\u0020the\nDiscord\u0020instance\u0020if\u0020necessary.",
+            "url": "classes/Discord-WebSockets-Events-AutoModerationRuleUpdate.html#method_handle"
         },                {
             "fqsen": "\\Discord\\WebSockets\\Events\\ChannelCreate",
             "name": "ChannelCreate",
@@ -8646,6 +8911,16 @@ Search.appendIndex(
             "summary": "Guild\u0020scheduled\u0020events\u0020events\u003A.",
             "url": "classes/Discord-WebSockets-Intents.html#constant_GUILD_SCHEDULED_EVENTS"
         },                {
+            "fqsen": "\\Discord\\WebSockets\\Intents\u003A\u003AAUTO_MODERATION_CONFIGURATION",
+            "name": "AUTO_MODERATION_CONFIGURATION",
+            "summary": "Auto\u0020moderation\u0020rule\u0020events\u003A.",
+            "url": "classes/Discord-WebSockets-Intents.html#constant_AUTO_MODERATION_CONFIGURATION"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Intents\u003A\u003AAUTO_MODERATION_EXECUTION",
+            "name": "AUTO_MODERATION_EXECUTION",
+            "summary": "Auto\u0020moderation\u0020execution\u0020events\u003A",
+            "url": "classes/Discord-WebSockets-Intents.html#constant_AUTO_MODERATION_EXECUTION"
+        },                {
             "fqsen": "\\Discord\\WebSockets\\Op",
             "name": "Op",
             "summary": "Contains\u0020constants\u0020used\u0020in\u0020websockets.",
@@ -8925,6 +9200,11 @@ Search.appendIndex(
             "name": "AuditLog",
             "summary": "",
             "url": "namespaces/discord-parts-guild-auditlog.html"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\AutoModeration",
+            "name": "AutoModeration",
+            "summary": "",
+            "url": "namespaces/discord-parts-guild-automoderation.html"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild",
             "name": "Guild",

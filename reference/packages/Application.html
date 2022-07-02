@@ -231,6 +231,10 @@ command is triggered.</dd>
         <dd>Represents an entry in the audit log.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Discord-Parts-Guild-AuditLog-Options.html"><abbr title="\Discord\Parts\Guild\AuditLog\Options">Options</abbr></a></dt>
         <dd>Represents an object of options for different audit log action types.</dd>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Discord-Parts-Guild-AutoModeration-Action.html"><abbr title="\Discord\Parts\Guild\AutoModeration\Action">Action</abbr></a></dt>
+        <dd>An action which will execute whenever a rule is triggered.</dd>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Discord-Parts-Guild-AutoModeration-Rule.html"><abbr title="\Discord\Parts\Guild\AutoModeration\Rule">Rule</abbr></a></dt>
+        <dd>Auto Moderation is a feature which allows each guild to set up rules that trigger based on some criteria. For example, a rule can trigger whenever a message contains a specific keyword.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Discord-Parts-Guild-Ban.html"><abbr title="\Discord\Parts\Guild\Ban">Ban</abbr></a></dt>
         <dd>A Ban is a ban on a user specific to a guild. It is also IP based.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Discord-Parts-Guild-Emoji.html"><abbr title="\Discord\Parts\Guild\Emoji">Emoji</abbr></a></dt>
@@ -296,6 +300,8 @@ base class.</dd>
         <dd>A member is a relationship between a user and a guild. It contains user-to-guild specific data like roles.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Discord-Parts-User-User.html"><abbr title="\Discord\Parts\User\User">User</abbr></a></dt>
         <dd>A user is a general user that is not attached to a guild.</dd>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Discord-Parts-WebSockets-AutoModerationActionExecution.html"><abbr title="\Discord\Parts\WebSockets\AutoModerationActionExecution">AutoModerationActionExecution</abbr></a></dt>
+        <dd>Sent when a rule is triggered and an action is executed (e.g. when a message is blocked).</dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Discord-Parts-WebSockets-MessageReaction.html"><abbr title="\Discord\Parts\WebSockets\MessageReaction">MessageReaction</abbr></a></dt>
         <dd>Represents a specific reaction to a message by a specific user.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Discord-Parts-WebSockets-PresenceUpdate.html"><abbr title="\Discord\Parts\WebSockets\PresenceUpdate">PresenceUpdate</abbr></a></dt>
@@ -324,6 +330,8 @@ information such as when the event was fired and then channel it was fired in.</
         <dd>Contains voice states for users in the voice channel.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Discord-Repository-Channel-WebhookRepository.html"><abbr title="\Discord\Repository\Channel\WebhookRepository">WebhookRepository</abbr></a></dt>
         <dd>Repositories provide a way to store and update parts on the Discord server.</dd>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Discord-Repository-Guild-AutoModerationRuleRepository.html"><abbr title="\Discord\Repository\Guild\AutoModerationRuleRepository">AutoModerationRuleRepository</abbr></a></dt>
+        <dd>Contains auto moderation rules that belong to guilds.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Discord-Repository-Guild-BanRepository.html"><abbr title="\Discord\Repository\Guild\BanRepository">BanRepository</abbr></a></dt>
         <dd>Contains bans on users.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Discord-Repository-Guild-ChannelRepository.html"><abbr title="\Discord\Repository\Guild\ChannelRepository">ChannelRepository</abbr></a></dt>
@@ -376,6 +384,18 @@ information such as when the event was fired and then channel it was fired in.</
         <dd>Contains constants for WebSocket events as well as handlers
 for the events.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Discord-WebSockets-Events-ApplicationCommandPermissionsUpdate.html"><abbr title="\Discord\WebSockets\Events\ApplicationCommandPermissionsUpdate">ApplicationCommandPermissionsUpdate</abbr></a></dt>
+        <dd>Contains constants for WebSocket events as well as handlers
+for the events.</dd>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Discord-WebSockets-Events-AutoModerationActionExecution.html"><abbr title="\Discord\WebSockets\Events\AutoModerationActionExecution">AutoModerationActionExecution</abbr></a></dt>
+        <dd>Contains constants for WebSocket events as well as handlers
+for the events.</dd>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Discord-WebSockets-Events-AutoModerationRuleCreate.html"><abbr title="\Discord\WebSockets\Events\AutoModerationRuleCreate">AutoModerationRuleCreate</abbr></a></dt>
+        <dd>Contains constants for WebSocket events as well as handlers
+for the events.</dd>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Discord-WebSockets-Events-AutoModerationRuleDelete.html"><abbr title="\Discord\WebSockets\Events\AutoModerationRuleDelete">AutoModerationRuleDelete</abbr></a></dt>
+        <dd>Contains constants for WebSocket events as well as handlers
+for the events.</dd>
+            <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Discord-WebSockets-Events-AutoModerationRuleUpdate.html"><abbr title="\Discord\WebSockets\Events\AutoModerationRuleUpdate">AutoModerationRuleUpdate</abbr></a></dt>
         <dd>Contains constants for WebSocket events as well as handlers
 for the events.</dd>
             <dt class="phpdocumentor-table-of-contents__entry -class"><a href="classes/Discord-WebSockets-Events-ChannelCreate.html"><abbr title="\Discord\WebSockets\Events\ChannelCreate">ChannelCreate</abbr></a></dt>
