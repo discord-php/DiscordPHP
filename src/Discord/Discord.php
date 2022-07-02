@@ -266,6 +266,20 @@ class Discord
     protected $encoding = 'json';
 
     /**
+     * Gateway compressed message payload buffer.
+     *
+     * @var string Buffer.
+     */
+    protected $payloadBuffer = '';
+
+    /**
+     * zlib decompressor.
+     *
+     * @var \Clue\React\Zlib\Decompressor
+     */
+    protected $zlibDecompressor;
+
+    /**
      * Tracks the number of payloads the client
      * has sent in the past 60 seconds.
      *
@@ -565,12 +579,37 @@ class Discord
      */
     public function handleWsMessage(Message $message): void
     {
-        if ($message->isBinary()) {
-            $data = zlib_decode($message->getPayload());
-        } else {
-            $data = $message->getPayload();
-        }
+        $payload = $message->getPayload();
 
+        if ($message->isBinary()) {
+            if ($this->zlibDecompressor) {
+                $this->payloadBuffer .= $payload;
+
+                if ($message->getPayloadLength() < 4 || substr($payload, -4) != "\x00\x00\xff\xff") {
+                    return;
+                }
+
+                $this->zlibDecompressor->once('data', function ($data) {
+                    $this->processWsMessage($data);
+                    $this->payloadBuffer = '';
+                });
+
+                $this->zlibDecompressor->write($this->payloadBuffer);
+            } else {
+                $this->processWsMessage(zlib_decode($payload));
+            }
+        } else {
+            $this->processWsMessage($payload);
+        }
+    }
+
+    /**
+     * Process WebSocket message payloads.
+     *
+     * @param string $data Message payload.
+     */
+    protected function processWsMessage(string $data): void
+    {
         $data = json_decode($data);
         $this->emit('raw', [$data, $this]);
 
@@ -1234,6 +1273,13 @@ class Discord
                 'v' => self::GATEWAY_VERSION,
                 'encoding' => $this->encoding,
             ];
+
+            
+            if (class_exists('\Clue\React\Zlib\Decompressor')) {
+                $this->logger->warning('The `clue/reactphp-zlib` is present, Enabling experimental zlib-stream compressed gateway message.');
+                $this->zlibDecompressor = new \Clue\React\Zlib\Decompressor(ZLIB_ENCODING_DEFLATE);
+                $params['compress'] = 'zlib-stream';
+            }
 
             $query = http_build_query($params);
             $this->gateway = trim($gateway, '/').'/?'.$query;
