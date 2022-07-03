@@ -103,7 +103,7 @@ class BanRepository extends AbstractRepository
      *
      * @return ExtendedPromiseInterface
      */
-    public function unban($member, ?string $reason = null): ExtendedPromiseInterface
+    public function unban($user, ?string $reason = null): ExtendedPromiseInterface
     {
         if ($user instanceof User || $user instanceof Member) {
             $user = $user->id;
@@ -111,6 +111,6 @@ class BanRepository extends AbstractRepository
             $user = $user->user_id;
         }
 
-        return $this->delete($member, $reason);
+        return $this->delete($user, $reason);
     }
 }
