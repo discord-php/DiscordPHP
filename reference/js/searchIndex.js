@@ -3781,11 +3781,6 @@ Search.appendIndex(
             "summary": "Returns\u0020the\u0020user\u0020attribute\u0020of\u0020the\u0020ban.",
             "url": "classes/Discord-Parts-Guild-Ban.html#method_getUserAttribute"
         },                {
-            "fqsen": "\\Discord\\Parts\\Guild\\Ban\u003A\u003AgetUpdatableAttributes\u0028\u0029",
-            "name": "getUpdatableAttributes",
-            "summary": "Returns\u0020the\u0020updatable\u0020attributes.",
-            "url": "classes/Discord-Parts-Guild-Ban.html#method_getUpdatableAttributes"
-        },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Ban\u003A\u003AgetRepositoryAttributes\u0028\u0029",
             "name": "getRepositoryAttributes",
             "summary": "Gets\u0020the\u0020attributes\u0020to\u0020pass\u0020to\u0020repositories.",
