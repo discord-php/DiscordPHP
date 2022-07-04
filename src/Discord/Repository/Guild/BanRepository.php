@@ -112,7 +112,7 @@ class BanRepository extends AbstractRepository
             $ban = $ban->id;
         }
 
-        if (! ($ban instanceof Ban)) {
+        if (! is_object($ban)) {
             if ($banPart = $this->get('user_id', $ban)) {
                 $ban = $banPart;
             }
