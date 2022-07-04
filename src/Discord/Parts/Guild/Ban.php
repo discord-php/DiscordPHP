@@ -74,8 +74,8 @@ class Ban extends Part
      */
     protected function getUserAttribute(): User
     {
-        if (isset($this->attributes['user_id'])) {
-            return $this->discord->users->get('id', $this->attributes['user_id']);
+        if (isset($this->attributes['user_id']) && $user = $this->discord->users->get('id', $this->attributes['user_id'])) {
+            return $user;
         }
 
         if ($user = $this->discord->users->get('id', $this->attributes['user']->id)) {
@@ -83,14 +83,6 @@ class Ban extends Part
         }
 
         return $this->factory->part(User::class, (array) $this->attributes['user'], true);
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getUpdatableAttributes(): array
-    {
-        return [];
     }
 
     /**

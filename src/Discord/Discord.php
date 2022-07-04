@@ -86,7 +86,7 @@ class Discord
      *
      * @var string Version.
      */
-    public const VERSION = 'v7.1.0';
+    public const VERSION = 'v7.1.2';
 
     /**
      * The logger.
@@ -1275,7 +1275,7 @@ class Discord
             ];
 
             if (class_exists('\Clue\React\Zlib\Decompressor')) {
-                $this->logger->warning('The `clue/reactphp-zlib` is present, Enabling experimental zlib-stream compressed gateway message.');
+                $this->logger->warning('The `clue/zlib-react` is installed, Enabling experimental zlib-stream compressed gateway message.');
                 $this->zlibDecompressor = new \Clue\React\Zlib\Decompressor(ZLIB_ENCODING_DEFLATE);
                 $params['compress'] = 'zlib-stream';
             }

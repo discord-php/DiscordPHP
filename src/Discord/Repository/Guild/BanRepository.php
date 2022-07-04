@@ -11,7 +11,6 @@
 
 namespace Discord\Repository\Guild;
 
-use Discord\Helpers\Deferred;
 use Discord\Http\Endpoint;
 use Discord\Parts\Guild\Ban;
 use Discord\Parts\User\Member;
@@ -56,41 +55,45 @@ class BanRepository extends AbstractRepository
      *
      * @see https://discord.com/developers/docs/resources/guild#create-guild-ban
      *
-     * @param Member|string $member
-     * @param int|null      $daysToDeleteMessages
-     * @param string|null   $reason
+     * @param User|Member|string $user
+     * @param int|null           $daysToDeleteMessages
+     * @param string|null        $reason
      *
      * @return ExtendedPromiseInterface
      */
-    public function ban($member, ?int $daysToDeleteMessages = null, ?string $reason = null): ExtendedPromiseInterface
+    public function ban($user, ?int $daysToDeleteMessages = null, ?string $reason = null): ExtendedPromiseInterface
     {
-        $deferred = new Deferred();
         $content = [];
         $headers = [];
 
-        if ($member instanceof Member) {
-            $member = $member->id;
+        if ($user instanceof Member) {
+            $user = $user->user;
+        } elseif (! ($user instanceof User)) {
+            $user = $this->factory->part(User::class, ['id' => $user], true);
         }
 
-        if (! is_null($daysToDeleteMessages)) {
+        if (isset($daysToDeleteMessages)) {
             $content['delete_message_days'] = $daysToDeleteMessages;
         }
 
-        if (! is_null($reason)) {
+        if (isset($reason)) {
             $headers['X-Audit-Log-Reason'] = $reason;
         }
 
-        $this->http->put(
-            Endpoint::bind(Endpoint::GUILD_BAN, $this->vars['guild_id'], $member),
+        return $this->http->put(
+            Endpoint::bind(Endpoint::GUILD_BAN, $this->vars['guild_id'], $user->id),
             empty($content) ? null : $content,
             $headers
-        )->done(function ($response) use ($deferred) {
-            $ban = $this->factory->create(Ban::class, $response, true);
-            $this->push($ban);
-            $deferred->resolve($ban);
-        }, [$deferred, 'reject']);
+        )->then(function () use ($user, $reason) {
+            $ban = $this->factory->create(Ban::class, [
+                'user' => (object) $user->getRawAttributes(),
+                'reason' => $reason,
+                'guild_id' => $this->vars['guild_id'],
+            ], true);
+            $this->pushItem($ban);
 
-        return $deferred->promise();
+            return $ban;
+        });
     }
 
     /**
@@ -98,19 +101,23 @@ class BanRepository extends AbstractRepository
      *
      * @see https://discord.com/developers/docs/resources/guild#remove-guild-ban
      *
-     * @param User|Ban|string $user   User or Ban Part, or User ID
+     * @param User|Ban|string $ban    User or Ban Part, or User ID
      * @param string|null     $reason Reason for Audit Log.
      *
      * @return ExtendedPromiseInterface
      */
-    public function unban($user, ?string $reason = null): ExtendedPromiseInterface
+    public function unban($ban, ?string $reason = null): ExtendedPromiseInterface
     {
-        if ($user instanceof User || $user instanceof Member) {
-            $user = $user->id;
-        } elseif ($user instanceof Ban) {
-            $user = $user->user_id;
+        if ($ban instanceof User || $ban instanceof Member) {
+            $ban = $ban->id;
         }
 
-        return $this->delete($user, $reason);
+        if (is_scalar($ban)) {
+            if ($banPart = $this->get('user_id', $ban)) {
+                $ban = $banPart;
+            }
+        }
+
+        return $this->delete($ban, $reason);
     }
 }
