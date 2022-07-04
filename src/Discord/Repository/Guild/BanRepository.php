@@ -72,11 +72,11 @@ class BanRepository extends AbstractRepository
             $user = $this->factory->part(User::class, ['id' => $user], true);
         }
 
-        if (! isset($daysToDeleteMessages)) {
+        if (isset($daysToDeleteMessages)) {
             $content['delete_message_days'] = $daysToDeleteMessages;
         }
 
-        if (! isset($reason)) {
+        if (isset($reason)) {
             $headers['X-Audit-Log-Reason'] = $reason;
         }
 
