@@ -112,7 +112,7 @@ class BanRepository extends AbstractRepository
             $ban = $ban->id;
         }
 
-        if (! is_scalar($ban)) {
+        if (is_scalar($ban)) {
             if ($banPart = $this->get('user_id', $ban)) {
                 $ban = $banPart;
             }
