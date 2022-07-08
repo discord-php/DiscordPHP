@@ -32,8 +32,8 @@ use function Discord\poly_strlen;
  * @property array|null               $channel_types             If the option is a channel type, the channels shown will be restricted to these types.
  * @property int|float|null           $min_value                 If the option is an INTEGER or NUMBER type, the minimum value permitted.
  * @property int|float|null           $max_value                 If the option is an INTEGER or NUMBER type, the maximum value permitted.
- * @property int|null                 $min_length                For option type `STRING`, the minimum allowed length (minimum of `0`).
- * @property int|null                 $max_length                For option type `STRING`, the maximum allowed length (minimum of `1`).
+ * @property int|null                 $min_length                For option type `STRING`, the minimum allowed length (minimum of `0`, maximum of `6000`).
+ * @property int|null                 $max_length                For option type `STRING`, the maximum allowed length (minimum of `1`, maximum of `6000`).
  * @property bool                     $autocomplete              Enable autocomplete interactions for this option.
  */
 class Option extends Part
@@ -374,8 +374,8 @@ class Option extends Part
     {
         if ($this->type != self::STRING) {
             throw new \LogicException('Minimum length can be only set on Option type STRING.');
-        } elseif ($min_length < 0) {
-            throw new \LengthException('Minimum length must be greater than or equal to 0.');
+        } elseif ($min_length < 0 || $min_length > 6000) {
+            throw new \LengthException('Minimum length must be between 1 and 6000 inclusive..');
         }
 
         $this->min_length = $min_length;
@@ -397,8 +397,8 @@ class Option extends Part
     {
         if ($this->type != self::STRING) {
             throw new \LogicException('Maximum length can be only set on Option type STRING.');
-        } elseif ($max_length < 1) {
-            throw new \LengthException('Maximum length must be greater than or equal to 1.');
+        } elseif ($max_length < 1 || $max_length > 6000) {
+            throw new \LengthException('Maximum length must be between 1 and 6000 inclusive.');
         }
 
         $this->max_length = $max_length;
