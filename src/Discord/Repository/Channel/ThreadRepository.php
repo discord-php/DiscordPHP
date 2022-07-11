@@ -16,7 +16,6 @@ use Discord\Http\Endpoint;
 use Discord\Parts\Thread\Member;
 use Discord\Parts\Thread\Thread;
 use Discord\Repository\AbstractRepository;
-use InvalidArgumentException;
 use React\Promise\ExtendedPromiseInterface;
 
 /**
@@ -72,13 +71,15 @@ class ThreadRepository extends AbstractRepository
      * @param int|null           $limit   The number of threads to return, null to return all.
      * @param Thread|string|null $before  Retrieve threads before this thread. Takes a thread object or a thread ID.
      *
+     * @throws \InvalidArgumentException
+     * 
      * @return ExtendedPromiseInterface<Collection<Thread>>
      */
     public function archived(bool $private = false, bool $joined = false, ?int $limit = null, $before = null): ExtendedPromiseInterface
     {
         if ($joined) {
             if (! $private) {
-                throw new InvalidArgumentException('You cannot fetch threads that the bot has joined but are not private.');
+                throw new \InvalidArgumentException('You cannot fetch threads that the bot has joined but are not private.');
             }
 
             $endpoint = Endpoint::CHANNEL_THREADS_ARCHIVED_PRIVATE_ME;

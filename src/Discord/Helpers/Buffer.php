@@ -12,11 +12,9 @@
 namespace Discord\Helpers;
 
 use Evenement\EventEmitter;
-use Exception;
 use React\EventLoop\LoopInterface;
 use React\Promise\ExtendedPromiseInterface;
 use React\Stream\WritableStreamInterface;
-use RuntimeException;
 
 class Buffer extends EventEmitter implements WritableStreamInterface
 {
@@ -118,9 +116,9 @@ class Buffer extends EventEmitter implements WritableStreamInterface
      * @param null|string $format  Format to read the bytes in. See `pack()`.
      * @param int         $timeout Time in milliseconds before the read times out.
      *
-     * @return ExtendedPromiseInterface<mixed, RuntimeException>
+     * @return ExtendedPromiseInterface<mixed, \RuntimeException>
      *
-     * @throws RuntimeException When there is an error unpacking the read bytes.
+     * @throws \RuntimeException When there is an error unpacking the read bytes.
      */
     public function read(int $length, ?string $format = null, ?int $timeout = -1): ExtendedPromiseInterface
     {
@@ -133,7 +131,7 @@ class Buffer extends EventEmitter implements WritableStreamInterface
 
             if ($timeout >= 0 && $this->loop !== null) {
                 $timer = $this->loop->addTimer($timeout / 1000, function () use ($deferred) {
-                    $deferred->reject(new Exception('Timed out.'));
+                    $deferred->reject(new \Exception('Timed out.'));
                 });
 
                 $deferred->promise()->then(function () use ($timer) {
@@ -147,7 +145,7 @@ class Buffer extends EventEmitter implements WritableStreamInterface
                 $unpacked = unpack($format, $d);
                 
                 if ($unpacked === false) {
-                    throw new RuntimeException('Error unpacking buffer.');
+                    throw new \RuntimeException('Error unpacking buffer.');
                 }
                 
                 return reset($unpacked);
@@ -162,9 +160,9 @@ class Buffer extends EventEmitter implements WritableStreamInterface
      *
      * @param int $timeout Time in milliseconds before the read times out.
      *
-     * @return ExtendedPromiseInterface<int, RuntimeException>
+     * @return ExtendedPromiseInterface<int, \RuntimeException>
      *
-     * @throws RuntimeException When there is an error unpacking the read bytes.
+     * @throws \RuntimeException When there is an error unpacking the read bytes.
      */
     public function readInt32(int $timeout = -1): ExtendedPromiseInterface
     {
@@ -176,9 +174,9 @@ class Buffer extends EventEmitter implements WritableStreamInterface
      *
      * @param int $timeout Time in milliseconds before the read times out.
      *
-     * @return ExtendedPromiseInterface<int, RuntimeException>
+     * @return ExtendedPromiseInterface<int, \RuntimeException>
      *
-     * @throws RuntimeException When there is an error unpacking the read bytes.
+     * @throws \RuntimeException When there is an error unpacking the read bytes.
      */
     public function readInt16(int $timeout = -1): ExtendedPromiseInterface
     {
