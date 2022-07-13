@@ -19,7 +19,7 @@ use React\Promise\ExtendedPromiseInterface;
 /**
  * A Widget of a Guild.
  *
- * @see https://discord.com/developers/docs/resources/guild#get-guild-widget-object
+ * @see https://discord.com/developers/docs/resources/guild#guild-widget-object
  *
  * @property string      $id             Guild id.
  * @property Guild|null  $guild          Guild.
@@ -44,12 +44,18 @@ class Widget extends Part
         'presence_count',
     ];
 
+    public const STYLE_SHIELD = 'shield';
+    public const STYLE_BANNER1 = 'banner1';
+    public const STYLE_BANNER2 = 'banner2';
+    public const STYLE_BANNER3 = 'banner3';
+    public const STYLE_BANNER4 = 'banner4';
+
     public const STYLE = [
-        'shield',
-        'banner1',
-        'banner2',
-        'banner3',
-        'banner4',
+        self::STYLE_SHIELD,
+        self::STYLE_BANNER1,
+        self::STYLE_BANNER2,
+        self::STYLE_BANNER3,
+        self::STYLE_BANNER4,
     ];
 
     /**
@@ -60,10 +66,6 @@ class Widget extends Part
         return $this->http->get(Endpoint::bind(Endpoint::GUILD_WIDGET, $this->id))
             ->then(function ($response) {
                 $this->fill((array) $response);
-
-                if ($this->guild) {
-                    $this->guild->widget = $this;
-                }
 
                 return $this;
             });
@@ -82,11 +84,11 @@ class Widget extends Part
     /**
      * Returns a PNG image widget for the guild. Requires no permissions or authentication.
      *
-     * @param string|null $style Style of the widget image returned
+     * @param string $style Style of the widget image returned (default 'shield').
      *
      * @return string
      */
-    public function getImageAttribute(?string $style = 'shield'): string
+    public function getImageAttribute(string $style = self::STYLE_SHIELD): string
     {
         $endpoint = Endpoint::bind(Endpoint::GUILD_WIDGET_IMAGE, $this->id);
 
