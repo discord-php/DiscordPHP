@@ -11,12 +11,13 @@
 
 namespace Discord\Parts\Channel;
 
+use Discord\Builders\MessageBuilder;
 use Discord\Http\Endpoint;
 use Discord\Http\Http;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
-use React\Promise\PromiseInterface;
+use React\Promise\ExtendedPromiseInterface;
 
 /**
  * Webhooks are a low-effort way to post messages to channels in Discord. They do not require a bot user or authentication to use.
@@ -67,13 +68,34 @@ class Webhook extends Part
      *
      * @see https://discord.com/developers/docs/resources/webhook#execute-webhook-jsonform-params
      *
-     * @param array $data
+     * @param MessageBuilder|array $data
+     * @param array                $queryparams Query string params to add to the request
      *
-     * @return PromiseInterface
+     * @return ExtendedPromiseInterface
      */
-    public function execute(array $data): PromiseInterface
+    public function execute($data, array $queryparams = []): ExtendedPromiseInterface
     {
-        return $this->http->post(Endpoint::bind(Endpoint::WEBHOOK_EXECUTE, $this->id, $this->token), $data);
+        $endpoint = Endpoint::bind(Endpoint::WEBHOOK_EXECUTE, $this->id, $this->token);
+
+        foreach ($queryparams as $query => $param) {
+            $endpoint->addQuery($query, $param);
+        }
+
+        if ($data instanceof MessageBuilder && $data->requiresMultipart()) {
+            $multipart = $data->toMultipart();
+
+            $promise = $this->http->post($endpoint, (string) $multipart, $multipart->getHeaders());
+        } else {
+            $promise = $this->http->post($endpoint, $data);
+        }
+
+        if (! empty($queryparams['wait'])) {
+            $promise->then(function ($response) {
+                return $this->factory->part(Message::class, (array) $response + ['guild_id' => $this->guild_id], true);
+            });
+        }
+
+        return $promise;
     }
 
     /**
@@ -143,23 +165,23 @@ class Webhook extends Part
     /**
      * @inheritdoc
      */
-    public function getUpdatableAttributes(): array
+    public function getCreatableAttributes(): array
     {
         return [
             'name' => $this->name,
             'avatar' => $this->avatar,
-            'channel_id' => $this->channel_id,
         ];
     }
 
     /**
      * @inheritdoc
      */
-    public function getCreatableAttributes(): array
+    public function getUpdatableAttributes(): array
     {
         return [
             'name' => $this->name,
             'avatar' => $this->avatar,
+            'channel_id' => $this->channel_id,
         ];
     }
 
