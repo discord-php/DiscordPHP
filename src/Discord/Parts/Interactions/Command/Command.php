@@ -188,4 +188,14 @@ class Command extends Part
             'application_id' => $this->application_id,
         ];
     }
+
+    /**
+     * Returns a formatted mention of the command.
+     *
+     * @return string A formatted mention of the command.
+     */
+    public function __toString(): string
+    {
+        return "</{$this->name}:{$this->id}>";
+    }
 }
