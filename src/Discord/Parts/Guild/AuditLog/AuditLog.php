@@ -106,11 +106,11 @@ class AuditLog extends Part
         $collection = Collection::for(User::class);
 
         foreach ($this->attributes['users'] ?? [] as $user) {
-            if ($cache_user = $this->discord->users->get('id', $user->id)) {
-                $collection->pushItem($cache_user);
-            } else {
-                $collection->pushItem($this->factory->create(User::class, $user, true));
+            if (! $cache_user = $this->discord->users->get('id', $user->id)) {
+                $cache_user = $this->factory->create(User::class, $user, true);
             }
+
+            $collection->pushItem($cache_user);
         }
 
         return $collection;

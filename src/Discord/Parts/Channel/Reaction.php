@@ -115,11 +115,11 @@ class Reaction extends Part
             $users = new Collection([], 'id', User::class);
 
             foreach ((array) $response as $user) {
-                if ($part = $this->discord->users->get('id', $user->id)) {
-                    $users->pushItem($part);
-                } else {
-                    $users->pushItem(new User($this->discord, (array) $user, true));
+                if (! $part = $this->discord->users->get('id', $user->id)) {
+                    $part = new User($this->discord, (array) $user, true);
                 }
+
+                $users->pushItem($part);
             }
 
             return $users;
