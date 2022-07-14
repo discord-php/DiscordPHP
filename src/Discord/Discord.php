@@ -1568,7 +1568,7 @@ class Discord
     }
 
     /**
-     * Registeres a command with the client.
+     * Add listerner for incoming application command from interaction
      *
      * @param string|array  $name
      * @param callable      $callback
