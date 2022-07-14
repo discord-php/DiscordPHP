@@ -295,7 +295,7 @@ class Guild extends Part
 
             foreach ($response as $invite) {
                 $invite = $this->factory->create(Invite::class, $invite, true);
-                $invites->push($invite);
+                $invites->pushItem($invite);
             }
 
             return $invites;
@@ -639,7 +639,7 @@ class Guild extends Part
         return $this->http->post(Endpoint::bind(Endpoint::GUILD_EMOJIS, $this->id), $options, $headers)
             ->then(function ($response) {
                 $emoji = $this->factory->create(Emoji::class, $response, true);
-                $this->emojis->push($emoji);
+                $this->emojis->pushItem($emoji);
 
                 return $emoji;
             });
@@ -739,7 +739,7 @@ class Guild extends Part
         return $this->http->post(Endpoint::bind(Endpoint::GUILD_STICKERS, $this->id), (string) $multipart, $headers)
             ->then(function ($response) {
                 $sticker = $this->factory->create(Sticker::class, $response, true);
-                $this->stickers->push($sticker);
+                $this->stickers->pushItem($sticker);
 
                 return $sticker;
             });
@@ -934,10 +934,10 @@ class Guild extends Part
             foreach ($responses as $response) {
                 if (! $member = $this->members->get('id', $response->user->id)) {
                     $member = $this->factory->create(Member::class, $response, true);
-                    $this->members->push($member);
+                    $this->members->pushItem($member);
                 }
 
-                $members->push($member);
+                $members->pushItem($member);
             }
 
             return $members;

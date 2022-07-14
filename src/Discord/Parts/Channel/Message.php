@@ -280,7 +280,7 @@ class Message extends Part
         if (preg_match_all('/<#([0-9]*)>/', $this->content, $matches)) {
             foreach ($matches[1] as $channelId) {
                 if ($channel = $this->discord->getChannel($channelId)) {
-                    $collection->push($channel);
+                    $collection->pushItem($channel);
                 }
             }
         }
@@ -290,7 +290,7 @@ class Message extends Part
                 $channel = $this->factory->create(Channel::class, $mention_channel, true);
             }
 
-            $collection->push($channel);
+            $collection->pushItem($channel);
         }
 
         return $collection;
@@ -322,7 +322,7 @@ class Message extends Part
         $this->reactions->clear();
 
         foreach ($reactions as $reaction) {
-            $this->reactions->push($this->reactions->create((array) $reaction, true));
+            $this->reactions->pushItem($this->reactions->create((array) $reaction, true));
         }
     }
 
@@ -402,7 +402,7 @@ class Message extends Part
         if ($this->channel->guild) {
             foreach ($this->channel->guild->roles ?? [] as $role) {
                 if (in_array($role->id, $this->attributes['mention_roles'] ?? [])) {
-                    $roles->push($role);
+                    $roles->pushItem($role);
                 }
             }
         }
@@ -423,7 +423,7 @@ class Message extends Part
             if (! $user = $this->discord->users->get('id', $mention->id)) {
                 $user = $this->factory->create(User::class, $mention, true);
             }
-            $users->push($user);
+            $users->pushItem($user);
         }
 
         return $users;
@@ -488,7 +488,7 @@ class Message extends Part
         $embeds = new Collection([], null);
 
         foreach ($this->attributes['embeds'] ?? [] as $embed) {
-            $embeds->push($this->factory->create(Embed::class, $embed, true));
+            $embeds->pushItem($this->factory->create(Embed::class, $embed, true));
         }
 
         return $embeds;
@@ -597,7 +597,7 @@ class Message extends Part
         $sticker_items = Collection::for(Sticker::class);
 
         foreach ($this->attributes['sticker_items'] as $sticker) {
-            $sticker_items->push($this->factory->create(Sticker::class, $sticker, true));
+            $sticker_items->pushItem($this->factory->create(Sticker::class, $sticker, true));
         }
 
         return $sticker_items;
@@ -858,7 +858,7 @@ class Message extends Part
             $filterResult = call_user_func_array($filter, [$reaction]);
 
             if ($filterResult) {
-                $reactions->push($reaction);
+                $reactions->pushItem($reaction);
 
                 if ($options['limit'] !== false && sizeof($reactions) >= $options['limit']) {
                     $this->discord->removeListener(Event::MESSAGE_REACTION_ADD, $eventHandler);

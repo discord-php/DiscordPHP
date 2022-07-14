@@ -41,7 +41,7 @@ class Overwrite extends Part
         $permissions = new Collection();
 
         foreach ($this->attributes['permissions'] ?? [] as $permission) {
-            $permissions->push($this->factory->create(Permission::class, $permission, true));
+            $permissions->pushItem($this->factory->create(Permission::class, $permission, true));
         }
 
         return $permissions;

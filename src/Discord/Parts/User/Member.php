@@ -487,7 +487,7 @@ class Member extends Part
         $activities = new Collection([], null);
 
         foreach ($this->attributes['activities'] ?? [] as $activity) {
-            $activities->push($this->factory->create(Activity::class, $activity, true));
+            $activities->pushItem($this->factory->create(Activity::class, $activity, true));
         }
 
         return $activities;
@@ -565,12 +565,12 @@ class Member extends Part
         if ($guild = $this->guild) {
             foreach ($guild->roles as $role) {
                 if (in_array($role->id, $this->attributes['roles'] ?? [])) {
-                    $roles->push($role);
+                    $roles->pushItem($role);
                 }
             }
         } else {
             foreach ($this->attributes['roles'] ?? [] as $role) {
-                $roles->push($this->factory->create(Role::class, $role, true));
+                $roles->pushItem($this->factory->create(Role::class, $role, true));
             }
         }
 

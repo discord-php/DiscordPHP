@@ -120,13 +120,13 @@ class ScheduledEvent extends Part
             foreach ($responses as $response) {
                 if (isset($response->member) && ! $user = $this->guild->members->get('id', $response->user->id)) {
                     $user = $this->factory->create(Member::class, $response->member, true);
-                    $this->guild->members->push($user);
+                    $this->guild->members->pushItem($user);
                 } elseif (! $user = $this->discord->users->get('id', $response->user->id)) {
                     $user = $this->factory->create(User::class, $response->user, true);
-                    $this->discord->users->push($user);
+                    $this->discord->users->pushItem($user);
                 }
 
-                $users->push($user);
+                $users->pushItem($user);
             }
 
             return $users;

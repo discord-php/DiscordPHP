@@ -104,10 +104,10 @@ class GuildCreate extends Event
                 $member['user_id'] = $this->discord->id;
 
                 $selfMember = $this->factory->create(ThreadMember::class, $member, true);
-                $thread->members->push($selfMember);
+                $thread->members->pushItem($selfMember);
             }
 
-            $guildPart->channels->get('id', $thread->parent_id)->threads->push($thread);
+            $guildPart->channels->get('id', $thread->parent_id)->threads->pushItem($thread);
         }
 
         foreach ($data->stage_instances as $stageInstance) {

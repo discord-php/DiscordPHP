@@ -116,9 +116,9 @@ class Reaction extends Part
 
             foreach ((array) $response as $user) {
                 if ($part = $this->discord->users->get('id', $user->id)) {
-                    $users->push($part);
+                    $users->pushItem($part);
                 } else {
-                    $users->push(new User($this->discord, (array) $user, true));
+                    $users->pushItem(new User($this->discord, (array) $user, true));
                 }
             }
 
@@ -146,7 +146,7 @@ class Reaction extends Part
             return $this->getUsers($options)->then(function (Collection $users) use ($response, &$getUsers) {
                 $last = null;
                 foreach ($users as $user) {
-                    $response->push($user);
+                    $response->pushItem($user);
                     $last = $user;
                 }
 

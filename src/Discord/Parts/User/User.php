@@ -105,7 +105,7 @@ class User extends Part
 
         return $this->http->post(Endpoint::USER_CURRENT_CHANNELS, ['recipient_id' => $this->id])->then(function ($response) {
             $channel = $this->factory->create(Channel::class, $response, true);
-            $this->discord->private_channels->push($channel);
+            $this->discord->private_channels->pushItem($channel);
 
             return $channel;
         });

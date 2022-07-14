@@ -46,7 +46,7 @@ class MessageReactionAdd extends Event
 
                 // New reaction added
                 if (! $addedReaction) {
-                    $message->reactions->push($message->reactions->create([
+                    $message->reactions->pushItem($message->reactions->create([
                         'count' => 1,
                         'me' => $reaction->user_id == $this->discord->id,
                         'emoji' => $reaction->emoji->getRawAttributes(),
