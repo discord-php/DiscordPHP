@@ -26,7 +26,7 @@ class WebhookMessageBuilder extends AbstractMessageBuilder implements JsonSerial
     /**
      * Whether the message is text-to-speech.
      *
-     * @var bool|null
+     * @var bool
      */
     private $tts;
 
@@ -47,11 +47,11 @@ class WebhookMessageBuilder extends AbstractMessageBuilder implements JsonSerial
     /**
      * Sets the TTS status of the message.
      *
-     * @param bool|null $tts
+     * @param bool $tts
      *
      * @return $this
      */
-    public function setTts(?bool $tts = null): self
+    public function setTts(bool $tts = false): self
     {
         $this->tts = $tts;
 
