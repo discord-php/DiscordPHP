@@ -12,6 +12,7 @@
 namespace Discord\Parts\Channel;
 
 use Carbon\Carbon;
+use Discord\Builders\MessageAttributes;
 use Discord\Builders\MessageBuilder;
 use Discord\Helpers\Collection;
 use Discord\Parts\Embed\Embed;
@@ -47,7 +48,6 @@ use function React\Promise\reject;
  * @property User|null                   $author                                 The author of the message. Will be a webhook if sent from one.
  * @property string|null                 $user_id                                The user id of the author.
  * @property Member|null                 $member                                 The member that sent this message, or null if it was in a private message.
- * @property string                      $content                                The content of the message if it is a normal message.
  * @property Carbon                      $timestamp                              A timestamp of when the message was sent.
  * @property Carbon|null                 $edited_timestamp                       A timestamp of when the message was edited, or null.
  * @property bool                        $tts                                    Whether the message was sent as a text-to-speech message.
@@ -66,7 +66,6 @@ use function React\Promise\reject;
  * @property object|null                 $application                            Application of message. Requires rich presence.
  * @property string|null                 $application_id                         If the message is a response to an Interaction, this is the id of the interaction's application.
  * @property object|null                 $message_reference                      Message that is referenced by this message.
- * @property int|null                    $flags                                  Message flags.
  * @property Message|null                $referenced_message                     The message that is referenced in a reply.
  * @property MessageInteraction|null     $interaction                            Sent if the message is a response to an Interaction.
  * @property Thread|null                 $thread                                 The thread that the message was sent in.
@@ -85,6 +84,8 @@ use function React\Promise\reject;
  */
 class Message extends Part
 {
+    use MessageAttributes;
+
     // @todo next major version TYPE_ name consistency
     public const TYPE_NORMAL = 0;
     public const TYPE_USER_ADDED = 1;
