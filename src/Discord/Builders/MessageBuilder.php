@@ -47,6 +47,19 @@ class MessageBuilder implements JsonSerializable
     private $nonce;
 
     /**
+     * Override the default username of the webhook.
+     *
+     * @var string|null
+     */
+    private $username;
+
+    /**
+     * Override the default avatar of the webhook
+     *
+     * @var string|null
+     */
+    private $avatar_url;
+    /**
      * Whether the message is text-to-speech.
      *
      * @var bool
@@ -142,9 +155,9 @@ class MessageBuilder implements JsonSerializable
     /**
      * Sets the nonce of the message. Only used for sending message.
      *
-     * @param int|string|null $nonce Nonce of the message. Maximum 25 characters.
+     * @param int|string|null $nonce Nonce of the message.
      *
-     * @throws \LengthException
+     * @throws \LengthException `$nonce` string exceeds 25 characters.
      *
      * @return $this
      */
@@ -155,6 +168,40 @@ class MessageBuilder implements JsonSerializable
         }
 
         $this->nonce = $nonce;
+
+        return $this;
+    }
+
+    /**
+     * Override the default username of the webhook. Only used for executing webhook.
+     *
+     * @param string $username New webhook username.
+     *
+     * @throws \LengthException `$username` exceeds 80 characters.
+     *
+     * @return $this
+     */
+    public function setUsername(string $username): self
+    {
+        if (poly_strlen($username) > 80) {
+            throw new \LengthException('Username can be only up to 80 characters.');
+        }
+
+        $this->username = $username;
+
+        return $this;
+    }
+
+    /**
+     * Override the default avatar URL of the webhook. Only used for executing webhook.
+     *
+     * @param string $avatar_url New webhook avatar URL.
+     *
+     * @return $this
+     */
+    public function setAvatarUrl(string $avatar_url): self
+    {
+        $this->avatar_url = $avatar_url;
 
         return $this;
     }
@@ -188,7 +235,7 @@ class MessageBuilder implements JsonSerializable
      *
      * @param Embed|array $embeds,...
      *
-     * @throws \OverflowException
+     * @throws \OverflowException Builder exceeds 10 embeds.
      *
      * @return $this
      */
@@ -256,8 +303,8 @@ class MessageBuilder implements JsonSerializable
      *
      * @param Component $component Component to add.
      *
-     * @throws \InvalidArgumentException
-     * @throws \OverflowException
+     * @throws \InvalidArgumentException Component is not a type of `ActionRow` or `SelectMenu`
+     * @throws \OverflowException        Builder exceeds 5 components.
      *
      * @return $this
      */
@@ -325,7 +372,7 @@ class MessageBuilder implements JsonSerializable
      *
      * @param string|Sticker $sticker Sticker to add.
      *
-     * @throws \OverflowException
+     * @throws \OverflowException Builder exceeds 3 stickers.
      *
      * @return $this
      */
@@ -383,7 +430,7 @@ class MessageBuilder implements JsonSerializable
     }
 
     /**
-     * Returns all the sticker IDs in the builder.
+     * Returns all the sticker ids in the builder.
      *
      * @return string[]
      */
@@ -575,6 +622,14 @@ class MessageBuilder implements JsonSerializable
             $empty = false;
         }
 
+        if (isset($this->username)) {
+            $body['username'] = $this->username;
+        }
+
+        if (isset($this->avatar_url)) {
+            $body['avatar_url'] = $this->avatar_url;
+        }
+
         if ($this->nonce !== null) {
             $body['nonce'] = $this->nonce;
         }
@@ -617,8 +672,6 @@ class MessageBuilder implements JsonSerializable
         } elseif ($empty) {
             throw new RequestFailedException('You cannot send an empty message. Set the content or add an embed or file.');
         }
-
-        var_dump($empty, $body);
 
         return $body;
     }
