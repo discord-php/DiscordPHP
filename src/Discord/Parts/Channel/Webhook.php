@@ -11,8 +11,7 @@
 
 namespace Discord\Parts\Channel;
 
-use Discord\Builders\AbstractMessageBuilder;
-use Discord\Builders\WebhookMessageBuilder;
+use Discord\Builders\MessageBuilder;
 use Discord\Http\Endpoint;
 use Discord\Http\Http;
 use Discord\Parts\Guild\Guild;
@@ -69,7 +68,7 @@ class Webhook extends Part
      *
      * @see https://discord.com/developers/docs/resources/webhook#execute-webhook-jsonform-params
      *
-     * @param WebhookMessageBuilder|array $data
+     * @param MessageBuilder|array $data
      * @param array                $queryparams Query string params to add to the request
      *
      * @return ExtendedPromiseInterface
@@ -82,7 +81,7 @@ class Webhook extends Part
             $endpoint->addQuery($query, $param);
         }
 
-        if ($data instanceof AbstractMessageBuilder && $data->requiresMultipart()) {
+        if ($data instanceof MessageBuilder && $data->requiresMultipart()) {
             $multipart = $data->toMultipart();
 
             $promise = $this->http->post($endpoint, (string) $multipart, $multipart->getHeaders());
