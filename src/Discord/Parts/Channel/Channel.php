@@ -204,7 +204,7 @@ class Channel extends Part
                 if (! $user = $this->discord->users->get('id', $recipient->id)) {
                     $user = $this->factory->create(User::class, $recipient, true);
                 }
-                $recipients->push($user);
+                $recipients->pushItem($user);
             }
         }
 
@@ -253,7 +253,7 @@ class Channel extends Part
                     $message = $this->factory->create(Message::class, $response, true);
                 }
 
-                $messages->push($message);
+                $messages->pushItem($message);
             }
 
             return $messages;
@@ -639,7 +639,7 @@ class Channel extends Part
                 if (! $message = $this->messages->get('id', $response->id)) {
                     $message = $this->factory->create(Message::class, $response, true);
                 }
-                $messages->push($message);
+                $messages->pushItem($message);
             }
 
             return $messages;
@@ -739,7 +739,7 @@ class Channel extends Part
             $invites = new Collection();
 
             foreach ($response as $invite) {
-                $invites->push($this->factory->create(Invite::class, $invite, true));
+                $invites->pushItem($this->factory->create(Invite::class, $invite, true));
             }
 
             return $invites;
@@ -760,7 +760,7 @@ class Channel extends Part
                 $overwrite = (array) $overwrite;
                 $overwrite['channel_id'] = $this->id;
 
-                $this->overwrites->push($this->factory->create(Overwrite::class, $overwrite, true));
+                $this->overwrites->pushItem($this->factory->create(Overwrite::class, $overwrite, true));
             }
         }
     }
@@ -1003,7 +1003,7 @@ class Channel extends Part
             $filterResult = call_user_func_array($filter, [$message]);
 
             if ($filterResult) {
-                $messages->push($message);
+                $messages->pushItem($message);
 
                 if ($options['limit'] !== false && sizeof($messages) >= $options['limit']) {
                     $this->discord->removeListener(Event::MESSAGE_CREATE, $eventHandler);

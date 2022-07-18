@@ -74,7 +74,7 @@ class AuditLog extends Part
         $collection = Collection::for(Webhook::class);
 
         foreach ($this->attributes['webhooks'] ?? [] as $webhook) {
-            $collection->push($this->factory->create(Webhook::class, $webhook, true));
+            $collection->pushItem($this->factory->create(Webhook::class, $webhook, true));
         }
 
         return $collection;
@@ -90,7 +90,7 @@ class AuditLog extends Part
         $collection = Collection::for(ScheduledEvent::class);
 
         foreach ($this->attributes['guild_scheduled_events'] ?? [] as $scheduled_event) {
-            $collection->push($this->factory->create(ScheduledEvent::class, $scheduled_event, true));
+            $collection->pushItem($this->factory->create(ScheduledEvent::class, $scheduled_event, true));
         }
 
         return $collection;
@@ -106,11 +106,11 @@ class AuditLog extends Part
         $collection = Collection::for(User::class);
 
         foreach ($this->attributes['users'] ?? [] as $user) {
-            if ($cache_user = $this->discord->users->get('id', $user->id)) {
-                $collection->push($cache_user);
-            } else {
-                $collection->push($this->factory->create(User::class, $user, true));
+            if (! $cache_user = $this->discord->users->get('id', $user->id)) {
+                $cache_user = $this->factory->create(User::class, $user, true);
             }
+
+            $collection->pushItem($cache_user);
         }
 
         return $collection;
@@ -126,7 +126,7 @@ class AuditLog extends Part
         $collection = Collection::for(Entry::class);
 
         foreach ($this->attributes['audit_log_entries'] ?? [] as $entry) {
-            $collection->push($this->factory->create(Entry::class, $entry, true));
+            $collection->pushItem($this->factory->create(Entry::class, $entry, true));
         }
 
         return $collection;
@@ -168,7 +168,7 @@ class AuditLog extends Part
         $collection = Collection::for(Thread::class);
 
         foreach ($this->attributes['threads'] ?? [] as $thread) {
-            $collection->push($this->factory->create(Thread::class, $thread, true));
+            $collection->pushItem($this->factory->create(Thread::class, $thread, true));
         }
 
         return $collection;

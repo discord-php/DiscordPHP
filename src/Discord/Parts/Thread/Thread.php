@@ -464,7 +464,7 @@ class Thread extends Part
                         $message = $this->factory->create(Message::class, $response, true);
                     }
 
-                    $messages->push($message);
+                    $messages->pushItem($message);
                 }
 
                 return $messages;
@@ -574,10 +574,10 @@ class Thread extends Part
             foreach ($responses as $response) {
                 if (! $message = $this->messages->get('id', $response->id)) {
                     $message = $this->factory->create(Message::class, $response, true);
-                    $this->messages->push($message);
+                    $this->messages->pushItem($message);
                 }
 
-                $messages->push($message);
+                $messages->pushItem($message);
             }
 
             return $messages;
@@ -746,7 +746,7 @@ class Thread extends Part
             $filterResult = call_user_func_array($filter, [$message]);
 
             if ($filterResult) {
-                $messages->push($message);
+                $messages->pushItem($message);
 
                 if ($options['limit'] !== false && sizeof($messages) >= $options['limit']) {
                     $this->discord->removeListener(Event::MESSAGE_CREATE, $eventHandler);

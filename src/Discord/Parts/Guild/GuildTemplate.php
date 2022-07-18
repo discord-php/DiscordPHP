@@ -155,14 +155,14 @@ class GuildTemplate extends Part
                     $guild = $this->factory->create(Guild::class, $response, true);
 
                     foreach ($roles as $role) {
-                        $guild->roles->push($guild->roles->create($role, true));
+                        $guild->roles->pushItem($guild->roles->create($role, true));
                     }
 
                     foreach ($channels as $channel) {
-                        $guild->channels->push($guild->channels->create($channel, true));
+                        $guild->channels->pushItem($guild->channels->create($channel, true));
                     }
 
-                    $this->discord->guilds->push($guild);
+                    $this->discord->guilds->pushItem($guild);
                 }
 
                 return $guild;
