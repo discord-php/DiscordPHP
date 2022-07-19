@@ -90,7 +90,7 @@ class Webhook extends Part
         }
 
         if (! empty($queryparams['wait'])) {
-            $promise->then(function ($response) {
+            $promise = $promise->then(function ($response) {
                 return $this->factory->part(Message::class, (array) $response + ['guild_id' => $this->guild_id], true);
             });
         }
