@@ -17,30 +17,30 @@ use Discord\Http\Http;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
+use Discord\Repository\Channel\WebhookMessageRepository;
 use React\Promise\ExtendedPromiseInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-
-use function Discord\normalizePartId;
 
 /**
  * Webhooks are a low-effort way to post messages to channels in Discord. They do not require a bot user or authentication to use.
  *
  * @see https://discord.com/developers/docs/resources/webhook#webhook-resource
  *
- * @property string       $id             The id of the webhook.
- * @property int          $type           The type of webhook.
- * @property ?string|null $guild_id       The guild ID this is for, if any.
- * @property Guild|null   $guild          The guild this is for, if any.
- * @property ?string|null $channel_id     The channel ID this is for, if any.
- * @property Channel|null $channel        The channel ID this is for, if any.
- * @property User|null    $user           The user that created the webhook.
- * @property ?string      $name           The name of the webhook.
- * @property ?string      $avatar         The avatar of the webhook.
- * @property string|null  $token          The token of the webhook.
- * @property ?string      $application_id The bot/OAuth2 application that created this webhook.
- * @property object|null  $source_guild   The partial guild of the channel that this webhook is following (returned for Channel Follower Webhooks).
- * @property object|null  $source_channel The partial channel that this webhook is following (returned for Channel Follower Webhooks).
- * @property string|null  $url            The url used for executing the webhook (returned by the webhooks OAuth2 flow).
+ * @property string                   $id             The id of the webhook.
+ * @property int                      $type           The type of webhook.
+ * @property ?string|null             $guild_id       The guild ID this is for, if any.
+ * @property Guild|null               $guild          The guild this is for, if any.
+ * @property ?string|null             $channel_id     The channel ID this is for, if any.
+ * @property Channel|null             $channel        The channel ID this is for, if any.
+ * @property User|null                $user           The user that created the webhook.
+ * @property ?string                  $name           The name of the webhook.
+ * @property ?string                  $avatar         The avatar of the webhook.
+ * @property string|null              $token          The token of the webhook.
+ * @property ?string                  $application_id The bot/OAuth2 application that created this webhook.
+ * @property object|null              $source_guild   The partial guild of the channel that this webhook is following (returned for Channel Follower Webhooks).
+ * @property object|null              $source_channel The partial channel that this webhook is following (returned for Channel Follower Webhooks).
+ * @property string|null              $url            The url used for executing the webhook (returned by the webhooks OAuth2 flow).
+ * @property WebhookMessageRepository $messages
  */
 class Webhook extends Part
 {
@@ -64,6 +64,13 @@ class Webhook extends Part
         'source_guild',
         'source_channel',
         'url',
+    ];
+
+    /**
+     * @inheritdoc
+     */
+    protected $repositories = [
+        'messages' => WebhookMessageRepository::class,
     ];
 
     /**
@@ -201,8 +208,14 @@ class Webhook extends Part
      */
     public function getRepositoryAttributes(): array
     {
-        return [
+        $attr = [
             'webhook_id' => $this->id,
         ];
+
+        if (array_key_exists('token', $this->attributes)) {
+            $attr['webhook_token'] = $this->token;
+        }
+
+        return $attr;
     }
 }
