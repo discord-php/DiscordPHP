@@ -76,7 +76,7 @@ class Webhook extends Part
     /**
      * Executes the webhook with an array of data.
      *
-     * @see https://discord.com/developers/docs/resources/webhook#execute-webhook-jsonform-params
+     * @see https://discord.com/developers/docs/resources/webhook#execute-webhook
      *
      * @param MessageBuilder|array $data
      * @param array                $queryparams Query string params to add to the request.
@@ -114,6 +114,52 @@ class Webhook extends Part
         }
 
         return $promise;
+    }
+
+    /**
+     * Edits a previously-sent webhook message from the same token.
+     *
+     * @see https://discord.com/developers/docs/resources/webhook#edit-webhook-message
+     *
+     * @param string         $message_id  ID of the message to update.
+     * @param MessageBuilder $builder     The new message.
+     * @param array          $queryparams Query string params to add to the request.
+     *
+     * @return ExtendedPromiseInterface
+     */
+    public function updateMessage(string $message_id, MessageBuilder $builder, array $queryparams = []): ExtendedPromiseInterface
+    {
+        $endpoint = Endpoint::bind(Endpoint::WEBHOOK_MESSAGE, $this->id, $this->token, $message_id);
+
+        $resolver = new OptionsResolver();
+        $resolver
+            ->setDefined('thread_id')
+            ->setAllowedTypes('thread_id', ['string', 'int']);
+
+        $options = $resolver->resolve($queryparams);
+
+        foreach ($options as $query => $param) {
+            $endpoint->addQuery($query, $param);
+        }
+
+        if ($builder->requiresMultipart()) {
+            $multipart = $builder->toMultipart();
+
+            $promise = $this->http->patch($endpoint, (string) $multipart, $multipart->getHeaders());
+        } else {
+            $promise = $this->http->patch($endpoint, $builder);
+        }
+
+        return $promise->then(function ($response) {
+            $channel = $this->channel;
+            if ($channel && $message = $channel->messages->offsetGet($response->id)) {
+                $message->fill((array) $response);
+
+                return $message;
+            }
+
+            return $this->factory->part(Message::class, (array) $response + ['guild_id' => $this->guild_id], true);
+        });
     }
 
     /**
