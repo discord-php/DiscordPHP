@@ -18,6 +18,9 @@ use Discord\Parts\Guild\Guild;
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
 use React\Promise\ExtendedPromiseInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+
+use function Discord\normalizePartId;
 
 /**
  * Webhooks are a low-effort way to post messages to channels in Discord. They do not require a bot user or authentication to use.
@@ -69,7 +72,7 @@ class Webhook extends Part
      * @see https://discord.com/developers/docs/resources/webhook#execute-webhook-jsonform-params
      *
      * @param MessageBuilder|array $data
-     * @param array                $queryparams Query string params to add to the request
+     * @param array                $queryparams Query string params to add to the request.
      *
      * @return ExtendedPromiseInterface
      */
@@ -77,7 +80,15 @@ class Webhook extends Part
     {
         $endpoint = Endpoint::bind(Endpoint::WEBHOOK_EXECUTE, $this->id, $this->token);
 
-        foreach ($queryparams as $query => $param) {
+        $resolver = new OptionsResolver();
+        $resolver
+            ->setDefined(['wait', 'thread_id'])
+            ->setAllowedTypes('wait', 'bool')
+            ->setAllowedTypes('thread_id', ['string', 'int']);
+
+        $options = $resolver->resolve($queryparams);
+
+        foreach ($options as $query => $param) {
             $endpoint->addQuery($query, $param);
         }
 
