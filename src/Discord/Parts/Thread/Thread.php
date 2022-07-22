@@ -43,7 +43,7 @@ use Traversable;
  * @property int               $rate_limit_per_user   Amount of seconds a user has to wait before sending a new message.
  * @property string            $owner_id              The ID of the owner of the thread.
  * @property string            $parent_id             The ID of the channel which the thread was started in.
- * @property int               $message_count         An approximate count of the number of messages sent in the thread. Stops counting at 50.
+ * @property int               $message_count         Number of messages (not including the initial message or deleted messages) in a thread (if the thread was created before July 1, 2022, it stops counting at 50).
  * @property int               $member_count          An approximate count of the number of members in the thread. Stops counting at 50.
  * @property Guild|null        $guild                 The guild which the thread belongs to.
  * @property User|null         $owner                 The owner of the thread.
@@ -54,6 +54,7 @@ use Traversable;
  * @property int|null          $auto_archive_duration The number of minutes of inactivity until the thread is automatically archived.
  * @property int|null          $flags                 Channel flags combined as a bitfield. `PINNED` can only be set for threads in forum channels.
  * @property Carbon            $archive_timestamp     The time that the thread's archive status was changed.
+ * @property int|null          $total_message_sent    Number of messages ever sent in a thread, it's similar to `message_count` on message creation, but will not decrement the number when a message is deleted.
  * @property MessageRepository $messages              Repository of messages sent in the thread.
  * @property MemberRepository  $members               Repository of members in the thread.
  *
@@ -79,6 +80,7 @@ class Thread extends Part
         'member_count',
         'thread_metadata',
         'flags',
+        'total_message_sent',
     ];
 
     /**
