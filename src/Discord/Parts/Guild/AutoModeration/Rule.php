@@ -112,10 +112,12 @@ class Rule extends Part
             'name' => $this->name,
             'event_type' => $this->event_type,
             'trigger_type' => $this->trigger_type,
-            'actions' => $this->actions,
+            'actions' => array_values($this->actions->map(function (Action $overwrite) {
+                return $overwrite->getCreatableAttributes();
+            })->toArray()),
         ];
 
-        if (in_array($this->trigger_type, [self::TRIGGER_TYPE_KEYWORD, self::TRIGGER_TYPE_KEYWORD_PRESET])) {
+        if (in_array($this->trigger_type, [self::TRIGGER_TYPE_KEYWORD, self::TRIGGER_TYPE_KEYWORD_PRESET, self::TRIGGER_TYPE_MENTION_SPAM])) {
             $attr['trigger_metadata'] = $this->trigger_metadata;
         }
 
