@@ -221,13 +221,6 @@
 <dd>Is the part already created in the Discord servers?</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -public">
-    <a href="classes/Discord-Builders-CommandAttributes.html#property_default_permission">$default_permission</a>
-    <span>
-                        &nbsp;: bool|null            </span>
-</dt>
-<dd>Whether the command is enabled by default when the app is added to a guild. SOON DEPRECATED.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -public">
     <a href="classes/Discord-Parts-Interactions-Command-Command.html#property_guild">$guild</a>
     <span>
                         &nbsp;: <a href="classes/Discord-Parts-Guild-Guild.html"><abbr title="\Discord\Parts\Guild\Guild">Guild</abbr></a>|null            </span>
@@ -382,11 +375,11 @@
 <dd>Handles dynamic set calls onto the part.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Discord-Parts-Part.html#method___toString">__toString()</a>
+    <a href="classes/Discord-Parts-Interactions-Command-Command.html#method___toString">__toString()</a>
     <span>
                                 &nbsp;: string    </span>
 </dt>
-<dd>Converts the part to a string.</dd>
+<dd>Returns a formatted mention of the command.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Discord-Parts-Part.html#method___unserialize">__unserialize()</a>
@@ -796,55 +789,6 @@ JSON. Used for JsonSerializable.</dd>
 </section>
 
     
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -public
-                        -deprecated                                "
->
-    <h4 class="phpdocumentor-element__name" id="property_default_permission">
-        $default_permission
-        <a href="classes/Discord-Builders-CommandAttributes.html#property_default_permission" class="headerlink"><i class="fas fa-link"></i></a>
-        <span class="phpdocumentor-element__modifiers">
-                                </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/CommandAttributes.php"><a href="files/src-discord-builders-commandattributes.html"><abbr title="src/Discord/Builders/CommandAttributes.php">CommandAttributes.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">44</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Whether the command is enabled by default when the app is added to a guild. SOON DEPRECATED.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature -deprecated">
-    <span class="phpdocumentor-signature__visibility">public</span>
-        <span class="phpdocumentor-signature__type">bool|null</span>
-    <span class="phpdocumentor-signature__name">$default_permission</span>
-    </code>
-
-    
-    
-    
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">deprecated</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                            <span class="phpdocumentor-tag-link">7.1.0</span>
-                                                                                
-                                                 <section class="phpdocumentor-description"><p>See <code class="prettyprint">CommandAttributes::default_member_permissions</code>.</p>
-</section>
-
-                                    </dd>
-                        </dl>
 
 </article>
                     <article
@@ -1777,16 +1721,16 @@ JSON. Used for JsonSerializable.</dd>
 >
     <h4 class="phpdocumentor-element__name" id="method___toString">
         __toString()
-        <a href="classes/Discord-Parts-Part.html#method___toString" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Parts-Interactions-Command-Command.html#method___toString" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Part.php"><a href="files/src-discord-parts-part.html"><abbr title="src/Discord/Parts/Part.php">Part.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Command/Command.php"><a href="files/src-discord-parts-interactions-command-command.html"><abbr title="src/Discord/Parts/Interactions/Command/Command.php">Command.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">424</span>
+    <span class="phpdocumentor-element-found-in__line">197</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Converts the part to a string.</p>
+        <p class="phpdocumentor-summary">Returns a formatted mention of the command.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
@@ -1795,35 +1739,11 @@ JSON. Used for JsonSerializable.</dd>
     
     
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">throws</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                <span class="phpdocumentor-tag-link"><abbr title="\Exception">Exception</abbr></span>
-                                                            
-                                             
-                                    </dd>
-                                                <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">see</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                                    <span class="phpdocumentor-tag-link"><abbr title="\Discord\Parts\self::getPublicAttributes()">self::getPublicAttributes()</abbr></span>
-                                        
-                                                 <section class="phpdocumentor-description"><p>This function encodes getPublicAttributes into JSON.</p>
-</section>
-
-                                    </dd>
-                        </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
     <span class="phpdocumentor-signature__response_type">string</span>
             &mdash;
-            <section class="phpdocumentor-description"><p>A JSON string of attributes.</p>
+            <section class="phpdocumentor-description"><p>A formatted mention of the command.</p>
 </section>
 
     
@@ -1902,7 +1822,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/CommandAttributes.php"><a href="files/src-discord-builders-commandattributes.html"><abbr title="src/Discord/Builders/CommandAttributes.php">CommandAttributes.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">223</span>
+    <span class="phpdocumentor-element-found-in__line">214</span>
 
     </aside>
 
@@ -1973,7 +1893,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/CommandAttributes.php"><a href="files/src-discord-builders-commandattributes.html"><abbr title="src/Discord/Builders/CommandAttributes.php">CommandAttributes.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">265</span>
+    <span class="phpdocumentor-element-found-in__line">256</span>
 
     </aside>
 
@@ -2651,7 +2571,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/CommandAttributes.php"><a href="files/src-discord-builders-commandattributes.html"><abbr title="src/Discord/Builders/CommandAttributes.php">CommandAttributes.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">247</span>
+    <span class="phpdocumentor-element-found-in__line">238</span>
 
     </aside>
 
@@ -2712,7 +2632,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/CommandAttributes.php"><a href="files/src-discord-builders-commandattributes.html"><abbr title="src/Discord/Builders/CommandAttributes.php">CommandAttributes.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">192</span>
+    <span class="phpdocumentor-element-found-in__line">183</span>
 
     </aside>
 
@@ -2757,7 +2677,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/CommandAttributes.php"><a href="files/src-discord-builders-commandattributes.html"><abbr title="src/Discord/Builders/CommandAttributes.php">CommandAttributes.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">178</span>
+    <span class="phpdocumentor-element-found-in__line">169</span>
 
     </aside>
 
@@ -2818,7 +2738,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/CommandAttributes.php"><a href="files/src-discord-builders-commandattributes.html"><abbr title="src/Discord/Builders/CommandAttributes.php">CommandAttributes.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">134</span>
+    <span class="phpdocumentor-element-found-in__line">125</span>
 
     </aside>
 
@@ -2879,7 +2799,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/CommandAttributes.php"><a href="files/src-discord-builders-commandattributes.html"><abbr title="src/Discord/Builders/CommandAttributes.php">CommandAttributes.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">158</span>
+    <span class="phpdocumentor-element-found-in__line">149</span>
 
     </aside>
 
@@ -2949,7 +2869,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/CommandAttributes.php"><a href="files/src-discord-builders-commandattributes.html"><abbr title="src/Discord/Builders/CommandAttributes.php">CommandAttributes.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">206</span>
+    <span class="phpdocumentor-element-found-in__line">197</span>
 
     </aside>
 
@@ -2994,7 +2914,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/CommandAttributes.php"><a href="files/src-discord-builders-commandattributes.html"><abbr title="src/Discord/Builders/CommandAttributes.php">CommandAttributes.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">76</span>
+    <span class="phpdocumentor-element-found-in__line">67</span>
 
     </aside>
 
@@ -3065,7 +2985,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/CommandAttributes.php"><a href="files/src-discord-builders-commandattributes.html"><abbr title="src/Discord/Builders/CommandAttributes.php">CommandAttributes.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">105</span>
+    <span class="phpdocumentor-element-found-in__line">96</span>
 
     </aside>
 
@@ -3214,7 +3134,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Builders/CommandAttributes.php"><a href="files/src-discord-builders-commandattributes.html"><abbr title="src/Discord/Builders/CommandAttributes.php">CommandAttributes.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">55</span>
+    <span class="phpdocumentor-element-found-in__line">46</span>
 
     </aside>
 

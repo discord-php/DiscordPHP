@@ -61,11 +61,6 @@ Search.appendIndex(
             "summary": "Clear\u0020all\u0020options\u0020from\u0020the\u0020command.",
             "url": "classes/Discord-Builders-CommandAttributes.html#method_clearOptions"
         },                {
-            "fqsen": "\\Discord\\Builders\\CommandAttributes\u003A\u003A\u0024default_permission",
-            "name": "default_permission",
-            "summary": "Whether\u0020the\u0020command\u0020is\u0020enabled\u0020by\u0020default\u0020when\u0020the\u0020app\u0020is\u0020added\u0020to\u0020a\u0020guild.\u0020SOON\u0020DEPRECATED.",
-            "url": "classes/Discord-Builders-CommandAttributes.html#property_default_permission"
-        },                {
             "fqsen": "\\Discord\\Builders\\CommandBuilder",
             "name": "CommandBuilder",
             "summary": "Helper\u0020class\u0020used\u0020to\u0020build\u0020application\u0020commands.",
@@ -101,20 +96,10 @@ Search.appendIndex(
             "summary": "Name\u0020of\u0020the\u0020command.",
             "url": "classes/Discord-Builders-CommandBuilder.html#property_name"
         },                {
-            "fqsen": "\\Discord\\Builders\\CommandBuilder\u003A\u003A\u0024name_localizations",
-            "name": "name_localizations",
-            "summary": "Localization\u0020dictionary\u0020for\u0020the\u0020name\u0020field.\u0020Values\u0020follow\u0020the\u0020same\u0020restrictions\u0020as\u0020name.",
-            "url": "classes/Discord-Builders-CommandBuilder.html#property_name_localizations"
-        },                {
             "fqsen": "\\Discord\\Builders\\CommandBuilder\u003A\u003A\u0024description",
             "name": "description",
             "summary": "Description\u0020of\u0020the\u0020command.\u0020should\u0020be\u0020emtpy\u0020if\u0020the\u0020type\u0020is\u0020not\u0020CHAT_INPUT.",
             "url": "classes/Discord-Builders-CommandBuilder.html#property_description"
-        },                {
-            "fqsen": "\\Discord\\Builders\\CommandBuilder\u003A\u003A\u0024description_localizations",
-            "name": "description_localizations",
-            "summary": "Localization\u0020dictionary\u0020for\u0020the\u0020description\u0020field.\u0020Values\u0020follow\u0020the\u0020same\u0020restrictions\u0020as\u0020description.",
-            "url": "classes/Discord-Builders-CommandBuilder.html#property_description_localizations"
         },                {
             "fqsen": "\\Discord\\Builders\\CommandBuilder\u003A\u003A\u0024options",
             "name": "options",
@@ -1218,7 +1203,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Discord\u003A\u003AlistenCommand\u0028\u0029",
             "name": "listenCommand",
-            "summary": "Registeres\u0020a\u0020command\u0020with\u0020the\u0020client.",
+            "summary": "Add\u0020listerner\u0020for\u0020incoming\u0020application\u0020command\u0020from\u0020interaction",
             "url": "classes/Discord-Discord.html#method_listenCommand"
         },                {
             "fqsen": "\\Discord\\Discord\u003A\u003A__call\u0028\u0029",
@@ -3661,6 +3646,11 @@ Search.appendIndex(
             "summary": "An\u0020action\u0020which\u0020will\u0020execute\u0020whenever\u0020a\u0020rule\u0020is\u0020triggered.",
             "url": "classes/Discord-Parts-Guild-AutoModeration-Action.html"
         },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\AutoModeration\\Action\u003A\u003AgetCreatableAttributes\u0028\u0029",
+            "name": "getCreatableAttributes",
+            "summary": "Returns\u0020the\u0020attributes\u0020needed\u0020to\u0020create.",
+            "url": "classes/Discord-Parts-Guild-AutoModeration-Action.html#method_getCreatableAttributes"
+        },                {
             "fqsen": "\\Discord\\Parts\\Guild\\AutoModeration\\Action\u003A\u003ATYPE_BLOCK_MESSAGE",
             "name": "TYPE_BLOCK_MESSAGE",
             "summary": "",
@@ -3735,6 +3725,11 @@ Search.appendIndex(
             "name": "TRIGGER_TYPE_KEYWORD_PRESET",
             "summary": "",
             "url": "classes/Discord-Parts-Guild-AutoModeration-Rule.html#constant_TRIGGER_TYPE_KEYWORD_PRESET"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\AutoModeration\\Rule\u003A\u003ATRIGGER_TYPE_MENTION_SPAM",
+            "name": "TRIGGER_TYPE_MENTION_SPAM",
+            "summary": "",
+            "url": "classes/Discord-Parts-Guild-AutoModeration-Rule.html#constant_TRIGGER_TYPE_MENTION_SPAM"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\AutoModeration\\Rule\u003A\u003AKEYWORD_PRESET_TYPE_PROFANITY",
             "name": "KEYWORD_PRESET_TYPE_PROFANITY",
@@ -4671,6 +4666,31 @@ Search.appendIndex(
             "summary": "Returns\u0020a\u0020PNG\u0020image\u0020widget\u0020for\u0020the\u0020guild.\u0020Requires\u0020no\u0020permissions\u0020or\u0020authentication.",
             "url": "classes/Discord-Parts-Guild-Widget.html#method_getImageAttribute"
         },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\Widget\u003A\u003ASTYLE_SHIELD",
+            "name": "STYLE_SHIELD",
+            "summary": "shield\u0020style\u0020widget\u0020with\u0020Discord\u0020icon\u0020and\u0020guild\u0020members\u0020online\u0020count",
+            "url": "classes/Discord-Parts-Guild-Widget.html#constant_STYLE_SHIELD"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\Widget\u003A\u003ASTYLE_BANNER1",
+            "name": "STYLE_BANNER1",
+            "summary": "large\u0020image\u0020with\u0020guild\u0020icon,\u0020name\u0020and\u0020online\u0020count.\u0020\u0022POWERED\u0020BY\u0020DISCORD\u0022\u0020as\u0020the\u0020footer\u0020of\u0020the\u0020widget",
+            "url": "classes/Discord-Parts-Guild-Widget.html#constant_STYLE_BANNER1"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\Widget\u003A\u003ASTYLE_BANNER2",
+            "name": "STYLE_BANNER2",
+            "summary": "smaller\u0020widget\u0020style\u0020with\u0020guild\u0020icon,\u0020name\u0020and\u0020online\u0020count.\u0020Split\u0020on\u0020the\u0020right\u0020with\u0020Discord\u0020logo",
+            "url": "classes/Discord-Parts-Guild-Widget.html#constant_STYLE_BANNER2"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\Widget\u003A\u003ASTYLE_BANNER3",
+            "name": "STYLE_BANNER3",
+            "summary": "large\u0020image\u0020with\u0020guild\u0020icon,\u0020name\u0020and\u0020online\u0020count.\u0020In\u0020the\u0020footer,\u0020Discord\u0020logo\u0020on\u0020the\u0020left\u0020and\u0020\u0022Chat\u0020Now\u0022\u0020on\u0020the\u0020right",
+            "url": "classes/Discord-Parts-Guild-Widget.html#constant_STYLE_BANNER3"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\Widget\u003A\u003ASTYLE_BANNER4",
+            "name": "STYLE_BANNER4",
+            "summary": "large\u0020Discord\u0020logo\u0020at\u0020the\u0020top\u0020of\u0020the\u0020widget.\u0020Guild\u0020icon,\u0020name\u0020and\u0020online\u0020count\u0020in\u0020the\u0020middle\u0020portion\u0020of\u0020the\u0020widget\u0020and\u0020a\u0020\u0022JOIN\u0020MY\u0020SERVER\u0022\u0020button\u0020at\u0020the\u0020bottom",
+            "url": "classes/Discord-Parts-Guild-Widget.html#constant_STYLE_BANNER4"
+        },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Widget\u003A\u003ASTYLE",
             "name": "STYLE",
             "summary": "",
@@ -4750,6 +4770,11 @@ Search.appendIndex(
             "name": "getRepositoryAttributes",
             "summary": "Gets\u0020the\u0020attributes\u0020to\u0020pass\u0020to\u0020repositories.",
             "url": "classes/Discord-Parts-Interactions-Command-Command.html#method_getRepositoryAttributes"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Interactions\\Command\\Command\u003A\u003A__toString\u0028\u0029",
+            "name": "__toString",
+            "summary": "Returns\u0020a\u0020formatted\u0020mention\u0020of\u0020the\u0020command.",
+            "url": "classes/Discord-Parts-Interactions-Command-Command.html#method___toString"
         },                {
             "fqsen": "\\Discord\\Parts\\Interactions\\Command\\Command\u003A\u003ACHAT_INPUT",
             "name": "CHAT_INPUT",
@@ -5325,6 +5350,11 @@ Search.appendIndex(
             "name": "GATEWAY_MESSAGE_CONTENT_LIMITED",
             "summary": "",
             "url": "classes/Discord-Parts-OAuth-Application.html#constant_GATEWAY_MESSAGE_CONTENT_LIMITED"
+        },                {
+            "fqsen": "\\Discord\\Parts\\OAuth\\Application\u003A\u003AAPPLICATION_COMMAND_BADGE",
+            "name": "APPLICATION_COMMAND_BADGE",
+            "summary": "",
+            "url": "classes/Discord-Parts-OAuth-Application.html#constant_APPLICATION_COMMAND_BADGE"
         },                {
             "fqsen": "\\Discord\\Parts\\OAuth\\Application\u003A\u003A\u0024fillable",
             "name": "fillable",
