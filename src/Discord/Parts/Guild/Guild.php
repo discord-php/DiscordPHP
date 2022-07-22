@@ -103,7 +103,6 @@ use function React\Promise\resolve;
  * @property bool                         $feature_animated_icon                    Guild has access to set an animated guild icon.
  * @property bool                         $feature_auto_moderation                  Guild has set up auto moderation rules.
  * @property bool                         $feature_banner                           Guild has access to set a guild banner image.
- * @property bool                         $feature_commerce                         Guild has access to use commerce features (create store channels).
  * @property bool                         $feature_community                        Guild can enable welcome screen, Membership Screening, stage channels and discovery, and receives community updates.
  * @property bool                         $feature_discoverable                     Guild is able to be discovered in the directory.
  * @property bool                         $feature_featurable                       Guild is able to be featured in the directory.
@@ -231,7 +230,6 @@ class Guild extends Part
         'feature_animated_icon',
         'feature_auto_moderation',
         'feature_banner',
-        'feature_commerce',
         'feature_community',
         'feature_discoverable',
         'feature_featurable',
@@ -432,11 +430,6 @@ class Guild extends Part
     protected function getFeatureBannerAttribute(): bool
     {
         return in_array('BANNER', $this->features);
-    }
-
-    protected function getFeatureCommerceAttribute(): bool
-    {
-        return in_array('COMMERCE', $this->features);
     }
 
     protected function getFeatureDiscoverableAttribute(): bool
