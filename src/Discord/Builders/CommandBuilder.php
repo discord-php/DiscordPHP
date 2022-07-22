@@ -105,9 +105,9 @@ class CommandBuilder implements JsonSerializable
     {
         $arrCommand = [
             'name' => $this->name,
-            'name_localizations' => $this->name_localizations,
+            'name_localizations' => $this->name_localizations ?? null,
             'description' => $this->description,
-            'description_localizations' => $this->name_localizations,
+            'description_localizations' => $this->name_localizations ?? null,
             'type' => $this->type,
             'default_permission' => $this->default_permission,
         ];
