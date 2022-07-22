@@ -72,6 +72,7 @@ use function React\Promise\reject;
  * @property Thread|null                 $thread                                 The thread that the message was sent in.
  * @property Collection|Component[]|null $components                             Sent if the message contains components like buttons, action rows, or other interactive components.
  * @property Collection|Sticker[]|null   $sticker_items                          Stickers attached to the message.
+ * @property int|null                    $position                               A generally increasing integer (there may be gaps or duplicates) that represents the approximate position of the message in a thread, it can be used to estimate the relative position of the messsage in a thread in company with `total_message_sent` on parent thread.
  * @property bool                        $crossposted                            Message has been crossposted.
  * @property bool                        $is_crosspost                           Message is a crosspost from another channel.
  * @property bool                        $suppress_embeds                        Do not include embeds when serializing message.
@@ -169,6 +170,7 @@ class Message extends Part
         'components',
         'sticker_items',
         'stickers',
+        'position',
     ];
 
     /**

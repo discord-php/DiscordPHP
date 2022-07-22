@@ -34,4 +34,20 @@ class Action extends Part
     public const TYPE_BLOCK_MESSAGE = 1;
     public const TYPE_SEND_ALERT_MESSAGE = 2;
     public const TYPE_TIMEOUT = 3;
+
+    /**
+     * @inheritdoc
+     */
+    public function getCreatableAttributes(): array
+    {
+        $attr = [
+            'type' => $this->type,
+        ];
+
+        if (isset($this->attributes['metadata'])) {
+            $attr['metadata'] = $this->metadata;
+        }
+
+        return $attr;
+    }
 }
