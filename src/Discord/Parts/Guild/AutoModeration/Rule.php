@@ -30,7 +30,7 @@ use Discord\Parts\User\User;
  * @property User|null           $creator          The user which first created this rule.
  * @property int                 $event_type       The rule event type.
  * @property int                 $trigger_type     The rule trigger type.
- * @property object              $trigger_metadata The rule trigger metadata (may contain `keyword_filter`, `presets`, and `allow_list`).
+ * @property object              $trigger_metadata The rule trigger metadata (may contain `keyword_filter`, `presets`, `allow_list`, and `mention_total_limit`).
  * @property Collection|Action[] $actions          The actions which will execute when the rule is triggered.
  * @property bool                $enabled          Whether the rule is enabled.
  * @property array               $exempt_roles     The role ids that should not be affected by the rule (Maximum of 20).
@@ -59,6 +59,7 @@ class Rule extends Part
     public const TRIGGER_TYPE_HARMFUL_LINK = 2;
     public const TRIGGER_TYPE_SPAM = 3;
     public const TRIGGER_TYPE_KEYWORD_PRESET = 4;
+    public const TRIGGER_TYPE_MENTION_SPAM = 5;
 
     public const KEYWORD_PRESET_TYPE_PROFANITY = 1;
     public const KEYWORD_PRESET_TYPE_SEXUAL_CONTENT = 2;
