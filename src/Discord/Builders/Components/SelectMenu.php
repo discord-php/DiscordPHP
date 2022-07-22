@@ -293,7 +293,7 @@ class SelectMenu extends Component
                 
                 foreach ($this->options as $option) {
                     if (in_array($option->getValue(), $interaction->data->values)) {
-                        $options->push($option);
+                        $options->pushItem($option);
                     }
                 }
 

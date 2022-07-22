@@ -19,7 +19,7 @@ use Discord\Parts\Part;
  *
  * @see https://discord.com/developers/docs/interactions/application-commands#application-command-permissions-object-guild-application-command-permissions-structure
  *
- * @property string                  $id             The id of the command
+ * @property string                  $id             The id of the command or the application ID if no overwrites
  * @property string                  $application_id The id of the application the command belongs to
  * @property string                  $guild_id       The id of the guild
  * @property Collection|Permission[] $permissions    The permissions for the command in the guild
@@ -41,7 +41,7 @@ class Overwrite extends Part
         $permissions = new Collection();
 
         foreach ($this->attributes['permissions'] ?? [] as $permission) {
-            $permissions->push($this->factory->create(Permission::class, $permission, true));
+            $permissions->pushItem($this->factory->create(Permission::class, $permission, true));
         }
 
         return $permissions;
@@ -66,5 +66,22 @@ class Overwrite extends Part
             'application_id' => $this->application_id,
             'guild_id' => $this->guild_id,
         ];
+    }
+
+    /**
+     * Get the permission ID constant for All Channels in the guild (i.e. guild_id - 1)
+     * Requires GMP extension loaded on 32 bits PHP.
+     *
+     * @see https://discord.com/developers/docs/interactions/application-commands#application-command-permissions-object-application-command-permissions-constants
+     *
+     * @return string The permission ID for all channels (i.e. guild_id - 1)
+     */
+    final public function allChannelsConstant(): string
+    {
+        if (PHP_INT_SIZE === 4) {
+            return (string) \gmp_sub($this->guild_id, 1);
+        }
+
+        return (string) ($this->guild_id - 1);
     }
 }

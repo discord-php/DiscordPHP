@@ -22,8 +22,8 @@ use Discord\Parts\Part;
  * @property string       $channel_id  The channel's id.
  * @property Channel|null $channel     The channel object.
  * @property string       $description The description shown for the channel.
- * @property string       $emoji_id    The emoji id, if the emoji is custom.
- * @property string       $emoji_name  The emoji name if custom, the unicode character if standard, or null if no emoji is set.
+ * @property string|null  $emoji_id    The emoji id, if the emoji is custom.
+ * @property string|null  $emoji_name  The emoji name if custom, the unicode character if standard, or null if no emoji is set.
  */
 class WelcomeChannel extends Part
 {

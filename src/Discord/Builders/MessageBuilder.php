@@ -40,6 +40,13 @@ class MessageBuilder implements JsonSerializable
     private $content;
 
     /**
+     * A nonce that can be used for message roundtrips with the gateway (up to 25 characters).
+     *
+     * @var int|string|null
+     */
+    private $nonce;
+
+    /**
      * Whether the message is text-to-speech.
      *
      * @var bool
@@ -128,6 +135,26 @@ class MessageBuilder implements JsonSerializable
         }
 
         $this->content = $content;
+
+        return $this;
+    }
+
+    /**
+     * Sets the nonce of the message.
+     *
+     * @param int|string|null $nonce Nonce of the message. Maximum 25 characters.
+     *
+     * @throws \LengthException
+     *
+     * @return $this
+     */
+    public function setNonce($nonce = null): self
+    {
+        if (is_string($nonce) && poly_strlen($nonce) > 25) {
+            throw new \LengthException('Message nonce must be less than or equal to 25 characters.');
+        }
+
+        $this->nonce = $nonce;
 
         return $this;
     }
@@ -474,7 +501,7 @@ class MessageBuilder implements JsonSerializable
     /**
      * Sets the flags of the message.
      *
-     * @internal You cannot set flags except for when sending webhooks. Use the APIs given.
+     * @internal You cannot set flags except for when sending webhooks or interaction. Use the APIs given.
      *
      * @param int $flags
      *
@@ -545,6 +572,10 @@ class MessageBuilder implements JsonSerializable
         if ($this->content) {
             $content['content'] = $this->content;
             $empty = false;
+        }
+
+        if (isset($this->nonce)) {
+            $content['nonce'] = $this->nonce;
         }
 
         if ($this->tts) {

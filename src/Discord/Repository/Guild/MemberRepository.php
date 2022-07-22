@@ -11,9 +11,11 @@
 
 namespace Discord\Repository\Guild;
 
+use Discord\Helpers\Deferred;
 use Discord\Http\Endpoint;
 use Discord\Parts\User\Member;
 use Discord\Repository\AbstractRepository;
+use React\Promise\ExtendedPromiseInterface;
 use React\Promise\PromiseInterface;
 
 /**
@@ -45,18 +47,60 @@ class MemberRepository extends AbstractRepository
     protected $class = Member::class;
 
     /**
-     * Alias for delete.
+     * Alias for `$member->delete()`.
      *
      * @see https://discord.com/developers/docs/resources/guild#remove-guild-member
      *
-     * @param Member $member The member to kick.
+     * @param Member      $member The member to kick.
+     * @param string|null $reason Reason for Audit Log.
      *
      * @return PromiseInterface
-     *
-     * @see self::delete()
      */
-    public function kick(Member $member): PromiseInterface
+    public function kick(Member $member, ?string $reason = null): PromiseInterface
     {
-        return $this->delete($member);
+        return $this->delete($member, $reason);
+    }
+
+    /**
+     * @inheritdoc
+     *
+     * @param array $queryparams Query string params to add to the request, leave null to paginate all members (Warning: Be careful to use this on very large guild)
+     */
+    public function freshen(array $queryparams = null): ExtendedPromiseInterface
+    {
+        if (isset($queryparams)) {
+            return parent::freshen($queryparams);
+        }
+
+        $endpoint = new Endpoint($this->endpoints['all']);
+        $endpoint->bindAssoc($this->vars);
+
+        $deferred = new Deferred();
+
+        ($paginate = function ($afterId = 0) use (&$paginate, $deferred, $endpoint) {
+            $endpoint->addQuery('limit', 1000);
+            $endpoint->addQuery('after', $afterId);
+
+            $this->http->get($endpoint)->then(function ($response) use ($paginate, $deferred, $afterId) {
+                if (empty($response)) {
+                    $deferred->resolve($this);
+
+                    return;
+                } elseif (! $afterId) {
+                    $this->clear();
+                }
+
+                foreach ($response as $value) {
+                    $value = array_merge($this->vars, (array) $value);
+                    $part = $this->factory->create($this->class, $value, true);
+
+                    $this->pushItem($part);
+                }
+
+                $paginate($part->id);
+            }, [$deferred, 'reject']);
+        })();
+
+        return $deferred->promise();
     }
 }

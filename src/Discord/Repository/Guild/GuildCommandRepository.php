@@ -53,10 +53,12 @@ class GuildCommandRepository extends AbstractRepository
      *
      * @param Overwrite $overwrite An overwrite object.
      *
+     * @deprecated 7.1.0 Removed on Permissions v2
+     *
      * @return ExtendedPromiseInterface
      */
     public function setOverwrite(Overwrite $overwrite): ExtendedPromiseInterface
     {
-        return $this->http->put(Endpoint::bind(Endpoint::GUILD_APPLICATION_COMMANDS_PERMISSIONS, $this->vars['application_id'], $this->vars['guild_id']), $overwrite->getRawAttributes());
+        return \React\Promise\reject(new \RuntimeException('This function is no longer usable by Bots'));
     }
 }

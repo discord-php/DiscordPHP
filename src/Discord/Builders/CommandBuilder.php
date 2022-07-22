@@ -39,25 +39,11 @@ class CommandBuilder implements JsonSerializable
     protected string $name;
 
     /**
-     * Localization dictionary for the name field. Values follow the same restrictions as name.
-     *
-     * @var string[]
-     */
-    protected array $name_localizations;
-
-    /**
      * Description of the command. should be emtpy if the type is not CHAT_INPUT.
      *
      * @var string
      */
     protected string $description = '';
-
-    /**
-     * Localization dictionary for the description field. Values follow the same restrictions as description.
-     *
-     * @var string[]|null
-     */
-    protected array $description_localizations;
 
     /**
      * array with options.
@@ -105,12 +91,18 @@ class CommandBuilder implements JsonSerializable
     {
         $arrCommand = [
             'name' => $this->name,
-            'name_localizations' => $this->name_localizations,
             'description' => $this->description,
-            'description_localizations' => $this->name_localizations,
             'type' => $this->type,
             'default_permission' => $this->default_permission,
         ];
+
+        if (property_exists($this, 'name_localizations')) {
+            $arrCommand['name_localizations'] = $this->name_localizations;
+        }
+
+        if (property_exists($this, 'description_localizations')) {
+            $arrCommand['description_localizations'] = $this->description_localizations;
+        }
 
         foreach ($this->options ?? [] as $option) {
             $arrCommand['options'][] = $option->getRawAttributes();

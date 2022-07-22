@@ -40,7 +40,7 @@ class ThreadMembersUpdate extends Event
                 if ($data->added_members ?? null) {
                     foreach ($data->added_members as $member) {
                         $member = $this->factory->create(Member::class, $member, true);
-                        $thread->members->push($member);
+                        $thread->members->pushItem($member);
                     }
                 }
 

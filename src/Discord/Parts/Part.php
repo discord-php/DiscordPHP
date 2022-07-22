@@ -18,8 +18,9 @@ use Discord\Factory\Factory;
 use Discord\Http\Http;
 use JsonSerializable;
 use React\Promise\ExtendedPromiseInterface;
-use RuntimeException;
 use Serializable;
+
+use function Discord\studly;
 
 /**
  * This class is the base of all objects that are returned. All "Parts" extend off this
@@ -161,13 +162,13 @@ abstract class Part implements ArrayAccess, JsonSerializable
      * Fetches any missing information about
      * the part from Discord's servers.
      *
-     * @throws RuntimeException The part is not fetchable.
+     * @throws \RuntimeException The part is not fetchable.
      *
      * @return ExtendedPromiseInterface<static>
      */
     public function fetch(): ExtendedPromiseInterface
     {
-        throw new RuntimeException('This part is not fetchable.');
+        throw new \RuntimeException('This part is not fetchable.');
     }
 
     /**
@@ -194,7 +195,7 @@ abstract class Part implements ArrayAccess, JsonSerializable
      */
     private function checkForMutator(string $key, string $type)
     {
-        $str = $type.\Discord\studly($key).'Attribute';
+        $str = $type.studly($key).'Attribute';
 
         if (is_callable([$this, $str])) {
             return $str;

@@ -30,7 +30,7 @@ class MessageCreate extends Event
         $messagePart = $this->factory->create(Message::class, $data, true);
 
         // assume it is a private channel
-        if ($messagePart->channel === null) {
+        if (! $messagePart->guild && $messagePart->channel->type == Channel::TYPE_DM) {
             /** @var Channel */
             $channel = $this->factory->create(Channel::class, [
                 'id' => $messagePart->channel_id,
@@ -50,6 +50,10 @@ class MessageCreate extends Event
 
         if (isset($data->author) && ! isset($data->webhook_id)) {
             $this->cacheUser($data->author);
+        }
+
+        if (isset($data->interaction->user)) {
+            $this->cacheUser($data->interaction->user);
         }
 
         $deferred->resolve($messagePart);

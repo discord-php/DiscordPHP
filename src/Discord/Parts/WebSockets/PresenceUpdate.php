@@ -84,7 +84,7 @@ class PresenceUpdate extends Part
         $collection = Collection::for(Activity::class, null);
 
         foreach ($this->attributes['activities'] ?? [] as $activity) {
-            $collection->push($this->factory->create(Activity::class, $activity, true));
+            $collection->pushItem($this->factory->create(Activity::class, $activity, true));
         }
 
         return $collection;

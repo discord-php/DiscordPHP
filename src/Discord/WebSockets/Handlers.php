@@ -45,6 +45,7 @@ class Handlers
         $this->addHandler(Event::INTEGRATION_UPDATE, \Discord\WebSockets\Events\IntegrationUpdate::class);
         $this->addHandler(Event::INTEGRATION_DELETE, \Discord\WebSockets\Events\IntegrationDelete::class);
         $this->addHandler(Event::WEBHOOKS_UPDATE, \Discord\WebSockets\Events\WebhooksUpdate::class);
+        $this->addHandler(Event::APPLICATION_COMMAND_PERMISSIONS_UPDATE, \Discord\WebSockets\Events\ApplicationCommandPermissionsUpdate::class);
 
         // Invite handlers
         $this->addHandler(Event::INVITE_CREATE, \Discord\WebSockets\Events\InviteCreate::class);
@@ -105,6 +106,12 @@ class Handlers
         $this->addHandler(Event::STAGE_INSTANCE_CREATE, \Discord\WebSockets\Events\StageInstanceCreate::class);
         $this->addHandler(Event::STAGE_INSTANCE_UPDATE, \Discord\WebSockets\Events\StageInstanceUpdate::class);
         $this->addHandler(Event::STAGE_INSTANCE_DELETE, \Discord\WebSockets\Events\StageInstanceDelete::class);
+
+        // Auto Moderation Event Handlers
+        $this->addHandler(Event::AUTO_MODERATION_RULE_CREATE, \Discord\WebSockets\Events\AutoModerationRuleCreate::class);
+        $this->addHandler(Event::AUTO_MODERATION_RULE_UPDATE, \Discord\WebSockets\Events\AutoModerationRuleUpdate::class);
+        $this->addHandler(Event::AUTO_MODERATION_RULE_DELETE, \Discord\WebSockets\Events\AutoModerationRuleDelete::class);
+        $this->addHandler(Event::AUTO_MODERATION_ACTION_EXECUTION, \Discord\WebSockets\Events\AutoModerationActionExecution::class);
     }
 
     /**

@@ -47,7 +47,7 @@ class Option extends Part
     protected function setOptionsAttribute($options)
     {
         foreach ($options as $option) {
-            $this->options->push($this->factory->create(Option::class, $option, true));
+            $this->options->pushItem($this->factory->create(Option::class, $option, true));
         }
     }
 

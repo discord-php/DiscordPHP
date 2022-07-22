@@ -13,15 +13,15 @@
         "nesbot/carbon": "^2.38",
         "ratchet/pawl": "^0.4.1",
         "react/datagram": "1.5.*",
-        "symfony/options-resolver": "^5.1.3",
+        "symfony/options-resolver": "^5.1.3 || ^6.0",
         "trafficcophp/bytebuffer": "^0.3",
-        "monolog/monolog": "^2.1",
+        "monolog/monolog": "^2.1 || ^3.0",
         "react/partial": "^3.0",
         "mollie/polyfill-libsodium": "^1.1",
         "react/http": "^1.1",
         "ext-json": "*",
         "ext-zlib": "*",
-        "discord-php/http": "^9.0.10",
+        "discord-php/http": "^9.0.12",
         "react/child-process": "^0.6.2",
         "discord/interactions": "^2.2"
     },
@@ -44,7 +44,8 @@
         "ext-libev": "For a faster, and more performant loop.",
         "ext-event": "For a faster, and more performant loop.",
         "ext-mbstring": "For accurate calculations of string length when handling non-english characters.",
-        "ext-gmp": "For Permissions and 64 bit calculations on x86 (32 bit) PHP."
+        "ext-gmp": "For Permissions and 64 bit calculations on x86 (32 bit) PHP.",
+        "clue/zlib-react": "For gateway message transport compression with zlib-stream."
     },
     "scripts": {
         "cs": ["./vendor/bin/php-cs-fixer fix"],
