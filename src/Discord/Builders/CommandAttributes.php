@@ -35,15 +35,6 @@ use function Discord\poly_strlen;
 trait CommandAttributes
 {
     /**
-     * Whether the command is enabled by default when the app is added to a guild. SOON DEPRECATED.
-     *
-     * @deprecated 7.1.0 See `CommandAttributes::default_member_permissions`.
-     *
-     * @var ?bool
-     */
-    public $default_permission;
-
-    /**
      * Sets the type of the command.
      *
      * @param int $type Type of the command.
