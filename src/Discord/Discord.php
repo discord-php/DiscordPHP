@@ -47,6 +47,8 @@ use Discord\Http\Drivers\React;
 use Discord\Http\Endpoint;
 use Evenement\EventEmitterTrait;
 use Psr\Log\LoggerInterface;
+use React\Cache\ArrayCache;
+use React\Cache\CacheInterface;
 use React\Promise\ExtendedPromiseInterface;
 use React\Promise\PromiseInterface;
 use React\Socket\Connector as SocketConnector;
@@ -86,7 +88,7 @@ class Discord
      *
      * @var string Version.
      */
-    public const VERSION = 'v7.1.3';
+    public const VERSION = 'v7.1.4';
 
     /**
      * The logger.
@@ -307,6 +309,13 @@ class Discord
      * @var Factory Part factory.
      */
     protected $factory;
+
+    /**
+     * The react/cache interface.
+     *
+     * @var CacheInterface
+     */
+    protected $cache;
 
     /**
      * The Client class.
@@ -1336,6 +1345,7 @@ class Discord
                 'intents',
                 'socket_options',
                 'dnsConfig',
+                'cacheInterface',
             ])
             ->setDefaults([
                 'loop' => LoopFactory::create(),
@@ -1347,6 +1357,7 @@ class Discord
                 'retrieveBans' => false,
                 'intents' => Intents::getDefaultIntents(),
                 'socket_options' => [],
+                'cacheInterface' => new ArrayCache(),
             ])
             ->setAllowedTypes('token', 'string')
             ->setAllowedTypes('logger', ['null', LoggerInterface::class])
@@ -1358,7 +1369,8 @@ class Discord
             ->setAllowedTypes('retrieveBans', 'bool')
             ->setAllowedTypes('intents', ['array', 'int'])
             ->setAllowedTypes('socket_options', 'array')
-            ->setAllowedTypes('dnsConfig', ['string', \React\Dns\Config\Config::class]);
+            ->setAllowedTypes('dnsConfig', ['string', \React\Dns\Config\Config::class])
+            ->setAllowedTypes('cacheInterface', ['null', CacheInterface::class]);
 
         $options = $resolver->resolve($options);
 
