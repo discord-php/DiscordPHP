@@ -315,7 +315,7 @@ class Discord
      *
      * @var CacheInterface
      */
-    public $cache;
+    protected $cache;
 
     /**
      * The Client class.
@@ -1522,6 +1522,16 @@ class Discord
     }
 
     /**
+     * Gets the cache interface.
+     *
+     * @return CacheInterface
+     */
+    public function getCacheInterface(): CacheInterface
+    {
+        return $this->cache;
+    }
+
+    /**
      * Handles dynamic get calls to the client.
      *
      * @param string $name Variable name.
@@ -1530,7 +1540,7 @@ class Discord
      */
     public function __get(string $name)
     {
-        $allowed = ['loop', 'options', 'logger', 'http', 'application_commands'];
+        $allowed = ['loop', 'options', 'logger', 'http', 'application_commands', 'cache'];
 
         if (in_array($name, $allowed)) {
             return $this->{$name};

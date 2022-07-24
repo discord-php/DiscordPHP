@@ -68,7 +68,7 @@ abstract class AbstractRepository extends Collection
      *
      * @var CacheInterface
      */
-    public $cache;
+    protected $cache;
 
     /**
      * Cache key prefix.
