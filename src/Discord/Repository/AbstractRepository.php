@@ -19,6 +19,7 @@ use Discord\Parts\Part;
 use React\Cache\CacheInterface;
 use React\Promise\ExtendedPromiseInterface;
 use React\Promise\PromiseInterface;
+use WeakReference;
 
 /**
  * Repositories provide a way to store and update parts on the Discord server.
@@ -78,9 +79,9 @@ abstract class AbstractRepository extends Collection
     protected $cacheKeyPrefix;
 
     /**
-     * Cache keys => part object id.
+     * Cache keys => part weak reference.
      *
-     * @var array Key => Part.
+     * @var WeakReference[]
      */
     protected $cacheKeys = [];
 
@@ -283,17 +284,17 @@ abstract class AbstractRepository extends Collection
     public function fetch(string $id, bool $fresh = false): ExtendedPromiseInterface
     {
         if (! $fresh) {
-            return $this->cache->get($this->cacheKeyPrefix.'.'.$id)->then(function ($item) use ($id) {
-                if (! isset($item)) {
-                    return $this->fetch($id, true);
-                }
+            $cacheKey = $this->cacheKeyPrefix.'.'.$id;
+            $part = null;
+            if (isset($this->cacheKeys[$cacheKey])) {
+                $part = $this->cacheKeys[$cacheKey]->get();
+            }
 
-                return $item;
-            });
+            return $this->cache->get($this->cacheKeyPrefix.'.'.$id, $part);
         }
 
         if (! isset($this->endpoints['get'])) {
-            return \React\Promise\resolve(new \Exception('You cannot get this part.'));
+            return \React\Promise\reject(new \Exception('You cannot get this part.'));
         }
 
         $part = $this->factory->create($this->class, [$this->discrim => $id]);
@@ -326,7 +327,7 @@ abstract class AbstractRepository extends Collection
 
                 $cacheKey = $this->cacheKeyPrefix.'.'.$part->{$this->discrim};
                 $parts[$cacheKey] = $part;
-                $cacheKeys[$cacheKey] = spl_object_id($part);
+                $cacheKeys[$cacheKey] = WeakReference::create($part);
             }
 
             return $this->cache->setMultiple($parts)->then(function ($success) use ($cacheKeys) {
@@ -346,7 +347,7 @@ abstract class AbstractRepository extends Collection
     {
         return $this->cache->set($cacheKey, $part)->then(function ($success) use ($part, $cacheKey) {
             if ($success) {
-                $this->cacheKeys[$cacheKey] = spl_object_id($part);
+                $this->cacheKeys[$cacheKey] = WeakReference::create($part);
             }
 
             return $part;
