@@ -381,6 +381,7 @@ class Discord
 
         $this->factory = new Factory($this, $this->http);
         $this->client = $this->factory->create(Client::class, [], true);
+        $this->cache = $options['cacheInterface'];
 
         $this->connectWs();
     }
@@ -1521,6 +1522,16 @@ class Discord
     }
 
     /**
+     * Gets the Cache Interface.
+     *
+     * @return CacheInterface
+     */
+    public function getCacheInterface(): CacheInterface
+    {
+        return $this->cache;
+    }
+
+    /**
      * Handles dynamic get calls to the client.
      *
      * @param string $name Variable name.
@@ -1529,7 +1540,7 @@ class Discord
      */
     public function __get(string $name)
     {
-        $allowed = ['loop', 'options', 'logger', 'http', 'application_commands'];
+        $allowed = ['loop', 'options', 'logger', 'http', 'application_commands', 'cache'];
 
         if (in_array($name, $allowed)) {
             return $this->{$name};
