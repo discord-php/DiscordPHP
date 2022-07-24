@@ -15,6 +15,7 @@ use Discord\Discord;
 use Discord\Http\Http;
 use Discord\Parts\Part;
 use Discord\Repository\AbstractRepository;
+use React\Cache\CacheInterface;
 
 /**
  * Exposes an interface to build part objects without the other requirements.
@@ -66,7 +67,7 @@ class Factory
         if (strpos($class, 'Discord\\Parts') !== false) {
             $object = $this->part($class, $data, $created);
         } elseif (strpos($class, 'Discord\\Repository') !== false) {
-            $object = $this->repository($class, $data);
+            $object = $this->repository($class, $data, $this->discord->cache);
         } else {
             throw new \Exception('The class '.$class.' is not a Part or a Repository.');
         }
@@ -96,8 +97,8 @@ class Factory
      *
      * @return AbstractRepository The repository.
      */
-    public function repository(string $class, array $data = []): AbstractRepository
+    public function repository(string $class, array $data = [], CacheInterface $cacheInterface): AbstractRepository
     {
-        return new $class($this->http, $this, $data);
+        return new $class($this->http, $this, $data, $cacheInterface);
     }
 }
