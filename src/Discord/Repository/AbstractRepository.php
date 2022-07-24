@@ -16,7 +16,9 @@ use Discord\Helpers\Collection;
 use Discord\Http\Endpoint;
 use Discord\Http\Http;
 use Discord\Parts\Part;
+use React\Cache\CacheInterface;
 use React\Promise\ExtendedPromiseInterface;
+use React\Promise\PromiseInterface;
 
 /**
  * Repositories provide a way to store and update parts on the Discord server.
@@ -62,17 +64,40 @@ abstract class AbstractRepository extends Collection
     protected $vars = [];
 
     /**
+     * The react/cache Interface.
+     *
+     * @var CacheInterface
+     */
+    public $cache;
+
+    /**
+     * Cache key prefix.
+     *
+     * @var string
+     */
+    protected $cacheKeyPrefix;
+
+    /**
+     * Cache keys => part object id.
+     *
+     * @var array Key => Part.
+     */
+    protected $cacheKeys = [];
+
+    /**
      * AbstractRepository constructor.
      *
      * @param Http    $http    The HTTP client.
      * @param Factory $factory The parts factory.
      * @param array   $vars    An array of variables used for the endpoint.
      */
-    public function __construct(Http $http, Factory $factory, array $vars = [])
+    public function __construct(Http $http, Factory $factory, array $vars = [], CacheInterface $cacheInterface)
     {
         $this->http = $http;
         $this->factory = $factory;
         $this->vars = $vars;
+        $this->cache = $cacheInterface;
+        $this->cacheKeyPrefix = 'repositories.'.static::class;
 
         parent::__construct([], $this->discrim, $this->class);
     }
@@ -101,14 +126,7 @@ abstract class AbstractRepository extends Collection
         return $this->http->get($endpoint)->then(function ($response) {
             $this->clear();
 
-            foreach ($response as $value) {
-                $value = array_merge($this->vars, (array) $value);
-                $part = $this->factory->create($this->class, $value, true);
-
-                $this->push($part);
-            }
-
-            return $this;
+            return $this->freshenCache($response);
         });
     }
 
@@ -168,10 +186,9 @@ abstract class AbstractRepository extends Collection
             $part->fill((array) $response);
             $part->created = true;
             $part->deleted = false;
+            $cacheKey = $this->cacheKeyPrefix.'.'.$part->{$this->discrim};
 
-            $this->push($part);
-
-            return $part;
+            return $this->setCache($cacheKey, $part);
         });
     }
 
@@ -212,8 +229,11 @@ abstract class AbstractRepository extends Collection
             }
 
             $part->created = false;
+            $cacheKey = $this->cacheKeyPrefix.'.'.$part->{$this->discrim};
 
-            return $part;
+            return $this->deleteCache($cacheKey)->then(function ($success) use ($part) {
+                return $part;
+            });
         });
     }
 
@@ -245,8 +265,9 @@ abstract class AbstractRepository extends Collection
 
         return $this->http->get($endpoint)->then(function ($response) use (&$part) {
             $part->fill((array) $response);
+            $cacheKey = $this->cacheKeyPrefix.'.'.$part->{$this->discrim};
 
-            return $part;
+            return $this->setCache($cacheKey, $part);
         });
     }
 
@@ -261,8 +282,14 @@ abstract class AbstractRepository extends Collection
      */
     public function fetch(string $id, bool $fresh = false): ExtendedPromiseInterface
     {
-        if (! $fresh && $part = $this->get($this->discrim, $id)) {
-            return \React\Promise\resolve($part);
+        if (! $fresh) {
+            return $this->cache->get($this->cacheKeyPrefix.'.'.$id)->then(function ($item) use ($id) {
+                if (! isset($item)) {
+                    return $this->fetch($id, true);
+                }
+
+                return $item;
+            });
         }
 
         if (! isset($this->endpoints['get'])) {
@@ -275,9 +302,68 @@ abstract class AbstractRepository extends Collection
 
         return $this->http->get($endpoint)->then(function ($response) {
             $part = $this->factory->create($this->class, array_merge($this->vars, (array) $response), true);
-            $this->push($part);
+            $cacheKey = $this->cacheKeyPrefix.'.'.$part->{$this->discrim};
+
+            return $this->setCache($cacheKey, $part);
+        });
+    }
+
+    /**
+     * @internal
+     */
+    protected function freshenCache($response): PromiseInterface
+    {
+        return $this->cache->deleteMultiple(array_keys($this->cacheKeys))->then(function ($success) use ($response) {
+            if ($success) {
+                $this->cacheKeys = [];
+            }
+
+            $parts = $cacheKeys = [];
+
+            foreach ($response as $value) {
+                $value = array_merge($this->vars, (array) $value);
+                $part = $this->factory->create($this->class, $value, true);
+
+                $cacheKey = $this->cacheKeyPrefix.'.'.$part->{$this->discrim};
+                $parts[$cacheKey] = $part;
+                $cacheKeys[$cacheKey] = spl_object_id($part);
+            }
+
+            return $this->cache->setMultiple($parts)->then(function ($success) use ($cacheKeys) {
+                if ($success) {
+                    $this->cacheKeys = $cacheKeys;
+                }
+
+                return $this;
+            });
+        });
+    }
+
+    /**
+     * @internal
+     */
+    protected function setCache($cacheKey, $part): PromiseInterface
+    {
+        return $this->cache->set($cacheKey, $part)->then(function ($success) use ($part, $cacheKey) {
+            if ($success) {
+                $this->cacheKeys[$cacheKey] = spl_object_id($part);
+            }
 
             return $part;
+        });
+    }
+
+    /**
+     * @internal
+     */
+    protected function deleteCache($cacheKey): PromiseInterface
+    {
+        return $this->cache->delete($cacheKey)->then(function ($success) use ($cacheKey) {
+            if ($success) {
+                unset($this->cacheKeys[$cacheKey]);
+            }
+
+            return $success;
         });
     }
 
