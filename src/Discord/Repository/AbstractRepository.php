@@ -368,6 +368,28 @@ abstract class AbstractRepository extends Collection
     }
 
     /**
+     * Counts the amount of objects in the cache.
+     *
+     * @return int
+     */
+    public function count(): int
+    {
+        return count($this->cacheKeys);
+    }
+
+    /**
+     * If the cache has an offset.
+     *
+     * @param mixed $offset
+     *
+     * @return bool
+     */
+    public function offsetExists($offset): bool
+    {
+        return isset($this->cacheKeys[$this->cacheKeyPrefix.'.'.$offset]);
+    }
+
+    /**
      * Handles debug calls from var_dump and similar functions.
      *
      * @return array An array of attributes.
