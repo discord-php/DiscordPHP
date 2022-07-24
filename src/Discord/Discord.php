@@ -1526,7 +1526,7 @@ class Discord
      *
      * @return CacheInterface
      */
-    public function getCacheInterface(): CacheInterface
+    public function getCache(): CacheInterface
     {
         return $this->cache;
     }

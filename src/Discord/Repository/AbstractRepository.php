@@ -391,6 +391,16 @@ abstract class AbstractRepository extends Collection
     }
 
     /**
+     * Gets the cache interface.
+     *
+     * @return CacheInterface
+     */
+    public function getCache(): CacheInterface
+    {
+        return $this->cache;
+    }
+
+    /**
      * Handles debug calls from var_dump and similar functions.
      *
      * @return array An array of attributes.
