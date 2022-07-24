@@ -97,7 +97,7 @@ abstract class AbstractRepository extends Collection
         $this->factory = $factory;
         $this->vars = $vars;
         $this->cache = $cacheInterface;
-        $this->cacheKeyPrefix = 'repositories.'.static::class;
+        $this->cacheKeyPrefix = substr(strrchr($this->class, '\\'), 1);
 
         parent::__construct([], $this->discrim, $this->class);
     }
@@ -374,6 +374,6 @@ abstract class AbstractRepository extends Collection
      */
     public function __debugInfo(): array
     {
-        return $this->jsonSerialize();
+        return $this->cacheKeys;
     }
 }
