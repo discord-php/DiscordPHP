@@ -33,7 +33,6 @@ class RoleRepository extends AbstractRepository
      */
     protected $endpoints = [
         'all' => Endpoint::GUILD_ROLES,
-        'get' => Endpoint::GUILD_ROLE,
         'create' => Endpoint::GUILD_ROLES,
         'update' => Endpoint::GUILD_ROLE,
         'delete' => Endpoint::GUILD_ROLE,
