@@ -91,13 +91,12 @@ class MemberRepository extends AbstractRepository
                 }
 
                 foreach ($response as $value) {
-                    $value = array_merge($this->vars, (array) $value);
-                    $part = $this->factory->create($this->class, $value, true);
-
-                    $this->pushItem($part);
+                    $lastValueId = $value->id;
                 }
 
-                $paginate($part->id);
+                $this->freshenCache($response)->then(function () use ($paginate, $lastValueId) {
+                    $paginate($lastValueId);
+                });
             }, [$deferred, 'reject']);
         })();
 

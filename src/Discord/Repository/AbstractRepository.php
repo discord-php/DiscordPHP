@@ -231,7 +231,7 @@ abstract class AbstractRepository extends Collection
             $part->created = false;
             $cacheKey = $this->cacheKeyPrefix.'.'.$part->{$this->discrim};
 
-            return $this->deleteCache($cacheKey)->then(function ($success) use ($part) {
+            return $this->deleteCache($cacheKey)->then(function () use ($part) {
                 return $part;
             });
         });
