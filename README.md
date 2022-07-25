@@ -12,23 +12,29 @@ For testing and stability it would be greatly appreciated if you were able to ad
 > Warning: This branch is in development and is experimental, do not use this in production! Create issues or join our Discord for feedback and discussions.
 
 DiscordPHP caching is powered by [react/cache](https://github.com/reactphp/cache). The Interface can be retrieved by accessing `$discord->cache` or in any repositories `$repository->cache`, e.g.
+
 ```php
 $discord->users->cache->get('User.115233618997149700')->then(function ($user) {
     // $user is a cached Part
 });
 ```
+
 Albeit example, it's preferred to fetch user like usual:
 ```php
 $discord->users->fetch('User.331769949720674305', true)->then(function ($user) {
-    // $user will update the cache from Discord API
+    // $user fetched from Discord API will automatically update the cache
 });
 ```
+
+As you may notice, the cache interfaces are handled in [Promise](https://github.com/reactphp/promise) manner, while it may help speed up a bit when combined with [async](https://github.com/reactphp/async), it is worth to note that is not as fast as previous In-memory memory cache. The caching interface suits to those who wants to scale up their Bot and not bound to PHP memory limit or process, at cost of the speed.
+
 All methods deriving from `AbstractRepository` (not `Collection`) handles the cache implementation already.
 
 Known available implementation:
 
-### `ArrayCache`
-Bundled in ReactPHP Cache, uses in-memory Array, and is already set by default.
+### [ArrayCache](https://github.com/reactphp/cache/blob/1.x/src/ArrayCache.php)
+
+Bundled in ReactPHP Cache, uses in-memory Array, and is already used by default.
 
 ### [Redis](https://github.com/WyriHaximus/reactphp-cache-redis)
 
@@ -46,6 +52,7 @@ $cache = new Redis($redis, 'react:cache:');
 
 $discord = new Discord([
     'token' => 'bot token',
+    'loop' => $loop, // note the same loop
     'cacheInterface' => $cache,
 ]);
 ```
