@@ -616,7 +616,6 @@ abstract class AbstractRepository extends Collection
         return (function () {
             foreach ($this->items as $key => $item) {
                 if (($part = $item->get()) || ($part = await($this->cache->get($key)))) {
-                    var_dump($part);
                     yield $part;
                 }
             }
