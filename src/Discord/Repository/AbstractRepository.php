@@ -11,6 +11,7 @@
 
 namespace Discord\Repository;
 
+use ArrayIterator;
 use Discord\Factory\Factory;
 use Discord\Helpers\Collection;
 use Discord\Http\Endpoint;
@@ -19,13 +20,19 @@ use Discord\Parts\Part;
 use React\Cache\CacheInterface;
 use React\Promise\ExtendedPromiseInterface;
 use React\Promise\PromiseInterface;
+use Traversable;
 use WeakReference;
+
+use function React\Async\await;
+use function React\Promise\reject;
 
 /**
  * Repositories provide a way to store and update parts on the Discord server.
  *
  * @author Aaron Scherer <aequasi@gmail.com>
  * @author David Cole <david.cole1340@gmail.com>
+ * 
+ * @property-read WeakReference[] $items 
  */
 abstract class AbstractRepository extends Collection
 {
@@ -79,13 +86,6 @@ abstract class AbstractRepository extends Collection
     protected $cacheKeyPrefix;
 
     /**
-     * Cache keys => part weak reference.
-     *
-     * @var WeakReference[]
-     */
-    protected $cacheKeys = [];
-
-    /**
      * AbstractRepository constructor.
      *
      * @param Http    $http    The HTTP client.
@@ -114,7 +114,7 @@ abstract class AbstractRepository extends Collection
     public function freshen(array $queryparams = []): ExtendedPromiseInterface
     {
         if (! isset($this->endpoints['all'])) {
-            return \React\Promise\reject(new \Exception('You cannot freshen this repository.'));
+            return reject(new \Exception('You cannot freshen this repository.'));
         }
 
         $endpoint = new Endpoint($this->endpoints['all']);
@@ -160,7 +160,7 @@ abstract class AbstractRepository extends Collection
     {
         if ($part->created) {
             if (! isset($this->endpoints['update'])) {
-                return \React\Promise\reject(new \Exception('You cannot update this part.'));
+                return reject(new \Exception('You cannot update this part.'));
             }
 
             $method = 'patch';
@@ -169,7 +169,7 @@ abstract class AbstractRepository extends Collection
             $attributes = $part->getUpdatableAttributes();
         } else {
             if (! isset($this->endpoints['create'])) {
-                return \React\Promise\reject(new \Exception('You cannot create this part.'));
+                return reject(new \Exception('You cannot create this part.'));
             }
 
             $method = 'post';
@@ -209,11 +209,11 @@ abstract class AbstractRepository extends Collection
         }
 
         if (! $part->created) {
-            return \React\Promise\reject(new \Exception('You cannot delete a non-existant part.'));
+            return reject(new \Exception('You cannot delete a non-existant part.'));
         }
 
         if (! isset($this->endpoints['delete'])) {
-            return \React\Promise\reject(new \Exception('You cannot delete this part.'));
+            return reject(new \Exception('You cannot delete this part.'));
         }
 
         $endpoint = new Endpoint($this->endpoints['delete']);
@@ -250,11 +250,11 @@ abstract class AbstractRepository extends Collection
     public function fresh(Part $part, array $queryparams = []): ExtendedPromiseInterface
     {
         if (! $part->created) {
-            return \React\Promise\reject(new \Exception('You cannot get a non-existant part.'));
+            return reject(new \Exception('You cannot get a non-existant part.'));
         }
 
         if (! isset($this->endpoints['get'])) {
-            return \React\Promise\reject(new \Exception('You cannot get this part.'));
+            return reject(new \Exception('You cannot get this part.'));
         }
 
         $endpoint = new Endpoint($this->endpoints['get']);
@@ -286,15 +286,15 @@ abstract class AbstractRepository extends Collection
         if (! $fresh) {
             $cacheKey = $this->cacheKeyPrefix.'.'.$id;
             $part = null;
-            if (isset($this->cacheKeys[$cacheKey])) {
-                $part = $this->cacheKeys[$cacheKey]->get();
+            if (isset($this->items[$cacheKey])) {
+                $part = $this->items[$cacheKey]->get();
             }
 
             return $this->cache->get($this->cacheKeyPrefix.'.'.$id, $part);
         }
 
         if (! isset($this->endpoints['get'])) {
-            return \React\Promise\reject(new \Exception('You cannot get this part.'));
+            return reject(new \Exception('You cannot get this part.'));
         }
 
         $part = $this->factory->create($this->class, [$this->discrim => $id]);
@@ -314,12 +314,12 @@ abstract class AbstractRepository extends Collection
      */
     protected function freshenCache($response): PromiseInterface
     {
-        return $this->cache->deleteMultiple(array_keys($this->cacheKeys))->then(function ($success) use ($response) {
+        return $this->cache->deleteMultiple(array_keys($this->items))->then(function ($success) use ($response) {
             if ($success) {
-                $this->cacheKeys = [];
+                $this->items = [];
             }
 
-            $parts = $cacheKeys = [];
+            $parts = $items = [];
 
             foreach ($response as $value) {
                 $value = array_merge($this->vars, (array) $value);
@@ -327,12 +327,12 @@ abstract class AbstractRepository extends Collection
 
                 $cacheKey = $this->cacheKeyPrefix.'.'.$part->{$this->discrim};
                 $parts[$cacheKey] = $part;
-                $cacheKeys[$cacheKey] = WeakReference::create($part);
+                $items[$cacheKey] = WeakReference::create($part);
             }
 
-            return $this->cache->setMultiple($parts)->then(function ($success) use ($cacheKeys) {
+            return $this->cache->setMultiple($parts)->then(function ($success) use ($items) {
                 if ($success) {
-                    $this->cacheKeys = $cacheKeys;
+                    $this->items = $items;
                 }
 
                 return $this;
@@ -347,7 +347,7 @@ abstract class AbstractRepository extends Collection
     {
         return $this->cache->set($cacheKey, $part)->then(function ($success) use ($part, $cacheKey) {
             if ($success) {
-                $this->cacheKeys[$cacheKey] = WeakReference::create($part);
+                $this->items[$cacheKey] = WeakReference::create($part);
             }
 
             return $part;
@@ -361,33 +361,11 @@ abstract class AbstractRepository extends Collection
     {
         return $this->cache->delete($cacheKey)->then(function ($success) use ($cacheKey) {
             if ($success) {
-                unset($this->cacheKeys[$cacheKey]);
+                unset($this->items[$cacheKey]);
             }
 
             return $success;
         });
-    }
-
-    /**
-     * Counts the amount of objects in the cache.
-     *
-     * @return int
-     */
-    public function count(): int
-    {
-        return count($this->cacheKeys);
-    }
-
-    /**
-     * If the cache has an offset.
-     *
-     * @param mixed $offset
-     *
-     * @return bool
-     */
-    public function offsetExists($offset): bool
-    {
-        return isset($this->cacheKeys[$this->cacheKeyPrefix.'.'.$offset]);
     }
 
     /**
@@ -401,12 +379,221 @@ abstract class AbstractRepository extends Collection
     }
 
     /**
-     * Handles debug calls from var_dump and similar functions.
+     * Returns the first element of the cache.
      *
-     * @return array An array of attributes.
+     * @return mixed
      */
-    public function __debugInfo(): array
+    public function first()
     {
-        return $this->cacheKeys;
+        if ($item = parent::first()) {
+            return $item->get();
+        }
+
+        return null;
+    }
+
+    /**
+     * Returns the last element of the cache.
+     *
+     * @return mixed
+     */
+    public function last()
+    {
+        if ($item = parent::last()) {
+            return $item->get();
+        }
+
+        return null;
+    }
+
+    /**
+     * Checks if the array has an object.
+     *
+     * @param array ...$keys
+     *
+     * @deprecated 7.1.4
+     *
+     * @return bool
+     */
+    public function has(...$keys): bool
+    {
+        foreach ($keys as $key) {
+            if (! await($this->cache->has($this->cacheKeyPrefix.'.'.$key))) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * Runs a filter callback over the collection and
+     * returns the first item where the callback returns
+     * `true` when given the item.
+     *
+     * Returns `null` if no items returns `true` when called in
+     * the callback.
+     *
+     * @param  callable $callback
+     * @return mixed
+     */
+    public function find(callable $callback)
+    {
+        foreach ($this->toArray() as $item) {
+            if ($callback($item)) {
+                return $item;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Clears the collection.
+     */
+    public function clear(): void
+    {
+        await($this->cache->deleteMultiple(array_keys($this->items))->then(function ($success) {
+            if ($success) {
+                parent::clear();
+            }
+        }));
+    }
+
+    /**
+     * Converts the cache to an array.
+     *
+     * @return array
+     */
+    public function toArray()
+    {
+        $items = [];
+
+        foreach ($this->items as $key => $value) {
+            $key = substr(strrchr($key, '.'), 1);
+            $items[$key] = $value->get();
+        }
+
+        return $items;
+    }
+
+    /**
+     * If the cache has an offset.
+     *
+     * @param mixed $offset
+     *
+     * @return bool
+     */
+    public function offsetExists($offset): bool
+    {
+        return isset($this->items[$this->cacheKeyPrefix.'.'.$offset]);
+    }
+
+    /**
+     * Gets an item from the cache.
+     *
+     * @param mixed $offset
+     *
+     * @return mixed
+     */
+    #[\ReturnTypeWillChange]
+    public function offsetGet($offset)
+    {
+        $cacheKey = $this->cacheKeyPrefix.'.'.$offset;
+
+        return await($this->cache->get($cacheKey, parent::offsetGet($offset))->then(function ($part) use ($cacheKey) {
+            if ($part !== null) {
+                $this->items[$cacheKey] = WeakReference::create($part);
+            }
+
+            return $part;
+        }));
+    }
+
+    /**
+     * Sets an item into the cache.
+     *
+     * @param mixed $offset
+     * @param mixed $value
+     */
+    public function offsetSet($offset, $value): void
+    {
+        await($this->setCache($this->cacheKeyPrefix.'.'.$offset, $value));
+    }
+
+    /**
+     * Unsets an index from the collection.
+     *
+     * @param mixed offset
+     */
+    public function offsetUnset($offset): void
+    {
+        await($this->deleteCache($this->cacheKeyPrefix.'.'.$offset));
+    }
+
+    /**
+     * Returns the string representation of the collection.
+     *
+     * @return string
+     */
+    public function serialize(): string
+    {
+        return json_encode($this->toArray());
+    }
+
+    /**
+     * Returns the string representation of the cache.
+     *
+     * @return string
+     */
+    public function __serialize(): array
+    {
+        return $this->toArray();
+    }
+
+    /**
+     * Unserializes the cache.
+     *
+     * @param string $serialized
+     */
+    public function unserialize(string $serialized): void
+    {
+        $this->__unserialize(json_decode($serialized));
+    }
+
+    /**
+     * Unserializes the cache.
+     *
+     * @param array $serialized
+     */
+    public function __unserialize(array $serialized): void
+    {
+        $this->items = [];
+
+        foreach ($serialized as $key => $value) {
+            $key = $this->cacheKeyPrefix.'.'.$key;
+            $this->items[$key] = WeakReference::create($value);
+        }
+    }
+
+    /**
+     * Serializes the object to a value that can be serialized natively by json_encode().
+     *
+     * @return array
+     */
+    public function jsonSerialize(): array
+    {
+        return $this->toArray();
+    }
+
+    /**
+     * Returns an iterator for the collection.
+     *
+     * @return Traversable
+     */
+    public function getIterator(): Traversable
+    {
+        // TODO: yield from cache
+        return new ArrayIterator($this->toArray());
     }
 }

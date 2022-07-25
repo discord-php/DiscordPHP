@@ -24,7 +24,8 @@
         "discord-php/http": "^9.0.12",
         "react/child-process": "^0.6.2",
         "discord/interactions": "^2.2",
-        "react/cache": "^1.1"
+        "react/cache": "^1.1",
+        "react/async": "^3.0"
     },
     "require-dev": {
         "symfony/var-dumper": "*",
