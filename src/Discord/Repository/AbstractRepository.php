@@ -21,6 +21,7 @@ use React\Cache\CacheInterface;
 use React\Promise\ExtendedPromiseInterface;
 use React\Promise\PromiseInterface;
 use Traversable;
+use WeakReference;
 
 use function React\Async\await;
 use function React\Promise\reject;
@@ -31,8 +32,9 @@ use function React\Promise\reject;
  * @author Aaron Scherer <aequasi@gmail.com>
  * @author David Cole <david.cole1340@gmail.com>
  *
- * @property-read \WeakReference[] $items
- * @property-read CacheWrapper     $cache
+ * @property-read \WeakReference[] $items          Repository cache items containing cache key => weak references to the cache.
+ * @property-read CacheWrapper     $cache          The react/cache wrapper.
+ * @property-read string           $cacheKeyPrefix Cache key prefix.
  */
 abstract class AbstractRepository extends Collection
 {
@@ -72,15 +74,11 @@ abstract class AbstractRepository extends Collection
     protected $vars = [];
 
     /**
-     * The react/cache wrapper.
-     *
      * @var CacheWrapper
      */
     protected $cache;
 
     /**
-     * Cache key prefix.
-     *
      * @var string
      */
     protected $cacheKeyPrefix;
@@ -326,12 +324,9 @@ abstract class AbstractRepository extends Collection
     }
 
     /**
-     * Gets an item from the cache.
-     *
-     * @param string $discrim
-     * @param mixed  $key
-     *
-     * @return mixed
+     * @deprecated 7.1.4 Use async `$repository->cache->get()` or `$repository->fetch()`
+     * @uses \React\Async\await() This method is blocking.
+     * {@inheritdoc}
      */
     public function get(string $discrim, $key)
     {
@@ -351,12 +346,9 @@ abstract class AbstractRepository extends Collection
     }
 
     /**
-     * Pulls an item from the cache.
-     *
-     * @param mixed $key
-     * @param mixed $default
-     *
-     * @return mixed
+     * @deprecated 7.1.4 Use async `$repository->cache->get()` and `$repository->cache->delete()`
+     * @uses \React\Async\await() This method is blocking.
+     * {@inheritdoc}
      */
     public function pull($key, $default = null)
     {
@@ -369,11 +361,9 @@ abstract class AbstractRepository extends Collection
     }
 
     /**
-     * Pushes a single item to the cache.
-     *
-     * @param mixed $item
-     *
-     * @return self
+     * @deprecated 7.1.4 Use async `$repository->cache->set()`
+     * @uses \React\Async\await() This method is blocking.
+     * {@inheritdoc}
      */
     public function pushItem($item): self
     {
@@ -389,12 +379,13 @@ abstract class AbstractRepository extends Collection
     }
 
     /**
-     * Returns the first element of the cache.
+     * Returns the first element of the cache which is not yet garbage collected.
      *
      * @return mixed
      */
     public function first()
     {
+        /** @var WeakReference|null */
         if ($item = parent::first()) {
             return $item->get();
         }
@@ -403,12 +394,13 @@ abstract class AbstractRepository extends Collection
     }
 
     /**
-     * Returns the last element of the cache.
+     * Returns the last element of the cache which is not yet garbage collected.
      *
      * @return mixed
      */
     public function last()
     {
+        /** @var WeakReference|null */
         if ($item = parent::last()) {
             return $item->get();
         }
@@ -417,13 +409,11 @@ abstract class AbstractRepository extends Collection
     }
 
     /**
-     * Checks if the array has an object.
+     * Checks if the cache has an object.
+     *
+     * @uses \React\Async\await() This method is blocking.
      *
      * @param array ...$keys
-     *
-     * @deprecated 7.1.4
-     *
-     * @return bool
      */
     public function has(...$keys): bool
     {
@@ -437,15 +427,7 @@ abstract class AbstractRepository extends Collection
     }
 
     /**
-     * Runs a filter callback over the cache and
-     * returns the first item where the callback returns
-     * `true` when given the item.
-     *
-     * Returns `null` if no items returns `true` when called in
-     * the callback.
-     *
-     * @param  callable $callback
-     * @return mixed
+     * {@inheritdoc}
      */
     public function find(callable $callback)
     {
@@ -462,6 +444,7 @@ abstract class AbstractRepository extends Collection
 
     /**
      * Clears the cache.
+     * @uses \React\Async\await() This method is blocking.
      */
     public function clear(): void
     {
@@ -473,7 +456,7 @@ abstract class AbstractRepository extends Collection
     }
 
     /**
-     * Converts the cache to an array.
+     * Converts the weak caches to an array.
      *
      * @return array
      */
@@ -490,7 +473,7 @@ abstract class AbstractRepository extends Collection
     }
 
     /**
-     * If the cache has an offset.
+     * If the weak cache has an offset.
      *
      * @param mixed $offset
      *
@@ -503,6 +486,8 @@ abstract class AbstractRepository extends Collection
 
     /**
      * Gets an item from the cache.
+     *
+     * @uses \React\Async\await() This method is blocking.
      *
      * @param mixed $offset
      *
@@ -517,6 +502,8 @@ abstract class AbstractRepository extends Collection
     /**
      * Sets an item into the cache.
      *
+     * @uses \React\Async\await() This method is blocking.
+     *
      * @param mixed $offset
      * @param mixed $value
      */
@@ -528,6 +515,8 @@ abstract class AbstractRepository extends Collection
     /**
      * Unsets an index from the cache.
      *
+     * @uses \React\Async\await() This method is blocking.
+     *
      * @param mixed offset
      */
     public function offsetUnset($offset): void
@@ -536,9 +525,7 @@ abstract class AbstractRepository extends Collection
     }
 
     /**
-     * Serializes the object to a value that can be serialized natively by json_encode().
-     *
-     * @return array
+     * {@inheritdoc}
      */
     public function jsonSerialize(): array
     {
@@ -547,6 +534,8 @@ abstract class AbstractRepository extends Collection
 
     /**
      * Returns an iterator for the cache.
+     *
+     * @uses \React\Async\await() This method is blocking.
      *
      * @return Traversable
      */
@@ -563,12 +552,13 @@ abstract class AbstractRepository extends Collection
 
     /**
      * @return CacheWrapper `cache`
+     * @return string       `cacheKeyPrefix`
      * @return mixed
      */
     public function __get(string $key): mixed
     {
-        if ($key == 'cache') {
-            return $this->cache;
+        if (in_array($key, ['cache', 'cacheKeyPrefix'])) {
+            return $this->{$key};
         }
     }
 }
