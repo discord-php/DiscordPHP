@@ -104,7 +104,7 @@ abstract class AbstractRepository extends Collection
     }
 
     /**
-     * Freshens the repository collection.
+     * Freshens the repository cache.
      *
      * @param array $queryparams Query string params to add to the request (no validation)
      *
@@ -379,6 +379,69 @@ abstract class AbstractRepository extends Collection
     }
 
     /**
+     * Gets an item from the cache.
+     *
+     * @param string $discrim
+     * @param mixed  $key
+     *
+     * @return mixed
+     */
+    public function get(string $discrim, $key)
+    {
+        if ($discrim == $this->discrim && $this->offsetExists($key)) {
+            return $this->offsetGet($key);
+        }
+
+        foreach ($this->items as $item) {
+            if ($part = $item->get()) {
+                if ($part->{$discrim} == $key) {
+                    return $part;
+                }
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Pulls an item from the cache.
+     *
+     * @param mixed $key
+     * @param mixed $default
+     *
+     * @return mixed
+     */
+    public function pull($key, $default = null)
+    {
+        if ($item = $this->offsetGet($key)) {
+            $default = $item;
+            $this->offsetUnset($key);
+        }
+
+        return $default;
+    }
+
+    /**
+     * Pushes a single item to the cache.
+     *
+     * @param mixed $item
+     *
+     * @return self
+     */
+    public function pushItem($item): self
+    {
+        if (! is_null($this->class) && ! ($item instanceof $this->class)) {
+            return $this;
+        }
+
+        if (is_object($item)) {
+            $this->offsetSet($this->cacheKeyPrefix.'.'.$item->{$this->discrim}, $item);
+        }
+
+        return $this;
+    }
+
+    /**
      * Returns the first element of the cache.
      *
      * @return mixed
@@ -427,7 +490,7 @@ abstract class AbstractRepository extends Collection
     }
 
     /**
-     * Runs a filter callback over the collection and
+     * Runs a filter callback over the cache and
      * returns the first item where the callback returns
      * `true` when given the item.
      *
@@ -439,9 +502,11 @@ abstract class AbstractRepository extends Collection
      */
     public function find(callable $callback)
     {
-        foreach ($this->toArray() as $item) {
-            if ($callback($item)) {
-                return $item;
+        foreach ($this->items as $item) {
+            if ($part = $item->get()) {
+                if ($callback($part)) {
+                    return $part;
+                }
             }
         }
 
@@ -449,7 +514,7 @@ abstract class AbstractRepository extends Collection
     }
 
     /**
-     * Clears the collection.
+     * Clears the cache.
      */
     public function clear(): void
     {
@@ -522,58 +587,13 @@ abstract class AbstractRepository extends Collection
     }
 
     /**
-     * Unsets an index from the collection.
+     * Unsets an index from the cache.
      *
      * @param mixed offset
      */
     public function offsetUnset($offset): void
     {
         await($this->deleteCache($this->cacheKeyPrefix.'.'.$offset));
-    }
-
-    /**
-     * Returns the string representation of the collection.
-     *
-     * @return string
-     */
-    public function serialize(): string
-    {
-        return json_encode($this->toArray());
-    }
-
-    /**
-     * Returns the string representation of the cache.
-     *
-     * @return string
-     */
-    public function __serialize(): array
-    {
-        return $this->toArray();
-    }
-
-    /**
-     * Unserializes the cache.
-     *
-     * @param string $serialized
-     */
-    public function unserialize(string $serialized): void
-    {
-        $this->__unserialize(json_decode($serialized));
-    }
-
-    /**
-     * Unserializes the cache.
-     *
-     * @param array $serialized
-     */
-    public function __unserialize(array $serialized): void
-    {
-        $this->items = [];
-
-        foreach ($serialized as $key => $value) {
-            $key = $this->cacheKeyPrefix.'.'.$key;
-            $this->items[$key] = WeakReference::create($value);
-        }
     }
 
     /**
@@ -587,13 +607,18 @@ abstract class AbstractRepository extends Collection
     }
 
     /**
-     * Returns an iterator for the collection.
+     * Returns an iterator for the cache.
      *
      * @return Traversable
      */
     public function getIterator(): Traversable
     {
-        // TODO: yield from cache
-        return new ArrayIterator($this->toArray());
+        return (function () {
+            foreach ($this->items as $key => $item) {
+                if ($part = $item->get() || $part = await($this->cache->get($key))) {
+                    yield $part;
+                }
+            }
+        })();
     }
 }
