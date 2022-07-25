@@ -95,7 +95,7 @@ abstract class AbstractRepository extends Collection
         $this->http = $http;
         $this->factory = $factory;
         $this->vars = $vars;
-        $this->cacheKeyPrefix = substr(strrchr($this->class, '\\'), 1);
+        $this->cacheKeyPrefix = substr(strrchr($this->class, '\\'), 1) . '.';
         $this->cache = new CacheWrapper($cacheInterface, $this->items);
 
         parent::__construct([], $this->discrim, $this->class);
@@ -184,7 +184,7 @@ abstract class AbstractRepository extends Collection
             $part->created = true;
             $part->deleted = false;
 
-            return $this->cache->set($this->cacheKeyPrefix.'.'.$part->{$this->discrim}, $part);
+            return $this->cache->set($this->cacheKeyPrefix.$part->{$this->discrim}, $part);
         });
     }
 
@@ -226,7 +226,7 @@ abstract class AbstractRepository extends Collection
 
             $part->created = false;
 
-            return $this->cache->delete($this->cacheKeyPrefix.'.'.$part->{$this->discrim})->then(function () use ($part) {
+            return $this->cache->delete($this->cacheKeyPrefix.$part->{$this->discrim})->then(function () use ($part) {
                 return $part;
             });
         });
@@ -261,7 +261,7 @@ abstract class AbstractRepository extends Collection
         return $this->http->get($endpoint)->then(function ($response) use (&$part) {
             $part->fill((array) $response);
 
-            return $this->cache->set($this->cacheKeyPrefix.'.'.$part->{$this->discrim}, $part);
+            return $this->cache->set($this->cacheKeyPrefix.$part->{$this->discrim}, $part);
         });
     }
 
@@ -277,7 +277,7 @@ abstract class AbstractRepository extends Collection
     public function fetch(string $id, bool $fresh = false): ExtendedPromiseInterface
     {
         if (! $fresh) {
-            $cacheKey = $this->cacheKeyPrefix.'.'.$id;
+            $cacheKey = $this->cacheKeyPrefix.$id;
             $part = null;
             if (isset($this->items[$cacheKey])) {
                 $part = $this->items[$cacheKey]->get();
@@ -297,7 +297,7 @@ abstract class AbstractRepository extends Collection
         return $this->http->get($endpoint)->then(function ($response) {
             $part = $this->factory->create($this->class, array_merge($this->vars, (array) $response), true);
 
-            return $this->cache->set($this->cacheKeyPrefix.'.'.$part->{$this->discrim}, $part);
+            return $this->cache->set($this->cacheKeyPrefix.$part->{$this->discrim}, $part);
         });
     }
 
@@ -313,7 +313,7 @@ abstract class AbstractRepository extends Collection
                 $value = array_merge($this->vars, (array) $value);
                 $part = $this->factory->create($this->class, $value, true);
 
-                $cacheKey = $this->cacheKeyPrefix.'.'.$part->{$this->discrim};
+                $cacheKey = $this->cacheKeyPrefix.$part->{$this->discrim};
                 $parts[$cacheKey] = $part;
             }
 
@@ -372,7 +372,7 @@ abstract class AbstractRepository extends Collection
         }
 
         if (is_object($item)) {
-            $this->offsetSet($this->cacheKeyPrefix.'.'.$item->{$this->discrim}, $item);
+            $this->offsetSet($this->cacheKeyPrefix.$item->{$this->discrim}, $item);
         }
 
         return $this;
@@ -418,7 +418,7 @@ abstract class AbstractRepository extends Collection
     public function has(...$keys): bool
     {
         foreach ($keys as $key) {
-            if (! await($this->cache->has($this->cacheKeyPrefix.'.'.$key))) {
+            if (! await($this->cache->has($this->cacheKeyPrefix.$key))) {
                 return false;
             }
         }
@@ -481,7 +481,7 @@ abstract class AbstractRepository extends Collection
      */
     public function offsetExists($offset): bool
     {
-        return isset($this->items[$this->cacheKeyPrefix.'.'.$offset]);
+        return isset($this->items[$this->cacheKeyPrefix.$offset]);
     }
 
     /**
@@ -496,7 +496,7 @@ abstract class AbstractRepository extends Collection
     #[\ReturnTypeWillChange]
     public function offsetGet($offset)
     {
-        return await($this->cache->get($this->cacheKeyPrefix.'.'.$offset, parent::offsetGet($offset)));
+        return await($this->cache->get($this->cacheKeyPrefix.$offset, parent::offsetGet($offset)));
     }
 
     /**
@@ -509,7 +509,7 @@ abstract class AbstractRepository extends Collection
      */
     public function offsetSet($offset, $value): void
     {
-        await($this->cache->set($this->cacheKeyPrefix.'.'.$offset, $value));
+        await($this->cache->set($this->cacheKeyPrefix.$offset, $value));
     }
 
     /**
@@ -521,7 +521,7 @@ abstract class AbstractRepository extends Collection
      */
     public function offsetUnset($offset): void
     {
-        await($this->cache->delete($this->cacheKeyPrefix.'.'.$offset));
+        await($this->cache->delete($this->cacheKeyPrefix.$offset));
     }
 
     /**
