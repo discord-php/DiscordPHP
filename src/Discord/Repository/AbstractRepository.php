@@ -429,6 +429,24 @@ abstract class AbstractRepository extends Collection
     /**
      * {@inheritdoc}
      */
+    public function filter(callable $callback): Collection
+    {
+        $collection = new Collection([], $this->discrim, $this->class);
+
+        foreach ($this->items as $item) {
+            if ($part = $item->get()) {
+                if ($callback($part)) {
+                    $collection->push($part);
+                }
+            }
+        }
+
+        return $collection;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function find(callable $callback)
     {
         foreach ($this->items as $item) {
@@ -453,6 +471,35 @@ abstract class AbstractRepository extends Collection
                 parent::clear();
             }
         }));
+    }
+
+    /**
+     * {@inheritdoc}
+     * @todo test
+     */
+    public function map(callable $callback): Collection
+    {
+        $keys = array_keys($this->items);
+        $values = array_map($callback, array_values($this->toArray()));
+
+        return new Collection(array_combine($keys, $values), $this->discrim, $this->class);
+    }
+
+    /**
+     * {@inheritdoc}
+     * @todo test
+     */
+    public function merge(Collection $collection): Collection
+    {
+        $items2 = [];
+
+        foreach ($collection->toArray() as $key => $value) {
+            $titems2[$this->cacheKeyPrefix.$key] = WeakReference::create($value);
+        }
+
+        $this->items = array_merge($this->items, $items2);
+
+        return $this;
     }
 
     /**
