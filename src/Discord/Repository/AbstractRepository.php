@@ -12,6 +12,7 @@
 namespace Discord\Repository;
 
 use Discord\Factory\Factory;
+use Discord\Helpers\CacheWrapper;
 use Discord\Helpers\Collection;
 use Discord\Http\Endpoint;
 use Discord\Http\Http;
@@ -20,7 +21,6 @@ use React\Cache\CacheInterface;
 use React\Promise\ExtendedPromiseInterface;
 use React\Promise\PromiseInterface;
 use Traversable;
-use WeakReference;
 
 use function React\Async\await;
 use function React\Promise\reject;
@@ -31,7 +31,8 @@ use function React\Promise\reject;
  * @author Aaron Scherer <aequasi@gmail.com>
  * @author David Cole <david.cole1340@gmail.com>
  *
- * @property-read WeakReference[] $items
+ * @property-read \WeakReference[] $items
+ * @property-read CacheWrapper     $cache
  */
 abstract class AbstractRepository extends Collection
 {
@@ -71,9 +72,9 @@ abstract class AbstractRepository extends Collection
     protected $vars = [];
 
     /**
-     * The react/cache Interface.
+     * The react/cache wrapper.
      *
-     * @var CacheInterface
+     * @var CacheWrapper
      */
     protected $cache;
 
@@ -96,8 +97,8 @@ abstract class AbstractRepository extends Collection
         $this->http = $http;
         $this->factory = $factory;
         $this->vars = $vars;
-        $this->cache = $cacheInterface;
         $this->cacheKeyPrefix = substr(strrchr($this->class, '\\'), 1);
+        $this->cache = new CacheWrapper($cacheInterface, $this->items);
 
         parent::__construct([], $this->discrim, $this->class);
     }
@@ -124,8 +125,6 @@ abstract class AbstractRepository extends Collection
         }
 
         return $this->http->get($endpoint)->then(function ($response) {
-            $this->clear();
-
             return $this->freshenCache($response);
         });
     }
@@ -187,7 +186,7 @@ abstract class AbstractRepository extends Collection
             $part->created = true;
             $part->deleted = false;
 
-            return $this->setCache($this->cacheKeyPrefix.'.'.$part->{$this->discrim}, $part);
+            return $this->cache->set($this->cacheKeyPrefix.'.'.$part->{$this->discrim}, $part);
         });
     }
 
@@ -229,7 +228,7 @@ abstract class AbstractRepository extends Collection
 
             $part->created = false;
 
-            return $this->deleteCache($this->cacheKeyPrefix.'.'.$part->{$this->discrim})->then(function () use ($part) {
+            return $this->cache->delete($this->cacheKeyPrefix.'.'.$part->{$this->discrim})->then(function () use ($part) {
                 return $part;
             });
         });
@@ -264,7 +263,7 @@ abstract class AbstractRepository extends Collection
         return $this->http->get($endpoint)->then(function ($response) use (&$part) {
             $part->fill((array) $response);
 
-            return $this->setCache($this->cacheKeyPrefix.'.'.$part->{$this->discrim}, $part);
+            return $this->cache->set($this->cacheKeyPrefix.'.'.$part->{$this->discrim}, $part);
         });
     }
 
@@ -300,7 +299,7 @@ abstract class AbstractRepository extends Collection
         return $this->http->get($endpoint)->then(function ($response) {
             $part = $this->factory->create($this->class, array_merge($this->vars, (array) $response), true);
 
-            return $this->setCache($this->cacheKeyPrefix.'.'.$part->{$this->discrim}, $part);
+            return $this->cache->set($this->cacheKeyPrefix.'.'.$part->{$this->discrim}, $part);
         });
     }
 
@@ -310,11 +309,7 @@ abstract class AbstractRepository extends Collection
     protected function freshenCache($response): PromiseInterface
     {
         return $this->cache->deleteMultiple(array_keys($this->items))->then(function ($success) use ($response) {
-            if ($success) {
-                $this->items = [];
-            }
-
-            $parts = $items = [];
+            $parts = [];
 
             foreach ($response as $value) {
                 $value = array_merge($this->vars, (array) $value);
@@ -322,55 +317,12 @@ abstract class AbstractRepository extends Collection
 
                 $cacheKey = $this->cacheKeyPrefix.'.'.$part->{$this->discrim};
                 $parts[$cacheKey] = $part;
-                $items[$cacheKey] = WeakReference::create($part);
             }
 
-            return $this->cache->setMultiple($parts)->then(function ($success) use ($items) {
-                if ($success) {
-                    $this->items = $items;
-                }
-
+            return $this->cache->setMultiple($parts)->then(function ($success) {
                 return $this;
             });
         });
-    }
-
-    /**
-     * @internal
-     */
-    protected function setCache($cacheKey, $part): PromiseInterface
-    {
-        return $this->cache->set($cacheKey, $part)->then(function ($success) use ($part, $cacheKey) {
-            if ($success) {
-                $this->items[$cacheKey] = WeakReference::create($part);
-            }
-
-            return $part;
-        });
-    }
-
-    /**
-     * @internal
-     */
-    protected function deleteCache($cacheKey): PromiseInterface
-    {
-        return $this->cache->delete($cacheKey)->then(function ($success) use ($cacheKey) {
-            if ($success) {
-                unset($this->items[$cacheKey]);
-            }
-
-            return $success;
-        });
-    }
-
-    /**
-     * Gets the cache interface.
-     *
-     * @return CacheInterface
-     */
-    public function getCache(): CacheInterface
-    {
-        return $this->cache;
     }
 
     /**
@@ -559,15 +511,7 @@ abstract class AbstractRepository extends Collection
     #[\ReturnTypeWillChange]
     public function offsetGet($offset)
     {
-        $cacheKey = $this->cacheKeyPrefix.'.'.$offset;
-
-        return await($this->cache->get($cacheKey, parent::offsetGet($offset))->then(function ($part) use ($cacheKey) {
-            if ($part !== null) {
-                $this->items[$cacheKey] = WeakReference::create($part);
-            }
-
-            return $part;
-        }));
+        return await($this->cache->get($this->cacheKeyPrefix.'.'.$offset, parent::offsetGet($offset)));
     }
 
     /**
@@ -578,7 +522,7 @@ abstract class AbstractRepository extends Collection
      */
     public function offsetSet($offset, $value): void
     {
-        await($this->setCache($this->cacheKeyPrefix.'.'.$offset, $value));
+        await($this->cache->set($this->cacheKeyPrefix.'.'.$offset, $value));
     }
 
     /**
@@ -588,7 +532,7 @@ abstract class AbstractRepository extends Collection
      */
     public function offsetUnset($offset): void
     {
-        await($this->deleteCache($this->cacheKeyPrefix.'.'.$offset));
+        await($this->cache->delete($this->cacheKeyPrefix.'.'.$offset));
     }
 
     /**
@@ -615,5 +559,16 @@ abstract class AbstractRepository extends Collection
                 }
             }
         })();
+    }
+
+    /**
+     * @return CacheWrapper `cache`
+     * @return mixed
+     */
+    public function __get(string $key): mixed
+    {
+        if ($key == 'cache') {
+            return $this->cache;
+        }
     }
 }
