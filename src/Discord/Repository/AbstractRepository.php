@@ -11,7 +11,6 @@
 
 namespace Discord\Repository;
 
-use ArrayIterator;
 use Discord\Factory\Factory;
 use Discord\Helpers\Collection;
 use Discord\Http\Endpoint;
@@ -31,8 +30,8 @@ use function React\Promise\reject;
  *
  * @author Aaron Scherer <aequasi@gmail.com>
  * @author David Cole <david.cole1340@gmail.com>
- * 
- * @property-read WeakReference[] $items 
+ *
+ * @property-read WeakReference[] $items
  */
 abstract class AbstractRepository extends Collection
 {
@@ -187,9 +186,8 @@ abstract class AbstractRepository extends Collection
             $part->fill((array) $response);
             $part->created = true;
             $part->deleted = false;
-            $cacheKey = $this->cacheKeyPrefix.'.'.$part->{$this->discrim};
 
-            return $this->setCache($cacheKey, $part);
+            return $this->setCache($this->cacheKeyPrefix.'.'.$part->{$this->discrim}, $part);
         });
     }
 
@@ -230,9 +228,8 @@ abstract class AbstractRepository extends Collection
             }
 
             $part->created = false;
-            $cacheKey = $this->cacheKeyPrefix.'.'.$part->{$this->discrim};
 
-            return $this->deleteCache($cacheKey)->then(function () use ($part) {
+            return $this->deleteCache($this->cacheKeyPrefix.'.'.$part->{$this->discrim})->then(function () use ($part) {
                 return $part;
             });
         });
@@ -266,9 +263,8 @@ abstract class AbstractRepository extends Collection
 
         return $this->http->get($endpoint)->then(function ($response) use (&$part) {
             $part->fill((array) $response);
-            $cacheKey = $this->cacheKeyPrefix.'.'.$part->{$this->discrim};
 
-            return $this->setCache($cacheKey, $part);
+            return $this->setCache($this->cacheKeyPrefix.'.'.$part->{$this->discrim}, $part);
         });
     }
 
@@ -290,7 +286,7 @@ abstract class AbstractRepository extends Collection
                 $part = $this->items[$cacheKey]->get();
             }
 
-            return $this->cache->get($this->cacheKeyPrefix.'.'.$id, $part);
+            return $this->cache->get($cacheKey, $part);
         }
 
         if (! isset($this->endpoints['get'])) {
@@ -303,9 +299,8 @@ abstract class AbstractRepository extends Collection
 
         return $this->http->get($endpoint)->then(function ($response) {
             $part = $this->factory->create($this->class, array_merge($this->vars, (array) $response), true);
-            $cacheKey = $this->cacheKeyPrefix.'.'.$part->{$this->discrim};
 
-            return $this->setCache($cacheKey, $part);
+            return $this->setCache($this->cacheKeyPrefix.'.'.$part->{$this->discrim}, $part);
         });
     }
 
