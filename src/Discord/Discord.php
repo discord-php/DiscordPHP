@@ -357,6 +357,9 @@ class Discord
 
         $this->logger->debug('Initializing DiscordPHP '.self::VERSION.' (DiscordPHP-Http: '.Http::VERSION.' & Gateway: v'.self::GATEWAY_VERSION.') on PHP '.PHP_VERSION);
 
+        $this->cache = $options['cacheInterface'];
+        $this->logger->warning('Attached experimental CacheInterface: '.get_class($this->cache));
+
         $connector = new SocketConnector($this->loop, $options['socket_options']);
         $this->wsFactory = new Connector($this->loop, $connector);
         $this->handlers = new Handlers();
@@ -381,7 +384,6 @@ class Discord
 
         $this->factory = new Factory($this, $this->http);
         $this->client = $this->factory->create(Client::class, [], true);
-        $this->cache = $options['cacheInterface'];
 
         $this->connectWs();
     }
