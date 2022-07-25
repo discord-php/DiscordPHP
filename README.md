@@ -26,7 +26,7 @@ $discord->users->fetch('User.331769949720674305', true)->then(function ($user) {
 });
 ```
 
-As you may notice, the cache interfaces are handled in [Promise](https://github.com/reactphp/promise) manner, while it may help speed up a bit when combined with [async](https://github.com/reactphp/async), it is worth to note that is not as fast as previous In-memory memory cache. The caching interface suits to those who wants to scale up their Bot and not bound to PHP memory limit or process, at cost of the speed.
+The cache interfaces are handled in [Promise](https://github.com/reactphp/promise) manner, while it may speed up when combined with [async](https://github.com/reactphp/async), it is worth to note that is not as fast as previous in-memory caching existed since DiscordPHP v5.x. The caching interface suits for those who wants to scale up their Bot and not bound to PHP memory limit nor process, at cost of the speed.
 
 All methods deriving from `AbstractRepository` (not `Collection`) handles the cache implementation already.
 
@@ -73,7 +73,7 @@ $discord = new Discord([
 ]);
 ```
 
-By default the cache key is prefixed "react:cache" so in your Redis/Memcached you will get have the data as: `react:cache:User.331769949720674305`. You do not need to write the prefix if accessing from the Bot code, just `User.331769949720674305`.
+By default the cache key is prefixed "react:cache" so in your Redis/Memcached you will get have the data as: `react:cache:User.331769949720674305`. You do not need to write the prefix if accessing from the Bot code, just `User.331769949720674305`. The repository prefix can be retrieved from the repository which in the case above `$discord->users->cacheKeyPrefix` would return `User.`, where `User` is the name of the `Part` class.
 
 ## Before you start
 
