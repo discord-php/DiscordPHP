@@ -555,7 +555,7 @@ abstract class AbstractRepository extends Collection
      * @return string       `cacheKeyPrefix`
      * @return mixed
      */
-    public function __get(string $key): mixed
+    public function __get(string $key)
     {
         if (in_array($key, ['cache', 'cacheKeyPrefix'])) {
             return $this->{$key};
