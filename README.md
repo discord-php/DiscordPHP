@@ -8,6 +8,66 @@ A wrapper for the official [Discord](https://discordapp.com) REST, gateway and v
 
 For testing and stability it would be greatly appreciated if you were able to add our test bot to your server. We don't store any data - the bot simply idles and does not interact with anyone and is used to test stability with large numbers of guilds. You can invite the bot [here.](https://discord.com/oauth2/authorize?client_id=157746770539970560&scope=bot)
 
+## CacheInterface experimental branch
+> Warning: This branch is in development and is experimental, do not use this in production! Create issues or join our Discord for feedback and discussions.
+
+DiscordPHP caching is powered by [react/cache](https://github.com/reactphp/cache). The Interface can be retrieved by accessing `$discord->cache` or in any repositories `$repository->cache`, e.g.
+```php
+$discord->users->cache->get('User.115233618997149700')->then(function ($user) {
+    // $user is a cached Part
+});
+```
+Albeit example, it's preferred to fetch user like usual:
+```php
+$discord->users->fetch('User.331769949720674305', true)->then(function ($user) {
+    // $user will update the cache from Discord API
+});
+```
+All methods deriving from `AbstractRepository` (not `Collection`) handles the cache implementation already.
+
+Known available implementation:
+
+### `ArrayCache`
+Bundled in ReactPHP Cache, uses in-memory Array, and is already set by default.
+
+### [Redis](https://github.com/WyriHaximus/reactphp-cache-redis)
+
+Note the examples below uses ReactPHP-Redis v2.x
+
+```php
+use React\EventLoop\Factory;
+use Clue\React\Redis\Client;
+use Clue\React\Redis\Factory;
+use WyriHaximus\React\Cache\Redis;
+
+$loop = Factory::create();
+$redis = (new Clue\React\Redis\Factory($loop))->createLazyClient('localhost:6379');
+$cache = new Redis($redis, 'react:cache:');
+
+$discord = new Discord([
+    'token' => 'bot token',
+    'cacheInterface' => $cache,
+]);
+```
+
+### [Memcached](https://github.com/seregazhuk/php-react-cache-memcached)
+
+```php
+use React\EventLoop\Factory;
+use seregazhuk\React\Cache\Memcached\Memcached;
+
+$loop = Factory::create();
+$cache = new Memcached($loop, 'localhost:11211', 'react:cache:');
+
+$discord = new Discord([
+    'token' => 'bot token',
+    'loop' => $loop, // note the same loop
+    'cacheInterface' => $cache,
+]);
+```
+
+By default the cache key is prefixed "react:cache" so in your Redis/Memcached you will get have the data as: `react:cache:User.331769949720674305`. You do not need to write the prefix if accessing from the Bot code, just `User.331769949720674305`.
+
 ## Before you start
 
 Before you start using this Library, you **need** to know how PHP works, you need to know the language and you need to know how Event Loops and Promises work. This is a fundamental requirement before you start. Without this knowledge, you will only suffer.
