@@ -26,7 +26,7 @@ use function Discord\studly;
  * This class is the base of all objects that are returned. All "Parts" extend off this
  * base class.
  */
-abstract class Part implements ArrayAccess, JsonSerializable
+abstract class Part implements ArrayAccess, JsonSerializable, Serializable
 {
     /**
      * The HTTP client.
@@ -311,7 +311,7 @@ abstract class Part implements ArrayAccess, JsonSerializable
      *
      * @return string A string of serialized data.
      */
-    public function __serialize()
+    public function serialize()
     {
         return serialize($this->attributes);
     }
@@ -323,7 +323,7 @@ abstract class Part implements ArrayAccess, JsonSerializable
      *
      * @see self::setAttribute() The unserialized data is stored with setAttribute.
      */
-    public function __unserialize($data)
+    public function unserialize($data)
     {
         $data = unserialize($data);
 
