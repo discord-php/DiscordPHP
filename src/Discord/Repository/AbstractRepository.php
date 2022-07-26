@@ -568,7 +568,16 @@ abstract class AbstractRepository extends Collection
      */
     public function offsetSet($offset, $value): void
     {
-        await($this->cache->set($this->cacheKeyPrefix.$offset, $value));
+        $cacheKey = $this->cacheKeyPrefix.$offset;
+
+        if (isset($this->items[$cacheKey])) {
+            $this->cache->interface->set($cacheKey, $value);
+            $this->items[$cacheKey] = WeakReference::create($value);
+
+            return;
+        }
+
+        await($this->cache->set($cacheKey, $value));
     }
 
     /**
@@ -580,7 +589,19 @@ abstract class AbstractRepository extends Collection
      */
     public function offsetUnset($offset): void
     {
-        await($this->cache->delete($this->cacheKeyPrefix.$offset));
+        $cacheKey = $this->cacheKeyPrefix.$offset;
+
+        if ($item = $this->items[$cacheKey]) {
+            if ($cache = $item->get()) {
+                unset($cache);
+            }
+            $this->cache->interface->delete($cacheKey);
+            unset($this->items[$cacheKey]);
+
+            return;
+        }
+
+        await($this->cache->delete($cacheKey));
     }
 
     /**
