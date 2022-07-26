@@ -86,10 +86,6 @@ class CacheWrapper
     {
         return $this->interface->delete($key)->then(function ($success) use ($key) {
             if ($success) {
-                if (isset($this->items[$key])) {
-                    $cache = $this->items[$key]->get();
-                    unset($cache);
-                }
                 unset($this->items[$key]);
             }
 
@@ -141,10 +137,6 @@ class CacheWrapper
         return $this->interface->deleteMultiple($keys)->then(function ($success) use ($keys) {
             if ($success) {
                 foreach ($keys as $key) {
-                    if (isset($this->items[$key])) {
-                        $cache = $this->items[$key]->get();
-                        unset($cache);
-                    }
                     unset($this->items[$key]);
                 }
             }
