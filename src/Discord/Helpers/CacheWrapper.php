@@ -73,7 +73,7 @@ class CacheWrapper implements CacheInterface
                 $this->items[$key] = WeakReference::create($value);
             }
 
-            return $value;
+            return $success;
         });
     }
 
