@@ -498,11 +498,7 @@ abstract class AbstractRepository extends Collection
         $items2 = [];
 
         foreach ($collection->toArray() as $key => $value) {
-            if (! ($value instanceof WeakReference)) {
-                $value = WeakReference::create($value);
-            }
-
-            $items2[$this->cacheKeyPrefix.$key] = $value;
+            $items2[$this->cacheKeyPrefix.$key] = WeakReference::create($value);
         }
 
         $this->items = array_merge($this->items, $items2);
