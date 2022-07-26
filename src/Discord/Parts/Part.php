@@ -25,7 +25,7 @@ use function Discord\studly;
  * This class is the base of all objects that are returned. All "Parts" extend off this
  * base class.
  */
-abstract class Part implements ArrayAccess, JsonSerializable
+abstract class Part implements ArrayAccess, JsonSerializable, Serializable
 {
     /**
      * The HTTP client.
