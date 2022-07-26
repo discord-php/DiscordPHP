@@ -466,7 +466,7 @@ abstract class AbstractRepository extends Collection
      */
     public function clear(): void
     {
-        if (count($this->items)) {
+        if ($this->items) {
             $this->interface->cache->deleteMultiple(array_keys($this->items));
             parent::clear();
         }
