@@ -418,7 +418,7 @@ abstract class AbstractRepository extends Collection
     public function has(...$keys): bool
     {
         foreach ($keys as $key) {
-            if (! await($this->cache->has($this->cacheKeyPrefix.$key))) {
+            if (! $this->offsetExists($key)) {
                 return false;
             }
         }
@@ -532,7 +532,11 @@ abstract class AbstractRepository extends Collection
      */
     public function offsetExists($offset): bool
     {
-        return isset($this->items[$this->cacheKeyPrefix.$offset]);
+        if (isset($this->items[$this->cacheKeyPrefix.$offset])) {
+            return true;
+        }
+
+        return await($this->cache->has($this->cacheKeyPrefix.$offset));
     }
 
     /**
