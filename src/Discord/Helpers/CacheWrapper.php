@@ -19,14 +19,16 @@ use WeakReference;
  *
  * @internal Used by AbstractRepository
  */
-class CacheWrapper implements CacheInterface
+class CacheWrapper
 {
     /**
      * The actual ReactPHP CacheInterface.
      *
+     * @internal
+     *
      * @var CacheInterface
      */
-    protected $cache;
+    public $interface;
 
     /**
      * Repository items array reference.
@@ -43,7 +45,7 @@ class CacheWrapper implements CacheInterface
      */
     public function __construct(CacheInterface $cacheInterface, &$items)
     {
-        $this->cache = $cacheInterface;
+        $this->interface = $cacheInterface;
         $this->items = &$items;
     }
 
@@ -52,7 +54,7 @@ class CacheWrapper implements CacheInterface
      */
     public function get($key, $default = null)
     {
-        return $this->cache->get($key, $default)->then(function ($value) use ($key) {
+        return $this->interface->get($key, $default)->then(function ($value) use ($key) {
             if ($value === null) {
                 unset($this->items[$key]);
             } else {
@@ -68,7 +70,7 @@ class CacheWrapper implements CacheInterface
      */
     public function set($key, $value, $ttl = null)
     {
-        return $this->cache->set($key, $value, $ttl)->then(function ($success) use ($key, $value) {
+        return $this->interface->set($key, $value, $ttl)->then(function ($success) use ($key, $value) {
             if ($success) {
                 $this->items[$key] = WeakReference::create($value);
             }
@@ -82,7 +84,7 @@ class CacheWrapper implements CacheInterface
      */
     public function delete($key)
     {
-        return $this->cache->delete($key)->then(function ($success) use ($key) {
+        return $this->interface->delete($key)->then(function ($success) use ($key) {
             if ($success) {
                 unset($this->items[$key]);
             }
@@ -96,7 +98,7 @@ class CacheWrapper implements CacheInterface
      */
     public function getMultiple(array $keys, $default = null)
     {
-        return $this->cache->getMultiple($keys, $default)->then(function ($values) {
+        return $this->interface->getMultiple($keys, $default)->then(function ($values) {
             foreach ($values as $key => $value) {
                 if ($value === null) {
                     unset($this->items[$key]);
@@ -114,7 +116,7 @@ class CacheWrapper implements CacheInterface
      */
     public function setMultiple(array $values, $ttl = null)
     {
-        return $this->cache->setMultiple($values, $ttl)->then(function ($success) use ($values) {
+        return $this->interface->setMultiple($values, $ttl)->then(function ($success) use ($values) {
             if ($success) {
                 foreach ($values as $key => $value) {
                     if ($value !== null) {
@@ -132,7 +134,7 @@ class CacheWrapper implements CacheInterface
      */
     public function deleteMultiple(array $keys)
     {
-        return $this->cache->deleteMultiple($keys)->then(function ($success) use ($keys) {
+        return $this->interface->deleteMultiple($keys)->then(function ($success) use ($keys) {
             if ($success) {
                 foreach ($keys as $key => $value) {
                     unset($this->items[$key]);
@@ -148,7 +150,7 @@ class CacheWrapper implements CacheInterface
      */
     public function clear()
     {
-        return $this->cache->clear()->then(function ($success) {
+        return $this->interface->clear()->then(function ($success) {
             if ($success) {
                 $this->items = [];
             }
@@ -162,7 +164,7 @@ class CacheWrapper implements CacheInterface
      */
     public function has($key)
     {
-        return $this->cache->has($key)->then(function ($success) use ($key) {
+        return $this->interface->has($key)->then(function ($success) use ($key) {
             if (! $success) {
                 unset($this->items[$key]);
             }
