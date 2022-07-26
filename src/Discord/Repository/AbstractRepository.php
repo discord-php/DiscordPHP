@@ -466,11 +466,13 @@ abstract class AbstractRepository extends Collection
      */
     public function clear(): void
     {
-        await($this->cache->deleteMultiple(array_keys($this->items))->then(function ($success) {
-            if ($success) {
-                parent::clear();
+        $this->cache->interface->deleteMultiple(array_keys($this->items));
+
+        foreach ($this->items as $key => $value) {
+            if ($cache = $value->get()) {
+                unset($cache);
             }
-        }));
+        }
     }
 
     /**
@@ -532,11 +534,13 @@ abstract class AbstractRepository extends Collection
      */
     public function offsetExists($offset): bool
     {
-        if (isset($this->items[$this->cacheKeyPrefix.$offset])) {
+        $cacheKey = $this->cacheKeyPrefix.$offset;
+
+        if (isset($this->items[$cacheKey])) {
             return true;
         }
 
-        return await($this->cache->has($this->cacheKeyPrefix.$offset));
+        return await($this->cache->has($cacheKey));
     }
 
     /**
@@ -551,11 +555,13 @@ abstract class AbstractRepository extends Collection
     #[\ReturnTypeWillChange]
     public function offsetGet($offset)
     {
-        if ($item = $this->items[$this->cacheKeyPrefix.$offset]) {
+        $cacheKey = $this->cacheKeyPrefix.$offset;
+
+        if ($item = $this->items[$cacheKey]) {
             return $item->get();
         }
 
-        return await($this->cache->get($this->cacheKeyPrefix.$offset));
+        return await($this->cache->get($cacheKey));
     }
 
     /**
@@ -592,10 +598,10 @@ abstract class AbstractRepository extends Collection
         $cacheKey = $this->cacheKeyPrefix.$offset;
 
         if ($item = $this->items[$cacheKey]) {
+            $this->cache->interface->delete($cacheKey);
             if ($cache = $item->get()) {
                 unset($cache);
             }
-            $this->cache->interface->delete($cacheKey);
             unset($this->items[$cacheKey]);
 
             return;
