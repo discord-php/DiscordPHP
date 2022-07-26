@@ -547,7 +547,11 @@ abstract class AbstractRepository extends Collection
     #[\ReturnTypeWillChange]
     public function offsetGet($offset)
     {
-        return await($this->cache->get($this->cacheKeyPrefix.$offset, parent::offsetGet($offset)));
+        if ($item = $this->items[$this->cacheKeyPrefix.$offset]) {
+            return $item->get();
+        }
+
+        return await($this->cache->get($this->cacheKeyPrefix.$offset));
     }
 
     /**
