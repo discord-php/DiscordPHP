@@ -482,6 +482,10 @@ abstract class AbstractRepository extends Collection
         $keys = array_keys($this->items);
         $values = array_map($callback, array_values($this->toArray()));
 
+        foreach ($values as $key => $value) {
+            $value[$key] = WeakReference::create($value);
+        }
+
         return new Collection(array_combine($keys, $values), $this->discrim, $this->class);
     }
 
@@ -494,7 +498,7 @@ abstract class AbstractRepository extends Collection
         $items2 = [];
 
         foreach ($collection->toArray() as $key => $value) {
-            $titems2[$this->cacheKeyPrefix.$key] = WeakReference::create($value);
+            $items2[$this->cacheKeyPrefix.$key] = WeakReference::create($value);
         }
 
         $this->items = array_merge($this->items, $items2);
