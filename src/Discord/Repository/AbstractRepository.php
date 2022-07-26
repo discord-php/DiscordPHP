@@ -367,12 +367,10 @@ abstract class AbstractRepository extends Collection
      */
     public function pushItem($item): self
     {
-        if (! is_null($this->class) && ! ($item instanceof $this->class)) {
-            return $this;
-        }
-
-        if (is_object($item)) {
-            $this->offsetSet($this->cacheKeyPrefix.$item->{$this->discrim}, $item);
+        if (! is_null($this->class) && is_a($item, $this->class)) {
+            $cacheKey = $this->cacheKeyPrefix.$item->{$this->discrim};
+            $this->cache->interface->set($cacheKey, $item);
+            $this->items[$cacheKey] = WeakReference::create($item);
         }
 
         return $this;
