@@ -369,7 +369,7 @@ abstract class AbstractRepository extends Collection
     {
         if (! is_null($this->class) && is_a($item, $this->class)) {
             $cacheKey = $this->cacheKeyPrefix.$item->{$this->discrim};
-            $this->cache->interface->set($cacheKey, $item);
+            $this->cache->interface->set($cacheKey, serialize($item));
             $this->items[$cacheKey] = WeakReference::create($item);
         }
 
@@ -572,7 +572,7 @@ abstract class AbstractRepository extends Collection
         $cacheKey = $this->cacheKeyPrefix.$offset;
 
         if (isset($this->items[$cacheKey])) {
-            $this->cache->interface->set($cacheKey, $value);
+            $this->cache->interface->set($cacheKey, serialize($value));
             $this->items[$cacheKey] = WeakReference::create($value);
 
             return;

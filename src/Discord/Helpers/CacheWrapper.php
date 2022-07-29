@@ -58,6 +58,7 @@ class CacheWrapper
             if ($value === null) {
                 unset($this->items[$key]);
             } else {
+                $value = unserialize($value);
                 $this->items[$key] = WeakReference::create($value);
             }
 
@@ -70,7 +71,7 @@ class CacheWrapper
      */
     public function set($key, $value, $ttl = null)
     {
-        return $this->interface->set($key, $value, $ttl)->then(function ($success) use ($key, $value) {
+        return $this->interface->set($key, serialize($value), $ttl)->then(function ($success) use ($key, $value) {
             if ($success) {
                 $this->items[$key] = WeakReference::create($value);
             }
@@ -103,7 +104,8 @@ class CacheWrapper
                 if ($value === null) {
                     unset($this->items[$key]);
                 } else {
-                    $this->items[$key] = WeakReference::create($value);
+                    $values[$key] = unserialize($value);
+                    $this->items[$key] = WeakReference::create($values[$key]);
                 }
             }
 
@@ -116,13 +118,14 @@ class CacheWrapper
      */
     public function setMultiple(array $values, $ttl = null)
     {
-        return $this->interface->setMultiple($values, $ttl)->then(function ($success) use ($values) {
+        foreach ($values as $key => $value) {
+            $valueRefs[$key] = WeakReference::create($value);
+            $values[$key] = serialize($value);
+        }
+
+        return $this->interface->setMultiple($values, $ttl)->then(function ($success) use ($valueRefs) {
             if ($success) {
-                foreach ($values as $key => $value) {
-                    if ($value !== null) {
-                        $this->items[$key] = WeakReference::create($value);
-                    }
-                }
+                $this->items = array_merge($this->items, $valueRefs);
             }
 
             return $success;
