@@ -38,7 +38,6 @@ use Monolog\Logger as Monolog;
 use Ratchet\Client\Connector;
 use Ratchet\Client\WebSocket;
 use Ratchet\RFC6455\Messaging\Message;
-use React\EventLoop\Factory as LoopFactory;
 use React\EventLoop\LoopInterface;
 use React\EventLoop\TimerInterface;
 use Discord\Helpers\Deferred;
@@ -49,6 +48,7 @@ use Evenement\EventEmitterTrait;
 use Psr\Log\LoggerInterface;
 use React\Cache\ArrayCache;
 use React\Cache\CacheInterface;
+use React\EventLoop\Loop;
 use React\Promise\ExtendedPromiseInterface;
 use React\Promise\PromiseInterface;
 use React\Socket\Connector as SocketConnector;
@@ -1351,7 +1351,7 @@ class Discord
                 'cacheInterface',
             ])
             ->setDefaults([
-                'loop' => LoopFactory::create(),
+                'loop' => Loop::get(),
                 'logger' => null,
                 'loadAllMembers' => false,
                 'disabledEvents' => [],
