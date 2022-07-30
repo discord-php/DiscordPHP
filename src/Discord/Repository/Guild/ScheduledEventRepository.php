@@ -70,9 +70,9 @@ class ScheduledEventRepository extends AbstractRepository
 
         return $this->http->get($endpoint)->then(function ($response) {
             $part = $this->factory->create($this->class, array_merge($this->vars, (array) $response), true);
-            $cacheKey = $this->cacheKeyPrefix.'.'.$part->{$this->discrim};
+            $cacheKey = $this->cacheKeyPrefix.$part->{$this->discrim};
 
-            return $this->setCache($cacheKey, $part);
+            return $this->cache->set($cacheKey, $part);
         });
     }
 }
