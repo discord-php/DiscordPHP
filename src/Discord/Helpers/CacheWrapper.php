@@ -38,15 +38,25 @@ class CacheWrapper
     protected $items;
 
     /**
+     * The allowed class name to be unserialized
+     *
+     * @internal
+     *
+     * @var string
+     */
+    protected $class;
+
+    /**
      * @param CacheInterface $cacheInterface The actual CacheInterface.
      * @param array          &$items         Repository items passed by reference.
      *
      * @internal
      */
-    public function __construct(CacheInterface $cacheInterface, &$items)
+    public function __construct(CacheInterface $cacheInterface, &$items, string $class)
     {
         $this->interface = $cacheInterface;
         $this->items = &$items;
+        $this->class = $class;
     }
 
     /**
@@ -58,7 +68,7 @@ class CacheWrapper
             if ($value === null) {
                 unset($this->items[$key]);
             } else {
-                $value = unserialize($value);
+                $value = unserialize($value, ['allowed_classes' => [$this->class]]);
                 $this->items[$key] = WeakReference::create($value);
             }
 
@@ -104,7 +114,7 @@ class CacheWrapper
                 if ($value === null) {
                     unset($this->items[$key]);
                 } else {
-                    $values[$key] = unserialize($value);
+                    $values[$key] = unserialize($value, ['allowed_classes' => [$this->class]]);
                     $this->items[$key] = WeakReference::create($values[$key]);
                 }
             }

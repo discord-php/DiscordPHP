@@ -96,7 +96,7 @@ abstract class AbstractRepository extends Collection
         $this->factory = $factory;
         $this->vars = $vars;
         $this->cacheKeyPrefix = substr(strrchr($this->class, '\\'), 1) . '.';
-        $this->cache = new CacheWrapper($cacheInterface, $this->items);
+        $this->cache = new CacheWrapper($cacheInterface, $this->items, $this->class);
 
         parent::__construct([], $this->discrim, $this->class);
     }
