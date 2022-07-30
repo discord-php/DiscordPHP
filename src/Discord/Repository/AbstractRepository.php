@@ -535,7 +535,9 @@ abstract class AbstractRepository extends Collection
             return true;
         }
 
-        return await($this->cache->has($cacheKey));
+        //await
+            ($this->cache->has($cacheKey));
+        return false;
     }
 
     /**
@@ -556,7 +558,9 @@ abstract class AbstractRepository extends Collection
             return $item->get();
         }
 
-        return await($this->cache->get($cacheKey));
+        //await
+            ($this->cache->get($cacheKey));
+        return null;
     }
 
     /**
@@ -578,7 +582,8 @@ abstract class AbstractRepository extends Collection
             return;
         }
 
-        await($this->cache->set($cacheKey, $value));
+        //await
+            ($this->cache->set($cacheKey, $value));
     }
 
     /**
@@ -599,7 +604,8 @@ abstract class AbstractRepository extends Collection
             return;
         }
 
-        await($this->cache->delete($cacheKey));
+        //await
+            ($this->cache->delete($cacheKey));
     }
 
     /**
@@ -621,8 +627,10 @@ abstract class AbstractRepository extends Collection
     {
         return (function () {
             foreach ($this->items as $key => $item) {
-                if (($part = $item->get()) || ($part = await($this->cache->get($key)))) {
+                if (($part = $item->get()) /*|| ($part = await($this->cache->get($key)))*/) {
                     yield $part;
+                } else {
+                    $this->cache->get($key);
                 }
             }
         })();
