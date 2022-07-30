@@ -536,9 +536,9 @@ abstract class AbstractRepository extends Collection
             return true;
         }
 
-        return await
+        //return await
             ($this->cache->has($cacheKey));
-        //return false;
+        return false;
     }
 
     /**
