@@ -536,9 +536,9 @@ abstract class AbstractRepository extends Collection
             return true;
         }
 
-        //return await
+        return await
             ($this->cache->has($cacheKey));
-        return false;
+        //return false;
     }
 
     /**
@@ -628,7 +628,7 @@ abstract class AbstractRepository extends Collection
     {
         return (function () {
             foreach ($this->items as $key => $item) {
-                if (($part = $item->get()) || ($part = await($this->cache->get($key)))) {
+                if (($part = $item->get())|| ($part = await($this->cache->get($key)))) {
                     yield $part;
                 } else {
                     //$this->cache->get($key);
