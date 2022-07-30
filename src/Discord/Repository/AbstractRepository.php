@@ -11,6 +11,7 @@
 
 namespace Discord\Repository;
 
+use Discord\Discord;
 use Discord\Factory\Factory;
 use Discord\Helpers\CacheWrapper;
 use Discord\Helpers\Collection;
@@ -90,13 +91,13 @@ abstract class AbstractRepository extends Collection
      * @param Factory $factory The parts factory.
      * @param array   $vars    An array of variables used for the endpoint.
      */
-    public function __construct(Http $http, Factory $factory, array $vars = [], CacheInterface $cacheInterface)
+    public function __construct(Discord $discord, array $vars = [])
     {
-        $this->http = $http;
-        $this->factory = $factory;
+        $this->http = $discord->getHttpClient();
+        $this->factory = $discord->getFactory();
         $this->vars = $vars;
         $this->cacheKeyPrefix = substr(strrchr($this->class, '\\'), 1) . '.';
-        $this->cache = new CacheWrapper($cacheInterface, $this->items, $this->class);
+        $this->cache = new CacheWrapper($discord, $discord->getCache(), $this->items, $this->class);
 
         parent::__construct([], $this->discrim, $this->class);
     }

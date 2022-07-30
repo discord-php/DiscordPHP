@@ -11,6 +11,8 @@
 
 namespace Discord\Helpers;
 
+use Discord\Discord;
+use Discord\Parts\Part;
 use React\Cache\CacheInterface;
 use WeakReference;
 
@@ -22,9 +24,12 @@ use WeakReference;
 class CacheWrapper
 {
     /**
+     * @var Discord
+     */
+    protected $discord;
+
+    /**
      * The actual ReactPHP CacheInterface.
-     *
-     * @internal
      *
      * @var CacheInterface
      */
@@ -40,8 +45,6 @@ class CacheWrapper
     /**
      * The allowed class name to be unserialized
      *
-     * @internal
-     *
      * @var string
      */
     protected $class;
@@ -52,10 +55,11 @@ class CacheWrapper
      *
      * @internal
      */
-    public function __construct(CacheInterface $cacheInterface, &$items, string $class)
+    public function __construct(Discord $discord, CacheInterface $cacheInterface, &$items, string $class)
     {
         $this->interface = $cacheInterface;
         $this->items = &$items;
+        $this->discord = $discord;
         $this->class = $class;
     }
 
@@ -68,7 +72,10 @@ class CacheWrapper
             if ($value === null) {
                 unset($this->items[$key]);
             } else {
+                /** @var Part */
                 $value = unserialize($value, ['allowed_classes' => [$this->class]]);
+                $value->created = true;
+                $value->initDiscord($this->discord);
                 $this->items[$key] = WeakReference::create($value);
             }
 
@@ -114,7 +121,10 @@ class CacheWrapper
                 if ($value === null) {
                     unset($this->items[$key]);
                 } else {
+                    /** @var Part */
                     $values[$key] = unserialize($value, ['allowed_classes' => [$this->class]]);
+                    $values[$key]->created = true;
+                    $values[$key]->initDiscord($this->discord);
                     $this->items[$key] = WeakReference::create($values[$key]);
                 }
             }

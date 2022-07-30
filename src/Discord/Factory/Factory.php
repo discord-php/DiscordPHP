@@ -67,7 +67,7 @@ class Factory
         if (strpos($class, 'Discord\\Parts') !== false) {
             $object = $this->part($class, $data, $created);
         } elseif (strpos($class, 'Discord\\Repository') !== false) {
-            $object = $this->repository($class, $data, $this->discord->cache);
+            $object = $this->repository($class, $data);
         } else {
             throw new \Exception('The class '.$class.' is not a Part or a Repository.');
         }
@@ -97,8 +97,8 @@ class Factory
      *
      * @return AbstractRepository The repository.
      */
-    public function repository(string $class, array $data = [], CacheInterface $cacheInterface): AbstractRepository
+    public function repository(string $class, array $data = []): AbstractRepository
     {
-        return new $class($this->http, $this, $data, $cacheInterface);
+        return new $class($this->discord, $data);
     }
 }
