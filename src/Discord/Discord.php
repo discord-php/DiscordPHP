@@ -48,7 +48,7 @@ use Evenement\EventEmitterTrait;
 use Psr\Log\LoggerInterface;
 use React\Cache\ArrayCache;
 use React\Cache\CacheInterface;
-use React\EventLoop\Loop;
+use React\EventLoop\Factory as LoopFactory;
 use React\Promise\ExtendedPromiseInterface;
 use React\Promise\PromiseInterface;
 use React\Socket\Connector as SocketConnector;
@@ -330,6 +330,13 @@ class Discord
      * @var RegisteredCommand[]
      */
     private $application_commands;
+
+    /**
+     * Whether the loop is stopping.
+     *
+     * @var bool
+     */
+    protected $stopping;
 
     /**
      * Creates a Discord client instance.
@@ -1351,7 +1358,6 @@ class Discord
                 'cacheInterface',
             ])
             ->setDefaults([
-                'loop' => Loop::get(),
                 'logger' => null,
                 'loadAllMembers' => false,
                 'disabledEvents' => [],
@@ -1376,6 +1382,10 @@ class Discord
             ->setAllowedTypes('cacheInterface', ['null', CacheInterface::class]);
 
         $options = $resolver->resolve($options);
+
+        if (! isset($options['loop'])) {
+            $options['loop'] = LoopFactory::create();
+        }
 
         if (is_null($options['logger'])) {
             $logger = new Monolog('DiscordPHP');
@@ -1435,9 +1445,18 @@ class Discord
      */
     public function run(): void
     {
-        while (! $this->closing) {
+        while (! $this->stopping) {
             $this->loop->run();
         }
+    }
+
+    /**
+     * Stops the ReactPHP event loop.
+     */
+    public function stop(): void
+    {
+        $this->stopping = true;
+        $this->loop->stop();
     }
 
     /**
@@ -1453,7 +1472,7 @@ class Discord
         $this->logger->info('discord closed');
 
         if ($closeLoop) {
-            $this->loop->stop();
+            $this->stop();
         }
     }
 
