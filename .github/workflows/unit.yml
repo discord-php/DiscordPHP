@@ -1,8 +1,9 @@
 name: Unit Tests
 on:
-  workflow_dispatch:
+  push:
     branches:
       - cacheInterface
+  workflow_dispatch:
 
 env:
   DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
