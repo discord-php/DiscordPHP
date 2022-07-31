@@ -26,22 +26,22 @@ final class DiscordTest extends TestCase
     public function testSetGetCacheAsync()
     {
         wait(function (Discord $discord, $resolve) {
+            $this->assertIsObject($discord->cache, 'No CacheInterface set');
             $cache = $discord->cache;
             $data = 'DiscordPHP 123';
 
             $cache->set('DPHP.Test', $data)->then(function ($success) use ($cache, $data) {
-                $this->assertNotFalse($success, 'Failed to set a cache');
+                $this->assertTrue($success, 'Failed to set a cache');
                 if ($success) {
-                    $cache->get('DPHP.Test')->then(function ($data, $value) {
-                        $this->assertNotNull($value, 'Failed to set cache');
-                        $this->assertNotEquals($data, $value, 'The stored cache mismatched');
+                    return $cache->get('DPHP.Test')->then(function ($value) use ($data) {
+                        $this->assertEquals($data, $value, 'The stored cache mismatched');
 
-                        return $value ?? null;
+                        return $value ? true : false;
                     });
                 }
 
                 return $success;
             })->done($resolve, $resolve);
-        });
+        }, 10);
     }
 }
