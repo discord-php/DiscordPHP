@@ -13,6 +13,7 @@ use Discord\Discord;
 use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
+use React\EventLoop\Loop;
 
 class DiscordSingleton
 {
@@ -24,10 +25,75 @@ class DiscordSingleton
     public static function get()
     {
         if (! self::$discord) {
-            self::new();
+            self::new_cache();
         }
 
         return self::$discord;
+    }
+
+    private static function new_cache()
+    {
+        $loop = Loop::get();
+        $redis = (new Clue\React\Redis\Factory($loop))->createLazyClient('localhost:6379');
+        $cache = new WyriHaximus\React\Cache\Redis($redis);
+
+        $logger = new Logger('DiscordPHP-UnitTests');
+        $handler = new StreamHandler(fopen(__DIR__.'/../phpunit.log', 'w'));
+        $formatter = new LineFormatter(null, null, true, true);
+        $handler->setFormatter($formatter);
+        $logger->pushHandler($handler);
+
+        $discord = new Discord([
+            'token' => getenv('DISCORD_TOKEN'),
+            'loop' => $loop,
+            'logger' => $logger,
+            'cacheInterface' => $cache
+        ]);
+
+        $e = null;
+
+        $timer = $discord->getLoop()->addTimer(10, function () use (&$e) {
+            $e = new Exception('Timed out trying to connect to Discord.');
+        });
+
+        $cache->set('DPHP.Test', 'DiscordPHP 123')->then(function ($success) use ($cache, $logger) {
+            if ($success) {
+                $logger->info('Success set a cache');
+                return $cache->get('DPHP.Test')->then(function ($value) use ($logger) {
+                    if ($value === null) {
+                        $logger->notice('Failed to get a cache');
+                        return false;
+                    }
+
+                    $logger->info('Success get a cache: '.$value);
+
+                    return true;
+                }, function ($e) use ($logger) {
+                    $logger->error($e);
+
+                    return $e;
+                });
+            } else {
+                $logger->notice('Failed to set a cache');
+                return false;
+            }
+        }, function ($e) use ($logger) {
+            $logger->error($e);
+        });
+
+        $discord->on('ready', function (Discord $discord) use ($timer) {
+            $discord->getLoop()->cancelTimer($timer);
+            $discord->stop();
+        });
+
+        self::$discord = $discord;
+
+        $discord->getLoop()->run();
+
+        if ($e !== null) {
+            throw $e;
+        }
+
     }
 
     private static function new()
