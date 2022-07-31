@@ -21,12 +21,10 @@ class DiscordTestCase extends TestCase
 
     public static function setUpBeforeClass(): void
     {
-        /*
         self::$channel = wait(function (Discord $discord, $resolve) {
             $channel = $discord->getChannel(getenv('TEST_CHANNEL'));
             $resolve($channel);
         });
-        */
     }
 
     protected function channel()
