@@ -33,10 +33,10 @@ jobs:
           tools: phpunit, phplint
       - name: Install dependencies
         run: composer install
+      - name: Redis Server in GitHub Actions
+        uses: supercharge/redis-github-action@1.4.0
       - name: Run PHPUnit
         run: phpunit
       - name: Run PHPLint
         run: phplint
-      - name: Redis Server in GitHub Actions
-        uses: supercharge/redis-github-action@1.4.0
 
