@@ -1,5 +1,8 @@
 name: Unit Tests
-on: [ push ]
+on:
+  workflow_dispatch:
+    branches:
+      - cacheInterface
 
 env:
   DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
@@ -33,3 +36,6 @@ jobs:
         run: phpunit
       - name: Run PHPLint
         run: phplint
+      - name: Redis Server in GitHub Actions
+        uses: supercharge/redis-github-action@v1
+
