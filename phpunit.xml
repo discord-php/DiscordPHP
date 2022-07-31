@@ -13,9 +13,9 @@
          verbose="true">
     <testsuites>
         <testsuite name="default">
-            <!--<directory suffix="Test.php">tests</directory>-->
-            <file>tests/DiscordTest.php</file>
-            <file>tests/DiscordTestCase.php</file>
+            <directory suffix="Test.php">tests</directory>
+            <!--<file>tests/DiscordTest.php</file>
+            <file>tests/DiscordTestCase.php</file>-->
         </testsuite>
     </testsuites>
 
