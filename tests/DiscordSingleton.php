@@ -56,31 +56,6 @@ class DiscordSingleton
             $e = new Exception('Timed out trying to connect to Discord.');
         });
 
-        $cache->set('DPHP.Test', 'DiscordPHP 123')->then(function ($success) use ($cache, $logger) {
-            if ($success) {
-                $logger->info('Success set a cache');
-                return $cache->get('DPHP.Test')->then(function ($value) use ($logger) {
-                    if ($value === null) {
-                        $logger->notice('Failed to get a cache');
-                        return false;
-                    }
-
-                    $logger->info('Success get a cache: '.$value);
-
-                    return true;
-                }, function ($e) use ($logger) {
-                    $logger->error($e);
-
-                    return $e;
-                });
-            } else {
-                $logger->notice('Failed to set a cache');
-                return false;
-            }
-        }, function ($e) use ($logger) {
-            $logger->error($e);
-        });
-
         $discord->on('ready', function (Discord $discord) use ($timer) {
             $discord->getLoop()->cancelTimer($timer);
             $discord->stop();
