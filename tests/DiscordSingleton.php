@@ -63,7 +63,7 @@ class DiscordSingleton
 
         self::$discord = $discord;
 
-        $discord->getLoop()->run();
+        $discord->run();
 
         if ($e !== null) {
             throw $e;
