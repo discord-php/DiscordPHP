@@ -34,8 +34,14 @@ class DiscordSingleton
     private static function new_cache()
     {
         $loop = Loop::get();
+        /*
         $redis = (new Clue\React\Redis\Factory($loop))->createLazyClient('localhost:6379');
         $cache = new WyriHaximus\React\Cache\Redis($redis);
+        */
+
+        $filesystem = React\Filesystem\Filesystem::create($loop);
+        $cache = new WyriHaximus\React\Cache\Filesystem($filesystem, '/tmp/cache/location/');
+
         //$cache = new seregazhuk\React\Cache\Memcached\Memcached($loop);
 
         $logger = new Logger('DiscordPHP-UnitTests');
