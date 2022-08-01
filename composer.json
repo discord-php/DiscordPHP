@@ -32,7 +32,8 @@
         "friendsofphp/php-cs-fixer": "^3",
         "phpunit/phpunit": "^9.4",
         "davidcole1340/reactsh": "dev-master",
-        "wyrihaximus/react-cache-redis": "^4.2"
+        "wyrihaximus/react-cache-redis": "^4.2",
+        "seregazhuk/react-cache-memcached": "^1.0"
     },
     "autoload": {
         "files": [
