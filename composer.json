@@ -55,5 +55,10 @@
         "cs": ["./vendor/bin/php-cs-fixer fix"],
         "unit": ["./vendor/bin/phpunit --testdox"],
         "coverage": ["XDEBUG_MODE=coverage ./vendor/bin/phpunit --coverage-html coverage --testdox"]
+    },
+    "config": {
+        "allow-plugins": {
+            "wyrihaximus/composer-update-bin-autoload-path": false
+        }
     }
 }
