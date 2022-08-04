@@ -4,7 +4,7 @@ title: "Events"
 
 ### Application Command Permissions Update
 
-Called with a `Overwrite` object when an application command's permissions are updated.
+Called with an `Overwrite` object when an application command's permissions are updated.
 
 ```php
 $discord->on(Event::APPLICATION_COMMAND_PERMISSIONS_UPDATE, function (Overwrite $overwrite, Discord $discord, Overwrite $oldOverwrite) {
@@ -12,128 +12,52 @@ $discord->on(Event::APPLICATION_COMMAND_PERMISSIONS_UPDATE, function (Overwrite 
 });
 ```
 
-### Message Create
+### Auto Moderation Rule Create
 
-Called with a `Message` object when a message is sent in a guild or private channel.
+Called with a `Rule` object when an auto moderation rule is created.
 
-Requires the `Intents::GUILD_MESSAGES` intent.
+Requires the `Intents::AUTO_MODERATION_CONFIGURATION` intent.
 
 ```php
-$discord->on(Event::MESSAGE_CREATE, function (Message $message, Discord $discord) {
+$discord->on(Event::AUTO_MODERATION_RULE_CREATE, function (Rule $rule, Discord $discord) {
     // ...
 });
 ```
 
-### Message Update
+### Auto Moderation Rule Update
 
-Called with two `Message` objects when a message is updated in a guild or private channel.
-The old message may be null if `storeMessages` is not enabled _or_ the message was sent before the Bot was started.
-Discord does not provide a way to get message update history.
+Called with a `Rule` object when an auto moderation rule is updated.
 
-Requires the `Intents::GUILD_MESSAGES` intent.
+Requires the `Intents::AUTO_MODERATION_CONFIGURATION` intent.
 
 ```php
-$discord->on(Event::MESSAGE_UPDATE, function (Message $message, Discord $discord, ?Message $oldMessage) {
+$discord->on(Event::AUTO_MODERATION_RULE_UPDATE, function (Rule $rule, Discord $discord, Rule $oldRule) {
     // ...
 });
 ```
 
-### Message Delete
+### Auto Moderation Rule Delete
 
-Called with an old `Message` object _or_ the raw payload when a message is deleted.
-The `Message` object may be the raw payload if `storeMessages` is not enabled _or_ the message was sent before the Bot was started.
-Discord does not provide a way to get deleted messages.
+Called with a `Rule` object when an auto moderation rule is deleted.
 
-Requires the `Intents::GUILD_MESSAGES` intent.
+Requires the `Intents::AUTO_MODERATION_CONFIGURATION` intent.
 
 ```php
-$discord->on(Event::MESSAGE_DELETE, function ($message, Discord $discord) {
-    if ($message instanceof Message) {
-        // Message is present in cache
-    }
-    // If the message is not present in the cache:
-    else {
-        // {
-        //     "id": "", // deleted message ID,
-        //     "channel_id": "", // message channel ID,
-        //     "guild_id": "" // channel guild ID
-        // }
-    }
-});
-```
-
-### Message Delete Bulk
-
-Called with a `Collection` of old `Message` objects _or_ the raw payload when bulk messages are deleted.
-The `Message` object may be the raw payload if `storeMessages` is not enabled _or_ the message was sent before the Bot was started.
-Discord does not provide a way to get deleted messages.
-
-Requires the `Intents::GUILD_MESSAGES` intent.
-
-```php
-$discord->on(Event::MESSAGE_DELETE_BULK, function (Collection $messages, Discord $discord) {
-    foreach ($messages as $message) {
-        if ($message instanceof Message) {
-            // Message is present in cache
-        }
-        // If the message is not present in the cache:
-        else {
-            // {
-            //     "id": "", // deleted message ID,
-            //     "channel_id": "", // message channel ID,
-            //     "guild_id": "" // channel guild ID
-            // }
-        }
-    }
-});
-```
-
-### Message Reaction Add
-
-Called with a `MessageReaction` object when a user added a reaction to a message.
-
-Requires the `Intents::GUILD_MESSAGE_REACTIONS` intent.
-
-```php
-$discord->on(Event::MESSAGE_REACTION_ADD, function (MessageReaction $reaction, Discord $discord) {
+$discord->on(Event::AUTO_MODERATION_RULE_DELETE, function (Rule $rule, Discord $discord) {
     // ...
 });
 ```
 
-### Message Reaction Remove
+### Auto Moderation Action Execution
 
-Called with a `MessageReaction` object when a user removes a reaction from a message.
+Called with an `AutoModerationActionExecution` object when an auto moderation rule is triggered and an action is executed (e.g. when a message is blocked).
 
-Requires the `Intents::GUILD_MESSAGE_REACTIONS` intent.
-
-```php
-$discord->on(Event::MESSAGE_REACTION_REMOVE, function (MessageReaction $reaction, Discord $discord) {
-    // ...
-});
-```
-
-### Message Reaction Remove All
-
-Called with a `MessageReaction` object when all reactions are removed from a message.
-Note that only the fields relating to the message, channel and guild will be filled.
-
-Requires the `Intents::GUILD_MESSAGE_REACTIONS` intent.
+Requires the `Intents::AUTO_MODERATION_EXECUTION` intent.
 
 ```php
-$discord->on(Event::MESSAGE_REACTION_REMOVE_ALL, function (MessageReaction $reaction, Discord $discord) {
-    // ...
-});
-```
+// use `Discord\Parts\WebSockets\AutoModerationActionExecution`;
 
-### Message Reaction Remove Emoji
-
-Called with an object when all reactions of an emoji are removed from a message.
-Unlike Message Reaction Remove, this event contains no users or members.
-
-Requires the `Intents::GUILD_MESSAGE_REACTIONS` intent.
-
-```php
-$discord->on(Event::MESSAGE_REACTION_REMOVE_EMOJI, function (MessageReaction $reaction, Discord $discord) {
+$discord->on(Event::AUTO_MODERATION_ACTION_EXECUTION, function (AutoModerationActionExecution $actionExecution, Discord $discord) {
     // ...
 });
 ```
@@ -252,42 +176,6 @@ $discord->on(Event::THREAD_MEMBERS_UPDATE, function (Thread $thread, Discord $di
 });
 ```
 
-### Stage Instance Create
-
-Called with a `StageInstance` object when a stage instance is created (i.e. the Stage is now "live").
-
-Requires the `Intents::GUILDS` intent.
-
-```php
-$discord->on(Event::STAGE_INSTANCE_CREATE, function (StageInstance $stageInstance, Discord $discord) {
-    // ...
-});
-```
-
-### Stage Instance Update
-
-Called with `StageInstance` objects when a stage instance has been updated.
-
-Requires the `Intents::GUILDS` intent.
-
-```php
-$discord->on(Event::STAGE_INSTANCE_UPDATE, function (StageInstance $stageInstance, Discord $discord, ?StageInstance $oldStageInstance) {
-    // ...
-});
-```
-
-### Stage Instance Delete
-
-Called with a `StageInstance` object when a stage instance has been deleted (i.e. the Stage has been closed).
-
-Requires the `Intents::GUILDS` intent.
-
-```php
-$discord->on(Event::STAGE_INSTANCE_DELETE, function (StageInstance $stageInstance, Discord $discord) {
-    // ...
-});
-```
-
 ### Guild Create
 
 Called with a `Guild` object in one of the following situations:
@@ -336,42 +224,6 @@ $discord->on(Event::GUILD_DELETE, function (?Guild $guild, Discord $discord, boo
 });
 ```
 
-### Guild Member Add
-
-Called with a `Member` object when a new user joins a guild.
-
-Requires the `Intents::GUILD_MEMBERS` intent. This intent is a priviliged intent, it must be enabled in your Discord Bot developer settings.
-
-```php
-$discord->on(Event::GUILD_MEMBER_ADD, function (Member $member, Discord $discord) {
-    // ...
-});
-```
-
-### Guild Member Update
-
-Called with two `Member` objects when a member is updated in a guild. Note that the old member _may_ be `null` if `loadAllMembers` is disabled.
-
-Requires the `Intents::GUILD_MEMBERS` intent. This intent is a priviliged intent, it must be enabled in your Discord Bot developer settings.
-
-```php
-$discord->on(Event::GUILD_MEMBER_UPDATE, function (Member $member, Discord $discord, Member $oldMember) {
-    // ...
-});
-```
-
-### Guild Member Remove
-
-Called with a `Member` object when a member is removed from a guild (leave/kick/ban). Note that the member _may_ only have `User` data if `loadAllMembers` is disabled.
-
-Requires the `Intents::GUILD_MEMBERS` intent. This intent is a priviliged intent, it must be enabled in your Discord Bot developer settings.
-
-```php
-$discord->on(Event::GUILD_MEMBER_REMOVE, function (Member $member, Discord $discord) {
-    // ...
-});
-```
-
 ### Guild Ban Add
 
 Called with a `Ban` object when a member is banned from a guild.
@@ -392,6 +244,78 @@ Requires the `Intents::GUILD_BANS` intent.
 
 ```php
 $discord->on(Event::GUILD_BAN_REMOVE, function (Ban $ban, Discord $discord) {
+    // ...
+});
+```
+
+### Guild Emojis Update
+
+Called with two Collections of `Emoji` objects when a guild's emojis have been added/updated/deleted. `$oldEmojis` _may_ be empty if it was not cached or there were previously no emojis.
+
+Requires the `Intents::GUILD_EMOJIS_AND_STICKERS` intent.
+
+```php
+$discord->on(Event::GUILD_EMOJIS_UPDATE, function (Collection $emojis, Discord $discord, Collection $oldEmojis) {
+    // ...
+});
+```
+
+### Guild Stickers Update
+
+Called with two Collections of `Sticker` objects when a guild's stickers have been added/updated/deleted. `$oldStickers` _may_ be empty if it was not cached or there were previously no stickers.
+
+Requires the `Intents::GUILD_EMOJIS_AND_STICKERS` intent.
+
+```php
+$discord->on(Event::GUILD_STICKERS_UPDATE, function (Collection $stickers, Discord $discord, Collecetion $oldStickers) {
+    // ...
+});
+```
+
+### Guild Integrations Update
+
+Called with a cached `Guild` object when a guild integration is updated.
+
+Requires the `Intents::GUILD_INTEGRATIONS` intent.
+
+```php
+$discord->on(Event::GUILD_INTEGRATIONS_UPDATE, function (?Guild $guild, Discord $discord) {
+    // ...
+});
+```
+
+### Guild Member Add
+
+Called with a `Member` object when a new user joins a guild.
+
+Requires the `Intents::GUILD_MEMBERS` intent. This intent is a priviliged intent, it must be enabled in your Discord Bot developer settings.
+
+```php
+$discord->on(Event::GUILD_MEMBER_ADD, function (Member $member, Discord $discord) {
+    // ...
+});
+```
+
+### Guild Member Remove
+
+Called with a `Member` object when a member is removed from a guild (leave/kick/ban). Note that the member _may_ only have `User` data if `loadAllMembers` is disabled.
+
+Requires the `Intents::GUILD_MEMBERS` intent. This intent is a priviliged intent, it must be enabled in your Discord Bot developer settings.
+
+```php
+$discord->on(Event::GUILD_MEMBER_REMOVE, function (Member $member, Discord $discord) {
+    // ...
+});
+```
+
+### Guild Member Update
+
+Called with two `Member` objects when a member is updated in a guild. Note that the old member _may_ be `null` if `loadAllMembers` is disabled.
+
+Requires the `Intents::GUILD_MEMBERS` intent. This intent is a priviliged intent, it must be enabled in your Discord Bot developer settings.
+
+```php
+$discord->on(Event::GUILD_MEMBER_UPDATE, function (Member $member, Discord $discord, Member $oldMember) {
     // ...
 });
 ```
@@ -436,147 +360,6 @@ $discord->on(Event::GUILD_ROLE_DELETE, function ($role, Discord $discord) {
         // {
         //     "guild_id": "" // role guild ID
         //     "role_id": "", // role ID,
-        // }
-    }
-});
-```
-
-### Guild Emojis Update
-
-Called with two Collections of `Emoji` objects when a guild's emojis have been added/updated/deleted. `$oldEmojis` _may_ be empty if it was not cached or there were previously no emojis.
-
-Requires the `Intents::GUILD_EMOJIS_AND_STICKERS` intent.
-
-```php
-$discord->on(Event::GUILD_EMOJIS_UPDATE, function (Collection $emojis, Discord $discord, Collection $oldEmojis) {
-    // ...
-});
-```
-
-### Guild Stickers Update
-
-Called with two Collections of `Sticker` objects when a guild's stickers have been added/updated/deleted. `$oldStickers` _may_ be empty if it was not cached or there were previously no stickers.
-
-Requires the `Intents::GUILD_EMOJIS_AND_STICKERS` intent.
-
-```php
-$discord->on(Event::GUILD_STICKERS_UPDATE, function (Collection $stickers, Discord $discord, Collecetion $oldStickers) {
-    // ...
-});
-```
-
-### Guild Integrations Update
-
-Called with a cached `Guild` object when a guild integration is updated.
-
-Requires the `Intents::GUILD_INTEGRATIONS` intent.
-
-```php
-$discord->on(Event::GUILD_INTEGRATIONS_UPDATE, function (?Guild $guild, Discord $discord) {
-    // ...
-});
-```
-
-### Integration Create
-
-Called with an `Integration` object when an integration is created in a guild.
-
-Requires the `Intents::GUILD_INTEGRATIONS` intent.
-
-```php
-$discord->on(Event::INTEGRATION_CREATE, function (Integration $integration, Discord $discord) {
-    // ...
-});
-```
-
-### Integration Update
-
-Called with an `Integration` object when a integration is updated in a guild.
-
-Requires the `Intents::GUILD_INTEGRATIONS` intent.
-
-```php
-$discord->on(Event::INTEGRATION_UPDATE, function (Integration $integration, Discord $discord, ?Integration $oldIntegration) {
-    // ...
-});
-```
-
-### Integration Delete
-
-Called with an old `Integration` object when a integration is deleted from a guild.
-`$oldIntegration` _may_ be `null` if Integration is not cached.
-
-Requires the `Intents::GUILD_INTEGRATIONS` intent.
-
-```php
-$discord->on(Event::INTEGRATION_DELETE, function (?Integration $integration, Discord $discord) {
-    // ...
-});
-```
-
-### Webhooks Update
-
-Called with a `Guild` and `Channel` object when a guild channel's webhooks are is created, updated, or deleted.
-
-Requires the `Intents::GUILD_WEBHOOKS` intent.
-
-```php
-$discord->on(Event::WEBHOOKS_UPDATE, function (?Guild $guild, Discord $discord, ?Channel $channel) {
-    // ...
-});
-```
-
-### Voice Server Update
-
-Called with a `VoiceServerUpdate` object when a voice server is updated in a guild.
-
-```php
-$discord->on(Event::VOICE_SERVER_UPDATE, function (VoiceServerUpdate $guild, Discord $discord) {
-    // ...
-});
-```
-
-### Voice State Update
-
-Called with a `VoiceStateUpdate` object when a member joins, leaves or moves between voice channels.
-
-Requires the `Intents::GUILD_VOICE_STATES` intent.
-
-```php
-$discord->on(Event::VOICE_STATE_UPDATE, function (VoiceStateUpdate $state, Discord $discord, $oldstate) {
-    // ...
-});
-```
-
-### Invite Create
-
-Called with an `Invite` object when a new invite to a channel is created.
-
-Requires the `Intents::GUILD_INVITES` intent.
-
-```php
-$discord->on(Event::INVITE_CREATE, function (Invite $invite, Discord $discord) {
-    // ...
-});
-```
-
-### Invite Delete
-
-Called with an object when an invite is created.
-
-Requires the `Intents::GUILD_INVITES` intent.
-
-```php
-$discord->on(Event::INVITE_DELETE, function ($invite, Discord $discord) {
-    if ($invite instanceof Invite) {
-        // Invite is present in cache
-    }
-    // If the invite is not present in the cache:
-    else {
-        // {
-        //     "channel_id": "",
-        //     "guild_id": "",
-        //     "code": "" // the unique invite code
         // }
     }
 });
@@ -642,52 +425,39 @@ $discord->on(Event::GUILD_SCHEDULED_EVENT_USER_REMOVE, function ($data, Discord 
 });
 ```
 
-### Auto Moderation Rule Create
+### Integration Create
 
-Called with a `Rule` object when an auto moderation rule is created.
+Called with an `Integration` object when an integration is created in a guild.
 
-Requires the `Intents::AUTO_MODERATION_CONFIGURATION` intent.
+Requires the `Intents::GUILD_INTEGRATIONS` intent.
 
 ```php
-$discord->on(Event::AUTO_MODERATION_RULE_CREATE, function (Rule $rule, Discord $discord) {
+$discord->on(Event::INTEGRATION_CREATE, function (Integration $integration, Discord $discord) {
     // ...
 });
 ```
 
-### Auto Moderation Rule Update
+### Integration Update
 
-Called with a `Rule` object when an auto moderation rule is updated.
+Called with an `Integration` object when a integration is updated in a guild.
 
-Requires the `Intents::AUTO_MODERATION_CONFIGURATION` intent.
+Requires the `Intents::GUILD_INTEGRATIONS` intent.
 
 ```php
-$discord->on(Event::AUTO_MODERATION_RULE_UPDATE, function (Rule $rule, Discord $discord, Rule $oldRule) {
+$discord->on(Event::INTEGRATION_UPDATE, function (Integration $integration, Discord $discord, ?Integration $oldIntegration) {
     // ...
 });
 ```
 
-### Auto Moderation Rule Delete
+### Integration Delete
 
-Called with a `Rule` object when an auto moderation rule is deleted.
+Called with an old `Integration` object when a integration is deleted from a guild.
+`$oldIntegration` _may_ be `null` if Integration is not cached.
 
-Requires the `Intents::AUTO_MODERATION_CONFIGURATION` intent.
-
-```php
-$discord->on(Event::AUTO_MODERATION_RULE_DELETE, function (Rule $rule, Discord $discord) {
-    // ...
-});
-```
-
-### Auto Moderation Action Execution
-
-Called with an `AutoModerationActionExecution` object when an auto moderation rule is triggered and an action is executed (e.g. when a message is blocked).
-
-Requires the `Intents::AUTO_MODERATION_EXECUTION` intent.
+Requires the `Intents::GUILD_INTEGRATIONS` intent.
 
 ```php
-// use `Discord\Parts\WebSockets\AutoModerationActionExecution`;
-
-$discord->on(Event::AUTO_MODERATION_ACTION_EXECUTION, function (AutoModerationActionExecution $actionExecution, Discord $discord) {
+$discord->on(Event::INTEGRATION_DELETE, function (?Integration $integration, Discord $discord) {
     // ...
 });
 ```
@@ -704,14 +474,163 @@ $discord->on(Event::INTERACTION_CREATE, function (Interaction $interaction, Disc
 });
 ```
 
-### Typing Start
+### Invite Create
 
-Called with a `TypingStart` object when a user starts typing in a channel.
+Called with an `Invite` object when a new invite to a channel is created.
 
-Requires the `Intents::GUILD_MESSAGE_TYPING` intent.
+Requires the `Intents::GUILD_INVITES` intent.
 
 ```php
-$discord->on(Event::TYPING_START, function (TypingStart $typing, Discord $discord) {
+$discord->on(Event::INVITE_CREATE, function (Invite $invite, Discord $discord) {
+    // ...
+});
+```
+
+### Invite Delete
+
+Called with an object when an invite is created.
+
+Requires the `Intents::GUILD_INVITES` intent.
+
+```php
+$discord->on(Event::INVITE_DELETE, function ($invite, Discord $discord) {
+    if ($invite instanceof Invite) {
+        // Invite is present in cache
+    }
+    // If the invite is not present in the cache:
+    else {
+        // {
+        //     "channel_id": "",
+        //     "guild_id": "",
+        //     "code": "" // the unique invite code
+        // }
+    }
+});
+```
+
+### Message Create
+
+Called with a `Message` object when a message is sent in a guild or private channel.
+
+Requires the `Intents::GUILD_MESSAGES` intent.
+
+```php
+$discord->on(Event::MESSAGE_CREATE, function (Message $message, Discord $discord) {
+    // ...
+});
+```
+
+
+### Message Update
+
+Called with two `Message` objects when a message is updated in a guild or private channel.
+The old message may be null if `storeMessages` is not enabled _or_ the message was sent before the Bot was started.
+Discord does not provide a way to get message update history.
+
+Requires the `Intents::GUILD_MESSAGES` intent.
+
+```php
+$discord->on(Event::MESSAGE_UPDATE, function (Message $message, Discord $discord, ?Message $oldMessage) {
+    // ...
+});
+```
+
+### Message Delete
+
+Called with an old `Message` object _or_ the raw payload when a message is deleted.
+The `Message` object may be the raw payload if `storeMessages` is not enabled _or_ the message was sent before the Bot was started.
+Discord does not provide a way to get deleted messages.
+
+Requires the `Intents::GUILD_MESSAGES` intent.
+
+```php
+$discord->on(Event::MESSAGE_DELETE, function ($message, Discord $discord) {
+    if ($message instanceof Message) {
+        // Message is present in cache
+    }
+    // If the message is not present in the cache:
+    else {
+        // {
+        //     "id": "", // deleted message ID,
+        //     "channel_id": "", // message channel ID,
+        //     "guild_id": "" // channel guild ID
+        // }
+    }
+});
+```
+
+### Message Delete Bulk
+
+Called with a `Collection` of old `Message` objects _or_ the raw payload when bulk messages are deleted.
+The `Message` object may be the raw payload if `storeMessages` is not enabled _or_ the message was sent before the Bot was started.
+Discord does not provide a way to get deleted messages.
+
+Requires the `Intents::GUILD_MESSAGES` intent.
+
+```php
+$discord->on(Event::MESSAGE_DELETE_BULK, function (Collection $messages, Discord $discord) {
+    foreach ($messages as $message) {
+        if ($message instanceof Message) {
+            // Message is present in cache
+        }
+        // If the message is not present in the cache:
+        else {
+            // {
+            //     "id": "", // deleted message ID,
+            //     "channel_id": "", // message channel ID,
+            //     "guild_id": "" // channel guild ID
+            // }
+        }
+    }
+});
+```
+
+### Message Reaction Add
+
+Called with a `MessageReaction` object when a user added a reaction to a message.
+
+Requires the `Intents::GUILD_MESSAGE_REACTIONS` intent.
+
+```php
+$discord->on(Event::MESSAGE_REACTION_ADD, function (MessageReaction $reaction, Discord $discord) {
+    // ...
+});
+```
+
+### Message Reaction Remove
+
+Called with a `MessageReaction` object when a user removes a reaction from a message.
+
+Requires the `Intents::GUILD_MESSAGE_REACTIONS` intent.
+
+```php
+$discord->on(Event::MESSAGE_REACTION_REMOVE, function (MessageReaction $reaction, Discord $discord) {
+    // ...
+});
+```
+
+### Message Reaction Remove All
+
+Called with a `MessageReaction` object when all reactions are removed from a message.
+Note that only the fields relating to the message, channel and guild will be filled.
+
+Requires the `Intents::GUILD_MESSAGE_REACTIONS` intent.
+
+```php
+$discord->on(Event::MESSAGE_REACTION_REMOVE_ALL, function (MessageReaction $reaction, Discord $discord) {
+    // ...
+});
+```
+
+### Message Reaction Remove Emoji
+
+Called with an object when all reactions of an emoji are removed from a message.
+Unlike Message Reaction Remove, this event contains no users or members.
+
+Requires the `Intents::GUILD_MESSAGE_REACTIONS` intent.
+
+```php
+$discord->on(Event::MESSAGE_REACTION_REMOVE_EMOJI, function (MessageReaction $reaction, Discord $discord) {
     // ...
 });
 ```
@@ -728,12 +647,94 @@ $discord->on(Event::PRESENCE_UPDATE, function (PresenceUpdate $presence, Discord
 });
 ```
 
+### Stage Instance Create
+
+Called with a `StageInstance` object when a stage instance is created (i.e. the Stage is now "live").
+
+Requires the `Intents::GUILDS` intent.
+
+```php
+$discord->on(Event::STAGE_INSTANCE_CREATE, function (StageInstance $stageInstance, Discord $discord) {
+    // ...
+});
+```
+
+### Stage Instance Update
+
+Called with `StageInstance` objects when a stage instance has been updated.
+
+Requires the `Intents::GUILDS` intent.
+
+```php
+$discord->on(Event::STAGE_INSTANCE_UPDATE, function (StageInstance $stageInstance, Discord $discord, ?StageInstance $oldStageInstance) {
+    // ...
+});
+```
+
+### Stage Instance Delete
+
+Called with a `StageInstance` object when a stage instance has been deleted (i.e. the Stage has been closed).
+
+Requires the `Intents::GUILDS` intent.
+
+```php
+$discord->on(Event::STAGE_INSTANCE_DELETE, function (StageInstance $stageInstance, Discord $discord) {
+    // ...
+});
+```
+
+### Typing Start
+
+Called with a `TypingStart` object when a user starts typing in a channel.
+
+Requires the `Intents::GUILD_MESSAGE_TYPING` intent.
+
+```php
+$discord->on(Event::TYPING_START, function (TypingStart $typing, Discord $discord) {
+    // ...
+});
+```
+
 ### User Update
 
 Called with `User` object when the Bot's user properties change.
 
 ```php
 $discord->on(Event::USER_UPDATE, function (User $user, Discord $discord, ?User $oldUser) {
+    // ...
+});
+```
+
+### Voice State Update
+
+Called with a `VoiceStateUpdate` object when a member joins, leaves or moves between voice channels.
+
+Requires the `Intents::GUILD_VOICE_STATES` intent.
+
+```php
+$discord->on(Event::VOICE_STATE_UPDATE, function (VoiceStateUpdate $state, Discord $discord, $oldstate) {
+    // ...
+});
+```
+
+### Voice Server Update
+
+Called with a `VoiceServerUpdate` object when a voice server is updated in a guild.
+
+```php
+$discord->on(Event::VOICE_SERVER_UPDATE, function (VoiceServerUpdate $guild, Discord $discord) {
+    // ...
+});
+```
+
+### Webhooks Update
+
+Called with a `Guild` and `Channel` object when a guild channel's webhooks are is created, updated, or deleted.
+
+Requires the `Intents::GUILD_WEBHOOKS` intent.
+
+```php
+$discord->on(Event::WEBHOOKS_UPDATE, function (?Guild $guild, Discord $discord, ?Channel $channel) {
     // ...
 });
 ```
