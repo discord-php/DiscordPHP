@@ -1,5 +1,5 @@
 ---
-title: "Auto Moderation"
+title: "Auto Moderations"
 ---
 
 All auto moderation related events are currently only sent to bot users which have the `MANAGE_GUILD` permission.
