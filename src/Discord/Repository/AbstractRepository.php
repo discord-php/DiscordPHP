@@ -362,9 +362,14 @@ abstract class AbstractRepository extends Collection
     }
 
     /**
+     * Pushes a single item to the repository.
+     *
      * @deprecated 7.1.4 Use async `$repository->cache->set()`
      * @uses \React\Async\await() This method is blocking.
-     * {@inheritdoc}
+     *
+     * @param Part $item
+     *
+     * @return self
      */
     public function pushItem($item): self
     {
@@ -570,7 +575,7 @@ abstract class AbstractRepository extends Collection
      * @uses \React\Async\await() This method is blocking.
      *
      * @param mixed $offset
-     * @param mixed $value
+     * @param Part  $value
      */
     public function offsetSet($offset, $value): void
     {

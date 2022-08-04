@@ -367,7 +367,7 @@ class Discord
         $this->cache = $options['cacheInterface'];
         $this->logger->warning('Attached experimental CacheInterface: '.get_class($this->cache));
 
-        $connector = new SocketConnector($this->loop, $options['socket_options']);
+        $connector = new SocketConnector($options['socket_options'], $this->loop);
         $this->wsFactory = new Connector($this->loop, $connector);
         $this->handlers = new Handlers();
 
