@@ -7,6 +7,8 @@ title: "Events"
 Called with an `Overwrite` object when an application command's permissions are updated.
 
 ```php
+// use Discord\Parts\Interactions\Command\Overwrite;
+
 $discord->on(Event::APPLICATION_COMMAND_PERMISSIONS_UPDATE, function (Overwrite $overwrite, Discord $discord, Overwrite $oldOverwrite) {
     // ...
 });
@@ -469,6 +471,8 @@ Application Command & Message component listeners are processed before this even
 Useful if you want to create a customized callback or have interaction response persists after Bot restart.
 
 ```php
+// use Discord\Parts\Interactions\Interaction;
+
 $discord->on(Event::INTERACTION_CREATE, function (Interaction $interaction, Discord $discord) {
     // ...
 });
@@ -690,6 +694,8 @@ Called with a `TypingStart` object when a user starts typing in a channel.
 Requires the `Intents::GUILD_MESSAGE_TYPING` intent.
 
 ```php
+// use Discord\Parts\WebSockets\TypingStart;
+
 $discord->on(Event::TYPING_START, function (TypingStart $typing, Discord $discord) {
     // ...
 });
@@ -712,6 +718,8 @@ Called with a `VoiceStateUpdate` object when a member joins, leaves or moves bet
 Requires the `Intents::GUILD_VOICE_STATES` intent.
 
 ```php
+// use Discord\Parts\WebSockets\VoiceStateUpdate;
+
 $discord->on(Event::VOICE_STATE_UPDATE, function (VoiceStateUpdate $state, Discord $discord, $oldstate) {
     // ...
 });
@@ -722,6 +730,8 @@ $discord->on(Event::VOICE_STATE_UPDATE, function (VoiceStateUpdate $state, Disco
 Called with a `VoiceServerUpdate` object when a voice server is updated in a guild.
 
 ```php
+// use Discord\Parts\WebSockets\VoiceServerUpdate;
+
 $discord->on(Event::VOICE_SERVER_UPDATE, function (VoiceServerUpdate $guild, Discord $discord) {
     // ...
 });
