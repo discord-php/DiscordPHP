@@ -2,9 +2,9 @@
 title: "Messages"
 ---
 
-> Unlike persistent messages, ephemeral messages are sent directly to the user and the bot who sent the message rather than through the guild channel. Because of this, ephemeral messages are tied to the `Intents::DIRECT_MESSAGES`, and the message object won't include `guild_id` or `member`.
+> Unlike persistent messages, ephemeral messages are sent directly to the user and the Bot who sent the message rather than through the guild channel. Because of this, ephemeral messages are tied to the `Intents::DIRECT_MESSAGES`, and the message object won't include `guild_id` or `member`.
 
-Requires the `Intents::GUILD_MESSAGES` intent.
+Requires the `Intents::GUILD_MESSAGES` intent for guild or `Intents::DIRECT_MESSAGES` for direct messages.
 
 ### Message Create
 
@@ -74,9 +74,9 @@ $discord->on(Event::MESSAGE_DELETE_BULK, function (Collection $messages, Discord
 });
 ```
 
-## Message Reaction {#message_reaction}
+## Message Reactions {#message_reactions}
 
-Requires the `Intents::GUILD_MESSAGE_REACTIONS` intent.
+Requires the `Intents::GUILD_MESSAGE_REACTIONS` intent for guild or `Intents::DIRECT_MESSAGE_REACTIONS` for direct messages.
 
 ### Message Reaction Add
 
