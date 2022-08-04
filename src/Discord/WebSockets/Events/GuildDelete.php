@@ -25,11 +25,6 @@ class GuildDelete extends Event
      */
     public function handle(Deferred &$deferred, $data): void
     {
-        if (! $guildPart = $this->discord->guilds->pull($data->id)) {
-            /** @var Guild */
-            $guildPart = $this->factory->create(Guild::class, $data);
-        }
-
-        $deferred->resolve([$guildPart, $data->unavailable ?? false]);
+        $deferred->resolve([$this->discord->guilds->pull($data->id), $data->unavailable ?? false]);
     }
 }
