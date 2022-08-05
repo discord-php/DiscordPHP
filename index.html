@@ -163,30 +163,29 @@ Some events are internally handled by the library and may not be registered a li
 <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre></div></div><h2 id="auto-moderations">Auto Moderations</h2><div class="api-module--section--1E1xV"><p>All auto moderation related events are currently only sent to bot users which have the <code class="language-text">MANAGE_GUILD</code> permission.</p>
 <h3>Auto Moderation Rule Create</h3>
 <p>Called with a <code class="language-text">Rule</code> object when an auto moderation rule is created.</p>
-<p>Requires the <code class="language-text">Intents::AUTO_MODERATION_CONFIGURATION</code> intent.</p>
 <div class="gatsby-highlight" data-language="php"><pre class="language-php"><code class="language-php"><span class="token variable">$discord</span><span class="token operator">-></span><span class="token function">on</span><span class="token punctuation">(</span><span class="token class-name static-context">Event</span><span class="token operator">::</span><span class="token constant">AUTO_MODERATION_RULE_CREATE</span><span class="token punctuation">,</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token class-name type-declaration">Rule</span> <span class="token variable">$rule</span><span class="token punctuation">,</span> <span class="token class-name type-declaration">Discord</span> <span class="token variable">$discord</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token comment">// ...</span>
 <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre></div>
+<p>Requires the <code class="language-text">Intents::AUTO_MODERATION_CONFIGURATION</code> intent.</p>
 <h3>Auto Moderation Rule Update</h3>
 <p>Called with a <code class="language-text">Rule</code> object when an auto moderation rule is updated.</p>
-<p>Requires the <code class="language-text">Intents::AUTO_MODERATION_CONFIGURATION</code> intent.</p>
 <div class="gatsby-highlight" data-language="php"><pre class="language-php"><code class="language-php"><span class="token variable">$discord</span><span class="token operator">-></span><span class="token function">on</span><span class="token punctuation">(</span><span class="token class-name static-context">Event</span><span class="token operator">::</span><span class="token constant">AUTO_MODERATION_RULE_UPDATE</span><span class="token punctuation">,</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token class-name type-declaration">Rule</span> <span class="token variable">$rule</span><span class="token punctuation">,</span> <span class="token class-name type-declaration">Discord</span> <span class="token variable">$discord</span><span class="token punctuation">,</span> <span class="token class-name type-declaration">Rule</span> <span class="token variable">$oldRule</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token comment">// ...</span>
 <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre></div>
 <h3>Auto Moderation Rule Delete</h3>
 <p>Called with a <code class="language-text">Rule</code> object when an auto moderation rule is deleted.</p>
-<p>Requires the <code class="language-text">Intents::AUTO_MODERATION_CONFIGURATION</code> intent.</p>
 <div class="gatsby-highlight" data-language="php"><pre class="language-php"><code class="language-php"><span class="token variable">$discord</span><span class="token operator">-></span><span class="token function">on</span><span class="token punctuation">(</span><span class="token class-name static-context">Event</span><span class="token operator">::</span><span class="token constant">AUTO_MODERATION_RULE_DELETE</span><span class="token punctuation">,</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token class-name type-declaration">Rule</span> <span class="token variable">$rule</span><span class="token punctuation">,</span> <span class="token class-name type-declaration">Discord</span> <span class="token variable">$discord</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token comment">// ...</span>
 <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre></div>
+<p>Requires the <code class="language-text">Intents::AUTO_MODERATION_CONFIGURATION</code> intent.</p>
 <h3>Auto Moderation Action Execution</h3>
 <p>Called with an <code class="language-text">AutoModerationActionExecution</code> object when an auto moderation rule is triggered and an action is executed (e.g. when a message is blocked).</p>
-<p>Requires the <code class="language-text">Intents::AUTO_MODERATION_EXECUTION</code> intent.</p>
 <div class="gatsby-highlight" data-language="php"><pre class="language-php"><code class="language-php"><span class="token comment">// use `Discord\Parts\WebSockets\AutoModerationActionExecution`;</span>
 
 <span class="token variable">$discord</span><span class="token operator">-></span><span class="token function">on</span><span class="token punctuation">(</span><span class="token class-name static-context">Event</span><span class="token operator">::</span><span class="token constant">AUTO_MODERATION_ACTION_EXECUTION</span><span class="token punctuation">,</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token class-name type-declaration">AutoModerationActionExecution</span> <span class="token variable">$actionExecution</span><span class="token punctuation">,</span> <span class="token class-name type-declaration">Discord</span> <span class="token variable">$discord</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token comment">// ...</span>
-<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre></div></div><h2 id="channels">Channels</h2><div class="api-module--section--1E1xV"><p>Requires the <code class="language-text">Intents::GUILDS</code> intent.</p>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre></div>
+<p>Requires the <code class="language-text">Intents::AUTO_MODERATION_EXECUTION</code> intent.</p></div><h2 id="channels">Channels</h2><div class="api-module--section--1E1xV"><p>Requires the <code class="language-text">Intents::GUILDS</code> intent.</p>
 <h3>Channel Create</h3>
 <p>Called with a <code class="language-text">Channel</code> object when a new channel is created, relevant to the Bot.</p>
 <div class="gatsby-highlight" data-language="php"><pre class="language-php"><code class="language-php"><span class="token variable">$discord</span><span class="token operator">-></span><span class="token function">on</span><span class="token punctuation">(</span><span class="token class-name static-context">Event</span><span class="token operator">::</span><span class="token constant">CHANNEL_CREATE</span><span class="token punctuation">,</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token class-name type-declaration">Channel</span> <span class="token variable">$channel</span><span class="token punctuation">,</span> <span class="token class-name type-declaration">Discord</span> <span class="token variable">$discord</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
@@ -204,9 +203,6 @@ Some events are internally handled by the library and may not be registered a li
 <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre></div>
 <h3>Channel Pins Update</h3>
 <p>Called with an object when a message is pinned or unpinned in a text channel. This is not sent when a pinned message is deleted.</p>
-<blockquote>
-<p>For direct messages, it only requires the <code class="language-text">Intents::DIRECT_MESSAGES</code> intent.</p>
-</blockquote>
 <div class="gatsby-highlight" data-language="php"><pre class="language-php"><code class="language-php"><span class="token variable">$discord</span><span class="token operator">-></span><span class="token function">on</span><span class="token punctuation">(</span><span class="token class-name static-context">Event</span><span class="token operator">::</span><span class="token constant">CHANNEL_PINS_UPDATE</span><span class="token punctuation">,</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token variable">$pins</span><span class="token punctuation">,</span> <span class="token class-name type-declaration">Discord</span> <span class="token variable">$discord</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token comment">// {</span>
     <span class="token comment">//     "guild_id": "",</span>
@@ -214,6 +210,9 @@ Some events are internally handled by the library and may not be registered a li
     <span class="token comment">//     "last_pin_timestamp": ""</span>
     <span class="token comment">// }</span>
 <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre></div>
+<blockquote>
+<p>For direct messages, it only requires the <code class="language-text">Intents::DIRECT_MESSAGES</code> intent.</p>
+</blockquote>
 <h2>Threads</h2>
 <p>Requires the <code class="language-text">Intents::GUILDS</code> intent.</p>
 <h3>Thread Create</h3>
@@ -277,7 +276,7 @@ Some events are internally handled by the library and may not be registered a li
         <span class="token comment">// the Bot has been kicked from the guild</span>
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre></div>
-<h2>Guild Bans {#guild_bans}</h2>
+<h2>Guild Bans</h2>
 <p>Requires the <code class="language-text">Intents::GUILD_BANS</code> intent and <code class="language-text">ban_members</code> permission.</p>
 <h3>Guild Ban Add</h3>
 <p>Called with a <code class="language-text">Ban</code> object when a member is banned from a guild.</p>
@@ -289,7 +288,7 @@ Some events are internally handled by the library and may not be registered a li
 <div class="gatsby-highlight" data-language="php"><pre class="language-php"><code class="language-php"><span class="token variable">$discord</span><span class="token operator">-></span><span class="token function">on</span><span class="token punctuation">(</span><span class="token class-name static-context">Event</span><span class="token operator">::</span><span class="token constant">GUILD_BAN_REMOVE</span><span class="token punctuation">,</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token class-name type-declaration">Ban</span> <span class="token variable">$ban</span><span class="token punctuation">,</span> <span class="token class-name type-declaration">Discord</span> <span class="token variable">$discord</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token comment">// ...</span>
 <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre></div>
-<h2>Guild Emojis and Stickers {#guild<em>emojis</em>and_stickers}</h2>
+<h2>Guild Emojis and Stickers</h2>
 <p>Requires the <code class="language-text">Intents::GUILD_EMOJIS_AND_STICKERS</code> intent.</p>
 <h3>Guild Emojis Update</h3>
 <p>Called with two Collections of <code class="language-text">Emoji</code> objects when a guild's emojis have been added/updated/deleted. <code class="language-text">$oldEmojis</code> <em>may</em> be empty if it was not cached or there were previously no emojis.</p>
@@ -301,7 +300,7 @@ Some events are internally handled by the library and may not be registered a li
 <div class="gatsby-highlight" data-language="php"><pre class="language-php"><code class="language-php"><span class="token variable">$discord</span><span class="token operator">-></span><span class="token function">on</span><span class="token punctuation">(</span><span class="token class-name static-context">Event</span><span class="token operator">::</span><span class="token constant">GUILD_STICKERS_UPDATE</span><span class="token punctuation">,</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token class-name type-declaration">Collection</span> <span class="token variable">$stickers</span><span class="token punctuation">,</span> <span class="token class-name type-declaration">Discord</span> <span class="token variable">$discord</span><span class="token punctuation">,</span> <span class="token class-name type-declaration">Collecetion</span> <span class="token variable">$oldStickers</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token comment">// ...</span>
 <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre></div>
-<h2>Guild Members {#guild_members}</h2>
+<h2>Guild Members</h2>
 <p>Requires the <code class="language-text">Intents::GUILD_MEMBERS</code> intent. This intent is a priviliged intent, it must be enabled in your Discord Bot developer settings.</p>
 <h3>Guild Member Add</h3>
 <p>Called with a <code class="language-text">Member</code> object when a new user joins a guild.</p>
@@ -318,7 +317,7 @@ Some events are internally handled by the library and may not be registered a li
 <div class="gatsby-highlight" data-language="php"><pre class="language-php"><code class="language-php"><span class="token variable">$discord</span><span class="token operator">-></span><span class="token function">on</span><span class="token punctuation">(</span><span class="token class-name static-context">Event</span><span class="token operator">::</span><span class="token constant">GUILD_MEMBER_UPDATE</span><span class="token punctuation">,</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token class-name type-declaration">Member</span> <span class="token variable">$member</span><span class="token punctuation">,</span> <span class="token class-name type-declaration">Discord</span> <span class="token variable">$discord</span><span class="token punctuation">,</span> <span class="token class-name type-declaration">Member</span> <span class="token variable">$oldMember</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token comment">// ...</span>
 <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre></div>
-<h2>Guild Roles {#guild_roles}</h2>
+<h2>Guild Roles</h2>
 <p>Requires the <code class="language-text">Intents::GUILDS</code> intent.</p>
 <h3>Guild Role Create</h3>
 <p>Called with a <code class="language-text">Role</code> object when a role is created in a guild.</p>
@@ -344,7 +343,7 @@ Some events are internally handled by the library and may not be registered a li
         <span class="token comment">// }</span>
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre></div>
-<h2>Guild Scheduled Events {#guild<em>scheduled</em>events}</h2>
+<h2>Guild Scheduled Events</h2>
 <p>Requires the <code class="language-text">Intents::GUILD_SCHEDULED_EVENTS</code> intent.</p>
 <h3>Guild Scheduled Event Create</h3>
 <p>Called with a <code class="language-text">ScheduledEvent</code> object when a scheduled event is created in a guild.</p>
@@ -414,14 +413,14 @@ Some events are internally handled by the library and may not be registered a li
         <span class="token comment">// }</span>
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre></div></div><h2 id="interactions">Interactions</h2><div class="api-module--section--1E1xV"><h3>Interaction Create</h3>
-<p>Called with an <code class="language-text">Interaction</code> object when an interaction is created.
-Application Command &#x26; Message component listeners are processed before this event is called.
-Useful if you want to create a customized callback or have interaction response persists after Bot restart.</p>
+<p>Called with an <code class="language-text">Interaction</code> object when an interaction is created.</p>
 <div class="gatsby-highlight" data-language="php"><pre class="language-php"><code class="language-php"><span class="token comment">// use Discord\Parts\Interactions\Interaction;</span>
 
 <span class="token variable">$discord</span><span class="token operator">-></span><span class="token function">on</span><span class="token punctuation">(</span><span class="token class-name static-context">Event</span><span class="token operator">::</span><span class="token constant">INTERACTION_CREATE</span><span class="token punctuation">,</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token class-name type-declaration">Interaction</span> <span class="token variable">$interaction</span><span class="token punctuation">,</span> <span class="token class-name type-declaration">Discord</span> <span class="token variable">$discord</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token comment">// ...</span>
-<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre></div></div><h2 id="messages">Messages</h2><div class="api-module--section--1E1xV"><blockquote>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre></div>
+<p>Application Command &#x26; Message component listeners are processed before this event is called.
+Useful if you want to create a customized callback or have interaction response persists after Bot restart.</p></div><h2 id="messages">Messages</h2><div class="api-module--section--1E1xV"><blockquote>
 <p>Unlike persistent messages, ephemeral messages are sent directly to the user and the Bot who sent the message rather than through the guild channel. Because of this, ephemeral messages are tied to the <code class="language-text">Intents::DIRECT_MESSAGES</code>, and the message object won't include <code class="language-text">guild_id</code> or <code class="language-text">member</code>.</p>
 </blockquote>
 <p>Requires the <code class="language-text">Intents::GUILD_MESSAGES</code> intent for guild or <code class="language-text">Intents::DIRECT_MESSAGES</code> for direct messages.</p>
@@ -473,7 +472,7 @@ Discord does not provide a way to get deleted messages.</p>
         <span class="token punctuation">}</span>
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre></div>
-<h2>Message Reactions {#message_reactions}</h2>
+<h2>Message Reactions</h2>
 <p>Requires the <code class="language-text">Intents::GUILD_MESSAGE_REACTIONS</code> intent for guild or <code class="language-text">Intents::DIRECT_MESSAGE_REACTIONS</code> for direct messages.</p>
 <h3>Message Reaction Add</h3>
 <p>Called with a <code class="language-text">MessageReaction</code> object when a user added a reaction to a message.</p>
@@ -498,18 +497,18 @@ Unlike Message Reaction Remove, this event contains no users or members.</p>
     <span class="token comment">// ...</span>
 <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre></div></div><h2 id="presences">Presences</h2><div class="api-module--section--1E1xV"><h3>Presence Update</h3>
 <p>Called with a <code class="language-text">PresenceUpdate</code> object when a member's presence is updated.</p>
-<p>Requires the <code class="language-text">Intents::GUILD_PRESENCES</code> intent. This intent is a priviliged intent, it must be enabled in your Discord Bot developer settings.</p>
 <div class="gatsby-highlight" data-language="php"><pre class="language-php"><code class="language-php"><span class="token variable">$discord</span><span class="token operator">-></span><span class="token function">on</span><span class="token punctuation">(</span><span class="token class-name static-context">Event</span><span class="token operator">::</span><span class="token constant">PRESENCE_UPDATE</span><span class="token punctuation">,</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token class-name type-declaration">PresenceUpdate</span> <span class="token variable">$presence</span><span class="token punctuation">,</span> <span class="token class-name type-declaration">Discord</span> <span class="token variable">$discord</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token comment">// ...</span>
 <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre></div>
+<p>Requires the <code class="language-text">Intents::GUILD_PRESENCES</code> intent. This intent is a priviliged intent, it must be enabled in your Discord Bot developer settings.</p>
 <h3>Typing Start</h3>
 <p>Called with a <code class="language-text">TypingStart</code> object when a user starts typing in a channel.</p>
-<p>Requires the <code class="language-text">Intents::GUILD_MESSAGE_TYPING</code> intent.</p>
 <div class="gatsby-highlight" data-language="php"><pre class="language-php"><code class="language-php"><span class="token comment">// use Discord\Parts\WebSockets\TypingStart;</span>
 
 <span class="token variable">$discord</span><span class="token operator">-></span><span class="token function">on</span><span class="token punctuation">(</span><span class="token class-name static-context">Event</span><span class="token operator">::</span><span class="token constant">TYPING_START</span><span class="token punctuation">,</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token class-name type-declaration">TypingStart</span> <span class="token variable">$typing</span><span class="token punctuation">,</span> <span class="token class-name type-declaration">Discord</span> <span class="token variable">$discord</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token comment">// ...</span>
 <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre></div>
+<p>Requires the <code class="language-text">Intents::GUILD_MESSAGE_TYPING</code> intent.</p>
 <h3>User Update</h3>
 <p>Called with a <code class="language-text">User</code> object when the Bot's user properties change.</p>
 <div class="gatsby-highlight" data-language="php"><pre class="language-php"><code class="language-php"><span class="token variable">$discord</span><span class="token operator">-></span><span class="token function">on</span><span class="token punctuation">(</span><span class="token class-name static-context">Event</span><span class="token operator">::</span><span class="token constant">USER_UPDATE</span><span class="token punctuation">,</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token class-name type-declaration">User</span> <span class="token variable">$user</span><span class="token punctuation">,</span> <span class="token class-name type-declaration">Discord</span> <span class="token variable">$discord</span><span class="token punctuation">,</span> <span class="token operator">?</span><span class="token class-name type-declaration">User</span> <span class="token variable">$oldUser</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
@@ -531,12 +530,12 @@ Unlike Message Reaction Remove, this event contains no users or members.</p>
     <span class="token comment">// ...</span>
 <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre></div></div><h2 id="voices">Voices</h2><div class="api-module--section--1E1xV"><h3>Voice State Update</h3>
 <p>Called with a <code class="language-text">VoiceStateUpdate</code> object when a member joins, leaves or moves between voice channels.</p>
-<p>Requires the <code class="language-text">Intents::GUILD_VOICE_STATES</code> intent.</p>
 <div class="gatsby-highlight" data-language="php"><pre class="language-php"><code class="language-php"><span class="token comment">// use Discord\Parts\WebSockets\VoiceStateUpdate;</span>
 
 <span class="token variable">$discord</span><span class="token operator">-></span><span class="token function">on</span><span class="token punctuation">(</span><span class="token class-name static-context">Event</span><span class="token operator">::</span><span class="token constant">VOICE_STATE_UPDATE</span><span class="token punctuation">,</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token class-name type-declaration">VoiceStateUpdate</span> <span class="token variable">$state</span><span class="token punctuation">,</span> <span class="token class-name type-declaration">Discord</span> <span class="token variable">$discord</span><span class="token punctuation">,</span> <span class="token variable">$oldstate</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token comment">// ...</span>
 <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre></div>
+<p>Requires the <code class="language-text">Intents::GUILD_VOICE_STATES</code> intent.</p>
 <h3>Voice Server Update</h3>
 <p>Called with a <code class="language-text">VoiceServerUpdate</code> object when a voice server is updated in a guild.</p>
 <div class="gatsby-highlight" data-language="php"><pre class="language-php"><code class="language-php"><span class="token comment">// use Discord\Parts\WebSockets\VoiceServerUpdate;</span>
@@ -545,10 +544,10 @@ Unlike Message Reaction Remove, this event contains no users or members.</p>
     <span class="token comment">// ...</span>
 <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre></div></div><h2 id="webhooks">Webhooks</h2><div class="api-module--section--1E1xV"><h3>Webhooks Update</h3>
 <p>Called with a <code class="language-text">Guild</code> and <code class="language-text">Channel</code> object when a guild channel's webhooks are is created, updated, or deleted.</p>
-<p>Requires the <code class="language-text">Intents::GUILD_WEBHOOKS</code> intent.</p>
 <div class="gatsby-highlight" data-language="php"><pre class="language-php"><code class="language-php"><span class="token variable">$discord</span><span class="token operator">-></span><span class="token function">on</span><span class="token punctuation">(</span><span class="token class-name static-context">Event</span><span class="token operator">::</span><span class="token constant">WEBHOOKS_UPDATE</span><span class="token punctuation">,</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token operator">?</span><span class="token class-name type-declaration">Guild</span> <span class="token variable">$guild</span><span class="token punctuation">,</span> <span class="token class-name type-declaration">Discord</span> <span class="token variable">$discord</span><span class="token punctuation">,</span> <span class="token operator">?</span><span class="token class-name type-declaration">Channel</span> <span class="token variable">$channel</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token comment">// ...</span>
-<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre></div></div><h2 id="repositories">Repositories</h2><div class="api-module--section--1E1xV"><p>Repositories are containers for parts. They provide the functions to get, save and delete parts from the Discord servers. Different parts have many repositories.</p>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre></div>
+<p>Requires the <code class="language-text">Intents::GUILD_WEBHOOKS</code> intent.</p></div><h2 id="repositories">Repositories</h2><div class="api-module--section--1E1xV"><p>Repositories are containers for parts. They provide the functions to get, save and delete parts from the Discord servers. Different parts have many repositories.</p>
 <p>An example is the <code class="language-text">Channel</code> part. It has 4 repositories: <code class="language-text">members</code>, <code class="language-text">messages</code>, <code class="language-text">overwrites</code> and <code class="language-text">webhooks</code>. Each of these repositories contain parts that relate to the <code class="language-text">Channel</code> part, such as messages sent in the channel (<code class="language-text">messages</code> repository), or if it is a voice channel the members currently in the channel (<code class="language-text">members</code> repository).</p>
 <p>A full list of repositories is provided below in the parts section, per part.</p>
 <p>Repositories extend the <a href="#collection">Collection</a> class. See the documentation on collections for extra methods.</p>
