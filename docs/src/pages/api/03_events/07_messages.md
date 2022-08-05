@@ -74,7 +74,7 @@ $discord->on(Event::MESSAGE_DELETE_BULK, function (Collection $messages, Discord
 });
 ```
 
-## Message Reactions {#message_reactions}
+## Message Reactions
 
 Requires the `Intents::GUILD_MESSAGE_REACTIONS` intent for guild or `Intents::DIRECT_MESSAGE_REACTIONS` for direct messages.
 

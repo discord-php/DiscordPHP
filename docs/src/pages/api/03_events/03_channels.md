@@ -38,8 +38,6 @@ $discord->on(Event::CHANNEL_DELETE, function (Channel $channel, Discord $discord
 
 Called with an object when a message is pinned or unpinned in a text channel. This is not sent when a pinned message is deleted.
 
-> For direct messages, it only requires the `Intents::DIRECT_MESSAGES` intent.
-
 ```php
 $discord->on(Event::CHANNEL_PINS_UPDATE, function ($pins, Discord $discord) {
     // {
@@ -49,6 +47,8 @@ $discord->on(Event::CHANNEL_PINS_UPDATE, function ($pins, Discord $discord) {
     // }
 });
 ```
+
+> For direct messages, it only requires the `Intents::DIRECT_MESSAGES` intent.
 
 ## Threads
 
