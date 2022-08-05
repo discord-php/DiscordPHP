@@ -92,7 +92,7 @@ class Intents
     /**
      * Guild presence events:.
      *
-     * - PRESENECE_UPDATE
+     * - PRESENCE_UPDATE
      */
     public const GUILD_PRESENCES = (1 << 8);
 
