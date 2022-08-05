@@ -46,7 +46,7 @@ $discord->on(Event::GUILD_DELETE, function (?Guild $guild, Discord $discord, boo
 });
 ```
 
-## Guild Bans {#guild_bans}
+## Guild Bans
 
 Requires the `Intents::GUILD_BANS` intent and `ban_members` permission.
 
@@ -70,7 +70,7 @@ $discord->on(Event::GUILD_BAN_REMOVE, function (Ban $ban, Discord $discord) {
 });
 ```
 
-## Guild Emojis and Stickers {#guild_emojis_and_stickers}
+## Guild Emojis and Stickers
 
 Requires the `Intents::GUILD_EMOJIS_AND_STICKERS` intent.
 
@@ -95,7 +95,7 @@ $discord->on(Event::GUILD_STICKERS_UPDATE, function (Collection $stickers, Disco
 });
 ```
 
-## Guild Members {#guild_members}
+## Guild Members
 
 Requires the `Intents::GUILD_MEMBERS` intent. This intent is a priviliged intent, it must be enabled in your Discord Bot developer settings.
 
@@ -129,7 +129,7 @@ $discord->on(Event::GUILD_MEMBER_UPDATE, function (Member $member, Discord $disc
 });
 ```
 
-## Guild Roles {#guild_roles}
+## Guild Roles
 
 Requires the `Intents::GUILDS` intent.
 
@@ -172,7 +172,7 @@ $discord->on(Event::GUILD_ROLE_DELETE, function ($role, Discord $discord) {
 });
 ```
 
-## Guild Scheduled Events {#guild_scheduled_events}
+## Guild Scheduled Events
 
 Requires the `Intents::GUILD_SCHEDULED_EVENTS` intent.
 
