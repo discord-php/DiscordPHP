@@ -17,6 +17,7 @@ use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
 use Discord\Repository\AbstractRepository;
 use React\Promise\ExtendedPromiseInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Contains bans on users.
@@ -55,13 +56,13 @@ class BanRepository extends AbstractRepository
      *
      * @see https://discord.com/developers/docs/resources/guild#create-guild-ban
      *
-     * @param User|Member|string $user
-     * @param int|null           $daysToDeleteMessages
-     * @param string|null        $reason
+     * @param User|Member|string $user    The User to ban.
+     * @param array|int          $options Array of Ban options 'delete_message_seconds' or 'delete_message_days' (deprecated).
+     * @param string|null        $reason  Reason for Audit Log.
      *
      * @return ExtendedPromiseInterface
      */
-    public function ban($user, ?int $daysToDeleteMessages = null, ?string $reason = null): ExtendedPromiseInterface
+    public function ban($user, $options = null, ?string $reason = null): ExtendedPromiseInterface
     {
         $content = [];
         $headers = [];
@@ -72,8 +73,25 @@ class BanRepository extends AbstractRepository
             $user = $this->factory->part(User::class, ['id' => $user], true);
         }
 
-        if (isset($daysToDeleteMessages)) {
-            $content['delete_message_days'] = $daysToDeleteMessages;
+        // TODO: v8.x remove all 'delete_message_days' and strict $options to array
+        if (is_int($options)) {
+            $content['delete_message_days'] = $options;
+        } elseif (is_array($options)) {
+            $resolver = new OptionsResolver();
+            $resolver->setDefined([
+                'delete_message_seconds',
+                'delete_message_days',
+            ])
+            ->setAllowedTypes('delete_message_seconds', 'int')
+            ->setAllowedTypes('delete_message_days', 'int')
+            ->setAllowedValues('delete_message_seconds', function ($value) {
+                return $value >= 0 && $value <= 604800;
+            })
+            ->setAllowedValues('delete_message_days', function ($value) {
+                return $value >= 1 && $value <= 7;
+            });
+
+            $content = $resolver->resolve($options);
         }
 
         if (isset($reason)) {
