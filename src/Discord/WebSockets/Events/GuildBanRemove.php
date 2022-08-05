@@ -25,14 +25,18 @@ class GuildBanRemove extends Event
      */
     public function handle(Deferred &$deferred, $data): void
     {
-        /** @var Ban */
-        $banPart = $this->factory->create(Ban::class, $data);
+        $banPart = null;
 
-        if ($guild = $banPart->guild) {
+        if ($guild = $this->discord->guilds->get('id', $data->guild_id)) {
             if ($banPart = $guild->bans->pull($data->user->id)) {
                 $banPart->fill((array) $data);
                 $banPart->created = false;
             }
+        }
+
+        if (! $banPart) {
+            /** @var Ban */
+            $banPart = $this->factory->create(Ban::class, $data);
         }
 
         $this->cacheUser($data->user);
