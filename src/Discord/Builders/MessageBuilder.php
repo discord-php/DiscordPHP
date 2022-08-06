@@ -599,7 +599,7 @@ class MessageBuilder implements JsonSerializable
             ];
         }
 
-        foreach ($this->files ?? [] as $idx => [$filename, $content]) {
+        foreach ($this->files as $idx => [$filename, $content]) {
             $fields[] = [
                 'name' => 'file'.$idx,
                 'content' => $content,
