@@ -573,7 +573,7 @@ class MessageBuilder implements JsonSerializable
      */
     public function requiresMultipart(): bool
     {
-        return !!($this->files);
+        return isset($this->files);
     }
 
     /**
@@ -599,7 +599,7 @@ class MessageBuilder implements JsonSerializable
             ];
         }
 
-        foreach ($this->files as $idx => [$filename, $content]) {
+        foreach ($this->files ?? [] as $idx => [$filename, $content]) {
             $fields[] = [
                 'name' => 'file'.$idx,
                 'content' => $content,
@@ -665,6 +665,7 @@ class MessageBuilder implements JsonSerializable
 
         if (isset($this->attachments)) {
             $body['attachments'] = $this->attachments;
+            $empty = false;
         }
 
         if (isset($this->flags)) {
