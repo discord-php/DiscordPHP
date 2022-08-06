@@ -389,7 +389,7 @@ class Discord
             new React($this->loop, $options['socket_options'])
         );
 
-        $this->factory = new Factory($this, $this->http);
+        $this->factory = new Factory($this);
         $this->client = $this->factory->create(Client::class, [], true);
 
         $this->connectWs();

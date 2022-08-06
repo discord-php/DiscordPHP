@@ -12,10 +12,8 @@
 namespace Discord\Factory;
 
 use Discord\Discord;
-use Discord\Http\Http;
 use Discord\Parts\Part;
 use Discord\Repository\AbstractRepository;
-use React\Cache\CacheInterface;
 
 /**
  * Exposes an interface to build part objects without the other requirements.
@@ -30,22 +28,13 @@ class Factory
     protected $discord;
 
     /**
-     * The HTTP client.
-     *
-     * @var Http Client.
-     */
-    protected $http;
-
-    /**
      * Constructs a factory.
      *
      * @param Discord $discord The Discord client.
-     * @param Http    $http    The HTTP client.
      */
-    public function __construct(Discord $discord, Http $http)
+    public function __construct(Discord $discord)
     {
         $this->discord = $discord;
-        $this->http = $http;
     }
 
     /**
