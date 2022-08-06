@@ -575,7 +575,7 @@ abstract class AbstractRepository extends Collection
      */
     public function offsetSet($offset, $value): void
     {
-        if (isset($this->items[$offset])) {
+        if (array_key_exists($offset, $this->items)) {
             $this->cache->interface->set($this->cache->keyPrefix.$offset, serialize($value));
             $this->items[$offset] = WeakReference::create($value);
 
