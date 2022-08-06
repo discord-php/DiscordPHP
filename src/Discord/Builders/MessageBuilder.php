@@ -615,7 +615,7 @@ class MessageBuilder implements JsonSerializable
      */
     public function jsonSerialize(): array
     {
-        $empty = !!($this->files);
+        $empty = ! ($this->files);
 
         if (isset($this->content)) {
             $body['content'] = $this->content;
