@@ -35,7 +35,6 @@ use function React\Promise\reject;
  *
  * @property-read \WeakReference[] $items          Repository cache items containing cache key => weak references to the cache.
  * @property-read CacheWrapper     $cache          The react/cache wrapper.
- * @property-read string           $cacheKeyPrefix Cache key prefix.
  */
 abstract class AbstractRepository extends Collection
 {
@@ -80,11 +79,6 @@ abstract class AbstractRepository extends Collection
     protected $cache;
 
     /**
-     * @var string
-     */
-    protected $cacheKeyPrefix;
-
-    /**
      * AbstractRepository constructor.
      *
      * @param Http    $http    The HTTP client.
@@ -96,7 +90,6 @@ abstract class AbstractRepository extends Collection
         $this->http = $discord->getHttpClient();
         $this->factory = $discord->getFactory();
         $this->vars = $vars;
-        $this->cacheKeyPrefix = substr(strrchr($this->class, '\\'), 1) . '.';
         $this->cache = new CacheWrapper($discord, $discord->getCache(), $this->items, $this->class);
 
         parent::__construct([], $this->discrim, $this->class);
@@ -185,7 +178,7 @@ abstract class AbstractRepository extends Collection
             $part->created = true;
             $part->deleted = false;
 
-            return $this->cache->set($this->cacheKeyPrefix.$part->{$this->discrim}, $part);
+            return $this->cache->set($part->{$this->discrim}, $part);
         });
     }
 
@@ -227,7 +220,7 @@ abstract class AbstractRepository extends Collection
 
             $part->created = false;
 
-            return $this->cache->delete($this->cacheKeyPrefix.$part->{$this->discrim})->then(function () use ($part) {
+            return $this->cache->delete($part->{$this->discrim})->then(function () use ($part) {
                 return $part;
             });
         });
@@ -262,7 +255,7 @@ abstract class AbstractRepository extends Collection
         return $this->http->get($endpoint)->then(function ($response) use (&$part) {
             $part->fill((array) $response);
 
-            return $this->cache->set($this->cacheKeyPrefix.$part->{$this->discrim}, $part);
+            return $this->cache->set($part->{$this->discrim}, $part);
         });
     }
 
@@ -272,33 +265,33 @@ abstract class AbstractRepository extends Collection
      * @param string $id    The ID to search for.
      * @param bool   $fresh Whether we should skip checking the cache.
      *
-     * @return ExtendedPromiseInterface
      * @throws \Exception
+     *
+     * @return ExtendedPromiseInterface<Part>
      */
     public function fetch(string $id, bool $fresh = false): ExtendedPromiseInterface
     {
         if (! $fresh) {
-            $cacheKey = $this->cacheKeyPrefix.$id;
-            $part = null;
-            if (isset($this->items[$cacheKey])) {
-                $part = $this->items[$cacheKey]->get();
+            if (isset($this->items[$id]) && $part = $this->items[$id]->get()) {
+                return $part;
             }
 
-            return $this->cache->get($cacheKey, $part);
+            return $this->cache->get($id, $part);
         }
 
         if (! isset($this->endpoints['get'])) {
             return reject(new \Exception('You cannot get this part.'));
         }
 
-        $part = $this->factory->create($this->class, [$this->discrim => $id]);
+        $part = $this->factory->part($this->class, [$this->discrim => $id]);
         $endpoint = new Endpoint($this->endpoints['get']);
         $endpoint->bindAssoc(array_merge($part->getRepositoryAttributes(), $this->vars));
 
-        return $this->http->get($endpoint)->then(function ($response) {
-            $part = $this->factory->create($this->class, array_merge($this->vars, (array) $response), true);
+        return $this->http->get($endpoint)->then(function ($response) use ($part) {
+            $part->fill(array_merge($this->vars, (array) $response));
+            $part->created = true;
 
-            return $this->cache->set($this->cacheKeyPrefix.$part->{$this->discrim}, $part);
+            return $this->cache->set($part->{$this->discrim}, $part);
         });
     }
 
@@ -314,8 +307,7 @@ abstract class AbstractRepository extends Collection
                 $value = array_merge($this->vars, (array) $value);
                 $part = $this->factory->create($this->class, $value, true);
 
-                $cacheKey = $this->cacheKeyPrefix.$part->{$this->discrim};
-                $parts[$cacheKey] = $part;
+                $parts[$part->{$this->discrim}] = $part;
             }
 
             return $this->cache->setMultiple($parts)->then(function ($success) {
@@ -331,8 +323,12 @@ abstract class AbstractRepository extends Collection
      */
     public function get(string $discrim, $key)
     {
-        if ($discrim == $this->discrim && $part = $this->offsetGet($key)) {
-            return $part;
+        if ($discrim == $this->discrim) {
+            if (isset($this->items[$key]) && $item = $this->items[$key]->get()) {
+                return $item;
+            }
+
+            return await($this->cache->get($key));
         }
 
         foreach ($this->items as $item) {
@@ -374,9 +370,9 @@ abstract class AbstractRepository extends Collection
     public function pushItem($item): self
     {
         if (! is_null($this->class) && is_a($item, $this->class)) {
-            $cacheKey = $this->cacheKeyPrefix.$item->{$this->discrim};
-            $this->cache->interface->set($cacheKey, serialize($item));
-            $this->items[$cacheKey] = WeakReference::create($item);
+            $key = $item->{$this->discrim};
+            $this->cache->interface->set($this->cache->keyPrefix.$key, serialize($item));
+            $this->items[$key] = WeakReference::create($item);
         }
 
         return $this;
@@ -471,7 +467,11 @@ abstract class AbstractRepository extends Collection
     public function clear(): void
     {
         if ($this->items) {
-            $this->interface->cache->deleteMultiple(array_keys($this->items));
+            $realKeys = array_map(function ($key) {
+                return $this->cache->keyPrefix.$key;
+            }, array_keys($this->items));
+            $this->interface->cache->deleteMultiple($realKeys);
+
             parent::clear();
         }
     }
@@ -501,7 +501,7 @@ abstract class AbstractRepository extends Collection
         $items2 = [];
 
         foreach ($collection->toArray() as $key => $value) {
-            $items2[$this->cacheKeyPrefix.$key] = WeakReference::create($value);
+            $items2[$key] = WeakReference::create($value);
         }
 
         $this->items = array_merge($this->items, $items2);
@@ -535,14 +535,12 @@ abstract class AbstractRepository extends Collection
      */
     public function offsetExists($offset): bool
     {
-        $cacheKey = $this->cacheKeyPrefix.$offset;
-
-        if (isset($this->items[$cacheKey])) {
+        if (isset($this->items[$offset])) {
             return true;
         }
 
         return await
-            ($this->cache->has($cacheKey));
+            ($this->cache->has($offset));
         //return false;
     }
 
@@ -558,15 +556,13 @@ abstract class AbstractRepository extends Collection
     #[\ReturnTypeWillChange]
     public function offsetGet($offset)
     {
-        $cacheKey = $this->cacheKeyPrefix.$offset;
-
-        if (isset($this->items[$cacheKey]) && $item = $this->items[$cacheKey]->get()) {
+        if (isset($this->items[$offset]) && $item = $this->items[$offset]->get()) {
             return $item;
         }
 
-        //return await
-            ($this->cache->get($cacheKey));
-        return null;
+        return await
+            ($this->cache->get($offset));
+        //return null;
     }
 
     /**
@@ -579,17 +575,15 @@ abstract class AbstractRepository extends Collection
      */
     public function offsetSet($offset, $value): void
     {
-        $cacheKey = $this->cacheKeyPrefix.$offset;
-
-        if (isset($this->items[$cacheKey])) {
-            $this->cache->interface->set($cacheKey, serialize($value));
-            $this->items[$cacheKey] = WeakReference::create($value);
+        if (isset($this->items[$offset])) {
+            $this->cache->interface->set($this->cache->keyPrefix.$offset, serialize($value));
+            $this->items[$offset] = WeakReference::create($value);
 
             return;
         }
 
         await
-            ($this->cache->set($cacheKey, $value));
+            ($this->cache->set($offset, $value));
     }
 
     /**
@@ -601,17 +595,15 @@ abstract class AbstractRepository extends Collection
      */
     public function offsetUnset($offset): void
     {
-        $cacheKey = $this->cacheKeyPrefix.$offset;
-
-        if (isset($this->items[$cacheKey])) {
-            $this->cache->interface->delete($cacheKey);
-            unset($this->items[$cacheKey]);
+        if (array_key_exists($offset, $this->items)) {
+            $this->cache->interface->delete($this->cache->keyPrefix, $offset);
+            unset($this->items[$offset]);
 
             return;
         }
 
         await
-            ($this->cache->delete($cacheKey));
+            ($this->cache->delete($offset));
     }
 
     /**
@@ -644,12 +636,11 @@ abstract class AbstractRepository extends Collection
 
     /**
      * @return CacheWrapper `cache`
-     * @return string       `cacheKeyPrefix`
      * @return mixed
      */
     public function __get(string $key)
     {
-        if (in_array($key, ['cache', 'cacheKeyPrefix'])) {
+        if (in_array($key, ['cache'])) {
             return $this->{$key};
         }
     }
