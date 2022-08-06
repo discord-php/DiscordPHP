@@ -68,7 +68,7 @@ use WyriHaximus\React\Cache\Redis;
 
 $loop = Factory::create();
 $redis = (new Clue\React\Redis\Factory($loop))->createLazyClient('localhost:6379');
-$cache = new Redis($redis, 'discordphp:cache:');
+$cache = new Redis($redis, 'dphp:cache:'); // prefix is "dphp:cache"
 
 $discord = new Discord([
     'token' => 'bot token',
@@ -86,7 +86,7 @@ use React\EventLoop\Factory;
 use seregazhuk\React\Cache\Memcached\Memcached;
 
 $loop = Factory::create();
-$cache = new Memcached($loop, 'localhost:11211', 'react:cache:');
+$cache = new Memcached($loop, 'localhost:11211', 'dphp:cache:'); // prefix is "dphp:cache"
 
 $discord = new Discord([
     'token' => 'bot token',

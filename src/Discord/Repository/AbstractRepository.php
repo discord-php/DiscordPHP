@@ -357,6 +357,32 @@ abstract class AbstractRepository extends Collection
     }
 
     /**
+     * Pushes items to the collection.
+     *
+     * @param mixed ...$items
+     *
+     * @return self|Collection
+     */
+    public function push(...$items): self
+    {
+        if ($this->class === null) {
+            return parent::push($items);
+        }
+
+        foreach ($items as $item) {
+            if (is_a($item, $this->class)) {
+                $key = $item->{$this->discrim};
+                $values[$this->cache->key_prefix.$key] = serialize($item);
+                $this->items[$key] = WeakReference::create($item);
+            }
+        }
+
+        $this->cache->interface->setMultiple($values);
+
+        return $this;
+    }
+
+    /**
      * Pushes a single item to the repository.
      *
      * @deprecated 7.1.4 Use async `$repository->cache->set()`
@@ -364,11 +390,15 @@ abstract class AbstractRepository extends Collection
      *
      * @param Part $item
      *
-     * @return self
+     * @return self|Collection
      */
     public function pushItem($item): self
     {
-        if (! is_null($this->class) && is_a($item, $this->class)) {
+        if ($this->class === null) {
+            return parent::pushItem($item);
+        }
+
+        if (is_a($item, $this->class)) {
             $key = $item->{$this->discrim};
             $this->cache->interface->set($this->cache->key_prefix.$key, serialize($item));
             $this->items[$key] = WeakReference::create($item);
@@ -449,7 +479,7 @@ abstract class AbstractRepository extends Collection
     public function find(callable $callback)
     {
         foreach ($this->items as $item) {
-            if ($part = $item->get()) {
+            if (isset($item) && $part = $item->get()) {
                 if ($callback($part)) {
                     return $part;
                 }
