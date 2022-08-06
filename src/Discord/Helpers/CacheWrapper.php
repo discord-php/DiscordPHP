@@ -20,6 +20,8 @@ use WeakReference;
  * Wrapper for CacheInterface that tracks Repository items
  *
  * @internal Used by AbstractRepository
+ *
+ * @property-read string $key_prefix Cache key prefix.
  */
 class CacheWrapper
 {
@@ -52,7 +54,7 @@ class CacheWrapper
     /**
      * @var string
      */
-    public $keyPrefix;
+    protected $key_prefix;
 
     /**
      * @param CacheInterface $cacheInterface The actual CacheInterface.
@@ -68,7 +70,7 @@ class CacheWrapper
         $this->items = &$items;
         $this->class = $class;
 
-        $this->keyPrefix = substr(strrchr($this->class, '\\'), 1) . '.';
+        $this->key_prefix = substr(strrchr($this->class, '\\'), 1) . '.';
     }
 
     /**
@@ -76,7 +78,7 @@ class CacheWrapper
      */
     public function get($key, $default = null)
     {
-        return $this->interface->get($this->keyPrefix.$key, $default)->then(function ($value) use ($key) {
+        return $this->interface->get($this->key_prefix.$key, $default)->then(function ($value) use ($key) {
             if ($value === null) {
                 unset($this->items[$key]);
             } else {
@@ -96,7 +98,7 @@ class CacheWrapper
      */
     public function set($key, $value, $ttl = null)
     {
-        return $this->interface->set($this->keyPrefix.$key, serialize($value), $ttl)->then(function ($success) use ($key, $value) {
+        return $this->interface->set($this->key_prefix.$key, serialize($value), $ttl)->then(function ($success) use ($key, $value) {
             if ($success) {
                 $this->items[$key] = WeakReference::create($value);
             }
@@ -110,7 +112,7 @@ class CacheWrapper
      */
     public function delete($key)
     {
-        return $this->interface->delete($this->keyPrefix.$key)->then(function ($success) use ($key) {
+        return $this->interface->delete($this->key_prefix.$key)->then(function ($success) use ($key) {
             if ($success) {
                 unset($this->items[$key]);
             }
@@ -125,19 +127,19 @@ class CacheWrapper
     public function getMultiple(array $keys, $default = null)
     {
         $realKeys = array_map(function ($key) {
-            return $this->keyPrefix.$key;
+            return $this->key_prefix.$key;
         }, $keys);
 
         return $this->interface->getMultiple($realKeys, $default)->then(function ($values) use ($keys) {
             foreach ($keys as $key) {
                 // Check if the prefixed key is returned
-                if (! array_key_exists($this->keyPrefix.$key, $values)) {
+                if (! array_key_exists($this->key_prefix.$key, $values)) {
                     unset($this->items[$key]);
                     continue;
                 }
 
                 // Get real value from prefixed key
-                $value = $values[$this->keyPrefix.$key];
+                $value = $values[$this->key_prefix.$key];
 
                 if ($value === null) {
                     unset($this->items[$key]);
@@ -150,7 +152,7 @@ class CacheWrapper
                 }
 
                 // Remove real value with key prefix
-                unset($values[$this->keyPrefix.$key]);
+                unset($values[$this->key_prefix.$key]);
             }
 
             return $values;
@@ -166,7 +168,7 @@ class CacheWrapper
             $valueRefs[$key] = WeakReference::create($value);
 
             // Replace values key with prefixed key
-            $values[$this->keyPrefix.$key] = serialize($value);
+            $values[$this->key_prefix.$key] = serialize($value);
             unset($values[$key]);
         }
 
@@ -185,7 +187,7 @@ class CacheWrapper
     public function deleteMultiple(array $keys)
     {
         $realKeys = array_map(function ($key) {
-            return $this->keyPrefix.$key;
+            return $this->key_prefix.$key;
         }, $keys);
 
         return $this->interface->deleteMultiple($realKeys)->then(function ($success) use ($keys) {
@@ -205,7 +207,7 @@ class CacheWrapper
     public function clear()
     {
         $realKeys = array_map(function ($key) {
-            return $this->keyPrefix.$key;
+            return $this->key_prefix.$key;
         }, $this->items);
 
         return $this->interface->deleteMultiple($realKeys)->then(function ($success) {
@@ -222,12 +224,19 @@ class CacheWrapper
      */
     public function has($key)
     {
-        return $this->interface->has($this->keyPrefix.$key)->then(function ($success) use ($key) {
+        return $this->interface->has($this->key_prefix.$key)->then(function ($success) use ($key) {
             if (! $success) {
                 unset($this->items[$key]);
             }
 
             return $success;
         });
+    }
+
+    public function __get(string $name)
+    {
+        if (in_array($name, ['key_prefix'])) {
+            return $this->$name;
+        }
     }
 }

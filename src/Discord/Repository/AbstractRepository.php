@@ -18,7 +18,6 @@ use Discord\Helpers\Collection;
 use Discord\Http\Endpoint;
 use Discord\Http\Http;
 use Discord\Parts\Part;
-use React\Cache\CacheInterface;
 use React\Promise\ExtendedPromiseInterface;
 use React\Promise\PromiseInterface;
 use Traversable;
@@ -33,8 +32,8 @@ use function React\Promise\reject;
  * @author Aaron Scherer <aequasi@gmail.com>
  * @author David Cole <david.cole1340@gmail.com>
  *
- * @property-read \WeakReference[] $items          Repository cache items containing cache key => weak references to the cache.
- * @property-read CacheWrapper     $cache          The react/cache wrapper.
+ * @property-read \WeakReference[] $items Repository cache items containing cache key => weak references to the cache.
+ * @property-read CacheWrapper     $cache The react/cache wrapper.
  */
 abstract class AbstractRepository extends Collection
 {
@@ -371,7 +370,7 @@ abstract class AbstractRepository extends Collection
     {
         if (! is_null($this->class) && is_a($item, $this->class)) {
             $key = $item->{$this->discrim};
-            $this->cache->interface->set($this->cache->keyPrefix.$key, serialize($item));
+            $this->cache->interface->set($this->cache->key_prefix.$key, serialize($item));
             $this->items[$key] = WeakReference::create($item);
         }
 
@@ -468,7 +467,7 @@ abstract class AbstractRepository extends Collection
     {
         if ($this->items) {
             $realKeys = array_map(function ($key) {
-                return $this->cache->keyPrefix.$key;
+                return $this->cache->key_prefix.$key;
             }, array_keys($this->items));
             $this->interface->cache->deleteMultiple($realKeys);
 
@@ -576,7 +575,7 @@ abstract class AbstractRepository extends Collection
     public function offsetSet($offset, $value): void
     {
         if (array_key_exists($offset, $this->items)) {
-            $this->cache->interface->set($this->cache->keyPrefix.$offset, serialize($value));
+            $this->cache->interface->set($this->cache->key_prefix.$offset, serialize($value));
             $this->items[$offset] = WeakReference::create($value);
 
             return;
@@ -596,7 +595,7 @@ abstract class AbstractRepository extends Collection
     public function offsetUnset($offset): void
     {
         if (array_key_exists($offset, $this->items)) {
-            $this->cache->interface->delete($this->cache->keyPrefix, $offset);
+            $this->cache->interface->delete($this->cache->key_prefix, $offset);
             unset($this->items[$offset]);
 
             return;

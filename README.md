@@ -14,14 +14,14 @@ For testing and stability it would be greatly appreciated if you were able to ad
 DiscordPHP caching is powered by [react/cache](https://github.com/reactphp/cache). The Interface can be retrieved by accessing `$discord->cache` or in any repositories `$repository->cache`, e.g.
 
 ```php
-$discord->users->cache->get('User.115233618997149700')->then(function ($user) {
+$discord->users->cache->get('115233618997149700')->then(function ($user) {
     // $user is a cached Part
 });
 ```
 
 Albeit example, it's preferred to fetch user like usual:
 ```php
-$discord->users->fetch('User.115233618997149700', true)->then(function ($user) {
+$discord->users->fetch('115233618997149700', true)->then(function ($user) {
     // $user fetched from Discord API will automatically update the cache
 });
 ```
@@ -36,7 +36,9 @@ Known available implementation:
 
 Bundled in ReactPHP Cache, uses in-memory Array, and is already used by default.
 
-### [FileSystem](https://github.com/WyriHaximus/reactphp-cache-filesystem)
+### [~~FileSystem~~](https://github.com/WyriHaximus/reactphp-cache-filesystem)
+
+*Current version is not working*
 
 ```php
 use React\EventLoop\Factory as LoopFactory;
@@ -75,7 +77,9 @@ $discord = new Discord([
 ]);
 ```
 
-### [Memcached](https://github.com/seregazhuk/php-react-cache-memcached)
+### [~~Memcached~~](https://github.com/seregazhuk/php-react-cache-memcached)
+
+*Current version is not working*
 
 ```php
 use React\EventLoop\Factory;
@@ -91,7 +95,7 @@ $discord = new Discord([
 ]);
 ```
 
-By default the cache key is prefixed "react:cache" so in your Redis/Memcached you will get have the data as: `react:cache:User.115233618997149700`. You do not need to write the prefix if accessing from the Bot code, just `User.115233618997149700`. The repository prefix can be retrieved from the repository which in the case above `$discord->users->cacheKeyPrefix` would return `User.`, where `User` is the name of the `Part` class.
+By default the cache key is prefixed "react:cache" so in your Redis/Memcached you will get have the data as: `react:cache:User.115233618997149700`. You do not need to write the prefix if accessing from the Bot code, just `User.115233618997149700`. The repository prefix can be retrieved from the repository which in the case above `$discord->users->cache->key_prefix` would return `User.`, where `User` is the name of the `Part` class.
 
 ## Before you start
 
