@@ -72,10 +72,11 @@ class Client extends Part
      */
     public function afterConstruct(): void
     {
-        $this->application = $this->factory->create(Application::class, [], true);
+        $this->application = $this->factory->part(Application::class, [], true);
 
         $this->http->get(Endpoint::APPLICATION_CURRENT)->done(function ($response) {
             $this->application->fill((array) $response);
+            $this->created = true;
         });
     }
 
@@ -86,7 +87,7 @@ class Client extends Part
      */
     protected function getUserAttribute(): Part
     {
-        return $this->factory->create(User::class, $this->attributes, true);
+        return $this->factory->part(User::class, $this->attributes, true);
     }
 
     /**
