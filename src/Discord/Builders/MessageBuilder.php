@@ -494,7 +494,7 @@ class MessageBuilder implements JsonSerializable
     }
 
     /**
-     * Removes all files from the message.
+     * Removes all files from the builder.
      *
      * @return $this
      */
