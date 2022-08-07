@@ -139,25 +139,6 @@ abstract class Part implements ArrayAccess, JsonSerializable
     }
 
     /**
-     * Reinitialize Discord references, used for serialization.
-     * Will not change an already set Discord reference.
-     *
-     * @internal
-     */
-    public function initDiscord(Discord $discord)
-    {
-        if ($this->discord) {
-            return;
-        }
-
-        $this->discord = $discord;
-        $this->factory = $discord->getFactory();
-        $this->http = $discord->getHttpClient();
-
-        $this->afterConstruct();
-    }
-
-    /**
      * Called after the part has been constructed.
      */
     protected function afterConstruct(): void

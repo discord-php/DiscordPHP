@@ -83,9 +83,10 @@ class CacheWrapper
                 unset($this->items[$key]);
             } else {
                 /** @var Part */
-                $value = unserialize($value, ['allowed_classes' => [$this->class]]);
-                $value->created = true;
-                $value->initDiscord($this->discord);
+                $unserialize = unserialize($value, ['allowed_classes' => [$this->class]]);
+                //$value = $this->discord->factory($this->class, json_decode($value), true);
+                $value = $this->discord->factory($this->class, $unserialize->getRawAttributes(), $unserialize->created);
+                unset($unserialize);
                 $this->items[$key] = WeakReference::create($value);
             }
 
@@ -145,9 +146,10 @@ class CacheWrapper
                     unset($this->items[$key]);
                 } else {
                     /** @var Part */
-                    $values[$key] = unserialize($value, ['allowed_classes' => [$this->class]]);
-                    $values[$key]->created = true;
-                    $values[$key]->initDiscord($this->discord);
+                    $unserialize = unserialize($value, ['allowed_classes' => [$this->class]]);
+                    //$value = $this->discord->factory($this->class, json_decode($value), true);
+                    $value = $this->discord->factory($this->class, $unserialize->getRawAttributes(), $unserialize->created);
+                    unset($unserialize);
                     $this->items[$key] = WeakReference::create($values[$key]);
                 }
 
