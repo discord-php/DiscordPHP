@@ -372,7 +372,7 @@ abstract class AbstractRepository extends Collection
         foreach ($items as $item) {
             if (is_a($item, $this->class)) {
                 $key = $item->{$this->discrim};
-                $values[$this->cache->key_prefix.$key] = json_encode($item);
+                $values[$this->cache->key_prefix.$key] = serialize($item);
                 $this->items[$key] = WeakReference::create($item);
             }
         }
@@ -400,7 +400,7 @@ abstract class AbstractRepository extends Collection
 
         if (is_a($item, $this->class)) {
             $key = $item->{$this->discrim};
-            $this->cache->interface->set($this->cache->key_prefix.$key, json_encode($item));
+            $this->cache->interface->set($this->cache->key_prefix.$key, serialize($item));
             $this->items[$key] = WeakReference::create($item);
         }
 
@@ -605,7 +605,7 @@ abstract class AbstractRepository extends Collection
     public function offsetSet($offset, $value): void
     {
         if (array_key_exists($offset, $this->items)) {
-            $this->cache->interface->set($this->cache->key_prefix.$offset, json_encode($value));
+            $this->cache->interface->set($this->cache->key_prefix.$offset, serialize($value));
             $this->items[$offset] = WeakReference::create($value);
 
             return;

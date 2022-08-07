@@ -83,9 +83,9 @@ class CacheWrapper
                 unset($this->items[$key]);
             } else {
                 /** @var Part */
-                //$unserialize = unserialize($value, ['allowed_classes' => [$this->class]]);
-                //$value = $this->discord->factory($this->class, $unserialize->getRawAttributes(), $unserialize->created);
-                $value = $this->discord->factory($this->class, json_decode($value), true);
+                $unserialize = unserialize($value, ['allowed_classes' => [$this->class]]);
+                $value = $this->discord->factory($this->class, $unserialize->getRawAttributes(), $unserialize->created);
+                //$value = $this->discord->factory($this->class, json_decode($value), true);
                 $this->items[$key] = WeakReference::create($value);
             }
 
@@ -98,7 +98,7 @@ class CacheWrapper
      */
     public function set($key, $value, $ttl = null)
     {
-        return $this->interface->set($this->key_prefix.$key, json_encode($value), $ttl)->then(function ($success) use ($key, $value) {
+        return $this->interface->set($this->key_prefix.$key, serialize($value), $ttl)->then(function ($success) use ($key, $value) {
             if ($success) {
                 $this->items[$key] = WeakReference::create($value);
             }
@@ -145,9 +145,9 @@ class CacheWrapper
                     unset($this->items[$key]);
                 } else {
                     /** @var Part */
-                    //$unserialize = unserialize($value, ['allowed_classes' => [$this->class]]);
-                    //$value = $this->discord->factory($this->class, $unserialize->getRawAttributes(), $unserialize->created);
-                    $value = $this->discord->factory($this->class, json_decode($value), true);
+                    $unserialize = unserialize($value, ['allowed_classes' => [$this->class]]);
+                    $value = $this->discord->factory($this->class, $unserialize->getRawAttributes(), $unserialize->created);
+                    //$value = $this->discord->factory($this->class, json_decode($value), true);
                     $this->items[$key] = WeakReference::create($values[$key]);
                 }
 
@@ -168,7 +168,7 @@ class CacheWrapper
             $valueRefs[$key] = WeakReference::create($value);
 
             // Replace values key with prefixed key
-            $values[$this->key_prefix.$key] = json_encode($value);
+            $values[$this->key_prefix.$key] = serialize($value);
             unset($values[$key]);
         }
 
