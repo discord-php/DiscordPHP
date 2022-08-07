@@ -494,7 +494,7 @@ class MessageBuilder implements JsonSerializable
     }
 
     /**
-     * Removes all files from the message.
+     * Removes all files from the builder.
      *
      * @return $this
      */
@@ -573,7 +573,7 @@ class MessageBuilder implements JsonSerializable
      */
     public function requiresMultipart(): bool
     {
-        return !!($this->files);
+        return isset($this->files);
     }
 
     /**
@@ -615,7 +615,7 @@ class MessageBuilder implements JsonSerializable
      */
     public function jsonSerialize(): array
     {
-        $empty = !!($this->files);
+        $empty = ! ($this->files);
 
         if (isset($this->content)) {
             $body['content'] = $this->content;
@@ -665,6 +665,7 @@ class MessageBuilder implements JsonSerializable
 
         if (isset($this->attachments)) {
             $body['attachments'] = $this->attachments;
+            $empty = false;
         }
 
         if (isset($this->flags)) {
