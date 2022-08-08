@@ -65,10 +65,6 @@ class Role extends Part
         if (! ($this->attributes['permissions'] instanceof RolePermission)) {
             $this->permissions = $this->attributes['permissions'];
         }
-
-        if (! isset($this->attributes['permissions'])) {
-            $this->permissions = $this->factory->part(RolePermission::class);
-        }
     }
 
     /**
@@ -80,7 +76,7 @@ class Role extends Part
      */
     protected function setPermissionsAttribute($permission): void
     {
-        if ($this->id && ! ($permission instanceof RolePermission)) {
+        if (! ($permission instanceof RolePermission)) {
             $permission = $this->factory->part(RolePermission::class, ['bitwise' => $permission], true);
         }
 

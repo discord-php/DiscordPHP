@@ -334,11 +334,13 @@ class Member extends Part
      *
      * @throws \InvalidArgumentException
      *
-     * @return RolePermission
+     * @return RolePermission|null Null if permission is failed to be determined.
      */
-    public function getPermissions($channel = null): RolePermission
+    public function getPermissions($channel = null): ?RolePermission
     {
-        $guild = $this->guild;
+        if (! $guild = $this->guild) {
+            return null;
+        }
 
         if ($channel) {
             if ($channel instanceof Thread) {

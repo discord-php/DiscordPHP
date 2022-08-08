@@ -285,7 +285,7 @@ class Guild extends Part
     {
         if (! empty($this->attributes['roles'])) {
             foreach ($this->attributes['roles'] as $role) {
-                $roles[] = $this->factory->part(Role::class, ['guild_id' => $this->id] + (array) $role, true);
+                $roles[] = $this->factory->part(Role::class, (array) $role + ['guild_id' => $this->id], true);
             }
             $this->roles->push(...$roles);
         }
@@ -1180,7 +1180,15 @@ class Guild extends Part
     public function createInvite(...$args): ExtendedPromiseInterface
     {
         $channel = $this->channels->find(function (Channel $channel) {
-            return $channel->allowInvite() && $channel->getBotPermissions()->create_instant_invite;
+            if ($channel->allowInvite()) {
+                if ($botperms = $channel->getBotPermissions()) {
+                    return $botperms->create_instant_invite;
+                }
+
+                return true;
+            }
+
+            return false;
         });
 
         if (! $channel) {
