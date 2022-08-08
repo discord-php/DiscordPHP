@@ -17,13 +17,15 @@ use Discord\Parts\Permissions\RolePermission;
 /**
  * A role defines permissions for the guild. Members can be added to the role. The role belongs to a guild.
  *
+ * @see https://discord.com/developers/docs/topics/permissions#role-object
+ *
  * @property string         $id            The unique identifier of the role.
  * @property string         $name          The name of the role.
  * @property int            $color         The color of the guild.
  * @property bool           $hoist         Whether the role is hoisted on the sidebar.
  * @property string|null    $icon          The URL to the role icon.
- * @property string|null    $icon_hash     The icon hash for the role.
- * @property string|null    $unicode_emoji The unicode emoji for the role.
+ * @property ?string|null   $icon_hash     The icon hash for the role.
+ * @property ?string|null   $unicode_emoji The unicode emoji for the role.
  * @property int            $position      The position of the role on the sidebar.
  * @property RolePermission $permissions   The permissions of the role.
  * @property bool           $managed       Whether the role is managed by a Twitch subscriber feature.
@@ -65,7 +67,7 @@ class Role extends Part
         }
 
         if (! isset($this->attributes['permissions'])) {
-            $this->permissions = $this->factory->create(RolePermission::class);
+            $this->permissions = $this->factory->part(RolePermission::class);
         }
     }
 
@@ -135,9 +137,9 @@ class Role extends Part
      *
      * @return string|null The role icon hash or null.
      */
-    protected function getIconHashAttribute()
+    protected function getIconHashAttribute(): ?string
     {
-        return $this->attributes['icon'];
+        return $this->attributes['icon'] ?? null;
     }
 
     /**
@@ -192,10 +194,13 @@ class Role extends Part
         return "<@&{$this->id}>";
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function serialize()
     {
         $attributes = $this->attributes;
-        $attributes['permissions'] = $attributes['permissions']->bitwise;
+        $attributes['permissions'] = (string) $attributes['permissions'];
 
         return json_encode($attributes);
     }

@@ -34,7 +34,7 @@ class Ban extends Part
         'reason',
         'user',
 
-        // internally used
+        // @internal
         'user_id',
         'guild_id',
     ];

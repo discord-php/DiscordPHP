@@ -50,7 +50,7 @@ class AuditLog extends Part
         'integrations',
         'threads',
 
-        // Internal
+        // @internal
         'guild_id',
     ];
 

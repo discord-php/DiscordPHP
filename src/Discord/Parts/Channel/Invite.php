@@ -69,7 +69,7 @@ class Invite extends Part
         'temporary',
         'created_at',
 
-        // Internal use
+        // @internal
         'guild_id',
         'channel_id',
     ];

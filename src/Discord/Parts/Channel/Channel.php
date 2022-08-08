@@ -135,7 +135,7 @@ class Channel extends Part
         'permissions',
         'flags',
 
-        // internal, legacy
+        // @internal
         'is_private',
     ];
 
