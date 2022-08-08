@@ -1,8 +1,5 @@
 name: Unit Tests
 on:
-  push:
-    branches:
-      - cacheInterface
   workflow_dispatch:
 
 env:
