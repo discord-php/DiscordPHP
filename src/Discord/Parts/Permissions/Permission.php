@@ -314,8 +314,8 @@ abstract class Permission extends Part
         return $this->attributes['manage_emojis_and_stickers'] = $value;
     }
 
-    public function __toString()
+    public function __toString(): string
     {
-        return $this->bitwise;
+        return (string) $this->bitwise;
     }
 }
