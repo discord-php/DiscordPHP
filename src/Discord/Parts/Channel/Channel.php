@@ -72,8 +72,9 @@ use function React\Promise\resolve;
  * @property ?string|null        $rtc_region                    Voice region id for the voice channel, automatic when set to null.
  * @property int|null            $video_quality_mode            The camera video quality mode of the voice channel, 1 when not present.
  * @property int|null            $default_auto_archive_duration Default duration for newly created threads, in minutes, to automatically archive the thread after recent activity, can be set to: 60, 1440, 4320, 10080.
- * @property int|null            $flags                         Channel flags combined as a bitfield.
  * @property string|null         $permissions                   Computed permissions for the invoking user in the channel, including overwrites, only included when part of the resolved data received on a slash command interaction.
+ * @property int|null            $flags                         Channel flags combined as a bitfield.
+ *
  * @property bool                $is_private                    Whether the channel is a private channel.
  * @property MemberRepository    $members                       Voice channel only - members in the channel.
  * @property MessageRepository   $messages                      Text channel only - messages sent in the channel.
@@ -133,6 +134,8 @@ class Channel extends Part
         'default_auto_archive_duration',
         'permissions',
         'flags',
+
+        // internal, legacy
         'is_private',
     ];
 
@@ -153,6 +156,8 @@ class Channel extends Part
      */
     protected function afterConstruct(): void
     {
+        $this->permission_overwrites = $this->attributes['permission_overwrites'];
+
         if (! array_key_exists('bitrate', $this->attributes) && $this->type != self::TYPE_TEXT) {
             $this->bitrate = 64000;
         }
@@ -185,9 +190,11 @@ class Channel extends Part
      */
     protected function getRecipientIdAttribute(): ?string
     {
-        if ($this->recipient) {
-            return $this->recipient->id;
+        if ($recipient = $this->recipient) {
+            return $recipient->id;
         }
+
+        return null;
     }
 
     /**
@@ -197,15 +204,13 @@ class Channel extends Part
      */
     protected function getRecipientsAttribute(): Collection
     {
-        $recipients = new Collection();
+        $recipients = Collection::for(User::class);
 
-        if (! empty($this->attributes['recipients'])) {
-            foreach ($this->attributes['recipients'] as $recipient) {
-                if (! $user = $this->discord->users->get('id', $recipient->id)) {
-                    $user = $this->factory->create(User::class, $recipient, true);
-                }
-                $recipients->pushItem($user);
+        foreach ($this->attributes['recipients'] ?? [] as $recipient) {
+            if (! $user = $this->discord->users->get('id', $recipient->id)) {
+                $user = $this->factory->part(User::class, (array) $recipient, true);
             }
+            $recipients->pushItem($user);
         }
 
         return $recipients;
@@ -246,13 +251,12 @@ class Channel extends Part
     {
         return $this->http->get(Endpoint::bind(Endpoint::CHANNEL_PINS, $this->id))
         ->then(function ($responses) {
-            $messages = new Collection();
+            $messages = Collection::for(Message::class);
 
             foreach ($responses as $response) {
                 if (! $message = $this->messages->get('id', $response->id)) {
-                    $message = $this->factory->create(Message::class, $response, true);
+                    $message = $this->factory->part(Message::class, (array) $response, true);
                 }
-
                 $messages->pushItem($message);
             }
 
@@ -287,10 +291,10 @@ class Channel extends Part
         $allow = array_fill_keys($allow, true);
         $deny = array_fill_keys($deny, true);
 
-        $allowPart = $this->factory->create(ChannelPermission::class, $allow);
-        $denyPart = $this->factory->create(ChannelPermission::class, $deny);
+        $allowPart = $this->factory->part(ChannelPermission::class, $allow);
+        $denyPart = $this->factory->part(ChannelPermission::class, $deny);
 
-        $overwrite = $this->factory->create(Overwrite::class, [
+        $overwrite = $this->factory->part(Overwrite::class, [
             'id' => $part->id,
             'channel_id' => $this->id,
             'type' => $type,
@@ -317,7 +321,7 @@ class Channel extends Part
      */
     public function setOverwrite(Part $part, Overwrite $overwrite, ?string $reason = null): ExtendedPromiseInterface
     {
-        if ($this->guild && ! $this->getBotPermissions()->manage_roles) {
+        if ($this->guild_id && ! $this->getBotPermissions()->manage_roles) {
             return reject(new NoPermissionsException('You do not have permission to edit roles in the specified channel.'));
         }
 
@@ -516,7 +520,10 @@ class Channel extends Part
 
         return $this->http->post(Endpoint::bind(Endpoint::CHANNEL_INVITES, $this->id), $options)
             ->then(function ($response) {
-                return $this->factory->create(Invite::class, $response, true);
+                $invite = $this->factory->part(Invite::class, (array) $response, true);
+                $this->invites->pushItem($invite);
+
+                return $invite;
             });
     }
 
@@ -633,11 +640,11 @@ class Channel extends Part
         }
 
         return $this->http->get($endpoint)->then(function ($responses) {
-            $messages = new Collection();
+            $messages = Collection::for(Message::class);
 
             foreach ($responses as $response) {
                 if (! $message = $this->messages->get('id', $response->id)) {
-                    $message = $this->factory->create(Message::class, $response, true);
+                    $message = $this->factory->part(Message::class, (array) $response, true);
                 }
                 $messages->pushItem($message);
             }
@@ -751,16 +758,16 @@ class Channel extends Part
      *
      * @param array $overwrites
      */
-    protected function setPermissionOverwritesAttribute(array $overwrites): void
+    protected function setPermissionOverwritesAttribute(?array $overwrites): void
     {
         $this->attributes['permission_overwrites'] = $overwrites;
 
-        if (! is_null($overwrites)) {
+        if ($this->id && ! $overwrites !== null) {
             foreach ($overwrites as $overwrite) {
                 $overwrite = (array) $overwrite;
                 $overwrite['channel_id'] = $this->id;
 
-                $this->overwrites->pushItem($this->factory->create(Overwrite::class, $overwrite, true));
+                $this->overwrites->pushItem($this->factory->part(Overwrite::class, $overwrite, true));
             }
         }
     }
@@ -812,7 +819,7 @@ class Channel extends Part
             'auto_archive_duration' => $auto_archive_duration,
             'type' => $type,
         ], $headers)->then(function ($response) {
-            return $this->factory->create(Thread::class, $response, true);
+            return $this->factory->part(Thread::class, (array) $response, true);
         });
     }
 
@@ -888,12 +895,7 @@ class Channel extends Part
 
             return $this->http->post(Endpoint::bind(Endpoint::CHANNEL_MESSAGES, $this->id), $message);
         })()->then(function ($response) {
-            // Workaround for sendMessage() no guild_id
-            if ($this->guild_id && ! isset($response->guild_id)) {
-                $response->guild_id = $this->guild_id;
-            }
-
-            return $this->factory->create(Message::class, $response, true);
+            return $this->factory->part(Message::class, ['guild_id' => $this->guild_id] + (array) $response, true);
         });
     }
 
@@ -1065,7 +1067,9 @@ class Channel extends Part
      */
     public function getBotPermissions(): RolePermission
     {
-        return $this->guild->members->offsetGet($this->discord->id)->getPermissions($this);
+        $guild = $this->guild;
+
+        return $guild->members->get('id', $this->discord->id)->getPermissions($this);
     }
 
     /**
