@@ -156,7 +156,9 @@ class Channel extends Part
      */
     protected function afterConstruct(): void
     {
-        $this->permission_overwrites = $this->attributes['permission_overwrites'];
+        if (isset($this->attributes['permission_overwrites'])) {
+            $this->permission_overwrites = $this->attributes['permission_overwrites'];
+        }
 
         if (! array_key_exists('bitrate', $this->attributes) && $this->type != self::TYPE_TEXT) {
             $this->bitrate = 64000;

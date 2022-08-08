@@ -37,24 +37,29 @@ use Traversable;
  * @property string            $id                    The ID of the thread.
  * @property string            $type                  The type of thread.
  * @property string            $guild_id              The ID of the guild which the thread belongs to.
+ * @property Guild|null        $guild                 The guild which the thread belongs to.
  * @property string            $name                  The name of the thread.
  * @property string            $last_message_id       The ID of the last message sent in the thread.
  * @property Carbon|null       $last_pin_timestamp    The timestamp when the last message was pinned in the thread.
  * @property int               $rate_limit_per_user   Amount of seconds a user has to wait before sending a new message.
  * @property string            $owner_id              The ID of the owner of the thread.
- * @property string            $parent_id             The ID of the channel which the thread was started in.
- * @property int               $message_count         Number of messages (not including the initial message or deleted messages) in a thread (if the thread was created before July 1, 2022, it stops counting at 50).
- * @property int               $member_count          An approximate count of the number of members in the thread. Stops counting at 50.
- * @property Guild|null        $guild                 The guild which the thread belongs to.
  * @property User|null         $owner                 The owner of the thread.
  * @property Member|null       $owner_member          The member object for the owner of the thread.
+ * @property string            $parent_id             The ID of the channel which the thread was started in.
  * @property Channel|null      $parent                The channel which the thread was created in.
- * @property bool              $archived              Whether the thread has been archived.
- * @property bool              $locked                Whether the thread has been locked.
- * @property int|null          $auto_archive_duration The number of minutes of inactivity until the thread is automatically archived.
- * @property int|null          $flags                 Channel flags combined as a bitfield. `PINNED` can only be set for threads in forum channels.
- * @property Carbon            $archive_timestamp     The time that the thread's archive status was changed.
+ * @property int               $message_count         Number of messages (not including the initial message or deleted messages) in a thread (if the thread was created before July 1, 2022, it stops counting at 50).
+ * @property int               $member_count          An approximate count of the number of members in the thread. Stops counting at 50.
+ * @property object            $thread_metadata       Thread-specific fields not needed by other channels.
  * @property int|null          $total_message_sent    Number of messages ever sent in a thread, it's similar to `message_count` on message creation, but will not decrement the number when a message is deleted.
+ * @property int|null          $flags                 Channel flags combined as a bitfield. `PINNED` can only be set for threads in forum channels.
+ *
+ * @property bool              $archived              Whether the thread has been archived.
+ * @property int|null          $auto_archive_duration The number of minutes of inactivity until the thread is automatically archived.
+ * @property Carbon            $archive_timestamp     The time that the thread's archive status was changed.
+ * @property bool              $locked                Whether the thread has been locked.
+ * @property bool|null         $invitable             Whether non-moderators can add other non-moderators to a thread; only available on private threads.
+ * @property Carbon|null       $create_timestamp      Timestamp when the thread was created; only populated for threads created after 2022-01-09.
+ *
  * @property MessageRepository $messages              Repository of messages sent in the thread.
  * @property MemberRepository  $members               Repository of members in the thread.
  *
@@ -79,8 +84,9 @@ class Thread extends Part
         'message_count',
         'member_count',
         'thread_metadata',
-        'flags',
+        'member',
         'total_message_sent',
+        'flags',
     ];
 
     /**
@@ -91,11 +97,13 @@ class Thread extends Part
         'owner',
         'owner_member',
         'parent',
-        'archived',
-        'auto_archive_duration',
-        'archive_timestamp',
-        'locked',
-        'invitable',
+    ];
+
+    /**
+     * @inheritdoc
+     */
+    protected $hidden = [
+        'member'
     ];
 
     /**
@@ -133,8 +141,8 @@ class Thread extends Part
      */
     protected function getOwnerMemberAttribute(): ?Member
     {
-        if ($this->guild) {
-            return $this->guild->members->get('id', $this->owner_id);
+        if ($guild = $this->guild) {
+            return $guild->members->get('id', $this->owner_id);
         }
 
         return null;
@@ -147,8 +155,8 @@ class Thread extends Part
      */
     protected function getParentAttribute(): ?Channel
     {
-        if ($this->guild) {
-            return $this->guild->channels->get('id', $this->parent_id);
+        if ($guild = $this->guild) {
+            return $guild->channels->get('id', $this->parent_id);
         }
 
         return $this->discord->getChannel($this->parent_id);
@@ -276,8 +284,8 @@ class Thread extends Part
      */
     protected function getArchiverMemberAttribute(): ?Member
     {
-        if ($this->archiver_id && $this->guild) {
-            return $this->guild->members->get('id', $this->archiver_id);
+        if ($this->archiver_id && $guild = $this->guild) {
+            return $guild->members->get('id', $this->archiver_id);
         }
 
         return null;
@@ -294,6 +302,20 @@ class Thread extends Part
     protected function getArchiveTimestampAttribute(): Carbon
     {
         return new Carbon($this->thread_metadata->archive_timestamp);
+    }
+
+    /**
+     * Returns the timestamp when the thread was created; only populated for threads created after 2022-01-09.
+     *
+     * @return Carbon|null
+     */
+    protected function getCreateTimestampAttribute(): ?Carbon
+    {
+        if (isset($this->attributes['create_timestamp'])) {
+            return new Carbon($this->thread_metadata->create_timestamp);
+        }
+
+        return null;
     }
 
     /**
@@ -375,7 +397,7 @@ class Thread extends Part
 
         return $this->http->patch(Endpoint::bind(Endpoint::THREAD, $this->id), ['name' => $name], $headers)
             ->then(function ($response) {
-                $this->attributes['name'] = $response->name;
+                $this->name = $response->name;
 
                 return $this;
             });
@@ -463,7 +485,7 @@ class Thread extends Part
 
                 foreach ($responses as $response) {
                     if (! $message = $this->messages->get('id', $response->id)) {
-                        $message = $this->factory->create(Message::class, $response, true);
+                        $message = $this->factory->part(Message::class, (array) $response, true);
                     }
 
                     $messages->pushItem($message);
@@ -571,11 +593,11 @@ class Thread extends Part
         }
 
         return $this->http->get($endpoint)->then(function ($responses) {
-            $messages = new Collection();
+            $messages = Collection::for(Message::class);
 
             foreach ($responses as $response) {
                 if (! $message = $this->messages->get('id', $response->id)) {
-                    $message = $this->factory->create(Message::class, $response, true);
+                    $message = $this->factory->part(Message::class, (array) $response, true);
                     $this->messages->pushItem($message);
                 }
 
@@ -699,7 +721,7 @@ class Thread extends Part
 
             return $this->http->post(Endpoint::bind(Endpoint::CHANNEL_MESSAGES, $this->id), $message);
         })()->then(function ($response) {
-            return $this->factory->create(Message::class, $response, true);
+            return $this->factory->part(Message::class, (array) $response, true);
         });
     }
 
