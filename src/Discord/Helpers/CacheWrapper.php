@@ -14,12 +14,13 @@ namespace Discord\Helpers;
 use Discord\Discord;
 use Discord\Parts\Part;
 use React\Cache\CacheInterface;
+use React\Promise\PromiseInterface;
 use WeakReference;
 
 /**
- * Wrapper for CacheInterface that tracks Repository items
+ * Wrapper for CacheInterface that tracks Repository items.
  *
- * @internal Used by AbstractRepository
+ * @internal Used by AbstractRepository.
  *
  * @property-read string $key_prefix Cache key prefix.
  */
@@ -74,7 +75,12 @@ class CacheWrapper
     }
 
     /**
-     * @inheritdoc
+     * Get Part from cache
+     *
+     * @param string $key
+     * @param mixed  $default
+     *
+     * @return PromiseInterface<Part>
      */
     public function get($key, $default = null)
     {
@@ -82,10 +88,7 @@ class CacheWrapper
             if ($value === null) {
                 unset($this->items[$key]);
             } else {
-                /** @var Part */
-                $unserialize = unserialize($value, ['allowed_classes' => [$this->class]]);
-                $value = $this->discord->factory($this->class, $unserialize->getRawAttributes(), $unserialize->created);
-                //$value = $this->discord->factory($this->class, json_decode($value), true);
+                $value = $this->discord->factory($this->class, json_decode($value), true);
                 $this->items[$key] = WeakReference::create($value);
             }
 
@@ -94,11 +97,16 @@ class CacheWrapper
     }
 
     /**
-     * @inheritdoc
+     * Set Part into cache
+     *
+     * @param string $key
+     * @param Part   $value
+     *
+     * @return PromiseInterface<bool>
      */
     public function set($key, $value, $ttl = null)
     {
-        return $this->interface->set($this->key_prefix.$key, serialize($value), $ttl)->then(function ($success) use ($key, $value) {
+        return $this->interface->set($this->key_prefix.$key, $value->serialize(), $ttl)->then(function ($success) use ($key, $value) {
             if ($success) {
                 $this->items[$key] = WeakReference::create($value);
             }
@@ -108,7 +116,11 @@ class CacheWrapper
     }
 
     /**
-     * @inheritdoc
+     * Delete Part from cache
+     *
+     * @param string $key
+     *
+     * @return PromiseInterface<bool>
      */
     public function delete($key)
     {
@@ -122,7 +134,12 @@ class CacheWrapper
     }
 
     /**
-     * @inheritdoc
+     * Get multiple Parts from cache
+     *
+     * @param array $keys
+     * @param ?Part $default
+     *
+     * @return PromiseInterface<array>
      */
     public function getMultiple(array $keys, $default = null)
     {
@@ -144,11 +161,8 @@ class CacheWrapper
                 if ($value === null) {
                     unset($this->items[$key]);
                 } else {
-                    /** @var Part */
-                    $unserialize = unserialize($value, ['allowed_classes' => [$this->class]]);
-                    $value = $this->discord->factory($this->class, $unserialize->getRawAttributes(), $unserialize->created);
-                    //$value = $this->discord->factory($this->class, json_decode($value), true);
-                    $this->items[$key] = WeakReference::create($values[$key]);
+                    $value = $this->discord->factory($this->class, json_decode($value), true);
+                    $this->items[$key] = WeakReference::create($value);
                 }
 
                 // Remove real value with key prefix
@@ -160,7 +174,12 @@ class CacheWrapper
     }
 
     /**
-     * @inheritdoc
+     * Set multiple Parts into cache
+     *
+     * @param array $values
+     * @param ?int  $ttl
+     *
+     * @return PromiseInterface<bool>
      */
     public function setMultiple(array $values, $ttl = null)
     {
@@ -168,7 +187,7 @@ class CacheWrapper
             $valueRefs[$key] = WeakReference::create($value);
 
             // Replace values key with prefixed key
-            $values[$this->key_prefix.$key] = serialize($value);
+            $values[$this->key_prefix.$key] = $value->serialize();
             unset($values[$key]);
         }
 
@@ -182,7 +201,11 @@ class CacheWrapper
     }
 
     /**
-     * @inheritdoc
+     * Delete multiple Parts from cache
+     *
+     * @param array $keys
+     *
+     * @return PromiseInterface<bool>
      */
     public function deleteMultiple(array $keys)
     {
@@ -202,7 +225,9 @@ class CacheWrapper
     }
 
     /**
-     * @inheritdoc
+     * Clear all Parts from cache
+     *
+     * @return PromiseInterface<bool>
      */
     public function clear()
     {
@@ -220,7 +245,11 @@ class CacheWrapper
     }
 
     /**
-     * @inheritdoc
+     * Check if Part is present in cache
+     *
+     * @param string $key
+     *
+     * @return PromiseInterface<bool>
      */
     public function has($key)
     {

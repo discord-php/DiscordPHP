@@ -32,7 +32,6 @@ use function React\Promise\reject;
  * @author Aaron Scherer <aequasi@gmail.com>
  * @author David Cole <david.cole1340@gmail.com>
  *
- * @property-read \WeakReference[] $items Repository cache items containing cache key => weak references to the cache.
  * @property-read CacheWrapper     $cache The react/cache wrapper.
  */
 abstract class AbstractRepository extends Collection
@@ -372,7 +371,7 @@ abstract class AbstractRepository extends Collection
         foreach ($items as $item) {
             if (is_a($item, $this->class)) {
                 $key = $item->{$this->discrim};
-                $values[$this->cache->key_prefix.$key] = serialize($item);
+                $values[$this->cache->key_prefix.$key] = $item->serialize();
                 $this->items[$key] = WeakReference::create($item);
             }
         }
@@ -400,7 +399,7 @@ abstract class AbstractRepository extends Collection
 
         if (is_a($item, $this->class)) {
             $key = $item->{$this->discrim};
-            $this->cache->interface->set($this->cache->key_prefix.$key, serialize($item));
+            $this->cache->interface->set($this->cache->key_prefix.$key, $item->serialize());
             $this->items[$key] = WeakReference::create($item);
         }
 
@@ -496,10 +495,9 @@ abstract class AbstractRepository extends Collection
     public function clear(): void
     {
         if ($this->items) {
-            $realKeys = array_map(function ($key) {
+            $this->interface->cache->deleteMultiple(array_map(function ($key) {
                 return $this->cache->key_prefix.$key;
-            }, array_keys($this->items));
-            $this->interface->cache->deleteMultiple($realKeys);
+            }, array_keys($this->items)));
 
             parent::clear();
         }
@@ -547,9 +545,8 @@ abstract class AbstractRepository extends Collection
     {
         $items = [];
 
-        foreach ($this->items as $key => $value) {
-            $key = substr(strrchr($key, '.'), 1);
-            $items[$key] = $value->get();
+        foreach ($this->items as $value) {
+            $items[] = $value->get();
         }
 
         return $items;
@@ -605,7 +602,7 @@ abstract class AbstractRepository extends Collection
     public function offsetSet($offset, $value): void
     {
         if (array_key_exists($offset, $this->items)) {
-            $this->cache->interface->set($this->cache->key_prefix.$offset, serialize($value));
+            $this->cache->interface->set($this->cache->key_prefix.$offset, $value->serialize());
             $this->items[$offset] = WeakReference::create($value);
 
             return;
@@ -663,10 +660,6 @@ abstract class AbstractRepository extends Collection
         })();
     }
 
-    /**
-     * @return CacheWrapper `cache`
-     * @return mixed
-     */
     public function __get(string $key)
     {
         if (in_array($key, ['cache'])) {
