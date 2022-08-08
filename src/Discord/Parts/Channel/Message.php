@@ -42,11 +42,8 @@ use function React\Promise\reject;
  * @property string                      $id                                     The unique identifier of the message.
  * @property string                      $channel_id                             The unique identifier of the channel that the message was went in.
  * @property Channel|Thread|null         $channel                                The channel that the message was sent in.
- * @property string|null                 $guild_id                               The unique identifier of the guild that the channel the message was sent in belongs to.
- * @property Guild|null                  $guild                                  The guild that the message was sent in.
  * @property User|null                   $author                                 The author of the message. Will be a webhook if sent from one.
  * @property string|null                 $user_id                                The user id of the author.
- * @property Member|null                 $member                                 The member that sent this message, or null if it was in a private message.
  * @property string                      $content                                The content of the message if it is a normal message.
  * @property Carbon                      $timestamp                              A timestamp of when the message was sent.
  * @property Carbon|null                 $edited_timestamp                       A timestamp of when the message was edited, or null.
@@ -73,6 +70,7 @@ use function React\Promise\reject;
  * @property Collection|Component[]|null $components                             Sent if the message contains components like buttons, action rows, or other interactive components.
  * @property Collection|Sticker[]|null   $sticker_items                          Stickers attached to the message.
  * @property int|null                    $position                               A generally increasing integer (there may be gaps or duplicates) that represents the approximate position of the message in a thread, it can be used to estimate the relative position of the messsage in a thread in company with `total_message_sent` on parent thread.
+ *
  * @property bool                        $crossposted                            Message has been crossposted.
  * @property bool                        $is_crosspost                           Message is a crosspost from another channel.
  * @property bool                        $suppress_embeds                        Do not include embeds when serializing message.
@@ -82,7 +80,11 @@ use function React\Promise\reject;
  * @property bool                        $ephemeral                              Whether this message is only visible to the user who invoked the Interaction.
  * @property bool                        $loading                                Whether this message is an Interaction Response and the bot is "thinking".
  * @property bool                        $failed_to_mention_some_roles_in_thread This message failed to mention some roles and add their members to the thread.
+ *
  * @property string|null                 $link                                   Returns a link to the message.
+ * @property string|null                 $guild_id                               The unique identifier of the guild that the channel the message was sent in belongs to.
+ * @property Guild|null                  $guild                                  The guild that the message was sent in.
+ * @property Member|null                 $member                                 The member that sent this message, or null if it was in a private message.
  */
 class Message extends Part
 {
@@ -140,37 +142,39 @@ class Message extends Part
      * @inheritdoc
      */
     protected $fillable = [
-        'reactions',
-        'attachments',
-        'tts',
-        'embeds',
-        'timestamp',
-        'mention_everyone',
         'id',
-        'pinned',
-        'edited_timestamp',
+        'channel_id',
         'author',
+        'content',
+        'timestamp',
+        'edited_timestamp',
+        'tts',
+        'mention_everyone',
+        'mentions',
         'mention_roles',
         'mention_channels',
-        'content',
-        'channel_id',
-        'mentions',
-        'type',
-        'flags',
-        'message_reference',
+        'attachments',
+        'embeds',
+        'reactions',
         'nonce',
-        'member',
-        'guild_id',
+        'pinned',
         'webhook_id',
+        'type',
         'activity',
         'application',
         'application_id',
+        'message_reference',
+        'flags',
         'referenced_message',
         'interaction',
         'components',
         'sticker_items',
-        'stickers',
+        'stickers', // deprecated
         'position',
+
+        // @internal
+        'guild_id',
+        'member',
     ];
 
     /**
