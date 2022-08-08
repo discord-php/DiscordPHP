@@ -61,17 +61,23 @@ class CacheWrapper
      * @param CacheInterface $cacheInterface The actual CacheInterface.
      * @param array          &$items         Repository items passed by reference.
      * @param string         $class          Object class name allowed for serialization.
+     * @param string[]       $vars           Variable containing hierarchy parent IDs.
      *
      * @internal
      */
-    public function __construct(Discord $discord, CacheInterface $cacheInterface, &$items, string $class)
+    public function __construct(Discord $discord, CacheInterface $cacheInterface, &$items, string $class, array $vars)
     {
         $this->discord = $discord;
         $this->interface = $cacheInterface;
         $this->items = &$items;
-        $this->class = $class;
+        $this->class = &$class;
 
-        $this->key_prefix = substr(strrchr($this->class, '\\'), 1) . '.';
+        $separator = '.';
+        if (is_a($cacheInterface, '\WyriHaximus\React\Cache\Redis') || is_a($cacheInterface, 'seregazhuk\React\Cache\Memcached\Memcached') ) {
+            $separator = ':';
+        }
+
+        $this->key_prefix = implode($separator, [substr(strrchr($this->class, '\\'), 1)] + $vars) . $separator;
     }
 
     /**
