@@ -44,13 +44,6 @@ class GuildCreate extends Event
 
         /** @var Guild */
         $guildPart = $this->factory->create(Guild::class, $data, true);
-        foreach ($data->roles as $role) {
-            $role = (array) $role;
-            $role['guild_id'] = $guildPart->id;
-            $rolePart = $this->factory->create(Role::class, $role, true);
-
-            $guildPart->roles->offsetSet($rolePart->id, $rolePart);
-        }
 
         foreach ($data->channels as $channel) {
             $channel = (array) $channel;

@@ -281,6 +281,16 @@ class Guild extends Part
      */
     protected $regions;
 
+    protected function afterConstruct(): void
+    {
+        if (! empty($this->attributes['roles'])) {
+            foreach ($this->attributes['roles'] as $role) {
+                $roles[] = $this->factory->part(Role::class, ['guild_id' => $this->id] + (array) $role, true);
+            }
+            $this->roles->push(...$roles);
+        }
+    }
+
     /**
      * Returns the channels invites.
      *

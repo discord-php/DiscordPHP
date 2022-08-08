@@ -32,7 +32,7 @@ use function React\Promise\reject;
  * @author Aaron Scherer <aequasi@gmail.com>
  * @author David Cole <david.cole1340@gmail.com>
  *
- * @property-read CacheWrapper     $cache The react/cache wrapper.
+ * @property-read CacheWrapper $cache The react/cache wrapper.
  */
 abstract class AbstractRepository extends Collection
 {

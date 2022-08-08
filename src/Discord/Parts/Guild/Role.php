@@ -29,7 +29,8 @@ use Discord\Parts\Permissions\RolePermission;
  * @property bool           $managed       Whether the role is managed by a Twitch subscriber feature.
  * @property bool           $mentionable   Whether the role is mentionable.
  * @property object|null    $tags          The tags this role has.
- * @property string         $guild_id      The unique identifier of the guild that the role belongs to.
+ *
+ * @property string|null    $guild_id      The unique identifier of the guild that the role belongs to.
  * @property Guild|null     $guild         The guild that the role belongs to.
  */
 class Role extends Part
@@ -49,6 +50,8 @@ class Role extends Part
         'managed',
         'mentionable',
         'tags',
+
+        // @internal
         'guild_id',
     ];
 
@@ -57,9 +60,29 @@ class Role extends Part
      */
     protected function afterConstruct(): void
     {
+        if (! ($this->attributes['permissions'] instanceof RolePermission)) {
+            $this->permissions = $this->attributes['permissions'];
+        }
+
         if (! isset($this->attributes['permissions'])) {
             $this->permissions = $this->factory->create(RolePermission::class);
         }
+    }
+
+    /**
+     * Sets the permissions attribute.
+     *
+     * @param RolePermission|int $permission The permissions to set.
+     *
+     * @throws \Exception
+     */
+    protected function setPermissionsAttribute($permission): void
+    {
+        if ($this->id && ! ($permission instanceof RolePermission)) {
+            $permission = $this->factory->part(RolePermission::class, ['bitwise' => $permission], true);
+        }
+
+        $this->attributes['permissions'] = $permission;
     }
 
     /**
@@ -73,22 +96,6 @@ class Role extends Part
     }
 
     /**
-     * Sets the permissions attribute.
-     *
-     * @param RolePermission|int $permission The permissions to set.
-     *
-     * @throws \Exception
-     */
-    protected function setPermissionsAttribute($permission): void
-    {
-        if (! ($permission instanceof RolePermission)) {
-            $permission = $this->factory->create(RolePermission::class, ['bitwise' => $permission], true);
-        }
-
-        $this->attributes['permissions'] = $permission;
-    }
-
-    /**
      * Sets the color for a role. RGB.
      *
      * @param int $red   The red value in RGB.
@@ -98,22 +105,6 @@ class Role extends Part
     public function setColor(int $red = 0, int $green = 0, int $blue = 0)
     {
         $this->color = ($red * 16 ** 4 + $green * 16 ** 2 + $blue);
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getCreatableAttributes(): array
-    {
-        return [
-            'name' => $this->name,
-            'permissions' => $this->permissions->bitwise,
-            'color' => $this->color,
-            'hoist' => $this->hoist,
-            'icon' => $this->attributes['icon'] ?? null,
-            'unicode_emoji' => $this->unicode_emoji ?? null,
-            'mentionable' => $this->mentionable,
-        ];
     }
 
     /**
@@ -152,6 +143,22 @@ class Role extends Part
     /**
      * @inheritdoc
      */
+    public function getCreatableAttributes(): array
+    {
+        return [
+            'name' => $this->name,
+            'permissions' => $this->permissions->bitwise,
+            'color' => $this->color,
+            'hoist' => $this->hoist,
+            'icon' => $this->attributes['icon'] ?? null,
+            'unicode_emoji' => $this->unicode_emoji ?? null,
+            'mentionable' => $this->mentionable,
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function getUpdatableAttributes(): array
     {
         return [
@@ -183,5 +190,13 @@ class Role extends Part
     public function __toString(): string
     {
         return "<@&{$this->id}>";
+    }
+
+    public function serialize()
+    {
+        $attributes = $this->attributes;
+        $attributes['permissions'] = $attributes['permissions']->bitwise;
+
+        return json_encode($attributes);
     }
 }
