@@ -24,7 +24,7 @@ use React\Promise\ExtendedPromiseInterface;
  * @property string      $id             Guild id.
  * @property Guild|null  $guild          Guild.
  * @property string      $name           Guild name (2-100 characters).
- * @property string|null $instant_invite Instant invite for the guilds specified widget invite channel.
+ * @property ?string     $instant_invite Instant invite for the guilds specified widget invite channel.
  * @property object[]    $channels       Voice and stage channels which are accessible by @everyone.
  * @property object[]    $members        Special widget user objects that includes users presence (Limit 100).
  * @property int         $presence_count Number of online members in this guild.
