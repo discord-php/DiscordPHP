@@ -28,5 +28,10 @@ class Video extends Part
     /**
      * @inheritdoc
      */
-    protected $fillable = ['url', 'proxy_url', 'height', 'width'];
+    protected $fillable = [
+        'url',
+        'proxy_url',
+        'height',
+        'width'
+    ];
 }

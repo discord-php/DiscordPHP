@@ -18,16 +18,20 @@ use Discord\Parts\Part;
  *
  * @see https://discord.com/developers/docs/resources/channel#embed-object-embed-field-structure
  *
- * @property string $name   The name of the field.
- * @property string $value  The value of the field.
- * @property bool   $inline Whether the field should be displayed in-line.
+ * @property string    $name   The name of the field.
+ * @property string    $value  The value of the field.
+ * @property bool|null $inline Whether the field should be displayed in-line.
  */
 class Field extends Part
 {
     /**
      * @inheritdoc
      */
-    protected $fillable = ['name', 'value', 'inline'];
+    protected $fillable = [
+        'name',
+        'value',
+        'inline'
+    ];
 
     /**
      * Gets the inline attribute.

@@ -46,7 +46,21 @@ class Embed extends Part
     /**
      * @inheritdoc
      */
-    protected $fillable = ['title', 'type', 'description', 'url', 'timestamp', 'color', 'footer', 'image', 'thumbnail', 'video', 'provider', 'author', 'fields'];
+    protected $fillable = [
+        'title',
+        'type',
+        'description',
+        'url',
+        'timestamp',
+        'color',
+        'footer',
+        'image',
+        'thumbnail',
+        'video',
+        'provider',
+        'author',
+        'fields'
+    ];
 
     /**
      * Gets the timestamp attribute.
@@ -127,7 +141,7 @@ class Embed extends Part
 
         foreach ($this->attributes['fields'] as $field) {
             if (! ($field instanceof Field)) {
-                $field = $this->factory->create(Field::class, $field, true);
+                $field = $this->factory->part(Field::class, (array) $field, true);
             }
 
             $fields->pushItem($field);
@@ -164,7 +178,7 @@ class Embed extends Part
      *
      * @param string $description Maximum length is 4096 characters.
      *
-     * @throws \LengthException
+     * @throws \LengthException Embed text too long.
      */
     protected function setDescriptionAttribute($description)
     {
@@ -186,7 +200,7 @@ class Embed extends Part
      *
      * @param string $type
      *
-     * @throws \InvalidArgumentException
+     * @throws \InvalidArgumentException Invalid embed type.
      */
     protected function setTypeAttribute($type)
     {
@@ -202,7 +216,7 @@ class Embed extends Part
      *
      * @param string $title Maximum length is 256 characters.
      *
-     * @throws \LengthException
+     * @throws \LengthException Embed text too long.
      *
      * @return $this
      */
@@ -282,7 +296,7 @@ class Embed extends Part
      *
      * @param Field|array $field
      *
-     * @throws \OverflowException
+     * @throws \OverflowException Embed exceeds 25 fields.
      *
      * @return $this
      */
@@ -330,17 +344,18 @@ class Embed extends Part
      * @param string $iconurl The URL to the icon.
      * @param string $url     The URL to the author.
      *
-     * @throws \LengthException
+     * @throws \LengthException Embed text too long.
      *
      * @return $this
      */
     public function setAuthor(string $name, string $iconurl = '', string $url = ''): self
     {
-        if (poly_strlen($name) === 0) {
+        $length = poly_strlen($name);
+        if ($length === 0) {
             $this->author = null;
-        } elseif (poly_strlen($name) > 256) {
+        } elseif ($length > 256) {
             throw new \LengthException('Author name can not be longer than 256 characters.');
-        } elseif ($this->exceedsOverallLimit(poly_strlen($name))) {
+        } elseif ($this->exceedsOverallLimit($length)) {
             throw new \LengthException('Embed text values collectively can not exceed than 6000 characters');
         } else {
             $this->author = [
@@ -359,17 +374,18 @@ class Embed extends Part
      * @param string $text    Maximum length is 2048 characters.
      * @param string $iconurl The URL to the icon.
      *
-     * @throws \LengthException
+     * @throws \LengthException Embed text too long.
      *
      * @return $this
      */
     public function setFooter(string $text, string $iconurl = ''): self
     {
-        if (poly_strlen($text) === 0) {
+        $length = poly_strlen($text);
+        if ($length === 0) {
             $this->footer = null;
-        } elseif (poly_strlen($text) > 2048) {
+        } elseif ($length > 2048) {
             throw new \LengthException('Footer text can not be longer than 2048 characters.');
-        } elseif ($this->exceedsOverallLimit(poly_strlen($text))) {
+        } elseif ($this->exceedsOverallLimit($length)) {
             throw new \LengthException('Embed text values collectively can not exceed than 6000 characters');
         } else {
             $this->footer = [
@@ -473,7 +489,7 @@ class Embed extends Part
      *
      * @param array|int|string $color
      *
-     * @throws \InvalidArgumentException
+     * @throws \InvalidArgumentException `$color` cannot be resolved
      *
      * @return int
      */
