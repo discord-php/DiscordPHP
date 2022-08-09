@@ -30,6 +30,7 @@ use Discord\Parts\Interactions\Request\Component;
 use Discord\Parts\Thread\Thread;
 use Discord\Parts\WebSockets\MessageInteraction;
 use Discord\Repository\Channel\ReactionRepository;
+use React\EventLoop\TimerInterface;
 use React\Promise\ExtendedPromiseInterface;
 
 use function React\Promise\reject;
@@ -669,14 +670,15 @@ class Message extends Part
      * @param int         $auto_archive_duration Number of minutes of inactivity until the thread is auto-archived. One of 60, 1440, 4320, 10080.
      * @param string|null $reason                Reason for Audit Log.
      *
-     * @throws \RuntimeException
-     * @throws \UnexpectedValueException
+     * @throws \RuntimeException         Channel type is not guild text or news.
+     * @throws \UnexpectedValueException `$auto_archive_duration` is not one of 60, 1440, 4320, 10080.
      *
      * @return ExtendedPromiseInterface<Thread>
      */
     public function startThread(string $name, int $auto_archive_duration = 1440, ?string $reason = null): ExtendedPromiseInterface
     {
-        if (! in_array($this->channel->type, [Channel::TYPE_TEXT, Channel::TYPE_NEWS, null])) {
+        $channel = $this->channel;
+        if ($channel && ! in_array($channel->type, [Channel::TYPE_TEXT, Channel::TYPE_NEWS, null])) {
             return reject(new \RuntimeException('You can only start threads on guild text channels or news channels.'));
         }
 
@@ -724,6 +726,8 @@ class Message extends Part
      *
      * @see https://discord.com/developers/docs/resources/channel#crosspost-message
      *
+     * @throws \RuntimeException Message has already been crossposted.
+     * 
      * @return ExtendedPromiseInterface<Message>
      */
     public function crosspost(): ExtendedPromiseInterface
@@ -744,9 +748,9 @@ class Message extends Part
      *
      * @see Message::reply()
      *
-     * @param string|MessageBuilder           $message Reply message to send after delay.
-     * @param int                             $delay   Delay after text will be sent in milliseconds.
-     * @param \React\EventLoop\TimerInterface &$timer  Delay timer passed by reference.
+     * @param string|MessageBuilder $message Reply message to send after delay.
+     * @param int                   $delay   Delay after text will be sent in milliseconds.
+     * @param TimerInterface        &$timer  Delay timer passed by reference.
      *
      * @return ExtendedPromiseInterface<Message>
      */
@@ -766,8 +770,8 @@ class Message extends Part
      *
      * @see Message::deleteMessage()
      *
-     * @param int                             $delay  Time to delay the delete by, in milliseconds.
-     * @param \React\EventLoop\TimerInterface &$timer Delay timer passed by reference.
+     * @param int            $delay  Time to delay the delete by, in milliseconds.
+     * @param TimerInterface &$timer Delay timer passed by reference.
      *
      * @return ExtendedPromseInterface
      */
@@ -809,6 +813,8 @@ class Message extends Part
      * @param int               $type     The type of deletion to perform.
      * @param Emoji|string|null $emoticon The emoticon to delete (if not all).
      * @param string|null       $id       The user reaction to delete (if not all).
+     *
+     * @throws \UnexpectedValueException Invalid reaction `$type`.
      *
      * @return ExtendedPromiseInterface
      */
