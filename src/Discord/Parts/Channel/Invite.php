@@ -299,7 +299,7 @@ class Invite extends Part
      */
     protected function getInviteUrlAttribute(): string
     {
-        return 'https://discord.gg/' . $this->code;
+        return 'https://discord.gg/'.$this->code;
     }
 
     /**
