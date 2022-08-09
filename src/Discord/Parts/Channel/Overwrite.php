@@ -15,7 +15,7 @@ use Discord\Parts\Part;
 use Discord\Parts\Permissions\ChannelPermission;
 
 /**
- * Overwrite Class.
+ * Channel Overwrite Class.
  *
  * @see https://discord.com/developers/docs/resources/channel#overwrite-object
  *
@@ -104,8 +104,8 @@ class Overwrite extends Part
     public function serialize()
     {
         $attributes = $this->attributes;
-        $attributes['allow'] = $attributes['allow']->bitwise;
-        $attributes['deny'] = $attributes['deny']->bitwise;
+        $attributes['allow'] = $this->attributes['allow']->bitwise;
+        $attributes['deny'] = $this->attributes['deny']->bitwise;
 
         return json_encode($attributes);
     }
