@@ -15,6 +15,7 @@ use Discord\Helpers\Collection;
 use Discord\Parts\Channel\Webhook;
 use Discord\Parts\Guild\AutoModeration\Rule;
 use Discord\Parts\Guild\Guild;
+use Discord\Parts\Guild\Integration;
 use Discord\Parts\Guild\ScheduledEvent;
 use Discord\Parts\Part;
 use Discord\Parts\Thread\Thread;
@@ -29,12 +30,13 @@ use ReflectionClass;
  * @property Collection|Entry[]               $audit_log_entries      List of audit log entries.
  * @property Collection|Rule[]                $auto_moderation_rules  List of auto moderation rules referenced in the audit log.
  * @property Collection|GuildScheduledEvent[] $guild_scheduled_events List of guild scheduled events referenced in the audit log.
- * @property Collection                       $integrations           List of partial integration objects.
+ * @property Collection|Integration[]         $integrations           List of partial integration objects.
  * @property Collection|Threads[]             $threads                List of threads referenced in the audit log.
  * @property Collection|User[]                $users                  List of users referenced in the audit log.
  * @property Collection|Webhook[]             $webhooks               List of webhooks referenced in the audit log.
+ *
  * @property string                           $guild_id
- * @property Guild                            $guild
+ * @property Guild|null                       $guild
  */
 class AuditLog extends Part
 {
@@ -65,58 +67,6 @@ class AuditLog extends Part
     }
 
     /**
-     * Returns a collection of webhooks found in the audit log.
-     *
-     * @return Collection|Webhook[]
-     */
-    protected function getWebhooksAttribute(): Collection
-    {
-        $collection = Collection::for(Webhook::class);
-
-        foreach ($this->attributes['webhooks'] ?? [] as $webhook) {
-            $collection->pushItem($this->factory->create(Webhook::class, $webhook, true));
-        }
-
-        return $collection;
-    }
-
-    /**
-     * Returns a collection of guild scheduled events found in the audit log.
-     *
-     * @return Collection|ScheduledEvent[]
-     */
-    protected function getGuildScheduledEventsAttribute(): Collection
-    {
-        $collection = Collection::for(ScheduledEvent::class);
-
-        foreach ($this->attributes['guild_scheduled_events'] ?? [] as $scheduled_event) {
-            $collection->pushItem($this->factory->create(ScheduledEvent::class, $scheduled_event, true));
-        }
-
-        return $collection;
-    }
-
-    /**
-     * Returns a collection of users found in the audit log.
-     *
-     * @return Collection|User[]
-     */
-    protected function getUsersAttribute(): Collection
-    {
-        $collection = Collection::for(User::class);
-
-        foreach ($this->attributes['users'] ?? [] as $user) {
-            if (! $cache_user = $this->discord->users->get('id', $user->id)) {
-                $cache_user = $this->factory->create(User::class, $user, true);
-            }
-
-            $collection->pushItem($cache_user);
-        }
-
-        return $collection;
-    }
-
-    /**
      * Returns a collection of audit log entries.
      *
      * @return Collection|Entry[]
@@ -125,8 +75,10 @@ class AuditLog extends Part
     {
         $collection = Collection::for(Entry::class);
 
-        foreach ($this->attributes['audit_log_entries'] ?? [] as $entry) {
-            $collection->pushItem($this->factory->create(Entry::class, $entry, true));
+        if (! empty($this->attributes['audit_log_entries'])) {
+            foreach ($this->attributes['audit_log_entries'] as $entry) {
+                $collection->pushItem($this->factory->part(Entry::class, (array) $entry, true));
+            }
         }
 
         return $collection;
@@ -141,21 +93,51 @@ class AuditLog extends Part
     {
         $collection = Collection::for(Rule::class);
 
-        foreach ($this->attributes['auto_moderation_rules'] ?? [] as $rule) {
-            $collection->pushItem($this->factory->create(Rule::class, $rule, true));
+        if (! empty($this->attributes['auto_moderation_rules'])) {
+            foreach ($this->attributes['auto_moderation_rules'] as $rule) {
+                $collection->pushItem($this->factory->part(Rule::class, (array) $rule, true));
+            }
         }
 
         return $collection;
     }
 
     /**
-     * Returns a collection of integrations found in the audit log.
+     * Returns a collection of guild scheduled events found in the audit log.
      *
-     * @return Collection
+     * @return Collection|ScheduledEvent[]
+     */
+    protected function getGuildScheduledEventsAttribute(): Collection
+    {
+        $collection = Collection::for(ScheduledEvent::class);
+
+        if (! empty($this->attributes['guild_scheduled_events'])) {
+            foreach ($this->attributes['guild_scheduled_events'] as $scheduled_event) {
+                $collection->pushItem($this->factory->part(ScheduledEvent::class, (array) $scheduled_event, true));
+            }
+        }
+
+        return $collection;
+    }
+
+    /**
+     * Returns a collection of partial integrations found in the audit log.
+     *
+     * @see https://discord.com/developers/docs/resources/audit-log#audit-log-object-example-partial-integration-object
+     *
+     * @return Collection|Integration[]
      */
     protected function getIntegrationsAttribute(): Collection
     {
-        return new Collection($this->attributes['integrations'] ?? []);
+        $collection = Collection::for(Integration::class);
+
+        if (! empty($this->attributes['integrations'])) {
+            foreach ($this->attributes['integrations'] as $integration) {
+                $collection->pushItem($this->factory->part(Integration::class, (array) $integration, true));
+            }
+        }
+
+        return $collection;
     }
 
     /**
@@ -167,8 +149,50 @@ class AuditLog extends Part
     {
         $collection = Collection::for(Thread::class);
 
-        foreach ($this->attributes['threads'] ?? [] as $thread) {
-            $collection->pushItem($this->factory->create(Thread::class, $thread, true));
+        if (! empty($this->attributes['threads'])) {
+            foreach ($this->attributes['threads'] as $thread) {
+                $collection->pushItem($this->factory->part(Thread::class, (array) $thread, true));
+            }
+        }
+
+        return $collection;
+    }
+
+    /**
+     * Returns a collection of users found in the audit log.
+     *
+     * @return Collection|User[]
+     */
+    protected function getUsersAttribute(): Collection
+    {
+        $collection = Collection::for(User::class);
+
+        if (! empty($this->attributes['users'])) {
+            foreach ($this->attributes['users'] as $user) {
+                if (! $userPart = $this->discord->users->get('id', $user->id)) {
+                    $userPart = $this->factory->part(User::class, (array) $user, true);
+                }
+
+                $collection->pushItem($userPart);
+            }
+        }
+
+        return $collection;
+    }
+
+    /**
+     * Returns a collection of webhooks found in the audit log.
+     *
+     * @return Collection|Webhook[]
+     */
+    protected function getWebhooksAttribute(): Collection
+    {
+        $collection = Collection::for(Webhook::class);
+
+        if (! empty($this->attributes['webhooks'])) {
+            foreach ($this->attributes['webhooks'] as $webhook) {
+                $collection->pushItem($this->factory->part(Webhook::class, (array) $webhook, true));
+            }
         }
 
         return $collection;
