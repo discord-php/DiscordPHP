@@ -176,7 +176,9 @@ abstract class AbstractRepository extends Collection
             $part->created = true;
             $part->deleted = false;
 
-            return $this->cache->set($part->{$this->discrim}, $part);
+            return $this->cache->set($part->{$this->discrim}, $part)->then(function ($success) use ($part) {
+                return $part;
+            });
         });
     }
 
@@ -253,7 +255,9 @@ abstract class AbstractRepository extends Collection
         return $this->http->get($endpoint)->then(function ($response) use (&$part) {
             $part->fill((array) $response);
 
-            return $this->cache->set($part->{$this->discrim}, $part);
+            return $this->cache->set($part->{$this->discrim}, $part)->then(function ($success) use ($part) {
+                return $part;
+            });
         });
     }
 
@@ -274,7 +278,7 @@ abstract class AbstractRepository extends Collection
                 return $part;
             }
 
-            return $this->cache->get($id, $part);
+            return $this->cache->get($id);
         }
 
         if (! isset($this->endpoints['get'])) {
@@ -289,7 +293,9 @@ abstract class AbstractRepository extends Collection
             $part->fill(array_merge($this->vars, (array) $response));
             $part->created = true;
 
-            return $this->cache->set($part->{$this->discrim}, $part);
+            return $this->cache->set($part->{$this->discrim}, $part)->then(function ($success) use ($part) {
+                return $part;
+            });
         });
     }
 
