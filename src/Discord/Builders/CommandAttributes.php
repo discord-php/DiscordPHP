@@ -241,7 +241,7 @@ trait CommandAttributes
             throw new \DomainException('Only CHAT_INPUT Command type can have option.');
         }
 
-        if (isset($this->optionns) && ($idx = array_search($option, $this->options)) !== null) {
+        if (isset($this->options) && ($idx = array_search($option, $this->options)) !== null) {
             array_splice($this->options, $idx, 1);
         }
 
