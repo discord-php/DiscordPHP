@@ -37,6 +37,8 @@ use Discord\Parts\User\User;
  * @property int|null         $subscriber_count    How many subscribers this integration has.
  * @property bool|null        $revoked             Has this integration been revoked.
  * @property Application|null $application         The bot/OAuth2 application for discord integrations.
+ *
+ * @property string|null      $guild_id
  * @property Guild|null       $guild
  */
 class Integration extends Part
@@ -60,6 +62,8 @@ class Integration extends Part
         'subscriber_count',
         'revoked',
         'application',
+
+        // @internal
         'guild_id',
     ];
 
@@ -110,13 +114,13 @@ class Integration extends Part
             return null;
         }
 
-        if ($this->attributes['application']->id == $this->discord->application->id) {
-            return $this->discord->application;
+        $botApplication = $this->discord->application;
+
+        if ($this->attributes['application']->id == $botApplication->id) {
+            return $botApplication;
         }
 
-        $application = $this->factory->part(Application::class, (array) $this->attributes['application'], true);
-
-        return $application;
+        return $this->factory->part(Application::class, (array) $this->attributes['application'], true);
     }
 
     /**
@@ -136,8 +140,8 @@ class Integration extends Part
      */
     protected function getRoleAttribute(): ?Role
     {
-        if ($this->guild) {
-            return $this->guild->roles->get('id', $this->attributes['role_id']);
+        if ($guild = $this->guild) {
+            return $guild->roles->get('id', $this->attributes['role_id']);
         }
 
         return null;
