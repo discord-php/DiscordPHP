@@ -97,8 +97,10 @@ class Webhook extends Part
             return null;
         }
 
-        if ($this->guild && $channel = $this->guild->channels->get('id', $this->channel_id)) {
-            return $channel;
+        if ($guild = $this->guild) {
+            if ($channel = $guild->channels->get('id', $this->channel_id)) {
+                return $channel;
+            }
         }
 
         return $this->discord->getChannel($this->channel_id);
@@ -143,23 +145,23 @@ class Webhook extends Part
     /**
      * @inheritdoc
      */
-    public function getUpdatableAttributes(): array
+    public function getCreatableAttributes(): array
     {
         return [
             'name' => $this->name,
             'avatar' => $this->avatar,
-            'channel_id' => $this->channel_id,
         ];
     }
 
     /**
      * @inheritdoc
      */
-    public function getCreatableAttributes(): array
+    public function getUpdatableAttributes(): array
     {
         return [
             'name' => $this->name,
             'avatar' => $this->avatar,
+            'channel_id' => $this->channel_id,
         ];
     }
 
