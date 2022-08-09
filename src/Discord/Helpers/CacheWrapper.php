@@ -167,8 +167,8 @@ class CacheWrapper
                 if ($value === null) {
                     unset($this->items[$key]);
                 } else {
-                    $value = $this->discord->factory($this->class, json_decode($value), true);
-                    $this->items[$key] = WeakReference::create($value);
+                    $values[$key] = $this->discord->factory($this->class, json_decode($value), true);
+                    $this->items[$key] = WeakReference::create($values[$key]);
                 }
 
                 // Remove real value with key prefix
