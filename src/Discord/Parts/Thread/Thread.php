@@ -92,16 +92,6 @@ class Thread extends Part
     /**
      * @inheritdoc
      */
-    protected $visible = [
-        'guild',
-        'owner',
-        'owner_member',
-        'parent',
-    ];
-
-    /**
-     * @inheritdoc
-     */
     protected $hidden = [
         'member'
     ];
@@ -113,6 +103,19 @@ class Thread extends Part
         'messages' => MessageRepository::class,
         'members' => MemberRepository::class,
     ];
+
+    /**
+     * @inheritdoc
+     */
+    protected function afterConstruct(): void
+    {
+        if (isset($this->attributes['member'])) {
+            $this->members->pushItem($this->factory->part(ThreadMember::class, (array) $this->attributes['member'] + [
+                'id' => $this->id,
+                'user_id' => $this->discord->id,
+            ], true));
+        }
+    }
 
     /**
      * Returns the guild which the thread belongs to.
