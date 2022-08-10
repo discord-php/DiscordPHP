@@ -29,7 +29,12 @@ class Overwrite extends Part
     /**
      * @inheritdoc
      */
-    protected $fillable = ['id', 'application_id', 'guild_id', 'permissions'];
+    protected $fillable = [
+        'id',
+        'application_id',
+        'guild_id',
+        'permissions'
+    ];
 
     /**
      * Gets the permissions attribute.
@@ -38,10 +43,10 @@ class Overwrite extends Part
      */
     protected function getPermissionsAttribute()
     {
-        $permissions = new Collection();
+        $permissions = Collection::for(Permission::class);
 
         foreach ($this->attributes['permissions'] ?? [] as $permission) {
-            $permissions->pushItem($this->factory->create(Permission::class, $permission, true));
+            $permissions->pushItem($this->factory->part(Permission::class, (array) $permission, true));
         }
 
         return $permissions;

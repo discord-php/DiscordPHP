@@ -30,7 +30,11 @@ class Choice extends Part
     /**
      * @inheritdoc
      */
-    protected $fillable = ['name', 'name_localizations', 'value'];
+    protected $fillable = [
+        'name',
+        'name_localizations',
+        'value'
+    ];
 
     /**
      * Creates a new Choice builder.
@@ -51,7 +55,7 @@ class Choice extends Part
      *
      * @param string $name name of the choice
      *
-     * @throws \LengthException
+     * @throws \LengthException `$name` is not 1-100 characters long.
      *
      * @return $this
      */
@@ -75,7 +79,7 @@ class Choice extends Part
      * @param string      $locale Discord locale code.
      * @param string|null $name   Localized name of the choice.
      *
-     * @throws \LengthException
+     * @throws \LengthException `$name` is not 1-100 characters long.
      *
      * @return $this
      */
@@ -100,7 +104,7 @@ class Choice extends Part
      *
      * @param string|int|float $value value of the choice
      *
-     * @throws \LengthException
+     * @throws \LengthException `string $value` is not 1-100 characters long.
      *
      * @return $this
      */

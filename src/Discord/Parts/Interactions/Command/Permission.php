@@ -31,5 +31,9 @@ class Permission extends Part
     /**
      * @inheritdoc
      */
-    protected $fillable = ['id', 'type', 'permission'];
+    protected $fillable = [
+        'id',
+        'type',
+        'permission'
+    ];
 }
