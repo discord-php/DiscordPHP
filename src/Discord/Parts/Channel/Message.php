@@ -295,12 +295,15 @@ class Message extends Part
             }
         }
 
-        foreach ($this->attributes['mention_channels'] ?? [] as $mention_channel) {
-            if (! $channel = $this->discord->getChannel($mention_channel->id)) {
-                $channel = $this->factory->part(Channel::class, (array) $mention_channel, true);
-            }
+        if (! empty($this->attributes['mention_channels'])) {
+            foreach ($this->attributes['mention_channels'] as $mention_channel) {
+                // @todo potentially slow code
+                if (! $channel = $this->discord->getChannel($mention_channel->id)) {
+                    $channel = $this->factory->part(Channel::class, (array) $mention_channel, true);
+                }
 
-            $collection->pushItem($channel);
+                $collection->pushItem($channel);
+            }
         }
 
         return $collection;
@@ -315,8 +318,10 @@ class Message extends Part
     {
         $attachments = Collection::for(Attachment::class);
 
-        foreach ($this->attributes['attachments'] ?? [] as $attachment) {
-            $attachments->pushItem($this->factory->part(Attachment::class, (array) $attachment, true));
+        if (! empty($this->attributes['attachments'])) {
+            foreach ($this->attributes['attachments'] as $attachment) {
+                $attachments->pushItem($this->factory->part(Attachment::class, (array) $attachment, true));
+            }
         }
 
         return $attachments;
@@ -424,11 +429,9 @@ class Message extends Part
             $roles->fill(array_fill_keys($this->attributes['mention_roles'], null));
 
             if ($guild = $this->guild) {
-                foreach ($guild->roles ?? [] as $id => $role) {
-                    if (in_array($id, $this->attributes['mention_roles'])) {
-                        $roles->pushItem($role);
-                    }
-                }
+                $roles->merge($guild->roles->filter(function ($role) {
+                    return in_array($role->id, $this->attributes['mention_roles']);
+                }));
             }
         }
 

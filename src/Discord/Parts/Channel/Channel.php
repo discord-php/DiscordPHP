@@ -208,11 +208,13 @@ class Channel extends Part
     {
         $recipients = Collection::for(User::class);
 
-        foreach ($this->attributes['recipients'] ?? [] as $recipient) {
-            if (! $user = $this->discord->users->get('id', $recipient->id)) {
-                $user = $this->factory->part(User::class, (array) $recipient, true);
+        if (! empty($this->attributes['recipients'])) {
+            foreach ($this->attributes['recipients'] as $recipient) {
+                if (! $user = $this->discord->users->get('id', $recipient->id)) {
+                    $user = $this->factory->part(User::class, (array) $recipient, true);
+                }
+                $recipients->pushItem($user);
             }
-            $recipients->pushItem($user);
         }
 
         return $recipients;
