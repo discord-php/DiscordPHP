@@ -18,19 +18,19 @@ use Discord\Repository\Interaction\OptionRepository;
 /**
  * Represents the data associated with an interaction.
  *
- * @see https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-interaction-data-structure
+ * @see https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-interaction-data
  *
  * @property string              $id             ID of the invoked command.
  * @property string              $name           Name of the invoked command.
  * @property int                 $type           The type of the invoked command.
  * @property Resolved|null       $resolved       Resolved users, members, roles and channels that are relevant.
  * @property OptionRepository    $options        Parameters and values from the user.
- * @property string|null         $custom_id      Custom ID the component was created for. Not used for slash commands.
- * @property int|null            $component_type Type of the component. Not used for slash commands.
- * @property string[]|null       $values         Values selected in a select menu.
- * @property string|null         $target_id      Id the of user or message targetted by a user or message command.
- * @property ComponentRepository $components     The values submitted by the user in modal.
  * @property string|null         $guild_id       ID of the guild internally passed from Interaction or ID of the guild the command belongs to.
+ * @property string|null         $target_id      Id the of user or message targetted by a user or message command.
+ * @property string|null         $custom_id      Custom ID the component was created for. (Only for Message Component & Modal)
+ * @property int|null            $component_type Type of the component. (Only for Message Component)
+ * @property string[]|null       $values         Values selected in a select menu. (Only for Message Component)
+ * @property ComponentRepository $components     The values submitted by the user. (Only for Modal)
  */
 class InteractionData extends Part
 {
@@ -43,18 +43,15 @@ class InteractionData extends Part
         'type',
         'resolved',
         'options',
+        'guild_id',
+        'target_id',
+
+        // message components
         'custom_id',
         'component_type',
         'values',
-        'target_id',
-        'components',
-        'guild_id',
+        'components', // modal only
     ];
-
-    /**
-     * @inheritdoc
-     */
-    protected $hidden = ['guild_id'];
 
     /**
      * @inheritdoc
@@ -72,7 +69,7 @@ class InteractionData extends Part
     protected function setOptionsAttribute($options)
     {
         foreach ($options as $option) {
-            $this->options->pushItem($this->factory->create(Option::class, $option, true));
+            $this->options->pushItem($this->factory->part(Option::class, (array) $option, true));
         }
     }
 
@@ -84,7 +81,7 @@ class InteractionData extends Part
     protected function setComponentsAttribute($components)
     {
         foreach ($components as $component) {
-            $this->components->pushItem($this->factory->create(Component::class, $component, true));
+            $this->components->pushItem($this->factory->part(Component::class, (array) $component, true));
         }
     }
 
@@ -104,6 +101,6 @@ class InteractionData extends Part
             $adata->guild_id = $this->guild_id;
         }
 
-        return $this->factory->create(Resolved::class, $adata, true);
+        return $this->factory->part(Resolved::class, (array) $adata, true);
     }
 }
