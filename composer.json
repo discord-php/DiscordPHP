@@ -23,7 +23,8 @@
         "ext-zlib": "*",
         "discord-php/http": "^9.0.12",
         "react/child-process": "^0.6.2",
-        "discord/interactions": "^2.2"
+        "discord/interactions": "^2.2",
+        "cweagans/composer-patches": "~1.0"
     },
     "require-dev": {
         "symfony/var-dumper": "*",
@@ -45,8 +46,7 @@
         "ext-event": "For a faster, and more performant loop.",
         "ext-mbstring": "For accurate calculations of string length when handling non-english characters.",
         "ext-gmp": "For Permissions and 64 bit calculations on x86 (32 bit) PHP.",
-        "clue/zlib-react": "For gateway message transport compression with zlib-stream.",
-        "cweagans/composer-patches": "~1.0"
+        "clue/zlib-react": "For gateway message transport compression with zlib-stream."
     },
     "scripts": {
         "cs": ["./vendor/bin/php-cs-fixer fix"],
