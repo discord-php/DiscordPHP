@@ -417,9 +417,9 @@ abstract class AbstractRepository extends Collection
     }
 
     /**
-     * Returns the first element of the cache which is not yet garbage collected.
+     * Returns the first element of the weak referenced cache.
      *
-     * @return mixed
+     * @return object|null
      */
     public function first()
     {
@@ -434,9 +434,9 @@ abstract class AbstractRepository extends Collection
     }
 
     /**
-     * Returns the last element of the cache which is not yet garbage collected.
+     * Returns the last element of the weak referenced cache.
      *
-     * @return mixed
+     * @return object|null
      */
     public function last()
     {
