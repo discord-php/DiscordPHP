@@ -25,30 +25,43 @@ use Discord\Parts\User\User;
  *
  * @see https://discord.com/developers/docs/topics/gateway#presence
  *
- * @property User                  $user           The user that the presence update affects.
- * @property string                $guild_id       The unique identifier of the guild that the presence update affects.
- * @property Guild|null            $guild          The guild that the presence update affects.
- * @property string                $status         The updated status of the user.
- * @property Collection|Activity[] $activities     The activities of the user.
- * @property Activity              $game           The updated game of the user.
- * @property object                $client_status  Status of the client.
- * @property string|null           $desktop_status Status of the user on their desktop client. Null if they are not active on desktop.
- * @property string|null           $mobile_status  Status of the user on their mobile client. Null if they are not active on mobile.
- * @property string|null           $web_status     Status of the user on their web client. Null if they are not active on web.
- * @property Member                $member         The member that the presence update affects.
- * @property Collection|Role[]     $roles          Roles that the user has in the guild.
+ * @property      User                  $user           The user that the presence update affects.
+ * @property      string                $guild_id       The unique identifier of the guild that the presence update affects.
+ * @property      Guild|null            $guild          The guild that the presence update affects.
+ * @property      string                $status         The updated status of the user.
+ * @property      Collection|Activity[] $activities     The activities of the user.
+ * @property      Activity              $game           The updated game of the user.
+ * @property      object                $client_status  Status of the client.
+ * @property      string|null           $desktop_status Status of the user on their desktop client. Null if they are not active on desktop.
+ * @property      string|null           $mobile_status  Status of the user on their mobile client. Null if they are not active on mobile.
+ * @property      string|null           $web_status     Status of the user on their web client. Null if they are not active on web.
+ *
+ * @property-read Member                $member         The member that the presence update affects.
+ * @property-read Collection|Role[]     $roles          Roles that the user has in the guild.
  */
 class PresenceUpdate extends Part
 {
     /**
      * @inheritdoc
      */
-    protected $fillable = ['user', 'guild_id', 'status', 'activities', 'client_status'];
+    protected $fillable = [
+        'user',
+        'guild_id',
+        'status',
+        'activities',
+        'client_status'
+    ];
 
     /**
      * @inheritDoc
      */
-    protected $visible = ['guild', 'game', 'desktop_status', 'mobile_status', 'web_status', 'member', 'roles'];
+    protected $visible = [
+        'game',
+
+        // @internal
+        'member',
+        'roles'
+    ];
 
     /**
      * Gets the user attribute.
@@ -57,7 +70,7 @@ class PresenceUpdate extends Part
      */
     protected function getUserAttribute(): User
     {
-        if ($user = $this->discord->users->offsetGet($this->attributes['user']->id)) {
+        if ($user = $this->discord->users->get('id', $this->attributes['user']->id)) {
             return $user;
         }
 
@@ -84,7 +97,7 @@ class PresenceUpdate extends Part
         $collection = Collection::for(Activity::class, null);
 
         foreach ($this->attributes['activities'] ?? [] as $activity) {
-            $collection->pushItem($this->factory->create(Activity::class, $activity, true));
+            $collection->pushItem($this->factory->part(Activity::class, (array) $activity, true));
         }
 
         return $collection;
@@ -137,8 +150,8 @@ class PresenceUpdate extends Part
      */
     protected function getMemberAttribute(): ?Member
     {
-        if (isset($this->attributes['user']) && $this->guild) {
-            return $this->guild->members->offsetGet($this->attributes['user']->id);
+        if (isset($this->attributes['user']) && $guild = $this->guild) {
+            return $guild->members->get('id', $this->attributes['user']->id);
         }
 
         return null;
@@ -151,6 +164,10 @@ class PresenceUpdate extends Part
      */
     protected function getRolesAttribute(): Collection
     {
-        return $this->member->roles ?? new Collection();
+        if ($member = $this->member) {
+            return $member->roles;
+        }
+
+        return Collection::for(Role::class);
     }
 }
