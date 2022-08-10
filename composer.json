@@ -45,11 +45,25 @@
         "ext-event": "For a faster, and more performant loop.",
         "ext-mbstring": "For accurate calculations of string length when handling non-english characters.",
         "ext-gmp": "For Permissions and 64 bit calculations on x86 (32 bit) PHP.",
-        "clue/zlib-react": "For gateway message transport compression with zlib-stream."
+        "clue/zlib-react": "For gateway message transport compression with zlib-stream.",
+        "cweagans/composer-patches": "~1.0"
     },
     "scripts": {
         "cs": ["./vendor/bin/php-cs-fixer fix"],
         "unit": ["./vendor/bin/phpunit --testdox"],
         "coverage": ["XDEBUG_MODE=coverage ./vendor/bin/phpunit --coverage-html coverage --testdox"]
+    },
+    "extra": {
+        "patches": {
+            "ratchet/rfc6455": {
+                "32bit support for 2Gb chunks" : "https://patch-diff.githubusercontent.com/raw/ratchetphp/RFC6455/pull/65.patch"
+            }
+        },
+        "composer-exit-on-patch-failure": true
+    },
+    "config": {
+        "allow-plugins": {
+            "cweagans/composer-patches": true
+        }
     }
 }
