@@ -184,7 +184,6 @@ class Guild extends Part
         'description',
         'splash',
         'discovery_splash',
-        'large',
         'features',
         'emojis',
         'banner',
