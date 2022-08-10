@@ -56,7 +56,7 @@
     "extra": {
         "patches": {
             "ratchet/rfc6455": {
-                "32bit support for 2Gb chunks" : "https://patch-diff.githubusercontent.com/raw/ratchetphp/RFC6455/pull/65.patch"
+                "32bit support for 2Gb chunks" : "patches/ratchet_rfc6455_65.patch"
             }
         },
         "composer-exit-on-patch-failure": true
