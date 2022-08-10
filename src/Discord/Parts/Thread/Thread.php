@@ -33,6 +33,8 @@ use Traversable;
 
 /**
  * Represents a Discord thread.
+ * 
+ * @see https://discord.com/developers/docs/topics/threads
  *
  * @property string            $id                    The ID of the thread.
  * @property string            $type                  The type of thread.
