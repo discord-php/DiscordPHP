@@ -424,8 +424,10 @@ abstract class AbstractRepository extends Collection
     public function first()
     {
         /** @var WeakReference|null */
-        if ($item = parent::first()) {
-            return $item->get();
+        foreach ($this->items as $item) {
+            if (isset($item)) {
+                return $item->get();
+            }
         }
 
         return null;
@@ -438,9 +440,13 @@ abstract class AbstractRepository extends Collection
      */
     public function last()
     {
+        $items = array_reverse($this->items, true);
+
         /** @var WeakReference|null */
-        if ($item = parent::last()) {
-            return $item->get();
+        foreach ($items as $item) {
+            if (isset($item)) {
+                return $item->get();
+            }
         }
 
         return null;
@@ -505,7 +511,7 @@ abstract class AbstractRepository extends Collection
     public function clear(): void
     {
         if ($this->items) {
-            $this->interface->cache->deleteMultiple(array_map(function ($key) {
+            $this->cache->interface->deleteMultiple(array_map(function ($key) {
                 return $this->cache->key_prefix.$key;
             }, array_keys($this->items)));
 
@@ -555,8 +561,10 @@ abstract class AbstractRepository extends Collection
     {
         $items = [];
 
-        foreach ($this->items as $value) {
-            $items[] = $value->get();
+        foreach ($this->items as $key => $value) {
+            if (isset($value)) {
+                $items[$key] = $value->get();
+            }
         }
 
         return $items;
