@@ -468,7 +468,7 @@ abstract class AbstractRepository extends Collection
         $collection = new Collection([], $this->discrim, $this->class);
 
         foreach ($this->items as $item) {
-            if ($part = $item->get()) {
+            if (isset($item) && $part = $item->get()) {
                 if ($callback($part)) {
                     $collection->push($part);
                 }
