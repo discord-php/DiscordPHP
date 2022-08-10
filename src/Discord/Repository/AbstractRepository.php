@@ -327,6 +327,10 @@ abstract class AbstractRepository extends Collection
      */
     public function get(string $discrim, $key)
     {
+        if ($key === null) {
+            return null;
+        }
+
         if ($discrim == $this->discrim) {
             if (isset($this->items[$key]) && $item = $this->items[$key]->get()) {
                 return $item;
