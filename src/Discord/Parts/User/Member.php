@@ -38,7 +38,7 @@ use function React\Promise\reject;
  *
  * @property User|null             $user                         The user part of the member.
  * @property ?string|null          $nick                         The nickname of the member.
- * @property string|null           $avatar                       The avatar URL of the member or null if member has no guild avatar.
+ * @property ?string|null          $avatar                       The avatar URL of the member or null if member has no guild avatar.
  * @property ?string|null          $avatar_hash                  The avatar hash of the member or null if member has no guild avatar.
  * @property Collection|Role[]     $roles                        A collection of Roles that the member has.
  * @property Carbon|null           $joined_at                    A timestamp of when the member joined the guild.
@@ -556,7 +556,7 @@ class Member extends Part
     /**
      * Returns the guild attribute.
      *
-     * @return null|Guild The guild.
+     * @return Guild|null The guild.
      */
     protected function getGuildAttribute(): ?Guild
     {
@@ -566,9 +566,7 @@ class Member extends Part
     /**
      * Returns the roles attribute.
      *
-     * @throws \Exception
-     *
-     * @return Collection A collection of roles the member is in.
+     * @return Collection<?Role> A collection of roles the member is in. Null role only contains ID in the collection.
      */
     protected function getRolesAttribute(): Collection
     {
