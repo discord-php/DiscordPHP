@@ -88,11 +88,11 @@ class Activity extends Part
      */
     protected function getCreatedAtAttribute(): ?Carbon
     {
-        if (isset($this->attributes['created_at'])) {
-            return Carbon::createFromTimestamp($this->attributes['created_at']);
+        if (! isset($this->attributes['created_at'])) {
+            return null;
         }
 
-        return null;
+        return Carbon::createFromTimestamp($this->attributes['created_at']);;
     }
 
     /**
@@ -102,11 +102,11 @@ class Activity extends Part
      */
     protected function getEmojiAttribute(): ?Emoji
     {
-        if (isset($this->attributes['emoji'])) {
-            return $this->factory->create(Emoji::class, $this->attributes['emoji'], true);
+        if (! isset($this->attributes['emoji'])) {
+            return null;
         }
 
-        return null;
+        return $this->factory->part(Emoji::class, (array) $this->attributes['emoji'], true);
     }
 
     /**
@@ -114,27 +114,23 @@ class Activity extends Part
      *
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         switch ($this->type) {
             case self::TYPE_PLAYING:
-                return "Playing {$this->name}";
-                break;
+                return 'Playing '.$this->name;
             case self::TYPE_STREAMING:
-                return "Streaming {$this->details}";
-                break;
+                return 'Streaming '.$this->details;
             case self::TYPE_LISTENING:
-                return "Listening to {$this->name}";
-                break;
+                return 'Listening to '.$this->name;
             case self::TYPE_WATCHING:
-                return "Watching {$this->name}";
-                break;
+                return 'Watching '.$this->name;
             case self::TYPE_CUSTOM:
                 return "{$this->emoji} {$this->name}";
-                break;
             case self::TYPE_COMPETING:
-                return "Competing in {$this->name}";
-                break;
+                return 'Competing in '.$this->name;
         }
+
+        return $this->name;
     }
 }
