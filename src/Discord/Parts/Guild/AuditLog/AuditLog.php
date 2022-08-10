@@ -27,16 +27,16 @@ use ReflectionClass;
  *
  * @see https://discord.com/developers/docs/resources/audit-log#audit-log-object
  *
- * @property Collection|Entry[]               $audit_log_entries      List of audit log entries.
- * @property Collection|Rule[]                $auto_moderation_rules  List of auto moderation rules referenced in the audit log.
- * @property Collection|GuildScheduledEvent[] $guild_scheduled_events List of guild scheduled events referenced in the audit log.
- * @property Collection|Integration[]         $integrations           List of partial integration objects.
- * @property Collection|Threads[]             $threads                List of threads referenced in the audit log.
- * @property Collection|User[]                $users                  List of users referenced in the audit log.
- * @property Collection|Webhook[]             $webhooks               List of webhooks referenced in the audit log.
+ * @property      Collection|Entry[]               $audit_log_entries      List of audit log entries.
+ * @property      Collection|Rule[]                $auto_moderation_rules  List of auto moderation rules referenced in the audit log.
+ * @property      Collection|GuildScheduledEvent[] $guild_scheduled_events List of guild scheduled events referenced in the audit log.
+ * @property      Collection|Integration[]         $integrations           List of partial integration objects.
+ * @property      Collection|Threads[]             $threads                List of threads referenced in the audit log.
+ * @property      Collection|User[]                $users                  List of users referenced in the audit log.
+ * @property      Collection|Webhook[]             $webhooks               List of webhooks referenced in the audit log.
  *
- * @property string                           $guild_id
- * @property Guild|null                       $guild
+ * @property      string                           $guild_id
+ * @property-read Guild|null                       $guild
  */
 class AuditLog extends Part
 {

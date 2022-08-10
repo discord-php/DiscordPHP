@@ -34,10 +34,8 @@ use React\Promise\ExtendedPromiseInterface;
  * @property ?string|null             $email            The email of the client.
  * @property int|null                 $flags            The flags on a user's account.
  * @property int|null                 $public_flags     The public flags on a user's account.
- *
  * @property User                     $user             The user instance of the client.
  * @property Application              $application      The OAuth2 application of the bot.
- *
  * @property GuildRepository          $guilds
  * @property PrivateChannelRepository $private_channels
  * @property UserRepository           $users
@@ -59,6 +57,7 @@ class Client extends Part
         'bot',
         'avatar',
 
+        // actual form
         'user',
         'application',
     ];

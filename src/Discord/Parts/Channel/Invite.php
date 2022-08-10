@@ -25,27 +25,27 @@ use React\Promise\ExtendedPromiseInterface;
  *
  * @see https://discord.com/developers/docs/resources/invite
  *
- * @property      string              $code                       The invite code.
- * @property      Guild|null          $guild                      The partial guild that the invite is for.
- * @property      string|null         $guild_id
- * @property      Channel             $channel                    The partial channel that the invite is for.
- * @property      string|null         $channel_id
- * @property      User|null           $inviter                    The user that created the invite.
- * @property      int|null            $target_type                The type of target for this voice channel invite.
- * @property      User|null           $target_user                The user whose stream to display for this voice channel stream invite.
- * @property      Application|null    $target_application         The partial embedded application to open for this voice channel embedded application invite.
- * @property      int|null            $approximate_presence_count Approximate count of online members, returned from the GET /invites/<code> endpoint when with_counts is true.
- * @property      int|null            $approximate_member_count   Approximate count of total members, returned from the GET /invites/<code> endpoint when with_counts is true.
- * @property      Carbon|null         $expires_at                 The expiration date of this invite, returned from the GET /invites/<code> endpoint when with_expiration is true.
- * @property      ScheduledEvent|null $guild_scheduled_event      Guild scheduled event data, only included if guild_scheduled_event_id contains a valid guild scheduled event id.
+ * @property string              $code                       The invite code.
+ * @property Guild|null          $guild                      The partial guild that the invite is for.
+ * @property string|null         $guild_id
+ * @property Channel             $channel                    The partial channel that the invite is for.
+ * @property string|null         $channel_id
+ * @property User|null           $inviter                    The user that created the invite.
+ * @property int|null            $target_type                The type of target for this voice channel invite.
+ * @property User|null           $target_user                The user whose stream to display for this voice channel stream invite.
+ * @property Application|null    $target_application         The partial embedded application to open for this voice channel embedded application invite.
+ * @property int|null            $approximate_presence_count Approximate count of online members, returned from the GET /invites/<code> endpoint when with_counts is true.
+ * @property int|null            $approximate_member_count   Approximate count of total members, returned from the GET /invites/<code> endpoint when with_counts is true.
+ * @property Carbon|null         $expires_at                 The expiration date of this invite, returned from the GET /invites/<code> endpoint when with_expiration is true.
+ * @property ScheduledEvent|null $guild_scheduled_event      Guild scheduled event data, only included if guild_scheduled_event_id contains a valid guild scheduled event id.
  *
- * @property      int|null            $uses                       How many times the invite has been used.
- * @property      int|null            $max_uses                   How many times the invite can be used.
- * @property      int|null            $max_age                    How many seconds the invite will be alive.
- * @property      bool|null           $temporary                  Whether the invite is for temporary membership.
- * @property      Carbon|null         $created_at                 A timestamp of when the invite was created.
+ * @property int|null            $uses                       How many times the invite has been used.
+ * @property int|null            $max_uses                   How many times the invite can be used.
+ * @property int|null            $max_age                    How many seconds the invite will be alive.
+ * @property bool|null           $temporary                  Whether the invite is for temporary membership.
+ * @property Carbon|null         $created_at                 A timestamp of when the invite was created.
  *
- * @property-read string              $invite_url                 Returns the invite URL.
+ * @property-read string         $invite_url                 Returns the invite URL.
  */
 class Invite extends Part
 {
