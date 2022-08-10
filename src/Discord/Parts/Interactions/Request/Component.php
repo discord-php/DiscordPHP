@@ -18,6 +18,8 @@ use Discord\Repository\Interaction\ComponentRepository;
 /**
  * Represents a component received with a message or interaction.
  *
+ * @todo split per type
+ *
  * @see https://discord.com/developers/docs/interactions/message-components#component-object
  *
  * @property int                 $type        Component type.
@@ -76,7 +78,7 @@ class Component extends Part
     protected function setComponentsAttribute($components)
     {
         foreach ($components as $component) {
-            $this->components->pushItem($this->factory->create(Component::class, $component, true));
+            $this->components->pushItem($this->factory->part(Component::class, (array) $component, true));
         }
     }
 
@@ -87,11 +89,11 @@ class Component extends Part
      */
     protected function getEmojiAttribute(): ?Emoji
     {
-        if (isset($this->attributes['emoji'])) {
-            return $this->factory->create(Emoji::class, $this->attributes['emoji'], true);
+        if (! isset($this->attributes['emoji'])) {
+            return null;
         }
 
-        return null;
+        return $this->factory->part(Emoji::class, (array) $this->attributes['emoji'], true);
     }
 
     /**
