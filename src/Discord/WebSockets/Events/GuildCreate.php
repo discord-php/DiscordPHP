@@ -14,7 +14,6 @@ namespace Discord\WebSockets\Events;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Guild\Ban;
 use Discord\Parts\Guild\Guild;
-use Discord\Parts\Guild\Role;
 use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
 use Discord\Parts\WebSockets\VoiceStateUpdate as VoiceStateUpdatePart;
@@ -23,8 +22,9 @@ use Discord\Helpers\Deferred;
 use Discord\Http\Endpoint;
 use Discord\Parts\Channel\StageInstance;
 use Discord\Parts\Guild\ScheduledEvent;
-use Discord\Parts\Thread\Member as ThreadMember;
 use Discord\Parts\Thread\Thread;
+
+use function React\Promise\all;
 
 /**
  * @see https://discord.com/developers/docs/topics/gateway#guild-create
@@ -46,119 +46,111 @@ class GuildCreate extends Event
         $guildPart = $this->factory->create(Guild::class, $data, true);
 
         foreach ($data->channels as $channel) {
-            $channel = (array) $channel;
-            $channel['guild_id'] = $data->id;
-            $channelPart = $this->factory->create(Channel::class, $channel, true);
-
-            $guildPart->channels->offsetSet($channelPart->id, $channelPart);
+            /** @var Channel[] */
+            $channels[$channel->id] = $this->factory->part(Channel::class, (array) $channel + ['guild_id' => $data->id], true);
+        }
+        if (! empty($channels)) {
+            $await[] = $guildPart->channels->cache->setMultiple($channels);
         }
 
         foreach ($data->members as $member) {
-            $member = (array) $member;
-            $member['guild_id'] = $data->id;
+            $userId = $member->user->id;
+            $member->guild_id = $data->id;
+            $rawMembers[$userId] = $member;
+            /** @var Member[] */
+            $members[$userId] = $this->factory->part(Member::class, (array) $rawMembers[$userId], true);
 
-            if (! $this->discord->users->isset($member['user']->id)) {
-                $userPart = $this->factory->create(User::class, $member['user'], true);
-                $this->discord->users->offsetSet($userPart->id, $userPart);
+            if (! $this->discord->users->offsetExists($userId)) {
+                /** @var User[] */
+                $users[$userId] = $this->factory->part(User::class, (array) $member->user, true);
             }
-
-            $memberPart = $this->factory->create(Member::class, $member, true);
-            $guildPart->members->offsetSet($memberPart->id, $memberPart);
         }
-
+        if (! empty($users)) {
+            $await[] = $this->discord->users->cache->setMultiple($users);
+        }
         foreach ($data->presences as $presence) {
-            if ($member = $guildPart->members->offsetGet($presence->user->id)) {
-                $member->fill((array) $presence);
-                $guildPart->members->offsetSet($member->id, $member);
+            $members[$presence->user->id]->fill((array) $presence);
+        }
+        if (! empty($members)) {
+            $await[] = $guildPart->members->cache->setMultiple($members);
+        }
+
+        foreach ($data->voice_states as $voice_state) {
+            if (isset($channels[$voice_state->channel_id])) {
+                $voice_state = (array) $voice_state;
+                $channelId = $voice_state['channel_id'];
+                $userId = $voice_state['user_id'];
+                $voice_state['guild_id'] = $data->id;
+                if (! isset($voice_state['member']) && isset($rawMembers[$userId])) {
+                    $voice_state['member'] = $rawMembers[$userId];
+                }
+                $await[] = $channels[$channelId]->members->cache->set($userId, $this->factory->part(VoiceStateUpdatePart::class, $voice_state, true));
             }
         }
 
-        foreach ($data->voice_states as $state) {
-            if ($channel = $guildPart->channels->offsetGet($state->channel_id)) {
-                $state = (array) $state;
-                $state['guild_id'] = $guildPart->id;
-
-                $stateUpdate = $this->factory->create(VoiceStateUpdatePart::class, $state, true);
-
-                $channel->members->offsetSet($stateUpdate->user_id, $stateUpdate);
-                $guildPart->channels->offsetSet($channel->id, $channel);
-            }
-        }
-
-        foreach ($data->threads as $rawThread) {
-            /**
-             * @var Thread
-             */
-            $thread = $this->factory->create(Thread::class, $rawThread, true);
-
-            if ($rawThread->member ?? null) {
-                $member = (array) $rawThread->member;
-                $member['id'] = $thread->id;
-                $member['user_id'] = $this->discord->id;
-
-                $selfMember = $this->factory->create(ThreadMember::class, $member, true);
-                $thread->members->pushItem($selfMember);
-            }
-
-            if ($channel = $guildPart->channels->get('id', $thread->parent_id)) {
-                $channel->threads->pushItem($thread);
+        foreach ($data->threads as $thread) {
+            if (isset($channels[$thread->parent_id])) {
+                $await[] = $channels[$thread->parent_id]->threads->cache->set($thread->id, $this->factory->part(Thread::class, (array) $thread, true));
             }
         }
 
         foreach ($data->stage_instances as $stageInstance) {
-            $stageInstance->guild_id = $data->id;
-            /** @var StageInstance */
-            $stageInstancePart = $this->factory->create(StageInstance::class, $stageInstance, true);
-
-            $guildPart->stage_instances->offsetSet($stageInstancePart->id, $stageInstancePart);
+            /** @var StageInstance[] */
+            $stageInstances[$stageInstance->id] = $this->factory->part(StageInstance::class, (array) $stageInstance, true);
+        }
+        if (! empty($stageInstances)) {
+            $await[] = $guildPart->stage_instances->cache->setMultiple($stageInstances);
         }
 
         foreach ($data->guild_scheduled_events as $scheduledEvent) {
-            $scheduledEvent->guild_id = $data->id;
-            /** @var ScheduledEvent */
-            $scheduledEventPart = $this->factory->create(ScheduledEvent::class, $scheduledEvent, true);
-
-            $guildPart->guild_scheduled_events->offsetSet($scheduledEventPart->id, $scheduledEventPart);
+            /** @var ScheduledEvent[] */
+            $scheduledEvents[$scheduledEvent->id] = $this->factory->part(ScheduledEvent::class, (array) $scheduledEvent, true);
+        }
+        if (! empty($scheduledEvents)) {
+            $await[] = $guildPart->guild_scheduled_events->cache->setMultiple($scheduledEvents);
         }
 
-        $resolve = function () use (&$guildPart, $deferred) {
-            if ($guildPart->large || $guildPart->member_count > $guildPart->members->count()) {
-                $this->discord->addLargeGuild($guildPart);
+        if ($this->discord->options['retrieveBans']) {
+            $canBan = true; // Assume so since the permission might fail to be determined
+            if ($botPerms = $members[$this->discord->id]->getPermissions()) {
+                $canBan = $botPerms->ban_members;
             }
 
-            $this->discord->guilds->offsetSet($guildPart->id, $guildPart);
-
-            $deferred->resolve($guildPart);
-        };
-
-        if ($this->discord->options['retrieveBans']) {
-            $banPagination = function ($lastUserId = null) use (&$banPagination, $guildPart, $resolve) {
-                $bind = Endpoint::bind(Endpoint::GUILD_BANS, $guildPart->id);
-                if (isset($lastUserId)) {
-                    $bind->addQuery('after', $lastUserId);
-                }
-                $this->http->get($bind)->done(function ($rawBans) use (&$banPagination, $guildPart, $resolve) {
-                    if (empty($rawBans)) {
-                        $resolve();
-
-                        return;
+            if ($canBan) {
+                $loadBans = new Deferred();
+                $banPagination = function ($lastUserId = null) use (&$banPagination, $guildPart, $loadBans) {
+                    $bind = Endpoint::bind(Endpoint::GUILD_BANS, $guildPart->id);
+                    if (isset($lastUserId)) {
+                        $bind->addQuery('after', $lastUserId);
                     }
+                    $this->http->get($bind)->done(function ($bans) use (&$banPagination, $guildPart, $loadBans) {
+                        if (empty($bans)) {
+                            $loadBans->resolve();
 
-                    foreach ($rawBans as $ban) {
-                        $ban = (array) $ban;
-                        $ban['guild_id'] = $guildPart->id;
+                            return;
+                        }
 
-                        $banPart = $this->factory->create(Ban::class, $ban, true);
+                        foreach ($bans as $ban) {
+                            $lastUserId = $ban->user->id;
+                            $guildPart->bans->cache->set($lastUserId, $this->factory->part(Ban::class, (array) $ban + ['guild_id' => $guildPart->id], true));
+                        }
 
-                        $guildPart->bans->offsetSet($banPart->user->id, $banPart);
-                    }
+                        $banPagination($lastUserId);
+                    }, [$loadBans, 'resolve']);
+                };
+                $banPagination();
+                $await[] = $loadBans->promise();
+            }
+        }
 
-                    $banPagination($guildPart->bans->last()->user->id);
-                }, $resolve);
-            };
-            $banPagination();
-        } else {
-            $resolve();
+        all($await)->then(function () use (&$guildPart) {
+            return $this->discord->guilds->cache->set($guildPart->id, $guildPart)->then(function ($success) use ($guildPart) {
+                return $guildPart;
+            });
+        })->then([$deferred, 'resolve']);
+
+        if ($data->large || $data->member_count > count($rawMembers)) {
+            $this->discord->addLargeGuild($guildPart);
         }
     }
 }
