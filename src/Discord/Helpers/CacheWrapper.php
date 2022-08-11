@@ -15,7 +15,6 @@ use Discord\Discord;
 use Discord\Parts\Part;
 use React\Cache\CacheInterface;
 use React\Promise\PromiseInterface;
-use WeakReference;
 
 /**
  * Wrapper for CacheInterface that tracks Repository items.
@@ -41,7 +40,7 @@ class CacheWrapper
     /**
      * Repository items array reference.
      *
-     * @var WeakReference[] Cache Key => Cache Weak Reference.
+     * @var null[]|Part[]|WeakReference[] Cache Key => Cache Part.
      */
     protected $items;
 
@@ -94,8 +93,7 @@ class CacheWrapper
             if ($value === null) {
                 unset($this->items[$key]);
             } else {
-                $value = $this->discord->factory($this->class, json_decode($value), true);
-                $this->items[$key] = WeakReference::create($value);
+                $value = $this->items[$key] = $this->discord->factory($this->class, json_decode($value), true);
             }
 
             return $value;
@@ -114,7 +112,7 @@ class CacheWrapper
     {
         return $this->interface->set($this->key_prefix.$key, $value->serialize(), $ttl)->then(function ($success) use ($key, $value) {
             if ($success) {
-                $this->items[$key] = WeakReference::create($value);
+                $this->items[$key] = $value;
             }
 
             return $success;
@@ -167,8 +165,7 @@ class CacheWrapper
                 if ($value === null) {
                     unset($this->items[$key]);
                 } else {
-                    $values[$key] = $this->discord->factory($this->class, json_decode($value), true);
-                    $this->items[$key] = WeakReference::create($values[$key]);
+                    $values[$key] = $this->items[$key] = $this->discord->factory($this->class, json_decode($value), true);
                 }
 
                 // Remove real value with key prefix
@@ -190,16 +187,12 @@ class CacheWrapper
     public function setMultiple(array $values, $ttl = null)
     {
         foreach ($values as $key => $value) {
-            $valueRefs[$key] = WeakReference::create($value);
-
-            // Replace values key with prefixed key
-            $values[$this->key_prefix.$key] = $value->serialize();
-            unset($values[$key]);
+            $items[$this->key_prefix.$key] = $value->serialize();
         }
 
-        return $this->interface->setMultiple($values, $ttl)->then(function ($success) use ($valueRefs) {
+        return $this->interface->setMultiple($items, $ttl)->then(function ($success) use ($values) {
             if ($success) {
-                $this->items = array_merge($this->items, $valueRefs);
+                $this->items = array_merge($this->items, $values);
             }
 
             return $success;

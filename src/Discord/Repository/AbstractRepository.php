@@ -23,7 +23,6 @@ use React\Promise\PromiseInterface;
 use Traversable;
 use WeakReference;
 
-use function React\Async\await;
 use function React\Promise\reject;
 
 /**
@@ -115,7 +114,42 @@ abstract class AbstractRepository extends Collection
         }
 
         return $this->http->get($endpoint)->then(function ($response) {
+            $keys = [];
+
+            foreach ($this->items as $key => $value) {
+                if ($value === null) {
+                    unset($this->items[$key]);
+                } elseif (! ($this->items[$key] instanceof WeakReference)) {
+                    $this->items[$key] = WeakReference::create($value);
+                }
+                $keys[] = $this->cache->key_prefix.$key;
+            }
+
+            if ($keys) {
+                $this->cache->interface->deleteMultiple($keys);
+            }
+
             return $this->freshenCache($response);
+        });
+    }
+
+    /**
+     * @internal
+     */
+    protected function freshenCache($response): PromiseInterface
+    {
+        foreach ($response as $value) {
+            $value = array_merge($this->vars, (array) $value);
+            $part = $this->factory->create($this->class, $value, true);
+            $items[$part->{$this->discrim}] = $part;
+        }
+
+        if (empty($items)) {
+            return $this;
+        }
+
+        return $this->cache->setMultiple($items)->then(function ($success) {
+            return $this;
         });
     }
 
@@ -171,10 +205,9 @@ abstract class AbstractRepository extends Collection
             $headers['X-Audit-Log-Reason'] = $reason;
         }
 
-        return $this->http->{$method}($endpoint, $attributes, $headers)->then(function ($response) use (&$part) {
+        return $this->http->{$method}($endpoint, $attributes, $headers)->then(function ($response) use ($part) {
             $part->fill((array) $response);
             $part->created = true;
-            $part->deleted = false;
 
             return $this->cache->set($part->{$this->discrim}, $part)->then(function ($success) use ($part) {
                 return $part;
@@ -217,10 +250,9 @@ abstract class AbstractRepository extends Collection
             if ($response) {
                 $part->fill((array) $response);
             }
-
             $part->created = false;
 
-            return $this->cache->delete($part->{$this->discrim})->then(function () use ($part) {
+            return $this->cache->delete($part->{$this->discrim})->then(function ($success) use ($part) {
                 return $part;
             });
         });
@@ -273,12 +305,16 @@ abstract class AbstractRepository extends Collection
      */
     public function fetch(string $id, bool $fresh = false): ExtendedPromiseInterface
     {
-        if (! $fresh) {
-            if (isset($this->items[$id]) && $part = $this->items[$id]->get()) {
-                return $part;
+        if (! $fresh && isset($this->items[$id])) {
+            $part = $this->items[$id];
+            if ($part instanceof WeakReference) {
+                $part = $part->get();
             }
 
-            return $this->cache->get($id);
+            if ($part) {
+                $this->items[$id] = $part;
+                return $part;
+            }
         }
 
         if (! isset($this->endpoints['get'])) {
@@ -289,40 +325,17 @@ abstract class AbstractRepository extends Collection
         $endpoint = new Endpoint($this->endpoints['get']);
         $endpoint->bindAssoc(array_merge($part->getRepositoryAttributes(), $this->vars));
 
-        return $this->http->get($endpoint)->then(function ($response) use ($part) {
+        return $this->http->get($endpoint)->then(function ($response) use ($part, $id) {
             $part->fill(array_merge($this->vars, (array) $response));
             $part->created = true;
 
-            return $this->cache->set($part->{$this->discrim}, $part)->then(function ($success) use ($part) {
+            return $this->cache->set($id, $part)->then(function ($success) use ($part) {
                 return $part;
             });
         });
     }
 
     /**
-     * @internal
-     */
-    protected function freshenCache($response): PromiseInterface
-    {
-        return $this->cache->deleteMultiple(array_keys($this->items))->then(function ($success) use ($response) {
-            $parts = [];
-
-            foreach ($response as $value) {
-                $value = array_merge($this->vars, (array) $value);
-                $part = $this->factory->create($this->class, $value, true);
-
-                $parts[$part->{$this->discrim}] = $part;
-            }
-
-            return $this->cache->setMultiple($parts)->then(function ($success) {
-                return $this;
-            });
-        });
-    }
-
-    /**
-     * @deprecated 7.1.4 Use async `$repository->cache->get()` or `$repository->fetch()`
-     * @uses \React\Async\await() This method is blocking.
      * {@inheritdoc}
      */
     public function get(string $discrim, $key)
@@ -332,27 +345,39 @@ abstract class AbstractRepository extends Collection
         }
 
         if ($discrim == $this->discrim) {
-            if (isset($this->items[$key]) && $item = $this->items[$key]->get()) {
-                return $item;
+            $item = $this->items[$key] ?? null;
+            if ($item instanceof WeakReference) {
+                $item = $item->get();
             }
 
-            return await($this->cache->get($key));
+            if ($item) {
+                return $this->items[$key] = $item;
+            }
+
+            $this->cache->get($this->cache->key_prefix.$key);
+            return null;
         }
 
-        foreach ($this->items as $item) {
-            if ($part = $item->get()) {
-                if ($part->{$discrim} == $key) {
-                    return $part;
-                }
+        foreach ($this->items as $id => &$item) {
+            if ($item === null) continue;
+
+            if ($item instanceof WeakReference) {
+                $item = $item->get();
             }
+
+            if ($item && $item->{$discrim} == $id) {
+                return $this->items[$key] = $item;
+            }
+
+            $this->cache->get($this->cache->key_prefix.$id);
+            break;
         }
 
         return null;
     }
 
     /**
-     * @deprecated 7.1.4 Use async `$repository->cache->get()` and `$repository->cache->delete()`
-     * @uses \React\Async\await() This method is blocking.
+     * @deprecated 7.2.0 Use async `$repository->cache->get()` and `$repository->cache->delete()`
      * {@inheritdoc}
      */
     public function pull($key, $default = null)
@@ -381,12 +406,14 @@ abstract class AbstractRepository extends Collection
         foreach ($items as $item) {
             if (is_a($item, $this->class)) {
                 $key = $item->{$this->discrim};
+                $this->items[$key] = $item;
                 $values[$this->cache->key_prefix.$key] = $item->serialize();
-                $this->items[$key] = WeakReference::create($item);
             }
         }
 
-        $this->cache->interface->setMultiple($values);
+        if ($values) {
+            $this->cache->interface->setMultiple($values);
+        }
 
         return $this;
     }
@@ -394,8 +421,7 @@ abstract class AbstractRepository extends Collection
     /**
      * Pushes a single item to the repository.
      *
-     * @deprecated 7.1.4 Use async `$repository->cache->set()`
-     * @uses \React\Async\await() This method is blocking.
+     * @deprecated 7.2.0 Use async `$repository->cache->set()`
      *
      * @param Part $item
      *
@@ -409,24 +435,27 @@ abstract class AbstractRepository extends Collection
 
         if (is_a($item, $this->class)) {
             $key = $item->{$this->discrim};
+            $this->items[$key] = $item;
             $this->cache->interface->set($this->cache->key_prefix.$key, $item->serialize());
-            $this->items[$key] = WeakReference::create($item);
         }
 
         return $this;
     }
 
     /**
-     * Returns the first element of the weak referenced cache.
+     * Returns the first cached element.
      *
      * @return object|null
      */
     public function first()
     {
-        /** @var WeakReference|null */
         foreach ($this->items as $item) {
-            if (isset($item)) {
-                return $item->get();
+            if ($item instanceof WeakReference) {
+                $item = $item->get();
+            }
+
+            if ($item) {
+                return $item;
             }
         }
 
@@ -434,7 +463,7 @@ abstract class AbstractRepository extends Collection
     }
 
     /**
-     * Returns the last element of the weak referenced cache.
+     * Returns the last cached element.
      *
      * @return object|null
      */
@@ -442,10 +471,13 @@ abstract class AbstractRepository extends Collection
     {
         $items = array_reverse($this->items, true);
 
-        /** @var WeakReference|null */
         foreach ($items as $item) {
-            if (isset($item)) {
-                return $item->get();
+            if ($item instanceof WeakReference) {
+                $item = $item->get();
+            }
+
+            if ($item) {
+                return $item;
             }
         }
 
@@ -453,11 +485,8 @@ abstract class AbstractRepository extends Collection
     }
 
     /**
-     * Checks if the cache has an object.
-     *
-     * @uses \React\Async\await() This method is blocking.
-     *
-     * @param array ...$keys
+     * @deprecated 7.2.0 Use async `$repository->cache->has()`
+     * {@inheritdoc}
      */
     public function has(...$keys): bool
     {
@@ -478,10 +507,14 @@ abstract class AbstractRepository extends Collection
         $collection = new Collection([], $this->discrim, $this->class);
 
         foreach ($this->items as $item) {
-            if (isset($item) && $part = $item->get()) {
-                if ($callback($part)) {
-                    $collection->push($part);
-                }
+            if ($item === null) continue;
+
+            if ($item instanceof WeakReference) {
+                $item = $item->get();
+            }
+
+            if ($item && $callback($item)) {
+                $collection->push($item);
             }
         }
 
@@ -494,10 +527,14 @@ abstract class AbstractRepository extends Collection
     public function find(callable $callback)
     {
         foreach ($this->items as $item) {
-            if (isset($item) && $part = $item->get()) {
-                if ($callback($part)) {
-                    return $part;
-                }
+            if ($item === null) continue;
+
+            if ($item instanceof WeakReference) {
+                $item = $item->get();
+            }
+
+            if ($item && $callback($item)) {
+                return $item;
             }
         }
 
@@ -505,55 +542,18 @@ abstract class AbstractRepository extends Collection
     }
 
     /**
-     * Clears the cache.
-     * @uses \React\Async\await() This method is blocking.
+     * @deprecated 7.2.0 Use async `$repository->cache->clear()`
+     * {@inheritdoc}
      */
     public function clear(): void
     {
-        if ($this->items) {
-            $this->cache->interface->deleteMultiple(array_map(function ($key) {
-                return $this->cache->key_prefix.$key;
-            }, array_keys($this->items)));
+        $this->items = [];
 
-            parent::clear();
-        }
+        $this->cache->clear();
     }
 
     /**
-     * {@inheritdoc}
-     * @todo test
-     */
-    public function map(callable $callback): Collection
-    {
-        $keys = array_keys($this->items);
-        $values = array_map($callback, array_values($this->toArray()));
-
-        foreach ($values as $key => $value) {
-            $value[$key] = WeakReference::create($value);
-        }
-
-        return new Collection(array_combine($keys, $values), $this->discrim, $this->class);
-    }
-
-    /**
-     * {@inheritdoc}
-     * @todo test
-     */
-    public function merge(Collection $collection): Collection
-    {
-        $items2 = [];
-
-        foreach ($collection->toArray() as $key => $value) {
-            $items2[$key] = WeakReference::create($value);
-        }
-
-        $this->items = array_merge($this->items, $items2);
-
-        return $this;
-    }
-
-    /**
-     * Converts the weak caches to an array.
+     * Converts the weak caches to array.
      *
      * @return array
      */
@@ -561,21 +561,19 @@ abstract class AbstractRepository extends Collection
     {
         $items = [];
 
-        foreach ($this->items as $key => $value) {
-            if (isset($value)) {
-                $items[$key] = $value->get();
+        foreach ($this->items as $key => $item) {
+            if ($item instanceof WeakReference) {
+                $item = $item->get();
             }
+            $items[$key] = $item;
         }
 
         return $items;
     }
 
     /**
-     * If the weak cache has an offset.
-     *
-     * @param mixed $offset
-     *
-     * @return bool
+     * @deprecated 7.2.0 Use async `$repository->cache->has()`
+     * {@inheritdoc}
      */
     public function offsetExists($offset): bool
     {
@@ -583,71 +581,48 @@ abstract class AbstractRepository extends Collection
             return true;
         }
 
-        return await
-            ($this->cache->has($offset));
-        //return false;
+        $this->cache->has($offset);
+        return false;
     }
 
     /**
-     * Gets an item from the cache.
-     *
-     * @uses \React\Async\await() This method is blocking.
-     *
-     * @param mixed $offset
-     *
-     * @return mixed
+     * @deprecated 7.2.0 Use async `$repository->cache->get()` or sync `$repository->get()`
+     * {@inheritdoc}
      */
     #[\ReturnTypeWillChange]
     public function offsetGet($offset)
     {
-        if (isset($this->items[$offset]) && $item = $this->items[$offset]->get()) {
+        if (isset($this->items[$offset])) {
+            $item = $this->items[$offset];
+            if ($item instanceof WeakReference) {
+                $item = $item->get();
+            }
+
             return $item;
         }
 
-        return await
-            ($this->cache->get($offset));
-        //return null;
+        $this->cache->get($offset);
+        return null;
     }
 
     /**
-     * Sets an item into the cache.
-     *
-     * @uses \React\Async\await() This method is blocking.
-     *
-     * @param mixed $offset
-     * @param Part  $value
+     * @deprecated 7.2.0 Use async `$repository->cache->set()`
+     * {@inheritdoc}
      */
     public function offsetSet($offset, $value): void
     {
-        if (array_key_exists($offset, $this->items)) {
-            $this->cache->interface->set($this->cache->key_prefix.$offset, $value->serialize());
-            $this->items[$offset] = WeakReference::create($value);
-
-            return;
-        }
-
-        await
-            ($this->cache->set($offset, $value));
+        $this->cache->interface->set($this->cache->key_prefix.$offset, $value->serialize());
+        parent::offsetSet($offset, $value);
     }
 
     /**
-     * Unsets an index from the cache.
-     *
-     * @uses \React\Async\await() This method is blocking.
-     *
-     * @param mixed offset
+     * @deprecated 7.2.0 Use async `$repository->cache->delete()`
+     * {@inheritdoc}
      */
     public function offsetUnset($offset): void
     {
-        if (array_key_exists($offset, $this->items)) {
-            $this->cache->interface->delete($this->cache->key_prefix, $offset);
-            unset($this->items[$offset]);
-
-            return;
-        }
-
-        await
-            ($this->cache->delete($offset));
+        $this->cache->interface->delete($this->cache->key_prefix, $offset);
+        parent::offsetUnset($offset);
     }
 
     /**
@@ -661,18 +636,20 @@ abstract class AbstractRepository extends Collection
     /**
      * Returns an iterator for the cache.
      *
-     * @uses \React\Async\await() This method is blocking.
-     *
      * @return Traversable
      */
     public function getIterator(): Traversable
     {
         return (function () {
             foreach ($this->items as $key => $item) {
-                if (($part = $item->get()) || ($part = await($this->cache->get($key)))) {
-                    yield $key => $part;
+                if ($item instanceof WeakReference) {
+                    $item = $item->get();
+                }
+
+                if ($item) {
+                    yield $key => $this->items[$key] = $item;
                 } else {
-                    //$this->cache->get($key);
+                    $this->cache->get($key);
                 }
             }
         })();
@@ -681,7 +658,7 @@ abstract class AbstractRepository extends Collection
     public function __get(string $key)
     {
         if (in_array($key, ['cache'])) {
-            return $this->{$key};
+            return $this->$key;
         }
     }
 }
