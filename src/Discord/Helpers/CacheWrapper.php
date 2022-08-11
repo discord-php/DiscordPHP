@@ -88,12 +88,19 @@ class CacheWrapper
         $this->flusher = function ($time, Discord $discord) {
             $values = [];
             foreach ($this->items as $key => $item) {
-                if ($item === null || $item instanceof WeakReference) {
-                    // Item was removed from memory, delete from cache
+                if ($item === null) {
                     $values[] = $key;
+                } elseif ($item instanceof WeakReference) {
+                    // Item was removed from memory, delete from cache
+                    if ($item->get() === null) {
+                        $values[] = $key;
+                    }
                 } elseif ($item instanceof Part) {
-                    // Item is no longer used other than in the repository, make it weak so it can be deleted next heartbeat
-                    $this->items[$key] = WeakReference::create($item);
+                    // Skip ID related to Bot
+                    if ($key != $discord->id) {
+                        // Item is no longer used other than in the repository, make it weak so it can be deleted next heartbeat
+                        $this->items[$key] = WeakReference::create($item);
+                    }
                 }
             }
             $flushed = count($values);
