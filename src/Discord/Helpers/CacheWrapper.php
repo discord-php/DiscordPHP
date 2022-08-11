@@ -89,16 +89,12 @@ class CacheWrapper
             $values = [];
             foreach ($this->items as $key => $item) {
                 if ($item === null) {
-                    $values[] = $key;
-                } elseif ($item instanceof WeakReference) {
                     // Item was removed from memory, delete from cache
-                    if ($item->get() === null) {
-                        $values[] = $key;
-                    }
+                    $values[] = $key;
                 } elseif ($item instanceof Part) {
                     // Skip ID related to Bot
                     if ($key != $discord->id) {
-                        // Item is no longer used other than in the repository, make it weak so it can be deleted next heartbeat
+                        // Item is no longer used other than in the repository, make it weak so it can be garbage collected
                         $this->items[$key] = WeakReference::create($item);
                     }
                 }
