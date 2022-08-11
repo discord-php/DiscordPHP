@@ -259,6 +259,13 @@ class Discord
     protected $gateway;
 
     /**
+     * The resume_gateway_url that the WebSocket client will reconnect to.
+     *
+     * @var string resume_gateway_url URL.
+     */
+    protected $resume_gateway_url;
+
+    /**
      * What encoding the client will use, either `json` or `etf`.
      *
      * @var string Encoding.
@@ -416,7 +423,8 @@ class Discord
  
         // Check if we received resume_gateway_url
         if (isset($content->resume_gateway_url)) {
-            $this->gateway = $content->resume_gateway_url;
+            $this->resume_gateway_url = $content->resume_gateway_url;
+            $this->logger->debug('resume_gateway_url received', ['url' => $content->resume_gateway_url]);
         }
 
         // If this is a reconnect we don't want to
@@ -1294,7 +1302,7 @@ class Discord
 
         if (is_null($gateway)) {
             $this->http->get(Endpoint::GATEWAY_BOT)->done(function ($response) use ($buildParams) {
-                $buildParams($this->reconnecting && $this->gateway ? $this->gateway : $response->url, $response->session_start_limit);
+                $buildParams($this->resume_gateway_url ?? $response->url, $response->session_start_limit);
             }, function ($e) use ($buildParams) {
                 // Can't access the API server so we will use the default gateway.
                 $this->logger->warning('could not retrieve gateway, using default');
