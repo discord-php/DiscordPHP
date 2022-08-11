@@ -15,6 +15,7 @@ use Discord\Discord;
 use Discord\Parts\Part;
 use React\Cache\CacheInterface;
 use React\Promise\PromiseInterface;
+use WeakReference;
 
 /**
  * Wrapper for CacheInterface that tracks Repository items.
@@ -57,6 +58,11 @@ class CacheWrapper
     protected $key_prefix;
 
     /**
+     * @var callable Callback flusher
+     */
+    protected $flusher;
+
+    /**
      * @param CacheInterface $cacheInterface The actual CacheInterface.
      * @param array          &$items         Repository items passed by reference.
      * @param string         $class          Object class name allowed for serialization.
@@ -77,6 +83,34 @@ class CacheWrapper
         }
 
         $this->key_prefix = implode($separator, [substr(strrchr($this->class, '\\'), 1)] + $vars) . $separator;
+
+        // Flush every heartbeat ack
+        $this->flusher = function ($time, Discord $discord) {
+            $values = [];
+            foreach ($this->items as $key => $item) {
+                if ($item === null || $item instanceof WeakReference) {
+                    // Item was removed from memory, delete from cache
+                    $values[] = $key;
+                } elseif ($item instanceof Part) {
+                    // Item is no longer used other than in the repository, make it weak so it can be deleted next heartbeat
+                    $this->items[$key] = WeakReference::create($item);
+                }
+            }
+            $flushed = count($values);
+            if ($flushed) {
+                $this->deleteMultiple($values)->then(function ($success) use ($flushed) {
+                    if ($success) {
+                        $this->discord->getLogger()->debug('Flushed repository cache', ['count' => $flushed, 'class' => $this->class]);
+                    }
+                });
+            }
+        };
+        $discord->on('heartbeat-ack', $this->flusher);
+    }
+
+    public function __destruct()
+    {
+        $this->discord->removeListener('heartbeat-ack', $this->flusher);
     }
 
     /**
