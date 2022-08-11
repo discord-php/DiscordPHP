@@ -412,6 +412,13 @@ class Discord
     {
         $this->logger->debug('ready packet received');
 
+        $content = $data->d;
+ 
+        // Check if we received resume_gateway_url
+        if (isset($content->resume_gateway_url)) {
+            $this->gateway = $content->resume_gateway_url;
+        }
+
         // If this is a reconnect we don't want to
         // reparse the READY packet as it would remove
         // all the data cached.
@@ -423,7 +430,6 @@ class Discord
             return;
         }
 
-        $content = $data->d;
         $this->emit('trace', $data->d->_trace);
         $this->logger->debug('discord trace received', ['trace' => $content->_trace]);
 
@@ -1288,7 +1294,7 @@ class Discord
 
         if (is_null($gateway)) {
             $this->http->get(Endpoint::GATEWAY_BOT)->done(function ($response) use ($buildParams) {
-                $buildParams($response->url, $response->session_start_limit);
+                $buildParams($this->reconnecting && $this->gateway ? $this->gateway : $response->url, $response->session_start_limit);
             }, function ($e) use ($buildParams) {
                 // Can't access the API server so we will use the default gateway.
                 $this->logger->warning('could not retrieve gateway, using default');
