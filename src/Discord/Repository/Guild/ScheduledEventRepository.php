@@ -16,6 +16,8 @@ use Discord\Parts\Guild\ScheduledEvent;
 use Discord\Repository\AbstractRepository;
 use React\Promise\ExtendedPromiseInterface;
 
+use function React\Promise\resolve;
+
 /**
  * Contains scheduled events to guilds.
  *
@@ -58,21 +60,23 @@ class ScheduledEventRepository extends AbstractRepository
 
         if (! $fresh && $part = $this->get($this->discrim, $id)) {
             if (isset($part->user_count)) {
-                return \React\Promise\resolve($part);
+                return resolve($part);
             }
         }
 
-        $part = $this->factory->create($this->class, [$this->discrim => $id]);
+        $part = $this->factory->part($this->class, [$this->discrim => $id]);
         $endpoint = new Endpoint($this->endpoints['get']);
         $endpoint->bindAssoc(array_merge($part->getRepositoryAttributes(), $this->vars));
 
         $endpoint->addQuery('with_user_count', $with_user_count);
 
-        return $this->http->get($endpoint)->then(function ($response) {
-            $part = $this->factory->create($this->class, array_merge($this->vars, (array) $response), true);
-            $cacheKey = $this->cacheKeyPrefix.$part->{$this->discrim};
+        return $this->http->get($endpoint)->then(function ($response) use ($part, $id) {
+            $part->fill(array_merge($this->vars, (array) $response));
+            $part->created = true;
 
-            return $this->cache->set($cacheKey, $part);
+            return $this->cache->set($id, $part)->then(function ($success) use ($part) {
+                return $part;
+            });
         });
     }
 }
