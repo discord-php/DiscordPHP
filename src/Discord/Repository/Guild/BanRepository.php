@@ -85,13 +85,13 @@ class BanRepository extends AbstractRepository
             empty($content) ? null : $content,
             $headers
         )->then(function () use ($user, $reason) {
-            $ban = $this->factory->create(Ban::class, [
+            $ban = $this->factory->part(Ban::class, [
                 'user' => (object) $user->getRawAttributes(),
                 'reason' => $reason,
                 'guild_id' => $this->vars['guild_id'],
             ], true);
 
-            return $this->cache->set($this->cacheKeyPrefix.$ban->user_id, $ban)->then(function () use ($ban) {
+            return $this->cache->set($ban->user_id, $ban)->then(function () use ($ban) {
                 return $ban;
             });
         });
@@ -114,7 +114,7 @@ class BanRepository extends AbstractRepository
         }
 
         if (is_scalar($ban)) {
-            return $this->cache->get($this->cacheKeyPrefix.$ban, $ban)->then(function ($ban) use ($reason) {
+            return $this->cache->get($ban)->then(function ($ban) use ($reason) {
                 return $this->delete($ban, $reason);
             });
         }
