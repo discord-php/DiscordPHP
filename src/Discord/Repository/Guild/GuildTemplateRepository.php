@@ -60,13 +60,15 @@ class GuildTemplateRepository extends AbstractRepository
     public function sync(string $template_code): ExtendedPromiseInterface
     {
         return $this->http->put(Endpoint::bind(Endpoint::GUILD_TEMPLATE, $this->vars['guild_id'], $template_code))->then(function ($guild_template) use ($template_code) {
-            $cacheKey = $this->cacheKeyPrefix.$template_code;
+            return $this->cache->get($template_code)->then(function ($guildTemplate) use ($guild_template, $template_code) {
+                if ($guildTemplate === null) {
+                    $guildTemplate = $this->factory->part(GuildTemplate::class, (array) $guild_template, true);
+                } else {
+                    $guildTemplate->fill($guild_template);
+                }
 
-            return $this->cache->has($cacheKey)->then(function ($success) use ($guild_template, $cacheKey) {
-                $guild_template = $this->factory->create(GuildTemplate::class, $guild_template, true);
-
-                return $this->cache->set($cacheKey, $guild_template)->then(function () use ($guild_template) {
-                    return $guild_template;
+                return $this->cache->set($template_code, $guildTemplate)->then(function ($success) use ($guildTemplate) {
+                    return $guildTemplate;
                 });
             });
         });
