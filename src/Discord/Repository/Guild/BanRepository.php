@@ -23,11 +23,6 @@ use React\Promise\ExtendedPromiseInterface;
  *
  * @see \Discord\Parts\Guild\Ban
  * @see \Discord\Parts\Guild\Guild
- *
- * @method Ban|null get(string $discrim, $key)  Gets an item from the collection.
- * @method Ban|null first()                     Returns the first element of the collection.
- * @method Ban|null pull($key, $default = null) Pulls an item from the repository, removing and returning the item.
- * @method Ban|null find(callable $callback)    Runs a filter callback over the repository.
  */
 class BanRepository extends AbstractRepository
 {

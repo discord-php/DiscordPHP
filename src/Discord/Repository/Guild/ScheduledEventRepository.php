@@ -23,11 +23,6 @@ use function React\Promise\resolve;
  *
  * @see \Discord\Parts\Guild\ScheduledEvent
  * @see \Discord\Parts\Guild\Guild
- *
- * @method ScheduledEvent|null get(string $discrim, $key)  Gets an item from the collection.
- * @method ScheduledEvent|null first()                     Returns the first element of the collection.
- * @method ScheduledEvent|null pull($key, $default = null) Pulls an item from the repository, removing and returning the item.
- * @method ScheduledEvent|null find(callable $callback)    Runs a filter callback over the repository.
  */
 class ScheduledEventRepository extends AbstractRepository
 {

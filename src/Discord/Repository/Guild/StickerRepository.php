@@ -20,11 +20,6 @@ use Discord\Repository\AbstractRepository;
  *
  * @see \Discord\Parts\Guild\Sticker
  * @see \Discord\Parts\Guild\Guild
- *
- * @method Sticker|null get(string $discrim, $key)  Gets an item from the collection.
- * @method Sticker|null first()                     Returns the first element of the collection.
- * @method Sticker|null pull($key, $default = null) Pulls an item from the repository, removing and returning the item.
- * @method Sticker|null find(callable $callback)    Runs a filter callback over the repository.
  */
 class StickerRepository extends AbstractRepository
 {

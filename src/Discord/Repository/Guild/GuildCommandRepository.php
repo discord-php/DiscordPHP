@@ -22,11 +22,6 @@ use React\Promise\ExtendedPromiseInterface;
  *
  * @see \Discord\Parts\Interactions\Command\Command
  * @see \Discord\Parts\Guild\Guild
- *
- * @method Command|null get(string $discrim, $key)  Gets an item from the collection.
- * @method Command|null first()                     Returns the first element of the collection.
- * @method Command|null pull($key, $default = null) Pulls an item from the repository, removing and returning the item.
- * @method Command|null find(callable $callback)    Runs a filter callback over the repository.
  */
 class GuildCommandRepository extends AbstractRepository
 {

@@ -21,11 +21,6 @@ use React\Promise\ExtendedPromiseInterface;
  *
  * @see \Discord\Parts\Guild\GuildTemplate
  * @see \Discord\Parts\Guild\Guild
- *
- * @method GuildTemplate|null get(string $discrim, $key)  Gets an item from the collection.
- * @method GuildTemplate|null first()                     Returns the first element of the collection.
- * @method GuildTemplate|null pull($key, $default = null) Pulls an item from the repository, removing and returning the item.
- * @method GuildTemplate|null find(callable $callback)    Runs a filter callback over the repository.
  */
 class GuildTemplateRepository extends AbstractRepository
 {
