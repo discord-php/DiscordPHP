@@ -47,7 +47,8 @@ class GuildCreate extends Event
 
         foreach ($data->channels as $channel) {
             /** @var Channel[] */
-            $channels[$channel->id] = $this->factory->part(Channel::class, (array) $channel + ['guild_id' => $data->id], true);
+            $channel->guild_id = $data->id;
+            $channels[$channel->id] = $this->factory->create(Channel::class, $channel, true);
         }
         if (! empty($channels)) {
             $await[] = $guildPart->channels->cache->setMultiple($channels);
@@ -58,11 +59,11 @@ class GuildCreate extends Event
             $member->guild_id = $data->id;
             $rawMembers[$userId] = $member;
             /** @var Member[] */
-            $members[$userId] = $this->factory->part(Member::class, (array) $rawMembers[$userId], true);
+            $members[$userId] = $this->factory->create(Member::class, $rawMembers[$userId], true);
 
             if (! $this->discord->users->offsetExists($userId)) {
                 /** @var User[] */
-                $users[$userId] = $this->factory->part(User::class, (array) $member->user, true);
+                $users[$userId] = $this->factory->create(User::class, $member->user, true);
             }
         }
         if (! empty($users)) {
@@ -77,26 +78,25 @@ class GuildCreate extends Event
 
         foreach ($data->voice_states as $voice_state) {
             if (isset($channels[$voice_state->channel_id])) {
-                $voice_state = (array) $voice_state;
-                $channelId = $voice_state['channel_id'];
-                $userId = $voice_state['user_id'];
-                $voice_state['guild_id'] = $data->id;
+                $channelId = $voice_state->channel_id;
+                $userId = $voice_state->user_id;
+                $voice_state->guild_id = $data->id;
                 if (! isset($voice_state['member']) && isset($rawMembers[$userId])) {
                     $voice_state['member'] = $rawMembers[$userId];
                 }
-                $await[] = $channels[$channelId]->members->cache->set($userId, $this->factory->part(VoiceStateUpdatePart::class, $voice_state, true));
+                $await[] = $channels[$channelId]->members->cache->set($userId, $this->factory->create(VoiceStateUpdatePart::class, $voice_state, true));
             }
         }
 
         foreach ($data->threads as $thread) {
             if (isset($channels[$thread->parent_id])) {
-                $await[] = $channels[$thread->parent_id]->threads->cache->set($thread->id, $this->factory->part(Thread::class, (array) $thread, true));
+                $await[] = $channels[$thread->parent_id]->threads->cache->set($thread->id, $this->factory->create(Thread::class, $thread, true));
             }
         }
 
         foreach ($data->stage_instances as $stageInstance) {
             /** @var StageInstance[] */
-            $stageInstances[$stageInstance->id] = $this->factory->part(StageInstance::class, (array) $stageInstance, true);
+            $stageInstances[$stageInstance->id] = $this->factory->create(StageInstance::class, $stageInstance, true);
         }
         if (! empty($stageInstances)) {
             $await[] = $guildPart->stage_instances->cache->setMultiple($stageInstances);
@@ -104,7 +104,7 @@ class GuildCreate extends Event
 
         foreach ($data->guild_scheduled_events as $scheduledEvent) {
             /** @var ScheduledEvent[] */
-            $scheduledEvents[$scheduledEvent->id] = $this->factory->part(ScheduledEvent::class, (array) $scheduledEvent, true);
+            $scheduledEvents[$scheduledEvent->id] = $this->factory->create(ScheduledEvent::class, $scheduledEvent, true);
         }
         if (! empty($scheduledEvents)) {
             $await[] = $guildPart->guild_scheduled_events->cache->setMultiple($scheduledEvents);
@@ -132,7 +132,8 @@ class GuildCreate extends Event
 
                         foreach ($bans as $ban) {
                             $lastUserId = $ban->user->id;
-                            $guildPart->bans->cache->set($lastUserId, $this->factory->part(Ban::class, (array) $ban + ['guild_id' => $guildPart->id], true));
+                            $ban->guild_id = $guildPart->id;
+                            $guildPart->bans->cache->set($lastUserId, $this->factory->create(Ban::class, $ban, true));
                         }
 
                         $banPagination($lastUserId);
