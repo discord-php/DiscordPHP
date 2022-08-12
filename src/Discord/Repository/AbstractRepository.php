@@ -547,9 +547,8 @@ abstract class AbstractRepository extends Collection
      */
     public function clear(): void
     {
-        $this->items = [];
-
         $this->cache->clear();
+        parent::clear();
     }
 
     /**
