@@ -60,9 +60,9 @@ class GuildRepository extends AbstractRepository
         }
 
         return $this->http->delete(Endpoint::bind(Endpoint::USER_CURRENT_GUILD, $guild))->then(function () use ($guild) {
-            $this->cache->delete($this->cacheKeyPrefix.$guild);
-
-            return $this;
+            return $this->cache->delete($guild)->then(function ($success) {
+                return $this;
+            });
         });
     }
 }
