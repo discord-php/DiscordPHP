@@ -87,7 +87,7 @@ class MemberRepository extends AbstractRepository
 
                     return;
                 } elseif (! $afterId) {
-                    $this->clear();
+                    $this->items = [];
                 }
 
                 foreach ($response as $value) {
