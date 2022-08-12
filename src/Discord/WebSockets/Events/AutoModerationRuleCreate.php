@@ -29,7 +29,10 @@ class AutoModerationRuleCreate extends Event
         $rulePart = $this->factory->create(Rule::class, $data, true);
 
         if ($guild = $this->discord->guilds->get('id', $data->guild_id)) {
-            $guild->auto_moderation_rules->pushItem($rulePart);
+            $deferred->resolve($guild->auto_moderation_rules->cache->set($data->id, $rulePart)->then(function ($success) use ($rulePart) {
+                return $rulePart;
+            }));
+            return;
         }
 
         $deferred->resolve($rulePart);
