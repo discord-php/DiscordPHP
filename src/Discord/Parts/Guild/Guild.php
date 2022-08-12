@@ -432,6 +432,11 @@ class Guild extends Part
         return in_array('BANNER', $this->features);
     }
 
+    protected function getFeatureCommunityAttribute(): bool
+    {
+        return in_array('COMMUNITY', $this->features);
+    }
+
     protected function getFeatureDiscoverableAttribute(): bool
     {
         return in_array('DISCOVERABLE', $this->features);
