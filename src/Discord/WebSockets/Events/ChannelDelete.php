@@ -15,6 +15,8 @@ use Discord\Parts\Channel\Channel;
 use Discord\WebSockets\Event;
 use Discord\Helpers\Deferred;
 
+use function React\Async\coroutine;
+
 /**
  * @see https://discord.com/developers/docs/topics/gateway#channel-delete
  */
@@ -25,16 +27,19 @@ class ChannelDelete extends Event
      */
     public function handle(Deferred &$deferred, $data): void
     {
-        /** @var Channel */
-        $channelPart = $this->factory->create(Channel::class, $data);
+        coroutine(function ($data) {
+            $channelPart = null;
 
-        if ($guild = $channelPart->guild) {
-            if ($channelPart = $guild->channels->pull($data->id)) {
-                $channelPart->fill((array) $data);
-                $channelPart->created = false;
+            /** @var ?Guild */
+            if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
+                /** @var Channel */
+                if ($channelPart = yield $guild->channels->cachePull($data->id)) {
+                    $channelPart->fill((array) $data);
+                    $channelPart->created = false;
+                }
             }
-        }
 
-        $deferred->resolve($channelPart);
+            return $channelPart ?? $this->factory->create(Channel::class, $data);;
+        }, $data)->then([$deferred, 'resolve']);
     }
 }
