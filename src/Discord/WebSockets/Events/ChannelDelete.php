@@ -39,7 +39,7 @@ class ChannelDelete extends Event
                 }
             }
 
-            return $channelPart ?? $this->factory->create(Channel::class, $data);;
+            return $channelPart ?? $this->factory->create(Channel::class, $data);
         }, $data)->then([$deferred, 'resolve']);
     }
 }
