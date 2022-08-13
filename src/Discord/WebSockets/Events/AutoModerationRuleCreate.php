@@ -14,6 +14,9 @@ namespace Discord\WebSockets\Events;
 use Discord\WebSockets\Event;
 use Discord\Helpers\Deferred;
 use Discord\Parts\Guild\AutoModeration\Rule;
+use Discord\Parts\Guild\Guild;
+
+use function React\Async\coroutine;
 
 /**
  * @see https://discord.com/developers/docs/topics/gateway#auto-moderation-rule-create
@@ -25,16 +28,21 @@ class AutoModerationRuleCreate extends Event
      */
     public function handle(Deferred &$deferred, $data): void
     {
-        /** @var Rule */
-        $rulePart = $this->factory->create(Rule::class, $data, true);
+        coroutine(function ($data) {
+            /** @var ?Guild */
+            if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
+                if ($rulePart = $guild->auto_moderation_rules[$data->id]) {
+                    $rulePart->fill((array) $data);
+                }
+            }
 
-        if ($guild = $this->discord->guilds->get('id', $data->guild_id)) {
-            $deferred->resolve($guild->auto_moderation_rules->cache->set($data->id, $rulePart)->then(function ($success) use ($rulePart) {
-                return $rulePart;
-            }));
-            return;
-        }
+            if (! $rulePart) {
+                /** @var Rule */
+                $rulePart = $this->factory->create(Rule::class, $data, true);
+            }
+            yield $guild->auto_moderation_rules->cache->set($data->id, $rulePart);
 
-        $deferred->resolve($rulePart);
+            return $rulePart;
+        }, $data)->then([$deferred, 'resolve']);
     }
 }

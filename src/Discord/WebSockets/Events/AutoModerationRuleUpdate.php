@@ -34,7 +34,7 @@ class AutoModerationRuleUpdate extends Event
             /** @var ?Guild */
             if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
                 /** @var ?Rule */
-                if ($oldRule = yield $guild->auto_moderation_rules->cacheGet($data->id)) {
+                if ($oldRule = yield $guild->auto_moderation_rules[$data->id]) {
                     // Swap
                     $rulePart = $oldRule;
                     $oldRule = clone $oldRule;

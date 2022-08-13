@@ -13,6 +13,7 @@ namespace Discord\WebSockets\Events;
 
 use Discord\WebSockets\Event;
 use Discord\Helpers\Deferred;
+use Discord\Parts\Guild\Guild;
 use Discord\Parts\Interactions\Command\Overwrite;
 
 /**
@@ -27,9 +28,11 @@ class ApplicationCommandPermissionsUpdate extends Event
     {
         $overwritePart = $oldOverwrite = null;
 
+        /** @var Guild */
         if ($guild = $this->discord->guilds->get('id', $data->guild_id)) {
             if ($command = $guild->commands->get('id', $data->id)) {
                 // There is only one command permissions object
+                /** @var Overwrite */
                 if ($oldOverwrite = $command->overwrites->first()) {
                     // Swap
                     $overwritePart = $oldOverwrite;
