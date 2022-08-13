@@ -603,7 +603,7 @@ class Message extends Part
      */
     protected function getEditedTimestampAttribute(): ?Carbon
     {
-        if (isset($this->attributes['edited_timestamp'])) {
+        if (! isset($this->attributes['edited_timestamp'])) {
             return null;
         }
 
