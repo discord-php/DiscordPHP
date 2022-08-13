@@ -151,7 +151,7 @@ abstract class Event
      * Discord instance if necessary.
      *
      * @param Deferred     $deferred The promise to use
-     * @param array|object $data     The data that was sent with the WebSocket
+     * @param object $data The data that was sent with the WebSocket
      *
      * @return void|PromiseInterface
      */
