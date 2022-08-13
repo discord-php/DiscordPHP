@@ -24,6 +24,7 @@ use Traversable;
 use WeakReference;
 
 use function React\Promise\reject;
+use function React\Promise\resolve;
 
 /**
  * Repositories provide a way to store and update parts on the Discord server.
@@ -366,6 +367,24 @@ abstract class AbstractRepository extends Collection
         }
 
         return null;
+    }
+
+    /**
+     * Attempts to get from memory first otherwise load from cache
+     * 
+     * @internal
+     *
+     * @param string|int $offset
+     *
+     * @return PromiseInterface<?Part>
+     */
+    public function cacheGet($offset): PromiseInterface
+    {
+        if ($item = $this->offsetGet($offset)) {
+            return resolve($item);
+        }
+
+        return $this->cache->get($offset);
     }
 
     /**
