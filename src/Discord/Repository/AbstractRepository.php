@@ -623,28 +623,24 @@ abstract class AbstractRepository extends Collection
      */
     public function offsetExists($offset): bool
     {
-        if (isset($this->items[$offset])) {
-            return true;
-        }
-
-        $this->cache->has($offset);
-        return false;
+        return parent::offsetExists($offset);
     }
 
     /**
      * @deprecated 7.2.0 Use async `$repository->cache->get()` or sync `$repository->get()`
      * @internal
      * {@inheritdoc}
+     * @return ?Part
      */
-    #[\ReturnTypeWillChange]
     public function offsetGet($offset)
     {
-        if (isset($this->items[$offset])) {
-            $item = $this->items[$offset];
-            if ($item instanceof WeakReference) {
-                $item = $item->get();
-            }
+        $item = parent::offsetGet($offset);
 
+        if ($item instanceof WeakReference) {
+            $item = $item->get();
+        }
+
+        if ($item) {
             return $this->items[$offset] = $item;
         }
 
