@@ -172,11 +172,11 @@ class Thread extends Part
      */
     protected function getLastPinTimestampAttribute(): ?Carbon
     {
-        if (isset($this->attributes['last_pin_timestamp'])) {
-            return new Carbon($this->attributes['last_pin_timestamp']);
+        if (! isset($this->attributes['last_pin_timestamp'])) {
+            return null;
         }
 
-        return null;
+        return new Carbon($this->attributes['last_pin_timestamp']);
     }
 
     /**
@@ -314,11 +314,11 @@ class Thread extends Part
      */
     protected function getCreateTimestampAttribute(): ?Carbon
     {
-        if (isset($this->attributes['create_timestamp'])) {
-            return new Carbon($this->thread_metadata->create_timestamp);
+        if (! isset($this->attributes['create_timestamp'])) {
+            return null;
         }
 
-        return null;
+        return new Carbon($this->thread_metadata->create_timestamp);
     }
 
     /**

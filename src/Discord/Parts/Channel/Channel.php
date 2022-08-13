@@ -237,11 +237,11 @@ class Channel extends Part
      */
     protected function getLastPinTimestampAttribute(): ?Carbon
     {
-        if (isset($this->attributes['last_pin_timestamp'])) {
-            return Carbon::parse($this->attributes['last_pin_timestamp']);
+        if (! isset($this->attributes['last_pin_timestamp'])) {
+            return null;
         }
 
-        return null;
+        return Carbon::parse($this->attributes['last_pin_timestamp']);
     }
 
     /**
