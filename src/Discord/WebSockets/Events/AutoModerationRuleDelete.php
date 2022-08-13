@@ -35,6 +35,7 @@ class AutoModerationRuleDelete extends Event
             if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
                 /** @var ?Rule */
                 if ($rulePart = yield $guild->auto_moderation_rules->cachePull($data->id)) {
+                    $rulePart->fill((array) $data);
                     $rulePart->created = false;
                 }
             }
