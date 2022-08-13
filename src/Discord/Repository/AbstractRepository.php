@@ -371,7 +371,7 @@ abstract class AbstractRepository extends Collection
 
     /**
      * Attempts to get from memory first otherwise load from cache
-     * 
+     *
      * @internal
      *
      * @param string|int $offset
@@ -380,11 +380,7 @@ abstract class AbstractRepository extends Collection
      */
     public function cacheGet($offset): PromiseInterface
     {
-        if ($item = $this->offsetGet($offset)) {
-            return resolve($item);
-        }
-
-        return $this->cache->get($offset);
+        return resolve($this->offsetGet($offset) ?? $this->cache->get($offset));
     }
 
     /**
@@ -419,6 +415,26 @@ abstract class AbstractRepository extends Collection
         }
 
         return $default;
+    }
+
+    /**
+     * Pulls an item from cache.
+     *
+     * @internal
+     *
+     * @param string|int $key
+     * @param ?Part      $default
+     *
+     * @return PromiseInterface<?Part>
+     */
+    public function cachePull($key, $default = null): PromiseInterface
+    {
+        return $this->cacheGet($key)->then(
+            fn ($item) => ($item === null) ?
+                $default : $this->cache->delete($key)->then(
+                    fn ($success) => $item
+                )
+            );
     }
 
     /**
