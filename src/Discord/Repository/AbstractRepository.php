@@ -345,35 +345,46 @@ abstract class AbstractRepository extends Collection
         }
 
         if ($discrim == $this->discrim) {
-            $item = $this->items[$key] ?? null;
-            if ($item instanceof WeakReference) {
-                $item = $item->get();
+            if ($item = $this->offsetGet($key)) {
+                return $item;
             }
 
-            if ($item) {
-                return $this->items[$key] = $item;
-            }
-
-            $this->cache->get($this->cache->key_prefix.$key);
+            $this->cache->get($key);
             return null;
         }
 
-        foreach ($this->items as $id => &$item) {
-            if ($item === null) continue;
-
-            if ($item instanceof WeakReference) {
-                $item = $item->get();
+        foreach ($this->items as $offset => $item) {
+            if ($item = $this->offsetGet($offset)) {
+                if ($item->{$discrim} == $key) {
+                    return $item;
+                }
+                continue;
             }
 
-            if ($item && $item->{$discrim} == $id) {
-                return $this->items[$key] = $item;
-            }
-
-            $this->cache->get($this->cache->key_prefix.$id);
+            $this->cache->get($offset);
             break;
         }
 
         return null;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function set($offset, $value)
+    {
+        if ($this->class === null) {
+            return parent::set($offset, $value);
+        }
+
+        // Don't insert elements that are not of type class.
+        if (! is_a($value, $this->class)) {
+            return;
+        }
+
+        $this->cache->interface->set($this->cache->key_prefix.$offset, $value->serialize());
+
+        $this->offsetSet($offset, $value);
     }
 
     /**
@@ -385,17 +396,18 @@ abstract class AbstractRepository extends Collection
         if ($item = $this->offsetGet($key)) {
             $default = $item;
             $this->offsetUnset($key);
+            $this->cache->interface->delete($this->cache->key_prefix, $key);
         }
 
         return $default;
     }
 
     /**
-     * Pushes items to the collection.
+     * Pushes items to the repository.
      *
      * @param mixed ...$items
      *
-     * @return self|Collection
+     * @return self
      */
     public function push(...$items): self
     {
@@ -425,7 +437,7 @@ abstract class AbstractRepository extends Collection
      *
      * @param Part $item
      *
-     * @return self|Collection
+     * @return self
      */
     public function pushItem($item): self
     {
@@ -586,6 +598,7 @@ abstract class AbstractRepository extends Collection
 
     /**
      * @deprecated 7.2.0 Use async `$repository->cache->get()` or sync `$repository->get()`
+     * @internal
      * {@inheritdoc}
      */
     #[\ReturnTypeWillChange]
@@ -597,10 +610,9 @@ abstract class AbstractRepository extends Collection
                 $item = $item->get();
             }
 
-            return $item;
+            return $this->items[$offset] = $item;
         }
 
-        $this->cache->get($offset);
         return null;
     }
 
@@ -610,7 +622,6 @@ abstract class AbstractRepository extends Collection
      */
     public function offsetSet($offset, $value): void
     {
-        $this->cache->interface->set($this->cache->key_prefix.$offset, $value->serialize());
         parent::offsetSet($offset, $value);
     }
 
@@ -620,7 +631,6 @@ abstract class AbstractRepository extends Collection
      */
     public function offsetUnset($offset): void
     {
-        $this->cache->interface->delete($this->cache->key_prefix, $offset);
         parent::offsetUnset($offset);
     }
 
