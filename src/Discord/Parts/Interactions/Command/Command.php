@@ -12,23 +12,23 @@
 namespace Discord\Parts\Interactions\Command;
 
 use Discord\Helpers\Collection;
-use Discord\Http\Endpoint;
+use Discord\Parts\Guild\CommandPermissions;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Part;
-use Discord\Repository\Guild\OverwriteRepository;
 use React\Promise\ExtendedPromiseInterface;
+
+use function React\Promise\reject;
 
 /**
  * Represents a command registered on the Discord servers.
  *
  * @see https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-structure
  *
- * @property string              $id             The unique identifier of the command.
- * @property string              $application_id The unique identifier of the parent Application that made the command, if made by one.
- * @property string|null         $guild_id       The unique identifier of the guild that the command belongs to. Null if global.
- * @property Guild|null          $guild          The guild that the command belongs to. Null if global.
- * @property string              $version        Autoincrementing version identifier updated during substantial record changes.
- * @property OverwriteRepository $overwrites     Permission overwrites.
+ * @property string      $id             The unique identifier of the command.
+ * @property string      $application_id The unique identifier of the parent Application that made the command, if made by one.
+ * @property string|null $guild_id       The unique identifier of the guild that the command belongs to. Null if global.
+ * @property Guild|null  $guild          The guild that the command belongs to. Null if global.
+ * @property string      $version        Autoincrementing version identifier updated during substantial record changes.
  */
 class Command extends Part
 {
@@ -60,13 +60,6 @@ class Command extends Part
         'dm_permission',
         'default_permission',
         'version',
-    ];
-
-    /**
-     * @inheritdoc
-     */
-    protected $repositories = [
-        'overwrites' => OverwriteRepository::class,
     ];
 
     /**
@@ -118,19 +111,19 @@ class Command extends Part
     }
 
     /**
-     * Sets an overwrite to the guild application command.
+     * Sets a guild application command permission overwrite.
      *
      * @see https://discord.com/developers/docs/interactions/application-commands#edit-application-command-permissions
      *
-     * @param Overwrite $overwrite An overwrite object.
+     * @param CommandPermissions $overwrite A command permission object.
      *
-     * @deprecated 7.1.0 Requires Bearer token on Permissions v2
+     * @deprecated 7.1.0 Requires Bearer token on Permissions v2.
      *
      * @return ExtendedPromiseInterface
      */
-    public function setOverwrite(Overwrite $overwrite): ExtendedPromiseInterface
+    public function setOverwrite(CommandPermissions $overwrite): ExtendedPromiseInterface
     {
-        return $this->http->put(Endpoint::bind(Endpoint::GUILD_APPLICATION_COMMAND_PERMISSIONS, $this->application_id, $this->guild_id, $this->id), $overwrite->getUpdatableAttributes());
+        return reject(new \RuntimeException('Bots can no longer set guild command permissions'));
     }
 
     /**

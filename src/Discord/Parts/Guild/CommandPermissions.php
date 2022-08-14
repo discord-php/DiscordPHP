@@ -9,13 +9,14 @@
  * with this source code in the LICENSE.md file.
  */
 
-namespace Discord\Parts\Interactions\Command;
+namespace Discord\Parts\Guild;
 
 use Discord\Helpers\Collection;
+use Discord\Parts\Interactions\Command\Permission;
 use Discord\Parts\Part;
 
 /**
- * Guild Application Command Permissions Overwrite Class.
+ * Guild Application Command Permissions Class.
  *
  * @see https://discord.com/developers/docs/interactions/application-commands#application-command-permissions-object-guild-application-command-permissions-structure
  *
@@ -24,7 +25,7 @@ use Discord\Parts\Part;
  * @property string                  $guild_id       The id of the guild
  * @property Collection|Permission[] $permissions    The permissions for the command in the guild
  */
-class Overwrite extends Part
+class CommandPermissions extends Part
 {
     /**
      * @inheritdoc

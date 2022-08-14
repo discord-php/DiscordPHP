@@ -12,10 +12,12 @@
 namespace Discord\Repository\Guild;
 
 use Discord\Http\Endpoint;
+use Discord\Parts\Guild\CommandPermissions;
 use Discord\Parts\Interactions\Command\Command;
-use Discord\Parts\Interactions\Command\Overwrite;
 use Discord\Repository\AbstractRepository;
 use React\Promise\ExtendedPromiseInterface;
+
+use function React\Promise\reject;
 
 /**
  * Contains application guild commands.
@@ -42,18 +44,18 @@ class GuildCommandRepository extends AbstractRepository
     protected $class = Command::class;
 
     /**
-     * Sets overwrite to all application commands in the guild.
+     * Sets all guild commands permission overwrites.
      *
      * @see https://discord.com/developers/docs/interactions/application-commands#batch-edit-application-command-permissions
      *
-     * @param Overwrite $overwrite An overwrite object.
+     * @param CommandPermissions $overwrite An overwrite object.
      *
-     * @deprecated 7.1.0 Removed on Permissions v2
+     * @deprecated 7.1.0 Removed on Permissions v2.
      *
      * @return ExtendedPromiseInterface
      */
-    public function setOverwrite(Overwrite $overwrite): ExtendedPromiseInterface
+    public function setOverwrite(CommandPermissions $overwrite): ExtendedPromiseInterface
     {
-        return \React\Promise\reject(new \RuntimeException('This function is no longer usable by Bots'));
+        return reject(new \RuntimeException('Bots can no longer set guild command permissions'));
     }
 }

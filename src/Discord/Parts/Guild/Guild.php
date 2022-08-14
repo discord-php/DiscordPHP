@@ -31,6 +31,7 @@ use Discord\Repository\Guild\RoleRepository;
 use Discord\Parts\Guild\AuditLog\AuditLog;
 use Discord\Parts\Guild\AuditLog\Entry;
 use Discord\Repository\Guild\AutoModerationRuleRepository;
+use Discord\Repository\Guild\CommandPermissionsRepository;
 use Discord\Repository\Guild\GuildCommandRepository;
 use Discord\Repository\Guild\StickerRepository;
 use Discord\Repository\Guild\ScheduledEventRepository;
@@ -127,12 +128,13 @@ use function React\Promise\resolve;
  * @property      StageInstanceRepository      $stage_instances                          Stage instances in the guild.
  * @property      ScheduledeventRepository     $guild_scheduled_events                   The scheduled events in the guild.
  *
- * @property      InviteRepository             $invites
+ * @property      AutoModerationRuleRepository $auto_moderation_rules
  * @property      BanRepository                $bans
  * @property      GuildCommandRepository       $commands
- * @property      GuildTemplateRepository      $templates
+ * @property      CommandPermissionsRepository $command_permissions
  * @property      IntegrationRepository        $integrations
- * @property      AutoModerationRuleRepository $auto_moderation_rules
+ * @property      InviteRepository             $invites
+ * @property      GuildTemplateRepository      $templates
  */
 class Guild extends Part
 {
@@ -241,12 +243,14 @@ class Guild extends Part
         'channels' => ChannelRepository::class,
         'stage_instances' => StageInstanceRepository::class,
         'guild_scheduled_events' => ScheduledEventRepository::class,
-        'invites' => InviteRepository::class,
+
+        'auto_moderation_rules' => AutoModerationRuleRepository::class,
         'bans' => BanRepository::class,
         'commands' => GuildCommandRepository::class,
-        'templates' => GuildTemplateRepository::class,
+        'command_permissions' => CommandPermissionsRepository::class,
         'integrations' => IntegrationRepository::class,
-        'auto_moderation_rules' => AutoModerationRuleRepository::class,
+        'invites' => InviteRepository::class,
+        'templates' => GuildTemplateRepository::class,
     ];
 
     /**

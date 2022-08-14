@@ -12,16 +12,17 @@
 namespace Discord\Repository\Guild;
 
 use Discord\Http\Endpoint;
-use Discord\Parts\Interactions\Command\Overwrite;
+use Discord\Parts\Guild\CommandPermissions;
 use Discord\Repository\AbstractRepository;
 
 /**
  * Contains permission overwrites for application guild commands.
  *
- * @see \Discord\Parts\Interactions\Command\Overwrite
+ * @see \Discord\Parts\Guild\CommandPermissions
  * @see \Discord\Parts\Interactions\Command\Command
+ * @see \Discord\Parts\Interactions\Command\Permission
  */
-class OverwriteRepository extends AbstractRepository
+class CommandPermissionsRepository extends AbstractRepository
 {
     /**
      * @inheritdoc
@@ -34,5 +35,5 @@ class OverwriteRepository extends AbstractRepository
     /**
      * @inheritdoc
      */
-    protected $class = Overwrite::class;
+    protected $class = CommandPermissions::class;
 }
