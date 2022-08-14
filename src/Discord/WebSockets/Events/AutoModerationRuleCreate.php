@@ -29,19 +29,22 @@ class AutoModerationRuleCreate extends Event
     public function handle(Deferred &$deferred, $data): void
     {
         coroutine(function ($data) {
+            $rulePart = null;
+
             /** @var ?Guild */
             if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
+                /** @var ?Rule */
                 if ($rulePart = $guild->auto_moderation_rules[$data->id]) {
                     $rulePart->fill((array) $data);
                 }
             }
 
-            if (! $rulePart) {
+            if ($rulePart === null) {
                 /** @var Rule */
                 $rulePart = $this->factory->create(Rule::class, $data, true);
             }
 
-            if (isset($guild)) {
+            if ($guild) {
                 yield $guild->auto_moderation_rules->cache->set($data->id, $rulePart);
             }
 

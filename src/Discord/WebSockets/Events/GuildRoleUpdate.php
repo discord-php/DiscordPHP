@@ -45,12 +45,12 @@ class GuildRoleUpdate extends Event
                 }
             }
 
-            if (! $rolePart) {
+            if ($rolePart === null) {
                 /** @var Role */
                 $rolePart = $this->factory->create(Role::class, $role, true);
             }
 
-            if (isset($guild)) {
+            if ($guild) {
                 yield $guild->roles->cache->set($data->role->id, $rolePart);
             }
 

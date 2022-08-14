@@ -43,12 +43,12 @@ class IntegrationUpdate extends Event
                 }
             }
 
-            if (! $integrationPart) {
+            if ($integrationPart === null) {
                 /** @var Integration */
                 $integrationPart = $this->factory->create(Integration::class, $data, true);
             }
 
-            if (isset($guild)) {
+            if ($guild) {
                 yield $guild->integrations->cache->set($data->id, $integrationPart);
             }
 

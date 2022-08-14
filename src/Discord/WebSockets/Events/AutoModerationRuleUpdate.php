@@ -43,12 +43,12 @@ class AutoModerationRuleUpdate extends Event
                 }
             }
 
-            if (! $rulePart) {
+            if ($rulePart === null) {
                 /** @var Rule */
                 $rulePart = $this->factory->create(Rule::class, $data, true);
             }
 
-            if (isset($guild)) {
+            if ($guild) {
                 yield $guild->auto_moderation_rules->cache->set($data->id, $rulePart);
             }
 

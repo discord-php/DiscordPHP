@@ -14,6 +14,7 @@ namespace Discord\WebSockets\Events;
 use Discord\WebSockets\Event;
 use Discord\Helpers\Deferred;
 use Discord\Parts\Channel\Channel;
+use Discord\Parts\Channel\Invite;
 use Discord\Parts\Guild\Guild;
 
 use function React\Async\coroutine;
@@ -35,10 +36,12 @@ class InviteDelete extends Event
             if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
                 /** @var ?Channel */
                 if ($channel = yield $guild->channels->cacheGet($data->channel_id)) {
+                    /** @var ?Invite */
                     $invitePart = yield $channel->invites->cachePull($data->code);
                 }
 
-                if (! $invitePart) {
+                if ($invitePart === null) {
+                    /** @var ?Invite */
                     $invitePart = yield $guild->invites->cachePull($data->code);
                 }
             }

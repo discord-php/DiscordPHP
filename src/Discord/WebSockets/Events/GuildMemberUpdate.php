@@ -43,12 +43,12 @@ class GuildMemberUpdate extends Event
                 }
             }
 
-            if (! $memberPart) {
+            if ($memberPart === null) {
                 /** @var Member */
                 $memberPart = $this->factory->create(Member::class, $data, true);
             }
 
-            if (isset($guild)) {
+            if ($guild) {
                 yield $guild->members->cache->set($data->user->id, $memberPart);
             }
 

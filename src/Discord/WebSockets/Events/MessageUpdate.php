@@ -52,7 +52,7 @@ class MessageUpdate extends Event
                 }
             }
 
-            if ($messagePart === null) {
+            if ($oldMessagePart === null) {
                 /** @var Message */
                 $messagePart = $this->factory->create(Message::class, $data, true);
             }

@@ -14,6 +14,7 @@ namespace Discord\WebSockets\Events;
 use Discord\Parts\Channel\Channel;
 use Discord\WebSockets\Event;
 use Discord\Helpers\Deferred;
+use Discord\Parts\Guild\Guild;
 
 use function React\Async\coroutine;
 
@@ -34,6 +35,7 @@ class ChannelCreate extends Event
             if ($channelPart->is_private) {
                 yield $this->discord->private_channels->cache->set($data->id, $channelPart);
             } else {
+                /** @var ?Guild */
                 if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
                     yield $guild->channels->cache->set($data->id, $channelPart);
                 }
