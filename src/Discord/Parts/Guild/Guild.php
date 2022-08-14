@@ -282,6 +282,16 @@ class Guild extends Part
             }
             $this->emojis->push(...$emojis);
         }
+
+        if (! empty($attributes['stickers'])) {
+            foreach ($attributes['stickers'] as $sticker) {
+                if ($stickerPart = $this->stickers->offsetGet($sticker->id)) {
+                    $stickerPart->fill((array) $sticker);
+                }
+                $stickers[] = $stickerPart ?? $this->factory->part(Sticker::class, (array) $sticker + ['guild_id' => $this->id], true);;
+            }
+            $this->stickers->push(...$stickers);
+        }
     }
 
     /**
