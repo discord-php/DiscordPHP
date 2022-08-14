@@ -41,7 +41,7 @@ class VoiceStateUpdate extends Event
                     }
 
                     /** @var ?VoiceStateUpdatePart */
-                    if ($oldVoiceState = yield $channel->members->cacheGet($data->user_id)) {
+                    if ($oldVoiceState = $channel->members[$data->user_id]) {
                         // Swap
                         $statePart = $oldVoiceState;
                         $oldVoiceState = clone $oldVoiceState;

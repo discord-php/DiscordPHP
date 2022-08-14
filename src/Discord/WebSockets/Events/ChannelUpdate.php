@@ -28,18 +28,20 @@ class ChannelUpdate extends Event
     public function handle(Deferred &$deferred, $data): void
     {
         coroutine(function ($data) {
-            $oldChannel = $promise = null;
+            $oldChannel = $repository = null;
 
             /** @var Channel */
             $channelPart = $this->factory->create(Channel::class, $data, true);
 
             if ($channelPart->is_private) {
+                /** @var ?Channel */
                 if (! $oldChannel = $this->discord->private_channels[$data->id]) {
-                    $promise = $this->discord->private_channels->cache->set($data->id, $channelPart);
+                    $repository = $this->discord->private_channels;
                 }
             } elseif ($guild = $channelPart->guild) {
+                /** @var ?Channel */
                 if (! $oldChannel = $guild->channels[$data->id]) {
-                    $promise = $guild->channels->cache->set($data->id, $channelPart);
+                    $repository = $guild->channels;
                 }
             }
 
@@ -51,8 +53,8 @@ class ChannelUpdate extends Event
                 $channelPart->fill((array) $data);
             }
 
-            if ($promise) {
-                yield $promise;
+            if ($repository) {
+                yield $repository->cache->set($data->id, $channelPart);
             }
 
             return [$channelPart, $oldChannel];
