@@ -14,6 +14,10 @@ namespace Discord\WebSockets\Events;
 use Discord\Parts\Channel\Message;
 use Discord\WebSockets\Event;
 use Discord\Helpers\Deferred;
+use Discord\Parts\Channel\Channel;
+use Discord\Parts\Guild\Guild;
+
+use function React\Async\coroutine;
 
 /**
  * @see https://discord.com/developers/docs/topics/gateway#message-update
@@ -25,21 +29,39 @@ class MessageUpdate extends Event
      */
     public function handle(Deferred &$deferred, $data): void
     {
-        /** @var Message */
-        $messagePart = $this->factory->create(Message::class, $data, true);
-        $oldMessage = null;
+        coroutine(function ($data) {
+            /** @var Message */
+            $messagePart = $oldMessagePart = null;
 
-        if ($channel = $messagePart->channel) {
-            if ($oldMessage = $channel->messages->get('id', $messagePart->id)) {
-                $messagePart = $this->factory->create(Message::class, array_merge($oldMessage->getRawAttributes(), $messagePart->getRawAttributes()), true);
-
-                // Copy scriptData, because fill() approach is bad with partial
-                $messagePart->scriptData = $oldMessage->scriptData;
+            if (isset($data->guild_id)) {
+                /** @var ?Guild */
+                if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
+                    /** @var ?Channel */
+                    $channel = yield $guild->channels->cacheGet($data->channel_id);
+                }
             }
 
-            $channel->messages->offsetSet($messagePart->id, $messagePart);
-        }
+            if (isset($channel)) {
+                /** @var ?Message */
+                if ($oldMessagePart = yield $channel->messages->cacheGet($data->id)) {
+                    // Swap
+                    $messagePart = $oldMessagePart;
+                    $oldMessagePart = clone $oldMessagePart;
 
-        $deferred->resolve([$messagePart, $oldMessage]);
+                    $messagePart->fill((array) $data);
+                }
+            }
+
+            if ($messagePart === null) {
+                /** @var Message */
+                $messagePart = $this->factory->create(Message::class, $data, true);
+            }
+
+            if (isset($channel)) {
+                yield $channel->messages->cache->set($data->id, $messagePart);
+            }
+
+            return [$messagePart, $oldMessagePart];
+        }, $data)->then([$deferred, 'resolve']);
     }
 }
