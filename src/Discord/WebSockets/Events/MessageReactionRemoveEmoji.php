@@ -13,7 +13,13 @@ namespace Discord\WebSockets\Events;
 
 use Discord\WebSockets\Event;
 use Discord\Helpers\Deferred;
+use Discord\Parts\Channel\Channel;
+use Discord\Parts\Channel\Message;
+use Discord\Parts\Guild\Guild;
+use Discord\Parts\Thread\Thread;
 use Discord\Parts\WebSockets\MessageReaction;
+
+use function React\Async\coroutine;
 
 /**
  * @see https://discord.com/developers/docs/topics/gateway#message-reaction-remove-emoji
@@ -25,15 +31,31 @@ class MessageReactionRemoveEmoji extends Event
      */
     public function handle(Deferred &$deferred, $data): void
     {
-        $reaction = new MessageReaction($this->discord, (array) $data, true);
-
-        if ($message = $reaction->message) {
-            $react = $reaction->emoji->toReactionString();
-            if ($message->reactions->offsetExists($react)) {
-                $message->reactions->offsetUnset($react);
+        coroutine(function ($data) {
+            /** @var ?Guild */
+            if (isset($data->guild_id) && $guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
+                $channels = $guild->channels;
+                /** @var ?Channel */
+                if (! $channel = yield $channels->cacheGet($data->channel_id)) {
+                    /** @var Channel */
+                    foreach ($channels as $channel) {
+                        /** @var ?Thread */
+                        if ($thread = yield $channel->threads->cacheGet($data->channel_id)) {
+                            $channel = $thread;
+                            break;
+                        }
+                    }
+                }
             }
-        }
 
-        $deferred->resolve($reaction);
+            $reaction = new MessageReaction($this->discord, (array) $data, true);
+
+            /** @var ?Message */
+            if (isset($channel) && $message = yield $channel->messages->cacheGet($data->message_id)) {
+                yield $message->reactions->cache->delete($reaction->emoji->toReactionString());
+            }
+
+            return $reaction;
+        }, $data)->then([$deferred, 'resolve']);
     }
 }
