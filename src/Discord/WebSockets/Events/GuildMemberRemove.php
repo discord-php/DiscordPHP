@@ -14,6 +14,9 @@ namespace Discord\WebSockets\Events;
 use Discord\Parts\User\Member;
 use Discord\WebSockets\Event;
 use Discord\Helpers\Deferred;
+use Discord\Parts\Guild\Guild;
+
+use function React\Async\coroutine;
 
 /**
  * @see https://discord.com/developers/docs/topics/gateway#guild-member-remove
@@ -25,23 +28,27 @@ class GuildMemberRemove extends Event
      */
     public function handle(Deferred &$deferred, $data): void
     {
-        $memberPart = null;
+        coroutine(function ($data) {
+            $memberPart = null;
 
-        if ($guild = $this->discord->guilds->get('id', $data->guild_id)) {
-            $memberPart = $guild->members->pull($data->user->id);
-            --$guild->member_count;
-        }
+            /** @var ?Guild */
+            if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
+                /** @var ?Member */
+                $memberPart = yield $guild->members->cachePull($data->user->id);
+                --$guild->member_count;
+            }
 
-        if ($memberPart) {
-            $memberPart->created = false;
-        } else {
-            /** @var Member */
-            $memberPart = $this->factory->create(Member::class, $data);
-            $memberPart->guild_id = $data->guild_id;
-        }
+            if ($memberPart) {
+                $memberPart->created = false;
+            } else {
+                /** @var Member */
+                $memberPart = $this->factory->create(Member::class, $data);
+                $memberPart->guild_id = $data->guild_id;
+            }
 
-        $this->cacheUser($data->user);
+            $this->cacheUser($data->user);
 
-        $deferred->resolve($memberPart);
+            return $memberPart;
+        }, $data)->then([$deferred, 'resolve']);
     }
 }
