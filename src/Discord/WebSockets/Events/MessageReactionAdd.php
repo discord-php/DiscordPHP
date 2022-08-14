@@ -33,8 +33,6 @@ class MessageReactionAdd extends Event
     public function handle(Deferred &$deferred, $data): void
     {
         coroutine(function ($data) {
-            $reaction = new MessageReaction($this->discord, (array) $data, true);
-
             /** @var ?Guild */
             if (isset($data->guild_id) && $guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
                 $channels = $guild->channels;
@@ -50,6 +48,8 @@ class MessageReactionAdd extends Event
                     }
                 }
             }
+
+            $reaction = new MessageReaction($this->discord, (array) $data, true);
 
             /** @var ?Message */
             if (isset($channel) && $message = yield $channel->messages->cacheGet($data->message_id)) {
