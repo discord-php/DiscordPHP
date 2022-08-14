@@ -40,6 +40,11 @@ class ApplicationCommandPermissionsUpdate extends Event
                     $oldCommandPermissions = clone $oldCommandPermissions;
 
                     $commandPermissionsPart->fill((array) $data);
+
+                    if ($data->id === $data->application_id) {
+                        // Permission synced
+                        yield $guild->command_permissions->cache->delete($oldCommandPermissions->id);
+                    }
                 }
             }
 
@@ -49,13 +54,8 @@ class ApplicationCommandPermissionsUpdate extends Event
             }
 
             if ($guild && isset($commandPermissionsPart)) {
-                if ($data->id === $data->application_id) {
-                    // Permission removed
-                    yield $guild->command_permissions->cache->delete($commandPermissionsPart->id);
-                } else {
-                    // Permission set / updated
-                    yield $guild->command_permissions->cache->set($data->id, $commandPermissionsPart);
-                }
+                // Permission set / updated
+                yield $guild->command_permissions->cache->set($data->id, $commandPermissionsPart);
             }
 
             return [$commandPermissionsPart, $oldCommandPermissions];
