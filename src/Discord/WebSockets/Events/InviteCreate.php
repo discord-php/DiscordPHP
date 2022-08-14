@@ -13,7 +13,11 @@ namespace Discord\WebSockets\Events;
 
 use Discord\WebSockets\Event;
 use Discord\Helpers\Deferred;
+use Discord\Parts\Channel\Channel;
 use Discord\Parts\Channel\Invite;
+use Discord\Parts\Guild\Guild;
+
+use function React\Async\coroutine;
 
 /**
  * @see https://discord.com/developers/docs/topics/gateway#invite-create
@@ -25,23 +29,29 @@ class InviteCreate extends Event
      */
     public function handle(Deferred &$deferred, $data): void
     {
-        /** @var Invite */
-        $invite = $this->factory->create(Invite::class, $data, true);
+        coroutine(function ($data) {
+            /** @var Invite */
+            $invite = $this->factory->create(Invite::class, $data, true);
 
-        if ($channel = $invite->channel) {
-            $channel->invites->pushItem($invite);
-        }
+            /** @var ?Guild */
+            if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
+                /** @var ?Channel */
+                if ($channel = yield $guild->channels->cacheGet($data->channel_id)) {
+                    yield $channel->invites->cache->set($data->code, $invite);
+                }
+            }
 
-        if (isset($data->inviter)) {
-            // User caching from inviter
-            $this->cacheUser($data->inviter);
-        }
+            if (isset($data->inviter)) {
+                // User caching from inviter
+                $this->cacheUser($data->inviter);
+            }
 
-        if (isset($data->target_user)) {
-            // User caching from target user
-            $this->cacheUser($data->target_user);
-        }
+            if (isset($data->target_user)) {
+                // User caching from target user
+                $this->cacheUser($data->target_user);
+            }
 
-        $deferred->resolve($invite);
+            return $invite;
+        }, $data)->then([$deferred, 'resolve']);
     }
 }
