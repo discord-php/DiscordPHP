@@ -14,6 +14,9 @@ namespace Discord\WebSockets\Events;
 use Discord\Parts\Channel\StageInstance;
 use Discord\WebSockets\Event;
 use Discord\Helpers\Deferred;
+use Discord\Parts\Guild\Guild;
+
+use function React\Async\coroutine;
 
 /**
  * @see https://discord.com/developers/docs/topics/gateway#stage-instance-create
@@ -25,13 +28,16 @@ class StageInstanceCreate extends Event
      */
     public function handle(Deferred &$deferred, $data): void
     {
-        /** @var StageInstance */
-        $stageInstancePart = $this->factory->create(StageInstance::class, $data, true);
+        coroutine(function ($data) {
+            /** @var StageInstance */
+            $stageInstancePart = $this->factory->create(StageInstance::class, $data, true);
 
-        if ($guild = $this->discord->guilds->get('id', $data->guild_id)) {
-            $guild->stage_instances->pushItem($stageInstancePart);
-        }
+            /** @var ?Guild */
+            if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
+                yield $guild->stage_instances->cache->set($data->id, $stageInstancePart);
+            }
 
-        $deferred->resolve($stageInstancePart);
+            return $stageInstancePart;
+        }, $data)->then([$deferred, 'resolve']);
     }
 }
