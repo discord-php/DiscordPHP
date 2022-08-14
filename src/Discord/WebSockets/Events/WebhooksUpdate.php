@@ -16,6 +16,8 @@ use Discord\Helpers\Deferred;
 
 /**
  * @see https://discord.com/developers/docs/topics/gateway#webhooks-update
+ *
+ * @todo update docs for raw parameter
  */
 class WebhooksUpdate extends Event
 {
@@ -24,12 +26,12 @@ class WebhooksUpdate extends Event
      */
     public function handle(Deferred &$deferred, $data): void
     {
-        $channel = null;
+        $this->discord->guilds->cacheGet($data->guild_id)->then(function ($guild) use ($data) {
+            if (! $guild) {
+                return $guild->channels->cacheGet($data->channel_id)->then(fn ($channel) => [$guild, $channel]);
+            }
 
-        if ($guild = $this->discord->guilds->get('id', $data->guild_id)) {
-            $channel = $guild->channels->get('id', $data->channel_id);
-        }
-
-        $deferred->resolve([$guild, $channel]);
+            return [(object) ['id' => $data->guild_id], (object) ['id' => $data->channel_id]];
+        })->then([$deferred, 'resolve']);
     }
 }
