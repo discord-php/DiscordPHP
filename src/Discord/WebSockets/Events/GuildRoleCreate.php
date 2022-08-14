@@ -14,6 +14,9 @@ namespace Discord\WebSockets\Events;
 use Discord\Parts\Guild\Role;
 use Discord\WebSockets\Event;
 use Discord\Helpers\Deferred;
+use Discord\Parts\Guild\Guild;
+
+use function React\Async\coroutine;
 
 /**
  * @see https://discord.com/developers/docs/topics/gateway#guild-role-create
@@ -25,16 +28,16 @@ class GuildRoleCreate extends Event
      */
     public function handle(Deferred &$deferred, $data): void
     {
-        $adata = (array) $data->role;
-        $adata['guild_id'] = $data->guild_id;
+        coroutine(function ($data) {
+            /** @var Role */
+            $rolePart = $this->factory->part(Role::class, (array) $data->role + ['guild_id' => $data->guild_id], true);
 
-        /** @var Role */
-        $rolePart = $this->factory->create(Role::class, $adata, true);
+            /** @var ?Guild */
+            if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
+                yield $guild->roles->cache->set($data->role->id, $rolePart);
+            }
 
-        if ($guild = $this->discord->guilds->get('id', $data->guild_id)) {
-            $guild->roles->pushItem($rolePart);
-        }
-
-        $deferred->resolve($rolePart);
+            return $rolePart;
+        }, $data)->then([$deferred, 'resolve']);
     }
 }
