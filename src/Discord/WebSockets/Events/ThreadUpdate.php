@@ -12,8 +12,12 @@
 namespace Discord\WebSockets\Events;
 
 use Discord\Helpers\Deferred;
+use Discord\Parts\Channel\Channel;
+use Discord\Parts\Guild\Guild;
 use Discord\Parts\Thread\Thread;
 use Discord\WebSockets\Event;
+
+use function React\Async\coroutine;
 
 /**
  * @see https://discord.com/developers/docs/topics/gateway#thread-update
@@ -22,28 +26,34 @@ class ThreadUpdate extends Event
 {
     public function handle(Deferred &$deferred, $data)
     {
-        $threadPart = $oldThread = null;
+        coroutine(function ($data) {
+            $threadPart = $oldThread = null;
 
-        if ($guild = $this->discord->guilds->get('id', $data->guild_id)) {
-            if ($parent = $guild->channels->get('id', $data->parent_id)) {
-                if ($oldThread = $parent->threads->get('id', $data->id)) {
-                    // Swap
-                    $threadPart = $oldThread;
-                    $oldThread = clone $oldThread;
+            /** @var ?Guild */
+            if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
+                /** @var ?Channel */
+                if ($parent = yield $guild->channels->cacheGet($data->parent_id)) {
+                    /** @var ?Thread */
+                    if ($oldThread = $parent->threads[$data->id]) {
+                        // Swap
+                        $threadPart = $oldThread;
+                        $oldThread = clone $oldThread;
 
-                    $threadPart->fill((array) $data);
+                        $threadPart->fill((array) $data);
+                    }
                 }
             }
-        }
 
-        if (! $threadPart) {
-            /** @var Thread */
-            $threadPart = $this->factory->create(Thread::class, $data, true);
-            if ($parent = $threadPart->parent) {
-                $parent->threads->pushItem($threadPart);
+            if ($threadPart === null) {
+                /** @var Thread */
+                $threadPart = $this->factory->create(Thread::class, $data, true);
             }
-        }
 
-        $deferred->resolve([$threadPart, $oldThread]);
+            if (isset($parent)) {
+                yield $parent->threads->cache->set($data->id, $threadPart);
+            }
+
+            return [$threadPart, $oldThread];
+        }, $data)->then([$deferred, 'resolve']);
     }
 }
