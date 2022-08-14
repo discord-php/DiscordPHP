@@ -15,6 +15,9 @@ use Discord\Parts\Channel\Message;
 use Discord\WebSockets\Event;
 use Discord\Helpers\Deferred;
 use Discord\Parts\Channel\Channel;
+use Discord\Parts\Guild\Guild;
+
+use function React\Async\coroutine;
 
 /**
  * @see https://discord.com/developers/docs/topics/gateway#message-create
@@ -26,36 +29,45 @@ class MessageCreate extends Event
      */
     public function handle(Deferred &$deferred, $data): void
     {
-        /** @var Message */
-        $messagePart = $this->factory->create(Message::class, $data, true);
+        coroutine(function ($data) {
+            /** @var Message */
+            $messagePart = $this->factory->create(Message::class, $data, true);
 
-        // assume it is a private channel
-        if (! $messagePart->guild && $messagePart->channel->type == Channel::TYPE_DM) {
-            /** @var Channel */
-            $channel = $this->factory->create(Channel::class, [
-                'id' => $messagePart->channel_id,
-                'type' => Channel::TYPE_DM,
-                'last_message_id' => $messagePart->id,
-                'recipients' => [$messagePart->author],
-            ], true);
+            if ($messagePart->is_private) {
+                /** @var Channel */
+                $channel = $this->factory->create(Channel::class, [
+                    'id' => $data->channel_id,
+                    'type' => Channel::TYPE_DM,
+                    'last_message_id' => $data->id,
+                    'recipients' => [$data->author],
+                ], true);
 
-            $this->discord->private_channels->pushItem($channel);
-        }
-
-        if ($this->discord->options['storeMessages']) {
-            if ($channel = $messagePart->channel) {
-                $channel->messages->pushItem($messagePart);
+                yield $this->discord->private_channels->cache->set($data->channel_id, $channel);
             }
-        }
 
-        if (isset($data->author) && ! isset($data->webhook_id)) {
-            $this->cacheUser($data->author);
-        }
+            if (isset($data->guild_id)) {
+                /** @var ?Guild */
+                $guild = yield $this->discord->guilds->cacheGet($data->guild_id);
 
-        if (isset($data->interaction->user)) {
-            $this->cacheUser($data->interaction->user);
-        }
+                if (! isset($channel)) {
+                    /** @var ?Channel */
+                    $channel = yield $guild->channels->cacheGet($data->channel_id);
+                }
+            }
 
-        $deferred->resolve($messagePart);
+            if ($this->discord->options['storeMessages'] && (isset($channel) || $channel = $messagePart->channel)) {
+                yield $channel->messages->cache->set($data->id, $messagePart);
+            }
+
+            if (isset($data->author) && ! isset($data->webhook_id)) {
+                $this->cacheUser($data->author);
+            }
+
+            if (isset($data->interaction->user)) {
+                $this->cacheUser($data->interaction->user);
+            }
+
+            return $messagePart;
+        }, $data)->then([$deferred, 'resolve']);
     }
 }
