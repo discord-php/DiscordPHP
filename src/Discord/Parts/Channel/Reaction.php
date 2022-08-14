@@ -72,7 +72,7 @@ class Reaction extends Part
     {
         return $this->http->get(Endpoint::bind(Endpoint::CHANNEL_MESSAGE, $this->channel_id, $this->message_id))
             ->then(function ($message) {
-                $this->message = $this->factory->part(Message::class, array_merge((array) $message, ['guild_id' => $this->guild_id]), true);
+                $this->message = $this->factory->part(Message::class, (array) $message + ['guild_id' => $this->guild_id], true);
 
                 return $this;
             });
@@ -183,7 +183,7 @@ class Reaction extends Part
             return null;
         }
 
-        return $this->factory->part(Emoji::class, array_merge((array) $this->attributes['emoji'], ['guild_id' => $this->guild_id]), true);
+        return $this->factory->part(Emoji::class, (array) $this->attributes['emoji'] + ['guild_id' => $this->guild_id], true);
     }
 
     /**
