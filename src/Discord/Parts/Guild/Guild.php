@@ -256,11 +256,19 @@ class Guild extends Part
      */
     protected $regions;
 
-    protected function afterConstruct(): void
+    /**
+     * @inheritdoc
+     */
+    public function fill(array $attributes): void
     {
-        if (! empty($this->attributes['roles'])) {
-            foreach ($this->attributes['roles'] as $role) {
-                $roles[] = $this->factory->part(Role::class, (array) $role + ['guild_id' => $this->id], true);
+        parent::fill($attributes);
+
+        if (! empty($attributes['roles'])) {
+            foreach ($attributes['roles'] as $role) {
+                if ($rolePart = $this->roles->get('id', $role->id)) {
+                    $rolePart->fill((array) $role);
+                }
+                $roles[] = $rolePart ?? $this->factory->part(Role::class, (array) $role + ['guild_id' => $this->id], true);;
             }
             $this->roles->push(...$roles);
         }
