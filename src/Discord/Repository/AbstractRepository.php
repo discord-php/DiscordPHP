@@ -594,8 +594,8 @@ abstract class AbstractRepository extends Collection
      */
     public function clear(): void
     {
-        $this->cache->clear();
-        parent::clear();
+        // Set items null but keep the key to be removed on flush
+        $this->items = array_fill_keys(array_keys($this->items), null);
     }
 
     /**
