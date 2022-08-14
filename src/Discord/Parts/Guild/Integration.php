@@ -37,8 +37,8 @@ use Discord\Parts\User\User;
  * @property      int|null         $subscriber_count    How many subscribers this integration has.
  * @property      bool|null        $revoked             Has this integration been revoked.
  * @property      Application|null $application         The bot/OAuth2 application for discord integrations.
- *
  * @property      string|null      $guild_id
+ *
  * @property-read Guild|null       $guild
  */
 class Integration extends Part
@@ -63,7 +63,7 @@ class Integration extends Part
         'revoked',
         'application',
 
-        // @internal
+        // events
         'guild_id',
     ];
 
