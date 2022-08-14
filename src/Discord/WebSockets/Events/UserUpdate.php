@@ -24,11 +24,12 @@ class UserUpdate extends Event
     {
         $oldUser = null;
 
-        /* @var User */
-        if ($oldUser = $this->discord->users->offsetGet($data->id)) {
+        /** @var User */
+        if ($oldUser = $this->discord->users[$data->id]) {
             $userPart = clone $oldUser;
             $userPart->fill((array) $data);
         } else {
+            /** @var User */
             $userPart = $this->factory->create(User::class, $data, true);
         }
 
