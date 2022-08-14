@@ -594,7 +594,7 @@ abstract class AbstractRepository extends Collection
      */
     public function clear(): void
     {
-        // Set items null but keep the key to be removed on flush
+        // Set items null but keep the keys to be removed on flush
         $this->items = array_fill_keys(array_keys($this->items), null);
     }
 

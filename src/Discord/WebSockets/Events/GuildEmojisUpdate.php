@@ -49,6 +49,7 @@ class GuildEmojisUpdate extends Event
                         $emoji->user = (object) $uploader->getRawAttributes();
                     }
                 }
+                $emoji->guild_id = $data->guild_id;
                 $emojiParts->pushItem($this->factory->create(Emoji::class, $emoji, true));
             }
 
