@@ -13,7 +13,10 @@ namespace Discord\WebSockets\Events;
 
 use Discord\WebSockets\Event;
 use Discord\Helpers\Deferred;
+use Discord\Parts\Guild\Guild;
 use Discord\Parts\Guild\ScheduledEvent;
+
+use function React\Async\coroutine;
 
 /**
  * @see https://discord.com/developers/docs/topics/gateway#guild-scheduled-event-delete
@@ -25,24 +28,23 @@ class GuildScheduledEventDelete extends Event
      */
     public function handle(Deferred &$deferred, $data): void
     {
-        $scheduledEventPart = null;
+        coroutine(function ($data) {
+            $scheduledEventPart = null;
 
-        if ($guild = $this->discord->guilds->get('id', $data->guild_id)) {
-            if ($scheduledEventPart = $guild->guild_scheduled_events->pull($data->id)) {
-                $scheduledEventPart->fill((array) $data);
-                $scheduledEventPart->created = false;
+            /** @var ?Guild */
+            if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
+                /** @var ?ScheduledEvent */
+                if ($scheduledEventPart = yield $guild->guild_scheduled_events->cachePull($data->id)) {
+                    $scheduledEventPart->fill((array) $data);
+                    $scheduledEventPart->created = false;
+                }
             }
-        }
 
-        if (! $scheduledEventPart) {
-            /** @var ScheduledEvent */
-            $scheduledEventPart = $this->factory->create(ScheduledEvent::class, $data);
-        }
+            if (isset($data->creator)) {
+                $this->cacheUser($data->creator);
+            }
 
-        if (isset($data->creator)) {
-            $this->cacheUser($data->creator);
-        }
-
-        $deferred->resolve($scheduledEventPart);
+            return $scheduledEventPart ?? $this->factory->create(ScheduledEvent::class, $data);
+        }, $data)->then([$deferred, 'resolve']);
     }
 }
