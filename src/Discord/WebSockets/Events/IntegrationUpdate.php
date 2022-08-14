@@ -13,7 +13,10 @@ namespace Discord\WebSockets\Events;
 
 use Discord\WebSockets\Event;
 use Discord\Helpers\Deferred;
+use Discord\Parts\Guild\Guild;
 use Discord\Parts\Guild\Integration;
+
+use function React\Async\coroutine;
 
 /**
  * @see https://discord.com/developers/docs/topics/gateway#integration-update
@@ -25,30 +28,35 @@ class IntegrationUpdate extends Event
      */
     public function handle(Deferred &$deferred, $data): void
     {
-        $integrationPart = $oldIntegration = null;
+        coroutine(function ($data) {
+            $integrationPart = $oldIntegration = null;
 
-        if ($guild = $this->discord->guilds->get('id', $data->guild_id)) {
-            if ($oldIntegration = $guild->integrations->get('id', $data->id)) {
-                // Swap
-                $integrationPart = $oldIntegration;
-                $oldIntegration = clone $oldIntegration;
+            /** @var ?Guild */
+            if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
+                /** @var ?Integration */
+                if ($oldIntegration = $guild->integrations[$data->id]) {
+                    // Swap
+                    $integrationPart = $oldIntegration;
+                    $oldIntegration = clone $oldIntegration;
 
-                $integrationPart->fill((array) $data);
+                    $integrationPart->fill((array) $data);
+                }
             }
-        }
 
-        if (! $integrationPart) {
-            /** @var Integration */
-            $integrationPart = $this->factory->create(Integration::class, $data, true);
-            if ($guild = $integrationPart->guild) {
-                $guild->integrations->pushItem($integrationPart);
+            if (! $integrationPart) {
+                /** @var Integration */
+                $integrationPart = $this->factory->create(Integration::class, $data, true);
             }
-        }
 
-        if (isset($data->user)) {
-            $this->cacheUser($data->user);
-        }
+            if (isset($guild)) {
+                yield $guild->integrations->cache->set($data->id, $integrationPart);
+            }
 
-        $deferred->resolve([$integrationPart, $oldIntegration]);
+            if (isset($data->user)) {
+                $this->cacheUser($data->user);
+            }
+
+            return [$integrationPart, $oldIntegration];
+        }, $data)->then([$deferred, 'resolve']);
     }
 }
