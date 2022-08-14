@@ -13,7 +13,10 @@ namespace Discord\WebSockets\Events;
 
 use Discord\WebSockets\Event;
 use Discord\Helpers\Deferred;
+use Discord\Parts\Guild\Guild;
 use Discord\Parts\Guild\ScheduledEvent;
+
+use function React\Async\coroutine;
 
 /**
  * @see https://discord.com/developers/docs/topics/gateway#guild-scheduled-event-create
@@ -25,17 +28,20 @@ class GuildScheduledEventCreate extends Event
      */
     public function handle(Deferred &$deferred, $data): void
     {
-        /** @var ScheduledEvent */
-        $scheduledEventPart = $this->factory->create(ScheduledEvent::class, $data, true);
+        coroutine(function ($data) {
+            /** @var ScheduledEvent */
+            $scheduledEventPart = $this->factory->create(ScheduledEvent::class, $data, true);
 
-        if ($guild = $this->discord->guilds->get('id', $data->guild_id)) {
-            $guild->guild_scheduled_events->pushItem($scheduledEventPart);
-        }
+            /** @var ?Guild */
+            if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
+                $guild->guild_scheduled_events->cache->set($data->id, $scheduledEventPart);
+            }
 
-        if (isset($data->creator)) {
-            $this->cacheUser($data->creator);
-        }
+            if (isset($data->creator)) {
+                $this->cacheUser($data->creator);
+            }
 
-        $deferred->resolve($scheduledEventPart);
+            return $scheduledEventPart;
+        }, $data)->then([$deferred, 'resolve']);
     }
 }
