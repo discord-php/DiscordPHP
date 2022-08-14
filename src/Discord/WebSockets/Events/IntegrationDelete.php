@@ -13,9 +13,14 @@ namespace Discord\WebSockets\Events;
 
 use Discord\WebSockets\Event;
 use Discord\Helpers\Deferred;
+use Discord\Parts\Guild\Integration;
+
+use function React\Async\coroutine;
 
 /**
  * @see https://discord.com/developers/docs/topics/gateway#integration-delete
+ *
+ * @todo update docs parameter change
  */
 class IntegrationDelete extends Event
 {
@@ -24,14 +29,18 @@ class IntegrationDelete extends Event
      */
     public function handle(Deferred &$deferred, $data): void
     {
-        $oldIntegration = null;
+        coroutine(function ($data) {
+            $oldIntegration = null;
 
-        if ($guild = $this->discord->guilds->get('id', $data->guild_id)) {
-            if ($oldIntegration = $guild->integrations->pull($data->id)) {
-                $oldIntegration->created = false;
+            /** @var ?Guild */
+            if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
+                /** @var ?Integration */
+                if ($oldIntegration = yield $guild->integrations->cachePull($data->id)) {
+                    $oldIntegration->created = false;
+                }
             }
-        }
 
-        $deferred->resolve($oldIntegration);
+            return $oldIntegration ?? $data;
+        }, $data)->then([$deferred, 'resolve']);
     }
 }
