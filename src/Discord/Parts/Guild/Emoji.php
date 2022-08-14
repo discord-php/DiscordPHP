@@ -64,10 +64,14 @@ class Emoji extends Part
     /**
      * Returns the roles attribute.
      *
-     * @return Collection A collection of roles for the emoji.
+     * @return Collection<?Role> A collection of roles for the emoji.
      */
     protected function getRolesAttribute(): Collection
     {
+        if (empty($this->attributes['roles'])) {
+            return new Collection();
+        }
+
         $roles = new Collection(array_fill_keys($this->attributes['roles'], null));
 
         if ($guild = $this->guild) {
