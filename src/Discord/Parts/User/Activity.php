@@ -92,7 +92,7 @@ class Activity extends Part
             return null;
         }
 
-        return Carbon::createFromTimestamp($this->attributes['created_at']);;
+        return Carbon::createFromTimestamp($this->attributes['created_at']);
     }
 
     /**

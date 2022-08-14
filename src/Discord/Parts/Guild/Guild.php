@@ -268,7 +268,7 @@ class Guild extends Part
                 if ($rolePart = $this->roles->offsetGet($role->id)) {
                     $rolePart->fill((array) $role);
                 }
-                $roles[] = $rolePart ?? $this->factory->part(Role::class, (array) $role + ['guild_id' => $this->id], true);;
+                $roles[] = $rolePart ?? $this->factory->part(Role::class, (array) $role + ['guild_id' => $this->id], true);
             }
             $this->roles->push(...$roles);
         }
@@ -278,7 +278,7 @@ class Guild extends Part
                 if ($emojiPart = $this->emojis->offsetGet($emoji->id)) {
                     $emojiPart->fill((array) $emoji);
                 }
-                $emojis[] = $emojiPart ?? $this->factory->part(Emoji::class, (array) $emoji + ['guild_id' => $this->id], true);;
+                $emojis[] = $emojiPart ?? $this->factory->part(Emoji::class, (array) $emoji + ['guild_id' => $this->id], true);
             }
             $this->emojis->push(...$emojis);
         }
@@ -288,7 +288,7 @@ class Guild extends Part
                 if ($stickerPart = $this->stickers->offsetGet($sticker->id)) {
                     $stickerPart->fill((array) $sticker);
                 }
-                $stickers[] = $stickerPart ?? $this->factory->part(Sticker::class, (array) $sticker + ['guild_id' => $this->id], true);;
+                $stickers[] = $stickerPart ?? $this->factory->part(Sticker::class, (array) $sticker + ['guild_id' => $this->id], true);
             }
             $this->stickers->push(...$stickers);
         }
