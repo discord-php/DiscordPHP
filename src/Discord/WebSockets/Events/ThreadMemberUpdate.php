@@ -12,8 +12,13 @@
 namespace Discord\WebSockets\Events;
 
 use Discord\Helpers\Deferred;
+use Discord\Parts\Channel\Channel;
+use Discord\Parts\Guild\Guild;
 use Discord\Parts\Thread\Member;
+use Discord\Parts\Thread\Thread;
 use Discord\WebSockets\Event;
+
+use function React\Async\coroutine;
 
 /**
  * @see https://discord.com/developers/docs/topics/gateway#thread-member-update
@@ -22,16 +27,22 @@ class ThreadMemberUpdate extends Event
 {
     public function handle(Deferred &$deferred, $data)
     {
-        $member = $this->factory->create(Member::class, $data, true);
-        $guild = $this->discord->guilds->get('id', $data->guild_id);
+        coroutine(function ($data) {
+            $memberPart = $this->factory->create(Member::class, $data, true);
 
-        foreach ($guild->channels as $channel) {
-            if ($thread = $channel->threads->get('id', $data->id)) {
-                $thread->members->pushItem($member);
-                break;
+            /** @var ?Guild */
+            if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
+                /** @var Channel */
+                foreach ($guild->channels as $channel) {
+                    /** @var ?Thread */
+                    if ($thread = yield $channel->threads->cacheGet($data->id)) {
+                        yield $thread->members->cache->set($data->user_id, $memberPart);
+                        break;
+                    }
+                }
             }
-        }
 
-        $deferred->resolve($member);
+            return $memberPart;
+        }, $data)->then([$deferred, 'resolve']);
     }
 }
