@@ -27,7 +27,7 @@ class WebhooksUpdate extends Event
     public function handle(Deferred &$deferred, $data): void
     {
         $this->discord->guilds->cacheGet($data->guild_id)->then(function ($guild) use ($data) {
-            if (! $guild) {
+            if ($guild) {
                 return $guild->channels->cacheGet($data->channel_id)->then(fn ($channel) => [$guild, $channel]);
             }
 
