@@ -14,6 +14,13 @@ namespace Discord\WebSockets\Events;
 use Discord\Parts\WebSockets\MessageReaction;
 use Discord\WebSockets\Event;
 use Discord\Helpers\Deferred;
+use Discord\Parts\Channel\Channel;
+use Discord\Parts\Channel\Message;
+use Discord\Parts\Channel\Reaction;
+use Discord\Parts\Guild\Guild;
+use Discord\Parts\Thread\Thread;
+
+use function React\Async\coroutine;
 
 /**
  * @see https://discord.com/developers/docs/topics/gateway#message-reaction-add
@@ -25,14 +32,33 @@ class MessageReactionAdd extends Event
      */
     public function handle(Deferred &$deferred, $data): void
     {
-        $reaction = new MessageReaction($this->discord, (array) $data, true);
+        coroutine(function ($data) {
+            $reaction = new MessageReaction($this->discord, (array) $data, true);
 
-        if ($channel = $reaction->channel) {
-            if ($message = $channel->messages->offsetGet($reaction->message_id)) {
+            /** @var ?Guild */
+            if (isset($data->guild_id) && $guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
+                $channels = $guild->channels;
+                /** @var ?Channel */
+                if (! $channel = yield $channels->cacheGet($data->channel_id)) {
+                    /** @var Channel */
+                    foreach ($channels as $channel) {
+                        /** @var ?Thread */
+                        if ($thread = yield $channel->threads->cacheGet($data->channel_id)) {
+                            $channel = $thread;
+                            break;
+                        }
+                    }
+                }
+            }
+
+            /** @var ?Message */
+            if (isset($channel) && $message = yield $channel->messages->cacheGet($data->message_id)) {
                 $addedReaction = false;
+                $reactions = $message->reactions;
 
-                foreach ($message->reactions as $react) {
-                    if ($react->id == $reaction->reaction_id) {
+                /** @var Reaction */
+                foreach ($reactions as $id => $react) {
+                    if ($id == $reaction->reaction_id) {
                         ++$react->count;
 
                         if ($reaction->user_id == $this->discord->id) {
@@ -40,25 +66,25 @@ class MessageReactionAdd extends Event
                         }
 
                         $addedReaction = true;
+                        $reaction = $react;
                         break;
                     }
                 }
 
                 // New reaction added
                 if (! $addedReaction) {
-                    $message->reactions->pushItem($message->reactions->create([
-                        'count' => 1,
-                        'me' => $reaction->user_id == $this->discord->id,
-                        'emoji' => $reaction->emoji->getRawAttributes(),
-                    ], true));
+                    $reaction->count = 1;
+                    $reaction->me = $data->user_id == $this->discord->id;
                 }
+                
+                yield $reactions->cache->set($reaction->reaction_id, $reaction);
             }
-        }
 
-        if (isset($data->member->user)) {
-            $this->cacheUser($data->member->user);
-        }
+            if (isset($data->member->user)) {
+                $this->cacheUser($data->member->user);
+            }
 
-        $deferred->resolve($reaction);
+            return $reaction;
+        }, $data)->then([$deferred, 'resolve']);
     }
 }
