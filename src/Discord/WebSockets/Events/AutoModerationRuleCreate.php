@@ -40,7 +40,10 @@ class AutoModerationRuleCreate extends Event
                 /** @var Rule */
                 $rulePart = $this->factory->create(Rule::class, $data, true);
             }
-            yield $guild->auto_moderation_rules->cache->set($data->id, $rulePart);
+
+            if (isset($guild)) {
+                yield $guild->auto_moderation_rules->cache->set($data->id, $rulePart);
+            }
 
             return $rulePart;
         }, $data)->then([$deferred, 'resolve']);

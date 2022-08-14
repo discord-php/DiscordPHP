@@ -46,9 +46,10 @@ class AutoModerationRuleUpdate extends Event
             if (! $rulePart) {
                 /** @var Rule */
                 $rulePart = $this->factory->create(Rule::class, $data, true);
-                if ($guild = $rulePart->guild) {
-                    yield $guild->auto_moderation_rules->cache->set($data->id, $rulePart);
-                }
+            }
+
+            if (isset($guild)) {
+                yield $guild->auto_moderation_rules->cache->set($data->id, $rulePart);
             }
 
             return [$rulePart, $oldRule];
