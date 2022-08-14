@@ -31,14 +31,16 @@ class InviteCreate extends Event
     {
         coroutine(function ($data) {
             /** @var Invite */
-            $invite = $this->factory->create(Invite::class, $data, true);
+            $invitePart = $this->factory->create(Invite::class, $data, true);
 
             /** @var ?Guild */
             if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
                 /** @var ?Channel */
                 if ($channel = yield $guild->channels->cacheGet($data->channel_id)) {
-                    yield $channel->invites->cache->set($data->code, $invite);
+                    yield $channel->invites->cache->set($data->code, $invitePart);
                 }
+
+                yield $guild->invites->cache->set($data->code, $invitePart);
             }
 
             if (isset($data->inviter)) {
@@ -51,7 +53,7 @@ class InviteCreate extends Event
                 $this->cacheUser($data->target_user);
             }
 
-            return $invite;
+            return $invitePart;
         }, $data)->then([$deferred, 'resolve']);
     }
 }
