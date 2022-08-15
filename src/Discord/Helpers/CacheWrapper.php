@@ -13,6 +13,7 @@ namespace Discord\Helpers;
 
 use Discord\Discord;
 use Discord\Parts\Part;
+use React\Cache\ArrayCache;
 use React\Cache\CacheInterface;
 use React\Promise\PromiseInterface;
 use WeakReference;
@@ -128,7 +129,10 @@ class CacheWrapper
             if ($value === null) {
                 unset($this->items[$key]);
             } else {
-                $value = $this->items[$key] = $this->discord->factory($this->class, json_decode($value), true);
+                if (! ($this->interface instanceof ArrayCache)) {
+                    $value = json_decode($value);
+                }
+                $value = $this->items[$key] = $this->discord->factory($this->class, $value, true);
             }
 
             return $value;
@@ -145,7 +149,13 @@ class CacheWrapper
      */
     public function set($key, $value, $ttl = null)
     {
-        return $this->interface->set($this->key_prefix.$key, $value->serialize(), $ttl)->then(function ($success) use ($key, $value) {
+        if ($this->interface instanceof ArrayCache) {
+            $item = $value->getRawAttributes();
+        } else {
+            $item = $value->serialize();
+        }
+
+        return $this->interface->set($this->key_prefix.$key, $item, $ttl)->then(function ($success) use ($key, $value) {
             if ($success) {
                 $this->items[$key] = $value;
             }
