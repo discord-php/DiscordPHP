@@ -14,6 +14,9 @@ namespace Discord\WebSockets\Events;
 use Discord\Parts\User\Member;
 use Discord\WebSockets\Event;
 use Discord\Helpers\Deferred;
+use Discord\Parts\Guild\Guild;
+
+use function React\Async\coroutine;
 
 /**
  * @see https://discord.com/developers/docs/topics/gateway#guild-member-add
@@ -25,16 +28,19 @@ class GuildMemberAdd extends Event
      */
     public function handle(Deferred &$deferred, $data): void
     {
-        /** @var Member */
-        $memberPart = $this->factory->create(Member::class, $data, true);
+        coroutine(function ($data) {
+            /** @var Member */
+            $memberPart = $this->factory->create(Member::class, $data, true);
 
-        if ($guild = $this->discord->guilds->get('id', $data->guild_id)) {
-            $guild->members->pushItem($memberPart);
-            ++$guild->member_count;
-        }
+            /** @var ?Guild */
+            if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
+                yield $guild->members->cache->set($data->user->id, $memberPart);
+                ++$guild->member_count;
+            }
 
-        $this->cacheUser($data->user);
+            $this->cacheUser($data->user);
 
-        $deferred->resolve($memberPart);
+            return $memberPart;
+        }, $data)->then([$deferred, 'resolve']);
     }
 }

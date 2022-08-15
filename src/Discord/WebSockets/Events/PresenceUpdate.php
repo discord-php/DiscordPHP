@@ -14,6 +14,10 @@ namespace Discord\WebSockets\Events;
 use Discord\Parts\WebSockets\PresenceUpdate as PresenceUpdatePart;
 use Discord\WebSockets\Event;
 use Discord\Helpers\Deferred;
+use Discord\Parts\Guild\Guild;
+use Discord\Parts\User\Member;
+
+use function React\Async\coroutine;
 
 /**
  * @see https://discord.com/developers/docs/topics/gateway#presence-update
@@ -25,22 +29,23 @@ class PresenceUpdate extends Event
      */
     public function handle(Deferred &$deferred, $data): void
     {
-        /**
-         * @var PresenceUpdatePart
-         */
-        $presence = $this->factory->create(PresenceUpdatePart::class, $data, true);
+        coroutine(function ($data) {
+            /** @var PresenceUpdatePart */
+            $presence = $this->factory->create(PresenceUpdatePart::class, $data, true);
 
-        if ($guild = $presence->guild) {
-            if ($member = $presence->member) {
-                $oldPresence = $member->updateFromPresence($presence);
+            /** @var ?Guild */
+            if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
+                /** @var ?Member */
+                if ($member = yield $guild->members->cacheGet($data->user->id)) {
+                    $oldPresence = $member->updateFromPresence($presence);
 
-                $guild->members->offsetSet($member->id, $member);
-                $this->discord->guilds->offsetSet($guild->id, $guild);
+                    yield $guild->members->cache->set($data->user->id, $member);
 
-                $deferred->resolve([$presence, $oldPresence]);
+                    return [$presence, $oldPresence];
+                }
             }
-        }
 
-        $deferred->resolve($presence);
+            return $presence;
+        }, $data)->then([$deferred, 'resolve']);
     }
 }

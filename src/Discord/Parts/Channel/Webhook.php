@@ -183,8 +183,10 @@ class Webhook extends Part
             return null;
         }
 
-        if ($this->guild && $channel = $this->guild->channels->get('id', $this->channel_id)) {
-            return $channel;
+        if ($guild = $this->guild) {
+            if ($channel = $guild->channels->get('id', $this->channel_id)) {
+                return $channel;
+            }
         }
 
         return $this->discord->getChannel($this->channel_id);

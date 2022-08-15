@@ -16,16 +16,13 @@ use Discord\Parts\Guild\ScheduledEvent;
 use Discord\Repository\AbstractRepository;
 use React\Promise\ExtendedPromiseInterface;
 
+use function React\Promise\resolve;
+
 /**
  * Contains scheduled events to guilds.
  *
  * @see \Discord\Parts\Guild\ScheduledEvent
  * @see \Discord\Parts\Guild\Guild
- *
- * @method ScheduledEvent|null get(string $discrim, $key)  Gets an item from the collection.
- * @method ScheduledEvent|null first()                     Returns the first element of the collection.
- * @method ScheduledEvent|null pull($key, $default = null) Pulls an item from the repository, removing and returning the item.
- * @method ScheduledEvent|null find(callable $callback)    Runs a filter callback over the repository.
  */
 class ScheduledEventRepository extends AbstractRepository
 {
@@ -58,21 +55,23 @@ class ScheduledEventRepository extends AbstractRepository
 
         if (! $fresh && $part = $this->get($this->discrim, $id)) {
             if (isset($part->user_count)) {
-                return \React\Promise\resolve($part);
+                return resolve($part);
             }
         }
 
-        $part = $this->factory->create($this->class, [$this->discrim => $id]);
+        $part = $this->factory->part($this->class, [$this->discrim => $id]);
         $endpoint = new Endpoint($this->endpoints['get']);
         $endpoint->bindAssoc(array_merge($part->getRepositoryAttributes(), $this->vars));
 
         $endpoint->addQuery('with_user_count', $with_user_count);
 
-        return $this->http->get($endpoint)->then(function ($response) {
-            $part = $this->factory->create($this->class, array_merge($this->vars, (array) $response), true);
-            $this->push($part);
+        return $this->http->get($endpoint)->then(function ($response) use ($part, $id) {
+            $part->fill(array_merge($this->vars, (array) $response));
+            $part->created = true;
 
-            return $part;
+            return $this->cache->set($id, $part)->then(function ($success) use ($part) {
+                return $part;
+            });
         });
     }
 }

@@ -30,7 +30,12 @@ jobs:
           tools: phpunit, phplint
       - name: Install dependencies
         run: composer install
+      - name: Redis Server in GitHub Actions
+        uses: supercharge/redis-github-action@1.4.0
+      # - name: Memcached Service
+      #   uses: niden/actions-memcached@v7
       - name: Run PHPUnit
         run: phpunit
       - name: Run PHPLint
         run: phplint
+

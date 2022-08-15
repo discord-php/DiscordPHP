@@ -20,11 +20,6 @@ use Discord\Repository\AbstractRepository;
  *
  * @see \Discord\Parts\Guild\Integration
  * @see \Discord\Parts\Guild\Guild
- *
- * @method Integration|null get(string $discrim, $key)  Gets an item from the collection.
- * @method Integration|null first()                     Returns the first element of the collection.
- * @method Integration|null pull($key, $default = null) Pulls an item from the repository, removing and returning the item.
- * @method Integration|null find(callable $callback)    Runs a filter callback over the repository.
  */
 class IntegrationRepository extends AbstractRepository
 {

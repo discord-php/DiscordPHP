@@ -39,8 +39,8 @@ use Discord\Parts\User\User;
  * @property string|null  $alert_system_message_id The id of any system auto moderation messages posted as a result of this action (will not exist if this event does not correspond to an action with type `SEND_ALERT_MESSAGE`)
  * @property Message|null $alert_system_message    Cached system auto moderation messages posted as a result of this action.
  * @property string       $content                 The user generated text content.
- * @property string|null  $matched_keyword         The word or phrase configured in the rule that triggered the rule. (empty without message content intent)
- * @property string|null  $matched_content         The substring in content that triggered the rule. (empty without message content intent)
+ * @property ?string      $matched_keyword         The word or phrase configured in the rule that triggered the rule. (empty without message content intent)
+ * @property ?string      $matched_content         The substring in content that triggered the rule. (empty without message content intent)
  */
 class AutoModerationActionExecution extends Part
 {
@@ -68,7 +68,7 @@ class AutoModerationActionExecution extends Part
      */
     protected function getGuildAttribute(): ?Guild
     {
-        return $this->discord->guilds->offsetGet($this->guild_id);
+        return $this->discord->guilds->get('id', $this->guild_id);
     }
 
     /**
@@ -78,7 +78,7 @@ class AutoModerationActionExecution extends Part
      */
     protected function getActionAttribute(): Action
     {
-        return $this->factory->create(Action::class, $this->attributes['action'], true);
+        return $this->factory->part(Action::class, (array) $this->attributes['action'], true);
     }
 
     /**
@@ -126,7 +126,7 @@ class AutoModerationActionExecution extends Part
      */
     protected function getMessageAttribute(): ?Message
     {
-        if ($channel = $this->channel) {
+        if (isset($this->message_id) && $channel = $this->channel) {
             return $channel->messages->get('id', $this->message_id);
         }
 
@@ -140,7 +140,7 @@ class AutoModerationActionExecution extends Part
      */
     protected function getAlertSystemMessageAttribute(): ?Message
     {
-        if ($channel = $this->channel) {
+        if (isset($this->alert_system_message_id) && $channel = $this->channel) {
             return $channel->messages->get('id', $this->alert_system_message_id);
         }
 

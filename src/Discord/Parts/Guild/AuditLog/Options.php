@@ -20,6 +20,7 @@ use Discord\Parts\Part;
  *
  * @see https://discord.com/developers/docs/resources/audit-log#audit-log-entry-object-optional-audit-entry-info
  *
+ * @property string $application_id     ID of the app whose permissions were targeted.
  * @property string $channel_id         Channel in which the entities were targeted.
  * @property string $count              Number of entities that were targeted.
  * @property string $delete_member_days Number of days after which inactive members were kicked.
@@ -35,13 +36,14 @@ class Options extends Part
      * @inheritdoc
      */
     protected $fillable = [
-        'delete_member_days',
-        'members_removed',
+        'application_id',
         'channel_id',
-        'message_id',
         'count',
+        'delete_member_days',
         'id',
-        'type',
+        'members_removed',
+        'message_id',
         'role_name',
+        'type',
     ];
 }

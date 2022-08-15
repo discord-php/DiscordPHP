@@ -14,7 +14,10 @@ namespace Discord\WebSockets\Events;
 use Discord\Helpers\Collection;
 use Discord\WebSockets\Event;
 use Discord\Helpers\Deferred;
+use Discord\Parts\Guild\Guild;
 use Discord\Parts\Guild\Sticker;
+
+use function React\Async\coroutine;
 
 class GuildStickersUpdate extends Event
 {
@@ -23,30 +26,33 @@ class GuildStickersUpdate extends Event
      */
     public function handle(Deferred &$deferred, $data): void
     {
-        $oldStickers = Collection::for(Sticker::class);
-        $stickerParts = Collection::for(Sticker::class);
+        coroutine(function ($data) {
+            $oldStickers = Collection::for(Sticker::class);
+            $stickerParts = Collection::for(Sticker::class);
 
-        if ($guild = $this->discord->guilds->get('id', $data->guild_id)) {
-            $oldStickers->merge($guild->stickers);
-            $guild->stickers->clear();
-        }
-
-        foreach ($data->stickers as $sticker) {
-            if (isset($sticker->user)) {
-                // User caching from sticker uploader
-                $this->cacheUser($sticker->user);
-            } elseif ($oldSticker = $oldStickers->offsetGet($sticker->id)) {
-                $sticker->user = $oldSticker->user;
+            /** @var ?Guild */
+            if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
+                $oldStickers->merge($guild->stickers);
+                $guild->stickers->clear();
             }
-            /** @var Sticker */
-            $stickerPart = $this->factory->create(Sticker::class, $sticker, true);
-            $stickerParts->pushItem($stickerPart);
-        }
 
-        if ($guild) {
-            $guild->stickers->merge($stickerParts);
-        }
+            foreach ($data->stickers as &$sticker) {
+                if (isset($sticker->user)) {
+                    // User caching from sticker uploader
+                    $this->cacheUser($sticker->user);
+                } elseif ($oldSticker = $oldStickers->offsetGet($sticker->id)) {
+                    if ($uploader = $oldSticker->user) {
+                        $sticker->user = (object) $uploader->getRawAttributes();
+                    }
+                }
+                $stickerParts->pushItem($this->factory->create(Sticker::class, $sticker, true));
+            }
 
-        $deferred->resolve([$stickerParts, $oldStickers]);
+            if ($guild) {
+                yield $guild->stickers->cache->setMultiple($stickerParts->toArray());
+            }
+
+            return [$stickerParts, $oldStickers];
+        }, $data)->then([$deferred, 'resolve']);
     }
 }

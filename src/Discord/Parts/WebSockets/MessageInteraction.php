@@ -20,11 +20,13 @@ use Discord\Parts\User\User;
  *
  * @see https://discord.com/developers/docs/interactions/receiving-and-responding#message-interaction-object
  *
- * @property string      $id     ID of the interaction.
- * @property int         $type   Type of interaction.
- * @property string      $name   Name of the application command, including subcommands and subcommand groups.
- * @property User        $user   User who invoked the interaction.
- * @property Member|null $member Partial Member who invoked the interaction.
+ * @property string      $id       ID of the interaction.
+ * @property int         $type     Type of interaction.
+ * @property string      $name     Name of the application command, including subcommands and subcommand groups.
+ * @property User        $user     User who invoked the interaction.
+ * @property Member|null $member   Partial Member who invoked the interaction.
+ * 
+ * @property string|null $guild_id
  */
 class MessageInteraction extends Part
 {
@@ -38,7 +40,7 @@ class MessageInteraction extends Part
         'user',
         'member',
 
-        // internal
+        // @internal
         'guild_id',
     ];
 
@@ -68,9 +70,9 @@ class MessageInteraction extends Part
      */
     protected function getMemberAttribute(): ?Member
     {
-        if ($this->guild_id) {
+        if (isset($this->guild_id)) {
             if ($guild = $this->discord->guilds->get('id', $this->guild_id)) {
-                if ($member = $guild->members->get('id', $this->user->id)) {
+                if ($member = $guild->members->get('id', $this->attributes['member']->id ?? $this->user->id)) {
                     return $member;
                 }
             }

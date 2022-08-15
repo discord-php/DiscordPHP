@@ -21,7 +21,7 @@ use Discord\Parts\Part;
  * @property string      $id          The identifier for the sticker.
  * @property string|null $pack_id     For standard stickers, id of the pack the sticker is from.
  * @property string      $name        The name of the sticker.
- * @property string      $description The description of the sticker.
+ * @property ?string     $description The description of the sticker.
  * @property array       $tags        Autocomplete/suggestion tags for the sticker (max 200 characters).
  * @property int         $type        The type of sticker.
  * @property int         $format_type The type of sticker format.
@@ -101,7 +101,7 @@ class Sticker extends Part
             return $user;
         }
 
-        return $this->factory->part(User::class, $this->attributes['user'], true);
+        return $this->factory->part(User::class, (array) $this->attributes['user'], true);
     }
 
     /**
@@ -153,8 +153,8 @@ class Sticker extends Part
     {
         if ($this->type == self::TYPE_GUILD) {
             return [
-                'sticker_id' => $this->id,
                 'guild_id' => $this->guild_id,
+                'sticker_id' => $this->id,
             ];
         }
 

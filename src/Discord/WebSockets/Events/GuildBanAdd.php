@@ -14,6 +14,9 @@ namespace Discord\WebSockets\Events;
 use Discord\Parts\Guild\Ban;
 use Discord\WebSockets\Event;
 use Discord\Helpers\Deferred;
+use Discord\Parts\Guild\Guild;
+
+use function React\Async\coroutine;
 
 /**
  * @see https://discord.com/developers/docs/topics/gateway#guild-ban-add
@@ -25,15 +28,18 @@ class GuildBanAdd extends Event
      */
     public function handle(Deferred &$deferred, $data): void
     {
-        /** @var Ban */
-        $banPart = $this->factory->create(Ban::class, $data, true);
+        coroutine(function ($data) {
+            /** @var Ban */
+            $banPart = $this->factory->create(Ban::class, $data, true);
 
-        if ($guild = $banPart->guild) {
-            $guild->bans->pushItem($banPart);
-        }
+            /** @var ?Guild */
+            if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
+                yield $guild->bans->cache->set($data->user->id, $banPart);
+            }
 
-        $this->cacheUser($data->user);
+            $this->cacheUser($data->user);
 
-        $deferred->resolve($banPart);
+            return $banPart;
+        }, $data)->then([$deferred, 'resolve']);
     }
 }

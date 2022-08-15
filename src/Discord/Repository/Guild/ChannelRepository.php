@@ -20,11 +20,6 @@ use Discord\Repository\AbstractRepository;
  *
  * @see \Discord\Parts\Channel\Channel
  * @see \Discord\Parts\Guild\Guild
- *
- * @method Channel|null get(string $discrim, $key)  Gets an item from the collection.
- * @method Channel|null first()                     Returns the first element of the collection.
- * @method Channel|null pull($key, $default = null) Pulls an item from the repository, removing and returning the item.
- * @method Channel|null find(callable $callback)    Runs a filter callback over the repository.
  */
 class ChannelRepository extends AbstractRepository
 {

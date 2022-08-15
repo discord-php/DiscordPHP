@@ -22,6 +22,7 @@ use Discord\Parts\User\User;
  * @property string      $reason   The reason for the ban.
  * @property User        $user     The banned user.
  * @property string      $user_id
+ *
  * @property string|null $guild_id
  * @property Guild|null  $guild
  */
@@ -34,9 +35,11 @@ class Ban extends Part
         'reason',
         'user',
 
-        // internally used
-        'user_id',
+        // events
         'guild_id',
+
+        // @internal
+        'user_id',
     ];
 
     /**
@@ -74,11 +77,7 @@ class Ban extends Part
      */
     protected function getUserAttribute(): User
     {
-        if (isset($this->attributes['user_id']) && $user = $this->discord->users->get('id', $this->attributes['user_id'])) {
-            return $user;
-        }
-
-        if ($user = $this->discord->users->get('id', $this->attributes['user']->id)) {
+        if ($user = $this->discord->users->get('id', $this->user_id)) {
             return $user;
         }
 

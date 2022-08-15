@@ -13,7 +13,10 @@ namespace Discord\WebSockets\Events;
 
 use Discord\WebSockets\Event;
 use Discord\Helpers\Deferred;
+use Discord\Parts\Guild\Guild;
 use Discord\Parts\Guild\ScheduledEvent;
+
+use function React\Async\coroutine;
 
 /**
  * @see https://discord.com/developers/docs/topics/gateway#guild-scheduled-event-update
@@ -25,30 +28,35 @@ class GuildScheduledEventUpdate extends Event
      */
     public function handle(Deferred &$deferred, $data): void
     {
-        $scheduledEventPart = $oldScheduledEvent = null;
+        coroutine(function ($data) {
+            $scheduledEventPart = $oldScheduledEvent = null;
 
-        if ($guild = $this->discord->guilds->get('id', $data->guild_id)) {
-            if ($oldScheduledEvent = $guild->guild_scheduled_events->get('id', $data->id)) {
-                // Swap
-                $scheduledEventPart = $oldScheduledEvent;
-                $oldScheduledEvent = clone $oldScheduledEvent;
+            /** @var ?Guild */
+            if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
+                /** @var ?ScheduledEvent */
+                if ($oldScheduledEvent = $guild->guild_scheduled_events[$data->id]) {
+                    // Swap
+                    $scheduledEventPart = $oldScheduledEvent;
+                    $oldScheduledEvent = clone $oldScheduledEvent;
 
-                $scheduledEventPart->fill((array) $data);
+                    $scheduledEventPart->fill((array) $data);
+                }
             }
-        }
 
-        if (! $scheduledEventPart) {
-            /** @var ScheduledEvent */
-            $scheduledEventPart = $this->factory->create(ScheduledEvent::class, $data, true);
-            if ($guild = $scheduledEventPart->guild) {
-                $guild->guild_scheduled_events->pushItem($scheduledEventPart);
+            if ($scheduledEventPart === null) {
+                /** @var ScheduledEvent */
+                $scheduledEventPart = $this->factory->create(ScheduledEvent::class, $data, true);
             }
-        }
 
-        if (isset($data->creator)) {
-            $this->cacheUser($data->creator);
-        }
+            if ($guild) {
+                yield $guild->guild_scheduled_events->cache->set($data->id, $scheduledEventPart);
+            }
 
-        $deferred->resolve([$scheduledEventPart, $oldScheduledEvent]);
+            if (isset($data->creator)) {
+                $this->cacheUser($data->creator);
+            }
+
+            return [$scheduledEventPart, $oldScheduledEvent];
+        }, $data)->then([$deferred, 'resolve']);
     }
 }

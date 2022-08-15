@@ -24,11 +24,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  *
  * @see \Discord\Parts\Guild\Ban
  * @see \Discord\Parts\Guild\Guild
- *
- * @method Ban|null get(string $discrim, $key)  Gets an item from the collection.
- * @method Ban|null first()                     Returns the first element of the collection.
- * @method Ban|null pull($key, $default = null) Pulls an item from the repository, removing and returning the item.
- * @method Ban|null find(callable $callback)    Runs a filter callback over the repository.
  */
 class BanRepository extends AbstractRepository
 {
@@ -103,14 +98,15 @@ class BanRepository extends AbstractRepository
             empty($content) ? null : $content,
             $headers
         )->then(function () use ($user, $reason) {
-            $ban = $this->factory->create(Ban::class, [
+            $ban = $this->factory->part(Ban::class, [
                 'user' => (object) $user->getRawAttributes(),
                 'reason' => $reason,
                 'guild_id' => $this->vars['guild_id'],
             ], true);
-            $this->pushItem($ban);
 
-            return $ban;
+            return $this->cache->set($ban->user_id, $ban)->then(function () use ($ban) {
+                return $ban;
+            });
         });
     }
 
@@ -131,9 +127,9 @@ class BanRepository extends AbstractRepository
         }
 
         if (is_scalar($ban)) {
-            if ($banPart = $this->get('user_id', $ban)) {
-                $ban = $banPart;
-            }
+            return $this->cache->get($ban)->then(function ($ban) use ($reason) {
+                return $this->delete($ban, $reason);
+            });
         }
 
         return $this->delete($ban, $reason);

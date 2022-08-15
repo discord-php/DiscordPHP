@@ -15,6 +15,8 @@ use Discord\Parts\Channel\Channel;
 use Discord\WebSockets\Event;
 use Discord\Helpers\Deferred;
 
+use function React\Async\coroutine;
+
 /**
  * @see https://discord.com/developers/docs/topics/gateway#channel-update
  */
@@ -25,29 +27,37 @@ class ChannelUpdate extends Event
      */
     public function handle(Deferred &$deferred, $data): void
     {
-        $oldChannel = null;
+        coroutine(function ($data) {
+            $oldChannel = $repository = null;
 
-        /** @var Channel */
-        $channelPart = $this->factory->create(Channel::class, $data, true);
+            /** @var Channel */
+            $channelPart = $this->factory->create(Channel::class, $data, true);
 
-        if ($channelPart->is_private) {
-            if (! $oldChannel = $this->discord->private_channels->get('id', $data->id)) {
-                $this->discord->private_channels->pushItem($channelPart);
+            if ($channelPart->is_private) {
+                /** @var ?Channel */
+                if (! $oldChannel = $this->discord->private_channels[$data->id]) {
+                    $repository = $this->discord->private_channels;
+                }
+            } elseif ($guild = $channelPart->guild) {
+                /** @var ?Channel */
+                if (! $oldChannel = $guild->channels[$data->id]) {
+                    $repository = $guild->channels;
+                }
             }
-        } elseif ($guild = $channelPart->guild) {
-            if (! $oldChannel = $guild->channels->get('id', $data->id)) {
-                $guild->channels->pushItem($channelPart);
+
+            if ($oldChannel) {
+                // Swap
+                $channelPart = $oldChannel;
+                $oldChannel = clone $oldChannel;
+
+                $channelPart->fill((array) $data);
             }
-        }
 
-        if ($oldChannel) {
-            // Swap
-            $channelPart = $oldChannel;
-            $oldChannel = clone $oldChannel;
+            if ($repository) {
+                yield $repository->cache->set($data->id, $channelPart);
+            }
 
-            $channelPart->fill((array) $data);
-        }
-
-        $deferred->resolve([$channelPart, $oldChannel]);
+            return [$channelPart, $oldChannel];
+        }, $data)->then([$deferred, 'resolve']);
     }
 }

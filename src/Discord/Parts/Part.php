@@ -312,7 +312,12 @@ abstract class Part implements ArrayAccess, JsonSerializable
      */
     public function serialize()
     {
-        return serialize($this->attributes);
+        return json_encode($this->attributes);
+    }
+
+    public function __serialize(): array
+    {
+        return $this->attributes;
     }
 
     public function __serialize(): array
@@ -329,13 +334,20 @@ abstract class Part implements ArrayAccess, JsonSerializable
      */
     public function unserialize($data)
     {
-        $data = unserialize($data);
+        $data = json_decode($data);
 
         foreach ($data as $key => $value) {
             $this->setAttribute($key, $value);
         }
     }
     
+    public function __unserialize(array $data): void
+    {
+        foreach ($data as $key => $value) {
+            $this->setAttribute($key, $value);
+        }
+    }
+
     public function __unserialize(array $data): void
     {
         foreach ($data as $key => $value) {
@@ -396,6 +408,7 @@ abstract class Part implements ArrayAccess, JsonSerializable
 
     /**
      * Gets the attributes to pass to repositories.
+     * Note: The order matters for repository tree (top to bottom).
      *
      * @return array Attributes.
      */

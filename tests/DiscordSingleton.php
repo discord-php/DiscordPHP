@@ -13,6 +13,7 @@ use Discord\Discord;
 use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
+use React\EventLoop\Loop;
 
 class DiscordSingleton
 {
@@ -24,10 +25,55 @@ class DiscordSingleton
     public static function get()
     {
         if (! self::$discord) {
-            self::new();
+            self::new_cache();
         }
 
         return self::$discord;
+    }
+
+    private static function new_cache()
+    {
+        $loop = Loop::get();
+
+        $redis = (new Clue\React\Redis\Factory($loop))->createLazyClient('localhost:6379');
+        $cache = new WyriHaximus\React\Cache\Redis($redis);
+
+        //$cache = new seregazhuk\React\Cache\Memcached\Memcached($loop);
+
+        //$cache = new WyriHaximus\React\Cache\Filesystem(React\Filesystem\Filesystem::create($loop), getenv('RUNNER_TEMP').DIRECTORY_SEPARATOR);
+
+        $logger = new Logger('DiscordPHP-UnitTests');
+        $handler = new StreamHandler(fopen(__DIR__.'/../phpunit.log', 'w'));
+        $formatter = new LineFormatter(null, null, true, true);
+        $handler->setFormatter($formatter);
+        $logger->pushHandler($handler);
+
+        $discord = new Discord([
+            'token' => getenv('DISCORD_TOKEN'),
+            'loop' => $loop,
+            'logger' => $logger,
+            'cacheInterface' => $cache
+        ]);
+
+        $e = null;
+
+        $timer = $discord->getLoop()->addTimer(10, function () use (&$e) {
+            $e = new Exception('Timed out trying to connect to Discord.');
+        });
+
+        $discord->on('ready', function (Discord $discord) use ($timer) {
+            $discord->getLoop()->cancelTimer($timer);
+            $discord->stop();
+        });
+
+        self::$discord = $discord;
+
+        $discord->run();
+
+        if ($e !== null) {
+            throw $e;
+        }
+
     }
 
     private static function new()

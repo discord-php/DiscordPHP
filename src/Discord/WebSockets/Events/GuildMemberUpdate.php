@@ -14,6 +14,9 @@ namespace Discord\WebSockets\Events;
 use Discord\Parts\User\Member;
 use Discord\WebSockets\Event;
 use Discord\Helpers\Deferred;
+use Discord\Parts\Guild\Guild;
+
+use function React\Async\coroutine;
 
 /**
  * @see https://discord.com/developers/docs/topics/gateway#guild-member-update
@@ -25,28 +28,33 @@ class GuildMemberUpdate extends Event
      */
     public function handle(Deferred &$deferred, $data): void
     {
-        $memberPart = $oldMember = null;
+        coroutine(function ($data) {
+            $memberPart = $oldMember = null;
 
-        if ($guild = $this->discord->guilds->get('id', $data->guild_id)) {
-            if ($oldMember = $guild->members->get('id', $data->user->id)) {
-                // Swap
-                $memberPart = $oldMember;
-                $oldMember = clone $oldMember;
+            /** @var ?Guild */
+            if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
+                /** @var ?Member */
+                if ($oldMember = $guild->members[$data->user->id]) {
+                    // Swap
+                    $memberPart = $oldMember;
+                    $oldMember = clone $oldMember;
 
-                $memberPart->fill((array) $data);
+                    $memberPart->fill((array) $data);
+                }
             }
-        }
 
-        if (! $memberPart) {
-            /** @var Member */
-            $memberPart = $this->factory->create(Member::class, $data, true);
-            if ($guild = $memberPart->guild) {
-                $guild->members->pushItem($memberPart);
+            if ($memberPart === null) {
+                /** @var Member */
+                $memberPart = $this->factory->create(Member::class, $data, true);
             }
-        }
 
-        $this->cacheUser($data->user);
+            if ($guild) {
+                yield $guild->members->cache->set($data->user->id, $memberPart);
+            }
 
-        $deferred->resolve([$memberPart, $oldMember]);
+            $this->cacheUser($data->user);
+
+            return [$memberPart, $oldMember];
+        }, $data)->then([$deferred, 'resolve']);
     }
 }

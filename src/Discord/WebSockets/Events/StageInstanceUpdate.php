@@ -14,6 +14,9 @@ namespace Discord\WebSockets\Events;
 use Discord\Parts\Channel\StageInstance;
 use Discord\WebSockets\Event;
 use Discord\Helpers\Deferred;
+use Discord\Parts\Guild\Guild;
+
+use function React\Async\coroutine;
 
 /**
  * @see https://discord.com/developers/docs/topics/gateway#stage-instance-update
@@ -25,26 +28,31 @@ class StageInstanceUpdate extends Event
      */
     public function handle(Deferred &$deferred, $data): void
     {
-        $stageInstancePart = $oldStageInstance = null;
+        coroutine(function ($data) {
+            $stageInstancePart = $oldStageInstance = null;
 
-        if ($guild = $this->discord->guilds->get('id', $data->guild_id)) {
-            if ($oldStageInstance = $guild->stage_instances->get('id', $data->id)) {
-                // Swap
-                $stageInstancePart = $oldStageInstance;
-                $oldStageInstance = clone $oldStageInstance;
+            /** @var ?Guild */
+            if ($guild = $this->discord->guilds->cacheGet($data->guild_id)) {
+                /** @var ?StageInstance */
+                if ($oldStageInstance = $guild->stage_instances[$data->id]) {
+                    // Swap
+                    $stageInstancePart = $oldStageInstance;
+                    $oldStageInstance = clone $oldStageInstance;
 
-                $stageInstancePart->fill((array) $data);
+                    $stageInstancePart->fill((array) $data);
+                }
             }
-        }
 
-        if (! $stageInstancePart) {
-            /** @var StageInstance */
-            $stageInstancePart = $this->factory->create(StageInstance::class, $data, true);
-            if ($guild = $stageInstancePart->guild) {
-                $guild->stage_instances->pushItem($stageInstancePart);
+            if ($stageInstancePart === null) {
+                /** @var StageInstance */
+                $stageInstancePart = $this->factory->create(StageInstance::class, $data, true);
             }
-        }
 
-        $deferred->resolve([$stageInstancePart, $oldStageInstance]);
+            if ($guild) {
+                $guild->stage_instances->cache->set($data->id, $stageInstancePart);
+            }
+
+            return [$stageInstancePart, $oldStageInstance];
+        }, $data)->then([$deferred, 'resolve']);
     }
 }

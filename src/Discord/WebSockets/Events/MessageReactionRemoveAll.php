@@ -14,6 +14,12 @@ namespace Discord\WebSockets\Events;
 use Discord\Parts\WebSockets\MessageReaction;
 use Discord\WebSockets\Event;
 use Discord\Helpers\Deferred;
+use Discord\Parts\Channel\Channel;
+use Discord\Parts\Channel\Message;
+use Discord\Parts\Guild\Guild;
+use Discord\Parts\Thread\Thread;
+
+use function React\Async\coroutine;
 
 /**
  * @see https://discord.com/developers/docs/topics/gateway#message-reaction-remove-all
@@ -25,14 +31,33 @@ class MessageReactionRemoveAll extends Event
      */
     public function handle(Deferred &$deferred, $data): void
     {
-        $reaction = new MessageReaction($this->discord, (array) $data, true);
+        coroutine(function ($data) {
+            /** @var ?Guild */
+            if (isset($data->guild_id) && $guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
+                /** @var ?Channel */
+                if (! $channel = yield $guild->channels->cacheGet($data->channel_id)) {
+                    /** @var Channel */
+                    foreach ($guild->channels as $channel) {
+                        /** @var ?Thread */
+                        if ($thread = yield $channel->threads->cacheGet($data->channel_id)) {
+                            $channel = $thread;
+                            break;
+                        }
+                    }
+                }
+            } else {
+                /** @var ?Channel */
+                $channel = yield $this->discord->private_channels->cacheGet($data->channel_id);
+            }
 
-        if ($channel = $reaction->channel) {
-            if ($message = $channel->messages->offsetGet($reaction->message_id)) {
+            $reaction = new MessageReaction($this->discord, (array) $data, true);
+
+            /** @var ?Message */
+            if (isset($channel) && $message = yield $channel->messages->cacheGet($data->message_id)) {
                 $message->reactions->clear();
             }
-        }
 
-        $deferred->resolve($reaction);
+            return $reaction;
+        }, $data)->then([$deferred, 'resolve']);
     }
 }

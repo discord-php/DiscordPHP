@@ -9,13 +9,14 @@
  * with this source code in the LICENSE.md file.
  */
 
-namespace Discord\Parts\Interactions\Command;
+namespace Discord\Parts\Guild;
 
 use Discord\Helpers\Collection;
+use Discord\Parts\Interactions\Command\Permission;
 use Discord\Parts\Part;
 
 /**
- * Guild Application Command Permissions Overwrite Class.
+ * Guild Application Command Permissions Class.
  *
  * @see https://discord.com/developers/docs/interactions/application-commands#application-command-permissions-object-guild-application-command-permissions-structure
  *
@@ -24,12 +25,17 @@ use Discord\Parts\Part;
  * @property string                  $guild_id       The id of the guild
  * @property Collection|Permission[] $permissions    The permissions for the command in the guild
  */
-class Overwrite extends Part
+class CommandPermissions extends Part
 {
     /**
      * @inheritdoc
      */
-    protected $fillable = ['id', 'application_id', 'guild_id', 'permissions'];
+    protected $fillable = [
+        'id',
+        'application_id',
+        'guild_id',
+        'permissions'
+    ];
 
     /**
      * Gets the permissions attribute.
@@ -38,10 +44,10 @@ class Overwrite extends Part
      */
     protected function getPermissionsAttribute()
     {
-        $permissions = new Collection();
+        $permissions = Collection::for(Permission::class);
 
         foreach ($this->attributes['permissions'] ?? [] as $permission) {
-            $permissions->pushItem($this->factory->create(Permission::class, $permission, true));
+            $permissions->pushItem($this->factory->part(Permission::class, (array) $permission, true));
         }
 
         return $permissions;
@@ -63,8 +69,8 @@ class Overwrite extends Part
     public function getRepositoryAttributes(): array
     {
         return [
-            'application_id' => $this->application_id,
             'guild_id' => $this->guild_id,
+            'application_id' => $this->application_id,
         ];
     }
 

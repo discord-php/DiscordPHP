@@ -35,10 +35,10 @@ use Discord\Parts\User\User;
  * @property bool         $mute                       Whether this user is muted by the server.
  * @property bool         $self_deaf                  Whether this user is locally deafened.
  * @property bool         $self_mute                  Whether this user is locally muted.
- * @property bool         $self_stream                Whether this user is streaming using "Go Live".
+ * @property bool|null    $self_stream                Whether this user is streaming using "Go Live".
  * @property bool         $self_video                 Whether this user's camera is enabled.
  * @property bool         $suppress                   Whether this user is muted by the current user.
- * @property Carbon|null  $request_to_speak_timestamp The time at which the user requested to speak.
+ * @property ?Carbon      $request_to_speak_timestamp The time at which the user requested to speak.
  */
 class VoiceStateUpdate extends Part
 {
@@ -82,8 +82,8 @@ class VoiceStateUpdate extends Part
             return null;
         }
 
-        if ($this->guild) {
-            return $this->guild->channels->get('id', $this->channel_id);
+        if ($this->channel_id && $guild = $this->guild) {
+            return $guild->channels->get('id', $this->channel_id);
         }
 
         return $this->discord->getChannel($this->channel_id);
@@ -96,12 +96,12 @@ class VoiceStateUpdate extends Part
      */
     protected function getUserAttribute(): ?User
     {
-        if ($user = $this->discord->users->offsetGet($this->user_id)) {
+        if ($user = $this->discord->users->get('id', $this->user_id)) {
             return $user;
         }
 
-        if ($this->member) {
-            return $this->member->user;
+        if ($member = $this->member) {
+            return $member->user;
         }
 
         return null;
@@ -114,8 +114,10 @@ class VoiceStateUpdate extends Part
      */
     protected function getMemberAttribute(): ?Member
     {
-        if ($this->guild && $member = $this->guild->members->offsetGet($this->user_id)) {
-            return $member;
+        if ($guild = $this->guild) {
+            if ($member = $guild->members->get('id', $this->user_id)) {
+                return $member;
+            }
         }
 
         if (isset($this->attributes['member'])) {
@@ -132,10 +134,10 @@ class VoiceStateUpdate extends Part
      */
     protected function getRequestToSpeakTimestampAttribute(): ?Carbon
     {
-        if (isset($this->attributes['request_to_speak_timestamp'])) {
-            return new Carbon($this->attributes['request_to_speak_timestamp']);
+        if (! isset($this->attributes['request_to_speak_timestamp'])) {
+            return null;
         }
 
-        return null;
+        return new Carbon($this->attributes['request_to_speak_timestamp']);
     }
 }

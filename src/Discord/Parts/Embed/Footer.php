@@ -27,5 +27,9 @@ class Footer extends Part
     /**
      * @inheritdoc
      */
-    protected $fillable = ['text', 'icon_url', 'proxy_icon_url'];
+    protected $fillable = [
+        'text',
+        'icon_url',
+        'proxy_icon_url'
+    ];
 }

@@ -33,7 +33,12 @@ class Member extends Part
     /**
      * @inheritdoc
      */
-    protected $fillable = ['id', 'user_id', 'join_timestamp', 'flags'];
+    protected $fillable = [
+        'id',
+        'user_id',
+        'join_timestamp',
+        'flags',
+    ];
 
     /**
      * Returns the user that the member represents.
@@ -47,6 +52,8 @@ class Member extends Part
 
     /**
      * Returns the time that the member joined the thread.
+     *
+     * @throws \Exception
      *
      * @return Carbon
      */

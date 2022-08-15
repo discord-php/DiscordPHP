@@ -11,12 +11,13 @@
 
 namespace Discord\WebSockets\Events;
 
-use Discord\Parts\Guild\Guild;
 use Discord\WebSockets\Event;
 use Discord\Helpers\Deferred;
 
 /**
  * @see https://discord.com/developers/docs/topics/gateway#guild-delete
+ *
+ * @todo update params in docs
  */
 class GuildDelete extends Event
 {
@@ -25,6 +26,6 @@ class GuildDelete extends Event
      */
     public function handle(Deferred &$deferred, $data): void
     {
-        $deferred->resolve([$this->discord->guilds->pull($data->id), $data->unavailable ?? false]);
+        $deferred->resolve($this->discord->guilds->cachePull($data->id, $data)->then(fn ($guildPart) => [$guildPart, $data->unavailable ?? false]));
     }
 }

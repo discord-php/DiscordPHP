@@ -151,7 +151,7 @@ abstract class Event
      * Discord instance if necessary.
      *
      * @param Deferred     $deferred The promise to use
-     * @param array|object $data     The data that was sent with the WebSocket
+     * @param object $data The data that was sent with the WebSocket
      *
      * @return void|PromiseInterface
      */
@@ -168,7 +168,7 @@ abstract class Event
         if ($user = $this->discord->users->get('id', $userdata->id)) {
             $user->fill((array) $userdata);
         } else {
-            $this->discord->users->pushItem($this->factory->create(\Discord\Parts\User\User::class, $userdata, true));
+            $this->discord->users->pushItem($this->factory->part(\Discord\Parts\User\User::class, (array) $userdata, true));
         }
     }
 

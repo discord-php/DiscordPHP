@@ -38,7 +38,6 @@ use Monolog\Logger as Monolog;
 use Ratchet\Client\Connector;
 use Ratchet\Client\WebSocket;
 use Ratchet\RFC6455\Messaging\Message;
-use React\EventLoop\Factory as LoopFactory;
 use React\EventLoop\LoopInterface;
 use React\EventLoop\TimerInterface;
 use Discord\Helpers\Deferred;
@@ -47,6 +46,9 @@ use Discord\Http\Drivers\React;
 use Discord\Http\Endpoint;
 use Evenement\EventEmitterTrait;
 use Psr\Log\LoggerInterface;
+use React\Cache\ArrayCache;
+use React\Cache\CacheInterface;
+use React\EventLoop\Factory as LoopFactory;
 use React\Promise\ExtendedPromiseInterface;
 use React\Promise\PromiseInterface;
 use React\Socket\Connector as SocketConnector;
@@ -86,7 +88,7 @@ class Discord
      *
      * @var string Version.
      */
-    public const VERSION = 'v7.2.0';
+    public const VERSION = 'v8.0.0';
 
     /**
      * The logger.
@@ -316,6 +318,13 @@ class Discord
     protected $factory;
 
     /**
+     * The react/cache interface.
+     *
+     * @var CacheInterface
+     */
+    protected $cache;
+
+    /**
      * The Client class.
      *
      * @var Client Discord client.
@@ -328,6 +337,13 @@ class Discord
      * @var RegisteredCommand[]
      */
     private $application_commands;
+
+    /**
+     * Whether the loop is stopping.
+     *
+     * @var bool
+     */
+    protected $stopping;
 
     /**
      * Creates a Discord client instance.
@@ -355,7 +371,10 @@ class Discord
 
         $this->logger->debug('Initializing DiscordPHP '.self::VERSION.' (DiscordPHP-Http: '.Http::VERSION.' & Gateway: v'.self::GATEWAY_VERSION.') on PHP '.PHP_VERSION);
 
-        $connector = new SocketConnector($this->loop, $options['socket_options']);
+        $this->cache = $options['cacheInterface'];
+        $this->logger->warning('Attached experimental CacheInterface: '.get_class($this->cache));
+
+        $connector = new SocketConnector($options['socket_options'], $this->loop);
         $this->wsFactory = new Connector($this->loop, $connector);
         $this->handlers = new Handlers();
 
@@ -377,8 +396,8 @@ class Discord
             new React($this->loop, $options['socket_options'])
         );
 
-        $this->factory = new Factory($this, $this->http);
-        $this->client = $this->factory->create(Client::class, [], true);
+        $this->factory = new Factory($this);
+        $this->client = $this->factory->part(Client::class, []);
 
         $this->connectWs();
     }
@@ -443,6 +462,7 @@ class Discord
 
         // Setup the user account
         $this->client->fill((array) $content->user);
+        $this->client->created = true;
         $this->sessionId = $content->session_id;
 
         $this->logger->debug('client created and session id stored', ['session_id' => $content->session_id, 'user' => $this->client->user->getPublicAttributes()]);
@@ -507,46 +527,50 @@ class Discord
      */
     protected function handleGuildMembersChunk(object $data): void
     {
-        $guild = $this->guilds->offsetGet($data->d->guild_id);
-        $members = $data->d->members;
+        $guild = $this->guilds->get('id', $data->d->guild_id);
 
-        $this->logger->debug('received guild member chunk', ['guild_id' => $guild->id, 'guild_name' => $guild->name, 'chunk_count' => count($members), 'member_collection' => $guild->members->count(), 'member_count' => $guild->member_count]);
+        $this->logger->debug('received guild member chunk', ['guild_id' => $data->d->guild_id, 'guild_name' => $guild->name, 'chunk_count' => count($data->d->members), 'member_collection' => $guild->members->count(), 'member_count' => $guild->member_count]);
 
-        $count = 0;
-        $skipped = 0;
-        foreach ($members as $member) {
-            if ($guild->members->has($member->user->id)) {
-                ++$skipped;
+        $count = $skipped = 0;
+        foreach ($data->d->members as $member) {
+            $userId = $member->user->id;
+            if ($guild->members->offsetExists($userId)) {
                 continue;
             }
 
             $member = (array) $member;
-            $member['guild_id'] = $guild->id;
+            $member['guild_id'] = $data->d->guild_id;
             $member['status'] = 'offline';
+            $members[$userId] = $this->factory->part(Member::class, $member, true);
 
-            if (! $this->users->has($member['user']->id)) {
-                $userPart = $this->factory->create(User::class, $member['user'], true);
-                $this->users->offsetSet($userPart->id, $userPart);
+            if (! $this->users->offsetExists($userId)) {
+                $users[$userId] = $this->factory->part(User::class, (array) $member['user'], true);
             }
-
-            $memberPart = $this->factory->create(Member::class, $member, true);
-            $guild->members->offsetSet($memberPart->id, $memberPart);
 
             ++$count;
         }
-
-        $this->logger->debug('parsed '.$count.' members (skipped '.$skipped.')', ['repository_count' => $guild->members->count(), 'actual_count' => $guild->member_count]);
-
-        if ($guild->members->count() >= $guild->member_count) {
-            $this->largeSent = array_diff($this->largeSent, [$guild->id]);
-
-            $this->logger->debug('all users have been loaded', ['guild' => $guild->id, 'member_collection' => $guild->members->count(), 'member_count' => $guild->member_count]);
-            $this->guilds->offsetSet($guild->id, $guild);
+        $await = [];
+        if (! empty($users)) {
+            $await[] = $this->users->cache->setMultiple($users);
+        }
+        if ($count) {
+            $await[] = $guild->members->cache->setMultiple($members);
         }
 
-        if (count($this->largeSent) < 1) {
-            $this->ready();
-        }
+        \React\Promise\all($await)->then(function () use ($guild, $count, $skipped) {
+            $membersCount = $guild->members->count();
+            $this->logger->debug('parsed '.$count.' members (skipped '.$skipped.')', ['repository_count' => $membersCount, 'actual_count' => $guild->member_count]);
+
+            if ($membersCount >= $guild->member_count) {
+                $this->largeSent = array_diff($this->largeSent, [$guild->id]);
+
+                $this->logger->debug('all users have been loaded', ['guild' => $guild->id, 'member_collection' => $membersCount, 'member_count' => $guild->member_count]);
+            }
+
+            if (count($this->largeSent) < 1) {
+                $this->ready();
+            }
+        });
     }
 
     /**
@@ -1350,9 +1374,9 @@ class Discord
                 'intents',
                 'socket_options',
                 'dnsConfig',
+                'cacheInterface',
             ])
             ->setDefaults([
-                'loop' => LoopFactory::create(),
                 'logger' => null,
                 'loadAllMembers' => false,
                 'disabledEvents' => [],
@@ -1361,6 +1385,7 @@ class Discord
                 'retrieveBans' => false,
                 'intents' => Intents::getDefaultIntents(),
                 'socket_options' => [],
+                'cacheInterface' => new ArrayCache(),
             ])
             ->setAllowedTypes('token', 'string')
             ->setAllowedTypes('logger', ['null', LoggerInterface::class])
@@ -1372,9 +1397,14 @@ class Discord
             ->setAllowedTypes('retrieveBans', 'bool')
             ->setAllowedTypes('intents', ['array', 'int'])
             ->setAllowedTypes('socket_options', 'array')
-            ->setAllowedTypes('dnsConfig', ['string', \React\Dns\Config\Config::class]);
+            ->setAllowedTypes('dnsConfig', ['string', \React\Dns\Config\Config::class])
+            ->setAllowedTypes('cacheInterface', ['null', CacheInterface::class]);
 
         $options = $resolver->resolve($options);
+
+        if (! isset($options['loop'])) {
+            $options['loop'] = LoopFactory::create();
+        }
 
         if (is_null($options['logger'])) {
             $logger = new Monolog('DiscordPHP');
@@ -1434,7 +1464,18 @@ class Discord
      */
     public function run(): void
     {
-        $this->loop->run();
+        while (! $this->stopping) {
+            $this->loop->run();
+        }
+    }
+
+    /**
+     * Stops the ReactPHP event loop.
+     */
+    public function stop(): void
+    {
+        $this->stopping = true;
+        $this->loop->stop();
     }
 
     /**
@@ -1452,7 +1493,7 @@ class Discord
         $this->logger->info('discord closed');
 
         if ($closeLoop) {
-            $this->loop->stop();
+            $this->stop();
         }
     }
 
@@ -1525,6 +1566,16 @@ class Discord
     }
 
     /**
+     * Gets the cache interface.
+     *
+     * @return CacheInterface
+     */
+    public function getCache(): CacheInterface
+    {
+        return $this->cache;
+    }
+
+    /**
      * Handles dynamic get calls to the client.
      *
      * @param string $name Variable name.
@@ -1533,7 +1584,7 @@ class Discord
      */
     public function __get(string $name)
     {
-        $allowed = ['loop', 'options', 'logger', 'http', 'application_commands'];
+        $allowed = ['loop', 'options', 'logger', 'http', 'application_commands', 'cache'];
 
         if (in_array($name, $allowed)) {
             return $this->{$name};

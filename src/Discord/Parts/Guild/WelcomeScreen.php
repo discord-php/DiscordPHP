@@ -19,7 +19,7 @@ use Discord\Parts\Part;
  *
  * @see https://discord.com/developers/docs/resources/guild#welcome-screen-object-welcome-screen-structure
  *
- * @property string                      $description      The server description shown in the welcome screen.
+ * @property ?string                     $description      The server description shown in the welcome screen.
  * @property Collection|WelcomeChannel[] $welcome_channels The channels shown in the welcome screen, up to 5.
  */
 class WelcomeScreen extends Part
@@ -27,7 +27,10 @@ class WelcomeScreen extends Part
     /**
      * @inheritdoc
      */
-    protected $fillable = ['description', 'welcome_channels'];
+    protected $fillable = [
+        'description',
+        'welcome_channels'
+    ];
 
     /**
      * Returns the Welcome Channels of the Welcome Screen.
@@ -38,8 +41,10 @@ class WelcomeScreen extends Part
     {
         $collection = Collection::for(WelcomeChannel::class, null);
 
-        foreach ($this->attributes['welcome_channels'] ?? [] as $welcome_channel) {
-            $collection->pushItem($this->factory->part(WelcomeChannel::class, (array) $welcome_channel, true));
+        if (! empty($this->attributes['welcome_channels'])) {
+            foreach ($this->attributes['welcome_channels'] as $welcome_channel) {
+                $collection->pushItem($this->factory->part(WelcomeChannel::class, (array) $welcome_channel, true));
+            }
         }
 
         return $collection;

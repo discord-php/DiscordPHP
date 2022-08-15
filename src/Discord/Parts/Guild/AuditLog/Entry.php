@@ -20,9 +20,9 @@ use Discord\Parts\User\User;
  *
  * @see https://discord.com/developers/docs/resources/audit-log#audit-log-entry-object
  *
- * @property string       $target_id   Id of the affected entity (webhook, user, role, etc.).
+ * @property ?string      $target_id   Id of the affected entity (webhook, user, role, etc.).
  * @property Collection   $changes     Changes made to the target_id.
- * @property string|null  $user_id     The user who made the changes.
+ * @property ?string      $user_id     The user who made the changes.
  * @property User|null    $user
  * @property string       $id          Id of the entry.
  * @property int          $action_type Type of action that occurred.
@@ -103,7 +103,7 @@ class Entry extends Part
     /**
      * Returns the user who made the changes.
      *
-     * @return User
+     * @return User|null
      */
     protected function getUserAttribute(): ?User
     {

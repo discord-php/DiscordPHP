@@ -15,6 +15,8 @@ use Discord\Parts\Guild\Ban;
 use Discord\WebSockets\Event;
 use Discord\Helpers\Deferred;
 
+use function React\Async\coroutine;
+
 /**
  * @see https://discord.com/developers/docs/topics/gateway#guild-ban-remove
  */
@@ -25,22 +27,21 @@ class GuildBanRemove extends Event
      */
     public function handle(Deferred &$deferred, $data): void
     {
-        $banPart = null;
+        coroutine(function ($data) {
+            $banPart = null;
 
-        if ($guild = $this->discord->guilds->get('id', $data->guild_id)) {
-            if ($banPart = $guild->bans->pull($data->user->id)) {
-                $banPart->fill((array) $data);
-                $banPart->created = false;
+            /** @var ?Guild */
+            if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
+                /** @var ?Ban */
+                if ($banPart = yield $guild->bans->cachePull($data->user->id)) {
+                    $banPart->fill((array) $data);
+                    $banPart->created = false;
+                }
             }
-        }
 
-        if (! $banPart) {
-            /** @var Ban */
-            $banPart = $this->factory->create(Ban::class, $data);
-        }
+            $this->cacheUser($data->user);
 
-        $this->cacheUser($data->user);
-
-        $deferred->resolve($banPart);
+            return $banPart ?? $this->factory->create(Ban::class, $data);
+        }, $data)->then([$deferred, 'resolve']);
     }
 }

@@ -25,16 +25,16 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  *
  * @property string      $code                    The template code (unique ID).
  * @property string      $name                    Template name.
- * @property string|null $description             The description for the template. Up to 120 characters.
+ * @property ?string     $description             The description for the template. Up to 120 characters.
  * @property int         $usage_count             Number of times this template has been used.
  * @property string      $creator_id              The ID of the user who created the template.
  * @property User        $creator                 The user who created the template.
  * @property Carbon      $created_at              A timestamp of when the template was created.
  * @property Carbon      $updated_at              When this template was last synced to the source guild.
  * @property string      $source_guild_id         The ID of the guild this template is based on.
- * @property Guild       $source_guild            The guild this template is based on.
+ * @property Guild|null  $source_guild            The guild this template is based on.
  * @property object      $serialized_source_guild The guild snapshot this template contains.
- * @property bool        $is_dirty                Whether the template has unsynced changes.
+ * @property ?bool       $is_dirty                Whether the template has unsynced changes.
  */
 class GuildTemplate extends Part
 {
@@ -72,7 +72,7 @@ class GuildTemplate extends Part
      */
     protected function getSourceGuildAttribute(): Guild
     {
-        if ($guild = $this->discord->guilds->offsetGet($this->source_guild_id)) {
+        if ($guild = $this->discord->guilds->get('id', $this->source_guild_id)) {
             return $guild;
         }
 
@@ -86,7 +86,7 @@ class GuildTemplate extends Part
      */
     protected function getCreatorAttribute(): Part
     {
-        if ($creator = $this->discord->users->offsetGet($this->creator_id)) {
+        if ($creator = $this->discord->users->get('id', $this->creator_id)) {
             return $creator;
         }
 
@@ -150,13 +150,9 @@ class GuildTemplate extends Part
 
         return $this->http->post(Endpoint::bind(Endpoint::GUILDS_TEMPLATE, $this->code), $options)
             ->then(function ($response) use ($roles, $channels) {
-                if (! $guild = $this->discord->guilds->offsetGet($response->id)) {
+                if (! $guild = $this->discord->guilds->get('id', $response->id)) {
                     /** @var Guild */
-                    $guild = $this->factory->create(Guild::class, $response, true);
-
-                    foreach ($roles as $role) {
-                        $guild->roles->pushItem($guild->roles->create($role, true));
-                    }
+                    $guild = $this->factory->part(Guild::class, (array) $response + ['roles' => $roles], true);
 
                     foreach ($channels as $channel) {
                         $guild->channels->pushItem($guild->channels->create($channel, true));
@@ -176,7 +172,7 @@ class GuildTemplate extends Part
      */
     public function __toString(): string
     {
-        return "https://discord.new/{$this->code}";
+        return 'https://discord.new/'.$this->code;
     }
 
     /**

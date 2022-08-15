@@ -13,7 +13,10 @@ namespace Discord\WebSockets\Events;
 
 use Discord\WebSockets\Event;
 use Discord\Helpers\Deferred;
-use Discord\Parts\Interactions\Command\Overwrite;
+use Discord\Parts\Guild\CommandPermissions;
+use Discord\Parts\Guild\Guild;
+
+use function React\Async\coroutine;
 
 /**
  * @see https://discord.com/developers/docs/topics/gateway#integration-update
@@ -25,32 +28,37 @@ class ApplicationCommandPermissionsUpdate extends Event
      */
     public function handle(Deferred &$deferred, $data): void
     {
-        $overwritePart = $oldOverwrite = null;
+        coroutine(function ($data) {
+            $commandPermissionsPart = $oldCommandPermissions = null;
 
-        if ($guild = $this->discord->guilds->get('id', $data->guild_id)) {
-            if ($command = $guild->commands->get('id', $data->id)) {
-                // There is only one command permissions object
-                if ($oldOverwrite = $command->overwrites->first()) {
+            /** @var ?Guild */
+            if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
+                /** @var ?CommandPermissions */
+                if ($oldCommandPermissions = yield $guild->command_permissions->cacheGet($data->id)) {
                     // Swap
-                    $overwritePart = $oldOverwrite;
-                    $oldOverwrite = clone $oldOverwrite;
+                    $commandPermissionsPart = $oldCommandPermissions;
+                    $oldCommandPermissions = clone $oldCommandPermissions;
 
-                    $overwritePart->fill((array) $data);
+                    $commandPermissionsPart->fill((array) $data);
+
+                    if ($data->id === $data->application_id) {
+                        // Permission synced
+                        yield $guild->command_permissions->cache->delete($oldCommandPermissions->id);
+                    }
                 }
             }
-        }
 
-        if (! $overwritePart) {
-            /** @var Overwrite */
-            $overwritePart = $this->factory->create(Overwrite::class, $data, true);
-            if ($guild && isset($command)) {
-                // There is only one command permissions object
-                $command->overwrites->clear();
-                $command->overwrites->pushItem($overwritePart);
+            if ($commandPermissionsPart === null) {
+                /** @var CommandPermissions */
+                $commandPermissionsPart = $this->factory->create(CommandPermissions::class, $data, true);
             }
-        }
 
-        // TODO: Add documentation
-        $deferred->resolve([$overwritePart, $oldOverwrite]);
+            if ($guild && isset($commandPermissionsPart)) {
+                // Permission set / updated
+                yield $guild->command_permissions->cache->set($data->id, $commandPermissionsPart);
+            }
+
+            return [$commandPermissionsPart, $oldCommandPermissions];
+        }, $data)->then([$deferred, 'resolve']);
     }
 }

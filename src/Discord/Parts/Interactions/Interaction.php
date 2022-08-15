@@ -36,7 +36,7 @@ use function React\Promise\reject;
 /**
  * Represents an interaction from Discord.
  *
- * @see https://discord.com/developers/docs/interactions/receiving-and-responding#interactions
+ * @see https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object
  *
  * @property      string               $id              ID of the interaction.
  * @property      string               $application_id  ID of the application the interaction is for.
@@ -78,11 +78,6 @@ class Interaction extends Part
     ];
 
     /**
-     * @inheritdoc
-     */
-    protected $visible = ['guild', 'channel'];
-
-    /**
      * Whether we have responded to the interaction yet.
      *
      * @var bool
@@ -110,12 +105,12 @@ class Interaction extends Part
             return null;
         }
 
-        $adata = $this->attributes['data'];
-        if (! isset($adata->guild_id) && isset($this->attributes['guild_id'])) {
-            $adata->guild_id = $this->guild_id;
+        $adata = (array) $this->attributes['data'];
+        if (! isset($adata['guild_id']) && isset($this->attributes['guild_id'])) {
+            $adata['guild_id'] = $this->guild_id;
         }
 
-        return $this->factory->create(InteractionData::class, $adata, true);
+        return $this->factory->part(InteractionData::class, $adata, true);
     }
 
     /**
@@ -154,7 +149,7 @@ class Interaction extends Part
                 return $member;
             }
 
-            return $this->factory->create(Member::class, (array) $this->attributes['member'] + ['guild_id' => $this->guild_id], true);
+            return $this->factory->part(Member::class, (array) $this->attributes['member'] + ['guild_id' => $this->guild_id], true);
         }
 
         return null;
@@ -167,15 +162,15 @@ class Interaction extends Part
      */
     protected function getUserAttribute(): ?User
     {
-        if ($this->member) {
-            return $this->member->user;
+        if ($member = $this->member) {
+            return $member->user;
         }
 
         if (! isset($this->attributes['user'])) {
             return null;
         }
 
-        return $this->factory->create(User::class, $this->attributes['user'], true);
+        return $this->factory->part(User::class, (array) $this->attributes['user'], true);
     }
 
     /**
@@ -185,11 +180,11 @@ class Interaction extends Part
      */
     protected function getMessageAttribute(): ?Message
     {
-        if (isset($this->attributes['message'])) {
-            return $this->factory->create(Message::class, $this->attributes['message'], true);
+        if (! isset($this->attributes['message'])) {
+            return null;
         }
 
-        return null;
+        return $this->factory->part(Message::class, (array) $this->attributes['message'], true);
     }
 
     /**
@@ -198,7 +193,7 @@ class Interaction extends Part
      *
      * @see https://discord.com/developers/docs/interactions/receiving-and-responding#responding-to-an-interaction
      *
-     * @throws \LogicException
+     * @throws \LogicException Interaction is not Message Component or Modal Submit.
      *
      * @return ExtendedPromiseInterface
      */
@@ -225,7 +220,7 @@ class Interaction extends Part
      *
      * @param bool $ephemeral Whether the acknowledge should be ephemeral.
      *
-     * @throws \LogicException
+     * @throws \LogicException Interaction is not Application Command, Message Component, or Modal Submit.
      *
      * @return ExtendedPromiseInterface
      */
@@ -249,7 +244,7 @@ class Interaction extends Part
      *
      * @param MessageBuilder $builder The new message content.
      *
-     * @throws \LogicException
+     * @throws \LogicException Interaction is not Message Component.
      *
      * @return ExtendedPromiseInterface
      */
@@ -270,7 +265,7 @@ class Interaction extends Part
      *
      * @see https://discord.com/developers/docs/interactions/receiving-and-responding#get-original-interaction-response
      *
-     * @throws \RuntimeException
+     * @throws \RuntimeException Interaction is not created yet.
      *
      * @return ExtendedPromiseInterface<Message>
      */
@@ -284,7 +279,7 @@ class Interaction extends Part
             ->then(function ($response) {
                 $this->responded = true;
 
-                return $this->factory->create(Message::class, $response, true);
+                return $this->factory->part(Message::class, (array) $response, true);
             });
     }
 
@@ -295,7 +290,7 @@ class Interaction extends Part
      *
      * @param MessageBuilder $builder New message contents.
      *
-     * @throws \RuntimeException
+     * @throws \RuntimeException Interaction is not responded yet.
      *
      * @return ExtendedPromiseInterface<Message>
      */
@@ -314,7 +309,7 @@ class Interaction extends Part
 
             return $this->http->patch(Endpoint::bind(Endpoint::ORIGINAL_INTERACTION_RESPONSE, $this->application_id, $this->token), $builder);
         })()->then(function ($response) {
-            return $this->factory->create(Message::class, $response, true);
+            return $this->factory->part(Message::class, (array) $response, true);
         });
     }
 
@@ -323,7 +318,7 @@ class Interaction extends Part
      *
      * @see https://discord.com/developers/docs/interactions/receiving-and-responding#delete-original-interaction-response
      *
-     * @throws \RuntimeException
+     * @throws \RuntimeException Interaction is not responded yet.
      *
      * @return ExtendedPromiseInterface
      */
@@ -344,7 +339,7 @@ class Interaction extends Part
      * @param MessageBuilder $builder   Message to send.
      * @param bool           $ephemeral Whether the created follow-up should be ephemeral. Will be ignored if the respond is previously ephemeral.
      *
-     * @throws \RuntimeException
+     * @throws \RuntimeException Interaction is not responded yet.
      *
      * @return ExtendedPromiseInterface<Message>
      */
@@ -367,7 +362,7 @@ class Interaction extends Part
 
             return $this->http->post(Endpoint::bind(Endpoint::CREATE_INTERACTION_FOLLOW_UP, $this->application_id, $this->token), $builder);
         })()->then(function ($response) {
-            return $this->factory->create(Message::class, $response, true);
+            return $this->factory->part(Message::class, (array) $response, true);
         });
     }
 
@@ -379,7 +374,7 @@ class Interaction extends Part
      * @param MessageBuilder $builder   Message to respond with.
      * @param bool           $ephemeral Whether the created message should be ephemeral.
      *
-     * @throws \LogicException
+     * @throws \LogicException Interaction is not Application Command, Message Component, or Modal Submit.
      *
      * @return ExtendedPromiseInterface
      */
@@ -410,7 +405,7 @@ class Interaction extends Part
      * @param array          $payload   Response payload.
      * @param Multipart|null $multipart Optional multipart payload.
      *
-     * @throws \RuntimeException
+     * @throws \RuntimeException Interaction is already responded.
      *
      * @return ExtendedPromiseInterface
      */
@@ -445,7 +440,7 @@ class Interaction extends Part
      * @param string         $message_id Message to update.
      * @param MessageBuilder $builder    New message contents.
      *
-     * @throws \RuntimeException
+     * @throws \RuntimeException Interaction is not responded yet.
      *
      * @return ExtendedPromiseInterface<Message>
      */
@@ -464,7 +459,7 @@ class Interaction extends Part
 
             return $this->http->patch(Endpoint::bind(Endpoint::INTERACTION_FOLLOW_UP, $this->application_id, $this->token, $message_id), $builder);
         })()->then(function ($response) {
-            return $this->factory->create(Message::class, $response, true);
+            return $this->factory->part(Message::class, (array) $response, true);
         });
     }
 
@@ -475,7 +470,7 @@ class Interaction extends Part
      *
      * @param string $message_id Message to get.
      *
-     * @throws \RuntimeException
+     * @throws \RuntimeException Interaction is not created yet.
      *
      * @return ExtendedPromiseInterface<Message>
      */
@@ -489,7 +484,7 @@ class Interaction extends Part
             ->then(function ($response) {
                 $this->responded = true;
 
-                return $this->factory->create(Message::class, $response, true);
+                return $this->factory->part(Message::class, (array) $response, true);
             });
     }
 
@@ -500,7 +495,7 @@ class Interaction extends Part
      *
      * @param string $message_id Message to delete.
      *
-     * @throws \RuntimeException
+     * @throws \RuntimeException Interaction is not responded yet.
      *
      * @return ExtendedPromiseInterface
      */
@@ -520,7 +515,7 @@ class Interaction extends Part
      *
      * @param array|Choice[] $choice Autocomplete choices (max of 25 choices)
      *
-     * @throws \LogicException
+     * @throws \LogicException Interaction is not Autocomplete.
      *
      * @return ExtendedPromiseInterface
      */
@@ -546,8 +541,8 @@ class Interaction extends Part
      * @param array|Component[] $components Between 1 and 5 (inclusive) components that make up the modal contained in Action Row
      * @param callable|null     $submit     The function to call once modal is submitted.
      *
-     * @throws \LogicException
-     * @throws \LengthException
+     * @throws \LogicException  Interaction is Ping or Modal Submit.
+     * @throws \LengthException Modal title is longer than 45 characters.
      *
      * @return ExtendedPromiseInterface
      */

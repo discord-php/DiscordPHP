@@ -14,6 +14,7 @@
     <testsuites>
         <testsuite name="default">
             <directory suffix="Test.php">tests</directory>
+            <!--<file>tests/DiscordTest.php</file>-->
         </testsuite>
     </testsuites>
 

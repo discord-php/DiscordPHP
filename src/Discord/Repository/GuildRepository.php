@@ -19,11 +19,6 @@ use React\Promise\ExtendedPromiseInterface;
  * Contains guilds that the user is in.
  *
  * @see \Discord\Parts\Guild\Guild
- *
- * @method Guild|null get(string $discrim, $key)  Gets an item from the collection.
- * @method Guild|null first()                     Returns the first element of the collection.
- * @method Guild|null pull($key, $default = null) Pulls an item from the repository, removing and returning the item.
- * @method Guild|null find(callable $callback)    Runs a filter callback over the repository.
  */
 class GuildRepository extends AbstractRepository
 {
@@ -60,9 +55,9 @@ class GuildRepository extends AbstractRepository
         }
 
         return $this->http->delete(Endpoint::bind(Endpoint::USER_CURRENT_GUILD, $guild))->then(function () use ($guild) {
-            $this->pull('id', $guild);
-
-            return $this;
+            return $this->cache->delete($guild)->then(function ($success) {
+                return $this;
+            });
         });
     }
 }

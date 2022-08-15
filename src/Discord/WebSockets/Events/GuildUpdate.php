@@ -15,6 +15,8 @@ use Discord\WebSockets\Event;
 use Discord\Helpers\Deferred;
 use Discord\Parts\Guild\Guild;
 
+use function React\Async\coroutine;
+
 /**
  * @see https://discord.com/developers/docs/topics/gateway#guild-update
  */
@@ -25,17 +27,21 @@ class GuildUpdate extends Event
      */
     public function handle(Deferred &$deferred, $data): void
     {
-        $oldGuild = null;
+        coroutine(function ($data) {
+            $oldGuild = null;
 
-        if ($guildPart = $this->discord->guilds->get('id', $data->id)) {
-            $oldGuild = clone $guildPart;
-            $guildPart->fill((array) $data);
-        } else {
-            /** @var Guild */
-            $guildPart = $this->factory->create(Guild::class, $data, true);
-            $this->discord->guilds->pushItem($guildPart);
-        }
+            /** @var ?Guild */
+            if ($guildPart = yield $this->discord->guilds->cacheGet($data->id)) {
+                $oldGuild = clone $guildPart;
+                $guildPart->fill((array) $data);
+            } else {
+                /** @var Guild */
+                $guildPart = $this->factory->create(Guild::class, $data, true);
+            }
 
-        $deferred->resolve([$guildPart, $oldGuild]);
+            yield $this->discord->guilds->cache->set($data->id, $guildPart);
+
+            return [$guildPart, $oldGuild];
+        }, $data)->then([$deferred, 'resolve']);
     }
 }

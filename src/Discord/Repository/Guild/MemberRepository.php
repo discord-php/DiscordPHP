@@ -23,11 +23,6 @@ use React\Promise\PromiseInterface;
  *
  * @see \Discord\Parts\User\Member
  * @see \Discord\Parts\Guild\Guild
- *
- * @method Member|null get(string $discrim, $key)  Gets an item from the collection.
- * @method Member|null first()                     Returns the first element of the collection.
- * @method Member|null pull($key, $default = null) Pulls an item from the repository, removing and returning the item.
- * @method Member|null find(callable $callback)    Runs a filter callback over the repository.
  */
 class MemberRepository extends AbstractRepository
 {
@@ -87,17 +82,16 @@ class MemberRepository extends AbstractRepository
 
                     return;
                 } elseif (! $afterId) {
-                    $this->clear();
+                    $this->items = [];
                 }
 
                 foreach ($response as $value) {
-                    $value = array_merge($this->vars, (array) $value);
-                    $part = $this->factory->create($this->class, $value, true);
-
-                    $this->pushItem($part);
+                    $lastValueId = $value->id;
                 }
 
-                $paginate($part->id);
+                $this->freshenCache($response)->then(function () use ($paginate, $lastValueId) {
+                    $paginate($lastValueId);
+                });
             }, [$deferred, 'reject']);
         })();
 

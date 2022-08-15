@@ -17,11 +17,6 @@ use Discord\Repository\AbstractRepository;
 
 /**
  * Contains a live stage instances channel.
- *
- * @method StageInstance|null get(string $discrim, $key)  Gets an item from the collection.
- * @method StageInstance|null first()                     Returns the first element of the collection.
- * @method StageInstance|null pull($key, $default = null) Pulls an item from the repository, removing and returning the item.
- * @method StageInstance|null find(callable $callback)    Runs a filter callback over the repository.
  */
 class StageInstanceRepository extends AbstractRepository
 {

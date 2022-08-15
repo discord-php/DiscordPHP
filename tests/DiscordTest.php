@@ -11,6 +11,7 @@ declare(strict_types=1);
  * with this source code in the LICENSE.md file.
  */
 
+use Discord\Discord;
 use PHPUnit\Framework\TestCase;
 
 final class DiscordTest extends TestCase
@@ -20,5 +21,27 @@ final class DiscordTest extends TestCase
         $this->assertNotFalse(getenv('DISCORD_TOKEN'), 'Discord token is missing');
         $this->assertNotFalse(getenv('TEST_CHANNEL'), 'Test channel ID is missing');
         $this->assertNotFalse(getenv('TEST_CHANNEL_NAME'), 'Test channel name is missing');
+    }
+
+    public function testSetGetCacheAsync()
+    {
+        wait(function (Discord $discord, $resolve) {
+            $this->assertIsObject($discord->cache, 'No CacheInterface set');
+            $cache = $discord->cache;
+            $data = 'DiscordPHP 123';
+
+            $cache->set('DPHP.Test', $data)->then(function ($success) use ($cache, $data) {
+                $this->assertTrue($success, 'Failed to set a cache');
+                if ($success) {
+                    return $cache->get('DPHP.Test')->then(function ($value) use ($data) {
+                        $this->assertEquals($data, $value, 'The stored cache mismatched');
+
+                        return $value ? true : false;
+                    });
+                }
+
+                return $success;
+            })->done($resolve, $resolve);
+        }, 10);
     }
 }

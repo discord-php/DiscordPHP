@@ -30,6 +30,7 @@ use Discord\Parts\Interactions\Request\Component;
 use Discord\Parts\Thread\Thread;
 use Discord\Parts\WebSockets\MessageInteraction;
 use Discord\Repository\Channel\ReactionRepository;
+use React\EventLoop\TimerInterface;
 use React\Promise\ExtendedPromiseInterface;
 
 use function React\Promise\reject;
@@ -39,50 +40,52 @@ use function React\Promise\reject;
  *
  * @see https://discord.com/developers/docs/resources/channel#message-object
  *
- * @property string                      $id                                     The unique identifier of the message.
- * @property string                      $channel_id                             The unique identifier of the channel that the message was went in.
- * @property Channel|Thread|null         $channel                                The channel that the message was sent in.
- * @property string|null                 $guild_id                               The unique identifier of the guild that the channel the message was sent in belongs to.
- * @property Guild|null                  $guild                                  The guild that the message was sent in.
- * @property User|null                   $author                                 The author of the message. Will be a webhook if sent from one.
- * @property string|null                 $user_id                                The user id of the author.
- * @property Member|null                 $member                                 The member that sent this message, or null if it was in a private message.
- * @property string                      $content                                The content of the message if it is a normal message.
- * @property Carbon                      $timestamp                              A timestamp of when the message was sent.
- * @property Carbon|null                 $edited_timestamp                       A timestamp of when the message was edited, or null.
- * @property bool                        $tts                                    Whether the message was sent as a text-to-speech message.
- * @property bool                        $mention_everyone                       Whether the message contained an @everyone mention.
- * @property Collection|User[]           $mentions                               A collection of the users mentioned in the message.
- * @property Collection|Role[]           $mention_roles                          A collection of roles that were mentioned in the message.
- * @property Collection|Channel[]        $mention_channels                       Collection of mentioned channels.
- * @property Collection|Attachment[]     $attachments                            Collection of attachment objects.
- * @property Collection|Embed[]          $embeds                                 A collection of embed objects.
- * @property ReactionRepository          $reactions                              Collection of reactions on the message.
- * @property string|null                 $nonce                                  A randomly generated string that provides verification for the client. Not required.
- * @property bool                        $pinned                                 Whether the message is pinned to the channel.
- * @property string|null                 $webhook_id                             ID of the webhook that made the message, if any.
- * @property int                         $type                                   The type of message.
- * @property object|null                 $activity                               Current message activity. Requires rich presence.
- * @property object|null                 $application                            Application of message. Requires rich presence.
- * @property string|null                 $application_id                         If the message is a response to an Interaction, this is the id of the interaction's application.
- * @property object|null                 $message_reference                      Message that is referenced by this message.
- * @property int|null                    $flags                                  Message flags.
- * @property Message|null                $referenced_message                     The message that is referenced in a reply.
- * @property MessageInteraction|null     $interaction                            Sent if the message is a response to an Interaction.
- * @property Thread|null                 $thread                                 The thread that the message was sent in.
- * @property Collection|Component[]|null $components                             Sent if the message contains components like buttons, action rows, or other interactive components.
- * @property Collection|Sticker[]|null   $sticker_items                          Stickers attached to the message.
- * @property int|null                    $position                               A generally increasing integer (there may be gaps or duplicates) that represents the approximate position of the message in a thread, it can be used to estimate the relative position of the messsage in a thread in company with `total_message_sent` on parent thread.
- * @property bool                        $crossposted                            Message has been crossposted.
- * @property bool                        $is_crosspost                           Message is a crosspost from another channel.
- * @property bool                        $suppress_embeds                        Do not include embeds when serializing message.
- * @property bool                        $source_message_deleted                 Source message for this message has been deleted.
- * @property bool                        $urgent                                 Message is urgent.
- * @property bool                        $has_thread                             Whether this message has an associated thread, with the same id as the message.
- * @property bool                        $ephemeral                              Whether this message is only visible to the user who invoked the Interaction.
- * @property bool                        $loading                                Whether this message is an Interaction Response and the bot is "thinking".
- * @property bool                        $failed_to_mention_some_roles_in_thread This message failed to mention some roles and add their members to the thread.
- * @property string|null                 $link                                   Returns a link to the message.
+ * @property      string                      $id                                     The unique identifier of the message.
+ * @property      string                      $channel_id                             The unique identifier of the channel that the message was went in.
+ * @property      Channel|Thread|null         $channel                                The channel that the message was sent in.
+ * @property      User|null                   $author                                 The author of the message. Will be a webhook if sent from one.
+ * @property      string|null                 $user_id                                The user id of the author.
+ * @property      string                      $content                                The content of the message if it is a normal message.
+ * @property      Carbon                      $timestamp                              A timestamp of when the message was sent.
+ * @property      Carbon|null                 $edited_timestamp                       A timestamp of when the message was edited, or null.
+ * @property      bool                        $tts                                    Whether the message was sent as a text-to-speech message.
+ * @property      bool                        $mention_everyone                       Whether the message contained an @everyone mention.
+ * @property      Collection|User[]           $mentions                               A collection of the users mentioned in the message.
+ * @property      Collection|Role[]           $mention_roles                          A collection of roles that were mentioned in the message.
+ * @property      Collection|Channel[]        $mention_channels                       Collection of mentioned channels.
+ * @property      Collection|Attachment[]     $attachments                            Collection of attachment objects.
+ * @property      Collection|Embed[]          $embeds                                 A collection of embed objects.
+ * @property      ReactionRepository          $reactions                              Collection of reactions on the message.
+ * @property      string|null                 $nonce                                  A randomly generated string that provides verification for the client. Not required.
+ * @property      bool                        $pinned                                 Whether the message is pinned to the channel.
+ * @property      string|null                 $webhook_id                             ID of the webhook that made the message, if any.
+ * @property      int                         $type                                   The type of message.
+ * @property      object|null                 $activity                               Current message activity. Requires rich presence.
+ * @property      object|null                 $application                            Application of message. Requires rich presence.
+ * @property      string|null                 $application_id                         If the message is a response to an Interaction, this is the id of the interaction's application.
+ * @property      object|null                 $message_reference                      Message that is referenced by this message.
+ * @property      int|null                    $flags                                  Message flags.
+ * @property      Message|null                $referenced_message                     The message that is referenced in a reply.
+ * @property      MessageInteraction|null     $interaction                            Sent if the message is a response to an Interaction.
+ * @property      Thread|null                 $thread                                 The thread that the message was sent in.
+ * @property      Collection|Component[]|null $components                             Sent if the message contains components like buttons, action rows, or other interactive components.
+ * @property      Collection|Sticker[]|null   $sticker_items                          Stickers attached to the message.
+ * @property      int|null                    $position                               A generally increasing integer (there may be gaps or duplicates) that represents the approximate position of the message in a thread, it can be used to estimate the relative position of the messsage in a thread in company with `total_message_sent` on parent thread.
+ *
+ * @property-read bool                        $crossposted                            Message has been crossposted.
+ * @property-read bool                        $is_crosspost                           Message is a crosspost from another channel.
+ * @property-read bool                        $suppress_embeds                        Do not include embeds when serializing message.
+ * @property-read bool                        $source_message_deleted                 Source message for this message has been deleted.
+ * @property-read bool                        $urgent                                 Message is urgent.
+ * @property-read bool                        $has_thread                             Whether this message has an associated thread, with the same id as the message.
+ * @property-read bool                        $ephemeral                              Whether this message is only visible to the user who invoked the Interaction.
+ * @property-read bool                        $loading                                Whether this message is an Interaction Response and the bot is "thinking".
+ * @property-read bool                        $failed_to_mention_some_roles_in_thread This message failed to mention some roles and add their members to the thread.
+ *
+ * @property-read string|null                 $link                                   Returns a link to the message.
+ * @property      string|null                 $guild_id                               The unique identifier of the guild that the channel the message was sent in belongs to.
+ * @property-read Guild|null                  $guild                                  The guild that the message was sent in.
+ * @property      Member|null                 $member                                 The member that sent this message, or null if it was in a private message.
  */
 class Message extends Part
 {
@@ -140,37 +143,40 @@ class Message extends Part
      * @inheritdoc
      */
     protected $fillable = [
-        'reactions',
-        'attachments',
-        'tts',
-        'embeds',
-        'timestamp',
-        'mention_everyone',
         'id',
-        'pinned',
-        'edited_timestamp',
+        'channel_id',
         'author',
+        'content',
+        'timestamp',
+        'edited_timestamp',
+        'tts',
+        'mention_everyone',
+        'mentions',
         'mention_roles',
         'mention_channels',
-        'content',
-        'channel_id',
-        'mentions',
-        'type',
-        'flags',
-        'message_reference',
+        'attachments',
+        'embeds',
+        'reactions',
         'nonce',
-        'member',
-        'guild_id',
+        'pinned',
         'webhook_id',
+        'type',
         'activity',
         'application',
         'application_id',
+        'message_reference',
+        'flags',
         'referenced_message',
         'interaction',
+        'thread',
         'components',
         'sticker_items',
-        'stickers',
+        'stickers', // deprecated
         'position',
+
+        // @internal
+        'guild_id',
+        'member',
     ];
 
     /**
@@ -273,11 +279,13 @@ class Message extends Part
     /**
      * Gets the mention_channels attribute.
      *
+     * @todo This is actually for crossposted message, not for channels in same server.
+     *
      * @return Collection|Channel[]
      */
     protected function getMentionChannelsAttribute(): Collection
     {
-        $collection = new Collection([], 'id', Channel::class);
+        $collection = Collection::for(Channel::class);
 
         if (preg_match_all('/<#([0-9]*)>/', $this->content, $matches)) {
             foreach ($matches[1] as $channelId) {
@@ -287,12 +295,15 @@ class Message extends Part
             }
         }
 
-        foreach ($this->attributes['mention_channels'] ?? [] as $mention_channel) {
-            if (! $channel = $this->discord->getChannel($mention_channel->id)) {
-                $channel = $this->factory->create(Channel::class, $mention_channel, true);
-            }
+        if (! empty($this->attributes['mention_channels'])) {
+            foreach ($this->attributes['mention_channels'] as $mention_channel) {
+                // @todo potentially slow code
+                if (! $channel = $this->discord->getChannel($mention_channel->id)) {
+                    $channel = $this->factory->part(Channel::class, (array) $mention_channel, true);
+                }
 
-            $collection->pushItem($channel);
+                $collection->pushItem($channel);
+            }
         }
 
         return $collection;
@@ -307,8 +318,10 @@ class Message extends Part
     {
         $attachments = Collection::for(Attachment::class);
 
-        foreach ($this->attributes['attachments'] ?? [] as $attachment) {
-            $attachments->pushItem($this->factory->part(Attachment::class, (array) $attachment, true));
+        if (! empty($this->attributes['attachments'])) {
+            foreach ($this->attributes['attachments'] as $attachment) {
+                $attachments->pushItem($this->factory->part(Attachment::class, (array) $attachment, true));
+            }
         }
 
         return $attachments;
@@ -335,19 +348,23 @@ class Message extends Part
      */
     protected function getChannelAttribute(): Part
     {
-        if ($this->guild && $channel = $this->guild->channels->offsetGet($this->channel_id)) {
-            return $channel;
+        if ($guild = $this->guild) {
+            if ($channel = $guild->channels->get('id', $this->channel_id)) {
+                return $channel;
+            }
         }
 
+        // @todo potentially slow
         if ($channel = $this->discord->getChannel($this->channel_id)) {
             return $channel;
         }
 
+        // @todo deprecate
         if ($thread = $this->thread) {
             return $thread;
         }
 
-        return $this->factory->create(Channel::class, [
+        return $this->factory->part(Channel::class, [
             'id' => $this->channel_id,
             'type' => Channel::TYPE_DM,
         ], true);
@@ -360,15 +377,22 @@ class Message extends Part
      */
     protected function getThreadAttribute(): ?Thread
     {
-        if ($this->guild) {
-            foreach ($this->guild->channels as $channel) {
+        if (! isset($this->attributes['thread'])) {
+            return null;
+        }
+
+        $thread = null;
+        if ($guild = $this->guild) {
+            if ($channel = $guild->channels->get('id', $this->attributes['thread']->parent_id)) {
                 if ($thread = $channel->threads->get('id', $this->channel_id)) {
                     return $thread;
                 }
+                $thread = $this->factory->part(Thread::class, $this->attributes['thread'], true);
+                $channel->threads->pushItem($thread);
             }
         }
 
-        return null;
+        return $thread;
     }
 
     /**
@@ -395,17 +419,19 @@ class Message extends Part
     /**
      * Returns the mention_roles attribute.
      *
-     * @return Collection The roles that were mentioned.
+     * @return Collection<?Role> The roles that were mentioned. Null role only contains the ID in the collection.
      */
     protected function getMentionRolesAttribute(): Collection
     {
         $roles = new Collection();
 
-        if ($this->channel->guild) {
-            foreach ($this->channel->guild->roles ?? [] as $role) {
-                if (in_array($role->id, $this->attributes['mention_roles'] ?? [])) {
-                    $roles->pushItem($role);
-                }
+        if (! empty($this->attributes['mention_roles'])) {
+            $roles->fill(array_fill_keys($this->attributes['mention_roles'], null));
+
+            if ($guild = $this->guild) {
+                $roles->merge($guild->roles->filter(function ($role) {
+                    return in_array($role->id, $this->attributes['mention_roles']);
+                }));
             }
         }
 
@@ -415,17 +441,19 @@ class Message extends Part
     /**
      * Returns the mention attribute.
      *
-     * @return Collection The users that were mentioned.
+     * @return Collection|User[] The users that were mentioned.
      */
     protected function getMentionsAttribute(): Collection
     {
-        $users = new Collection();
+        $users = Collection::for(User::class);
 
-        foreach ($this->attributes['mentions'] ?? [] as $mention) {
-            if (! $user = $this->discord->users->get('id', $mention->id)) {
-                $user = $this->factory->create(User::class, $mention, true);
+        if (! empty($this->attributes['mentions'])) {
+            foreach ($this->attributes['mentions'] as $mention) {
+                if (! $user = $this->discord->users->get('id', $mention->id)) {
+                    $user = $this->factory->part(User::class, (array) $mention, true);
+                }
+                $users->pushItem($user);
             }
-            $users->pushItem($user);
         }
 
         return $users;
@@ -448,15 +476,15 @@ class Message extends Part
      */
     protected function getAuthorAttribute(): ?User
     {
-        if (isset($this->attributes['author'])) {
-            if ($user = $this->discord->users->get('id', $this->attributes['author']->id)) {
-                return $user;
-            }
-
-            return $this->factory->create(User::class, $this->attributes['author'], true);
+        if (! isset($this->attributes['author'])) {
+            return null;
         }
 
-        return null;
+        if ($user = $this->discord->users->get('id', $this->attributes['author']->id)) {
+            return $user;
+        }
+
+        return $this->factory->part(User::class, (array) $this->attributes['author'], true);
     }
 
     /**
@@ -466,12 +494,14 @@ class Message extends Part
      */
     protected function getMemberAttribute(): ?Member
     {
-        if ($this->channel->guild && $author = $this->channel->guild->members->get('id', $this->attributes['author']->id)) {
-            return $author;
+        if ($guild = $this->guild) {
+            if ($member = $guild->members->get('id', $this->attributes['author']->id)) {
+                return $member;
+            }
         }
 
         if (isset($this->attributes['member'])) {
-            return $this->factory->create(Member::class, array_merge((array) $this->attributes['member'], [
+            return $this->factory->part(Member::class, array_merge((array) $this->attributes['member'], [
                 'user' => $this->attributes['author'],
                 'guild_id' => $this->guild_id,
             ]), true);
@@ -483,14 +513,16 @@ class Message extends Part
     /**
      * Returns the embed attribute.
      *
-     * @return Collection|Embed[] A collection of embeds.
+     * @return Collection<Embed> A collection of embeds.
      */
     protected function getEmbedsAttribute(): Collection
     {
         $embeds = new Collection([], null);
 
-        foreach ($this->attributes['embeds'] ?? [] as $embed) {
-            $embeds->pushItem($this->factory->create(Embed::class, $embed, true));
+        if (! empty($this->attributes['embeds'])) {
+            foreach ($this->attributes['embeds'] as $embed) {
+                $embeds->pushItem($this->factory->part(Embed::class, (array) $embed, true));
+            }
         }
 
         return $embeds;
@@ -503,11 +535,11 @@ class Message extends Part
      */
     protected function getInteractionAttribute(): ?MessageInteraction
     {
-        if (isset($this->attributes['interaction'])) {
-            return $this->factory->part(MessageInteraction::class, (array) $this->attributes['interaction'] + ['guild_id' => $this->guild_id], true);
+        if (! isset($this->attributes['interaction'])) {
+            return null;
         }
 
-        return null;
+        return $this->factory->part(MessageInteraction::class, (array) $this->attributes['interaction'] + ['guild_id' => $this->guild_id], true);
     }
 
     /**
@@ -523,15 +555,28 @@ class Message extends Part
         if (isset($this->attributes['message_reference'])) {
             $reference = $this->attributes['message_reference'];
 
-            if ($channel = $this->discord->getChannel($reference->channel_id ?? null)) {
-                if ($message = $channel->messages->get('id', $reference->message_id ?? null)) {
-                    return $message;
+            if (isset($reference->message_id, $reference->channel_id)) {
+                $channel = null;
+
+                if (isset($reference->guild_id) && $guild = $this->discord->guilds->get('id', $reference->guild_id)) {
+                    $channel = $guild->channels->get('id', $reference->channel_id);
+                }
+
+                // @todo potentially slow
+                if (! $channel && ! isset($this->attributes['referenced_message'])) {
+                    $channel = $this->discord->getChannel($reference->channel_id);
+                }
+
+                if ($channel) {
+                    if ($message = $channel->messages->get('id', $reference->message_id)) {
+                        return $message;
+                    }
                 }
             }
         }
 
         if (isset($this->attributes['referenced_message'])) {
-            return $this->factory->create(Message::class, $this->attributes['referenced_message'], true);
+            return $this->factory->part(Message::class, (array) $this->attributes['referenced_message'], true);
         }
 
         return null;
@@ -544,11 +589,11 @@ class Message extends Part
      */
     protected function getTimestampAttribute(): ?Carbon
     {
-        if (isset($this->attributes['timestamp'])) {
-            return new Carbon($this->attributes['timestamp']);
+        if (! isset($this->attributes['timestamp'])) {
+            return null;
         }
 
-        return null;
+        return new Carbon($this->attributes['timestamp']);
     }
 
     /**
@@ -558,11 +603,11 @@ class Message extends Part
      */
     protected function getEditedTimestampAttribute(): ?Carbon
     {
-        if (isset($this->attributes['edited_timestamp'])) {
-            return new Carbon($this->attributes['edited_timestamp']);
+        if (! isset($this->attributes['edited_timestamp'])) {
+            return null;
         }
 
-        return null;
+        return new Carbon($this->attributes['edited_timestamp']);
     }
 
     /**
@@ -579,7 +624,7 @@ class Message extends Part
         $components = Collection::for(Component::class, null);
 
         foreach ($this->attributes['components'] as $component) {
-            $components->pushItem($this->factory->create(Component::class, $component, true));
+            $components->pushItem($this->factory->part(Component::class, (array) $component, true));
         }
 
         return $components;
@@ -588,7 +633,7 @@ class Message extends Part
     /**
      * Returns the sticker_items attribute.
      *
-     * @return Collection|Sticker[]|null
+     * @return Collection|Sticker[]|null Partial stickers.
      */
     protected function getStickerItemsAttribute(): ?Collection
     {
@@ -599,7 +644,7 @@ class Message extends Part
         $sticker_items = Collection::for(Sticker::class);
 
         foreach ($this->attributes['sticker_items'] as $sticker) {
-            $sticker_items->pushItem($this->factory->create(Sticker::class, $sticker, true));
+            $sticker_items->pushItem($this->factory->part(Sticker::class, (array) $sticker, true));
         }
 
         return $sticker_items;
@@ -628,14 +673,15 @@ class Message extends Part
      * @param int         $auto_archive_duration Number of minutes of inactivity until the thread is auto-archived. One of 60, 1440, 4320, 10080.
      * @param string|null $reason                Reason for Audit Log.
      *
-     * @throws \RuntimeException
-     * @throws \UnexpectedValueException
+     * @throws \RuntimeException         Channel type is not guild text or news.
+     * @throws \UnexpectedValueException `$auto_archive_duration` is not one of 60, 1440, 4320, 10080.
      *
      * @return ExtendedPromiseInterface<Thread>
      */
     public function startThread(string $name, int $auto_archive_duration = 1440, ?string $reason = null): ExtendedPromiseInterface
     {
-        if (! in_array($this->channel->type, [Channel::TYPE_TEXT, Channel::TYPE_NEWS])) {
+        $channel = $this->channel;
+        if ($channel && ! in_array($channel->type, [Channel::TYPE_TEXT, Channel::TYPE_NEWS, null])) {
             return reject(new \RuntimeException('You can only start threads on guild text channels or news channels.'));
         }
 
@@ -667,11 +713,13 @@ class Message extends Part
      */
     public function reply($message): ExtendedPromiseInterface
     {
+        $channel = $this->channel;
+
         if ($message instanceof MessageBuilder) {
-            return $this->channel->sendMessage($message->setReplyTo($this));
+            return $channel->sendMessage($message->setReplyTo($this));
         }
 
-        return $this->channel->sendMessage(MessageBuilder::new()
+        return $channel->sendMessage(MessageBuilder::new()
             ->setContent($message)
             ->setReplyTo($this));
     }
@@ -681,12 +729,20 @@ class Message extends Part
      *
      * @see https://discord.com/developers/docs/resources/channel#crosspost-message
      *
+     * @throws \RuntimeException Message has already been crossposted.
+     * 
      * @return ExtendedPromiseInterface<Message>
      */
     public function crosspost(): ExtendedPromiseInterface
     {
+        if ($this->crossposted) {
+            return reject(new \RuntimeException('This message has already been crossposted.'));
+        }
+
         return $this->http->post(Endpoint::bind(Endpoint::CHANNEL_CROSSPOST_MESSAGE, $this->channel_id, $this->id))->then(function ($response) {
-            return $this->factory->create(Message::class, $response, true);
+            $this->flags = $response->flags;
+
+            return $this;
         });
     }
 
@@ -695,9 +751,9 @@ class Message extends Part
      *
      * @see Message::reply()
      *
-     * @param string|MessageBuilder           $message Reply message to send after delay.
-     * @param int                             $delay   Delay after text will be sent in milliseconds.
-     * @param \React\EventLoop\TimerInterface &$timer  Delay timer passed by reference.
+     * @param string|MessageBuilder $message Reply message to send after delay.
+     * @param int                   $delay   Delay after text will be sent in milliseconds.
+     * @param TimerInterface        &$timer  Delay timer passed by reference.
      *
      * @return ExtendedPromiseInterface<Message>
      */
@@ -717,8 +773,8 @@ class Message extends Part
      *
      * @see Message::deleteMessage()
      *
-     * @param int                             $delay  Time to delay the delete by, in milliseconds.
-     * @param \React\EventLoop\TimerInterface &$timer Delay timer passed by reference.
+     * @param int            $delay  Time to delay the delete by, in milliseconds.
+     * @param TimerInterface &$timer Delay timer passed by reference.
      *
      * @return ExtendedPromseInterface
      */
@@ -760,6 +816,8 @@ class Message extends Part
      * @param int               $type     The type of deletion to perform.
      * @param Emoji|string|null $emoticon The emoticon to delete (if not all).
      * @param string|null       $id       The user reaction to delete (if not all).
+     *
+     * @throws \UnexpectedValueException Invalid reaction `$type`.
      *
      * @return ExtendedPromiseInterface
      */
@@ -923,9 +981,9 @@ class Message extends Part
     public function getRepositoryAttributes(): array
     {
         return [
-            'message_id' => $this->id,
-            'channel_id' => $this->channel_id,
             'guild_id' => $this->guild_id,
+            'channel_id' => $this->channel_id,
+            'message_id' => $this->id,
         ];
     }
 }
