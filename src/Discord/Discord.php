@@ -1464,9 +1464,9 @@ class Discord
      */
     public function run(): void
     {
-        while (! $this->stopping) {
+        //while (! $this->stopping) {
             $this->loop->run();
-        }
+        //}
     }
 
     /**
