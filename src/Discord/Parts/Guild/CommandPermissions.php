@@ -69,8 +69,8 @@ class CommandPermissions extends Part
     public function getRepositoryAttributes(): array
     {
         return [
-            'application_id' => $this->application_id,
             'guild_id' => $this->guild_id,
+            'application_id' => $this->application_id,
         ];
     }
 

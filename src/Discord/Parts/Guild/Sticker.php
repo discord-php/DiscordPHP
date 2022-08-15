@@ -153,8 +153,8 @@ class Sticker extends Part
     {
         if ($this->type == self::TYPE_GUILD) {
             return [
-                'sticker_id' => $this->id,
                 'guild_id' => $this->guild_id,
+                'sticker_id' => $this->id,
             ];
         }
 

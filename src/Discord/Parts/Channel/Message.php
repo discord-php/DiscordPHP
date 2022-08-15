@@ -981,9 +981,9 @@ class Message extends Part
     public function getRepositoryAttributes(): array
     {
         return [
-            'message_id' => $this->id,
-            'channel_id' => $this->channel_id,
             'guild_id' => $this->guild_id,
+            'channel_id' => $this->channel_id,
+            'message_id' => $this->id,
         ];
     }
 }

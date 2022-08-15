@@ -176,9 +176,9 @@ class Command extends Part
     public function getRepositoryAttributes(): array
     {
         return [
-            'command_id' => $this->id,
             'guild_id' => $this->guild_id,
             'application_id' => $this->application_id,
+            'command_id' => $this->id,
         ];
     }
 

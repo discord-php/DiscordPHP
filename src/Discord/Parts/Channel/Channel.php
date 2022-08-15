@@ -1144,8 +1144,8 @@ class Channel extends Part
     public function getRepositoryAttributes(): array
     {
         return [
-            'channel_id' => $this->id,
             'guild_id' => $this->guild_id,
+            'channel_id' => $this->id,
         ];
     }
 

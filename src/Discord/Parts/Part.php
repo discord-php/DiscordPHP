@@ -396,6 +396,7 @@ abstract class Part implements ArrayAccess, JsonSerializable
 
     /**
      * Gets the attributes to pass to repositories.
+     * Note: The order matters for repository tree (top to bottom).
      *
      * @return array Attributes.
      */
