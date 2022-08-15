@@ -33,6 +33,6 @@ class Image extends Part
         'url',
         'proxy_url',
         'height',
-        'width'
+        'width',
     ];
 }

@@ -20,12 +20,12 @@ use Discord\Parts\User\User;
  *
  * @see https://discord.com/developers/docs/interactions/receiving-and-responding#message-interaction-object
  *
- * @property string      $id       ID of the interaction.
- * @property int         $type     Type of interaction.
- * @property string      $name     Name of the application command, including subcommands and subcommand groups.
- * @property User        $user     User who invoked the interaction.
- * @property Member|null $member   Partial Member who invoked the interaction.
- * 
+ * @property string      $id     ID of the interaction.
+ * @property int         $type   Type of interaction.
+ * @property string      $name   Name of the application command, including subcommands and subcommand groups.
+ * @property User        $user   User who invoked the interaction.
+ * @property Member|null $member Partial Member who invoked the interaction.
+ *
  * @property string|null $guild_id
  */
 class MessageInteraction extends Part

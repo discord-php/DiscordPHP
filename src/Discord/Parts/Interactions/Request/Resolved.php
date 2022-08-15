@@ -33,7 +33,7 @@ use Discord\Parts\User\User;
  * @property Collection|Message[]|null          $messages    The ids and partial Message objects.
  * @property Collection|Attachment[]|null       $attachments The ids and partial Attachment objects.
  *
- * @property string|null                        $guild_id    ID of the guild internally passed from Interaction.
+ * @property string|null $guild_id ID of the guild internally passed from Interaction.
  */
 class Resolved extends Part
 {
@@ -49,7 +49,7 @@ class Resolved extends Part
         'attachments',
 
         // @internal
-        'guild_id'
+        'guild_id',
     ];
 
     /**

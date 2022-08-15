@@ -28,18 +28,18 @@ use function React\Promise\resolve;
  *
  * @see https://discord.com/developers/docs/resources/channel#reaction-object
  *
- * @property int                 $count      Number of reactions.
- * @property bool                $me         Whether the current bot has reacted.
- * @property Emoji               $emoji      The emoji that was reacted with.
+ * @property int   $count Number of reactions.
+ * @property bool  $me    Whether the current bot has reacted.
+ * @property Emoji $emoji The emoji that was reacted with.
  *
- * @property      string         $channel_id The channel ID that the message belongs in.
- * @property      Channel|Thread $channel    The channel that the message belongs to.
- * @property      string         $message_id The message ID the reaction is for.
- * @property      Message|null   $message    The message the reaction is for.
- * @property      string|null    $guild_id   The guild ID of the guild that owns the channel the message belongs in.
- * @property      Guild|null     $guild      The guild that owns the channel the message belongs in.
+ * @property string         $channel_id The channel ID that the message belongs in.
+ * @property Channel|Thread $channel    The channel that the message belongs to.
+ * @property string         $message_id The message ID the reaction is for.
+ * @property Message|null   $message    The message the reaction is for.
+ * @property string|null    $guild_id   The guild ID of the guild that owns the channel the message belongs in.
+ * @property Guild|null     $guild      The guild that owns the channel the message belongs in.
  *
- * @property-read string         $id         The identifier of the reaction.
+ * @property-read string $id The identifier of the reaction.
  */
 class Reaction extends Part
 {
@@ -54,7 +54,7 @@ class Reaction extends Part
         // events only
         'channel_id',
         'message_id',
-        'guild_id'
+        'guild_id',
     ];
 
     /**

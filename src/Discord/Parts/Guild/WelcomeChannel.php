@@ -34,7 +34,7 @@ class WelcomeChannel extends Part
         'channel_id',
         'description',
         'emoji_id',
-        'emoji_name'
+        'emoji_name',
     ];
 
     /**

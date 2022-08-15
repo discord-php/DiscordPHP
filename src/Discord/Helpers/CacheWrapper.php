@@ -48,7 +48,7 @@ class CacheWrapper
     protected $items;
 
     /**
-     * The allowed class name to be unserialized
+     * The allowed class name to be unserialized.
      *
      * @var string
      */
@@ -80,11 +80,11 @@ class CacheWrapper
         $this->class = &$class;
 
         $separator = '.';
-        if (is_a($cacheInterface, '\WyriHaximus\React\Cache\Redis') || is_a($cacheInterface, 'seregazhuk\React\Cache\Memcached\Memcached') ) {
+        if (is_a($cacheInterface, '\WyriHaximus\React\Cache\Redis') || is_a($cacheInterface, 'seregazhuk\React\Cache\Memcached\Memcached')) {
             $separator = ':';
         }
 
-        $this->key_prefix = implode($separator, [substr(strrchr($this->class, '\\'), 1)] + $vars) . $separator;
+        $this->key_prefix = implode($separator, [substr(strrchr($this->class, '\\'), 1)] + $vars).$separator;
 
         // Flush every heartbeat ack
         $this->flusher = function ($time, Discord $discord) {
@@ -115,7 +115,7 @@ class CacheWrapper
     }
 
     /**
-     * Get Part from cache
+     * Get Part from cache.
      *
      * @param string $key
      * @param mixed  $default
@@ -136,7 +136,7 @@ class CacheWrapper
     }
 
     /**
-     * Set Part into cache
+     * Set Part into cache.
      *
      * @param string $key
      * @param Part   $value
@@ -155,7 +155,7 @@ class CacheWrapper
     }
 
     /**
-     * Delete Part from cache
+     * Delete Part from cache.
      *
      * @param string $key
      *
@@ -173,7 +173,7 @@ class CacheWrapper
     }
 
     /**
-     * Get multiple Parts from cache
+     * Get multiple Parts from cache.
      *
      * @param array $keys
      * @param ?Part $default
@@ -192,7 +192,7 @@ class CacheWrapper
     }
 
     /**
-     * Set multiple Parts into cache
+     * Set multiple Parts into cache.
      *
      * Includes polyfill for react/cache 0.5
      *
@@ -213,7 +213,7 @@ class CacheWrapper
     }
 
     /**
-     * Delete multiple Parts from cache
+     * Delete multiple Parts from cache.
      *
      * Includes polyfill for react/cache 0.5
      *
@@ -233,7 +233,7 @@ class CacheWrapper
     }
 
     /**
-     * Check if Part is present in cache
+     * Check if Part is present in cache.
      *
      * @param string $key
      *
@@ -257,7 +257,7 @@ class CacheWrapper
     }
 
     /**
-     * Clear all Parts from cache
+     * Clear all Parts from cache.
      *
      * @return PromiseInterface<bool>
      */

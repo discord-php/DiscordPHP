@@ -19,21 +19,21 @@ use Discord\Parts\Permissions\RolePermission;
  *
  * @see https://discord.com/developers/docs/topics/permissions#role-object
  *
- * @property      string         $id            The unique identifier of the role.
- * @property      string         $name          The name of the role.
- * @property      int            $color         The color of the guild.
- * @property      bool           $hoist         Whether the role is hoisted on the sidebar.
- * @property      string|null    $icon          The URL to the role icon.
- * @property      ?string|null   $icon_hash     The icon hash for the role.
- * @property      ?string|null   $unicode_emoji The unicode emoji for the role.
- * @property      int            $position      The position of the role on the sidebar.
- * @property      RolePermission $permissions   The permissions of the role.
- * @property      bool           $managed       Whether the role is managed by a Twitch subscriber feature.
- * @property      bool           $mentionable   Whether the role is mentionable.
- * @property      object|null    $tags          The tags this role has.
+ * @property string         $id            The unique identifier of the role.
+ * @property string         $name          The name of the role.
+ * @property int            $color         The color of the guild.
+ * @property bool           $hoist         Whether the role is hoisted on the sidebar.
+ * @property string|null    $icon          The URL to the role icon.
+ * @property ?string|null   $icon_hash     The icon hash for the role.
+ * @property ?string|null   $unicode_emoji The unicode emoji for the role.
+ * @property int            $position      The position of the role on the sidebar.
+ * @property RolePermission $permissions   The permissions of the role.
+ * @property bool           $managed       Whether the role is managed by a Twitch subscriber feature.
+ * @property bool           $mentionable   Whether the role is mentionable.
+ * @property object|null    $tags          The tags this role has.
  *
- * @property      string|null    $guild_id      The unique identifier of the guild that the role belongs to.
- * @property-read Guild|null     $guild         The guild that the role belongs to.
+ * @property      string|null $guild_id The unique identifier of the guild that the role belongs to.
+ * @property-read Guild|null  $guild    The guild that the role belongs to.
  */
 class Role extends Part
 {

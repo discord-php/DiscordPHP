@@ -35,7 +35,7 @@ class Option extends Part
         'type',
         'value',
         'options',
-        'focused'
+        'focused',
     ];
 
     /**

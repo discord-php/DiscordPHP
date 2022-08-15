@@ -43,7 +43,7 @@ class TypingStart extends Part
         'guild_id',
         'user_id',
         'timestamp',
-        'member'
+        'member',
     ];
 
     /**

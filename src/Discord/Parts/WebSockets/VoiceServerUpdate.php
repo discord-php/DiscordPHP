@@ -32,7 +32,7 @@ class VoiceServerUpdate extends Part
     protected $fillable = [
         'token',
         'guild_id',
-        'endpoint'
+        'endpoint',
     ];
 
     /**

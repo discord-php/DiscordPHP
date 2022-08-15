@@ -308,6 +308,7 @@ abstract class AbstractRepository extends Collection
 
             if ($part) {
                 $this->items[$id] = $part;
+
                 return $part;
             }
         }
@@ -345,6 +346,7 @@ abstract class AbstractRepository extends Collection
             }
 
             $this->cache->get($key);
+
             return null;
         }
 
@@ -364,7 +366,7 @@ abstract class AbstractRepository extends Collection
     }
 
     /**
-     * Attempts to get from memory first otherwise load from cache
+     * Attempts to get from memory first otherwise load from cache.
      *
      * @internal
      *
@@ -428,7 +430,7 @@ abstract class AbstractRepository extends Collection
                 $default : $this->cache->delete($key)->then(
                     fn ($success) => $item
                 )
-            );
+        );
     }
 
     /**
@@ -544,7 +546,9 @@ abstract class AbstractRepository extends Collection
         $collection = new Collection([], $this->discrim, $this->class);
 
         foreach ($this->items as $item) {
-            if ($item === null) continue;
+            if ($item === null) {
+                continue;
+            }
 
             if ($item instanceof WeakReference) {
                 $item = $item->get();
@@ -564,7 +568,9 @@ abstract class AbstractRepository extends Collection
     public function find(callable $callback)
     {
         foreach ($this->items as $item) {
-            if ($item === null) continue;
+            if ($item === null) {
+                continue;
+            }
 
             if ($item instanceof WeakReference) {
                 $item = $item->get();

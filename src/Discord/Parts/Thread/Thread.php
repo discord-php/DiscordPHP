@@ -93,7 +93,7 @@ class Thread extends Part
      * @inheritdoc
      */
     protected $hidden = [
-        'member'
+        'member',
     ];
 
     /**

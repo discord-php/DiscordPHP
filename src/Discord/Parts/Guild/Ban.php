@@ -19,9 +19,9 @@ use Discord\Parts\User\User;
  *
  * @see https://discord.com/developers/docs/resources/guild#ban-object
  *
- * @property string      $reason   The reason for the ban.
- * @property User        $user     The banned user.
- * @property string      $user_id
+ * @property string $reason  The reason for the ban.
+ * @property User   $user    The banned user.
+ * @property string $user_id
  *
  * @property string|null $guild_id
  * @property Guild|null  $guild

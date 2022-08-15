@@ -32,6 +32,6 @@ class Author extends Part
         'name',
         'url',
         'icon_url',
-        'proxy_icon_url'
+        'proxy_icon_url',
     ];
 }

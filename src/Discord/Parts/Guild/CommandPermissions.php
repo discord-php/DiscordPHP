@@ -34,7 +34,7 @@ class CommandPermissions extends Part
         'id',
         'application_id',
         'guild_id',
-        'permissions'
+        'permissions',
     ];
 
     /**

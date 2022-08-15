@@ -30,6 +30,6 @@ class Footer extends Part
     protected $fillable = [
         'text',
         'icon_url',
-        'proxy_icon_url'
+        'proxy_icon_url',
     ];
 }

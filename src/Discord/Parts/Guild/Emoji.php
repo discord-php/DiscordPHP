@@ -29,8 +29,8 @@ use Discord\Parts\User\User;
  * @property bool|null         $animated       Whether the emoji is animated.
  * @property bool|null         $available      Whether this emoji can be used, may be false due to loss of Server Boosts.
  *
- * @property string|null       $guild_id       The identifier of the guild that owns the emoji.
- * @property-read Guild|null   $guild          The guild that owns the emoji.
+ * @property      string|null $guild_id The identifier of the guild that owns the emoji.
+ * @property-read Guild|null  $guild    The guild that owns the emoji.
  */
 class Emoji extends Part
 {

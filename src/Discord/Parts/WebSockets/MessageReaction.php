@@ -29,18 +29,18 @@ use function React\Promise\resolve;
  * Different from `Reaction` in the fact that `Reaction` represents a specific reaction
  * to a message by _multiple_ members.
  *
- * @property string|null    $user_id     ID of the user that performed the reaction.
- * @property User|null      $user        User that performed the reaction.
- * @property string         $channel_id  ID of the channel that the reaction was performed in.
- * @property Channel|Thread $channel     Channel that the reaction was performed in.
- * @property string         $message_id  ID of the message that the reaction was placed on.
- * @property Message|null   $message     Message that the reaction was placed on, null if not cached.
- * @property string|null    $guild_id    ID of the guild that owns the channel.
- * @property Guild|null     $guild       Guild that owns the channel.
- * @property Member|null    $member      Member object of the user that performed the reaction, null if not cached or DM channel.
- * @property Emoji|null     $emoji       The emoji that was used as the reaction.
+ * @property string|null    $user_id    ID of the user that performed the reaction.
+ * @property User|null      $user       User that performed the reaction.
+ * @property string         $channel_id ID of the channel that the reaction was performed in.
+ * @property Channel|Thread $channel    Channel that the reaction was performed in.
+ * @property string         $message_id ID of the message that the reaction was placed on.
+ * @property Message|null   $message    Message that the reaction was placed on, null if not cached.
+ * @property string|null    $guild_id   ID of the guild that owns the channel.
+ * @property Guild|null     $guild      Guild that owns the channel.
+ * @property Member|null    $member     Member object of the user that performed the reaction, null if not cached or DM channel.
+ * @property Emoji|null     $emoji      The emoji that was used as the reaction.
  *
- * @property string         $reaction_id ID of the reaction.
+ * @property string $reaction_id ID of the reaction.
  */
 class MessageReaction extends Part
 {
@@ -53,7 +53,7 @@ class MessageReaction extends Part
         'message_id',
         'guild_id',
         'member',
-        'emoji'
+        'emoji',
     ];
 
     /**

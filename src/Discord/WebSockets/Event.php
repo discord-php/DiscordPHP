@@ -150,8 +150,8 @@ abstract class Event
      * Transforms the given data, and updates the
      * Discord instance if necessary.
      *
-     * @param Deferred     $deferred The promise to use
-     * @param object $data The data that was sent with the WebSocket
+     * @param Deferred $deferred The promise to use
+     * @param object   $data     The data that was sent with the WebSocket
      *
      * @return void|PromiseInterface
      */

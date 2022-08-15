@@ -30,7 +30,7 @@ class Field extends Part
     protected $fillable = [
         'name',
         'value',
-        'inline'
+        'inline',
     ];
 
     /**

@@ -29,7 +29,7 @@ class WelcomeScreen extends Part
      */
     protected $fillable = [
         'description',
-        'welcome_channels'
+        'welcome_channels',
     ];
 
     /**

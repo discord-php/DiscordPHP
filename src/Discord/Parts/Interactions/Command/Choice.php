@@ -33,7 +33,7 @@ class Choice extends Part
     protected $fillable = [
         'name',
         'name_localizations',
-        'value'
+        'value',
     ];
 
     /**

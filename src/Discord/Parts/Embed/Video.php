@@ -32,6 +32,6 @@ class Video extends Part
         'url',
         'proxy_url',
         'height',
-        'width'
+        'width',
     ];
 }

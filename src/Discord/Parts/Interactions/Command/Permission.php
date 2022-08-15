@@ -34,6 +34,6 @@ class Permission extends Part
     protected $fillable = [
         'id',
         'type',
-        'permission'
+        'permission',
     ];
 }

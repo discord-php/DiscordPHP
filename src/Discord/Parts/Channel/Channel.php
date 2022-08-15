@@ -75,12 +75,12 @@ use function React\Promise\resolve;
  * @property string|null         $permissions                   Computed permissions for the invoking user in the channel, including overwrites, only included when part of the resolved data received on a slash command interaction.
  * @property int|null            $flags                         Channel flags combined as a bitfield.
  *
- * @property bool                $is_private                    Whether the channel is a private channel.
- * @property MemberRepository    $members                       Voice channel only - members in the channel.
- * @property MessageRepository   $messages                      Text channel only - messages sent in the channel.
- * @property WebhookRepository   $webhooks                      Webhooks in the channel.
- * @property ThreadRepository    $threads                       Threads that belong to the channel.
- * @property InviteRepository    $invites                       Invites in the channel.
+ * @property bool              $is_private Whether the channel is a private channel.
+ * @property MemberRepository  $members    Voice channel only - members in the channel.
+ * @property MessageRepository $messages   Text channel only - messages sent in the channel.
+ * @property WebhookRepository $webhooks   Webhooks in the channel.
+ * @property ThreadRepository  $threads    Threads that belong to the channel.
+ * @property InviteRepository  $invites    Invites in the channel.
  *
  * @method ExtendedPromiseInterface sendMessage(MessageBuilder $builder)
  * @method ExtendedPromiseInterface sendMessage(string $text, bool $tts = false, Embed|array $embed = null, array $allowed_mentions = null, ?Message $replyTo = null)

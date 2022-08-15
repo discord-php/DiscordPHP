@@ -59,7 +59,7 @@ class Embed extends Part
         'video',
         'provider',
         'author',
-        'fields'
+        'fields',
     ];
 
     /**
