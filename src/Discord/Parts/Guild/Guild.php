@@ -233,6 +233,37 @@ class Guild extends Part
     ];
 
     /**
+     * @inheritDoc
+     */
+    protected $visible = [
+        'feature_animated_banner',
+        'feature_animated_icon',
+        'feature_auto_moderation',
+        'feature_banner',
+        'feature_community',
+        'feature_discoverable',
+        'feature_featurable',
+        'feature_has_directory_entry',
+        'feature_invite_splash',
+        'feature_linked_to_hub',
+        'feature_member_verification_gate_enabled',
+        'feature_monetization_enabled',
+        'feature_more_stickers',
+        'feature_news',
+        'feature_partnered',
+        'feature_preview_enabled',
+        'feature_private_threads',
+        'feature_role_icons',
+        'feature_seven_day_thread_archive',
+        'feature_three_day_thread_archive',
+        'feature_ticketed_events_enabled',
+        'feature_vanity_url',
+        'feature_verified',
+        'feature_vip_regions',
+        'feature_welcome_screen_enabled',
+    ];
+
+    /**
      * @inheritdoc
      */
     protected $repositories = [
@@ -451,9 +482,9 @@ class Guild extends Part
         return in_array('BANNER', $this->features);
     }
 
-    protected function getFeatureCommerceAttribute(): bool
+    protected function getFeatureCommunityAttribute(): bool
     {
-        return in_array('COMMERCE', $this->features);
+        return in_array('COMMUNITY', $this->features);
     }
 
     protected function getFeatureDiscoverableAttribute(): bool

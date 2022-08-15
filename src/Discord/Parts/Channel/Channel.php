@@ -93,8 +93,6 @@ class Channel extends Part
     public const TYPE_GROUP = 3;
     public const TYPE_CATEGORY = 4;
     public const TYPE_NEWS = 5;
-    /** @deprecated 7.0.6 */
-    public const TYPE_GAME_STORE = 6;
     public const TYPE_NEWS_THREAD = 10;
     public const TYPE_PUBLIC_THREAD = 11;
     public const TYPE_PRIVATE_THREAD = 12;

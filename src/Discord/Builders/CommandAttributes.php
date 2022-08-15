@@ -217,7 +217,7 @@ trait CommandAttributes
             throw new \DomainException('Only CHAT_INPUT Command type can have option.');
         }
 
-        if (count($this->options) >= 25) {
+        if (isset($this->options) && count($this->options) >= 25) {
             throw new \OverflowException('Command can only have a maximum of 25 options.');
         }
 
@@ -241,7 +241,7 @@ trait CommandAttributes
             throw new \DomainException('Only CHAT_INPUT Command type can have option.');
         }
 
-        if (($idx = array_search($option, $this->option)) !== null) {
+        if (isset($this->options) && ($idx = array_search($option, $this->options)) !== false) {
             array_splice($this->options, $idx, 1);
         }
 
@@ -255,7 +255,7 @@ trait CommandAttributes
      */
     public function clearOptions(): self
     {
-        $this->options = null;
+        $this->options = [];
 
         return $this;
     }
