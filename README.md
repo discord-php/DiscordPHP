@@ -36,9 +36,9 @@ Known available implementation:
 
 Bundled in ReactPHP Cache, uses in-memory Array, and is already used by default.
 
-### [~~FileSystem~~](https://github.com/WyriHaximus/reactphp-cache-filesystem)
+### [FileSystem](https://github.com/WyriHaximus/reactphp-cache-filesystem)
 
-*Current version is not working*
+*Does not work on Windows*
 
 ```php
 use React\EventLoop\Factory as LoopFactory;
