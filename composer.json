@@ -33,7 +33,7 @@
         "phpunit/phpunit": "^9.4",
         "davidcole1340/reactsh": "dev-master",
         "seregazhuk/react-cache-memcached": "^1.0",
-        "wyrihaximus/react-cache-redis": "^3.0"
+        "wyrihaximus/react-cache-redis": "^3.0 || ^4.0"
     },
     "autoload": {
         "files": [
