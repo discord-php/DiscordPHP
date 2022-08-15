@@ -94,7 +94,7 @@ class CacheWrapper
                     // Item was removed from memory, delete from cache
                     $this->delete($key);
                     $flushing++;
-                } elseif (is_object($item)) {
+                } elseif (is_object($item) && ! ($item instanceof WeakReference)) {
                     // Skip ID related to Bot
                     if ($key != $discord->id) {
                         // Item is no longer used other than in the repository, weaken so it can be garbage collected
