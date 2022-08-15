@@ -34,11 +34,10 @@ class MessageReactionRemoveEmoji extends Event
         coroutine(function ($data) {
             /** @var ?Guild */
             if (isset($data->guild_id) && $guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
-                $channels = $guild->channels;
                 /** @var ?Channel */
-                if (! $channel = yield $channels->cacheGet($data->channel_id)) {
+                if (! $channel = yield $guild->channels->cacheGet($data->channel_id)) {
                     /** @var Channel */
-                    foreach ($channels as $channel) {
+                    foreach ($guild->channels as $channel) {
                         /** @var ?Thread */
                         if ($thread = yield $channel->threads->cacheGet($data->channel_id)) {
                             $channel = $thread;
@@ -46,6 +45,9 @@ class MessageReactionRemoveEmoji extends Event
                         }
                     }
                 }
+            } else {
+                /** @var ?Channel */
+                $channel = yield $this->discord->private_channels->cacheGet($data->channel_id);
             }
 
             $reaction = new MessageReaction($this->discord, (array) $data, true);

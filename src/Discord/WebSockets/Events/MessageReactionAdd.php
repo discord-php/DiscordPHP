@@ -35,11 +35,10 @@ class MessageReactionAdd extends Event
         coroutine(function ($data) {
             /** @var ?Guild */
             if (isset($data->guild_id) && $guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
-                $channels = $guild->channels;
                 /** @var ?Channel */
-                if (! $channel = yield $channels->cacheGet($data->channel_id)) {
+                if (! $channel = yield $guild->channels->cacheGet($data->channel_id)) {
                     /** @var Channel */
-                    foreach ($channels as $channel) {
+                    foreach ($guild->channels as $channel) {
                         /** @var ?Thread */
                         if ($thread = yield $channel->threads->cacheGet($data->channel_id)) {
                             $channel = $thread;
@@ -47,18 +46,20 @@ class MessageReactionAdd extends Event
                         }
                     }
                 }
+            } else {
+                /** @var ?Channel */
+                $channel = yield $this->discord->private_channels->cacheGet($data->channel_id);
             }
 
             $reaction = new MessageReaction($this->discord, (array) $data, true);
 
             /** @var ?Message */
-            if (isset($channel) && $message = yield $channel->messages->cacheGet($data->message_id)) {
+            if ($channel && $message = yield $channel->messages->cacheGet($data->message_id)) {
                 $addedReaction = false;
-                $reactions = $message->reactions;
 
                 /** @var Reaction */
-                foreach ($reactions as $id => $react) {
-                    if ($id == $reaction->reaction_id) {
+                foreach ($message->reactions as $react) {
+                    if ($react->id == $reaction->reaction_id) {
                         ++$react->count;
 
                         if ($reaction->user_id == $this->discord->id) {
@@ -77,7 +78,7 @@ class MessageReactionAdd extends Event
                     $reaction->me = $data->user_id == $this->discord->id;
                 }
 
-                yield $reactions->cache->set($reaction->reaction_id, $reaction);
+                yield $message->reactions->cache->set($reaction->reaction_id, $reaction);
             }
 
             if (isset($data->member->user)) {
