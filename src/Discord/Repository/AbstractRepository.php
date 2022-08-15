@@ -115,19 +115,13 @@ abstract class AbstractRepository extends Collection
         }
 
         return $this->http->get($endpoint)->then(function ($response) {
-            $keys = [];
-
             foreach ($this->items as $key => $value) {
                 if ($value === null) {
                     unset($this->items[$key]);
                 } elseif (! ($this->items[$key] instanceof WeakReference)) {
                     $this->items[$key] = WeakReference::create($value);
                 }
-                $keys[] = $this->cache->key_prefix.$key;
-            }
-
-            if ($keys) {
-                $this->cache->interface->deleteMultiple($keys);
+                $this->cache->interface->delete($this->cache->key_prefix.$key);
             }
 
             return $this->freshenCache($response);
@@ -454,12 +448,8 @@ abstract class AbstractRepository extends Collection
             if (is_a($item, $this->class)) {
                 $key = $item->{$this->discrim};
                 $this->items[$key] = $item;
-                $values[$this->cache->key_prefix.$key] = $item->serialize();
+                $this->cache->interface->set($this->cache->key_prefix.$key, $item->serialize());
             }
-        }
-
-        if ($values) {
-            $this->cache->interface->setMultiple($values);
         }
 
         return $this;

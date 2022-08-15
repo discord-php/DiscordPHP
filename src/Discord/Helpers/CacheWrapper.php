@@ -17,6 +17,8 @@ use React\Cache\CacheInterface;
 use React\Promise\PromiseInterface;
 use WeakReference;
 
+use function React\Promise\all;
+
 /**
  * Wrapper for CacheInterface that tracks Repository items.
  *
@@ -86,26 +88,22 @@ class CacheWrapper
 
         // Flush every heartbeat ack
         $this->flusher = function ($time, Discord $discord) {
-            $values = [];
+            $flushing = 0;
             foreach ($this->items as $key => $item) {
                 if ($item === null) {
                     // Item was removed from memory, delete from cache
-                    $values[] = $key;
-                } elseif ($item instanceof Part) {
+                    $this->delete($key);
+                    $flushing++;
+                } elseif (is_object($item)) {
                     // Skip ID related to Bot
                     if ($key != $discord->id) {
-                        // Item is no longer used other than in the repository, make it weak so it can be garbage collected
+                        // Item is no longer used other than in the repository, weaken so it can be garbage collected
                         $this->items[$key] = WeakReference::create($item);
                     }
                 }
             }
-            $flushed = count($values);
-            if ($flushed) {
-                $this->deleteMultiple($values)->then(function ($success) use ($flushed) {
-                    if ($success) {
-                        $this->discord->getLogger()->debug('Flushed repository cache', ['count' => $flushed, 'class' => $this->class]);
-                    }
-                });
+            if ($flushing) {
+                $this->discord->getLogger()->debug('Flushing repository cache', ['count' => $flushing, 'class' => $this->class]);
             }
         };
         $discord->on('heartbeat-ack', $this->flusher);
@@ -184,37 +182,19 @@ class CacheWrapper
      */
     public function getMultiple(array $keys, $default = null)
     {
-        $realKeys = array_map(function ($key) {
-            return $this->key_prefix.$key;
-        }, $keys);
+        $promises = [];
 
-        return $this->interface->getMultiple($realKeys, $default)->then(function ($values) use ($keys) {
-            foreach ($keys as $key) {
-                // Check if the prefixed key is returned
-                if (! array_key_exists($this->key_prefix.$key, $values)) {
-                    unset($this->items[$key]);
-                    continue;
-                }
+        foreach ($keys as $key) {
+            $promises[$key] = $this->get($key, $default);
+        }
 
-                // Get real value from prefixed key
-                $value = $values[$this->key_prefix.$key];
-
-                if ($value === null) {
-                    unset($this->items[$key]);
-                } else {
-                    $values[$key] = $this->items[$key] = $this->discord->factory($this->class, json_decode($value), true);
-                }
-
-                // Remove real value with key prefix
-                unset($values[$this->key_prefix.$key]);
-            }
-
-            return $values;
-        });
+        return all($promises);
     }
 
     /**
      * Set multiple Parts into cache
+     *
+     * Includes polyfill for react/cache 0.5
      *
      * @param array $values
      * @param ?int  $ttl
@@ -223,21 +203,19 @@ class CacheWrapper
      */
     public function setMultiple(array $values, $ttl = null)
     {
+        $promises = [];
+
         foreach ($values as $key => $value) {
-            $items[$this->key_prefix.$key] = $value->serialize();
+            $promises[$key] = $this->set($key, $value, $ttl);
         }
 
-        return $this->interface->setMultiple($items, $ttl)->then(function ($success) use ($values) {
-            if ($success) {
-                $this->items = array_merge($this->items, $values);
-            }
-
-            return $success;
-        });
+        return all($promises);
     }
 
     /**
      * Delete multiple Parts from cache
+     *
+     * Includes polyfill for react/cache 0.5
      *
      * @param array $keys
      *
@@ -245,39 +223,13 @@ class CacheWrapper
      */
     public function deleteMultiple(array $keys)
     {
-        $realKeys = array_map(function ($key) {
-            return $this->key_prefix.$key;
-        }, $keys);
+        $promises = [];
 
-        return $this->interface->deleteMultiple($realKeys)->then(function ($success) use ($keys) {
-            if ($success) {
-                foreach ($keys as $key) {
-                    unset($this->items[$key]);
-                }
-            }
+        foreach ($keys as $key) {
+            $promises[$key] = $this->delete($key);
+        }
 
-            return $success;
-        });
-    }
-
-    /**
-     * Clear all Parts from cache
-     *
-     * @return PromiseInterface<bool>
-     */
-    public function clear()
-    {
-        $realKeys = array_map(function ($key) {
-            return $this->key_prefix.$key;
-        }, $this->items);
-
-        return $this->interface->deleteMultiple($realKeys)->then(function ($success) {
-            if ($success) {
-                $this->items = [];
-            }
-
-            return $success;
-        });
+        return all($promises);
     }
 
     /**
@@ -289,9 +241,37 @@ class CacheWrapper
      */
     public function has($key)
     {
-        return $this->interface->has($this->key_prefix.$key)->then(function ($success) use ($key) {
-            if (! $success) {
+        if (is_callable([$this->interface, 'has'])) {
+            $promise = call_user_func([$this->interface, 'has'], $this->key_prefix.$key);
+        } else {
+            $promise = $this->get($this->key_prefix.$key);
+        }
+
+        return $promise->then(function ($value) use ($key) {
+            if (! $value) {
                 unset($this->items[$key]);
+            }
+
+            return (bool) $value;
+        });
+    }
+
+    /**
+     * Clear all Parts from cache
+     *
+     * @return PromiseInterface<bool>
+     */
+    public function clear()
+    {
+        $promises = [];
+
+        foreach (array_keys($this->items) as $key) {
+            $promises[$key] = $this->interface->delete($this->key_prefix.$key);
+        }
+
+        return all($promises)->then(function ($success) {
+            if ($success) {
+                $this->items = [];
             }
 
             return $success;
