@@ -320,11 +320,6 @@ abstract class Part implements ArrayAccess, JsonSerializable
         return $this->attributes;
     }
 
-    public function __serialize(): array
-    {
-        return $this->attributes;
-    }
-
     /**
      * Unserializes some data and stores it. Used for Serializable.
      *
@@ -341,13 +336,6 @@ abstract class Part implements ArrayAccess, JsonSerializable
         }
     }
     
-    public function __unserialize(array $data): void
-    {
-        foreach ($data as $key => $value) {
-            $this->setAttribute($key, $value);
-        }
-    }
-
     public function __unserialize(array $data): void
     {
         foreach ($data as $key => $value) {
