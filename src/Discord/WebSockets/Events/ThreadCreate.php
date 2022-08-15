@@ -38,9 +38,7 @@ class ThreadCreate extends Event
             if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
                 /** @var ?Channel */
                 if ($parent = yield $guild->channels->cacheGet($data->parent_id)) {
-                    if (! empty($data->newly_created)) {
-                        yield $parent->threads->cache->set($data->id, $threadPart);
-                    }
+                    yield $parent->threads->cache->set($data->id, $threadPart);
                 }
             }
 
