@@ -40,7 +40,7 @@ class DiscordSingleton
 
         //$cache = new seregazhuk\React\Cache\Memcached\Memcached($loop);
 
-        $cache = new WyriHaximus\React\Cache\Filesystem(React\Filesystem\Filesystem::create($loop), getenv('RUNNER_TEMP'));
+        $cache = new WyriHaximus\React\Cache\Filesystem(React\Filesystem\Filesystem::create($loop), getenv('RUNNER_TEMP').DIRECTORY_SEPARATOR);
 
         $logger = new Logger('DiscordPHP-UnitTests');
         $handler = new StreamHandler(fopen(__DIR__.'/../phpunit.log', 'w'));
