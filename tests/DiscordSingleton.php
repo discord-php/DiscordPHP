@@ -35,12 +35,12 @@ class DiscordSingleton
     {
         $loop = Loop::get();
 
-        //$redis = (new Clue\React\Redis\Factory($loop))->createLazyClient('localhost:6379');
-        //$cache = new WyriHaximus\React\Cache\Redis($redis);
+        $redis = (new Clue\React\Redis\Factory($loop))->createLazyClient('localhost:6379');
+        $cache = new WyriHaximus\React\Cache\Redis($redis);
 
         //$cache = new seregazhuk\React\Cache\Memcached\Memcached($loop);
 
-        $cache = new WyriHaximus\React\Cache\Filesystem(React\Filesystem\Filesystem::create($loop), getenv('RUNNER_TEMP').DIRECTORY_SEPARATOR);
+        //$cache = new WyriHaximus\React\Cache\Filesystem(React\Filesystem\Filesystem::create($loop), getenv('RUNNER_TEMP').DIRECTORY_SEPARATOR);
 
         $logger = new Logger('DiscordPHP-UnitTests');
         $handler = new StreamHandler(fopen(__DIR__.'/../phpunit.log', 'w'));

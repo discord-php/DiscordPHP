@@ -32,7 +32,8 @@
         "friendsofphp/php-cs-fixer": "^3",
         "phpunit/phpunit": "^9.4",
         "davidcole1340/reactsh": "dev-master",
-        "wyrihaximus/react-cache-filesystem": "^1.0"
+        "seregazhuk/react-cache-memcached": "^1.0",
+        "wyrihaximus/react-cache-redis": "^3.0"
     },
     "autoload": {
         "files": [
@@ -54,10 +55,5 @@
         "cs": ["./vendor/bin/php-cs-fixer fix"],
         "unit": ["./vendor/bin/phpunit --testdox"],
         "coverage": ["XDEBUG_MODE=coverage ./vendor/bin/phpunit --coverage-html coverage --testdox"]
-    },
-    "config": {
-        "allow-plugins": {
-            "wyrihaximus/composer-update-bin-autoload-path": false
-        }
     }
 }

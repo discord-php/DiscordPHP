@@ -95,7 +95,7 @@ $discord = new Discord([
 ]);
 ```
 
-By default the cache key is prefixed "react:cache" so in your Redis/Memcached you will get have the data as: `react:cache:User.115233618997149700`. You do not need to write the prefix if accessing from the Bot code, just `User.115233618997149700`. The repository prefix can be retrieved from the repository which in the case above `$discord->users->cache->key_prefix` would return `User.`, where `User` is the name of the `Part` class.
+By default the cache key is prefixed "react:cache" so in your Redis/Memcached you will get have the data as: `react:cache:User:115233618997149700`. You do not need to write the prefix if accessing from the Bot code, just `User.115233618997149700`. The repository prefix can be retrieved from the repository which in the case above `$discord->users->cache->key_prefix` would return `User:`, where `User` is the name of the `Part` class.
 
 ## Before you start
 
