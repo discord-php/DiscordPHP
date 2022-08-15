@@ -11,6 +11,7 @@
 
 namespace Discord\Repository\Guild;
 
+use Discord\Discord;
 use Discord\Http\Endpoint;
 use Discord\Parts\Guild\CommandPermissions;
 use Discord\Parts\Interactions\Command\Command;
@@ -42,6 +43,16 @@ class GuildCommandRepository extends AbstractRepository
      * @inheritdoc
      */
     protected $class = Command::class;
+
+    /**
+     * @inheritdoc
+     */
+    public function __construct(Discord $discord, array $vars = [])
+    {
+        $vars['application_id'] = $discord->application->id; // For the bot's Application Guild Commands
+
+        parent::__construct($discord, $vars);
+    }
 
     /**
      * Sets all guild commands permission overwrites.

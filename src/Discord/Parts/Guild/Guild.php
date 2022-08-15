@@ -1279,7 +1279,6 @@ class Guild extends Part
     {
         return [
             'guild_id' => $this->id,
-            'application_id' => $this->discord->application->id, // For the bot's Application Guild Commands
         ];
     }
 
