@@ -73,6 +73,13 @@ abstract class AbstractRepository extends Collection
     protected $vars = [];
 
     /**
+     * The Part that holds this repository.
+     *
+     * @var ?Part
+     */
+    protected $parent;
+
+    /**
      * @var CacheWrapper
      */
     protected $cache;
@@ -83,12 +90,14 @@ abstract class AbstractRepository extends Collection
      * @param Http    $http    The HTTP client.
      * @param Factory $factory The parts factory.
      * @param array   $vars    An array of variables used for the endpoint.
+     * @param ?Part   $parent  The repository parent.
      */
-    public function __construct(Discord $discord, array $vars = [])
+    public function __construct(Discord $discord, array $vars = [], $parent)
     {
         $this->http = $discord->getHttpClient();
         $this->factory = $discord->getFactory();
         $this->vars = $vars;
+        $this->parent = $parent;
         $this->cache = new CacheWrapper($discord, $discord->getCache(), $this->items, $this->class, $this->vars);
 
         parent::__construct([], $this->discrim, $this->class);

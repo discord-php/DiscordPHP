@@ -81,13 +81,14 @@ class Factory
     /**
      * Creates a repository.
      *
-     * @param string $class The class to build.
-     * @param array  $data  Data to create the object.
+     * @param string $class  The class to build.
+     * @param array  $data   Data to create the object.
+     * @param ?Part  $parent The repository parent.
      *
      * @return AbstractRepository The repository.
      */
-    public function repository(string $class, array $data = []): AbstractRepository
+    public function repository(string $class, array $data = [], $parent = null): AbstractRepository
     {
-        return new $class($this->discord, $data);
+        return new $class($this->discord, $data, $parent);
     }
 }

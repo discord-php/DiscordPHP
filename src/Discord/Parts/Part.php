@@ -215,7 +215,7 @@ abstract class Part implements ArrayAccess, JsonSerializable
     {
         if (isset($this->repositories[$key])) {
             if (! isset($this->repositories_cache[$key])) {
-                $this->repositories_cache[$key] = $this->factory->create($this->repositories[$key], $this->getRepositoryAttributes());
+                $this->repositories_cache[$key] = $this->factory->repository($this->repositories[$key], $this->getRepositoryAttributes(), $this);
             }
 
             return $this->repositories_cache[$key];
