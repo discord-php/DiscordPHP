@@ -122,7 +122,7 @@ abstract class AbstractRepository extends Collection
                 } elseif (! ($this->items[$key] instanceof WeakReference)) {
                     $this->items[$key] = WeakReference::create($value);
                 }
-                $this->cache->interface->delete($this->cache->key_prefix.$key);
+                $this->cache->interface->delete($this->cache->getPrefix().$key);
             }
 
             return $this->freshenCache($response);
@@ -144,9 +144,7 @@ abstract class AbstractRepository extends Collection
             return $this;
         }
 
-        return $this->cache->setMultiple($items)->then(function ($success) {
-            return $this;
-        });
+        return $this->cache->setMultiple($items)->then(fn ($success) => $this);
     }
 
     /**
@@ -205,9 +203,7 @@ abstract class AbstractRepository extends Collection
             $part->fill((array) $response);
             $part->created = true;
 
-            return $this->cache->set($part->{$this->discrim}, $part)->then(function ($success) use ($part) {
-                return $part;
-            });
+            return $this->cache->set($part->{$this->discrim}, $part)->then(fn ($success) => $part);
         });
     }
 
@@ -248,9 +244,7 @@ abstract class AbstractRepository extends Collection
             }
             $part->created = false;
 
-            return $this->cache->delete($part->{$this->discrim})->then(function ($success) use ($part) {
-                return $part;
-            });
+            return $this->cache->delete($part->{$this->discrim})->then(fn ($success) => $part);
         });
     }
 
@@ -283,9 +277,7 @@ abstract class AbstractRepository extends Collection
         return $this->http->get($endpoint)->then(function ($response) use (&$part) {
             $part->fill((array) $response);
 
-            return $this->cache->set($part->{$this->discrim}, $part)->then(function ($success) use ($part) {
-                return $part;
-            });
+            return $this->cache->set($part->{$this->discrim}, $part)->then(fn ($success) => $part);
         });
     }
 
@@ -326,9 +318,7 @@ abstract class AbstractRepository extends Collection
             $part->fill(array_merge($this->vars, (array) $response));
             $part->created = true;
 
-            return $this->cache->set($id, $part)->then(function ($success) use ($part) {
-                return $part;
-            });
+            return $this->cache->set($id, $part)->then(fn ($success) => $part);
         });
     }
 
@@ -394,7 +384,7 @@ abstract class AbstractRepository extends Collection
             return;
         }
 
-        $this->cache->interface->set($this->cache->key_prefix.$offset, $this->serializer($value));
+        $this->cache->interface->set($this->cache->getPrefix().$offset, $this->serializer($value));
 
         $this->offsetSet($offset, $value);
     }
@@ -408,7 +398,7 @@ abstract class AbstractRepository extends Collection
         if ($item = $this->offsetGet($key)) {
             $default = $item;
             $this->offsetUnset($key);
-            $this->cache->interface->delete($this->cache->key_prefix, $key);
+            $this->cache->interface->delete($this->cache->getPrefix(), $key);
         }
 
         return $default;
@@ -451,7 +441,7 @@ abstract class AbstractRepository extends Collection
             if (is_a($item, $this->class)) {
                 $key = $item->{$this->discrim};
                 $this->items[$key] = $item;
-                $this->cache->interface->set($this->cache->key_prefix.$key, $this->serializer($item));
+                $this->cache->interface->set($this->cache->getPrefix().$key, $this->serializer($item));
             }
         }
 
@@ -476,7 +466,7 @@ abstract class AbstractRepository extends Collection
         if (is_a($item, $this->class)) {
             $key = $item->{$this->discrim};
             $this->items[$key] = $item;
-            $this->cache->interface->set($this->cache->key_prefix.$key, $this->serializer($item));
+            $this->cache->interface->set($this->cache->getPrefix().$key, $this->serializer($item));
         }
 
         return $this;

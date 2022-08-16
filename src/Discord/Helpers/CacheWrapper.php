@@ -21,11 +21,13 @@ use WeakReference;
 use function React\Promise\all;
 
 /**
- * Wrapper for CacheInterface that tracks Repository items.
+ * Wrapper for CacheInterface that store Repository items.
+ *
+ * Compatible with react/cache 0.5 - 1.x interface.
  *
  * @internal Used by AbstractRepository.
  *
- * @property-read string $key_prefix Cache key prefix.
+ * @property-read CacheInterface $interface The actual ReactPHP CacheInterface.
  */
 class CacheWrapper
 {
@@ -35,30 +37,30 @@ class CacheWrapper
     protected $discord;
 
     /**
-     * The actual ReactPHP CacheInterface.
-     *
      * @var CacheInterface
      */
-    public $interface;
+    protected $interface;
 
     /**
      * Repository items array reference.
      *
-     * @var null[]|Part[]|WeakReference[] Cache Key => Cache Part.
+     * @var ?Part[]|WeakReference[] Cache Key => Cache Part.
      */
     protected $items;
 
     /**
-     * The allowed class name to be unserialized.
+     * The item class name.
      *
      * @var string
      */
     protected $class;
 
     /**
+     * Cache key prefix.
+     *
      * @var string
      */
-    protected $key_prefix;
+    protected $prefix;
 
     /**
      * @var callable Callback flusher
@@ -66,9 +68,10 @@ class CacheWrapper
     protected $flusher;
 
     /**
+     * @param Discord        $discord
      * @param CacheInterface $cacheInterface The actual CacheInterface.
      * @param array          &$items         Repository items passed by reference.
-     * @param string         $class          Object class name allowed for serialization.
+     * @param string         $class          Part class name.
      * @param string[]       $vars           Variable containing hierarchy parent IDs.
      *
      * @internal
@@ -85,7 +88,7 @@ class CacheWrapper
             $separator = ':';
         }
 
-        $this->key_prefix = implode($separator, [substr(strrchr($this->class, '\\'), 1)] + $vars).$separator;
+        $this->prefix = implode($separator, [substr(strrchr($this->class, '\\'), 1)] + $vars).$separator;
 
         // Flush every heartbeat ack
         $this->flusher = function ($time, Discord $discord) {
@@ -95,7 +98,7 @@ class CacheWrapper
                     // Item was removed from memory, delete from cache
                     $this->delete($key);
                     $flushing++;
-                } elseif (is_object($item) && ! ($item instanceof WeakReference)) {
+                } elseif ($item instanceof Part) {
                     // Skip ID related to Bot
                     if ($key != $discord->id) {
                         // Item is no longer used other than in the repository, weaken so it can be garbage collected
@@ -125,7 +128,7 @@ class CacheWrapper
      */
     public function get($key, $default = null)
     {
-        return $this->interface->get($this->key_prefix.$key, $default)->then(function ($value) use ($key) {
+        return $this->interface->get($this->prefix.$key, $default)->then(function ($value) use ($key) {
             if ($value === null) {
                 unset($this->items[$key]);
             } else {
@@ -155,7 +158,7 @@ class CacheWrapper
             $item = $value->serialize();
         }
 
-        return $this->interface->set($this->key_prefix.$key, $item, $ttl)->then(function ($success) use ($key, $value) {
+        return $this->interface->set($this->prefix.$key, $item, $ttl)->then(function ($success) use ($key, $value) {
             if ($success) {
                 $this->items[$key] = $value;
             }
@@ -173,7 +176,7 @@ class CacheWrapper
      */
     public function delete($key)
     {
-        return $this->interface->delete($this->key_prefix.$key)->then(function ($success) use ($key) {
+        return $this->interface->delete($this->prefix.$key)->then(function ($success) use ($key) {
             if ($success) {
                 unset($this->items[$key]);
             }
@@ -184,6 +187,8 @@ class CacheWrapper
 
     /**
      * Get multiple Parts from cache.
+     *
+     * react/cache 0.5 polyfill.
      *
      * @param array $keys
      * @param ?Part $default
@@ -204,10 +209,10 @@ class CacheWrapper
     /**
      * Set multiple Parts into cache.
      *
-     * Includes polyfill for react/cache 0.5
+     * react/cache 0.5 polyfill.
      *
-     * @param array $values
-     * @param ?int  $ttl
+     * @param Part[] $values
+     * @param ?int   $ttl
      *
      * @return PromiseInterface<bool>
      */
@@ -225,7 +230,7 @@ class CacheWrapper
     /**
      * Delete multiple Parts from cache.
      *
-     * Includes polyfill for react/cache 0.5
+     * react/cache 0.5 polyfill.
      *
      * @param array $keys
      *
@@ -243,7 +248,31 @@ class CacheWrapper
     }
 
     /**
+     * Clear all Parts from cache.
+     *
+     * @return PromiseInterface<bool>
+     */
+    public function clear()
+    {
+        $promises = [];
+
+        foreach (array_keys($this->items) as $key) {
+            $promises[$key] = $this->interface->delete($this->prefix.$key);
+        }
+
+        return all($promises)->then(function ($success) {
+            if ($success) {
+                $this->items = [];
+            }
+
+            return $success;
+        });
+    }
+
+    /**
      * Check if Part is present in cache.
+     *
+     * react/cache 0.5 polyfill.
      *
      * @param string $key
      *
@@ -252,9 +281,9 @@ class CacheWrapper
     public function has($key)
     {
         if (is_callable([$this->interface, 'has'])) {
-            $promise = call_user_func([$this->interface, 'has'], $this->key_prefix.$key);
+            $promise = call_user_func([$this->interface, 'has'], $this->prefix.$key);
         } else {
-            $promise = $this->get($this->key_prefix.$key);
+            $promise = $this->get($this->prefix.$key);
         }
 
         return $promise->then(function ($value) use ($key) {
@@ -267,30 +296,18 @@ class CacheWrapper
     }
 
     /**
-     * Clear all Parts from cache.
+     * Get the cache key prefix.
      *
-     * @return PromiseInterface<bool>
+     * @return string
      */
-    public function clear()
+    public function getPrefix()
     {
-        $promises = [];
-
-        foreach (array_keys($this->items) as $key) {
-            $promises[$key] = $this->interface->delete($this->key_prefix.$key);
-        }
-
-        return all($promises)->then(function ($success) {
-            if ($success) {
-                $this->items = [];
-            }
-
-            return $success;
-        });
+        return $this->prefix;
     }
 
     public function __get(string $name)
     {
-        if (in_array($name, ['key_prefix'])) {
+        if (in_array($name, ['interface'])) {
             return $this->$name;
         }
     }
