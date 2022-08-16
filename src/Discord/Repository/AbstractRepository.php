@@ -92,7 +92,7 @@ abstract class AbstractRepository extends Collection
      * @param array   $vars    An array of variables used for the endpoint.
      * @param ?Part   $parent  The repository parent.
      */
-    public function __construct(Discord $discord, array $vars = [], $parent)
+    public function __construct(Discord $discord, array $vars = [], $parent = null)
     {
         $this->http = $discord->getHttpClient();
         $this->factory = $discord->getFactory();
