@@ -188,7 +188,7 @@ class CacheWrapper
     /**
      * Get multiple Parts from cache.
      *
-     * react/cache 0.5 polyfill.
+     * For react/cache 0.5 polyfill.
      *
      * @param array $keys
      * @param ?Part $default
@@ -209,7 +209,7 @@ class CacheWrapper
     /**
      * Set multiple Parts into cache.
      *
-     * react/cache 0.5 polyfill.
+     * For react/cache 0.5 polyfill.
      *
      * @param Part[] $values
      * @param ?int   $ttl
@@ -230,7 +230,7 @@ class CacheWrapper
     /**
      * Delete multiple Parts from cache.
      *
-     * react/cache 0.5 polyfill.
+     * For react/cache 0.5 polyfill.
      *
      * @param array $keys
      *
@@ -249,6 +249,8 @@ class CacheWrapper
 
     /**
      * Clear all Parts from cache.
+     *
+     * For react/cache 0.5 polyfill.
      *
      * @return PromiseInterface<bool>
      */
@@ -272,7 +274,7 @@ class CacheWrapper
     /**
      * Check if Part is present in cache.
      *
-     * react/cache 0.5 polyfill.
+     * For react/cache 0.5 polyfill.
      *
      * @param string $key
      *
