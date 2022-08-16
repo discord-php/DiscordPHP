@@ -44,7 +44,7 @@ class GuildRepository extends AbstractRepository
      *
      * @see https://discord.com/developers/docs/resources/user#leave-guild
      *
-     * @param Guild|snowflake $guild
+     * @param Guild|string $guild
      *
      * @return ExtendedPromiseInterface
      */

@@ -320,7 +320,7 @@ class Discord
     /**
      * The react/cache interface.
      *
-     * @var CacheInterface
+     * @var CacheInterface[]
      */
     protected $cache;
 
@@ -364,6 +364,10 @@ class Discord
 
         $options = $this->resolveOptions($options);
 
+        if (! isset($options['cacheInterface'][AbstractRepository::class])) {
+            $options['cacheInterface'][AbstractRepository::class] = new ArrayCache();
+        }
+
         $this->options = $options;
         $this->token = $options['token'];
         $this->loop = $options['loop'];
@@ -372,7 +376,7 @@ class Discord
         $this->logger->debug('Initializing DiscordPHP '.self::VERSION.' (DiscordPHP-Http: '.Http::VERSION.' & Gateway: v'.self::GATEWAY_VERSION.') on PHP '.PHP_VERSION);
 
         $this->cache = $options['cacheInterface'];
-        $this->logger->warning('Attached experimental CacheInterface: '.get_class($this->cache));
+        $this->logger->warning('Attached experimental CacheInterface: '.get_class($this->cache[AbstractRepository::class]));
 
         $connector = new SocketConnector($options['socket_options'], $this->loop);
         $this->wsFactory = new Connector($this->loop, $connector);
@@ -439,7 +443,7 @@ class Discord
         $this->logger->debug('ready packet received');
 
         $content = $data->d;
- 
+
         // Check if we received resume_gateway_url
         if (isset($content->resume_gateway_url)) {
             $this->resume_gateway_url = $content->resume_gateway_url;
@@ -1385,7 +1389,6 @@ class Discord
                 'retrieveBans' => false,
                 'intents' => Intents::getDefaultIntents(),
                 'socket_options' => [],
-                'cacheInterface' => new ArrayCache(),
             ])
             ->setAllowedTypes('token', 'string')
             ->setAllowedTypes('logger', ['null', LoggerInterface::class])
@@ -1398,7 +1401,7 @@ class Discord
             ->setAllowedTypes('intents', ['array', 'int'])
             ->setAllowedTypes('socket_options', 'array')
             ->setAllowedTypes('dnsConfig', ['string', \React\Dns\Config\Config::class])
-            ->setAllowedTypes('cacheInterface', ['null', CacheInterface::class]);
+            ->setAllowedTypes('cacheInterface', ['null', 'array', CacheInterface::class]);
 
         $options = $resolver->resolve($options);
 
@@ -1568,11 +1571,17 @@ class Discord
     /**
      * Gets the cache interface.
      *
+     * @param string $name Repository class name.
+     *
      * @return CacheInterface
      */
-    public function getCache(): CacheInterface
+    public function getCache($repository_class = null): CacheInterface
     {
-        return $this->cache;
+        if ($repository_class === null || ! isset($this->cache[$repository_class])) {
+            $repository_class = AbstractRepository::class;
+        }
+
+        return $this->cache[$repository_class];
     }
 
     /**
