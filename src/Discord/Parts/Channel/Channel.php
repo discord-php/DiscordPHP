@@ -91,15 +91,20 @@ class Channel extends Part
     public const TYPE_VOICE = 2;
     public const TYPE_GROUP = 3;
     public const TYPE_CATEGORY = 4;
-    public const TYPE_NEWS = 5;
+    public const TYPE_ANNOUNCEMENT = 5;
     /** @deprecated 7.0.6 */
     public const TYPE_GAME_STORE = 6;
-    public const TYPE_NEWS_THREAD = 10;
+    public const TYPE_ANNOUNCEMENT_THREAD = 10;
     public const TYPE_PUBLIC_THREAD = 11;
     public const TYPE_PRIVATE_THREAD = 12;
     public const TYPE_STAGE_CHANNEL = 13;
     public const TYPE_DIRECTORY = 14;
     public const TYPE_FORUM = 15;
+
+    /** @deprecated 7.2.1 Use `TYPE_ANNOUNCEMENT` */
+    public const TYPE_NEWS = 5;
+    /** @deprecated 7.2.1 Use `TYPE_ANNOUNCEMENT_THREAD` */
+    public const TYPE_NEWS_THREAD = 10;
 
     public const VIDEO_QUALITY_AUTO = 1;
     public const VIDEO_QUALITY_FULL = 2;
