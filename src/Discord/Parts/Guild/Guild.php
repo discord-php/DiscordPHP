@@ -117,8 +117,6 @@ use function React\Promise\resolve;
  * @property bool                         $feature_preview_enabled                  Guild can be previewed before joining via membership screening or the directory.
  * @property bool                         $feature_private_threads                  Guild has access to create private threads.
  * @property bool                         $feature_role_icons                       Guild is able to set role icons.
- * @property bool                         $feature_seven_day_thread_archive         Guild has access to the seven day archive time for threads.
- * @property bool                         $feature_three_day_thread_archive         Guild has access to the three day archive time for threads.
  * @property bool                         $feature_ticketed_events_enabled          Guild has enabled ticketed events.
  * @property bool                         $feature_vanity_url                       Guild has access to set a vanity url.
  * @property bool                         $feature_verified                         Guild is verified.
@@ -244,8 +242,6 @@ class Guild extends Part
         'feature_preview_enabled',
         'feature_private_threads',
         'feature_role_icons',
-        'feature_seven_day_thread_archive',
-        'feature_three_day_thread_archive',
         'feature_ticketed_events_enabled',
         'feature_vanity_url',
         'feature_verified',
@@ -525,11 +521,17 @@ class Guild extends Part
         return in_array('MORE_STICKERS', $this->features);
     }
 
+    /**
+     * @deprecated 7.2.1
+     */
     protected function getFeatureThreeDayThreadArchiveAttribute(): bool
     {
         return in_array('THREE_DAY_THREAD_ARCHIVE', $this->features);
     }
 
+    /**
+     * @deprecated 7.2.1
+     */
     protected function getFeatureSevenDayThreadArchiveAttribute(): bool
     {
         return in_array('SEVEN_DAY_THREAD_ARCHIVE', $this->features);
