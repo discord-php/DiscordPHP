@@ -125,14 +125,14 @@ abstract class AbstractRepository extends Collection
                 $this->cache->interface->delete($this->cache->getPrefix().$key);
             }
 
-            return $this->freshenCache($response);
+            return $this->cacheFreshen($response);
         });
     }
 
     /**
      * @internal
      */
-    protected function freshenCache($response): PromiseInterface
+    protected function cacheFreshen($response): PromiseInterface
     {
         foreach ($response as $value) {
             $value = array_merge($this->vars, (array) $value);
