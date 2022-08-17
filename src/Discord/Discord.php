@@ -1379,6 +1379,7 @@ class Discord
                 'socket_options',
                 'dnsConfig',
                 'cacheInterface',
+                'cacheSweep',
             ])
             ->setDefaults([
                 'logger' => null,
@@ -1389,6 +1390,7 @@ class Discord
                 'retrieveBans' => false,
                 'intents' => Intents::getDefaultIntents(),
                 'socket_options' => [],
+                'cacheSweep' => true,
             ])
             ->setAllowedTypes('token', 'string')
             ->setAllowedTypes('logger', ['null', LoggerInterface::class])
@@ -1401,7 +1403,15 @@ class Discord
             ->setAllowedTypes('intents', ['array', 'int'])
             ->setAllowedTypes('socket_options', 'array')
             ->setAllowedTypes('dnsConfig', ['string', \React\Dns\Config\Config::class])
-            ->setAllowedTypes('cacheInterface', ['null', 'array', CacheInterface::class]);
+            ->setAllowedTypes('cacheInterface', ['null', 'array', CacheInterface::class])
+            ->setAllowedTypes('cacheSweep', 'bool')
+            ->setNormalizer('cacheInterface', function ($options, $value) {
+                if (! is_array($value)) {
+                    return [AbstractRepository::class => $value];
+                }
+
+                return $value;
+            });
 
         $options = $resolver->resolve($options);
 
