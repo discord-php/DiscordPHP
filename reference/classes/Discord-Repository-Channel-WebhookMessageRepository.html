@@ -123,12 +123,12 @@
                     <ul class="phpdocumentor-breadcrumbs">
             <li class="phpdocumentor-breadcrumb"><a href="namespaces/discord.html">Discord</a></li>
             <li class="phpdocumentor-breadcrumb"><a href="namespaces/discord-repository.html">Repository</a></li>
-            <li class="phpdocumentor-breadcrumb"><a href="namespaces/discord-repository-guild.html">Guild</a></li>
+            <li class="phpdocumentor-breadcrumb"><a href="namespaces/discord-repository-channel.html">Channel</a></li>
     </ul>
 
     <article class="phpdocumentor-element -class">
         <h2 class="phpdocumentor-content__title">
-    BanRepository
+    WebhookMessageRepository
 
         <span class="phpdocumentor-element__extends">
         extends <a href="classes/Discord-Repository-AbstractRepository.html"><abbr title="\Discord\Repository\AbstractRepository">AbstractRepository</abbr></a>
@@ -145,13 +145,13 @@
     </h2>
 
         <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/Guild/BanRepository.php"><a href="files/src-discord-repository-guild-banrepository.html"><abbr title="src/Discord/Repository/Guild/BanRepository.php">BanRepository.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/Channel/WebhookMessageRepository.php"><a href="files/src-discord-repository-channel-webhookmessagerepository.html"><abbr title="src/Discord/Repository/Channel/WebhookMessageRepository.php">WebhookMessageRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">33</span>
+    <span class="phpdocumentor-element-found-in__line">30</span>
 
     </aside>
 
-            <p class="phpdocumentor-summary">Contains bans on users.</p>
+            <p class="phpdocumentor-summary">Contains messages sent to channels from webhook.</p>
 
 
 
@@ -164,7 +164,7 @@
                     <span class="phpdocumentor-tag__name">see</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
-                                                                                    <span class="phpdocumentor-tag-link"><a href="classes/Discord-Parts-Guild-Ban.html"><abbr title="\Discord\Parts\Guild\Ban">Ban</abbr></a></span>
+                                                                                    <span class="phpdocumentor-tag-link"><a href="classes/Discord-Parts-Channel-Message.html"><abbr title="\Discord\Parts\Channel\Message">Message</abbr></a></span>
                                         
                                              
                                     </dd>
@@ -172,7 +172,15 @@
                     <span class="phpdocumentor-tag__name">see</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
-                                                                                    <span class="phpdocumentor-tag-link"><a href="classes/Discord-Parts-Guild-Guild.html"><abbr title="\Discord\Parts\Guild\Guild">Guild</abbr></a></span>
+                                                                                    <span class="phpdocumentor-tag-link"><a href="classes/Discord-Parts-Channel-Channel.html"><abbr title="\Discord\Parts\Channel\Channel">Channel</abbr></a></span>
+                                        
+                                             
+                                    </dd>
+                            <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">see</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                    <span class="phpdocumentor-tag-link"><a href="classes/Discord-Parts-Channel-Webhook.html"><abbr title="\Discord\Parts\Channel\Webhook">Webhook</abbr></a></span>
                                         
                                              
                                     </dd>
@@ -190,21 +198,21 @@
 
 <dl class="phpdocumentor-table-of-contents">
                     <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a href="classes/Discord-Repository-Guild-BanRepository.html#property_class">$class</a>
+    <a href="classes/Discord-Repository-Channel-WebhookMessageRepository.html#property_class">$class</a>
     <span>
                         &nbsp;: mixed            </span>
 </dt>
 <dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a href="classes/Discord-Repository-Guild-BanRepository.html#property_discrim">$discrim</a>
+    <a href="classes/Discord-Helpers-Collection.html#property_discrim">$discrim</a>
     <span>
                         &nbsp;: string            </span>
 </dt>
-<dd>The discriminator.</dd>
+<dd>The collection discriminator.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a href="classes/Discord-Repository-Guild-BanRepository.html#property_endpoints">$endpoints</a>
+    <a href="classes/Discord-Repository-Channel-WebhookMessageRepository.html#property_endpoints">$endpoints</a>
     <span>
                         &nbsp;: array&lt;string|int, mixed&gt;            </span>
 </dt>
@@ -267,13 +275,6 @@
 <dd>Unserializes the collection.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Discord-Repository-Guild-BanRepository.html#method_ban">ban()</a>
-    <span>
-                                &nbsp;: <abbr title="\React\Promise\ExtendedPromiseInterface">ExtendedPromiseInterface</abbr>    </span>
-</dt>
-<dd>Bans a member from the guild.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Discord-Helpers-Collection.html#method_clear">clear()</a>
     <span>
                                 &nbsp;: void    </span>
@@ -334,16 +335,16 @@ returns the first item where the callback returns
 `true` when given the item.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Discord-Repository-Guild-BanRepository.html#method_find">find()</a>
+    <a href="classes/Discord-Repository-Channel-WebhookMessageRepository.html#method_find">find()</a>
     <span>
-                                &nbsp;: <a href="classes/Discord-Parts-Guild-Ban.html"><abbr title="\Discord\Parts\Guild\Ban">Ban</abbr></a>|null    </span>
+                                &nbsp;: <a href="classes/Discord-Parts-Channel-Message.html"><abbr title="\Discord\Parts\Channel\Message">Message</abbr></a>|null    </span>
 </dt>
 <dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Discord-Repository-Guild-BanRepository.html#method_first">first()</a>
+    <a href="classes/Discord-Repository-Channel-WebhookMessageRepository.html#method_first">first()</a>
     <span>
-                                &nbsp;: <a href="classes/Discord-Parts-Guild-Ban.html"><abbr title="\Discord\Parts\Guild\Ban">Ban</abbr></a>|null    </span>
+                                &nbsp;: <a href="classes/Discord-Parts-Channel-Message.html"><abbr title="\Discord\Parts\Channel\Message">Message</abbr></a>|null    </span>
 </dt>
 <dd></dd>
 
@@ -383,18 +384,18 @@ returns the first item where the callback returns
 <dd>Creates a collection from an array.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/Discord-Repository-Channel-WebhookMessageRepository.html#method_get">get()</a>
+    <span>
+                                &nbsp;: <a href="classes/Discord-Parts-Channel-Message.html"><abbr title="\Discord\Parts\Channel\Message">Message</abbr></a>|null    </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Discord-Helpers-Collection.html#method_get">get()</a>
     <span>
                                 &nbsp;: mixed    </span>
 </dt>
 <dd>Gets an item from the collection.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Discord-Repository-Guild-BanRepository.html#method_get">get()</a>
-    <span>
-                                &nbsp;: <a href="classes/Discord-Parts-Guild-Ban.html"><abbr title="\Discord\Parts\Guild\Ban">Ban</abbr></a>|null    </span>
-</dt>
-<dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Discord-Helpers-Collection.html#method_getIterator">getIterator()</a>
@@ -474,9 +475,9 @@ returns the first item where the callback returns
 <dd>Unsets an index from the collection.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Discord-Repository-Guild-BanRepository.html#method_pull">pull()</a>
+    <a href="classes/Discord-Repository-Channel-WebhookMessageRepository.html#method_pull">pull()</a>
     <span>
-                                &nbsp;: <a href="classes/Discord-Parts-Guild-Ban.html"><abbr title="\Discord\Parts\Guild\Ban">Ban</abbr></a>|null    </span>
+                                &nbsp;: <a href="classes/Discord-Parts-Channel-Message.html"><abbr title="\Discord\Parts\Channel\Message">Message</abbr></a>|null    </span>
 </dt>
 <dd></dd>
 
@@ -530,13 +531,6 @@ returns the first item where the callback returns
 <dd>Converts the collection to an array.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Discord-Repository-Guild-BanRepository.html#method_unban">unban()</a>
-    <span>
-                                &nbsp;: <abbr title="\React\Promise\ExtendedPromiseInterface">ExtendedPromiseInterface</abbr>    </span>
-</dt>
-<dd>Unbans a member from the guild.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Discord-Helpers-Collection.html#method_unserialize">unserialize()</a>
     <span>
                                 &nbsp;: void    </span>
@@ -553,7 +547,7 @@ returns the first item where the callback returns
     <section class="phpdocumentor-properties">
         <h3 class="phpdocumentor-elements__header" id="properties">
             Properties
-            <a href="classes/Discord-Repository-Guild-BanRepository.html#properties" class="headerlink"><i class="fas fa-link"></i></a>
+            <a href="classes/Discord-Repository-Channel-WebhookMessageRepository.html#properties" class="headerlink"><i class="fas fa-link"></i></a>
         </h3>
                     <article
         class="
@@ -564,14 +558,14 @@ returns the first item where the callback returns
 >
     <h4 class="phpdocumentor-element__name" id="property_class">
         $class
-        <a href="classes/Discord-Repository-Guild-BanRepository.html#property_class" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Repository-Channel-WebhookMessageRepository.html#property_class" class="headerlink"><i class="fas fa-link"></i></a>
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/Guild/BanRepository.php"><a href="files/src-discord-repository-guild-banrepository.html"><abbr title="src/Discord/Repository/Guild/BanRepository.php">BanRepository.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/Channel/WebhookMessageRepository.php"><a href="files/src-discord-repository-channel-webhookmessagerepository.html"><abbr title="src/Discord/Repository/Channel/WebhookMessageRepository.php">WebhookMessageRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">52</span>
+    <span class="phpdocumentor-element-found-in__line">44</span>
 
     </aside>
 
@@ -580,7 +574,7 @@ returns the first item where the callback returns
     <span class="phpdocumentor-signature__visibility">protected</span>
         <span class="phpdocumentor-signature__type">mixed</span>
     <span class="phpdocumentor-signature__name">$class</span>
-     = <span class="phpdocumentor-signature__default-value">\Discord\Parts\Guild\Ban::class</span></code>
+     = <span class="phpdocumentor-signature__default-value">\Discord\Parts\Channel\Message::class</span></code>
 
     
         <section class="phpdocumentor-description"></section>
@@ -610,43 +604,28 @@ returns the first item where the callback returns
 >
     <h4 class="phpdocumentor-element__name" id="property_discrim">
         $discrim
-        <a href="classes/Discord-Repository-Guild-BanRepository.html#property_discrim" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Helpers-Collection.html#property_discrim" class="headerlink"><i class="fas fa-link"></i></a>
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/Guild/BanRepository.php"><a href="files/src-discord-repository-guild-banrepository.html"><abbr title="src/Discord/Repository/Guild/BanRepository.php">BanRepository.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/Collection.php"><a href="files/src-discord-helpers-collection.html"><abbr title="src/Discord/Helpers/Collection.php">Collection.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">38</span>
+    <span class="phpdocumentor-element-found-in__line">31</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">The discriminator.</p>
+        <p class="phpdocumentor-summary">The collection discriminator.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">protected</span>
         <span class="phpdocumentor-signature__type">string</span>
     <span class="phpdocumentor-signature__name">$discrim</span>
-     = <span class="phpdocumentor-signature__default-value">&#039;user_id&#039;</span></code>
+    </code>
 
     
-        <section class="phpdocumentor-description"><p>Discriminator.</p>
-</section>
-
     
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">inheritdoc</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                                
-                                             
-                                    </dd>
-                        </dl>
+    
 
 </article>
                     <article
@@ -658,14 +637,14 @@ returns the first item where the callback returns
 >
     <h4 class="phpdocumentor-element__name" id="property_endpoints">
         $endpoints
-        <a href="classes/Discord-Repository-Guild-BanRepository.html#property_endpoints" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Repository-Channel-WebhookMessageRepository.html#property_endpoints" class="headerlink"><i class="fas fa-link"></i></a>
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/Guild/BanRepository.php"><a href="files/src-discord-repository-guild-banrepository.html"><abbr title="src/Discord/Repository/Guild/BanRepository.php">BanRepository.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/Channel/WebhookMessageRepository.php"><a href="files/src-discord-repository-channel-webhookmessagerepository.html"><abbr title="src/Discord/Repository/Channel/WebhookMessageRepository.php">WebhookMessageRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">43</span>
+    <span class="phpdocumentor-element-found-in__line">35</span>
 
     </aside>
 
@@ -675,7 +654,7 @@ returns the first item where the callback returns
     <span class="phpdocumentor-signature__visibility">protected</span>
         <span class="phpdocumentor-signature__type">array&lt;string|int, mixed&gt;</span>
     <span class="phpdocumentor-signature__name">$endpoints</span>
-     = <span class="phpdocumentor-signature__default-value">[&#039;all&#039; =&gt; \Discord\Http\Endpoint::GUILD_BANS, &#039;get&#039; =&gt; \Discord\Http\Endpoint::GUILD_BAN, &#039;delete&#039; =&gt; \Discord\Http\Endpoint::GUILD_BAN]</span></code>
+     = <span class="phpdocumentor-signature__default-value">[&#039;get&#039; =&gt; \Discord\Http\Endpoint::WEBHOOK_MESSAGE, &#039;update&#039; =&gt; \Discord\Http\Endpoint::WEBHOOK_MESSAGE, &#039;delete&#039; =&gt; \Discord\Http\Endpoint::WEBHOOK_MESSAGE]</span></code>
 
     
         <section class="phpdocumentor-description"><p>Endpoints.</p>
@@ -840,7 +819,7 @@ returns the first item where the callback returns
             <section class="phpdocumentor-methods">
         <h3 class="phpdocumentor-elements__header" id="methods">
             Methods
-            <a href="classes/Discord-Repository-Guild-BanRepository.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
+            <a href="classes/Discord-Repository-Channel-WebhookMessageRepository.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
         </h3>
                     <article
         class="phpdocumentor-element
@@ -1004,83 +983,6 @@ returns the first item where the callback returns
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
     <span class="phpdocumentor-signature__response_type">void</span>
-            &mdash;
-        
-    
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_ban">
-        ban()
-        <a href="classes/Discord-Repository-Guild-BanRepository.html#method_ban" class="headerlink"><i class="fas fa-link"></i></a>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/Guild/BanRepository.php"><a href="files/src-discord-repository-guild-banrepository.html"><abbr title="src/Discord/Repository/Guild/BanRepository.php">BanRepository.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">65</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Bans a member from the guild.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">ban</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Discord-Parts-User-User.html"><abbr title="\Discord\Parts\User\User">User</abbr></a>|<a href="classes/Discord-Parts-User-Member.html"><abbr title="\Discord\Parts\User\Member">Member</abbr></a>|string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$user</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;|int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$options</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$reason</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\ExtendedPromiseInterface">ExtendedPromiseInterface</abbr></span></code>
-
-    
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$user</span>
-                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Discord-Parts-User-User.html"><abbr title="\Discord\Parts\User\User">User</abbr></a>|<a href="classes/Discord-Parts-User-Member.html"><abbr title="\Discord\Parts\User\Member">Member</abbr></a>|string</span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>The User to ban.</p>
-</section>
-
-            </dd>
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$options</span>
-                : <span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;|int</span>
-                 = <span class="phpdocumentor-signature__argument__default-value">null</span>            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>Array of Ban options 'delete_message_seconds' or 'delete_message_days' (deprecated).</p>
-</section>
-
-            </dd>
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$reason</span>
-                : <span class="phpdocumentor-signature__argument__return-type">string|null</span>
-                 = <span class="phpdocumentor-signature__argument__default-value">null</span>            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>Reason for Audit Log.</p>
-</section>
-
-            </dd>
-            </dl>
-
-    
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">see</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                                    <span class="phpdocumentor-tag-link"><a href="https://discord.com/developers/docs/resources/guild#create-guild-ban"><abbr title="https://discord.com/developers/docs/resources/guild#create-guild-ban">https://discord.com/developers/docs/resources/guild#create-guild-ban</abbr></a></span>
-                                        
-                                             
-                                    </dd>
-                        </dl>
-
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\ExtendedPromiseInterface">ExtendedPromiseInterface</abbr></span>
             &mdash;
         
     
@@ -1499,10 +1401,10 @@ the callback.</p>
 >
     <h4 class="phpdocumentor-element__name" id="method_find">
         find()
-        <a href="classes/Discord-Repository-Guild-BanRepository.html#method_find" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Repository-Channel-WebhookMessageRepository.html#method_find" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/Guild/BanRepository.php"><a href="files/src-discord-repository-guild-banrepository.html"><abbr title="src/Discord/Repository/Guild/BanRepository.php">BanRepository.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/Channel/WebhookMessageRepository.php"><a href="files/src-discord-repository-channel-webhookmessagerepository.html"><abbr title="src/Discord/Repository/Channel/WebhookMessageRepository.php">WebhookMessageRepository.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">0</span>
 
@@ -1511,7 +1413,7 @@ the callback.</p>
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">find</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">callable&nbsp;</span><span class="phpdocumentor-signature__argument__name">$callback</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Guild-Ban.html"><abbr title="\Discord\Parts\Guild\Ban">Ban</abbr></a>|null</span></code>
+                    <span class="phpdocumentor-signature__name">find</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">callable&nbsp;</span><span class="phpdocumentor-signature__argument__name">$callback</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Channel-Message.html"><abbr title="\Discord\Parts\Channel\Message">Message</abbr></a>|null</span></code>
 
         <section class="phpdocumentor-description"><p>Runs a filter callback over the repository.</p>
 </section>
@@ -1531,7 +1433,7 @@ the callback.</p>
     
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Guild-Ban.html"><abbr title="\Discord\Parts\Guild\Ban">Ban</abbr></a>|null</span>
+    <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Channel-Message.html"><abbr title="\Discord\Parts\Channel\Message">Message</abbr></a>|null</span>
             &mdash;
         
     
@@ -1544,10 +1446,10 @@ the callback.</p>
 >
     <h4 class="phpdocumentor-element__name" id="method_first">
         first()
-        <a href="classes/Discord-Repository-Guild-BanRepository.html#method_first" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Repository-Channel-WebhookMessageRepository.html#method_first" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/Guild/BanRepository.php"><a href="files/src-discord-repository-guild-banrepository.html"><abbr title="src/Discord/Repository/Guild/BanRepository.php">BanRepository.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/Channel/WebhookMessageRepository.php"><a href="files/src-discord-repository-channel-webhookmessagerepository.html"><abbr title="src/Discord/Repository/Channel/WebhookMessageRepository.php">WebhookMessageRepository.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">0</span>
 
@@ -1556,7 +1458,7 @@ the callback.</p>
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">first</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Guild-Ban.html"><abbr title="\Discord\Parts\Guild\Ban">Ban</abbr></a>|null</span></code>
+                    <span class="phpdocumentor-signature__name">first</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Channel-Message.html"><abbr title="\Discord\Parts\Channel\Message">Message</abbr></a>|null</span></code>
 
         <section class="phpdocumentor-description"><p>Returns the first element of the collection.</p>
 </section>
@@ -1565,7 +1467,7 @@ the callback.</p>
     
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Guild-Ban.html"><abbr title="\Discord\Parts\Guild\Ban">Ban</abbr></a>|null</span>
+    <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Channel-Message.html"><abbr title="\Discord\Parts\Channel\Message">Message</abbr></a>|null</span>
             &mdash;
         
     
@@ -1845,6 +1747,59 @@ the callback.</p>
 >
     <h4 class="phpdocumentor-element__name" id="method_get">
         get()
+        <a href="classes/Discord-Repository-Channel-WebhookMessageRepository.html#method_get" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/Channel/WebhookMessageRepository.php"><a href="files/src-discord-repository-channel-webhookmessagerepository.html"><abbr title="src/Discord/Repository/Channel/WebhookMessageRepository.php">WebhookMessageRepository.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">0</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">get</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$discrim</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$key</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Channel-Message.html"><abbr title="\Discord\Parts\Channel\Message">Message</abbr></a>|null</span></code>
+
+        <section class="phpdocumentor-description"><p>Gets an item from the collection.</p>
+</section>
+
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$discrim</span>
+                : <span class="phpdocumentor-signature__argument__return-type">string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"></section>
+
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$key</span>
+                : <span class="phpdocumentor-signature__argument__return-type">mixed</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"></section>
+
+            </dd>
+            </dl>
+
+    
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Channel-Message.html"><abbr title="\Discord\Parts\Channel\Message">Message</abbr></a>|null</span>
+            &mdash;
+        
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="method_get">
+        get()
         <a href="classes/Discord-Helpers-Collection.html#method_get" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
@@ -1883,59 +1838,6 @@ the callback.</p>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
     <span class="phpdocumentor-signature__response_type">mixed</span>
-            &mdash;
-        
-    
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_get">
-        get()
-        <a href="classes/Discord-Repository-Guild-BanRepository.html#method_get" class="headerlink"><i class="fas fa-link"></i></a>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/Guild/BanRepository.php"><a href="files/src-discord-repository-guild-banrepository.html"><abbr title="src/Discord/Repository/Guild/BanRepository.php">BanRepository.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">0</span>
-
-    </aside>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">get</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$discrim</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$key</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Guild-Ban.html"><abbr title="\Discord\Parts\Guild\Ban">Ban</abbr></a>|null</span></code>
-
-        <section class="phpdocumentor-description"><p>Gets an item from the collection.</p>
-</section>
-
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$discrim</span>
-                : <span class="phpdocumentor-signature__argument__return-type">string</span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
-
-            </dd>
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$key</span>
-                : <span class="phpdocumentor-signature__argument__return-type">mixed</span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
-
-            </dd>
-            </dl>
-
-    
-
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Guild-Ban.html"><abbr title="\Discord\Parts\Guild\Ban">Ban</abbr></a>|null</span>
             &mdash;
         
     
@@ -2399,10 +2301,10 @@ the callback.</p>
 >
     <h4 class="phpdocumentor-element__name" id="method_pull">
         pull()
-        <a href="classes/Discord-Repository-Guild-BanRepository.html#method_pull" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Repository-Channel-WebhookMessageRepository.html#method_pull" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/Guild/BanRepository.php"><a href="files/src-discord-repository-guild-banrepository.html"><abbr title="src/Discord/Repository/Guild/BanRepository.php">BanRepository.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/Channel/WebhookMessageRepository.php"><a href="files/src-discord-repository-channel-webhookmessagerepository.html"><abbr title="src/Discord/Repository/Channel/WebhookMessageRepository.php">WebhookMessageRepository.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">0</span>
 
@@ -2411,7 +2313,7 @@ the callback.</p>
     
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">pull</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$key</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$default</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Guild-Ban.html"><abbr title="\Discord\Parts\Guild\Ban">Ban</abbr></a>|null</span></code>
+                    <span class="phpdocumentor-signature__name">pull</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$key</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$default</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Channel-Message.html"><abbr title="\Discord\Parts\Channel\Message">Message</abbr></a>|null</span></code>
 
         <section class="phpdocumentor-description"><p>Pulls an item from the repository, removing and returning the item.</p>
 </section>
@@ -2439,7 +2341,7 @@ the callback.</p>
     
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Guild-Ban.html"><abbr title="\Discord\Parts\Guild\Ban">Ban</abbr></a>|null</span>
+    <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Channel-Message.html"><abbr title="\Discord\Parts\Channel\Message">Message</abbr></a>|null</span>
             &mdash;
         
     
@@ -2770,74 +2672,6 @@ the callback.</p>
             -public
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="method_unban">
-        unban()
-        <a href="classes/Discord-Repository-Guild-BanRepository.html#method_unban" class="headerlink"><i class="fas fa-link"></i></a>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/Guild/BanRepository.php"><a href="files/src-discord-repository-guild-banrepository.html"><abbr title="src/Discord/Repository/Guild/BanRepository.php">BanRepository.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">127</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Unbans a member from the guild.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">unban</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Discord-Parts-User-User.html"><abbr title="\Discord\Parts\User\User">User</abbr></a>|<a href="classes/Discord-Parts-Guild-Ban.html"><abbr title="\Discord\Parts\Guild\Ban">Ban</abbr></a>|string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$ban</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$reason</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\ExtendedPromiseInterface">ExtendedPromiseInterface</abbr></span></code>
-
-    
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$ban</span>
-                : <span class="phpdocumentor-signature__argument__return-type"><a href="classes/Discord-Parts-User-User.html"><abbr title="\Discord\Parts\User\User">User</abbr></a>|<a href="classes/Discord-Parts-Guild-Ban.html"><abbr title="\Discord\Parts\Guild\Ban">Ban</abbr></a>|string</span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>User or Ban Part, or User ID</p>
-</section>
-
-            </dd>
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$reason</span>
-                : <span class="phpdocumentor-signature__argument__return-type">string|null</span>
-                 = <span class="phpdocumentor-signature__argument__default-value">null</span>            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"><p>Reason for Audit Log.</p>
-</section>
-
-            </dd>
-            </dl>
-
-    
-    <h5 class="phpdocumentor-tag-list__heading" id="tags">
-        Tags
-        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
-    </h5>
-    <dl class="phpdocumentor-tag-list">
-                                    <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">see</span>
-                </dt>
-                <dd class="phpdocumentor-tag-list__definition">
-                                                                                    <span class="phpdocumentor-tag-link"><a href="https://discord.com/developers/docs/resources/guild#remove-guild-ban"><abbr title="https://discord.com/developers/docs/resources/guild#remove-guild-ban">https://discord.com/developers/docs/resources/guild#remove-guild-ban</abbr></a></span>
-                                        
-                                             
-                                    </dd>
-                        </dl>
-
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\ExtendedPromiseInterface">ExtendedPromiseInterface</abbr></span>
-            &mdash;
-        
-    
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                        "
->
     <h4 class="phpdocumentor-element__name" id="method_unserialize">
         unserialize()
         <a href="classes/Discord-Helpers-Collection.html#method_unserialize" class="headerlink"><i class="fas fa-link"></i></a>
@@ -2953,7 +2787,7 @@ the callback.</p>
 </section>
             </div>
         </div>
-        <a href="classes/Discord-Repository-Guild-BanRepository.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
+        <a href="classes/Discord-Repository-Channel-WebhookMessageRepository.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
 
     </main>
 
