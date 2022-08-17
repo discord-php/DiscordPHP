@@ -36,10 +36,14 @@ Called with a `Guild` object in one of the following situations:
 2. The guild is unavailable due to an outage.
 
 ```php
-$discord->on(Event::GUILD_DELETE, function (?Guild $guild, Discord $discord, bool $unavailable) {
+$discord->on(Event::GUILD_DELETE, function ($guild, Discord $discord, bool $unavailable) {
     // ...
     if ($unavailable) {
         // the guild is unavailabe due to an outage
+        // {
+        //     "id": "" // guild ID
+        //     "unavailable": true
+        // }
     } else {
         // the Bot has been kicked from the guild
     }
