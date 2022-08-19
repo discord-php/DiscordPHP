@@ -90,7 +90,7 @@ class CacheWrapper
 
         $this->prefix = implode($separator, [substr(strrchr($this->class, '\\'), 1)] + $vars).$separator;
 
-        if (! empty($discord->options['cacheSweep'])) {
+        if (! $discord->options['cacheSweep']) {
             // Flush every heartbeat ack
             $this->flusher = function ($time, Discord $discord) {
                 $flushing = 0;

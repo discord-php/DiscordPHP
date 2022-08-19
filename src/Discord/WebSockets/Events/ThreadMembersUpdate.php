@@ -47,11 +47,8 @@ class ThreadMembersUpdate extends Event
                         yield $thread->members->cache->deleteMultiple($data->removed_member_ids);
                     }
 
-                    if (! empty($data->added_members)) {
-                        foreach ($data->added_members as $member) {
-                            $members[$member->user_id] = $this->factory->create(Member::class, $member, true);
-                        }
-                        yield $thread->members->cache->setMultiple($members);
+                    foreach ($data->added_members ?? [] as $member) {
+                        yield $thread->members->cache->set($member->user_id, $this->factory->create(Member::class, $member, true));
                     }
 
                     return $thread;

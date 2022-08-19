@@ -295,15 +295,13 @@ class Message extends Part
             }
         }
 
-        if (! empty($this->attributes['mention_channels'])) {
-            foreach ($this->attributes['mention_channels'] as $mention_channel) {
-                // @todo potentially slow code
-                if (! $channel = $this->discord->getChannel($mention_channel->id)) {
-                    $channel = $this->factory->part(Channel::class, (array) $mention_channel, true);
-                }
-
-                $collection->pushItem($channel);
+        foreach ($this->attributes['mention_channels'] ?? [] as $mention_channel) {
+            // @todo potentially slow code
+            if (! $channel = $this->discord->getChannel($mention_channel->id)) {
+                $channel = $this->factory->part(Channel::class, (array) $mention_channel, true);
             }
+
+            $collection->pushItem($channel);
         }
 
         return $collection;
@@ -318,10 +316,8 @@ class Message extends Part
     {
         $attachments = Collection::for(Attachment::class);
 
-        if (! empty($this->attributes['attachments'])) {
-            foreach ($this->attributes['attachments'] as $attachment) {
-                $attachments->pushItem($this->factory->part(Attachment::class, (array) $attachment, true));
-            }
+        foreach ($this->attributes['attachments'] ?? [] as $attachment) {
+            $attachments->pushItem($this->factory->part(Attachment::class, (array) $attachment, true));
         }
 
         return $attachments;
@@ -447,13 +443,11 @@ class Message extends Part
     {
         $users = Collection::for(User::class);
 
-        if (! empty($this->attributes['mentions'])) {
-            foreach ($this->attributes['mentions'] as $mention) {
-                if (! $user = $this->discord->users->get('id', $mention->id)) {
-                    $user = $this->factory->part(User::class, (array) $mention, true);
-                }
-                $users->pushItem($user);
+        foreach ($this->attributes['mentions'] ?? [] as $mention) {
+            if (! $user = $this->discord->users->get('id', $mention->id)) {
+                $user = $this->factory->part(User::class, (array) $mention, true);
             }
+            $users->pushItem($user);
         }
 
         return $users;
@@ -519,10 +513,8 @@ class Message extends Part
     {
         $embeds = new Collection([], null);
 
-        if (! empty($this->attributes['embeds'])) {
-            foreach ($this->attributes['embeds'] as $embed) {
-                $embeds->pushItem($this->factory->part(Embed::class, (array) $embed, true));
-            }
+        foreach ($this->attributes['embeds'] ?? [] as $embed) {
+            $embeds->pushItem($this->factory->part(Embed::class, (array) $embed, true));
         }
 
         return $embeds;

@@ -298,34 +298,25 @@ class Guild extends Part
     {
         parent::fill($attributes);
 
-        if (! empty($attributes['roles'])) {
-            foreach ($attributes['roles'] as $role) {
-                if ($rolePart = $this->roles->offsetGet($role->id)) {
-                    $rolePart->fill((array) $role);
-                }
-                $roles[] = $rolePart ?? $this->factory->part(Role::class, (array) $role + ['guild_id' => $this->id], true);
+        foreach ($attributes['roles'] ?? [] as $role) {
+            if ($rolePart = $this->roles->offsetGet($role->id)) {
+                $rolePart->fill((array) $role);
             }
-            $this->roles->push(...$roles);
+            $this->roles->pushItem($rolePart ?? $this->factory->part(Role::class, (array) $role + ['guild_id' => $this->id], true));
         }
 
-        if (! empty($attributes['emojis'])) {
-            foreach ($attributes['emojis'] as $emoji) {
-                if ($emojiPart = $this->emojis->offsetGet($emoji->id)) {
-                    $emojiPart->fill((array) $emoji);
-                }
-                $emojis[] = $emojiPart ?? $this->factory->part(Emoji::class, (array) $emoji + ['guild_id' => $this->id], true);
+        foreach ($attributes['emojis'] ?? [] as $emoji) {
+            if ($emojiPart = $this->emojis->offsetGet($emoji->id)) {
+                $emojiPart->fill((array) $emoji);
             }
-            $this->emojis->push(...$emojis);
+            $this->emojis->pushItem($emojiPart ?? $this->factory->part(Emoji::class, (array) $emoji + ['guild_id' => $this->id], true));
         }
 
-        if (! empty($attributes['stickers'])) {
-            foreach ($attributes['stickers'] as $sticker) {
-                if ($stickerPart = $this->stickers->offsetGet($sticker->id)) {
-                    $stickerPart->fill((array) $sticker);
-                }
-                $stickers[] = $stickerPart ?? $this->factory->part(Sticker::class, (array) $sticker + ['guild_id' => $this->id], true);
+        foreach ($attributes['stickers'] ?? [] as $sticker) {
+            if ($stickerPart = $this->stickers->offsetGet($sticker->id)) {
+                $stickerPart->fill((array) $sticker);
             }
-            $this->stickers->push(...$stickers);
+            $this->stickers->pushItem($stickerPart ?? $this->factory->part(Sticker::class, (array) $sticker + ['guild_id' => $this->id], true));
         }
     }
 

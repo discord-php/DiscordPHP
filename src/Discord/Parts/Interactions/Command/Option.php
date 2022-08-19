@@ -99,10 +99,8 @@ class Option extends Part
     {
         $options = Collection::for(Option::class, null);
 
-        if (! empty($this->attributes['options'])) {
-            foreach ($this->attributes['options'] as $option) {
-                $options->pushItem($this->factory->part(Option::class, (array) $option, true));
-            }
+        foreach ($this->attributes['options'] ?? [] as $option) {
+            $options->pushItem($this->factory->part(Option::class, (array) $option, true));
         }
 
         return $options;
@@ -297,12 +295,10 @@ class Option extends Part
             $option = $option->name;
         }
 
-        if (! empty($this->attributes['options'])) {
-            foreach ($this->attributes['options'] as $idx => $opt) {
-                if ($opt['name'] == $option) {
-                    unset($this->attributes['options'][$idx]);
-                    break;
-                }
+        foreach ($this->attributes['options'] ?? [] as $idx => $opt) {
+            if ($opt['name'] == $option) {
+                unset($this->attributes['options'][$idx]);
+                break;
             }
         }
 
@@ -322,12 +318,10 @@ class Option extends Part
             $choice = $choice->name;
         }
 
-        if (! empty($this->attributes['choices'])) {
-            foreach ($this->attributes['choices'] as $idx => $cho) {
-                if ($cho['name'] == $choice) {
-                    unset($this->attributes['choices'][$idx]);
-                    break;
-                }
+        foreach ($this->attributes['choices'] ?? [] as $idx => $cho) {
+            if ($cho['name'] == $choice) {
+                unset($this->attributes['choices'][$idx]);
+                break;
             }
         }
 

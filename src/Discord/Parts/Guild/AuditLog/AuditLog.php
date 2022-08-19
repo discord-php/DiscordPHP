@@ -75,10 +75,8 @@ class AuditLog extends Part
     {
         $collection = Collection::for(Entry::class);
 
-        if (! empty($this->attributes['audit_log_entries'])) {
-            foreach ($this->attributes['audit_log_entries'] as $entry) {
-                $collection->pushItem($this->factory->part(Entry::class, (array) $entry, true));
-            }
+        foreach ($this->attributes['audit_log_entries'] ?? [] as $entry) {
+            $collection->pushItem($this->factory->part(Entry::class, (array) $entry, true));
         }
 
         return $collection;
@@ -93,10 +91,8 @@ class AuditLog extends Part
     {
         $collection = Collection::for(Rule::class);
 
-        if (! empty($this->attributes['auto_moderation_rules'])) {
-            foreach ($this->attributes['auto_moderation_rules'] as $rule) {
-                $collection->pushItem($this->factory->part(Rule::class, (array) $rule, true));
-            }
+        foreach ($this->attributes['auto_moderation_rules'] ?? [] as $rule) {
+            $collection->pushItem($this->factory->part(Rule::class, (array) $rule, true));
         }
 
         return $collection;
@@ -111,10 +107,8 @@ class AuditLog extends Part
     {
         $collection = Collection::for(ScheduledEvent::class);
 
-        if (! empty($this->attributes['guild_scheduled_events'])) {
-            foreach ($this->attributes['guild_scheduled_events'] as $scheduled_event) {
-                $collection->pushItem($this->factory->part(ScheduledEvent::class, (array) $scheduled_event, true));
-            }
+        foreach ($this->attributes['guild_scheduled_events'] ?? [] as $scheduled_event) {
+            $collection->pushItem($this->factory->part(ScheduledEvent::class, (array) $scheduled_event, true));
         }
 
         return $collection;
@@ -131,10 +125,8 @@ class AuditLog extends Part
     {
         $collection = Collection::for(Integration::class);
 
-        if (! empty($this->attributes['integrations'])) {
-            foreach ($this->attributes['integrations'] as $integration) {
-                $collection->pushItem($this->factory->part(Integration::class, (array) $integration, true));
-            }
+        foreach ($this->attributes['integrations'] ?? [] as $integration) {
+            $collection->pushItem($this->factory->part(Integration::class, (array) $integration, true));
         }
 
         return $collection;
@@ -149,10 +141,8 @@ class AuditLog extends Part
     {
         $collection = Collection::for(Thread::class);
 
-        if (! empty($this->attributes['threads'])) {
-            foreach ($this->attributes['threads'] as $thread) {
-                $collection->pushItem($this->factory->part(Thread::class, (array) $thread, true));
-            }
+        foreach ($this->attributes['threads'] ?? [] as $thread) {
+            $collection->pushItem($this->factory->part(Thread::class, (array) $thread, true));
         }
 
         return $collection;
@@ -167,14 +157,12 @@ class AuditLog extends Part
     {
         $collection = Collection::for(User::class);
 
-        if (! empty($this->attributes['users'])) {
-            foreach ($this->attributes['users'] as $user) {
-                if (! $userPart = $this->discord->users->get('id', $user->id)) {
-                    $userPart = $this->factory->part(User::class, (array) $user, true);
-                }
-
-                $collection->pushItem($userPart);
+        foreach ($this->attributes['users'] ?? [] as $user) {
+            if (! $userPart = $this->discord->users->get('id', $user->id)) {
+                $userPart = $this->factory->part(User::class, (array) $user, true);
             }
+
+            $collection->pushItem($userPart);
         }
 
         return $collection;
@@ -189,10 +177,8 @@ class AuditLog extends Part
     {
         $collection = Collection::for(Webhook::class);
 
-        if (! empty($this->attributes['webhooks'])) {
-            foreach ($this->attributes['webhooks'] as $webhook) {
-                $collection->pushItem($this->factory->part(Webhook::class, (array) $webhook, true));
-            }
+        foreach ($this->attributes['webhooks'] ?? [] as $webhook) {
+            $collection->pushItem($this->factory->part(Webhook::class, (array) $webhook, true));
         }
 
         return $collection;

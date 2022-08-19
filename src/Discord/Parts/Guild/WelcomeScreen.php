@@ -41,10 +41,8 @@ class WelcomeScreen extends Part
     {
         $collection = Collection::for(WelcomeChannel::class, null);
 
-        if (! empty($this->attributes['welcome_channels'])) {
-            foreach ($this->attributes['welcome_channels'] as $welcome_channel) {
-                $collection->pushItem($this->factory->part(WelcomeChannel::class, (array) $welcome_channel, true));
-            }
+        foreach ($this->attributes['welcome_channels'] ?? [] as $welcome_channel) {
+            $collection->pushItem($this->factory->part(WelcomeChannel::class, (array) $welcome_channel, true));
         }
 
         return $collection;
