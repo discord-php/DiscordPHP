@@ -425,30 +425,6 @@ abstract class AbstractRepository extends Collection
     }
 
     /**
-     * Pushes items to the repository.
-     *
-     * @param mixed ...$items
-     *
-     * @return self
-     */
-    public function push(...$items): self
-    {
-        if ($this->class === null) {
-            return parent::push($items);
-        }
-
-        foreach ($items as $item) {
-            if (is_a($item, $this->class)) {
-                $key = $item->{$this->discrim};
-                $this->items[$key] = $item;
-                $this->cache->interface->set($this->cache->getPrefix().$key, $this->serializer($item));
-            }
-        }
-
-        return $this;
-    }
-
-    /**
      * Pushes a single item to the repository.
      *
      * @deprecated 7.2.0 Use async `$repository->cache->set()`
