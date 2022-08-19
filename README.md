@@ -79,7 +79,7 @@ $discord = new Discord([
 
 ### [~~Memcached~~](https://github.com/seregazhuk/php-react-cache-memcached)
 
-*Current version is not working*
+*Current version is broken when getting a cache*
 
 ```php
 use React\EventLoop\Factory;
@@ -95,7 +95,9 @@ $discord = new Discord([
 ]);
 ```
 
-By default the cache key is prefixed "react:cache" so in your Redis/Memcached you will get have the data as: `react:cache:User:115233618997149700`. You do not need to write the prefix if accessing from the Bot code, just `User.115233618997149700`. The repository prefix can be retrieved from the repository which in the case above `$discord->users->cache->key_prefix` would return `User:`, where `User` is the name of the `Part` class.
+For Redis/Memcached by default the cache key is prefixed "react:cache" so you can get the data as: `dphp:cache:User:115233618997149700`. And the separator used will be colon `:` instead of dot `.`
+
+You do not need to write the prefix if accessing from the Bot code, just `User.115233618997149700`. The repository prefix can be retrieved from the repository which in the case above `$discord->users->cache->getPrefix()` would return `User.`, where `User` is the name of the `Part` class.
 
 ## Before you start
 
