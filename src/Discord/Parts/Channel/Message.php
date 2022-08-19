@@ -421,14 +421,16 @@ class Message extends Part
     {
         $roles = new Collection();
 
-        if (! empty($this->attributes['mention_roles'])) {
-            $roles->fill(array_fill_keys($this->attributes['mention_roles'], null));
+        if (empty($this->attributes['mention_roles'])) {
+            return $roles;
+        }
 
-            if ($guild = $this->guild) {
-                $roles->merge($guild->roles->filter(function ($role) {
-                    return in_array($role->id, $this->attributes['mention_roles']);
-                }));
-            }
+        $roles->fill(array_fill_keys($this->attributes['mention_roles'], null));
+
+        if ($guild = $this->guild) {
+            $roles->merge($guild->roles->filter(function ($role) {
+                return in_array($role->id, $this->attributes['mention_roles']);
+            }));
         }
 
         return $roles;

@@ -570,7 +570,13 @@ class Member extends Part
      */
     protected function getRolesAttribute(): Collection
     {
-        $roles = new Collection(array_fill_keys($this->attributes['roles'], null));
+        $roles = new Collection();
+
+        if (empty($this->attributes['roles'])) {
+            return $roles;
+        }
+
+        $roles->fill(array_fill_keys($this->attributes['roles'], null));
 
         if ($guild = $this->guild) {
             foreach ($guild->roles as $id => $role) {
