@@ -54,6 +54,8 @@ use React\Promise\PromiseInterface;
 use React\Socket\Connector as SocketConnector;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+use function React\Promise\all;
+
 /**
  * The Discord client class.
  *
@@ -531,11 +533,15 @@ class Discord
      */
     protected function handleGuildMembersChunk(object $data): void
     {
-        $guild = $this->guilds->get('id', $data->d->guild_id);
+        if (! $guild = $this->guilds->get('id', $data->d->guild_id)) {
+            $this->logger->warning('not chunking member, Guild is not cached.', ['guild_id' => $data->d->guild_id]);
+            return;
+        }
 
-        $this->logger->debug('received guild member chunk', ['guild_id' => $data->d->guild_id, 'guild_name' => $guild->name, 'chunk_count' => count($data->d->members), 'member_collection' => $guild->members->count(), 'member_count' => $guild->member_count]);
+        $this->logger->debug('received guild member chunk', ['guild_id' => $data->d->guild_id, 'guild_name' => $guild->name, 'chunk_count' => count($data->d->members), 'member_collection' => $guild->members->count(), 'member_count' => $guild->member_count, 'progress' => [$data->d->chunk_index + 1, $data->d->chunk_count]]);
 
         $count = $skipped = 0;
+        $await = [];
         foreach ($data->d->members as $member) {
             $userId = $member->user->id;
             if ($guild->members->offsetExists($userId)) {
@@ -545,23 +551,16 @@ class Discord
             $member = (array) $member;
             $member['guild_id'] = $data->d->guild_id;
             $member['status'] = 'offline';
-            $members[$userId] = $this->factory->part(Member::class, $member, true);
+            $await[] = $guild->members->cache->set($userId, $this->factory->part(Member::class, $member, true));
 
             if (! $this->users->offsetExists($userId)) {
-                $users[$userId] = $this->factory->part(User::class, (array) $member['user'], true);
+                $await[] = $this->users->cache->set($userId, $this->factory->part(User::class, (array) $member['user'], true));
             }
 
             ++$count;
         }
-        $await = [];
-        if (! empty($users)) {
-            $await[] = $this->users->cache->setMultiple($users);
-        }
-        if ($count) {
-            $await[] = $guild->members->cache->setMultiple($members);
-        }
 
-        \React\Promise\all($await)->then(function () use ($guild, $count, $skipped) {
+        all($await)->then(function () use ($guild, $count, $skipped) {
             $membersCount = $guild->members->count();
             $this->logger->debug('parsed '.$count.' members (skipped '.$skipped.')', ['repository_count' => $membersCount, 'actual_count' => $guild->member_count]);
 
