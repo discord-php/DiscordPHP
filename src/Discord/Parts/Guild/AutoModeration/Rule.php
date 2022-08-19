@@ -56,6 +56,7 @@ class Rule extends Part
     ];
 
     public const TRIGGER_TYPE_KEYWORD = 1;
+    /** @deprecated 7.2.3 No longer part of AutoMod */
     public const TRIGGER_TYPE_HARMFUL_LINK = 2;
     public const TRIGGER_TYPE_SPAM = 3;
     public const TRIGGER_TYPE_KEYWORD_PRESET = 4;
