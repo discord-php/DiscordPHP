@@ -17,7 +17,6 @@
         "trafficcophp/bytebuffer": "^0.3",
         "monolog/monolog": "^2.1 || ^3.0",
         "react/partial": "^3.0",
-        "mollie/polyfill-libsodium": "^1.1",
         "react/http": "^1.1",
         "ext-json": "*",
         "ext-zlib": "*",
