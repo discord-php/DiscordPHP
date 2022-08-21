@@ -23,19 +23,20 @@ use React\Promise\ExtendedPromiseInterface;
 /**
  * The client is the main interface for the client. Most calls on the main class are forwarded here.
  *
- * @property string                   $id               The unique identifier of the client.
- * @property string                   $username         The username of the client.
- * @property string                   $discriminator    The unique discriminator of the client.
- * @property ?string                  $avatar           The avatar URL of the client.
- * @property string|null              $avatar_hash      The avatar hash of the client.
- * @property bool                     $bot              Whether the client is a bot.
- * @property bool|null                $mfa_enabled      Whether the Bot owner has two factor enabled on their account.
- * @property bool|null                $verified         Whether the client has verified their email.
- * @property ?string|null             $email            The email of the client.
- * @property int|null                 $flags            The flags on a user's account.
- * @property int|null                 $public_flags     The public flags on a user's account.
- * @property User                     $user             The user instance of the client.
- * @property Application              $application      The OAuth2 application of the bot.
+ * @property string       $id               The unique identifier of the client.
+ * @property string       $username         The username of the client.
+ * @property string       $discriminator    The unique discriminator of the client.
+ * @property ?string      $avatar           The avatar URL of the client.
+ * @property string|null  $avatar_hash      The avatar hash of the client.
+ * @property bool         $bot              Whether the client is a bot.
+ * @property bool|null    $mfa_enabled      Whether the Bot owner has two factor enabled on their account.
+ * @property bool|null    $verified         Whether the client has verified their email.
+ * @property ?string|null $email            The email of the client.
+ * @property int|null     $flags            The flags on a user's account.
+ * @property int|null     $public_flags     The public flags on a user's account.
+ * @property User         $user             The user instance of the client.
+ * @property Application  $application      The OAuth2 application of the bot.
+ *
  * @property GuildRepository          $guilds
  * @property PrivateChannelRepository $private_channels
  * @property UserRepository           $users

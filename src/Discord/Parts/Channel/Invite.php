@@ -311,4 +311,9 @@ class Invite extends Part
             'code' => $this->code,
         ];
     }
+
+    public function __toString(): string
+    {
+        return 'discord.gg/'.$this->code;
+    }
 }

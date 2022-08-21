@@ -24,14 +24,14 @@ use Discord\Parts\User\User;
  *
  * @see https://discord.com/developers/docs/topics/gateway#typing-start
  *
- * @property string              $channel_id The unique identifier of the channel that the user started typing in.
- * @property Channel|Thread|null $channel    The channel that the user started typing in.
- * @property string|null         $guild_id   The unique identifier of the guild that the user started typing in.
- * @property Guild|null          $guild      The guild that the user started typing in.
- * @property string              $user_id    The unique identifier of the user that started typing
- * @property User|null           $user       The user that started typing.
- * @property Carbon              $timestamp  A timestamp of when the user started typing.
- * @property Member|null         $member     The member that started typing.
+ * @property      string              $channel_id The unique identifier of the channel that the user started typing in.
+ * @property-read Channel|Thread|null $channel    The channel that the user started typing in.
+ * @property      string|null         $guild_id   The unique identifier of the guild that the user started typing in.
+ * @property-read Guild|null          $guild      The guild that the user started typing in.
+ * @property      string              $user_id    The unique identifier of the user that started typing
+ * @property-read User|null           $user       The user that started typing.
+ * @property      Carbon              $timestamp  A timestamp of when the user started typing.
+ * @property      Member|null         $member     The member that started typing.
  */
 class TypingStart extends Part
 {

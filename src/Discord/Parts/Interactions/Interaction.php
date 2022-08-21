@@ -43,9 +43,9 @@ use function React\Promise\reject;
  * @property      int                  $type            Type of interaction.
  * @property      InteractionData|null $data            Data associated with the interaction.
  * @property      string|null          $guild_id        ID of the guild the interaction was sent from.
- * @property      Guild|null           $guild           Guild the interaction was sent from.
+ * @property-read Guild|null           $guild           Guild the interaction was sent from.
  * @property      string|null          $channel_id      ID of the channel the interaction was sent from.
- * @property      Channel|null         $channel         Channel the interaction was sent from.
+ * @property-read Channel|null         $channel         Channel the interaction was sent from.
  * @property      Member|null          $member          Member who invoked the interaction.
  * @property      User|null            $user            User who invoked the interaction.
  * @property      string               $token           Continuation token for responding to the interaction.

@@ -23,22 +23,22 @@ use Discord\Parts\User\User;
  *
  * @see https://discord.com/developers/docs/resources/voice#voice-state-object
  *
- * @property string|null  $guild_id                   Guild ID that the voice state came from, or null if it is for a DM channel.
- * @property Guild|null   $guild                      Guild that the voice state came from, or null if it is for a DM channel.
- * @property ?string|null $channel_id                 Channel ID that the voice state came from, or null if the user is leaving a channel.
- * @property Channel|null $channel                    Channel that the voice state came from, or null if the user is leaving a channel.
- * @property string       $user_id                    User ID the voice state is for.
- * @property User|null    $user                       User the voice state is for, or null if it is not cached.
- * @property Member|null  $member                     Member object the voice state is for, null if the voice state is for a DM channel or the member object is not cached.
- * @property string       $session_id                 Session ID for the voice state.
- * @property bool         $deaf                       Whether this user is deafened by the server.
- * @property bool         $mute                       Whether this user is muted by the server.
- * @property bool         $self_deaf                  Whether this user is locally deafened.
- * @property bool         $self_mute                  Whether this user is locally muted.
- * @property bool|null    $self_stream                Whether this user is streaming using "Go Live".
- * @property bool         $self_video                 Whether this user's camera is enabled.
- * @property bool         $suppress                   Whether this user is muted by the current user.
- * @property ?Carbon      $request_to_speak_timestamp The time at which the user requested to speak.
+ * @property      string|null  $guild_id                   Guild ID that the voice state came from, or null if it is for a DM channel.
+ * @property-read Guild|null   $guild                      Guild that the voice state came from, or null if it is for a DM channel.
+ * @property      ?string|null $channel_id                 Channel ID that the voice state came from, or null if the user is leaving a channel.
+ * @property-read Channel|null $channel                    Channel that the voice state came from, or null if the user is leaving a channel.
+ * @property      string       $user_id                    User ID the voice state is for.
+ * @property-read User|null    $user                       User the voice state is for, or null if it is not cached.
+ * @property      Member|null  $member                     Member object the voice state is for, null if the voice state is for a DM channel or the member object is not cached.
+ * @property      string       $session_id                 Session ID for the voice state.
+ * @property      bool         $deaf                       Whether this user is deafened by the server.
+ * @property      bool         $mute                       Whether this user is muted by the server.
+ * @property      bool         $self_deaf                  Whether this user is locally deafened.
+ * @property      bool         $self_mute                  Whether this user is locally muted.
+ * @property      bool|null    $self_stream                Whether this user is streaming using "Go Live".
+ * @property      bool         $self_video                 Whether this user's camera is enabled.
+ * @property      bool         $suppress                   Whether this user is muted by the current user.
+ * @property      ?Carbon      $request_to_speak_timestamp The time at which the user requested to speak.
  */
 class VoiceStateUpdate extends Part
 {

@@ -39,7 +39,6 @@ class Overwrite extends Part
         'type',
         'allow',
         'deny',
-        'permissions',
 
         // @internal
         'channel_id',

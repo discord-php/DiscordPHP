@@ -19,10 +19,10 @@ use Discord\Parts\Part;
  *
  * @see https://discord.com/developers/docs/topics/gateway#voice
  *
- * @property string     $token    The new client voice token.
- * @property string     $guild_id The unique identifier of the guild that was affected by the change.
- * @property Guild|null $guild    The guild affected by the change.
- * @property ?string    $endpoint The new voice server endpoint.
+ * @property      string     $token    The new client voice token.
+ * @property      string     $guild_id The unique identifier of the guild that was affected by the change.
+ * @property-read Guild|null $guild    The guild affected by the change.
+ * @property      ?string    $endpoint The new voice server endpoint.
  */
 class VoiceServerUpdate extends Part
 {

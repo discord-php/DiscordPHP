@@ -23,8 +23,8 @@ use Discord\Parts\User\User;
  * @property User   $user    The banned user.
  * @property string $user_id
  *
- * @property string|null $guild_id
- * @property Guild|null  $guild
+ * @property      string|null $guild_id
+ * @property-read Guild|null  $guild
  */
 class Ban extends Part
 {

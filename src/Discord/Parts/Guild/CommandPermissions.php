@@ -20,10 +20,11 @@ use Discord\Parts\Part;
  *
  * @see https://discord.com/developers/docs/interactions/application-commands#application-command-permissions-object-guild-application-command-permissions-structure
  *
- * @property string                  $id             The id of the command or the application ID if no overwrites
- * @property string                  $application_id The id of the application the command belongs to
- * @property string                  $guild_id       The id of the guild
- * @property Collection|Permission[] $permissions    The permissions for the command in the guild
+ * @property      string                  $id             The id of the command or the application ID if no overwrites.
+ * @property      string                  $application_id The id of the application the command belongs to.
+ * @property      string                  $guild_id       The id of the guild.
+ * @property-read Guild|null              $guild
+ * @property      Collection|Permission[] $permissions    The permissions for the command in the guild.
  */
 class CommandPermissions extends Part
 {
@@ -36,6 +37,16 @@ class CommandPermissions extends Part
         'guild_id',
         'permissions',
     ];
+
+    /**
+     * Returns the guild attribute.
+     *
+     * @return Guild|null
+     */
+    protected function getGuildAttribute(): ?Guild
+    {
+        return $this->discord->guilds->get('id', $this->guild_id);
+    }
 
     /**
      * Gets the permissions attribute.

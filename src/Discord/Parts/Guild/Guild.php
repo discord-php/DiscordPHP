@@ -59,7 +59,7 @@ use function React\Promise\resolve;
  * @property      ?string|null       $splash_hash                              The splash hash for the guild.
  * @property      ?string            $discovery_splash                         Discovery splash hash. Only for discoverable guilds.
  * @property      string             $owner_id                                 The unique identifier of the owner of the guild.
- * @property      User|null          $owner                                    The owner of the guild.
+ * @property-read User|null          $owner                                    The owner of the guild.
  * @property      ?string|null       $region                                   The region the guild's voice channels are hosted in.
  * @property      string             $afk_channel_id                           The unique identifier of the AFK channel ID.
  * @property      int                $afk_timeout                              How long you will remain in the voice channel until you are moved into the AFK channel.
@@ -114,7 +114,7 @@ use function React\Promise\resolve;
  * @property      int|null           $max_video_channel_users                  Maximum amount of users allowed in a video channel.
  * @property      int|null           $approximate_member_count                 Approximate number of members in this guild, returned from the GET /guilds/<id> endpoint when with_counts is true.
  * @property      int|null           $approximate_presence_count               Approximate number of non-offline members in this guild, returned from the GET /guilds/<id> endpoint when with_counts is true.
- * @property      WelcomeScreen|null $welcome_screen                           The welcome screen of a Community guild, shown to new members, returned in an Invite's guild object. use `getWelcomeScreen` first to populate.
+ * @property-read WelcomeScreen|null $welcome_screen                           The welcome screen of a Community guild, shown to new members, returned in an Invite's guild object. use `getWelcomeScreen` first to populate.
  * @property      int                $nsfw_level                               The guild NSFW level.
  * @property      StickerRepository  $stickers                                 Custom guild stickers.
  * @property      bool               $premium_progress_bar_enabled             Whether the guild has the boost progress bar enabled.

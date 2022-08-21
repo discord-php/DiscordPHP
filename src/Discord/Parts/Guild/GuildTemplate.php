@@ -23,18 +23,18 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  *
  * @see https://discord.com/developers/docs/resources/guild-template
  *
- * @property string     $code                    The template code (unique ID).
- * @property string     $name                    Template name.
- * @property ?string    $description             The description for the template. Up to 120 characters.
- * @property int        $usage_count             Number of times this template has been used.
- * @property string     $creator_id              The ID of the user who created the template.
- * @property User       $creator                 The user who created the template.
- * @property Carbon     $created_at              A timestamp of when the template was created.
- * @property Carbon     $updated_at              When this template was last synced to the source guild.
- * @property string     $source_guild_id         The ID of the guild this template is based on.
- * @property Guild|null $source_guild            The guild this template is based on.
- * @property object     $serialized_source_guild The guild snapshot this template contains.
- * @property ?bool      $is_dirty                Whether the template has unsynced changes.
+ * @property      string     $code                    The template code (unique ID).
+ * @property      string     $name                    Template name.
+ * @property      ?string    $description             The description for the template. Up to 120 characters.
+ * @property      int        $usage_count             Number of times this template has been used.
+ * @property      string     $creator_id              The ID of the user who created the template.
+ * @property      User       $creator                 The user who created the template.
+ * @property      Carbon     $created_at              A timestamp of when the template was created.
+ * @property      Carbon     $updated_at              When this template was last synced to the source guild.
+ * @property      string     $source_guild_id         The ID of the guild this template is based on.
+ * @property-read Guild|null $source_guild            The guild this template is based on.
+ * @property      object     $serialized_source_guild The guild snapshot this template contains.
+ * @property      ?bool      $is_dirty                Whether the template has unsynced changes.
  */
 class GuildTemplate extends Part
 {

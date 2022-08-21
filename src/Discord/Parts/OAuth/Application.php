@@ -44,6 +44,7 @@ use Discord\Repository\Interaction\GlobalCommandRepository;
  * @property object|null             $install_params         Settings for the application's default in-app authorization link, if enabled.
  * @property string|null             $custom_install_url     The application's default custom authorization link, if enabled.
  * @property string                  $invite_url             The invite URL to invite the bot to a guild.
+ *
  * @property GlobalCommandRepository $commands               The application global commands.
  */
 class Application extends Part

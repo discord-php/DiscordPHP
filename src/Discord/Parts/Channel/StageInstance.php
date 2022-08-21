@@ -19,15 +19,15 @@ use Discord\Parts\Part;
  *
  * @see https://discord.com/developers/docs/resources/stage-instance#stage-instance-resource
  *
- * @property string       $id                       The unique identifier of the Stage Instance.
- * @property string       $guild_id                 The unique identifier of the guild that the stage instance associated to.
- * @property Guild|null   $guild                    The guild that the stage instance associated to.
- * @property string       $channel_id               The id of the associated Stage channel.
- * @property Channel|null $channel                  The channel that the stage instance associated to.
- * @property string       $topic                    The topic of the Stage instance (1-120 characters).
- * @property int          $privacy_level            The privacy level of the Stage instance.
- * @property bool         $send_start_notification  Notify @everyone that a Stage instance has started.
- * @property ?string      $guild_scheduled_event_id The id of the scheduled event.
+ * @property      string       $id                       The unique identifier of the Stage Instance.
+ * @property      string       $guild_id                 The unique identifier of the guild that the stage instance associated to.
+ * @property-read Guild|null   $guild                    The guild that the stage instance associated to.
+ * @property      string       $channel_id               The id of the associated Stage channel.
+ * @property-read Channel|null $channel                  The channel that the stage instance associated to.
+ * @property      string       $topic                    The topic of the Stage instance (1-120 characters).
+ * @property      int          $privacy_level            The privacy level of the Stage instance.
+ * @property      bool         $send_start_notification  Notify @everyone that a Stage instance has started.
+ * @property      ?string      $guild_scheduled_event_id The id of the scheduled event.
  */
 class StageInstance extends Part
 {

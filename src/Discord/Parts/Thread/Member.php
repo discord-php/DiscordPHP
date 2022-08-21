@@ -22,11 +22,11 @@ use React\Promise\ExtendedPromiseInterface;
  *
  * @see https://discord.com/developers/docs/resources/channel#thread-member-object
  *
- * @property string|null $id             ID of the thread.
- * @property string|null $user_id        ID of the user that the member object represents.
- * @property User|null   $user           The user that the member object represents.
- * @property Carbon      $join_timestamp The time that the member joined the thread.
- * @property int         $flags          Flags relating to the member. Only used for client notifications.
+ * @property      string|null $id             ID of the thread.
+ * @property      string|null $user_id        ID of the user that the member object represents.
+ * @property-read User|null   $user           The user that the member object represents.
+ * @property      Carbon      $join_timestamp The time that the member joined the thread.
+ * @property      int         $flags          Flags relating to the member. Only used for client notifications.
  */
 class Member extends Part
 {
