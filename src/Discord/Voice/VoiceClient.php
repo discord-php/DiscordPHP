@@ -1262,7 +1262,7 @@ class VoiceClient extends EventEmitter
         $voicePacket = VoicePacket::make($message);
         $nonce = new Buffer(24);
         $nonce->write($voicePacket->getHeader(), 0);
-        $message = \Sodium\crypto_secretbox_open($voicePacket->getData(), (string) $nonce, $this->secret_key);
+        $message = \sodium_crypto_secretbox_open($voicePacket->getData(), (string) $nonce, $this->secret_key);
 
         if ($message === false) {
             // if we can't decode the message, drop it silently.
@@ -1402,7 +1402,7 @@ class VoiceClient extends EventEmitter
      */
     private function checkForLibsodium(): bool
     {
-        if (! function_exists('\Sodium\crypto_secretbox')) {
+        if (! function_exists('sodium_crypto_secretbox')) {
             $this->emit('error', [new LibSodiumNotFoundException('libsodium-php could not be found.')]);
 
             return false;
