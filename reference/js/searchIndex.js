@@ -91,16 +91,6 @@ Search.appendIndex(
             "summary": "Type\u0020of\u0020the\u0020command.\u0020The\u0020type\u0020defaults\u0020to\u00201.",
             "url": "classes/Discord-Builders-CommandBuilder.html#property_type"
         },                {
-            "fqsen": "\\Discord\\Builders\\CommandBuilder\u003A\u003A\u0024name",
-            "name": "name",
-            "summary": "Name\u0020of\u0020the\u0020command.",
-            "url": "classes/Discord-Builders-CommandBuilder.html#property_name"
-        },                {
-            "fqsen": "\\Discord\\Builders\\CommandBuilder\u003A\u003A\u0024description",
-            "name": "description",
-            "summary": "Description\u0020of\u0020the\u0020command.\u0020should\u0020be\u0020emtpy\u0020if\u0020the\u0020type\u0020is\u0020not\u0020CHAT_INPUT.",
-            "url": "classes/Discord-Builders-CommandBuilder.html#property_description"
-        },                {
             "fqsen": "\\Discord\\Builders\\CommandBuilder\u003A\u003A\u0024default_permission",
             "name": "default_permission",
             "summary": "The\u0020default\u0020permission\u0020of\u0020the\u0020command.\u0020If\u0020true\u0020the\u0020command\u0020is\u0020enabled\u0020when\u0020the\u0020app\u0020is\u0020added\u0020to\u0020the\u0020guild.",
