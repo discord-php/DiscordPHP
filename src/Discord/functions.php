@@ -26,7 +26,9 @@ use Symfony\Component\OptionsResolver\Options;
 /**
  * The HTML Color Table.
  *
- * @array HTML Color Table.
+ * @var array HTML Color Table.
+ *
+ * @since 5.0.12
  */
 const COLORTABLE = [
     'indianred' => 0xcd5c5c, 'lightcoral' => 0xf08080, 'salmon' => 0xfa8072, 'darksalmon' => 0xe9967a,
@@ -75,6 +77,8 @@ const COLORTABLE = [
  * @param Message     $message The message to check.
  *
  * @return bool Whether the part was mentioned.
+ *
+ * @since 4.0.0
  */
 function mentioned($part, Message $message): bool
 {
@@ -95,6 +99,8 @@ function mentioned($part, Message $message): bool
  * @param int|string $color The color's int, hexcode or htmlname.
  *
  * @return int color
+ *
+ * @since 5.0.12
  */
 function getColor($color = 0): int
 {
@@ -123,6 +129,8 @@ function getColor($color = 0): int
  * @param array  $matches Array containing one or more phrases to match.
  *
  * @return bool
+ *
+ * @since 5.0.12
  */
 function contains(string $string, array $matches): bool
 {
@@ -141,6 +149,8 @@ function contains(string $string, array $matches): bool
  * @param string $string The string to convert.
  *
  * @return string
+ *
+ * @since 5.0.12
  */
 function studly(string $string): string
 {
@@ -160,6 +170,8 @@ function studly(string $string): string
  * @param string $str
  *
  * @return int
+ *
+ * @since 5.0.12
  */
 function poly_strlen($str)
 {
@@ -177,6 +189,8 @@ function poly_strlen($str)
  * @param string $filepath
  *
  * @return string
+ *
+ * @since 5.1.0
  */
 function imageToBase64(string $filepath): string
 {
@@ -197,12 +211,13 @@ function imageToBase64(string $filepath): string
 }
 
 /**
- * Takes a snowflake and calculates the time that the snowflake
- * was generated.
+ * Takes a snowflake and calculates the time that the snowflake was generated.
  *
  * @param string|float $snowflake
  *
  * @return float
+ *
+ * @since 5.1.1
  */
 function getSnowflakeTimestamp(string $snowflake)
 {
@@ -230,11 +245,11 @@ function getSnowflakeTimestamp(string $snowflake)
 
 /**
  * For use with the Symfony options resolver.
- * For an option that takes a snowflake or part,
- * returns the snowflake or the value of `id_field`
- * on the part.
+ * For an option that takes a snowflake or part, returns the snowflake or the value of `id_field` on the part.
  *
  * @param string $id_field
+ *
+ * @since 6.0.0
  *
  * @internal
  */
@@ -257,6 +272,8 @@ function normalizePartId($id_field = 'id')
  * A backslash will be added before the each formatting symbol.
  *
  * @return string the escaped string unformatted as plain text
+ *
+ * @since 6.0.2
  */
 function escapeMarkdown(string $text): string
 {
@@ -272,6 +289,8 @@ function escapeMarkdown(string $text): string
  * @param callable      $canceller The function to cancel the search
  *
  * @return ExtendedPromiseInterface
+ *
+ * @since 7.1.0
  */
 function deferFind($array, callable $callback, $loop, ?callable $canceller = null): ExtendedPromiseInterface
 {
