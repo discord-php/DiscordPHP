@@ -20,6 +20,8 @@ use function React\Async\coroutine;
 
 /**
  * @link https://discord.com/developers/docs/topics/gateway#auto-moderation-rule-delete
+ *
+ * @since 7.1.0
  */
 class AutoModerationRuleDelete extends Event
 {

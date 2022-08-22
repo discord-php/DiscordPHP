@@ -16,6 +16,8 @@ use Discord\Helpers\Deferred;
 
 /**
  * @link https://discord.com/developers/docs/topics/gateway#channel-pins-update
+ *
+ * @since 4.0.4
  */
 class ChannelPinsUpdate extends Event
 {

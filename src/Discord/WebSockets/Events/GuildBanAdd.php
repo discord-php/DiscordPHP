@@ -20,6 +20,8 @@ use function React\Async\coroutine;
 
 /**
  * @link https://discord.com/developers/docs/topics/gateway#guild-ban-add
+ *
+ * @since 2.1.3
  */
 class GuildBanAdd extends Event
 {

@@ -24,6 +24,8 @@ use function React\Async\coroutine;
 
 /**
  * @link https://discord.com/developers/docs/topics/gateway#message-reaction-add
+ *
+ * @since 4.0.4
  */
 class MessageReactionAdd extends Event
 {

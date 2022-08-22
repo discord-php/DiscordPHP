@@ -23,6 +23,8 @@ use function React\Async\coroutine;
 
 /**
  * @link https://discord.com/developers/docs/topics/gateway#message-reaction-remove-emoji
+ *
+ * @since 5.0.0
  */
 class MessageReactionRemoveEmoji extends Event
 {

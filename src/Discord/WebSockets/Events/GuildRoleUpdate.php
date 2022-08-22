@@ -20,6 +20,8 @@ use function React\Async\coroutine;
 
 /**
  * @link https://discord.com/developers/docs/topics/gateway#guild-role-update
+ *
+ * @since 2.1.3
  */
 class GuildRoleUpdate extends Event
 {

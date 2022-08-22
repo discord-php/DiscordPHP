@@ -20,6 +20,8 @@ use function React\Async\coroutine;
 /**
  * @link https://discord.com/developers/docs/topics/gateway#integration-delete
  *
+ * @since 7.0.0
+ *
  * @todo update docs parameter change
  */
 class IntegrationDelete extends Event

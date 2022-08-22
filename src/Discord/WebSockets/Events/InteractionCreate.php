@@ -19,6 +19,8 @@ use Discord\WebSockets\Event;
 
 /**
  * @link https://discord.com/developers/docs/topics/gateway#interaction-create
+ *
+ * @since 6.0.0
  */
 class InteractionCreate extends Event
 {

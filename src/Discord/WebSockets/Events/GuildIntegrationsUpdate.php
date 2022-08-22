@@ -16,6 +16,8 @@ use Discord\Helpers\Deferred;
 
 /**
  * @link https://discord.com/developers/docs/topics/gateway#guild-integrations-update
+ *
+ * @since 5.0.0
  */
 class GuildIntegrationsUpdate extends Event
 {

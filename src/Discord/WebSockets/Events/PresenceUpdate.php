@@ -21,6 +21,8 @@ use function React\Async\coroutine;
 
 /**
  * @link https://discord.com/developers/docs/topics/gateway#presence-update
+ *
+ * @since 2.1.3
  */
 class PresenceUpdate extends Event
 {

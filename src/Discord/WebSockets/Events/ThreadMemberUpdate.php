@@ -22,6 +22,8 @@ use function React\Async\coroutine;
 
 /**
  * @link https://discord.com/developers/docs/topics/gateway#thread-member-update
+ *
+ * @since 7.0.0
  */
 class ThreadMemberUpdate extends Event
 {

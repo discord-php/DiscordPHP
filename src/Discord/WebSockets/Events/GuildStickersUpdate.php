@@ -19,6 +19,11 @@ use Discord\Parts\Guild\Sticker;
 
 use function React\Async\coroutine;
 
+/**
+ * @link https://discord.com/developers/docs/topics/gateway#guild-stickers-update
+ *
+ * @since 7.0.0
+ */
 class GuildStickersUpdate extends Event
 {
     /**

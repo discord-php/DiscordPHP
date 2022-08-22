@@ -20,6 +20,8 @@ use function React\Async\coroutine;
 
 /**
  * @link https://discord.com/developers/docs/topics/gateway#integration-update
+ *
+ * @since 7.1.0
  */
 class ApplicationCommandPermissionsUpdate extends Event
 {

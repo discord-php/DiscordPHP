@@ -17,6 +17,8 @@ use Discord\Helpers\Deferred;
 
 /**
  * @link https://discord.com/developers/docs/topics/gateway#voice-server-update
+ *
+ * @since 4.0.0
  */
 class VoiceServerUpdate extends Event
 {

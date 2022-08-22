@@ -21,6 +21,8 @@ use function React\Async\coroutine;
 
 /**
  * @link https://discord.com/developers/docs/topics/gateway#invite-delete
+ *
+ * @since 5.0.0
  */
 class InviteDelete extends Event
 {

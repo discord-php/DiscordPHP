@@ -21,6 +21,8 @@ use function React\Async\coroutine;
 
 /**
  * @link https://discord.com/developers/docs/topics/gateway#thread-create
+ *
+ * @since 7.0.0
  */
 class ThreadCreate extends Event
 {

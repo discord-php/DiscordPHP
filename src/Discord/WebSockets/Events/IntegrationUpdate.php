@@ -20,6 +20,8 @@ use function React\Async\coroutine;
 
 /**
  * @link https://discord.com/developers/docs/topics/gateway#integration-update
+ *
+ * @since 7.0.0
  */
 class IntegrationUpdate extends Event
 {

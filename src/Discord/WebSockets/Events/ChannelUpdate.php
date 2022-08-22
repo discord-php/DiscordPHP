@@ -19,6 +19,8 @@ use function React\Async\coroutine;
 
 /**
  * @link https://discord.com/developers/docs/topics/gateway#channel-update
+ *
+ * @since 2.1.3
  */
 class ChannelUpdate extends Event
 {

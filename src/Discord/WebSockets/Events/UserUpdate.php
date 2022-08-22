@@ -15,6 +15,11 @@ use Discord\WebSockets\Event;
 use Discord\Helpers\Deferred;
 use Discord\Parts\User\User;
 
+/**
+ * @link https://discord.com/developers/docs/topics/gateway#user-update
+ *
+ * @since 7.0.0
+ */
 class UserUpdate extends Event
 {
     /**

@@ -21,6 +21,8 @@ use function React\Async\coroutine;
 
 /**
  * @link https://discord.com/developers/docs/topics/gateway#invite-create
+ *
+ * @since 5.0.0
  */
 class InviteCreate extends Event
 {

@@ -20,6 +20,8 @@ use function React\Async\coroutine;
 
 /**
  * @link https://discord.com/developers/docs/topics/gateway#guild-member-add
+ *
+ * @since 2.1.3
  */
 class GuildMemberAdd extends Event
 {

@@ -20,6 +20,8 @@ use function React\Async\coroutine;
 
 /**
  * @link https://discord.com/developers/docs/topics/gateway#auto-moderation-rule-update
+ *
+ * @since 7.1.0
  */
 class AutoModerationRuleUpdate extends Event
 {

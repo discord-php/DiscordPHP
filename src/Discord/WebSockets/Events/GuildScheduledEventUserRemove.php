@@ -16,6 +16,8 @@ use Discord\Helpers\Deferred;
 
 /**
  * @link https://discord.com/developers/docs/topics/gateway#guild-scheduled-event-user-remove
+ *
+ * @since 7.0.0
  */
 class GuildScheduledEventUserRemove extends Event
 {

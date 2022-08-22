@@ -28,6 +28,8 @@ use function React\Promise\all;
 
 /**
  * @link https://discord.com/developers/docs/topics/gateway#guild-create
+ *
+ * @since 2.1.3
  */
 class GuildCreate extends Event
 {

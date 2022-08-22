@@ -17,6 +17,8 @@ use Discord\Helpers\Deferred;
 
 /**
  * @link https://discord.com/developers/docs/topics/gateway#typing-start
+ *
+ * @since 2.1.3
  */
 class TypingStart extends Event
 {

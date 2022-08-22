@@ -21,6 +21,8 @@ use function React\Async\coroutine;
 /**
  * @link https://discord.com/developers/docs/topics/gateway#thread-delete
  *
+ * @since 7.0.0
+ *
  * @todo update docs parameter
  */
 class ThreadDelete extends Event

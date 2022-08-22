@@ -23,6 +23,8 @@ use function React\Async\coroutine;
 
 /**
  * @link https://discord.com/developers/docs/topics/gateway#message-reaction-remove
+ *
+ * @since 4.0.4
  */
 class MessageReactionRemove extends Event
 {

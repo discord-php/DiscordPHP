@@ -20,6 +20,8 @@ use function React\Async\coroutine;
 
 /**
  * @link https://discord.com/developers/docs/topics/gateway#stage-instance-delete
+ *
+ * @since 7.0.0
  */
 class StageInstanceDelete extends Event
 {

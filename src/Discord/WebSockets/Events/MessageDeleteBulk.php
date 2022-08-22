@@ -19,6 +19,8 @@ use function React\Promise\all;
 
 /**
  * @link https://discord.com/developers/docs/topics/gateway#message-delete-bulk
+ *
+ * @since 4.0.0
  */
 class MessageDeleteBulk extends Event
 {

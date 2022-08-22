@@ -19,6 +19,8 @@ use function React\Async\coroutine;
 
 /**
  * @link https://discord.com/developers/docs/topics/gateway#channel-delete
+ *
+ * @since 2.1.3
  */
 class ChannelDelete extends Event
 {
