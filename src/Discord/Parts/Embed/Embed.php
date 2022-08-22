@@ -20,6 +20,8 @@ use function Discord\poly_strlen;
 /**
  * An embed object to be sent with a message.
  *
+ * @since 4.0.3
+ *
  * @property string|null        $title       The title of the embed.
  * @property string|null        $type        The type of the embed.
  * @property string|null        $description A description of the embed.

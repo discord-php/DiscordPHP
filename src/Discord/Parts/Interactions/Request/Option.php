@@ -19,6 +19,8 @@ use Discord\Repository\Interaction\OptionRepository;
  *
  * @link https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-interaction-data-option-structure
  *
+ * @since 7.0.0
+ *
  * @property string                $name    Name of the parameter.
  * @property int                   $type    Type of the option.
  * @property string|int|float|null $value   Value of the option resulting from user input.

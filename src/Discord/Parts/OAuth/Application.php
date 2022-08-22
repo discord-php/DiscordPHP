@@ -21,6 +21,8 @@ use Discord\Repository\Interaction\GlobalCommandRepository;
  *
  * @link https://discord.com/developers/docs/resources/application
  *
+ * @since 7.0.0
+ *
  * @property string                  $id                     The client ID of the OAuth application.
  * @property string                  $name                   The name of the OAuth application.
  * @property string|null             $icon                   The icon URL of the OAuth application.

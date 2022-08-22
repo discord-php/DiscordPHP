@@ -22,6 +22,8 @@ use Discord\Parts\User\User;
  *
  * @link https://discord.com/developers/docs/resources/auto-moderation#auto-moderation-rule-object
  *
+ * @since 7.1.0
+ *
  * @property      string              $id               The id of this rule.
  * @property      string              $guild_id         The id of the guild which this rule belongs to.
  * @property-read Guild|null          $guild            The guild which this rule belongs to.

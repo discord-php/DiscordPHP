@@ -23,6 +23,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  *
  * @link https://discord.com/developers/docs/resources/guild-template
  *
+ * @since 7.0.0
+ *
  * @property      string     $code                    The template code (unique ID).
  * @property      string     $name                    Template name.
  * @property      ?string    $description             The description for the template. Up to 120 characters.

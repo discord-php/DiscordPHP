@@ -24,6 +24,8 @@ use Discord\Parts\User\User;
  *
  * @link https://discord.com/developers/docs/topics/gateway#auto-moderation-action-execution-auto-moderation-action-execution-event-fields
  *
+ * @since 7.1.0
+ * 
  * @property      string       $guild_id                The id of the guild in which action was executed.
  * @property-read Guild|null   $guild                   The guild in which action was executed.
  * @property      Action       $action                  The action which was executed.

@@ -22,6 +22,8 @@ use React\Promise\ExtendedPromiseInterface;
  *
  * @link https://discord.com/developers/docs/resources/channel#thread-member-object
  *
+ * @since 7.0.0
+ *
  * @property      string|null $id             ID of the thread.
  * @property      string|null $user_id        ID of the user that the member object represents.
  * @property-read User|null   $user           The user that the member object represents.

@@ -23,6 +23,8 @@ use React\Promise\ExtendedPromiseInterface;
 /**
  * The client is the main interface for the client. Most calls on the main class are forwarded here.
  *
+ * @since 2.0.0
+ *
  * @property string       $id               The unique identifier of the client.
  * @property string       $username         The username of the client.
  * @property string       $discriminator    The unique discriminator of the client.

@@ -20,6 +20,8 @@ use Discord\Parts\User\User;
  *
  * @link https://discord.com/developers/docs/interactions/receiving-and-responding#message-interaction-object
  *
+ * @since 7.1.0
+ *
  * @property string      $id     ID of the interaction.
  * @property int         $type   Type of interaction.
  * @property string      $name   Name of the application command, including subcommands and subcommand groups.

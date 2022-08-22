@@ -36,6 +36,8 @@ use Traversable;
  *
  * @link https://discord.com/developers/docs/topics/threads
  *
+ * @since 7.0.0
+ *
  * @property      string            $id                    The ID of the thread.
  * @property      string            $type                  The type of thread.
  * @property      string            $guild_id              The ID of the guild which the thread belongs to.

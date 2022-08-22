@@ -19,6 +19,8 @@ use Discord\Parts\Part;
  *
  * @link https://discord.com/developers/docs/resources/guild#welcome-screen-object-welcome-screen-channel-structure
  *
+ * @since 7.0.0
+ *
  * @property      string       $channel_id  The channel's id.
  * @property-read Channel|null $channel     The channel object.
  * @property      string       $description The description shown for the channel.

@@ -22,6 +22,8 @@ use Discord\Repository\Interaction\ComponentRepository;
  *
  * @link https://discord.com/developers/docs/interactions/message-components#component-object
  *
+ * @since 7.0.0
+ *
  * @property int                 $type        Component type.
  * @property string|null         $custom_id   A developer-defined identifier for the component, max 100 characters. (Buttons, Select Menus)
  * @property bool|null           $disabled    Whether the component is disabled, default false. (Buttons, Select Menus)

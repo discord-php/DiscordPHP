@@ -51,6 +51,9 @@ use function React\Promise\resolve;
  *
  * @link https://discord.com/developers/docs/resources/guild
  *
+ * @since 2.0.0 Refactored as Part
+ * @since 1.0.0
+ *
  * @property      string             $id                                       The unique identifier of the guild.
  * @property      string             $name                                     The name of the guild.
  * @property      ?string            $icon                                     The URL to the guild icon.

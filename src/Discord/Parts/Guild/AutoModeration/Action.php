@@ -18,6 +18,8 @@ use Discord\Parts\Part;
  *
  * @link https://discord.com/developers/docs/resources/auto-moderation#auto-moderation-action-object
  *
+ * @since 7.1.0
+ *
  * @property int         $type     The type of action.
  * @property object|null $metadata Additional metadata needed during execution for this specific action type (may contain `channel_id` and `duration_seconds`).
  */

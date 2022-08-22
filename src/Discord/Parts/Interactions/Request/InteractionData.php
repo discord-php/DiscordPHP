@@ -20,6 +20,8 @@ use Discord\Repository\Interaction\OptionRepository;
  *
  * @link https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-interaction-data
  *
+ * @since 7.0.0
+ *
  * @property string              $id             ID of the invoked command.
  * @property string              $name           Name of the invoked command.
  * @property int                 $type           The type of the invoked command.

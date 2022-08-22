@@ -25,6 +25,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  *
  * @link https://discord.com/developers/docs/resources/guild-scheduled-event
  *
+ * @since 7.0.0
+ *
  * @property      string       $id                   The id of the scheduled event.
  * @property      string       $guild_id             The guild id which the scheduled event belongs to.
  * @property-read Guild|null   $guild                The guild which the scheduled event belongs to.

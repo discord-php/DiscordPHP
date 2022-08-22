@@ -36,6 +36,8 @@ use function React\Promise\reject;
  *
  * @link https://discord.com/developers/docs/resources/guild#guild-member-object
  *
+ * @since 2.0.0
+ *
  * @property      User|null           $user                         The user part of the member.
  * @property-read string|null         $username                     The username of the member.
  * @property-read string|null         $discriminator                The discriminator of the member.

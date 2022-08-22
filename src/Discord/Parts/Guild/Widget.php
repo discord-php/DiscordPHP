@@ -21,6 +21,8 @@ use React\Promise\ExtendedPromiseInterface;
  *
  * @link https://discord.com/developers/docs/resources/guild#guild-widget-object
  *
+ * @since 7.0.0
+ *
  * @property      string     $id             Guild id.
  * @property-read Guild|null $guild          Guild.
  * @property      string     $name           Guild name (2-100 characters).

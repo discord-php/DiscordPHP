@@ -21,6 +21,8 @@ use function Discord\poly_strlen;
  *
  * @link https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-option-structure
  *
+ * @since 7.0.0
+ *
  * @property int                      $type                      Type of the option.
  * @property string                   $name                      Name of the option.
  * @property ?string[]|null           $name_localizations        Localization dictionary for the name field. Values follow the same restrictions as name.

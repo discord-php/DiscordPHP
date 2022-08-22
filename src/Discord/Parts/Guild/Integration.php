@@ -21,6 +21,8 @@ use Discord\Parts\User\User;
  *
  * @link https://discord.com/developers/docs/resources/guild#integration-object
  *
+ * @since 7.0.0
+ *
  * @property      string           $id                  Integration id.
  * @property      string           $name                Integration name.
  * @property      string           $type                Integration type (twitch, youtube, or discord).

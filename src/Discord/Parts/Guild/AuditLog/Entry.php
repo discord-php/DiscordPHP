@@ -18,6 +18,8 @@ use Discord\Parts\User\User;
 /**
  * Represents an entry in the audit log.
  *
+ * @since 5.1.0
+ *
  * @link https://discord.com/developers/docs/resources/audit-log#audit-log-entry-object
  *
  * @property      ?string      $target_id   Id of the affected entity (webhook, user, role, etc.).

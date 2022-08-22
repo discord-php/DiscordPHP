@@ -18,6 +18,8 @@ use Discord\Parts\Part;
  *
  * @link https://discord.com/developers/docs/resources/channel#embed-object-embed-video-structure
  *
+ * @since 4.0.3
+ *
  * @property string|null $url       The source of the video.
  * @property string|null $proxy_url A proxied url of the video.
  * @property int|null    $height    The height of the video.

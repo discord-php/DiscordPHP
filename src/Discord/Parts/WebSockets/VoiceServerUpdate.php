@@ -19,6 +19,8 @@ use Discord\Parts\Part;
  *
  * @link https://discord.com/developers/docs/topics/gateway#voice
  *
+ * @since 4.0.0
+ *
  * @property      string     $token    The new client voice token.
  * @property      string     $guild_id The unique identifier of the guild that was affected by the change.
  * @property-read Guild|null $guild    The guild affected by the change.

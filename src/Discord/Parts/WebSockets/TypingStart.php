@@ -22,6 +22,8 @@ use Discord\Parts\User\User;
  * A TypingStart part is used when the `TYPING_START` event is fired on the WebSocket. It contains
  * information such as when the event was fired and then channel it was fired in.
  *
+ * @since 2.1.3
+ *
  * @link https://discord.com/developers/docs/topics/gateway#typing-start
  *
  * @property      string              $channel_id The unique identifier of the channel that the user started typing in.

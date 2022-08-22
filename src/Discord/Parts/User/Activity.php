@@ -20,6 +20,9 @@ use Discord\Parts\Part;
  *
  * @link https://discord.com/developers/docs/topics/gateway#activity-object
  *
+ * @since 5.0.0 Renamed from Game to Activity
+ * @since 3.2.2
+ *
  * @property string        $name           The activity's name.
  * @property int           $type           Activity type.
  * @property ?string|null  $url            Stream url, is validated when type is 1.

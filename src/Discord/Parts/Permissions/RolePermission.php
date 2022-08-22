@@ -14,6 +14,8 @@ namespace Discord\Parts\Permissions;
 /**
  * @inheritdoc
  *
+ * @since 2.1.3
+ *
  * @property bool $add_reactions
  * @property bool $priority_speaker
  * @property bool $stream

@@ -19,6 +19,8 @@ use Discord\Parts\Permissions\RolePermission;
  *
  * @link https://discord.com/developers/docs/topics/permissions#role-object
  *
+ * @since 2.0.0
+ *
  * @property      string         $id            The unique identifier of the role.
  * @property      string         $name          The name of the role.
  * @property      int            $color         The color of the guild.

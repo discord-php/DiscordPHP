@@ -18,6 +18,8 @@ use Discord\Parts\Part;
  *
  * @link https://discord.com/developers/docs/resources/channel#embed-object-embed-author-structure
  *
+ * @since 4.0.3
+ *
  * @property string      $name           The name of the author.
  * @property string|null $url            The URL to the author.
  * @property string|null $icon_url       The source of the author icon. Must be https.

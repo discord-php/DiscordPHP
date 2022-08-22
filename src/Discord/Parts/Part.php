@@ -22,8 +22,9 @@ use React\Promise\ExtendedPromiseInterface;
 use function Discord\studly;
 
 /**
- * This class is the base of all objects that are returned. All "Parts" extend off this
- * base class.
+ * This class is the base of all objects that are returned. All "Parts" extend off this base class.
+ *
+ * @since 2.0.0
  */
 abstract class Part implements ArrayAccess, JsonSerializable
 {

@@ -24,6 +24,8 @@ use function React\Promise\reject;
  *
  * @link https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-structure
  *
+ * @since 7.0.0
+ *
  * @property      string      $id             The unique identifier of the command.
  * @property      string      $application_id The unique identifier of the parent Application that made the command, if made by one.
  * @property      string|null $guild_id       The unique identifier of the guild that the command belongs to. Null if global.

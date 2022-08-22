@@ -18,6 +18,9 @@ use Discord\Parts\Part;
  *
  * @link https://discord.com/developers/docs/resources/sticker#sticker-object-sticker-structure
  *
+ * @since 7.0.0 Namespace moved from Channel to Guild
+ * @since 6.0.0
+ *
  * @property      string      $id          The identifier for the sticker.
  * @property      string|null $pack_id     For standard stickers, id of the pack the sticker is from.
  * @property      string      $name        The name of the sticker.

@@ -23,6 +23,8 @@ use Discord\Parts\User\User;
  *
  * @link https://discord.com/developers/docs/resources/voice#voice-state-object
  *
+ * @since 3.2.1
+ *
  * @property      string|null  $guild_id                   Guild ID that the voice state came from, or null if it is for a DM channel.
  * @property-read Guild|null   $guild                      Guild that the voice state came from, or null if it is for a DM channel.
  * @property      ?string|null $channel_id                 Channel ID that the voice state came from, or null if the user is leaving a channel.

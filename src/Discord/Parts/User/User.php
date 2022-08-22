@@ -25,6 +25,8 @@ use function React\Promise\resolve;
  *
  * @link https://discord.com/developers/docs/resources/user
  *
+ * @since 2.0.0
+ *
  * @property string       $id            The unique identifier of the user.
  * @property string       $username      The username of the user.
  * @property string       $discriminator The discriminator of the user.

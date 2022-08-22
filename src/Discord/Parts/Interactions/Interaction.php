@@ -38,6 +38,8 @@ use function React\Promise\reject;
  *
  * @link https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object
  *
+ * @since 7.0.0
+ *
  * @property      string               $id              ID of the interaction.
  * @property      string               $application_id  ID of the application the interaction is for.
  * @property      int                  $type            Type of interaction.

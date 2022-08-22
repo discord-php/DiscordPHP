@@ -20,6 +20,9 @@ use Discord\Parts\Part;
  *
  * @link https://discord.com/developers/docs/topics/permissions
  *
+ * @since 2.1.3 Namespace moved from Guild to Permissions
+ * @since 2.0.0
+ *
  * @property int|string $bitwise
  * @property bool       $create_instant_invite
  * @property bool       $manage_channels

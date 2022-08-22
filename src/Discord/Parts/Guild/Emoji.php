@@ -20,6 +20,8 @@ use Discord\Parts\User\User;
  *
  * @link https://discord.com/developers/docs/resources/emoji
  *
+ * @since 4.0.2
+ *
  * @property ?string           $id             The identifier for the emoji.
  * @property string            $name           The name of the emoji.
  * @property Collection|Role[] $roles          The roles that are allowed to use the emoji.

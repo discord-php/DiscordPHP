@@ -19,6 +19,8 @@ use Discord\Parts\Part;
  * @link https://discord.com/developers/docs/resources/channel#embed-object-embed-image-structure
  * @link https://discord.com/developers/docs/resources/channel#embed-object-embed-thumbnail-structure
  *
+ * @since 4.0.3
+ *
  * @property string      $url       The source of the image. Must be https.
  * @property string|null $proxy_url A proxied version of the image.
  * @property int|null    $height    The height of the image.

@@ -26,6 +26,8 @@ use Discord\Parts\User\User;
  *
  * @link https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-resolved-data-structure
  *
+ * @since 7.0.0
+ *
  * @property Collection|User[]|null             $users       The ids and User objects.
  * @property Collection|Member[]|null           $members     The ids and partial Member objects.
  * @property Collection|Role[]|null             $roles       The ids and Role objects.

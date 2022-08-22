@@ -48,7 +48,8 @@ use function React\Promise\resolve;
  *
  * @link https://discord.com/developers/docs/resources/channel#channel-object
  *
- * @since 2.0.0
+ * @since 2.0.0 Refactored as Part
+ * @since 1.0.0
  *
  * @property      string              $id                            The unique identifier of the Channel.
  * @property      int                 $type                          The type of the channel.

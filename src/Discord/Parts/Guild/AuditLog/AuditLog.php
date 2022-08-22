@@ -27,6 +27,8 @@ use ReflectionClass;
  *
  * @link https://discord.com/developers/docs/resources/audit-log#audit-log-object
  *
+ * @since 5.1.0
+ *
  * @property Collection|Entry[]               $audit_log_entries      List of audit log entries.
  * @property Collection|Rule[]                $auto_moderation_rules  List of auto moderation rules referenced in the audit log.
  * @property Collection|GuildScheduledEvent[] $guild_scheduled_events List of guild scheduled events referenced in the audit log.
