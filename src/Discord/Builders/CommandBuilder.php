@@ -18,6 +18,8 @@ use JsonSerializable;
 /**
  * Helper class used to build application commands.
  *
+ * @since 7.0.0
+ *
  * @author Mark `PeanutNL` Versluis
  */
 class CommandBuilder implements JsonSerializable

@@ -17,6 +17,8 @@ use Discord\Repository\AbstractRepository;
 
 /**
  * Exposes an interface to build part objects without the other requirements.
+ *
+ * @since 4.0.0
  */
 class Factory
 {

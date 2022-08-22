@@ -19,8 +19,10 @@ use function Discord\poly_strlen;
 /**
  * Application Command attributes.
  *
- * @see Discord\Builders\CommandBuilder
- * @see Discord\Parts\Interactions\Command\Command
+ * @see \Discord\Builders\CommandBuilder
+ * @see \Discord\Parts\Interactions\Command\Command
+ *
+ * @since 7.1.0
  *
  * @property int                      $type                       The type of the command, defaults 1 if not set.
  * @property string                   $name                       1-32 character name of the command.

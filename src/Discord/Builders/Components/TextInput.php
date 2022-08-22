@@ -17,6 +17,8 @@ use function Discord\poly_strlen;
  * Text inputs are an interactive component that render on modals. They can be used to collect short-form or long-form text.
  *
  * @link https://discord.com/developers/docs/interactions/message-components#text-inputs
+ *
+ * @since 7.0.0
  */
 class TextInput extends Component
 {

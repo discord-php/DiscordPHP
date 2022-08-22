@@ -19,6 +19,8 @@ use Discord\Parts\Permissions\ChannelPermission;
  *
  * @link https://discord.com/developers/docs/resources/channel#overwrite-object
  *
+ * @since 3.1.1
+ *
  * @property string            $id    The unique identifier of the user/role that the overwrite applies to.
  * @property int               $type  The type of part that the overwrite applies to.
  * @property ChannelPermission $allow The allow permissions.

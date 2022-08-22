@@ -48,6 +48,8 @@ use function React\Promise\resolve;
  *
  * @link https://discord.com/developers/docs/resources/channel#channel-object
  *
+ * @since 2.0.0
+ *
  * @property      string              $id                            The unique identifier of the Channel.
  * @property      int                 $type                          The type of the channel.
  * @property      string|null         $guild_id                      The unique identifier of the guild that the channel belongs to. Only for text or voice channels.

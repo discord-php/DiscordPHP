@@ -19,6 +19,8 @@ use Discord\Parts\Part;
  *
  * @link https://discord.com/developers/docs/resources/stage-instance#stage-instance-resource
  *
+ * @since 7.0.0
+ *
  * @property      string       $id                       The unique identifier of the Stage Instance.
  * @property      string       $guild_id                 The unique identifier of the guild that the stage instance associated to.
  * @property-read Guild|null   $guild                    The guild that the stage instance associated to.

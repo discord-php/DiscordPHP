@@ -13,6 +13,8 @@ namespace Discord\Helpers;
 
 /**
  * Polyfill to handle bitwise operation in 32 bit php using ext-gmp.
+ *
+ * @since 7.0.0
  */
 class Bitwise
 {

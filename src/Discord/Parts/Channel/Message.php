@@ -40,6 +40,8 @@ use function React\Promise\reject;
  *
  * @link https://discord.com/developers/docs/resources/channel#message-object
  *
+ * @since 2.0.0
+ *
  * @property      string                      $id                 The unique identifier of the message.
  * @property      string                      $channel_id         The unique identifier of the channel that the message was went in.
  * @property-read Channel|Thread|null         $channel            The channel that the message was sent in.

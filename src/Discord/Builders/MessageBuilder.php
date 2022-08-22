@@ -28,6 +28,8 @@ use function Discord\poly_strlen;
 /**
  * Helper class used to build messages.
  *
+ * @since 7.0.0
+ *
  * @author David Cole <david.cole1340@gmail.com>
  */
 class MessageBuilder implements JsonSerializable

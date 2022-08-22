@@ -26,6 +26,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  *
  * @link https://discord.com/developers/docs/resources/webhook#webhook-resource
  *
+ * @since 5.0.0
+ *
  * @property      string                   $id             The id of the webhook.
  * @property      int                      $type           The type of webhook.
  * @property      ?string|null             $guild_id       The guild ID this is for, if any.

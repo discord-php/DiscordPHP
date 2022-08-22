@@ -18,6 +18,8 @@ use Discord\Parts\Part;
  *
  * @link https://discord.com/developers/docs/resources/channel#attachment-object
  *
+ * @since 7.0.0
+ *
  * @property string      $id           Attachment ID.
  * @property string      $filename     Name of file attached.
  * @property string|null $description  Description for the file.

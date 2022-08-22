@@ -25,6 +25,8 @@ use function Discord\poly_strlen;
  * On mobile, tapping a select menu opens up a half-sheet with the options.
  *
  * @link https://discord.com/developers/docs/interactions/message-components#select-menus
+ *
+ * @since 7.0.0
  */
 class SelectMenu extends Component
 {

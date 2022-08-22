@@ -25,9 +25,11 @@ use function React\Promise\all;
  *
  * Compatible with react/cache 0.5 - 1.x interface.
  *
- * @internal Used by AbstractRepository.
+ * @since 10.0.0
  *
  * @property-read CacheInterface $interface The actual ReactPHP CacheInterface.
+ *
+ * @internal
  */
 class CacheWrapper
 {

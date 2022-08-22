@@ -28,6 +28,8 @@ use function React\Promise\resolve;
  *
  * @link https://discord.com/developers/docs/resources/channel#reaction-object
  *
+ * @since 5.0.0
+ *
  * @property int   $count Number of reactions.
  * @property bool  $me    Whether the current bot has reacted.
  * @property Emoji $emoji The emoji that was reacted with.

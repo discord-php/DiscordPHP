@@ -14,6 +14,8 @@ namespace Discord\Helpers;
 /**
  * Builds a multipart request.
  *
+ * @since 5.1.0
+ *
  * @author David Cole <david.cole1340@gmail.com>
  */
 class Multipart

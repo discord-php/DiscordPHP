@@ -25,6 +25,9 @@ use React\Promise\ExtendedPromiseInterface;
  *
  * @link https://discord.com/developers/docs/resources/invite
  *
+ * @since 7.0.0 Namespace moved from Guild to Channel
+ * @since 2.0.0
+ *
  * @property string              $code                       The invite code.
  * @property Guild|null          $guild                      The partial guild that the invite is for.
  * @property string|null         $guild_id

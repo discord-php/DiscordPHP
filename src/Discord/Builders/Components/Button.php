@@ -24,6 +24,8 @@ use function Discord\poly_strlen;
  * They can be clicked by users, and send an interaction to your app when clicked.
  *
  * @link https://discord.com/developers/docs/interactions/message-components#buttons
+ *
+ * @since 7.0.0
  */
 class Button extends Component
 {

@@ -19,6 +19,8 @@ use Discord\Parts\Interactions\Interaction;
  * with the Discord servers and has a handler to handle when the
  * command is triggered.
  *
+ * @since 7.0.0
+ *
  * @author David Cole <david.cole1340@gmail.com>
  */
 class RegisteredCommand

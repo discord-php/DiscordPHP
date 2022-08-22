@@ -16,6 +16,8 @@ namespace Discord\Builders\Components;
  * It has a type: 1 and a sub-array of components of other types.
  *
  * @link https://discord.com/developers/docs/interactions/message-components#action-rows
+ *
+ * @since 7.0.0
  */
 class ActionRow extends Component
 {

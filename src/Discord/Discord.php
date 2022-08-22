@@ -59,6 +59,8 @@ use function React\Promise\all;
 /**
  * The Discord client class.
  *
+ * @version 10.0.0
+ *
  * @property string                   $id               The unique identifier of the client.
  * @property string                   $username         The username of the client.
  * @property string                   $password         The password of the client (if they have provided it).
