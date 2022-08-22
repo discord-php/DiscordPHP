@@ -21,10 +21,7 @@ use React\Promise\ExtendedPromiseInterface;
 /**
  * Contains threads that belong to a channel.
  *
- * @method Thread|null get(string $discrim, $key)  Gets an item from the collection.
- * @method Thread|null first()                     Returns the first element of the collection.
- * @method Thread|null pull($key, $default = null) Pulls an item from the repository, removing and returning the item.
- * @method Thread|null find(callable $callback)    Runs a filter callback over the repository.
+ * @see Thread
  */
 class ThreadRepository extends AbstractRepository
 {

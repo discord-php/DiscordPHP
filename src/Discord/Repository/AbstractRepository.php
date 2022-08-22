@@ -323,7 +323,12 @@ abstract class AbstractRepository extends Collection
     }
 
     /**
-     * {@inheritdoc}
+     * Gets a part from the repository.
+     *
+     * @param string $discrim
+     * @param mixed  $key
+     *
+     * @return Part|null
      */
     public function get(string $discrim, $key)
     {
@@ -371,7 +376,10 @@ abstract class AbstractRepository extends Collection
     }
 
     /**
-     * {@inheritdoc}
+     * Sets a part in the repository.
+     *
+     * @param string|int $offset
+     * @param Part       $value
      */
     public function set($offset, $value)
     {
@@ -390,8 +398,14 @@ abstract class AbstractRepository extends Collection
     }
 
     /**
+     * Pulls a part from the repository.
+     *
      * @deprecated 7.2.0 Use async `$repository->cache->get()` and `$repository->cache->delete()`
-     * {@inheritdoc}
+     *
+     * @param string|int $key
+     * @param mixed      $default
+     *
+     * @return Part|mixed
      */
     public function pull($key, $default = null)
     {
@@ -449,9 +463,9 @@ abstract class AbstractRepository extends Collection
     }
 
     /**
-     * Returns the first cached element.
+     * Returns the first cached part.
      *
-     * @return object|null
+     * @return Part|null
      */
     public function first()
     {
@@ -469,9 +483,9 @@ abstract class AbstractRepository extends Collection
     }
 
     /**
-     * Returns the last cached element.
+     * Returns the last cached part.
      *
-     * @return object|null
+     * @return Part|null
      */
     public function last()
     {
@@ -491,8 +505,13 @@ abstract class AbstractRepository extends Collection
     }
 
     /**
+     * Checks if the array has an object.
+     *
      * @deprecated 7.2.0 Use async `$repository->cache->has()`
-     * {@inheritdoc}
+     *
+     * @param array ...$keys
+     *
+     * @return bool
      */
     public function has(...$keys): bool
     {
@@ -506,7 +525,11 @@ abstract class AbstractRepository extends Collection
     }
 
     /**
-     * {@inheritdoc}
+     * Runs a filter callback over the repository and returns a new collection based on the response of the callback.
+     *
+     * @param callable $callback
+     *
+     * @return Collection
      */
     public function filter(callable $callback): Collection
     {
@@ -530,7 +553,11 @@ abstract class AbstractRepository extends Collection
     }
 
     /**
-     * {@inheritdoc}
+     * Runs a filter callback over the repository and returns the first part where the callback returns `true` when given the part.
+     *
+     * @param callable $callback
+     *
+     * @return Part|null `null` if no items returns `true` when called in the callback.
      */
     public function find(callable $callback)
     {
@@ -552,8 +579,9 @@ abstract class AbstractRepository extends Collection
     }
 
     /**
+     * Clears the repository.
+     *
      * @deprecated 7.2.0 Use async `$repository->cache->clear()`
-     * {@inheritdoc}
      */
     public function clear(): void
     {
@@ -581,8 +609,13 @@ abstract class AbstractRepository extends Collection
     }
 
     /**
+     * If the repository has an offset.
+     *
      * @deprecated 7.2.0 Use async `$repository->cache->has()`
-     * {@inheritdoc}
+     *
+     * @param string|int $offset
+     *
+     * @return bool
      */
     public function offsetExists($offset): bool
     {
@@ -590,9 +623,12 @@ abstract class AbstractRepository extends Collection
     }
 
     /**
+     * Gets a part from the repository.
+     *
      * @deprecated 7.2.0 Use async `$repository->cache->get()` or sync `$repository->get()`
-     * @internal
-     * {@inheritdoc}
+     *
+     * @param string|int $offset
+     *
      * @return ?Part
      */
     public function offsetGet($offset)
@@ -611,8 +647,12 @@ abstract class AbstractRepository extends Collection
     }
 
     /**
+     * Sets a part into the repository.
+     *
      * @deprecated 7.2.0 Use async `$repository->cache->set()`
-     * {@inheritdoc}
+     *
+     * @param string|int $offset
+     * @param ?Part      $value
      */
     public function offsetSet($offset, $value): void
     {
@@ -620,8 +660,11 @@ abstract class AbstractRepository extends Collection
     }
 
     /**
+     * Unsets an index from the repository.
+     *
      * @deprecated 7.2.0 Use async `$repository->cache->delete()`
-     * {@inheritdoc}
+     *
+     * @param string|int offset
      */
     public function offsetUnset($offset): void
     {

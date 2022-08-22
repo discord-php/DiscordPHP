@@ -17,13 +17,8 @@ use Discord\Repository\AbstractRepository;
 /**
  * Contains voice states for users in the voice channel.
  *
- * @see \Discord\Parts\WebSockets\VoiceStateUpdate
+ * @see VoiceStateUpdate
  * @see \Discord\Parts\Channel\Channel
- *
- * @method VoiceStateUpdate|null get(string $discrim, $key)  Gets an item from the collection.
- * @method VoiceStateUpdate|null first()                     Returns the first element of the collection.
- * @method VoiceStateUpdate|null pull($key, $default = null) Pulls an item from the repository, removing and returning the item.
- * @method VoiceStateUpdate|null find(callable $callback)    Runs a filter callback over the repository.
  */
 class VoiceMemberRepository extends AbstractRepository
 {

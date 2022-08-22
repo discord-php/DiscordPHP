@@ -18,14 +18,9 @@ use Discord\Repository\AbstractRepository;
 /**
  * Contains messages sent to channels from webhook.
  *
- * @see \Discord\Parts\Channel\Message
+ * @see Message
  * @see \Discord\Parts\Channel\Channel
  * @see \Discord\Parts\Channel\Webhook
- *
- * @method Message|null get(string $discrim, $key)  Gets an item from the collection.
- * @method Message|null first()                     Returns the first element of the collection.
- * @method Message|null pull($key, $default = null) Pulls an item from the repository, removing and returning the item.
- * @method Message|null find(callable $callback)    Runs a filter callback over the repository.
  */
 class WebhookMessageRepository extends AbstractRepository
 {
