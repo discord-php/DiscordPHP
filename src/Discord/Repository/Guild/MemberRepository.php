@@ -21,8 +21,14 @@ use React\Promise\PromiseInterface;
 /**
  * Contains members of a guild.
  *
- * @see \Discord\Parts\User\Member
+ * @see Member
  * @see \Discord\Parts\Guild\Guild
+ *
+ * @method Member|null get(string $discrim, $key)
+ * @method Member|null pull(string|int $key, $default = null)
+ * @method Member|null first()
+ * @method Member|null last()
+ * @method Member|null find()
  */
 class MemberRepository extends AbstractRepository
 {

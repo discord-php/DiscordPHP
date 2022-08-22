@@ -16,10 +16,16 @@ use Discord\Parts\Guild\AutoModeration\Rule;
 use Discord\Repository\AbstractRepository;
 
 /**
- * Contains auto moderation rules that belong to guilds.
+ * Contains auto moderation rules for a guild.
  *
- * @see \Discord\Parts\Guild\AutoModeration\Rule
+ * @see Rule
  * @see \Discord\Parts\Guild\Guild
+ *
+ * @method Rule|null get(string $discrim, $key)
+ * @method Rule|null pull(string|int $key, $default = null)
+ * @method Rule|null first()
+ * @method Rule|null last()
+ * @method Rule|null find()
  */
 class AutoModerationRuleRepository extends AbstractRepository
 {

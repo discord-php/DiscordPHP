@@ -16,9 +16,15 @@ use Discord\Parts\Guild\Guild;
 use React\Promise\ExtendedPromiseInterface;
 
 /**
- * Contains guilds that the user is in.
+ * Contains guilds that the client is in.
  *
- * @see \Discord\Parts\Guild\Guild
+ * @see Guild
+ *
+ * @method Guild|null get(string $discrim, $key)
+ * @method Guild|null pull(string|int $key, $default = null)
+ * @method Guild|null first()
+ * @method Guild|null last()
+ * @method Guild|null find()
  */
 class GuildRepository extends AbstractRepository
 {

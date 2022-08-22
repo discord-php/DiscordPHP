@@ -18,9 +18,15 @@ use Discord\Repository\AbstractRepository;
 /**
  * Contains permission overwrites for application guild commands.
  *
- * @see \Discord\Parts\Guild\CommandPermissions
+ * @see CommandPermissions
  * @see \Discord\Parts\Interactions\Command\Command
  * @see \Discord\Parts\Interactions\Command\Permission
+ *
+ * @method CommandPermissions|null get(string $discrim, $key)
+ * @method CommandPermissions|null pull(string|int $key, $default = null)
+ * @method CommandPermissions|null first()
+ * @method CommandPermissions|null last()
+ * @method CommandPermissions|null find()
  */
 class CommandPermissionsRepository extends AbstractRepository
 {

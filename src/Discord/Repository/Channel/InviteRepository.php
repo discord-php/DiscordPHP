@@ -16,10 +16,16 @@ use Discord\Parts\Channel\Invite;
 use Discord\Repository\AbstractRepository;
 
 /**
- * Contains invites for channels.
+ * Contains invites of a channel.
  *
  * @see Invite
  * @see \Discord\Parts\Channel\Channel
+ *
+ * @method Invite|null get(string $discrim, $key)
+ * @method Invite|null pull(string|int $key, $default = null)
+ * @method Invite|null first()
+ * @method Invite|null last()
+ * @method Invite|null find()
  */
 class InviteRepository extends AbstractRepository
 {

@@ -18,8 +18,14 @@ use Discord\Repository\AbstractRepository;
 /**
  * Contains application global commands.
  *
- * @see \Discord\Parts\Interactions\Command\Command
+ * @see Command
  * @see \Discord\Parts\Guild\Guild
+ *
+ * @method Command|null get(string $discrim, $key)
+ * @method Command|null pull(string|int $key, $default = null)
+ * @method Command|null first()
+ * @method Command|null last()
+ * @method Command|null find()
  */
 class GlobalCommandRepository extends AbstractRepository
 {

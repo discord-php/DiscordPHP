@@ -16,10 +16,16 @@ use Discord\Parts\Channel\Invite;
 use Discord\Repository\AbstractRepository;
 
 /**
- * Contains invites to guilds.
+ * Contains invites to a guild.
  *
- * @see \Discord\Parts\Guild\Invite
+ * @see Invite
  * @see \Discord\Parts\Guild\Guild
+ *
+ * @method Invite|null get(string $discrim, $key)
+ * @method Invite|null pull(string|int $key, $default = null)
+ * @method Invite|null first()
+ * @method Invite|null last()
+ * @method Invite|null find()
  */
 class InviteRepository extends AbstractRepository
 {

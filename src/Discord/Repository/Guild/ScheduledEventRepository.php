@@ -19,10 +19,16 @@ use React\Promise\ExtendedPromiseInterface;
 use function React\Promise\resolve;
 
 /**
- * Contains scheduled events to guilds.
+ * Contains scheduled events on a guild.
  *
- * @see \Discord\Parts\Guild\ScheduledEvent
+ * @see ScheduledEvent
  * @see \Discord\Parts\Guild\Guild
+ *
+ * @method ScheduledEvent|null get(string $discrim, $key)
+ * @method ScheduledEvent|null pull(string|int $key, $default = null)
+ * @method ScheduledEvent|null first()
+ * @method ScheduledEvent|null last()
+ * @method ScheduledEvent|null find()
  */
 class ScheduledEventRepository extends AbstractRepository
 {

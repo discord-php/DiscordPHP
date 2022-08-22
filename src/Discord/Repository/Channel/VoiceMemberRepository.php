@@ -19,6 +19,12 @@ use Discord\Repository\AbstractRepository;
  *
  * @see VoiceStateUpdate
  * @see \Discord\Parts\Channel\Channel
+ *
+ * @method VoiceStateUpdate|null get(string $discrim, $key)
+ * @method VoiceStateUpdate|null pull(string|int $key, $default = null)
+ * @method VoiceStateUpdate|null first()
+ * @method VoiceStateUpdate|null last()
+ * @method VoiceStateUpdate|null find()
  */
 class VoiceMemberRepository extends AbstractRepository
 {

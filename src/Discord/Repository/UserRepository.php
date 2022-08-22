@@ -15,9 +15,15 @@ use Discord\Http\Endpoint;
 use Discord\Parts\User\User;
 
 /**
- * Contains users that the user shares guilds with.
+ * Contains users that the client shares guilds with.
  *
- * @see \Discord\Parts\User\User
+ * @see User
+ *
+ * @method User|null get(string $discrim, $key)
+ * @method User|null pull(string|int $key, $default = null)
+ * @method User|null first()
+ * @method User|null last()
+ * @method User|null find()
  */
 class UserRepository extends AbstractRepository
 {

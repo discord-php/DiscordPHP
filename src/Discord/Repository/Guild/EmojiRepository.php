@@ -16,10 +16,16 @@ use Discord\Parts\Guild\Emoji;
 use Discord\Repository\AbstractRepository;
 
 /**
- * Contains emojis that belong to guilds.
+ * Contains emojis of a guild.
  *
- * @see \Discord\Parts\Guild\Emoji
+ * @see Emoji
  * @see \Discord\Parts\Guild\Guild
+ *
+ * @method Emoji|null get(string $discrim, $key)
+ * @method Emoji|null pull(string|int $key, $default = null)
+ * @method Emoji|null first()
+ * @method Emoji|null last()
+ * @method Emoji|null find()
  */
 class EmojiRepository extends AbstractRepository
 {

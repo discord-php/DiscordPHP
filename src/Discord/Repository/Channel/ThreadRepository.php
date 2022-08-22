@@ -19,9 +19,15 @@ use Discord\Repository\AbstractRepository;
 use React\Promise\ExtendedPromiseInterface;
 
 /**
- * Contains threads that belong to a channel.
+ * Contains threads on a channel.
  *
  * @see Thread
+ *
+ * @method Thread|null get(string $discrim, $key)
+ * @method Thread|null pull(string|int $key, $default = null)
+ * @method Thread|null first()
+ * @method Thread|null last()
+ * @method Thread|null find()
  */
 class ThreadRepository extends AbstractRepository
 {

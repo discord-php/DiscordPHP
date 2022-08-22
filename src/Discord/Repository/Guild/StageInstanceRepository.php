@@ -17,6 +17,15 @@ use Discord\Repository\AbstractRepository;
 
 /**
  * Contains a live stage instances channel.
+ *
+ * @see StageInstance
+ * @see \Discord\Parts\Guild\Guild
+ *
+ * @method StageInstance|null get(string $discrim, $key)
+ * @method StageInstance|null pull(string|int $key, $default = null)
+ * @method StageInstance|null first()
+ * @method StageInstance|null last()
+ * @method StageInstance|null find()
  */
 class StageInstanceRepository extends AbstractRepository
 {

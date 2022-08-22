@@ -23,8 +23,14 @@ use function React\Promise\reject;
 /**
  * Contains application guild commands.
  *
- * @see \Discord\Parts\Interactions\Command\Command
+ * @see Command
  * @see \Discord\Parts\Guild\Guild
+ *
+ * @method Command|null get(string $discrim, $key)
+ * @method Command|null pull(string|int $key, $default = null)
+ * @method Command|null first()
+ * @method Command|null last()
+ * @method Command|null find()
  */
 class GuildCommandRepository extends AbstractRepository
 {

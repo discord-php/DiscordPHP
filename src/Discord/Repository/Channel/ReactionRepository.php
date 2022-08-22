@@ -19,6 +19,12 @@ use Discord\Repository\AbstractRepository;
  *
  * @see Reaction
  * @see \Discord\Parts\Channel\Message
+ *
+ * @method Reaction|null get(string $discrim, $key)
+ * @method Reaction|null pull(string|int $key, $default = null)
+ * @method Reaction|null first()
+ * @method Reaction|null last()
+ * @method Reaction|null find()
  */
 class ReactionRepository extends AbstractRepository
 {

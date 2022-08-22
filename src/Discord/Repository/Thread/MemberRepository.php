@@ -17,6 +17,15 @@ use Discord\Repository\AbstractRepository;
 
 /**
  * Contains members of a thread.
+ *
+ * @see Member
+ * @see \Discord\Parts\Thread\Thread
+ *
+ * @method Member|null get(string $discrim, $key)
+ * @method Member|null pull(string|int $key, $default = null)
+ * @method Member|null first()
+ * @method Member|null last()
+ * @method Member|null find()
  */
 class MemberRepository extends AbstractRepository
 {

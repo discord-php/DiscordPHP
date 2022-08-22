@@ -16,10 +16,16 @@ use Discord\Parts\Channel\Message;
 use Discord\Repository\AbstractRepository;
 
 /**
- * Contains messages sent to channels.
+ * Contains messages sent to a channel.
  *
  * @see Message
  * @see \Discord\Parts\Channel\Channel
+ *
+ * @method Message|null get(string $discrim, $key)
+ * @method Message|null pull(string|int $key, $default = null)
+ * @method Message|null first()
+ * @method Message|null last()
+ * @method Message|null find()
  */
 class MessageRepository extends AbstractRepository
 {

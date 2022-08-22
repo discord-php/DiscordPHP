@@ -16,11 +16,17 @@ use Discord\Parts\Channel\Message;
 use Discord\Repository\AbstractRepository;
 
 /**
- * Contains messages sent to channels from webhook.
+ * Contains messages sent to a channel from the webhook.
  *
  * @see Message
  * @see \Discord\Parts\Channel\Channel
  * @see \Discord\Parts\Channel\Webhook
+ *
+ * @method Message|null get(string $discrim, $key)
+ * @method Message|null pull(string|int $key, $default = null)
+ * @method Message|null first()
+ * @method Message|null last()
+ * @method Message|null find()
  */
 class WebhookMessageRepository extends AbstractRepository
 {

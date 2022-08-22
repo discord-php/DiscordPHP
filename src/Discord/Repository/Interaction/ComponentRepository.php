@@ -14,6 +14,18 @@ namespace Discord\Repository\Interaction;
 use Discord\Parts\Interactions\Request\Component;
 use Discord\Repository\AbstractRepository;
 
+/**
+ * Contains components for message interaction.
+ *
+ * @see Component
+ * @see \Discord\Parts\Interactions\Interaction
+ *
+ * @method Component|null get(string $discrim, $key)
+ * @method Component|null pull(string|int $key, $default = null)
+ * @method Component|null first()
+ * @method Component|null last()
+ * @method Component|null find()
+ */
 class ComponentRepository extends AbstractRepository
 {
     /**

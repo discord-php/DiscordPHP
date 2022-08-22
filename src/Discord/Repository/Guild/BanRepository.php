@@ -20,10 +20,16 @@ use React\Promise\ExtendedPromiseInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Contains bans on users.
+ * Contains bans for users of a guild.
  *
- * @see \Discord\Parts\Guild\Ban
+ * @see Ban
  * @see \Discord\Parts\Guild\Guild
+ *
+ * @method Ban|null get(string $discrim, $key)
+ * @method Ban|null pull(string|int $key, $default = null)
+ * @method Ban|null first()
+ * @method Ban|null last()
+ * @method Ban|null find()
  */
 class BanRepository extends AbstractRepository
 {

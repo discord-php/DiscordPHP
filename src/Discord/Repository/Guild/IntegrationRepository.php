@@ -16,10 +16,16 @@ use Discord\Parts\Guild\Integration;
 use Discord\Repository\AbstractRepository;
 
 /**
- * Contains integrations to guilds.
+ * Contains integrations on a guild.
  *
- * @see \Discord\Parts\Guild\Integration
+ * @see Integration
  * @see \Discord\Parts\Guild\Guild
+ *
+ * @method Integration|null get(string $discrim, $key)
+ * @method Integration|null pull(string|int $key, $default = null)
+ * @method Integration|null first()
+ * @method Integration|null last()
+ * @method Integration|null find()
  */
 class IntegrationRepository extends AbstractRepository
 {

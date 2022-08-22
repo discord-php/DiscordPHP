@@ -629,7 +629,7 @@ abstract class AbstractRepository extends Collection
      *
      * @param string|int $offset
      *
-     * @return ?Part
+     * @return Part|null
      */
     public function offsetGet($offset)
     {

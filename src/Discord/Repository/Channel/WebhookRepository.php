@@ -16,9 +16,15 @@ use Discord\Parts\Channel\Webhook;
 use Discord\Repository\AbstractRepository;
 
 /**
- * Contains channel webhooks.
+ * Contains webhooks for a channel.
  *
  * @see Webhook
+ *
+ * @method Webhook|null get(string $discrim, $key)
+ * @method Webhook|null pull(string|int $key, $default = null)
+ * @method Webhook|null first()
+ * @method Webhook|null last()
+ * @method Webhook|null find()
  */
 class WebhookRepository extends AbstractRepository
 {

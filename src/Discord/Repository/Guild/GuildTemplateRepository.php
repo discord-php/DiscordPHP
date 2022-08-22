@@ -17,10 +17,16 @@ use Discord\Repository\AbstractRepository;
 use React\Promise\ExtendedPromiseInterface;
 
 /**
- * Contains guildtemplates to guilds.
+ * Contains guild templates of a guild.
  *
- * @see \Discord\Parts\Guild\GuildTemplate
+ * @see GuildTemplate
  * @see \Discord\Parts\Guild\Guild
+ *
+ * @method GuildTemplate|null get(string $discrim, $key)
+ * @method GuildTemplate|null pull(string|int $key, $default = null)
+ * @method GuildTemplate|null first()
+ * @method GuildTemplate|null last()
+ * @method GuildTemplate|null find()
  */
 class GuildTemplateRepository extends AbstractRepository
 {
