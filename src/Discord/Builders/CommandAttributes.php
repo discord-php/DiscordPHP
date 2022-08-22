@@ -41,7 +41,7 @@ trait CommandAttributes
      *
      * @throws \InvalidArgumentException `$type` is not 1-3.
      *
-     * @return $this
+     * @return self
      */
     public function setType(int $type): self
     {
@@ -62,7 +62,7 @@ trait CommandAttributes
      * @throws \LengthException `$name` is not 1-32 characters long.
      * @throws \DomainException `$name` contains invalid characters.
      *
-     * @return $this
+     * @return self
      */
     public function setName(string $name): self
     {
@@ -91,7 +91,7 @@ trait CommandAttributes
      * @throws \LengthException `$name` is not 1-32 characters long.
      * @throws \DomainException `$name` contains invalid characters.
      *
-     * @return $this
+     * @return self
      */
     public function setNameLocalization(string $locale, ?string $name): self
     {
@@ -122,7 +122,7 @@ trait CommandAttributes
      *
      * @throws \LengthException `$description` is not 1-100 characters long.
      *
-     * @return $this
+     * @return self
      */
     public function setDescription(string $description): self
     {
@@ -146,7 +146,7 @@ trait CommandAttributes
      *
      * @throws \LengthException `$description` is not 1-100 characters long.
      *
-     * @return $this
+     * @return self
      */
     public function setDescriptionLocalization(string $locale, ?string $description): self
     {
@@ -168,7 +168,7 @@ trait CommandAttributes
      *
      * @param ?bool $permission Default permission of the command
      *
-     * @return $this
+     * @return self
      */
     public function setDefaultPermission(?bool $permission): self
     {
@@ -182,7 +182,7 @@ trait CommandAttributes
      *
      * @param string|int $permissions Default member permission bits of the command.
      *
-     * @return $this
+     * @return self
      */
     public function setDefaultMemberPermissions($permissions): self
     {
@@ -196,7 +196,7 @@ trait CommandAttributes
      *
      * @param bool $permission DM permission of the command.
      *
-     * @return $this
+     * @return self
      */
     public function setDmPermission(bool $permission): self
     {
@@ -213,7 +213,7 @@ trait CommandAttributes
      * @throws \DomainException   Command type is not CHAT_INPUT (1).
      * @throws \OverflowException Command exceeds maximum 25 options.
      *
-     * @return $this
+     * @return self
      */
     public function addOption(Option $option): self
     {
@@ -239,7 +239,7 @@ trait CommandAttributes
      *
      * @throws \DomainException Command type is not CHAT_INPUT (1).
      *
-     * @return $this
+     * @return self
      */
     public function removeOption(Option $option): self
     {
@@ -257,7 +257,7 @@ trait CommandAttributes
     /**
      * Clear all options from the command.
      *
-     * @return $this
+     * @return self
      */
     public function clearOptions(): self
     {

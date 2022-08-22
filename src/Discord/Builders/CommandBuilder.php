@@ -41,7 +41,7 @@ class CommandBuilder implements JsonSerializable
     /**
      * Creates a new command builder.
      *
-     * @return $this
+     * @return self
      */
     public static function new(): self
     {

@@ -115,7 +115,7 @@ class SelectMenu extends Component
      *
      * @throws \LengthException
      *
-     * @return $this
+     * @return self
      */
     public function setCustomId($custom_id): self
     {
@@ -136,7 +136,7 @@ class SelectMenu extends Component
      * @throws \OverflowException
      * @throws \UnexpectedValueException
      *
-     * @return $this
+     * @return self
      */
     public function addOption(Option $option): self
     {
@@ -163,7 +163,7 @@ class SelectMenu extends Component
      *
      * @param Option $option Option to remove.
      *
-     * @return $this
+     * @return self
      */
     public function removeOption(Option $option): self
     {
@@ -182,7 +182,7 @@ class SelectMenu extends Component
      *
      * @throws \LengthException
      *
-     * @return $this
+     * @return self
      */
     public function setPlaceholder(?string $placeholder): self
     {
@@ -203,7 +203,7 @@ class SelectMenu extends Component
      *
      * @throws \LengthException
      *
-     * @return $this
+     * @return self
      */
     public function setMinValues(?int $min_values): self
     {
@@ -224,7 +224,7 @@ class SelectMenu extends Component
      *
      * @throws \LengthException
      *
-     * @return $this
+     * @return self
      */
     public function setMaxValues(?int $max_values): self
     {
@@ -242,7 +242,7 @@ class SelectMenu extends Component
      *
      * @param bool $disabled
      *
-     * @return $this
+     * @return self
      */
     public function setDisabled(bool $disabled = true): self
     {
@@ -272,7 +272,7 @@ class SelectMenu extends Component
      * @param Discord  $discord  Discord client.
      * @param bool     $oneOff   Whether the listener should be removed after the selection is changed for the first time.
      *
-     * @return $this
+     * @return self
      */
     public function setListener(?callable $callback, Discord $discord, bool $oneOff = false): self
     {
@@ -326,7 +326,7 @@ class SelectMenu extends Component
     /**
      * Removes the listener from the button.
      *
-     * @return $this
+     * @return self
      */
     public function removeListener(): self
     {

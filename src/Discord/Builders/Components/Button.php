@@ -138,7 +138,7 @@ class Button extends Component
      *
      * @throws \InvalidArgumentException
      *
-     * @return $this
+     * @return self
      */
     public function setStyle(int $style): self
     {
@@ -170,7 +170,7 @@ class Button extends Component
      *
      * @throws \LengthException
      *
-     * @return $this
+     * @return self
      */
     public function setLabel(?string $label): self
     {
@@ -188,7 +188,7 @@ class Button extends Component
      *
      * @param Emoji|string|null $emoji Emoji to set.
      *
-     * @return $this
+     * @return self
      */
     public function setEmoji($emoji): self
     {
@@ -235,7 +235,7 @@ class Button extends Component
      * @throws \LogicException
      * @throws \LengthException
      *
-     * @return $this
+     * @return self
      */
     public function setCustomId(?string $custom_id): self
     {
@@ -259,7 +259,7 @@ class Button extends Component
      *
      * @throws \LogicException
      *
-     * @return $this
+     * @return self
      */
     public function setUrl(?string $url): self
     {
@@ -277,7 +277,7 @@ class Button extends Component
      *
      * @param bool $disabled
      *
-     * @return $this
+     * @return self
      */
     public function setDisabled(bool $disabled): self
     {
@@ -306,7 +306,7 @@ class Button extends Component
      *
      * @throws \LogicException
      *
-     * @return $this
+     * @return self
      */
     public function setListener(?callable $callback, Discord $discord, bool $oneOff = false): self
     {
@@ -360,7 +360,7 @@ class Button extends Component
     /**
      * Removes the listener from the button.
      *
-     * @return $this
+     * @return self
      */
     public function removeListener(): self
     {
