@@ -99,7 +99,7 @@ class Option extends Component
      *
      * @throws \LengthException
      *
-     * @return $this
+     * @return self
      */
     public function setDescription(?string $description): self
     {
@@ -117,7 +117,7 @@ class Option extends Component
      *
      * @param Emoji|string|null $emoji Emoji to set.
      *
-     * @return $this
+     * @return self
      */
     public function setEmoji($emoji): self
     {
@@ -161,7 +161,7 @@ class Option extends Component
      *
      * @param bool $default
      *
-     * @return $this
+     * @return self
      */
     public function setDefault(bool $default = true): self
     {

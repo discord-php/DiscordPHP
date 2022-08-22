@@ -43,7 +43,7 @@ class Choice extends Part
      * @param string           $name    name of the choice
      * @param string|int|float $value   value of the choice
      *
-     * @return $this
+     * @return self
      */
     public static function new(Discord $discord, string $name, $value): self
     {
@@ -57,7 +57,7 @@ class Choice extends Part
      *
      * @throws \LengthException `$name` is not 1-100 characters long.
      *
-     * @return $this
+     * @return self
      */
     public function setName(string $name): self
     {
@@ -81,7 +81,7 @@ class Choice extends Part
      *
      * @throws \LengthException `$name` is not 1-100 characters long.
      *
-     * @return $this
+     * @return self
      */
     public function setNameLocalization(string $locale, ?string $name): self
     {
@@ -106,7 +106,7 @@ class Choice extends Part
      *
      * @throws \LengthException `string $value` is not 1-100 characters long.
      *
-     * @return $this
+     * @return self
      */
     public function setValue($value): self
     {
