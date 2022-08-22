@@ -82,8 +82,7 @@ use function React\Promise\resolve;
  * @property ThreadRepository  $threads    Threads that belong to the channel.
  * @property InviteRepository  $invites    Invites in the channel.
  *
- * @method ExtendedPromiseInterface sendMessage(MessageBuilder $builder)
- * @method ExtendedPromiseInterface sendMessage(string $text, bool $tts = false, Embed|array $embed = null, array $allowed_mentions = null, ?Message $replyTo = null)
+ * @method ExtendedPromiseInterface<Message> sendMessage(MessageBuilder $builder)
  */
 class Channel extends Part
 {

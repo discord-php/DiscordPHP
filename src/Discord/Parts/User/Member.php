@@ -60,8 +60,7 @@ use function React\Promise\reject;
  * @property      Collection|Activity[] $activities    User's current activities.
  * @property      object                $client_status Current client status.
  *
- * @method ExtendedPromiseInterface sendMessage(MessageBuilder $builder)
- * @method ExtendedPromiseInterface sendMessage(string $text, bool $tts = false, Embed|array $embed = null, array $allowed_mentions = null, ?Message $replyTo = null)
+ * @method ExtendedPromiseInterface<Message> sendMessage(MessageBuilder $builder)
  */
 class Member extends Part
 {

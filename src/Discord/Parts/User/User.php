@@ -44,8 +44,7 @@ use function React\Promise\resolve;
  * @property int|null     $premium_type  Type of nitro subscription.
  * @property int|null     $public_flags  Public flags on the user.
  *
- * @method ExtendedPromiseInterface sendMessage(MessageBuilder $builder)
- * @method ExtendedPromiseInterface sendMessage(string $text, bool $tts = false, Embed|array $embed = null, array $allowed_mentions = null, ?Message $replyTo = null)
+ * @method ExtendedPromiseInterface<Message> sendMessage(MessageBuilder $builder)
  */
 class User extends Part
 {

@@ -64,8 +64,7 @@ use Traversable;
  * @property MessageRepository $messages              Repository of messages sent in the thread.
  * @property MemberRepository  $members               Repository of members in the thread.
  *
- * @method ExtendedPromiseInterface sendMessage(MessageBuilder $builder)
- * @method ExtendedPromiseInterface sendMessage(string $text, bool $tts = false, Embed|array $embed = null, array $allowed_mentions = null, ?Message $replyTo = null)
+ * @method ExtendedPromiseInterface<Message> sendMessage(MessageBuilder $builder)
  */
 class Thread extends Part
 {
