@@ -13,6 +13,8 @@ namespace Discord\Exceptions;
 
 /**
  * Thrown when FFmpeg is not compiled with libopus.
+ *
+ * @since 3.2.0
  */
 class OpusNotFoundException extends \Exception
 {

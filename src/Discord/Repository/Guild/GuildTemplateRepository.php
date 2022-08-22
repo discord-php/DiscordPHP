@@ -22,6 +22,8 @@ use React\Promise\ExtendedPromiseInterface;
  * @see GuildTemplate
  * @see \Discord\Parts\Guild\Guild
  *
+ * @since 7.0.0
+ *
  * @method GuildTemplate|null get(string $discrim, $key)
  * @method GuildTemplate|null pull(string|int $key, $default = null)
  * @method GuildTemplate|null first()

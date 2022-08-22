@@ -18,6 +18,8 @@ use Discord\Repository\AbstractRepository;
 /**
  * Contains invites to a guild.
  *
+ * @since 4.0.0
+ *
  * @see Invite
  * @see \Discord\Parts\Guild\Guild
  *

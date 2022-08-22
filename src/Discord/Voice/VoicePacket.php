@@ -13,6 +13,8 @@ namespace Discord\Voice;
 
 /**
  * A voice packet received from Discord.
+ *
+ * @since 3.2.0
  */
 class VoicePacket
 {

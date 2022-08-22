@@ -20,6 +20,8 @@ use Discord\Repository\AbstractRepository;
  * @see Reaction
  * @see \Discord\Parts\Channel\Message
  *
+ * @since 5.1.0
+ *
  * @method Reaction|null get(string $discrim, $key)
  * @method Reaction|null pull(string|int $key, $default = null)
  * @method Reaction|null first()

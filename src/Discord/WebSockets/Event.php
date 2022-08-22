@@ -19,8 +19,9 @@ use Evenement\EventEmitterTrait;
 use React\Promise\PromiseInterface;
 
 /**
- * Contains constants for WebSocket events as well as handlers
- * for the events.
+ * Contains constants for WebSocket events as well as handlers for the events.
+ *
+ * @since 2.1.3
  */
 abstract class Event
 {

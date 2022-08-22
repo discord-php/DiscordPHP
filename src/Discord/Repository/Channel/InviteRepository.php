@@ -21,6 +21,8 @@ use Discord\Repository\AbstractRepository;
  * @see Invite
  * @see \Discord\Parts\Channel\Channel
  *
+ * @since 4.0.0
+ *
  * @method Invite|null get(string $discrim, $key)
  * @method Invite|null pull(string|int $key, $default = null)
  * @method Invite|null first()

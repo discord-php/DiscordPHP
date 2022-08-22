@@ -13,6 +13,8 @@ namespace Discord\Exceptions;
 
 /**
  * Thrown when the FFmpeg binary cannot be found in your PATH.
+ *
+ * @since 3.2.0
  */
 class FFmpegNotFoundException extends \Exception
 {

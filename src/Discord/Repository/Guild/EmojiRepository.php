@@ -21,6 +21,8 @@ use Discord\Repository\AbstractRepository;
  * @see Emoji
  * @see \Discord\Parts\Guild\Guild
  *
+ * @since 4.0.2
+ *
  * @method Emoji|null get(string $discrim, $key)
  * @method Emoji|null pull(string|int $key, $default = null)
  * @method Emoji|null first()

@@ -13,6 +13,8 @@ namespace Discord\WebSockets;
 
 /**
  * This class contains all the handlers for the individual WebSocket events.
+ *
+ * @since 2.1.3
  */
 class Handlers
 {

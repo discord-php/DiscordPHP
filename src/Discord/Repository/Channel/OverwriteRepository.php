@@ -21,6 +21,8 @@ use Discord\Repository\AbstractRepository;
  * @see Overwrite
  * @see \Discord\Parts\Channel\Channel
  *
+ * @since 4.0.0
+ *
  * @method Overwrite|null get(string $discrim, $key)
  * @method Overwrite|null pull(string|int $key, $default = null)
  * @method Overwrite|null first()

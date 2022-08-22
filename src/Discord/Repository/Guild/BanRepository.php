@@ -25,6 +25,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * @see Ban
  * @see \Discord\Parts\Guild\Guild
  *
+ * @since 4.0.0
+ *
  * @method Ban|null get(string $discrim, $key)
  * @method Ban|null pull(string|int $key, $default = null)
  * @method Ban|null first()

@@ -20,6 +20,8 @@ use React\Promise\ExtendedPromiseInterface;
  *
  * @see Guild
  *
+ * @since 4.0.0
+ *
  * @method Guild|null get(string $discrim, $key)
  * @method Guild|null pull(string|int $key, $default = null)
  * @method Guild|null first()

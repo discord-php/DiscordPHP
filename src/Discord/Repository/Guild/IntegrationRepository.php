@@ -21,6 +21,8 @@ use Discord\Repository\AbstractRepository;
  * @see Integration
  * @see \Discord\Parts\Guild\Guild
  *
+ * @since 7.0.0
+ *
  * @method Integration|null get(string $discrim, $key)
  * @method Integration|null pull(string|int $key, $default = null)
  * @method Integration|null first()

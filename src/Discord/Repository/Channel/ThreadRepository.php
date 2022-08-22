@@ -23,6 +23,8 @@ use React\Promise\ExtendedPromiseInterface;
  *
  * @see Thread
  *
+ * @since 7.0.0
+ *
  * @method Thread|null get(string $discrim, $key)
  * @method Thread|null pull(string|int $key, $default = null)
  * @method Thread|null first()

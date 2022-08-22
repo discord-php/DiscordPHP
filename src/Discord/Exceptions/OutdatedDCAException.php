@@ -13,6 +13,8 @@ namespace Discord\Exceptions;
 
 /**
  * Thrown when the installed DCA version is outdated.
+ *
+ * @since 3.2.0
  */
 class OutdatedDCAException extends \Exception
 {

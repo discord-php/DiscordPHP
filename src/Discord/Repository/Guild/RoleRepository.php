@@ -18,6 +18,8 @@ use Discord\Repository\AbstractRepository;
 /**
  * Contains roles of a guild.
  *
+ * @since 4.0.0
+ *
  * @see Role
  * @see \Discord\Parts\Guild\Guild
  *

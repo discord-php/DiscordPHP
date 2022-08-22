@@ -20,6 +20,8 @@ use Discord\Repository\AbstractRepository;
  * @see Option
  * @see \Discord\Parts\Interactions\Command\Command
  *
+ * @since 7.0.0
+ *
  * @method Option|null get(string $discrim, $key)
  * @method Option|null pull(string|int $key, $default = null)
  * @method Option|null first()

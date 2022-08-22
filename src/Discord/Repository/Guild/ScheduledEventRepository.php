@@ -24,6 +24,8 @@ use function React\Promise\resolve;
  * @see ScheduledEvent
  * @see \Discord\Parts\Guild\Guild
  *
+ * @since 7.0.0
+ *
  * @method ScheduledEvent|null get(string $discrim, $key)
  * @method ScheduledEvent|null pull(string|int $key, $default = null)
  * @method ScheduledEvent|null first()

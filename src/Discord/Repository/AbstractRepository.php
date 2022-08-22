@@ -30,6 +30,8 @@ use function React\Promise\resolve;
 /**
  * Repositories provide a way to store and update parts on the Discord server.
  *
+ * @since 4.0.0
+ *
  * @author Aaron Scherer <aequasi@gmail.com>
  * @author David Cole <david.cole1340@gmail.com>
  *

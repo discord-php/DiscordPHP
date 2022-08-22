@@ -22,6 +22,8 @@ use Discord\Repository\AbstractRepository;
  * @see \Discord\Parts\Channel\Channel
  * @see \Discord\Parts\Channel\Webhook
  *
+ * @since 7.2.0
+ *
  * @method Message|null get(string $discrim, $key)
  * @method Message|null pull(string|int $key, $default = null)
  * @method Message|null first()

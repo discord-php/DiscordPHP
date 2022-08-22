@@ -19,6 +19,8 @@ use Discord\Http\Endpoint;
  *
  * @see Channel
  *
+ * @since 4.0.0
+ *
  * @method Channel|null get(string $discrim, $key)
  * @method Channel|null pull(string|int $key, $default = null)
  * @method Channel|null first()

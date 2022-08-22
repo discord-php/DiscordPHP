@@ -21,6 +21,8 @@ use Discord\Repository\AbstractRepository;
  * @see Member
  * @see \Discord\Parts\Thread\Thread
  *
+ * @since 7.0.0
+ *
  * @method Member|null get(string $discrim, $key)
  * @method Member|null pull(string|int $key, $default = null)
  * @method Member|null first()

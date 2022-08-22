@@ -21,6 +21,8 @@ use React\Promise\PromiseInterface;
 /**
  * Contains members of a guild.
  *
+ * @since 4.0.0
+ *
  * @see Member
  * @see \Discord\Parts\Guild\Guild
  *

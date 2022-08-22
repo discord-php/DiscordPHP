@@ -19,6 +19,8 @@ use Discord\Parts\User\User;
  *
  * @see User
  *
+ * @since 4.0.0
+ *
  * @method User|null get(string $discrim, $key)
  * @method User|null pull(string|int $key, $default = null)
  * @method User|null first()

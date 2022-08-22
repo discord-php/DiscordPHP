@@ -21,6 +21,8 @@ use Discord\Repository\AbstractRepository;
  * @see Message
  * @see \Discord\Parts\Channel\Channel
  *
+ * @since 4.0.0
+ *
  * @method Message|null get(string $discrim, $key)
  * @method Message|null pull(string|int $key, $default = null)
  * @method Message|null first()

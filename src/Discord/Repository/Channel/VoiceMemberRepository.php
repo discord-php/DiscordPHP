@@ -20,6 +20,8 @@ use Discord\Repository\AbstractRepository;
  * @see VoiceStateUpdate
  * @see \Discord\Parts\Channel\Channel
  *
+ * @since 4.0.0
+ *
  * @method VoiceStateUpdate|null get(string $discrim, $key)
  * @method VoiceStateUpdate|null pull(string|int $key, $default = null)
  * @method VoiceStateUpdate|null first()

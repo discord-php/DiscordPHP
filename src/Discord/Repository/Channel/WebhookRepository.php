@@ -20,6 +20,8 @@ use Discord\Repository\AbstractRepository;
  *
  * @see Webhook
  *
+ * @since 5.0.0
+ *
  * @method Webhook|null get(string $discrim, $key)
  * @method Webhook|null pull(string|int $key, $default = null)
  * @method Webhook|null first()
