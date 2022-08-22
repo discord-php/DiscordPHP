@@ -19,7 +19,7 @@ use Discord\WebSockets\Event;
 use function React\Async\coroutine;
 
 /**
- * @see https://discord.com/developers/docs/topics/gateway#guild-role-delete
+ * @link https://discord.com/developers/docs/topics/gateway#guild-role-delete
  */
 class GuildRoleDelete extends Event
 {

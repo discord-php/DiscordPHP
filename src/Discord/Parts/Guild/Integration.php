@@ -19,7 +19,7 @@ use Discord\Parts\User\User;
 /**
  * An Integration is a guild integrations for Twitch, Youtube, Bot and Apps.
  *
- * @see https://discord.com/developers/docs/resources/guild#integration-object
+ * @link https://discord.com/developers/docs/resources/guild#integration-object
  *
  * @property      string           $id                  Integration id.
  * @property      string           $name                Integration name.

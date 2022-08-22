@@ -19,7 +19,7 @@ use Discord\Parts\Guild\Integration;
 use function React\Async\coroutine;
 
 /**
- * @see https://discord.com/developers/docs/topics/gateway#integration-create
+ * @link https://discord.com/developers/docs/topics/gateway#integration-create
  */
 class IntegrationCreate extends Event
 {

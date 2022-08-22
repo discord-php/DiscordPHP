@@ -20,7 +20,7 @@ use Discord\Parts\Guild\Guild;
 use function React\Async\coroutine;
 
 /**
- * @see https://discord.com/developers/docs/topics/gateway#voice-state-update
+ * @link https://discord.com/developers/docs/topics/gateway#voice-state-update
  */
 class VoiceStateUpdate extends Event
 {

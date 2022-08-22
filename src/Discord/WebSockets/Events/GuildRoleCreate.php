@@ -19,7 +19,7 @@ use Discord\Parts\Guild\Guild;
 use function React\Async\coroutine;
 
 /**
- * @see https://discord.com/developers/docs/topics/gateway#guild-role-create
+ * @link https://discord.com/developers/docs/topics/gateway#guild-role-create
  */
 class GuildRoleCreate extends Event
 {

@@ -25,7 +25,7 @@ use ReflectionClass;
 /**
  * Represents an audit log query from a guild.
  *
- * @see https://discord.com/developers/docs/resources/audit-log#audit-log-object
+ * @link https://discord.com/developers/docs/resources/audit-log#audit-log-object
  *
  * @property Collection|Entry[]               $audit_log_entries      List of audit log entries.
  * @property Collection|Rule[]                $auto_moderation_rules  List of auto moderation rules referenced in the audit log.
@@ -117,7 +117,7 @@ class AuditLog extends Part
     /**
      * Returns a collection of partial integrations found in the audit log.
      *
-     * @see https://discord.com/developers/docs/resources/audit-log#audit-log-object-example-partial-integration-object
+     * @link https://discord.com/developers/docs/resources/audit-log#audit-log-object-example-partial-integration-object
      *
      * @return Collection|Integration[]
      */

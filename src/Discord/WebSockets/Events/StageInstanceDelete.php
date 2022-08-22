@@ -19,7 +19,7 @@ use Discord\Parts\Guild\Guild;
 use function React\Async\coroutine;
 
 /**
- * @see https://discord.com/developers/docs/topics/gateway#stage-instance-delete
+ * @link https://discord.com/developers/docs/topics/gateway#stage-instance-delete
  */
 class StageInstanceDelete extends Event
 {

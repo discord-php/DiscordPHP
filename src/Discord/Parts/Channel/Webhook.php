@@ -24,7 +24,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * Webhooks are a low-effort way to post messages to channels in Discord. They do not require a bot user or authentication to use.
  *
- * @see https://discord.com/developers/docs/resources/webhook#webhook-resource
+ * @link https://discord.com/developers/docs/resources/webhook#webhook-resource
  *
  * @property      string                   $id             The id of the webhook.
  * @property      int                      $type           The type of webhook.
@@ -77,7 +77,7 @@ class Webhook extends Part
     /**
      * Executes the webhook with an array of data.
      *
-     * @see https://discord.com/developers/docs/resources/webhook#execute-webhook
+     * @link https://discord.com/developers/docs/resources/webhook#execute-webhook
      *
      * @param MessageBuilder|array $data
      * @param array                $queryparams Query string params to add to the request.
@@ -120,7 +120,7 @@ class Webhook extends Part
     /**
      * Edits a previously-sent webhook message from the same token.
      *
-     * @see https://discord.com/developers/docs/resources/webhook#edit-webhook-message
+     * @link https://discord.com/developers/docs/resources/webhook#edit-webhook-message
      *
      * @param string         $message_id  ID of the message to update.
      * @param MessageBuilder $builder     The new message.

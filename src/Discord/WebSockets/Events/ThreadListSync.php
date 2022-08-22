@@ -22,7 +22,7 @@ use Discord\WebSockets\Event;
 use function React\Async\coroutine;
 
 /**
- * @see https://discord.com/developers/docs/topics/gateway#thread-list-sync
+ * @link https://discord.com/developers/docs/topics/gateway#thread-list-sync
  */
 class ThreadListSync extends Event
 {

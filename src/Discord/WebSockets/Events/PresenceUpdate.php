@@ -20,7 +20,7 @@ use Discord\Parts\User\Member;
 use function React\Async\coroutine;
 
 /**
- * @see https://discord.com/developers/docs/topics/gateway#presence-update
+ * @link https://discord.com/developers/docs/topics/gateway#presence-update
  */
 class PresenceUpdate extends Event
 {

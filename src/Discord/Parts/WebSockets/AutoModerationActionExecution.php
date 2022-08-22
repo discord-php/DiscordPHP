@@ -22,7 +22,7 @@ use Discord\Parts\User\User;
 /**
  * Sent when a rule is triggered and an action is executed (e.g. when a message is blocked).
  *
- * @see https://discord.com/developers/docs/topics/gateway#auto-moderation-action-execution-auto-moderation-action-execution-event-fields
+ * @link https://discord.com/developers/docs/topics/gateway#auto-moderation-action-execution-auto-moderation-action-execution-event-fields
  *
  * @property      string       $guild_id                The id of the guild in which action was executed.
  * @property-read Guild|null   $guild                   The guild in which action was executed.

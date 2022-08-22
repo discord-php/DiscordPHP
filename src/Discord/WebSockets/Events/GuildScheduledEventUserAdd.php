@@ -15,7 +15,7 @@ use Discord\WebSockets\Event;
 use Discord\Helpers\Deferred;
 
 /**
- * @see https://discord.com/developers/docs/topics/gateway#guild-scheduled-event-user-add
+ * @link https://discord.com/developers/docs/topics/gateway#guild-scheduled-event-user-add
  */
 class GuildScheduledEventUserAdd extends Event
 {

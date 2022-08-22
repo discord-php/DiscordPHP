@@ -20,7 +20,7 @@ use Discord\Parts\User\User;
  * Auto Moderation is a feature which allows each guild to set up rules that trigger based on some criteria. For example, a rule can trigger whenever a message contains a specific keyword.
  * Rules can be configured to automatically execute actions whenever they trigger. For example, if a user tries to send a message which contains a certain keyword, a rule can trigger and block the message before it is sent.
  *
- * @see https://discord.com/developers/docs/resources/auto-moderation#auto-moderation-rule-object
+ * @link https://discord.com/developers/docs/resources/auto-moderation#auto-moderation-rule-object
  *
  * @property      string              $id               The id of this rule.
  * @property      string              $guild_id         The id of the guild which this rule belongs to.

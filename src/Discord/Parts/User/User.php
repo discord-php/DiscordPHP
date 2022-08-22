@@ -23,7 +23,7 @@ use function React\Promise\resolve;
 /**
  * A user is a general user that is not attached to a guild.
  *
- * @see https://discord.com/developers/docs/resources/user
+ * @link https://discord.com/developers/docs/resources/user
  *
  * @property string       $id            The unique identifier of the user.
  * @property string       $username      The username of the user.
@@ -92,7 +92,7 @@ class User extends Part
     /**
      * Gets the private channel for the user.
      *
-     * @see https://discord.com/developers/docs/resources/user#create-dm
+     * @link https://discord.com/developers/docs/resources/user#create-dm
      *
      * @return ExtendedPromiseInterface<Channel>
      */
@@ -116,7 +116,7 @@ class User extends Part
      * Takes a `MessageBuilder` or content of the message for the first parameter. If the first parameter
      * is an instance of `MessageBuilder`, the rest of the arguments are disregarded.
      *
-     * @see https://discord.com/developers/docs/resources/channel#create-message
+     * @link https://discord.com/developers/docs/resources/channel#create-message
      *
      * @param MessageBuilder|string $message          The message builder that should be converted into a message, or the string content of the message.
      * @param bool                  $tts              Whether the message is TTS.
@@ -136,7 +136,7 @@ class User extends Part
     /**
      * Broadcasts that you are typing to the channel. Lasts for 5 seconds.
      *
-     * @see https://discord.com/developers/docs/resources/channel#trigger-typing-indicator
+     * @link https://discord.com/developers/docs/resources/channel#trigger-typing-indicator
      *
      * @throws \Exception
      *

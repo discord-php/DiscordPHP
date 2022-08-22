@@ -20,7 +20,7 @@ use Discord\Parts\Guild\Guild;
 use function React\Async\coroutine;
 
 /**
- * @see https://discord.com/developers/docs/topics/gateway#invite-create
+ * @link https://discord.com/developers/docs/topics/gateway#invite-create
  */
 class InviteCreate extends Event
 {

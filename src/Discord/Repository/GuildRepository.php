@@ -42,7 +42,7 @@ class GuildRepository extends AbstractRepository
     /**
      * Causes the client to leave a guild.
      *
-     * @see https://discord.com/developers/docs/resources/user#leave-guild
+     * @link https://discord.com/developers/docs/resources/user#leave-guild
      *
      * @param Guild|string $guild
      *

@@ -22,7 +22,7 @@ use Discord\Parts\Thread\Thread;
 use function React\Async\coroutine;
 
 /**
- * @see https://discord.com/developers/docs/topics/gateway#message-reaction-remove
+ * @link https://discord.com/developers/docs/topics/gateway#message-reaction-remove
  */
 class MessageReactionRemove extends Event
 {

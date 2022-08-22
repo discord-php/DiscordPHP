@@ -19,7 +19,7 @@ use React\Promise\ExtendedPromiseInterface;
 /**
  * A Widget of a Guild.
  *
- * @see https://discord.com/developers/docs/resources/guild#guild-widget-object
+ * @link https://discord.com/developers/docs/resources/guild#guild-widget-object
  *
  * @property      string     $id             Guild id.
  * @property-read Guild|null $guild          Guild.

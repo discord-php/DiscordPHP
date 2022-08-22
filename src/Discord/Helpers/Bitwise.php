@@ -159,7 +159,7 @@ class Bitwise
     /**
      * Safely converts float to string, avoiding locale-dependent issues.
      *
-     * @see https://github.com/brick/math/pull/20
+     * @link https://github.com/brick/math/pull/20
      *
      * @param mixed $value if not a float, it is discarded
      *

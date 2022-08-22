@@ -22,7 +22,7 @@ use function React\Promise\reject;
 /**
  * Represents a command registered on the Discord servers.
  *
- * @see https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-structure
+ * @link https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-structure
  *
  * @property      string      $id             The unique identifier of the command.
  * @property      string      $application_id The unique identifier of the parent Application that made the command, if made by one.
@@ -113,7 +113,7 @@ class Command extends Part
     /**
      * Sets a guild application command permission overwrite.
      *
-     * @see https://discord.com/developers/docs/interactions/application-commands#edit-application-command-permissions
+     * @link https://discord.com/developers/docs/interactions/application-commands#edit-application-command-permissions
      *
      * @param CommandPermissions $overwrite A command permission object.
      *

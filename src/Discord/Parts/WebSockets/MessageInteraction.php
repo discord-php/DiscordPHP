@@ -18,7 +18,7 @@ use Discord\Parts\User\User;
 /**
  * Sent on the message object when the message is a response to an Interaction without an existing message.
  *
- * @see https://discord.com/developers/docs/interactions/receiving-and-responding#message-interaction-object
+ * @link https://discord.com/developers/docs/interactions/receiving-and-responding#message-interaction-object
  *
  * @property string      $id     ID of the interaction.
  * @property int         $type   Type of interaction.

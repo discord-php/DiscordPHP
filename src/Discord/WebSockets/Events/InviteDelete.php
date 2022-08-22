@@ -20,7 +20,7 @@ use Discord\Parts\Guild\Guild;
 use function React\Async\coroutine;
 
 /**
- * @see https://discord.com/developers/docs/topics/gateway#invite-delete
+ * @link https://discord.com/developers/docs/topics/gateway#invite-delete
  */
 class InviteDelete extends Event
 {

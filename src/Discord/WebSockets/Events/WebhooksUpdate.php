@@ -15,7 +15,7 @@ use Discord\WebSockets\Event;
 use Discord\Helpers\Deferred;
 
 /**
- * @see https://discord.com/developers/docs/topics/gateway#webhooks-update
+ * @link https://discord.com/developers/docs/topics/gateway#webhooks-update
  *
  * @todo update docs for raw parameter
  */

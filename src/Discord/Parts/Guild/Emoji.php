@@ -18,7 +18,7 @@ use Discord\Parts\User\User;
 /**
  * An emoji object represents a custom emoji.
  *
- * @see https://discord.com/developers/docs/resources/emoji
+ * @link https://discord.com/developers/docs/resources/emoji
  *
  * @property ?string           $id             The identifier for the emoji.
  * @property string            $name           The name of the emoji.

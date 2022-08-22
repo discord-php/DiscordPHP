@@ -20,7 +20,7 @@ use Discord\WebSockets\Event;
 use function React\Async\coroutine;
 
 /**
- * @see https://discord.com/developers/docs/topics/gateway#thread-update
+ * @link https://discord.com/developers/docs/topics/gateway#thread-update
  */
 class ThreadUpdate extends Event
 {

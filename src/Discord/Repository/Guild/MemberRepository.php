@@ -44,7 +44,7 @@ class MemberRepository extends AbstractRepository
     /**
      * Alias for `$member->delete()`.
      *
-     * @see https://discord.com/developers/docs/resources/guild#remove-guild-member
+     * @link https://discord.com/developers/docs/resources/guild#remove-guild-member
      *
      * @param Member      $member The member to kick.
      * @param string|null $reason Reason for Audit Log.

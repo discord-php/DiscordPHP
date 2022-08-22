@@ -16,7 +16,7 @@ use Discord\Parts\Part;
 /**
  * The footer section of an embed.
  *
- * @see https://discord.com/developers/docs/resources/channel#embed-object-embed-footer-structure
+ * @link https://discord.com/developers/docs/resources/channel#embed-object-embed-footer-structure
  *
  * @property string      $text           Footer text.
  * @property string|null $icon_url       URL of an icon for the footer. Must be https.

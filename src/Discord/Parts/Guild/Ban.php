@@ -17,7 +17,7 @@ use Discord\Parts\User\User;
 /**
  * A Ban is a ban on a user specific to a guild. It is also IP based.
  *
- * @see https://discord.com/developers/docs/resources/guild#ban-object
+ * @link https://discord.com/developers/docs/resources/guild#ban-object
  *
  * @property string $reason  The reason for the ban.
  * @property User   $user    The banned user.

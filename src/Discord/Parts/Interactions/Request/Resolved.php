@@ -24,7 +24,7 @@ use Discord\Parts\User\User;
 /**
  * Represents the data associated with an interaction.
  *
- * @see https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-resolved-data-structure
+ * @link https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-resolved-data-structure
  *
  * @property Collection|User[]|null             $users       The ids and User objects.
  * @property Collection|Member[]|null           $members     The ids and partial Member objects.

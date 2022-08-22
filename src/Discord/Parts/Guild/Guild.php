@@ -49,7 +49,7 @@ use function React\Promise\resolve;
 /**
  * A Guild is Discord's equivalent of a server. It contains all the Members, Channels, Roles, Bans etc.
  *
- * @see https://discord.com/developers/docs/resources/guild
+ * @link https://discord.com/developers/docs/resources/guild
  *
  * @property      string             $id                                       The unique identifier of the guild.
  * @property      string             $name                                     The name of the guild.
@@ -323,7 +323,7 @@ class Guild extends Part
     /**
      * Returns the channels invites.
      *
-     * @see https://discord.com/developers/docs/resources/guild#get-guild-invites
+     * @link https://discord.com/developers/docs/resources/guild#get-guild-invites
      *
      * @return ExtendedPromiseInterface<Collection|Invite[]>
      */
@@ -581,7 +581,7 @@ class Guild extends Part
     /**
      * Gets the voice regions available.
      *
-     * @see https://discord.com/developers/docs/resources/voice#list-voice-regions
+     * @link https://discord.com/developers/docs/resources/voice#list-voice-regions
      *
      * @return ExtendedPromiseInterface
      */
@@ -603,7 +603,7 @@ class Guild extends Part
     /**
      * Creates a role.
      *
-     * @see https://discord.com/developers/docs/resources/guild#create-guild-role
+     * @link https://discord.com/developers/docs/resources/guild#create-guild-role
      *
      * @param array       $data   The data to fill the role with.
      * @param string|null $reason Reason for Audit Log.
@@ -626,7 +626,7 @@ class Guild extends Part
     /**
      * Creates an Emoji for the guild.
      *
-     * @see https://discord.com/developers/docs/resources/emoji#create-guild-emoji
+     * @link https://discord.com/developers/docs/resources/emoji#create-guild-emoji
      *
      * @param array       $options  An array of options.
      *                              name => name of the emoji
@@ -687,7 +687,7 @@ class Guild extends Part
     /**
      * Creates an Sticker for the guild.
      *
-     * @see https://discord.com/developers/docs/resources/sticker#create-guild-sticker
+     * @link https://discord.com/developers/docs/resources/sticker#create-guild-sticker
      *
      * @param array       $options  An array of options.
      *                              name => Name of the sticker.
@@ -850,7 +850,7 @@ class Guild extends Part
     /**
      * Returns an audit log object for the query.
      *
-     * @see https://discord.com/developers/docs/resources/audit-log#get-guild-audit-log
+     * @link https://discord.com/developers/docs/resources/audit-log#get-guild-audit-log
      *
      * @param array $options An array of options.
      *                       user_id => filter the log for actions made by a user
@@ -900,7 +900,7 @@ class Guild extends Part
     /**
      * Updates the positions of a list of given roles.
      *
-     * @see https://discord.com/developers/docs/resources/guild#modify-guild-role-positions
+     * @link https://discord.com/developers/docs/resources/guild#modify-guild-role-positions
      *
      * The `$roles` array should be an associative array where the LHS key is the position,
      * and the RHS value is a `Role` object or a string ID, e.g. [1 => 'role_id_1', 3 => 'role_id_3'].
@@ -938,7 +938,7 @@ class Guild extends Part
     /**
      * Returns a list of guild member objects whose username or nickname starts with a provided string.
      *
-     * @see https://discord.com/developers/docs/resources/guild#search-guild-members
+     * @link https://discord.com/developers/docs/resources/guild#search-guild-members
      *
      * @param array $options An array of options.
      *                       query => query string to match username(s) and nickname(s) against
@@ -984,7 +984,7 @@ class Guild extends Part
      * Returns the number of members that would be removed in a prune operation.
      * Requires the KICK_MEMBERS permission.
      *
-     * @see https://discord.com/developers/docs/resources/guild#get-guild-prune-count
+     * @link https://discord.com/developers/docs/resources/guild#get-guild-prune-count
      *
      * @param array $options An array of options.
      *                       days => number of days to count prune for (1-30)
@@ -1022,7 +1022,7 @@ class Guild extends Part
      * For large guilds it's recommended to set the compute_prune_count option to false, forcing 'pruned' to null.
      * Requires the KICK_MEMBERS permission.
      *
-     * @see https://discord.com/developers/docs/resources/guild#get-guild-prune-count
+     * @link https://discord.com/developers/docs/resources/guild#get-guild-prune-count
      *
      * @param array  $options An array of options.
      *                        days => number of days to count prune for (1-30)
@@ -1061,7 +1061,7 @@ class Guild extends Part
     /**
      * Get the Welcome Screen for the guild.
      *
-     * @see https://discord.com/developers/docs/resources/guild#get-guild-welcome-screen
+     * @link https://discord.com/developers/docs/resources/guild#get-guild-welcome-screen
      *
      * @param bool $fresh Whether we should skip checking the cache.
      *
@@ -1097,7 +1097,7 @@ class Guild extends Part
     /**
      * Modify the guild's Welcome Screen. Requires the MANAGE_GUILD permission.
      *
-     * @see https://discord.com/developers/docs/resources/guild#modify-guild-welcome-screen
+     * @link https://discord.com/developers/docs/resources/guild#modify-guild-welcome-screen
      *
      * @param array $options An array of options.
      *                       enabled => whether the welcome screen is enabled
@@ -1130,7 +1130,7 @@ class Guild extends Part
     /**
      * Fetch the Widget Settings for the guild.
      *
-     * @see https://discord.com/developers/docs/resources/guild#get-guild-widget-settings
+     * @link https://discord.com/developers/docs/resources/guild#get-guild-widget-settings
      *
      * @return ExtendedPromiseInterface
      */
@@ -1147,7 +1147,7 @@ class Guild extends Part
     /**
      * Modify a guild widget settings object for the guild. All attributes may be passed in with JSON and modified. Requires the MANAGE_GUILD permission.
      *
-     * @see https://discord.com/developers/docs/resources/guild#modify-guild-widget
+     * @link https://discord.com/developers/docs/resources/guild#modify-guild-widget
      *
      * @param array  $options An array of options.
      *                        enabled => whether the widget is enabled
@@ -1184,7 +1184,7 @@ class Guild extends Part
     /**
      * Get the Widget for the guild.
      *
-     * @see https://discord.com/developers/docs/resources/guild#get-guild-widget
+     * @link https://discord.com/developers/docs/resources/guild#get-guild-widget
      *
      * @return ExtendedPromiseInterface<WelcomeScreen>
      */
@@ -1227,7 +1227,7 @@ class Guild extends Part
     /**
      * Modify the Guild `mfa_level`, requires guild ownership.
      *
-     * @see https://discord.com/developers/docs/resources/guild#modify-guild-mfa-level
+     * @link https://discord.com/developers/docs/resources/guild#modify-guild-mfa-level
      *
      * @param int    $level  The new MFA level `Guild::MFA_NONE` or `Guild::MFA_ELEVATED`.
      * @param string $reason Reason for Audit Log.

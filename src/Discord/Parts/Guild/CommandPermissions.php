@@ -18,7 +18,7 @@ use Discord\Parts\Part;
 /**
  * Guild Application Command Permissions Class.
  *
- * @see https://discord.com/developers/docs/interactions/application-commands#application-command-permissions-object-guild-application-command-permissions-structure
+ * @link https://discord.com/developers/docs/interactions/application-commands#application-command-permissions-object-guild-application-command-permissions-structure
  *
  * @property      string                  $id             The id of the command or the application ID if no overwrites.
  * @property      string                  $application_id The id of the application the command belongs to.
@@ -89,7 +89,7 @@ class CommandPermissions extends Part
      * Get the permission ID constant for All Channels in the guild (i.e. guild_id - 1)
      * Requires GMP extension loaded on 32 bits PHP.
      *
-     * @see https://discord.com/developers/docs/interactions/application-commands#application-command-permissions-object-application-command-permissions-constants
+     * @link https://discord.com/developers/docs/interactions/application-commands#application-command-permissions-object-application-command-permissions-constants
      *
      * @return string The permission ID for all channels (i.e. guild_id - 1)
      */

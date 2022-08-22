@@ -16,7 +16,7 @@ use Discord\Helpers\Deferred;
 use Discord\Parts\WebSockets\AutoModerationActionExecution as ActionExecution;
 
 /**
- * @see https://discord.com/developers/docs/topics/gateway#auto-moderation-action-execution
+ * @link https://discord.com/developers/docs/topics/gateway#auto-moderation-action-execution
  */
 class AutoModerationActionExecution extends Event
 {

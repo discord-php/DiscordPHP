@@ -20,7 +20,7 @@ use Discord\Parts\Guild\Guild;
 use function React\Async\coroutine;
 
 /**
- * @see https://discord.com/developers/docs/topics/gateway#message-update
+ * @link https://discord.com/developers/docs/topics/gateway#message-update
  */
 class MessageUpdate extends Event
 {

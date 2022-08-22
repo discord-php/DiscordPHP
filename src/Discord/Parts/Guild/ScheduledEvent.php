@@ -23,7 +23,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * A representation of a scheduled event in a guild.
  *
- * @see https://discord.com/developers/docs/resources/guild-scheduled-event
+ * @link https://discord.com/developers/docs/resources/guild-scheduled-event
  *
  * @property      string       $id                   The id of the scheduled event.
  * @property      string       $guild_id             The guild id which the scheduled event belongs to.
@@ -85,7 +85,7 @@ class ScheduledEvent extends Part
      * Returns a list of guild scheduled event user objects on success.
      * Guild member data, if it exists, is included if the with_member query parameter is set.
      *
-     * @see https://discord.com/developers/docs/resources/guild-scheduled-event#get-guild-scheduled-event-users
+     * @link https://discord.com/developers/docs/resources/guild-scheduled-event#get-guild-scheduled-event-users
      *
      * @throws \RangeException
      *

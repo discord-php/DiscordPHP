@@ -18,7 +18,7 @@ use Discord\Parts\Guild\Integration;
 use function React\Async\coroutine;
 
 /**
- * @see https://discord.com/developers/docs/topics/gateway#integration-delete
+ * @link https://discord.com/developers/docs/topics/gateway#integration-delete
  *
  * @todo update docs parameter change
  */

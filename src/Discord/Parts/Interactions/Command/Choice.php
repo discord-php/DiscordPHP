@@ -19,7 +19,7 @@ use function Discord\poly_strlen;
 /**
  * Choice represents a choice that can be given to a command.
  *
- * @see https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-option-choice-structure
+ * @link https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-option-choice-structure
  *
  * @property string           $name               1-100 character choice name.
  * @property ?string[]|null   $name_localizations Localization dictionary for the name field. Values follow the same restrictions as name.

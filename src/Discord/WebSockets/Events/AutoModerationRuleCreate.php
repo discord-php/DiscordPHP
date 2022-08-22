@@ -19,7 +19,7 @@ use Discord\Parts\Guild\Guild;
 use function React\Async\coroutine;
 
 /**
- * @see https://discord.com/developers/docs/topics/gateway#auto-moderation-rule-create
+ * @link https://discord.com/developers/docs/topics/gateway#auto-moderation-rule-create
  */
 class AutoModerationRuleCreate extends Event
 {

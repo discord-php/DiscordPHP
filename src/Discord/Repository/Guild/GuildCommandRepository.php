@@ -57,7 +57,7 @@ class GuildCommandRepository extends AbstractRepository
     /**
      * Sets all guild commands permission overwrites.
      *
-     * @see https://discord.com/developers/docs/interactions/application-commands#batch-edit-application-command-permissions
+     * @link https://discord.com/developers/docs/interactions/application-commands#batch-edit-application-command-permissions
      *
      * @param CommandPermissions $overwrite An overwrite object.
      *

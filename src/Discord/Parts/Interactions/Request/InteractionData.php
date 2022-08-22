@@ -18,7 +18,7 @@ use Discord\Repository\Interaction\OptionRepository;
 /**
  * Represents the data associated with an interaction.
  *
- * @see https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-interaction-data
+ * @link https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-interaction-data
  *
  * @property string              $id             ID of the invoked command.
  * @property string              $name           Name of the invoked command.

@@ -15,7 +15,7 @@ use Discord\WebSockets\Event;
 use Discord\Helpers\Deferred;
 
 /**
- * @see https://discord.com/developers/docs/topics/gateway#guild-integrations-update
+ * @link https://discord.com/developers/docs/topics/gateway#guild-integrations-update
  */
 class GuildIntegrationsUpdate extends Event
 {

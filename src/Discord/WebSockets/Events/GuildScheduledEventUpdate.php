@@ -19,7 +19,7 @@ use Discord\Parts\Guild\ScheduledEvent;
 use function React\Async\coroutine;
 
 /**
- * @see https://discord.com/developers/docs/topics/gateway#guild-scheduled-event-update
+ * @link https://discord.com/developers/docs/topics/gateway#guild-scheduled-event-update
  */
 class GuildScheduledEventUpdate extends Event
 {

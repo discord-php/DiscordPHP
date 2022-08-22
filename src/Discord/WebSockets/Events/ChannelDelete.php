@@ -18,7 +18,7 @@ use Discord\Helpers\Deferred;
 use function React\Async\coroutine;
 
 /**
- * @see https://discord.com/developers/docs/topics/gateway#channel-delete
+ * @link https://discord.com/developers/docs/topics/gateway#channel-delete
  */
 class ChannelDelete extends Event
 {

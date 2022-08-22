@@ -46,7 +46,7 @@ use function React\Promise\resolve;
 /**
  * A Channel can be either a text or voice channel on a Discord guild.
  *
- * @see https://discord.com/developers/docs/resources/channel#channel-object
+ * @link https://discord.com/developers/docs/resources/channel#channel-object
  *
  * @property      string              $id                            The unique identifier of the Channel.
  * @property      int                 $type                          The type of the channel.
@@ -242,7 +242,7 @@ class Channel extends Part
     /**
      * Returns the channels pinned messages.
      *
-     * @see https://discord.com/developers/docs/resources/channel#get-pinned-messages
+     * @link https://discord.com/developers/docs/resources/channel#get-pinned-messages
      *
      * @return ExtendedPromiseInterface<Collection<Message>>
      */
@@ -266,7 +266,7 @@ class Channel extends Part
     /**
      * Sets permissions in a channel.
      *
-     * @see https://discord.com/developers/docs/resources/channel#edit-channel-permissions
+     * @link https://discord.com/developers/docs/resources/channel#edit-channel-permissions
      *
      * @param Part        $part   A role or member.
      * @param array       $allow  An array of permissions to allow.
@@ -307,7 +307,7 @@ class Channel extends Part
     /**
      * Sets an overwrite to the channel.
      *
-     * @see https://discord.com/developers/docs/resources/channel#edit-channel-permissions
+     * @link https://discord.com/developers/docs/resources/channel#edit-channel-permissions
      *
      * @param Part        $part      A role or member.
      * @param Overwrite   $overwrite An overwrite object.
@@ -477,7 +477,7 @@ class Channel extends Part
     /**
      * Creates an invite for the channel.
      *
-     * @see https://discord.com/developers/docs/resources/channel#create-channel-invite
+     * @link https://discord.com/developers/docs/resources/channel#create-channel-invite
      *
      * @param array  $options                          An array of options. All fields are optional.
      * @param int    $options['max_age']               The time that the invite will be valid in seconds.
@@ -539,7 +539,7 @@ class Channel extends Part
     /**
      * Bulk deletes an array of messages.
      *
-     * @see https://discord.com/developers/docs/resources/channel#bulk-delete-messages
+     * @link https://discord.com/developers/docs/resources/channel#bulk-delete-messages
      *
      * @param array|Traversable $messages An array of messages to delete.
      * @param string|null       $reason   Reason for Audit Log (only for bulk messages).
@@ -588,7 +588,7 @@ class Channel extends Part
     /**
      * Deletes a given number of messages, in order of time sent.
      *
-     * @see https://discord.com/developers/docs/resources/channel#bulk-delete-messages
+     * @link https://discord.com/developers/docs/resources/channel#bulk-delete-messages
      *
      * @param int         $value
      * @param string|null $reason Reason for Audit Log (only for bulk messages).
@@ -605,7 +605,7 @@ class Channel extends Part
     /**
      * Fetches message history.
      *
-     * @see https://discord.com/developers/docs/resources/channel#get-channel-messages
+     * @link https://discord.com/developers/docs/resources/channel#get-channel-messages
      *
      * @param array $options
      *
@@ -667,7 +667,7 @@ class Channel extends Part
     /**
      * Adds a message to the channels pinboard.
      *
-     * @see https://discord.com/developers/docs/resources/channel#pin-message
+     * @link https://discord.com/developers/docs/resources/channel#pin-message
      *
      * @param Message     $message The message to pin.
      * @param string|null $reason  Reason for Audit Log.
@@ -708,7 +708,7 @@ class Channel extends Part
     /**
      * Removes a message from the channels pinboard.
      *
-     * @see https://discord.com/developers/docs/resources/channel#unpin-message
+     * @link https://discord.com/developers/docs/resources/channel#unpin-message
      *
      * @param Message     $message The message to un-pin.
      * @param string|null $reason  Reason for Audit Log.
@@ -749,7 +749,7 @@ class Channel extends Part
     /**
      * Returns the channels invites.
      *
-     * @see https://discord.com/developers/docs/resources/channel#get-channel-invites
+     * @link https://discord.com/developers/docs/resources/channel#get-channel-invites
      *
      * @deprecated 7.1.0 Use `$channel->invites->freshen()`
      *
@@ -790,7 +790,7 @@ class Channel extends Part
     /**
      * Starts a thread in the channel.
      *
-     * @see https://discord.com/developers/docs/resources/channel#start-thread-without-message
+     * @link https://discord.com/developers/docs/resources/channel#start-thread-without-message
      *
      * @param string      $name                  The name of the thread.
      * @param bool        $private               Whether the thread should be private. cannot start a private thread in a news channel channel.
@@ -844,7 +844,7 @@ class Channel extends Part
      * Takes a `MessageBuilder` or content of the message for the first parameter. If the first parameter
      * is an instance of `MessageBuilder`, the rest of the arguments are disregarded.
      *
-     * @see https://discord.com/developers/docs/resources/channel#create-message
+     * @link https://discord.com/developers/docs/resources/channel#create-message
      *
      * @param MessageBuilder|string $message          The message builder that should be converted into a message, or the string content of the message.
      * @param bool                  $tts              Whether the message is TTS.
@@ -915,7 +915,7 @@ class Channel extends Part
     /**
      * Edit a message in the channel.
      *
-     * @see https://discord.com/developers/docs/resources/channel#edit-message
+     * @link https://discord.com/developers/docs/resources/channel#edit-message
      *
      * @param Message        $message The message to update.
      * @param MessageBuilder $message Contains the new contents of the message. Note that fields not specified in the builder will not be overwritten.
@@ -974,7 +974,7 @@ class Channel extends Part
     /**
      * Broadcasts that you are typing to the channel. Lasts for 5 seconds.
      *
-     * @see https://discord.com/developers/docs/resources/channel#trigger-typing-indicator
+     * @link https://discord.com/developers/docs/resources/channel#trigger-typing-indicator
      *
      * @throws \RuntimeException
      *

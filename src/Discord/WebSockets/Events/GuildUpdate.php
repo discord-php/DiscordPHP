@@ -18,7 +18,7 @@ use Discord\Parts\Guild\Guild;
 use function React\Async\coroutine;
 
 /**
- * @see https://discord.com/developers/docs/topics/gateway#guild-update
+ * @link https://discord.com/developers/docs/topics/gateway#guild-update
  */
 class GuildUpdate extends Event
 {

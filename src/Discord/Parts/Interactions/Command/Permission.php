@@ -16,7 +16,7 @@ use Discord\Parts\Part;
 /**
  * Application Command Permissions Class.
  *
- * @see https://discord.com/developers/docs/interactions/application-commands#application-command-permissions-object-application-command-permissions-structure
+ * @link https://discord.com/developers/docs/interactions/application-commands#application-command-permissions-object-application-command-permissions-structure
  *
  * @property string $id         The id of the role / user / channel
  * @property int    $type       Role / user / channel

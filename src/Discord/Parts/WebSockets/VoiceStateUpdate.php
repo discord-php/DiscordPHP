@@ -21,7 +21,7 @@ use Discord\Parts\User\User;
 /**
  * Notifies the client of voice state updates about users.
  *
- * @see https://discord.com/developers/docs/resources/voice#voice-state-object
+ * @link https://discord.com/developers/docs/resources/voice#voice-state-object
  *
  * @property      string|null  $guild_id                   Guild ID that the voice state came from, or null if it is for a DM channel.
  * @property-read Guild|null   $guild                      Guild that the voice state came from, or null if it is for a DM channel.

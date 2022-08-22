@@ -20,7 +20,7 @@ use Discord\Repository\Interaction\ComponentRepository;
  *
  * @todo split per type
  *
- * @see https://discord.com/developers/docs/interactions/message-components#component-object
+ * @link https://discord.com/developers/docs/interactions/message-components#component-object
  *
  * @property int                 $type        Component type.
  * @property string|null         $custom_id   A developer-defined identifier for the component, max 100 characters. (Buttons, Select Menus)

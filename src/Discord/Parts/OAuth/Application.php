@@ -19,7 +19,7 @@ use Discord\Repository\Interaction\GlobalCommandRepository;
 /**
  * The OAuth2 application of the bot.
  *
- * @see https://discord.com/developers/docs/resources/application
+ * @link https://discord.com/developers/docs/resources/application
  *
  * @property string                  $id                     The client ID of the OAuth application.
  * @property string                  $name                   The name of the OAuth application.

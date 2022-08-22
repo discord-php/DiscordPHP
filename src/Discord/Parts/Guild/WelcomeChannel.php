@@ -17,7 +17,7 @@ use Discord\Parts\Part;
 /**
  * A Welcome Channel of a Guild.
  *
- * @see https://discord.com/developers/docs/resources/guild#welcome-screen-object-welcome-screen-channel-structure
+ * @link https://discord.com/developers/docs/resources/guild#welcome-screen-object-welcome-screen-channel-structure
  *
  * @property      string       $channel_id  The channel's id.
  * @property-read Channel|null $channel     The channel object.

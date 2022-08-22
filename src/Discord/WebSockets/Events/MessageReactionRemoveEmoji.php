@@ -22,7 +22,7 @@ use Discord\Parts\WebSockets\MessageReaction;
 use function React\Async\coroutine;
 
 /**
- * @see https://discord.com/developers/docs/topics/gateway#message-reaction-remove-emoji
+ * @link https://discord.com/developers/docs/topics/gateway#message-reaction-remove-emoji
  */
 class MessageReactionRemoveEmoji extends Event
 {

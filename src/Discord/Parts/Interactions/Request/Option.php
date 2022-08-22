@@ -17,7 +17,7 @@ use Discord\Repository\Interaction\OptionRepository;
 /**
  * Represents an option received with an interaction.
  *
- * @see https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-interaction-data-option-structure
+ * @link https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-interaction-data-option-structure
  *
  * @property string                $name    Name of the parameter.
  * @property int                   $type    Type of the option.

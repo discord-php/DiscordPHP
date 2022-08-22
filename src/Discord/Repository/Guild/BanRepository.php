@@ -49,7 +49,7 @@ class BanRepository extends AbstractRepository
     /**
      * Bans a member from the guild.
      *
-     * @see https://discord.com/developers/docs/resources/guild#create-guild-ban
+     * @link https://discord.com/developers/docs/resources/guild#create-guild-ban
      *
      * @param User|Member|string $user    The User to ban.
      * @param array|int          $options Array of Ban options 'delete_message_seconds' or 'delete_message_days' (deprecated).
@@ -113,7 +113,7 @@ class BanRepository extends AbstractRepository
     /**
      * Unbans a member from the guild.
      *
-     * @see https://discord.com/developers/docs/resources/guild#remove-guild-ban
+     * @link https://discord.com/developers/docs/resources/guild#remove-guild-ban
      *
      * @param User|Ban|string $ban    User or Ban Part, or User ID
      * @param string|null     $reason Reason for Audit Log.

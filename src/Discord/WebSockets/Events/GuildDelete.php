@@ -15,7 +15,7 @@ use Discord\WebSockets\Event;
 use Discord\Helpers\Deferred;
 
 /**
- * @see https://discord.com/developers/docs/topics/gateway#guild-delete
+ * @link https://discord.com/developers/docs/topics/gateway#guild-delete
  *
  * @todo update params in docs
  */

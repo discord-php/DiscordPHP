@@ -18,7 +18,7 @@ use Discord\Parts\Part;
  * Not all options will be present. See the Discord developer docs for
  * more information: https://discord.com/developers/docs/resources/audit-log#audit-log-entry-object-optional-audit-entry-info.
  *
- * @see https://discord.com/developers/docs/resources/audit-log#audit-log-entry-object-optional-audit-entry-info
+ * @link https://discord.com/developers/docs/resources/audit-log#audit-log-entry-object-optional-audit-entry-info
  *
  * @property string $application_id     ID of the app whose permissions were targeted.
  * @property string $channel_id         Channel in which the entities were targeted.

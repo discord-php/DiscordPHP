@@ -34,7 +34,7 @@ use function React\Promise\reject;
 /**
  * A member is a relationship between a user and a guild. It contains user-to-guild specific data like roles.
  *
- * @see https://discord.com/developers/docs/resources/guild#guild-member-object
+ * @link https://discord.com/developers/docs/resources/guild#guild-member-object
  *
  * @property      User|null           $user                         The user part of the member.
  * @property-read string|null         $username                     The username of the member.
@@ -194,7 +194,7 @@ class Member extends Part
     /**
      * Adds a role to the member.
      *
-     * @see https://discord.com/developers/docs/resources/guild#add-guild-member-role
+     * @link https://discord.com/developers/docs/resources/guild#add-guild-member-role
      *
      * @param Role|string $role   The role to add to the member.
      * @param string|null $reason Reason for Audit Log.
@@ -230,7 +230,7 @@ class Member extends Part
     /**
      * Removes a role from the member.
      *
-     * @see https://discord.com/developers/docs/resources/guild#remove-guild-member-role
+     * @link https://discord.com/developers/docs/resources/guild#remove-guild-member-role
      *
      * @param Role|string $role   The role to remove from the member.
      * @param string|null $reason Reason for Audit Log.
@@ -265,7 +265,7 @@ class Member extends Part
     /**
      * Updates member roles.
      *
-     * @see https://discord.com/developers/docs/resources/guild#modify-guild-member
+     * @link https://discord.com/developers/docs/resources/guild#modify-guild-member
      *
      * @param Role[]|string[] $roles  The roles to set to the member.
      * @param string|null     $reason Reason for Audit Log.
@@ -327,7 +327,7 @@ class Member extends Part
      * need to account for the fact that you cannot edit
      * a role higher than your own.
      *
-     * @see https://discord.com/developers/docs/topics/permissions
+     * @link https://discord.com/developers/docs/topics/permissions
      *
      * @param Channel|Thread|null $channel
      *

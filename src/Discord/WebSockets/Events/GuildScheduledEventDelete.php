@@ -19,7 +19,7 @@ use Discord\Parts\Guild\ScheduledEvent;
 use function React\Async\coroutine;
 
 /**
- * @see https://discord.com/developers/docs/topics/gateway#guild-scheduled-event-delete
+ * @link https://discord.com/developers/docs/topics/gateway#guild-scheduled-event-delete
  */
 class GuildScheduledEventDelete extends Event
 {

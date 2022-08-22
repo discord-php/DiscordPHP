@@ -15,7 +15,7 @@ namespace Discord\Builders\Components;
  * An Action Row is a non-interactive container component for other types of components.
  * It has a type: 1 and a sub-array of components of other types.
  *
- * @see https://discord.com/developers/docs/interactions/message-components#action-rows
+ * @link https://discord.com/developers/docs/interactions/message-components#action-rows
  */
 class ActionRow extends Component
 {

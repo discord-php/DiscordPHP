@@ -18,7 +18,7 @@ use Discord\Parts\Part;
 /**
  * Permission represents a set of permissions for a given role or overwrite.
  *
- * @see https://discord.com/developers/docs/topics/permissions
+ * @link https://discord.com/developers/docs/topics/permissions
  *
  * @property int|string $bitwise
  * @property bool       $create_instant_invite
@@ -165,7 +165,7 @@ abstract class Permission extends Part
     /**
      * Gets the bitwise attribute of the permission.
      *
-     * @see https://discord.com/developers/docs/topics/permissions#permissions-bitwise-permission-flags
+     * @link https://discord.com/developers/docs/topics/permissions#permissions-bitwise-permission-flags
      *
      * @return int|string
      */
@@ -195,7 +195,7 @@ abstract class Permission extends Part
     /**
      * Sets the bitwise attribute of the permission.
      *
-     * @see https://discord.com/developers/docs/topics/permissions#permissions-bitwise-permission-flags
+     * @link https://discord.com/developers/docs/topics/permissions#permissions-bitwise-permission-flags
      *
      * @param int|string $bitwise
      */

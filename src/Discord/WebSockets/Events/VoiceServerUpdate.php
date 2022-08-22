@@ -16,7 +16,7 @@ use Discord\WebSockets\Event;
 use Discord\Helpers\Deferred;
 
 /**
- * @see https://discord.com/developers/docs/topics/gateway#voice-server-update
+ * @link https://discord.com/developers/docs/topics/gateway#voice-server-update
  */
 class VoiceServerUpdate extends Event
 {

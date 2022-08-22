@@ -17,7 +17,7 @@ use Discord\Parts\Part;
 /**
  * A Stage Instance holds information about a live stage. on a Discord guild.
  *
- * @see https://discord.com/developers/docs/resources/stage-instance#stage-instance-resource
+ * @link https://discord.com/developers/docs/resources/stage-instance#stage-instance-resource
  *
  * @property      string       $id                       The unique identifier of the Stage Instance.
  * @property      string       $guild_id                 The unique identifier of the guild that the stage instance associated to.

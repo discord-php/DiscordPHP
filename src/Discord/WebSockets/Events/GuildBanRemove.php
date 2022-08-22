@@ -18,7 +18,7 @@ use Discord\Helpers\Deferred;
 use function React\Async\coroutine;
 
 /**
- * @see https://discord.com/developers/docs/topics/gateway#guild-ban-remove
+ * @link https://discord.com/developers/docs/topics/gateway#guild-ban-remove
  */
 class GuildBanRemove extends Event
 {

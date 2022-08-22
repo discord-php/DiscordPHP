@@ -38,7 +38,7 @@ use function React\Promise\reject;
 /**
  * A message which is posted to a Discord text channel.
  *
- * @see https://discord.com/developers/docs/resources/channel#message-object
+ * @link https://discord.com/developers/docs/resources/channel#message-object
  *
  * @property      string                      $id                 The unique identifier of the message.
  * @property      string                      $channel_id         The unique identifier of the channel that the message was went in.
@@ -661,7 +661,7 @@ class Message extends Part
     /**
      * Starts a public thread from the message.
      *
-     * @see https://discord.com/developers/docs/resources/channel#start-thread-with-message
+     * @link https://discord.com/developers/docs/resources/channel#start-thread-with-message
      *
      * @param string      $name                  The name of the thread.
      * @param int         $auto_archive_duration Number of minutes of inactivity until the thread is auto-archived. One of 60, 1440, 4320, 10080.
@@ -699,7 +699,7 @@ class Message extends Part
     /**
      * Replies to the message.
      *
-     * @see https://discord.com/developers/docs/resources/channel#create-message
+     * @link https://discord.com/developers/docs/resources/channel#create-message
      *
      * @param string|MessageBuilder $message The reply message.
      *
@@ -721,7 +721,7 @@ class Message extends Part
     /**
      * Crossposts the message to any following channels.
      *
-     * @see https://discord.com/developers/docs/resources/channel#crosspost-message
+     * @link https://discord.com/developers/docs/resources/channel#crosspost-message
      *
      * @throws \RuntimeException Message has already been crossposted.
      *
@@ -786,7 +786,7 @@ class Message extends Part
     /**
      * Reacts to the message.
      *
-     * @see https://discord.com/developers/docs/resources/channel#create-reaction
+     * @link https://discord.com/developers/docs/resources/channel#create-reaction
      *
      * @param Emoji|string $emoticon The emoticon to react with. (custom: ':michael:251127796439449631')
      *
@@ -804,8 +804,8 @@ class Message extends Part
     /**
      * Deletes a reaction.
      *
-     * @see https://discord.com/developers/docs/resources/channel#delete-own-reaction
-     * @see https://discord.com/developers/docs/resources/channel#delete-user-reaction
+     * @link https://discord.com/developers/docs/resources/channel#delete-own-reaction
+     * @link https://discord.com/developers/docs/resources/channel#delete-user-reaction
      *
      * @param int               $type     The type of deletion to perform.
      * @param Emoji|string|null $emoticon The emoticon to delete (if not all).
@@ -846,7 +846,7 @@ class Message extends Part
     /**
      * Edits the message.
      *
-     * @see https://discord.com/developers/docs/resources/channel#edit-message
+     * @link https://discord.com/developers/docs/resources/channel#edit-message
      *
      * @param MessageBuilder $message Contains the new contents of the message. Note that fields not specified in the builder will not be overwritten.
      *
@@ -875,7 +875,7 @@ class Message extends Part
     /**
      * Deletes the message from the channel.
      *
-     * @see https://discord.com/developers/docs/resources/channel#delete-message
+     * @link https://discord.com/developers/docs/resources/channel#delete-message
      *
      * @return ExtendedPromiseInterface
      */

@@ -26,7 +26,7 @@ use function React\Promise\resolve;
 /**
  * Represents a reaction to a message by members(s).
  *
- * @see https://discord.com/developers/docs/resources/channel#reaction-object
+ * @link https://discord.com/developers/docs/resources/channel#reaction-object
  *
  * @property int   $count Number of reactions.
  * @property bool  $me    Whether the current bot has reacted.
@@ -95,7 +95,7 @@ class Reaction extends Part
     /**
      * Gets the users that have used the reaction.
      *
-     * @see https://discord.com/developers/docs/resources/channel#get-reactions
+     * @link https://discord.com/developers/docs/resources/channel#get-reactions
 
      * @param array $options See https://discord.com/developers/docs/resources/channel#get-reactions
      *

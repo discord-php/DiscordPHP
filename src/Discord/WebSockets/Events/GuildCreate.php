@@ -27,7 +27,7 @@ use Discord\Parts\Thread\Thread;
 use function React\Promise\all;
 
 /**
- * @see https://discord.com/developers/docs/topics/gateway#guild-create
+ * @link https://discord.com/developers/docs/topics/gateway#guild-create
  */
 class GuildCreate extends Event
 {

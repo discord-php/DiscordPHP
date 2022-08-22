@@ -18,7 +18,7 @@ use Discord\Parts\Part;
 /**
  * The Activity part describes activities the member is undertaking.
  *
- * @see https://discord.com/developers/docs/topics/gateway#activity-object
+ * @link https://discord.com/developers/docs/topics/gateway#activity-object
  *
  * @property string        $name           The activity's name.
  * @property int           $type           Activity type.

@@ -23,7 +23,7 @@ use function Discord\poly_strlen;
  * Buttons are interactive components that render on messages.
  * They can be clicked by users, and send an interaction to your app when clicked.
  *
- * @see https://discord.com/developers/docs/interactions/message-components#buttons
+ * @link https://discord.com/developers/docs/interactions/message-components#buttons
  */
 class Button extends Component
 {
