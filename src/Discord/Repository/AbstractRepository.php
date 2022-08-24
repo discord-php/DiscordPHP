@@ -82,8 +82,7 @@ abstract class AbstractRepository extends Collection
     /**
      * AbstractRepository constructor.
      *
-     * @param Http    $http    The HTTP client.
-     * @param Factory $factory The parts factory.
+     * @param Discord $discord
      * @param array   $vars    An array of variables used for the endpoint.
      */
     public function __construct(Discord $discord, array $vars = [])
@@ -143,7 +142,7 @@ abstract class AbstractRepository extends Collection
         }
 
         if (empty($items)) {
-            return $this;
+            return resolve($this);
         }
 
         return $this->cache->setMultiple($items)->then(fn ($success) => $this);
@@ -414,7 +413,7 @@ abstract class AbstractRepository extends Collection
         if ($item = $this->offsetGet($key)) {
             $default = $item;
             $this->offsetUnset($key);
-            $this->cache->interface->delete($this->cache->getPrefix(), $key);
+            $this->cache->interface->delete($this->cache->getPrefix().$key);
         }
 
         return $default;
@@ -538,15 +537,15 @@ abstract class AbstractRepository extends Collection
         $collection = new Collection([], $this->discrim, $this->class);
 
         foreach ($this->items as $item) {
-            if ($item === null) {
-                continue;
-            }
-
             if ($item instanceof WeakReference) {
                 $item = $item->get();
             }
 
-            if ($item && $callback($item)) {
+            if ($item === null) {
+                continue;
+            }
+
+            if ($callback($item)) {
                 $collection->push($item);
             }
         }
@@ -564,15 +563,15 @@ abstract class AbstractRepository extends Collection
     public function find(callable $callback)
     {
         foreach ($this->items as $item) {
-            if ($item === null) {
-                continue;
-            }
-
             if ($item instanceof WeakReference) {
                 $item = $item->get();
             }
 
-            if ($item && $callback($item)) {
+            if ($item === null) {
+                continue;
+            }
+
+            if ($callback($item)) {
                 return $item;
             }
         }
