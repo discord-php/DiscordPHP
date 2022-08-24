@@ -14,7 +14,6 @@ namespace Discord\Parts\Permissions;
 /**
  * @inheritdoc
  *
- * @property bool $mention_everyone
  * @property bool $connect
  * @property bool $mute_members
  * @property bool $deafen_members
@@ -40,7 +39,6 @@ namespace Discord\Parts\Permissions;
  * @property bool $embed_links
  * @property bool $attach_files
  * @property bool $read_message_history
- * @property bool $mention_everyone
  * @property bool $use_external_emojis
  * @property bool $manage_webhooks
  * @property bool $use_application_commands

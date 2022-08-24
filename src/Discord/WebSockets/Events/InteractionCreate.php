@@ -38,6 +38,16 @@ class InteractionCreate extends Event
             }
         }
 
+        if (isset($data->member->user)) {
+            // User caching from member
+            $this->cacheUser($data->member->user);
+        }
+
+        if (isset($data->user)) {
+            // User caching from user dm
+            $this->cacheUser($data->user);
+        }
+
         if ($data->type == InteractionType::APPLICATION_COMMAND) {
             $command = $data->data;
             if (isset($this->discord->application_commands[$command->name])) {
@@ -52,16 +62,6 @@ class InteractionCreate extends Event
                     return;
                 }
             }
-        }
-
-        if (isset($data->member->user)) {
-            // User caching from member
-            $this->cacheUser($data->member->user);
-        }
-
-        if (isset($data->user)) {
-            // User caching from user dm
-            $this->cacheUser($data->user);
         }
 
         $deferred->resolve($interaction);

@@ -22,12 +22,12 @@ use Discord\Parts\Part;
  *
  * @property string        $name
  * @property int           $type
- * @property string|null   $url
+ * @property ?string|null  $url
  * @property Carbon|null   $created_at
  * @property object|null   $timestamps
  * @property string|null   $application_id
- * @property string|null   $details
- * @property string|null   $state
+ * @property ?string|null  $details
+ * @property ?string|null  $state
  * @property Emoji|null    $emoji
  * @property object|null   $party
  * @property object|null   $assets

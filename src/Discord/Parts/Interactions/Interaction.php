@@ -38,21 +38,22 @@ use function React\Promise\reject;
  *
  * @see https://discord.com/developers/docs/interactions/receiving-and-responding#interactions
  *
- * @property string               $id             ID of the interaction.
- * @property string               $application_id ID of the application the interaction is for.
- * @property int                  $type           Type of interaction.
- * @property InteractionData|null $data           Data associated with the interaction.
- * @property string|null          $guild_id       ID of the guild the interaction was sent from.
- * @property Guild|null           $guild          Guild the interaction was sent from.
- * @property string|null          $channel_id     ID of the channel the interaction was sent from.
- * @property Channel|null         $channel        Channel the interaction was sent from.
- * @property Member|null          $member         Member who invoked the interaction.
- * @property User|null            $user           User who invoked the interaction.
- * @property string               $token          Continuation token for responding to the interaction.
- * @property int                  $version        Version of interaction.
- * @property Message|null         $message        Message that triggered the interactions, when triggered from message components.
- * @property string|null          $locale         The selected language of the invoking user.
- * @property string|null          $guild_locale   The guild's preferred locale, if invoked in a guild.
+ * @property      string               $id              ID of the interaction.
+ * @property      string               $application_id  ID of the application the interaction is for.
+ * @property      int                  $type            Type of interaction.
+ * @property      InteractionData|null $data            Data associated with the interaction.
+ * @property      string|null          $guild_id        ID of the guild the interaction was sent from.
+ * @property      Guild|null           $guild           Guild the interaction was sent from.
+ * @property      string|null          $channel_id      ID of the channel the interaction was sent from.
+ * @property      Channel|null         $channel         Channel the interaction was sent from.
+ * @property      Member|null          $member          Member who invoked the interaction.
+ * @property      User|null            $user            User who invoked the interaction.
+ * @property      string               $token           Continuation token for responding to the interaction.
+ * @property-read int                  $version         Version of interaction.
+ * @property      Message|null         $message         Message that triggered the interactions, when triggered from message components.
+ * @property      string|null          $app_permissions Bitwise set of permissions the app or bot has within the channel the interaction was sent from.
+ * @property      string|null          $locale          The selected language of the invoking user.
+ * @property      string|null          $guild_locale    The guild's preferred locale, if invoked in a guild.
  */
 class Interaction extends Part
 {
@@ -71,6 +72,7 @@ class Interaction extends Part
         'token',
         'version',
         'message',
+        'app_permissions',
         'locale',
         'guild_locale',
     ];
@@ -89,6 +91,8 @@ class Interaction extends Part
 
     /**
      * Returns true if this interaction has been internally responded.
+     *
+     * @return bool The interaction is responded
      */
     public function isResponded(): bool
     {
@@ -272,12 +276,14 @@ class Interaction extends Part
      */
     public function getOriginalResponse(): ExtendedPromiseInterface
     {
-        if (! $this->responded) {
-            return reject(new \RuntimeException('Interaction has not been responded to.'));
+        if (! $this->created) {
+            return reject(new \RuntimeException('Interaction has not been created yet.'));
         }
 
         return $this->http->get(Endpoint::bind(Endpoint::ORIGINAL_INTERACTION_RESPONSE, $this->application_id, $this->token))
             ->then(function ($response) {
+                $this->responded = true;
+
                 return $this->factory->create(Message::class, $response, true);
             });
     }
@@ -475,12 +481,14 @@ class Interaction extends Part
      */
     public function getFollowUpMessage(string $message_id): ExtendedPromiseInterface
     {
-        if (! $this->responded) {
-            return reject(new \RuntimeException('Interaction has not been responded to.'));
+        if (! $this->created) {
+            return reject(new \RuntimeException('Interaction has not been created yet.'));
         }
 
         return $this->http->get(Endpoint::bind(Endpoint::INTERACTION_FOLLOW_UP, $this->application_id, $this->token, $message_id))
             ->then(function ($response) {
+                $this->responded = true;
+
                 return $this->factory->create(Message::class, $response, true);
             });
     }
@@ -560,7 +568,7 @@ class Interaction extends Part
                 'custom_id' => $custom_id,
                 'components' => $components,
             ],
-        ])->then(function () use ($custom_id, $submit) {
+        ])->then(function ($response) use ($custom_id, $submit) {
             if ($submit) {
                 $this->discord->once(Event::INTERACTION_CREATE, function (Interaction $interaction) use ($custom_id, $submit) {
                     if ($interaction->type == InteractionType::MODAL_SUBMIT && $interaction->data->custom_id == $custom_id) {
@@ -576,6 +584,8 @@ class Interaction extends Part
                     }
                 });
             }
+
+            return $response;
         });
     }
 }

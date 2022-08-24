@@ -266,7 +266,7 @@ final class ChannelTest extends DiscordTestCase
     /**
      * @covers \Discord\Parts\Channel\Channel::allowVoice
      */
-    public function testVoiceChannelDoesNotAllowText()
+    public function testVoiceChannelAllowVoice()
     {
         /**
          * @var Channel
@@ -275,7 +275,6 @@ final class ChannelTest extends DiscordTestCase
             return $channel->type == Channel::TYPE_VOICE;
         })->first();
 
-        $this->assertFalse($vc->allowText());
         $this->assertTrue($vc->allowVoice());
     }
 }

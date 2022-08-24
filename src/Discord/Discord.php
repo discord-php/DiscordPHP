@@ -86,7 +86,7 @@ class Discord
      *
      * @var string Version.
      */
-    public const VERSION = 'v7.1.0';
+    public const VERSION = 'v7.2.0';
 
     /**
      * The logger.
@@ -259,11 +259,32 @@ class Discord
     protected $gateway;
 
     /**
+     * The resume_gateway_url that the WebSocket client will reconnect to.
+     *
+     * @var string resume_gateway_url URL.
+     */
+    protected $resume_gateway_url;
+
+    /**
      * What encoding the client will use, either `json` or `etf`.
      *
      * @var string Encoding.
      */
     protected $encoding = 'json';
+
+    /**
+     * Gateway compressed message payload buffer.
+     *
+     * @var string Buffer.
+     */
+    protected $payloadBuffer = '';
+
+    /**
+     * zlib decompressor.
+     *
+     * @var \Clue\React\Zlib\Decompressor
+     */
+    protected $zlibDecompressor;
 
     /**
      * Tracks the number of payloads the client
@@ -398,6 +419,14 @@ class Discord
     {
         $this->logger->debug('ready packet received');
 
+        $content = $data->d;
+ 
+        // Check if we received resume_gateway_url
+        if (isset($content->resume_gateway_url)) {
+            $this->resume_gateway_url = $content->resume_gateway_url;
+            $this->logger->debug('resume_gateway_url received', ['url' => $content->resume_gateway_url]);
+        }
+
         // If this is a reconnect we don't want to
         // reparse the READY packet as it would remove
         // all the data cached.
@@ -409,7 +438,6 @@ class Discord
             return;
         }
 
-        $content = $data->d;
         $this->emit('trace', $data->d->_trace);
         $this->logger->debug('discord trace received', ['trace' => $content->_trace]);
 
@@ -418,18 +446,6 @@ class Discord
         $this->sessionId = $content->session_id;
 
         $this->logger->debug('client created and session id stored', ['session_id' => $content->session_id, 'user' => $this->client->user->getPublicAttributes()]);
-
-        // Private Channels
-        if ($this->options['pmChannels']) {
-            foreach ($content->private_channels as $channel) {
-                $channelPart = $this->factory->create(Channel::class, $channel, true);
-                $this->private_channels->push($channelPart);
-            }
-
-            $this->logger->info('stored private channels', ['count' => $this->private_channels->count()]);
-        } else {
-            $this->logger->info('did not parse private channels');
-        }
 
         // Guilds
         $event = new GuildCreate(
@@ -577,12 +593,37 @@ class Discord
      */
     public function handleWsMessage(Message $message): void
     {
-        if ($message->isBinary()) {
-            $data = zlib_decode($message->getPayload());
-        } else {
-            $data = $message->getPayload();
-        }
+        $payload = $message->getPayload();
 
+        if ($message->isBinary()) {
+            if ($this->zlibDecompressor) {
+                $this->payloadBuffer .= $payload;
+
+                if ($message->getPayloadLength() < 4 || substr($payload, -4) != "\x00\x00\xff\xff") {
+                    return;
+                }
+
+                $this->zlibDecompressor->once('data', function ($data) {
+                    $this->processWsMessage($data);
+                    $this->payloadBuffer = '';
+                });
+
+                $this->zlibDecompressor->write($this->payloadBuffer);
+            } else {
+                $this->processWsMessage(zlib_decode($payload));
+            }
+        } else {
+            $this->processWsMessage($payload);
+        }
+    }
+
+    /**
+     * Process WebSocket message payloads.
+     *
+     * @param string $data Message payload.
+     */
+    protected function processWsMessage(string $data): void
+    {
         $data = json_decode($data);
         $this->emit('raw', [$data, $this]);
 
@@ -845,11 +886,11 @@ class Discord
                 'd' => [
                     'token' => $this->token,
                     'properties' => [
-                        '$os' => PHP_OS,
-                        '$browser' => $this->http->getUserAgent(),
-                        '$device' => $this->http->getUserAgent(),
-                        '$referrer' => 'https://github.com/discord-php/DiscordPHP',
-                        '$referring_domain' => 'https://github.com/discord-php/DiscordPHP',
+                        'os' => PHP_OS,
+                        'browser' => $this->http->getUserAgent(),
+                        'device' => $this->http->getUserAgent(),
+                        'referrer' => 'https://github.com/discord-php/DiscordPHP',
+                        'referring_domain' => 'https://github.com/discord-php/DiscordPHP',
                     ],
                     'compress' => true,
                     'intents' => $this->options['intents'],
@@ -1247,6 +1288,12 @@ class Discord
                 'encoding' => $this->encoding,
             ];
 
+            if (class_exists('\Clue\React\Zlib\Decompressor')) {
+                $this->logger->warning('The `clue/zlib-react` is installed, Enabling experimental zlib-stream compressed gateway message.');
+                $this->zlibDecompressor = new \Clue\React\Zlib\Decompressor(ZLIB_ENCODING_DEFLATE);
+                $params['compress'] = 'zlib-stream';
+            }
+
             $query = http_build_query($params);
             $this->gateway = trim($gateway, '/').'/?'.$query;
 
@@ -1255,7 +1302,7 @@ class Discord
 
         if (is_null($gateway)) {
             $this->http->get(Endpoint::GATEWAY_BOT)->done(function ($response) use ($buildParams) {
-                $buildParams($response->url, $response->session_start_limit);
+                $buildParams($this->resume_gateway_url ?? $response->url, $response->session_start_limit);
             }, function ($e) use ($buildParams) {
                 // Can't access the API server so we will use the default gateway.
                 $this->logger->warning('could not retrieve gateway, using default');
@@ -1398,7 +1445,9 @@ class Discord
     public function close(bool $closeLoop = true): void
     {
         $this->closing = true;
-        $this->ws->close($closeLoop ? Op::CLOSE_UNKNOWN_ERROR : Op::CLOSE_NORMAL, 'discordphp closing...');
+        if ($this->ws) {
+            $this->ws->close($closeLoop ? Op::CLOSE_UNKNOWN_ERROR : Op::CLOSE_NORMAL, 'discordphp closing...');
+        }
         $this->emit('closed', [$this]);
         $this->logger->info('discord closed');
 
@@ -1535,7 +1584,7 @@ class Discord
     }
 
     /**
-     * Registeres a command with the client.
+     * Add listerner for incoming application command from interaction
      *
      * @param string|array  $name
      * @param callable      $callback

@@ -27,7 +27,7 @@ class ThreadMemberUpdate extends Event
 
         foreach ($guild->channels as $channel) {
             if ($thread = $channel->threads->get('id', $data->id)) {
-                $thread->members->push($member);
+                $thread->members->pushItem($member);
                 break;
             }
         }

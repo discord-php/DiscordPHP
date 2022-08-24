@@ -35,7 +35,7 @@ use function React\Promise\resolve;
  * @property string         $message_id The message ID the reaction is for.
  * @property Message|null   $message    The message the reaction is for.
  * @property string         $channel_id The channel ID that the message belongs in.
- * @property Channel|Thread $channel    The channel that the message belongs tol
+ * @property Channel|Thread $channel    The channel that the message belongs to.
  * @property string|null    $guild_id   The guild ID of the guild that owns the channel the message belongs in.
  * @property Guild|null     $guild      The guild that owns the channel the message belongs in.
  */
@@ -115,11 +115,11 @@ class Reaction extends Part
             $users = new Collection([], 'id', User::class);
 
             foreach ((array) $response as $user) {
-                if ($part = $this->discord->users->get('id', $user->id)) {
-                    $users->push($part);
-                } else {
-                    $users->push(new User($this->discord, (array) $user, true));
+                if (! $part = $this->discord->users->get('id', $user->id)) {
+                    $part = new User($this->discord, (array) $user, true);
                 }
+
+                $users->pushItem($part);
             }
 
             return $users;
@@ -146,7 +146,7 @@ class Reaction extends Part
             return $this->getUsers($options)->then(function (Collection $users) use ($response, &$getUsers) {
                 $last = null;
                 foreach ($users as $user) {
-                    $response->push($user);
+                    $response->pushItem($user);
                     $last = $user;
                 }
 

@@ -25,24 +25,24 @@ use function React\Promise\resolve;
  *
  * @see https://discord.com/developers/docs/resources/user
  *
- * @property string      $id            The unique identifier of the user.
- * @property string      $username      The username of the user.
- * @property string      $discriminator The discriminator of the user.
- * @property string      $displayname   The username and discriminator of the user.
- * @property string      $avatar        The avatar URL of the user.
- * @property string|null $avatar_hash   The avatar hash of the user.
- * @property bool|null   $bot           Whether the user is a bot.
- * @property bool|null   $system        Whether the user is a Discord system user.
- * @property bool|null   $mfa_enabled   Whether MFA is enabled.
- * @property string|null $banner        The banner URL of the user.
- * @property string|null $banner_hash   The banner hash of the user.
- * @property int|null    $accent_color  The user's banner color encoded as an integer representation of hexadecimal color code.
- * @property string|null $locale        User locale.
- * @property bool|null   $verified      Whether the user is verified.
- * @property string|null $email         User email.
- * @property int|null    $flags         User flags.
- * @property int|null    $premium_type  Type of nitro subscription.
- * @property int|null    $public_flags  Public flags on the user.
+ * @property string       $id            The unique identifier of the user.
+ * @property string       $username      The username of the user.
+ * @property string       $discriminator The discriminator of the user.
+ * @property string       $displayname   The username and discriminator of the user.
+ * @property string       $avatar        The avatar URL of the user.
+ * @property ?string      $avatar_hash   The avatar hash of the user.
+ * @property bool|null    $bot           Whether the user is a bot.
+ * @property bool|null    $system        Whether the user is a Discord system user.
+ * @property bool|null    $mfa_enabled   Whether MFA is enabled.
+ * @property string|null  $banner        The banner URL of the user.
+ * @property ?string|null $banner_hash   The banner hash of the user.
+ * @property ?int|null    $accent_color  The user's banner color encoded as an integer representation of hexadecimal color code.
+ * @property string|null  $locale        User locale.
+ * @property bool|null    $verified      Whether the user is verified.
+ * @property ?string|null $email         User email.
+ * @property int|null     $flags         User flags.
+ * @property int|null     $premium_type  Type of nitro subscription.
+ * @property int|null     $public_flags  Public flags on the user.
  *
  * @method ExtendedPromiseInterface sendMessage(MessageBuilder $builder)
  * @method ExtendedPromiseInterface sendMessage(string $text, bool $tts = false, Embed|array $embed = null, array $allowed_mentions = null, ?Message $replyTo = null)
@@ -105,7 +105,7 @@ class User extends Part
 
         return $this->http->post(Endpoint::USER_CURRENT_CHANNELS, ['recipient_id' => $this->id])->then(function ($response) {
             $channel = $this->factory->create(Channel::class, $response, true);
-            $this->discord->private_channels->push($channel);
+            $this->discord->private_channels->pushItem($channel);
 
             return $channel;
         });
@@ -194,7 +194,7 @@ class User extends Part
     /**
      * Returns the avatar hash for the client.
      *
-     * @return string|null The client avatar's hash.
+     * @return ?string The client avatar's hash.
      */
     protected function getAvatarHashAttribute(): ?string
     {
@@ -233,7 +233,7 @@ class User extends Part
     /**
      * Returns the banner hash for the client.
      *
-     * @return string|null The client banner's hash.
+     * @return ?string|null The client banner's hash.
      */
     protected function getBannerHashAttribute(): ?string
     {

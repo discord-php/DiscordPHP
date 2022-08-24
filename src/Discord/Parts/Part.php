@@ -18,8 +18,6 @@ use Discord\Factory\Factory;
 use Discord\Http\Http;
 use JsonSerializable;
 use React\Promise\ExtendedPromiseInterface;
-use RuntimeException;
-use Serializable;
 
 use function Discord\studly;
 
@@ -163,13 +161,13 @@ abstract class Part implements ArrayAccess, JsonSerializable
      * Fetches any missing information about
      * the part from Discord's servers.
      *
-     * @throws RuntimeException The part is not fetchable.
+     * @throws \RuntimeException The part is not fetchable.
      *
      * @return ExtendedPromiseInterface<static>
      */
     public function fetch(): ExtendedPromiseInterface
     {
-        throw new RuntimeException('This part is not fetchable.');
+        throw new \RuntimeException('This part is not fetchable.');
     }
 
     /**
@@ -312,9 +310,14 @@ abstract class Part implements ArrayAccess, JsonSerializable
      *
      * @return string A string of serialized data.
      */
-    public function __serialize()
+    public function serialize()
     {
         return serialize($this->attributes);
+    }
+
+    public function __serialize(): array
+    {
+        return $this->attributes;
     }
 
     /**
@@ -324,10 +327,17 @@ abstract class Part implements ArrayAccess, JsonSerializable
      *
      * @see self::setAttribute() The unserialized data is stored with setAttribute.
      */
-    public function __unserialize($data)
+    public function unserialize($data)
     {
         $data = unserialize($data);
 
+        foreach ($data as $key => $value) {
+            $this->setAttribute($key, $value);
+        }
+    }
+    
+    public function __unserialize(array $data): void
+    {
         foreach ($data as $key => $value) {
             $this->setAttribute($key, $value);
         }

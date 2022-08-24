@@ -23,12 +23,12 @@ use React\Promise\ExtendedPromiseInterface;
  *
  * @see https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-structure
  *
- * @property string                   $id             The unique identifier of the command.
- * @property string                   $application_id The unique identifier of the parent Application that made the command, if made by one.
- * @property string|null              $guild_id       The unique identifier of the guild that the command belongs to. Null if global.
- * @property Guild|null               $guild          The guild that the command belongs to. Null if global.
- * @property string                   $version        Autoincrementing version identifier updated during substantial record changes.
- * @property OverwriteRepository      $overwrites     Permission overwrites.
+ * @property string              $id             The unique identifier of the command.
+ * @property string              $application_id The unique identifier of the parent Application that made the command, if made by one.
+ * @property string|null         $guild_id       The unique identifier of the guild that the command belongs to. Null if global.
+ * @property Guild|null          $guild          The guild that the command belongs to. Null if global.
+ * @property string              $version        Autoincrementing version identifier updated during substantial record changes.
+ * @property OverwriteRepository $overwrites     Permission overwrites.
  */
 class Command extends Part
 {
@@ -97,7 +97,7 @@ class Command extends Part
         $options = Collection::for(Option::class, null);
 
         foreach ($this->attributes['options'] as $option) {
-            $options->push($this->factory->create(Option::class, $option, true));
+            $options->pushItem($this->factory->create(Option::class, $option, true));
         }
 
         return $options;
@@ -124,6 +124,8 @@ class Command extends Part
      *
      * @param Overwrite $overwrite An overwrite object.
      *
+     * @deprecated 7.1.0 Requires Bearer token on Permissions v2
+     *
      * @return ExtendedPromiseInterface
      */
     public function setOverwrite(Overwrite $overwrite): ExtendedPromiseInterface
@@ -135,6 +137,31 @@ class Command extends Part
      * @inheritdoc
      */
     public function getCreatableAttributes(): array
+    {
+        $attr = [
+            'guild_id' => $this->guild_id ?? null,
+            'name' => $this->name,
+            'name_localizations' => $this->name_localizations,
+            'description' => $this->description,
+            'description_localizations' => $this->description_localizations,
+            'options' => $this->attributes['options'] ?? null,
+            'default_member_permissions' => $this->default_member_permissions,
+            'default_permission' => $this->default_permission,
+            'type' => $this->type,
+        ];
+
+        // Guild command might omit this fillable
+        if (array_key_exists('dm_permission', $this->attributes)) {
+            $attr['dm_permission'] = $this->dm_permission;
+        }
+
+        return $attr;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getUpdatableAttributes(): array
     {
         return [
             'guild_id' => $this->guild_id ?? null,
@@ -153,25 +180,6 @@ class Command extends Part
     /**
      * @inheritdoc
      */
-    public function getUpdatableAttributes(): array
-    {
-        return [
-            'guild_id' => $this->guild_id ?? null,
-            'name' => $this->name,
-            'name_localizations' => $this->name_localizations,
-            'description' => $this->description,
-            'description_localizations' => $this->description_localizations,
-            'options' => $this->attributes['options'] ?? null,
-            'default_member_permissions' => $this->default_member_permissions,
-            'dm_permissions' => $this->dm_permission,
-            'default_permission' => $this->default_permission,
-            'type' => $this->type,
-        ];
-    }
-
-    /**
-     * @inheritdoc
-     */
     public function getRepositoryAttributes(): array
     {
         return [
@@ -179,5 +187,15 @@ class Command extends Part
             'guild_id' => $this->guild_id,
             'application_id' => $this->application_id,
         ];
+    }
+
+    /**
+     * Returns a formatted mention of the command.
+     *
+     * @return string A formatted mention of the command.
+     */
+    public function __toString(): string
+    {
+        return "</{$this->name}:{$this->id}>";
     }
 }

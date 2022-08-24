@@ -29,7 +29,7 @@ class CommandBuilder implements JsonSerializable
      *
      * @var int
      */
-    protected int $type = Command::CHAT_INPUT;
+    protected $type = Command::CHAT_INPUT;
 
     /**
      * Name of the command.
@@ -39,39 +39,18 @@ class CommandBuilder implements JsonSerializable
     protected string $name;
 
     /**
-     * Localization dictionary for the name field. Values follow the same restrictions as name.
-     *
-     * @var string[]
-     */
-    protected array $name_localizations;
-
-    /**
      * Description of the command. should be emtpy if the type is not CHAT_INPUT.
      *
      * @var string
      */
-    protected string $description = '';
-
-    /**
-     * Localization dictionary for the description field. Values follow the same restrictions as description.
-     *
-     * @var string[]|null
-     */
-    protected array $description_localizations;
-
-    /**
-     * array with options.
-     *
-     * @var Option[]|null
-     */
-    protected array $options;
+    protected string $description;
 
     /**
      * The default permission of the command. If true the command is enabled when the app is added to the guild.
      *
      * @var bool
      */
-    protected bool $default_permission = true;
+    protected $default_permission = true;
 
     /**
      * Creates a new command builder.
@@ -105,12 +84,22 @@ class CommandBuilder implements JsonSerializable
     {
         $arrCommand = [
             'name' => $this->name,
-            'name_localizations' => $this->name_localizations,
             'description' => $this->description,
-            'description_localizations' => $this->name_localizations,
-            'type' => $this->type,
-            'default_permission' => $this->default_permission,
         ];
+
+        $optionals = [
+            'type',
+            'name_localizations',
+            'description_localizations',
+            'default_member_permissions',
+            'default_permission',
+        ];
+
+        foreach ($optionals as $optional) {
+            if (property_exists($this, $optional)) {
+                $arrCommand[$optional] = $this->$optional;
+            }
+        }
 
         foreach ($this->options ?? [] as $option) {
             $arrCommand['options'][] = $option->getRawAttributes();

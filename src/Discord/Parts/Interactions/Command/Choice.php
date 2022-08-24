@@ -22,7 +22,7 @@ use function Discord\poly_strlen;
  * @see https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-option-choice-structure
  *
  * @property string           $name               1-100 character choice name.
- * @property string[]|null    $name_localizations Localization dictionary for the name field. Values follow the same restrictions as name.
+ * @property ?string[]|null   $name_localizations Localization dictionary for the name field. Values follow the same restrictions as name.
  * @property string|int|float $value              Value of the choice, up to 100 characters if string.
  */
 class Choice extends Part

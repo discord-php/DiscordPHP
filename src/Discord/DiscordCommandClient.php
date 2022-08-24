@@ -386,10 +386,6 @@ class DiscordCommandClient extends Discord
 
         $options = $resolver->resolve($options);
 
-        if (! empty($options['usage'])) {
-            $options['usage'] .= ' ';
-        }
-
         return $options;
     }
 

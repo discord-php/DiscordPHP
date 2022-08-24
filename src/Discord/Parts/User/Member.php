@@ -37,9 +37,9 @@ use function React\Promise\reject;
  * @see https://discord.com/developers/docs/resources/guild#guild-member-object
  *
  * @property User|null             $user                         The user part of the member.
- * @property string|null           $nick                         The nickname of the member.
+ * @property ?string|null          $nick                         The nickname of the member.
  * @property string|null           $avatar                       The avatar URL of the member or null if member has no guild avatar.
- * @property string|null           $avatar_hash                  The avatar hash of the member or null if member has no guild avatar.
+ * @property ?string|null          $avatar_hash                  The avatar hash of the member or null if member has no guild avatar.
  * @property Collection|Role[]     $roles                        A collection of Roles that the member has.
  * @property Carbon|null           $joined_at                    A timestamp of when the member joined the guild.
  * @property Carbon|null           $premium_since                When the user started boosting the server.
@@ -133,10 +133,10 @@ class Member extends Part
     /**
      * Sets the nickname of the member.
      *
-     * @param string|null $nick   The nickname of the member.
-     * @param string|null $reason Reason for Audit Log.
+     * @param ?string|null $nick   The nickname of the member.
+     * @param string|null  $reason Reason for Audit Log.
      *
-     * @return ExtendedPromiseInterface
+     * @return ExtendedPromiseInterface<Member>
      */
     public function setNickname(?string $nick = null, ?string $reason = null): ExtendedPromiseInterface
     {
@@ -154,7 +154,12 @@ class Member extends Part
             return $this->http->patch(Endpoint::bind(Endpoint::GUILD_MEMBER_SELF, $this->guild_id), $payload, $headers);
         }
 
-        return $this->http->patch(Endpoint::bind(Endpoint::GUILD_MEMBER, $this->guild_id, $this->id), $payload, $headers);
+        return $this->http->patch(Endpoint::bind(Endpoint::GUILD_MEMBER, $this->guild_id, $this->id), $payload, $headers)
+            ->then(function ($response) {
+                $this->nick = $response->nick;
+
+                return $this;
+            });
     }
 
     /**
@@ -207,7 +212,12 @@ class Member extends Part
             $headers['X-Audit-Log-Reason'] = $reason;
         }
 
-        return $this->http->put(Endpoint::bind(Endpoint::GUILD_MEMBER_ROLE, $this->guild_id, $this->id, $role), null, $headers);
+        return $this->http->put(Endpoint::bind(Endpoint::GUILD_MEMBER_ROLE, $this->guild_id, $this->id, $role), null, $headers)
+            ->then(function () use ($role) {
+                if (in_array($role, $this->attributes['roles'])) {
+                    $this->attributes['roles'][] = $role;
+                }
+            });
     }
 
     /**
@@ -234,7 +244,12 @@ class Member extends Part
                 $headers['X-Audit-Log-Reason'] = $reason;
             }
 
-            return $this->http->delete(Endpoint::bind(Endpoint::GUILD_MEMBER_ROLE, $this->guild_id, $this->id, $role), null, $headers);
+            return $this->http->delete(Endpoint::bind(Endpoint::GUILD_MEMBER_ROLE, $this->guild_id, $this->id, $role), null, $headers)
+                ->then(function () use ($role) {
+                    if ($removeRole = array_search($role, $this->attributes['roles']) !== false) {
+                        unset($this->attributes['roles'][$removeRole]);
+                    }
+                });
         }
 
         return reject(new \RuntimeException('Member does not have role.'));
@@ -263,7 +278,12 @@ class Member extends Part
             $headers['X-Audit-Log-Reason'] = $reason;
         }
 
-        return $this->http->patch(Endpoint::bind(Endpoint::GUILD_MEMBER, $this->guild_id, $this->id), ['roles' => $roles], $headers);
+        return $this->http->patch(Endpoint::bind(Endpoint::GUILD_MEMBER, $this->guild_id, $this->id), ['roles' => $roles], $headers)
+            ->then(function ($response) {
+                $this->attributes['roles'] = $response->roles;
+
+                return $this;
+            });
     }
 
     /**
@@ -411,7 +431,7 @@ class Member extends Part
      *
      * @throws NoPermissionsException
      *
-     * @return ExtendedPromiseInterface
+     * @return ExtendedPromiseInterface<Member>
      */
     public function timeoutMember(?Carbon $communication_disabled_until, ?string $reason = null): ExtendedPromiseInterface
     {
@@ -426,7 +446,12 @@ class Member extends Part
             $headers['X-Audit-Log-Reason'] = $reason;
         }
 
-        return $this->http->patch(Endpoint::bind(Endpoint::GUILD_MEMBER, $this->guild_id, $this->id), ['communication_disabled_until' => isset($communication_disabled_until) ? $communication_disabled_until->toIso8601ZuluString() : null], $headers);
+        return $this->http->patch(Endpoint::bind(Endpoint::GUILD_MEMBER, $this->guild_id, $this->id), ['communication_disabled_until' => isset($communication_disabled_until) ? $communication_disabled_until->toIso8601ZuluString() : null], $headers)
+            ->then(function ($response) {
+                $this->attributes['communication_disabled_until'] = $response->communication_disabled_until;
+
+                return $this;
+            });
     }
 
     /**
@@ -462,7 +487,7 @@ class Member extends Part
         $activities = new Collection([], null);
 
         foreach ($this->attributes['activities'] ?? [] as $activity) {
-            $activities->push($this->factory->create(Activity::class, $activity, true));
+            $activities->pushItem($this->factory->create(Activity::class, $activity, true));
         }
 
         return $activities;
@@ -540,12 +565,12 @@ class Member extends Part
         if ($guild = $this->guild) {
             foreach ($guild->roles as $role) {
                 if (in_array($role->id, $this->attributes['roles'] ?? [])) {
-                    $roles->push($role);
+                    $roles->pushItem($role);
                 }
             }
         } else {
             foreach ($this->attributes['roles'] ?? [] as $role) {
-                $roles->push($this->factory->create(Role::class, $role, true));
+                $roles->pushItem($this->factory->create(Role::class, $role, true));
             }
         }
 
@@ -600,7 +625,7 @@ class Member extends Part
     /**
      * Returns the guild avatar hash for the member.
      *
-     * @return string|null The member avatar's hash or null.
+     * @return ?string|null The member avatar's hash or null.
      */
     protected function getAvatarHashAttribute(): ?string
     {
@@ -661,7 +686,7 @@ class Member extends Part
     {
         return $this->guild->channels->find(function (Channel $channel) {
             return $channel->allowVoice() && isset($channel->members[$this->id]);
-	    });
+        });
     }
 
     /**

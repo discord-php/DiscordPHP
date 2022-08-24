@@ -28,7 +28,6 @@ use React\Datagram\Socket;
 use React\Dns\Resolver\Factory as DNSFactory;
 use React\EventLoop\LoopInterface;
 use Discord\Helpers\Deferred;
-use Exception;
 use Psr\Log\LoggerInterface;
 use React\ChildProcess\Process;
 use React\Promise\ExtendedPromiseInterface;
@@ -36,7 +35,6 @@ use React\Stream\ReadableResourceStream as Stream;
 use React\EventLoop\TimerInterface;
 use React\Stream\ReadableResourceStream;
 use React\Stream\ReadableStreamInterface;
-use RuntimeException;
 
 /**
  * The Discord voice client.
@@ -766,7 +764,7 @@ class VoiceClient extends EventEmitter
         $deferred = new Deferred();
 
         if (! $this->isReady()) {
-            $deferred->reject(new Exception('Voice client is not ready yet.'));
+            $deferred->reject(new \Exception('Voice client is not ready yet.'));
 
             return $deferred->promise();
         }
@@ -794,7 +792,7 @@ class VoiceClient extends EventEmitter
         }
 
         if (! ($stream instanceof ReadableStreamInterface)) {
-            $deferred->reject(new Exception('The stream passed to playDCAStream was not an instance of resource, ReactPHP Process, ReactPHP Readable Stream'));
+            $deferred->reject(new \Exception('The stream passed to playDCAStream was not an instance of resource, ReactPHP Process, ReactPHP Readable Stream'));
 
             return $deferred->promise();
         }
@@ -1264,7 +1262,7 @@ class VoiceClient extends EventEmitter
         $voicePacket = VoicePacket::make($message);
         $nonce = new Buffer(24);
         $nonce->write($voicePacket->getHeader(), 0);
-        $message = \Sodium\crypto_secretbox_open($voicePacket->getData(), (string) $nonce, $this->secret_key);
+        $message = \sodium_crypto_secretbox_open($voicePacket->getData(), (string) $nonce, $this->secret_key);
 
         if ($message === false) {
             // if we can't decode the message, drop it silently.
@@ -1404,7 +1402,7 @@ class VoiceClient extends EventEmitter
      */
     private function checkForLibsodium(): bool
     {
-        if (! function_exists('\Sodium\crypto_secretbox')) {
+        if (! function_exists('sodium_crypto_secretbox')) {
             $this->emit('error', [new LibSodiumNotFoundException('libsodium-php could not be found.')]);
 
             return false;
@@ -1416,11 +1414,11 @@ class VoiceClient extends EventEmitter
     private function checkPHPVersion(): bool
     {
         if (substr(strtolower(PHP_OS), 0, 3) === 'win' && PHP_VERSION_ID < 80000) {
-            $this->emit('error', [new RuntimeException('PHP 8.0.0 or later is required to run the voice client on Windows.')]);
+            $this->emit('error', [new \RuntimeException('PHP 8.0.0 or later is required to run the voice client on Windows.')]);
 
             return false;
         } elseif (PHP_VERSION_ID < 70400) {
-            $this->emit('error', [new RuntimeException('PHP 7.4.0 or later is required to run the voice client.')]);
+            $this->emit('error', [new \RuntimeException('PHP 7.4.0 or later is required to run the voice client.')]);
 
             return false;
         }
@@ -1436,8 +1434,8 @@ class VoiceClient extends EventEmitter
      */
     private static function checkForExecutable(string $executable): ?string
     {
-        $which = strtoupper(substr(PHP_OS, 0, 3) === 'WIN') ? 'where' : 'command -v';
-        $executable = rtrim(shell_exec("{$which} {$executable}"));
+        $which = strtoupper(substr(PHP_OS, 0, 3)) === 'WIN' ? 'where' : 'command -v';
+        $executable = rtrim((string) shell_exec("{$which} {$executable}"));
 
         return is_executable($executable) ? $executable : null;
     }

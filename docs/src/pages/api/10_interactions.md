@@ -4,7 +4,7 @@ title: "Interactions"
 
 Interactions are utilized in message components and slash commands.
 
-## Attributes
+### Attributes
 
 | name           | type               | description                                          |
 | -------------- | ------------------ | ---------------------------------------------------- |
@@ -24,7 +24,7 @@ Interactions are utilized in message components and slash commands.
 
 The locale list can be seen on [Discord API reference](https://discord.com/developers/docs/reference#locales).
 
-## Functions on interaction create
+### Functions on interaction create
 
 The following functions are used to respond an interaction after being created `Event::INTERACTION_CREATE`,
 responding interaction with wrong type throws a `LogicException`
@@ -37,7 +37,7 @@ responding interaction with wrong type throws a `LogicException`
 | `autoCompleteResult(array $choices)`                                                       | responds a suggestion to options with auto complete                         | `APPLICATION_COMMAND_AUTOCOMPLETE`                         |
 | `showModal(string $title, string $custom_id, array $components, ?callable $submit = null)` | responds to the interaction with a popup modal                              | `MODAL_SUBMIT`                                             |
 
-## Functions after interaction response
+### Functions after interaction response
 
 The following functions can be only used after interaction respond above,
 otherwise throws a `RuntimeException` "Interaction has not been responded to."

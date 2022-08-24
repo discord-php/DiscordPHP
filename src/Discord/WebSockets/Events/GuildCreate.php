@@ -21,6 +21,8 @@ use Discord\Parts\WebSockets\VoiceStateUpdate as VoiceStateUpdatePart;
 use Discord\WebSockets\Event;
 use Discord\Helpers\Deferred;
 use Discord\Http\Endpoint;
+use Discord\Parts\Channel\StageInstance;
+use Discord\Parts\Guild\ScheduledEvent;
 use Discord\Parts\Thread\Member as ThreadMember;
 use Discord\Parts\Thread\Thread;
 
@@ -102,10 +104,26 @@ class GuildCreate extends Event
                 $member['user_id'] = $this->discord->id;
 
                 $selfMember = $this->factory->create(ThreadMember::class, $member, true);
-                $thread->members->push($selfMember);
+                $thread->members->pushItem($selfMember);
             }
 
-            $guildPart->channels->get('id', $thread->parent_id)->threads->push($thread);
+            $guildPart->channels->get('id', $thread->parent_id)->threads->pushItem($thread);
+        }
+
+        foreach ($data->stage_instances as $stageInstance) {
+            $stageInstance->guild_id = $data->id;
+            /** @var StageInstance */
+            $stageInstancePart = $this->factory->create(StageInstance::class, $stageInstance, true);
+
+            $guildPart->stage_instances->offsetSet($stageInstancePart->id, $stageInstancePart);
+        }
+
+        foreach ($data->guild_scheduled_events as $scheduledEvent) {
+            $scheduledEvent->guild_id = $data->id;
+            /** @var ScheduledEvent */
+            $scheduledEventPart = $this->factory->create(ScheduledEvent::class, $scheduledEvent, true);
+
+            $guildPart->guild_scheduled_events->offsetSet($scheduledEventPart->id, $scheduledEventPart);
         }
 
         $resolve = function () use (&$guildPart, $deferred) {
@@ -127,6 +145,7 @@ class GuildCreate extends Event
                 $this->http->get($bind)->done(function ($rawBans) use (&$banPagination, $guildPart, $resolve) {
                     if (empty($rawBans)) {
                         $resolve();
+
                         return;
                     }
 

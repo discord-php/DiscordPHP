@@ -109,7 +109,7 @@ class TypingStart extends Part
      */
     protected function getTimestampAttribute(): Carbon
     {
-        return new Carbon(gmdate('r', $this->attributes['timestamp']));
+        return new Carbon($this->attributes['timestamp']);
     }
 
     /**
