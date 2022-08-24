@@ -27,7 +27,8 @@ class InteractionCreate extends Event
      */
     public function handle(Deferred &$deferred, $data): void
     {
-        $interaction = $this->factory->create(Interaction::class, $data, true);
+        /** @var Interaction */
+        $interaction = $this->factory->part(Interaction::class, (array) $data, true);
 
         foreach ($data->data->resolved->users ?? [] as $snowflake => $user) {
             if ($userPart = $this->discord->users->get('id', $snowflake)) {
@@ -37,25 +38,17 @@ class InteractionCreate extends Event
             }
         }
 
-        if ($interaction->type == InteractionType::APPLICATION_COMMAND) {
-            $checkCommand = function ($command) use ($interaction, &$checkCommand) {
-                if (isset($this->discord->application_commands[$command['name']])) {
-                    if ($this->discord->application_commands[$command['name']]->execute($command['options'] ? $command['options']->toArray() : [], $interaction)) {
-                        return true;
-                    }
+        if ($data->type == InteractionType::APPLICATION_COMMAND) {
+            $command = $data->data;
+            if (isset($this->discord->application_commands[$command->name])) {
+                if ($this->discord->application_commands[$command->name]->execute($command->options ?? [], $interaction)) {
+                    return;
                 }
-
-                foreach ($command['options'] ?? [] as $option) {
-                    if ($checkCommand($option)) {
-                        return true;
-                    }
-                }
-            };
-
-            $checkCommand($interaction->data);
-        } elseif ($interaction->type == InteractionType::APPLICATION_COMMAND_AUTOCOMPLETE) {
-            if (isset($this->discord->application_commands[$interaction->data['name']])) {
-                if ($this->discord->application_commands[$interaction->data['name']]->suggest($interaction)) {
+            }
+        } elseif ($data->type == InteractionType::APPLICATION_COMMAND_AUTOCOMPLETE) {
+            $commandName = $data->data->name;
+            if (isset($this->discord->application_commands[$commandName])) {
+                if ($this->discord->application_commands[$commandName]->suggest($interaction)) {
                     return;
                 }
             }
