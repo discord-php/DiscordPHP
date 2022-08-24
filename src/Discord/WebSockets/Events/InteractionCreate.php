@@ -56,9 +56,22 @@ class InteractionCreate extends Event
                 }
             }
         } elseif ($data->type == InteractionType::APPLICATION_COMMAND_AUTOCOMPLETE) {
-            $commandName = $data->data->name;
-            if (isset($this->discord->application_commands[$commandName])) {
-                if ($this->discord->application_commands[$commandName]->suggest($interaction)) {
+            $command = $data->data;
+            if (isset($this->discord->application_commands[$command->name])) {
+                $checkCommand = function ($command, $options) use (&$checkCommand, $interaction) {
+                    foreach ($options as $option) {
+                        if ($subCommand = $command->getSubCommand($option->name)) {
+                            if (! empty($option->focused)) {
+                                return $subCommand->suggest($interaction);
+                            }
+                            if (! empty($option->options)) {
+                                return $checkCommand($subCommand, $option->options);
+                            }
+                        }
+                    }
+                    return false;
+                };
+                if ($checkCommand($this->discord->application_commands[$command->name], $command->options)) {
                     return;
                 }
             }
