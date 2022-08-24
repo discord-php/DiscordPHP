@@ -87,14 +87,14 @@ class RegisteredCommand
     public function execute(array $options, Interaction $interaction): bool
     {
         foreach ($options as $option) {
-            if (isset($this->subCommands[$option['name']])) {
-                if ($this->subCommands[$option['name']]->execute($option['options'] ?? [], $interaction)) {
+            if (isset($this->subCommands[$option->name])) {
+                if ($this->subCommands[$option->name]->execute($option->options ?? [], $interaction)) {
                     return true;
                 }
             }
         }
 
-        if (! is_null($this->callback)) {
+        if (isset($this->callback)) {
             ($this->callback)($interaction);
 
             return true;
@@ -182,13 +182,13 @@ class RegisteredCommand
             return $this->subCommands[$name] = new static($this->discord, $name, $callback, $autocomplete_callback);
         }
 
-        $baseCommand = array_shift($name);
+        $subCommand = array_shift($name);
 
-        if (! isset($this->subCommands[$baseCommand])) {
-            $this->addSubCommand($baseCommand);
+        if (! isset($this->subCommands[$subCommand])) {
+            $this->addSubCommand($subCommand);
         }
 
-        return $this->subCommands[$baseCommand]->addSubCommand($name, $callback, $autocomplete_callback);
+        return $this->subCommands[$subCommand]->addSubCommand($name, $callback, $autocomplete_callback);
     }
 
     /**
