@@ -237,18 +237,12 @@ class Member extends Part
      * @param Role|string $role   The role to remove from the member.
      * @param string|null $reason Reason for Audit Log.
      *
-     * @throws \RuntimeException
-     *
      * @return ExtendedPromiseInterface
      */
     public function removeRole($role, ?string $reason = null): ExtendedPromiseInterface
     {
         if ($role instanceof Role) {
             $role = $role->id;
-        }
-
-        if (! in_array($role, $this->attributes['roles'])) {
-            return reject(new \RuntimeException('Member does not have role.'));
         }
 
         $headers = [];
