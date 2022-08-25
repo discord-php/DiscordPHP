@@ -73,12 +73,12 @@ class CacheWrapper
      * @param Discord        $discord
      * @param CacheInterface $cacheInterface The actual CacheInterface.
      * @param array          &$items         Repository items passed by reference.
-     * @param string         $class          Part class name.
+     * @param string         &$class         Part class name.
      * @param string[]       $vars           Variable containing hierarchy parent IDs.
      *
      * @internal
      */
-    public function __construct(Discord $discord, CacheInterface $cacheInterface, &$items, string $class, array $vars)
+    public function __construct(Discord $discord, CacheInterface $cacheInterface, &$items, string &$class, array $vars)
     {
         $this->discord = $discord;
         $this->interface = $cacheInterface;
