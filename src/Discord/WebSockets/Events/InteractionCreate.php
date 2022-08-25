@@ -67,6 +67,8 @@ class InteractionCreate extends Event
                             if (! empty($option->options)) {
                                 return $checkCommand($subCommand, $option->options);
                             }
+                        } elseif (! empty($option->focused)) {
+                            return $command->suggest($interaction);
                         }
                     }
                     return false;
