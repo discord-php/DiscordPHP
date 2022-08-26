@@ -281,8 +281,6 @@ class Message extends Part
     /**
      * Gets the mention_channels attribute.
      *
-     * @todo This is actually for crossposted message, not for channels in same server.
-     *
      * @return Collection|Channel[]
      */
     protected function getMentionChannelsAttribute(): Collection
@@ -298,7 +296,6 @@ class Message extends Part
         }
 
         foreach ($this->attributes['mention_channels'] ?? [] as $mention_channel) {
-            // @todo potentially slow code
             if (! $channel = $this->discord->getChannel($mention_channel->id)) {
                 $channel = $this->factory->part(Channel::class, (array) $mention_channel, true);
             }
@@ -548,9 +545,7 @@ class Message extends Part
         // try get the message from the relevant repository
         // otherwise, if message is present in payload, create it
         // otherwise, return null
-        if (isset($this->attributes['message_reference'])) {
-            $reference = $this->attributes['message_reference'];
-
+        if ($reference = $this->attributes['message_reference'] ?? null) {
             if (isset($reference->message_id, $reference->channel_id)) {
                 $channel = null;
 
