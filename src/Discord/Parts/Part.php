@@ -19,8 +19,6 @@ use Discord\Http\Http;
 use JsonSerializable;
 use React\Promise\ExtendedPromiseInterface;
 
-use function Discord\studly;
-
 /**
  * This class is the base of all objects that are returned. All "Parts" extend off this base class.
  *
@@ -107,13 +105,6 @@ abstract class Part implements ArrayAccess, JsonSerializable
     public $created = false;
 
     /**
-     * The regex pattern to replace variables with.
-     *
-     * @var string The regex which is used to replace placeholders.
-     */
-    protected $regex = '/:([a-z_]+)/';
-
-    /**
      * Should we fill the part after saving?
      *
      * @var bool Whether the part will be saved after being filled.
@@ -195,7 +186,7 @@ abstract class Part implements ArrayAccess, JsonSerializable
      */
     private function checkForMutator(string $key, string $type)
     {
-        $str = $type.studly($key).'Attribute';
+        $str = $type.static::studly($key).'Attribute';
 
         if (is_callable([$this, $str])) {
             return $str;
@@ -336,7 +327,7 @@ abstract class Part implements ArrayAccess, JsonSerializable
             $this->setAttribute($key, $value);
         }
     }
-    
+
     public function __unserialize(array $data): void
     {
         foreach ($data as $key => $value) {
@@ -424,6 +415,35 @@ abstract class Part implements ArrayAccess, JsonSerializable
     public function getUpdatableAttributes(): array
     {
         return [];
+    }
+
+    /**
+     * Converts a string to studlyCase.
+     *
+     * This is a port of updated laravel's implementation, a non-regex with static cache.
+     * The Discord\studly() is kept due to unintended bug and we do not want to introduce BC by replacing it.
+     * This method is private static as we may move it outside this class in future.
+     *
+     * @param string $string The string to convert.
+     *
+     * @return string
+     *
+     * @since 10.0.0
+     */
+    private static function studly(string $string): string
+    {
+        static $studlyCache = [];
+        $key = $string;
+
+        if (isset($studlyCache[$key])) {
+            return $studlyCache[$key];
+        }
+
+        $words = explode(' ', str_replace(['-', '_'], ' ', $string));
+
+        $studlyWords = array_map(fn ($word) => ucfirst($word), $words);
+
+        return $studlyCache[$key] = implode($studlyWords);
     }
 
     /**
