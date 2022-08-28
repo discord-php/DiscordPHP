@@ -121,8 +121,8 @@ abstract class Part implements ArrayAccess, JsonSerializable
     public function __construct(Discord $discord, array $attributes = [], bool $created = false)
     {
         $this->discord = $discord;
-        $this->factory = $discord->getFactory();
         $this->http = $discord->getHttpClient();
+        $this->factory = $discord->getFactory();
 
         $this->created = $created;
         $this->fill($attributes);

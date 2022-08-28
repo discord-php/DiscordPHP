@@ -111,6 +111,13 @@ abstract class Event
     public const MESSAGE_REACTION_REMOVE_EMOJI = 'MESSAGE_REACTION_REMOVE_EMOJI';
 
     /**
+     * The Discord client instance.
+     *
+     * @var Discord Client.
+     */
+    protected $discord;
+
+    /**
      * The HTTP client.
      *
      * @var Http Client.
@@ -125,24 +132,15 @@ abstract class Event
     protected $factory;
 
     /**
-     * The Discord client instance.
-     *
-     * @var Discord Client.
-     */
-    protected $discord;
-
-    /**
      * Constructs an event.
      *
-     * @param Http    $http    The HTTP client.
-     * @param Factory $factory The factory.
      * @param Discord $discord The Discord client.
      */
-    public function __construct(Http $http, Factory $factory, Discord $discord)
+    public function __construct(Discord $discord)
     {
-        $this->http = $http;
-        $this->factory = $factory;
         $this->discord = $discord;
+        $this->http = $discord->getHttpClient();
+        $this->factory = $discord->getFactory();
     }
 
     /**

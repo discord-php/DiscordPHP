@@ -477,11 +477,7 @@ class Discord
         $this->logger->debug('client created and session id stored', ['session_id' => $content->session_id, 'user' => $this->client->user->getPublicAttributes()]);
 
         // Guilds
-        $event = new GuildCreate(
-            $this->http,
-            $this->factory,
-            $this
-        );
+        $event = new GuildCreate($this);
 
         $unavailable = [];
 
@@ -767,11 +763,7 @@ class Discord
 
         if (! is_null($hData = $this->handlers->getHandler($data->t))) {
             /** @var Event */
-            $handler = new $hData['class'](
-                $this->http,
-                $this->factory,
-                $this
-            );
+            $handler = new $hData['class']($this);
 
             $deferred = new Deferred();
             $deferred->promise()->done(function ($d) use ($data, $hData) {
