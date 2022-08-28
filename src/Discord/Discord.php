@@ -1303,7 +1303,7 @@ class Discord
         if (is_null($gateway)) {
             $this->http->get(Endpoint::GATEWAY_BOT)->done(function ($response) use ($buildParams) {
                 if ($response->shards > 1) {
-                    $this->logger->warning('Please contact the DiscordPHP devs if you are interrested in working with us on sharding support.');
+                    $this->logger->warning('Please contact the DiscordPHP devs at https://discord.gg/F8nqn7VqR5 or https://github.com/discord-php/DiscordPHP/issues if you are interrested in assisting us with sharding support development.');
                 }
                 $buildParams($this->resume_gateway_url ?? $response->url, $response->session_start_limit);
             }, function ($e) use ($buildParams) {
