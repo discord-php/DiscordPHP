@@ -13,7 +13,6 @@ namespace Discord\WebSockets\Events;
 
 use Discord\Parts\WebSockets\TypingStart as TypingStartPart;
 use Discord\WebSockets\Event;
-use Discord\Helpers\Deferred;
 
 /**
  * @link https://discord.com/developers/docs/topics/gateway#typing-start
@@ -25,7 +24,7 @@ class TypingStart extends Event
     /**
      * @inheritdoc
      */
-    public function handle(Deferred &$deferred, $data): void
+    public function handle($data)
     {
         $typing = $this->factory->create(TypingStartPart::class, $data, true);
 
@@ -33,6 +32,6 @@ class TypingStart extends Event
             $this->cacheUser($data->member->user);
         }
 
-        $deferred->resolve($typing);
+        return $typing;
     }
 }

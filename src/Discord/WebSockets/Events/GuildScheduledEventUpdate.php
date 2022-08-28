@@ -12,11 +12,8 @@
 namespace Discord\WebSockets\Events;
 
 use Discord\WebSockets\Event;
-use Discord\Helpers\Deferred;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Guild\ScheduledEvent;
-
-use function React\Async\coroutine;
 
 /**
  * @link https://discord.com/developers/docs/topics/gateway#guild-scheduled-event-update
@@ -28,9 +25,8 @@ class GuildScheduledEventUpdate extends Event
     /**
      * @inheritdoc
      */
-    public function handle(Deferred &$deferred, $data): void
+    public function handle($data)
     {
-        coroutine(function ($data) {
             $scheduledEventPart = $oldScheduledEvent = null;
 
             /** @var ?Guild */
@@ -59,6 +55,5 @@ class GuildScheduledEventUpdate extends Event
             }
 
             return [$scheduledEventPart, $oldScheduledEvent];
-        }, $data)->then([$deferred, 'resolve']);
     }
 }

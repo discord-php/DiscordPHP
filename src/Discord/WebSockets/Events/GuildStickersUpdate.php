@@ -13,11 +13,8 @@ namespace Discord\WebSockets\Events;
 
 use Discord\Helpers\Collection;
 use Discord\WebSockets\Event;
-use Discord\Helpers\Deferred;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Guild\Sticker;
-
-use function React\Async\coroutine;
 
 /**
  * @link https://discord.com/developers/docs/topics/gateway#guild-stickers-update
@@ -29,9 +26,8 @@ class GuildStickersUpdate extends Event
     /**
      * @inheritdoc
      */
-    public function handle(Deferred &$deferred, $data): void
+    public function handle($data)
     {
-        coroutine(function ($data) {
             $oldStickers = Collection::for(Sticker::class);
             $stickerParts = Collection::for(Sticker::class);
 
@@ -58,6 +54,5 @@ class GuildStickersUpdate extends Event
             }
 
             return [$stickerParts, $oldStickers];
-        }, $data)->then([$deferred, 'resolve']);
     }
 }

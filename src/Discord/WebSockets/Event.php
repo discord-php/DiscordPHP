@@ -14,9 +14,7 @@ namespace Discord\WebSockets;
 use Discord\Discord;
 use Discord\Factory\Factory;
 use Discord\Http\Http;
-use Discord\Helpers\Deferred;
 use Evenement\EventEmitterTrait;
-use React\Promise\PromiseInterface;
 
 /**
  * Contains constants for WebSocket events as well as handlers for the events.
@@ -148,15 +146,16 @@ abstract class Event
     }
 
     /**
-     * Transforms the given data, and updates the
-     * Discord instance if necessary.
+     * Transforms the given data, and updates the Discord instance if necessary.
      *
-     * @param Deferred $deferred The promise to use
-     * @param object   $data     The data that was sent with the WebSocket
+     * @param object $data The data that was sent with the WebSocket.
      *
-     * @return void|PromiseInterface
+     * @return Generator
+     *
+     * @since 10.0.0 changed args from `Deferred &$deferred, $data` to `$data`, changed return from `void` to `Generator`.
+     * @since 4.0.0
      */
-    abstract public function handle(Deferred &$deferred, $data);
+    abstract public function handle($data);
 
     /**
      * Cache User repository from Event data.

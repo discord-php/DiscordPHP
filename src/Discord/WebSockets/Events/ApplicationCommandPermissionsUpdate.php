@@ -12,11 +12,8 @@
 namespace Discord\WebSockets\Events;
 
 use Discord\WebSockets\Event;
-use Discord\Helpers\Deferred;
 use Discord\Parts\Guild\CommandPermissions;
 use Discord\Parts\Guild\Guild;
-
-use function React\Async\coroutine;
 
 /**
  * @link https://discord.com/developers/docs/topics/gateway#integration-update
@@ -28,9 +25,8 @@ class ApplicationCommandPermissionsUpdate extends Event
     /**
      * @inheritdoc
      */
-    public function handle(Deferred &$deferred, $data): void
+    public function handle($data)
     {
-        coroutine(function ($data) {
             $commandPermissionsPart = $oldCommandPermissions = null;
 
             /** @var ?Guild */
@@ -61,6 +57,5 @@ class ApplicationCommandPermissionsUpdate extends Event
             }
 
             return [$commandPermissionsPart, $oldCommandPermissions];
-        }, $data)->then([$deferred, 'resolve']);
     }
 }

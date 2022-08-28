@@ -13,11 +13,8 @@ namespace Discord\WebSockets\Events;
 
 use Discord\Parts\WebSockets\PresenceUpdate as PresenceUpdatePart;
 use Discord\WebSockets\Event;
-use Discord\Helpers\Deferred;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\User\Member;
-
-use function React\Async\coroutine;
 
 /**
  * @link https://discord.com/developers/docs/topics/gateway#presence-update
@@ -29,9 +26,8 @@ class PresenceUpdate extends Event
     /**
      * @inheritdoc
      */
-    public function handle(Deferred &$deferred, $data): void
+    public function handle($data)
     {
-        coroutine(function ($data) {
             /** @var PresenceUpdatePart */
             $presence = $this->factory->create(PresenceUpdatePart::class, $data, true);
 
@@ -48,6 +44,5 @@ class PresenceUpdate extends Event
             }
 
             return $presence;
-        }, $data)->then([$deferred, 'resolve']);
     }
 }

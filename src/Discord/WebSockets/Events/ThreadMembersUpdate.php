@@ -11,14 +11,11 @@
 
 namespace Discord\WebSockets\Events;
 
-use Discord\Helpers\Deferred;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Thread\Member;
 use Discord\Parts\Thread\Thread;
 use Discord\WebSockets\Event;
-
-use function React\Async\coroutine;
 
 /**
  * @link https://discord.com/developers/docs/topics/gateway#thread-members-update
@@ -27,9 +24,8 @@ use function React\Async\coroutine;
  */
 class ThreadMembersUpdate extends Event
 {
-    public function handle(Deferred &$deferred, $data)
+    public function handle($data)
     {
-        coroutine(function ($data) {
             /** @var ?Guild */
             if (! $guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
                 return null;
@@ -58,10 +54,5 @@ class ThreadMembersUpdate extends Event
             }
 
             return null;
-        }, $data)->then(function ($thread) use ($deferred) {
-            if ($thread) {
-                $deferred->resolve($thread);
-            }
-        });
     }
 }

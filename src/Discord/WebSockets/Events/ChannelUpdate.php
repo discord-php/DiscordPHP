@@ -13,9 +13,6 @@ namespace Discord\WebSockets\Events;
 
 use Discord\Parts\Channel\Channel;
 use Discord\WebSockets\Event;
-use Discord\Helpers\Deferred;
-
-use function React\Async\coroutine;
 
 /**
  * @link https://discord.com/developers/docs/topics/gateway#channel-update
@@ -27,9 +24,8 @@ class ChannelUpdate extends Event
     /**
      * @inheritdoc
      */
-    public function handle(Deferred &$deferred, $data): void
+    public function handle($data)
     {
-        coroutine(function ($data) {
             $oldChannel = $repository = null;
 
             /** @var Channel */
@@ -60,6 +56,5 @@ class ChannelUpdate extends Event
             }
 
             return [$channelPart, $oldChannel];
-        }, $data)->then([$deferred, 'resolve']);
     }
 }

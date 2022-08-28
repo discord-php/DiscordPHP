@@ -54,6 +54,7 @@ use React\Promise\PromiseInterface;
 use React\Socket\Connector as SocketConnector;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+use function React\Async\coroutine;
 use function React\Promise\all;
 
 /**
@@ -485,17 +486,16 @@ class Discord
         $unavailable = [];
 
         foreach ($content->guilds as $guild) {
-            $deferred = new Deferred();
+            /** @var ExtendedPromiseInterface */
+            $promise = coroutine([$event, 'handle'], $guild);
 
-            $deferred->promise()->done(null, function ($d) use (&$unavailable) {
+            $promise->done(null, function ($d) use (&$unavailable) {
                 list($status, $data) = $d;
 
                 if ($status == 'unavailable') {
                     $unavailable[$data] = $data;
                 }
             });
-
-            $event->handle($deferred, $guild);
         }
 
         $this->logger->info('stored guilds', ['count' => $this->guilds->count(), 'unavailable' => count($unavailable)]);
@@ -766,6 +766,7 @@ class Discord
         ];
 
         if (! is_null($hData = $this->handlers->getHandler($data->t))) {
+            /** @var Event */
             $handler = new $hData['class'](
                 $this->http,
                 $this->factory,
@@ -802,10 +803,10 @@ class Discord
 
             if (! $this->emittedReady && (! in_array($data->t, $parse))) {
                 $this->unparsedPackets[] = function () use (&$handler, &$deferred, &$data) {
-                    $handler->handle($deferred, $data->d);
+                    coroutine([$handler, 'handle'], $data->d)->then([$deferred, 'resolve'], [$deferred, 'reject']);
                 };
             } else {
-                $handler->handle($deferred, $data->d);
+                coroutine([$handler, 'handle'], $data->d)->then([$deferred, 'resolve'], [$deferred, 'reject']);
             }
         } elseif (isset($handlers[$data->t])) {
             $this->{$handlers[$data->t]}($data);

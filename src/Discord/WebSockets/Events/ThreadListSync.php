@@ -12,14 +12,11 @@
 namespace Discord\WebSockets\Events;
 
 use Discord\Helpers\Collection;
-use Discord\Helpers\Deferred;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Thread\Member;
 use Discord\Parts\Thread\Thread;
 use Discord\WebSockets\Event;
-
-use function React\Async\coroutine;
 
 /**
  * @link https://discord.com/developers/docs/topics/gateway#thread-list-sync
@@ -28,9 +25,8 @@ use function React\Async\coroutine;
  */
 class ThreadListSync extends Event
 {
-    public function handle(Deferred &$deferred, $data)
+    public function handle($data)
     {
-        coroutine(function ($data) {
             $threadParts = Collection::for(Thread::class);
 
             /** @var ?Guild */
@@ -64,6 +60,5 @@ class ThreadListSync extends Event
             }
 
             return $threadParts;
-        }, $data)->then([$deferred, 'resolve']);
     }
 }

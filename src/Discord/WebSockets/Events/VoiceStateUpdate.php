@@ -13,11 +13,8 @@ namespace Discord\WebSockets\Events;
 
 use Discord\Parts\WebSockets\VoiceStateUpdate as VoiceStateUpdatePart;
 use Discord\WebSockets\Event;
-use Discord\Helpers\Deferred;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Guild\Guild;
-
-use function React\Async\coroutine;
 
 /**
  * @link https://discord.com/developers/docs/topics/gateway#voice-state-update
@@ -29,9 +26,8 @@ class VoiceStateUpdate extends Event
     /**
      * @inheritdoc
      */
-    public function handle(Deferred &$deferred, $data): void
+    public function handle($data)
     {
-        coroutine(function ($data) {
             $statePart = $oldVoiceState = null;
 
             /** @var ?Guild */
@@ -71,6 +67,5 @@ class VoiceStateUpdate extends Event
             $this->cacheUser($data->member->user);
 
             return [$statePart, $oldVoiceState];
-        }, $data)->then([$deferred, 'resolve']);
     }
 }

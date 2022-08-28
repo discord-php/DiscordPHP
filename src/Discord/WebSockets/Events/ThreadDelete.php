@@ -11,12 +11,9 @@
 
 namespace Discord\WebSockets\Events;
 
-use Discord\Helpers\Deferred;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Guild\Guild;
 use Discord\WebSockets\Event;
-
-use function React\Async\coroutine;
 
 /**
  * @link https://discord.com/developers/docs/topics/gateway#thread-delete
@@ -27,9 +24,8 @@ use function React\Async\coroutine;
  */
 class ThreadDelete extends Event
 {
-    public function handle(Deferred &$deferred, $data)
+    public function handle($data)
     {
-        coroutine(function ($data) {
             $threadPart = null;
 
             /** @var ?Guild */
@@ -41,6 +37,5 @@ class ThreadDelete extends Event
             }
 
             return $threadPart ?? $data;
-        }, $data)->then([$deferred, 'resolve']);
     }
 }

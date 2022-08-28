@@ -13,11 +13,8 @@ namespace Discord\WebSockets\Events;
 
 use Discord\Parts\Channel\Message;
 use Discord\WebSockets\Event;
-use Discord\Helpers\Deferred;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Guild\Guild;
-
-use function React\Async\coroutine;
 
 /**
  * @link https://discord.com/developers/docs/topics/gateway#message-update
@@ -29,9 +26,8 @@ class MessageUpdate extends Event
     /**
      * @inheritdoc
      */
-    public function handle(Deferred &$deferred, $data): void
+    public function handle($data)
     {
-        coroutine(function ($data) {
             /** @var Message */
             $messagePart = $oldMessagePart = null;
 
@@ -64,6 +60,5 @@ class MessageUpdate extends Event
             }
 
             return [$messagePart, $oldMessagePart];
-        }, $data)->then([$deferred, 'resolve']);
     }
 }

@@ -11,7 +11,6 @@
 
 namespace Discord\WebSockets\Events;
 
-use Discord\Helpers\Deferred;
 use Discord\InteractionType;
 use Discord\Parts\Interactions\Interaction;
 use Discord\Parts\User\User;
@@ -27,7 +26,7 @@ class InteractionCreate extends Event
     /**
      * @inheritdoc
      */
-    public function handle(Deferred &$deferred, $data): void
+    public function handle($data)
     {
         /** @var Interaction */
         $interaction = $this->factory->part(Interaction::class, (array) $data, true);
@@ -81,6 +80,6 @@ class InteractionCreate extends Event
             }
         }
 
-        $deferred->resolve($interaction);
+        return $interaction;
     }
 }

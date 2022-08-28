@@ -13,13 +13,10 @@ namespace Discord\WebSockets\Events;
 
 use Discord\Parts\WebSockets\MessageReaction;
 use Discord\WebSockets\Event;
-use Discord\Helpers\Deferred;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Channel\Message;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Thread\Thread;
-
-use function React\Async\coroutine;
 
 /**
  * @link https://discord.com/developers/docs/topics/gateway#message-reaction-remove
@@ -31,9 +28,8 @@ class MessageReactionRemove extends Event
     /**
      * @inheritdoc
      */
-    public function handle(Deferred &$deferred, $data): void
+    public function handle($data)
     {
-        coroutine(function ($data) {
             /** @var ?Guild */
             if (isset($data->guild_id) && $guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
                 /** @var ?Channel */
@@ -73,6 +69,5 @@ class MessageReactionRemove extends Event
             }
 
             return $reaction;
-        }, $data)->then([$deferred, 'resolve']);
     }
 }

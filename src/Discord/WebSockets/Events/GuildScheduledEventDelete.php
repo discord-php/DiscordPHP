@@ -12,11 +12,8 @@
 namespace Discord\WebSockets\Events;
 
 use Discord\WebSockets\Event;
-use Discord\Helpers\Deferred;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Guild\ScheduledEvent;
-
-use function React\Async\coroutine;
 
 /**
  * @link https://discord.com/developers/docs/topics/gateway#guild-scheduled-event-delete
@@ -28,9 +25,8 @@ class GuildScheduledEventDelete extends Event
     /**
      * @inheritdoc
      */
-    public function handle(Deferred &$deferred, $data): void
+    public function handle($data)
     {
-        coroutine(function ($data) {
             $scheduledEventPart = null;
 
             /** @var ?Guild */
@@ -47,6 +43,5 @@ class GuildScheduledEventDelete extends Event
             }
 
             return $scheduledEventPart ?? $this->factory->create(ScheduledEvent::class, $data);
-        }, $data)->then([$deferred, 'resolve']);
     }
 }

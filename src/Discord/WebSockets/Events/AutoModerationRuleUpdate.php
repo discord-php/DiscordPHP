@@ -12,11 +12,8 @@
 namespace Discord\WebSockets\Events;
 
 use Discord\WebSockets\Event;
-use Discord\Helpers\Deferred;
 use Discord\Parts\Guild\AutoModeration\Rule;
 use Discord\Parts\Guild\Guild;
-
-use function React\Async\coroutine;
 
 /**
  * @link https://discord.com/developers/docs/topics/gateway#auto-moderation-rule-update
@@ -28,9 +25,8 @@ class AutoModerationRuleUpdate extends Event
     /**
      * @inheritdoc
      */
-    public function handle(Deferred &$deferred, $data): void
+    public function handle($data)
     {
-        coroutine(function ($data) {
             $rulePart = $oldRule = null;
 
             /** @var ?Guild */
@@ -55,6 +51,5 @@ class AutoModerationRuleUpdate extends Event
             }
 
             return [$rulePart, $oldRule];
-        }, $data)->then([$deferred, 'resolve']);
     }
 }

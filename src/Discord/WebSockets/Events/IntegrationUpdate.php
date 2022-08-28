@@ -12,11 +12,8 @@
 namespace Discord\WebSockets\Events;
 
 use Discord\WebSockets\Event;
-use Discord\Helpers\Deferred;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Guild\Integration;
-
-use function React\Async\coroutine;
 
 /**
  * @link https://discord.com/developers/docs/topics/gateway#integration-update
@@ -28,9 +25,8 @@ class IntegrationUpdate extends Event
     /**
      * @inheritdoc
      */
-    public function handle(Deferred &$deferred, $data): void
+    public function handle($data)
     {
-        coroutine(function ($data) {
             $integrationPart = $oldIntegration = null;
 
             /** @var ?Guild */
@@ -59,6 +55,5 @@ class IntegrationUpdate extends Event
             }
 
             return [$integrationPart, $oldIntegration];
-        }, $data)->then([$deferred, 'resolve']);
     }
 }

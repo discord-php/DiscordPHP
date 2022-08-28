@@ -12,9 +12,7 @@
 namespace Discord\WebSockets\Events;
 
 use Discord\WebSockets\Event;
-use Discord\Helpers\Deferred;
 use React\Promise\ExtendedPromiseInterface;
-
 use function React\Promise\all;
 
 /**
@@ -27,19 +25,15 @@ class MessageDeleteBulk extends Event
     /**
      * @inheritdoc
      */
-    public function handle(Deferred &$deferred, $data): void
+    public function handle($data)
     {
-        $promises = [];
+        $resolves = [];
 
         foreach ($data->ids as $id) {
-            $promise = new Deferred();
             $event = new MessageDelete($this->http, $this->factory, $this->discord);
-            $event->handle($promise, (object) ['id' => $id, 'channel_id' => $data->channel_id, 'guild_id' => $data->guild_id]);
-            $promises[] = $promise->promise();
+            $resolves[] = yield $event->handle((object) ['id' => $id, 'channel_id' => $data->channel_id, 'guild_id' => $data->guild_id]);
         }
 
-        /** @var ExtendedPromiseInterface */
-        $allPromises = all($promises);
-        $allPromises->done([$deferred, 'resolve']);
+        return $resolves;
     }
 }

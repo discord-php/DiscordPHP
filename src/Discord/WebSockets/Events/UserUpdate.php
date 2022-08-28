@@ -12,7 +12,6 @@
 namespace Discord\WebSockets\Events;
 
 use Discord\WebSockets\Event;
-use Discord\Helpers\Deferred;
 use Discord\Parts\User\User;
 
 /**
@@ -25,7 +24,7 @@ class UserUpdate extends Event
     /**
      * @inheritdoc
      */
-    public function handle(Deferred &$deferred, $data): void
+    public function handle($data)
     {
         $oldUser = null;
 
@@ -38,6 +37,6 @@ class UserUpdate extends Event
             $userPart = $this->factory->create(User::class, $data, true);
         }
 
-        $deferred->resolve([$userPart, $oldUser]);
+        return [$userPart, $oldUser];
     }
 }

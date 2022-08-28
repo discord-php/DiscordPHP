@@ -12,10 +12,7 @@
 namespace Discord\WebSockets\Events;
 
 use Discord\WebSockets\Event;
-use Discord\Helpers\Deferred;
 use Discord\Parts\Guild\Guild;
-
-use function React\Async\coroutine;
 
 /**
  * @link https://discord.com/developers/docs/topics/gateway#guild-update
@@ -27,9 +24,8 @@ class GuildUpdate extends Event
     /**
      * @inheritdoc
      */
-    public function handle(Deferred &$deferred, $data): void
+    public function handle($data)
     {
-        coroutine(function ($data) {
             $oldGuild = null;
 
             /** @var ?Guild */
@@ -44,6 +40,5 @@ class GuildUpdate extends Event
             yield $this->discord->guilds->cache->set($data->id, $guildPart);
 
             return [$guildPart, $oldGuild];
-        }, $data)->then([$deferred, 'resolve']);
     }
 }

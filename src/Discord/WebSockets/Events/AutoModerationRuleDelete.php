@@ -12,11 +12,8 @@
 namespace Discord\WebSockets\Events;
 
 use Discord\WebSockets\Event;
-use Discord\Helpers\Deferred;
 use Discord\Parts\Guild\AutoModeration\Rule;
 use Discord\Parts\Guild\Guild;
-
-use function React\Async\coroutine;
 
 /**
  * @link https://discord.com/developers/docs/topics/gateway#auto-moderation-rule-delete
@@ -28,9 +25,8 @@ class AutoModerationRuleDelete extends Event
     /**
      * @inheritdoc
      */
-    public function handle(Deferred &$deferred, $data): void
+    public function handle($data)
     {
-        coroutine(function ($data) {
             $rulePart = null;
 
             /** @var ?Guild */
@@ -43,6 +39,5 @@ class AutoModerationRuleDelete extends Event
             }
 
             return $rulePart ?? $this->factory->create(Rule::class, $data);
-        }, $data)->then([$deferred, 'resolve']);
     }
 }

@@ -12,7 +12,6 @@
 namespace Discord\WebSockets\Events;
 
 use Discord\WebSockets\Event;
-use Discord\Helpers\Deferred;
 use Discord\Parts\WebSockets\AutoModerationActionExecution as ActionExecution;
 
 /**
@@ -25,11 +24,11 @@ class AutoModerationActionExecution extends Event
     /**
      * @inheritdoc
      */
-    public function handle(Deferred &$deferred, $data): void
+    public function handle($data)
     {
         /** @var ActionExecution */
         $actionExecutionPart = $this->factory->create(ActionExecution::class, $data, true);
 
-        $deferred->resolve($actionExecutionPart);
+        return $actionExecutionPart;
     }
 }

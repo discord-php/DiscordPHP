@@ -11,14 +11,11 @@
 
 namespace Discord\WebSockets\Events;
 
-use Discord\Helpers\Deferred;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Thread\Member;
 use Discord\Parts\Thread\Thread;
 use Discord\WebSockets\Event;
-
-use function React\Async\coroutine;
 
 /**
  * @link https://discord.com/developers/docs/topics/gateway#thread-member-update
@@ -27,9 +24,8 @@ use function React\Async\coroutine;
  */
 class ThreadMemberUpdate extends Event
 {
-    public function handle(Deferred &$deferred, $data)
+    public function handle($data)
     {
-        coroutine(function ($data) {
             $memberPart = $this->factory->create(Member::class, $data, true);
 
             /** @var ?Guild */
@@ -45,6 +41,5 @@ class ThreadMemberUpdate extends Event
             }
 
             return $memberPart;
-        }, $data)->then([$deferred, 'resolve']);
     }
 }

@@ -12,12 +12,9 @@
 namespace Discord\WebSockets\Events;
 
 use Discord\WebSockets\Event;
-use Discord\Helpers\Deferred;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Channel\Invite;
 use Discord\Parts\Guild\Guild;
-
-use function React\Async\coroutine;
 
 /**
  * @link https://discord.com/developers/docs/topics/gateway#invite-delete
@@ -29,9 +26,8 @@ class InviteDelete extends Event
     /**
      * @inheritdoc
      */
-    public function handle(Deferred &$deferred, $data): void
+    public function handle($data)
     {
-        coroutine(function ($data) {
             $invitePart = null;
 
             /** @var ?Guild */
@@ -49,6 +45,5 @@ class InviteDelete extends Event
             }
 
             return $invitePart ?? $data;
-        }, $data)->then([$deferred, 'resolve']);
     }
 }

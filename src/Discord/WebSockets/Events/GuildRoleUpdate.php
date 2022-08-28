@@ -13,10 +13,7 @@ namespace Discord\WebSockets\Events;
 
 use Discord\Parts\Guild\Role;
 use Discord\WebSockets\Event;
-use Discord\Helpers\Deferred;
 use Discord\Parts\Guild\Guild;
-
-use function React\Async\coroutine;
 
 /**
  * @link https://discord.com/developers/docs/topics/gateway#guild-role-update
@@ -28,9 +25,8 @@ class GuildRoleUpdate extends Event
     /**
      * @inheritdoc
      */
-    public function handle(Deferred &$deferred, $data): void
+    public function handle($data)
     {
-        coroutine(function ($data) {
             $role = (array) $data->role;
             $role['guild_id'] = $data->guild_id;
             $rolePart = $oldRole = null;
@@ -57,6 +53,5 @@ class GuildRoleUpdate extends Event
             }
 
             return [$rolePart, $oldRole];
-        }, $data)->then([$deferred, 'resolve']);
     }
 }

@@ -11,6 +11,7 @@
 
 namespace Discord\WebSockets\Events;
 
+use Discord\Helpers\Deferred;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Guild\Ban;
 use Discord\Parts\Guild\Guild;
@@ -18,13 +19,13 @@ use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
 use Discord\Parts\WebSockets\VoiceStateUpdate as VoiceStateUpdatePart;
 use Discord\WebSockets\Event;
-use Discord\Helpers\Deferred;
 use Discord\Http\Endpoint;
 use Discord\Parts\Channel\StageInstance;
 use Discord\Parts\Guild\ScheduledEvent;
 use Discord\Parts\Thread\Thread;
 
 use function React\Promise\all;
+use function React\Promise\reject;
 
 /**
  * @link https://discord.com/developers/docs/topics/gateway#guild-create
@@ -36,12 +37,10 @@ class GuildCreate extends Event
     /**
      * @inheritdoc
      */
-    public function handle(Deferred &$deferred, $data)
+    public function handle($data)
     {
         if (isset($data->unavailable) && $data->unavailable) {
-            $deferred->reject(['unavailable', $data->id]);
-
-            return $deferred->promise();
+            return reject(['unavailable', $data->id]);
         }
 
         /** @var Guild */
@@ -146,14 +145,16 @@ class GuildCreate extends Event
             }
         }
 
-        all($await)->then(function () use (&$guildPart) {
+        $all = yield all($await)->then(function () use (&$guildPart) {
             return $this->discord->guilds->cache->set($guildPart->id, $guildPart)->then(function ($success) use ($guildPart) {
                 return $guildPart;
             });
-        })->then([$deferred, 'resolve']);
+        });
 
         if ($data->large || $data->member_count > count($rawMembers)) {
             $this->discord->addLargeGuild($guildPart);
         }
+
+        return $all;
     }
 }

@@ -13,10 +13,7 @@ namespace Discord\WebSockets\Events;
 
 use Discord\Parts\Channel\StageInstance;
 use Discord\WebSockets\Event;
-use Discord\Helpers\Deferred;
 use Discord\Parts\Guild\Guild;
-
-use function React\Async\coroutine;
 
 /**
  * @link https://discord.com/developers/docs/topics/gateway#stage-instance-delete
@@ -28,9 +25,8 @@ class StageInstanceDelete extends Event
     /**
      * @inheritdoc
      */
-    public function handle(Deferred &$deferred, $data): void
+    public function handle($data)
     {
-        coroutine(function ($data) {
             $stageInstancePart = null;
 
             /** @var ?Guild */
@@ -43,6 +39,5 @@ class StageInstanceDelete extends Event
             }
 
             return $stageInstancePart ?? $this->factory->create(StageInstance::class, $data);
-        }, $data)->then([$deferred, 'resolve']);
     }
 }

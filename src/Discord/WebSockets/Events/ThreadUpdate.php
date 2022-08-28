@@ -11,13 +11,10 @@
 
 namespace Discord\WebSockets\Events;
 
-use Discord\Helpers\Deferred;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Thread\Thread;
 use Discord\WebSockets\Event;
-
-use function React\Async\coroutine;
 
 /**
  * @link https://discord.com/developers/docs/topics/gateway#thread-update
@@ -26,9 +23,8 @@ use function React\Async\coroutine;
  */
 class ThreadUpdate extends Event
 {
-    public function handle(Deferred &$deferred, $data)
+    public function handle($data)
     {
-        coroutine(function ($data) {
             $threadPart = $oldThread = null;
 
             /** @var ?Guild */
@@ -56,6 +52,5 @@ class ThreadUpdate extends Event
             }
 
             return [$threadPart, $oldThread];
-        }, $data)->then([$deferred, 'resolve']);
     }
 }
