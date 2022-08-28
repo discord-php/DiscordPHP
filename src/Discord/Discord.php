@@ -1302,6 +1302,9 @@ class Discord
 
         if (is_null($gateway)) {
             $this->http->get(Endpoint::GATEWAY_BOT)->done(function ($response) use ($buildParams) {
+                if ($response->shards > 1) {
+                    $this->logger->warning('Please contact the DiscordPHP devs if you are interrested in working with us on sharding support.');
+                }
                 $buildParams($this->resume_gateway_url ?? $response->url, $response->session_start_limit);
             }, function ($e) use ($buildParams) {
                 // Can't access the API server so we will use the default gateway.
