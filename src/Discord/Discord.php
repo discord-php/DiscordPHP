@@ -369,9 +369,7 @@ class Discord
 
         $options = $this->resolveOptions($options);
 
-        if (! isset($options['cacheInterface'][AbstractRepository::class])) {
-            $options['cacheInterface'][AbstractRepository::class] = new ArrayCache();
-        }
+        $options['cacheInterface'][AbstractRepository::class] ??= new ArrayCache();
 
         $this->options = $options;
         $this->token = $options['token'];
