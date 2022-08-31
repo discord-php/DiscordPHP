@@ -1347,7 +1347,6 @@ class Discord
                 'logger',
                 'loadAllMembers',
                 'disabledEvents',
-                'pmChannels',
                 'storeMessages',
                 'retrieveBans',
                 'intents',
@@ -1359,7 +1358,6 @@ class Discord
                 'logger' => null,
                 'loadAllMembers' => false,
                 'disabledEvents' => [],
-                'pmChannels' => false,
                 'storeMessages' => false,
                 'retrieveBans' => false,
                 'intents' => Intents::getDefaultIntents(),
@@ -1370,7 +1368,6 @@ class Discord
             ->setAllowedTypes('loop', LoopInterface::class)
             ->setAllowedTypes('loadAllMembers', ['bool', 'array'])
             ->setAllowedTypes('disabledEvents', 'array')
-            ->setAllowedTypes('pmChannels', 'bool')
             ->setAllowedTypes('storeMessages', 'bool')
             ->setAllowedTypes('retrieveBans', 'bool')
             ->setAllowedTypes('intents', ['array', 'int'])
