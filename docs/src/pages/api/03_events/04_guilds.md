@@ -36,10 +36,14 @@ Called with a `Guild` object in one of the following situations:
 2. The guild is unavailable due to an outage.
 
 ```php
-$discord->on(Event::GUILD_DELETE, function (?Guild $guild, Discord $discord, bool $unavailable) {
+$discord->on(Event::GUILD_DELETE, function ($guild, Discord $discord, bool $unavailable) {
     // ...
     if ($unavailable) {
-        // the guild is unavailabe due to an outage
+        // the guild is unavailabe due to an outage, $guild is a stdClass
+        // {
+        //     "guild_id": "",
+        //     "unavailable": "",
+        // }
     } else {
         // the Bot has been kicked from the guild
     }
@@ -263,10 +267,14 @@ $discord->on(Event::INTEGRATION_UPDATE, function (Integration $integration, Disc
 ### Integration Delete
 
 Called with an old `Integration` object when a integration is deleted from a guild.
-`$oldIntegration` _may_ be `null` if Integration is not cached.
 
 ```php
-$discord->on(Event::INTEGRATION_DELETE, function (?Integration $integration, Discord $discord) {
-    // ...
+$discord->on(Event::INTEGRATION_DELETE, function ($integration, Discord $discord) {
+    // if $integration is not cached,
+    // {
+    //     "id": "",
+    //     "guild_id": "",
+    //     "application_id": ""
+    // }
 });
 ```

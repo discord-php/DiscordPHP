@@ -17,8 +17,6 @@ use Discord\WebSockets\Event;
  * @link https://discord.com/developers/docs/topics/gateway#guild-delete
  *
  * @since 2.1.3
- *
- * @todo update params in docs
  */
 class GuildDelete extends Event
 {
