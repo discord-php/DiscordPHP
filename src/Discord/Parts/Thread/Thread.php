@@ -822,6 +822,7 @@ class Thread extends Part
             'thread_id' => $this->id,
             'channel_id' => $this->id,
             'parent_id' => $this->parent_id,
+            'guild_id' => $this->guild_id,
         ];
     }
 
