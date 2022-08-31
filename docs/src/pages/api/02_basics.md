@@ -29,7 +29,7 @@ $discord = new Discord([
 ```
 
 `intents` can be an array of valid intents _or_ an integer representing the intents. Default is all intents minus any privileged intents.
-At the moment this means all intents minus `GUILD_MEMBERS` and `GUILD_PRESENCES`. To enable these intents you must first enable them in your
+At the moment this means all intents minus `GUILD_MEMBERS`, `GUILD_PRESENCES`, and `MESSAGE_CONTENT`. To enable these intents you must first enable them in your
 Discord developer portal.
 
 ```php
