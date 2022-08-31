@@ -1374,6 +1374,7 @@ class Discord
                 'dnsConfig',
                 'cacheInterface',
                 'cacheSweep',
+                'cacheInterface',
             ])
             ->setDefaults([
                 'logger' => null,
