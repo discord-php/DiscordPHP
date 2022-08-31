@@ -846,6 +846,7 @@ class Thread extends Part
     public function getRepositoryAttributes(): array
     {
         return [
+            'guild_id' => $this->guild_id,
             'parent_id' => $this->parent_id,
             'channel_id' => $this->id,
             'thread_id' => $this->id,

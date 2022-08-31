@@ -86,14 +86,14 @@ class Discord
      *
      * @var int Gateway version.
      */
-    public const GATEWAY_VERSION = 9;
+    public const GATEWAY_VERSION = 10;
 
     /**
      * The client version.
      *
      * @var string Version.
      */
-    public const VERSION = 'v8.0.0';
+    public const VERSION = 'v10.0.0';
 
     /**
      * The logger.
@@ -1322,6 +1322,9 @@ class Discord
 
         if (is_null($gateway)) {
             $this->http->get(Endpoint::GATEWAY_BOT)->done(function ($response) use ($buildParams) {
+                if ($response->shards > 1) {
+                    $this->logger->info('Please contact the DiscordPHP devs at https://discord.gg/dphp or https://github.com/discord-php/DiscordPHP/issues if you are interrested in assisting us with sharding support development.');
+                }
                 $buildParams($this->resume_gateway_url ?? $response->url, $response->session_start_limit);
             }, function ($e) use ($buildParams) {
                 // Can't access the API server so we will use the default gateway.
@@ -1364,7 +1367,6 @@ class Discord
                 'logger',
                 'loadAllMembers',
                 'disabledEvents',
-                'pmChannels',
                 'storeMessages',
                 'retrieveBans',
                 'intents',
@@ -1377,7 +1379,6 @@ class Discord
                 'logger' => null,
                 'loadAllMembers' => false,
                 'disabledEvents' => [],
-                'pmChannels' => false,
                 'storeMessages' => false,
                 'retrieveBans' => false,
                 'intents' => Intents::getDefaultIntents(),
@@ -1389,7 +1390,6 @@ class Discord
             ->setAllowedTypes('loop', LoopInterface::class)
             ->setAllowedTypes('loadAllMembers', ['bool', 'array'])
             ->setAllowedTypes('disabledEvents', 'array')
-            ->setAllowedTypes('pmChannels', 'bool')
             ->setAllowedTypes('storeMessages', 'bool')
             ->setAllowedTypes('retrieveBans', 'bool')
             ->setAllowedTypes('intents', ['array', 'int'])

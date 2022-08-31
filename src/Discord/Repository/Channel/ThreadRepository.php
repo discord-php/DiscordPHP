@@ -37,7 +37,7 @@ class ThreadRepository extends AbstractRepository
      * @inheritdoc
      */
     protected $endpoints = [
-        'all' => Endpoint::CHANNEL_THREADS_ACTIVE,
+        'all' => Endpoint::GUILD_THREADS_ACTIVE,
         'get' => Endpoint::THREAD,
         'update' => Endpoint::THREAD,
         'delete' => Endpoint::THREAD,
@@ -58,7 +58,7 @@ class ThreadRepository extends AbstractRepository
      */
     public function active(): ExtendedPromiseInterface
     {
-        return $this->http->get(Endpoint::bind(Endpoint::CHANNEL_THREADS_ACTIVE, $this->vars['channel_id']))
+        return $this->http->get(Endpoint::bind(Endpoint::GUILD_THREADS_ACTIVE, $this->vars['guild_id']))
             ->then(function ($response) {
                 return $this->handleThreadPaginationResponse($response);
             });

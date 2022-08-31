@@ -66,7 +66,6 @@ class Application extends Part
         'owner',
         'primary_sku_id',
         'slug',
-        'summary', // deprecated, is now empty, used to be same as description
         'team',
         'verify_key',
         'rpc_origins',
@@ -190,7 +189,7 @@ class Application extends Part
             $permissions = $permissions->bitwise;
         }
 
-        return "https://discordapp.com/oauth2/authorize?client_id={$this->id}&scope=bot&permissions={$permissions}";
+        return "https://discord.com/oauth2/authorize?client_id={$this->id}&scope=bot&permissions={$permissions}";
     }
 
     /**

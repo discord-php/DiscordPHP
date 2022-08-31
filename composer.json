@@ -19,7 +19,7 @@
         "react/event-loop": "^1.2",
         "ext-json": "*",
         "ext-zlib": "*",
-        "discord-php/http": "^9.0.12",
+        "discord-php/http": "^10.1.13",
         "react/child-process": "^0.6.3",
         "discord/interactions": "^2.2",
         "react/async": "^4.0 || ^3.0",

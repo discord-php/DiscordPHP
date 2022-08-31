@@ -58,7 +58,6 @@ class Rule extends Part
     ];
 
     public const TRIGGER_TYPE_KEYWORD = 1;
-    public const TRIGGER_TYPE_HARMFUL_LINK = 2;
     public const TRIGGER_TYPE_SPAM = 3;
     public const TRIGGER_TYPE_KEYWORD_PRESET = 4;
     public const TRIGGER_TYPE_MENTION_SPAM = 5;

@@ -109,11 +109,9 @@ class Reaction extends Part
 
         $resolver = new OptionsResolver();
         $resolver
-            ->setDefined(['before', 'after', 'limit'])
-            ->setAllowedTypes('before', ['int', 'string', User::class])
+            ->setDefined(['after', 'limit'])
             ->setAllowedTypes('after', ['int', 'string', User::class])
             ->setAllowedTypes('limit', 'int')
-            ->setNormalizer('before', normalizePartId())
             ->setNormalizer('after', normalizePartId())
             ->setAllowedValues('limit', range(1, 100));
 

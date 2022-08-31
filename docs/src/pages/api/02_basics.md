@@ -62,12 +62,6 @@ This requires the `GUILD_MEMBERS` intent to be enabled in DiscordPHP. See above 
     'retrieveBans' => false,
 ```
 
-`pmChannels` is a boolean whether PM channels should be stored on bot load. Default is false.
-
-```php
-    'pmChannels' => false,
-```
-
 `disabledEvents` is an array of events that will be disabled. By default all events are enabled.
 
 ```php
