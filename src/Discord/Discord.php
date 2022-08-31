@@ -79,14 +79,14 @@ class Discord
      *
      * @var int Gateway version.
      */
-    public const GATEWAY_VERSION = 9;
+    public const GATEWAY_VERSION = 10;
 
     /**
      * The client version.
      *
      * @var string Version.
      */
-    public const VERSION = 'v7.2.0';
+    public const VERSION = 'v10.0.0';
 
     /**
      * The logger.
