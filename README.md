@@ -8,8 +8,8 @@ A wrapper for the official [Discord](https://discordapp.com) REST, gateway and v
 
 For testing and stability it would be greatly appreciated if you were able to add our test bot to your server. We don't store any data - the bot simply idles and does not interact with anyone and is used to test stability with large numbers of guilds. You can invite the bot [here.](https://discord.com/oauth2/authorize?client_id=157746770539970560&scope=bot)
 
-## CacheInterface experimental branch
-> Warning: This branch is in development and is experimental, do not use this in production! Create issues or join our Discord for feedback and discussions.
+## CacheInterface experimental
+> Warning: This branch contains an experimental feature, do not use this in production! Create issues or join our Discord for feedback and discussions.
 
 DiscordPHP caching is powered by [react/cache](https://github.com/reactphp/cache). The Interface can be retrieved by accessing `$discord->cache` or in any repositories `$repository->cache`, e.g.
 
@@ -41,11 +41,11 @@ Bundled in ReactPHP Cache, uses in-memory Array, and is already used by default.
 *Does not work on Windows*
 
 ```php
-use React\EventLoop\Factory as LoopFactory;
+use React\EventLoop\Loop;
 use React\Filesystem\Filesystem as ReactFilesystem;
 use WyriHaximus\React\Cache\Filesystem;
 
-$loop = LoopFactory::create();
+$loop = Loop::get();
 $filesystem = ReactFilesystem::create($loop);
 $cache = new Filesystem($filesystem, '/tmp/cache/discordphp/');
 
@@ -61,12 +61,10 @@ $discord = new Discord([
 Note the examples below uses ReactPHP-Redis v2.x
 
 ```php
-use React\EventLoop\Factory;
-use Clue\React\Redis\Client;
-use Clue\React\Redis\Factory;
+use React\EventLoop\Loop;
 use WyriHaximus\React\Cache\Redis;
 
-$loop = Factory::create();
+$loop = Loop::get();
 $redis = (new Clue\React\Redis\Factory($loop))->createLazyClient('localhost:6379');
 $cache = new Redis($redis, 'dphp:cache:'); // prefix is "dphp:cache"
 
