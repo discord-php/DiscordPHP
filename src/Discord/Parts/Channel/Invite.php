@@ -78,22 +78,6 @@ class Invite extends Part
     public const TARGET_TYPE_EMBEDDED_APPLICATION = 2;
 
     /**
-     * Accepts the invite.
-     *
-     * @deprecated 7.0.6
-     *
-     * @return ExtendedPromiseInterface
-     */
-    public function accept(): ExtendedPromiseInterface
-    {
-        if ($this->uses >= $this->max_uses) {
-            return \React\Promise\reject(new \RuntimeException('This invite has been used the max times.'));
-        }
-
-        return $this->http->post(Endpoint::bind(Endpoint::INVITE, $this->code));
-    }
-
-    /**
      * Returns the id attribute.
      *
      * @return string The id attribute.
