@@ -111,6 +111,12 @@ class GuildCreate extends Event
             $await[] = $guildPart->guild_scheduled_events->cache->setMultiple($scheduledEvents);
         }
 
+        $all = yield all($await)->then(function () use (&$guildPart) {
+            return $this->discord->guilds->cache->set($guildPart->id, $guildPart)->then(function ($success) use ($guildPart) {
+                return $guildPart;
+            });
+        });
+
         if ($this->discord->options['retrieveBans']) {
             $canBan = true; // Assume so since the permission might fail to be determined
             if ($botPerms = $members[$this->discord->id]->getPermissions()) {
@@ -141,15 +147,9 @@ class GuildCreate extends Event
                     }, [$loadBans, 'resolve']);
                 };
                 $banPagination();
-                $await[] = $loadBans->promise();
+                yield $loadBans->promise();
             }
         }
-
-        $all = yield all($await)->then(function () use (&$guildPart) {
-            return $this->discord->guilds->cache->set($guildPart->id, $guildPart)->then(function ($success) use ($guildPart) {
-                return $guildPart;
-            });
-        });
 
         if ($data->large || $data->member_count > count($rawMembers)) {
             $this->discord->addLargeGuild($guildPart);
