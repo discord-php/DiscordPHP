@@ -28,29 +28,29 @@ class InviteCreate extends Event
      */
     public function handle($data)
     {
-            /** @var Invite */
-            $invitePart = $this->factory->create(Invite::class, $data, true);
+        /** @var Invite */
+        $invitePart = $this->factory->create(Invite::class, $data, true);
 
-            /** @var ?Guild */
-            if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
-                /** @var ?Channel */
-                if ($channel = yield $guild->channels->cacheGet($data->channel_id)) {
-                    yield $channel->invites->cache->set($data->code, $invitePart);
-                }
-
-                yield $guild->invites->cache->set($data->code, $invitePart);
+        /** @var ?Guild */
+        if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
+            /** @var ?Channel */
+            if ($channel = yield $guild->channels->cacheGet($data->channel_id)) {
+                yield $channel->invites->cache->set($data->code, $invitePart);
             }
 
-            if (isset($data->inviter)) {
-                // User caching from inviter
-                $this->cacheUser($data->inviter);
-            }
+            yield $guild->invites->cache->set($data->code, $invitePart);
+        }
 
-            if (isset($data->target_user)) {
-                // User caching from target user
-                $this->cacheUser($data->target_user);
-            }
+        if (isset($data->inviter)) {
+            // User caching from inviter
+            $this->cacheUser($data->inviter);
+        }
 
-            return $invitePart;
+        if (isset($data->target_user)) {
+            // User caching from target user
+            $this->cacheUser($data->target_user);
+        }
+
+        return $invitePart;
     }
 }

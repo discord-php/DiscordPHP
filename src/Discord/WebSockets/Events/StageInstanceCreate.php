@@ -27,14 +27,14 @@ class StageInstanceCreate extends Event
      */
     public function handle($data)
     {
-            /** @var StageInstance */
-            $stageInstancePart = $this->factory->create(StageInstance::class, $data, true);
+        /** @var StageInstance */
+        $stageInstancePart = $this->factory->create(StageInstance::class, $data, true);
 
-            /** @var ?Guild */
-            if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
-                yield $guild->stage_instances->cache->set($data->id, $stageInstancePart);
-            }
+        /** @var ?Guild */
+        if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
+            yield $guild->stage_instances->cache->set($data->id, $stageInstancePart);
+        }
 
-            return $stageInstancePart;
+        return $stageInstancePart;
     }
 }

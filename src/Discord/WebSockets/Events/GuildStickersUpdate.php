@@ -28,31 +28,31 @@ class GuildStickersUpdate extends Event
      */
     public function handle($data)
     {
-            $oldStickers = Collection::for(Sticker::class);
-            $stickerParts = Collection::for(Sticker::class);
+        $oldStickers = Collection::for(Sticker::class);
+        $stickerParts = Collection::for(Sticker::class);
 
-            /** @var ?Guild */
-            if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
-                $oldStickers->merge($guild->stickers);
-                $guild->stickers->clear();
-            }
+        /** @var ?Guild */
+        if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
+            $oldStickers->merge($guild->stickers);
+            $guild->stickers->clear();
+        }
 
-            foreach ($data->stickers as &$sticker) {
-                if (isset($sticker->user)) {
-                    // User caching from sticker uploader
-                    $this->cacheUser($sticker->user);
-                } elseif ($oldSticker = $oldStickers->offsetGet($sticker->id)) {
-                    if ($uploader = $oldSticker->user) {
-                        $sticker->user = (object) $uploader->getRawAttributes();
-                    }
+        foreach ($data->stickers as &$sticker) {
+            if (isset($sticker->user)) {
+                // User caching from sticker uploader
+                $this->cacheUser($sticker->user);
+            } elseif ($oldSticker = $oldStickers->offsetGet($sticker->id)) {
+                if ($uploader = $oldSticker->user) {
+                    $sticker->user = (object) $uploader->getRawAttributes();
                 }
-                $stickerParts->pushItem($this->factory->create(Sticker::class, $sticker, true));
             }
+            $stickerParts->pushItem($this->factory->create(Sticker::class, $sticker, true));
+        }
 
-            if ($guild) {
-                yield $guild->stickers->cache->setMultiple($stickerParts->toArray());
-            }
+        if ($guild) {
+            yield $guild->stickers->cache->setMultiple($stickerParts->toArray());
+        }
 
-            return [$stickerParts, $oldStickers];
+        return [$stickerParts, $oldStickers];
     }
 }

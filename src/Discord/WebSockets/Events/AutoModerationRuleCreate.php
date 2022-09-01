@@ -27,14 +27,14 @@ class AutoModerationRuleCreate extends Event
      */
     public function handle($data)
     {
-            /** @var Rule */
-            $rulePart = $this->factory->create(Rule::class, $data, true);
+        /** @var Rule */
+        $rulePart = $this->factory->create(Rule::class, $data, true);
 
-            /** @var ?Guild */
-            if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
-                yield $guild->auto_moderation_rules->cache->set($data->id, $rulePart);
-            }
+        /** @var ?Guild */
+        if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
+            yield $guild->auto_moderation_rules->cache->set($data->id, $rulePart);
+        }
 
-            return $rulePart;
+        return $rulePart;
     }
 }

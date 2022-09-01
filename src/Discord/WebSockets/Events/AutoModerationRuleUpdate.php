@@ -27,29 +27,29 @@ class AutoModerationRuleUpdate extends Event
      */
     public function handle($data)
     {
-            $rulePart = $oldRule = null;
+        $rulePart = $oldRule = null;
 
-            /** @var ?Guild */
-            if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
-                /** @var ?Rule */
-                if ($oldRule = $guild->auto_moderation_rules[$data->id]) {
-                    // Swap
-                    $rulePart = $oldRule;
-                    $oldRule = clone $oldRule;
+        /** @var ?Guild */
+        if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
+            /** @var ?Rule */
+            if ($oldRule = $guild->auto_moderation_rules[$data->id]) {
+                // Swap
+                $rulePart = $oldRule;
+                $oldRule = clone $oldRule;
 
-                    $rulePart->fill((array) $data);
-                }
+                $rulePart->fill((array) $data);
             }
+        }
 
-            if ($rulePart === null) {
-                /** @var Rule */
-                $rulePart = $this->factory->create(Rule::class, $data, true);
-            }
+        if ($rulePart === null) {
+            /** @var Rule */
+            $rulePart = $this->factory->create(Rule::class, $data, true);
+        }
 
-            if ($guild) {
-                yield $guild->auto_moderation_rules->cache->set($data->id, $rulePart);
-            }
+        if ($guild) {
+            yield $guild->auto_moderation_rules->cache->set($data->id, $rulePart);
+        }
 
-            return [$rulePart, $oldRule];
+        return [$rulePart, $oldRule];
     }
 }

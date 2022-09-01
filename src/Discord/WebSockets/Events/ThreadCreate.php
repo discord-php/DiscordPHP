@@ -28,17 +28,17 @@ class ThreadCreate extends Event
      */
     public function handle($data)
     {
-            /** @var Thread */
-            $threadPart = $this->factory->create(Thread::class, $data, true);
+        /** @var Thread */
+        $threadPart = $this->factory->create(Thread::class, $data, true);
 
-            /** @var ?Guild */
-            if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
-                /** @var ?Channel */
-                if ($parent = yield $guild->channels->cacheGet($data->parent_id)) {
-                    yield $parent->threads->cache->set($data->id, $threadPart);
-                }
+        /** @var ?Guild */
+        if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
+            /** @var ?Channel */
+            if ($parent = yield $guild->channels->cacheGet($data->parent_id)) {
+                yield $parent->threads->cache->set($data->id, $threadPart);
             }
+        }
 
-            return $threadPart;
+        return $threadPart;
     }
 }

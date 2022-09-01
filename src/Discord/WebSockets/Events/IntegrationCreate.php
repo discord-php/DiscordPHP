@@ -27,18 +27,18 @@ class IntegrationCreate extends Event
      */
     public function handle($data)
     {
-            /** @var Integration */
-            $integrationPart = $this->factory->create(Integration::class, $data, true);
+        /** @var Integration */
+        $integrationPart = $this->factory->create(Integration::class, $data, true);
 
-            /** @var ?Guild */
-            if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
-                yield $guild->integrations->cacahe->set($data->id, $integrationPart);
-            }
+        /** @var ?Guild */
+        if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
+            yield $guild->integrations->cacahe->set($data->id, $integrationPart);
+        }
 
-            if (isset($data->user)) {
-                $this->cacheUser($data->user);
-            }
+        if (isset($data->user)) {
+            $this->cacheUser($data->user);
+        }
 
-            return $integrationPart;
+        return $integrationPart;
     }
 }

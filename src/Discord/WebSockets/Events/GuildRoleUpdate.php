@@ -27,31 +27,31 @@ class GuildRoleUpdate extends Event
      */
     public function handle($data)
     {
-            $role = (array) $data->role;
-            $role['guild_id'] = $data->guild_id;
-            $rolePart = $oldRole = null;
+        $role = (array) $data->role;
+        $role['guild_id'] = $data->guild_id;
+        $rolePart = $oldRole = null;
 
-            /** @var ?Guild */
-            if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
-                /** @var ?Role */
-                if ($oldRole = $guild->roles[$data->role->id]) {
-                    // Swap
-                    $rolePart = $oldRole;
-                    $oldRole = clone $oldRole;
+        /** @var ?Guild */
+        if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
+            /** @var ?Role */
+            if ($oldRole = $guild->roles[$data->role->id]) {
+                // Swap
+                $rolePart = $oldRole;
+                $oldRole = clone $oldRole;
 
-                    $rolePart->fill($role);
-                }
+                $rolePart->fill($role);
             }
+        }
 
-            if ($rolePart === null) {
-                /** @var Role */
-                $rolePart = $this->factory->create(Role::class, $role, true);
-            }
+        if ($rolePart === null) {
+            /** @var Role */
+            $rolePart = $this->factory->create(Role::class, $role, true);
+        }
 
-            if ($guild) {
-                yield $guild->roles->cache->set($data->role->id, $rolePart);
-            }
+        if ($guild) {
+            yield $guild->roles->cache->set($data->role->id, $rolePart);
+        }
 
-            return [$rolePart, $oldRole];
+        return [$rolePart, $oldRole];
     }
 }

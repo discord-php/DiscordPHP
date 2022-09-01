@@ -28,22 +28,22 @@ class InviteDelete extends Event
      */
     public function handle($data)
     {
-            $invitePart = null;
+        $invitePart = null;
 
-            /** @var ?Guild */
-            if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
-                /** @var ?Channel */
-                if ($channel = yield $guild->channels->cacheGet($data->channel_id)) {
-                    /** @var ?Invite */
-                    $invitePart = yield $channel->invites->cachePull($data->code);
-                }
-
-                if ($invitePart === null) {
-                    /** @var ?Invite */
-                    $invitePart = yield $guild->invites->cachePull($data->code);
-                }
+        /** @var ?Guild */
+        if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
+            /** @var ?Channel */
+            if ($channel = yield $guild->channels->cacheGet($data->channel_id)) {
+                /** @var ?Invite */
+                $invitePart = yield $channel->invites->cachePull($data->code);
             }
 
-            return $invitePart ?? $data;
+            if ($invitePart === null) {
+                /** @var ?Invite */
+                $invitePart = yield $guild->invites->cachePull($data->code);
+            }
+        }
+
+        return $invitePart ?? $data;
     }
 }

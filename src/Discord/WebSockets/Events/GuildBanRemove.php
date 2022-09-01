@@ -26,19 +26,19 @@ class GuildBanRemove extends Event
      */
     public function handle($data)
     {
-            $banPart = null;
+        $banPart = null;
 
-            /** @var ?Guild */
-            if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
-                /** @var ?Ban */
-                if ($banPart = yield $guild->bans->cachePull($data->user->id)) {
-                    $banPart->fill((array) $data);
-                    $banPart->created = false;
-                }
+        /** @var ?Guild */
+        if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
+            /** @var ?Ban */
+            if ($banPart = yield $guild->bans->cachePull($data->user->id)) {
+                $banPart->fill((array) $data);
+                $banPart->created = false;
             }
+        }
 
-            $this->cacheUser($data->user);
+        $this->cacheUser($data->user);
 
-            return $banPart ?? $this->factory->create(Ban::class, $data);
+        return $banPart ?? $this->factory->create(Ban::class, $data);
     }
 }

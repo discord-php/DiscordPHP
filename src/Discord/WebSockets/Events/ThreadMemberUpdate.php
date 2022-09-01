@@ -26,20 +26,20 @@ class ThreadMemberUpdate extends Event
 {
     public function handle($data)
     {
-            $memberPart = $this->factory->create(Member::class, $data, true);
+        $memberPart = $this->factory->create(Member::class, $data, true);
 
-            /** @var ?Guild */
-            if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
-                /** @var Channel */
-                foreach ($guild->channels as $channel) {
-                    /** @var ?Thread */
-                    if ($thread = yield $channel->threads->cacheGet($data->id)) {
-                        yield $thread->members->cache->set($data->user_id, $memberPart);
-                        break;
-                    }
+        /** @var ?Guild */
+        if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
+            /** @var Channel */
+            foreach ($guild->channels as $channel) {
+                /** @var ?Thread */
+                if ($thread = yield $channel->threads->cacheGet($data->id)) {
+                    yield $thread->members->cache->set($data->user_id, $memberPart);
+                    break;
                 }
             }
+        }
 
-            return $memberPart;
+        return $memberPart;
     }
 }

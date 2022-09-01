@@ -27,29 +27,29 @@ class StageInstanceUpdate extends Event
      */
     public function handle($data)
     {
-            $stageInstancePart = $oldStageInstance = null;
+        $stageInstancePart = $oldStageInstance = null;
 
-            /** @var ?Guild */
-            if ($guild = $this->discord->guilds->cacheGet($data->guild_id)) {
-                /** @var ?StageInstance */
-                if ($oldStageInstance = $guild->stage_instances[$data->id]) {
-                    // Swap
-                    $stageInstancePart = $oldStageInstance;
-                    $oldStageInstance = clone $oldStageInstance;
+        /** @var ?Guild */
+        if ($guild = $this->discord->guilds->cacheGet($data->guild_id)) {
+            /** @var ?StageInstance */
+            if ($oldStageInstance = $guild->stage_instances[$data->id]) {
+                // Swap
+                $stageInstancePart = $oldStageInstance;
+                $oldStageInstance = clone $oldStageInstance;
 
-                    $stageInstancePart->fill((array) $data);
-                }
+                $stageInstancePart->fill((array) $data);
             }
+        }
 
-            if ($stageInstancePart === null) {
-                /** @var StageInstance */
-                $stageInstancePart = $this->factory->create(StageInstance::class, $data, true);
-            }
+        if ($stageInstancePart === null) {
+            /** @var StageInstance */
+            $stageInstancePart = $this->factory->create(StageInstance::class, $data, true);
+        }
 
-            if ($guild) {
-                $guild->stage_instances->cache->set($data->id, $stageInstancePart);
-            }
+        if ($guild) {
+            $guild->stage_instances->cache->set($data->id, $stageInstancePart);
+        }
 
-            return [$stageInstancePart, $oldStageInstance];
+        return [$stageInstancePart, $oldStageInstance];
     }
 }

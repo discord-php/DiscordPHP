@@ -28,33 +28,33 @@ class GuildEmojisUpdate extends Event
      */
     public function handle($data)
     {
-            $oldEmojis = Collection::for(Emoji::class);
-            $emojiParts = Collection::for(Emoji::class);
+        $oldEmojis = Collection::for(Emoji::class);
+        $emojiParts = Collection::for(Emoji::class);
 
-            /** @var ?Guild */
-            if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
-                // @todo load all emojis from cache?
-                $oldEmojis->merge($guild->emojis);
-                $guild->emojis->clear();
-            }
+        /** @var ?Guild */
+        if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
+            // @todo load all emojis from cache?
+            $oldEmojis->merge($guild->emojis);
+            $guild->emojis->clear();
+        }
 
-            foreach ($data->emojis as &$emoji) {
-                if (isset($emoji->user)) {
-                    // User caching from emoji uploader
-                    $this->cacheUser($emoji->user);
-                } elseif ($oldEmoji = $oldEmojis->offsetGet($emoji->id)) {
-                    if ($uploader = $oldEmoji->user) {
-                        $emoji->user = (object) $uploader->getRawAttributes();
-                    }
+        foreach ($data->emojis as &$emoji) {
+            if (isset($emoji->user)) {
+                // User caching from emoji uploader
+                $this->cacheUser($emoji->user);
+            } elseif ($oldEmoji = $oldEmojis->offsetGet($emoji->id)) {
+                if ($uploader = $oldEmoji->user) {
+                    $emoji->user = (object) $uploader->getRawAttributes();
                 }
-                $emoji->guild_id = $data->guild_id;
-                $emojiParts->pushItem($this->factory->create(Emoji::class, $emoji, true));
             }
+            $emoji->guild_id = $data->guild_id;
+            $emojiParts->pushItem($this->factory->create(Emoji::class, $emoji, true));
+        }
 
-            if ($guild) {
-                yield $guild->emojis->cache->setMultiple($emojiParts->toArray());
-            }
+        if ($guild) {
+            yield $guild->emojis->cache->setMultiple($emojiParts->toArray());
+        }
 
-            return [$emojiParts, $oldEmojis];
+        return [$emojiParts, $oldEmojis];
     }
 }

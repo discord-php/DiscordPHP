@@ -24,16 +24,16 @@ class ThreadDelete extends Event
 {
     public function handle($data)
     {
-            $threadPart = null;
+        $threadPart = null;
 
-            /** @var ?Guild */
-            if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
-                /** @var ?Channel */
-                if ($parent = yield $guild->channels->cacheGet($data->parent_id)) {
-                    $threadPart = yield $parent->threads->cachePull($data->id);
-                }
+        /** @var ?Guild */
+        if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
+            /** @var ?Channel */
+            if ($parent = yield $guild->channels->cacheGet($data->parent_id)) {
+                $threadPart = yield $parent->threads->cachePull($data->id);
             }
+        }
 
-            return $threadPart ?? $data;
+        return $threadPart ?? $data;
     }
 }

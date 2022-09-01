@@ -28,37 +28,37 @@ class MessageUpdate extends Event
      */
     public function handle($data)
     {
+        /** @var Message */
+        $messagePart = $oldMessagePart = null;
+
+        if (isset($data->guild_id)) {
+            /** @var ?Guild */
+            if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
+                /** @var ?Channel */
+                $channel = yield $guild->channels->cacheGet($data->channel_id);
+            }
+        }
+
+        if (isset($channel)) {
+            /** @var ?Message */
+            if ($oldMessagePart = yield $channel->messages->cacheGet($data->id)) {
+                // Swap
+                $messagePart = $oldMessagePart;
+                $oldMessagePart = clone $oldMessagePart;
+
+                $messagePart->fill((array) $data);
+            }
+        }
+
+        if ($oldMessagePart === null) {
             /** @var Message */
-            $messagePart = $oldMessagePart = null;
+            $messagePart = $this->factory->create(Message::class, $data, true);
+        }
 
-            if (isset($data->guild_id)) {
-                /** @var ?Guild */
-                if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
-                    /** @var ?Channel */
-                    $channel = yield $guild->channels->cacheGet($data->channel_id);
-                }
-            }
+        if (isset($channel) && ($oldMessagePart || $this->discord->options['storeMessages'])) {
+            yield $channel->messages->cache->set($data->id, $messagePart);
+        }
 
-            if (isset($channel)) {
-                /** @var ?Message */
-                if ($oldMessagePart = yield $channel->messages->cacheGet($data->id)) {
-                    // Swap
-                    $messagePart = $oldMessagePart;
-                    $oldMessagePart = clone $oldMessagePart;
-
-                    $messagePart->fill((array) $data);
-                }
-            }
-
-            if ($oldMessagePart === null) {
-                /** @var Message */
-                $messagePart = $this->factory->create(Message::class, $data, true);
-            }
-
-            if (isset($channel) && ($oldMessagePart || $this->discord->options['storeMessages'])) {
-                yield $channel->messages->cache->set($data->id, $messagePart);
-            }
-
-            return [$messagePart, $oldMessagePart];
+        return [$messagePart, $oldMessagePart];
     }
 }

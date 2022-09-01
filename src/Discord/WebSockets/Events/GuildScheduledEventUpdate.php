@@ -27,33 +27,33 @@ class GuildScheduledEventUpdate extends Event
      */
     public function handle($data)
     {
-            $scheduledEventPart = $oldScheduledEvent = null;
+        $scheduledEventPart = $oldScheduledEvent = null;
 
-            /** @var ?Guild */
-            if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
-                /** @var ?ScheduledEvent */
-                if ($oldScheduledEvent = $guild->guild_scheduled_events[$data->id]) {
-                    // Swap
-                    $scheduledEventPart = $oldScheduledEvent;
-                    $oldScheduledEvent = clone $oldScheduledEvent;
+        /** @var ?Guild */
+        if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
+            /** @var ?ScheduledEvent */
+            if ($oldScheduledEvent = $guild->guild_scheduled_events[$data->id]) {
+                // Swap
+                $scheduledEventPart = $oldScheduledEvent;
+                $oldScheduledEvent = clone $oldScheduledEvent;
 
-                    $scheduledEventPart->fill((array) $data);
-                }
+                $scheduledEventPart->fill((array) $data);
             }
+        }
 
-            if ($scheduledEventPart === null) {
-                /** @var ScheduledEvent */
-                $scheduledEventPart = $this->factory->create(ScheduledEvent::class, $data, true);
-            }
+        if ($scheduledEventPart === null) {
+            /** @var ScheduledEvent */
+            $scheduledEventPart = $this->factory->create(ScheduledEvent::class, $data, true);
+        }
 
-            if ($guild) {
-                yield $guild->guild_scheduled_events->cache->set($data->id, $scheduledEventPart);
-            }
+        if ($guild) {
+            yield $guild->guild_scheduled_events->cache->set($data->id, $scheduledEventPart);
+        }
 
-            if (isset($data->creator)) {
-                $this->cacheUser($data->creator);
-            }
+        if (isset($data->creator)) {
+            $this->cacheUser($data->creator);
+        }
 
-            return [$scheduledEventPart, $oldScheduledEvent];
+        return [$scheduledEventPart, $oldScheduledEvent];
     }
 }

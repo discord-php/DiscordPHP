@@ -27,18 +27,18 @@ class GuildScheduledEventCreate extends Event
      */
     public function handle($data)
     {
-            /** @var ScheduledEvent */
-            $scheduledEventPart = $this->factory->create(ScheduledEvent::class, $data, true);
+        /** @var ScheduledEvent */
+        $scheduledEventPart = $this->factory->create(ScheduledEvent::class, $data, true);
 
-            /** @var ?Guild */
-            if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
-                yield $guild->guild_scheduled_events->cache->set($data->id, $scheduledEventPart);
-            }
+        /** @var ?Guild */
+        if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
+            yield $guild->guild_scheduled_events->cache->set($data->id, $scheduledEventPart);
+        }
 
-            if (isset($data->creator)) {
-                $this->cacheUser($data->creator);
-            }
+        if (isset($data->creator)) {
+            $this->cacheUser($data->creator);
+        }
 
-            return $scheduledEventPart;
+        return $scheduledEventPart;
     }
 }

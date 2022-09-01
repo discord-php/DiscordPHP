@@ -27,18 +27,18 @@ class ChannelCreate extends Event
      */
     public function handle($data)
     {
-            /** @var Channel */
-            $channelPart = $this->factory->create(Channel::class, $data, true);
+        /** @var Channel */
+        $channelPart = $this->factory->create(Channel::class, $data, true);
 
-            if ($channelPart->is_private) {
-                yield $this->discord->private_channels->cache->set($data->id, $channelPart);
-            } else {
-                /** @var ?Guild */
-                if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
-                    yield $guild->channels->cache->set($data->id, $channelPart);
-                }
+        if ($channelPart->is_private) {
+            yield $this->discord->private_channels->cache->set($data->id, $channelPart);
+        } else {
+            /** @var ?Guild */
+            if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
+                yield $guild->channels->cache->set($data->id, $channelPart);
             }
+        }
 
-            return $channelPart;
+        return $channelPart;
     }
 }

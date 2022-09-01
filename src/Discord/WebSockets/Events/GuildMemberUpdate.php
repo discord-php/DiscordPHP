@@ -27,31 +27,31 @@ class GuildMemberUpdate extends Event
      */
     public function handle($data)
     {
-            $memberPart = $oldMember = null;
+        $memberPart = $oldMember = null;
 
-            /** @var ?Guild */
-            if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
-                /** @var ?Member */
-                if ($oldMember = $guild->members[$data->user->id]) {
-                    // Swap
-                    $memberPart = $oldMember;
-                    $oldMember = clone $oldMember;
+        /** @var ?Guild */
+        if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
+            /** @var ?Member */
+            if ($oldMember = $guild->members[$data->user->id]) {
+                // Swap
+                $memberPart = $oldMember;
+                $oldMember = clone $oldMember;
 
-                    $memberPart->fill((array) $data);
-                }
+                $memberPart->fill((array) $data);
             }
+        }
 
-            if ($memberPart === null) {
-                /** @var Member */
-                $memberPart = $this->factory->create(Member::class, $data, true);
-            }
+        if ($memberPart === null) {
+            /** @var Member */
+            $memberPart = $this->factory->create(Member::class, $data, true);
+        }
 
-            if ($guild) {
-                yield $guild->members->cache->set($data->user->id, $memberPart);
-            }
+        if ($guild) {
+            yield $guild->members->cache->set($data->user->id, $memberPart);
+        }
 
-            $this->cacheUser($data->user);
+        $this->cacheUser($data->user);
 
-            return [$memberPart, $oldMember];
+        return [$memberPart, $oldMember];
     }
 }

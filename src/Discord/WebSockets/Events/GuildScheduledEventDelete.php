@@ -27,21 +27,21 @@ class GuildScheduledEventDelete extends Event
      */
     public function handle($data)
     {
-            $scheduledEventPart = null;
+        $scheduledEventPart = null;
 
-            /** @var ?Guild */
-            if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
-                /** @var ?ScheduledEvent */
-                if ($scheduledEventPart = yield $guild->guild_scheduled_events->cachePull($data->id)) {
-                    $scheduledEventPart->fill((array) $data);
-                    $scheduledEventPart->created = false;
-                }
+        /** @var ?Guild */
+        if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
+            /** @var ?ScheduledEvent */
+            if ($scheduledEventPart = yield $guild->guild_scheduled_events->cachePull($data->id)) {
+                $scheduledEventPart->fill((array) $data);
+                $scheduledEventPart->created = false;
             }
+        }
 
-            if (isset($data->creator)) {
-                $this->cacheUser($data->creator);
-            }
+        if (isset($data->creator)) {
+            $this->cacheUser($data->creator);
+        }
 
-            return $scheduledEventPart ?? $this->factory->create(ScheduledEvent::class, $data);
+        return $scheduledEventPart ?? $this->factory->create(ScheduledEvent::class, $data);
     }
 }

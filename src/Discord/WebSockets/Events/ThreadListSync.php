@@ -27,38 +27,38 @@ class ThreadListSync extends Event
 {
     public function handle($data)
     {
-            $threadParts = Collection::for(Thread::class);
+        $threadParts = Collection::for(Thread::class);
 
-            /** @var ?Guild */
-            if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
-                foreach ($data->channel_ids as $channel_id) {
-                    /** @var ?Channel[] */
-                    $channels[$channel_id] = yield $guild->channels->cacheGet($channel_id);
-                }
-
-                foreach ($data->threads as $thread) {
-                    /** @var Thread */
-                    $threadPart = $this->factory->create(Thread::class, $thread, true);
-                    /** @var ?Channel */
-                    if ($channel = $channels[$thread->parent_id] ?? null) {
-                        /** @var ?Thread */
-                        if ($oldThread = yield $channel->threads->cacheGet($thread->id)) {
-                            $oldThread->fill((array) $thread);
-                            $threadPart = $oldThread;
-                        }
-                        yield $channel->threads->cache->set($thread->id, $threadPart);
-                    }
-                    $threadParts->pushItem($threadPart);
-                }
-
-                foreach ($data->members as $member) {
-                    /** @var ?Thread */
-                    if ($threadPart = $threadParts[$member->id] ?? null) {
-                        yield $threadPart->members->cache->set($member->user_id, $this->factory->create(Member::class, $member, true));
-                    }
-                }
+        /** @var ?Guild */
+        if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
+            foreach ($data->channel_ids as $channel_id) {
+                /** @var ?Channel[] */
+                $channels[$channel_id] = yield $guild->channels->cacheGet($channel_id);
             }
 
-            return $threadParts;
+            foreach ($data->threads as $thread) {
+                /** @var Thread */
+                $threadPart = $this->factory->create(Thread::class, $thread, true);
+                /** @var ?Channel */
+                if ($channel = $channels[$thread->parent_id] ?? null) {
+                    /** @var ?Thread */
+                    if ($oldThread = yield $channel->threads->cacheGet($thread->id)) {
+                        $oldThread->fill((array) $thread);
+                        $threadPart = $oldThread;
+                    }
+                    yield $channel->threads->cache->set($thread->id, $threadPart);
+                }
+                $threadParts->pushItem($threadPart);
+            }
+
+            foreach ($data->members as $member) {
+                /** @var ?Thread */
+                if ($threadPart = $threadParts[$member->id] ?? null) {
+                    yield $threadPart->members->cache->set($member->user_id, $this->factory->create(Member::class, $member, true));
+                }
+            }
+        }
+
+        return $threadParts;
     }
 }

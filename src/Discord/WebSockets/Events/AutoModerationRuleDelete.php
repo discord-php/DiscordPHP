@@ -27,17 +27,17 @@ class AutoModerationRuleDelete extends Event
      */
     public function handle($data)
     {
-            $rulePart = null;
+        $rulePart = null;
 
-            /** @var ?Guild */
-            if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
-                /** @var ?Rule */
-                if ($rulePart = yield $guild->auto_moderation_rules->cachePull($data->id)) {
-                    $rulePart->fill((array) $data);
-                    $rulePart->created = false;
-                }
+        /** @var ?Guild */
+        if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
+            /** @var ?Rule */
+            if ($rulePart = yield $guild->auto_moderation_rules->cachePull($data->id)) {
+                $rulePart->fill((array) $data);
+                $rulePart->created = false;
             }
+        }
 
-            return $rulePart ?? $this->factory->create(Rule::class, $data);
+        return $rulePart ?? $this->factory->create(Rule::class, $data);
     }
 }

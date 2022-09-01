@@ -30,31 +30,31 @@ class MessageReactionRemoveAll extends Event
      */
     public function handle($data)
     {
-            /** @var ?Guild */
-            if (isset($data->guild_id) && $guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
-                /** @var ?Channel */
-                if (! $channel = yield $guild->channels->cacheGet($data->channel_id)) {
-                    /** @var Channel */
-                    foreach ($guild->channels as $channel) {
-                        /** @var ?Thread */
-                        if ($thread = yield $channel->threads->cacheGet($data->channel_id)) {
-                            $channel = $thread;
-                            break;
-                        }
+        /** @var ?Guild */
+        if (isset($data->guild_id) && $guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
+            /** @var ?Channel */
+            if (! $channel = yield $guild->channels->cacheGet($data->channel_id)) {
+                /** @var Channel */
+                foreach ($guild->channels as $channel) {
+                    /** @var ?Thread */
+                    if ($thread = yield $channel->threads->cacheGet($data->channel_id)) {
+                        $channel = $thread;
+                        break;
                     }
                 }
-            } else {
-                /** @var ?Channel */
-                $channel = yield $this->discord->private_channels->cacheGet($data->channel_id);
             }
+        } else {
+            /** @var ?Channel */
+            $channel = yield $this->discord->private_channels->cacheGet($data->channel_id);
+        }
 
-            $reaction = new MessageReaction($this->discord, (array) $data, true);
+        $reaction = new MessageReaction($this->discord, (array) $data, true);
 
-            /** @var ?Message */
-            if (isset($channel) && $message = yield $channel->messages->cacheGet($data->message_id)) {
-                $message->reactions->clear();
-            }
+        /** @var ?Message */
+        if (isset($channel) && $message = yield $channel->messages->cacheGet($data->message_id)) {
+            $message->reactions->clear();
+        }
 
-            return $reaction;
+        return $reaction;
     }
 }

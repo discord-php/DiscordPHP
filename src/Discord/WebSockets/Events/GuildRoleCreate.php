@@ -27,14 +27,14 @@ class GuildRoleCreate extends Event
      */
     public function handle($data)
     {
-            /** @var Role */
-            $rolePart = $this->factory->part(Role::class, (array) $data->role + ['guild_id' => $data->guild_id], true);
+        /** @var Role */
+        $rolePart = $this->factory->part(Role::class, (array) $data->role + ['guild_id' => $data->guild_id], true);
 
-            /** @var ?Guild */
-            if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
-                yield $guild->roles->cache->set($data->role->id, $rolePart);
-            }
+        /** @var ?Guild */
+        if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
+            yield $guild->roles->cache->set($data->role->id, $rolePart);
+        }
 
-            return $rolePart;
+        return $rolePart;
     }
 }

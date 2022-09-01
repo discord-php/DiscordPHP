@@ -27,12 +27,12 @@ class GuildRoleDelete extends Event
      */
     public function handle($data)
     {
-            /** @var ?Guild */
-            if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
-                /** @var ?Role */
-                $rolePart = yield $guild->roles->cachePull($data->role_id);
-            }
+        /** @var ?Guild */
+        if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
+            /** @var ?Role */
+            $rolePart = yield $guild->roles->cachePull($data->role_id);
+        }
 
-            return $rolePart ?? $data;
+        return $rolePart ?? $data;
     }
 }

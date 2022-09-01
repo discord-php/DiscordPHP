@@ -28,43 +28,43 @@ class MessageCreate extends Event
      */
     public function handle($data)
     {
-            /** @var Message */
-            $messagePart = $this->factory->create(Message::class, $data, true);
+        /** @var Message */
+        $messagePart = $this->factory->create(Message::class, $data, true);
 
-            if ($messagePart->is_private) {
-                /** @var Channel */
-                $channel = $this->factory->create(Channel::class, [
-                    'id' => $data->channel_id,
-                    'type' => Channel::TYPE_DM,
-                    'last_message_id' => $data->id,
-                    'recipients' => [$data->author],
-                ], true);
+        if ($messagePart->is_private) {
+            /** @var Channel */
+            $channel = $this->factory->create(Channel::class, [
+                'id' => $data->channel_id,
+                'type' => Channel::TYPE_DM,
+                'last_message_id' => $data->id,
+                'recipients' => [$data->author],
+            ], true);
 
-                yield $this->discord->private_channels->cache->set($data->channel_id, $channel);
+            yield $this->discord->private_channels->cache->set($data->channel_id, $channel);
+        }
+
+        if (isset($data->guild_id)) {
+            /** @var ?Guild */
+            $guild = yield $this->discord->guilds->cacheGet($data->guild_id);
+
+            if (! isset($channel)) {
+                /** @var ?Channel */
+                $channel = yield $guild->channels->cacheGet($data->channel_id);
             }
+        }
 
-            if (isset($data->guild_id)) {
-                /** @var ?Guild */
-                $guild = yield $this->discord->guilds->cacheGet($data->guild_id);
+        if ($this->discord->options['storeMessages'] && (isset($channel) || $channel = $messagePart->channel)) {
+            yield $channel->messages->cache->set($data->id, $messagePart);
+        }
 
-                if (! isset($channel)) {
-                    /** @var ?Channel */
-                    $channel = yield $guild->channels->cacheGet($data->channel_id);
-                }
-            }
+        if (isset($data->author) && ! isset($data->webhook_id)) {
+            $this->cacheUser($data->author);
+        }
 
-            if ($this->discord->options['storeMessages'] && (isset($channel) || $channel = $messagePart->channel)) {
-                yield $channel->messages->cache->set($data->id, $messagePart);
-            }
+        if (isset($data->interaction->user)) {
+            $this->cacheUser($data->interaction->user);
+        }
 
-            if (isset($data->author) && ! isset($data->webhook_id)) {
-                $this->cacheUser($data->author);
-            }
-
-            if (isset($data->interaction->user)) {
-                $this->cacheUser($data->interaction->user);
-            }
-
-            return $messagePart;
+        return $messagePart;
     }
 }

@@ -27,17 +27,17 @@ class GuildMemberAdd extends Event
      */
     public function handle($data)
     {
-            /** @var Member */
-            $memberPart = $this->factory->create(Member::class, $data, true);
+        /** @var Member */
+        $memberPart = $this->factory->create(Member::class, $data, true);
 
-            /** @var ?Guild */
-            if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
-                yield $guild->members->cache->set($data->user->id, $memberPart);
-                ++$guild->member_count;
-            }
+        /** @var ?Guild */
+        if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
+            yield $guild->members->cache->set($data->user->id, $memberPart);
+            ++$guild->member_count;
+        }
 
-            $this->cacheUser($data->user);
+        $this->cacheUser($data->user);
 
-            return $memberPart;
+        return $memberPart;
     }
 }

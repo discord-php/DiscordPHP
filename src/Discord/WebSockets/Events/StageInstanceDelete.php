@@ -27,17 +27,17 @@ class StageInstanceDelete extends Event
      */
     public function handle($data)
     {
-            $stageInstancePart = null;
+        $stageInstancePart = null;
 
-            /** @var ?Guild */
-            if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
-                /** @var ?StageInstance */
-                if ($stageInstancePart = yield $guild->stage_instances->cachePull($data->id)) {
-                    $stageInstancePart->fill((array) $data);
-                    $stageInstancePart->created = false;
-                }
+        /** @var ?Guild */
+        if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
+            /** @var ?StageInstance */
+            if ($stageInstancePart = yield $guild->stage_instances->cachePull($data->id)) {
+                $stageInstancePart->fill((array) $data);
+                $stageInstancePart->created = false;
             }
+        }
 
-            return $stageInstancePart ?? $this->factory->create(StageInstance::class, $data);
+        return $stageInstancePart ?? $this->factory->create(StageInstance::class, $data);
     }
 }

@@ -28,25 +28,25 @@ class MessageDelete extends Event
      */
     public function handle($data)
     {
-            $messagePart = null;
+        $messagePart = null;
 
-            if (! isset($data->guild_id)) {
+        if (! isset($data->guild_id)) {
+            /** @var ?Channel */
+            if ($channel = yield $this->discord->private_channels->cacheGet($data->channel_id)) {
+                /** @var ?Message */
+                $messagePart = yield $channel->messages->cachePull($data->id);
+            }
+        } else {
+            /** @var ?Guild */
+            if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
                 /** @var ?Channel */
-                if ($channel = yield $this->discord->private_channels->cacheGet($data->channel_id)) {
+                if ($channel = yield $guild->channels->cacheGet($data->channel_id)) {
                     /** @var ?Message */
                     $messagePart = yield $channel->messages->cachePull($data->id);
                 }
-            } else {
-                /** @var ?Guild */
-                if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
-                    /** @var ?Channel */
-                    if ($channel = yield $guild->channels->cacheGet($data->channel_id)) {
-                        /** @var ?Message */
-                        $messagePart = yield $channel->messages->cachePull($data->id);
-                    }
-                }
             }
+        }
 
-            return $messagePart ?? $data;
+        return $messagePart ?? $data;
     }
 }

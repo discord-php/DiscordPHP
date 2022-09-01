@@ -26,19 +26,19 @@ class GuildUpdate extends Event
      */
     public function handle($data)
     {
-            $oldGuild = null;
+        $oldGuild = null;
 
-            /** @var ?Guild */
-            if ($guildPart = yield $this->discord->guilds->cacheGet($data->id)) {
-                $oldGuild = clone $guildPart;
-                $guildPart->fill((array) $data);
-            } else {
-                /** @var Guild */
-                $guildPart = $this->factory->create(Guild::class, $data, true);
-            }
+        /** @var ?Guild */
+        if ($guildPart = yield $this->discord->guilds->cacheGet($data->id)) {
+            $oldGuild = clone $guildPart;
+            $guildPart->fill((array) $data);
+        } else {
+            /** @var Guild */
+            $guildPart = $this->factory->create(Guild::class, $data, true);
+        }
 
-            yield $this->discord->guilds->cache->set($data->id, $guildPart);
+        yield $this->discord->guilds->cache->set($data->id, $guildPart);
 
-            return [$guildPart, $oldGuild];
+        return [$guildPart, $oldGuild];
     }
 }

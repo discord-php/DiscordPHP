@@ -26,17 +26,17 @@ class ChannelDelete extends Event
      */
     public function handle($data)
     {
-            $channelPart = null;
+        $channelPart = null;
 
-            /** @var ?Guild */
-            if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
-                /** @var Channel */
-                if ($channelPart = yield $guild->channels->cachePull($data->id)) {
-                    $channelPart->fill((array) $data);
-                    $channelPart->created = false;
-                }
+        /** @var ?Guild */
+        if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
+            /** @var Channel */
+            if ($channelPart = yield $guild->channels->cachePull($data->id)) {
+                $channelPart->fill((array) $data);
+                $channelPart->created = false;
             }
+        }
 
-            return $channelPart ?? $this->factory->create(Channel::class, $data);
+        return $channelPart ?? $this->factory->create(Channel::class, $data);
     }
 }

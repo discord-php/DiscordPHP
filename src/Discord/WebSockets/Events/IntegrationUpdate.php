@@ -27,33 +27,33 @@ class IntegrationUpdate extends Event
      */
     public function handle($data)
     {
-            $integrationPart = $oldIntegration = null;
+        $integrationPart = $oldIntegration = null;
 
-            /** @var ?Guild */
-            if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
-                /** @var ?Integration */
-                if ($oldIntegration = $guild->integrations[$data->id]) {
-                    // Swap
-                    $integrationPart = $oldIntegration;
-                    $oldIntegration = clone $oldIntegration;
+        /** @var ?Guild */
+        if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
+            /** @var ?Integration */
+            if ($oldIntegration = $guild->integrations[$data->id]) {
+                // Swap
+                $integrationPart = $oldIntegration;
+                $oldIntegration = clone $oldIntegration;
 
-                    $integrationPart->fill((array) $data);
-                }
+                $integrationPart->fill((array) $data);
             }
+        }
 
-            if ($integrationPart === null) {
-                /** @var Integration */
-                $integrationPart = $this->factory->create(Integration::class, $data, true);
-            }
+        if ($integrationPart === null) {
+            /** @var Integration */
+            $integrationPart = $this->factory->create(Integration::class, $data, true);
+        }
 
-            if ($guild) {
-                yield $guild->integrations->cache->set($data->id, $integrationPart);
-            }
+        if ($guild) {
+            yield $guild->integrations->cache->set($data->id, $integrationPart);
+        }
 
-            if (isset($data->user)) {
-                $this->cacheUser($data->user);
-            }
+        if (isset($data->user)) {
+            $this->cacheUser($data->user);
+        }
 
-            return [$integrationPart, $oldIntegration];
+        return [$integrationPart, $oldIntegration];
     }
 }

@@ -25,32 +25,32 @@ class ThreadUpdate extends Event
 {
     public function handle($data)
     {
-            $threadPart = $oldThread = null;
+        $threadPart = $oldThread = null;
 
-            /** @var ?Guild */
-            if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
-                /** @var ?Channel */
-                if ($parent = yield $guild->channels->cacheGet($data->parent_id)) {
-                    /** @var ?Thread */
-                    if ($oldThread = $parent->threads[$data->id]) {
-                        // Swap
-                        $threadPart = $oldThread;
-                        $oldThread = clone $oldThread;
+        /** @var ?Guild */
+        if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
+            /** @var ?Channel */
+            if ($parent = yield $guild->channels->cacheGet($data->parent_id)) {
+                /** @var ?Thread */
+                if ($oldThread = $parent->threads[$data->id]) {
+                    // Swap
+                    $threadPart = $oldThread;
+                    $oldThread = clone $oldThread;
 
-                        $threadPart->fill((array) $data);
-                    }
+                    $threadPart->fill((array) $data);
                 }
             }
+        }
 
-            if ($threadPart === null) {
-                /** @var Thread */
-                $threadPart = $this->factory->create(Thread::class, $data, true);
-            }
+        if ($threadPart === null) {
+            /** @var Thread */
+            $threadPart = $this->factory->create(Thread::class, $data, true);
+        }
 
-            if (isset($parent)) {
-                yield $parent->threads->cache->set($data->id, $threadPart);
-            }
+        if (isset($parent)) {
+            yield $parent->threads->cache->set($data->id, $threadPart);
+        }
 
-            return [$threadPart, $oldThread];
+        return [$threadPart, $oldThread];
     }
 }

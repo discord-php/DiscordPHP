@@ -26,33 +26,33 @@ class ThreadMembersUpdate extends Event
 {
     public function handle($data)
     {
-            /** @var ?Guild */
-            if (! $guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
-                return null;
-            }
-
-            // When the bot is added to a private thread, sometimes the `THREAD_MEMBER_UPDATE` event
-            // comes before the `THREAD_CREATE` event, so we just don't emit this event if we don't have the
-            // thread cached.
-            // @todo channels may be missing from cache
-            /** @var Channel */
-            foreach ($guild->channels as $channel) {
-                /** @var ?Thread */
-                if ($thread = yield $channel->threads->cacheGet($data->id)) {
-                    $thread->member_count = $data->member_count;
-
-                    if (isset($data->removed_member_ids)) {
-                        yield $thread->members->cache->deleteMultiple($data->removed_member_ids);
-                    }
-
-                    foreach ($data->added_members ?? [] as $member) {
-                        yield $thread->members->cache->set($member->user_id, $this->factory->create(Member::class, $member, true));
-                    }
-
-                    return $thread;
-                }
-            }
-
+        /** @var ?Guild */
+        if (! $guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
             return null;
+        }
+
+        // When the bot is added to a private thread, sometimes the `THREAD_MEMBER_UPDATE` event
+        // comes before the `THREAD_CREATE` event, so we just don't emit this event if we don't have the
+        // thread cached.
+        // @todo channels may be missing from cache
+        /** @var Channel */
+        foreach ($guild->channels as $channel) {
+            /** @var ?Thread */
+            if ($thread = yield $channel->threads->cacheGet($data->id)) {
+                $thread->member_count = $data->member_count;
+
+                if (isset($data->removed_member_ids)) {
+                    yield $thread->members->cache->deleteMultiple($data->removed_member_ids);
+                }
+
+                foreach ($data->added_members ?? [] as $member) {
+                    yield $thread->members->cache->set($member->user_id, $this->factory->create(Member::class, $member, true));
+                }
+
+                return $thread;
+            }
+        }
+
+        return null;
     }
 }

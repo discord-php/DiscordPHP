@@ -27,25 +27,25 @@ class GuildMemberRemove extends Event
      */
     public function handle($data)
     {
-            $memberPart = null;
+        $memberPart = null;
 
-            /** @var ?Guild */
-            if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
-                /** @var ?Member */
-                $memberPart = yield $guild->members->cachePull($data->user->id);
-                --$guild->member_count;
-            }
+        /** @var ?Guild */
+        if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
+            /** @var ?Member */
+            $memberPart = yield $guild->members->cachePull($data->user->id);
+            --$guild->member_count;
+        }
 
-            if ($memberPart) {
-                $memberPart->created = false;
-            } else {
-                /** @var Member */
-                $memberPart = $this->factory->create(Member::class, $data);
-                $memberPart->guild_id = $data->guild_id;
-            }
+        if ($memberPart) {
+            $memberPart->created = false;
+        } else {
+            /** @var Member */
+            $memberPart = $this->factory->create(Member::class, $data);
+            $memberPart->guild_id = $data->guild_id;
+        }
 
-            $this->cacheUser($data->user);
+        $this->cacheUser($data->user);
 
-            return $memberPart;
+        return $memberPart;
     }
 }

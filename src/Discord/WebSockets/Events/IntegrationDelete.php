@@ -26,16 +26,16 @@ class IntegrationDelete extends Event
      */
     public function handle($data)
     {
-            $oldIntegration = null;
+        $oldIntegration = null;
 
-            /** @var ?Guild */
-            if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
-                /** @var ?Integration */
-                if ($oldIntegration = yield $guild->integrations->cachePull($data->id)) {
-                    $oldIntegration->created = false;
-                }
+        /** @var ?Guild */
+        if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
+            /** @var ?Integration */
+            if ($oldIntegration = yield $guild->integrations->cachePull($data->id)) {
+                $oldIntegration->created = false;
             }
+        }
 
-            return $oldIntegration ?? $data;
+        return $oldIntegration ?? $data;
     }
 }

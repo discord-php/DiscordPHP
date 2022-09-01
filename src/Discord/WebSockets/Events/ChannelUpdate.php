@@ -26,35 +26,35 @@ class ChannelUpdate extends Event
      */
     public function handle($data)
     {
-            $oldChannel = $repository = null;
+        $oldChannel = $repository = null;
 
-            /** @var Channel */
-            $channelPart = $this->factory->create(Channel::class, $data, true);
+        /** @var Channel */
+        $channelPart = $this->factory->create(Channel::class, $data, true);
 
-            if ($channelPart->is_private) {
-                /** @var ?Channel */
-                if (! $oldChannel = $this->discord->private_channels[$data->id]) {
-                    $repository = $this->discord->private_channels;
-                }
-            } elseif ($guild = $channelPart->guild) {
-                /** @var ?Channel */
-                if (! $oldChannel = $guild->channels[$data->id]) {
-                    $repository = $guild->channels;
-                }
+        if ($channelPart->is_private) {
+            /** @var ?Channel */
+            if (! $oldChannel = $this->discord->private_channels[$data->id]) {
+                $repository = $this->discord->private_channels;
             }
-
-            if ($oldChannel) {
-                // Swap
-                $channelPart = $oldChannel;
-                $oldChannel = clone $oldChannel;
-
-                $channelPart->fill((array) $data);
+        } elseif ($guild = $channelPart->guild) {
+            /** @var ?Channel */
+            if (! $oldChannel = $guild->channels[$data->id]) {
+                $repository = $guild->channels;
             }
+        }
 
-            if ($repository) {
-                yield $repository->cache->set($data->id, $channelPart);
-            }
+        if ($oldChannel) {
+            // Swap
+            $channelPart = $oldChannel;
+            $oldChannel = clone $oldChannel;
 
-            return [$channelPart, $oldChannel];
+            $channelPart->fill((array) $data);
+        }
+
+        if ($repository) {
+            yield $repository->cache->set($data->id, $channelPart);
+        }
+
+        return [$channelPart, $oldChannel];
     }
 }

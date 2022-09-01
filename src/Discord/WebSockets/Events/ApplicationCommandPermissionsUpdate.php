@@ -27,35 +27,35 @@ class ApplicationCommandPermissionsUpdate extends Event
      */
     public function handle($data)
     {
-            $commandPermissionsPart = $oldCommandPermissions = null;
+        $commandPermissionsPart = $oldCommandPermissions = null;
 
-            /** @var ?Guild */
-            if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
-                /** @var ?CommandPermissions */
-                if ($oldCommandPermissions = yield $guild->command_permissions->cacheGet($data->id)) {
-                    // Swap
-                    $commandPermissionsPart = $oldCommandPermissions;
-                    $oldCommandPermissions = clone $oldCommandPermissions;
+        /** @var ?Guild */
+        if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
+            /** @var ?CommandPermissions */
+            if ($oldCommandPermissions = yield $guild->command_permissions->cacheGet($data->id)) {
+                // Swap
+                $commandPermissionsPart = $oldCommandPermissions;
+                $oldCommandPermissions = clone $oldCommandPermissions;
 
-                    $commandPermissionsPart->fill((array) $data);
+                $commandPermissionsPart->fill((array) $data);
 
-                    if ($data->id === $data->application_id) {
-                        // Permission synced
-                        yield $guild->command_permissions->cache->delete($oldCommandPermissions->id);
-                    }
+                if ($data->id === $data->application_id) {
+                    // Permission synced
+                    yield $guild->command_permissions->cache->delete($oldCommandPermissions->id);
                 }
             }
+        }
 
-            if ($commandPermissionsPart === null) {
-                /** @var CommandPermissions */
-                $commandPermissionsPart = $this->factory->create(CommandPermissions::class, $data, true);
-            }
+        if ($commandPermissionsPart === null) {
+            /** @var CommandPermissions */
+            $commandPermissionsPart = $this->factory->create(CommandPermissions::class, $data, true);
+        }
 
-            if ($guild && isset($commandPermissionsPart)) {
-                // Permission set / updated
-                yield $guild->command_permissions->cache->set($data->id, $commandPermissionsPart);
-            }
+        if ($guild && isset($commandPermissionsPart)) {
+            // Permission set / updated
+            yield $guild->command_permissions->cache->set($data->id, $commandPermissionsPart);
+        }
 
-            return [$commandPermissionsPart, $oldCommandPermissions];
+        return [$commandPermissionsPart, $oldCommandPermissions];
     }
 }

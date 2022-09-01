@@ -28,21 +28,21 @@ class PresenceUpdate extends Event
      */
     public function handle($data)
     {
-            /** @var PresenceUpdatePart */
-            $presence = $this->factory->create(PresenceUpdatePart::class, $data, true);
+        /** @var PresenceUpdatePart */
+        $presence = $this->factory->create(PresenceUpdatePart::class, $data, true);
 
-            /** @var ?Guild */
-            if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
-                /** @var ?Member */
-                if ($member = yield $guild->members->cacheGet($data->user->id)) {
-                    $oldPresence = $member->updateFromPresence($presence);
+        /** @var ?Guild */
+        if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
+            /** @var ?Member */
+            if ($member = yield $guild->members->cacheGet($data->user->id)) {
+                $oldPresence = $member->updateFromPresence($presence);
 
-                    yield $guild->members->cache->set($data->user->id, $member);
+                yield $guild->members->cache->set($data->user->id, $member);
 
-                    return [$presence, $oldPresence];
-                }
+                return [$presence, $oldPresence];
             }
+        }
 
-            return $presence;
+        return $presence;
     }
 }
