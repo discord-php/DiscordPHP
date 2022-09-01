@@ -26,7 +26,7 @@ class TypingStart extends Event
      */
     public function handle($data)
     {
-        $typing = $this->factory->create(TypingStartPart::class, $data, true);
+        $typing = $this->factory->part(TypingStartPart::class, (array) $data, true);
 
         if (isset($data->member->user)) {
             $this->cacheUser($data->member->user);

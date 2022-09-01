@@ -42,6 +42,6 @@ class GuildScheduledEventDelete extends Event
             $this->cacheUser($data->creator);
         }
 
-        return $scheduledEventPart ?? $this->factory->create(ScheduledEvent::class, $data);
+        return $scheduledEventPart ?? $this->factory->part(ScheduledEvent::class, (array) $data);
     }
 }

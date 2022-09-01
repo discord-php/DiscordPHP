@@ -43,7 +43,7 @@ class GuildScheduledEventUpdate extends Event
 
         if ($scheduledEventPart === null) {
             /** @var ScheduledEvent */
-            $scheduledEventPart = $this->factory->create(ScheduledEvent::class, $data, true);
+            $scheduledEventPart = $this->factory->part(ScheduledEvent::class, (array) $data, true);
         }
 
         if ($guild) {

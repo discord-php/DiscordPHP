@@ -38,6 +38,6 @@ class AutoModerationRuleDelete extends Event
             }
         }
 
-        return $rulePart ?? $this->factory->create(Rule::class, $data);
+        return $rulePart ?? $this->factory->part(Rule::class, (array) $data);
     }
 }

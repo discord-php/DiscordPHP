@@ -28,7 +28,7 @@ class GuildBanAdd extends Event
     public function handle($data)
     {
         /** @var Ban */
-        $banPart = $this->factory->create(Ban::class, $data, true);
+        $banPart = $this->factory->part(Ban::class, (array) $data, true);
 
         /** @var ?Guild */
         if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {

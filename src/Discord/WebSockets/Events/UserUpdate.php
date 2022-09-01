@@ -34,7 +34,7 @@ class UserUpdate extends Event
             $userPart->fill((array) $data);
         } else {
             /** @var User */
-            $userPart = $this->factory->create(User::class, $data, true);
+            $userPart = $this->factory->part(User::class, (array) $data, true);
         }
 
         return [$userPart, $oldUser];

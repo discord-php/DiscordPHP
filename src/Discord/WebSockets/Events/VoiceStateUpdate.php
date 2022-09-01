@@ -49,7 +49,7 @@ class VoiceStateUpdate extends Event
 
                 if ($statePart === null) {
                     /** @var VoiceStateUpdatePart */
-                    $statePart = $this->factory->create(VoiceStateUpdatePart::class, $data, true);
+                    $statePart = $this->factory->part(VoiceStateUpdatePart::class, (array) $data, true);
                 }
 
                 if (! isset($data->channel_id)) {

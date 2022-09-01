@@ -28,7 +28,7 @@ class GuildMemberAdd extends Event
     public function handle($data)
     {
         /** @var Member */
-        $memberPart = $this->factory->create(Member::class, $data, true);
+        $memberPart = $this->factory->part(Member::class, (array) $data, true);
 
         /** @var ?Guild */
         if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {

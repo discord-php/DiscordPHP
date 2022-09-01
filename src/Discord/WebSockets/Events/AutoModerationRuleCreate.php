@@ -28,7 +28,7 @@ class AutoModerationRuleCreate extends Event
     public function handle($data)
     {
         /** @var Rule */
-        $rulePart = $this->factory->create(Rule::class, $data, true);
+        $rulePart = $this->factory->part(Rule::class, (array) $data, true);
 
         /** @var ?Guild */
         if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {

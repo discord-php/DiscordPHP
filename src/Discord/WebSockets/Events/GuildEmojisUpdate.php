@@ -48,7 +48,7 @@ class GuildEmojisUpdate extends Event
                 }
             }
             $emoji->guild_id = $data->guild_id;
-            $emojiParts->pushItem($this->factory->create(Emoji::class, $emoji, true));
+            $emojiParts->pushItem($this->factory->part(Emoji::class, (array) $emoji, true));
         }
 
         if ($guild) {

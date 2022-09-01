@@ -46,7 +46,7 @@ class ThreadMembersUpdate extends Event
                 }
 
                 foreach ($data->added_members ?? [] as $member) {
-                    yield $thread->members->cache->set($member->user_id, $this->factory->create(Member::class, $member, true));
+                    yield $thread->members->cache->set($member->user_id, $this->factory->part(Member::class, (array) $member, true));
                 }
 
                 return $thread;

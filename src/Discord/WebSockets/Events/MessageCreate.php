@@ -29,11 +29,11 @@ class MessageCreate extends Event
     public function handle($data)
     {
         /** @var Message */
-        $messagePart = $this->factory->create(Message::class, $data, true);
+        $messagePart = $this->factory->part(Message::class, (array) $data, true);
 
         if ($messagePart->is_private) {
             /** @var Channel */
-            $channel = $this->factory->create(Channel::class, [
+            $channel = $this->factory->part(Channel::class, [
                 'id' => $data->channel_id,
                 'type' => Channel::TYPE_DM,
                 'last_message_id' => $data->id,

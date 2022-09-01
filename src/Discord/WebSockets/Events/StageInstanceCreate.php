@@ -28,7 +28,7 @@ class StageInstanceCreate extends Event
     public function handle($data)
     {
         /** @var StageInstance */
-        $stageInstancePart = $this->factory->create(StageInstance::class, $data, true);
+        $stageInstancePart = $this->factory->part(StageInstance::class, (array) $data, true);
 
         /** @var ?Guild */
         if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {

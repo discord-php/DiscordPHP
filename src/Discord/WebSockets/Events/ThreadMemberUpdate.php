@@ -26,7 +26,7 @@ class ThreadMemberUpdate extends Event
 {
     public function handle($data)
     {
-        $memberPart = $this->factory->create(Member::class, $data, true);
+        $memberPart = $this->factory->part(Member::class, (array) $data, true);
 
         /** @var ?Guild */
         if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {

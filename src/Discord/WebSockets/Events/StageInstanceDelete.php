@@ -38,6 +38,6 @@ class StageInstanceDelete extends Event
             }
         }
 
-        return $stageInstancePart ?? $this->factory->create(StageInstance::class, $data);
+        return $stageInstancePart ?? $this->factory->part(StageInstance::class, (array) $data);
     }
 }

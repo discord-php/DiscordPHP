@@ -29,7 +29,7 @@ class InviteCreate extends Event
     public function handle($data)
     {
         /** @var Invite */
-        $invitePart = $this->factory->create(Invite::class, $data, true);
+        $invitePart = $this->factory->part(Invite::class, (array) $data, true);
 
         /** @var ?Guild */
         if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {

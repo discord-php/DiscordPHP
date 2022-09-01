@@ -27,7 +27,7 @@ class AutoModerationActionExecution extends Event
     public function handle($data)
     {
         /** @var ActionExecution */
-        $actionExecutionPart = $this->factory->create(ActionExecution::class, $data, true);
+        $actionExecutionPart = $this->factory->part(ActionExecution::class, (array) $data, true);
 
         return $actionExecutionPart;
     }

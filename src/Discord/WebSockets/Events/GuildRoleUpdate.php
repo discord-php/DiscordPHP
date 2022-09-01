@@ -45,7 +45,7 @@ class GuildRoleUpdate extends Event
 
         if ($rolePart === null) {
             /** @var Role */
-            $rolePart = $this->factory->create(Role::class, $role, true);
+            $rolePart = $this->factory->part(Role::class, $role, true);
         }
 
         if ($guild) {

@@ -29,7 +29,7 @@ class PresenceUpdate extends Event
     public function handle($data)
     {
         /** @var PresenceUpdatePart */
-        $presence = $this->factory->create(PresenceUpdatePart::class, $data, true);
+        $presence = $this->factory->part(PresenceUpdatePart::class, (array) $data, true);
 
         /** @var ?Guild */
         if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {

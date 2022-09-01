@@ -43,7 +43,7 @@ class StageInstanceUpdate extends Event
 
         if ($stageInstancePart === null) {
             /** @var StageInstance */
-            $stageInstancePart = $this->factory->create(StageInstance::class, $data, true);
+            $stageInstancePart = $this->factory->part(StageInstance::class, (array) $data, true);
         }
 
         if ($guild) {

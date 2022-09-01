@@ -43,7 +43,7 @@ class IntegrationUpdate extends Event
 
         if ($integrationPart === null) {
             /** @var Integration */
-            $integrationPart = $this->factory->create(Integration::class, $data, true);
+            $integrationPart = $this->factory->part(Integration::class, (array) $data, true);
         }
 
         if ($guild) {

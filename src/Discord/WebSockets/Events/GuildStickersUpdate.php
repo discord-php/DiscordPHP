@@ -46,7 +46,7 @@ class GuildStickersUpdate extends Event
                     $sticker->user = (object) $uploader->getRawAttributes();
                 }
             }
-            $stickerParts->pushItem($this->factory->create(Sticker::class, $sticker, true));
+            $stickerParts->pushItem($this->factory->part(Sticker::class, (array) $sticker, true));
         }
 
         if ($guild) {

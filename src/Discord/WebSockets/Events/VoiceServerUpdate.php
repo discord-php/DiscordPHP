@@ -26,6 +26,6 @@ class VoiceServerUpdate extends Event
      */
     public function handle($data)
     {
-        return $this->factory->create(VoiceServerUpdatePart::class, $data, true);
+        return $this->factory->part(VoiceServerUpdatePart::class, (array) $data, true);
     }
 }

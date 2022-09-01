@@ -43,7 +43,7 @@ class AutoModerationRuleUpdate extends Event
 
         if ($rulePart === null) {
             /** @var Rule */
-            $rulePart = $this->factory->create(Rule::class, $data, true);
+            $rulePart = $this->factory->part(Rule::class, (array) $data, true);
         }
 
         if ($guild) {

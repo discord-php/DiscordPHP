@@ -43,7 +43,7 @@ class GuildMemberUpdate extends Event
 
         if ($memberPart === null) {
             /** @var Member */
-            $memberPart = $this->factory->create(Member::class, $data, true);
+            $memberPart = $this->factory->part(Member::class, (array) $data, true);
         }
 
         if ($guild) {

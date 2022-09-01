@@ -34,7 +34,7 @@ class GuildUpdate extends Event
             $guildPart->fill((array) $data);
         } else {
             /** @var Guild */
-            $guildPart = $this->factory->create(Guild::class, $data, true);
+            $guildPart = $this->factory->part(Guild::class, (array) $data, true);
         }
 
         yield $this->discord->guilds->cache->set($data->id, $guildPart);

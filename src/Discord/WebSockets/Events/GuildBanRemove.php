@@ -39,6 +39,6 @@ class GuildBanRemove extends Event
 
         $this->cacheUser($data->user);
 
-        return $banPart ?? $this->factory->create(Ban::class, $data);
+        return $banPart ?? $this->factory->part(Ban::class, (array) $data);
     }
 }

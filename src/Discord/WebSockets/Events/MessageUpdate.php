@@ -52,7 +52,7 @@ class MessageUpdate extends Event
 
         if ($oldMessagePart === null) {
             /** @var Message */
-            $messagePart = $this->factory->create(Message::class, $data, true);
+            $messagePart = $this->factory->part(Message::class, (array) $data, true);
         }
 
         if (isset($channel) && ($oldMessagePart || $this->discord->options['storeMessages'])) {

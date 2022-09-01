@@ -28,7 +28,7 @@ class IntegrationCreate extends Event
     public function handle($data)
     {
         /** @var Integration */
-        $integrationPart = $this->factory->create(Integration::class, $data, true);
+        $integrationPart = $this->factory->part(Integration::class, (array) $data, true);
 
         /** @var ?Guild */
         if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {

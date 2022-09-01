@@ -40,7 +40,7 @@ class GuildMemberRemove extends Event
             $memberPart->created = false;
         } else {
             /** @var Member */
-            $memberPart = $this->factory->create(Member::class, $data);
+            $memberPart = $this->factory->part(Member::class, (array) $data);
             $memberPart->guild_id = $data->guild_id;
         }
 

@@ -38,7 +38,7 @@ class ThreadListSync extends Event
 
             foreach ($data->threads as $thread) {
                 /** @var Thread */
-                $threadPart = $this->factory->create(Thread::class, $thread, true);
+                $threadPart = $this->factory->part(Thread::class, (array) $thread, true);
                 /** @var ?Channel */
                 if ($channel = $channels[$thread->parent_id] ?? null) {
                     /** @var ?Thread */
@@ -54,7 +54,7 @@ class ThreadListSync extends Event
             foreach ($data->members as $member) {
                 /** @var ?Thread */
                 if ($threadPart = $threadParts[$member->id] ?? null) {
-                    yield $threadPart->members->cache->set($member->user_id, $this->factory->create(Member::class, $member, true));
+                    yield $threadPart->members->cache->set($member->user_id, $this->factory->part(Member::class, (array) $member, true));
                 }
             }
         }
