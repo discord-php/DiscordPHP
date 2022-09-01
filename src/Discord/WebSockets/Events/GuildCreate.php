@@ -63,12 +63,8 @@ class GuildCreate extends Event
             $members[$userId] = $this->factory->part(Member::class, (array) $rawMembers[$userId], true);
 
             if (! $this->discord->users->offsetExists($userId)) {
-                /** @var User[] */
-                $users[$userId] = $this->factory->part(User::class, (array) $member->user, true);
+                $await[] = $this->discord->users->cache->set($userId, $this->factory->part(User::class, (array) $member->user, true));
             }
-        }
-        if (! empty($users)) {
-            $await[] = $this->discord->users->cache->setMultiple($users);
         }
         foreach ($data->presences as $presence) {
             $members[$presence->user->id]->fill((array) $presence);
@@ -96,19 +92,11 @@ class GuildCreate extends Event
         }
 
         foreach ($data->stage_instances as $stageInstance) {
-            /** @var StageInstance[] */
-            $stageInstances[$stageInstance->id] = $this->factory->part(StageInstance::class, (array) $stageInstance, true);
-        }
-        if (! empty($stageInstances)) {
-            $await[] = $guildPart->stage_instances->cache->setMultiple($stageInstances);
+            $await[] = $guildPart->stage_instances->cache->set($stageInstance->id, $this->factory->part(StageInstance::class, (array) $stageInstance, true));
         }
 
         foreach ($data->guild_scheduled_events as $scheduledEvent) {
-            /** @var ScheduledEvent[] */
-            $scheduledEvents[$scheduledEvent->id] = $this->factory->part(ScheduledEvent::class, (array) $scheduledEvent, true);
-        }
-        if (! empty($scheduledEvents)) {
-            $await[] = $guildPart->guild_scheduled_events->cache->setMultiple($scheduledEvents);
+            $await[] = $guildPart->guild_scheduled_events->cache->set($scheduledEvent->id, $this->factory->part(ScheduledEvent::class, (array) $scheduledEvent, true));
         }
 
         $all = yield all($await)->then(function () use (&$guildPart) {
@@ -117,38 +105,31 @@ class GuildCreate extends Event
             });
         });
 
-        if ($this->discord->options['retrieveBans']) {
-            $canBan = true; // Assume so since the permission might fail to be determined
-            if ($botPerms = $members[$this->discord->id]->getPermissions()) {
-                $canBan = $botPerms->ban_members;
-            }
+        if ($this->discord->options['retrieveBans'] && $members[$this->discord->id]->getPermissions()->ban_members ?? true) {
+            $loadBans = new Deferred();
+            $banPagination = function ($lastUserId = null) use (&$banPagination, $guildPart, $loadBans) {
+                $bind = Endpoint::bind(Endpoint::GUILD_BANS, $guildPart->id);
+                if (isset($lastUserId)) {
+                    $bind->addQuery('after', $lastUserId);
+                }
+                $this->http->get($bind)->done(function ($bans) use (&$banPagination, $guildPart, $loadBans) {
+                    if (empty($bans)) {
+                        $loadBans->resolve();
 
-            if ($canBan) {
-                $loadBans = new Deferred();
-                $banPagination = function ($lastUserId = null) use (&$banPagination, $guildPart, $loadBans) {
-                    $bind = Endpoint::bind(Endpoint::GUILD_BANS, $guildPart->id);
-                    if (isset($lastUserId)) {
-                        $bind->addQuery('after', $lastUserId);
+                        return;
                     }
-                    $this->http->get($bind)->done(function ($bans) use (&$banPagination, $guildPart, $loadBans) {
-                        if (empty($bans)) {
-                            $loadBans->resolve();
 
-                            return;
-                        }
+                    foreach ($bans as $ban) {
+                        $lastUserId = $ban->user->id;
+                        $ban->guild_id = $guildPart->id;
+                        $guildPart->bans->cache->set($lastUserId, $this->factory->part(Ban::class, (array) $ban, true));
+                    }
 
-                        foreach ($bans as $ban) {
-                            $lastUserId = $ban->user->id;
-                            $ban->guild_id = $guildPart->id;
-                            $guildPart->bans->cache->set($lastUserId, $this->factory->part(Ban::class, (array) $ban, true));
-                        }
-
-                        $banPagination($lastUserId);
-                    }, [$loadBans, 'resolve']);
-                };
-                $banPagination();
-                yield $loadBans->promise();
-            }
+                    $banPagination($lastUserId);
+                }, [$loadBans, 'resolve']);
+            };
+            $banPagination();
+            yield $loadBans->promise();
         }
 
         if ($data->large || $data->member_count > count($rawMembers)) {
