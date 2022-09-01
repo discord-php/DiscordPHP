@@ -689,7 +689,7 @@ class Message extends Part
             'name' => $name,
             'auto_archive_duration' => $auto_archive_duration,
         ], $headers)->then(function ($response) {
-            return $this->factory->create(Thread::class, $response, true);
+            return $this->factory->part(Thread::class, (array) $response, true);
         });
     }
 

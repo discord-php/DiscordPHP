@@ -219,7 +219,7 @@ class Reaction extends Part
             }
         }
 
-        return $this->factory->create(part::class, [
+        return $this->factory->part(Channel::class, [
             'id' => $this->channel_id,
             'type' => Channel::TYPE_DM,
         ]);

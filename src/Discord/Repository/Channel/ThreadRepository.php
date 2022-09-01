@@ -126,11 +126,11 @@ class ThreadRepository extends AbstractRepository
         $collection = Collection::for(Thread::class);
 
         foreach ($response->threads as $thread) {
-            $thread = $this->factory->create(Thread::class, $thread, true);
+            $thread = $this->factory->part(Thread::class, (array) $thread, true);
 
             foreach ($response->members as $member) {
                 if ($member->id == $thread->id) {
-                    $thread->members->pushItem($this->factory->create(Member::class, $member, true));
+                    $thread->members->pushItem($this->factory->part(Member::class, (array) $member, true));
                     break;
                 }
             }

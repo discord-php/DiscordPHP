@@ -161,7 +161,7 @@ abstract class AbstractRepository extends Collection
     {
         $attributes = array_merge($attributes, $this->vars);
 
-        return $this->factory->create($this->class, $attributes, $created);
+        return $this->factory->part($this->class, $attributes, $created);
     }
 
     /**
