@@ -151,6 +151,8 @@ class Intents
      */
     public const DIRECT_MESSAGE_TYPING = (1 << 14);
 
+    public const MESSAGE_CONTENT = (1 << 15);
+
     /**
      * Guild scheduled events events:.
      *
@@ -214,9 +216,9 @@ class Intents
      */
     public static function getDefaultIntents(): int
     {
-        return static::getAllIntents() & ~(static::GUILD_MEMBERS | static::GUILD_PRESENCES);
+        return static::getAllIntents() & ~(static::GUILD_MEMBERS | static::GUILD_PRESENCES | static::MESSAGE_CONTENT);
     }
-    
+
     /**
      * Converts an integer intent representation into an array of strings,
      * representing the enabled intents. Useful for debugging.
