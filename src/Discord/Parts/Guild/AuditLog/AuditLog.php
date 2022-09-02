@@ -68,7 +68,7 @@ class AuditLog extends Part
     }
 
     /**
-     * Returns a collection of webhooks found in the audit log.
+     * Returns a collection of application commands found in the audit log.
      *
      * @return Collection|Command[]
      */
@@ -77,7 +77,7 @@ class AuditLog extends Part
         $collection = Collection::for(Command::class);
 
         foreach ($this->attributes['application_commands'] ?? [] as $application_commands) {
-            $collection->pushItem($this->factory->create(Webhook::class, $application_commands, true));
+            $collection->pushItem($this->factory->create(Command::class, $application_commands, true));
         }
 
         return $collection;
