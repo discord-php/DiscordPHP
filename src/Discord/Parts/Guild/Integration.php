@@ -39,6 +39,7 @@ use Discord\Parts\User\User;
  * @property      int|null         $subscriber_count    How many subscribers this integration has.
  * @property      bool|null        $revoked             Has this integration been revoked.
  * @property      Application|null $application         The bot/OAuth2 application for discord integrations.
+ * @property      array|null       $scopes              The scopes the application has been authorized for.
  *
  * @property      string|null      $guild_id
  * @property-read Guild|null $guild
