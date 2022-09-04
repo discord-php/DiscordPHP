@@ -8,7 +8,7 @@ A wrapper for the official [Discord](https://discordapp.com) REST, gateway and v
 
 For testing and stability it would be greatly appreciated if you were able to add our test bot to your server. We don't store any data - the bot simply idles and does not interact with anyone and is used to test stability with large numbers of guilds. You can invite the bot [here.](https://discord.com/oauth2/authorize?client_id=157746770539970560&scope=bot)
 
-## CacheInterface experimental
+## CacheInterface (experimental)
 > Warning: This branch contains an experimental feature, do not use this in production! Create issues or join our Discord for feedback and discussions.
 
 DiscordPHP caching is powered by [react/cache](https://github.com/reactphp/cache) or any compatbile [psr/simple-cache](https://github.com/php-fig/simple-cache). The Interface can be retrieved from any repositories `$repository->cache`, e.g.
@@ -60,9 +60,7 @@ $discord = new Discord([
 ]);
 ```
 
-### Redis
-
-#### [ReactPHP Redis](https://github.com/WyriHaximus/reactphp-cache-redis)
+### [ReactPHP Redis](https://github.com/WyriHaximus/reactphp-cache-redis)
 
 Note the examples below uses ReactPHP-Redis v2.x
 
@@ -83,26 +81,6 @@ $discord = new Discord([
 
 By default the cache key is prefixed `reach:cache:`, in example above the prefix is set to `dphp:` so you can get the data as: `dphp:User:115233618997149700`.
 
-#### [Symfony RedisAdapter](https://symfony.com/doc/current/components/cache/adapters/redis_adapter.html)
-
-Note the examples below uses [Redis PECL](https://pecl.php.net/package/redis) and PSR-16 bridge
-
-```php
-$redis = new \Redis();
-$redis->connect('127.0.0.1');
-$psr6Cache = new \Symfony\Component\Cache\Adapter\RedisAdapter(
-    $redis,
-    $namespace = 'dphp', // prefix is "dphp:"
-    $defaultLifetime = 0
-);
-$cache = new \Symfony\Component\Cache\Psr16Cache($psr6Cache);
-
-$discord = new Discord([
-    'token' => 'bot token',
-    'cacheInterface' => $cache,
-]);
-```
-
 ### [~~Memcached~~](https://github.com/seregazhuk/php-react-cache-memcached)
 
 *Current version is broken when getting a cache*
@@ -122,6 +100,53 @@ $discord = new Discord([
 ```
 
 By default the cache key is prefixed `react:cache:`, in example above the prefix is set to `dphp:` so you can get the data as: `dphp:User:115233618997149700`.
+
+### [Symfony Cache](https://github.com/symfony/cache)
+
+If you are not fan of ReactPHP Asynchronous Cache library, you can try a compatible PSR-16 Synchronous Cache library, Please note this implementation is slower as it blocks the event loop and may break your bot if not used carefully.
+
+Note the following section uses PSR-16 Adapter
+
+#### [ArrayAdapter](https://symfony.com/doc/current/components/cache/adapters/redis_adapter.html)
+
+```php
+use Symfony\Component\Cache\Adapter\ArrayAdapter;
+
+$psr6Cache = new ArrayAdapter(
+    $defaultLifetime = 0,
+    $storeSerialized = false,
+    $maxLifetime = 0,
+    $maxItems = 0
+);
+$cache = new \Symfony\Component\Cache\Psr16Cache($psr6Cache);
+
+$discord = new Discord([
+    'token' => 'bot token',
+    'cacheInterface' => $cache,
+]);
+```
+
+#### [RedisAdapter](https://symfony.com/doc/current/components/cache/adapters/redis_adapter.html)
+
+Note the examples below uses [Redis PECL](https://pecl.php.net/package/redis)
+
+```php
+use Symfony\Component\Cache\Adapter\RedisAdapter;
+
+$redis = new \Redis();
+$redis->connect('127.0.0.1');
+$psr6Cache = new RedisAdapter(
+    $redis,
+    $namespace = 'dphp', // prefix is "dphp:"
+    $defaultLifetime = 0
+);
+$cache = new \Symfony\Component\Cache\Psr16Cache($psr6Cache);
+
+$discord = new Discord([
+    'token' => 'bot token',
+    'cacheInterface' => $cache,
+]);
+```
 
 ## Before you start
 
