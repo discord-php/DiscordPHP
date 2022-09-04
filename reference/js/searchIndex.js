@@ -3331,6 +3331,11 @@ Search.appendIndex(
             "summary": "Returns\u0020the\u0020guild\u0020the\u0020audit\u0020log\u0020belongs\u0020to.",
             "url": "classes/Discord-Parts-Guild-AuditLog-AuditLog.html#method_getGuildAttribute"
         },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\AuditLog\\AuditLog\u003A\u003AgetApplicationCommandsAttribute\u0028\u0029",
+            "name": "getApplicationCommandsAttribute",
+            "summary": "Returns\u0020a\u0020collection\u0020of\u0020application\u0020commands\u0020found\u0020in\u0020the\u0020audit\u0020log.",
+            "url": "classes/Discord-Parts-Guild-AuditLog-AuditLog.html#method_getApplicationCommandsAttribute"
+        },                {
             "fqsen": "\\Discord\\Parts\\Guild\\AuditLog\\AuditLog\u003A\u003AgetWebhooksAttribute\u0028\u0029",
             "name": "getWebhooksAttribute",
             "summary": "Returns\u0020a\u0020collection\u0020of\u0020webhooks\u0020found\u0020in\u0020the\u0020audit\u0020log.",
@@ -9080,6 +9085,11 @@ Search.appendIndex(
             "name": "DIRECT_MESSAGE_TYPING",
             "summary": "Direct\u0020message\u0020typing\u0020events\u003A.",
             "url": "classes/Discord-WebSockets-Intents.html#constant_DIRECT_MESSAGE_TYPING"
+        },                {
+            "fqsen": "\\Discord\\WebSockets\\Intents\u003A\u003AMESSAGE_CONTENT",
+            "name": "MESSAGE_CONTENT",
+            "summary": "",
+            "url": "classes/Discord-WebSockets-Intents.html#constant_MESSAGE_CONTENT"
         },                {
             "fqsen": "\\Discord\\WebSockets\\Intents\u003A\u003AGUILD_SCHEDULED_EVENTS",
             "name": "GUILD_SCHEDULED_EVENTS",
