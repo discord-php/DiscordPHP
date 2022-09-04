@@ -48,14 +48,14 @@ class AuditLog extends Part
      * @inheritdoc
      */
     protected $fillable = [
-        'audit_log_entries',
-        'users',
-        'integrations',
-        'webhooks',
-        'guild_scheduled_events',
-        'threads',
         'application_commands',
+        'webhooks',
         'auto_moderation_rules',
+        'guild_scheduled_events',
+        'users',
+        'audit_log_entries',
+        'integrations',
+        'threads',
 
         // @internal
         'guild_id',
@@ -72,7 +72,7 @@ class AuditLog extends Part
     }
 
     /**
-     * Returns a collection of audit log entries.
+     * Returns a collection of application commands found in the audit log.
      *
      * @return Collection|Command[]
      */

@@ -159,6 +159,7 @@ class Intents
     public const DIRECT_MESSAGE_TYPING = (1 << 14);
 
     public const MESSAGE_CONTENT = (1 << 15);
+
     /**
      * Guild scheduled events events:.
      *

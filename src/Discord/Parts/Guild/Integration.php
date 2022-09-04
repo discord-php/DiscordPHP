@@ -65,6 +65,7 @@ class Integration extends Part
         'subscriber_count',
         'revoked',
         'application',
+        'scopes',
 
         // events
         'guild_id',
