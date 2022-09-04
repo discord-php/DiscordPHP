@@ -14,11 +14,13 @@ namespace Discord\Helpers;
 use Discord\Discord;
 use Discord\Parts\Part;
 use React\Cache\ArrayCache;
-use React\Cache\CacheInterface;
 use React\Promise\PromiseInterface;
+use Throwable;
 use WeakReference;
 
 use function React\Promise\all;
+use function React\Promise\reject;
+use function React\Promise\resolve;
 
 /**
  * Wrapper for CacheInterface that store Repository items.
@@ -27,7 +29,7 @@ use function React\Promise\all;
  *
  * @since 10.0.0
  *
- * @property-read CacheInterface $interface The actual ReactPHP CacheInterface.
+ * @property-read \React\Cache\CacheInterface|\Psr\SimpleCache\CacheInterface $interface The actual ReactPHP PSR-16 CacheInterface.
  *
  * @internal
  */
@@ -39,7 +41,7 @@ class CacheWrapper
     protected $discord;
 
     /**
-     * @var CacheInterface
+     * @var \React\Cache\CacheInterface|\Psr\SimpleCache\CacheInterface
      */
     protected $interface;
 
@@ -65,20 +67,20 @@ class CacheWrapper
     protected $prefix;
 
     /**
-     * @var ?callable Callback flusher
+     * @var ?callable Sweeper callback
      */
-    protected $flusher;
+    protected $sweeper;
 
     /**
-     * @param Discord        $discord
-     * @param CacheInterface $cacheInterface The actual CacheInterface.
-     * @param array          &$items         Repository items passed by reference.
-     * @param string         &$class         Part class name.
-     * @param string[]       $vars           Variable containing hierarchy parent IDs.
+     * @param Discord                                                     $discord
+     * @param \React\Cache\CacheInterface|\Psr\SimpleCache\CacheInterface $cacheInterface The actual CacheInterface.
+     * @param array                                                       &$items         Repository items passed by reference.
+     * @param string                                                      &$class         Part class name.
+     * @param string[]                                                    $vars           Variable containing hierarchy parent IDs.
      *
      * @internal
      */
-    public function __construct(Discord $discord, CacheInterface $cacheInterface, &$items, string &$class, array $vars)
+    public function __construct(Discord $discord, $cacheInterface, &$items, string &$class, array $vars)
     {
         $this->discord = $discord;
         $this->interface = $cacheInterface;
@@ -86,21 +88,21 @@ class CacheWrapper
         $this->class = &$class;
 
         $separator = '.';
-        if (is_a($cacheInterface, '\WyriHaximus\React\Cache\Redis') || is_a($cacheInterface, 'seregazhuk\React\Cache\Memcached\Memcached')) {
+        if (stripos(get_class($cacheInterface), 'Redis') !== false || stripos(get_class($cacheInterface), 'Memcached') !== false) {
             $separator = ':';
         }
 
         $this->prefix = implode($separator, [substr(strrchr($this->class, '\\'), 1)] + $vars).$separator;
 
         if ($discord->options['cacheSweep']) {
-            // Flush every heartbeat ack
-            $this->flusher = function ($time, Discord $discord) {
-                $flushing = 0;
+            // Sweep every heartbeat ack
+            $this->sweeper = function ($time, Discord $discord) {
+                $sweeping = 0;
                 foreach ($this->items as $key => $item) {
                     if ($item === null) {
                         // Item was removed from memory, delete from cache
                         $this->delete($key);
-                        $flushing++;
+                        $sweeping++;
                     } elseif ($item instanceof Part) {
                         // Skip ID related to Bot
                         if ($key != $discord->id) {
@@ -109,18 +111,18 @@ class CacheWrapper
                         }
                     }
                 }
-                if ($flushing) {
-                    $this->discord->getLogger()->debug('Flushing repository cache', ['count' => $flushing, 'class' => $this->class]);
+                if ($sweeping) {
+                    $this->discord->getLogger()->debug('Sweeping repository cache', ['count' => $sweeping, 'class' => $this->class]);
                 }
             };
-            $discord->on('heartbeat-ack', $this->flusher);
+            $discord->on('heartbeat-ack', $this->sweeper);
         }
     }
 
     public function __destruct()
     {
-        if ($this->flusher) {
-            $this->discord->removeListener('heartbeat-ack', $this->flusher);
+        if ($this->sweeper) {
+            $this->discord->removeListener('heartbeat-ack', $this->sweeper);
         }
     }
 
@@ -134,7 +136,7 @@ class CacheWrapper
      */
     public function get($key, $default = null)
     {
-        return $this->interface->get($this->prefix.$key, $default)->then(function ($value) use ($key) {
+        $handleValue = function ($value) use ($key) {
             if ($value === null) {
                 unset($this->items[$key]);
             } else {
@@ -142,7 +144,19 @@ class CacheWrapper
             }
 
             return $value;
-        });
+        };
+
+        try {
+            $result = $this->interface->get($this->prefix.$key, $default);
+        } catch (Throwable $throwable) {
+            return reject($throwable);
+        }
+
+        if ($result instanceof PromiseInterface) {
+            return $result->then($handleValue);
+        }
+
+        return resolve($handleValue($result));
     }
 
     /**
@@ -157,13 +171,25 @@ class CacheWrapper
     {
         $item = $this->serializer($value);
 
-        return $this->interface->set($this->prefix.$key, $item, $ttl)->then(function ($success) use ($key, $value) {
+        $handleValue = function ($success) use ($key, $value) {
             if ($success) {
                 $this->items[$key] = $value;
             }
 
             return $success;
-        });
+        };
+
+        try {
+            $result = $this->interface->set($this->prefix.$key, $item, $ttl);
+        } catch (Throwable $throwable) {
+            return reject($throwable);
+        }
+
+        if ($result instanceof PromiseInterface) {
+            return $result->then($handleValue);
+        }
+
+        return resolve($handleValue($result));
     }
 
     /**
@@ -171,17 +197,29 @@ class CacheWrapper
      *
      * @param string $key
      *
-     * @return PromiseInterface<bool>
+     * @return PromiseInterface<bool>|bool
      */
     public function delete($key)
     {
-        return $this->interface->delete($this->prefix.$key)->then(function ($success) use ($key) {
+        $handleValue = function ($success) use ($key) {
             if ($success) {
                 unset($this->items[$key]);
             }
 
             return $success;
-        });
+        };
+
+        try {
+            $result = $this->interface->delete($this->prefix.$key);
+        } catch (Throwable $throwable) {
+            return reject($throwable);
+        }
+
+        if ($result instanceof PromiseInterface) {
+            return $result->then($handleValue);
+        }
+
+        return resolve($handleValue($result));
     }
 
     /**
@@ -281,19 +319,29 @@ class CacheWrapper
      */
     public function has($key)
     {
-        if (is_callable([$this->interface, 'has'])) {
-            $promise = call_user_func([$this->interface, 'has'], $this->prefix.$key);
-        } else {
-            $promise = $this->get($this->prefix.$key);
-        }
-
-        return $promise->then(function ($value) use ($key) {
+        $handleValue = function ($value) use ($key) {
             if (! $value) {
                 unset($this->items[$key]);
             }
 
             return (bool) $value;
-        });
+        };
+
+        try {
+            if (is_callable([$this->interface, 'has'])) {
+                $result = $this->interface->has($this->prefix.$key);
+            } else {
+                $result = $this->get($this->prefix.$key);
+            }
+        } catch (Throwable $throwable) {
+            return reject($throwable);
+        }
+
+        if ($result instanceof PromiseInterface) {
+            return $result->then($handleValue);
+        }
+
+        return resolve($handleValue($result));
     }
 
     /**
@@ -313,7 +361,7 @@ class CacheWrapper
      */
     public function serializer($part)
     {
-        if ($this->interface instanceof ArrayCache) {
+        if ($this->interface instanceof ArrayCache || $this->interface instanceof \Psr\SimpleCache\CacheInterface) {
             return $part->getRawAttributes();
         }
 
@@ -327,7 +375,7 @@ class CacheWrapper
      */
     public function unserializer($value)
     {
-        if (! ($this->interface instanceof ArrayCache)) {
+        if (! ($this->interface instanceof ArrayCache) && (! $this->interface instanceof \Psr\SimpleCache\CacheInterface)) {
             $value = json_decode($value);
         }
 

@@ -11,7 +11,7 @@ For testing and stability it would be greatly appreciated if you were able to ad
 ## CacheInterface experimental
 > Warning: This branch contains an experimental feature, do not use this in production! Create issues or join our Discord for feedback and discussions.
 
-DiscordPHP caching is powered by [react/cache](https://github.com/reactphp/cache). The Interface can be retrieved by accessing `$discord->cache` or in any repositories `$repository->cache`, e.g.
+DiscordPHP caching is powered by [react/cache](https://github.com/reactphp/cache) or any compatbile [psr/simple-cache](https://github.com/php-fig/simple-cache). The Interface can be retrieved from any repositories `$repository->cache`, e.g.
 
 ```php
 $discord->users->cache->get('115233618997149700')->then(function ($user) {
@@ -29,6 +29,10 @@ $discord->users->fetch('115233618997149700', true)->then(function ($user) {
 The cache interfaces are handled in [Promise](https://github.com/reactphp/promise) manner, while it may speed up when combined with [async](https://github.com/reactphp/async), it is worth to note that is not as fast as previous in-memory caching existed since DiscordPHP v5.x. The caching interface suits for those who wants to scale up their Bot and not bound to PHP memory limit nor process, at cost of the speed.
 
 All methods deriving from `AbstractRepository` (not `Collection`) handles the cache implementation already.
+
+Note: libraries containing namespace "Redis" or "Memcached" will have the colon `:` separator instead of dot `.`
+
+You do not need to write the prefix if accessing from the Bot code, just `User.115233618997149700`. The repository prefix can be retrieved from the repository which in the case above `$discord->users->cache->getPrefix()` would return `User.`, where `User` is the name of the `Part` class.
 
 Known available implementation:
 
@@ -56,7 +60,9 @@ $discord = new Discord([
 ]);
 ```
 
-### [Redis](https://github.com/WyriHaximus/reactphp-cache-redis)
+### Redis
+
+#### [ReactPHP Redis](https://github.com/WyriHaximus/reactphp-cache-redis)
 
 Note the examples below uses ReactPHP-Redis v2.x
 
@@ -66,11 +72,33 @@ use WyriHaximus\React\Cache\Redis;
 
 $loop = Loop::get();
 $redis = (new Clue\React\Redis\Factory($loop))->createLazyClient('localhost:6379');
-$cache = new Redis($redis, 'dphp:cache:'); // prefix is "dphp:cache"
+$cache = new Redis($redis, 'dphp:'); // prefix is "dphp:"
 
 $discord = new Discord([
     'token' => 'bot token',
     'loop' => $loop, // note the same loop
+    'cacheInterface' => $cache,
+]);
+```
+
+By default the cache key is prefixed `reach:cache:`, in example above the prefix is set to `dphp:` so you can get the data as: `dphp:User:115233618997149700`.
+
+#### [Symfony RedisAdapter](https://symfony.com/doc/current/components/cache/adapters/redis_adapter.html)
+
+Note the examples below uses [Redis PECL](https://pecl.php.net/package/redis) and PSR-16 bridge
+
+```php
+$redis = new \Redis();
+$redis->connect('127.0.0.1');
+$psr6Cache = new \Symfony\Component\Cache\Adapter\RedisAdapter(
+    $redis,
+    $namespace = 'dphp', // prefix is "dphp:"
+    $defaultLifetime = 0
+);
+$cache = new \Symfony\Component\Cache\Psr16Cache($psr6Cache);
+
+$discord = new Discord([
+    'token' => 'bot token',
     'cacheInterface' => $cache,
 ]);
 ```
@@ -84,7 +112,7 @@ use React\EventLoop\Factory;
 use seregazhuk\React\Cache\Memcached\Memcached;
 
 $loop = Factory::create();
-$cache = new Memcached($loop, 'localhost:11211', 'dphp:cache:'); // prefix is "dphp:cache"
+$cache = new Memcached($loop, 'localhost:11211', 'dphp:'); // prefix is "dphp:"
 
 $discord = new Discord([
     'token' => 'bot token',
@@ -93,9 +121,7 @@ $discord = new Discord([
 ]);
 ```
 
-For Redis/Memcached by default the cache key is prefixed "react:cache" so you can get the data as: `dphp:cache:User:115233618997149700`. And the separator used will be colon `:` instead of dot `.`
-
-You do not need to write the prefix if accessing from the Bot code, just `User.115233618997149700`. The repository prefix can be retrieved from the repository which in the case above `$discord->users->cache->getPrefix()` would return `User.`, where `User` is the name of the `Part` class.
+By default the cache key is prefixed `react:cache:`, in example above the prefix is set to `dphp:` so you can get the data as: `dphp:User:115233618997149700`.
 
 ## Before you start
 

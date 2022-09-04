@@ -47,7 +47,6 @@ use Discord\Http\Endpoint;
 use Evenement\EventEmitterTrait;
 use Psr\Log\LoggerInterface;
 use React\Cache\ArrayCache;
-use React\Cache\CacheInterface;
 use React\EventLoop\Factory as LoopFactory;
 use React\Promise\ExtendedPromiseInterface;
 use React\Promise\PromiseInterface;
@@ -325,7 +324,7 @@ class Discord
     /**
      * The react/cache interface.
      *
-     * @var CacheInterface[]
+     * @var \React\Cache\CacheInterface[]|\Psr\SimpleCache\CacheInterface[]
      */
     protected $cache;
 
@@ -1395,7 +1394,7 @@ class Discord
             ->setAllowedTypes('intents', ['array', 'int'])
             ->setAllowedTypes('socket_options', 'array')
             ->setAllowedTypes('dnsConfig', ['string', \React\Dns\Config\Config::class])
-            ->setAllowedTypes('cacheInterface', ['null', 'array', CacheInterface::class])
+            ->setAllowedTypes('cacheInterface', ['null', 'array', \React\Cache\CacheInterface::class, \Psr\SimpleCache\CacheInterface::class])
             ->setAllowedTypes('cacheSweep', 'bool')
             ->setNormalizer('cacheInterface', function ($options, $value) {
                 if (! is_array($value)) {
@@ -1575,9 +1574,9 @@ class Discord
      *
      * @param string $name Repository class name.
      *
-     * @return CacheInterface
+     * @return \React\Cache\CacheInterface|\Psr\SimpleCache\CacheInterface
      */
-    public function getCache($repository_class = null): CacheInterface
+    public function getCache($repository_class = null)
     {
         if ($repository_class === null || ! isset($this->cache[$repository_class])) {
             $repository_class = AbstractRepository::class;
