@@ -234,6 +234,32 @@ class CacheWrapper
      */
     public function getMultiple(array $keys, $default = null)
     {
+        if (is_callable([$this->interface, 'getMultiple'])) {
+            $handleValue = function ($values) {
+                foreach ($values as $key => &$value) {
+                    if ($value === null) {
+                        unset($this->items[$key]);
+                    } else {
+                        $value = $this->items[$key] = $this->discord->factory($this->class, $this->unserializer($value), true);
+                    }
+                }
+
+                return $values;
+            };
+
+            try {
+                $result = $this->interface->getMultiple(array_map(fn ($key) => $this->prefix.$key, $keys), $default);
+            } catch (Throwable $throwable) {
+                return reject($throwable);
+            }
+
+            if ($result instanceof PromiseInterface) {
+                return $result->then($handleValue);
+            }
+
+            return resolve($handleValue($result));
+        }
+
         $promises = [];
 
         foreach ($keys as $key) {
@@ -275,6 +301,32 @@ class CacheWrapper
      */
     public function deleteMultiple(array $keys)
     {
+        if (is_callable([$this->interface, 'deleteMultiple'])) {
+            $handleValue = function ($success) use ($keys) {
+                if ($success) {
+                    foreach ($keys as $key) {
+                        unset($this->items[$key]);
+                    }
+                }
+
+                return $success;
+            };
+
+            $keys = array_map(fn ($key) => $this->prefix.$key, $keys);
+
+            try {
+                $result = $this->interface->deleteMultiple($keys);
+            } catch (Throwable $throwable) {
+                return reject($throwable);
+            }
+
+            if ($result instanceof PromiseInterface) {
+                return $result->then($handleValue);
+            }
+
+            return resolve($handleValue($result));
+        }
+
         $promises = [];
 
         foreach ($keys as $key) {
