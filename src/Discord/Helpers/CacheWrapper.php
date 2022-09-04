@@ -25,7 +25,7 @@ use function React\Promise\resolve;
 /**
  * Wrapper for CacheInterface that store Repository items.
  *
- * Compatible with react/cache 0.5 - 1.x interface.
+ * Compatible with react/cache 0.5 - 1.x and psr/simple-cache interface.
  *
  * @since 10.0.0
  *
@@ -88,7 +88,8 @@ class CacheWrapper
         $this->class = &$class;
 
         $separator = '.';
-        if (stripos(get_class($cacheInterface), 'Redis') !== false || stripos(get_class($cacheInterface), 'Memcached') !== false) {
+        $cacheInterfaceName = get_class($cacheInterface);
+        if (stripos($cacheInterfaceName, 'Redis') !== false || stripos($cacheInterfaceName, 'Memcached') !== false) {
             $separator = ':';
         }
 
@@ -97,12 +98,12 @@ class CacheWrapper
         if ($discord->options['cacheSweep']) {
             // Sweep every heartbeat ack
             $this->sweeper = function ($time, Discord $discord) {
-                $sweeping = 0;
+                $flushing = 0;
                 foreach ($this->items as $key => $item) {
                     if ($item === null) {
                         // Item was removed from memory, delete from cache
                         $this->delete($key);
-                        $sweeping++;
+                        $flushing++;
                     } elseif ($item instanceof Part) {
                         // Skip ID related to Bot
                         if ($key != $discord->id) {
@@ -111,8 +112,8 @@ class CacheWrapper
                         }
                     }
                 }
-                if ($sweeping) {
-                    $this->discord->getLogger()->debug('Sweeping repository cache', ['count' => $sweeping, 'class' => $this->class]);
+                if ($flushing) {
+                    $this->discord->getLogger()->debug('Flushing repository cache', ['count' => $flushing, 'class' => $this->class]);
                 }
             };
             $discord->on('heartbeat-ack', $this->sweeper);
