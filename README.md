@@ -11,7 +11,7 @@ For testing and stability it would be greatly appreciated if you were able to ad
 ## CacheInterface (experimental)
 > Warning: This branch contains an experimental feature, do not use this in production! Create issues or join our Discord for feedback and discussions.
 
-DiscordPHP caching is powered by [react/cache](https://github.com/reactphp/cache) or any compatbile [psr/simple-cache](https://github.com/php-fig/simple-cache). The Interface can be retrieved from any repositories `$repository->cache`, e.g.
+DiscordPHP caching is powered by [react/cache](https://github.com/reactphp/cache) or any compatible [psr/simple-cache](https://github.com/php-fig/simple-cache). The Interface can be retrieved from any repositories `$repository->cache`, e.g.
 
 ```php
 $discord->users->cache->get('115233618997149700')->then(function ($user) {
@@ -28,9 +28,9 @@ $discord->users->fetch('115233618997149700', true)->then(function ($user) {
 
 The cache interfaces are handled in [Promise](https://github.com/reactphp/promise) manner, while it may speed up when combined with [async](https://github.com/reactphp/async), it is worth to note that is not as fast as previous in-memory caching existed since DiscordPHP v5.x. The caching interface suits for those who wants to scale up their Bot and not bound to PHP memory limit nor process, at cost of the speed.
 
-All methods deriving from `AbstractRepository` (not `Collection`) handles the cache implementation already.
+All methods deriving from `AbstractRepository` (no more `Collection`) handles the cache implementation already.
 
-Note: libraries containing namespace "Redis" or "Memcached" will have the colon `:` separator instead of dot `.`
+Note: Caching libraries containing namespace "Redis" or "Memcached" will have the colon `:` separator instead of dot `.`
 
 You do not need to write the prefix if accessing from the Bot code, just `User.115233618997149700`. The repository prefix can be retrieved from the repository which in the case above `$discord->users->cache->getPrefix()` would return `User.`, where `User` is the name of the `Part` class.
 
@@ -39,6 +39,10 @@ Known available implementation:
 ### [ArrayCache](https://github.com/reactphp/cache/blob/1.x/src/ArrayCache.php)
 
 Bundled in ReactPHP Cache, uses in-memory Array, and is already used by default.
+
+```php
+$cache = new ArrayCache(100); // 100 is the limit with LRU policy
+```
 
 ### [FileSystem](https://github.com/WyriHaximus/reactphp-cache-filesystem)
 
@@ -109,15 +113,12 @@ Note the following section uses PSR-16 Adapter
 
 #### [ArrayAdapter](https://symfony.com/doc/current/components/cache/adapters/redis_adapter.html)
 
+Equivalent to ArrayCache from ReactPHP.
+
 ```php
 use Symfony\Component\Cache\Adapter\ArrayAdapter;
 
-$psr6Cache = new ArrayAdapter(
-    $defaultLifetime = 0,
-    $storeSerialized = false,
-    $maxLifetime = 0,
-    $maxItems = 0
-);
+$psr6Cache = new ArrayAdapter(0, false, 0, 100); // 100 is the limit
 $cache = new \Symfony\Component\Cache\Psr16Cache($psr6Cache);
 
 $discord = new Discord([
@@ -134,12 +135,26 @@ Note the examples below uses [Redis PECL](https://pecl.php.net/package/redis)
 use Symfony\Component\Cache\Adapter\RedisAdapter;
 
 $redis = new \Redis();
-$redis->connect('127.0.0.1');
-$psr6Cache = new RedisAdapter(
-    $redis,
-    $namespace = 'dphp', // prefix is "dphp:"
-    $defaultLifetime = 0
-);
+$redis->connect('localhost');
+$psr6Cache = new RedisAdapter($redis, 'dphp', 0); // prefix is "dphp:"
+$cache = new \Symfony\Component\Cache\Psr16Cache($psr6Cache);
+
+$discord = new Discord([
+    'token' => 'bot token',
+    'cacheInterface' => $cache,
+]);
+```
+
+#### [MemcachedAdapter](https://symfony.com/doc/current/components/cache/adapters/memcached_adapter.html)
+
+Note the examples below uses [Memcached PECL](https://pecl.php.net/package/memcached)
+
+```php
+use Symfony\Component\Cache\Adapter\MemcachedAdapter;
+
+$memcached = new \Memcached();
+$memcached->addServer('localhost', 11211);
+$psr6Cache = new MemcachedAdapter($memcached, 'dphp', 0); // prefix is "dphp:"
 $cache = new \Symfony\Component\Cache\Psr16Cache($psr6Cache);
 
 $discord = new Discord([
