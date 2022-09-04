@@ -18,7 +18,6 @@ use Discord\Helpers\Collection;
 use Discord\Http\Endpoint;
 use Discord\Http\Http;
 use Discord\Parts\Part;
-use React\Cache\ArrayCache;
 use React\Promise\ExtendedPromiseInterface;
 use React\Promise\PromiseInterface;
 use Traversable;
@@ -393,7 +392,7 @@ abstract class AbstractRepository extends Collection
             return;
         }
 
-        $this->cache->interface->set($this->cache->getPrefix().$offset, $this->serializer($value));
+        $this->cache->interface->set($this->cache->getPrefix().$offset, $this->cache->serializer($value));
 
         $this->offsetSet($offset, $value);
     }
@@ -457,7 +456,7 @@ abstract class AbstractRepository extends Collection
         if (is_a($item, $this->class)) {
             $key = $item->{$this->discrim};
             $this->items[$key] = $item;
-            $this->cache->interface->set($this->cache->getPrefix().$key, $this->serializer($item));
+            $this->cache->interface->set($this->cache->getPrefix().$key, $this->cache->serializer($item));
         }
 
         return $this;
@@ -700,20 +699,6 @@ abstract class AbstractRepository extends Collection
                 }
             }
         })();
-    }
-
-    /**
-     * @param Part $part
-     *
-     * @return array|string
-     */
-    private function serializer($part)
-    {
-        if ($this->cache->interface instanceof ArrayCache) {
-            return $part->getRawAttributes();
-        }
-
-        return $part->serialize();
     }
 
     public function __get(string $key)

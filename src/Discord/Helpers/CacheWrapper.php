@@ -138,10 +138,7 @@ class CacheWrapper
             if ($value === null) {
                 unset($this->items[$key]);
             } else {
-                if (! ($this->interface instanceof ArrayCache)) {
-                    $value = json_decode($value);
-                }
-                $value = $this->items[$key] = $this->discord->factory($this->class, $value, true);
+                $value = $this->items[$key] = $this->discord->factory($this->class, $this->unserializer($value), true);
             }
 
             return $value;
@@ -158,11 +155,7 @@ class CacheWrapper
      */
     public function set($key, $value, $ttl = null)
     {
-        if ($this->interface instanceof ArrayCache) {
-            $item = $value->getRawAttributes();
-        } else {
-            $item = $value->serialize();
-        }
+        $item = $this->serializer($value);
 
         return $this->interface->set($this->prefix.$key, $item, $ttl)->then(function ($success) use ($key, $value) {
             if ($success) {
@@ -311,6 +304,34 @@ class CacheWrapper
     public function getPrefix()
     {
         return $this->prefix;
+    }
+
+    /**
+     * @param Part $part
+     *
+     * @return array|string
+     */
+    public function serializer($part)
+    {
+        if ($this->interface instanceof ArrayCache) {
+            return $part->getRawAttributes();
+        }
+
+        return $part->serialize();
+    }
+
+    /**
+     * @param string $value
+     *
+     * @return mixed
+     */
+    public function unserializer($value)
+    {
+        if (! ($this->interface instanceof ArrayCache)) {
+            $value = json_decode($value);
+        }
+
+        return $value;
     }
 
     public function __get(string $name)
