@@ -16,6 +16,7 @@ use Discord\Parts\Channel\Webhook;
 use Discord\Parts\Guild\AutoModeration\Rule;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Guild\ScheduledEvent;
+use Discord\Parts\Interactions\Command\Command;
 use Discord\Parts\Part;
 use Discord\Parts\Thread\Thread;
 use Discord\Parts\User\User;
@@ -26,6 +27,7 @@ use ReflectionClass;
  *
  * @see https://discord.com/developers/docs/resources/audit-log#audit-log-object
  *
+ * @property Collection|Command               $application_commands   List of application commands referenced in the audit log.
  * @property Collection|Entry[]               $audit_log_entries      List of audit log entries.
  * @property Collection|Rule[]                $auto_moderation_rules  List of auto moderation rules referenced in the audit log.
  * @property Collection|GuildScheduledEvent[] $guild_scheduled_events List of guild scheduled events referenced in the audit log.
@@ -42,6 +44,7 @@ class AuditLog extends Part
      * @inheritdoc
      */
     protected $fillable = [
+        'application_commands',
         'webhooks',
         'auto_moderation_rules',
         'guild_scheduled_events',
@@ -62,6 +65,22 @@ class AuditLog extends Part
     protected function getGuildAttribute(): ?Guild
     {
         return $this->discord->guilds->get('id', $this->guild_id);
+    }
+
+    /**
+     * Returns a collection of application commands found in the audit log.
+     *
+     * @return Collection|Command[]
+     */
+    protected function getApplicationCommandsAttribute(): Collection
+    {
+        $collection = Collection::for(Command::class);
+
+        foreach ($this->attributes['application_commands'] ?? [] as $application_commands) {
+            $collection->pushItem($this->factory->create(Command::class, $application_commands, true));
+        }
+
+        return $collection;
     }
 
     /**
