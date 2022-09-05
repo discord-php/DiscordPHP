@@ -161,15 +161,23 @@ class Role extends Part
      */
     public function getUpdatableAttributes(): array
     {
-        return [
+        $attr = [
             'name' => $this->name,
             'permissions' => $this->permissions->bitwise,
             'color' => $this->color,
             'hoist' => $this->hoist,
-            'icon' => $this->attributes['icon'],
-            'unicode_emoji' => $this->unicode_emoji,
             'mentionable' => $this->mentionable,
         ];
+
+        if (array_key_exists('icon', $this->attributes)) {
+            $attr['icon'] = $this->icon_hash;
+        }
+
+        if (array_key_exists('unicode_emoji', $this->attributes)) {
+            $attr['unicode_emoji'] = $this->unicode_emoji;
+        }
+
+        return $attr;
     }
 
     /**
