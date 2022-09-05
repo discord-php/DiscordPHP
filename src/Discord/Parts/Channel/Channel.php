@@ -33,6 +33,7 @@ use Discord\Http\Exceptions\NoPermissionsException;
 use Discord\Parts\Permissions\RolePermission;
 use Discord\Parts\Thread\Thread;
 use Discord\Repository\Channel\InviteRepository;
+use Discord\Repository\Channel\StageInstanceRepository;
 use Discord\Repository\Channel\ThreadRepository;
 use React\Promise\ExtendedPromiseInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -78,12 +79,13 @@ use function React\Promise\resolve;
  * @property      string|null         $permissions                   Computed permissions for the invoking user in the channel, including overwrites, only included when part of the resolved data received on a slash command interaction.
  * @property      int|null            $flags                         Channel flags combined as a bitfield.
  *
- * @property bool              $is_private Whether the channel is a private channel.
- * @property MemberRepository  $members    Voice channel only - members in the channel.
- * @property MessageRepository $messages   Text channel only - messages sent in the channel.
- * @property WebhookRepository $webhooks   Webhooks in the channel.
- * @property ThreadRepository  $threads    Threads that belong to the channel.
- * @property InviteRepository  $invites    Invites in the channel.
+ * @property bool                    $is_private      Whether the channel is a private channel.
+ * @property MemberRepository        $members         Voice channel only - members in the channel.
+ * @property MessageRepository       $messages        Text channel only - messages sent in the channel.
+ * @property WebhookRepository       $webhooks        Webhooks in the channel.
+ * @property ThreadRepository        $threads         Threads that belong to the channel.
+ * @property InviteRepository        $invites         Invites in the channel.
+ * @property StageInstanceRepository $stage_instances Stage instances in the channel.
  *
  * @method ExtendedPromiseInterface<Message> sendMessage(MessageBuilder $builder)
  */
@@ -149,6 +151,7 @@ class Channel extends Part
         'webhooks' => WebhookRepository::class,
         'threads' => ThreadRepository::class,
         'invites' => InviteRepository::class,
+        'stage_instances' => StageInstanceRepository::class,
     ];
 
     /**

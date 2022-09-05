@@ -78,8 +78,8 @@ class GuildCreate extends Event
                 $channelId = $voice_state->channel_id;
                 $userId = $voice_state->user_id;
                 $voice_state->guild_id = $data->id;
-                if (! isset($voice_state['member']) && isset($rawMembers[$userId])) {
-                    $voice_state['member'] = $rawMembers[$userId];
+                if (! isset($voice_state->member) && isset($rawMembers[$userId])) {
+                    $voice_state->member = $rawMembers[$userId];
                 }
                 $await[] = $channels[$channelId]->members->cache->set($userId, $this->factory->part(VoiceStateUpdatePart::class, (array) $voice_state, true));
             }
@@ -92,7 +92,9 @@ class GuildCreate extends Event
         }
 
         foreach ($data->stage_instances as $stageInstance) {
-            $await[] = $guildPart->stage_instances->cache->set($stageInstance->id, $this->factory->part(StageInstance::class, (array) $stageInstance, true));
+            if (isset($channels[$stageInstance->channel_id])) {
+                $await[] = $channels[$stageInstance->channel_id]->stage_instances->cache->set($stageInstance->id, $this->factory->part(StageInstance::class, (array) $stageInstance, true));
+            }
         }
 
         foreach ($data->guild_scheduled_events as $scheduledEvent) {

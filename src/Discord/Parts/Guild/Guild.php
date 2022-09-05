@@ -19,6 +19,7 @@ use Discord\Http\Endpoint;
 use Discord\Http\Exceptions\NoPermissionsException;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Channel\Invite;
+use Discord\Parts\Channel\StageInstance;
 use Discord\Parts\Part;
 use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
@@ -37,7 +38,6 @@ use Discord\Repository\Guild\StickerRepository;
 use Discord\Repository\Guild\ScheduledEventRepository;
 use Discord\Repository\Guild\GuildTemplateRepository;
 use Discord\Repository\Guild\IntegrationRepository;
-use Discord\Repository\Guild\StageInstanceRepository;
 use React\Promise\ExtendedPromiseInterface;
 use ReflectionClass;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -128,7 +128,6 @@ use function React\Promise\resolve;
  * @property object[]|null            $voice_states           Array of voice states.
  * @property MemberRepository         $members                Users in the guild.
  * @property ChannelRepository        $channels               Channels in the guild.
- * @property StageInstanceRepository  $stage_instances        Stage instances in the guild.
  * @property ScheduledeventRepository $guild_scheduled_events The scheduled events in the guild.
  *
  * @property AutoModerationRuleRepository $auto_moderation_rules
@@ -273,7 +272,6 @@ class Guild extends Part
         'stickers' => StickerRepository::class,
         'members' => MemberRepository::class,
         'channels' => ChannelRepository::class,
-        'stage_instances' => StageInstanceRepository::class,
         'guild_scheduled_events' => ScheduledEventRepository::class,
 
         'auto_moderation_rules' => AutoModerationRuleRepository::class,
@@ -318,6 +316,17 @@ class Guild extends Part
                 $stickerPart->fill((array) $sticker);
             }
             $this->stickers->pushItem($stickerPart ?? $this->factory->part(Sticker::class, (array) $sticker + ['guild_id' => $this->id], true));
+        }
+
+        // @todo fill channels first
+        foreach ($attributes['stage_instances'] ?? [] as $stage_instance) {
+            if ($channel = $this->channels->get('id', $stage_instance->channel_id)) {
+                if ($stageInstancePart = $channel->stage_instances->get('id', $stage_instance->id)) {
+                    $stageInstancePart->fill((array) $stage_instance);
+                } else {
+                    $channel->stage_instances->pushItem($this->factory->part(StageInstance::class, (array) $stage_instance, true));
+                }
+            }
         }
     }
 
@@ -452,6 +461,27 @@ class Guild extends Part
     protected function getSplashHashAttribute(): ?string
     {
         return $this->attributes['splash'];
+    }
+
+    /**
+     * Returns the channels stage instances.
+     *
+     * @deprecated 10.0.0 Use `$channel->stage_instances`
+     *
+     * @return Collection[]|StageInstance[]|null
+     */
+    protected function getStageInstancesAttribute(): ?Collection
+    {
+        $stage_instances = Collection::for(StageInstance::class);
+
+        if ($channels = $this->channels) {
+            /** @var Channel */
+            foreach ($channels as $channel) {
+                $stage_instances->merge($channel->stage_instances);
+            }
+        }
+
+        return $stage_instances;
     }
 
     protected function getFeatureAnimatedBannerAttribute(): bool

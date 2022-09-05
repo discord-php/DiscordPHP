@@ -9,7 +9,7 @@
  * with this source code in the LICENSE.md file.
  */
 
-namespace Discord\Repository\Guild;
+namespace Discord\Repository\Channel;
 
 use Discord\Http\Endpoint;
 use Discord\Parts\Channel\StageInstance;
@@ -19,8 +19,9 @@ use Discord\Repository\AbstractRepository;
  * Contains a live stage instances channel.
  *
  * @see StageInstance
- * @see \Discord\Parts\Guild\Guild
+ * @see \Discord\Parts\Channel\Channel
  *
+ * @since 10.0.0 Moved from Guild to Channel
  * @since 7.0.0
  *
  * @method StageInstance|null get(string $discrim, $key)
@@ -31,11 +32,6 @@ use Discord\Repository\AbstractRepository;
  */
 class StageInstanceRepository extends AbstractRepository
 {
-    /**
-     * @inheritdoc
-     */
-    protected $discrim = 'channel_id';
-
     /**
      * @inheritdoc
      */

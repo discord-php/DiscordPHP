@@ -11,6 +11,7 @@
 
 namespace Discord\WebSockets\Events;
 
+use Discord\Parts\Channel\Channel;
 use Discord\Parts\Channel\StageInstance;
 use Discord\WebSockets\Event;
 use Discord\Parts\Guild\Guild;
@@ -32,7 +33,10 @@ class StageInstanceCreate extends Event
 
         /** @var ?Guild */
         if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
-            yield $guild->stage_instances->cache->set($data->id, $stageInstancePart);
+            /** @var ?Channel */
+            if ($channel = yield $guild->channels->cacheGet($data->channel_id)) {
+                yield $channel->stage_instances->cache->set($data->id, $stageInstancePart);
+            }
         }
 
         return $stageInstancePart;

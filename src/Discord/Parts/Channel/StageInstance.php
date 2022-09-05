@@ -15,7 +15,7 @@ use Discord\Parts\Guild\Guild;
 use Discord\Parts\Part;
 
 /**
- * A Stage Instance holds information about a live stage. on a Discord guild.
+ * A Stage Instance holds information about a live stage.
  *
  * @link https://discord.com/developers/docs/resources/stage-instance#stage-instance-resource
  *
