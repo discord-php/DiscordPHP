@@ -33,12 +33,12 @@ class ChannelUpdate extends Event
 
         if ($channelPart->is_private) {
             /** @var ?Channel */
-            if (! $oldChannel = $this->discord->private_channels[$data->id]) {
+            if (! $oldChannel = yield $this->discord->private_channels->cacheGet($data->id)) {
                 $repository = $this->discord->private_channels;
             }
         } elseif ($guild = $channelPart->guild) {
             /** @var ?Channel */
-            if (! $oldChannel = $guild->channels[$data->id]) {
+            if (! $oldChannel = yield $guild->channels->cacheGet($data->id)) {
                 $repository = $guild->channels;
             }
         }

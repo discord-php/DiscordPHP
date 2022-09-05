@@ -32,7 +32,7 @@ class ThreadUpdate extends Event
             /** @var ?Channel */
             if ($parent = yield $guild->channels->cacheGet($data->parent_id)) {
                 /** @var ?Thread */
-                if ($oldThread = $parent->threads[$data->id]) {
+                if ($oldThread = yield $parent->threads->cacheGet($data->id)) {
                     // Swap
                     $threadPart = $oldThread;
                     $oldThread = clone $oldThread;

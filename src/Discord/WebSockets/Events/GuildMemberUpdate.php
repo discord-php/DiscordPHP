@@ -32,7 +32,7 @@ class GuildMemberUpdate extends Event
         /** @var ?Guild */
         if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
             /** @var ?Member */
-            if ($oldMember = $guild->members[$data->user->id]) {
+            if ($oldMember = yield $guild->members->cacheGet($data->user->id)) {
                 // Swap
                 $memberPart = $oldMember;
                 $oldMember = clone $oldMember;

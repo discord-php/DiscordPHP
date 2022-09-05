@@ -32,7 +32,7 @@ class GuildScheduledEventUpdate extends Event
         /** @var ?Guild */
         if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
             /** @var ?ScheduledEvent */
-            if ($oldScheduledEvent = $guild->guild_scheduled_events[$data->id]) {
+            if ($oldScheduledEvent = yield $guild->guild_scheduled_events->cacheGet($data->id)) {
                 // Swap
                 $scheduledEventPart = $oldScheduledEvent;
                 $oldScheduledEvent = clone $oldScheduledEvent;

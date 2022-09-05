@@ -34,7 +34,7 @@ class GuildRoleUpdate extends Event
         /** @var ?Guild */
         if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
             /** @var ?Role */
-            if ($oldRole = $guild->roles[$data->role->id]) {
+            if ($oldRole = yield $guild->roles->cacheGet($data->role->id)) {
                 // Swap
                 $rolePart = $oldRole;
                 $oldRole = clone $oldRole;

@@ -32,7 +32,7 @@ class IntegrationUpdate extends Event
         /** @var ?Guild */
         if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
             /** @var ?Integration */
-            if ($oldIntegration = $guild->integrations[$data->id]) {
+            if ($oldIntegration = yield $guild->integrations->cacheGet($data->id)) {
                 // Swap
                 $integrationPart = $oldIntegration;
                 $oldIntegration = clone $oldIntegration;

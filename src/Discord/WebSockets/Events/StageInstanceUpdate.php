@@ -32,7 +32,7 @@ class StageInstanceUpdate extends Event
         /** @var ?Guild */
         if ($guild = $this->discord->guilds->cacheGet($data->guild_id)) {
             /** @var ?StageInstance */
-            if ($oldStageInstance = $guild->stage_instances[$data->id]) {
+            if ($oldStageInstance = yield $guild->stage_instances->cacheGet($data->id)) {
                 // Swap
                 $stageInstancePart = $oldStageInstance;
                 $oldStageInstance = clone $oldStageInstance;

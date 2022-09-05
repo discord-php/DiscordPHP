@@ -29,7 +29,7 @@ class UserUpdate extends Event
         $oldUser = null;
 
         /** @var User */
-        if ($oldUser = $this->discord->users[$data->id]) {
+        if ($oldUser = yield $this->discord->users->cacheGet($data->id)) {
             $userPart = clone $oldUser;
             $userPart->fill((array) $data);
         } else {
