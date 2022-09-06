@@ -719,7 +719,15 @@ abstract class AbstractRepository extends Collection
                 if ($item) {
                     yield $key => $this->items[$key] = $item;
                 } else {
-                    $this->cache->get($key);
+                    // Attempt to get resolved value if promise is resolved without waiting
+                    $resolved = null;
+                    $this->cache->get($key)->then(static function ($value) use (&$resolved) {
+                        return $resolved = $value;
+                    });
+
+                    if ($resolved !== null) {
+                        yield $key => $this->items[$key] = $resolved;
+                    }
                 }
             }
         })();
