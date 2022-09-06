@@ -1576,9 +1576,9 @@ class Discord
      *
      * @return \React\Cache\CacheInterface|\Psr\SimpleCache\CacheInterface
      */
-    public function getCache($repository_class = null)
+    public function getCache($repository_class = AbstractRepository::class)
     {
-        if ($repository_class === null || ! isset($this->cache[$repository_class])) {
+        if (! isset($this->cache[$repository_class])) {
             $repository_class = AbstractRepository::class;
         }
 

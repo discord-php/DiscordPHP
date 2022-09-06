@@ -30,7 +30,19 @@ The cache interfaces are handled in [Promise](https://github.com/reactphp/promis
 
 All methods deriving from `AbstractRepository` (no more `Collection`) handles the cache implementation already.
 
-Note: Caching libraries containing namespace "Redis" or "Memcached" will have the colon `:` separator instead of dot `.`
+Note: Caching libraries containing namespace "Redis" or "Memcached" will have the `:` colon separator instead of `.` dot.
+If you found implementation without the name containing "Redis" or "Memcached", create an extended class named with it, e.g.
+
+```php
+// Before:
+$psr6Cache = new RedisAdapter($redis, 'dphp', 0); // "Redis" in "RedisAdapter" here will not be detected
+$cache = new Psr16Cache($psr6Cache); // Since the wrapper class name does not have "Redis", it will use dot
+
+// After:
+$psr6Cache = new RedisAdapter($redis, 'dphp', 0);
+class RedisPsr16 extends Psr16Cache {} // Just create a new class that extends the wrapper class
+$cache = new RedisPsr16($psr6Cache); // The class name now contains "Redis", it will use colon
+```
 
 You do not need to write the prefix if accessing from the Bot code, just `User.115233618997149700`. The repository prefix can be retrieved from the repository which in the case above `$discord->users->cache->getPrefix()` would return `User.`, where `User` is the name of the `Part` class.
 
@@ -55,7 +67,7 @@ use WyriHaximus\React\Cache\Filesystem;
 
 $loop = Loop::get();
 $filesystem = ReactFilesystem::create($loop);
-$cache = new Filesystem($filesystem, '/tmp/cache/discordphp/');
+$cache = new Filesystem($filesystem, '/tmp/cache/dphp/');
 
 $discord = new Discord([
     'token' => 'bot token',
