@@ -414,13 +414,13 @@ final class CacheWrapper
      */
     public function serializer($part)
     {
-        $data = get_object_vars($part) + ['attributes' => $part->getRawAttributes()];
+        $data = (object) (get_object_vars($part) + ['attributes' => $part->getRawAttributes()]);
 
         if ($this->interface instanceof \React\Cache\CacheInterface && ! ($this->interface instanceof ArrayCache)) {
-            return json_encode($data);
+            return serialize($data);
         }
 
-        return (object) $data;
+        return $data;
     }
 
     /**
@@ -431,7 +431,7 @@ final class CacheWrapper
     public function unserializer($value)
     {
         if (! ($this->interface instanceof ArrayCache) && (! $this->interface instanceof \Psr\SimpleCache\CacheInterface)) {
-            $value = json_decode($value);
+            $value = unserialize($value);
         }
 
         $part = $this->discord->factory($this->class, $value->attributes, $value->created);
