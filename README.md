@@ -48,9 +48,9 @@ You do not need to write the prefix if accessing from the Bot code, just `User.1
 
 Known available implementation:
 
-## [ReactPHP/cache](https://github.com/reactphp/cache)
+### [ReactPHP/cache](https://github.com/reactphp/cache)
 
-### [ArrayCache](https://github.com/reactphp/cache/blob/1.x/src/ArrayCache.php)
+#### [ArrayCache](https://github.com/reactphp/cache/blob/1.x/src/ArrayCache.php)
 
 Bundled in ReactPHP Cache, uses in-memory Array, and is used by default.
 
@@ -58,7 +58,7 @@ Bundled in ReactPHP Cache, uses in-memory Array, and is used by default.
 $cache = new ArrayCache(100); // 100 is the limit with LRU policy
 ```
 
-### [FileSystem](https://github.com/WyriHaximus/reactphp-cache-filesystem)
+#### [FileSystem](https://github.com/WyriHaximus/reactphp-cache-filesystem)
 
 *Does not work on Windows*
 
@@ -78,7 +78,7 @@ $discord = new Discord([
 ]);
 ```
 
-### [Redis](https://github.com/WyriHaximus/reactphp-cache-redis)
+#### [Redis](https://github.com/WyriHaximus/reactphp-cache-redis)
 
 Note the examples below uses ReactPHP-Redis v2.x
 
@@ -99,7 +99,7 @@ $discord = new Discord([
 
 By default the cache key is prefixed `reach:cache:`, in example above the prefix is set to `dphp:` so you can get the data as: `dphp:User:115233618997149700`.
 
-### [~~Memcached~~](https://github.com/seregazhuk/php-react-cache-memcached)
+#### [~~Memcached~~](https://github.com/seregazhuk/php-react-cache-memcached)
 
 *Current version is broken when getting a cache*
 
