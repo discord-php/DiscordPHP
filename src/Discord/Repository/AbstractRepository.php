@@ -22,6 +22,7 @@ use React\Promise\ExtendedPromiseInterface;
 use Traversable;
 use WeakReference;
 
+use function Discord\nowait;
 use function React\Promise\reject;
 use function React\Promise\resolve;
 
@@ -354,20 +355,13 @@ abstract class AbstractRepository extends Collection
             return null;
         }
 
-        // Attempt to get resolved value if promise is resolved without waiting
-        $resolved = null;
-        $noWaitResolver = static function ($value) use (&$resolved) {
-            return $resolved = $value;
-        };
-
         if ($discrim == $this->discrim) {
             if ($item = $this->offsetGet($key)) {
                 return $item;
             }
 
-            $this->cache->get($key)->then($noWaitResolver);
-
-            return $resolved;
+            // Attempt to get resolved value if promise is resolved without waiting
+            return nowait($this->cache->get($key));
         }
 
         foreach ($this->items as $offset => $item) {
@@ -378,11 +372,13 @@ abstract class AbstractRepository extends Collection
                 continue;
             }
 
-            $this->cache->get($offset)->then($noWaitResolver);
+            if ($resolved = nowait($this->cache->get($offset)) !== null) {
+                return $resolved;
+            }
             break;
         }
 
-        return $resolved;
+        return null;
     }
 
     /**
@@ -493,9 +489,12 @@ abstract class AbstractRepository extends Collection
      */
     public function first()
     {
-        foreach ($this->items as $item) {
+        foreach ($this->items as $key => $item) {
             if ($item instanceof WeakReference) {
-                $item = $item->get();
+                if (! $item = $item->get()) {
+                    // Attempt to get resolved value if promise is resolved without waiting
+                    $item = nowait($this->cache->get($key));
+                }
             }
 
             if ($item) {
@@ -515,9 +514,12 @@ abstract class AbstractRepository extends Collection
     {
         $items = array_reverse($this->items, true);
 
-        foreach ($items as $item) {
+        foreach ($items as $key => $item) {
             if ($item instanceof WeakReference) {
-                $item = $item->get();
+                if (! $item = $item->get()) {
+                    // Attempt to get resolved value if promise is resolved without waiting
+                    $item = nowait($this->cache->get($key));
+                }
             }
 
             if ($item) {
@@ -720,12 +722,7 @@ abstract class AbstractRepository extends Collection
                     yield $key => $this->items[$key] = $item;
                 } else {
                     // Attempt to get resolved value if promise is resolved without waiting
-                    $resolved = null;
-                    $this->cache->get($key)->then(static function ($value) use (&$resolved) {
-                        return $resolved = $value;
-                    });
-
-                    if ($resolved !== null) {
+                    if ($resolved = nowait($this->cache->get($key)) !== null) {
                         yield $key => $this->items[$key] = $resolved;
                     }
                 }

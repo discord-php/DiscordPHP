@@ -21,6 +21,7 @@ use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
 use React\EventLoop\LoopInterface;
 use React\Promise\ExtendedPromiseInterface;
+use React\Promise\PromiseInterface;
 use Symfony\Component\OptionsResolver\Options;
 
 /**
@@ -317,4 +318,25 @@ function deferFind($array, callable $callback, $loop, ?callable $canceller = nul
     });
 
     return $deferred->promise();
+}
+
+/**
+ * Attempts to return a resolved value from a synchronous promise.
+ * Like await() but only for resolvable blocking promise without touching the loop.
+ *
+ * @param PromiseInterface $promiseInterface The synchronous promise.
+ *
+ * @return mixed null if failed to return.
+ *
+ * @see \React\Async\await() for asynchronous promise.
+ */
+function nowait(PromiseInterface $promiseInterface)
+{
+    $resolved = null;
+
+    $promiseInterface->then(static function ($value) use (&$resolved) {
+        return $resolved = $value;
+    });
+
+    return $resolved;
 }
