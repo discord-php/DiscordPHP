@@ -52,6 +52,8 @@ abstract class Part implements ArrayAccess, JsonSerializable
      * Used for storing custom information, used by end products.
      *
      * @var mixed
+     *
+     * @deprecated Relying on this variable with dynamic caching is discouraged
      */
     public $scriptData;
 

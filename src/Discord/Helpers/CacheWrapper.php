@@ -426,7 +426,7 @@ final class CacheWrapper
     /**
      * @param string $value
      *
-     * @return Part|AbstractRepository
+     * @return Part
      */
     public function unserializer($value)
     {
