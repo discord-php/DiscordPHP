@@ -329,6 +329,8 @@ function deferFind($array, callable $callback, $loop, ?callable $canceller = nul
  * @return mixed null if failed to return.
  *
  * @see \React\Async\await() for asynchronous promise.
+ *
+ * @since 10.0.0
  */
 function nowait(PromiseInterface $promiseInterface)
 {

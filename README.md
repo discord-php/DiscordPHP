@@ -48,9 +48,11 @@ You do not need to write the prefix if accessing from the Bot code, just `User.1
 
 Known available implementation:
 
+## [ReactPHP/cache](https://github.com/reactphp/cache)
+
 ### [ArrayCache](https://github.com/reactphp/cache/blob/1.x/src/ArrayCache.php)
 
-Bundled in ReactPHP Cache, uses in-memory Array, and is already used by default.
+Bundled in ReactPHP Cache, uses in-memory Array, and is used by default.
 
 ```php
 $cache = new ArrayCache(100); // 100 is the limit with LRU policy
@@ -76,7 +78,7 @@ $discord = new Discord([
 ]);
 ```
 
-### [ReactPHP Redis](https://github.com/WyriHaximus/reactphp-cache-redis)
+### [Redis](https://github.com/WyriHaximus/reactphp-cache-redis)
 
 Note the examples below uses ReactPHP-Redis v2.x
 
