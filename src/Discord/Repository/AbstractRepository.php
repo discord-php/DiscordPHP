@@ -98,7 +98,7 @@ abstract class AbstractRepository extends Collection
      *
      * @param array $queryparams Query string params to add to the request (no validation)
      *
-     * @return ExtendedPromiseInterface<self>
+     * @return ExtendedPromiseInterface<static>
      *
      * @throws \Exception
      */
@@ -132,7 +132,7 @@ abstract class AbstractRepository extends Collection
     /**
      * @param object $response
      *
-     * @return ExtendedPromiseInterface<self>
+     * @return ExtendedPromiseInterface<static>
      *
      * @internal
      */
@@ -174,7 +174,7 @@ abstract class AbstractRepository extends Collection
      * @param Part        $part   The part to save.
      * @param string|null $reason Reason for Audit Log (if supported).
      *
-     * @return ExtendedPromiseInterface
+     * @return ExtendedPromiseInterface<Part>
      *
      * @throws \Exception
      */
@@ -301,16 +301,26 @@ abstract class AbstractRepository extends Collection
      */
     public function fetch(string $id, bool $fresh = false): ExtendedPromiseInterface
     {
-        if (! $fresh && isset($this->items[$id])) {
-            $part = $this->items[$id];
-            if ($part instanceof WeakReference) {
-                $part = $part->get();
-            }
+        if (! $fresh) {
+            if (isset($this->items[$id])) {
+                $part = $this->items[$id];
+                if ($part instanceof WeakReference) {
+                    $part = $part->get();
+                }
 
-            if ($part) {
-                $this->items[$id] = $part;
+                if ($part) {
+                    $this->items[$id] = $part;
 
-                return resolve($part);
+                    return resolve($part);
+                }
+            } else {
+                return $this->cache->get($id)->then(function ($part) use ($id) {
+                    if ($part === null) {
+                        return $this->fetch($id, true);
+                    }
+
+                    return $part;
+                });
             }
         }
 
