@@ -203,11 +203,11 @@ class Role extends Part
     /**
      * {@inheritdoc}
      */
-    public function serialize()
+    public function getRawAttributes(): array
     {
         $attributes = $this->attributes;
         $attributes['permissions'] = (string) $attributes['permissions'];
 
-        return serialize($attributes);
+        return $attributes;
     }
 }

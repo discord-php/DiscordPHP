@@ -430,14 +430,15 @@ final class CacheWrapper
      */
     public function unserializer($value)
     {
-        if (! ($this->interface instanceof ArrayCache) && (! $this->interface instanceof \Psr\SimpleCache\CacheInterface)) {
+        if ($this->interface instanceof \React\Cache\CacheInterface && ! ($this->interface instanceof ArrayCache)) {
             $value = unserialize($value);
         }
 
         $part = $this->discord->factory($this->class, $value->attributes, $value->created);
-        unset($value->attributes, $value->created);
         foreach ($value as $name => $var) {
-            $part->{$name} = $var;
+            if (! in_array($name, ['created', 'attributes'])) {
+                $part->{$name} = $var;
+            }
         }
 
         return $part;

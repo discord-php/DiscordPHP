@@ -306,7 +306,7 @@ abstract class Part implements ArrayAccess, JsonSerializable
      */
     public function serialize()
     {
-        return serialize($this->attributes);
+        return serialize($this->getRawAttributes());
     }
 
     public function __serialize(): array

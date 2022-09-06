@@ -102,12 +102,12 @@ class Overwrite extends Part
     /**
      * {@inheritdoc}
      */
-    public function serialize()
+    public function getRawAttributes(): array
     {
         $attributes = $this->attributes;
         $attributes['allow'] = $this->attributes['allow']->bitwise;
         $attributes['deny'] = $this->attributes['deny']->bitwise;
 
-        return serialize($attributes);
+        return $attributes;
     }
 }
