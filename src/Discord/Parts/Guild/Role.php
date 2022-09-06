@@ -208,9 +208,6 @@ class Role extends Part
         $attributes = $this->attributes;
         $attributes['permissions'] = (string) $attributes['permissions'];
 
-        return json_encode([
-            'created' => $this->created,
-            'attributes' => $attributes,
-        ]);
+        return serialize($attributes);
     }
 }

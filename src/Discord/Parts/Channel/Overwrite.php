@@ -108,9 +108,6 @@ class Overwrite extends Part
         $attributes['allow'] = $this->attributes['allow']->bitwise;
         $attributes['deny'] = $this->attributes['deny']->bitwise;
 
-        return json_encode([
-            'created' => $this->created,
-            'attributes' => $attributes,
-        ]);
+        return serialize($attributes);
     }
 }
