@@ -354,14 +354,20 @@ abstract class AbstractRepository extends Collection
             return null;
         }
 
+        // Attempt to get resolved value if promise is resolved without waiting
+        $resolved = null;
+        $noWaitResolver = static function ($value) use (&$resolved) {
+            return $resolved = $value;
+        };
+
         if ($discrim == $this->discrim) {
             if ($item = $this->offsetGet($key)) {
                 return $item;
             }
 
-            $this->cache->get($key);
+            $this->cache->get($key)->then($noWaitResolver);
 
-            return null;
+            return $resolved;
         }
 
         foreach ($this->items as $offset => $item) {
@@ -372,11 +378,11 @@ abstract class AbstractRepository extends Collection
                 continue;
             }
 
-            $this->cache->get($offset);
+            $this->cache->get($offset)->then($noWaitResolver);
             break;
         }
 
-        return null;
+        return $resolved;
     }
 
     /**
