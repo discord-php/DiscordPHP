@@ -33,7 +33,7 @@ use function React\Promise\resolve;
  *
  * @internal
  */
-class CacheWrapper
+final class CacheWrapper
 {
     /**
      * @var Discord
@@ -141,7 +141,7 @@ class CacheWrapper
             if ($value === null) {
                 unset($this->items[$key]);
             } else {
-                $value = $this->items[$key] = $this->discord->factory($this->class, $this->unserializer($value), true);
+                $value = $this->items[$key] = $this->unserializer($value);
             }
 
             return $value;
@@ -241,7 +241,7 @@ class CacheWrapper
                     if ($value === null) {
                         unset($this->items[$key]);
                     } else {
-                        $value = $this->items[$key] = $this->discord->factory($this->class, $this->unserializer($value), true);
+                        $value = $this->items[$key] = $this->unserializer($value);
                     }
                 }
 
@@ -410,21 +410,23 @@ class CacheWrapper
     /**
      * @param Part $part
      *
-     * @return array|string
+     * @return object|string
      */
     public function serializer($part)
     {
-        if ($this->interface instanceof ArrayCache || $this->interface instanceof \Psr\SimpleCache\CacheInterface) {
-            return $part->getRawAttributes();
+        $data = get_object_vars($part) + ['attributes' => $part->getRawAttributes()];
+
+        if ($this->interface instanceof \React\Cache\CacheInterface && ! ($this->interface instanceof ArrayCache)) {
+            return json_encode($data);
         }
 
-        return $part->serialize();
+        return (object) $data;
     }
 
     /**
      * @param string $value
      *
-     * @return mixed
+     * @return Part|AbstractRepository
      */
     public function unserializer($value)
     {
@@ -432,7 +434,13 @@ class CacheWrapper
             $value = json_decode($value);
         }
 
-        return $value;
+        $part = $this->discord->factory($this->class, $value->attributes, $value->created);
+        unset($value->attributes, $value->created);
+        foreach ($value as $name => $var) {
+            $part->{$name} = $var;
+        }
+
+        return $part;
     }
 
     public function __get(string $name)

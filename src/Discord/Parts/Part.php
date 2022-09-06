@@ -304,7 +304,7 @@ abstract class Part implements ArrayAccess, JsonSerializable
      */
     public function serialize()
     {
-        return json_encode($this->attributes);
+        return serialize($this->attributes);
     }
 
     public function __serialize(): array
@@ -321,7 +321,7 @@ abstract class Part implements ArrayAccess, JsonSerializable
      */
     public function unserialize($data)
     {
-        $data = json_decode($data);
+        $data = unserialize($data);
 
         foreach ($data as $key => $value) {
             $this->setAttribute($key, $value);
