@@ -368,8 +368,6 @@ class Discord
 
         $options = $this->resolveOptions($options);
 
-        $options['cacheInterface'][AbstractRepository::class] ??= new ArrayCache();
-
         $this->options = $options;
         $this->token = $options['token'];
         $this->loop = $options['loop'];
@@ -1382,6 +1380,7 @@ class Discord
                 'retrieveBans' => false,
                 'intents' => Intents::getDefaultIntents(),
                 'socket_options' => [],
+                'cacheInterface' => new ArrayCache(),
                 'cacheSweep' => true,
             ])
             ->setAllowedTypes('token', 'string')
@@ -1394,7 +1393,7 @@ class Discord
             ->setAllowedTypes('intents', ['array', 'int'])
             ->setAllowedTypes('socket_options', 'array')
             ->setAllowedTypes('dnsConfig', ['string', \React\Dns\Config\Config::class])
-            ->setAllowedTypes('cacheInterface', ['null', 'array', \React\Cache\CacheInterface::class, \Psr\SimpleCache\CacheInterface::class])
+            ->setAllowedTypes('cacheInterface', ['array', \React\Cache\CacheInterface::class, \Psr\SimpleCache\CacheInterface::class])
             ->setAllowedTypes('cacheSweep', 'bool')
             ->setNormalizer('cacheInterface', function ($options, $value) {
                 if (! is_array($value)) {
