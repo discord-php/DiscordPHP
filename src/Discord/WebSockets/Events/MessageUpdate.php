@@ -50,14 +50,10 @@ class MessageUpdate extends Event
                 $messagePart->fill((array) $data);
 
                 // Deal with empty message content intent
-                if (! ($this->discord->options['intents'] & Intents::MESSAGE_CONTENT)) {
+                if (! ($this->discord->options['intents'] & Intents::MESSAGE_CONTENT) && $data->author->id != $this->discord->id) {
                     $cacheMessagePart = clone $oldMessagePart;
-                    foreach ($data as $key => $value) {
-                        // Skip intent required fields
-                        if (! in_array($key, ['content', 'embeds', 'attachments', 'components'])) {
-                            $cacheMessagePart->offsetSet($key, $value);
-                        }
-                    }
+                    // Ignore intent required fields
+                    $cacheMessagePart->fill(array_filter((array) $data, fn ($value, $key) => ! in_array($key, ['content', 'embeds', 'attachments', 'components']), ARRAY_FILTER_USE_BOTH));
                 }
             }
         }

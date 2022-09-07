@@ -155,7 +155,7 @@ class Webhook extends Part
 
         return $promise->then(function ($response) {
             $channel = $this->channel;
-            if ($channel && $message = $channel->messages->offsetGet($response->id)) {
+            if (($channel && $message = $channel->messages->get('id', $response->id)) || $message = $this->messages->get('id', $response->id)) {
                 $message->fill((array) $response);
 
                 return $message;
