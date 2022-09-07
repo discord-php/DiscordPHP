@@ -342,7 +342,7 @@ class VoiceClient extends EventEmitter
     /**
      * Audio Buffer.
      *
-     * @var Buffer The Audio Buffer
+     * @var RealBuffer The Audio Buffer
      */
     protected $buffer;
 
