@@ -72,6 +72,7 @@ class InteractionCreate extends Event
                             return $command->suggest($interaction);
                         }
                     }
+
                     return false;
                 };
                 if ($checkCommand($this->discord->application_commands[$command->name], $command->options)) {

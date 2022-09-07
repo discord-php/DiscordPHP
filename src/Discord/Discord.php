@@ -528,6 +528,7 @@ class Discord
     {
         if (! $guild = $this->guilds->get('id', $data->d->guild_id)) {
             $this->logger->warning('not chunking member, Guild is not cached.', ['guild_id' => $data->d->guild_id]);
+
             return;
         }
 
@@ -1468,7 +1469,7 @@ class Discord
     public function run(): void
     {
         //while (! $this->stopping) {
-            $this->loop->run();
+        $this->loop->run();
         //}
     }
 

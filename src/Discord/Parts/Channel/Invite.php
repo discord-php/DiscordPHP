@@ -12,13 +12,11 @@
 namespace Discord\Parts\Channel;
 
 use Carbon\Carbon;
-use Discord\Http\Endpoint;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Guild\ScheduledEvent;
 use Discord\Parts\OAuth\Application;
 use Discord\Parts\Part;
 use Discord\Parts\User\User;
-use React\Promise\ExtendedPromiseInterface;
 
 /**
  * An invite to a Channel and Guild.

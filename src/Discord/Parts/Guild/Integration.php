@@ -41,8 +41,8 @@ use Discord\Parts\User\User;
  * @property      Application|null $application         The bot/OAuth2 application for discord integrations.
  * @property      array|null       $scopes              The scopes the application has been authorized for.
  *
- * @property      string|null      $guild_id
- * @property-read Guild|null $guild
+ * @property      string|null $guild_id
+ * @property-read Guild|null  $guild
  */
 class Integration extends Part
 {

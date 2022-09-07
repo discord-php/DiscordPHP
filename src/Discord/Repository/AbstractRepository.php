@@ -158,7 +158,7 @@ abstract class AbstractRepository extends Collection
      * @param array $attributes The attributes for the new part.
      * @param bool  $created
      *
-     * @return Part       The new part.
+     * @return Part The new part.
      *
      * @throws \Exception
      */

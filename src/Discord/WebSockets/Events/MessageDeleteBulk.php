@@ -12,8 +12,6 @@
 namespace Discord\WebSockets\Events;
 
 use Discord\WebSockets\Event;
-use React\Promise\ExtendedPromiseInterface;
-use function React\Promise\all;
 
 /**
  * @link https://discord.com/developers/docs/topics/gateway#message-delete-bulk
