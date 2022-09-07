@@ -420,7 +420,7 @@ abstract class AbstractRepository extends Collection
     /**
      * Pulls a part from the repository.
      *
-     * @deprecated 7.2.0 Use async `$repository->cache->get()` and `$repository->cache->delete()`
+     * @deprecated 10.0.0 Use async `$repository->cache->get()` and `$repository->cache->delete()`
      *
      * @param string|int $key
      * @param mixed      $default
@@ -461,7 +461,7 @@ abstract class AbstractRepository extends Collection
     /**
      * Pushes a single item to the repository.
      *
-     * @deprecated 7.2.0 Use async `$repository->cache->set()`
+     * @deprecated 10.0.0 Use async `$repository->cache->set()`
      *
      * @param Part $item
      *
@@ -533,7 +533,7 @@ abstract class AbstractRepository extends Collection
     /**
      * Checks if the array has an object.
      *
-     * @deprecated 7.2.0 Use async `$repository->cache->has()`
+     * @deprecated 10.0.0 Use async `$repository->cache->has()`
      *
      * @param array ...$keys
      *
@@ -607,7 +607,7 @@ abstract class AbstractRepository extends Collection
     /**
      * Clears the repository.
      *
-     * @deprecated 7.2.0 Use async `$repository->cache->clear()`
+     * @deprecated 10.0.0 Use async `$repository->cache->clear()`
      */
     public function clear(): void
     {
@@ -637,7 +637,7 @@ abstract class AbstractRepository extends Collection
     /**
      * If the repository has an offset.
      *
-     * @deprecated 7.2.0 Use async `$repository->cache->has()`
+     * @deprecated 10.0.0 Use async `$repository->cache->has()`
      *
      * @param string|int $offset
      *
@@ -651,7 +651,7 @@ abstract class AbstractRepository extends Collection
     /**
      * Gets a part from the repository.
      *
-     * @deprecated 7.2.0 Use async `$repository->cache->get()` or sync `$repository->get()`
+     * @deprecated 10.0.0 Use async `$repository->cache->get()` or sync `$repository->get()`
      *
      * @param string|int $offset
      *
@@ -675,7 +675,7 @@ abstract class AbstractRepository extends Collection
     /**
      * Sets a part into the repository.
      *
-     * @deprecated 7.2.0 Use async `$repository->cache->set()`
+     * @deprecated 10.0.0 Use async `$repository->cache->set()`
      *
      * @param string|int $offset
      * @param ?Part      $value
@@ -688,7 +688,7 @@ abstract class AbstractRepository extends Collection
     /**
      * Unsets an index from the repository.
      *
-     * @deprecated 7.2.0 Use async `$repository->cache->delete()`
+     * @deprecated 10.0.0 Use async `$repository->cache->delete()`
      *
      * @param string|int offset
      */
