@@ -15,6 +15,7 @@ use Discord\Parts\Channel\Message;
 use Discord\WebSockets\Event;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Guild\Guild;
+use Discord\WebSockets\Intents;
 
 /**
  * @link https://discord.com/developers/docs/topics/gateway#message-create
@@ -54,7 +55,10 @@ class MessageCreate extends Event
         }
 
         if ($this->discord->options['storeMessages'] && (isset($channel) || $channel = $messagePart->channel)) {
-            yield $channel->messages->cache->set($data->id, $messagePart);
+            // Only cache if message intent is enabled or message is not cached
+            if (($this->discord->options['intents'] & Intents::MESSAGE_CONTENT) || ! (yield $channel->messages->cache->has($data->id))) {
+                yield $channel->messages->cache->set($data->id, $messagePart);
+            }
         }
 
         if (isset($data->author) && ! isset($data->webhook_id)) {

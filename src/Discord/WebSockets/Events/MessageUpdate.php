@@ -15,6 +15,7 @@ use Discord\Parts\Channel\Message;
 use Discord\WebSockets\Event;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Guild\Guild;
+use Discord\WebSockets\Intents;
 
 /**
  * @link https://discord.com/developers/docs/topics/gateway#message-update
@@ -47,6 +48,17 @@ class MessageUpdate extends Event
                 $oldMessagePart = clone $oldMessagePart;
 
                 $messagePart->fill((array) $data);
+
+                // Deal with empty message content intent
+                if (! ($this->discord->options['intents'] & Intents::MESSAGE_CONTENT)) {
+                    $cacheMessagePart = clone $oldMessagePart;
+                    foreach ($data as $key => $value) {
+                        // Skip intent required fields
+                        if (! in_array($key, ['content', 'embeds', 'attachments', 'components'])) {
+                            $cacheMessagePart->offsetSet($key, $value);
+                        }
+                    }
+                }
             }
         }
 
@@ -56,7 +68,7 @@ class MessageUpdate extends Event
         }
 
         if (isset($channel) && ($oldMessagePart || $this->discord->options['storeMessages'])) {
-            yield $channel->messages->cache->set($data->id, $messagePart);
+            yield $channel->messages->cache->set($data->id, $cacheMessagePart ?? $messagePart);
         }
 
         return [$messagePart, $oldMessagePart];
