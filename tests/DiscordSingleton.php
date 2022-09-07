@@ -35,8 +35,8 @@ class DiscordSingleton
     {
         $loop = Loop::get();
 
-        //$redis = (new Clue\React\Redis\Factory($loop))->createLazyClient('localhost:6379');
-        //$cache = new WyriHaximus\React\Cache\Redis($redis);
+        $redis = (new Clue\React\Redis\Factory($loop))->createLazyClient('localhost:6379');
+        $cache = new WyriHaximus\React\Cache\Redis($redis);
 
         //$cache = new seregazhuk\React\Cache\Memcached\Memcached($loop);
 
