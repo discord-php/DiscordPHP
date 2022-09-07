@@ -26,14 +26,14 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
-          extensions: uv, zlib, mbstring, memcached
+          extensions: uv, zlib, mbstring
           tools: phpunit, phplint
       - name: Install dependencies
         run: composer install
-      #- name: Redis Server in GitHub Actions
-      #  uses: supercharge/redis-github-action@1.4.0
-      - name: Memcached Service
-        uses: niden/actions-memcached@v7
+      - name: Redis Server in GitHub Actions
+        uses: supercharge/redis-github-action@1.4.0
+      # - name: Memcached Service
+      #   uses: niden/actions-memcached@v7
       - name: Run PHPUnit
         run: phpunit
       - name: Run PHPLint

@@ -42,10 +42,10 @@ class DiscordSingleton
 
         //$cache = new WyriHaximus\React\Cache\Filesystem(React\Filesystem\Filesystem::create($loop), getenv('RUNNER_TEMP').DIRECTORY_SEPARATOR);
 
-        $memcached = new \Memcached();
-        $memcached->addServer('localhost', 11211);
-        $psr6Cache = new \Symfony\Component\Cache\Adapter\MemcachedAdapter($memcached, 'dphp', 0);
-        $cache = new RedisPsr16($psr6Cache);
+        //$memcached = new \Memcached();
+        //$memcached->addServer('localhost', 11211);
+        //$psr6Cache = new \Symfony\Component\Cache\Adapter\MemcachedAdapter($memcached, 'dphp', 0);
+        //$cache = new RedisPsr16($psr6Cache);
 
         $logger = new Logger('DiscordPHP-UnitTests');
         $handler = new StreamHandler(fopen(__DIR__.'/../phpunit.log', 'w'));
