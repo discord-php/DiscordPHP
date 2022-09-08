@@ -459,11 +459,7 @@ class MessageBuilder implements JsonSerializable
             throw new FileNotFoundException("File does not exist at path {$filepath}.");
         }
 
-        if ($filename === null) {
-            $filename = basename($filepath);
-        }
-
-        return $this->addFileFromContent($filename, file_get_contents($filepath));
+        return $this->addFileFromContent($filename ?? basename($filepath), file_get_contents($filepath));
     }
 
     /**
