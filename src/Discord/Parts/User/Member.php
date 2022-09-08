@@ -13,7 +13,7 @@ namespace Discord\Parts\User;
 
 use Carbon\Carbon;
 use Discord\Builders\MessageBuilder;
-use Discord\Helpers\Bitwise;
+use Discord\Helpers\BigInt;
 use Discord\Helpers\Collection;
 use Discord\Http\Endpoint;
 use Discord\Http\Exceptions\NoPermissionsException;
@@ -351,7 +351,7 @@ class Member extends Part
         // If this member is the guild owner
         if ($guild->owner_id == $this->id) {
             // Add administrator permission
-            $bitwise = Bitwise::set($bitwise, Permission::ROLE_PERMISSIONS['administrator']);
+            $bitwise = BigInt::set($bitwise, Permission::ROLE_PERMISSIONS['administrator']);
         } else {
             // Prepare array for role ids
             $roles = [];
@@ -362,7 +362,7 @@ class Member extends Part
                 // Remember the role id for later use
                 $roles[] = $id;
                 // Store permission value from this role
-                $bitwise = Bitwise::or($bitwise, $role->permissions->bitwise);
+                $bitwise = BigInt::or($bitwise, $role->permissions->bitwise);
             }
         }
 
@@ -388,9 +388,9 @@ class Member extends Part
             /** @var Overwrite */
             if ($overwrite = $channel->overwrites->get('id', $guild->id)) {
                 // Set "DENY" overwrites
-                $bitwise = Bitwise::and($bitwise, Bitwise::not($overwrite->deny->bitwise));
+                $bitwise = BigInt::and($bitwise, BigInt::not($overwrite->deny->bitwise));
                 // Set "ALLOW" overwrites
-                $bitwise = Bitwise::or($bitwise, $overwrite->allow->bitwise);
+                $bitwise = BigInt::or($bitwise, $overwrite->allow->bitwise);
             }
 
             // Prepare Allow and Deny buffers for role overwrite
@@ -406,23 +406,23 @@ class Member extends Part
                 }
 
                 // Get "ALLOW" permissions
-                $allow = Bitwise::or($allow, $overwrite->allow->bitwise);
+                $allow = BigInt::or($allow, $overwrite->allow->bitwise);
                 // Get "DENY" permissions
-                $deny = Bitwise::or($deny, $overwrite->deny->bitwise);
+                $deny = BigInt::or($deny, $overwrite->deny->bitwise);
             }
 
             // Set role "DENY" permissions overwrite
-            $bitwise = Bitwise::and($bitwise, Bitwise::not($deny));
+            $bitwise = BigInt::and($bitwise, BigInt::not($deny));
             // Set role "ALLOW" permissions overwrite
-            $bitwise = Bitwise::or($bitwise, $allow);
+            $bitwise = BigInt::or($bitwise, $allow);
 
             // Get this member specific overwrite
             /** @var Overwrite */
             if ($overwrite = $channel->overwrites->get('id', $this->id)) {
                 // Set member "DENY" permissions overwrite
-                $bitwise = Bitwise::and($bitwise, Bitwise::not($overwrite->deny->bitwise));
+                $bitwise = BigInt::and($bitwise, BigInt::not($overwrite->deny->bitwise));
                 // Set member "ALLOW" permissions overwrite
-                $bitwise = Bitwise::or($bitwise, $overwrite->allow->bitwise);
+                $bitwise = BigInt::or($bitwise, $overwrite->allow->bitwise);
             }
         }
 

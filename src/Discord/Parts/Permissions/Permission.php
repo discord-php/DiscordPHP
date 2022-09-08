@@ -12,7 +12,7 @@
 namespace Discord\Parts\Permissions;
 
 use Discord\Discord;
-use Discord\Helpers\Bitwise;
+use Discord\Helpers\BigInt;
 use Discord\Parts\Part;
 
 /**
@@ -174,7 +174,7 @@ abstract class Permission extends Part
      */
     protected function getBitwiseAttribute()
     {
-        if (Bitwise::is32BitWithGMP()) { // x86 with GMP
+        if (BigInt::is32BitWithGMP()) { // x86 with GMP
             $bitwise = \gmp_init(0);
 
             foreach ($this->permissions as $permission => $value) {
@@ -209,7 +209,7 @@ abstract class Permission extends Part
         }
 
         foreach ($this->permissions as $permission => $value) {
-            if (Bitwise::test($bitwise, $value)) {
+            if (BigInt::test($bitwise, $value)) {
                 $this->attributes[$permission] = true;
             } else {
                 $this->attributes[$permission] = false;

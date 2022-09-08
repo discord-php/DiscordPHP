@@ -13,7 +13,7 @@ namespace Discord;
 
 use Discord\Exceptions\IntentException;
 use Discord\Factory\Factory;
-use Discord\Helpers\Bitwise;
+use Discord\Helpers\BigInt;
 use Discord\Http\Http;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\OAuth\Application;
@@ -362,8 +362,8 @@ class Discord
         }
 
         // x86 need gmp extension for big integer operation
-        if (PHP_INT_SIZE === 4 && ! Bitwise::init()) {
-            trigger_error('ext-gmp is not loaded. Permissions will NOT work correctly!', E_USER_WARNING);
+        if (PHP_INT_SIZE === 4 && ! BigInt::init()) {
+            trigger_error('ext-gmp is not loaded. Big integer calculations (e.g. Permissions) will NOT work correctly!', E_USER_WARNING);
         }
 
         $options = $this->resolveOptions($options);

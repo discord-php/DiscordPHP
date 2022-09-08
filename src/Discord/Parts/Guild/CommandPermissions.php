@@ -11,6 +11,7 @@
 
 namespace Discord\Parts\Guild;
 
+use Discord\Helpers\BigInt;
 use Discord\Helpers\Collection;
 use Discord\Parts\Interactions\Command\Permission;
 use Discord\Parts\Part;
@@ -98,10 +99,6 @@ class CommandPermissions extends Part
      */
     final public function allChannelsConstant(): string
     {
-        if (PHP_INT_SIZE === 4) {
-            return (string) \gmp_sub($this->guild_id, 1);
-        }
-
-        return (string) ($this->guild_id - 1);
+        return (string) BigInt::sub($this->guild_id, 1);
     }
 }

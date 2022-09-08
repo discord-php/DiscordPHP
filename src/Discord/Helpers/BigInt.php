@@ -12,11 +12,12 @@
 namespace Discord\Helpers;
 
 /**
- * Polyfill to handle bitwise operation in 32 bit php using ext-gmp.
+ * Polyfill to handle big integer operation in 32 bit php using ext-gmp.
  *
+ * @since 10.0.0 Renamed from Bitwise to BigInt
  * @since 7.0.0
  */
-class Bitwise
+final class BigInt
 {
     private static bool $is_32_gmp = false;
 
@@ -156,6 +157,28 @@ class Bitwise
         }
 
         return $a |= (1 << $b);
+    }
+
+    /**
+     * @param \GMP|int|string $num1
+     * @param \GMP|int|string $num2
+     *
+     * @return \GMP|int $num1 + $num2
+     */
+    public static function add($num1, $num2)
+    {
+        return (self::$is_32_gmp) ? \gmp_add(self::floatCast($num1), self::floatCast($num2)) : $num1 + $num2;
+    }
+
+    /**
+     * @param \GMP|int|string $num1
+     * @param \GMP|int|string $num2
+     *
+     * @return \GMP|int $num1 - $num2
+     */
+    public static function sub($num1, $num2)
+    {
+        return (self::$is_32_gmp) ? \gmp_sub(self::floatCast($num1), self::floatCast($num2)) : $num1 - $num2;
     }
 
     /**
