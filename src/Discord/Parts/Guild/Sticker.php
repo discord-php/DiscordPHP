@@ -139,14 +139,21 @@ class Sticker extends Part
 
     /**
      * @inheritdoc
+     *
+     * @link https://discord.com/developers/docs/resources/sticker#modify-guild-sticker-json-params
      */
     public function getUpdatableAttributes(): array
     {
-        return [
+        $attr = [
             'name' => $this->name,
-            'description' => $this->description ?? null,
             'tags' => $this->attributes['tags'],
         ];
+
+        if (array_key_exists('description', $this->attributes)) {
+            $attr['description'] = $this->description;
+        }
+
+        return $attr;
     }
 
     /**

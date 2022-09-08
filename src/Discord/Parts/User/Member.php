@@ -706,6 +706,8 @@ class Member extends Part
 
     /**
      * @inheritdoc
+     *
+     * @link https://discord.com/developers/docs/resources/guild#modify-guild-member
      */
     public function getUpdatableAttributes(): array
     {

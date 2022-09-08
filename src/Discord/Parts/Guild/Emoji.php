@@ -135,13 +135,20 @@ class Emoji extends Part
 
     /**
      * @inheritdoc
+     *
+     * @link https://discord.com/developers/docs/resources/emoji#modify-guild-emoji-json-params
      */
     public function getUpdatableAttributes(): array
     {
-        return [
+        $attr = [
             'name' => $this->name,
-            'roles' => $this->attributes['roles'],
         ];
+
+        if (array_key_exists('roles', $this->attributes)) {
+            $attr['roles'] = $this->attributes['roles'];
+        }
+
+        return $attr;
     }
 
     /**

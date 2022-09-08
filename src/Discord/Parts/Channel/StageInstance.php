@@ -83,6 +83,8 @@ class StageInstance extends Part
 
     /**
      * @inheritdoc
+     *
+     * @link https://discord.com/developers/docs/resources/stage-instance#create-stage-instance-json-params
      */
     public function getCreatableAttributes(): array
     {
@@ -96,20 +98,15 @@ class StageInstance extends Part
 
     /**
      * @inheritdoc
+     *
+     * @link https://discord.com/developers/docs/resources/stage-instance#modify-stage-instance-json-params
      */
     public function getUpdatableAttributes(): array
     {
-        $attr = [];
-
-        if (isset($this->attributes['topic'])) {
-            $attr['topic'] = $this->topic;
-        }
-
-        if (isset($this->attributes['privacy_level'])) {
-            $attr['privacy_level'] = $this->privacy_level;
-        }
-
-        return $attr;
+        return [
+            'topic' => $this->topic,
+            'privacy_level' => $this->privacy_level,
+        ];
     }
 
     /**

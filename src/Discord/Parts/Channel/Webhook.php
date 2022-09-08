@@ -233,25 +233,34 @@ class Webhook extends Part
 
     /**
      * @inheritdoc
+     *
+     * @link https://discord.com/developers/docs/resources/webhook#create-webhook-json-params
      */
     public function getCreatableAttributes(): array
     {
         return [
             'name' => $this->name,
-            'avatar' => $this->avatar,
+            'avatar' => $this->avatar ?? null,
         ];
     }
 
     /**
      * @inheritdoc
+     *
+     * @link https://discord.com/developers/docs/resources/webhook#modify-webhook-json-params
      */
     public function getUpdatableAttributes(): array
     {
-        return [
+        $attr = [
             'name' => $this->name,
-            'avatar' => $this->avatar,
             'channel_id' => $this->channel_id,
         ];
+
+        if (array_key_exists('avatar', $this->attributes)) {
+            $attr['avatar'] = $this->avatar;
+        }
+
+        return $attr;
     }
 
     /**

@@ -130,20 +130,25 @@ class Command extends Part
 
     /**
      * @inheritdoc
+     *
+     * @link https://discord.com/developers/docs/interactions/application-commands#create-global-application-command
+     * @link https://discord.com/developers/docs/interactions/application-commands#create-guild-application-command
      */
     public function getCreatableAttributes(): array
     {
         $attr = [
-            'guild_id' => $this->guild_id ?? null,
             'name' => $this->name,
-            'name_localizations' => $this->name_localizations,
+            'name_localizations' => $this->name_localizations ?? null,
             'description' => $this->description,
-            'description_localizations' => $this->description_localizations,
-            'options' => $this->attributes['options'] ?? null,
-            'default_member_permissions' => $this->default_member_permissions,
-            'default_permission' => $this->default_permission,
+            'description_localizations' => $this->description_localizations ?? null,
+            'default_member_permissions' => $this->default_member_permissions ?? null,
+            'default_permission' => $this->default_permission ?? true,
             'type' => $this->type,
         ];
+
+        if (array_key_exists('options', $this->attributes)) {
+            $attr['options'] = $this->attributes['options'];
+        }
 
         // Guild command might omit this fillable
         if (array_key_exists('dm_permission', $this->attributes)) {
@@ -155,21 +160,39 @@ class Command extends Part
 
     /**
      * @inheritdoc
+     *
+     * @link https://discord.com/developers/docs/interactions/application-commands#edit-guild-application-command-json-params
      */
     public function getUpdatableAttributes(): array
     {
-        return [
-            'guild_id' => $this->guild_id ?? null,
+        $attr = [
             'name' => $this->name,
-            'name_localizations' => $this->name_localizations,
             'description' => $this->description,
-            'description_localizations' => $this->description_localizations,
-            'options' => $this->attributes['options'] ?? null,
             'default_member_permissions' => $this->default_member_permissions,
-            'dm_permission' => $this->dm_permission,
-            'default_permission' => $this->default_permission,
             'type' => $this->type,
         ];
+
+        if (array_key_exists('options', $this->attributes)) {
+            $attr['options'] = $this->attributes['options'];
+        }
+
+        if (array_key_exists('name_localizations', $this->attributes)) {
+            $attr['name_localizations'] = $this->name_localizations;
+        }
+
+        if (array_key_exists('description_localizations', $this->attributes)) {
+            $attr['description_localizations'] = $this->description_localizations;
+        }
+
+        if (array_key_exists('default_permission', $this->attributes)) {
+            $attr['default_permission'] = $this->default_permission;
+        }
+
+        if (array_key_exists('dm_permission', $this->attributes)) {
+            $attr['dm_permission'] = $this->dm_permission;
+        }
+
+        return $attr;
     }
 
     /**

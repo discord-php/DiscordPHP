@@ -106,6 +106,8 @@ class Rule extends Part
 
     /**
      * @inheritdoc
+     *
+     * @link https://discord.com/developers/docs/resources/auto-moderation#create-auto-moderation-rule-json-params
      */
     public function getCreatableAttributes(): array
     {
@@ -139,6 +141,8 @@ class Rule extends Part
 
     /**
      * @inheritdoc
+     *
+     * @link https://discord.com/developers/docs/resources/auto-moderation#modify-auto-moderation-rule-json-params
      */
     public function getUpdatableAttributes(): array
     {

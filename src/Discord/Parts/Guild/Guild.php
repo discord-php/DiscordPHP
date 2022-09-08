@@ -1278,6 +1278,8 @@ class Guild extends Part
 
     /**
      * @inheritdoc
+     *
+     * @link https://discord.com/developers/docs/resources/guild#create-guild-json-params
      */
     public function getCreatableAttributes(): array
     {
@@ -1298,6 +1300,8 @@ class Guild extends Part
 
     /**
      * @inheritdoc
+     *
+     * @link https://discord.com/developers/docs/resources/guild#modify-guild-json-params
      */
     public function getUpdatableAttributes(): array
     {

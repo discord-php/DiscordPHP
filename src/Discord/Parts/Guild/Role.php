@@ -142,6 +142,8 @@ class Role extends Part
 
     /**
      * @inheritdoc
+     *
+     * @link https://discord.com/developers/docs/resources/guild#create-guild-role-json-params
      */
     public function getCreatableAttributes(): array
     {
@@ -158,6 +160,8 @@ class Role extends Part
 
     /**
      * @inheritdoc
+     *
+     * @link https://discord.com/developers/docs/resources/guild#modify-guild-role-json-params
      */
     public function getUpdatableAttributes(): array
     {

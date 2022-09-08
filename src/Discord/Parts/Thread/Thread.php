@@ -821,6 +821,8 @@ class Thread extends Part
 
     /**
      * @inheritdoc
+     *
+     * @link https://discord.com/developers/docs/resources/channel#modify-channel-json-params-thread
      */
     public function getUpdatableAttributes(): array
     {

@@ -249,6 +249,8 @@ class ScheduledEvent extends Part
 
     /**
      * @inheritdoc
+     *
+     * @link https://discord.com/developers/docs/resources/guild-scheduled-event#create-guild-scheduled-event-json-params
      */
     public function getCreatableAttributes(): array
     {
@@ -267,21 +269,34 @@ class ScheduledEvent extends Part
 
     /**
      * @inheritdoc
+     *
+     * @link https://discord.com/developers/docs/resources/guild-scheduled-event#modify-guild-scheduled-event-json-params
      */
     public function getUpdatableAttributes(): array
     {
-        return [
-            'channel_id' => $this->channel_id,
-            'entity_metadata' => $this->entity_metadata,
+        $attr = [
             'name' => $this->name,
             'privacy_level' => $this->privacy_level,
             'scheduled_start_time' => $this->attributes['scheduled_start_time'],
             'scheduled_end_time' => $this->attributes['scheduled_end_time'],
-            'description' => $this->description ?? null,
             'entity_type' => $this->entity_type,
             'status' => $this->status,
             'image' => $this->image_hash,
         ];
+
+        if (array_key_exists('channel_id', $this->attributes)) {
+            $attr['channel_id'] = $this->channel_id;
+        }
+
+        if (array_key_exists('entity_metadata', $this->attributes)) {
+            $attr['entity_metadata'] = $this->entity_metadata;
+        }
+
+        if (array_key_exists('description', $this->attributes)) {
+            $attr['description'] = $this->description;
+        }
+
+        return $attr;
     }
 
     /**

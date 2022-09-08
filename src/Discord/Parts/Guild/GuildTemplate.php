@@ -179,24 +179,33 @@ class GuildTemplate extends Part
 
     /**
      * @inheritdoc
+     *
+     * @link https://discord.com/developers/docs/resources/guild-template#create-guild-template-json-params
      */
     public function getCreatableAttributes(): array
     {
         return [
             'name' => $this->name,
-            'description' => $this->description,
+            'description' => $this->description ?? null,
         ];
     }
 
     /**
      * @inheritdoc
+     *
+     * @link https://discord.com/developers/docs/resources/guild-template#modify-guild-template-json-params
      */
     public function getUpdatableAttributes(): array
     {
-        return [
+        $attr = [
             'name' => $this->name,
-            'description' => $this->description,
         ];
+
+        if (array_key_exists('description', $this->attributes)) {
+            $attr['description'] = $this->description;
+        }
+
+        return $attr;
     }
 
     /**

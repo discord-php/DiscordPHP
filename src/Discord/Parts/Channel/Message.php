@@ -949,14 +949,8 @@ class Message extends Part
 
     /**
      * @inheritdoc
-     */
-    public function getCreatableAttributes(): array
-    {
-        return [];
-    }
-
-    /**
-     * @inheritdoc
+     *
+     * @link https://discord.com/developers/docs/resources/channel#edit-message-jsonform-params
      */
     public function getUpdatableAttributes(): array
     {

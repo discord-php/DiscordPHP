@@ -149,18 +149,20 @@ class Client extends Part
 
     /**
      * @inheritdoc
+     *
+     * @link https://discord.com/developers/docs/resources/user#modify-current-user-json-params
      */
     public function getUpdatableAttributes(): array
     {
-        $attributes = [
+        $attr = [
             'username' => $this->attributes['username'],
         ];
 
         if (isset($this->attributes['avatarhash'])) {
-            $attributes['avatar'] = $this->attributes['avatarhash'];
+            $attr['avatar'] = $this->attributes['avatarhash'];
         }
 
-        return $attributes;
+        return $attr;
     }
 
     /**

@@ -1095,6 +1095,8 @@ class Channel extends Part
 
     /**
      * @inheritdoc
+     *
+     * @link https://discord.com/developers/docs/resources/guild#create-guild-channel-json-params
      */
     public function getCreatableAttributes(): array
     {
@@ -1117,6 +1119,8 @@ class Channel extends Part
 
     /**
      * @inheritdoc
+     *
+     * @link https://discord.com/developers/docs/resources/channel#modify-channel-json-params-guild-channel
      */
     public function getUpdatableAttributes(): array
     {

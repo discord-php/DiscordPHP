@@ -78,6 +78,8 @@ class Overwrite extends Part
 
     /**
      * @inheritDoc
+     *
+     * @see Channel::getUpdatableAttributes()
      */
     public function getUpdatableAttributes(): array
     {
