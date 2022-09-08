@@ -349,7 +349,7 @@ class Member extends Part
             $roles = [];
 
             // Iterate all base roles
-            /* @var Role */
+            /** @var Role */
             foreach ($this->roles ?? [] as $role) {
                 // Remember the role id for later use
                 $roles[] = $role->id;
@@ -377,7 +377,7 @@ class Member extends Part
         // If channel is specified (overwrites)
         if ($channel) {
             // Get @everyone role channel permission
-            /* @var Overwrite */
+            /** @var Overwrite */
             if ($overwrite = $channel->overwrites->get('id', $this->guild->id)) {
                 // Set "DENY" overwrites
                 $bitwise = Bitwise::and($bitwise, Bitwise::not($overwrite->deny->bitwise));
@@ -389,7 +389,7 @@ class Member extends Part
             $allow = $deny = 0;
 
             // Iterate all roles channel permission
-            /* @var Overwrite */
+            /** @var Overwrite */
             foreach ($channel->overwrites as $overwrite) {
                 // Check for Role overwrite or invalid roles
                 if ($overwrite->type !== Overwrite::TYPE_ROLE || ! in_array($overwrite->id, $roles)) {
@@ -409,7 +409,7 @@ class Member extends Part
             $bitwise = Bitwise::or($bitwise, $allow);
 
             // Get this member specific overwrite
-            /* @var Overwrite */
+            /** @var Overwrite */
             if ($overwrite = $channel->overwrites->get('id', $this->id)) {
                 // Set member "DENY" permissions overwrite
                 $bitwise = Bitwise::and($bitwise, Bitwise::not($overwrite->deny->bitwise));
@@ -419,7 +419,7 @@ class Member extends Part
         }
 
         // Re-create the Role Permissions from the computed overwrites
-        /* @var RolePermission */
+        /** @var RolePermission */
         return $this->factory->part(RolePermission::class, ['bitwise' => $bitwise]);
     }
 

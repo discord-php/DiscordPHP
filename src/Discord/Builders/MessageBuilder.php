@@ -54,7 +54,7 @@ class MessageBuilder implements JsonSerializable
     private $username;
 
     /**
-     * Override the default avatar of the webhook
+     * Override the default avatar of the webhook.
      *
      * @var string|null
      */

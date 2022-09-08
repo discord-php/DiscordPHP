@@ -24,7 +24,7 @@ class UserUpdate extends Event
     {
         $oldUser = null;
 
-        /* @var User */
+        /** @var User */
         if ($oldUser = $this->discord->users->offsetGet($data->id)) {
             $userPart = clone $oldUser;
             $userPart->fill((array) $data);

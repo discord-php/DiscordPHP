@@ -1584,7 +1584,7 @@ class Discord
     }
 
     /**
-     * Add listerner for incoming application command from interaction
+     * Add listerner for incoming application command from interaction.
      *
      * @param string|array  $name
      * @param callable      $callback

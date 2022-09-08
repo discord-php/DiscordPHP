@@ -72,7 +72,7 @@ class ThreadRepository extends AbstractRepository
      * @param Thread|string|null $before  Retrieve threads before this thread. Takes a thread object or a thread ID.
      *
      * @throws \InvalidArgumentException
-     * 
+     *
      * @return ExtendedPromiseInterface<Collection<Thread>>
      */
     public function archived(bool $private = false, bool $joined = false, ?int $limit = null, $before = null): ExtendedPromiseInterface
