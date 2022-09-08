@@ -22,28 +22,31 @@ use Discord\Parts\User\User;
  * A TypingStart part is used when the `TYPING_START` event is fired on the WebSocket. It contains
  * information such as when the event was fired and then channel it was fired in.
  *
- * @see https://discord.com/developers/docs/topics/gateway#typing-start
+ * @since 2.1.3
  *
- * @property string              $channel_id The unique identifier of the channel that the user started typing in.
- * @property Channel|Thread|null $channel    The channel that the user started typing in.
- * @property string|null         $guild_id   The unique identifier of the guild that the user started typing in.
- * @property Guild|null          $guild      The guild that the user started typing in.
- * @property string              $user_id    The unique identifier of the user that started typing
- * @property User|null           $user       The user that started typing.
- * @property Carbon              $timestamp  A timestamp of when the user started typing.
- * @property Member|null         $member     The member that started typing.
+ * @link https://discord.com/developers/docs/topics/gateway#typing-start
+ *
+ * @property      string              $channel_id The unique identifier of the channel that the user started typing in.
+ * @property-read Channel|Thread|null $channel    The channel that the user started typing in.
+ * @property      string|null         $guild_id   The unique identifier of the guild that the user started typing in.
+ * @property-read Guild|null          $guild      The guild that the user started typing in.
+ * @property      string              $user_id    The unique identifier of the user that started typing
+ * @property-read User|null           $user       The user that started typing.
+ * @property      Carbon              $timestamp  A timestamp of when the user started typing.
+ * @property      Member|null         $member     The member that started typing.
  */
 class TypingStart extends Part
 {
     /**
      * @inheritdoc
      */
-    protected $fillable = ['channel_id', 'guild_id', 'user_id', 'timestamp', 'member'];
-
-    /**
-     * @inheritdoc
-     */
-    protected $visible = ['channel', 'guild', 'user'];
+    protected $fillable = [
+        'channel_id',
+        'guild_id',
+        'user_id',
+        'timestamp',
+        'member',
+    ];
 
     /**
      * Gets the channel attribute.
@@ -52,13 +55,13 @@ class TypingStart extends Part
      */
     protected function getChannelAttribute()
     {
-        if ($this->guild) {
-            if ($channel = $this->guild->channels->offsetGet($this->channel_id)) {
+        if ($guild = $this->guild) {
+            if ($channel = $guild->channels->get('id', $this->channel_id)) {
                 return $channel;
             }
 
-            foreach ($this->guild->channels as $channel) {
-                if ($thread = $channel->threads->offsetGet($this->channel_id)) {
+            foreach ($guild->channels as $channel) {
+                if ($thread = $channel->threads->get('id', $this->channel_id)) {
                     return $thread;
                 }
             }
@@ -66,11 +69,11 @@ class TypingStart extends Part
             return null;
         }
 
-        if ($channel = $this->discord->private_channels->offsetGet($this->channel_id)) {
+        if ($channel = $this->discord->private_channels->get('id', $this->channel_id)) {
             return $channel;
         }
 
-        return $this->factory->create(Channel::class, [
+        return $this->factory->part(Channel::class, [
             'id' => $this->channel_id,
             'type' => Channel::TYPE_DM,
         ], true);
@@ -83,7 +86,7 @@ class TypingStart extends Part
      */
     protected function getGuildAttribute(): ?Guild
     {
-        if (! $this->guild_id) {
+        if (! isset($this->guild_id)) {
             return null;
         }
 
@@ -97,7 +100,7 @@ class TypingStart extends Part
      */
     protected function getUserAttribute(): ?User
     {
-        return $this->discord->users->offsetGet($this->user_id);
+        return $this->discord->users->get('id', $this->user_id);
     }
 
     /**
@@ -119,8 +122,10 @@ class TypingStart extends Part
      */
     protected function getMemberAttribute(): ?Member
     {
-        if ($this->guild && $member = $this->guild->members->offsetGet($this->user_id)) {
-            return $member;
+        if ($guild = $this->guild) {
+            if ($member = $guild->members->get('id', $this->user_id)) {
+                return $member;
+            }
         }
 
         if (isset($this->attributes['member'])) {

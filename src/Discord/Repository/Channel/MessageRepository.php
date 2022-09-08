@@ -16,15 +16,18 @@ use Discord\Parts\Channel\Message;
 use Discord\Repository\AbstractRepository;
 
 /**
- * Contains messages sent to channels.
+ * Contains messages sent to a channel.
  *
- * @see \Discord\Parts\Channel\Message
+ * @see Message
  * @see \Discord\Parts\Channel\Channel
  *
- * @method Message|null get(string $discrim, $key)  Gets an item from the collection.
- * @method Message|null first()                     Returns the first element of the collection.
- * @method Message|null pull($key, $default = null) Pulls an item from the repository, removing and returning the item.
- * @method Message|null find(callable $callback)    Runs a filter callback over the repository.
+ * @since 4.0.0
+ *
+ * @method Message|null get(string $discrim, $key)
+ * @method Message|null pull(string|int $key, $default = null)
+ * @method Message|null first()
+ * @method Message|null last()
+ * @method Message|null find()
  */
 class MessageRepository extends AbstractRepository
 {

@@ -16,7 +16,9 @@ use function Discord\poly_strlen;
 /**
  * Text inputs are an interactive component that render on modals. They can be used to collect short-form or long-form text.
  *
- * @see https://discord.com/developers/docs/interactions/message-components#text-inputs
+ * @link https://discord.com/developers/docs/interactions/message-components#text-inputs
+ *
+ * @since 7.0.0
  */
 class TextInput extends Component
 {
@@ -114,7 +116,7 @@ class TextInput extends Component
      *
      * @throws \LengthException
      *
-     * @return $this
+     * @return self
      */
     public function setCustomId($custom_id): self
     {
@@ -134,7 +136,7 @@ class TextInput extends Component
      *
      * @throws \InvalidArgumentException
      *
-     * @return $this
+     * @return self
      */
     public function setStyle(int $style): self
     {
@@ -154,7 +156,7 @@ class TextInput extends Component
      *
      * @throws \LengthException
      *
-     * @return $this
+     * @return self
      */
     public function setLabel(string $label): self
     {
@@ -175,7 +177,7 @@ class TextInput extends Component
      *
      * @throws \LengthException
      *
-     * @return $this
+     * @return self
      */
     public function setMinLength(?int $min_length): self
     {
@@ -196,7 +198,7 @@ class TextInput extends Component
      *
      * @throws \LengthException
      *
-     * @return $this
+     * @return self
      */
     public function setMaxLength(?int $max_length): self
     {
@@ -217,7 +219,7 @@ class TextInput extends Component
      *
      * @throws \LengthException
      *
-     * @return $this
+     * @return self
      */
     public function setPlaceholder(?string $placeholder): self
     {
@@ -235,7 +237,7 @@ class TextInput extends Component
      *
      * @param bool $required
      *
-     * @return $this
+     * @return self
      */
     public function setRequired(bool $required): self
     {
@@ -251,7 +253,7 @@ class TextInput extends Component
      *
      * @throws \LengthException
      *
-     * @return $this
+     * @return self
      */
     public function setValue(?string $value): self
     {

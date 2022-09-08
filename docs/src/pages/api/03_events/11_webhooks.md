@@ -7,8 +7,17 @@ title: "Webhooks"
 Called with a `Guild` and `Channel` object when a guild channel's webhooks are is created, updated, or deleted.
 
 ```php
-$discord->on(Event::WEBHOOKS_UPDATE, function (?Guild $guild, Discord $discord, ?Channel $channel) {
-    // ...
+$discord->on(Event::WEBHOOKS_UPDATE, function ($guild, Discord $discord, $channel) {
+    if ($guild instanceof Guild && $channel instanceof Channel) {
+        // Guild and Channel is present in cache
+    }
+    // If not present in the cache:
+    else {
+        // {
+        //     "guild_id": "" // webhook guild ID
+        //     "channel_id": "", // webhook channel ID,
+        // }
+    }
 });
 ```
 

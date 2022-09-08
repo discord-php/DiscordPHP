@@ -13,7 +13,7 @@ namespace Discord\Parts\User;
 
 use Carbon\Carbon;
 use Discord\Builders\MessageBuilder;
-use Discord\Helpers\Bitwise;
+use Discord\Helpers\BigInt;
 use Discord\Helpers\Collection;
 use Discord\Http\Endpoint;
 use Discord\Http\Exceptions\NoPermissionsException;
@@ -34,33 +34,35 @@ use function React\Promise\reject;
 /**
  * A member is a relationship between a user and a guild. It contains user-to-guild specific data like roles.
  *
- * @see https://discord.com/developers/docs/resources/guild#guild-member-object
+ * @link https://discord.com/developers/docs/resources/guild#guild-member-object
  *
- * @property User|null             $user                         The user part of the member.
- * @property ?string|null          $nick                         The nickname of the member.
- * @property string|null           $avatar                       The avatar URL of the member or null if member has no guild avatar.
- * @property ?string|null          $avatar_hash                  The avatar hash of the member or null if member has no guild avatar.
- * @property Collection|Role[]     $roles                        A collection of Roles that the member has.
- * @property Carbon|null           $joined_at                    A timestamp of when the member joined the guild.
- * @property Carbon|null           $premium_since                When the user started boosting the server.
- * @property bool                  $deaf                         Whether the member is deaf.
- * @property bool                  $mute                         Whether the member is mute.
- * @property bool                  $pending                      Whether the user has not yet passed the guild's Membership Screening requirements.
- * @property RolePermission|null   $permissions                  Total permissions of the member in the channel, including overwrites, returned when in the interaction object.
- * @property Carbon|null           $communication_disabled_until When the user's timeout will expire and the user will be able to communicate in the guild again, null or a time in the past if the user is not timed out.
- * @property string                $id                           The unique identifier of the member.
- * @property string                $username                     The username of the member.
- * @property string                $discriminator                The discriminator of the member.
- * @property string                $displayname                  The nickname or username with discriminator of the member.
- * @property Guild                 $guild                        The guild that the member belongs to.
- * @property string                $guild_id                     The unique identifier of the guild that the member belongs to.
- * @property string                $status                       The status of the member.
- * @property Activity              $game                         The game the member is playing.
- * @property Collection|Activity[] $activities                   User's current activities.
- * @property object                $client_status                Current client status.
+ * @since 2.0.0
  *
- * @method ExtendedPromiseInterface sendMessage(MessageBuilder $builder)
- * @method ExtendedPromiseInterface sendMessage(string $text, bool $tts = false, Embed|array $embed = null, array $allowed_mentions = null, ?Message $replyTo = null)
+ * @property      User|null           $user                         The user part of the member.
+ * @property-read string|null         $username                     The username of the member.
+ * @property-read string|null         $discriminator                The discriminator of the member.
+ * @property      ?string|null        $nick                         The nickname of the member.
+ * @property-read string              $displayname                  The nickname or username with discriminator of the member.
+ * @property      ?string|null        $avatar                       The avatar URL of the member or null if member has no guild avatar.
+ * @property      ?string|null        $avatar_hash                  The avatar hash of the member or null if member has no guild avatar.
+ * @property      Collection|Role[]   $roles                        A collection of Roles that the member has.
+ * @property      Carbon|null         $joined_at                    A timestamp of when the member joined the guild.
+ * @property      Carbon|null         $premium_since                When the user started boosting the server.
+ * @property      bool                $deaf                         Whether the member is deaf.
+ * @property      bool                $mute                         Whether the member is mute.
+ * @property      bool|null           $pending                      Whether the user has not yet passed the guild's Membership Screening requirements.
+ * @property      RolePermission|null $permissions                  Total permissions of the member in the channel, including overwrites, returned when in the interaction object.
+ * @property      Carbon|null         $communication_disabled_until When the user's timeout will expire and the user will be able to communicate in the guild again, null or a time in the past if the user is not timed out.
+ * @property      string|null         $guild_id                     The unique identifier of the guild that the member belongs to.
+ * @property-read Guild|null          $guild                        The guild that the member belongs to.
+ *
+ * @property      string                $id            The unique identifier of the member.
+ * @property      string                $status        The status of the member.
+ * @property-read Activity              $game          The game the member is playing.
+ * @property      Collection|Activity[] $activities    User's current activities.
+ * @property      object                $client_status Current client status.
+ *
+ * @method ExtendedPromiseInterface<Message> sendMessage(MessageBuilder $builder)
  */
 class Member extends Part
 {
@@ -79,9 +81,13 @@ class Member extends Part
         'pending',
         'permissions',
         'communication_disabled_until',
+
+        // partial
         'guild_id',
-        'status',
+
+        // @internal
         'id',
+        'status',
         'activities',
         'client_status',
     ];
@@ -99,14 +105,12 @@ class Member extends Part
      *
      * @param PresenceUpdate $presence
      *
-     * @throws \Exception
-     *
      * @return PresenceUpdate Old presence.
      */
     public function updateFromPresence(PresenceUpdate $presence): Part
     {
         $rawPresence = $presence->getRawAttributes();
-        $oldPresence = $this->factory->create(PresenceUpdate::class, $this->attributes, true);
+        $oldPresence = $this->factory->part(PresenceUpdate::class, (array) $this->attributes, true);
 
         $this->attributes = array_merge($this->attributes, $rawPresence);
 
@@ -127,7 +131,9 @@ class Member extends Part
      */
     public function ban(?int $daysToDeleteMessages = null, ?string $reason = null): ExtendedPromiseInterface
     {
-        return $this->guild->bans->ban($this, $daysToDeleteMessages, $reason);
+        $guild = $this->guild;
+
+        return $guild->bans->ban($this, $daysToDeleteMessages, $reason);
     }
 
     /**
@@ -165,10 +171,10 @@ class Member extends Part
     /**
      * Moves the member to another voice channel.
      *
-     * @param Channel|string|null $channel The channel to move the member to.
-     * @param string|null         $reason  Reason for Audit Log.
+     * @param Channel|?string $channel The channel to move the member to.
+     * @param string|null     $reason  Reason for Audit Log.
      *
-     * @return ExtendedPromiseInterface
+     * @return ExtendedPromiseInterface<Member>
      */
     public function moveMember($channel, ?string $reason = null): ExtendedPromiseInterface
     {
@@ -181,13 +187,16 @@ class Member extends Part
             $headers['X-Audit-Log-Reason'] = $reason;
         }
 
-        return $this->http->patch(Endpoint::bind(Endpoint::GUILD_MEMBER, $this->guild_id, $this->id), ['channel_id' => $channel], $headers);
+        return $this->http->patch(Endpoint::bind(Endpoint::GUILD_MEMBER, $this->guild_id, $this->id), ['channel_id' => $channel], $headers)
+            ->then(function ($response) {
+                return $this;
+            });
     }
 
     /**
      * Adds a role to the member.
      *
-     * @see https://discord.com/developers/docs/resources/guild#add-guild-member-role
+     * @link https://discord.com/developers/docs/resources/guild#add-guild-member-role
      *
      * @param Role|string $role   The role to add to the member.
      * @param string|null $reason Reason for Audit Log.
@@ -214,7 +223,7 @@ class Member extends Part
 
         return $this->http->put(Endpoint::bind(Endpoint::GUILD_MEMBER_ROLE, $this->guild_id, $this->id, $role), null, $headers)
             ->then(function () use ($role) {
-                if (in_array($role, $this->attributes['roles'])) {
+                if (! in_array($role, $this->attributes['roles'])) {
                     $this->attributes['roles'][] = $role;
                 }
             });
@@ -223,12 +232,10 @@ class Member extends Part
     /**
      * Removes a role from the member.
      *
-     * @see https://discord.com/developers/docs/resources/guild#remove-guild-member-role
+     * @link https://discord.com/developers/docs/resources/guild#remove-guild-member-role
      *
      * @param Role|string $role   The role to remove from the member.
      * @param string|null $reason Reason for Audit Log.
-     *
-     * @throws \RuntimeException
      *
      * @return ExtendedPromiseInterface
      */
@@ -238,27 +245,23 @@ class Member extends Part
             $role = $role->id;
         }
 
-        if (in_array($role, $this->attributes['roles'])) {
-            $headers = [];
-            if (isset($reason)) {
-                $headers['X-Audit-Log-Reason'] = $reason;
-            }
-
-            return $this->http->delete(Endpoint::bind(Endpoint::GUILD_MEMBER_ROLE, $this->guild_id, $this->id, $role), null, $headers)
-                ->then(function () use ($role) {
-                    if ($removeRole = array_search($role, $this->attributes['roles']) !== false) {
-                        unset($this->attributes['roles'][$removeRole]);
-                    }
-                });
+        $headers = [];
+        if (isset($reason)) {
+            $headers['X-Audit-Log-Reason'] = $reason;
         }
 
-        return reject(new \RuntimeException('Member does not have role.'));
+        return $this->http->delete(Endpoint::bind(Endpoint::GUILD_MEMBER_ROLE, $this->guild_id, $this->id, $role), null, $headers)
+            ->then(function () use ($role) {
+                if ($removeRole = array_search($role, $this->attributes['roles']) !== false) {
+                    unset($this->attributes['roles'][$removeRole]);
+                }
+            });
     }
 
     /**
      * Updates member roles.
      *
-     * @see https://discord.com/developers/docs/resources/guild#modify-guild-member
+     * @link https://discord.com/developers/docs/resources/guild#modify-guild-member
      *
      * @param Role[]|string[] $roles  The roles to set to the member.
      * @param string|null     $reason Reason for Audit Log.
@@ -306,8 +309,8 @@ class Member extends Part
      */
     public function sendMessage($message, bool $tts = false, $embed = null, $allowed_mentions = null, ?Message $replyTo = null): ExtendedPromiseInterface
     {
-        if ($this->user) {
-            return $this->user->sendMessage($message, $tts, $embed, $allowed_mentions, $replyTo);
+        if ($user = $this->user) {
+            return $user->sendMessage($message, $tts, $embed, $allowed_mentions, $replyTo);
         }
 
         return reject(new \RuntimeException('Member had no user part.'));
@@ -320,41 +323,46 @@ class Member extends Part
      * need to account for the fact that you cannot edit
      * a role higher than your own.
      *
-     * @see https://discord.com/developers/docs/topics/permissions
+     * @link https://discord.com/developers/docs/topics/permissions
      *
      * @param Channel|Thread|null $channel
      *
      * @throws \InvalidArgumentException
      *
-     * @return RolePermission
+     * @return RolePermission|null Null if permission is failed to be determined.
      */
-    public function getPermissions($channel = null): RolePermission
+    public function getPermissions($channel = null): ?RolePermission
     {
+        if (! $guild = $this->guild) {
+            return null;
+        }
+
         if ($channel) {
             if ($channel instanceof Thread) {
-                $channel = $this->guild->channels->get('id', $channel->parent_id);
+                $channel = $channel->parent;
             } elseif (! ($channel instanceof Channel)) {
                 throw new \InvalidArgumentException('$channel must be an instance of Channel, Thread or null.');
             }
         }
+
         // Get @everyone role guild permission
-        $bitwise = $this->guild->roles->get('id', $this->guild_id)->permissions->bitwise;
+        $bitwise = $guild->roles->get('id', $guild->id)->permissions->bitwise;
 
         // If this member is the guild owner
-        if ($this->guild->owner_id == $this->id) {
+        if ($guild->owner_id == $this->id) {
             // Add administrator permission
-            $bitwise = Bitwise::set($bitwise, Permission::ROLE_PERMISSIONS['administrator']);
+            $bitwise = BigInt::set($bitwise, Permission::ROLE_PERMISSIONS['administrator']);
         } else {
             // Prepare array for role ids
             $roles = [];
 
             // Iterate all base roles
-            /* @var Role */
-            foreach ($this->roles ?? [] as $role) {
+            /** @var Role */
+            foreach ($this->roles as $id => $role) {
                 // Remember the role id for later use
-                $roles[] = $role->id;
+                $roles[] = $id;
                 // Store permission value from this role
-                $bitwise = Bitwise::or($bitwise, $role->permissions->bitwise);
+                $bitwise = BigInt::or($bitwise, $role->permissions->bitwise);
             }
         }
 
@@ -377,19 +385,19 @@ class Member extends Part
         // If channel is specified (overwrites)
         if ($channel) {
             // Get @everyone role channel permission
-            /* @var Overwrite */
-            if ($overwrite = $channel->overwrites->get('id', $this->guild->id)) {
+            /** @var Overwrite */
+            if ($overwrite = $channel->overwrites->get('id', $guild->id)) {
                 // Set "DENY" overwrites
-                $bitwise = Bitwise::and($bitwise, Bitwise::not($overwrite->deny->bitwise));
+                $bitwise = BigInt::and($bitwise, BigInt::not($overwrite->deny->bitwise));
                 // Set "ALLOW" overwrites
-                $bitwise = Bitwise::or($bitwise, $overwrite->allow->bitwise);
+                $bitwise = BigInt::or($bitwise, $overwrite->allow->bitwise);
             }
 
             // Prepare Allow and Deny buffers for role overwrite
             $allow = $deny = 0;
 
             // Iterate all roles channel permission
-            /* @var Overwrite */
+            /** @var Overwrite */
             foreach ($channel->overwrites as $overwrite) {
                 // Check for Role overwrite or invalid roles
                 if ($overwrite->type !== Overwrite::TYPE_ROLE || ! in_array($overwrite->id, $roles)) {
@@ -398,28 +406,27 @@ class Member extends Part
                 }
 
                 // Get "ALLOW" permissions
-                $allow = Bitwise::or($allow, $overwrite->allow->bitwise);
+                $allow = BigInt::or($allow, $overwrite->allow->bitwise);
                 // Get "DENY" permissions
-                $deny = Bitwise::or($deny, $overwrite->deny->bitwise);
+                $deny = BigInt::or($deny, $overwrite->deny->bitwise);
             }
 
             // Set role "DENY" permissions overwrite
-            $bitwise = Bitwise::and($bitwise, Bitwise::not($deny));
+            $bitwise = BigInt::and($bitwise, BigInt::not($deny));
             // Set role "ALLOW" permissions overwrite
-            $bitwise = Bitwise::or($bitwise, $allow);
+            $bitwise = BigInt::or($bitwise, $allow);
 
             // Get this member specific overwrite
-            /* @var Overwrite */
+            /** @var Overwrite */
             if ($overwrite = $channel->overwrites->get('id', $this->id)) {
                 // Set member "DENY" permissions overwrite
-                $bitwise = Bitwise::and($bitwise, Bitwise::not($overwrite->deny->bitwise));
+                $bitwise = BigInt::and($bitwise, BigInt::not($overwrite->deny->bitwise));
                 // Set member "ALLOW" permissions overwrite
-                $bitwise = Bitwise::or($bitwise, $overwrite->allow->bitwise);
+                $bitwise = BigInt::or($bitwise, $overwrite->allow->bitwise);
             }
         }
 
         // Re-create the Role Permissions from the computed overwrites
-        /* @var RolePermission */
         return $this->factory->part(RolePermission::class, ['bitwise' => $bitwise]);
     }
 
@@ -435,10 +442,12 @@ class Member extends Part
      */
     public function timeoutMember(?Carbon $communication_disabled_until, ?string $reason = null): ExtendedPromiseInterface
     {
-        $botperms = $this->guild->members->offsetGet($this->discord->id)->getPermissions();
-
-        if (! $botperms->moderate_members) {
-            return reject(new NoPermissionsException('You do not have permission to time out members in the specified guild.'));
+        if ($guild = $this->guild) {
+            if ($botperms = $guild->members->get('id', $this->discord->id)->getPermissions()) {
+                if (! $botperms->moderate_members) {
+                    return reject(new NoPermissionsException('You do not have permission to time out members in the specified guild.'));
+                }
+            }
         }
 
         $headers = [];
@@ -478,16 +487,14 @@ class Member extends Part
     /**
      * Gets the activities attribute.
      *
-     * @throws \Exception
-     *
      * @return Collection|Activity[]
      */
     protected function getActivitiesAttribute(): Collection
     {
-        $activities = new Collection([], null);
+        $activities = Collection::for(Activity::class, null);
 
         foreach ($this->attributes['activities'] ?? [] as $activity) {
-            $activities->pushItem($this->factory->create(Activity::class, $activity, true));
+            $activities->pushItem($this->factory->part(Activity::class, (array) $activity, true));
         }
 
         return $activities;
@@ -506,21 +513,21 @@ class Member extends Part
     /**
      * Returns the username attribute.
      *
-     * @return string The username of the member.
+     * @return string|null The username of the member.
      */
-    protected function getUsernameAttribute(): string
+    protected function getUsernameAttribute(): ?string
     {
-        return $this->user->username;
+        return $this->user->username ?? null;
     }
 
     /**
      * Returns the discriminator attribute.
      *
-     * @return string The discriminator of the member.
+     * @return string|null The discriminator of the member.
      */
-    protected function getDiscriminatorAttribute(): string
+    protected function getDiscriminatorAttribute(): ?string
     {
-        return $this->user->discriminator;
+        return $this->user->discriminator ?? null;
     }
 
     /**
@@ -530,12 +537,12 @@ class Member extends Part
      */
     protected function getUserAttribute(): ?User
     {
-        if (! isset($this->attributes['user'])) {
-            return null;
+        if ($user = $this->discord->users->get('id', $this->id)) {
+            return $user;
         }
 
-        if ($user = $this->discord->users->get('id', $this->attributes['user']->id)) {
-            return $user;
+        if (! isset($this->attributes['user'])) {
+            return null;
         }
 
         return $this->factory->part(User::class, (array) $this->attributes['user'], true);
@@ -544,33 +551,33 @@ class Member extends Part
     /**
      * Returns the guild attribute.
      *
-     * @return null|Guild The guild.
+     * @return Guild|null The guild.
      */
     protected function getGuildAttribute(): ?Guild
     {
-        return $this->discord->guilds->offsetGet($this->guild_id);
+        return $this->discord->guilds->get('id', $this->guild_id);
     }
 
     /**
      * Returns the roles attribute.
      *
-     * @throws \Exception
-     *
-     * @return Collection A collection of roles the member is in.
+     * @return Collection<?Role> A collection of roles the member is in. Null role only contains ID in the collection.
      */
     protected function getRolesAttribute(): Collection
     {
         $roles = new Collection();
 
+        if (empty($this->attributes['roles'])) {
+            return $roles;
+        }
+
+        $roles->fill(array_fill_keys($this->attributes['roles'], null));
+
         if ($guild = $this->guild) {
-            foreach ($guild->roles as $role) {
-                if (in_array($role->id, $this->attributes['roles'] ?? [])) {
+            foreach ($guild->roles as $id => $role) {
+                if (in_array($id, $this->attributes['roles'])) {
                     $roles->pushItem($role);
                 }
-            }
-        } else {
-            foreach ($this->attributes['roles'] ?? [] as $role) {
-                $roles->pushItem($this->factory->create(Role::class, $role, true));
             }
         }
 
@@ -684,13 +691,23 @@ class Member extends Part
      */
     public function getVoiceChannel(): ?Channel
     {
-        return $this->guild->channels->find(function (Channel $channel) {
-            return $channel->allowVoice() && isset($channel->members[$this->id]);
-        });
+        if ($guild = $this->guild) {
+            return $guild->channels->find(function (Channel $channel) {
+                if ($channel->allowVoice() && $members = $channel->members) {
+                    return $members->offsetExists($this->id);
+                }
+
+                return false;
+            });
+        }
+
+        return null;
     }
 
     /**
      * @inheritdoc
+     *
+     * @link https://discord.com/developers/docs/resources/guild#modify-guild-member-json-params
      */
     public function getUpdatableAttributes(): array
     {

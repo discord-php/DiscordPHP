@@ -18,6 +18,8 @@ use JsonSerializable;
 /**
  * Helper class used to build application commands.
  *
+ * @since 7.0.0
+ *
  * @author Mark `PeanutNL` Versluis
  */
 class CommandBuilder implements JsonSerializable
@@ -55,7 +57,7 @@ class CommandBuilder implements JsonSerializable
     /**
      * Creates a new command builder.
      *
-     * @return $this
+     * @return self
      */
     public static function new(): self
     {

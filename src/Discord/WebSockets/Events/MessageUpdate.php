@@ -13,33 +13,60 @@ namespace Discord\WebSockets\Events;
 
 use Discord\Parts\Channel\Message;
 use Discord\WebSockets\Event;
-use Discord\Helpers\Deferred;
+use Discord\Parts\Channel\Channel;
+use Discord\Parts\Guild\Guild;
+use Discord\WebSockets\Intents;
 
 /**
- * @see https://discord.com/developers/docs/topics/gateway#message-update
+ * @link https://discord.com/developers/docs/topics/gateway#message-update
+ *
+ * @since 2.1.3
  */
 class MessageUpdate extends Event
 {
     /**
      * @inheritdoc
      */
-    public function handle(Deferred &$deferred, $data): void
+    public function handle($data)
     {
         /** @var Message */
-        $messagePart = $this->factory->create(Message::class, $data, true);
-        $oldMessage = null;
+        $messagePart = $oldMessagePart = null;
 
-        if ($channel = $messagePart->channel) {
-            if ($oldMessage = $channel->messages->get('id', $messagePart->id)) {
-                $messagePart = $this->factory->create(Message::class, array_merge($oldMessage->getRawAttributes(), $messagePart->getRawAttributes()), true);
-
-                // Copy scriptData, because fill() approach is bad with partial
-                $messagePart->scriptData = $oldMessage->scriptData;
+        if (isset($data->guild_id)) {
+            /** @var ?Guild */
+            if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
+                /** @var ?Channel */
+                $channel = yield $guild->channels->cacheGet($data->channel_id);
             }
-
-            $channel->messages->offsetSet($messagePart->id, $messagePart);
         }
 
-        $deferred->resolve([$messagePart, $oldMessage]);
+        if (isset($channel)) {
+            /** @var ?Message */
+            if ($oldMessagePart = yield $channel->messages->cacheGet($data->id)) {
+                // Swap
+                $messagePart = $oldMessagePart;
+                $oldMessagePart = clone $oldMessagePart;
+
+                $messagePart->fill((array) $data);
+
+                // Deal with empty message content intent
+                if (! ($this->discord->options['intents'] & Intents::MESSAGE_CONTENT) && $data->author->id != $this->discord->id) {
+                    $cacheMessagePart = clone $oldMessagePart;
+                    // Ignore intent required fields
+                    $cacheMessagePart->fill(array_filter((array) $data, fn ($value, $key) => ! in_array($key, ['content', 'embeds', 'attachments', 'components']), ARRAY_FILTER_USE_BOTH));
+                }
+            }
+        }
+
+        if ($oldMessagePart === null) {
+            /** @var Message */
+            $messagePart = $this->factory->part(Message::class, (array) $data, true);
+        }
+
+        if (isset($channel) && ($oldMessagePart || $this->discord->options['storeMessages'])) {
+            yield $channel->messages->cache->set($data->id, $cacheMessagePart ?? $messagePart);
+        }
+
+        return [$messagePart, $oldMessagePart];
     }
 }

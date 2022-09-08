@@ -20,15 +20,18 @@ use React\Promise\ExtendedPromiseInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Contains bans on users.
+ * Contains bans for users of a guild.
  *
- * @see \Discord\Parts\Guild\Ban
+ * @see Ban
  * @see \Discord\Parts\Guild\Guild
  *
- * @method Ban|null get(string $discrim, $key)  Gets an item from the collection.
- * @method Ban|null first()                     Returns the first element of the collection.
- * @method Ban|null pull($key, $default = null) Pulls an item from the repository, removing and returning the item.
- * @method Ban|null find(callable $callback)    Runs a filter callback over the repository.
+ * @since 4.0.0
+ *
+ * @method Ban|null get(string $discrim, $key)
+ * @method Ban|null pull(string|int $key, $default = null)
+ * @method Ban|null first()
+ * @method Ban|null last()
+ * @method Ban|null find()
  */
 class BanRepository extends AbstractRepository
 {
@@ -54,7 +57,7 @@ class BanRepository extends AbstractRepository
     /**
      * Bans a member from the guild.
      *
-     * @see https://discord.com/developers/docs/resources/guild#create-guild-ban
+     * @link https://discord.com/developers/docs/resources/guild#create-guild-ban
      *
      * @param User|Member|string $user    The User to ban.
      * @param array|int          $options Array of Ban options 'delete_message_seconds' or 'delete_message_days' (deprecated).
@@ -103,21 +106,22 @@ class BanRepository extends AbstractRepository
             empty($content) ? null : $content,
             $headers
         )->then(function () use ($user, $reason) {
-            $ban = $this->factory->create(Ban::class, [
+            $ban = $this->factory->part(Ban::class, [
                 'user' => (object) $user->getRawAttributes(),
                 'reason' => $reason,
                 'guild_id' => $this->vars['guild_id'],
             ], true);
-            $this->pushItem($ban);
 
-            return $ban;
+            return $this->cache->set($ban->user_id, $ban)->then(function () use ($ban) {
+                return $ban;
+            });
         });
     }
 
     /**
      * Unbans a member from the guild.
      *
-     * @see https://discord.com/developers/docs/resources/guild#remove-guild-ban
+     * @link https://discord.com/developers/docs/resources/guild#remove-guild-ban
      *
      * @param User|Ban|string $ban    User or Ban Part, or User ID
      * @param string|null     $reason Reason for Audit Log.
@@ -131,9 +135,9 @@ class BanRepository extends AbstractRepository
         }
 
         if (is_scalar($ban)) {
-            if ($banPart = $this->get('user_id', $ban)) {
-                $ban = $banPart;
-            }
+            return $this->cache->get($ban)->then(function ($ban) use ($reason) {
+                return $this->delete($ban, $reason);
+            });
         }
 
         return $this->delete($ban, $reason);

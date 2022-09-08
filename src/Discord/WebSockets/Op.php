@@ -13,6 +13,8 @@ namespace Discord\WebSockets;
 
 /**
  * Contains constants used in websockets.
+ *
+ * @since 3.2.1
  */
 class Op
 {

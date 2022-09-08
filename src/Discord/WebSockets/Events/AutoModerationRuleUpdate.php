@@ -12,23 +12,27 @@
 namespace Discord\WebSockets\Events;
 
 use Discord\WebSockets\Event;
-use Discord\Helpers\Deferred;
 use Discord\Parts\Guild\AutoModeration\Rule;
+use Discord\Parts\Guild\Guild;
 
 /**
- * @see https://discord.com/developers/docs/topics/gateway#auto-moderation-rule-update
+ * @link https://discord.com/developers/docs/topics/gateway#auto-moderation-rule-update
+ *
+ * @since 7.1.0
  */
 class AutoModerationRuleUpdate extends Event
 {
     /**
      * @inheritdoc
      */
-    public function handle(Deferred &$deferred, $data): void
+    public function handle($data)
     {
         $rulePart = $oldRule = null;
 
-        if ($guild = $this->discord->guilds->get('id', $data->guild_id)) {
-            if ($oldRule = $guild->auto_moderation_rules->get('id', $data->id)) {
+        /** @var ?Guild */
+        if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
+            /** @var ?Rule */
+            if ($oldRule = yield $guild->auto_moderation_rules->cacheGet($data->id)) {
                 // Swap
                 $rulePart = $oldRule;
                 $oldRule = clone $oldRule;
@@ -37,14 +41,15 @@ class AutoModerationRuleUpdate extends Event
             }
         }
 
-        if (! $rulePart) {
+        if ($rulePart === null) {
             /** @var Rule */
-            $rulePart = $this->factory->create(Rule::class, $data, true);
-            if ($guild = $rulePart->guild) {
-                $guild->auto_moderation_rules->pushItem($rulePart);
-            }
+            $rulePart = $this->factory->part(Rule::class, (array) $data, true);
         }
 
-        $deferred->resolve([$rulePart, $oldRule]);
+        if ($guild) {
+            yield $guild->auto_moderation_rules->cache->set($data->id, $rulePart);
+        }
+
+        return [$rulePart, $oldRule];
     }
 }

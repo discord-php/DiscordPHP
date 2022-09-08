@@ -11,22 +11,28 @@
 
 namespace Discord\WebSockets\Events;
 
-use Discord\Helpers\Deferred;
+use Discord\Parts\Channel\Channel;
+use Discord\Parts\Guild\Guild;
 use Discord\Parts\Thread\Thread;
 use Discord\WebSockets\Event;
 
 /**
- * @see https://discord.com/developers/docs/topics/gateway#thread-update
+ * @link https://discord.com/developers/docs/topics/gateway#thread-update
+ *
+ * @since 7.0.0
  */
 class ThreadUpdate extends Event
 {
-    public function handle(Deferred &$deferred, $data)
+    public function handle($data)
     {
         $threadPart = $oldThread = null;
 
-        if ($guild = $this->discord->guilds->get('id', $data->guild_id)) {
-            if ($parent = $guild->channels->get('id', $data->parent_id)) {
-                if ($oldThread = $parent->threads->get('id', $data->id)) {
+        /** @var ?Guild */
+        if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
+            /** @var ?Channel */
+            if ($parent = yield $guild->channels->cacheGet($data->parent_id)) {
+                /** @var ?Thread */
+                if ($oldThread = yield $parent->threads->cacheGet($data->id)) {
                     // Swap
                     $threadPart = $oldThread;
                     $oldThread = clone $oldThread;
@@ -36,14 +42,15 @@ class ThreadUpdate extends Event
             }
         }
 
-        if (! $threadPart) {
+        if ($threadPart === null) {
             /** @var Thread */
-            $threadPart = $this->factory->create(Thread::class, $data, true);
-            if ($parent = $threadPart->parent) {
-                $parent->threads->pushItem($threadPart);
-            }
+            $threadPart = $this->factory->part(Thread::class, (array) $data, true);
         }
 
-        $deferred->resolve([$threadPart, $oldThread]);
+        if (isset($parent)) {
+            yield $parent->threads->cache->set($data->id, $threadPart);
+        }
+
+        return [$threadPart, $oldThread];
     }
 }

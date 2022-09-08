@@ -16,15 +16,19 @@ use Discord\Parts\Guild\AutoModeration\Rule;
 use Discord\Repository\AbstractRepository;
 
 /**
- * Contains auto moderation rules that belong to guilds.
+ * Contains auto moderation rules for a guild.
  *
- * @see \Discord\Parts\Guild\AutoModeration\Rule
+ * @see Rule
  * @see \Discord\Parts\Guild\Guild
  *
- * @method Rule|null get(string $discrim, $key)  Gets an item from the collection.
- * @method Rule|null first()                     Returns the first element of the collection.
- * @method Rule|null pull($key, $default = null) Pulls an item from the repository, removing and returning the item.
- * @method Rule|null find(callable $callback)    Runs a filter callback over the repository.
+ * @since 7.1.0
+ *
+ * @method Rule      create(array $attributes = [], bool $created = false)
+ * @method Rule|null get(string $discrim, $key)
+ * @method Rule|null pull(string|int $key, $default = null)
+ * @method Rule|null first()
+ * @method Rule|null last()
+ * @method Rule|null find()
  */
 class AutoModerationRuleRepository extends AbstractRepository
 {

@@ -14,13 +14,12 @@ namespace Discord\WebSockets;
 use Discord\Discord;
 use Discord\Factory\Factory;
 use Discord\Http\Http;
-use Discord\Helpers\Deferred;
 use Evenement\EventEmitterTrait;
-use React\Promise\PromiseInterface;
 
 /**
- * Contains constants for WebSocket events as well as handlers
- * for the events.
+ * Contains constants for WebSocket events as well as handlers for the events.
+ *
+ * @since 2.1.3
  */
 abstract class Event
 {
@@ -112,6 +111,13 @@ abstract class Event
     public const MESSAGE_REACTION_REMOVE_EMOJI = 'MESSAGE_REACTION_REMOVE_EMOJI';
 
     /**
+     * The Discord client instance.
+     *
+     * @var Discord Client.
+     */
+    protected $discord;
+
+    /**
      * The HTTP client.
      *
      * @var Http Client.
@@ -126,36 +132,28 @@ abstract class Event
     protected $factory;
 
     /**
-     * The Discord client instance.
-     *
-     * @var Discord Client.
-     */
-    protected $discord;
-
-    /**
      * Constructs an event.
      *
-     * @param Http    $http    The HTTP client.
-     * @param Factory $factory The factory.
      * @param Discord $discord The Discord client.
      */
-    public function __construct(Http $http, Factory $factory, Discord $discord)
+    public function __construct(Discord $discord)
     {
-        $this->http = $http;
-        $this->factory = $factory;
         $this->discord = $discord;
+        $this->http = $discord->getHttpClient();
+        $this->factory = $discord->getFactory();
     }
 
     /**
-     * Transforms the given data, and updates the
-     * Discord instance if necessary.
+     * Transforms the given data, and updates the Discord instance if necessary.
      *
-     * @param Deferred     $deferred The promise to use
-     * @param array|object $data     The data that was sent with the WebSocket
+     * @param object $data The data that was sent with the WebSocket.
      *
-     * @return void|PromiseInterface
+     * @return Generator
+     *
+     * @since 10.0.0 changed args from `Deferred &$deferred, $data` to `$data`, changed return from `void` to `Generator`.
+     * @since 4.0.0
      */
-    abstract public function handle(Deferred &$deferred, $data);
+    abstract public function handle($data);
 
     /**
      * Cache User repository from Event data.
@@ -168,7 +166,7 @@ abstract class Event
         if ($user = $this->discord->users->get('id', $userdata->id)) {
             $user->fill((array) $userdata);
         } else {
-            $this->discord->users->pushItem($this->factory->create(\Discord\Parts\User\User::class, $userdata, true));
+            $this->discord->users->pushItem($this->factory->part(\Discord\Parts\User\User::class, (array) $userdata, true));
         }
     }
 

@@ -34,32 +34,39 @@ use Traversable;
 /**
  * Represents a Discord thread.
  *
- * @property string            $id                    The ID of the thread.
- * @property string            $type                  The type of thread.
- * @property string            $guild_id              The ID of the guild which the thread belongs to.
- * @property string            $name                  The name of the thread.
- * @property string            $last_message_id       The ID of the last message sent in the thread.
- * @property Carbon|null       $last_pin_timestamp    The timestamp when the last message was pinned in the thread.
- * @property int               $rate_limit_per_user   Amount of seconds a user has to wait before sending a new message.
- * @property string            $owner_id              The ID of the owner of the thread.
- * @property string            $parent_id             The ID of the channel which the thread was started in.
- * @property int               $message_count         Number of messages (not including the initial message or deleted messages) in a thread (if the thread was created before July 1, 2022, it stops counting at 50).
- * @property int               $member_count          An approximate count of the number of members in the thread. Stops counting at 50.
- * @property Guild|null        $guild                 The guild which the thread belongs to.
- * @property User|null         $owner                 The owner of the thread.
- * @property Member|null       $owner_member          The member object for the owner of the thread.
- * @property Channel|null      $parent                The channel which the thread was created in.
- * @property bool              $archived              Whether the thread has been archived.
- * @property bool              $locked                Whether the thread has been locked.
- * @property int|null          $auto_archive_duration The number of minutes of inactivity until the thread is automatically archived.
- * @property int|null          $flags                 Channel flags combined as a bitfield. `PINNED` can only be set for threads in forum channels.
- * @property Carbon            $archive_timestamp     The time that the thread's archive status was changed.
- * @property int|null          $total_message_sent    Number of messages ever sent in a thread, it's similar to `message_count` on message creation, but will not decrement the number when a message is deleted.
- * @property MessageRepository $messages              Repository of messages sent in the thread.
- * @property MemberRepository  $members               Repository of members in the thread.
+ * @link https://discord.com/developers/docs/topics/threads
  *
- * @method ExtendedPromiseInterface sendMessage(MessageBuilder $builder)
- * @method ExtendedPromiseInterface sendMessage(string $text, bool $tts = false, Embed|array $embed = null, array $allowed_mentions = null, ?Message $replyTo = null)
+ * @since 7.0.0
+ *
+ * @property      string       $id                    The ID of the thread.
+ * @property      string       $type                  The type of thread.
+ * @property      string       $guild_id              The ID of the guild which the thread belongs to.
+ * @property-read Guild|null   $guild                 The guild which the thread belongs to.
+ * @property      string       $name                  The name of the thread.
+ * @property      string       $last_message_id       The ID of the last message sent in the thread.
+ * @property      Carbon|null  $last_pin_timestamp    The timestamp when the last message was pinned in the thread.
+ * @property      int          $rate_limit_per_user   Amount of seconds a user has to wait before sending a new message.
+ * @property      string       $owner_id              The ID of the owner of the thread.
+ * @property-read User|null    $owner                 The owner of the thread.
+ * @property-read Member|null  $owner_member          The member object for the owner of the thread.
+ * @property      string       $parent_id             The ID of the channel which the thread was started in.
+ * @property-read Channel|null $parent                The channel which the thread was created in.
+ * @property      int          $message_count         Number of messages (not including the initial message or deleted messages) in a thread (if the thread was created before July 1, 2022, it stops counting at 50).
+ * @property      int          $member_count          An approximate count of the number of members in the thread. Stops counting at 50.
+ * @property      object       $thread_metadata       Thread-specific fields not needed by other channels.
+ * @property      bool         $archived              Whether the thread has been archived.
+ * @property      int|null     $auto_archive_duration The number of minutes of inactivity until the thread is automatically archived.
+ * @property      Carbon       $archive_timestamp     The time that the thread's archive status was changed.
+ * @property      bool         $locked                Whether the thread has been locked.
+ * @property      bool|null    $invitable             Whether non-moderators can add other non-moderators to a thread; only available on private threads.
+ * @property      Carbon|null  $create_timestamp      Timestamp when the thread was created; only populated for threads created after 2022-01-09.
+ * @property      int|null     $total_message_sent    Number of messages ever sent in a thread, it's similar to `message_count` on message creation, but will not decrement the number when a message is deleted.
+ * @property      int|null     $flags                 Channel flags combined as a bitfield. `PINNED` can only be set for threads in forum channels.
+ *
+ * @property MessageRepository $messages Repository of messages sent in the thread.
+ * @property MemberRepository  $members  Repository of members in the thread.
+ *
+ * @method ExtendedPromiseInterface<Message> sendMessage(MessageBuilder $builder)
  */
 class Thread extends Part
 {
@@ -79,23 +86,16 @@ class Thread extends Part
         'message_count',
         'member_count',
         'thread_metadata',
-        'flags',
+        'member',
         'total_message_sent',
+        'flags',
     ];
 
     /**
      * @inheritdoc
      */
-    protected $visible = [
-        'guild',
-        'owner',
-        'owner_member',
-        'parent',
-        'archived',
-        'auto_archive_duration',
-        'archive_timestamp',
-        'locked',
-        'invitable',
+    protected $hidden = [
+        'member',
     ];
 
     /**
@@ -105,6 +105,19 @@ class Thread extends Part
         'messages' => MessageRepository::class,
         'members' => MemberRepository::class,
     ];
+
+    /**
+     * @inheritdoc
+     */
+    protected function afterConstruct(): void
+    {
+        if (isset($this->attributes['member'])) {
+            $this->members->pushItem($this->factory->part(ThreadMember::class, (array) $this->attributes['member'] + [
+                'id' => $this->id,
+                'user_id' => $this->discord->id,
+            ], true));
+        }
+    }
 
     /**
      * Returns the guild which the thread belongs to.
@@ -133,8 +146,8 @@ class Thread extends Part
      */
     protected function getOwnerMemberAttribute(): ?Member
     {
-        if ($this->guild) {
-            return $this->guild->members->get('id', $this->owner_id);
+        if ($guild = $this->guild) {
+            return $guild->members->get('id', $this->owner_id);
         }
 
         return null;
@@ -147,8 +160,8 @@ class Thread extends Part
      */
     protected function getParentAttribute(): ?Channel
     {
-        if ($this->guild) {
-            return $this->guild->channels->get('id', $this->parent_id);
+        if ($guild = $this->guild) {
+            return $guild->channels->get('id', $this->parent_id);
         }
 
         return $this->discord->getChannel($this->parent_id);
@@ -161,11 +174,11 @@ class Thread extends Part
      */
     protected function getLastPinTimestampAttribute(): ?Carbon
     {
-        if (isset($this->attributes['last_pin_timestamp'])) {
-            return new Carbon($this->attributes['last_pin_timestamp']);
+        if (! isset($this->attributes['last_pin_timestamp'])) {
+            return null;
         }
 
-        return null;
+        return new Carbon($this->attributes['last_pin_timestamp']);
     }
 
     /**
@@ -276,8 +289,8 @@ class Thread extends Part
      */
     protected function getArchiverMemberAttribute(): ?Member
     {
-        if ($this->archiver_id && $this->guild) {
-            return $this->guild->members->get('id', $this->archiver_id);
+        if ($this->archiver_id && $guild = $this->guild) {
+            return $guild->members->get('id', $this->archiver_id);
         }
 
         return null;
@@ -297,9 +310,23 @@ class Thread extends Part
     }
 
     /**
+     * Returns the timestamp when the thread was created; only populated for threads created after 2022-01-09.
+     *
+     * @return Carbon|null
+     */
+    protected function getCreateTimestampAttribute(): ?Carbon
+    {
+        if (! isset($this->attributes['create_timestamp'])) {
+            return null;
+        }
+
+        return new Carbon($this->thread_metadata->create_timestamp);
+    }
+
+    /**
      * Attempts to join the thread.
      *
-     * @see https://discord.com/developers/docs/resources/channel#join-thread
+     * @link https://discord.com/developers/docs/resources/channel#join-thread
      *
      * @return ExtendedPromiseInterface
      */
@@ -311,7 +338,7 @@ class Thread extends Part
     /**
      * Attempts to add a user to the thread.
      *
-     * @see https://discord.com/developers/docs/resources/channel#add-thread-member
+     * @link https://discord.com/developers/docs/resources/channel#add-thread-member
      *
      * @param User|Member|string $user User to add. Can be one of the user objects or a user ID.
      *
@@ -329,7 +356,7 @@ class Thread extends Part
     /**
      * Attempts to leave the thread.
      *
-     * @see https://discord.com/developers/docs/resources/channel#leave-thread
+     * @link https://discord.com/developers/docs/resources/channel#leave-thread
      *
      * @return ExtendedPromiseInterface
      */
@@ -341,7 +368,7 @@ class Thread extends Part
     /**
      * Attempts to remove a user from the thread.
      *
-     * @see https://discord.com/developers/docs/resources/channel#remove-thread-member
+     * @link https://discord.com/developers/docs/resources/channel#remove-thread-member
      *
      * @param User|Member|ThreadMember|string $user User to remove. Can be one of the user objects or a user ID.
      *
@@ -375,7 +402,7 @@ class Thread extends Part
 
         return $this->http->patch(Endpoint::bind(Endpoint::THREAD, $this->id), ['name' => $name], $headers)
             ->then(function ($response) {
-                $this->attributes['name'] = $response->name;
+                $this->name = $response->name;
 
                 return $this;
             });
@@ -451,7 +478,7 @@ class Thread extends Part
     /**
      * Returns the thread's pinned messages.
      *
-     * @see https://discord.com/developers/docs/resources/channel#get-pinned-messages
+     * @link https://discord.com/developers/docs/resources/channel#get-pinned-messages
      *
      * @return ExtendedPromiseInterface<Collection<Message>>
      */
@@ -463,7 +490,7 @@ class Thread extends Part
 
                 foreach ($responses as $response) {
                     if (! $message = $this->messages->get('id', $response->id)) {
-                        $message = $this->factory->create(Message::class, $response, true);
+                        $message = $this->factory->part(Message::class, (array) $response, true);
                     }
 
                     $messages->pushItem($message);
@@ -476,7 +503,7 @@ class Thread extends Part
     /**
      * Bulk deletes an array of messages.
      *
-     * @see https://discord.com/developers/docs/resources/channel#bulk-delete-messages
+     * @link https://discord.com/developers/docs/resources/channel#bulk-delete-messages
      *
      * @param array|Traversable $messages
      * @param string|null       $reason   Reason for Audit Log (only for bulk messages).
@@ -530,7 +557,7 @@ class Thread extends Part
      * Fetches the message history of the thread with a given array
      * of arguments.
      *
-     * @see https://discord.com/developers/docs/resources/channel#get-channel-messages
+     * @link https://discord.com/developers/docs/resources/channel#get-channel-messages
      *
      * @param array $options
      *
@@ -571,11 +598,11 @@ class Thread extends Part
         }
 
         return $this->http->get($endpoint)->then(function ($responses) {
-            $messages = new Collection();
+            $messages = Collection::for(Message::class);
 
             foreach ($responses as $response) {
                 if (! $message = $this->messages->get('id', $response->id)) {
-                    $message = $this->factory->create(Message::class, $response, true);
+                    $message = $this->factory->part(Message::class, (array) $response, true);
                     $this->messages->pushItem($message);
                 }
 
@@ -589,7 +616,7 @@ class Thread extends Part
     /**
      * Pins a message in the thread.
      *
-     * @see https://discord.com/developers/docs/resources/channel#pin-message
+     * @link https://discord.com/developers/docs/resources/channel#pin-message
      *
      * @param Message     $message
      * @param string|null $reason  Reason for Audit Log.
@@ -621,7 +648,7 @@ class Thread extends Part
     /**
      * Unpins a message in the thread.
      *
-     * @see https://discord.com/developers/docs/resources/channel#unpin-message
+     * @link https://discord.com/developers/docs/resources/channel#unpin-message
      *
      * @param Message     $message
      * @param string|null $reason  Reason for Audit Log.
@@ -656,7 +683,7 @@ class Thread extends Part
      * Takes a `MessageBuilder` or content of the message for the first parameter. If the first parameter
      * is an instance of `MessageBuilder`, the rest of the arguments are disregarded.
      *
-     * @see https://discord.com/developers/docs/resources/channel#create-message
+     * @link https://discord.com/developers/docs/resources/channel#create-message
      *
      * @param MessageBuilder|string $message          The message builder that should be converted into a message, or the string content of the message.
      * @param bool                  $tts              Whether the message is TTS.
@@ -699,7 +726,7 @@ class Thread extends Part
 
             return $this->http->post(Endpoint::bind(Endpoint::CHANNEL_MESSAGES, $this->id), $message);
         })()->then(function ($response) {
-            return $this->factory->create(Message::class, $response, true);
+            return $this->factory->part(Message::class, (array) $response, true);
         });
     }
 
@@ -775,6 +802,8 @@ class Thread extends Part
 
     /**
      * @inheritdoc
+     *
+     * @link https://discord.com/developers/docs/resources/channel#start-thread-without-message-json-params
      */
     public function getCreatableAttributes(): array
     {
@@ -794,6 +823,8 @@ class Thread extends Part
 
     /**
      * @inheritdoc
+     *
+     * @link https://discord.com/developers/docs/resources/channel#modify-channel-json-params-thread
      */
     public function getUpdatableAttributes(): array
     {
@@ -819,10 +850,10 @@ class Thread extends Part
     public function getRepositoryAttributes(): array
     {
         return [
-            'thread_id' => $this->id,
-            'channel_id' => $this->id,
-            'parent_id' => $this->parent_id,
             'guild_id' => $this->guild_id,
+            'parent_id' => $this->parent_id,
+            'channel_id' => $this->id,
+            'thread_id' => $this->id,
         ];
     }
 

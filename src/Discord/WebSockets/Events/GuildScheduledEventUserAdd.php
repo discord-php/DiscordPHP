@@ -12,19 +12,20 @@
 namespace Discord\WebSockets\Events;
 
 use Discord\WebSockets\Event;
-use Discord\Helpers\Deferred;
 
 /**
- * @see https://discord.com/developers/docs/topics/gateway#guild-scheduled-event-user-add
+ * @link https://discord.com/developers/docs/topics/gateway#guild-scheduled-event-user-add
+ *
+ * @since 7.0.0
  */
 class GuildScheduledEventUserAdd extends Event
 {
     /**
      * @inheritdoc
      */
-    public function handle(Deferred &$deferred, $data): void
+    public function handle($data)
     {
         // TODO: Create WebSockets Event Part
-        $deferred->resolve($data);
+        return $data;
     }
 }

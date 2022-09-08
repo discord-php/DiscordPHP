@@ -11,43 +11,48 @@
 
 namespace Discord\WebSockets\Events;
 
-use Discord\Helpers\Deferred;
+use Discord\Parts\Channel\Channel;
+use Discord\Parts\Guild\Guild;
 use Discord\Parts\Thread\Member;
+use Discord\Parts\Thread\Thread;
 use Discord\WebSockets\Event;
 
 /**
- * @see https://discord.com/developers/docs/topics/gateway#thread-members-update
+ * @link https://discord.com/developers/docs/topics/gateway#thread-members-update
+ *
+ * @since 7.0.0
  */
 class ThreadMembersUpdate extends Event
 {
-    public function handle(Deferred &$deferred, $data)
+    public function handle($data)
     {
-        $guild = $this->discord->guilds->get('id', $data->guild_id);
+        /** @var ?Guild */
+        if (! $guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
+            return null;
+        }
 
         // When the bot is added to a private thread, sometimes the `THREAD_MEMBER_UPDATE` event
         // comes before the `THREAD_CREATE` event, so we just don't emit this event if we don't have the
         // thread cached.
+        // @todo channels may be missing from cache
+        /** @var Channel */
         foreach ($guild->channels as $channel) {
-            if ($thread = $channel->threads->get('id', $data->id)) {
+            /** @var ?Thread */
+            if ($thread = yield $channel->threads->cacheGet($data->id)) {
                 $thread->member_count = $data->member_count;
 
-                if ($data->removed_member_ids ?? null) {
-                    foreach ($data->removed_member_ids as $id) {
-                        $thread->members->pull($id);
-                    }
+                if (isset($data->removed_member_ids)) {
+                    yield $thread->members->cache->deleteMultiple($data->removed_member_ids);
                 }
 
-                if ($data->added_members ?? null) {
-                    foreach ($data->added_members as $member) {
-                        $member = $this->factory->create(Member::class, $member, true);
-                        $thread->members->pushItem($member);
-                    }
+                foreach ($data->added_members ?? [] as $member) {
+                    yield $thread->members->cache->set($member->user_id, $this->factory->part(Member::class, (array) $member, true));
                 }
 
-                $deferred->resolve($thread);
-
-                return;
+                return $thread;
             }
         }
+
+        return null;
     }
 }

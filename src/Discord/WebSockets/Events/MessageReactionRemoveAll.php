@@ -13,26 +13,48 @@ namespace Discord\WebSockets\Events;
 
 use Discord\Parts\WebSockets\MessageReaction;
 use Discord\WebSockets\Event;
-use Discord\Helpers\Deferred;
+use Discord\Parts\Channel\Channel;
+use Discord\Parts\Channel\Message;
+use Discord\Parts\Guild\Guild;
+use Discord\Parts\Thread\Thread;
 
 /**
- * @see https://discord.com/developers/docs/topics/gateway#message-reaction-remove-all
+ * @link https://discord.com/developers/docs/topics/gateway#message-reaction-remove-all
+ *
+ * @since 4.0.4
  */
 class MessageReactionRemoveAll extends Event
 {
     /**
      * @inheritdoc
      */
-    public function handle(Deferred &$deferred, $data): void
+    public function handle($data)
     {
-        $reaction = new MessageReaction($this->discord, (array) $data, true);
-
-        if ($channel = $reaction->channel) {
-            if ($message = $channel->messages->offsetGet($reaction->message_id)) {
-                $message->reactions->clear();
+        /** @var ?Guild */
+        if (isset($data->guild_id) && $guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
+            /** @var ?Channel */
+            if (! $channel = yield $guild->channels->cacheGet($data->channel_id)) {
+                /** @var Channel */
+                foreach ($guild->channels as $channel) {
+                    /** @var ?Thread */
+                    if ($thread = yield $channel->threads->cacheGet($data->channel_id)) {
+                        $channel = $thread;
+                        break;
+                    }
+                }
             }
+        } else {
+            /** @var ?Channel */
+            $channel = yield $this->discord->private_channels->cacheGet($data->channel_id);
         }
 
-        $deferred->resolve($reaction);
+        $reaction = new MessageReaction($this->discord, (array) $data, true);
+
+        /** @var ?Message */
+        if (isset($channel) && $message = yield $channel->messages->cacheGet($data->message_id)) {
+            $message->reactions->clear();
+        }
+
+        return $reaction;
     }
 }

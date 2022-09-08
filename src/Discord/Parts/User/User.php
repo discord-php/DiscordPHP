@@ -23,19 +23,21 @@ use function React\Promise\resolve;
 /**
  * A user is a general user that is not attached to a guild.
  *
- * @see https://discord.com/developers/docs/resources/user
+ * @link https://discord.com/developers/docs/resources/user
+ *
+ * @since 2.0.0
  *
  * @property string       $id            The unique identifier of the user.
  * @property string       $username      The username of the user.
  * @property string       $discriminator The discriminator of the user.
  * @property string       $displayname   The username and discriminator of the user.
- * @property string       $avatar        The avatar URL of the user.
- * @property ?string      $avatar_hash   The avatar hash of the user.
+ * @property ?string      $avatar        The avatar URL of the user.
+ * @property string|null  $avatar_hash   The avatar hash of the user.
  * @property bool|null    $bot           Whether the user is a bot.
  * @property bool|null    $system        Whether the user is a Discord system user.
  * @property bool|null    $mfa_enabled   Whether MFA is enabled.
- * @property string|null  $banner        The banner URL of the user.
- * @property ?string|null $banner_hash   The banner hash of the user.
+ * @property ?string|null $banner        The banner URL of the user.
+ * @property string|null  $banner_hash   The banner hash of the user.
  * @property ?int|null    $accent_color  The user's banner color encoded as an integer representation of hexadecimal color code.
  * @property string|null  $locale        User locale.
  * @property bool|null    $verified      Whether the user is verified.
@@ -44,8 +46,7 @@ use function React\Promise\resolve;
  * @property int|null     $premium_type  Type of nitro subscription.
  * @property int|null     $public_flags  Public flags on the user.
  *
- * @method ExtendedPromiseInterface sendMessage(MessageBuilder $builder)
- * @method ExtendedPromiseInterface sendMessage(string $text, bool $tts = false, Embed|array $embed = null, array $allowed_mentions = null, ?Message $replyTo = null)
+ * @method ExtendedPromiseInterface<Message> sendMessage(MessageBuilder $builder)
  */
 class User extends Part
 {
@@ -93,7 +94,7 @@ class User extends Part
     /**
      * Gets the private channel for the user.
      *
-     * @see https://discord.com/developers/docs/resources/user#create-dm
+     * @link https://discord.com/developers/docs/resources/user#create-dm
      *
      * @return ExtendedPromiseInterface<Channel>
      */
@@ -104,7 +105,7 @@ class User extends Part
         }
 
         return $this->http->post(Endpoint::USER_CURRENT_CHANNELS, ['recipient_id' => $this->id])->then(function ($response) {
-            $channel = $this->factory->create(Channel::class, $response, true);
+            $channel = $this->factory->part(Channel::class, (array) $response, true);
             $this->discord->private_channels->pushItem($channel);
 
             return $channel;
@@ -117,7 +118,7 @@ class User extends Part
      * Takes a `MessageBuilder` or content of the message for the first parameter. If the first parameter
      * is an instance of `MessageBuilder`, the rest of the arguments are disregarded.
      *
-     * @see https://discord.com/developers/docs/resources/channel#create-message
+     * @link https://discord.com/developers/docs/resources/channel#create-message
      *
      * @param MessageBuilder|string $message          The message builder that should be converted into a message, or the string content of the message.
      * @param bool                  $tts              Whether the message is TTS.
@@ -129,7 +130,7 @@ class User extends Part
      */
     public function sendMessage($message, bool $tts = false, $embed = null, $allowed_mentions = null, ?Message $replyTo = null): ExtendedPromiseInterface
     {
-        return $this->getPrivateChannel()->then(function ($channel) use ($message, $tts, $embed, $allowed_mentions, $replyTo) {
+        return $this->getPrivateChannel()->then(function (Channel $channel) use ($message, $tts, $embed, $allowed_mentions, $replyTo) {
             return $channel->sendMessage($message, $tts, $embed, $allowed_mentions, $replyTo);
         });
     }
@@ -137,7 +138,7 @@ class User extends Part
     /**
      * Broadcasts that you are typing to the channel. Lasts for 5 seconds.
      *
-     * @see https://discord.com/developers/docs/resources/channel#trigger-typing-indicator
+     * @link https://discord.com/developers/docs/resources/channel#trigger-typing-indicator
      *
      * @throws \Exception
      *

@@ -13,34 +13,36 @@ namespace Discord\WebSockets\Events;
 
 use Discord\Parts\WebSockets\PresenceUpdate as PresenceUpdatePart;
 use Discord\WebSockets\Event;
-use Discord\Helpers\Deferred;
+use Discord\Parts\Guild\Guild;
+use Discord\Parts\User\Member;
 
 /**
- * @see https://discord.com/developers/docs/topics/gateway#presence-update
+ * @link https://discord.com/developers/docs/topics/gateway#presence-update
+ *
+ * @since 2.1.3
  */
 class PresenceUpdate extends Event
 {
     /**
      * @inheritdoc
      */
-    public function handle(Deferred &$deferred, $data): void
+    public function handle($data)
     {
-        /**
-         * @var PresenceUpdatePart
-         */
-        $presence = $this->factory->create(PresenceUpdatePart::class, $data, true);
+        /** @var PresenceUpdatePart */
+        $presence = $this->factory->part(PresenceUpdatePart::class, (array) $data, true);
 
-        if ($guild = $presence->guild) {
-            if ($member = $presence->member) {
+        /** @var ?Guild */
+        if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
+            /** @var ?Member */
+            if ($member = yield $guild->members->cacheGet($data->user->id)) {
                 $oldPresence = $member->updateFromPresence($presence);
 
-                $guild->members->offsetSet($member->id, $member);
-                $this->discord->guilds->offsetSet($guild->id, $guild);
+                yield $guild->members->cache->set($data->user->id, $member);
 
-                $deferred->resolve([$presence, $oldPresence]);
+                return [$presence, $oldPresence];
             }
         }
 
-        $deferred->resolve($presence);
+        return $presence;
     }
 }

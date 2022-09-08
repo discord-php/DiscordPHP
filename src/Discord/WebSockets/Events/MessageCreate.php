@@ -13,38 +13,51 @@ namespace Discord\WebSockets\Events;
 
 use Discord\Parts\Channel\Message;
 use Discord\WebSockets\Event;
-use Discord\Helpers\Deferred;
 use Discord\Parts\Channel\Channel;
+use Discord\Parts\Guild\Guild;
+use Discord\WebSockets\Intents;
 
 /**
- * @see https://discord.com/developers/docs/topics/gateway#message-create
+ * @link https://discord.com/developers/docs/topics/gateway#message-create
+ *
+ * @since 2.1.3
  */
 class MessageCreate extends Event
 {
     /**
      * @inheritdoc
      */
-    public function handle(Deferred &$deferred, $data): void
+    public function handle($data)
     {
         /** @var Message */
-        $messagePart = $this->factory->create(Message::class, $data, true);
+        $messagePart = $this->factory->part(Message::class, (array) $data, true);
 
-        // assume it is a private channel
-        if (! $messagePart->guild && $messagePart->channel->type == Channel::TYPE_DM) {
+        if ($messagePart->is_private) {
             /** @var Channel */
-            $channel = $this->factory->create(Channel::class, [
-                'id' => $messagePart->channel_id,
+            $channel = $this->factory->part(Channel::class, [
+                'id' => $data->channel_id,
                 'type' => Channel::TYPE_DM,
-                'last_message_id' => $messagePart->id,
-                'recipients' => [$messagePart->author],
+                'last_message_id' => $data->id,
+                'recipients' => [$data->author],
             ], true);
 
-            $this->discord->private_channels->pushItem($channel);
+            yield $this->discord->private_channels->cache->set($data->channel_id, $channel);
         }
 
-        if ($this->discord->options['storeMessages']) {
-            if ($channel = $messagePart->channel) {
-                $channel->messages->pushItem($messagePart);
+        if (isset($data->guild_id)) {
+            /** @var ?Guild */
+            $guild = yield $this->discord->guilds->cacheGet($data->guild_id);
+
+            if (! isset($channel)) {
+                /** @var ?Channel */
+                $channel = yield $guild->channels->cacheGet($data->channel_id);
+            }
+        }
+
+        if ($this->discord->options['storeMessages'] && (isset($channel) || $channel = $messagePart->channel)) {
+            // Only cache if message intent is enabled or message was sent by the bot or message is not cached
+            if (($this->discord->options['intents'] & Intents::MESSAGE_CONTENT) || $data->author->id == $this->discord->id || ! (yield $channel->messages->cache->has($data->id))) {
+                yield $channel->messages->cache->set($data->id, $messagePart);
             }
         }
 
@@ -56,6 +69,6 @@ class MessageCreate extends Event
             $this->cacheUser($data->interaction->user);
         }
 
-        $deferred->resolve($messagePart);
+        return $messagePart;
     }
 }

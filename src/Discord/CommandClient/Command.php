@@ -15,7 +15,9 @@ use Discord\DiscordCommandClient;
 use Discord\Parts\Channel\Message;
 
 /**
- * A command that the Command Client will listen for.
+ * A message based command that the Command Client will listen for.
+ *
+ * @since 4.0.0
  */
 class Command
 {

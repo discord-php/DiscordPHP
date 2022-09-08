@@ -14,6 +14,20 @@ namespace Discord\Repository\Interaction;
 use Discord\Parts\Interactions\Request\Option;
 use Discord\Repository\AbstractRepository;
 
+/**
+ * Contains options for application commands.
+ *
+ * @see Option
+ * @see \Discord\Parts\Interactions\Command\Command
+ *
+ * @since 7.0.0
+ *
+ * @method Option|null get(string $discrim, $key)
+ * @method Option|null pull(string|int $key, $default = null)
+ * @method Option|null first()
+ * @method Option|null last()
+ * @method Option|null find()
+ */
 class OptionRepository extends AbstractRepository
 {
     /**

@@ -17,6 +17,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Provides an easy way to have triggerable commands.
+ *
+ * @since 4.0.0
  */
 class DiscordCommandClient extends Discord
 {

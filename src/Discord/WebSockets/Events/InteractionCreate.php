@@ -11,21 +11,22 @@
 
 namespace Discord\WebSockets\Events;
 
-use Discord\Helpers\Deferred;
 use Discord\InteractionType;
 use Discord\Parts\Interactions\Interaction;
 use Discord\Parts\User\User;
 use Discord\WebSockets\Event;
 
 /**
- * @see https://discord.com/developers/docs/topics/gateway#interaction-create
+ * @link https://discord.com/developers/docs/topics/gateway#interaction-create
+ *
+ * @since 6.0.0
  */
 class InteractionCreate extends Event
 {
     /**
      * @inheritdoc
      */
-    public function handle(Deferred &$deferred, $data): void
+    public function handle($data)
     {
         /** @var Interaction */
         $interaction = $this->factory->part(Interaction::class, (array) $data, true);
@@ -71,6 +72,7 @@ class InteractionCreate extends Event
                             return $command->suggest($interaction);
                         }
                     }
+
                     return false;
                 };
                 if ($checkCommand($this->discord->application_commands[$command->name], $command->options)) {
@@ -79,6 +81,6 @@ class InteractionCreate extends Event
             }
         }
 
-        $deferred->resolve($interaction);
+        return $interaction;
     }
 }

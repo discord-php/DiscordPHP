@@ -12,13 +12,16 @@
 namespace Discord\Parts\Permissions;
 
 use Discord\Discord;
-use Discord\Helpers\Bitwise;
+use Discord\Helpers\BigInt;
 use Discord\Parts\Part;
 
 /**
  * Permission represents a set of permissions for a given role or overwrite.
  *
- * @see https://discord.com/developers/docs/topics/permissions
+ * @link https://discord.com/developers/docs/topics/permissions
+ *
+ * @since 2.1.3 Namespace moved from Guild to Permissions
+ * @since 2.0.0
  *
  * @property int|string $bitwise
  * @property bool       $create_instant_invite
@@ -165,13 +168,13 @@ abstract class Permission extends Part
     /**
      * Gets the bitwise attribute of the permission.
      *
-     * @see https://discord.com/developers/docs/topics/permissions#permissions-bitwise-permission-flags
+     * @link https://discord.com/developers/docs/topics/permissions#permissions-bitwise-permission-flags
      *
      * @return int|string
      */
     protected function getBitwiseAttribute()
     {
-        if (Bitwise::is32BitWithGMP()) { // x86 with GMP
+        if (BigInt::is32BitWithGMP()) { // x86 with GMP
             $bitwise = \gmp_init(0);
 
             foreach ($this->permissions as $permission => $value) {
@@ -195,7 +198,7 @@ abstract class Permission extends Part
     /**
      * Sets the bitwise attribute of the permission.
      *
-     * @see https://discord.com/developers/docs/topics/permissions#permissions-bitwise-permission-flags
+     * @link https://discord.com/developers/docs/topics/permissions#permissions-bitwise-permission-flags
      *
      * @param int|string $bitwise
      */
@@ -206,7 +209,7 @@ abstract class Permission extends Part
         }
 
         foreach ($this->permissions as $permission => $value) {
-            if (Bitwise::test($bitwise, $value)) {
+            if (BigInt::test($bitwise, $value)) {
                 $this->attributes[$permission] = true;
             } else {
                 $this->attributes[$permission] = false;
@@ -312,5 +315,10 @@ abstract class Permission extends Part
     protected function setManageEmojisAttribute($value)
     {
         return $this->attributes['manage_emojis_and_stickers'] = $value;
+    }
+
+    public function __toString(): string
+    {
+        return (string) $this->bitwise;
     }
 }

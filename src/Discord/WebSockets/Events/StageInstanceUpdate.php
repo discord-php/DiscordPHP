@@ -13,22 +13,26 @@ namespace Discord\WebSockets\Events;
 
 use Discord\Parts\Channel\StageInstance;
 use Discord\WebSockets\Event;
-use Discord\Helpers\Deferred;
+use Discord\Parts\Guild\Guild;
 
 /**
- * @see https://discord.com/developers/docs/topics/gateway#stage-instance-update
+ * @link https://discord.com/developers/docs/topics/gateway#stage-instance-update
+ *
+ * @since 7.0.0
  */
 class StageInstanceUpdate extends Event
 {
     /**
      * @inheritdoc
      */
-    public function handle(Deferred &$deferred, $data): void
+    public function handle($data)
     {
         $stageInstancePart = $oldStageInstance = null;
 
-        if ($guild = $this->discord->guilds->get('id', $data->guild_id)) {
-            if ($oldStageInstance = $guild->stage_instances->get('id', $data->id)) {
+        /** @var ?Guild */
+        if ($guild = $this->discord->guilds->cacheGet($data->guild_id)) {
+            /** @var ?StageInstance */
+            if ($oldStageInstance = yield $guild->stage_instances->cacheGet($data->id)) {
                 // Swap
                 $stageInstancePart = $oldStageInstance;
                 $oldStageInstance = clone $oldStageInstance;
@@ -37,14 +41,15 @@ class StageInstanceUpdate extends Event
             }
         }
 
-        if (! $stageInstancePart) {
+        if ($stageInstancePart === null) {
             /** @var StageInstance */
-            $stageInstancePart = $this->factory->create(StageInstance::class, $data, true);
-            if ($guild = $stageInstancePart->guild) {
-                $guild->stage_instances->pushItem($stageInstancePart);
-            }
+            $stageInstancePart = $this->factory->part(StageInstance::class, (array) $data, true);
         }
 
-        $deferred->resolve([$stageInstancePart, $oldStageInstance]);
+        if ($guild) {
+            $guild->stage_instances->cache->set($data->id, $stageInstancePart);
+        }
+
+        return [$stageInstancePart, $oldStageInstance];
     }
 }

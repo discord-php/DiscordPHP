@@ -15,14 +15,17 @@ use Discord\Http\Endpoint;
 use Discord\Parts\User\User;
 
 /**
- * Contains users that the user shares guilds with.
+ * Contains users that the client shares guilds with.
  *
- * @see \Discord\Parts\User\User
+ * @see User
  *
- * @method User|null get(string $discrim, $key)  Gets an item from the collection.
- * @method User|null first()                     Returns the first element of the collection.
- * @method User|null pull($key, $default = null) Pulls an item from the repository, removing and returning the item.
- * @method User|null find(callable $callback)    Runs a filter callback over the repository.
+ * @since 4.0.0
+ *
+ * @method User|null get(string $discrim, $key)
+ * @method User|null pull(string|int $key, $default = null)
+ * @method User|null first()
+ * @method User|null last()
+ * @method User|null find()
  */
 class UserRepository extends AbstractRepository
 {

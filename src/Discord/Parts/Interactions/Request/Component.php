@@ -18,7 +18,11 @@ use Discord\Repository\Interaction\ComponentRepository;
 /**
  * Represents a component received with a message or interaction.
  *
- * @see https://discord.com/developers/docs/interactions/message-components#component-object
+ * @todo split per type
+ *
+ * @link https://discord.com/developers/docs/interactions/message-components#component-object
+ *
+ * @since 7.0.0
  *
  * @property int                 $type        Component type.
  * @property string|null         $custom_id   A developer-defined identifier for the component, max 100 characters. (Buttons, Select Menus)
@@ -76,7 +80,7 @@ class Component extends Part
     protected function setComponentsAttribute($components)
     {
         foreach ($components as $component) {
-            $this->components->pushItem($this->factory->create(Component::class, $component, true));
+            $this->components->pushItem($this->factory->part(Component::class, (array) $component, true));
         }
     }
 
@@ -87,11 +91,11 @@ class Component extends Part
      */
     protected function getEmojiAttribute(): ?Emoji
     {
-        if (isset($this->attributes['emoji'])) {
-            return $this->factory->create(Emoji::class, $this->attributes['emoji'], true);
+        if (! isset($this->attributes['emoji'])) {
+            return null;
         }
 
-        return null;
+        return $this->factory->part(Emoji::class, (array) $this->attributes['emoji'], true);
     }
 
     /**

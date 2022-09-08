@@ -16,7 +16,9 @@ use Discord\Parts\Part;
 /**
  * Application Command Permissions Class.
  *
- * @see https://discord.com/developers/docs/interactions/application-commands#application-command-permissions-object-application-command-permissions-structure
+ * @link https://discord.com/developers/docs/interactions/application-commands#application-command-permissions-object-application-command-permissions-structure
+ *
+ * @since 7.0.0
  *
  * @property string $id         The id of the role / user / channel
  * @property int    $type       Role / user / channel
@@ -31,5 +33,9 @@ class Permission extends Part
     /**
      * @inheritdoc
      */
-    protected $fillable = ['id', 'type', 'permission'];
+    protected $fillable = [
+        'id',
+        'type',
+        'permission',
+    ];
 }

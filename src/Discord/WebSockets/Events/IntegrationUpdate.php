@@ -12,23 +12,27 @@
 namespace Discord\WebSockets\Events;
 
 use Discord\WebSockets\Event;
-use Discord\Helpers\Deferred;
+use Discord\Parts\Guild\Guild;
 use Discord\Parts\Guild\Integration;
 
 /**
- * @see https://discord.com/developers/docs/topics/gateway#integration-update
+ * @link https://discord.com/developers/docs/topics/gateway#integration-update
+ *
+ * @since 7.0.0
  */
 class IntegrationUpdate extends Event
 {
     /**
      * @inheritdoc
      */
-    public function handle(Deferred &$deferred, $data): void
+    public function handle($data)
     {
         $integrationPart = $oldIntegration = null;
 
-        if ($guild = $this->discord->guilds->get('id', $data->guild_id)) {
-            if ($oldIntegration = $guild->integrations->get('id', $data->id)) {
+        /** @var ?Guild */
+        if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
+            /** @var ?Integration */
+            if ($oldIntegration = yield $guild->integrations->cacheGet($data->id)) {
                 // Swap
                 $integrationPart = $oldIntegration;
                 $oldIntegration = clone $oldIntegration;
@@ -37,18 +41,19 @@ class IntegrationUpdate extends Event
             }
         }
 
-        if (! $integrationPart) {
+        if ($integrationPart === null) {
             /** @var Integration */
-            $integrationPart = $this->factory->create(Integration::class, $data, true);
-            if ($guild = $integrationPart->guild) {
-                $guild->integrations->pushItem($integrationPart);
-            }
+            $integrationPart = $this->factory->part(Integration::class, (array) $data, true);
+        }
+
+        if ($guild) {
+            yield $guild->integrations->cache->set($data->id, $integrationPart);
         }
 
         if (isset($data->user)) {
             $this->cacheUser($data->user);
         }
 
-        $deferred->resolve([$integrationPart, $oldIntegration]);
+        return [$integrationPart, $oldIntegration];
     }
 }

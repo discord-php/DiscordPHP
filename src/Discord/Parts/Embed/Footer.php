@@ -16,7 +16,9 @@ use Discord\Parts\Part;
 /**
  * The footer section of an embed.
  *
- * @see https://discord.com/developers/docs/resources/channel#embed-object-embed-footer-structure
+ * @link https://discord.com/developers/docs/resources/channel#embed-object-embed-footer-structure
+ *
+ * @since 4.0.3
  *
  * @property string      $text           Footer text.
  * @property string|null $icon_url       URL of an icon for the footer. Must be https.
@@ -27,5 +29,9 @@ class Footer extends Part
     /**
      * @inheritdoc
      */
-    protected $fillable = ['text', 'icon_url', 'proxy_icon_url'];
+    protected $fillable = [
+        'text',
+        'icon_url',
+        'proxy_icon_url',
+    ];
 }

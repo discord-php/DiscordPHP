@@ -16,6 +16,9 @@ use React\EventLoop\LoopInterface;
 use React\Promise\ExtendedPromiseInterface;
 use React\Stream\WritableStreamInterface;
 
+/**
+ * @since 6.0.0
+ */
 class Buffer extends EventEmitter implements WritableStreamInterface
 {
     /**

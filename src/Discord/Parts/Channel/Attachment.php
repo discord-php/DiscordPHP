@@ -16,7 +16,9 @@ use Discord\Parts\Part;
 /**
  * A message attachment.
  *
- * @see https://discord.com/developers/docs/resources/channel#attachment-object
+ * @link https://discord.com/developers/docs/resources/channel#attachment-object
+ *
+ * @since 7.0.0
  *
  * @property string      $id           Attachment ID.
  * @property string      $filename     Name of file attached.

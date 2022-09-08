@@ -13,48 +13,59 @@ namespace Discord\WebSockets\Events;
 
 use Discord\Parts\WebSockets\VoiceStateUpdate as VoiceStateUpdatePart;
 use Discord\WebSockets\Event;
-use Discord\Helpers\Deferred;
+use Discord\Parts\Channel\Channel;
+use Discord\Parts\Guild\Guild;
 
 /**
- * @see https://discord.com/developers/docs/topics/gateway#voice-state-update
+ * @link https://discord.com/developers/docs/topics/gateway#voice-state-update
+ *
+ * @since 2.1.3
  */
 class VoiceStateUpdate extends Event
 {
     /**
      * @inheritdoc
      */
-    public function handle(Deferred &$deferred, $data): void
+    public function handle($data)
     {
-        $state = $this->factory->create(VoiceStateUpdatePart::class, $data, true);
-        $old_state = null;
+        $statePart = $oldVoiceState = null;
 
-        if ($state->guild) {
-            $guild = $state->guild;
-
+        /** @var ?Guild */
+        if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
+            /** @var ?Channel */
             foreach ($guild->channels as $channel) {
                 if (! $channel->allowVoice()) {
                     continue;
                 }
 
-                // Remove old member states
-                if ($channel->members->has($state->user_id)) {
-                    $old_state = $channel->members->offsetGet($state->user_id);
-                    $channel->members->offsetUnset($state->user_id);
+                /** @var ?VoiceStateUpdatePart */
+                if ($oldVoiceState = yield $channel->members->cacheGet($data->user_id)) {
+                    // Swap
+                    $statePart = $oldVoiceState;
+                    $oldVoiceState = clone $oldVoiceState;
+
+                    $statePart->fill((array) $data);
                 }
 
-                // Add member state to new channel
-                if ($channel->id == $state->channel_id) {
-                    $channel->members->offsetSet($state->user_id, $state);
+                if ($statePart === null) {
+                    /** @var VoiceStateUpdatePart */
+                    $statePart = $this->factory->part(VoiceStateUpdatePart::class, (array) $data, true);
                 }
 
-                $guild->channels->offsetSet($channel->id, $channel);
+                if (! isset($data->channel_id)) {
+                    // Remove old member states
+                    yield $channel->members->cache->delete($data->user_id);
+                    break;
+                } elseif ($channel->id == $data->channel_id) {
+                    // Add member state to new channel
+                    yield $channel->members->cache->set($data->user_id, $statePart);
+                    break;
+                }
             }
-
-            $this->discord->guilds->offsetSet($state->guild->id, $state->guild);
         }
 
         $this->cacheUser($data->member->user);
 
-        $deferred->resolve([$state, $old_state]);
+        return [$statePart, $oldVoiceState];
     }
 }

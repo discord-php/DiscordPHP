@@ -12,26 +12,38 @@
 namespace Discord\WebSockets\Events;
 
 use Discord\WebSockets\Event;
-use Discord\Helpers\Deferred;
+use Discord\Parts\Channel\Channel;
+use Discord\Parts\Channel\Invite;
+use Discord\Parts\Guild\Guild;
 
 /**
- * @see https://discord.com/developers/docs/topics/gateway#invite-delete
+ * @link https://discord.com/developers/docs/topics/gateway#invite-delete
+ *
+ * @since 5.0.0
  */
 class InviteDelete extends Event
 {
     /**
      * @inheritdoc
      */
-    public function handle(Deferred &$deferred, $data): void
+    public function handle($data)
     {
         $invitePart = null;
 
-        if ($guild = $this->discord->guilds->get('id', $data->guild_id)) {
-            if ($channel = $guild->channels->get('id', $data->channel_id)) {
-                $invitePart = $channel->invites->pull($data->code);
+        /** @var ?Guild */
+        if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
+            /** @var ?Channel */
+            if ($channel = yield $guild->channels->cacheGet($data->channel_id)) {
+                /** @var ?Invite */
+                $invitePart = yield $channel->invites->cachePull($data->code);
+            }
+
+            if ($invitePart === null) {
+                /** @var ?Invite */
+                $invitePart = yield $guild->invites->cachePull($data->code);
             }
         }
 
-        $deferred->resolve($invitePart ?? $data);
+        return $invitePart ?? $data;
     }
 }

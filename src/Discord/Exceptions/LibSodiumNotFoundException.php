@@ -13,6 +13,8 @@ namespace Discord\Exceptions;
 
 /**
  * Thrown when libsodium or libsodium-php cannot be found.
+ *
+ * @since 3.2.1
  */
 class LibSodiumNotFoundException extends \Exception
 {

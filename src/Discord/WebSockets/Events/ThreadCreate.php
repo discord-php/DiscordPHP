@@ -11,43 +11,34 @@
 
 namespace Discord\WebSockets\Events;
 
-use Discord\Helpers\Deferred;
-use Discord\Parts\Thread\Member;
+use Discord\Parts\Channel\Channel;
+use Discord\Parts\Guild\Guild;
 use Discord\Parts\Thread\Thread;
 use Discord\WebSockets\Event;
 
 /**
- * @see https://discord.com/developers/docs/topics/gateway#thread-create
+ * @link https://discord.com/developers/docs/topics/gateway#thread-create
+ *
+ * @since 7.0.0
  */
 class ThreadCreate extends Event
 {
     /**
      * @inheritdoc
      */
-    public function handle(Deferred &$deferred, $data)
+    public function handle($data)
     {
         /** @var Thread */
-        $thread = $this->factory->create(Thread::class, $data, true);
+        $threadPart = $this->factory->part(Thread::class, (array) $data, true);
 
-        // Ignore threads that have already been added
-        if ($parent = $thread->parent) {
-            if ($parent->threads->get('id', $thread->id)) {
-                return;
+        /** @var ?Guild */
+        if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
+            /** @var ?Channel */
+            if ($parent = yield $guild->channels->cacheGet($data->parent_id)) {
+                yield $parent->threads->cache->set($data->id, $threadPart);
             }
-
-            foreach ($data->members ?? [] as $member) {
-                $member = $this->factory->create(Member::class, $member, true);
-                $thread->members->pushItem($member);
-            }
-
-            if ($data->member ?? null) {
-                $member = $this->factory->create(Member::class, $data->member, true);
-                $thread->members->pushItem($member);
-            }
-
-            $parent->threads->pushItem($thread);
         }
-        
-        $deferred->resolve($thread);
+
+        return $threadPart;
     }
 }

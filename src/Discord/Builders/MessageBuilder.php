@@ -28,6 +28,8 @@ use function Discord\poly_strlen;
 /**
  * Helper class used to build messages.
  *
+ * @since 7.0.0
+ *
  * @author David Cole <david.cole1340@gmail.com>
  */
 class MessageBuilder implements JsonSerializable
@@ -54,7 +56,7 @@ class MessageBuilder implements JsonSerializable
     private $username;
 
     /**
-     * Override the default avatar of the webhook
+     * Override the default avatar of the webhook.
      *
      * @var string|null
      */
@@ -125,7 +127,7 @@ class MessageBuilder implements JsonSerializable
     /**
      * Creates a new message builder.
      *
-     * @return $this
+     * @return self
      */
     public static function new(): self
     {
@@ -139,7 +141,7 @@ class MessageBuilder implements JsonSerializable
      *
      * @throws \LengthException
      *
-     * @return $this
+     * @return self
      */
     public function setContent(string $content): self
     {
@@ -159,7 +161,7 @@ class MessageBuilder implements JsonSerializable
      *
      * @throws \LengthException `$nonce` string exceeds 25 characters.
      *
-     * @return $this
+     * @return self
      */
     public function setNonce($nonce = null): self
     {
@@ -179,7 +181,7 @@ class MessageBuilder implements JsonSerializable
      *
      * @throws \LengthException `$username` exceeds 80 characters.
      *
-     * @return $this
+     * @return self
      */
     public function setUsername(string $username): self
     {
@@ -197,7 +199,7 @@ class MessageBuilder implements JsonSerializable
      *
      * @param string $avatar_url New webhook avatar URL.
      *
-     * @return $this
+     * @return self
      */
     public function setAvatarUrl(string $avatar_url): self
     {
@@ -211,7 +213,7 @@ class MessageBuilder implements JsonSerializable
      *
      * @param bool $tts
      *
-     * @return $this
+     * @return self
      */
     public function setTts(bool $tts = false): self
     {
@@ -237,7 +239,7 @@ class MessageBuilder implements JsonSerializable
      *
      * @throws \OverflowException Builder exceeds 10 embeds.
      *
-     * @return $this
+     * @return self
      */
     public function addEmbed(...$embeds): self
     {
@@ -261,7 +263,7 @@ class MessageBuilder implements JsonSerializable
      *
      * @param array $embeds
      *
-     * @return $this
+     * @return self
      */
     public function setEmbeds(array $embeds): self
     {
@@ -275,7 +277,7 @@ class MessageBuilder implements JsonSerializable
      *
      * @param array $allowed_mentions
      *
-     * @return $this
+     * @return self
      */
     public function setAllowedMentions(array $allowed_mentions): self
     {
@@ -289,7 +291,7 @@ class MessageBuilder implements JsonSerializable
      *
      * @param Message|null $message
      *
-     * @return $this
+     * @return self
      */
     public function setReplyTo(?Message $message = null): self
     {
@@ -306,7 +308,7 @@ class MessageBuilder implements JsonSerializable
      * @throws \InvalidArgumentException Component is not a type of `ActionRow` or `SelectMenu`
      * @throws \OverflowException        Builder exceeds 5 components.
      *
-     * @return $this
+     * @return self
      */
     public function addComponent(Component $component): self
     {
@@ -328,7 +330,7 @@ class MessageBuilder implements JsonSerializable
      *
      * @param Component $component Component to remove.
      *
-     * @return $this
+     * @return self
      */
     public function removeComponent(Component $component): self
     {
@@ -344,7 +346,7 @@ class MessageBuilder implements JsonSerializable
      *
      * @param array $components New message components.
      *
-     * @return $this
+     * @return self
      */
     public function setComponents(array $components): self
     {
@@ -374,7 +376,7 @@ class MessageBuilder implements JsonSerializable
      *
      * @throws \OverflowException Builder exceeds 3 stickers.
      *
-     * @return $this
+     * @return self
      */
     public function addSticker($sticker): self
     {
@@ -396,7 +398,7 @@ class MessageBuilder implements JsonSerializable
      *
      * @param string|Sticker $sticker Sticker to remove.
      *
-     * @return $this
+     * @return self
      */
     public function removeSticker($sticker): self
     {
@@ -416,7 +418,7 @@ class MessageBuilder implements JsonSerializable
      *
      * @param array $stickers New sticker ids.
      *
-     * @return $this
+     * @return self
      */
     public function setStickers(array $stickers): self
     {
@@ -449,7 +451,7 @@ class MessageBuilder implements JsonSerializable
      * @param string      $filepath Path to the file to send.
      * @param string|null $filename Name to send the file as. Null for the base name of `$filepath`.
      *
-     * @return $this
+     * @return self
      */
     public function addFile(string $filepath, ?string $filename = null): self
     {
@@ -457,11 +459,7 @@ class MessageBuilder implements JsonSerializable
             throw new FileNotFoundException("File does not exist at path {$filepath}.");
         }
 
-        if ($filename == null) {
-            $filename = basename($filepath);
-        }
-
-        return $this->addFileFromContent($filename, file_get_contents($filepath));
+        return $this->addFileFromContent($filename ?? basename($filepath), file_get_contents($filepath));
     }
 
     /**
@@ -470,7 +468,7 @@ class MessageBuilder implements JsonSerializable
      * @param string $filename Name to send the file as.
      * @param string $content  Content of the file.
      *
-     * @return $this
+     * @return self
      */
     public function addFileFromContent(string $filename, string $content): self
     {
@@ -496,7 +494,7 @@ class MessageBuilder implements JsonSerializable
     /**
      * Removes all files from the builder.
      *
-     * @return $this
+     * @return self
      */
     public function clearFiles(): self
     {
@@ -510,7 +508,7 @@ class MessageBuilder implements JsonSerializable
      *
      * @param Attachment|string|int $attachment Attachment objects or IDs to add
      *
-     * @return $this
+     * @return self
      */
     public function addAttachment(...$attachments): self
     {
@@ -540,7 +538,7 @@ class MessageBuilder implements JsonSerializable
     /**
      * Removes all attachments from the message.
      *
-     * @return $this
+     * @return self
      */
     public function clearAttachments(): self
     {
@@ -556,7 +554,7 @@ class MessageBuilder implements JsonSerializable
      *
      * @param int $flags
      *
-     * @return $this
+     * @return self
      */
     public function _setFlags(int $flags): self
     {

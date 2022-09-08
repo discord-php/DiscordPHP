@@ -15,11 +15,13 @@ use Discord\Parts\Part;
 
 /**
  * Represents an object of options for different audit log action types.
- * Not all options will be present. See the Discord developer docs for
- * more information: https://discord.com/developers/docs/resources/audit-log#audit-log-entry-object-optional-audit-entry-info.
+ * Not all options will be present. See the Discord developer docs for more information.
  *
- * @see https://discord.com/developers/docs/resources/audit-log#audit-log-entry-object-optional-audit-entry-info
+ * @link https://discord.com/developers/docs/resources/audit-log#audit-log-entry-object-optional-audit-entry-info
  *
+ * @since 5.1.0
+ *
+ * @property string $application_id     ID of the app whose permissions were targeted.
  * @property string $channel_id         Channel in which the entities were targeted.
  * @property string $count              Number of entities that were targeted.
  * @property string $delete_member_days Number of days after which inactive members were kicked.
@@ -35,13 +37,14 @@ class Options extends Part
      * @inheritdoc
      */
     protected $fillable = [
-        'delete_member_days',
-        'members_removed',
+        'application_id',
         'channel_id',
-        'message_id',
         'count',
+        'delete_member_days',
         'id',
-        'type',
+        'members_removed',
+        'message_id',
         'role_name',
+        'type',
     ];
 }

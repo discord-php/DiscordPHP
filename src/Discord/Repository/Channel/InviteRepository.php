@@ -16,15 +16,19 @@ use Discord\Parts\Channel\Invite;
 use Discord\Repository\AbstractRepository;
 
 /**
- * Contains invites for channels.
+ * Contains invites of a channel.
  *
- * @see \Discord\Parts\Guild\Invite
+ * @see Invite
  * @see \Discord\Parts\Channel\Channel
  *
- * @method Invite|null get(string $discrim, $key)  Gets an item from the collection.
- * @method Invite|null first()                     Returns the first element of the collection.
- * @method Invite|null pull($key, $default = null) Pulls an item from the repository, removing and returning the item.
- * @method Invite|null find(callable $callback)    Runs a filter callback over the repository.
+ * @since 4.0.0
+ *
+ * @method Invite      create(array $attributes = [], bool $created = false)
+ * @method Invite|null get(string $discrim, $key)
+ * @method Invite|null pull(string|int $key, $default = null)
+ * @method Invite|null first()
+ * @method Invite|null last()
+ * @method Invite|null find()
  */
 class InviteRepository extends AbstractRepository
 {

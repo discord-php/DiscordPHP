@@ -17,20 +17,28 @@ use Discord\Repository\Interaction\OptionRepository;
 /**
  * Represents an option received with an interaction.
  *
- * @see https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-interaction-data-option-structure
+ * @link https://discord.com/developers/docs/interactions/application-commands#application-command-object-application-command-interaction-data-option-structure
  *
- * @property string           $name    Name of the option.
- * @property int              $type    Type of the option.
- * @property mixed            $value   Value of the option.
- * @property OptionRepository $options Sub-options if applicable.
- * @property bool             $focused Whether this option is the currently focused option for autocomplete.
+ * @since 7.0.0
+ *
+ * @property string                $name    Name of the parameter.
+ * @property int                   $type    Type of the option.
+ * @property string|int|float|null $value   Value of the option resulting from user input.
+ * @property OptionRepository      $options Present if this option is a group or subcommand.
+ * @property bool|null             $focused `true` if this option is the currently focused option for autocomplete.
  */
 class Option extends Part
 {
     /**
      * @inheritdoc
      */
-    protected $fillable = ['name', 'type', 'value', 'options', 'focused'];
+    protected $fillable = [
+        'name',
+        'type',
+        'value',
+        'options',
+        'focused',
+    ];
 
     /**
      * @inheritdoc
@@ -47,7 +55,7 @@ class Option extends Part
     protected function setOptionsAttribute($options)
     {
         foreach ($options as $option) {
-            $this->options->pushItem($this->factory->create(Option::class, $option, true));
+            $this->options->pushItem($this->factory->part(Option::class, (array) $option, true));
         }
     }
 

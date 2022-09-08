@@ -17,13 +17,16 @@ use Discord\Repository\AbstractRepository;
 /**
  * Contains reactions on a message.
  *
- * @see \Discord\Parts\Channel\Message
  * @see Reaction
+ * @see \Discord\Parts\Channel\Message
  *
- * @method Reaction|null get(string $discrim, $key)  Gets an item from the collection.
- * @method Reaction|null first()                     Returns the first element of the collection.
- * @method Reaction|null pull($key, $default = null) Pulls an item from the repository, removing and returning the item.
- * @method Reaction|null find(callable $callback)    Runs a filter callback over the repository.
+ * @since 5.1.0
+ *
+ * @method Reaction|null get(string $discrim, $key)
+ * @method Reaction|null pull(string|int $key, $default = null)
+ * @method Reaction|null first()
+ * @method Reaction|null last()
+ * @method Reaction|null find()
  */
 class ReactionRepository extends AbstractRepository
 {

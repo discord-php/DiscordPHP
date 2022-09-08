@@ -13,7 +13,7 @@ namespace Discord;
 
 use Discord\Exceptions\IntentException;
 use Discord\Factory\Factory;
-use Discord\Helpers\Bitwise;
+use Discord\Helpers\BigInt;
 use Discord\Http\Http;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\OAuth\Application;
@@ -47,13 +47,19 @@ use Discord\Http\Drivers\React;
 use Discord\Http\Endpoint;
 use Evenement\EventEmitterTrait;
 use Psr\Log\LoggerInterface;
+use React\Cache\ArrayCache;
 use React\Promise\ExtendedPromiseInterface;
 use React\Promise\PromiseInterface;
 use React\Socket\Connector as SocketConnector;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+use function React\Async\coroutine;
+use function React\Promise\all;
+
 /**
  * The Discord client class.
+ *
+ * @version 10.0.0
  *
  * @property string                   $id               The unique identifier of the client.
  * @property string                   $username         The username of the client.
@@ -316,6 +322,13 @@ class Discord
     protected $factory;
 
     /**
+     * The react/cache interface.
+     *
+     * @var \React\Cache\CacheInterface[]|\Psr\SimpleCache\CacheInterface[]
+     */
+    protected $cache;
+
+    /**
      * The Client class.
      *
      * @var Client Discord client.
@@ -330,6 +343,13 @@ class Discord
     private $application_commands;
 
     /**
+     * Whether the loop is stopping.
+     *
+     * @var bool
+     */
+    protected $stopping;
+
+    /**
      * Creates a Discord client instance.
      *
      * @param  array           $options Array of options.
@@ -342,8 +362,8 @@ class Discord
         }
 
         // x86 need gmp extension for big integer operation
-        if (PHP_INT_SIZE === 4 && ! Bitwise::init()) {
-            trigger_error('ext-gmp is not loaded. Permissions will NOT work correctly!', E_USER_WARNING);
+        if (PHP_INT_SIZE === 4 && ! BigInt::init()) {
+            trigger_error('ext-gmp is not loaded. Big integer calculations (e.g. Permissions) will NOT work correctly!', E_USER_WARNING);
         }
 
         $options = $this->resolveOptions($options);
@@ -355,7 +375,10 @@ class Discord
 
         $this->logger->debug('Initializing DiscordPHP '.self::VERSION.' (DiscordPHP-Http: '.Http::VERSION.' & Gateway: v'.self::GATEWAY_VERSION.') on PHP '.PHP_VERSION);
 
-        $connector = new SocketConnector($this->loop, $options['socket_options']);
+        $this->cache = $options['cacheInterface'];
+        $this->logger->warning('Attached experimental CacheInterface: '.get_class($this->cache[AbstractRepository::class]));
+
+        $connector = new SocketConnector($options['socket_options'], $this->loop);
         $this->wsFactory = new Connector($this->loop, $connector);
         $this->handlers = new Handlers();
 
@@ -377,8 +400,8 @@ class Discord
             new React($this->loop, $options['socket_options'])
         );
 
-        $this->factory = new Factory($this, $this->http);
-        $this->client = $this->factory->create(Client::class, [], true);
+        $this->factory = new Factory($this);
+        $this->client = $this->factory->part(Client::class, []);
 
         $this->connectWs();
     }
@@ -420,7 +443,7 @@ class Discord
         $this->logger->debug('ready packet received');
 
         $content = $data->d;
- 
+
         // Check if we received resume_gateway_url
         if (isset($content->resume_gateway_url)) {
             $this->resume_gateway_url = $content->resume_gateway_url;
@@ -443,31 +466,27 @@ class Discord
 
         // Setup the user account
         $this->client->fill((array) $content->user);
+        $this->client->created = true;
         $this->sessionId = $content->session_id;
 
         $this->logger->debug('client created and session id stored', ['session_id' => $content->session_id, 'user' => $this->client->user->getPublicAttributes()]);
 
         // Guilds
-        $event = new GuildCreate(
-            $this->http,
-            $this->factory,
-            $this
-        );
+        $event = new GuildCreate($this);
 
         $unavailable = [];
 
         foreach ($content->guilds as $guild) {
-            $deferred = new Deferred();
+            /** @var ExtendedPromiseInterface */
+            $promise = coroutine([$event, 'handle'], $guild);
 
-            $deferred->promise()->done(null, function ($d) use (&$unavailable) {
+            $promise->done(null, function ($d) use (&$unavailable) {
                 list($status, $data) = $d;
 
                 if ($status == 'unavailable') {
                     $unavailable[$data] = $data;
                 }
             });
-
-            $event->handle($deferred, $guild);
         }
 
         $this->logger->info('stored guilds', ['count' => $this->guilds->count(), 'unavailable' => count($unavailable)]);
@@ -507,46 +526,48 @@ class Discord
      */
     protected function handleGuildMembersChunk(object $data): void
     {
-        $guild = $this->guilds->offsetGet($data->d->guild_id);
-        $members = $data->d->members;
+        if (! $guild = $this->guilds->get('id', $data->d->guild_id)) {
+            $this->logger->warning('not chunking member, Guild is not cached.', ['guild_id' => $data->d->guild_id]);
 
-        $this->logger->debug('received guild member chunk', ['guild_id' => $guild->id, 'guild_name' => $guild->name, 'chunk_count' => count($members), 'member_collection' => $guild->members->count(), 'member_count' => $guild->member_count]);
+            return;
+        }
 
-        $count = 0;
-        $skipped = 0;
-        foreach ($members as $member) {
-            if ($guild->members->has($member->user->id)) {
-                ++$skipped;
+        $this->logger->debug('received guild member chunk', ['guild_id' => $data->d->guild_id, 'guild_name' => $guild->name, 'chunk_count' => count($data->d->members), 'member_collection' => $guild->members->count(), 'member_count' => $guild->member_count, 'progress' => [$data->d->chunk_index + 1, $data->d->chunk_count]]);
+
+        $count = $skipped = 0;
+        $await = [];
+        foreach ($data->d->members as $member) {
+            $userId = $member->user->id;
+            if ($guild->members->offsetExists($userId)) {
                 continue;
             }
 
             $member = (array) $member;
-            $member['guild_id'] = $guild->id;
+            $member['guild_id'] = $data->d->guild_id;
             $member['status'] = 'offline';
+            $await[] = $guild->members->cache->set($userId, $this->factory->part(Member::class, $member, true));
 
-            if (! $this->users->has($member['user']->id)) {
-                $userPart = $this->factory->create(User::class, $member['user'], true);
-                $this->users->offsetSet($userPart->id, $userPart);
+            if (! $this->users->offsetExists($userId)) {
+                $await[] = $this->users->cache->set($userId, $this->factory->part(User::class, (array) $member['user'], true));
             }
-
-            $memberPart = $this->factory->create(Member::class, $member, true);
-            $guild->members->offsetSet($memberPart->id, $memberPart);
 
             ++$count;
         }
 
-        $this->logger->debug('parsed '.$count.' members (skipped '.$skipped.')', ['repository_count' => $guild->members->count(), 'actual_count' => $guild->member_count]);
+        all($await)->then(function () use ($guild, $count, $skipped) {
+            $membersCount = $guild->members->count();
+            $this->logger->debug('parsed '.$count.' members (skipped '.$skipped.')', ['repository_count' => $membersCount, 'actual_count' => $guild->member_count]);
 
-        if ($guild->members->count() >= $guild->member_count) {
-            $this->largeSent = array_diff($this->largeSent, [$guild->id]);
+            if ($membersCount >= $guild->member_count) {
+                $this->largeSent = array_diff($this->largeSent, [$guild->id]);
 
-            $this->logger->debug('all users have been loaded', ['guild' => $guild->id, 'member_collection' => $guild->members->count(), 'member_count' => $guild->member_count]);
-            $this->guilds->offsetSet($guild->id, $guild);
-        }
+                $this->logger->debug('all users have been loaded', ['guild' => $guild->id, 'member_collection' => $membersCount, 'member_count' => $guild->member_count]);
+            }
 
-        if (count($this->largeSent) < 1) {
-            $this->ready();
-        }
+            if (count($this->largeSent) < 1) {
+                $this->ready();
+            }
+        });
     }
 
     /**
@@ -737,11 +758,8 @@ class Discord
         ];
 
         if (! is_null($hData = $this->handlers->getHandler($data->t))) {
-            $handler = new $hData['class'](
-                $this->http,
-                $this->factory,
-                $this
-            );
+            /** @var Event */
+            $handler = new $hData['class']($this);
 
             $deferred = new Deferred();
             $deferred->promise()->done(function ($d) use ($data, $hData) {
@@ -773,10 +791,14 @@ class Discord
 
             if (! $this->emittedReady && (! in_array($data->t, $parse))) {
                 $this->unparsedPackets[] = function () use (&$handler, &$deferred, &$data) {
-                    $handler->handle($deferred, $data->d);
+                    /** @var ExtendedPromiseInterface */
+                    $promise = coroutine([$handler, 'handle'], $data->d);
+                    $promise->done([$deferred, 'resolve'], [$deferred, 'reject']);
                 };
             } else {
-                $handler->handle($deferred, $data->d);
+                /** @var ExtendedPromiseInterface */
+                $promise = coroutine([$handler, 'handle'], $data->d);
+                $promise->done([$deferred, 'resolve'], [$deferred, 'reject']);
             }
         } elseif (isset($handlers[$data->t])) {
             $this->{$handlers[$data->t]}($data);
@@ -1352,9 +1374,10 @@ class Discord
                 'intents',
                 'socket_options',
                 'dnsConfig',
+                'cacheInterface',
+                'cacheSweep',
             ])
             ->setDefaults([
-                'loop' => LoopFactory::create(),
                 'logger' => null,
                 'loadAllMembers' => false,
                 'disabledEvents' => [],
@@ -1362,6 +1385,8 @@ class Discord
                 'retrieveBans' => false,
                 'intents' => Intents::getDefaultIntents(),
                 'socket_options' => [],
+                'cacheInterface' => new ArrayCache(),
+                'cacheSweep' => true,
             ])
             ->setAllowedTypes('token', 'string')
             ->setAllowedTypes('logger', ['null', LoggerInterface::class])
@@ -1372,9 +1397,20 @@ class Discord
             ->setAllowedTypes('retrieveBans', 'bool')
             ->setAllowedTypes('intents', ['array', 'int'])
             ->setAllowedTypes('socket_options', 'array')
-            ->setAllowedTypes('dnsConfig', ['string', \React\Dns\Config\Config::class]);
+            ->setAllowedTypes('dnsConfig', ['string', \React\Dns\Config\Config::class])
+            ->setAllowedTypes('cacheInterface', ['array', \React\Cache\CacheInterface::class, \Psr\SimpleCache\CacheInterface::class])
+            ->setAllowedTypes('cacheSweep', 'bool')
+            ->setNormalizer('cacheInterface', function ($options, $value) {
+                if (! is_array($value)) {
+                    return [AbstractRepository::class => $value];
+                }
+
+                return $value;
+            });
 
         $options = $resolver->resolve($options);
+
+        $options['loop'] ??= LoopFactory::create();
 
         if (is_null($options['logger'])) {
             $logger = new Monolog('DiscordPHP');
@@ -1434,7 +1470,18 @@ class Discord
      */
     public function run(): void
     {
+        //while (! $this->stopping) {
         $this->loop->run();
+        //}
+    }
+
+    /**
+     * Stops the ReactPHP event loop.
+     */
+    public function stop(): void
+    {
+        $this->stopping = true;
+        $this->loop->stop();
     }
 
     /**
@@ -1452,7 +1499,7 @@ class Discord
         $this->logger->info('discord closed');
 
         if ($closeLoop) {
-            $this->loop->stop();
+            $this->stop();
         }
     }
 
@@ -1466,6 +1513,8 @@ class Discord
      * @return Part|AbstractRepository
      *
      * @see Factory::create()
+     *
+     * @deprecated 10.0.0 Use `new $class($discord, ...)`.
      */
     public function factory(string $class, $data = [], bool $created = false)
     {
@@ -1525,6 +1574,22 @@ class Discord
     }
 
     /**
+     * Gets the cache interface.
+     *
+     * @param string $name Repository class name.
+     *
+     * @return \React\Cache\CacheInterface|\Psr\SimpleCache\CacheInterface
+     */
+    public function getCache($repository_class = AbstractRepository::class)
+    {
+        if (! isset($this->cache[$repository_class])) {
+            $repository_class = AbstractRepository::class;
+        }
+
+        return $this->cache[$repository_class];
+    }
+
+    /**
      * Handles dynamic get calls to the client.
      *
      * @param string $name Variable name.
@@ -1533,7 +1598,7 @@ class Discord
      */
     public function __get(string $name)
     {
-        $allowed = ['loop', 'options', 'logger', 'http', 'application_commands'];
+        $allowed = ['loop', 'options', 'logger', 'http', 'application_commands', 'cache'];
 
         if (in_array($name, $allowed)) {
             return $this->{$name};
@@ -1584,7 +1649,7 @@ class Discord
     }
 
     /**
-     * Add listerner for incoming application command from interaction
+     * Add listerner for incoming application command from interaction.
      *
      * @param string|array  $name
      * @param callable      $callback

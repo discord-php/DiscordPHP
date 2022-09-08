@@ -9,7 +9,7 @@
  * with this source code in the LICENSE.md file.
  */
 
-namespace Discord\Repository\Guild;
+namespace Discord\Repository\Channel;
 
 use Discord\Http\Endpoint;
 use Discord\Parts\Channel\StageInstance;
@@ -18,18 +18,21 @@ use Discord\Repository\AbstractRepository;
 /**
  * Contains a live stage instances channel.
  *
- * @method StageInstance|null get(string $discrim, $key)  Gets an item from the collection.
- * @method StageInstance|null first()                     Returns the first element of the collection.
- * @method StageInstance|null pull($key, $default = null) Pulls an item from the repository, removing and returning the item.
- * @method StageInstance|null find(callable $callback)    Runs a filter callback over the repository.
+ * @see StageInstance
+ * @see \Discord\Parts\Channel\Channel
+ *
+ * @since 10.0.0 Moved from Guild to Channel
+ * @since 7.0.0
+ *
+ * @method StageInstance      create(array $attributes = [], bool $created = false)
+ * @method StageInstance|null get(string $discrim, $key)
+ * @method StageInstance|null pull(string|int $key, $default = null)
+ * @method StageInstance|null first()
+ * @method StageInstance|null last()
+ * @method StageInstance|null find()
  */
 class StageInstanceRepository extends AbstractRepository
 {
-    /**
-     * @inheritdoc
-     */
-    protected $discrim = 'channel_id';
-
     /**
      * @inheritdoc
      */

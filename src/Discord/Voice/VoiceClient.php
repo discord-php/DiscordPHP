@@ -38,6 +38,8 @@ use React\Stream\ReadableStreamInterface;
 
 /**
  * The Discord voice client.
+ *
+ * @since 3.2.0
  */
 class VoiceClient extends EventEmitter
 {

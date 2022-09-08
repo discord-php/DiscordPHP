@@ -20,20 +20,27 @@ use React\Promise\ExtendedPromiseInterface;
 /**
  * Represents a member that belongs to a thread. Not the same as a user nor a guild member.
  *
- * @see https://discord.com/developers/docs/resources/channel#thread-member-object
+ * @link https://discord.com/developers/docs/resources/channel#thread-member-object
  *
- * @property string|null $id             ID of the thread.
- * @property string|null $user_id        ID of the user that the member object represents.
- * @property User|null   $user           The user that the member object represents.
- * @property Carbon      $join_timestamp The time that the member joined the thread.
- * @property int         $flags          Flags relating to the member. Only used for client notifications.
+ * @since 7.0.0
+ *
+ * @property      string|null $id             ID of the thread.
+ * @property      string|null $user_id        ID of the user that the member object represents.
+ * @property-read User|null   $user           The user that the member object represents.
+ * @property      Carbon      $join_timestamp The time that the member joined the thread.
+ * @property      int         $flags          Flags relating to the member. Only used for client notifications.
  */
 class Member extends Part
 {
     /**
      * @inheritdoc
      */
-    protected $fillable = ['id', 'user_id', 'join_timestamp', 'flags'];
+    protected $fillable = [
+        'id',
+        'user_id',
+        'join_timestamp',
+        'flags',
+    ];
 
     /**
      * Returns the user that the member represents.
@@ -48,6 +55,8 @@ class Member extends Part
     /**
      * Returns the time that the member joined the thread.
      *
+     * @throws \Exception
+     *
      * @return Carbon
      */
     protected function getJoinTimestampAttribute(): Carbon
@@ -58,7 +67,7 @@ class Member extends Part
     /**
      * Attempts to remove the member from the thread.
      *
-     * @see https://discord.com/developers/docs/resources/channel#remove-thread-member
+     * @link https://discord.com/developers/docs/resources/channel#remove-thread-member
      *
      * @return ExtendedPromiseInterface
      */

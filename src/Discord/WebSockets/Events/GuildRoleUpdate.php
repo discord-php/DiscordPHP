@@ -13,40 +13,45 @@ namespace Discord\WebSockets\Events;
 
 use Discord\Parts\Guild\Role;
 use Discord\WebSockets\Event;
-use Discord\Helpers\Deferred;
+use Discord\Parts\Guild\Guild;
 
 /**
- * @see https://discord.com/developers/docs/topics/gateway#guild-role-update
+ * @link https://discord.com/developers/docs/topics/gateway#guild-role-update
+ *
+ * @since 2.1.3
  */
 class GuildRoleUpdate extends Event
 {
     /**
      * @inheritdoc
      */
-    public function handle(Deferred &$deferred, $data): void
+    public function handle($data)
     {
-        $adata = (array) $data->role;
-        $adata['guild_id'] = $data->guild_id;
+        $role = (array) $data->role;
+        $role['guild_id'] = $data->guild_id;
         $rolePart = $oldRole = null;
 
-        if ($guild = $this->discord->guilds->get('id', $data->guild_id)) {
-            if ($oldRole = $guild->roles->get('id', $data->role->id)) {
+        /** @var ?Guild */
+        if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
+            /** @var ?Role */
+            if ($oldRole = yield $guild->roles->cacheGet($data->role->id)) {
                 // Swap
                 $rolePart = $oldRole;
                 $oldRole = clone $oldRole;
 
-                $rolePart->fill($adata);
+                $rolePart->fill($role);
             }
         }
 
-        if (! $rolePart) {
+        if ($rolePart === null) {
             /** @var Role */
-            $rolePart = $this->factory->create(Role::class, $adata, true);
-            if ($guild = $rolePart->guild) {
-                $guild->roles->pushItem($rolePart);
-            }
+            $rolePart = $this->factory->part(Role::class, $role, true);
         }
 
-        $deferred->resolve([$rolePart, $oldRole]);
+        if ($guild) {
+            yield $guild->roles->cache->set($data->role->id, $rolePart);
+        }
+
+        return [$rolePart, $oldRole];
     }
 }

@@ -12,21 +12,26 @@
 namespace Discord\Repository\Guild;
 
 use Discord\Http\Endpoint;
-use Discord\Parts\Interactions\Command\Overwrite;
+use Discord\Parts\Guild\CommandPermissions;
 use Discord\Repository\AbstractRepository;
 
 /**
  * Contains permission overwrites for application guild commands.
  *
- * @see \Discord\Parts\Interactions\Command\Overwrite
+ * @see CommandPermissions
  * @see \Discord\Parts\Interactions\Command\Command
+ * @see \Discord\Parts\Interactions\Command\Permission
  *
- * @method Overwrite|null get(string $discrim, $key)  Gets an item from the collection.
- * @method Overwrite|null first()                     Returns the first element of the collection.
- * @method Overwrite|null pull($key, $default = null) Pulls an item from the repository, removing and returning the item.
- * @method Overwrite|null find(callable $callback)    Runs a filter callback over the repository.
+ * @since 10.0.0 Refactored from OverwriteRepository to CommandPermissionsRepository
+ * @since 7.0.0
+ *
+ * @method CommandPermissions|null get(string $discrim, $key)
+ * @method CommandPermissions|null pull(string|int $key, $default = null)
+ * @method CommandPermissions|null first()
+ * @method CommandPermissions|null last()
+ * @method CommandPermissions|null find()
  */
-class OverwriteRepository extends AbstractRepository
+class CommandPermissionsRepository extends AbstractRepository
 {
     /**
      * @inheritdoc
@@ -39,5 +44,5 @@ class OverwriteRepository extends AbstractRepository
     /**
      * @inheritdoc
      */
-    protected $class = Overwrite::class;
+    protected $class = CommandPermissions::class;
 }

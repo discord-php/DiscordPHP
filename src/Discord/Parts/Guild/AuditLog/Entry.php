@@ -18,16 +18,18 @@ use Discord\Parts\User\User;
 /**
  * Represents an entry in the audit log.
  *
- * @see https://discord.com/developers/docs/resources/audit-log#audit-log-entry-object
+ * @since 5.1.0
  *
- * @property string       $target_id   Id of the affected entity (webhook, user, role, etc.).
- * @property Collection   $changes     Changes made to the target_id.
- * @property string|null  $user_id     The user who made the changes.
- * @property User|null    $user
- * @property string       $id          Id of the entry.
- * @property int          $action_type Type of action that occurred.
- * @property Options|null $options     Additional info for certain action types.
- * @property string|null  $reason      The reason for the change (0-512 characters).
+ * @link https://discord.com/developers/docs/resources/audit-log#audit-log-entry-object
+ *
+ * @property      ?string      $target_id   Id of the affected entity (webhook, user, role, etc.).
+ * @property      Collection   $changes     Changes made to the target_id.
+ * @property      ?string      $user_id     The user who made the changes.
+ * @property-read User|null    $user
+ * @property      string       $id          Id of the entry.
+ * @property      int          $action_type Type of action that occurred.
+ * @property      Options|null $options     Additional info for certain action types.
+ * @property      string|null  $reason      The reason for the change (0-512 characters).
  */
 class Entry extends Part
 {
@@ -103,7 +105,7 @@ class Entry extends Part
     /**
      * Returns the user who made the changes.
      *
-     * @return User
+     * @return User|null
      */
     protected function getUserAttribute(): ?User
     {
@@ -113,7 +115,7 @@ class Entry extends Part
     /**
      * Returns a collection of changes.
      *
-     * @see https://discord.com/developers/docs/resources/audit-log#audit-log-change-object
+     * @link https://discord.com/developers/docs/resources/audit-log#audit-log-change-object
      *
      * @return Collection
      */
@@ -129,6 +131,6 @@ class Entry extends Part
      */
     protected function getOptionsAttribute(): Options
     {
-        return $this->factory->create(Options::class, $this->attributes['options'] ?? [], true);
+        return $this->factory->part(Options::class, (array) $this->attributes['options'] ?? [], true);
     }
 }

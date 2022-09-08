@@ -18,13 +18,17 @@ use Discord\Parts\User\User;
 /**
  * Sent on the message object when the message is a response to an Interaction without an existing message.
  *
- * @see https://discord.com/developers/docs/interactions/receiving-and-responding#message-interaction-object
+ * @link https://discord.com/developers/docs/interactions/receiving-and-responding#message-interaction-object
+ *
+ * @since 7.1.0
  *
  * @property string      $id     ID of the interaction.
  * @property int         $type   Type of interaction.
  * @property string      $name   Name of the application command, including subcommands and subcommand groups.
  * @property User        $user   User who invoked the interaction.
  * @property Member|null $member Partial Member who invoked the interaction.
+ *
+ * @property string|null $guild_id
  */
 class MessageInteraction extends Part
 {
@@ -38,7 +42,7 @@ class MessageInteraction extends Part
         'user',
         'member',
 
-        // internal
+        // @internal
         'guild_id',
     ];
 
@@ -58,7 +62,7 @@ class MessageInteraction extends Part
             return $user;
         }
 
-        return $this->factory->create(User::class, $this->attributes['user'], true);
+        return $this->factory->part(User::class, (array) $this->attributes['user'], true);
     }
 
     /**
@@ -68,9 +72,9 @@ class MessageInteraction extends Part
      */
     protected function getMemberAttribute(): ?Member
     {
-        if ($this->guild_id) {
+        if (isset($this->guild_id)) {
             if ($guild = $this->discord->guilds->get('id', $this->guild_id)) {
-                if ($member = $guild->members->get('id', $this->user->id)) {
+                if ($member = $guild->members->get('id', $this->attributes['member']->id ?? $this->user->id)) {
                     return $member;
                 }
             }

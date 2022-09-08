@@ -18,7 +18,9 @@ use function Discord\poly_strlen;
 /**
  * Option for select menu component.
  *
- * @see https://discord.com/developers/docs/interactions/message-components#select-menu-object-select-option-structure
+ * @link https://discord.com/developers/docs/interactions/message-components#select-menu-object-select-option-structure
+ *
+ * @since 7.0.0
  */
 class Option extends Component
 {
@@ -99,7 +101,7 @@ class Option extends Component
      *
      * @throws \LengthException
      *
-     * @return $this
+     * @return self
      */
     public function setDescription(?string $description): self
     {
@@ -117,7 +119,7 @@ class Option extends Component
      *
      * @param Emoji|string|null $emoji Emoji to set.
      *
-     * @return $this
+     * @return self
      */
     public function setEmoji($emoji): self
     {
@@ -161,7 +163,7 @@ class Option extends Component
      *
      * @param bool $default
      *
-     * @return $this
+     * @return self
      */
     public function setDefault(bool $default = true): self
     {

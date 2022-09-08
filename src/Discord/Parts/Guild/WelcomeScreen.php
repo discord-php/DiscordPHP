@@ -17,9 +17,11 @@ use Discord\Parts\Part;
 /**
  * A Welcome Screen of a Guild.
  *
- * @see https://discord.com/developers/docs/resources/guild#welcome-screen-object-welcome-screen-structure
+ * @link https://discord.com/developers/docs/resources/guild#welcome-screen-object-welcome-screen-structure
  *
- * @property string                      $description      The server description shown in the welcome screen.
+ * @since 7.0.0
+ *
+ * @property ?string                     $description      The server description shown in the welcome screen.
  * @property Collection|WelcomeChannel[] $welcome_channels The channels shown in the welcome screen, up to 5.
  */
 class WelcomeScreen extends Part
@@ -27,7 +29,10 @@ class WelcomeScreen extends Part
     /**
      * @inheritdoc
      */
-    protected $fillable = ['description', 'welcome_channels'];
+    protected $fillable = [
+        'description',
+        'welcome_channels',
+    ];
 
     /**
      * Returns the Welcome Channels of the Welcome Screen.

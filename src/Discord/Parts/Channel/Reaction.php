@@ -26,32 +26,45 @@ use function React\Promise\resolve;
 /**
  * Represents a reaction to a message by members(s).
  *
- * @see https://discord.com/developers/docs/resources/channel#reaction-object
+ * @link https://discord.com/developers/docs/resources/channel#reaction-object
  *
- * @property int            $count      Number of reactions.
- * @property bool           $me         Whether the current bot has reacted.
- * @property Emoji          $emoji      The emoji that was reacted with.
- * @property string         $id         The identifier of the reaction.
- * @property string         $message_id The message ID the reaction is for.
- * @property Message|null   $message    The message the reaction is for.
- * @property string         $channel_id The channel ID that the message belongs in.
- * @property Channel|Thread $channel    The channel that the message belongs to.
- * @property string|null    $guild_id   The guild ID of the guild that owns the channel the message belongs in.
- * @property Guild|null     $guild      The guild that owns the channel the message belongs in.
+ * @since 5.0.0
+ *
+ * @property int   $count Number of reactions.
+ * @property bool  $me    Whether the current bot has reacted.
+ * @property Emoji $emoji The emoji that was reacted with.
+ *
+ * @property      string         $channel_id The channel ID that the message belongs in.
+ * @property-read Channel|Thread $channel    The channel that the message belongs to.
+ * @property      string         $message_id The message ID the reaction is for.
+ * @property      Message|null   $message    The message the reaction is for.
+ * @property      string|null    $guild_id   The guild ID of the guild that owns the channel the message belongs in.
+ * @property-read Guild|null     $guild      The guild that owns the channel the message belongs in.
+ *
+ * @property-read string $id The identifier of the reaction.
  */
 class Reaction extends Part
 {
     /**
      * @inheritdoc
      */
-    protected $fillable = ['count', 'me', 'emoji', 'message_id', 'channel_id', 'guild_id'];
+    protected $fillable = [
+        'count',
+        'me',
+        'emoji',
+
+        // events only
+        'channel_id',
+        'message_id',
+        'guild_id',
+    ];
 
     /**
      * @inheritdoc
      */
     public function isPartial(): bool
     {
-        return $this->message == null;
+        return $this->message === null;
     }
 
     /**
@@ -61,7 +74,7 @@ class Reaction extends Part
     {
         return $this->http->get(Endpoint::bind(Endpoint::CHANNEL_MESSAGE, $this->channel_id, $this->message_id))
             ->then(function ($message) {
-                $this->attributes['message'] = $this->factory->create(Message::class, $message, true);
+                $this->message = $this->factory->part(Message::class, (array) $message + ['guild_id' => $this->guild_id], true);
 
                 return $this;
             });
@@ -84,7 +97,7 @@ class Reaction extends Part
     /**
      * Gets the users that have used the reaction.
      *
-     * @see https://discord.com/developers/docs/resources/channel#get-reactions
+     * @link https://discord.com/developers/docs/resources/channel#get-reactions
 
      * @param array $options See https://discord.com/developers/docs/resources/channel#get-reactions
      *
@@ -110,11 +123,11 @@ class Reaction extends Part
 
         return $this->http->get($query)
         ->then(function ($response) {
-            $users = new Collection([], 'id', User::class);
+            $users = Collection::for(User::class);
 
             foreach ((array) $response as $user) {
                 if (! $part = $this->discord->users->get('id', $user->id)) {
-                    $part = new User($this->discord, (array) $user, true);
+                    $part = $this->factory->part(User::class, (array) $user, true);
                 }
 
                 $users->pushItem($part);
@@ -166,11 +179,11 @@ class Reaction extends Part
      */
     protected function getEmojiAttribute(): ?Emoji
     {
-        if (isset($this->attributes['emoji'])) {
-            return $this->factory->create(Emoji::class, $this->attributes['emoji'], true);
+        if (! isset($this->attributes['emoji'])) {
+            return null;
         }
 
-        return null;
+        return $this->factory->part(Emoji::class, (array) $this->attributes['emoji'] + ['guild_id' => $this->guild_id], true);
     }
 
     /**
@@ -181,7 +194,7 @@ class Reaction extends Part
     protected function getMessageAttribute(): ?Message
     {
         if ($channel = $this->channel) {
-            return $channel->messages->offsetGet($this->message_id);
+            return $channel->messages->get('id', $this->message_id);
         }
 
         return $this->attributes['message'] ?? null;
@@ -198,15 +211,15 @@ class Reaction extends Part
             return $channel;
         }
 
-        if ($this->guild) {
-            foreach ($this->guild->channels as $channel) {
+        if ($guild = $this->guild) {
+            foreach ($guild->channels as $channel) {
                 if ($thread = $channel->threads->get('id', $this->channel_id)) {
                     return $thread;
                 }
             }
         }
 
-        return $this->factory->create(Channel::class, [
+        return $this->factory->part(Channel::class, [
             'id' => $this->channel_id,
             'type' => Channel::TYPE_DM,
         ]);
@@ -219,10 +232,10 @@ class Reaction extends Part
      */
     protected function getGuildAttribute(): ?Guild
     {
-        if ($this->guild_id) {
-            return $this->discord->guilds->get('id', $this->guild_id);
+        if (! isset($this->guild_id)) {
+            return null;
         }
 
-        return null;
+        return $this->discord->guilds->get('id', $this->guild_id);
     }
 }

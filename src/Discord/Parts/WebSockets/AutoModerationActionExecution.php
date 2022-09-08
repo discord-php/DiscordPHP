@@ -22,25 +22,27 @@ use Discord\Parts\User\User;
 /**
  * Sent when a rule is triggered and an action is executed (e.g. when a message is blocked).
  *
- * @see https://discord.com/developers/docs/topics/gateway#auto-moderation-action-execution-auto-moderation-action-execution-event-fields
+ * @link https://discord.com/developers/docs/topics/gateway#auto-moderation-action-execution-auto-moderation-action-execution-event-fields
  *
- * @property string       $guild_id                The id of the guild in which action was executed.
- * @property Guild|null   $guild                   The guild in which action was executed.
- * @property Action       $action                  The action which was executed.
- * @property string       $rule_id                 The id of the rule which action belongs to.
- * @property int          $rule_trigger_type       The trigger type of rule which was triggered.
- * @property string       $user_id                 The id of the user which generated the content which triggered the rule.
- * @property User|null    $user                    The user which generated the content which triggered the rule.
- * @property Member|null  $member                  Cached member which generated the content which triggered the rule.
- * @property string|null  $channel_id              The id of the channel in which user content was posted.
- * @property Channel|null $channel                 Cached channel in which user content was posted.
- * @property string|null  $message_id              The id of any user message which content belongs to (will not exist if message was blocked by automod or content was not part of any message)
- * @property Message|null $message                 Cached user message which content belongs to (will not exist if message was blocked by automod or content was not part of any message)
- * @property string|null  $alert_system_message_id The id of any system auto moderation messages posted as a result of this action (will not exist if this event does not correspond to an action with type `SEND_ALERT_MESSAGE`)
- * @property Message|null $alert_system_message    Cached system auto moderation messages posted as a result of this action.
- * @property string       $content                 The user generated text content.
- * @property string|null  $matched_keyword         The word or phrase configured in the rule that triggered the rule. (empty without message content intent)
- * @property string|null  $matched_content         The substring in content that triggered the rule. (empty without message content intent)
+ * @since 7.1.0
+ *
+ * @property      string       $guild_id                The id of the guild in which action was executed.
+ * @property-read Guild|null   $guild                   The guild in which action was executed.
+ * @property      Action       $action                  The action which was executed.
+ * @property      string       $rule_id                 The id of the rule which action belongs to.
+ * @property      int          $rule_trigger_type       The trigger type of rule which was triggered.
+ * @property      string       $user_id                 The id of the user which generated the content which triggered the rule.
+ * @property-read User|null    $user                    The user which generated the content which triggered the rule.
+ * @property-read Member|null  $member                  Cached member which generated the content which triggered the rule.
+ * @property      string|null  $channel_id              The id of the channel in which user content was posted.
+ * @property-read Channel|null $channel                 Cached channel in which user content was posted.
+ * @property      string|null  $message_id              The id of any user message which content belongs to (will not exist if message was blocked by automod or content was not part of any message)
+ * @property-read Message|null $message                 Cached user message which content belongs to (will not exist if message was blocked by automod or content was not part of any message)
+ * @property      string|null  $alert_system_message_id The id of any system auto moderation messages posted as a result of this action (will not exist if this event does not correspond to an action with type `SEND_ALERT_MESSAGE`)
+ * @property-read Message|null $alert_system_message    Cached system auto moderation messages posted as a result of this action.
+ * @property      string       $content                 The user generated text content.
+ * @property      ?string      $matched_keyword         The word or phrase configured in the rule that triggered the rule. (empty without message content intent)
+ * @property      ?string      $matched_content         The substring in content that triggered the rule. (empty without message content intent)
  */
 class AutoModerationActionExecution extends Part
 {
@@ -68,7 +70,7 @@ class AutoModerationActionExecution extends Part
      */
     protected function getGuildAttribute(): ?Guild
     {
-        return $this->discord->guilds->offsetGet($this->guild_id);
+        return $this->discord->guilds->get('id', $this->guild_id);
     }
 
     /**
@@ -78,7 +80,7 @@ class AutoModerationActionExecution extends Part
      */
     protected function getActionAttribute(): Action
     {
-        return $this->factory->create(Action::class, $this->attributes['action'], true);
+        return $this->factory->part(Action::class, (array) $this->attributes['action'], true);
     }
 
     /**
@@ -126,7 +128,7 @@ class AutoModerationActionExecution extends Part
      */
     protected function getMessageAttribute(): ?Message
     {
-        if ($channel = $this->channel) {
+        if (isset($this->message_id) && $channel = $this->channel) {
             return $channel->messages->get('id', $this->message_id);
         }
 
@@ -140,7 +142,7 @@ class AutoModerationActionExecution extends Part
      */
     protected function getAlertSystemMessageAttribute(): ?Message
     {
-        if ($channel = $this->channel) {
+        if (isset($this->alert_system_message_id) && $channel = $this->channel) {
             return $channel->messages->get('id', $this->alert_system_message_id);
         }
 
