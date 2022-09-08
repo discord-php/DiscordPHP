@@ -24,19 +24,19 @@ use Discord\Parts\User\User;
  *
  * @since 7.1.0
  *
- * @property      string              $id               The id of this rule.
- * @property      string              $guild_id         The id of the guild which this rule belongs to.
- * @property-read Guild|null          $guild            The guild which this rule belongs to.
- * @property      string              $name             The rule name.
- * @property      string              $creator_id       The id of the user which first created this rule.
- * @property-read User|null           $creator          The user which first created this rule.
- * @property      int                 $event_type       The rule event type.
- * @property      int                 $trigger_type     The rule trigger type.
- * @property      object              $trigger_metadata The rule trigger metadata (may contain `keyword_filter`, `presets`, `allow_list`, and `mention_total_limit`).
- * @property      Collection|Action[] $actions          The actions which will execute when the rule is triggered.
- * @property      bool                $enabled          Whether the rule is enabled.
- * @property      array               $exempt_roles     The role ids that should not be affected by the rule (Maximum of 20).
- * @property      array               $exempt_channels  The channel ids that should not be affected by the rule (Maximum of 50).
+ * @property      string                $id               The id of this rule.
+ * @property      string                $guild_id         The id of the guild which this rule belongs to.
+ * @property-read Guild|null            $guild            The guild which this rule belongs to.
+ * @property      string                $name             The rule name.
+ * @property      string                $creator_id       The id of the user which first created this rule.
+ * @property-read User|null             $creator          The user which first created this rule.
+ * @property      int                   $event_type       The rule event type.
+ * @property      int                   $trigger_type     The rule trigger type.
+ * @property      object                $trigger_metadata The rule trigger metadata (may contain `keyword_filter`, `presets`, `allow_list`, and `mention_total_limit`).
+ * @property      Collection|Action[]   $actions          The actions which will execute when the rule is triggered.
+ * @property      bool                  $enabled          Whether the rule is enabled.
+ * @property      Collection|Roles[]    $exempt_roles     The role ids that should not be affected by the rule (Maximum of 20).
+ * @property      Collection|Channels[] $exempt_channels  The channel ids that should not be affected by the rule (Maximum of 50).
  */
 class Rule extends Part
 {
@@ -102,6 +102,54 @@ class Rule extends Part
         }
 
         return $actions;
+    }
+
+    /**
+     * Returns the exempt roles attribute.
+     *
+     * @return Collection<?Role> A collection of roles exempt from the rule.
+     */
+    protected function getExemptRolesAttribute(): Collection
+    {
+        $roles = new Collection();
+
+        if (empty($this->attributes['exempt_roles'])) {
+            return $roles;
+        }
+
+        $roles->fill(array_fill_keys($this->attributes['exempt_roles'], null));
+
+        if ($guild = $this->guild) {
+            $roles->merge($guild->roles->filter(fn ($role) 
+                => in_array($role->id, $this->attributes['exempt_roles'])
+            ));
+        }
+
+        return $roles;
+    }
+
+    /**
+     * Returns the exempt channels attribute.
+     *
+     * @return Collection<?Channel> A collection of channels exempt from the rule.
+     */
+    protected function getExemptChannelsAttribute(): Collection
+    {
+        $channels = new Collection();
+
+        if (empty($this->attributes['exempt_channels'])) {
+            return $channels;
+        }
+
+        $channels->fill(array_fill_keys($this->attributes['exempt_channels'], null));
+
+        if ($guild = $this->guild) {
+            $channels->merge($guild->channels->filter(fn ($channel) 
+                => in_array($channel->id, $this->attributes['exempt_channels'])
+            ));
+        }
+
+        return $channels;
     }
 
     /**
