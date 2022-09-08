@@ -270,7 +270,7 @@ function escapeMarkdown(string $text): string
  * @param array|object  $array     Traversable, use $collection->getIterator() if searching in Collection
  * @param callable      $callback  The filter function to run
  * @param LoopInterface $loop      Loop interface, use $discord->getLoop()
- * @param callable      $canceller Deprecated, use `cancel()` from the returned promise.
+ * @param callable      $canceller Deprecated, use `cancel()` from the returned promise
  *
  * @return Promise
  */
