@@ -51,7 +51,7 @@ class Reaction extends Part
      */
     public function isPartial(): bool
     {
-        return $this->message == null;
+        return $this->message === null;
     }
 
     /**
