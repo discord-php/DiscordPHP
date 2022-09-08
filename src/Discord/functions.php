@@ -21,6 +21,7 @@ use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
 use React\EventLoop\LoopInterface;
 use React\Promise\ExtendedPromiseInterface;
+use React\Promise\Promise;
 use Symfony\Component\OptionsResolver\Options;
 
 /**
@@ -269,16 +270,26 @@ function escapeMarkdown(string $text): string
  * @param array|object  $array     Traversable, use $collection->getIterator() if searching in Collection
  * @param callable      $callback  The filter function to run
  * @param LoopInterface $loop      Loop interface, use $discord->getLoop()
- * @param callable      $canceller The function to cancel the search
+ * @param callable      $canceller Deprecated, use `cancel()` from the returned promise.
  *
- * @return ExtendedPromiseInterface
+ * @return Promise
  */
 function deferFind($array, callable $callback, $loop, ?callable $canceller = null): ExtendedPromiseInterface
 {
+    $cancelled = false;
+    $canceller ??= function () use (&$cancelled) {
+        $cancelled = true;
+    };
     $deferred = new Deferred($canceller);
     $iterator = new ArrayIterator($array);
 
-    $loop->addPeriodicTimer(0.001, function ($timer) use ($loop, $deferred, $iterator, $callback) {
+    $loop->addPeriodicTimer(0.001, function ($timer) use ($loop, $deferred, $iterator, $callback, &$cancelled) {
+        if ($cancelled) {
+            $loop->cancelTimer($timer);
+
+            return;
+        }
+
         if (! $iterator->valid()) {
             $loop->cancelTimer($timer);
             $deferred->reject();
