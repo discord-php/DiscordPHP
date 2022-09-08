@@ -38,6 +38,7 @@ use Monolog\Logger as Monolog;
 use Ratchet\Client\Connector;
 use Ratchet\Client\WebSocket;
 use Ratchet\RFC6455\Messaging\Message;
+use React\EventLoop\Factory as LoopFactory;
 use React\EventLoop\LoopInterface;
 use React\EventLoop\TimerInterface;
 use Discord\Helpers\Deferred;
@@ -47,7 +48,6 @@ use Discord\Http\Endpoint;
 use Evenement\EventEmitterTrait;
 use Psr\Log\LoggerInterface;
 use React\Cache\ArrayCache;
-use React\EventLoop\Factory as LoopFactory;
 use React\Promise\ExtendedPromiseInterface;
 use React\Promise\PromiseInterface;
 use React\Socket\Connector as SocketConnector;
@@ -1406,9 +1406,7 @@ class Discord
 
         $options = $resolver->resolve($options);
 
-        if (! isset($options['loop'])) {
-            $options['loop'] = LoopFactory::create();
-        }
+        $options['loop'] ??= LoopFactory::create();
 
         if (is_null($options['logger'])) {
             $logger = new Monolog('DiscordPHP');
