@@ -462,7 +462,7 @@ class Guild extends Part
      */
     protected function getSplashHashAttribute(): ?string
     {
-        return $this->attributes['splash'];
+        return $this->attributes['splash'] ?? null;
     }
 
     /**
@@ -1313,7 +1313,7 @@ class Guild extends Part
             'afk_channel_id' => $this->afk_channel_id ?? null,
             'afk_timeout' => $this->afk_timeout,
             'icon' => $this->attributes['icon'] ?? null,
-            'splash' => $this->attributes['splash'] ?? null,
+            'splash' => $this->splash_hash,
             'discovery_splash' => $this->attributes['discovery_splash'] ?? null,
             'banner' => $this->attributes['banner'] ?? null,
             'system_channel_id' => $this->system_channel_id ?? null,

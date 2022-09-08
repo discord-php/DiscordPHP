@@ -118,22 +118,13 @@ class Rule extends Part
             'actions' => array_values($this->actions->map(function (Action $action) {
                 return $action->getCreatableAttributes();
             })->toArray()),
+            'enabled' => $this->enabled ?? false,
+            'exempt_roles' => $this->attributes['exempt_roles'] ?? null,
+            'exempt_channels' => $this->attributes['exempt_channels'] ?? null,
         ];
 
         if (in_array($this->trigger_type, [self::TRIGGER_TYPE_KEYWORD, self::TRIGGER_TYPE_KEYWORD_PRESET, self::TRIGGER_TYPE_MENTION_SPAM])) {
             $attr['trigger_metadata'] = $this->trigger_metadata;
-        }
-
-        if (isset($this->attributes['enabled'])) {
-            $attr['enabled'] = $this->enabled;
-        }
-
-        if (isset($this->attributes['exempt_roles'])) {
-            $attr['exempt_roles'] = $this->attributes['exempt_roles'];
-        }
-
-        if (isset($this->attributes['exempt_channels'])) {
-            $attr['exempt_channels'] = $this->attributes['exempt_channels'];
         }
 
         return $attr;
