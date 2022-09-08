@@ -434,7 +434,7 @@ final class CacheWrapper
             $value = unserialize($value);
         }
 
-        $part = $this->discord->factory($this->class, $value->attributes, $value->created);
+        $part = $this->discord->getFactory()->part($this->class, $value->attributes, $value->created);
         foreach ($value as $name => $var) {
             if (! in_array($name, ['created', 'attributes'])) {
                 $part->{$name} = $var;

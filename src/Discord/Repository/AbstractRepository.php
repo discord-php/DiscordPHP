@@ -420,7 +420,7 @@ abstract class AbstractRepository extends Collection
     /**
      * Pulls a part from the repository.
      *
-     * @deprecated 10.0.0 Use async `$repository->cache->get()` and `$repository->cache->delete()`
+     * @deprecated 10.0.0 Use async `$repository->cachePull()`
      *
      * @param string|int $key
      * @param mixed      $default
@@ -652,7 +652,7 @@ abstract class AbstractRepository extends Collection
     /**
      * Gets a part from the repository.
      *
-     * @deprecated 10.0.0 Use async `$repository->cache->get()` or sync `$repository->get()`
+     * @deprecated 10.0.0 Use async `$repository->cacheGet()` or sync `$repository->get()`
      *
      * @param string|int $offset
      *
