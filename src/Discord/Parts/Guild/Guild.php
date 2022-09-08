@@ -83,6 +83,7 @@ use function React\Promise\resolve;
  * @property-read bool               $feature_discoverable                     Guild is able to be discovered in the directory.
  * @property-read bool               $feature_featurable                       Guild is able to be featured in the directory.
  * @property-read bool               $feature_has_directory_entry              Guild is listed in a directory channel.
+ * @property-read bool               $feature_invites_disabled                 Guild has paused invites, preventing new users from joining.
  * @property-read bool               $feature_invite_splash                    Guild has access to set an invite splash background.
  * @property-read bool               $feature_linked_to_hub                    Guild is in a Student Hub.
  * @property-read bool               $feature_member_verification_gate_enabled Guild has enabled membership screening.
@@ -246,6 +247,7 @@ class Guild extends Part
         'feature_discoverable',
         'feature_featurable',
         'feature_has_directory_entry',
+        'feature_invites_disabled',
         'feature_invite_splash',
         'feature_linked_to_hub',
         'feature_member_verification_gate_enabled',
@@ -522,6 +524,11 @@ class Guild extends Part
     protected function getFeatureHasDirectoryEntryAttribute(): bool
     {
         return in_array('HAS_DIRECTORY_ENTRY', $this->features);
+    }
+
+    protected function getFeatureInvitesDisabledAttribute(): bool
+    {
+        return in_array('INVITES_DISABLED', $this->features);
     }
 
     protected function getFeatureInviteSplashAttribute(): bool
