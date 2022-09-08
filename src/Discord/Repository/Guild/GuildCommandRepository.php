@@ -28,7 +28,6 @@ use function React\Promise\reject;
  *
  * @since 7.0.0
  *
- * @method Command      create(array $attributes = [], bool $created = false)
  * @method Command|null get(string $discrim, $key)
  * @method Command|null pull(string|int $key, $default = null)
  * @method Command|null first()

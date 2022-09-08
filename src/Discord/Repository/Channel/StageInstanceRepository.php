@@ -24,7 +24,6 @@ use Discord\Repository\AbstractRepository;
  * @since 10.0.0 Moved from Guild to Channel
  * @since 7.0.0
  *
- * @method StageInstance      create(array $attributes = [], bool $created = false)
  * @method StageInstance|null get(string $discrim, $key)
  * @method StageInstance|null pull(string|int $key, $default = null)
  * @method StageInstance|null first()
