@@ -25,6 +25,7 @@ use Discord\Parts\Interactions\Command\Choice;
 use Discord\Parts\Interactions\Request\Component as RequestComponent;
 use Discord\Parts\Interactions\Request\InteractionData;
 use Discord\Parts\Part;
+use Discord\Parts\Permissions\ChannelPermission;
 use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
 use Discord\WebSockets\Event;
@@ -40,22 +41,22 @@ use function React\Promise\reject;
  *
  * @since 7.0.0
  *
- * @property      string               $id              ID of the interaction.
- * @property      string               $application_id  ID of the application the interaction is for.
- * @property      int                  $type            Type of interaction.
- * @property      InteractionData|null $data            Data associated with the interaction.
- * @property      string|null          $guild_id        ID of the guild the interaction was sent from.
- * @property-read Guild|null           $guild           Guild the interaction was sent from.
- * @property      string|null          $channel_id      ID of the channel the interaction was sent from.
- * @property-read Channel|null         $channel         Channel the interaction was sent from.
- * @property      Member|null          $member          Member who invoked the interaction.
- * @property      User|null            $user            User who invoked the interaction.
- * @property      string               $token           Continuation token for responding to the interaction.
- * @property-read int                  $version         Version of interaction.
- * @property      Message|null         $message         Message that triggered the interactions, when triggered from message components.
- * @property      string|null          $app_permissions Bitwise set of permissions the app or bot has within the channel the interaction was sent from.
- * @property      string|null          $locale          The selected language of the invoking user.
- * @property      string|null          $guild_locale    The guild's preferred locale, if invoked in a guild.
+ * @property      string                 $id              ID of the interaction.
+ * @property      string                 $application_id  ID of the application the interaction is for.
+ * @property      int                    $type            Type of interaction.
+ * @property      InteractionData|null   $data            Data associated with the interaction.
+ * @property      string|null            $guild_id        ID of the guild the interaction was sent from.
+ * @property-read Guild|null             $guild           Guild the interaction was sent from.
+ * @property      string|null            $channel_id      ID of the channel the interaction was sent from.
+ * @property-read Channel|null           $channel         Channel the interaction was sent from.
+ * @property      Member|null            $member          Member who invoked the interaction.
+ * @property      User|null              $user            User who invoked the interaction.
+ * @property      string                 $token           Continuation token for responding to the interaction.
+ * @property-read int                    $version         Version of interaction.
+ * @property      Message|null           $message         Message that triggered the interactions, when triggered from message components.
+ * @property-read ChannelPermission|null $app_permissions Bitwise set of permissions the app or bot has within the channel the interaction was sent from.
+ * @property      string|null            $locale          The selected language of the invoking user.
+ * @property      string|null            $guild_locale    The guild's preferred locale, if invoked in a guild.
  */
 class Interaction extends Part
 {
@@ -187,6 +188,20 @@ class Interaction extends Part
         }
 
         return $this->factory->part(Message::class, (array) $this->attributes['message'], true);
+    }
+
+    /**
+     * Returns the permissions the app or bot has within the channel the interaction was sent from.
+     *
+     * @return ChannelPermission|null
+     */
+    protected function getAppPermissionsAttribute(): ?ChannelPermission
+    {
+        if (! isset($this->attributes['app_permissions'])) {
+            return null;
+        }
+
+        return $this->factory->part(ChannelPermission::class, ['bitwise' => $this->attributes['app_permissions']], true);
     }
 
     /**
