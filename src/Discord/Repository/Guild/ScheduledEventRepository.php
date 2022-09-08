@@ -26,7 +26,6 @@ use function React\Promise\resolve;
  *
  * @since 7.0.0
  *
- * @method ScheduledEvent      create(array $attributes = [], bool $created = false)
  * @method ScheduledEvent|null get(string $discrim, $key)
  * @method ScheduledEvent|null pull(string|int $key, $default = null)
  * @method ScheduledEvent|null first()

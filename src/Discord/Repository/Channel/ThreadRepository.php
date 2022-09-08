@@ -25,7 +25,6 @@ use React\Promise\ExtendedPromiseInterface;
  *
  * @since 7.0.0
  *
- * @method Thread      create(array $attributes = [], bool $created = false)
  * @method Thread|null get(string $discrim, $key)
  * @method Thread|null pull(string|int $key, $default = null)
  * @method Thread|null first()
