@@ -791,10 +791,14 @@ class Discord
 
             if (! $this->emittedReady && (! in_array($data->t, $parse))) {
                 $this->unparsedPackets[] = function () use (&$handler, &$deferred, &$data) {
-                    coroutine([$handler, 'handle'], $data->d)->then([$deferred, 'resolve'], [$deferred, 'reject']);
+                    /** @var ExtendedPromiseInterface */
+                    $promise = coroutine([$handler, 'handle'], $data->d);
+                    $promise->done([$deferred, 'resolve'], [$deferred, 'reject']);
                 };
             } else {
-                coroutine([$handler, 'handle'], $data->d)->then([$deferred, 'resolve'], [$deferred, 'reject']);
+                /** @var ExtendedPromiseInterface */
+                $promise = coroutine([$handler, 'handle'], $data->d);
+                $promise->done([$deferred, 'resolve'], [$deferred, 'reject']);
             }
         } elseif (isset($handlers[$data->t])) {
             $this->{$handlers[$data->t]}($data);
