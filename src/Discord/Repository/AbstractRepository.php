@@ -117,13 +117,13 @@ abstract class AbstractRepository extends Collection
         }
 
         return $this->http->get($endpoint)->then(function ($response) {
-            foreach ($this->items as $key => $value) {
+            foreach ($this->items as $offset => $value) {
                 if ($value === null) {
-                    unset($this->items[$key]);
-                } elseif (! ($this->items[$key] instanceof WeakReference)) {
-                    $this->items[$key] = WeakReference::create($value);
+                    unset($this->items[$offset]);
+                } elseif (! ($this->items[$offset] instanceof WeakReference)) {
+                    $this->items[$offset] = WeakReference::create($value);
                 }
-                $this->cache->interface->delete($this->cache->getPrefix().$key);
+                $this->cache->interface->delete($this->cache->getPrefix().$offset);
             }
 
             return $this->cacheFreshen($response);
@@ -450,11 +450,10 @@ abstract class AbstractRepository extends Collection
      */
     public function cachePull($key, $default = null): ExtendedPromiseInterface
     {
-        return $this->cacheGet($key)->then(
-            fn ($item) => ($item === null) ?
-                $default : $this->cache->delete($key)->then(
-                    fn ($success) => $item
-                )
+        return $this->cacheGet($key)->then(fn ($item)
+            => ($item === null) ? $default : $this->cache->delete($key)->then(fn ($success)
+                => $item
+            )
         );
     }
 
@@ -489,11 +488,11 @@ abstract class AbstractRepository extends Collection
      */
     public function first()
     {
-        foreach ($this->items as $key => $item) {
+        foreach ($this->items as $offset => $item) {
             if ($item instanceof WeakReference) {
                 if (! $item = $item->get()) {
                     // Attempt to get resolved value if promise is resolved without waiting
-                    $item = nowait($this->cache->get($key));
+                    $item = nowait($this->cache->get($offset));
                 }
             }
 
@@ -514,11 +513,11 @@ abstract class AbstractRepository extends Collection
     {
         $items = array_reverse($this->items, true);
 
-        foreach ($items as $key => $item) {
+        foreach ($items as $offset => $item) {
             if ($item instanceof WeakReference) {
                 if (! $item = $item->get()) {
                     // Attempt to get resolved value if promise is resolved without waiting
-                    $item = nowait($this->cache->get($key));
+                    $item = nowait($this->cache->get($offset));
                 }
             }
 
@@ -542,7 +541,7 @@ abstract class AbstractRepository extends Collection
     public function has(...$keys): bool
     {
         foreach ($keys as $key) {
-            if (! $this->offsetExists($key)) {
+            if (! $this->offsetExists($key) || nowait($this->cache->has($key)) === false) {
                 return false;
             }
         }
@@ -561,9 +560,12 @@ abstract class AbstractRepository extends Collection
     {
         $collection = new Collection([], $this->discrim, $this->class);
 
-        foreach ($this->items as $item) {
+        foreach ($this->items as $offset => $item) {
             if ($item instanceof WeakReference) {
-                $item = $item->get();
+                if (! $item = $item->get()) {
+                    // Attempt to get resolved value if promise is resolved without waiting
+                    $item = nowait($this->cache->get($offset));
+                }
             }
 
             if ($item === null) {
@@ -587,9 +589,12 @@ abstract class AbstractRepository extends Collection
      */
     public function find(callable $callback)
     {
-        foreach ($this->items as $item) {
+        foreach ($this->items as $offset => $item) {
             if ($item instanceof WeakReference) {
-                $item = $item->get();
+                if (! $item = $item->get()) {
+                    // Attempt to get resolved value if promise is resolved without waiting
+                    $item = nowait($this->cache->get($offset));
+                }
             }
 
             if ($item === null) {
@@ -624,11 +629,11 @@ abstract class AbstractRepository extends Collection
     {
         $items = [];
 
-        foreach ($this->items as $key => $item) {
+        foreach ($this->items as $offset => $item) {
             if ($item instanceof WeakReference) {
                 $item = $item->get();
             }
-            $items[$key] = $item;
+            $items[$offset] = $item;
         }
 
         return $items;
@@ -713,17 +718,17 @@ abstract class AbstractRepository extends Collection
     public function getIterator(): Traversable
     {
         return (function () {
-            foreach ($this->items as $key => $item) {
+            foreach ($this->items as $offset => $item) {
                 if ($item instanceof WeakReference) {
                     $item = $item->get();
                 }
 
                 if ($item) {
-                    yield $key => $this->items[$key] = $item;
+                    yield $offset => $this->items[$offset] = $item;
                 } else {
                     // Attempt to get resolved value if promise is resolved without waiting
-                    if ($resolved = nowait($this->cache->get($key)) !== null) {
-                        yield $key => $this->items[$key] = $resolved;
+                    if ($resolved = nowait($this->cache->get($offset)) !== null) {
+                        yield $offset => $this->items[$offset] = $resolved;
                     }
                 }
             }
