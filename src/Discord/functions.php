@@ -19,8 +19,9 @@ use Discord\Parts\Guild\Role;
 use Discord\Parts\Part;
 use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
+use React\EventLoop\Loop;
 use React\EventLoop\LoopInterface;
-use React\Promise\ExtendedPromiseInterface;
+use React\Promise\Promise;
 use React\Promise\PromiseInterface;
 use Symfony\Component\OptionsResolver\Options;
 
@@ -284,21 +285,32 @@ function escapeMarkdown(string $text): string
 /**
  * Run a deferred search in array.
  *
- * @param array|object  $array     Traversable, use $collection->getIterator() if searching in Collection
- * @param callable      $callback  The filter function to run
- * @param LoopInterface $loop      Loop interface, use $discord->getLoop()
- * @param callable      $canceller The function to cancel the search
+ * @param array|object   $array     Traversable, use $collection->getIterator() if searching in Collection
+ * @param callable       $callback  The filter function to run
+ * @param ?LoopInterface $loop      Loop interface, use $discord->getLoop()
  *
- * @return ExtendedPromiseInterface
+ * @return Promise
  *
+ * @since 10.0.0 Handle `$canceller` internally, use `cancel()` from the returned promise.
  * @since 7.1.0
  */
-function deferFind($array, callable $callback, $loop, ?callable $canceller = null): ExtendedPromiseInterface
+function deferFind($array, callable $callback, $loop = null): Promise
 {
-    $deferred = new Deferred($canceller);
+    $canceled = false;
+    $deferred = new Deferred(function () use (&$canceled) {
+        $canceled = true;
+    });
     $iterator = new ArrayIterator($array);
 
-    $loop->addPeriodicTimer(0.001, function ($timer) use ($loop, $deferred, $iterator, $callback) {
+    $loop ??= Loop::get();
+
+    $loop->addPeriodicTimer(0.001, function ($timer) use ($loop, $deferred, $iterator, $callback, &$canceled) {
+        if ($canceled) {
+            $loop->cancelTimer($timer);
+
+            return;
+        }
+
         if (! $iterator->valid()) {
             $loop->cancelTimer($timer);
             $deferred->reject();
