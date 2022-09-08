@@ -11,7 +11,7 @@ For testing and stability it would be greatly appreciated if you were able to ad
 ## CacheInterface (experimental)
 > Warning: This branch contains an experimental feature, do not use this in production! Create issues or join our Discord for feedback and discussions.
 
-See [the wiki page for more information](/wiki/Cache-Interface) on how to set up
+See [the wiki page for more information](https://github.com/discord-php/DiscordPHP/wiki/Cache-Interface) on how to set it up
 
 ## Before you start
 
