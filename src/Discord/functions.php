@@ -296,16 +296,16 @@ function escapeMarkdown(string $text): string
  */
 function deferFind($array, callable $callback, $loop = null): Promise
 {
-    $canceled = false;
-    $deferred = new Deferred(function () use (&$canceled) {
-        $canceled = true;
+    $cancelled = false;
+    $deferred = new Deferred(function () use (&$cancelled) {
+        $cancelled = true;
     });
     $iterator = new ArrayIterator($array);
 
     $loop ??= Loop::get();
 
-    $loop->addPeriodicTimer(0.001, function ($timer) use ($loop, $deferred, $iterator, $callback, &$canceled) {
-        if ($canceled) {
+    $loop->addPeriodicTimer(0.001, function ($timer) use ($loop, $deferred, $iterator, $callback, &$cancelled) {
+        if ($cancelled) {
             $loop->cancelTimer($timer);
 
             return;
