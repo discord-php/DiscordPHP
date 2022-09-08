@@ -17,8 +17,6 @@ use Discord\WebSockets\Event;
  * @link https://discord.com/developers/docs/topics/gateway#webhooks-update
  *
  * @since 7.0.0
- *
- * @todo update docs for raw parameter
  */
 class WebhooksUpdate extends Event
 {
