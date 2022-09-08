@@ -115,8 +115,8 @@ class Rule extends Part
             'name' => $this->name,
             'event_type' => $this->event_type,
             'trigger_type' => $this->trigger_type,
-            'actions' => array_values($this->actions->map(function (Action $overwrite) {
-                return $overwrite->getCreatableAttributes();
+            'actions' => array_values($this->actions->map(function (Action $action) {
+                return $action->getCreatableAttributes();
             })->toArray()),
         ];
 

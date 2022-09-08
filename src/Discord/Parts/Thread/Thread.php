@@ -802,6 +802,8 @@ class Thread extends Part
 
     /**
      * @inheritdoc
+     *
+     * @link https://discord.com/developers/docs/resources/channel#start-thread-without-message-json-params
      */
     public function getCreatableAttributes(): array
     {

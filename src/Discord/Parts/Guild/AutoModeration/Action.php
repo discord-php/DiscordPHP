@@ -39,6 +39,8 @@ class Action extends Part
 
     /**
      * @inheritdoc
+     *
+     * @see Rule::getCreatableAttributes()
      */
     public function getCreatableAttributes(): array
     {

@@ -152,7 +152,7 @@ class Role extends Part
             'permissions' => $this->permissions->bitwise,
             'color' => $this->color,
             'hoist' => $this->hoist,
-            'icon' => $this->attributes['icon'] ?? null,
+            'icon' => $this->icon_hash,
             'unicode_emoji' => $this->unicode_emoji ?? null,
             'mentionable' => $this->mentionable,
         ];

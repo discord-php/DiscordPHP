@@ -131,8 +131,8 @@ class Command extends Part
     /**
      * @inheritdoc
      *
-     * @link https://discord.com/developers/docs/interactions/application-commands#create-global-application-command
-     * @link https://discord.com/developers/docs/interactions/application-commands#create-guild-application-command
+     * @link https://discord.com/developers/docs/interactions/application-commands#create-global-application-command-json-params
+     * @link https://discord.com/developers/docs/interactions/application-commands#create-guild-application-command-json-params
      */
     public function getCreatableAttributes(): array
     {
@@ -161,7 +161,7 @@ class Command extends Part
     /**
      * @inheritdoc
      *
-     * @link https://discord.com/developers/docs/interactions/application-commands#edit-guild-application-command-json-params
+     * @link https://discord.com/developers/docs/interactions/application-commands#edit-global-application-command-json-params
      */
     public function getUpdatableAttributes(): array
     {
