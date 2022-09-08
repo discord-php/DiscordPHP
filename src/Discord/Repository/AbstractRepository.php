@@ -450,11 +450,7 @@ abstract class AbstractRepository extends Collection
      */
     public function cachePull($key, $default = null): ExtendedPromiseInterface
     {
-        return $this->cacheGet($key)->then(fn ($item)
-            => ($item === null) ? $default : $this->cache->delete($key)->then(fn ($success)
-                => $item
-            )
-        );
+        return $this->cacheGet($key)->then(fn ($item) => ($item === null) ? $default : $this->cache->delete($key)->then(fn ($success) => $item));
     }
 
     /**

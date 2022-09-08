@@ -120,8 +120,8 @@ class Rule extends Part
         $roles->fill(array_fill_keys($this->attributes['exempt_roles'], null));
 
         if ($guild = $this->guild) {
-            $roles->merge($guild->roles->filter(fn ($role) 
-                => in_array($role->id, $this->attributes['exempt_roles'])
+            $roles->merge($guild->roles->filter(
+                fn ($role) => in_array($role->id, $this->attributes['exempt_roles'])
             ));
         }
 
@@ -144,8 +144,8 @@ class Rule extends Part
         $channels->fill(array_fill_keys($this->attributes['exempt_channels'], null));
 
         if ($guild = $this->guild) {
-            $channels->merge($guild->channels->filter(fn ($channel) 
-                => in_array($channel->id, $this->attributes['exempt_channels'])
+            $channels->merge($guild->channels->filter(
+                fn ($channel) => in_array($channel->id, $this->attributes['exempt_channels'])
             ));
         }
 

@@ -285,9 +285,9 @@ function escapeMarkdown(string $text): string
 /**
  * Run a deferred search in array.
  *
- * @param array|object   $array     Traversable, use $collection->getIterator() if searching in Collection
- * @param callable       $callback  The filter function to run
- * @param ?LoopInterface $loop      Loop interface, use $discord->getLoop()
+ * @param array|object   $array    Traversable, use $collection->getIterator() if searching in Collection
+ * @param callable       $callback The filter function to run
+ * @param ?LoopInterface $loop     Loop interface, use $discord->getLoop()
  *
  * @return Promise
  *
