@@ -62,9 +62,9 @@ class MessageReaction extends Part
      */
     public function isPartial(): bool
     {
-        return $this->user == null ||
-            $this->message == null ||
-            $this->member == null;
+        return $this->user === null ||
+            $this->message === null ||
+            $this->member === null;
     }
 
     /**
@@ -74,7 +74,7 @@ class MessageReaction extends Part
     {
         $promise = resolve();
 
-        if ($this->member == null) {
+        if ($this->member === null) {
             $promise = $promise
                 ->then(function () {
                     return $this->http->get(Endpoint::bind(Endpoint::GUILD_MEMBER, $this->guild_id, $this->user_id));
@@ -84,7 +84,7 @@ class MessageReaction extends Part
                 });
         }
 
-        if ($this->message == null) {
+        if ($this->message === null) {
             $promise = $promise
                 ->then(function () {
                     return $this->http->get(Endpoint::bind(Endpoint::CHANNEL_MESSAGE, $this->channel_id, $this->message_id));

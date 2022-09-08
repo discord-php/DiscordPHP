@@ -459,7 +459,7 @@ class MessageBuilder implements JsonSerializable
             throw new FileNotFoundException("File does not exist at path {$filepath}.");
         }
 
-        if ($filename == null) {
+        if ($filename === null) {
             $filename = basename($filepath);
         }
 
