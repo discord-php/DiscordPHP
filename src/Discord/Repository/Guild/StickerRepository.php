@@ -23,6 +23,7 @@ use Discord\Repository\AbstractRepository;
  *
  * @since 7.0.0
  *
+ * @method Sticker      create(array $attributes = [], bool $created = false)
  * @method Sticker|null get(string $discrim, $key)
  * @method Sticker|null pull(string|int $key, $default = null)
  * @method Sticker|null first()

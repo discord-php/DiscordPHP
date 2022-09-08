@@ -23,6 +23,7 @@ use Discord\Repository\AbstractRepository;
  *
  * @since 4.0.2
  *
+ * @method Emoji      create(array $attributes = [], bool $created = false)
  * @method Emoji|null get(string $discrim, $key)
  * @method Emoji|null pull(string|int $key, $default = null)
  * @method Emoji|null first()

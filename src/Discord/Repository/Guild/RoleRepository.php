@@ -23,6 +23,7 @@ use Discord\Repository\AbstractRepository;
  * @see Role
  * @see \Discord\Parts\Guild\Guild
  *
+ * @method Role      create(array $attributes = [], bool $created = false)
  * @method Role|null get(string $discrim, $key)
  * @method Role|null pull(string|int $key, $default = null)
  * @method Role|null first()

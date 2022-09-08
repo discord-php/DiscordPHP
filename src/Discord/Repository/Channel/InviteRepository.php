@@ -23,6 +23,7 @@ use Discord\Repository\AbstractRepository;
  *
  * @since 4.0.0
  *
+ * @method Invite      create(array $attributes = [], bool $created = false)
  * @method Invite|null get(string $discrim, $key)
  * @method Invite|null pull(string|int $key, $default = null)
  * @method Invite|null first()

@@ -22,6 +22,7 @@ use React\Promise\ExtendedPromiseInterface;
  *
  * @since 4.0.0
  *
+ * @method Guild      create(array $attributes = [], bool $created = false)
  * @method Guild|null get(string $discrim, $key)
  * @method Guild|null pull(string|int $key, $default = null)
  * @method Guild|null first()

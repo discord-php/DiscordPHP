@@ -22,6 +22,7 @@ use Discord\Repository\AbstractRepository;
  *
  * @since 5.0.0
  *
+ * @method Webhook      create(array $attributes = [], bool $created = false)
  * @method Webhook|null get(string $discrim, $key)
  * @method Webhook|null pull(string|int $key, $default = null)
  * @method Webhook|null first()

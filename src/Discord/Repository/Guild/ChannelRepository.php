@@ -23,6 +23,7 @@ use Discord\Repository\AbstractRepository;
  *
  * @since 4.0.0
  *
+ * @method Channel      create(array $attributes = [], bool $created = false)
  * @method Channel|null get(string $discrim, $key)
  * @method Channel|null pull(string|int $key, $default = null)
  * @method Channel|null first()
