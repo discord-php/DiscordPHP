@@ -516,6 +516,17 @@ class Discord
         };
 
         $this->on(Event::GUILD_CREATE, $function);
+
+        $function2 = function ($guild) use (&$function2, &$unavailable) {
+            if ($guild->unavailable) {
+                $this->logger->debug('guild unavailable', ['guild' => $guild->id, 'unavailable' => count($unavailable)]);
+                unset($unavailable[$guild->id]);
+                if (count($unavailable) < 1) {
+                    $this->removeListener(Event::GUILD_DELETE, $function2);
+                }
+            }
+        };
+        $this->on(Event::GUILD_DELETE, $function2);
     }
 
     /**
