@@ -12,12 +12,8 @@
 namespace Discord\Parts\Interactions\Command;
 
 use Discord\Helpers\Collection;
-use Discord\Parts\Guild\CommandPermissions;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Part;
-use React\Promise\ExtendedPromiseInterface;
-
-use function React\Promise\reject;
 
 /**
  * Represents a command registered on the Discord servers.
@@ -110,22 +106,6 @@ class Command extends Part
         }
 
         return $this->discord->guilds->get('id', $this->guild_id);
-    }
-
-    /**
-     * Sets a guild application command permission overwrite.
-     *
-     * @link https://discord.com/developers/docs/interactions/application-commands#edit-application-command-permissions
-     *
-     * @param CommandPermissions $overwrite A command permission object.
-     *
-     * @deprecated 7.1.0 Requires Bearer token on Permissions v2.
-     *
-     * @return ExtendedPromiseInterface
-     */
-    public function setOverwrite(CommandPermissions $overwrite): ExtendedPromiseInterface
-    {
-        return reject(new \RuntimeException('Bots can no longer set guild command permissions'));
     }
 
     /**
