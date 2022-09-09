@@ -804,7 +804,7 @@ class Channel extends Part
      * @param string|null $reason                Reason for Audit Log.
      *
      * @throws \RuntimeException
-     * @throws \UnexpectedValueException
+     * @throws \UnexpectedValueException `$auto_archive_duration` is not one of 60, 1440, 4320, 10080.
      *
      * @return ExtendedPromiseInterface<Thread>
      */
@@ -827,7 +827,7 @@ class Channel extends Part
         }
 
         if (! in_array($auto_archive_duration, [60, 1440, 4320, 10080])) {
-            return reject(new \UnexpectedValueException('`auto_archive_duration` must be one of 60, 1440, 4320, 10080.'));
+            return reject(new \UnexpectedValueException('$auto_archive_duration must be one of 60, 1440, 4320, 10080.'));
         }
 
         $headers = [];

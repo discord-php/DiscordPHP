@@ -677,7 +677,7 @@ class Message extends Part
         }
 
         if (! in_array($auto_archive_duration, [60, 1440, 4320, 10080])) {
-            return reject(new \UnexpectedValueException('`auto_archive_duration` must be one of 60, 1440, 4320, 10080.'));
+            return reject(new \UnexpectedValueException('auto_archive_duration must be one of 60, 1440, 4320, 10080.'));
         }
 
         $headers = [];

@@ -413,7 +413,7 @@ class Option extends Part
      *
      * @param bool|null $autocomplete enable autocomplete interactions for this option.
      *
-     * @throws \InvalidArgumentException Command option type is not string/integer/number.
+     * @throws \DomainException Command option type is not string/integer/number.
      *
      * @return self
      */
@@ -421,11 +421,11 @@ class Option extends Part
     {
         if ($autocomplete) {
             if (! empty($this->attributes['choices'])) {
-                throw new \InvalidArgumentException('Autocomplete may not be set to true if choices are present.');
+                throw new \DomainException('Autocomplete may not be set to true if choices are present.');
             }
 
             if (! in_array($this->type, [self::STRING, self::INTEGER, self::NUMBER])) {
-                throw new \InvalidArgumentException('Autocomplete may be only set to true if option type is STRING, INTEGER, or NUMBER.');
+                throw new \DomainException('Autocomplete may be only set to true if option type is STRING, INTEGER, or NUMBER.');
             }
         }
 

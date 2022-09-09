@@ -20,6 +20,8 @@ use Discord\Parts\User\User;
 use React\Promise\ExtendedPromiseInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+use function React\Promise\reject;
+
 /**
  * A representation of a scheduled event in a guild.
  *
@@ -105,7 +107,7 @@ class ScheduledEvent extends Part
 
         $options = $resolver->resolve($options);
         if (isset($options['before'], $options['after'])) {
-            return \React\Promise\reject(new \RangeException('Can only specify one of before after.'));
+            return reject(new \RangeException('Can only specify one of before after.'));
         }
 
         $endpoint = Endpoint::bind(Endpoint::GUILD_SCHEDULED_EVENT_USERS, $this->guild_id, $this->id);

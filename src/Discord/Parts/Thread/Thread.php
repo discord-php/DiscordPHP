@@ -31,6 +31,10 @@ use React\Promise\ExtendedPromiseInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Traversable;
 
+use function React\Promise\all;
+use function React\Promise\reject;
+use function React\Promise\resolve;
+
 /**
  * Represents a Discord thread.
  *
@@ -513,13 +517,13 @@ class Thread extends Part
     public function deleteMessages($messages, ?string $reason = null): ExtendedPromiseInterface
     {
         if (! is_array($messages) && ! ($messages instanceof Traversable)) {
-            return \React\Promise\reject(new \Exception('$messages must be an array or implement Traversable.'));
+            return reject(new \Exception('$messages must be an array or implement Traversable.'));
         }
 
         $count = count($messages);
 
         if ($count == 0) {
-            return \React\Promise\resolve();
+            return resolve();
         } elseif ($count == 1) {
             foreach ($messages as $message) {
                 if ($message instanceof Message) {
@@ -550,7 +554,7 @@ class Thread extends Part
             ], $headers);
         }
 
-        return \React\Promise\all($promises);
+        return all($promises);
     }
 
     /**
@@ -579,7 +583,7 @@ class Thread extends Part
         if (isset($options['before'], $options['after']) ||
             isset($options['before'], $options['around']) ||
             isset($options['around'], $options['after'])) {
-            return \React\Promise\reject(new \Exception('Can only specify one of before, after and around.'));
+            return reject(new \Exception('Can only specify one of before, after and around.'));
         }
 
         $endpoint = Endpoint::bind(Endpoint::CHANNEL_MESSAGES, $this->id);
@@ -621,16 +625,18 @@ class Thread extends Part
      * @param Message     $message
      * @param string|null $reason  Reason for Audit Log.
      *
+     * @throws \RuntimeException
+     *
      * @return ExtendedPromiseInterface<Message>
      */
     public function pinMessage(Message $message, ?string $reason = null): ExtendedPromiseInterface
     {
         if ($message->pinned) {
-            return \React\Promise\reject(new \Exception('This message is already pinned.'));
+            return reject(new \RuntimeException('This message is already pinned.'));
         }
 
         if ($message->channel_id != $this->id) {
-            return \React\Promise\reject(new \Exception('You cannot pin a message not sent in this thread.'));
+            return reject(new \RuntimeException('You cannot pin a message not sent in this thread.'));
         }
 
         $headers = [];
@@ -653,16 +659,18 @@ class Thread extends Part
      * @param Message     $message
      * @param string|null $reason  Reason for Audit Log.
      *
+     * @throws \RuntimeException
+     *
      * @return ExtendedPromiseInterface<Message>
      */
     public function unpinMessage(Message $message, ?string $reason = null): ExtendedPromiseInterface
     {
         if (! $message->pinned) {
-            return \React\Promise\reject(new \Exception('This message is not pinned.'));
+            return reject(new \RuntimeException('This message is not pinned.'));
         }
 
         if ($message->channel_id != $this->id) {
-            return \React\Promise\reject(new \Exception('You cannot un-pin a message not sent in this thread.'));
+            return reject(new \RuntimeException('You cannot un-pin a message not sent in this thread.'));
         }
 
         $headers = [];
