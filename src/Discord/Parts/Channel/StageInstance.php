@@ -33,8 +33,6 @@ use Discord\Parts\Part;
  */
 class StageInstance extends Part
 {
-    /** @deprecated 7.0.0 */
-    public const PRIVACY_LEVEL_PUBLIC = 1;
     public const PRIVACY_LEVEL_GROUP_ONLY = 2;
 
     /**
