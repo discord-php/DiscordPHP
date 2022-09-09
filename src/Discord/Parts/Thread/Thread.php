@@ -227,18 +227,6 @@ class Thread extends Part
     }
 
     /**
-     * Returns the ID of the user who archived the thread.
-     *
-     * @deprecated 7.1.0 Removed from API
-     *
-     * @return string|null
-     */
-    protected function getArchiverIdAttribute(): ?string
-    {
-        return $this->thread_metadata->archiver_id ?? null;
-    }
-
-    /**
      * Set whether the thread is archived.
      *
      * @param bool $value
@@ -266,38 +254,6 @@ class Thread extends Part
     protected function setAutoArchiveDurationAttribute(int $value)
     {
         $this->attributes['thread_metadata']->auto_archive_duration = $value;
-    }
-
-    /**
-     * Returns the user who archived the thread.
-     *
-     * @deprecated 7.1.0 Removed from API
-     *
-     * @return User|null
-     */
-    protected function getArchiverAttribute(): ?User
-    {
-        if ($this->archiver_id) {
-            return $this->discord->users->get('id', $this->archiver_id);
-        }
-
-        return null;
-    }
-
-    /**
-     * Returns the member object for the user who archived the thread.
-     *
-     * @deprecated 7.1.0 Removed from API
-     *
-     * @return Member|null
-     */
-    protected function getArchiverMemberAttribute(): ?Member
-    {
-        if ($this->archiver_id && $guild = $this->guild) {
-            return $guild->members->get('id', $this->archiver_id);
-        }
-
-        return null;
     }
 
     /**
