@@ -73,7 +73,7 @@ abstract class Permission extends Part
         'manage_webhooks' => 29,
         'manage_events' => 33,
         'use_external_stickers' => 37,
-        'start_embedded_activities' => 39, // @todo use_embedded_activities
+        'use_embedded_activities' => 39,
     ];
 
     /**
@@ -215,106 +215,6 @@ abstract class Permission extends Part
                 $this->attributes[$permission] = false;
             }
         }
-    }
-
-    /**
-     * @inheritDoc
-     *
-     * @todo replace start_embedded_activities in next major version
-     */
-    protected function getUseEmbeddedActivitiesAttribute()
-    {
-        return $this->attributes['start_embedded_activities'] ?? null;
-    }
-
-    /**
-     * @inheritDoc
-     *
-     * @todo replace start_embedded_activities in next major version
-     */
-    protected function setUseEmbeddedActivitiesAttribute($value)
-    {
-        $this->attributes['start_embedded_activities'] = $value;
-    }
-
-    /**
-     * @inheritDoc
-     *
-     * @deprecated 7.0.0 Use `use_application_commands`
-     */
-    protected function getUseSlashCommandsAttribute()
-    {
-        return $this->attributes['use_application_commands'] ?? null;
-    }
-
-    /**
-     * @inheritDoc
-     *
-     * @deprecated 7.0.0 Use `create_public_threads`
-     */
-    protected function getUsePublicThreadsAttribute()
-    {
-        return $this->attributes['create_public_threads'] ?? null;
-    }
-
-    /**
-     * @inheritDoc
-     *
-     * @deprecated 7.0.0 Use `create_private_threads`
-     */
-    protected function getUsePrivateThreadsAttribute()
-    {
-        return $this->attributes['create_private_threads'] ?? null;
-    }
-
-    /**
-     * @inheritDoc
-     *
-     * @deprecated 7.0.0 Use `manage_emojis_and_stickers`
-     */
-    protected function getManageEmojisAttribute()
-    {
-        return $this->attributes['manage_emojis_and_stickers'] ?? null;
-    }
-
-    /**
-     * @inheritDoc
-     *
-     * @deprecated 7.0.0 Use `use_application_commands`
-     */
-    protected function setUseSlashCommandsAttribute($value)
-    {
-        return $this->attributes['use_application_commands'] = $value;
-    }
-
-    /**
-     * @inheritDoc
-     *
-     * @deprecated 7.0.0 Use `create_public_threads`
-     */
-    protected function setUsePublicThreadsAttribute($value)
-    {
-        return $this->attributes['create_public_threads'] = $value;
-    }
-
-    /**
-     * @inheritDoc
-     *
-     * @deprecated 7.0.0 Use `create_private_threads`
-     */
-    protected function setUsePrivateThreadsAttribute($value)
-    {
-        return $this->attributes['create_private_threads'] = $value;
-    }
-
-    /**
-     * @inheritDoc
-     *
-     * @deprecated 7.0.0 Use `manage_emojis_and_stickers`
-     */
-    protected function setManageEmojisAttribute($value)
-    {
-        return $this->attributes['manage_emojis_and_stickers'] = $value;
     }
 
     public function __toString(): string

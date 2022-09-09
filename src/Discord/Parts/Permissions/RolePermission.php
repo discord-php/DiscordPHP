@@ -41,7 +41,7 @@ namespace Discord\Parts\Permissions;
  * @property bool $create_private_threads
  * @property bool $use_external_stickers
  * @property bool $send_messages_in_threads
- * @property bool $start_embedded_activities @todo $use_embedded_activities
+ * @property bool $use_embedded_activities
  *
  * @property bool $kick_members
  * @property bool $ban_members
