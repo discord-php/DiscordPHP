@@ -106,7 +106,7 @@ class ActionRow extends Component
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function jsonSerialize(): array
     {

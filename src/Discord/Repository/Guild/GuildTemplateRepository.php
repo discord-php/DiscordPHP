@@ -33,12 +33,12 @@ use React\Promise\ExtendedPromiseInterface;
 class GuildTemplateRepository extends AbstractRepository
 {
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     protected $discrim = 'code';
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     protected $endpoints = [
         'all' => Endpoint::GUILD_TEMPLATES,
@@ -49,7 +49,7 @@ class GuildTemplateRepository extends AbstractRepository
     ];
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     protected $class = GuildTemplate::class;
 

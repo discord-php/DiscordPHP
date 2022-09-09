@@ -32,12 +32,12 @@ use Discord\Repository\AbstractRepository;
 class MemberRepository extends AbstractRepository
 {
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     protected $discrim = 'user_id';
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     protected $endpoints = [
         'all' => Endpoint::THREAD_MEMBERS,
@@ -45,7 +45,7 @@ class MemberRepository extends AbstractRepository
     ];
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     protected $class = Member::class;
 }

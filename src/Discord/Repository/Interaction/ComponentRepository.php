@@ -31,12 +31,12 @@ use Discord\Repository\AbstractRepository;
 class ComponentRepository extends AbstractRepository
 {
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     protected $class = Component::class;
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     protected $discrim = null;
 }

@@ -46,7 +46,7 @@ use function React\Promise\resolve;
 class MessageReaction extends Part
 {
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     protected $fillable = [
         'user_id',
@@ -58,7 +58,7 @@ class MessageReaction extends Part
     ];
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function isPartial(): bool
     {
@@ -68,7 +68,7 @@ class MessageReaction extends Part
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function fetch(): ExtendedPromiseInterface
     {

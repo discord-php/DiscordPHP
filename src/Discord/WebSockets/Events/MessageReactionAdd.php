@@ -27,7 +27,7 @@ use Discord\Parts\Thread\Thread;
 class MessageReactionAdd extends Event
 {
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function handle($data)
     {

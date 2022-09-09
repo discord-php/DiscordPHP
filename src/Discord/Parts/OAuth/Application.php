@@ -52,7 +52,7 @@ use Discord\Repository\Interaction\GlobalCommandRepository;
 class Application extends Part
 {
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     protected $fillable = [
         'bot_public',
@@ -88,7 +88,7 @@ class Application extends Part
     public const APPLICATION_COMMAND_BADGE = (1 << 23);
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     protected $repositories = [
         'commands' => GlobalCommandRepository::class,
@@ -193,7 +193,7 @@ class Application extends Part
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getRepositoryAttributes(): array
     {

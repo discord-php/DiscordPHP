@@ -28,7 +28,7 @@ use Discord\Parts\Part;
 class Author extends Part
 {
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     protected $fillable = [
         'name',

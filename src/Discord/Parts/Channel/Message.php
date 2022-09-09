@@ -142,7 +142,7 @@ class Message extends Part
     public const FLAG_EPHEMERAL = (1 << 6);
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     protected $fillable = [
         'id',
@@ -182,7 +182,7 @@ class Message extends Part
     ];
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     protected $repositories = [
         'reactions' => ReactionRepository::class,
@@ -948,7 +948,7 @@ class Message extends Part
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      *
      * @link https://discord.com/developers/docs/resources/channel#edit-message-jsonform-params
      */
@@ -961,7 +961,7 @@ class Message extends Part
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getRepositoryAttributes(): array
     {

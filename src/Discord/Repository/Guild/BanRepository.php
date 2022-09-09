@@ -36,12 +36,12 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class BanRepository extends AbstractRepository
 {
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     protected $discrim = 'user_id';
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     protected $endpoints = [
         'all' => Endpoint::GUILD_BANS,
@@ -50,7 +50,7 @@ class BanRepository extends AbstractRepository
     ];
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     protected $class = Ban::class;
 

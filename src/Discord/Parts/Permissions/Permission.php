@@ -141,7 +141,7 @@ abstract class Permission extends Part
     private $permissions = [];
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function __construct(Discord $discord, array $attributes = [], bool $created = false)
     {
@@ -218,7 +218,7 @@ abstract class Permission extends Part
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      *
      * @todo replace start_embedded_activities in next major version
      */
@@ -228,7 +228,7 @@ abstract class Permission extends Part
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      *
      * @todo replace start_embedded_activities in next major version
      */
@@ -238,7 +238,7 @@ abstract class Permission extends Part
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      *
      * @deprecated 7.0.0 Use `use_application_commands`
      */
@@ -248,7 +248,7 @@ abstract class Permission extends Part
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      *
      * @deprecated 7.0.0 Use `create_public_threads`
      */
@@ -258,7 +258,7 @@ abstract class Permission extends Part
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      *
      * @deprecated 7.0.0 Use `create_private_threads`
      */
@@ -268,7 +268,7 @@ abstract class Permission extends Part
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      *
      * @deprecated 7.0.0 Use `manage_emojis_and_stickers`
      */
@@ -278,7 +278,7 @@ abstract class Permission extends Part
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      *
      * @deprecated 7.0.0 Use `use_application_commands`
      */
@@ -288,7 +288,7 @@ abstract class Permission extends Part
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      *
      * @deprecated 7.0.0 Use `create_public_threads`
      */
@@ -298,7 +298,7 @@ abstract class Permission extends Part
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      *
      * @deprecated 7.0.0 Use `create_private_threads`
      */
@@ -308,7 +308,7 @@ abstract class Permission extends Part
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      *
      * @deprecated 7.0.0 Use `manage_emojis_and_stickers`
      */

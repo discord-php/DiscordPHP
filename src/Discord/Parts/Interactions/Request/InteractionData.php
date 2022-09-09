@@ -37,7 +37,7 @@ use Discord\Repository\Interaction\OptionRepository;
 class InteractionData extends Part
 {
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     protected $fillable = [
         'id',
@@ -56,7 +56,7 @@ class InteractionData extends Part
     ];
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     protected $repositories = [
         'options' => OptionRepository::class,

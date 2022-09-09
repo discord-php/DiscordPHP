@@ -22,7 +22,7 @@ use Discord\Parts\User\User;
 class UserUpdate extends Event
 {
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function handle($data)
     {

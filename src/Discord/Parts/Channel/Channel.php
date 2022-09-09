@@ -110,7 +110,7 @@ class Channel extends Part
     public const FLAG_PINNED = (1 << 1);
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     protected $fillable = [
         'id',
@@ -142,7 +142,7 @@ class Channel extends Part
     ];
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     protected $repositories = [
         'overwrites' => OverwriteRepository::class,
@@ -155,7 +155,7 @@ class Channel extends Part
     ];
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     protected function afterConstruct(): void
     {
@@ -1094,7 +1094,7 @@ class Channel extends Part
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      *
      * @link https://discord.com/developers/docs/resources/guild#create-guild-channel-json-params
      */
@@ -1118,7 +1118,7 @@ class Channel extends Part
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      *
      * @link https://discord.com/developers/docs/resources/channel#modify-channel-json-params-guild-channel
      */
@@ -1144,7 +1144,7 @@ class Channel extends Part
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getRepositoryAttributes(): array
     {

@@ -71,7 +71,7 @@ use Traversable;
 class Thread extends Part
 {
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     protected $fillable = [
         'id',
@@ -92,14 +92,14 @@ class Thread extends Part
     ];
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     protected $hidden = [
         'member',
     ];
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     protected $repositories = [
         'messages' => MessageRepository::class,
@@ -107,7 +107,7 @@ class Thread extends Part
     ];
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     protected function afterConstruct(): void
     {
@@ -801,7 +801,7 @@ class Thread extends Part
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      *
      * @link https://discord.com/developers/docs/resources/channel#start-thread-without-message-json-params
      */
@@ -822,7 +822,7 @@ class Thread extends Part
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      *
      * @link https://discord.com/developers/docs/resources/channel#modify-channel-json-params-thread
      */
@@ -845,7 +845,7 @@ class Thread extends Part
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getRepositoryAttributes(): array
     {

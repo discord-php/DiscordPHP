@@ -23,7 +23,7 @@ use Discord\Parts\Guild\Guild;
 class GuildMemberUpdate extends Event
 {
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function handle($data)
     {

@@ -21,7 +21,7 @@ use Discord\WebSockets\Event;
 class GuildIntegrationsUpdate extends Event
 {
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function handle($data)
     {

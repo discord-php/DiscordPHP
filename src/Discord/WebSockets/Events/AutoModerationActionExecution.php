@@ -22,7 +22,7 @@ use Discord\Parts\WebSockets\AutoModerationActionExecution as ActionExecution;
 class AutoModerationActionExecution extends Event
 {
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function handle($data)
     {

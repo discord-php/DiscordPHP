@@ -53,7 +53,7 @@ class Option extends Part
     public const ATTACHMENT = 11;
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     protected $fillable = [
         'type',

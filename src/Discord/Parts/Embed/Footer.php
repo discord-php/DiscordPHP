@@ -27,7 +27,7 @@ use Discord\Parts\Part;
 class Footer extends Part
 {
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     protected $fillable = [
         'text',

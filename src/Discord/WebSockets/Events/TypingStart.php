@@ -22,7 +22,7 @@ use Discord\WebSockets\Event;
 class TypingStart extends Event
 {
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function handle($data)
     {

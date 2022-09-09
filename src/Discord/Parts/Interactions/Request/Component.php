@@ -44,7 +44,7 @@ use Discord\Repository\Interaction\ComponentRepository;
 class Component extends Part
 {
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     protected $fillable = [
         'type',
@@ -66,7 +66,7 @@ class Component extends Part
     ];
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     protected $repositories = [
         'components' => ComponentRepository::class,
@@ -99,7 +99,7 @@ class Component extends Part
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getRepositoryAttributes(): array
     {

@@ -23,7 +23,7 @@ use Discord\Parts\Guild\Guild;
 class ChannelCreate extends Event
 {
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function handle($data)
     {

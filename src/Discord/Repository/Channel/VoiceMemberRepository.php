@@ -31,17 +31,17 @@ use Discord\Repository\AbstractRepository;
 class VoiceMemberRepository extends AbstractRepository
 {
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     protected $discrim = 'user_id';
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     protected $endpoints = [];
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     protected $class = VoiceStateUpdate::class;
 }

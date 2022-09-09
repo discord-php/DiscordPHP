@@ -26,7 +26,7 @@ use Discord\Parts\Part;
 class Action extends Part
 {
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     protected $fillable = [
         'type',
@@ -38,7 +38,7 @@ class Action extends Part
     public const TYPE_TIMEOUT = 3;
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      *
      * @see Rule::getCreatableAttributes()
      */

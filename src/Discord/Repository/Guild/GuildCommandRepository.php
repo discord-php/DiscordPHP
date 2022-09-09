@@ -37,7 +37,7 @@ use function React\Promise\reject;
 class GuildCommandRepository extends AbstractRepository
 {
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     protected $endpoints = [
         'all' => Endpoint::GUILD_APPLICATION_COMMANDS,
@@ -48,12 +48,12 @@ class GuildCommandRepository extends AbstractRepository
     ];
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     protected $class = Command::class;
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function __construct(Discord $discord, array $vars = [])
     {

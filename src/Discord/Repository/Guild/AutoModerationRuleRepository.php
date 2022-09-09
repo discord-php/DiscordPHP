@@ -32,7 +32,7 @@ use Discord\Repository\AbstractRepository;
 class AutoModerationRuleRepository extends AbstractRepository
 {
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     protected $endpoints = [
         'all' => Endpoint::GUILD_AUTO_MODERATION_RULES,
@@ -43,7 +43,7 @@ class AutoModerationRuleRepository extends AbstractRepository
     ];
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     protected $class = Rule::class;
 }

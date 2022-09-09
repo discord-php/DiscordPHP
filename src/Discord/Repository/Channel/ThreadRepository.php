@@ -34,7 +34,7 @@ use React\Promise\ExtendedPromiseInterface;
 class ThreadRepository extends AbstractRepository
 {
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     protected $endpoints = [
         'all' => Endpoint::GUILD_THREADS_ACTIVE,
@@ -45,7 +45,7 @@ class ThreadRepository extends AbstractRepository
     ];
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     protected $class = Thread::class;
 

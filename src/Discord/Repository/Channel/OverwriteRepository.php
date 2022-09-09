@@ -32,14 +32,14 @@ use Discord\Repository\AbstractRepository;
 class OverwriteRepository extends AbstractRepository
 {
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     protected $endpoints = [
         'delete' => Endpoint::CHANNEL_PERMISSIONS,
     ];
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     protected $class = Overwrite::class;
 }

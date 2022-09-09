@@ -24,7 +24,7 @@ use Discord\WebSockets\Event;
 class InteractionCreate extends Event
 {
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function handle($data)
     {

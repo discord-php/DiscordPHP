@@ -31,12 +31,12 @@ use Discord\Repository\AbstractRepository;
 class ReactionRepository extends AbstractRepository
 {
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     protected $endpoints = [];
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     protected $class = Reaction::class;
 }
