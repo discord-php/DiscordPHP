@@ -1,9 +1,9 @@
 <?php
 
 /**
- * Example Bot with Discord-PHP and ReactPHP HTTP Browser
+ * Example Bot with Discord-PHP CommandClient and ReactPHP HTTP Browser 
  *
- * When an User says "@MyBot discordstatus", the Bot will reply Discord service status
+ * When a User says "@Bot discordstatus", the Bot will reply Discord service status
  *
  * @link https://reactphp.org/http/#browser
  *

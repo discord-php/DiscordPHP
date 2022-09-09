@@ -3,7 +3,10 @@
 /**
  * Example Bot with Discord-PHP
  *
- * When an User says "ping", the Bot will reply "pong"
+ * When a User says "ping", the Bot will reply "pong"
+ *
+ * Getting a User message content requries the Message Content Privileged Intent
+ * @link https://support-dev.discord.com/hc/en-us/articles/4404772028055-Message-Content-Privileged-Intent-FAQ
  *
  * Run this example bot from main directory using command:
  * php examples/ping.php
