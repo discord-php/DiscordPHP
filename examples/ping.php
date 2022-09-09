@@ -6,7 +6,7 @@
  * When a User says "ping", the Bot will reply "pong"
  *
  * Getting a User message content requries the Message Content Privileged Intent
- * @link https://support-dev.discord.com/hc/en-us/articles/4404772028055-Message-Content-Privileged-Intent-FAQ
+ * @link http://dis.gd/mcfaq
  *
  * Run this example bot from main directory using command:
  * php examples/ping.php
