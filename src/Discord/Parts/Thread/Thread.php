@@ -441,6 +441,8 @@ class Thread extends Part
      * @link https://discord.com/developers/docs/resources/channel#get-pinned-messages
      *
      * @return ExtendedPromiseInterface<Collection<Message>>
+     * 
+     * @todo Make it in a trait along with Channel
      */
     public function getPinnedMessages(): ExtendedPromiseInterface
     {
@@ -465,15 +467,17 @@ class Thread extends Part
      *
      * @link https://discord.com/developers/docs/resources/channel#bulk-delete-messages
      *
-     * @param array|Traversable $messages
-     * @param string|null       $reason   Reason for Audit Log (only for bulk messages).
+     * @param array       $messages
+     * @param string|null $reason   Reason for Audit Log (only for bulk messages).
      *
      * @return ExtendedPromiseInterface
+     * 
+     * @todo Make it in a trait along with Channel
      */
     public function deleteMessages($messages, ?string $reason = null): ExtendedPromiseInterface
     {
-        if (! is_array($messages) && ! ($messages instanceof Traversable)) {
-            return reject(new \Exception('$messages must be an array or implement Traversable.'));
+        if (! is_array($messages)) {
+            return reject(new \Exception('$messages must be an array.'));
         }
 
         $count = count($messages);
@@ -522,6 +526,8 @@ class Thread extends Part
      * @param array $options
      *
      * @return ExtendedPromiseInterface<Collection<Message>>
+     * 
+     * @todo Make it in a trait along with Channel
      */
     public function getMessageHistory(array $options): ExtendedPromiseInterface
     {
@@ -584,6 +590,8 @@ class Thread extends Part
      * @throws \RuntimeException
      *
      * @return ExtendedPromiseInterface<Message>
+     * 
+     * @todo Make it in a trait along with Channel
      */
     public function pinMessage(Message $message, ?string $reason = null): ExtendedPromiseInterface
     {
@@ -618,6 +626,8 @@ class Thread extends Part
      * @throws \RuntimeException
      *
      * @return ExtendedPromiseInterface<Message>
+     * 
+     * @todo Make it in a trait along with Channel
      */
     public function unpinMessage(Message $message, ?string $reason = null): ExtendedPromiseInterface
     {
@@ -656,6 +666,8 @@ class Thread extends Part
      * @param Message|null          $replyTo          Sends the message as a reply to the given message instance.
      *
      * @return ExtendedPromiseInterface<Message>
+     * 
+     * @todo Make it in a trait along with Channel
      */
     public function sendMessage($message, bool $tts = false, $embed = null, $allowed_mentions = null, ?Message $replyTo = null): ExtendedPromiseInterface
     {
@@ -702,6 +714,8 @@ class Thread extends Part
      * @param Embed $embed Embed to send.
      *
      * @return ExtendedPromiseInterface<Message>
+     * 
+     * @todo Make it in a trait along with Channel
      */
     public function sendEmbed(Embed $embed): ExtendedPromiseInterface
     {
@@ -718,6 +732,8 @@ class Thread extends Part
      * @param int      $options ['limit'] The amount of messages allowed or false.
      *
      * @return ExtendedPromiseInterface<Collection<Message>>
+     * 
+     * @todo Make it in a trait along with Channel
      */
     public function createMessageCollector(callable $filter, array $options = []): ExtendedPromiseInterface
     {
