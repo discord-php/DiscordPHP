@@ -495,38 +495,37 @@ class Discord
             return $this->ready();
         }
 
-        // Emit ready after 60 seconds
-        $this->loop->addTimer(60, function () {
-            $this->ready();
-        });
-
-        $function = function ($guild) use (&$function, &$unavailable) {
+        $function = function ($guild) use (&$unavailable) {
             $this->logger->debug('guild available', ['guild' => $guild->id, 'unavailable' => count($unavailable)]);
             if (array_key_exists($guild->id, $unavailable)) {
                 unset($unavailable[$guild->id]);
             }
-
-            // todo setup timer to continue after x amount of time
-            if (count($unavailable) < 1) {
-                $this->logger->info('all guilds are now available', ['count' => $this->guilds->count()]);
-                $this->removeListener(Event::GUILD_CREATE, $function);
-
-                $this->setupChunking();
-            }
         };
-
         $this->on(Event::GUILD_CREATE, $function);
 
-        $function2 = function ($guild) use (&$function2, &$unavailable) {
+        $function2 = function ($guild) use (&$unavailable) {
             if ($guild->unavailable) {
                 $this->logger->debug('guild unavailable', ['guild' => $guild->id, 'unavailable' => count($unavailable)]);
                 unset($unavailable[$guild->id]);
-                if (count($unavailable) < 1) {
-                    $this->removeListener(Event::GUILD_DELETE, $function2);
-                }
             }
         };
         $this->on(Event::GUILD_DELETE, $function2);
+
+        $this->loop->addPeriodicTimer(5, function ($timer) use (&$function, &$function2, &$unavailable) {
+            if (count($unavailable) < 1) {
+                $this->logger->info('all guilds are now available', ['count' => $this->guilds->count()]);
+                $this->removeListener(Event::GUILD_CREATE, $function);
+                $this->removeListener(Event::GUILD_DELETE, $function2);
+                $this->loop->cancelTimer($timer);
+
+                $this->setupChunking();
+            }            
+        });
+
+        // Emit ready after 60 seconds
+        $this->loop->addTimer(60, function () {
+            $this->ready();
+        });
     }
 
     /**
@@ -798,6 +797,7 @@ class Discord
 
             $parse = [
                 Event::GUILD_CREATE,
+                Event::GUILD_DELETE,
             ];
 
             if (! $this->emittedReady && (! in_array($data->t, $parse))) {
