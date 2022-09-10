@@ -73,7 +73,7 @@ trait CommandAttributes
             throw new \LengthException('Command name can be only up to 32 characters long.');
         }
 
-        if ($this->type == Command::CHAT_INPUT && preg_match('/^[-_\p{L}\p{N}\p{Devanagari}\p{Thai}]{1,32}$/u', $name) === 0) {
+        if (isset($this->type) && $this->type == Command::CHAT_INPUT && preg_match('/^[-_\p{L}\p{N}\p{Devanagari}\p{Thai}]{1,32}$/u', $name) === 0) {
             throw new \DomainException('Slash command name contains invalid characters.');
         }
 
@@ -107,6 +107,8 @@ trait CommandAttributes
                 throw new \DomainException('Slash command localized name contains invalid characters.');
             }
         }
+
+        $this->name_localizations ??= [];
 
         $this->name_localizations[$locale] = $name;
 
@@ -148,9 +150,11 @@ trait CommandAttributes
      */
     public function setDescriptionLocalization(string $locale, ?string $description): self
     {
-        if (isset($description) && $this->type == Command::CHAT_INPUT && poly_strlen($description) > 100) {
+        if (isset($description, $this->type) && $this->type == Command::CHAT_INPUT && poly_strlen($description) > 100) {
             throw new \LengthException('Command description must be less than or equal to 100 characters.');
         }
+
+        $this->description_localizations ??= [];
 
         $this->description_localizations[$locale] = $description;
 
@@ -213,13 +217,15 @@ trait CommandAttributes
      */
     public function addOption(Option $option): self
     {
-        if ($this->type != Command::CHAT_INPUT) {
+        if (isset($this->type) && $this->type != Command::CHAT_INPUT) {
             throw new \DomainException('Only CHAT_INPUT Command type can have option.');
         }
 
         if (isset($this->options) && count($this->options) >= 25) {
             throw new \OverflowException('Command can only have a maximum of 25 options.');
         }
+
+        $this->options ??= [];
 
         $this->options[] = $option;
 
@@ -237,7 +243,7 @@ trait CommandAttributes
      */
     public function removeOption(Option $option): self
     {
-        if ($this->type != Command::CHAT_INPUT) {
+        if (isset($this->type) && $this->type != Command::CHAT_INPUT) {
             throw new \DomainException('Only CHAT_INPUT Command type can have option.');
         }
 

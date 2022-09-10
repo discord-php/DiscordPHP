@@ -90,7 +90,7 @@ class Choice extends Part
             }
         }
 
-        $this->name_localizations[$locale] = $name;
+        $this->attributes['name_localizations'][$locale] = $name;
 
         return $this;
     }
