@@ -107,13 +107,6 @@ abstract class Part implements ArrayAccess, JsonSerializable
     public $created = false;
 
     /**
-     * Should we fill the part after saving?
-     *
-     * @var bool Whether the part will be saved after being filled.
-     */
-    protected $fillAfterSave = true;
-
-    /**
      * Create a new part instance.
      *
      * @param Discord $discord    The Discord client.

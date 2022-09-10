@@ -93,11 +93,6 @@ class Member extends Part
     ];
 
     /**
-     * @inheritDoc
-     */
-    protected $fillAfterSave = false;
-
-    /**
      * Updates the member from a new presence update object.
      * This is an internal function and is not meant to be used by a public application.
      *
