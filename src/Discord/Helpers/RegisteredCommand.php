@@ -13,6 +13,8 @@ namespace Discord\Helpers;
 
 use Discord\Discord;
 use Discord\Parts\Interactions\Interaction;
+use Discord\Parts\Interactions\Request\Option;
+use Discord\Repository\Interaction\OptionRepository;
 
 /**
  * RegisteredCommand represents a command that has been registered
@@ -88,16 +90,19 @@ class RegisteredCommand
      */
     public function execute(array $options, Interaction $interaction): bool
     {
+        $optionRepository = new OptionRepository($this->discord);
+
         foreach ($options as $option) {
             if (isset($this->subCommands[$option->name])) {
                 if ($this->subCommands[$option->name]->execute($option->options ?? [], $interaction)) {
                     return true;
                 }
             }
+            $optionRepository->pushItem($this->discord->getFactory()->part(Option::class, (array) $option, true));
         }
 
         if (isset($this->callback)) {
-            ($this->callback)($interaction);
+            ($this->callback)($interaction, $optionRepository);
 
             return true;
         }
