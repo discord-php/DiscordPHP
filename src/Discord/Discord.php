@@ -787,8 +787,6 @@ class Discord
                 } else {
                     $this->logger->warning('rejection while trying to handle dispatch packet', ['packet' => $data->t, 'rejection' => $e]);
                 }
-            }, function ($d) use ($data) {
-                $this->logger->warning('notified from event', ['data' => $d, 'packet' => $data->t]);
             });
 
             $parse = [
