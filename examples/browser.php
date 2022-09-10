@@ -11,10 +11,11 @@
  * php examples/browser.php
  */
 
-include __DIR__.'/../vendor/autoload.php';
+include __DIR__ . '/../vendor/autoload.php';
 
 // Import classes, install a LSP such as Intelephense to auto complete imports
 use Discord\Discord;
+use Discord\WebSockets\Intents;
 use Discord\Parts\Channel\Message;
 use Psr\Http\Message\ResponseInterface;
 use React\Http\Browser;
@@ -22,6 +23,8 @@ use React\Http\Browser;
 // Create a $discord BOT
 $discord = new Discord([
     'token' => '', // Put your Bot token here from https://discord.com/developers/applications/
+    // Enable the `MESSAGE_CONTENT` intent
+    'intents' => Intents::getDefaultIntents() | Intents::MESSAGE_CONTENT // Make sure the intent is enabled on developer portal.
 ]);
 
 // Create a $browser with same loop as $discord
@@ -66,9 +69,7 @@ $discord->on('ready', function (Discord $discord) {
                 }
             );
         }
-
     });
-
 });
 
 // Start the Bot (must be at the bottom)
