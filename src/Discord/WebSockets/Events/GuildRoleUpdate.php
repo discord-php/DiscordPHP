@@ -49,7 +49,7 @@ class GuildRoleUpdate extends Event
         }
 
         if ($guild) {
-            yield $guild->roles->cache->set($data->role->id, $rolePart);
+            $guild->roles->set($data->role->id, $rolePart);
         }
 
         return [$rolePart, $oldRole];

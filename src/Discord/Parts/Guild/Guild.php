@@ -224,12 +224,6 @@ class Guild extends Part
         'joined_at',
         'large',
         'member_count',
-        'voice_states',
-        'members', // @todo
-        'channels', // @todo
-        'threads', // @todo
-        'stage_instances',
-        'guild_scheduled_events',
     ];
 
     /**
@@ -297,35 +291,35 @@ class Guild extends Part
         parent::fill($attributes);
 
         foreach ($attributes['roles'] ?? [] as $role) {
-            if ($rolePart = $this->roles->offsetGet($role->id)) {
-                $rolePart->fill((array) $role);
+            $role = (array) $role + ['guild_id' => $this->id];
+            if ($rolePart = $this->roles->offsetGet($role['id'])) {
+                $rolePart->fill($role);
             }
-            $this->roles->pushItem($rolePart ?? $this->factory->part(Role::class, (array) $role + ['guild_id' => $this->id], true));
+            $this->roles->pushItem($rolePart ?? $this->factory->part(Role::class, $role, $this->created));
         }
 
         foreach ($attributes['emojis'] ?? [] as $emoji) {
-            if ($emojiPart = $this->emojis->offsetGet($emoji->id)) {
-                $emojiPart->fill((array) $emoji);
+            $emoji = (array) $emoji + ['guild_id' => $this->id];
+            if ($emojiPart = $this->emojis->offsetGet($emoji['id'])) {
+                $emojiPart->fill($emoji);
             }
-            $this->emojis->pushItem($emojiPart ?? $this->factory->part(Emoji::class, (array) $emoji + ['guild_id' => $this->id], true));
+            $this->emojis->pushItem($emojiPart ?? $this->factory->part(Emoji::class, $emoji, $this->created));
         }
 
         foreach ($attributes['stickers'] ?? [] as $sticker) {
-            if ($stickerPart = $this->stickers->offsetGet($sticker->id)) {
-                $stickerPart->fill((array) $sticker);
+            $sticker = (array) $sticker + ['guild_id' => $this->id];
+            if ($stickerPart = $this->stickers->offsetGet($sticker['id'])) {
+                $stickerPart->fill($sticker);
             }
-            $this->stickers->pushItem($stickerPart ?? $this->factory->part(Sticker::class, (array) $sticker + ['guild_id' => $this->id], true));
+            $this->stickers->pushItem($stickerPart ?? $this->factory->part(Sticker::class, $sticker, $this->created));
         }
 
-        // @todo fill channels first
-        foreach ($attributes['stage_instances'] ?? [] as $stage_instance) {
-            if ($channel = $this->channels->get('id', $stage_instance->channel_id)) {
-                if ($stageInstancePart = $channel->stage_instances->get('id', $stage_instance->id)) {
-                    $stageInstancePart->fill((array) $stage_instance);
-                } else {
-                    $channel->stage_instances->pushItem($this->factory->part(StageInstance::class, (array) $stage_instance, true));
-                }
+        foreach ($attributes['channels'] ?? [] as $channel) {
+            $channel = (array) $channel + ['guild_id' => $this->id];
+            if ($channelPart = $this->channels->offsetGet($channel['id'])) {
+                $channelPart->fill($channel);
             }
+            $this->channels->pushItem($channelPart ?? $this->factory->part(Channel::class, $channel, true));
         }
     }
 
@@ -1282,12 +1276,16 @@ class Guild extends Part
     {
         return [
             'name' => $this->name,
-            'icon' => $this->attributes['icon'],
+            'icon' => $this->attributes['icon'] ?? null,
             'verification_level' => $this->verification_level,
             'default_message_notifications' => $this->default_message_notifications,
             'explicit_content_filter' => $this->explicit_content_filter,
-            'roles' => $this->attributes['roles'], // @todo
-            'channels' => $this->attributes['channels'], // @todo
+            'roles' => array_values(array_map(function (Role $role) {
+                return $role->getCreatableAttributes();
+            }, $this->roles->toArray())) ?: null, // @todo test
+            'channels' => array_values(array_map(function (Channel $channel) {
+                return $channel->getCreatableAttributes();
+            }, $this->channels->toArray())) ?: null, // @todo test
             'afk_channel_id' => $this->afk_channel_id,
             'afk_timeout' => $this->afk_timeout,
             'system_channel_id' => $this->system_channel_id,

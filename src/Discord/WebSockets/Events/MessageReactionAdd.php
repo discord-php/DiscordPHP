@@ -76,7 +76,7 @@ class MessageReactionAdd extends Event
                 $reaction->me = $data->user_id == $this->discord->id;
             }
 
-            yield $message->reactions->cache->set($reaction->reaction_id, $reaction);
+            $message->reactions->set($reaction->reaction_id, $reaction);
         }
 
         if (isset($data->member->user)) {

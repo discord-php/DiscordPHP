@@ -346,19 +346,14 @@ final class CacheWrapper
      */
     public function clear()
     {
-        $promises = [];
+        return $this->deleteMultiple(array_keys($this->items))
+            ->then(function ($success) {
+                if ($success) {
+                    $this->items = [];
+                }
 
-        foreach (array_keys($this->items) as $key) {
-            $promises[$key] = $this->interface->delete($this->prefix.$key);
-        }
-
-        return all($promises)->then(function ($success) {
-            if ($success) {
-                $this->items = [];
-            }
-
-            return $success;
-        });
+                return $success;
+            });
     }
 
     /**

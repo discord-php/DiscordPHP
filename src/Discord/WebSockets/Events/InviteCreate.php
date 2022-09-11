@@ -35,10 +35,10 @@ class InviteCreate extends Event
         if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
             /** @var ?Channel */
             if ($channel = yield $guild->channels->cacheGet($data->channel_id)) {
-                yield $channel->invites->cache->set($data->code, $invitePart);
+                $channel->invites->set($data->code, $invitePart);
             }
 
-            yield $guild->invites->cache->set($data->code, $invitePart);
+            $guild->invites->set($data->code, $invitePart);
         }
 
         if (isset($data->inviter)) {

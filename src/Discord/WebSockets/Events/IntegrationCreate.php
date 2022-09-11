@@ -32,7 +32,7 @@ class IntegrationCreate extends Event
 
         /** @var ?Guild */
         if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
-            yield $guild->integrations->cacahe->set($data->id, $integrationPart);
+            $guild->integrations->set($data->id, $integrationPart);
         }
 
         if (isset($data->user)) {

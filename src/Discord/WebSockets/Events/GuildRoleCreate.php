@@ -32,7 +32,7 @@ class GuildRoleCreate extends Event
 
         /** @var ?Guild */
         if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
-            yield $guild->roles->cache->set($data->role->id, $rolePart);
+            $guild->roles->set($data->role->id, $rolePart);
         }
 
         return $rolePart;

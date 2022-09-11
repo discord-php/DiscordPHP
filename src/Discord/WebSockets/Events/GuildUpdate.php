@@ -37,7 +37,7 @@ class GuildUpdate extends Event
             $guildPart = $this->factory->part(Guild::class, (array) $data, true);
         }
 
-        yield $this->discord->guilds->cache->set($data->id, $guildPart);
+        $this->discord->guilds->set($data->id, $guildPart);
 
         return [$guildPart, $oldGuild];
     }

@@ -32,7 +32,7 @@ class GuildMemberAdd extends Event
 
         /** @var ?Guild */
         if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
-            yield $guild->members->cache->set($data->user->id, $memberPart);
+            $guild->members->set($data->user->id, $memberPart);
             ++$guild->member_count;
         }
 

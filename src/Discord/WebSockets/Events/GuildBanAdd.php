@@ -32,7 +32,7 @@ class GuildBanAdd extends Event
 
         /** @var ?Guild */
         if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
-            yield $guild->bans->cache->set($data->user->id, $banPart);
+            $guild->bans->set($data->user->id, $banPart);
         }
 
         $this->cacheUser($data->user);

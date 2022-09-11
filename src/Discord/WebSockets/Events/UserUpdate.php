@@ -36,6 +36,7 @@ class UserUpdate extends Event
             /** @var User */
             $userPart = $this->factory->part(User::class, (array) $data, true);
         }
+        $this->discord->users->set($data->id, $userPart);
 
         return [$userPart, $oldUser];
     }

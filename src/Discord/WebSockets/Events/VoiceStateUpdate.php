@@ -58,7 +58,7 @@ class VoiceStateUpdate extends Event
                     break;
                 } elseif ($channel->id == $data->channel_id) {
                     // Add member state to new channel
-                    yield $channel->members->cache->set($data->user_id, $statePart);
+                    $channel->members->set($data->user_id, $statePart);
                     break;
                 }
             }

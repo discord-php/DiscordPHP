@@ -341,7 +341,10 @@ class Member extends Part
         }
 
         // Get @everyone role guild permission
-        $bitwise = $guild->roles->get('id', $guild->id)->permissions->bitwise;
+        if (! $everyoneRole = $guild->roles->get('id', $guild->id)) {
+            return null;
+        }
+        $bitwise = $everyoneRole->permissions->bitwise;
 
         // If this member is the guild owner
         if ($guild->owner_id == $this->id) {

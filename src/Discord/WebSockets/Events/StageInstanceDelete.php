@@ -11,6 +11,7 @@
 
 namespace Discord\WebSockets\Events;
 
+use Discord\Parts\Channel\Channel;
 use Discord\Parts\Channel\StageInstance;
 use Discord\WebSockets\Event;
 use Discord\Parts\Guild\Guild;
@@ -31,10 +32,13 @@ class StageInstanceDelete extends Event
 
         /** @var ?Guild */
         if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
-            /** @var ?StageInstance */
-            if ($stageInstancePart = yield $guild->stage_instances->cachePull($data->id)) {
-                $stageInstancePart->fill((array) $data);
-                $stageInstancePart->created = false;
+            /** @var ?Channel */
+            if ($channel = yield $guild->channels->cacheGet($data->channel_id)) {
+                /** @var ?StageInstance */
+                if ($stageInstancePart = yield $channel->stage_instances->cachePull($data->id)) {
+                    $stageInstancePart->fill((array) $data);
+                    $stageInstancePart->created = false;
+                }
             }
         }
 

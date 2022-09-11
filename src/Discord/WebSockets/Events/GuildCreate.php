@@ -46,15 +46,6 @@ class GuildCreate extends Event
         /** @var Guild */
         $guildPart = $this->factory->part(Guild::class, (array) $data, true);
 
-        foreach ($data->channels as $channel) {
-            /** @var Channel[] */
-            $channel->guild_id = $data->id;
-            $channels[$channel->id] = $this->factory->part(Channel::class, (array) $channel, true);
-        }
-        if (! empty($channels)) {
-            $await[] = $guildPart->channels->cache->setMultiple($channels);
-        }
-
         foreach ($data->members as $member) {
             $userId = $member->user->id;
             $member->guild_id = $data->id;
@@ -74,26 +65,28 @@ class GuildCreate extends Event
         }
 
         foreach ($data->voice_states as $voice_state) {
-            if (isset($channels[$voice_state->channel_id])) {
-                $channelId = $voice_state->channel_id;
+            /** @var ?Channel */
+            if ($voiceChannel = $guildPart->channels->offsetGet($voice_state->channel_id)) {
                 $userId = $voice_state->user_id;
                 $voice_state->guild_id = $data->id;
                 if (! isset($voice_state->member) && isset($rawMembers[$userId])) {
                     $voice_state->member = $rawMembers[$userId];
                 }
-                $await[] = $channels[$channelId]->members->cache->set($userId, $this->factory->part(VoiceStateUpdatePart::class, (array) $voice_state, true));
+                $await[] = $voiceChannel->members->cache->set($userId, $this->factory->part(VoiceStateUpdatePart::class, (array) $voice_state, true));
             }
         }
 
         foreach ($data->threads as $thread) {
-            if (isset($channels[$thread->parent_id])) {
-                $await[] = $channels[$thread->parent_id]->threads->cache->set($thread->id, $this->factory->part(Thread::class, (array) $thread, true));
+            /** @var ?Channel */
+            if ($parent = $guildPart->channels->offsetGet($thread->parent_id)) {
+                $await[] = $parent->threads->cache->set($thread->id, $this->factory->part(Thread::class, (array) $thread, true));
             }
         }
 
         foreach ($data->stage_instances as $stageInstance) {
-            if (isset($channels[$stageInstance->channel_id])) {
-                $await[] = $channels[$stageInstance->channel_id]->stage_instances->cache->set($stageInstance->id, $this->factory->part(StageInstance::class, (array) $stageInstance, true));
+            /** @var ?Channel */
+            if ($channel = $guildPart->channels->offsetGet($stageInstance->channel_id)) {
+                $await[] = $channel->stage_instances->cache->set($stageInstance->id, $this->factory->part(StageInstance::class, (array) $stageInstance, true));
             }
         }
 
