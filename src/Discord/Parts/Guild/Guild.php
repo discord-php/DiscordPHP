@@ -303,7 +303,7 @@ class Guild extends Part
             if ($emojiPart = $this->emojis->offsetGet($emoji['id'])) {
                 $emojiPart->fill($emoji);
             }
-            $this->emojis->pushItem($emojiPart ?? $this->factory->part(Emoji::class, $emoji, true));
+            $this->emojis->pushItem($emojiPart ?? $this->factory->part(Emoji::class, $emoji, $this->created));
         }
 
         foreach ($attributes['stickers'] ?? [] as $sticker) {
@@ -311,7 +311,7 @@ class Guild extends Part
             if ($stickerPart = $this->stickers->offsetGet($sticker['id'])) {
                 $stickerPart->fill($sticker);
             }
-            $this->stickers->pushItem($stickerPart ?? $this->factory->part(Sticker::class, $sticker, true));
+            $this->stickers->pushItem($stickerPart ?? $this->factory->part(Sticker::class, $sticker, $this->created));
         }
 
         foreach ($attributes['channels'] ?? [] as $channel) {
@@ -319,7 +319,7 @@ class Guild extends Part
             if ($channelPart = $this->channels->offsetGet($channel['id'])) {
                 $channelPart->fill($channel);
             }
-            $this->channels->pushItem($channelPart ?? $this->factory->part(Channel::class, $channel, $this->created));
+            $this->channels->pushItem($channelPart ?? $this->factory->part(Channel::class, $channel, true));
         }
     }
 
