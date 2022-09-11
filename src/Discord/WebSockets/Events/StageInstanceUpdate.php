@@ -11,6 +11,7 @@
 
 namespace Discord\WebSockets\Events;
 
+use Discord\Parts\Channel\Channel;
 use Discord\Parts\Channel\StageInstance;
 use Discord\WebSockets\Event;
 use Discord\Parts\Guild\Guild;
@@ -30,14 +31,17 @@ class StageInstanceUpdate extends Event
         $stageInstancePart = $oldStageInstance = null;
 
         /** @var ?Guild */
-        if ($guild = $this->discord->guilds->cacheGet($data->guild_id)) {
-            /** @var ?StageInstance */
-            if ($oldStageInstance = yield $guild->stage_instances->cacheGet($data->id)) {
-                // Swap
-                $stageInstancePart = $oldStageInstance;
-                $oldStageInstance = clone $oldStageInstance;
+        if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
+            /** @var ?Channel */
+            if ($channel = yield $guild->channels->cacheGet($data->channel_id)) {
+                /** @var ?StageInstance */
+                if ($oldStageInstance = yield $channel->stage_instances->cacheGet($data->id)) {
+                    // Swap
+                    $stageInstancePart = $oldStageInstance;
+                    $oldStageInstance = clone $oldStageInstance;
 
-                $stageInstancePart->fill((array) $data);
+                    $stageInstancePart->fill((array) $data);
+                }
             }
         }
 
@@ -46,8 +50,8 @@ class StageInstanceUpdate extends Event
             $stageInstancePart = $this->factory->part(StageInstance::class, (array) $data, true);
         }
 
-        if ($guild) {
-            $guild->stage_instances->cache->set($data->id, $stageInstancePart);
+        if ($channel) {
+            yield $channel->stage_instances->cache->set($data->id, $stageInstancePart);
         }
 
         return [$stageInstancePart, $oldStageInstance];
