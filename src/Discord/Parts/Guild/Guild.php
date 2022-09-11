@@ -295,7 +295,7 @@ class Guild extends Part
             if ($rolePart = $this->roles->offsetGet($role['id'])) {
                 $rolePart->fill($role);
             }
-            $this->roles->pushItem($rolePart ?? $this->factory->part(Role::class, $role, true));
+            $this->roles->pushItem($rolePart ?? $this->factory->part(Role::class, $role, $this->created));
         }
 
         foreach ($attributes['emojis'] ?? [] as $emoji) {
@@ -319,7 +319,7 @@ class Guild extends Part
             if ($channelPart = $this->channels->offsetGet($channel['id'])) {
                 $channelPart->fill($channel);
             }
-            $this->channels->pushItem($channelPart ?? $this->factory->part(Channel::class, $channel, true));
+            $this->channels->pushItem($channelPart ?? $this->factory->part(Channel::class, $channel, $this->created));
         }
     }
 

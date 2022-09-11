@@ -207,8 +207,8 @@ abstract class AbstractRepository extends Collection
         }
 
         return $this->http->{$method}($endpoint, $attributes, $headers)->then(function ($response) use ($part) {
-            $part->fill((array) $response);
             $part->created = true;
+            $part->fill((array) $response);
 
             return $this->cache->set($part->{$this->discrim}, $part)->then(fn ($success) => $part);
         });
