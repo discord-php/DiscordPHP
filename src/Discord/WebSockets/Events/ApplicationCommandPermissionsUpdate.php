@@ -53,7 +53,7 @@ class ApplicationCommandPermissionsUpdate extends Event
 
         if ($guild && isset($commandPermissionsPart)) {
             // Permission set / updated
-            yield $guild->command_permissions->cache->set($data->id, $commandPermissionsPart);
+            $guild->command_permissions->set($data->id, $commandPermissionsPart);
         }
 
         return [$commandPermissionsPart, $oldCommandPermissions];

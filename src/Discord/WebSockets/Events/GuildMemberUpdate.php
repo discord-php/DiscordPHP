@@ -47,7 +47,7 @@ class GuildMemberUpdate extends Event
         }
 
         if ($guild) {
-            yield $guild->members->cache->set($data->user->id, $memberPart);
+            $guild->members->set($data->user->id, $memberPart);
         }
 
         $this->cacheUser($data->user);

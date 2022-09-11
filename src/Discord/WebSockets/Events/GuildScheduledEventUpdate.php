@@ -47,7 +47,7 @@ class GuildScheduledEventUpdate extends Event
         }
 
         if ($guild) {
-            yield $guild->guild_scheduled_events->cache->set($data->id, $scheduledEventPart);
+            $guild->guild_scheduled_events->set($data->id, $scheduledEventPart);
         }
 
         if (isset($data->creator)) {

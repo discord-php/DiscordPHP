@@ -207,8 +207,8 @@ abstract class AbstractRepository extends Collection
         }
 
         return $this->http->{$method}($endpoint, $attributes, $headers)->then(function ($response) use ($part) {
-            $part->fill((array) $response);
             $part->created = true;
+            $part->fill((array) $response);
 
             return $this->cache->set($part->{$this->discrim}, $part)->then(fn ($success) => $part);
         });
@@ -403,18 +403,13 @@ abstract class AbstractRepository extends Collection
      */
     public function set($offset, $value)
     {
-        if ($this->class === null) {
-            return parent::set($offset, $value);
-        }
-
         // Don't insert elements that are not of type class.
         if (! is_a($value, $this->class)) {
             return;
         }
 
         $this->cache->interface->set($this->cache->getPrefix().$offset, $this->cache->serializer($value));
-
-        $this->offsetSet($offset, $value);
+        $this->items[$offset] = $value;
     }
 
     /**
@@ -431,7 +426,7 @@ abstract class AbstractRepository extends Collection
     {
         if ($item = $this->offsetGet($key)) {
             $default = $item;
-            $this->offsetUnset($key);
+            unset($this->items[$key]);
             $this->cache->interface->delete($this->cache->getPrefix().$key);
         }
 
@@ -464,10 +459,6 @@ abstract class AbstractRepository extends Collection
      */
     public function pushItem($item): self
     {
-        if ($this->class === null) {
-            return parent::pushItem($item);
-        }
-
         if (is_a($item, $this->class)) {
             $key = $item->{$this->discrim};
             $this->items[$key] = $item;
@@ -537,7 +528,7 @@ abstract class AbstractRepository extends Collection
     public function has(...$keys): bool
     {
         foreach ($keys as $key) {
-            if (! $this->offsetExists($key) || nowait($this->cache->has($key)) === false) {
+            if (! isset($this->items[$key]) || nowait($this->cache->has($key)) === false) {
                 return false;
             }
         }
@@ -585,14 +576,7 @@ abstract class AbstractRepository extends Collection
      */
     public function find(callable $callback)
     {
-        foreach ($this->items as $offset => $item) {
-            if ($item instanceof WeakReference) {
-                if (! $item = $item->get()) {
-                    // Attempt to get resolved value if promise is resolved without waiting
-                    $item = nowait($this->cache->get($offset));
-                }
-            }
-
+        foreach ($this->getIterator() as $item) {
             if ($item === null) {
                 continue;
             }
@@ -716,16 +700,14 @@ abstract class AbstractRepository extends Collection
         return (function () {
             foreach ($this->items as $offset => $item) {
                 if ($item instanceof WeakReference) {
-                    $item = $item->get();
+                    if (! $item = $item->get()) {
+                        // Attempt to get resolved value if promise is resolved without waiting
+                        $item = nowait($this->cache->get($offset));
+                    }
                 }
 
                 if ($item) {
                     yield $offset => $this->items[$offset] = $item;
-                } else {
-                    // Attempt to get resolved value if promise is resolved without waiting
-                    if ($resolved = nowait($this->cache->get($offset)) !== null) {
-                        yield $offset => $this->items[$offset] = $resolved;
-                    }
                 }
             }
         })();

@@ -60,16 +60,6 @@ class Role extends Part
     ];
 
     /**
-     * @inheritdoc
-     */
-    protected function afterConstruct(): void
-    {
-        if (! ($this->attributes['permissions'] instanceof RolePermission)) {
-            $this->permissions = $this->attributes['permissions'];
-        }
-    }
-
-    /**
      * Sets the permissions attribute.
      *
      * @param RolePermission|int $permission The permissions to set.

@@ -52,7 +52,7 @@ class ChannelUpdate extends Event
         }
 
         if ($repository) {
-            yield $repository->cache->set($data->id, $channelPart);
+            $repository->set($data->id, $channelPart);
         }
 
         return [$channelPart, $oldChannel];

@@ -37,7 +37,7 @@ class PresenceUpdate extends Event
             if ($member = yield $guild->members->cacheGet($data->user->id)) {
                 $oldPresence = $member->updateFromPresence($presence);
 
-                yield $guild->members->cache->set($data->user->id, $member);
+                $guild->members->set($data->user->id, $member);
 
                 return [$presence, $oldPresence];
             }

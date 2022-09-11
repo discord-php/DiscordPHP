@@ -32,7 +32,7 @@ class AutoModerationRuleCreate extends Event
 
         /** @var ?Guild */
         if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
-            yield $guild->auto_moderation_rules->cache->set($data->id, $rulePart);
+            $guild->auto_moderation_rules->set($data->id, $rulePart);
         }
 
         return $rulePart;

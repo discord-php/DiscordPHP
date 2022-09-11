@@ -31,11 +31,11 @@ class ChannelCreate extends Event
         $channelPart = $this->factory->part(Channel::class, (array) $data, true);
 
         if ($channelPart->is_private) {
-            yield $this->discord->private_channels->cache->set($data->id, $channelPart);
+            $this->discord->private_channels->set($data->id, $channelPart);
         } else {
             /** @var ?Guild */
             if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
-                yield $guild->channels->cache->set($data->id, $channelPart);
+                $guild->channels->set($data->id, $channelPart);
             }
         }
 

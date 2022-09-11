@@ -41,7 +41,7 @@ class MessageCreate extends Event
                 'recipients' => [$data->author],
             ], true);
 
-            yield $this->discord->private_channels->cache->set($data->channel_id, $channel);
+            $this->discord->private_channels->set($data->channel_id, $channel);
         }
 
         if (isset($data->guild_id)) {
@@ -57,7 +57,7 @@ class MessageCreate extends Event
         if ($this->discord->options['storeMessages'] && (isset($channel) || $channel = $messagePart->channel)) {
             // Only cache if message intent is enabled or message was sent by the bot or message is not cached
             if (($this->discord->options['intents'] & Intents::MESSAGE_CONTENT) || $data->author->id == $this->discord->id || ! (yield $channel->messages->cache->has($data->id))) {
-                yield $channel->messages->cache->set($data->id, $messagePart);
+                $channel->messages->set($data->id, $messagePart);
             }
         }
 

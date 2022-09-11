@@ -48,7 +48,7 @@ class ThreadUpdate extends Event
         }
 
         if (isset($parent)) {
-            yield $parent->threads->cache->set($data->id, $threadPart);
+            $parent->threads->set($data->id, $threadPart);
         }
 
         return [$threadPart, $oldThread];
