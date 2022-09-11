@@ -403,10 +403,6 @@ abstract class AbstractRepository extends Collection
      */
     public function set($offset, $value)
     {
-        if ($this->class === null) {
-            return parent::set($offset, $value);
-        }
-
         // Don't insert elements that are not of type class.
         if (! is_a($value, $this->class)) {
             return;
@@ -463,10 +459,6 @@ abstract class AbstractRepository extends Collection
      */
     public function pushItem($item): self
     {
-        if ($this->class === null) {
-            return parent::pushItem($item);
-        }
-
         if (is_a($item, $this->class)) {
             $key = $item->{$this->discrim};
             $this->items[$key] = $item;
