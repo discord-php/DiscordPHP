@@ -50,7 +50,7 @@ class StageInstanceUpdate extends Event
             $stageInstancePart = $this->factory->part(StageInstance::class, (array) $data, true);
         }
 
-        if ($channel) {
+        if (isset($channel)) {
             yield $channel->stage_instances->cache->set($data->id, $stageInstancePart);
         }
 
