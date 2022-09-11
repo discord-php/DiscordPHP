@@ -190,6 +190,7 @@ class Guild extends Part
         'splash',
         'discovery_splash',
         'features',
+        'emojis',
         'banner',
         'owner_id',
         'application_id',
@@ -200,6 +201,7 @@ class Guild extends Part
         'widget_enabled',
         'widget_channel_id',
         'verification_level',
+        'roles',
         'default_message_notifications',
         'hub_type',
         'mfa_level',
@@ -218,6 +220,7 @@ class Guild extends Part
         'approximate_presence_count',
         'welcome_screen',
         'nsfw_level',
+        'stickers',
         'premium_progress_bar_enabled',
 
         // events
