@@ -117,7 +117,6 @@ class Channel extends Part
         'type',
         'guild_id',
         'position',
-        'permission_overwrites',
         'name',
         'topic',
         'nsfw',
@@ -155,14 +154,22 @@ class Channel extends Part
     ];
 
     /**
+     * @inheritDoc
+     */
+    public function fill(array $attributes): void
+    {
+        parent::fill($attributes);
+
+        if (isset($attributes['permission_overwrites'])) {
+            $this->setPermissionOverwritesAttribute($attributes['permission_overwrites']);
+        }
+    }
+
+    /**
      * @inheritdoc
      */
     protected function afterConstruct(): void
     {
-        if (isset($this->attributes['permission_overwrites'])) {
-            $this->permission_overwrites = $this->attributes['permission_overwrites'];
-        }
-
         if (! array_key_exists('bitrate', $this->attributes) && $this->type != self::TYPE_TEXT) {
             $this->bitrate = 64000;
         }
@@ -783,13 +790,12 @@ class Channel extends Part
     {
         $this->attributes['permission_overwrites'] = $overwrites;
 
-        if ($this->id && ! $overwrites !== null) {
-            foreach ($overwrites as $overwrite) {
-                $overwrite = (array) $overwrite;
-                $overwrite['channel_id'] = $this->id;
-
-                $this->overwrites->pushItem($this->factory->part(Overwrite::class, $overwrite, true));
+        foreach ($overwrites as $overwrite) {
+            $overwrite = (array) $overwrite + ['channel_id' => $this->id];
+            if ($overwritePart = $this->overwrites->offsetGet($overwrite['id'])) {
+                $overwritePart->fill($overwrite);
             }
+            $this->overwrites->pushItem($this->factory->part(Overwrite::class, $overwrite, true));
         }
     }
 
