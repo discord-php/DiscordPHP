@@ -1280,12 +1280,12 @@ class Guild extends Part
             'verification_level' => $this->verification_level,
             'default_message_notifications' => $this->default_message_notifications,
             'explicit_content_filter' => $this->explicit_content_filter,
-            'roles' => array_values($this->roles->map(function (Role $role) {
+            'roles' => array_values(array_map(function (Role $role) {
                 return $role->getCreatableAttributes();
-            })->toArray()) ?: null, // @todo test
-            'channels' => array_values($this->channels->map(function (Channel $channel) {
+            }, $this->roles->toArray())) ?: null, // @todo test
+            'channels' => array_values(array_map(function (Channel $channel) {
                 return $channel->getCreatableAttributes();
-            })->toArray()) ?: null, // @todo test
+            }, $this->channels->toArray())) ?: null, // @todo test
             'afk_channel_id' => $this->afk_channel_id,
             'afk_timeout' => $this->afk_timeout,
             'system_channel_id' => $this->system_channel_id,
