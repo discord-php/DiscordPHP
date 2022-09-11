@@ -34,7 +34,7 @@ class ThreadMemberUpdate extends Event
             foreach ($guild->channels as $channel) {
                 /** @var ?Thread */
                 if ($thread = yield $channel->threads->cacheGet($data->id)) {
-                    yield $thread->members->cache->set($data->user_id, $memberPart);
+                    $thread->members->set($data->user_id, $memberPart);
                     break;
                 }
             }

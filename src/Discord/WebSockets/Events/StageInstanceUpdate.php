@@ -51,7 +51,7 @@ class StageInstanceUpdate extends Event
         }
 
         if (isset($channel)) {
-            yield $channel->stage_instances->cache->set($data->id, $stageInstancePart);
+            $channel->stage_instances->set($data->id, $stageInstancePart);
         }
 
         return [$stageInstancePart, $oldStageInstance];

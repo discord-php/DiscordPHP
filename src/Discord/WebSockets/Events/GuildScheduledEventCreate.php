@@ -32,7 +32,7 @@ class GuildScheduledEventCreate extends Event
 
         /** @var ?Guild */
         if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
-            yield $guild->guild_scheduled_events->cache->set($data->id, $scheduledEventPart);
+            $guild->guild_scheduled_events->set($data->id, $scheduledEventPart);
         }
 
         if (isset($data->creator)) {

@@ -47,7 +47,7 @@ class IntegrationUpdate extends Event
         }
 
         if ($guild) {
-            yield $guild->integrations->cache->set($data->id, $integrationPart);
+            $guild->integrations->set($data->id, $integrationPart);
         }
 
         if (isset($data->user)) {

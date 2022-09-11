@@ -47,7 +47,7 @@ class AutoModerationRuleUpdate extends Event
         }
 
         if ($guild) {
-            yield $guild->auto_moderation_rules->cache->set($data->id, $rulePart);
+            $guild->auto_moderation_rules->set($data->id, $rulePart);
         }
 
         return [$rulePart, $oldRule];

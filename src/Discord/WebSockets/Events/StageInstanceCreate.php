@@ -35,7 +35,7 @@ class StageInstanceCreate extends Event
         if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
             /** @var ?Channel */
             if ($channel = yield $guild->channels->cacheGet($data->channel_id)) {
-                yield $channel->stage_instances->cache->set($data->id, $stageInstancePart);
+                $channel->stage_instances->set($data->id, $stageInstancePart);
             }
         }
 

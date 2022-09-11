@@ -64,7 +64,7 @@ class MessageUpdate extends Event
         }
 
         if (isset($channel) && ($oldMessagePart || $this->discord->options['storeMessages'])) {
-            yield $channel->messages->cache->set($data->id, $cacheMessagePart ?? $messagePart);
+            $channel->messages->set($data->id, $cacheMessagePart ?? $messagePart);
         }
 
         return [$messagePart, $oldMessagePart];
