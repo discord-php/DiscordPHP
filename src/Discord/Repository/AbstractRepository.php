@@ -413,8 +413,7 @@ abstract class AbstractRepository extends Collection
         }
 
         $this->cache->interface->set($this->cache->getPrefix().$offset, $this->cache->serializer($value));
-
-        $this->offsetSet($offset, $value);
+        $this->items[$offset] = $value;
     }
 
     /**
@@ -431,7 +430,7 @@ abstract class AbstractRepository extends Collection
     {
         if ($item = $this->offsetGet($key)) {
             $default = $item;
-            $this->offsetUnset($key);
+            unset($this->items[$key]);
             $this->cache->interface->delete($this->cache->getPrefix().$key);
         }
 
