@@ -528,7 +528,7 @@ abstract class AbstractRepository extends Collection
     public function has(...$keys): bool
     {
         foreach ($keys as $key) {
-            if (! $this->offsetExists($key) || nowait($this->cache->has($key)) === false) {
+            if (! isset($this->items[$key]) || nowait($this->cache->has($key)) === false) {
                 return false;
             }
         }
