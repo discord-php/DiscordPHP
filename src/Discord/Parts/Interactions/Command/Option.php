@@ -170,7 +170,7 @@ class Option extends Part
             throw new \LengthException('Name must be less than or equal to 32 characters.');
         }
 
-        $this->name_localizations[$locale] = $name;
+        $this->attributes['name_localizations'][$locale] = $name;
 
         return $this;
     }
@@ -211,7 +211,7 @@ class Option extends Part
             throw new \LengthException('Description must be less than or equal to 100 characters.');
         }
 
-        $this->description_localizations[$locale] = $description;
+        $this->attributes['description_localizations'][$locale] = $description;
 
         return $this;
     }

@@ -780,9 +780,13 @@ class Discord
                     $this->emit('mention', [$new, $this, $old]);
                 }
             }, function ($e) use ($data) {
-                $this->logger->warning('error while trying to handle dispatch packet', ['packet' => $data->t, 'error' => $e]);
-            }, function ($d) use ($data) {
-                $this->logger->warning('notified from event', ['data' => $d, 'packet' => $data->t]);
+                if ($e instanceof \Error) {
+                    throw $e;
+                } elseif ($e instanceof \Exception) {
+                    $this->logger->error('exception while trying to handle dispatch packet', ['packet' => $data->t, 'exception' => $e]);
+                } else {
+                    $this->logger->warning('rejection while trying to handle dispatch packet', ['packet' => $data->t, 'rejection' => $e]);
+                }
             });
 
             $parse = [
