@@ -528,9 +528,7 @@ class Discord
             $this->logger->info('all guilds are now available', ['count' => $this->guilds->count()]);
 
             $this->setupChunking();
-        })->done(function () use ($onGuildCreate, $onGuildDelete) {
-            var_dump($onGuildCreate, $onGuildDelete);
-        });
+        })->done();
     }
 
     /**
