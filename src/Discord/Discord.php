@@ -500,22 +500,35 @@ class Discord
             $this->ready();
         });
 
-        $function = function ($guild) use (&$function, &$unavailable) {
+        $guildLoad = new Deferred();
+
+        $onGuildCreate = function ($guild) use (&$unavailable, $guildLoad) {
             $this->logger->debug('guild available', ['guild' => $guild->id, 'unavailable' => count($unavailable)]);
-            if (array_key_exists($guild->id, $unavailable)) {
-                unset($unavailable[$guild->id]);
-            }
-
-            // todo setup timer to continue after x amount of time
+            unset($unavailable[$guild->id]);
             if (count($unavailable) < 1) {
-                $this->logger->info('all guilds are now available', ['count' => $this->guilds->count()]);
-                $this->removeListener(Event::GUILD_CREATE, $function);
-
-                $this->setupChunking();
+                $guildLoad->resolve();
             }
         };
+        $this->on(Event::GUILD_CREATE, $onGuildCreate);
 
-        $this->on(Event::GUILD_CREATE, $function);
+        $onGuildDelete = function ($guild) use (&$unavailable, $guildLoad) {
+            if ($guild->unavailable) {
+                $this->logger->debug('guild unavailable', ['guild' => $guild->id, 'unavailable' => count($unavailable)]);
+                unset($unavailable[$guild->id]);
+                if (count($unavailable) < 1) {
+                    $guildLoad->resolve();
+                }
+            }
+        };
+        $this->on(Event::GUILD_DELETE, $onGuildDelete);
+
+        $guildLoad->promise()->always(function () use ($onGuildCreate, $onGuildDelete) {
+            $this->removeListener(Event::GUILD_CREATE, $onGuildCreate);
+            $this->removeListener(Event::GUILD_DELETE, $onGuildDelete);
+            $this->logger->info('all guilds are now available', ['count' => $this->guilds->count()]);
+
+            $this->setupChunking();
+        })->done();
     }
 
     /**
@@ -791,6 +804,7 @@ class Discord
 
             $parse = [
                 Event::GUILD_CREATE,
+                Event::GUILD_DELETE,
             ];
 
             if (! $this->emittedReady && (! in_array($data->t, $parse))) {
