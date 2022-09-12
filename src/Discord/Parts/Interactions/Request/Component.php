@@ -11,9 +11,9 @@
 
 namespace Discord\Parts\Interactions\Request;
 
+use Discord\Helpers\Collection;
 use Discord\Parts\Guild\Emoji;
 use Discord\Parts\Part;
-use Discord\Repository\Interaction\ComponentRepository;
 
 /**
  * Represents a component received with a message or interaction.
@@ -24,22 +24,22 @@ use Discord\Repository\Interaction\ComponentRepository;
  *
  * @since 7.0.0
  *
- * @property int                 $type        Component type.
- * @property string|null         $custom_id   A developer-defined identifier for the component, max 100 characters. (Buttons, Select Menus)
- * @property bool|null           $disabled    Whether the component is disabled, default false. (Buttons, Select Menus)
- * @property int|null            $style       One of button styles. (Buttons)
- * @property string|null         $label       Text that appears on the button, max 80 characters. (Buttons)
- * @property Emoji|null          $emoji       Name, id, and animated. (Buttons)
- * @property string|null         $url         A url for link-style buttons. (Buttons)
- * @property object[]|null       $options     The choices in the select, max 25. (Select Menus)
- * @property string|null         $placeholder Custom placeholder text if nothing is selected, max 150 characters. (Select Menus, Text Inputs)
- * @property int|null            $min_values  The minimum number of items that must be chosen; default 1, min 0, max 25. (Select Menus)
- * @property int|null            $max_values  The maximum number of items that can be chosen; default 1, max 25. (Select Menus)
- * @property ComponentRepository $components  A list of child components. (Action Rows)
- * @property int|null            $min_length  The minimum input length for a text input. (Text Inputs)
- * @property int|null            $max_length  The maximum input length for a text input. (Text Inputs)
- * @property bool|null           $required    Whether this component is required to be filled. (Text Inputs)
- * @property string|null         $value       Value for this component. (Text Inputs)
+ * @property int                         $type        Component type.
+ * @property string|null                 $custom_id   A developer-defined identifier for the component, max 100 characters. (Buttons, Select Menus)
+ * @property bool|null                   $disabled    Whether the component is disabled, default false. (Buttons, Select Menus)
+ * @property int|null                    $style       One of button styles. (Buttons)
+ * @property string|null                 $label       Text that appears on the button, max 80 characters. (Buttons)
+ * @property Emoji|null                  $emoji       Name, id, and animated. (Buttons)
+ * @property string|null                 $url         A url for link-style buttons. (Buttons)
+ * @property object[]|null               $options     The choices in the select, max 25. (Select Menus)
+ * @property string|null                 $placeholder Custom placeholder text if nothing is selected, max 150 characters. (Select Menus, Text Inputs)
+ * @property int|null                    $min_values  The minimum number of items that must be chosen; default 1, min 0, max 25. (Select Menus)
+ * @property int|null                    $max_values  The maximum number of items that can be chosen; default 1, max 25. (Select Menus)
+ * @property Collection|Component[]|null $components  A list of child components. (Action Rows)
+ * @property int|null                    $min_length  The minimum input length for a text input. (Text Inputs)
+ * @property int|null                    $max_length  The maximum input length for a text input. (Text Inputs)
+ * @property bool|null                   $required    Whether this component is required to be filled. (Text Inputs)
+ * @property string|null                 $value       Value for this component. (Text Inputs)
  */
 class Component extends Part
 {
@@ -66,22 +66,23 @@ class Component extends Part
     ];
 
     /**
-     * @inheritDoc
-     */
-    protected $repositories = [
-        'components' => ComponentRepository::class,
-    ];
-
-    /**
-     * Sets the sub-components of the component.
+     * Gets the sub-components of the component.
      *
-     * @param array $components
+     * @return Collection|Component[]|null $components
      */
-    protected function setComponentsAttribute($components)
+    protected function getComponentsAttribute()
     {
-        foreach ($components as $component) {
-            $this->components->pushItem($this->factory->part(Component::class, (array) $component, true));
+        if (! isset($this->attributes['components'])) {
+            return null;
         }
+
+        $components = Collection::for(Component::class, null);
+
+        foreach ($this->attributes['components'] as $component) {
+            $components->pushItem($this->factory->part(Component::class, (array) $component, true));
+        }
+
+        return $components;
     }
 
     /**

@@ -11,8 +11,8 @@
 
 namespace Discord\Parts\Interactions\Request;
 
+use Discord\Helpers\Collection;
 use Discord\Parts\Part;
-use Discord\Repository\Interaction\OptionRepository;
 
 /**
  * Represents an option received with an interaction.
@@ -21,11 +21,11 @@ use Discord\Repository\Interaction\OptionRepository;
  *
  * @since 7.0.0
  *
- * @property string                $name    Name of the parameter.
- * @property int                   $type    Type of the option.
- * @property string|int|float|null $value   Value of the option resulting from user input.
- * @property OptionRepository      $options Present if this option is a group or subcommand.
- * @property bool|null             $focused `true` if this option is the currently focused option for autocomplete.
+ * @property string                   $name    Name of the parameter.
+ * @property int                      $type    Type of the option.
+ * @property string|int|float|null    $value   Value of the option resulting from user input.
+ * @property Collection|Option[]|null $options Present if this option is a group or subcommand.
+ * @property bool|null                $focused `true` if this option is the currently focused option for autocomplete.
  */
 class Option extends Part
 {
@@ -41,22 +41,23 @@ class Option extends Part
     ];
 
     /**
-     * @inheritDoc
-     */
-    protected $repositories = [
-        'options' => OptionRepository::class,
-    ];
-
-    /**
-     * Sets the sub-options of the option.
+     * Gets the options of the interaction.
      *
-     * @param array $options
+     * @return Collection|Option[]|null $options
      */
-    protected function setOptionsAttribute($options)
+    protected function getOptionsAttribute()
     {
-        foreach ($options as $option) {
-            $this->options->pushItem($this->factory->part(Option::class, (array) $option, true));
+        if (! isset($this->attributes['options'])) {
+            return null;
         }
+
+        $options = Collection::for(Option::class, 'name');
+
+        foreach ($this->attributes['options'] as $option) {
+            $options->pushItem($this->factory->part(Option::class, (array) $option, true));
+        }
+
+        return $options;
     }
 
     /**
