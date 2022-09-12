@@ -495,36 +495,41 @@ class Discord
             return $this->ready();
         }
 
-        $function = function ($guild) use (&$unavailable) {
-            $this->logger->debug('guild available', ['guild' => $guild->id, 'unavailable' => count($unavailable)]);
-            if (array_key_exists($guild->id, $unavailable)) {
-                unset($unavailable[$guild->id]);
-            }
-        };
-        $this->on(Event::GUILD_CREATE, $function);
-
-        $function2 = function ($guild) use (&$unavailable) {
-            if ($guild->unavailable) {
-                $this->logger->debug('guild unavailable', ['guild' => $guild->id, 'unavailable' => count($unavailable)]);
-                unset($unavailable[$guild->id]);
-            }
-        };
-        $this->on(Event::GUILD_DELETE, $function2);
-
-        $this->loop->addPeriodicTimer(5, function ($timer) use (&$function, &$function2, &$unavailable) {
-            if (count($unavailable) < 1) {
-                $this->logger->info('all guilds are now available', ['count' => $this->guilds->count()]);
-                $this->removeListener(Event::GUILD_CREATE, $function);
-                $this->removeListener(Event::GUILD_DELETE, $function2);
-                $this->loop->cancelTimer($timer);
-
-                $this->setupChunking();
-            }            
-        });
-
         // Emit ready after 60 seconds
         $this->loop->addTimer(60, function () {
             $this->ready();
+        });
+
+        $guildLoad = new Deferred();
+
+        $onGuildCreate = function ($guild) use (&$unavailable, $guildLoad) {
+            $this->logger->debug('guild available', ['guild' => $guild->id, 'unavailable' => count($unavailable)]);
+            unset($unavailable[$guild->id]);
+            if (count($unavailable) < 1) {
+                $guildLoad->resolve();
+            }
+        };
+        $this->on(Event::GUILD_CREATE, $onGuildCreate);
+
+        $onGuildDelete = function ($guild) use (&$unavailable, $guildLoad) {
+            if ($guild->unavailable) {
+                $this->logger->debug('guild unavailable', ['guild' => $guild->id, 'unavailable' => count($unavailable)]);
+                unset($unavailable[$guild->id]);
+                if (count($unavailable) < 1) {
+                    $guildLoad->resolve();
+                }
+            }
+        };
+        $this->on(Event::GUILD_DELETE, $onGuildDelete);
+
+        $guildLoad->promise()->always(function () use ($onGuildCreate, $onGuildDelete) {
+            $this->removeListener(Event::GUILD_CREATE, $onGuildCreate);
+            $this->removeListener(Event::GUILD_DELETE, $onGuildDelete);
+            $this->logger->info('all guilds are now available', ['count' => $this->guilds->count()]);
+
+            $this->setupChunking();
+        })->done(function () use ($onGuildCreate, $onGuildDelete) {
+            var_dump($onGuildCreate, $onGuildDelete);
         });
     }
 
