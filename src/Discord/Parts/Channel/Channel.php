@@ -110,7 +110,7 @@ class Channel extends Part
     public const FLAG_PINNED = (1 << 1);
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     protected $fillable = [
         'id',
@@ -141,7 +141,7 @@ class Channel extends Part
     ];
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     protected $repositories = [
         'overwrites' => OverwriteRepository::class,
@@ -166,7 +166,7 @@ class Channel extends Part
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     protected function afterConstruct(): void
     {
@@ -366,20 +366,6 @@ class Channel extends Part
         }
 
         return $this->http->put(Endpoint::bind(Endpoint::CHANNEL_PERMISSIONS, $this->id, $part->id), $payload, $headers);
-    }
-
-    /**
-     * Fetches a message object from the Discord servers.
-     *
-     * @param string $id The message snowflake.
-     *
-     * @deprecated 7.0.0 Use `$channel->messages->fetch($id)`.
-     *
-     * @return ExtendedPromiseInterface
-     */
-    public function getMessage(string $id): ExtendedPromiseInterface
-    {
-        return $this->messages->fetch($id);
     }
 
     /**
@@ -760,28 +746,6 @@ class Channel extends Part
     }
 
     /**
-     * Returns the channels invites.
-     *
-     * @link https://discord.com/developers/docs/resources/channel#get-channel-invites
-     *
-     * @deprecated 7.1.0 Use `$channel->invites->freshen()`
-     *
-     * @return ExtendedPromiseInterface<Collection<Invite>>
-     */
-    public function getInvites(): ExtendedPromiseInterface
-    {
-        return $this->http->get(Endpoint::bind(Endpoint::CHANNEL_INVITES, $this->id))->then(function ($response) {
-            $invites = new Collection();
-
-            foreach ($response as $invite) {
-                $invites->pushItem($this->factory->create(Invite::class, $invite, true));
-            }
-
-            return $invites;
-        });
-    }
-
-    /**
      * Sets the permission overwrites attribute.
      *
      * @param array $overwrites
@@ -810,7 +774,7 @@ class Channel extends Part
      * @param string|null $reason                Reason for Audit Log.
      *
      * @throws \RuntimeException
-     * @throws \UnexpectedValueException
+     * @throws \UnexpectedValueException `$auto_archive_duration` is not one of 60, 1440, 4320, 10080.
      *
      * @return ExtendedPromiseInterface<Thread>
      */
@@ -833,7 +797,7 @@ class Channel extends Part
         }
 
         if (! in_array($auto_archive_duration, [60, 1440, 4320, 10080])) {
-            return reject(new \UnexpectedValueException('`auto_archive_duration` must be one of 60, 1440, 4320, 10080.'));
+            return reject(new \UnexpectedValueException('$auto_archive_duration must be one of 60, 1440, 4320, 10080.'));
         }
 
         $headers = [];
@@ -922,23 +886,6 @@ class Channel extends Part
         })()->then(function ($response) {
             return $this->factory->part(Message::class, (array) $response + ['guild_id' => $this->guild_id], true);
         });
-    }
-
-    /**
-     * Edit a message in the channel.
-     *
-     * @link https://discord.com/developers/docs/resources/channel#edit-message
-     *
-     * @param Message        $message The message to update.
-     * @param MessageBuilder $message Contains the new contents of the message. Note that fields not specified in the builder will not be overwritten.
-     *
-     * @deprecated 7.0.0 Use `Message::edit` instead
-     *
-     * @return ExtendedPromiseInterface<Message>
-     */
-    public function editMessage(Message $message, MessageBuilder $builder): ExtendedPromiseInterface
-    {
-        return $message->edit($builder);
     }
 
     /**
@@ -1100,7 +1047,7 @@ class Channel extends Part
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      *
      * @link https://discord.com/developers/docs/resources/guild#create-guild-channel-json-params
      */
@@ -1124,7 +1071,7 @@ class Channel extends Part
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      *
      * @link https://discord.com/developers/docs/resources/channel#modify-channel-json-params-guild-channel
      */
@@ -1150,7 +1097,7 @@ class Channel extends Part
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getRepositoryAttributes(): array
     {

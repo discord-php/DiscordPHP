@@ -47,7 +47,7 @@ use Discord\Parts\User\User;
 class AutoModerationActionExecution extends Part
 {
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     protected $fillable = [
         'guild_id',

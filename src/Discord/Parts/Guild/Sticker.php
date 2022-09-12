@@ -44,7 +44,7 @@ class Sticker extends Part
     public const FORMAT_TYPE_LOTTIE = 3;
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     protected $fillable = [
         'id',
@@ -62,7 +62,7 @@ class Sticker extends Part
     ];
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function isPartial(): bool
     {
@@ -138,7 +138,7 @@ class Sticker extends Part
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      *
      * @link https://discord.com/developers/docs/resources/sticker#modify-guild-sticker-json-params
      */
@@ -157,7 +157,7 @@ class Sticker extends Part
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getRepositoryAttributes(): array
     {

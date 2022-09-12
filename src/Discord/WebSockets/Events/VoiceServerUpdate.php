@@ -22,7 +22,7 @@ use Discord\WebSockets\Event;
 class VoiceServerUpdate extends Event
 {
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function handle($data)
     {

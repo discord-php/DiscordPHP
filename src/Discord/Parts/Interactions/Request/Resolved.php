@@ -40,7 +40,7 @@ use Discord\Parts\User\User;
 class Resolved extends Part
 {
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     protected $fillable = [
         'users',
@@ -55,7 +55,7 @@ class Resolved extends Part
     ];
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     protected $hidden = ['guild_id'];
 

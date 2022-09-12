@@ -11,9 +11,8 @@
 
 namespace Discord\Parts\Interactions\Request;
 
+use Discord\Helpers\Collection;
 use Discord\Parts\Part;
-use Discord\Repository\Interaction\ComponentRepository;
-use Discord\Repository\Interaction\OptionRepository;
 
 /**
  * Represents the data associated with an interaction.
@@ -22,22 +21,22 @@ use Discord\Repository\Interaction\OptionRepository;
  *
  * @since 7.0.0
  *
- * @property string              $id             ID of the invoked command.
- * @property string              $name           Name of the invoked command.
- * @property int                 $type           The type of the invoked command.
- * @property Resolved|null       $resolved       Resolved users, members, roles and channels that are relevant.
- * @property OptionRepository    $options        Parameters and values from the user.
- * @property string|null         $guild_id       ID of the guild internally passed from Interaction or ID of the guild the command belongs to.
- * @property string|null         $target_id      Id the of user or message targetted by a user or message command.
- * @property string|null         $custom_id      Custom ID the component was created for. (Only for Message Component & Modal)
- * @property int|null            $component_type Type of the component. (Only for Message Component)
- * @property string[]|null       $values         Values selected in a select menu. (Only for Message Component)
- * @property ComponentRepository $components     The values submitted by the user. (Only for Modal)
+ * @property string                      $id             ID of the invoked command.
+ * @property string                      $name           Name of the invoked command.
+ * @property int                         $type           The type of the invoked command.
+ * @property Resolved|null               $resolved       Resolved users, members, roles and channels that are relevant.
+ * @property Collection|Option[]|null    $options        Parameters and values from the user.
+ * @property string|null                 $guild_id       ID of the guild internally passed from Interaction or ID of the guild the command belongs to.
+ * @property string|null                 $target_id      Id the of user or message targetted by a user or message command.
+ * @property string|null                 $custom_id      Custom ID the component was created for. (Only for Message Component & Modal)
+ * @property int|null                    $component_type Type of the component. (Only for Message Component)
+ * @property string[]|null               $values         Values selected in a select menu. (Only for Message Component)
+ * @property Collection|Component[]|null $components     The values submitted by the user. (Only for Modal)
  */
 class InteractionData extends Part
 {
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     protected $fillable = [
         'id',
@@ -56,35 +55,43 @@ class InteractionData extends Part
     ];
 
     /**
-     * @inheritdoc
-     */
-    protected $repositories = [
-        'options' => OptionRepository::class,
-        'components' => ComponentRepository::class,
-    ];
-
-    /**
-     * Sets the options of the interaction.
+     * Gets the options of the interaction.
      *
-     * @param array $options
+     * @return Collection|Option[]|null $options
      */
-    protected function setOptionsAttribute($options)
+    protected function getOptionsAttribute()
     {
-        foreach ($options as $option) {
-            $this->options->pushItem($this->factory->part(Option::class, (array) $option, true));
+        if (! isset($this->attributes['options'])) {
+            return null;
         }
+
+        $options = Collection::for(Option::class, 'name');
+
+        foreach ($this->attributes['options'] as $option) {
+            $options->pushItem($this->factory->part(Option::class, (array) $option, true));
+        }
+
+        return $options;
     }
 
     /**
-     * Sets the components of the interaction.
+     * Gets the components of the interaction.
      *
-     * @param array $components
+     * @return Collection|Component[]|null $components
      */
-    protected function setComponentsAttribute($components)
+    protected function getComponentsAttribute()
     {
-        foreach ($components as $component) {
-            $this->components->pushItem($this->factory->part(Component::class, (array) $component, true));
+        if (! isset($this->attributes['components'])) {
+            return null;
         }
+
+        $components = Collection::for(Component::class, null);
+
+        foreach ($this->attributes['components'] as $component) {
+            $components->pushItem($this->factory->part(Component::class, (array) $component, true));
+        }
+
+        return $components;
     }
 
     /**

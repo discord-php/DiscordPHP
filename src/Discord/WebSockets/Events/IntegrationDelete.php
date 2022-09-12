@@ -22,7 +22,7 @@ use Discord\Parts\Guild\Integration;
 class IntegrationDelete extends Event
 {
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function handle($data)
     {

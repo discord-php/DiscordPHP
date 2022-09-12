@@ -35,7 +35,7 @@ use function React\Promise\reject;
 class GuildCreate extends Event
 {
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function handle($data)
     {

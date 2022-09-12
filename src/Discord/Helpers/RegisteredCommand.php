@@ -13,6 +13,7 @@ namespace Discord\Helpers;
 
 use Discord\Discord;
 use Discord\Parts\Interactions\Interaction;
+use Discord\Parts\Interactions\Request\Option;
 
 /**
  * RegisteredCommand represents a command that has been registered
@@ -88,16 +89,19 @@ class RegisteredCommand
      */
     public function execute(array $options, Interaction $interaction): bool
     {
+        $params = Collection::for(Option::class, 'name');
+
         foreach ($options as $option) {
             if (isset($this->subCommands[$option->name])) {
                 if ($this->subCommands[$option->name]->execute($option->options ?? [], $interaction)) {
                     return true;
                 }
             }
+            $params->pushItem($this->discord->getFactory()->part(Option::class, (array) $option, true));
         }
 
         if (isset($this->callback)) {
-            ($this->callback)($interaction);
+            ($this->callback)($interaction, $params);
 
             return true;
         }

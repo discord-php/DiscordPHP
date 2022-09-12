@@ -64,7 +64,7 @@ class Activity extends Part
     public const STATUS_INVISIBLE = 'invisible';
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     protected $fillable = [
         'name',

@@ -24,7 +24,7 @@ use Discord\Parts\Guild\Guild;
 class MessageDelete extends Event
 {
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function handle($data)
     {

@@ -343,13 +343,6 @@ class Discord
     private $application_commands;
 
     /**
-     * Whether the loop is stopping.
-     *
-     * @var bool
-     */
-    protected $stopping;
-
-    /**
      * Creates a Discord client instance.
      *
      * @param  array           $options Array of options.
@@ -1404,7 +1397,7 @@ class Discord
                 'intents' => Intents::getDefaultIntents(),
                 'socket_options' => [],
                 'cacheInterface' => new ArrayCache(),
-                'cacheSweep' => true,
+                'cacheSweep' => false,
             ])
             ->setAllowedTypes('token', 'string')
             ->setAllowedTypes('logger', ['null', LoggerInterface::class])
@@ -1488,18 +1481,7 @@ class Discord
      */
     public function run(): void
     {
-        //while (! $this->stopping) {
         $this->loop->run();
-        //}
-    }
-
-    /**
-     * Stops the ReactPHP event loop.
-     */
-    public function stop(): void
-    {
-        $this->stopping = true;
-        $this->loop->stop();
     }
 
     /**

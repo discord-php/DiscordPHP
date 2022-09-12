@@ -31,6 +31,10 @@ use React\Promise\ExtendedPromiseInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Traversable;
 
+use function React\Promise\all;
+use function React\Promise\reject;
+use function React\Promise\resolve;
+
 /**
  * Represents a Discord thread.
  *
@@ -71,7 +75,7 @@ use Traversable;
 class Thread extends Part
 {
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     protected $fillable = [
         'id',
@@ -92,14 +96,14 @@ class Thread extends Part
     ];
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     protected $hidden = [
         'member',
     ];
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     protected $repositories = [
         'messages' => MessageRepository::class,
@@ -107,7 +111,7 @@ class Thread extends Part
     ];
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     protected function afterConstruct(): void
     {
@@ -223,18 +227,6 @@ class Thread extends Part
     }
 
     /**
-     * Returns the ID of the user who archived the thread.
-     *
-     * @deprecated 7.1.0 Removed from API
-     *
-     * @return string|null
-     */
-    protected function getArchiverIdAttribute(): ?string
-    {
-        return $this->thread_metadata->archiver_id ?? null;
-    }
-
-    /**
      * Set whether the thread is archived.
      *
      * @param bool $value
@@ -262,38 +254,6 @@ class Thread extends Part
     protected function setAutoArchiveDurationAttribute(int $value)
     {
         $this->attributes['thread_metadata']->auto_archive_duration = $value;
-    }
-
-    /**
-     * Returns the user who archived the thread.
-     *
-     * @deprecated 7.1.0 Removed from API
-     *
-     * @return User|null
-     */
-    protected function getArchiverAttribute(): ?User
-    {
-        if ($this->archiver_id) {
-            return $this->discord->users->get('id', $this->archiver_id);
-        }
-
-        return null;
-    }
-
-    /**
-     * Returns the member object for the user who archived the thread.
-     *
-     * @deprecated 7.1.0 Removed from API
-     *
-     * @return Member|null
-     */
-    protected function getArchiverMemberAttribute(): ?Member
-    {
-        if ($this->archiver_id && $guild = $this->guild) {
-            return $guild->members->get('id', $this->archiver_id);
-        }
-
-        return null;
     }
 
     /**
@@ -481,6 +441,8 @@ class Thread extends Part
      * @link https://discord.com/developers/docs/resources/channel#get-pinned-messages
      *
      * @return ExtendedPromiseInterface<Collection<Message>>
+     * 
+     * @todo Make it in a trait along with Channel
      */
     public function getPinnedMessages(): ExtendedPromiseInterface
     {
@@ -505,21 +467,23 @@ class Thread extends Part
      *
      * @link https://discord.com/developers/docs/resources/channel#bulk-delete-messages
      *
-     * @param array|Traversable $messages
-     * @param string|null       $reason   Reason for Audit Log (only for bulk messages).
+     * @param array       $messages
+     * @param string|null $reason   Reason for Audit Log (only for bulk messages).
      *
      * @return ExtendedPromiseInterface
+     * 
+     * @todo Make it in a trait along with Channel
      */
     public function deleteMessages($messages, ?string $reason = null): ExtendedPromiseInterface
     {
-        if (! is_array($messages) && ! ($messages instanceof Traversable)) {
-            return \React\Promise\reject(new \Exception('$messages must be an array or implement Traversable.'));
+        if (! is_array($messages)) {
+            return reject(new \Exception('$messages must be an array.'));
         }
 
         $count = count($messages);
 
         if ($count == 0) {
-            return \React\Promise\resolve();
+            return resolve();
         } elseif ($count == 1) {
             foreach ($messages as $message) {
                 if ($message instanceof Message) {
@@ -550,7 +514,7 @@ class Thread extends Part
             ], $headers);
         }
 
-        return \React\Promise\all($promises);
+        return all($promises);
     }
 
     /**
@@ -562,6 +526,8 @@ class Thread extends Part
      * @param array $options
      *
      * @return ExtendedPromiseInterface<Collection<Message>>
+     * 
+     * @todo Make it in a trait along with Channel
      */
     public function getMessageHistory(array $options): ExtendedPromiseInterface
     {
@@ -579,7 +545,7 @@ class Thread extends Part
         if (isset($options['before'], $options['after']) ||
             isset($options['before'], $options['around']) ||
             isset($options['around'], $options['after'])) {
-            return \React\Promise\reject(new \Exception('Can only specify one of before, after and around.'));
+            return reject(new \Exception('Can only specify one of before, after and around.'));
         }
 
         $endpoint = Endpoint::bind(Endpoint::CHANNEL_MESSAGES, $this->id);
@@ -621,16 +587,20 @@ class Thread extends Part
      * @param Message     $message
      * @param string|null $reason  Reason for Audit Log.
      *
+     * @throws \RuntimeException
+     *
      * @return ExtendedPromiseInterface<Message>
+     * 
+     * @todo Make it in a trait along with Channel
      */
     public function pinMessage(Message $message, ?string $reason = null): ExtendedPromiseInterface
     {
         if ($message->pinned) {
-            return \React\Promise\reject(new \Exception('This message is already pinned.'));
+            return reject(new \RuntimeException('This message is already pinned.'));
         }
 
         if ($message->channel_id != $this->id) {
-            return \React\Promise\reject(new \Exception('You cannot pin a message not sent in this thread.'));
+            return reject(new \RuntimeException('You cannot pin a message not sent in this thread.'));
         }
 
         $headers = [];
@@ -653,16 +623,20 @@ class Thread extends Part
      * @param Message     $message
      * @param string|null $reason  Reason for Audit Log.
      *
+     * @throws \RuntimeException
+     *
      * @return ExtendedPromiseInterface<Message>
+     * 
+     * @todo Make it in a trait along with Channel
      */
     public function unpinMessage(Message $message, ?string $reason = null): ExtendedPromiseInterface
     {
         if (! $message->pinned) {
-            return \React\Promise\reject(new \Exception('This message is not pinned.'));
+            return reject(new \RuntimeException('This message is not pinned.'));
         }
 
         if ($message->channel_id != $this->id) {
-            return \React\Promise\reject(new \Exception('You cannot un-pin a message not sent in this thread.'));
+            return reject(new \RuntimeException('You cannot un-pin a message not sent in this thread.'));
         }
 
         $headers = [];
@@ -692,6 +666,8 @@ class Thread extends Part
      * @param Message|null          $replyTo          Sends the message as a reply to the given message instance.
      *
      * @return ExtendedPromiseInterface<Message>
+     * 
+     * @todo Make it in a trait along with Channel
      */
     public function sendMessage($message, bool $tts = false, $embed = null, $allowed_mentions = null, ?Message $replyTo = null): ExtendedPromiseInterface
     {
@@ -738,6 +714,8 @@ class Thread extends Part
      * @param Embed $embed Embed to send.
      *
      * @return ExtendedPromiseInterface<Message>
+     * 
+     * @todo Make it in a trait along with Channel
      */
     public function sendEmbed(Embed $embed): ExtendedPromiseInterface
     {
@@ -754,6 +732,8 @@ class Thread extends Part
      * @param int      $options ['limit'] The amount of messages allowed or false.
      *
      * @return ExtendedPromiseInterface<Collection<Message>>
+     * 
+     * @todo Make it in a trait along with Channel
      */
     public function createMessageCollector(callable $filter, array $options = []): ExtendedPromiseInterface
     {
@@ -801,7 +781,7 @@ class Thread extends Part
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      *
      * @link https://discord.com/developers/docs/resources/channel#start-thread-without-message-json-params
      */
@@ -822,7 +802,7 @@ class Thread extends Part
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      *
      * @link https://discord.com/developers/docs/resources/channel#modify-channel-json-params-thread
      */
@@ -845,7 +825,7 @@ class Thread extends Part
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getRepositoryAttributes(): array
     {

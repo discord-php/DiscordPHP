@@ -46,7 +46,7 @@ use function React\Promise\resolve;
 class Reaction extends Part
 {
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     protected $fillable = [
         'count',
@@ -60,7 +60,7 @@ class Reaction extends Part
     ];
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function isPartial(): bool
     {
@@ -68,7 +68,7 @@ class Reaction extends Part
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function fetch(): ExtendedPromiseInterface
     {

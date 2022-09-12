@@ -27,7 +27,7 @@ use Discord\Parts\Part;
 class WelcomeScreen extends Part
 {
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     protected $fillable = [
         'description',

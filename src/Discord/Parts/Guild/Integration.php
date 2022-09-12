@@ -47,7 +47,7 @@ use Discord\Parts\User\User;
 class Integration extends Part
 {
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     protected $fillable = [
         'id',
@@ -152,7 +152,7 @@ class Integration extends Part
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getRepositoryAttributes(): array
     {

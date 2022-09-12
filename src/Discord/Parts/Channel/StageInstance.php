@@ -33,12 +33,10 @@ use Discord\Parts\Part;
  */
 class StageInstance extends Part
 {
-    /** @deprecated 7.0.0 */
-    public const PRIVACY_LEVEL_PUBLIC = 1;
     public const PRIVACY_LEVEL_GROUP_ONLY = 2;
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     protected $fillable = [
         'id',
@@ -82,7 +80,7 @@ class StageInstance extends Part
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      *
      * @link https://discord.com/developers/docs/resources/stage-instance#create-stage-instance-json-params
      */
@@ -97,7 +95,7 @@ class StageInstance extends Part
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      *
      * @link https://discord.com/developers/docs/resources/stage-instance#modify-stage-instance-json-params
      */
@@ -110,7 +108,7 @@ class StageInstance extends Part
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getRepositoryAttributes(): array
     {

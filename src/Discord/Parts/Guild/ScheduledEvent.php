@@ -20,6 +20,8 @@ use Discord\Parts\User\User;
 use React\Promise\ExtendedPromiseInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+use function React\Promise\reject;
+
 /**
  * A representation of a scheduled event in a guild.
  *
@@ -61,7 +63,7 @@ class ScheduledEvent extends Part
     public const STATUS_CANCELED = 4;
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     protected $fillable = [
         'id',
@@ -105,7 +107,7 @@ class ScheduledEvent extends Part
 
         $options = $resolver->resolve($options);
         if (isset($options['before'], $options['after'])) {
-            return \React\Promise\reject(new \RangeException('Can only specify one of before after.'));
+            return reject(new \RangeException('Can only specify one of before after.'));
         }
 
         $endpoint = Endpoint::bind(Endpoint::GUILD_SCHEDULED_EVENT_USERS, $this->guild_id, $this->id);
@@ -248,7 +250,7 @@ class ScheduledEvent extends Part
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      *
      * @link https://discord.com/developers/docs/resources/guild-scheduled-event#create-guild-scheduled-event-json-params
      */
@@ -268,7 +270,7 @@ class ScheduledEvent extends Part
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      *
      * @link https://discord.com/developers/docs/resources/guild-scheduled-event#modify-guild-scheduled-event-json-params
      */
@@ -300,7 +302,7 @@ class ScheduledEvent extends Part
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getRepositoryAttributes(): array
     {

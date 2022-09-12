@@ -23,7 +23,7 @@ use Discord\Parts\Guild\Integration;
 class IntegrationUpdate extends Event
 {
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function handle($data)
     {

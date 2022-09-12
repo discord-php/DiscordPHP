@@ -78,7 +78,6 @@ use function React\Promise\resolve;
  * @property-read bool               $feature_animated_icon                    Guild has access to set an animated guild icon.
  * @property-read bool               $feature_auto_moderation                  Guild has set up auto moderation rules.
  * @property-read bool               $feature_banner                           Guild has access to set a guild banner image.
- * @property-read bool               $feature_commerce                         Guild has access to use commerce features (create store channels).
  * @property-read bool               $feature_community                        Guild can enable welcome screen, Membership Screening, stage channels and discovery, and receives community updates.
  * @property-read bool               $feature_discoverable                     Guild is able to be discovered in the directory.
  * @property-read bool               $feature_featurable                       Guild is able to be featured in the directory.
@@ -94,8 +93,6 @@ use function React\Promise\resolve;
  * @property-read bool               $feature_preview_enabled                  Guild can be previewed before joining via membership screening or the directory.
  * @property-read bool               $feature_private_threads                  Guild has access to create private threads.
  * @property-read bool               $feature_role_icons                       Guild is able to set role icons.
- * @property-read bool               $feature_seven_day_thread_archive         Guild has access to the seven day archive time for threads.
- * @property-read bool               $feature_three_day_thread_archive         Guild has access to the three day archive time for threads.
  * @property-read bool               $feature_ticketed_events_enabled          Guild has enabled ticketed events.
  * @property-read bool               $feature_vanity_url                       Guild has access to set a vanity url.
  * @property-read bool               $feature_verified                         Guild is verified.
@@ -179,7 +176,7 @@ class Guild extends Part
     public const HUB_TYPE_COLLEGE = 2;
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     protected $fillable = [
         'id',
@@ -260,7 +257,7 @@ class Guild extends Part
     ];
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     protected $repositories = [
         'roles' => RoleRepository::class,
@@ -287,7 +284,7 @@ class Guild extends Part
     protected $regions;
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function fill(array $attributes): void
     {
@@ -1271,7 +1268,7 @@ class Guild extends Part
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      *
      * @link https://discord.com/developers/docs/resources/guild#create-guild-json-params
      */
@@ -1297,7 +1294,7 @@ class Guild extends Part
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      *
      * @link https://discord.com/developers/docs/resources/guild#modify-guild-json-params
      */
@@ -1325,7 +1322,7 @@ class Guild extends Part
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getRepositoryAttributes(): array
     {

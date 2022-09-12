@@ -24,7 +24,7 @@ use Discord\Parts\Guild\Sticker;
 class GuildStickersUpdate extends Event
 {
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function handle($data)
     {

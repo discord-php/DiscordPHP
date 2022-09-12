@@ -91,42 +91,61 @@ use function React\Promise\reject;
  */
 class Message extends Part
 {
-    // @todo next major version TYPE_ name consistency
-    public const TYPE_NORMAL = 0;
-    public const TYPE_USER_ADDED = 1;
-    public const TYPE_USER_REMOVED = 2;
+    public const TYPE_DEFAULT = 0;
+    public const TYPE_RECIPIENT_ADD = 1;
+    public const TYPE_RECIPIENT_REMOVE = 2;
     public const TYPE_CALL = 3;
     public const TYPE_CHANNEL_NAME_CHANGE = 4;
     public const TYPE_CHANNEL_ICON_CHANGE = 5;
-    public const CHANNEL_PINNED_MESSAGE = 6;
+    public const TYPE_CHANNEL_PINNED_MESSAGE = 6;
     public const TYPE_USER_JOIN = 7;
     public const TYPE_GUILD_BOOST = 8;
     public const TYPE_GUILD_BOOST_TIER_1 = 9;
     public const TYPE_GUILD_BOOST_TIER_2 = 10;
     public const TYPE_GUILD_BOOST_TIER_3 = 11;
-    public const CHANNEL_FOLLOW_ADD = 12;
-    public const GUILD_DISCOVERY_DISQUALIFIED = 14;
-    public const GUILD_DISCOVERY_REQUALIFIED = 15;
-    public const GUILD_DISCOVERY_GRACE_PERIOD_INITIAL_WARNING = 16;
-    public const GUILD_DISCOVERY_GRACE_PERIOD_FINAL_WARNING = 17;
+    public const TYPE_CHANNEL_FOLLOW_ADD = 12;
+    public const TYPE_GUILD_DISCOVERY_DISQUALIFIED = 14;
+    public const TYPE_GUILD_DISCOVERY_REQUALIFIED = 15;
+    public const TYPE_GUILD_DISCOVERY_GRACE_PERIOD_INITIAL_WARNING = 16;
+    public const TYPE_GUILD_DISCOVERY_GRACE_PERIOD_FINAL_WARNING = 17;
     public const TYPE_THREAD_CREATED = 18;
     public const TYPE_REPLY = 19;
-    public const TYPE_APPLICATION_COMMAND = 20;
+    public const TYPE_CHAT_INPUT_COMMAND = 20;
     public const TYPE_THREAD_STARTER_MESSAGE = 21;
     public const TYPE_GUILD_INVITE_REMINDER = 22;
     public const TYPE_CONTEXT_MENU_COMMAND = 23;
     public const TYPE_AUTO_MODERATION_ACTION = 24;
 
     /** @deprecated 7.1.0 Use `Message::TYPE_USER_JOIN` */
-    public const GUILD_MEMBER_JOIN = 7;
+    public const GUILD_MEMBER_JOIN = self::TYPE_USER_JOIN;
     /** @deprecated 7.1.0 Use `Message::TYPE_GUILD_BOOST` */
-    public const USER_PREMIUM_GUILD_SUBSCRIPTION = 8;
+    public const USER_PREMIUM_GUILD_SUBSCRIPTION = self::TYPE_GUILD_BOOST;
     /** @deprecated 7.1.0 Use `Message::TYPE_GUILD_BOOST_TIER_1` */
-    public const USER_PREMIUM_GUILD_SUBSCRIPTION_TIER_1 = 9;
+    public const USER_PREMIUM_GUILD_SUBSCRIPTION_TIER_1 = self::TYPE_GUILD_BOOST_TIER_1;
     /** @deprecated 7.1.0 Use `Message::TYPE_GUILD_BOOST_TIER_2` */
-    public const USER_PREMIUM_GUILD_SUBSCRIPTION_TIER_2 = 10;
+    public const USER_PREMIUM_GUILD_SUBSCRIPTION_TIER_2 = self::TYPE_GUILD_BOOST_TIER_2;
     /** @deprecated 7.1.0 Use `Message::TYPE_GUILD_BOOST_TIER_3` */
-    public const USER_PREMIUM_GUILD_SUBSCRIPTION_TIER_3 = 11;
+    public const USER_PREMIUM_GUILD_SUBSCRIPTION_TIER_3 = self::TYPE_GUILD_BOOST_TIER_3;
+    /** @deprecated 10.0.0 Use `Message::TYPE_DEFAULT` */
+    public const TYPE_NORMAL = self::TYPE_DEFAULT;
+    /** @deprecated 10.0.0 Use `Message::TYPE_RECIPIENT_ADD` */
+    public const TYPE_USER_ADDED = self::TYPE_RECIPIENT_ADD;
+    /** @deprecated 10.0.0 Use `Message::TYPE_RECIPIENT_REMOVE` */
+    public const TYPE_USER_REMOVED = self::TYPE_RECIPIENT_REMOVE;
+    /** @deprecated 10.0.0 Use `Message::TYPE_CHANNEL_PINNED_MESSAGE` */
+    public const CHANNEL_PINNED_MESSAGE = self::TYPE_CHANNEL_PINNED_MESSAGE;
+    /** @deprecated 10.0.0 Use `Message::TYPE_CHANNEL_FOLLOW_ADD` */
+    public const CHANNEL_FOLLOW_ADD = self::TYPE_CHANNEL_FOLLOW_ADD;
+    /** @deprecated 10.0.0 Use `Message::TYPE_GUILD_DISCOVERY_DISQUALIFIED` */
+    public const GUILD_DISCOVERY_DISQUALIFIED = self::TYPE_GUILD_DISCOVERY_DISQUALIFIED;
+    /** @deprecated 10.0.0 Use `Message::TYPE_GUILD_DISCOVERY_REQUALIFIED` */
+    public const GUILD_DISCOVERY_REQUALIFIED = self::TYPE_GUILD_DISCOVERY_REQUALIFIED;
+    /** @deprecated 10.0.0 Use `Message::TYPE_GUILD_DISCOVERY_GRACE_PERIOD_INITIAL_WARNING` */
+    public const GUILD_DISCOVERY_GRACE_PERIOD_INITIAL_WARNING = self::TYPE_GUILD_DISCOVERY_GRACE_PERIOD_INITIAL_WARNING;
+    /** @deprecated 10.0.0 Use `Message::TYPE_GUILD_DISCOVERY_GRACE_PERIOD_FINAL_WARNING` */
+    public const GUILD_DISCOVERY_GRACE_PERIOD_FINAL_WARNING = self::TYPE_GUILD_DISCOVERY_GRACE_PERIOD_FINAL_WARNING;
+    /** @deprecated 10.0.0 Use `Message::TYPE_CHAT_INPUT_COMMAND` */
+    public const TYPE_APPLICATION_COMMAND = self::TYPE_CHAT_INPUT_COMMAND;
 
     public const ACTIVITY_JOIN = 1;
     public const ACTIVITY_SPECTATE = 2;
@@ -142,7 +161,7 @@ class Message extends Part
     public const FLAG_EPHEMERAL = (1 << 6);
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     protected $fillable = [
         'id',
@@ -182,7 +201,7 @@ class Message extends Part
     ];
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     protected $repositories = [
         'reactions' => ReactionRepository::class,
@@ -677,7 +696,7 @@ class Message extends Part
         }
 
         if (! in_array($auto_archive_duration, [60, 1440, 4320, 10080])) {
-            return reject(new \UnexpectedValueException('`auto_archive_duration` must be one of 60, 1440, 4320, 10080.'));
+            return reject(new \UnexpectedValueException('auto_archive_duration must be one of 60, 1440, 4320, 10080.'));
         }
 
         $headers = [];
@@ -948,7 +967,7 @@ class Message extends Part
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      *
      * @link https://discord.com/developers/docs/resources/channel#edit-message-jsonform-params
      */
@@ -961,7 +980,7 @@ class Message extends Part
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getRepositoryAttributes(): array
     {

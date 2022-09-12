@@ -430,7 +430,7 @@ class Button extends Component
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function jsonSerialize(): array
     {

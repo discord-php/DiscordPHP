@@ -33,7 +33,7 @@ use React\Promise\ExtendedPromiseInterface;
 class Member extends Part
 {
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     protected $fillable = [
         'id',

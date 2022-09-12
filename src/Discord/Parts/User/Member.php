@@ -67,7 +67,7 @@ use function React\Promise\reject;
 class Member extends Part
 {
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     protected $fillable = [
         'user',
@@ -91,11 +91,6 @@ class Member extends Part
         'activities',
         'client_status',
     ];
-
-    /**
-     * @inheritdoc
-     */
-    protected $fillAfterSave = false;
 
     /**
      * Updates the member from a new presence update object.
@@ -708,7 +703,7 @@ class Member extends Part
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      *
      * @link https://discord.com/developers/docs/resources/guild#modify-guild-member-json-params
      */
@@ -720,7 +715,7 @@ class Member extends Part
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getRepositoryAttributes(): array
     {

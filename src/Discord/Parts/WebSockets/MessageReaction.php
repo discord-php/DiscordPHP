@@ -48,7 +48,7 @@ use function React\Promise\resolve;
 class MessageReaction extends Part
 {
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     protected $fillable = [
         'user_id',
@@ -60,7 +60,7 @@ class MessageReaction extends Part
     ];
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function isPartial(): bool
     {
@@ -70,7 +70,7 @@ class MessageReaction extends Part
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function fetch(): ExtendedPromiseInterface
     {
@@ -227,7 +227,7 @@ class MessageReaction extends Part
      *
      * @param int|null $type The type of deletion to perform.
      *
-     * @throws \UnexpectedValueException Reaction has no user id.
+     * @throws \RuntimeException Reaction has no user id.
      *
      * @return ExtendedPromiseInterface
      */
@@ -256,7 +256,7 @@ class MessageReaction extends Part
             case Message::REACT_DELETE_ID:
             default:
                 if (! $userid = $this->user_id ?? $this->user->id) {
-                    return reject(new \UnexpectedValueException('This reaction has no user id'));
+                    return reject(new \RuntimeException('This reaction has no user id'));
                 }
                 $url = Endpoint::bind(Endpoint::USER_MESSAGE_REACTION, $this->channel_id, $this->message_id, $reaction, $userid);
                 break;

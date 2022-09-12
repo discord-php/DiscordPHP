@@ -21,7 +21,7 @@ use Discord\WebSockets\Event;
 class WebhooksUpdate extends Event
 {
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function handle($data)
     {

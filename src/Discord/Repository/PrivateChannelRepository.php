@@ -30,14 +30,14 @@ use Discord\Http\Endpoint;
 class PrivateChannelRepository extends AbstractRepository
 {
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     protected $endpoints = [
         'get' => Endpoint::CHANNEL,
     ];
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     protected $class = Channel::class;
 }

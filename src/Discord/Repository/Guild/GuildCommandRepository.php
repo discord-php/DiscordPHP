@@ -13,12 +13,8 @@ namespace Discord\Repository\Guild;
 
 use Discord\Discord;
 use Discord\Http\Endpoint;
-use Discord\Parts\Guild\CommandPermissions;
 use Discord\Parts\Interactions\Command\Command;
 use Discord\Repository\AbstractRepository;
-use React\Promise\ExtendedPromiseInterface;
-
-use function React\Promise\reject;
 
 /**
  * Contains application guild commands.
@@ -37,7 +33,7 @@ use function React\Promise\reject;
 class GuildCommandRepository extends AbstractRepository
 {
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     protected $endpoints = [
         'all' => Endpoint::GUILD_APPLICATION_COMMANDS,
@@ -48,33 +44,17 @@ class GuildCommandRepository extends AbstractRepository
     ];
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     protected $class = Command::class;
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function __construct(Discord $discord, array $vars = [])
     {
         $vars['application_id'] = $discord->application->id; // For the bot's Application Guild Commands
 
         parent::__construct($discord, $vars);
-    }
-
-    /**
-     * Sets all guild commands permission overwrites.
-     *
-     * @link https://discord.com/developers/docs/interactions/application-commands#batch-edit-application-command-permissions
-     *
-     * @param CommandPermissions $overwrite An overwrite object.
-     *
-     * @deprecated 7.1.0 Removed on Permissions v2.
-     *
-     * @return ExtendedPromiseInterface
-     */
-    public function setOverwrite(CommandPermissions $overwrite): ExtendedPromiseInterface
-    {
-        return reject(new \RuntimeException('Bots can no longer set guild command permissions'));
     }
 }

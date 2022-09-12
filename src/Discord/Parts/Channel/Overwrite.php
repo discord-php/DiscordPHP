@@ -34,7 +34,7 @@ class Overwrite extends Part
     public const TYPE_MEMBER = 1;
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     protected $fillable = [
         'id',
@@ -92,7 +92,7 @@ class Overwrite extends Part
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getRepositoryAttributes(): array
     {
@@ -102,7 +102,7 @@ class Overwrite extends Part
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function getRawAttributes(): array
     {

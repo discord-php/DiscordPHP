@@ -52,7 +52,7 @@ class Webhook extends Part
     public const TYPE_APPLICATION = 3;
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     protected $fillable = [
         'id',
@@ -70,7 +70,7 @@ class Webhook extends Part
     ];
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     protected $repositories = [
         'messages' => WebhookMessageRepository::class,
@@ -232,7 +232,7 @@ class Webhook extends Part
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      *
      * @link https://discord.com/developers/docs/resources/webhook#create-webhook-json-params
      */
@@ -245,7 +245,7 @@ class Webhook extends Part
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      *
      * @link https://discord.com/developers/docs/resources/webhook#modify-webhook-json-params
      */
@@ -264,7 +264,7 @@ class Webhook extends Part
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getRepositoryAttributes(): array
     {

@@ -107,13 +107,6 @@ abstract class Part implements ArrayAccess, JsonSerializable
     public $created = false;
 
     /**
-     * Should we fill the part after saving?
-     *
-     * @var bool Whether the part will be saved after being filled.
-     */
-    protected $fillAfterSave = true;
-
-    /**
      * Create a new part instance.
      *
      * @param Discord $discord    The Discord client.
@@ -140,9 +133,7 @@ abstract class Part implements ArrayAccess, JsonSerializable
     }
 
     /**
-     * Whether the part is considered partial
-     * i.e. missing information which can be
-     * fetched from Discord.
+     * Whether the part is considered partial i.e. missing information which can be fetched from Discord.
      *
      * @return bool
      */
@@ -152,12 +143,11 @@ abstract class Part implements ArrayAccess, JsonSerializable
     }
 
     /**
-     * Fetches any missing information about
-     * the part from Discord's servers.
+     * Fetches any missing information about the part from Discord's servers.
      *
      * @throws \RuntimeException The part is not fetchable.
      *
-     * @return ExtendedPromiseInterface<static>
+     * @return ExtendedPromiseInterface<self>
      */
     public function fetch(): ExtendedPromiseInterface
     {
@@ -278,7 +268,6 @@ abstract class Part implements ArrayAccess, JsonSerializable
      *
      * @param string $key   The attribute key.
      * @param mixed  $value The attribute value.
-     *
      *
      * @see self::setAttribute() This function forwards onto setAttribute.
      */

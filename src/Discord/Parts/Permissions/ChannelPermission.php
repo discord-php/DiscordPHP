@@ -12,7 +12,7 @@
 namespace Discord\Parts\Permissions;
 
 /**
- * @inheritdoc
+ * @inheritDoc
  *
  * @since 2.1.3
  *
@@ -32,7 +32,7 @@ namespace Discord\Parts\Permissions;
  * @property bool $move_members
  * @property bool $use_vad
  * @property bool $manage_events
- * @property bool $start_embedded_activities @todo $use_embedded_activities
+ * @property bool $use_embedded_activities
  *
  * @property bool $add_reactions
  * @property bool $send_messages
@@ -53,7 +53,7 @@ namespace Discord\Parts\Permissions;
 class ChannelPermission extends Permission
 {
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public static function getPermissions(): array
     {

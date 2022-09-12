@@ -32,7 +32,7 @@ use Discord\Repository\AbstractRepository;
 class IntegrationRepository extends AbstractRepository
 {
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     protected $endpoints = [
         'all' => Endpoint::GUILD_INTEGRATIONS,
@@ -40,7 +40,7 @@ class IntegrationRepository extends AbstractRepository
     ];
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     protected $class = Integration::class;
 }

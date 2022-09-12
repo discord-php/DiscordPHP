@@ -26,7 +26,7 @@ use Discord\Parts\Thread\Thread;
 class MessageReactionRemove extends Event
 {
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function handle($data)
     {

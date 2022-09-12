@@ -23,7 +23,7 @@ use Discord\Parts\Guild\Guild;
 class AutoModerationRuleDelete extends Event
 {
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function handle($data)
     {

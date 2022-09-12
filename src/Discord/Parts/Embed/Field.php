@@ -27,7 +27,7 @@ use Discord\Parts\Part;
 class Field extends Part
 {
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     protected $fillable = [
         'name',

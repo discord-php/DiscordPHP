@@ -34,7 +34,7 @@ use Discord\Repository\AbstractRepository;
 class CommandPermissionsRepository extends AbstractRepository
 {
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     protected $endpoints = [
         'all' => Endpoint::GUILD_APPLICATION_COMMANDS_PERMISSIONS,
@@ -42,7 +42,7 @@ class CommandPermissionsRepository extends AbstractRepository
     ];
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     protected $class = CommandPermissions::class;
 }

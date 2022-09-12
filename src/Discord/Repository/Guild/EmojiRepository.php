@@ -32,7 +32,7 @@ use Discord\Repository\AbstractRepository;
 class EmojiRepository extends AbstractRepository
 {
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     protected $endpoints = [
         'all' => Endpoint::GUILD_EMOJIS,
@@ -43,7 +43,7 @@ class EmojiRepository extends AbstractRepository
     ];
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     protected $class = Emoji::class;
 }

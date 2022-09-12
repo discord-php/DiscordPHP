@@ -25,7 +25,7 @@ use Discord\WebSockets\Intents;
 class MessageUpdate extends Event
 {
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function handle($data)
     {

@@ -24,7 +24,7 @@ use Discord\Parts\Guild\Guild;
 class InviteDelete extends Event
 {
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function handle($data)
     {

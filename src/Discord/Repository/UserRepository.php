@@ -30,14 +30,14 @@ use Discord\Parts\User\User;
 class UserRepository extends AbstractRepository
 {
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     protected $endpoints = [
         'get' => Endpoint::USER,
     ];
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     protected $class = User::class;
 }
