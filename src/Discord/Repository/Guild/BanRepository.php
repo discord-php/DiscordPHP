@@ -122,7 +122,7 @@ class BanRepository extends AbstractRepository
      * @param User|Ban|string $ban    User or Ban Part, or User ID
      * @param string|null     $reason Reason for Audit Log.
      *
-     * @return ExtendedPromiseInterface<Part>
+     * @return ExtendedPromiseInterface
      */
     public function unban($ban, ?string $reason = null): ExtendedPromiseInterface
     {
