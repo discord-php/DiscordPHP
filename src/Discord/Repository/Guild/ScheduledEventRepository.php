@@ -54,6 +54,8 @@ class ScheduledEventRepository extends AbstractRepository
      * @inheritDoc
      *
      * @param bool $with_user_count Whether to include number of users subscribed to each event
+     *
+     * @return ExtendedPromiseInterface<ScheduledEvent>
      */
     public function fetch(string $id, bool $fresh = false, bool $with_user_count = false): ExtendedPromiseInterface
     {
