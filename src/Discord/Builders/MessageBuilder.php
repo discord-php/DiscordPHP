@@ -261,7 +261,7 @@ class MessageBuilder implements JsonSerializable
     /**
      * Sets the embeds for the message. Clears the existing embeds in the process.
      *
-     * @param array $embeds
+     * @param Embed[]|array $embeds
      *
      * @return self
      */
@@ -274,6 +274,8 @@ class MessageBuilder implements JsonSerializable
 
     /**
      * Sets the allowed mentions object of the message.
+     *
+     * @link https://discord.com/developers/docs/resources/channel#allowed-mentions-object
      *
      * @param array $allowed_mentions
      *
