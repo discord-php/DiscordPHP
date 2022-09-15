@@ -20,10 +20,10 @@ use Discord\Parts\Part;
  *
  * @since 4.0.3
  *
- * @property string      $name           The name of the author.
- * @property string|null $url            The URL to the author.
- * @property string|null $icon_url       The source of the author icon. Must be https.
- * @property string|null $proxy_icon_url A proxied version of the icon url.
+ * @property      string      $name           The name of the author.
+ * @property      string|null $url            The URL to the author.
+ * @property      string|null $icon_url       The source of the author icon. Must be https.
+ * @property-read string|null $proxy_icon_url A proxied version of the icon url.
  */
 class Author extends Part
 {

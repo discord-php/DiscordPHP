@@ -1499,7 +1499,7 @@ class Discord
         $this->logger->info('discord closed');
 
         if ($closeLoop) {
-            $this->stop();
+            $this->loop->stop();
         }
     }
 
