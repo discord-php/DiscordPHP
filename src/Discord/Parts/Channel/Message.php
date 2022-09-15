@@ -194,7 +194,7 @@ class Message extends Part
      */
     protected function getCrosspostedAttribute(): bool
     {
-        return (bool) ($this->flags & (1 << 0));
+        return (bool) ($this->flags & self::FLAG_CROSSPOSTED);
     }
 
     /**
@@ -204,7 +204,7 @@ class Message extends Part
      */
     protected function getIsCrosspostAttribute(): bool
     {
-        return (bool) ($this->flags & self::FLAG_CROSSPOSTED);
+        return (bool) ($this->flags & self::FLAG_IS_CROSSPOST);
     }
 
     /**
