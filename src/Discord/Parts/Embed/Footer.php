@@ -20,9 +20,9 @@ use Discord\Parts\Part;
  *
  * @since 4.0.3
  *
- * @property string      $text           Footer text.
- * @property string|null $icon_url       URL of an icon for the footer. Must be https.
- * @property string|null $proxy_icon_url Proxied version of the icon URL.
+ * @property      string      $text           Footer text.
+ * @property      string|null $icon_url       URL of an icon for the footer. Must be https.
+ * @property-read string|null $proxy_icon_url Proxied version of the icon URL.
  */
 class Footer extends Part
 {
