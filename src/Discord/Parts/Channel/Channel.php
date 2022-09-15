@@ -91,18 +91,37 @@ use function React\Promise\resolve;
  */
 class Channel extends Part
 {
-    public const TYPE_TEXT = 0;
+    public const TYPE_GUILD_TEXT = 0;
     public const TYPE_DM = 1;
-    public const TYPE_VOICE = 2;
-    public const TYPE_GROUP = 3;
-    public const TYPE_CATEGORY = 4;
-    public const TYPE_NEWS = 5;
-    public const TYPE_NEWS_THREAD = 10;
+    public const TYPE_GUILD_VOICE = 2;
+    public const TYPE_GROUP_DM = 3;
+    public const TYPE_GUILD_CATEGORY = 4;
+    public const TYPE_GUILD_ANNOUNCEMENT = 5;
+    public const TYPE_ANNOUNCEMENT_THREAD = 10;
     public const TYPE_PUBLIC_THREAD = 11;
     public const TYPE_PRIVATE_THREAD = 12;
-    public const TYPE_STAGE_CHANNEL = 13;
-    public const TYPE_DIRECTORY = 14;
-    public const TYPE_FORUM = 15;
+    public const TYPE_GUILD_STAGE_VOICE = 13;
+    public const TYPE_GUILD_DIRECTORY = 14;
+    public const TYPE_GUILD_FORUM = 15;
+
+    /** @deprecated 10.0.0 Use `Channel::TYPE_GUILD_TEXT` */
+    public const TYPE_TEXT = self::TYPE_GUILD_TEXT;
+    /** @deprecated 10.0.0 Use `Channel::TYPE_GUILD_VOICE` */
+    public const TYPE_VOICE = self::TYPE_GUILD_VOICE;
+    /** @deprecated 10.0.0 Use `Channel::TYPE_GROUP_DM` */
+    public const TYPE_GROUP = self::TYPE_GROUP_DM;
+    /** @deprecated 10.0.0 Use `Channel::TYPE_GUILD_CATEGORY` */
+    public const TYPE_CATEGORY = self::TYPE_GUILD_CATEGORY;
+    /** @deprecated 10.0.0 Use `Channel::TYPE_GUILD_ANNOUNCEMENT` */
+    public const TYPE_NEWS = self::TYPE_GUILD_ANNOUNCEMENT;
+    /** @deprecated 10.0.0 Use `Channel::TYPE_ANNOUNCEMENT_THREAD` */
+    public const TYPE_NEWS_THREAD = self::TYPE_ANNOUNCEMENT_THREAD;
+    /** @deprecated 10.0.0 Use `Channel::TYPE_GUILD_STAGE_VOICE` */
+    public const TYPE_STAGE_CHANNEL = self::TYPE_GUILD_STAGE_VOICE;
+    /** @deprecated 10.0.0 Use `Channel::TYPE_GUILD_DIRECTORY` */
+    public const TYPE_DIRECTORY = self::TYPE_GUILD_DIRECTORY;
+    /** @deprecated 10.0.0 Use `Channel::TYPE_GUILD_FORUM` */
+    public const TYPE_FORUM = self::TYPE_GUILD_FORUM;
 
     public const VIDEO_QUALITY_AUTO = 1;
     public const VIDEO_QUALITY_FULL = 2;
