@@ -910,6 +910,8 @@ class Channel extends Part
     /**
      * Sends an embed to the channel.
      *
+     * @deprecated 10.0.0 Use `Channel::sendMessage` with `MessageBuilder::addEmbed()`
+     *
      * @see Channel::sendMessage()
      *
      * @param Embed $embed Embed to send.
@@ -925,14 +927,14 @@ class Channel extends Part
     /**
      * Sends a file to the channel.
      *
+     * @deprecated 7.0.0 Use `Channel::sendMessage` to send files.
+     *
      * @see Channel::sendMessage()
      *
      * @param string      $filepath The path to the file to be sent.
      * @param string|null $filename The name to send the file as.
      * @param string|null $content  Message content to send with the file.
      * @param bool        $tts      Whether to send the message with TTS.
-     *
-     * @deprecated 7.0.0 Use `Channel::sendMessage` to send files.
      *
      * @return ExtendedPromiseInterface<Message>
      */

@@ -709,12 +709,14 @@ class Thread extends Part
     /**
      * Sends an embed to the thread.
      *
+     * @deprecated 10.0.0 Use `Channel::sendMessage` with `MessageBuilder::addEmbed()`
+     *
      * @see Thread::sendMessage()
      *
      * @param Embed $embed Embed to send.
      *
      * @return ExtendedPromiseInterface<Message>
-     * 
+     *
      * @todo Make it in a trait along with Channel
      */
     public function sendEmbed(Embed $embed): ExtendedPromiseInterface
