@@ -63,7 +63,7 @@ class BanRepository extends AbstractRepository
      * @param array              $options Array of Ban options 'delete_message_seconds' or 'delete_message_days' (deprecated).
      * @param string|null        $reason  Reason for Audit Log.
      *
-     * @return ExtendedPromiseInterface
+     * @return ExtendedPromiseInterface<Ban>
      */
     public function ban($user, array $options = [], ?string $reason = null): ExtendedPromiseInterface
     {
@@ -101,6 +101,7 @@ class BanRepository extends AbstractRepository
             empty($content) ? null : $content,
             $headers
         )->then(function () use ($user, $reason) {
+            /** @var Ban */
             $ban = $this->factory->part(Ban::class, [
                 'user' => (object) $user->getRawAttributes(),
                 'reason' => $reason,

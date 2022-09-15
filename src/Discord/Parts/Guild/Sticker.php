@@ -12,6 +12,7 @@
 namespace Discord\Parts\Guild;
 
 use Discord\Parts\Part;
+use Discord\Parts\User\User;
 
 /**
  * A sticker that can be sent in a Discord message.
@@ -94,7 +95,7 @@ class Sticker extends Part
      *
      * @return User|null
      */
-    protected function getUserAttribute(): ?Part
+    protected function getUserAttribute(): ?User
     {
         if (! isset($this->attributes['user'])) {
             return null;

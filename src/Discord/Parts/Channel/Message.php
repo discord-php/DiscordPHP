@@ -691,7 +691,7 @@ class Message extends Part
     public function startThread(string $name, int $auto_archive_duration = 1440, ?string $reason = null): ExtendedPromiseInterface
     {
         $channel = $this->channel;
-        if ($channel && ! in_array($channel->type, [Channel::TYPE_TEXT, Channel::TYPE_NEWS, null])) {
+        if ($channel && ! in_array($channel->type, [Channel::TYPE_GUILD_TEXT, Channel::TYPE_GUILD_ANNOUNCEMENT, null])) {
             return reject(new \RuntimeException('You can only start threads on guild text channels or news channels.'));
         }
 

@@ -91,18 +91,37 @@ use function React\Promise\resolve;
  */
 class Channel extends Part
 {
-    public const TYPE_TEXT = 0;
+    public const TYPE_GUILD_TEXT = 0;
     public const TYPE_DM = 1;
-    public const TYPE_VOICE = 2;
-    public const TYPE_GROUP = 3;
-    public const TYPE_CATEGORY = 4;
-    public const TYPE_NEWS = 5;
-    public const TYPE_NEWS_THREAD = 10;
+    public const TYPE_GUILD_VOICE = 2;
+    public const TYPE_GROUP_DM = 3;
+    public const TYPE_GUILD_CATEGORY = 4;
+    public const TYPE_GUILD_ANNOUNCEMENT = 5;
+    public const TYPE_ANNOUNCEMENT_THREAD = 10;
     public const TYPE_PUBLIC_THREAD = 11;
     public const TYPE_PRIVATE_THREAD = 12;
-    public const TYPE_STAGE_CHANNEL = 13;
-    public const TYPE_DIRECTORY = 14;
-    public const TYPE_FORUM = 15;
+    public const TYPE_GUILD_STAGE_VOICE = 13;
+    public const TYPE_GUILD_DIRECTORY = 14;
+    public const TYPE_GUILD_FORUM = 15;
+
+    /** @deprecated 10.0.0 Use `Channel::TYPE_GUILD_TEXT` */
+    public const TYPE_TEXT = self::TYPE_GUILD_TEXT;
+    /** @deprecated 10.0.0 Use `Channel::TYPE_GUILD_VOICE` */
+    public const TYPE_VOICE = self::TYPE_GUILD_VOICE;
+    /** @deprecated 10.0.0 Use `Channel::TYPE_GROUP_DM` */
+    public const TYPE_GROUP = self::TYPE_GROUP_DM;
+    /** @deprecated 10.0.0 Use `Channel::TYPE_GUILD_CATEGORY` */
+    public const TYPE_CATEGORY = self::TYPE_GUILD_CATEGORY;
+    /** @deprecated 10.0.0 Use `Channel::TYPE_GUILD_ANNOUNCEMENT` */
+    public const TYPE_NEWS = self::TYPE_GUILD_ANNOUNCEMENT;
+    /** @deprecated 10.0.0 Use `Channel::TYPE_ANNOUNCEMENT_THREAD` */
+    public const TYPE_NEWS_THREAD = self::TYPE_ANNOUNCEMENT_THREAD;
+    /** @deprecated 10.0.0 Use `Channel::TYPE_GUILD_STAGE_VOICE` */
+    public const TYPE_STAGE_CHANNEL = self::TYPE_GUILD_STAGE_VOICE;
+    /** @deprecated 10.0.0 Use `Channel::TYPE_GUILD_DIRECTORY` */
+    public const TYPE_DIRECTORY = self::TYPE_GUILD_DIRECTORY;
+    /** @deprecated 10.0.0 Use `Channel::TYPE_GUILD_FORUM` */
+    public const TYPE_FORUM = self::TYPE_GUILD_FORUM;
 
     public const VIDEO_QUALITY_AUTO = 1;
     public const VIDEO_QUALITY_FULL = 2;
@@ -170,7 +189,7 @@ class Channel extends Part
      */
     protected function afterConstruct(): void
     {
-        if (! array_key_exists('bitrate', $this->attributes) && $this->type != self::TYPE_TEXT) {
+        if (! array_key_exists('bitrate', $this->attributes) && $this->type != self::TYPE_GUILD_TEXT) {
             $this->bitrate = 64000;
         }
     }
@@ -182,7 +201,7 @@ class Channel extends Part
      */
     protected function getIsPrivateAttribute(): bool
     {
-        return in_array($this->type, [self::TYPE_DM, self::TYPE_GROUP]);
+        return in_array($this->type, [self::TYPE_DM, self::TYPE_GROUP_DM]);
     }
 
     /**
@@ -784,14 +803,14 @@ class Channel extends Part
             return reject(new \RuntimeException('Guild does not have access to private threads.'));
         }
 
-        if ($this->type == Channel::TYPE_NEWS) {
+        if ($this->type == self::TYPE_GUILD_ANNOUNCEMENT) {
             if ($private) {
                 return reject(new \RuntimeException('You cannot start a private thread within a news channel.'));
             }
 
-            $type = Channel::TYPE_NEWS_THREAD;
-        } elseif ($this->type == Channel::TYPE_TEXT) {
-            $type = $private ? Channel::TYPE_PRIVATE_THREAD : Channel::TYPE_PUBLIC_THREAD;
+            $type = self::TYPE_ANNOUNCEMENT_THREAD;
+        } elseif ($this->type == self::TYPE_GUILD_TEXT) {
+            $type = $private ? self::TYPE_PRIVATE_THREAD : self::TYPE_PUBLIC_THREAD;
         } else {
             return reject(new \RuntimeException('You cannot start a thread in this type of channel.'));
         }
@@ -891,6 +910,8 @@ class Channel extends Part
     /**
      * Sends an embed to the channel.
      *
+     * @deprecated 10.0.0 Use `Channel::sendMessage` with `MessageBuilder::addEmbed()`
+     *
      * @see Channel::sendMessage()
      *
      * @param Embed $embed Embed to send.
@@ -906,14 +927,14 @@ class Channel extends Part
     /**
      * Sends a file to the channel.
      *
+     * @deprecated 7.0.0 Use `Channel::sendMessage` to send files.
+     *
      * @see Channel::sendMessage()
      *
      * @param string      $filepath The path to the file to be sent.
      * @param string|null $filename The name to send the file as.
      * @param string|null $content  Message content to send with the file.
      * @param bool        $tts      Whether to send the message with TTS.
-     *
-     * @deprecated 7.0.0 Use `Channel::sendMessage` to send files.
      *
      * @return ExtendedPromiseInterface<Message>
      */
@@ -1009,7 +1030,7 @@ class Channel extends Part
      */
     public function allowText()
     {
-        return in_array($this->type, [self::TYPE_TEXT, self::TYPE_DM, self::TYPE_VOICE, self::TYPE_GROUP, self::TYPE_NEWS]);
+        return in_array($this->type, [self::TYPE_GUILD_TEXT, self::TYPE_DM, self::TYPE_GUILD_VOICE, self::TYPE_GROUP_DM, self::TYPE_GUILD_ANNOUNCEMENT]);
     }
 
     /**
@@ -1019,7 +1040,7 @@ class Channel extends Part
      */
     public function allowVoice()
     {
-        return in_array($this->type, [self::TYPE_VOICE, self::TYPE_STAGE_CHANNEL]);
+        return in_array($this->type, [self::TYPE_GUILD_VOICE, self::TYPE_GUILD_STAGE_VOICE]);
     }
 
     /**
@@ -1029,7 +1050,7 @@ class Channel extends Part
      */
     public function allowInvite()
     {
-        return in_array($this->type, [self::TYPE_TEXT, self::TYPE_VOICE, self::TYPE_NEWS, self::TYPE_STAGE_CHANNEL, self::TYPE_FORUM]);
+        return in_array($this->type, [self::TYPE_GUILD_TEXT, self::TYPE_GUILD_VOICE, self::TYPE_GUILD_ANNOUNCEMENT, self::TYPE_GUILD_STAGE_VOICE, self::TYPE_GUILD_FORUM]);
     }
 
     /**

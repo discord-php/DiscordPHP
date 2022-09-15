@@ -41,12 +41,15 @@ use Discord\Parts\Part;
  */
 class Activity extends Part
 {
-    public const TYPE_PLAYING = 0; // Playing {$this->name}
+    public const TYPE_GAME = 0; // Playing {$this->name}
     public const TYPE_STREAMING = 1; // Streaming {$this->details}
     public const TYPE_LISTENING = 2; // Listening to {$this->name}
     public const TYPE_WATCHING = 3; // Watching {$this->name}
     public const TYPE_CUSTOM = 4; // {$this->emoji} {$this->name}
     public const TYPE_COMPETING = 5; // Competing in {$this->name}
+
+    /** @deprecated 10.0.0 Use `Activity::TYPE_GAME` */
+    public const TYPE_PLAYING = self::TYPE_GAME;
 
     public const FLAG_INSTANCE = (1 << 0);
     public const FLAG_JOIN = (1 << 1);

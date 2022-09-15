@@ -20,6 +20,7 @@ use Discord\Http\Exceptions\NoPermissionsException;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Channel\Message;
 use Discord\Parts\Channel\Overwrite;
+use Discord\Parts\Guild\Ban;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Guild\Role;
 use Discord\Parts\Part;
@@ -102,7 +103,7 @@ class Member extends Part
      *
      * @return PresenceUpdate Old presence.
      */
-    public function updateFromPresence(PresenceUpdate $presence): Part
+    public function updateFromPresence(PresenceUpdate $presence): PresenceUpdate
     {
         $rawPresence = $presence->getRawAttributes();
         $oldPresence = $this->factory->part(PresenceUpdate::class, (array) $this->attributes, true);
@@ -120,15 +121,17 @@ class Member extends Part
      * @param int|null    $daysToDeleteMessages The amount of days to delete messages from.
      * @param string|null $reason               Reason of the Ban.
      *
-     * @throws \Exception
+     * @throws \RuntimeException Member has no `$guild`
      *
-     * @return ExtendedPromiseInterface
+     * @return ExtendedPromiseInterface<Ban>
      */
     public function ban(?int $daysToDeleteMessages = null, ?string $reason = null): ExtendedPromiseInterface
     {
-        $guild = $this->guild;
+        if (! $guild = $this->guild) {
+            return reject(new \RuntimeException('Member has no Guild Part'));
+        }
 
-        return $guild->bans->ban($this, $daysToDeleteMessages, $reason);
+        return $guild->bans->ban($this, ['delete_message_days' => $daysToDeleteMessages], $reason);
     }
 
     /**
@@ -479,7 +482,7 @@ class Member extends Part
      */
     protected function getGameAttribute(): ?Activity
     {
-        return $this->activities->first();
+        return $this->activities->get('type', Activity::TYPE_GAME);
     }
 
     /**

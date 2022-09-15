@@ -57,9 +57,9 @@ class MemberRepository extends AbstractRepository
      * @param Member      $member The member to kick.
      * @param string|null $reason Reason for Audit Log.
      *
-     * @return PromiseInterface
+     * @return ExtendedPromiseInterface
      */
-    public function kick(Member $member, ?string $reason = null): PromiseInterface
+    public function kick(Member $member, ?string $reason = null): ExtendedPromiseInterface
     {
         return $this->delete($member, $reason);
     }

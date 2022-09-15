@@ -23,8 +23,9 @@ final class BigInt
 
     /**
      * Run a single check whether the GMP extension is loaded.
+     * Internally used during Discord class construct.
      *
-     * @internal internally used during Discord class construct.
+     * @internal
      *
      * @return bool true if GMP extension is loaded
      */
