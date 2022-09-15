@@ -68,7 +68,7 @@ class DiscordSingleton
 
         $discord->on('ready', function (Discord $discord) use ($timer) {
             $discord->getLoop()->cancelTimer($timer);
-            $discord->stop();
+            $discord->getLoop()->stop();
         });
 
         self::$discord = $discord;

@@ -185,12 +185,12 @@ final class ChannelTest extends DiscordTestCase
     }
 
     /**
-     * @covers \Discord\Parts\Channel\Channel::getInvites
+     * @covers \Discord\Repository\Channel\InviteRepository::freshen
      */
     public function testCanGetInvites()
     {
         return wait(function (Discord $discord, $resolve) {
-            $this->channel()->getInvites()
+            $this->channel()->invites->freshen()
                 ->then(function (Collection $invites) {
                     $this->assertInstanceOf(Collection::class, $invites);
 
