@@ -157,8 +157,15 @@ class Message extends Part
     public const REACT_DELETE_ID = 2;
     public const REACT_DELETE_EMOJI = 3;
 
+    public const FLAG_CROSSPOSTED = (1 << 0);
+    public const FLAG_IS_CROSSPOST = (1 << 1);
     public const FLAG_SUPPRESS_EMBED = (1 << 2);
+    public const FLAG_SOURCE_MESSAGE_DELETED = (1 << 3);
+    public const FLAG_URGENT = (1 << 4);
+    public const FLAG_HAS_THREAD = (1 << 5);
     public const FLAG_EPHEMERAL = (1 << 6);
+    public const FLAG_LOADING = (1 << 7);
+    public const FLAG_FAILED_TO_MENTION_SOME_ROLES_IN_THREAD = (1 << 8);
 
     /**
      * @inheritDoc
@@ -224,7 +231,7 @@ class Message extends Part
      */
     protected function getIsCrosspostAttribute(): bool
     {
-        return (bool) ($this->flags & (1 << 1));
+        return (bool) ($this->flags & self::FLAG_CROSSPOSTED);
     }
 
     /**
@@ -244,7 +251,7 @@ class Message extends Part
      */
     protected function getSourceMessageDeletedAttribute(): bool
     {
-        return (bool) ($this->flags & (1 << 3));
+        return (bool) ($this->flags & self::FLAG_SOURCE_MESSAGE_DELETED);
     }
 
     /**
@@ -254,7 +261,7 @@ class Message extends Part
      */
     protected function getUrgentAttribute(): bool
     {
-        return (bool) ($this->flags & (1 << 4));
+        return (bool) ($this->flags & self::FLAG_URGENT);
     }
 
     /**
@@ -264,7 +271,7 @@ class Message extends Part
      */
     protected function getHasThreadAttribute(): bool
     {
-        return (bool) ($this->flags & (1 << 5));
+        return (bool) ($this->flags & self::FLAG_HAS_THREAD);
     }
 
     /**
@@ -284,7 +291,7 @@ class Message extends Part
      */
     protected function getLoadingAttribute(): bool
     {
-        return (bool) ($this->flags & (1 << 7));
+        return (bool) ($this->flags & self::FLAG_LOADING);
     }
 
     /**
@@ -294,7 +301,7 @@ class Message extends Part
      */
     protected function getFailedToMentionSomeRolesInThreadAttribute(): bool
     {
-        return (bool) ($this->flags & (1 << 8));
+        return (bool) ($this->flags & self::FLAG_FAILED_TO_MENTION_SOME_ROLES_IN_THREAD);
     }
 
     /**
