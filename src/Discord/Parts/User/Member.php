@@ -102,7 +102,7 @@ class Member extends Part
      *
      * @return PresenceUpdate Old presence.
      */
-    public function updateFromPresence(PresenceUpdate $presence): Part
+    public function updateFromPresence(PresenceUpdate $presence): PresenceUpdate
     {
         $rawPresence = $presence->getRawAttributes();
         $oldPresence = $this->factory->part(PresenceUpdate::class, (array) $this->attributes, true);

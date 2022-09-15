@@ -86,7 +86,7 @@ class GuildTemplate extends Part
      *
      * @return User
      */
-    protected function getCreatorAttribute(): Part
+    protected function getCreatorAttribute(): User
     {
         if ($creator = $this->discord->users->get('id', $this->creator_id)) {
             return $creator;
