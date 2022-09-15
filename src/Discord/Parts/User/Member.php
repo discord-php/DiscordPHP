@@ -479,7 +479,7 @@ class Member extends Part
      */
     protected function getGameAttribute(): ?Activity
     {
-        return $this->activities->first();
+        return $this->activities->get('type', Activity::TYPE_GAME);
     }
 
     /**
