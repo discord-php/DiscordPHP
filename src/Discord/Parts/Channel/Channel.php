@@ -189,7 +189,7 @@ class Channel extends Part
      */
     protected function afterConstruct(): void
     {
-        if (! array_key_exists('bitrate', $this->attributes) && $this->type != self::TYPE_TEXT) {
+        if (! array_key_exists('bitrate', $this->attributes) && $this->type != self::TYPE_GUILD_TEXT) {
             $this->bitrate = 64000;
         }
     }
@@ -201,7 +201,7 @@ class Channel extends Part
      */
     protected function getIsPrivateAttribute(): bool
     {
-        return in_array($this->type, [self::TYPE_DM, self::TYPE_GROUP]);
+        return in_array($this->type, [self::TYPE_DM, self::TYPE_GROUP_DM]);
     }
 
     /**
@@ -803,14 +803,14 @@ class Channel extends Part
             return reject(new \RuntimeException('Guild does not have access to private threads.'));
         }
 
-        if ($this->type == Channel::TYPE_NEWS) {
+        if ($this->type == self::TYPE_GUILD_ANNOUNCEMENT) {
             if ($private) {
                 return reject(new \RuntimeException('You cannot start a private thread within a news channel.'));
             }
 
-            $type = Channel::TYPE_NEWS_THREAD;
-        } elseif ($this->type == Channel::TYPE_TEXT) {
-            $type = $private ? Channel::TYPE_PRIVATE_THREAD : Channel::TYPE_PUBLIC_THREAD;
+            $type = self::TYPE_ANNOUNCEMENT_THREAD;
+        } elseif ($this->type == self::TYPE_GUILD_TEXT) {
+            $type = $private ? self::TYPE_PRIVATE_THREAD : self::TYPE_PUBLIC_THREAD;
         } else {
             return reject(new \RuntimeException('You cannot start a thread in this type of channel.'));
         }
@@ -1028,7 +1028,7 @@ class Channel extends Part
      */
     public function allowText()
     {
-        return in_array($this->type, [self::TYPE_TEXT, self::TYPE_DM, self::TYPE_VOICE, self::TYPE_GROUP, self::TYPE_NEWS]);
+        return in_array($this->type, [self::TYPE_GUILD_TEXT, self::TYPE_DM, self::TYPE_GUILD_VOICE, self::TYPE_GROUP_DM, self::TYPE_GUILD_ANNOUNCEMENT]);
     }
 
     /**
@@ -1038,7 +1038,7 @@ class Channel extends Part
      */
     public function allowVoice()
     {
-        return in_array($this->type, [self::TYPE_VOICE, self::TYPE_STAGE_CHANNEL]);
+        return in_array($this->type, [self::TYPE_GUILD_VOICE, self::TYPE_GUILD_STAGE_VOICE]);
     }
 
     /**
@@ -1048,7 +1048,7 @@ class Channel extends Part
      */
     public function allowInvite()
     {
-        return in_array($this->type, [self::TYPE_TEXT, self::TYPE_VOICE, self::TYPE_NEWS, self::TYPE_STAGE_CHANNEL, self::TYPE_FORUM]);
+        return in_array($this->type, [self::TYPE_GUILD_TEXT, self::TYPE_GUILD_VOICE, self::TYPE_GUILD_ANNOUNCEMENT, self::TYPE_GUILD_STAGE_VOICE, self::TYPE_GUILD_FORUM]);
     }
 
     /**
