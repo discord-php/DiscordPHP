@@ -97,7 +97,7 @@ class PresenceUpdate extends Part
      */
     protected function getGameAttribute(): ?Part
     {
-        return $this->activities->first();
+        return $this->activities->get('type', Activity::TYPE_PLAYING);
     }
 
     /**
