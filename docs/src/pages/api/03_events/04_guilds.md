@@ -13,8 +13,17 @@ Called with a `Guild` object in one of the following situations:
 3. When the Bot joins a new guild.
 
 ```php
-$discord->on(Event::GUILD_CREATE, function (Guild $guild, Discord $discord) {
-    // ...
+$discord->on(Event::GUILD_CREATE, function ($guild, Discord $discord) {
+    if (! ($guild instanceof Guild)) {
+        // the guild is unavailable due to an outage, $guild is a stdClass
+        // {
+        //     "id": "",
+        //     "unavailable": true,
+        // }
+        return;
+    }
+
+    // the Bot has joined the guild
 });
 ```
 

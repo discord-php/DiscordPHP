@@ -25,7 +25,6 @@ use Discord\Parts\Guild\ScheduledEvent;
 use Discord\Parts\Thread\Thread;
 
 use function React\Promise\all;
-use function React\Promise\reject;
 
 /**
  * @link https://discord.com/developers/docs/topics/gateway#guild-create
@@ -39,8 +38,8 @@ class GuildCreate extends Event
      */
     public function handle($data)
     {
-        if (isset($data->unavailable) && $data->unavailable) {
-            return reject(['unavailable', $data->id]);
+        if (! empty($data->unavailable)) {
+            return $data;
         }
 
         /** @var Guild */
