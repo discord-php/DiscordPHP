@@ -1268,6 +1268,51 @@ class Guild extends Part
     }
 
     /**
+     * Modify the guild feature.
+     *
+     * @link https://discord.com/developers/docs/resources/guild#modify-guild
+     *
+     * @param bool[] $features Array of features to set/unset, e.g. `['COMMUNITY' => true, 'INVITES_DISABLED' => false]`.
+     *
+     * @return ExtendedPromiseInterface<Guild> This guild.
+     *
+     * @throws \OutOfRangeException Feature is not mutable.
+     * @throws \RuntimeException    Guild feature is already set.
+     */
+    public function setFeatures(array $features, ?string $reason = null): ExtendedPromiseInterface
+    {
+        $setFeatures = $this->features;
+        foreach ($features as $feature => $set) {
+            if (! in_array($feature, ['COMMUNITY', 'INVITES_DISABLED', 'DISCOVERABLE'])) {
+                return reject(new \OutOfRangeException("Guild feature {$feature} is not mutable"));
+            }
+            $featureIdx = array_search($feature, $setFeatures);
+            if ($set) {
+                if ($featureIdx !== false) {
+                    return reject(new \RuntimeException("Guild feature {$feature} is already set"));
+                }
+                $setFeatures[] = $feature;
+            } else {
+                if ($featureIdx === false) {
+                    return reject(new \RuntimeException("Guild feature {$feature} is already not set"));
+                }
+                unset($setFeatures[$featureIdx]);
+            }
+        }
+
+        $headers = [];
+        if (isset($reason)) {
+            $headers['X-Audit-Log-Reason'] = $reason;
+        }
+
+        return $this->http->patch(Endpoint::bind(Endpoint::GUILD, $this->id), ['features' => array_values($setFeatures)], $headers)->then(function ($response) {
+            $this->features = $response->features;
+
+            return $this;
+        });
+    }
+
+    /**
      * @inheritDoc
      *
      * @link https://discord.com/developers/docs/resources/guild#create-guild-json-params
