@@ -37,9 +37,9 @@ Discord does not provide a way to get deleted messages.
 ```php
 $discord->on(Event::MESSAGE_DELETE, function (object $message, Discord $discord) {
     if ($message instanceof Message) {
-        // Message is present in cache
+        // $message was cached
     }
-    // If the message is not present in the cache:
+    // $message was not in cache:
     else {
         // {
         //     "id": "", // deleted message ID,
@@ -60,9 +60,9 @@ Discord does not provide a way to get deleted messages.
 $discord->on(Event::MESSAGE_DELETE_BULK, function (Collection $messages, Discord $discord) {
     foreach ($messages as $message) {
         if ($message instanceof Message) {
-            // Message is present in cache
+            // $message was cached
         }
-        // If the message is not present in the cache:
+        // $message was not in cache:
         else {
             // {
             //     "id": "", // deleted message ID,

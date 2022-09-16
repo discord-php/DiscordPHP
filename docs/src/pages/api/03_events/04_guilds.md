@@ -173,9 +173,9 @@ Called with a `Role` object when a role is deleted in a guild. `$role` may retur
 ```php
 $discord->on(Event::GUILD_ROLE_DELETE, function (object $role, Discord $discord) {
     if ($role instanceof Role) {
-        // Role is present in cache
+        // $role was cached
     }
-    // If the role is not present in the cache:
+    // $role was not in cache:
     else {
         // {
         //     "guild_id": "" // role guild ID
@@ -249,9 +249,14 @@ Called with a cached `Guild` object when a guild integration is updated.
 
 ```php
 $discord->on(Event::GUILD_INTEGRATIONS_UPDATE, function (object $guild, Discord $discord) {
-    // ...
     if ($guild instanceof Guild) {
-        // Guild is present on cache
+        // $guild was cached
+    }
+    // $guild was not in cache:
+    else {
+        // {
+        //     "guild_id": "",
+        // }
     }
 });
 ```
@@ -282,11 +287,16 @@ Called with an old `Integration` object when a integration is deleted from a gui
 
 ```php
 $discord->on(Event::INTEGRATION_DELETE, function (object $integration, Discord $discord) {
-    // if $integration is not cached,
-    // {
-    //     "id": "",
-    //     "guild_id": "",
-    //     "application_id": ""
-    // }
+    if ($integration instanceof Integration) {
+        // $integration was cached
+    }
+    // $integration was not in cache:
+    else {
+        // {
+        //     "id": "",
+        //     "guild_id": "",
+        //     "application_id": ""
+        // }
+    }
 });
 ```
