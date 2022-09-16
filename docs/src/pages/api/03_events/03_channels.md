@@ -79,7 +79,7 @@ $discord->on(Event::THREAD_UPDATE, function (Thread $thread, Discord $discord, ?
 Called with an old `Thread` object when a thread relevant to the Bot is deleted.
 
 ```php
-$discord->on(Event::THREAD_DELETE, function ($thread, Discord $discord) {
+$discord->on(Event::THREAD_DELETE, function (object $thread, Discord $discord) {
     // {
     //     "type": 0,
     //     "id": "",

@@ -45,7 +45,7 @@ Called with a `Guild` object in one of the following situations:
 2. The guild is unavailable due to an outage.
 
 ```php
-$discord->on(Event::GUILD_DELETE, function ($guild, Discord $discord, bool $unavailable) {
+$discord->on(Event::GUILD_DELETE, function (object $guild, Discord $discord, bool $unavailable) {
     // ...
     if ($unavailable) {
         // the guild is unavailabe due to an outage, $guild is a stdClass
@@ -248,8 +248,11 @@ Requires the `Intents::GUILD_INTEGRATIONS` intent.
 Called with a cached `Guild` object when a guild integration is updated.
 
 ```php
-$discord->on(Event::GUILD_INTEGRATIONS_UPDATE, function (?Guild $guild, Discord $discord) {
+$discord->on(Event::GUILD_INTEGRATIONS_UPDATE, function (object $guild, Discord $discord) {
     // ...
+    if ($guild instanceof Guild) {
+        // Guild is present on cache
+    }
 });
 ```
 
@@ -278,7 +281,7 @@ $discord->on(Event::INTEGRATION_UPDATE, function (Integration $integration, Disc
 Called with an old `Integration` object when a integration is deleted from a guild.
 
 ```php
-$discord->on(Event::INTEGRATION_DELETE, function ($integration, Discord $discord) {
+$discord->on(Event::INTEGRATION_DELETE, function (object $integration, Discord $discord) {
     // if $integration is not cached,
     // {
     //     "id": "",
