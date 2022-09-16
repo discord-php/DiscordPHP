@@ -727,7 +727,7 @@ class Message extends Part
         $deferred = new Deferred();
 
         $timer = $this->discord->getLoop()->addTimer($delay / 1000, function () use ($deferred) {
-            $this->delete([$deferred, 'resolve'], [$deferred, 'reject']);
+            $this->delete()->done([$deferred, 'resolve'], [$deferred, 'reject']);
         });
 
         return $deferred->promise();
