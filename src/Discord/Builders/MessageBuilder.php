@@ -662,6 +662,7 @@ class MessageBuilder implements JsonSerializable
 
         if (isset($this->components)) {
             $body['components'] = $this->components;
+            $empty = false;
         }
 
         if ($this->sticker_ids) {
