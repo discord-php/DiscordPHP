@@ -178,8 +178,6 @@ class Invite extends Part
     /**
      * Returns the inviter attribute.
      *
-     * @throws \Exception
-     *
      * @return User|null The User that invited you.
      */
     protected function getInviterAttribute(): ?User
@@ -230,9 +228,9 @@ class Invite extends Part
     /**
      * Returns the expires at attribute.
      *
-     * @throws \Exception
-     *
      * @return Carbon|null The time that the invite was created.
+     *
+     * @throws \Exception
      */
     protected function getExpiresAtAttribute(): ?Carbon
     {
@@ -267,6 +265,8 @@ class Invite extends Part
      * Returns the created at attribute.
      *
      * @return Carbon|null The time that the invite was created.
+     *
+     * @throws \Exception
      */
     protected function getCreatedAtAttribute(): ?Carbon
     {

@@ -175,6 +175,8 @@ class Thread extends Part
      * Returns the timestamp when the last message was pinned in the thread.
      *
      * @return Carbon|null
+     *
+     * @throws \Exception
      */
     protected function getLastPinTimestampAttribute(): ?Carbon
     {
@@ -263,6 +265,8 @@ class Thread extends Part
      * also mean the time when the thread was created, archived, unarchived etc.
      *
      * @return Carbon
+     *
+     * @throws \Exception
      */
     protected function getArchiveTimestampAttribute(): Carbon
     {
@@ -273,6 +277,8 @@ class Thread extends Part
      * Returns the timestamp when the thread was created; only populated for threads created after 2022-01-09.
      *
      * @return Carbon|null
+     *
+     * @throws \Exception
      */
     protected function getCreateTimestampAttribute(): ?Carbon
     {

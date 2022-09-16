@@ -70,6 +70,8 @@ class Embed extends Part
      * Gets the timestamp attribute.
      *
      * @return Carbon|null The timestamp attribute.
+     *
+     * @throws \Exception
      */
     protected function getTimestampAttribute(): ?Carbon
     {

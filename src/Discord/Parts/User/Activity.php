@@ -91,6 +91,8 @@ class Activity extends Part
      * Gets the created at timestamp.
      *
      * @return Carbon|null
+     *
+     * @throws \Exception
      */
     protected function getCreatedAtAttribute(): ?Carbon
     {

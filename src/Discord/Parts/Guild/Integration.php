@@ -92,9 +92,9 @@ class Integration extends Part
     /**
      * Returns the synced_at attribute.
      *
-     * @throws \Exception
-     *
      * @return Carbon|null The synced_at attribute.
+     *
+     * @throws \Exception
      */
     protected function getSyncedAtAttribute(): ?Carbon
     {

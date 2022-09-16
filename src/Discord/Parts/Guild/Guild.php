@@ -371,9 +371,9 @@ class Guild extends Part
     /**
      * Returns the joined_at attribute.
      *
-     * @throws \Exception
-     *
      * @return Carbon|null The joined_at attribute.
+     *
+     * @throws \Exception
      */
     protected function getJoinedAtAttribute(): ?Carbon
     {

@@ -603,6 +603,8 @@ class Message extends Part
      * Returns the timestamp attribute.
      *
      * @return Carbon|null The time that the message was sent.
+     *
+     * @throws \Exception
      */
     protected function getTimestampAttribute(): ?Carbon
     {
@@ -617,6 +619,8 @@ class Message extends Part
      * Returns the edited_timestamp attribute.
      *
      * @return Carbon|null The time that the message was edited.
+     *
+     * @throws \Exception
      */
     protected function getEditedTimestampAttribute(): ?Carbon
     {

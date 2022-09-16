@@ -202,9 +202,9 @@ class ScheduledEvent extends Part
     /**
      * Returns the created at attribute.
      *
-     * @throws \Exception
-     *
      * @return Carbon The time the scheduled event will start.
+     *
+     * @throws \Exception
      */
     protected function getScheduledStartTimeAttribute(): Carbon
     {
@@ -214,9 +214,9 @@ class ScheduledEvent extends Part
     /**
      * Returns the created at attribute.
      *
-     * @throws \Exception
-     *
      * @return Carbon|null The time the scheduled event will end, required if entity_type is EXTERNAL.
+     *
+     * @throws \Exception
      */
     protected function getScheduledEndTimeAttribute(): ?Carbon
     {
