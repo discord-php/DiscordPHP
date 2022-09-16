@@ -35,7 +35,7 @@ The `Message` object may be the raw payload if `storeMessages` is not enabled _o
 Discord does not provide a way to get deleted messages.
 
 ```php
-$discord->on(Event::MESSAGE_DELETE, function ($message, Discord $discord) {
+$discord->on(Event::MESSAGE_DELETE, function (object $message, Discord $discord) {
     if ($message instanceof Message) {
         // Message is present in cache
     }

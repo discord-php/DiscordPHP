@@ -36,7 +36,7 @@ Called with a `Guild` object in one of the following situations:
 2. The guild is unavailable due to an outage.
 
 ```php
-$discord->on(Event::GUILD_DELETE, function ($guild, Discord $discord, bool $unavailable) {
+$discord->on(Event::GUILD_DELETE, function (object $guild, Discord $discord, bool $unavailable) {
     // ...
     if ($unavailable) {
         // the guild is unavailabe due to an outage
@@ -128,7 +128,7 @@ $discord->on(Event::GUILD_MEMBER_REMOVE, function (Member $member, Discord $disc
 Called with two `Member` objects when a member is updated in a guild. Note that the old member _may_ be `null` if `loadAllMembers` is disabled.
 
 ```php
-$discord->on(Event::GUILD_MEMBER_UPDATE, function (Member $member, Discord $discord, Member $oldMember) {
+$discord->on(Event::GUILD_MEMBER_UPDATE, function (Member $member, Discord $discord, ?Member $oldMember) {
     // ...
 });
 ```
@@ -162,7 +162,7 @@ $discord->on(Event::GUILD_ROLE_UPDATE, function (Role $role, Discord $discord, ?
 Called with a `Role` object when a role is deleted in a guild. `$role` may return `Role` object if it was cached.
 
 ```php
-$discord->on(Event::GUILD_ROLE_DELETE, function ($role, Discord $discord) {
+$discord->on(Event::GUILD_ROLE_DELETE, function (object $role, Discord $discord) {
     if ($role instanceof Role) {
         // Role is present in cache
     }
@@ -267,7 +267,7 @@ $discord->on(Event::INTEGRATION_UPDATE, function (Integration $integration, Disc
 ### Integration Delete
 
 Called with an old `Integration` object when a integration is deleted from a guild.
-`$oldIntegration` _may_ be `null` if Integration is not cached.
+`$integration` _may_ be `null` if Integration is not cached.
 
 ```php
 $discord->on(Event::INTEGRATION_DELETE, function (?Integration $integration, Discord $discord) {
