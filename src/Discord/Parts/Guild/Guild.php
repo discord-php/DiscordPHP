@@ -65,7 +65,7 @@ use function React\Promise\resolve;
  * @property-read User|null          $owner                                    The owner of the guild.
  * @property      ?string|null       $region                                   The region the guild's voice channels are hosted in.
  * @property      string             $afk_channel_id                           The unique identifier of the AFK channel ID.
- * @property      int                $afk_timeout                              How long you will remain in the voice channel until you are moved into the AFK channel.
+ * @property      int                $afk_timeout                              How long in seconds you will remain in the voice channel until you are moved into the AFK channel. Can be set to: 60, 300, 900, 1800, 3600.
  * @property      bool|null          $widget_enabled                           Is server widget enabled.
  * @property      ?string|null       $widget_channel_id                        Channel that the widget will create an invite to.
  * @property      int                $verification_level                       The verification level used for the guild.
