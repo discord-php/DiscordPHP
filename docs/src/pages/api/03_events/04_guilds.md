@@ -8,12 +8,12 @@ Requires the `Intents::GUILDS` intent.
 
 Called with a `Guild` object in one of the following situations:
 
-1. When the Bot is first starting and the guilds are becoming available.
+1. When the Bot is first starting and the guilds are becoming available. (unless the listener is put inside after 'ready' event)
 2. When a guild was unavailable and is now available due to an outage.
 3. When the Bot joins a new guild.
 
 ```php
-$discord->on(Event::GUILD_CREATE, function ($guild, Discord $discord) {
+$discord->on(Event::GUILD_CREATE, function (object $guild, Discord $discord) {
     if (! ($guild instanceof Guild)) {
         // the guild is unavailable due to an outage, $guild is a stdClass
         // {
@@ -137,7 +137,7 @@ $discord->on(Event::GUILD_MEMBER_REMOVE, function (Member $member, Discord $disc
 Called with two `Member` objects when a member is updated in a guild. Note that the old member _may_ be `null` if `loadAllMembers` is disabled.
 
 ```php
-$discord->on(Event::GUILD_MEMBER_UPDATE, function (Member $member, Discord $discord, Member $oldMember) {
+$discord->on(Event::GUILD_MEMBER_UPDATE, function (Member $member, Discord $discord, ?Member $oldMember) {
     // ...
 });
 ```
@@ -171,7 +171,7 @@ $discord->on(Event::GUILD_ROLE_UPDATE, function (Role $role, Discord $discord, ?
 Called with a `Role` object when a role is deleted in a guild. `$role` may return `Role` object if it was cached.
 
 ```php
-$discord->on(Event::GUILD_ROLE_DELETE, function ($role, Discord $discord) {
+$discord->on(Event::GUILD_ROLE_DELETE, function (object $role, Discord $discord) {
     if ($role instanceof Role) {
         // Role is present in cache
     }
