@@ -388,6 +388,46 @@ class Channel extends Part
     }
 
     /**
+     * Moves a channel to another category.
+     *
+     * @param Channel|string|null $category The category channel to move it to. (either a Channel part or the channel ID or null for none)
+     *
+     * @throws \InvalidArgumentException
+     * @throws NoPermissionsException
+     *
+     * @return ExtendedPromiseInterface
+     */
+    public function move($category): ExtendedPromiseInterface
+    {
+        if (! in_array($this->type, [self::TYPE_GUILD_TEXT, self::TYPE_GUILD_VOICE, self::TYPE_GUILD_ANNOUNCEMENT, self::TYPE_GUILD_FORUM])) {
+            return reject(new \InvalidArgumentException('You can only move Text, Voice, Announcement or Forum channels.));
+        }
+
+        if ($botperms = $this->getBotPermissions()) {
+            if (! $botperms->manage_channels) {
+                return reject(new NoPermissionsException('You do not have permission to manage the specified channel.'));
+            }
+        }
+
+        if (! is_null($category)) {
+            if (! $category instanceof Channel) {
+                if (! $category = $this->guild->channels->get('id', $category)) {
+                    return reject(new \InvalidArgumentException('Specified channel not found in current guild.'));
+                }
+            }
+
+            if ($category->type !== self::TYPE_GUILD_CATEGORY) {
+                return reject(new \InvalidArgumentException('You can only move channels into a category.'));
+            }
+
+            $category = $category->id;
+        }
+
+        $this->parent_id = $category;
+        return $this->save();
+    }
+
+    /**
      * Moves a member to another voice channel.
      *
      * @param Member|string $member The member to move. (either a Member part or the member ID)
