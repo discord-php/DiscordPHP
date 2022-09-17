@@ -391,13 +391,14 @@ class Channel extends Part
      * Moves a channel to another category.
      *
      * @param Channel|string|null $category The category channel to move it to. (either a Channel part or the channel ID or null for none)
+     * @param string              $reason   Optional reason for auditlog
      *
      * @throws \InvalidArgumentException
      * @throws NoPermissionsException
      *
      * @return ExtendedPromiseInterface
      */
-    public function move($category): ExtendedPromiseInterface
+    public function move($category, ?string $reason = null): ExtendedPromiseInterface
     {
         if (! in_array($this->type, [self::TYPE_GUILD_TEXT, self::TYPE_GUILD_VOICE, self::TYPE_GUILD_ANNOUNCEMENT, self::TYPE_GUILD_FORUM])) {
             return reject(new \InvalidArgumentException('You can only move Text, Voice, Announcement or Forum channels.'));
@@ -422,9 +423,17 @@ class Channel extends Part
 
             $category = $category->id;
         }
+        
+        $headers = [];
+        if (isset($reason)) {
+            $headers['X-Audit-Log-Reason'] = $reason;
+        }
 
-        $this->parent_id = $category;
-        return $this->save();
+        return $this->http->patch(Endpoint::bind(Endpoint::CHANNEL, $this->id), ['parent_id' => $category], $headers)->then(function ($response) {
+            $this->parent_id = $response->parent_id;
+
+            return $this;
+        });
     }
 
     /**
