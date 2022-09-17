@@ -411,6 +411,11 @@ class Channel extends Part
             }
         }
 
+        if (is_string($category)) {
+            if ($cachedCategory = $this->guild->channels->get('id', $category)) {
+                $category = $cachedCategory;
+            }
+        }
         if ($category instanceof Channel) {
             if ($category->type !== self::TYPE_GUILD_CATEGORY) {
                 return reject(new \InvalidArgumentException('You can only move channel into a category.'));
