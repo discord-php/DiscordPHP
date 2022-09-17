@@ -1248,8 +1248,8 @@ class Guild extends Part
      *
      * @link https://discord.com/developers/docs/resources/guild#modify-guild-mfa-level
      *
-     * @param int    $level  The new MFA level `Guild::MFA_NONE` or `Guild::MFA_ELEVATED`.
-     * @param string $reason Reason for Audit Log.
+     * @param int         $level  The new MFA level `Guild::MFA_NONE` or `Guild::MFA_ELEVATED`.
+     * @param string|null $reason Reason for Audit Log.
      *
      * @return ExtendedPromiseInterface<Guild> This guild.
      */
@@ -1272,7 +1272,8 @@ class Guild extends Part
      *
      * @link https://discord.com/developers/docs/resources/guild#modify-guild
      *
-     * @param bool[] $features Array of features to set/unset, e.g. `['COMMUNITY' => true, 'INVITES_DISABLED' => false]`.
+     * @param bool[]      $features Array of features to set/unset, e.g. `['COMMUNITY' => true, 'INVITES_DISABLED' => false]`.
+     * @param string|null $reason   Reason for Audit Log.
      *
      * @return ExtendedPromiseInterface<Guild> This guild.
      *
