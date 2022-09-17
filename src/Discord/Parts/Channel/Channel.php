@@ -400,7 +400,7 @@ class Channel extends Part
     public function move($category): ExtendedPromiseInterface
     {
         if (! in_array($this->type, [self::TYPE_GUILD_TEXT, self::TYPE_GUILD_VOICE, self::TYPE_GUILD_ANNOUNCEMENT, self::TYPE_GUILD_FORUM])) {
-            return reject(new \InvalidArgumentException('You can only move Text, Voice, Announcement or Forum channels.));
+            return reject(new \InvalidArgumentException('You can only move Text, Voice, Announcement or Forum channels.'));
         }
 
         if ($botperms = $this->getBotPermissions()) {
