@@ -411,7 +411,7 @@ class Channel extends Part
         }
 
         if (! is_null($category)) {
-            if (! $category instanceof Channel) {
+            if (! ($category instanceof Channel)) {
                 if (! $category = $this->guild->channels->get('id', $category)) {
                     return reject(new \InvalidArgumentException('Specified channel not found in current guild.'));
                 }
