@@ -388,9 +388,9 @@ class Channel extends Part
     }
 
     /**
-     * Moves a channel to another category.
+     * Change category of a channel.
      *
-     * @param Channel|string|null $category The category channel to move it to (either a Channel part or the channel ID or null for none).
+     * @param Channel|string|null $category The category channel to set it to (either a Channel part or the channel ID or null for none).
      * @param string|null         $reason   Reason for Audit Log.
      *
      * @return ExtendedPromiseInterface<self>
@@ -399,7 +399,7 @@ class Channel extends Part
      * @throws \InvalidArgumentException
      * @throws NoPermissionsException
      */
-    public function move($category, ?string $reason = null): ExtendedPromiseInterface
+    public function setCategory($category, ?string $reason = null): ExtendedPromiseInterface
     {
         if (! in_array($this->type, [self::TYPE_GUILD_TEXT, self::TYPE_GUILD_VOICE, self::TYPE_GUILD_ANNOUNCEMENT, self::TYPE_GUILD_FORUM])) {
             return reject(new \RuntimeException('You can only move Text, Voice, Announcement or Forum channel type.'));
