@@ -356,6 +356,61 @@ class Channel extends Part
     }
 
     /**
+     * Moves a channel to another category.
+     *
+     * @param Channel|string|null $category The category channel to move it to (either a Channel part or the channel ID or null for none).
+     * @param string|null         $reason   Reason for Audit Log.
+     *
+     * @return ExtendedPromiseInterface<self>
+     *
+     * @throws \RuntimeException
+     * @throws \InvalidArgumentException
+     * @throws NoPermissionsException
+     */
+    public function move($category, ?string $reason = null): ExtendedPromiseInterface
+    {
+        if (! in_array($this->type, [self::TYPE_TEXT, self::TYPE_VOICE, self::TYPE_ANNOUNCEMENT, self::TYPE_FORUM])) {
+            return reject(new \RuntimeException('You can only move Text, Voice, Announcement or Forum channel type.'));
+        }
+
+        if ($botperms = $this->getBotPermissions()) {
+            if (! $botperms->manage_channels) {
+                return reject(new NoPermissionsException('You do not have permission to manage this channel.'));
+            }
+        }
+
+        if (is_string($category)) {
+            if ($cachedCategory = $this->guild->channels->get('id', $category)) {
+                $category = $cachedCategory;
+            }
+        }
+        if ($category instanceof Channel) {
+            if ($category->type !== self::TYPE_CATEGORY) {
+                return reject(new \InvalidArgumentException('You can only move channel into a category.'));
+            }
+
+            if ($botperms = $category->getBotPermissions()) {
+                if (! $botperms->manage_channels) {
+                    return reject(new NoPermissionsException('You do not have permission to manage the specified channel.'));
+                }
+            }
+
+            $category = $category->id;
+        }
+
+        $headers = [];
+        if (isset($reason)) {
+            $headers['X-Audit-Log-Reason'] = $reason;
+        }
+
+        return $this->http->patch(Endpoint::bind(Endpoint::CHANNEL, $this->id), ['parent_id' => $category], $headers)->then(function ($response) {
+            $this->parent_id = $response->parent_id;
+
+            return $this;
+        });
+    }
+
+    /**
      * Fetches a message object from the Discord servers.
      *
      * @param string $id The message snowflake.
