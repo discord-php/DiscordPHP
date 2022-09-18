@@ -473,11 +473,9 @@ class Discord
             /** @var ExtendedPromiseInterface */
             $promise = coroutine([$event, 'handle'], $guild);
 
-            $promise->done(null, function ($d) use (&$unavailable) {
-                list($status, $data) = $d;
-
-                if ($status == 'unavailable') {
-                    $unavailable[$data] = $data;
+            $promise->done(function ($d) use (&$unavailable) {
+                if (! empty($d->unavailable)) {
+                    $unavailable[$d->id] = $d->unavailable;
                 }
             });
         }
@@ -496,8 +494,10 @@ class Discord
         $guildLoad = new Deferred();
 
         $onGuildCreate = function ($guild) use (&$unavailable, $guildLoad) {
-            $this->logger->debug('guild available', ['guild' => $guild->id, 'unavailable' => count($unavailable)]);
-            unset($unavailable[$guild->id]);
+            if (empty($guild->unavailable)) {
+                $this->logger->debug('guild available', ['guild' => $guild->id, 'unavailable' => count($unavailable)]);
+                unset($unavailable[$guild->id]);
+            }
             if (count($unavailable) < 1) {
                 $guildLoad->resolve();
             }
@@ -508,9 +508,9 @@ class Discord
             if ($guild->unavailable) {
                 $this->logger->debug('guild unavailable', ['guild' => $guild->id, 'unavailable' => count($unavailable)]);
                 unset($unavailable[$guild->id]);
-                if (count($unavailable) < 1) {
-                    $guildLoad->resolve();
-                }
+            }
+            if (count($unavailable) < 1) {
+                $guildLoad->resolve();
             }
         };
         $this->on(Event::GUILD_DELETE, $onGuildDelete);

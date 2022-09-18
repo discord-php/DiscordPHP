@@ -63,8 +63,6 @@ class Role extends Part
      * Sets the permissions attribute.
      *
      * @param RolePermission|int $permission The permissions to set.
-     *
-     * @throws \Exception
      */
     protected function setPermissionsAttribute($permission): void
     {

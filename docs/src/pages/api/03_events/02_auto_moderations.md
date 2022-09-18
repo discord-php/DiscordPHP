@@ -21,7 +21,7 @@ Requires the `Intents::AUTO_MODERATION_CONFIGURATION` intent.
 Called with a `Rule` object when an auto moderation rule is updated.
 
 ```php
-$discord->on(Event::AUTO_MODERATION_RULE_UPDATE, function (Rule $rule, Discord $discord, Rule $oldRule) {
+$discord->on(Event::AUTO_MODERATION_RULE_UPDATE, function (Rule $rule, Discord $discord, ?Rule $oldRule) {
     // ...
 });
 ```

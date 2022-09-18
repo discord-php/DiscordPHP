@@ -588,9 +588,9 @@ class Member extends Part
     /**
      * Returns the joined at attribute.
      *
-     * @throws \Exception
-     *
      * @return Carbon|null The timestamp from when the member joined.
+     *
+     * @throws \Exception
      */
     protected function getJoinedAtAttribute(): ?Carbon
     {
@@ -644,6 +644,8 @@ class Member extends Part
      * Returns the premium since attribute.
      *
      * @return Carbon|null
+     *
+     * @throws \Exception
      */
     protected function getPremiumSinceAttribute(): ?Carbon
     {
@@ -675,6 +677,8 @@ class Member extends Part
      * Returns the communication disabled until attribute.
      *
      * @return Carbon|null
+     *
+     * @throws \Exception
      */
     protected function getCommunicationDisabledUntilAttribute(): ?Carbon
     {

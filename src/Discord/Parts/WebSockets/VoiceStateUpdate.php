@@ -133,6 +133,8 @@ class VoiceStateUpdate extends Part
      * Gets the request_to_speak_timestamp attribute.
      *
      * @return Carbon|null
+     *
+     * @throws \Exception
      */
     protected function getRequestToSpeakTimestampAttribute(): ?Carbon
     {

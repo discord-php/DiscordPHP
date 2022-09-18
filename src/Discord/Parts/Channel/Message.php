@@ -603,6 +603,8 @@ class Message extends Part
      * Returns the timestamp attribute.
      *
      * @return Carbon|null The time that the message was sent.
+     *
+     * @throws \Exception
      */
     protected function getTimestampAttribute(): ?Carbon
     {
@@ -617,6 +619,8 @@ class Message extends Part
      * Returns the edited_timestamp attribute.
      *
      * @return Carbon|null The time that the message was edited.
+     *
+     * @throws \Exception
      */
     protected function getEditedTimestampAttribute(): ?Carbon
     {
@@ -800,7 +804,7 @@ class Message extends Part
         $deferred = new Deferred();
 
         $timer = $this->discord->getLoop()->addTimer($delay / 1000, function () use ($deferred) {
-            $this->delete([$deferred, 'resolve'], [$deferred, 'reject']);
+            $this->delete()->done([$deferred, 'resolve'], [$deferred, 'reject']);
         });
 
         return $deferred->promise();
@@ -901,9 +905,15 @@ class Message extends Part
      * @link https://discord.com/developers/docs/resources/channel#delete-message
      *
      * @return ExtendedPromiseInterface
+     *
+     * @throws \RuntimeException This type of message cannot be deleted.
      */
     public function delete(): ExtendedPromiseInterface
     {
+        if (! $this->isDeletable()) {
+            return reject(new \RuntimeException("Cannot delete this type of message: {$this->type}", 50021));
+        }
+
         return $this->http->delete(Endpoint::bind(Endpoint::CHANNEL_MESSAGE, $this->channel_id, $this->id));
     }
 
@@ -971,6 +981,22 @@ class Message extends Part
     {
         return $this->edit(MessageBuilder::new()
             ->addEmbed($embed));
+    }
+
+    public function isDeletable(): bool
+    {
+        return ! in_array($this->type, [
+            self::TYPE_RECIPIENT_ADD,
+            self::TYPE_RECIPIENT_REMOVE,
+            self::TYPE_CALL,
+            self::TYPE_CHANNEL_NAME_CHANGE,
+            self::TYPE_CHANNEL_ICON_CHANGE,
+            self::TYPE_GUILD_DISCOVERY_DISQUALIFIED,
+            self::TYPE_GUILD_DISCOVERY_REQUALIFIED,
+            self::TYPE_GUILD_DISCOVERY_GRACE_PERIOD_INITIAL_WARNING,
+            self::TYPE_GUILD_DISCOVERY_GRACE_PERIOD_FINAL_WARNING,
+            self::TYPE_THREAD_STARTER_MESSAGE,
+        ]);
     }
 
     /**

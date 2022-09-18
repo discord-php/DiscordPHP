@@ -65,7 +65,7 @@ use function React\Promise\resolve;
  * @property-read User|null          $owner                                    The owner of the guild.
  * @property      ?string|null       $region                                   The region the guild's voice channels are hosted in.
  * @property      string             $afk_channel_id                           The unique identifier of the AFK channel ID.
- * @property      int                $afk_timeout                              How long you will remain in the voice channel until you are moved into the AFK channel.
+ * @property      int                $afk_timeout                              How long in seconds you will remain in the voice channel until you are moved into the AFK channel. Can be set to: 60, 300, 900, 1800, 3600.
  * @property      bool|null          $widget_enabled                           Is server widget enabled.
  * @property      ?string|null       $widget_channel_id                        Channel that the widget will create an invite to.
  * @property      int                $verification_level                       The verification level used for the guild.
@@ -371,9 +371,9 @@ class Guild extends Part
     /**
      * Returns the joined_at attribute.
      *
-     * @throws \Exception
-     *
      * @return Carbon|null The joined_at attribute.
+     *
+     * @throws \Exception
      */
     protected function getJoinedAtAttribute(): ?Carbon
     {
@@ -1248,8 +1248,8 @@ class Guild extends Part
      *
      * @link https://discord.com/developers/docs/resources/guild#modify-guild-mfa-level
      *
-     * @param int    $level  The new MFA level `Guild::MFA_NONE` or `Guild::MFA_ELEVATED`.
-     * @param string $reason Reason for Audit Log.
+     * @param int         $level  The new MFA level `Guild::MFA_NONE` or `Guild::MFA_ELEVATED`.
+     * @param string|null $reason Reason for Audit Log.
      *
      * @return ExtendedPromiseInterface<Guild> This guild.
      */
@@ -1262,6 +1262,52 @@ class Guild extends Part
 
         return $this->http->post(Endpoint::bind(Endpoint::GUILD_MFA, $this->id), ['level' => $level], $headers)->then(function ($response) {
             $this->mfa_level = $response->level;
+
+            return $this;
+        });
+    }
+
+    /**
+     * Modify the guild feature.
+     *
+     * @link https://discord.com/developers/docs/resources/guild#modify-guild
+     *
+     * @param bool[]      $features Array of features to set/unset, e.g. `['COMMUNITY' => true, 'INVITES_DISABLED' => false]`.
+     * @param string|null $reason   Reason for Audit Log.
+     *
+     * @return ExtendedPromiseInterface<Guild> This guild.
+     *
+     * @throws \OutOfRangeException Feature is not mutable.
+     * @throws \RuntimeException    Guild feature is already set.
+     */
+    public function setFeatures(array $features, ?string $reason = null): ExtendedPromiseInterface
+    {
+        $setFeatures = $this->features;
+        foreach ($features as $feature => $set) {
+            if (! in_array($feature, ['COMMUNITY', 'INVITES_DISABLED', 'DISCOVERABLE'])) {
+                return reject(new \OutOfRangeException("Guild feature {$feature} is not mutable"));
+            }
+            $featureIdx = array_search($feature, $setFeatures);
+            if ($set) {
+                if ($featureIdx !== false) {
+                    return reject(new \RuntimeException("Guild feature {$feature} is already set"));
+                }
+                $setFeatures[] = $feature;
+            } else {
+                if ($featureIdx === false) {
+                    return reject(new \RuntimeException("Guild feature {$feature} is already not set"));
+                }
+                unset($setFeatures[$featureIdx]);
+            }
+        }
+
+        $headers = [];
+        if (isset($reason)) {
+            $headers['X-Audit-Log-Reason'] = $reason;
+        }
+
+        return $this->http->patch(Endpoint::bind(Endpoint::GUILD, $this->id), ['features' => array_values($setFeatures)], $headers)->then(function ($response) {
+            $this->features = $response->features;
 
             return $this;
         });

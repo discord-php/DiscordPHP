@@ -55,9 +55,9 @@ class Member extends Part
     /**
      * Returns the time that the member joined the thread.
      *
-     * @throws \Exception
-     *
      * @return Carbon
+     *
+     * @throws \Exception
      */
     protected function getJoinTimestampAttribute(): Carbon
     {

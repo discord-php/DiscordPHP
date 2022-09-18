@@ -86,6 +86,8 @@ class Entry extends Part
     public const AUTO_MODERATION_RULE_UPDATE = 141;
     public const AUTO_MODERATION_RULE_DELETE = 142;
     public const AUTO_MODERATION_BLOCK_MESSAGE = 143;
+    public const AUTO_MODERATION_FLAG_TO_CHANNEL = 144;
+    public const AUTO_MODERATION_USER_COMMUNICATION_DISABLED = 145;
 
     // AUDIT LOG ENTRY TYPES
 

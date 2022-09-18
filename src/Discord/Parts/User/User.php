@@ -140,7 +140,7 @@ class User extends Part
      *
      * @link https://discord.com/developers/docs/resources/channel#trigger-typing-indicator
      *
-     * @throws \Exception
+     * @throws \RuntimeException
      *
      * @return ExtendedPromiseInterface
      */

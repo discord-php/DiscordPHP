@@ -50,7 +50,6 @@ class Overwrite extends Part
      * Sets the allow attribute of the role.
      *
      * @param  ChannelPermission|int $allow
-     * @throws \Exception
      */
     protected function setAllowAttribute($allow): void
     {
@@ -65,7 +64,6 @@ class Overwrite extends Part
      * Sets the deny attribute of the role.
      *
      * @param  ChannelPermission|int $deny
-     * @throws \Exception
      */
     protected function setDenyAttribute($deny): void
     {
