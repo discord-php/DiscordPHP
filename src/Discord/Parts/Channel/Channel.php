@@ -359,6 +359,7 @@ class Channel extends Part
      * Change category of a channel.
      *
      * @param Channel|string|null $category The category channel to set it to (either a Channel part or the channel ID or null for none).
+     * @param int|null            $position The new channel position, not relative to category.
      * @param string|null         $reason   Reason for Audit Log.
      *
      * @return ExtendedPromiseInterface<self>
@@ -367,7 +368,7 @@ class Channel extends Part
      * @throws \InvalidArgumentException
      * @throws NoPermissionsException
      */
-    public function setCategory($category, ?string $reason = null): ExtendedPromiseInterface
+    public function setCategory($category, ?int $position = null, ?string $reason = null): ExtendedPromiseInterface
     {
         if (! in_array($this->type, [self::TYPE_TEXT, self::TYPE_VOICE, self::TYPE_ANNOUNCEMENT, self::TYPE_FORUM])) {
             return reject(new \RuntimeException('You can only move Text, Voice, Announcement or Forum channel type.'));
@@ -398,13 +399,19 @@ class Channel extends Part
             $category = $category->id;
         }
 
+        $payload = ['parent_id' => $category];
+        if ($position !== null) {
+            $payload['position'] = $position;
+        }
+
         $headers = [];
         if (isset($reason)) {
             $headers['X-Audit-Log-Reason'] = $reason;
         }
 
-        return $this->http->patch(Endpoint::bind(Endpoint::CHANNEL, $this->id), ['parent_id' => $category], $headers)->then(function ($response) {
+        return $this->http->patch(Endpoint::bind(Endpoint::CHANNEL, $this->id), $payload, $headers)->then(function ($response) {
             $this->parent_id = $response->parent_id;
+            $this->position = $response->position;
 
             return $this;
         });
