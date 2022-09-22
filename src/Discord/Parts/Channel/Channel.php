@@ -433,14 +433,14 @@ class Channel extends Part
             $category = $category->id;
         }
 
-        $headers = [];
-        if (isset($reason)) {
-            $headers['X-Audit-Log-Reason'] = $reason;
-        }
-
         $payload = ['parent_id' => $category];
         if ($position !== null) {
             $payload['position'] = $position;
+        }
+
+        $headers = [];
+        if (isset($reason)) {
+            $headers['X-Audit-Log-Reason'] = $reason;
         }
 
         return $this->http->patch(Endpoint::bind(Endpoint::CHANNEL, $this->id), $payload, $headers)->then(function ($response) {
