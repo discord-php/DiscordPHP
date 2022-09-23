@@ -414,14 +414,25 @@ final class CacheWrapper
     /**
      * @param string $value
      *
-     * @return Part
+     * @return ?Part
      */
     public function unserializer($value)
     {
         if ($this->interface instanceof \React\Cache\CacheInterface && ! ($this->interface instanceof ArrayCache)) {
-            $value = unserialize($value);
+            $tmp = unserialize($value);
+            if ($tmp === false) {
+                $this->discord->getLogger()->error('Malformed cache serialization', ['class' => $this->class, 'interface' => get_class($this->interface), 'serialized' => $value]);
+                return null;
+            }
+            $value = $tmp;
         }
 
+        if (empty($value->attributes)) {
+            $this->discord->getLogger()->warning('Cached Part::$attributes is empty', ['class' => $this->class, 'interface' => get_class($this->interface), 'data' => $value]);
+        }
+        if (empty($value->created)) {
+            $this->discord->getLogger()->warning('Cached Part::$created is empty', ['class' => $this->class, 'interface' => get_class($this->interface), 'data' => $value]);
+        }
         $part = $this->discord->getFactory()->part($this->class, $value->attributes, $value->created);
         foreach ($value as $name => $var) {
             if (! in_array($name, ['created', 'attributes'])) {
