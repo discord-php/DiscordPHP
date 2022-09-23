@@ -346,14 +346,7 @@ final class CacheWrapper
      */
     public function clear()
     {
-        return $this->deleteMultiple(array_keys($this->items))
-            ->then(function ($success) {
-                if ($success) {
-                    $this->items = [];
-                }
-
-                return $success;
-            });
+        return $this->deleteMultiple(array_keys($this->items));
     }
 
     /**
