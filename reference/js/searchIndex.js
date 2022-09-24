@@ -838,7 +838,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Builders\\MessageBuilder\u003A\u003A\u0024avatar_url",
             "name": "avatar_url",
-            "summary": "Override\u0020the\u0020default\u0020avatar\u0020of\u0020the\u0020webhook",
+            "summary": "Override\u0020the\u0020default\u0020avatar\u0020of\u0020the\u0020webhook.",
             "url": "classes/Discord-Builders-MessageBuilder.html#property_avatar_url"
         },                {
             "fqsen": "\\Discord\\Builders\\MessageBuilder\u003A\u003A\u0024tts",
@@ -1208,7 +1208,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Discord\u003A\u003AlistenCommand\u0028\u0029",
             "name": "listenCommand",
-            "summary": "Add\u0020listerner\u0020for\u0020incoming\u0020application\u0020command\u0020from\u0020interaction",
+            "summary": "Add\u0020listerner\u0020for\u0020incoming\u0020application\u0020command\u0020from\u0020interaction.",
             "url": "classes/Discord-Discord.html#method_listenCommand"
         },                {
             "fqsen": "\\Discord\\Discord\u003A\u003A__call\u0028\u0029",
@@ -2126,6 +2126,11 @@ Search.appendIndex(
             "summary": "Sets\u0020an\u0020overwrite\u0020to\u0020the\u0020channel.",
             "url": "classes/Discord-Parts-Channel-Channel.html#method_setOverwrite"
         },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Channel\u003A\u003AsetCategory\u0028\u0029",
+            "name": "setCategory",
+            "summary": "Change\u0020category\u0020of\u0020a\u0020channel.",
+            "url": "classes/Discord-Parts-Channel-Channel.html#method_setCategory"
+        },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Channel\u003A\u003AgetMessage\u0028\u0029",
             "name": "getMessage",
             "summary": "Fetches\u0020a\u0020message\u0020object\u0020from\u0020the\u0020Discord\u0020servers.",
@@ -2851,15 +2856,50 @@ Search.appendIndex(
             "summary": "",
             "url": "classes/Discord-Parts-Channel-Message.html#constant_REACT_DELETE_EMOJI"
         },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\u003A\u003AFLAG_CROSSPOSTED",
+            "name": "FLAG_CROSSPOSTED",
+            "summary": "",
+            "url": "classes/Discord-Parts-Channel-Message.html#constant_FLAG_CROSSPOSTED"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\u003A\u003AFLAG_IS_CROSSPOST",
+            "name": "FLAG_IS_CROSSPOST",
+            "summary": "",
+            "url": "classes/Discord-Parts-Channel-Message.html#constant_FLAG_IS_CROSSPOST"
+        },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\u003A\u003AFLAG_SUPPRESS_EMBED",
             "name": "FLAG_SUPPRESS_EMBED",
             "summary": "",
             "url": "classes/Discord-Parts-Channel-Message.html#constant_FLAG_SUPPRESS_EMBED"
         },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\u003A\u003AFLAG_SOURCE_MESSAGE_DELETED",
+            "name": "FLAG_SOURCE_MESSAGE_DELETED",
+            "summary": "",
+            "url": "classes/Discord-Parts-Channel-Message.html#constant_FLAG_SOURCE_MESSAGE_DELETED"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\u003A\u003AFLAG_URGENT",
+            "name": "FLAG_URGENT",
+            "summary": "",
+            "url": "classes/Discord-Parts-Channel-Message.html#constant_FLAG_URGENT"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\u003A\u003AFLAG_HAS_THREAD",
+            "name": "FLAG_HAS_THREAD",
+            "summary": "",
+            "url": "classes/Discord-Parts-Channel-Message.html#constant_FLAG_HAS_THREAD"
+        },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\u003A\u003AFLAG_EPHEMERAL",
             "name": "FLAG_EPHEMERAL",
             "summary": "",
             "url": "classes/Discord-Parts-Channel-Message.html#constant_FLAG_EPHEMERAL"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\u003A\u003AFLAG_LOADING",
+            "name": "FLAG_LOADING",
+            "summary": "",
+            "url": "classes/Discord-Parts-Channel-Message.html#constant_FLAG_LOADING"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Message\u003A\u003AFLAG_FAILED_TO_MENTION_SOME_ROLES_IN_THREAD",
+            "name": "FLAG_FAILED_TO_MENTION_SOME_ROLES_IN_THREAD",
+            "summary": "",
+            "url": "classes/Discord-Parts-Channel-Message.html#constant_FLAG_FAILED_TO_MENTION_SOME_ROLES_IN_THREAD"
         },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Message\u003A\u003A\u0024fillable",
             "name": "fillable",
@@ -3955,6 +3995,11 @@ Search.appendIndex(
             "name": "getFeatureHasDirectoryEntryAttribute",
             "summary": "",
             "url": "classes/Discord-Parts-Guild-Guild.html#method_getFeatureHasDirectoryEntryAttribute"
+        },                {
+            "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AgetFeatureInvitesDisabledAttribute\u0028\u0029",
+            "name": "getFeatureInvitesDisabledAttribute",
+            "summary": "",
+            "url": "classes/Discord-Parts-Guild-Guild.html#method_getFeatureInvitesDisabledAttribute"
         },                {
             "fqsen": "\\Discord\\Parts\\Guild\\Guild\u003A\u003AgetFeatureInviteSplashAttribute\u0028\u0029",
             "name": "getFeatureInviteSplashAttribute",
