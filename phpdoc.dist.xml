@@ -14,9 +14,9 @@
 				<path>src</path>
 			</source>
 		</api>
-		<guide format="md">
+		<guide>
 			<source dsn=".">
-				<path>docs/src/pages/api</path>
+				<path>docs/new</path>
 			</source>
 			<output>build/guide</output>
 		</guide>
