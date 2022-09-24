@@ -17,8 +17,8 @@
 		<guide format="md">
 			<source dsn=".">
 				<path>docs/src/pages/api</path>
-				<output>build/guide</output>
 			</source>
+			<output>build/guide</output>
 		</guide>
 	</version>
 </phpdocumentor>
