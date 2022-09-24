@@ -121,7 +121,7 @@ class Command
         string $usage,
         int $cooldown,
         string $cooldownMessage,
-        bool $helpVisibility
+        bool $showHelp
     ) {
         $this->client = $client;
         $this->command = $command;
