@@ -6,7 +6,7 @@
     
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <base href="../../">
+    <base href="../">
     <link rel="icon" href="images/favicon.ico"/>
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/base.css">
@@ -55,7 +55,7 @@
 </label>
 <aside class="phpdocumentor-column -four phpdocumentor-sidebar">
                     <section class="phpdocumentor-sidebar__category">
-            <h2 class="phpdocumentor-sidebar__category-header">Documentation</h2>
+            <h2 class="phpdocumentor-sidebar__category-header">Intro</h2>
                         </section>
                 <section class="phpdocumentor-sidebar__category">
             <h2 class="phpdocumentor-sidebar__category-header">Namespaces</h2>
@@ -124,50 +124,118 @@
 </aside>
 
             <div class="phpdocumentor-column -eight phpdocumentor-content">
-                    <div class="section" id="documentation">
-<h1>Documentation</h1>
-<p>Welcome to the documentation for phpDocumentor.</p>
-<p>phpDocumentor is the de-facto documentation application for PHP projects. Your project can benefit too from more
-than 20 years of experience and setting the standard for documenting PHP Applications.</p>
-<p>With these tutorials, guides and references we aim to provide you with all the information that you need to optimally
-document your code and leverage phpDocumentor to generate an extensive set of documentation for your application.</p>
-<div class="section" id="what-does-it-do">
-<h2>What does it do?</h2>
-<p>phpDocumentor analyzes the code of your application and generates a set of documentation that describes what each
-element in your code does, what it expects and what it returns. With it, you can easily navigate through your codebase
-and see how it works without having to read the actual code.</p>
-<p>For an example on how that would look like, check the sidebar in
-<a href="https://docs.phpdoc.org/latest/">our own documentation</a>.</p>
-<div class="phpdocumentor-admonition -hint ">
-                    <svg class="phpdocumentor-admonition__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
-            <article>
-        <p>There is a new feature underway to render handwritten documentation, like the one you are reading now. Check this
-space for updates in the coming months.</p>
+                    <div class="section" id="intro">
+<h1>Intro</h1>
+<p>DiscordPHP is a wrapper for the Discord REST, WebSocket and Voice APIs. Built on top of ReactPHP components. This documentation is based off the latest release.</p>
+<p>The class reference has moved. You can now access it here.</p>
+<div class="section" id="requirements">
+<h2>Requirements</h2>
 
-    </article>
+
+<ul>
+    <li>
+            PHP 7.4 CLI
+<em> Will not run on a webserver (FPM, CGI), you must run through CLI. A bot is a long-running process.
+</em> x86 (32-bit) PHP requires ext-gmp extension enabled for handling new Permission values.
+        </li>
+    <li>
+            ext-json for JSON parsing.
+        </li>
+    <li>
+            ext-zlib for gateway packet compression.
+        </li>
+</ul>
+<div class="section" id="recommended-extensions">
+<h3>Recommended Extensions</h3>
+
+
+<ul>
+    <li>
+            One of ext-uv, ext-libev or evt-event (in order of preference) for a faster, and more performant event loop.
+        </li>
+    <li>
+            ext-mbstring if you may handle non-english characters.
+        </li>
+    <li>
+            ext-gmp if running 32-bit PHP.
+        </li>
+</ul>
+</div>
+<div class="section" id="voice-requirements">
+<h3>Voice Requirements</h3>
+
+
+<ul>
+    <li>
+            x8664 Windows, Linux or Darwin based OS.
+* If you are running on Windows, you must be using PHP 8.0.
+        </li>
+    <li>
+            ext-sodium for voice encryption.
+        </li>
+    <li>
+            FFmpeg
+        </li>
+</ul>
+</div>
+<div class="section" id="development-environment-recommendations">
+<h3>Development Environment Recommendations</h3>
+<p>We recommend using an editor with support for the Language Server Protocol.
+A list of supported editors can be found here.
+Here are some commonly used editors:</p>
+
+
+<ul>
+    <li>
+            Visual Studio Code (built-in LSP support)
+        </li>
+    <li>
+            Vim/Neovim (with the coc.nvim plugin for LSP support)
+        </li>
+    <li>
+            PHPStorm (built-in PHP support)
+        </li>
+</ul>
+<p>We recommend installing PHP Intelephense alongside your LSP-equipped editor for code completion alongside other helpful features. There is no need to pay for the premium features, the free version will suffice.</p>
 </div>
 </div>
-<div class="section" id="where-to-start">
-<h2>Where to start?</h2>
-<p>We have divided the documentation into 4 sections:</p>
+<div class="section" id="installation">
+<h2>Installation</h2>
+<p>Installation requries Composer.</p>
+<p>To install the latest release:</p>
+<pre><code class="language- " >$ composer require team-reflex/discord-php
 
-    
-<ol>
+</code></pre>
+<p>If you would like to run on the latest master branch:</p>
+<pre><code class="language- " >$ composer require team-reflex/discord-php dev-master
+</code></pre>
+<p>master can be substituted for any other branch name to install that branch.</p>
+</div>
+<div class="section" id="key-tips">
+<h2>Key Tips</h2>
+<p>As Discord is a real-time application, events come frequently and it is vital that your code does not block the ReactPHP event loop.
+Most, if not all, functions return promises, therefore it is vital that you understand the concept of asynchronous programming with promises.
+You can learn more about ReactPHP promises here.</p>
+</div>
+<div class="section" id="help">
+<h2>Help</h2>
+<p>If you need any help, feel free to join the PHP Discorders Discord and someone should be able to give you a hand. We are a small community so please be patient if someone can't help you straight away.</p>
+</div>
+<div class="section" id="contributing">
+<h2>Contributing</h2>
+</div>
+<div class="section" id="all-contributions-are-welcome-through-pull-requests-in-our-github-repository-at-the-moment-we-would-love-contributions-towards">
+<h2>All contributions are welcome through pull requests in our GitHub repository. At the moment we would love contributions towards:</h2>
+
+
+<ul>
     <li>
-            , which is a series of concise tutorials that will help you get running within minutes.
+            Unit testing
         </li>
     <li>
-            , these chapters provide in-depth information in the usage and all features of phpDocumentor.
+            Documentation
         </li>
-    <li>
-            , here you can find the nitty-gritty lists of commonly used components, options and
-configuration.
-        </li>
-    <li>
-            , care to contribute to phpDocumentor or interested in its architecture? Then this section
-is for you.
-        </li>
-</ol>
+</ul>
 </div>
 
                 <section data-search-results class="phpdocumentor-search-results phpdocumentor-search-results--hidden">
