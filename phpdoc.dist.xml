@@ -13,13 +13,12 @@
 			<source dsn=".">
 				<path>src</path>
 			</source>
-			<output>reference</output>
 		</api>
 		<guide>
 			<source dsn=".">
 				<path>docs/new</path>
 			</source>
-			<output>guide</output>
+			<output>reference</output>
 		</guide>
 	</version>
 </phpdocumentor>
