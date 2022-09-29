@@ -18,6 +18,7 @@
 			<source dsn=".">
 				<path>docs/new</path>
 			</source>
+			<output>build/guide</output>
 		</guide>
 	</version>
 </phpdocumentor>
