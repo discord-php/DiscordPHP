@@ -14,11 +14,11 @@
 				<path>src</path>
 			</source>
 		</api>
-		<guide>
+		<guide format="md">
 			<source dsn=".">
 				<path>docs/new</path>
 			</source>
-			<output>build/guide</output>
+			<output>guide</output>
 		</guide>
 	</version>
 </phpdocumentor>
