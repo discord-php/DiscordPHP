@@ -126,24 +126,22 @@
             <div class="phpdocumentor-column -eight phpdocumentor-content">
                     <div class="section" id="intro">
 <h1>Intro</h1>
-<p>DiscordPHP is a wrapper for the Discord REST, WebSocket and Voice APIs. Built on top of ReactPHP components. This documentation is based off the latest release.</p>
-<p>The class reference has moved. You can now access it here.</p>
+<p>DiscordPHP is a wrapper for the Discord REST, WebSocket and Voice APIs. Built on top of <a href="https://reactphp.org/">ReactPHP</a> components. This documentation is based off the latest release.</p>
 <div class="section" id="requirements">
 <h2>Requirements</h2>
 
 
 <ul>
     <li>
-            <p>PHP 7.4 CLI</p>
-            <blockquote><p><em> Will not run on a webserver (FPM, CGI), you must run through CLI. A bot is a long-running process.
-</em> x86 (32-bit) PHP requires ext-gmp extension enabled for handling new Permission values.</p>
-</blockquote>
+            PHP 7.4 CLI
+ <em> Will not run on a webserver (FPM, CGI), you must run through CLI. A bot is a long-running process.
+</em> x86 (32-bit) PHP requires ext-gmp extension enabled for handling new Permission values.
         </li>
     <li>
-            <strong>ext-json</strong> for JSON parsing.
+            <code>ext-json</code> for JSON parsing.
         </li>
     <li>
-            <strong>ext-zlib</strong> for gateway packet compression.
+            <code>ext-zlib</code> for gateway packet compression.
         </li>
 </ul>
 <div class="section" id="recommended-extensions">
@@ -152,13 +150,13 @@
 
 <ul>
     <li>
-            One of <strong>ext-uv</strong>, <strong>ext-libev</strong> or <strong>evt-event</strong> (in order of preference) for a faster, and more performant event loop.
+            One of <code>ext-uv</code>, <code>ext-libev</code> or <code>evt-event</code> (in order of preference) for a faster, and more performant event loop.
         </li>
     <li>
-            <strong>ext-mbstring</strong> if you may handle non-english characters.
+            <code>ext-mbstring</code> if you may handle non-english characters.
         </li>
     <li>
-            <strong>ext-gmp</strong> if running 32-bit PHP.
+            <code>ext-gmp</code> if running 32-bit PHP.
         </li>
 </ul>
 </div>
@@ -172,7 +170,7 @@
 * If you are running on Windows, you must be using PHP 8.0.
         </li>
     <li>
-            <strong>ext-sodium</strong> for voice encryption.
+            <code>ext-sodium</code> for voice encryption.
         </li>
     <li>
             FFmpeg
@@ -181,8 +179,8 @@
 </div>
 <div class="section" id="development-environment-recommendations">
 <h3>Development Environment Recommendations</h3>
-<p>We recommend using an editor with support for the Language Server Protocol.
-A list of supported editors can be found here.
+<p>We recommend using an editor with support for the <a href="https://microsoft.github.io/language-server-protocol/">Language Server Protocol</a>.
+A list of supported editors can be found <a href="https://microsoft.github.io/language-server-protocol/implementors/servers/">here</a>.
 Here are some commonly used editors:</p>
 
 
@@ -191,35 +189,35 @@ Here are some commonly used editors:</p>
             Visual Studio Code (built-in LSP support)
         </li>
     <li>
-            Vim/Neovim (with the coc.nvim plugin for LSP support)
+            Vim/Neovim (with the <a href="https://github.com/neoclide/coc.nvim">coc.nvim</a> plugin for LSP support)
         </li>
     <li>
             PHPStorm (built-in PHP support)
         </li>
 </ul>
-<p>We recommend installing PHP Intelephense alongside your LSP-equipped editor for code completion alongside other helpful features. There is no need to pay for the premium features, the free version will suffice.</p>
+<p>We recommend installing <a href="https://intelephense.com/">PHP Intelephense</a> alongside your LSP-equipped editor for code completion alongside other helpful features. There is no need to pay for the premium features, the free version will suffice.</p>
 </div>
 </div>
 <div class="section" id="installation">
 <h2>Installation</h2>
-<p>Installation requries Composer.</p>
+<p>Installation requries <a href="https://getcomposer.org">Composer</a>.</p>
 <p>To install the latest release:</p>
 <pre><code class="language- " >$ composer require team-reflex/discord-php
 </code></pre>
-<p>If you would like to run on the latest <strong>master</strong> branch:</p>
+<p>If you would like to run on the latest <code>master</code> branch:</p>
 <pre><code class="language- " >$ composer require team-reflex/discord-php dev-master
 </code></pre>
-<p><strong>master</strong> can be substituted for any other branch name to install that branch.</p>
+<p><code>master</code> can be substituted for any other branch name to install that branch.</p>
 </div>
 <div class="section" id="key-tips">
 <h2>Key Tips</h2>
 <p>As Discord is a real-time application, events come frequently and it is vital that your code does not block the ReactPHP event loop.
 Most, if not all, functions return promises, therefore it is vital that you understand the concept of asynchronous programming with promises.
-You can learn more about ReactPHP promises here.</p>
+You can learn more about ReactPHP promises <a href="https://reactphp.org/promise/">here</a>.</p>
 </div>
 <div class="section" id="help">
 <h2>Help</h2>
-<p>If you need any help, feel free to join the PHP Discorders Discord and someone should be able to give you a hand. We are a small community so please be patient if someone can't help you straight away.</p>
+<p>If you need any help, feel free to join the <a href="https://discord.gg/dphp">PHP Discorders</a> Discord and someone should be able to give you a hand. We are a small community so please be patient if someone can't help you straight away.</p>
 </div>
 <div class="section" id="contributing">
 <h2>Contributing</h2>
