@@ -262,7 +262,7 @@ class Collection implements ArrayAccess, JsonSerializable, IteratorAggregate, Co
     }
 
     /**
-     * Checks if the array has an object.
+     * Checks if the array has multiple offsets.
      *
      * @param array ...$keys
      *
@@ -414,6 +414,18 @@ class Collection implements ArrayAccess, JsonSerializable, IteratorAggregate, Co
     public function offsetUnset($offset): void
     {
         unset($this->items[$offset]);
+    }
+
+    /**
+     * Run a callback on each element of the collection
+     * 
+     * @param callable $callback
+     */
+    public function each(callable $callback): void
+    {
+        foreach ($this->items as $item) {
+            $callback($item);
+        }
     }
 
     /**
