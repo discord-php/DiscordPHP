@@ -55,7 +55,7 @@
 </label>
 <aside class="phpdocumentor-column -four phpdocumentor-sidebar">
                     <section class="phpdocumentor-sidebar__category">
-            <h2 class="phpdocumentor-sidebar__category-header">Intro</h2>
+            <h2 class="phpdocumentor-sidebar__category-header">Requirements</h2>
                         </section>
                 <section class="phpdocumentor-sidebar__category">
             <h2 class="phpdocumentor-sidebar__category-header">Namespaces</h2>
@@ -124,9 +124,7 @@
 </aside>
 
             <div class="phpdocumentor-column -eight phpdocumentor-content">
-                    <div class="section" id="message-builder">
-<h1>Message Builder</h1>
-<p>The <code>MessageBuilder</code> class is used to describe the contents of a new (or to be updated) message.</p>
+                    <p>The <code>MessageBuilder</code> class is used to describe the contents of a new (or to be updated) message.</p>
 <p>A new message builder can be created with the <code>new</code> function:</p>
 <pre><code class="language-php " >$builder = MessageBuilder::new();
 </code></pre>
@@ -136,7 +134,6 @@
     -&gt;addEmbed($embed)
     -&gt;addFile(&#039;/path/to/file&#039;));
 </code></pre>
-</div>
 <div class="section" id="setting-content">
 <h1>Setting content</h1>
 <p>Sets the text content of the message. Throws an <code>LengthException</code> if the content is greater than 2000 characters.</p>
