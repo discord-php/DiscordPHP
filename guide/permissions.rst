@@ -1,12 +1,7 @@
-===========
-Permissions
-===========
-
-
 There are two types of permissions - channel permissions and role permissions. They are represented by their individual classes, but both extend the same abstract permission class.
 
 Properties
-==========
+~~~~~~~~~~
 
 ===================== ==== ======================
 name                  type description
@@ -21,10 +16,10 @@ manage_roles          bool
 The rest of the properties are listed under each permission type, all are type of ``bool``.
 
 Methods
-=======
+~~~~~~~
 
 Get all valid permissions
--------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Returns a list of valid permissions, in key value form. Static method.
 
@@ -37,12 +32,12 @@ Returns a list of valid permissions, in key value form. Static method.
    // ]
 
 Channel Permission
-==================
+~~~~~~~~~~~~~~~~~~
 
 Represents permissions for text, voice, and stage instance channels.
 
 Text Channel Permissions
-------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^
 
 -  ``create_instant_invite``
 -  ``manage_channels``
@@ -66,7 +61,7 @@ Text Channel Permissions
 -  ``send_messages_in_threads``
 
 Voice Channel Permissions
--------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
 -  ``create_instant_invite``
 -  ``manage_channels``
@@ -84,7 +79,7 @@ Voice Channel Permissions
 -  ``use_embedded_activities`` was ``start_embedded_activities``
 
 Stage Instance Channel Permissions
-----------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 -  ``create_instant_invite``
 -  ``manage_channels``
@@ -98,12 +93,12 @@ Stage Instance Channel Permissions
 -  ``manage_events``
 
 Role Permissions
-================
+~~~~~~~~~~~~~~~~
 
 Represents permissions for roles.
 
 Permissions
------------
+^^^^^^^^^^^
 
 -  ``create_instant_invite``
 -  ``manage_channels``
@@ -119,3 +114,4 @@ Permissions
 -  ``manage_nicknames``
 -  ``manage_emojis_and_stickers``
 -  ``moderate_members``
+

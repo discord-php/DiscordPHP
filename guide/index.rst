@@ -1,7 +1,3 @@
-=====
-Intro
-=====
-
 DiscordPHP is a wrapper for the Discord REST, WebSocket and Voice APIs. Built on top of `ReactPHP <https://reactphp.org/>`_ components. This documentation is based off the latest release.
 
 Requirements
