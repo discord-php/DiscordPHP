@@ -55,7 +55,19 @@
 </label>
 <aside class="phpdocumentor-column -four phpdocumentor-sidebar">
                     <section class="phpdocumentor-sidebar__category">
-            <h2 class="phpdocumentor-sidebar__category-header">Requirements</h2>
+            <h2 class="phpdocumentor-sidebar__category-header">Intro</h2>
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="guide/index.html" class="">Intro</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="guide/parts/index.html" class="">Filling a part with data</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="guide/events/index.html" class=""></a>
+</h4>
+
                         </section>
                 <section class="phpdocumentor-sidebar__category">
             <h2 class="phpdocumentor-sidebar__category-header">Namespaces</h2>
@@ -124,9 +136,12 @@
 </aside>
 
             <div class="phpdocumentor-column -eight phpdocumentor-content">
-                    <p>DiscordPHP is a wrapper for the Discord REST, WebSocket and Voice APIs. Built on top of <a href="https://reactphp.org/">ReactPHP</a> components. This documentation is based off the latest release.</p>
+                    
+<div class="section" id="intro">
+<h1>Intro</h1>
+<p>DiscordPHP is a wrapper for the Discord REST, WebSocket and Voice APIs. Built on top of <a href="https://reactphp.org/">ReactPHP</a> components. This documentation is based off the latest release.</p>
 <div class="section" id="requirements">
-<h1>Requirements</h1>
+<h2>Requirements</h2>
 
 
 <ul>
@@ -151,7 +166,7 @@
         </li>
 </ul>
 <div class="section" id="recommended-extensions">
-<h2>Recommended Extensions</h2>
+<h3>Recommended Extensions</h3>
 
 
 <ul>
@@ -167,7 +182,7 @@
 </ul>
 </div>
 <div class="section" id="voice-requirements">
-<h2>Voice Requirements</h2>
+<h3>Voice Requirements</h3>
 
 
 <ul>
@@ -190,7 +205,7 @@
 </ul>
 </div>
 <div class="section" id="development-environment-recommendations">
-<h2>Development Environment Recommendations</h2>
+<h3>Development Environment Recommendations</h3>
 <p>We recommend using an editor with support for the <a href="https://microsoft.github.io/language-server-protocol/">Language Server Protocol</a>.
 A list of supported editors can be found <a href="https://microsoft.github.io/language-server-protocol/implementors/servers/">here</a>.
 Here are some commonly used editors:</p>
@@ -209,8 +224,9 @@ Here are some commonly used editors:</p>
 </ul>
 <p>We recommend installing <a href="https://intelephense.com/">PHP Intelephense</a> alongside your LSP-equipped editor for code completion alongside other helpful features. There is no need to pay for the premium features, the free version will suffice.</p>
 </div>
+</div>
 <div class="section" id="installation">
-<h1>Installation</h1>
+<h2>Installation</h2>
 <p>Installation requries <a href="https://getcomposer.org">Composer</a>.</p>
 <p>To install the latest release:</p>
 <pre><code class="language- " >$ composer require team-reflex/discord-php
@@ -221,17 +237,17 @@ Here are some commonly used editors:</p>
 <p><code>master</code> can be substituted for any other branch name to install that branch.</p>
 </div>
 <div class="section" id="key-tips">
-<h1>Key Tips</h1>
+<h2>Key Tips</h2>
 <p>As Discord is a real-time application, events come frequently and it is vital that your code does not block the ReactPHP event loop.
 Most, if not all, functions return promises, therefore it is vital that you understand the concept of asynchronous programming with promises.
 You can learn more about ReactPHP promises <a href="https://reactphp.org/promise/">here</a>.</p>
 </div>
 <div class="section" id="help">
-<h1>Help</h1>
+<h2>Help</h2>
 <p>If you need any help, feel free to join the <a href="https://discord.gg/dphp">PHP Discorders</a> Discord and someone should be able to give you a hand. We are a small community so please be patient if someone can't help you straight away.</p>
 </div>
 <div class="section" id="contributing">
-<h1>Contributing</h1>
+<h2>Contributing</h2>
 <p>All contributions are welcome through pull requests in our GitHub repository. At the moment we would love contributions towards:</p>
 
 

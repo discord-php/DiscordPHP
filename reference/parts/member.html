@@ -55,7 +55,19 @@
 </label>
 <aside class="phpdocumentor-column -four phpdocumentor-sidebar">
                     <section class="phpdocumentor-sidebar__category">
-            <h2 class="phpdocumentor-sidebar__category-header">Requirements</h2>
+            <h2 class="phpdocumentor-sidebar__category-header">Intro</h2>
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="guide/index.html" class="">Intro</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="guide/parts/index.html" class="">Filling a part with data</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="guide/events/index.html" class=""></a>
+</h4>
+
                         </section>
                 <section class="phpdocumentor-sidebar__category">
             <h2 class="phpdocumentor-sidebar__category-header">Namespaces</h2>
@@ -124,9 +136,7 @@
 </aside>
 
             <div class="phpdocumentor-column -eight phpdocumentor-content">
-                    <div class="section" id="member">
-<h1>Member</h1>
-<p>Members represent a user in a guild. There is a member object for every guild-user relationship, meaning that there will be multiple member objects in the Discord client with the same user ID, but they will belong to different guilds.</p>
+                    <p>Members represent a user in a guild. There is a member object for every guild-user relationship, meaning that there will be multiple member objects in the Discord client with the same user ID, but they will belong to different guilds.</p>
 <p>A member object can also be serialised into a mention string. For example:</p>
 <pre><code class="language-php " >$discord-&gt;on(Event::MESSAGE_CREATE, function (Message $message) {
     // Hello &lt;@member_id&gt;!
@@ -135,18 +145,124 @@
     $message-&gt;channel-&gt;sendMessage(&#039;Hello &#039;.$message-&gt;member.&#039;!&#039;);
 });
 </code></pre>
-</div>
 <div class="section" id="properties">
 <h1>Properties</h1>
 <table>
+            <thead>
+                            <tr>
+                                            <th>name</th>
+                                            <th>type</th>
+                                            <th>description</th>
+                                    </tr>
+                    </thead>
     
     <tbody>
+                    <tr>
+                                    <td>user</td>
+                                    <td><a href="#user">User</a>_</td>
+                                    <td>the user part of the member</td>
+                            </tr>
+                    <tr>
+                                    <td>nick</td>
+                                    <td>string</td>
+                                    <td>the nickname of the member</td>
+                            </tr>
+                    <tr>
+                                    <td>avatar</td>
+                                    <td>?string</td>
+                                    <td>The guild avatar URL of the member</td>
+                            </tr>
+                    <tr>
+                                    <td>avatarhash</td>
+                                    <td>?string</td>
+                                    <td>The guild avatar hash of the member</td>
+                            </tr>
+                    <tr>
+                                    <td>roles</td>
+                                    <td>Collection of <a href="#role">Roles</a>_</td>
+                                    <td>roles the member is a part of</td>
+                            </tr>
+                    <tr>
+                                    <td>joinedat</td>
+                                    <td><code>Carbon</code> timestamp</td>
+                                    <td>when the member joined the guild</td>
+                            </tr>
+                    <tr>
+                                    <td>deaf</td>
+                                    <td>bool</td>
+                                    <td>whether the member is deafened</td>
+                            </tr>
+                    <tr>
+                                    <td>mute</td>
+                                    <td>bool</td>
+                                    <td>whether the member is muted</td>
+                            </tr>
+                    <tr>
+                                    <td>pending</td>
+                                    <td>?string</td>
+                                    <td>whether the user has not yet passed the guild’s Membership Screening requirements</td>
+                            </tr>
+                    <tr>
+                                    <td>communicationdisableduntil</td>
+                                    <td><code>?Carbon</code></td>
+                                    <td>when the user’s timeout will expire and the user will be able to communicate in the guild again, null or a time in the past if the user is not timed out</td>
+                            </tr>
+                    <tr>
+                                    <td>id</td>
+                                    <td>string</td>
+                                    <td>the user ID of the member</td>
+                            </tr>
+                    <tr>
+                                    <td>username</td>
+                                    <td>string</td>
+                                    <td>the username of the member</td>
+                            </tr>
+                    <tr>
+                                    <td>discriminator</td>
+                                    <td>string</td>
+                                    <td>the four digit discriminator of the member</td>
+                            </tr>
+                    <tr>
+                                    <td>displayname</td>
+                                    <td>string</td>
+                                    <td>nick/username#discriminator</td>
+                            </tr>
+                    <tr>
+                                    <td>guild</td>
+                                    <td><a href="#guild">Guild</a>_</td>
+                                    <td>the guild the member is a part of</td>
+                            </tr>
+                    <tr>
+                                    <td><a href="#guild">guild</a>id</td>
+                                    <td>string</td>
+                                    <td>the id of the guild the member is a part of</td>
+                            </tr>
+                    <tr>
+                                    <td>string</td>
+                                    <td>status</td>
+                                    <td>the status of the member</td>
+                            </tr>
+                    <tr>
+                                    <td>game</td>
+                                    <td><a href="#activity">Activity</a>_</td>
+                                    <td>the current activity of the member</td>
+                            </tr>
+                    <tr>
+                                    <td>premiumsince</td>
+                                    <td><code>Carbon</code> timestamp</td>
+                                    <td>when the member started boosting the guild</td>
+                            </tr>
+                    <tr>
+                                    <td>activities</td>
+                                    <td>Collection of <a href="#activity">Activities</a>_</td>
+                                    <td>the current activities of the member</td>
+                            </tr>
             </tbody>
 </table>
 </div>
 <div class="section" id="ban-the-member">
 <h1>Ban the member</h1>
-<p>Bans the member from the guild. Returns a <a href="#ban">Ban</a> part in a promise.</p>
+<p>Bans the member from the guild. Returns a <a href="#ban">Ban</a>_ part in a promise.</p>
 <div class="section" id="parameters">
 <h2>Parameters</h2>
 <table>
@@ -208,8 +324,20 @@
 <div class="section" id="parameters">
 <h2>Parameters</h2>
 <table>
+            <thead>
+                            <tr>
+                                            <th>name</th>
+                                            <th>type</th>
+                                            <th>description</th>
+                                    </tr>
+                    </thead>
     
     <tbody>
+                    <tr>
+                                    <td>channel</td>
+                                    <td><a href="#channel">Channel</a>_ or string</td>
+                                    <td>the channel to move the member to</td>
+                            </tr>
             </tbody>
 </table>
 <pre><code class="language-php " >$member-&gt;moveMember($channel)-&gt;done(function () {
@@ -233,6 +361,16 @@ $member-&gt;moveMember(&#039;123451231231&#039;)-&gt;done(function () {
 <table>
     
     <tbody>
+                    <tr>
+                                    <td>name</td>
+                                    <td>type</td>
+                                    <td>description</td>
+                            </tr>
+                    <tr>
+                                    <td>role</td>
+                                    <td><a href="#role">Role</a>_ or string</td>
+                                    <td>the role to add the member to</td>
+                            </tr>
             </tbody>
 </table>
 <pre><code class="language-php " >$member-&gt;addRole($role)-&gt;done(function () {
@@ -256,6 +394,16 @@ $member-&gt;addRole(&#039;1231231231&#039;)-&gt;done(function () {
 <table>
     
     <tbody>
+                    <tr>
+                                    <td>name</td>
+                                    <td>type</td>
+                                    <td>description</td>
+                            </tr>
+                    <tr>
+                                    <td>role</td>
+                                    <td><a href="#role">Role</a>_ or string</td>
+                                    <td>the role to remove the member from</td>
+                            </tr>
             </tbody>
 </table>
 <pre><code class="language-php " >$member-&gt;removeRole($role)-&gt;done(function () {
@@ -307,13 +455,25 @@ $member-&gt;timeoutMember()-&gt;done(function () {
 <div class="section" id="get-permissions-of-member">
 <h1>Get permissions of member</h1>
 <p>Gets the effective permissions of the member: - When given a channel, returns the effective permissions of a member in a channel. - Otherwise, returns the effective permissions of a member in a guild.</p>
-<p>Returns a <a href="#permissions">role permission</a> in a promise.</p>
+<p>Returns a <a href="#permissions">role permission</a>_ in a promise.</p>
 <a id="parameters-6"></a>
 <div class="section" id="parameters">
 <h2>Parameters</h2>
 <table>
+            <thead>
+                            <tr>
+                                            <th>name</th>
+                                            <th>type</th>
+                                            <th>description</th>
+                                    </tr>
+                    </thead>
     
     <tbody>
+                    <tr>
+                                    <td>channel</td>
+                                    <td><a href="#channel">Channel</a>_ or null</td>
+                                    <td>the channel to get the effective permissions for</td>
+                            </tr>
             </tbody>
 </table>
 <pre><code class="language-php " >$member-&gt;getPermissions($channel)-&gt;done(function (RolePermission $permission) {

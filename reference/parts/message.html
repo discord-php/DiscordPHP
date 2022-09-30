@@ -55,7 +55,19 @@
 </label>
 <aside class="phpdocumentor-column -four phpdocumentor-sidebar">
                     <section class="phpdocumentor-sidebar__category">
-            <h2 class="phpdocumentor-sidebar__category-header">Requirements</h2>
+            <h2 class="phpdocumentor-sidebar__category-header">Intro</h2>
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="guide/index.html" class="">Intro</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="guide/parts/index.html" class="">Filling a part with data</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="guide/events/index.html" class=""></a>
+</h4>
+
                         </section>
                 <section class="phpdocumentor-sidebar__category">
             <h2 class="phpdocumentor-sidebar__category-header">Namespaces</h2>
@@ -124,15 +136,229 @@
 </aside>
 
             <div class="phpdocumentor-column -eight phpdocumentor-content">
-                    <div class="section" id="message">
-<h1>Message</h1>
-<p>Messages are present in channels and can be anything from a cross post to a reply and a regular message.</p>
-</div>
+                    <p>Messages are present in channels and can be anything from a cross post to a reply and a regular message.</p>
 <div class="section" id="properties">
 <h1>Properties</h1>
 <table>
+            <thead>
+                            <tr>
+                                            <th>name</th>
+                                            <th>type</th>
+                                            <th>description</th>
+                                    </tr>
+                    </thead>
     
     <tbody>
+                    <tr>
+                                    <td>id</td>
+                                    <td>string</td>
+                                    <td>id of the message</td>
+                            </tr>
+                    <tr>
+                                    <td><a href="#channel">channel</a>id</td>
+                                    <td>string</td>
+                                    <td>id of the channel the message was sent in</td>
+                            </tr>
+                    <tr>
+                                    <td>channel</td>
+                                    <td><a href="#channel">Channel</a>_</td>
+                                    <td>channel the message was sent in</td>
+                            </tr>
+                    <tr>
+                                    <td><a href="#guild">guild</a>id</td>
+                                    <td>string or null</td>
+                                    <td>the unique identifier of the guild that the channel the message was sent in belongs to</td>
+                            </tr>
+                    <tr>
+                                    <td>guild</td>
+                                    <td><a href="#guild">Guild</a>_ or null</td>
+                                    <td>the guild that the message was sent in</td>
+                            </tr>
+                    <tr>
+                                    <td>content</td>
+                                    <td>string</td>
+                                    <td>content of the message</td>
+                            </tr>
+                    <tr>
+                                    <td>type</td>
+                                    <td>int, <a href="#message">Message</a>_ constants</td>
+                                    <td>type of the message</td>
+                            </tr>
+                    <tr>
+                                    <td>mentions</td>
+                                    <td>Collection of <a href="#user">Users</a>_</td>
+                                    <td>users mentioned in the message</td>
+                            </tr>
+                    <tr>
+                                    <td>author</td>
+                                    <td><a href="#user">User</a>_</td>
+                                    <td>the author of the message</td>
+                            </tr>
+                    <tr>
+                                    <td><a href="#user">user</a>id</td>
+                                    <td>string</td>
+                                    <td>id of the user that sent the message</td>
+                            </tr>
+                    <tr>
+                                    <td>member</td>
+                                    <td><a href="#member">Member</a>_</td>
+                                    <td>the member that sent this message, or null if it was in a private message</td>
+                            </tr>
+                    <tr>
+                                    <td>mentioneveryone</td>
+                                    <td>bool</td>
+                                    <td>whether @everyone was mentioned</td>
+                            </tr>
+                    <tr>
+                                    <td>timestamp</td>
+                                    <td><code>Carbon</code> timestamp</td>
+                                    <td>the time the message was sent</td>
+                            </tr>
+                    <tr>
+                                    <td>editedtimestamp</td>
+                                    <td><code>Carbon</code> timestamp or null</td>
+                                    <td>the time the message was edited or null if it hasn’t been edited</td>
+                            </tr>
+                    <tr>
+                                    <td>tts</td>
+                                    <td>bool</td>
+                                    <td>whether text to speech was set when the message was sent</td>
+                            </tr>
+                    <tr>
+                                    <td>attachments</td>
+                                    <td>Collection of <a href="#attachment">Attachments</a>_</td>
+                                    <td>array of attachments</td>
+                            </tr>
+                    <tr>
+                                    <td>embeds</td>
+                                    <td>Collection of <a href="#embed">Embeds</a>_</td>
+                                    <td>embeds contained in the message</td>
+                            </tr>
+                    <tr>
+                                    <td>nonce</td>
+                                    <td>string</td>
+                                    <td>randomly generated string for client</td>
+                            </tr>
+                    <tr>
+                                    <td>mentionroles</td>
+                                    <td>Collection of <a href="#role">Roles</a>_</td>
+                                    <td>any roles that were mentioned in the message</td>
+                            </tr>
+                    <tr>
+                                    <td>mentionchannels</td>
+                                    <td>Collection of <a href="#channel">Channels</a>_</td>
+                                    <td>any channels that were mentioned in the message</td>
+                            </tr>
+                    <tr>
+                                    <td>pinned</td>
+                                    <td>bool</td>
+                                    <td>whether the message is pinned</td>
+                            </tr>
+                    <tr>
+                                    <td>reactions</td>
+                                    <td>reaction repository</td>
+                                    <td>any reactions on the message</td>
+                            </tr>
+                    <tr>
+                                    <td><a href="#webhook">webhook</a>id</td>
+                                    <td>string</td>
+                                    <td>id of the webhook that sent the message</td>
+                            </tr>
+                    <tr>
+                                    <td>activity</td>
+                                    <td>object</td>
+                                    <td>current message activity, requires rich present</td>
+                            </tr>
+                    <tr>
+                                    <td>application</td>
+                                    <td>object</td>
+                                    <td>application of the message, requires rich presence</td>
+                            </tr>
+                    <tr>
+                                    <td>applicationid</td>
+                                    <td>string</td>
+                                    <td>if the message is a response to an Interaction, this is the id of the interaction’s application</td>
+                            </tr>
+                    <tr>
+                                    <td><a href="#message">message</a>reference</td>
+                                    <td>object</td>
+                                    <td>message that is referenced by the message</td>
+                            </tr>
+                    <tr>
+                                    <td>referencedmessage</td>
+                                    <td><a href="#message">Message</a>_</td>
+                                    <td>the message that is referenced in a reply</td>
+                            </tr>
+                    <tr>
+                                    <td>interaction</td>
+                                    <td>object</td>
+                                    <td>the interaction which triggered the message (application commands)</td>
+                            </tr>
+                    <tr>
+                                    <td>thread</td>
+                                    <td><a href="#thread">Thread</a>_</td>
+                                    <td>the thread that the message was sent in</td>
+                            </tr>
+                    <tr>
+                                    <td>components</td>
+                                    <td><a href="#component">Component</a>_</td>
+                                    <td>sent if the message contains components like buttons, action rows, or other interactive components</td>
+                            </tr>
+                    <tr>
+                                    <td><a href="#sticker">sticker</a>items</td>
+                                    <td><a href="#sticker">Sticker</a>_</td>
+                                    <td>stickers attached to the message</td>
+                            </tr>
+                    <tr>
+                                    <td>flags</td>
+                                    <td>int</td>
+                                    <td>message flags, see below 5 properties</td>
+                            </tr>
+                    <tr>
+                                    <td>crossposted</td>
+                                    <td>bool</td>
+                                    <td>whether the message has been crossposted</td>
+                            </tr>
+                    <tr>
+                                    <td>iscrosspost</td>
+                                    <td>bool</td>
+                                    <td>whether the message is a crosspost</td>
+                            </tr>
+                    <tr>
+                                    <td>suppressemeds</td>
+                                    <td>bool</td>
+                                    <td>whether embeds have been supressed</td>
+                            </tr>
+                    <tr>
+                                    <td>source<a href="#message">message</a>deleted</td>
+                                    <td>bool</td>
+                                    <td>whether the source message has been deleted e.g. crosspost</td>
+                            </tr>
+                    <tr>
+                                    <td>urgent</td>
+                                    <td>bool</td>
+                                    <td>whether message is urgent</td>
+                            </tr>
+                    <tr>
+                                    <td>hasthread</td>
+                                    <td>bool</td>
+                                    <td>whether this message has an associated thread, with the same id as the message</td>
+                            </tr>
+                    <tr>
+                                    <td>ephemeral</td>
+                                    <td>bool</td>
+                                    <td>whether this message is only visible to the user who invoked the Interaction</td>
+                            </tr>
+                    <tr>
+                                    <td>loading</td>
+                                    <td>bool</td>
+                                    <td>whether this message is an Interaction Response and the bot is “thinking”</td>
+                            </tr>
+                    <tr>
+                                    <td>failedtomentionsome<a href="#role">roles</a>inthread</td>
+                                    <td>bool</td>
+                                    <td>this message failed to mention some roles and add their members to the thread</td>
+                            </tr>
             </tbody>
 </table>
 </div>
@@ -204,13 +430,23 @@ $message-&gt;delayedReply(&#039;hello!&#039;, 1500)-&gt;done(function (Message $
 </div>
 <div class="section" id="react-to-a-message">
 <h1>React to a message</h1>
-<p>Adds a reaction to a message. Takes an <a href="#emoji">Emoji</a> object, a custom emoji string or a unicode emoji. Returns nothing in a promise.</p>
+<p>Adds a reaction to a message. Takes an <a href="#emoji">Emoji</a>_ object, a custom emoji string or a unicode emoji. Returns nothing in a promise.</p>
 <a id="parameters-2"></a>
 <div class="section" id="parameters">
 <h2>Parameters</h2>
 <table>
     
     <tbody>
+                    <tr>
+                                    <td>name</td>
+                                    <td>type</td>
+                                    <td>description</td>
+                            </tr>
+                    <tr>
+                                    <td>emoticon</td>
+                                    <td><a href="#emoji">Emoji</a>_ or string</td>
+                                    <td>the emoji to react with</td>
+                            </tr>
             </tbody>
 </table>
 <pre><code class="language-php " >$message-&gt;react($emoji)-&gt;done(function () {
@@ -238,8 +474,30 @@ $message-&gt;react(&#039;😀&#039;)-&gt;done(function () {
 <div class="section" id="parameters">
 <h2>Parameters</h2>
 <table>
+            <thead>
+                            <tr>
+                                            <th>name</th>
+                                            <th>type</th>
+                                            <th>description</th>
+                                    </tr>
+                    </thead>
     
     <tbody>
+                    <tr>
+                                    <td>type</td>
+                                    <td>int</td>
+                                    <td>type of deletion, one of <code>Message::REACT_DELETE_ALL, Message::REACT_DELETE_ME, Message:REACT_DELETE_ID, Message::REACT_DELETE_EMOJI</code></td>
+                            </tr>
+                    <tr>
+                                    <td>emoticon</td>
+                                    <td><a href="#emoji">Emoji</a>_, string, null</td>
+                                    <td>emoji to delete, require if using <code>DELETE_ID</code>, <code>DELETE_ME</code> or <code>DELETE_EMOJI</code></td>
+                            </tr>
+                    <tr>
+                                    <td>id</td>
+                                    <td>string, null</td>
+                                    <td>id of the user to delete reactions for, required by <code>DELETE_ID</code></td>
+                            </tr>
             </tbody>
 </table>
 </div>
@@ -292,7 +550,7 @@ $message-&gt;react(&#039;😀&#039;)-&gt;done(function () {
 </div>
 <div class="section" id="create-reaction-collector">
 <h1>Create reaction collector</h1>
-<p>Creates a reaction collector. Works similar to <a href="#channel">Channel</a>\ ’s reaction collector. Takes a callback and an array of options. Returns a collection of reactions in a promise.</p>
+<p>Creates a reaction collector. Works similar to <a href="#channel">Channel</a>_\ ’s reaction collector. Takes a callback and an array of options. Returns a collection of reactions in a promise.</p>
 <div class="section" id="options">
 <h2>Options</h2>
 <p>At least one of <code>time</code> or <code>limit</code> must be specified.</p>
@@ -342,6 +600,16 @@ $message-&gt;react(&#039;😀&#039;)-&gt;done(function () {
 <table>
     
     <tbody>
+                    <tr>
+                                    <td>name</td>
+                                    <td>type</td>
+                                    <td>description</td>
+                            </tr>
+                    <tr>
+                                    <td>embed</td>
+                                    <td><a href="#embed">Embed</a>_</td>
+                                    <td>the embed to add</td>
+                            </tr>
             </tbody>
 </table>
 <pre><code class="language-php " >$message-&gt;addEmbed($embed)-&gt;done(function (Message $message) {
