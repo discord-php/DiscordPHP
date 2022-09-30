@@ -18,7 +18,6 @@
 			<source dsn=".">
 				<path>docs/new</path>
 			</source>
-			<output>../guide</output>
 		</guide>
 	</version>
 	<setting name="guides.enabled" value="true"/>
