@@ -1,18 +1,3 @@
-.. toctree::
-   :hidden:
-
-   application_commands
-   auto_moderations
-   channels
-   guilds
-   invites
-   interactions
-   messages
-   presences
-   stage_instances
-   voices
-   webhooks
-
 ======
 Guilds
 ======
