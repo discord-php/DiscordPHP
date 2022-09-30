@@ -136,7 +136,10 @@
 </aside>
 
             <div class="phpdocumentor-column -eight phpdocumentor-content">
-                    <p>User represents a user of Discord. The bot can “see” any users that to a guild that they also belong to.</p>
+                    <div class="section" id="user">
+<h1>User</h1>
+<p>User represents a user of Discord. The bot can “see” any users that to a guild that they also belong to.</p>
+</div>
 <div class="section" id="properties">
 <h1>Properties</h1>
 <table>
@@ -244,7 +247,7 @@
 </div>
 <div class="section" id="get-private-channel-for-user">
 <h1>Get private channel for user</h1>
-<p>Gets the private direct message channel for the user. Returns a <a href="#channel">Channel</a>_ in a promise.</p>
+<p>Gets the private direct message channel for the user. Returns a <a href="#channel">Channel</a> in a promise.</p>
 <pre><code class="language-php " >$user-&gt;getPrivateChannel()-&gt;done(function (Channel $channel) {
     // ...
 });

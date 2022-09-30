@@ -136,79 +136,15 @@
 </aside>
 
             <div class="phpdocumentor-column -eight phpdocumentor-content">
-                    <p>Guilds represent Discord ‘servers’.</p>
+                    <div class="section" id="guild">
+<h1>Guild</h1>
+<p>Guilds represent Discord ‘servers’.</p>
+</div>
 <div class="section" id="repositories">
 <h1>Repositories</h1>
 <table>
-            <thead>
-                            <tr>
-                                            <th>name</th>
-                                            <th>type</th>
-                                            <th>notes</th>
-                                    </tr>
-                    </thead>
     
     <tbody>
-                    <tr>
-                                    <td>roles</td>
-                                    <td><a href="#role">Role</a>_</td>
-                                    <td></td>
-                            </tr>
-                    <tr>
-                                    <td>emojis</td>
-                                    <td><a href="#emoji">Emoji</a>_</td>
-                                    <td></td>
-                            </tr>
-                    <tr>
-                                    <td>members</td>
-                                    <td><a href="#member">Member</a>_</td>
-                                    <td>May not contain offline members, see the <code>`loadAllMembers</code> option &lt;#basics&gt;May not contain offline members, see the 193a56dc1ac427a1cc29a7af3a38099ca7d7d40e option <#basics>_</td>
-                            </tr>
-                    <tr>
-                                    <td>channels</td>
-                                    <td><a href="#channel">Channel</a>_</td>
-                                    <td></td>
-                            </tr>
-                    <tr>
-                                    <td>stageinstances</td>
-                                    <td><a href="#stage_instance">StageInstance</a>_</td>
-                                    <td></td>
-                            </tr>
-                    <tr>
-                                    <td>guildscheduledevents</td>
-                                    <td><a href="#scheduled_event">ScheduledEvent</a>_</td>
-                                    <td></td>
-                            </tr>
-                    <tr>
-                                    <td>stickers</td>
-                                    <td><a href="#sticker">Sticker</a>_</td>
-                                    <td></td>
-                            </tr>
-                    <tr>
-                                    <td>invites</td>
-                                    <td><a href="#invite">Invite</a>_</td>
-                                    <td>Not initially loaded</td>
-                            </tr>
-                    <tr>
-                                    <td>bans</td>
-                                    <td><a href="#ban">Ban</a>_</td>
-                                    <td>Not initially loaded without <code>`retrieveBans</code> option &lt;#basics&gt;Not initially loaded without aa6477e6f6785c38cc4e43c427c7c5bc5eff2317 option <#basics>_</td>
-                            </tr>
-                    <tr>
-                                    <td>commands</td>
-                                    <td><a href="#command">Command</a>_</td>
-                                    <td>Not initially loaded</td>
-                            </tr>
-                    <tr>
-                                    <td>templates</td>
-                                    <td><a href="#guild_template">GuildTemplate</a>_</td>
-                                    <td>Not initially loaded</td>
-                            </tr>
-                    <tr>
-                                    <td>integrations</td>
-                                    <td><a href="#integration">Integration</a>_</td>
-                                    <td>Not initially loaded</td>
-                            </tr>
             </tbody>
 </table>
 </div>
@@ -327,7 +263,7 @@ $guild-&gt;transferOwnership(&#039;member_id&#039;)-&gt;done(...);
                                     <td>description</td>
                             </tr>
                     <tr>
-                                    <td><a href="#user">user</a>id</td>
+                                    <td>userid</td>
                                     <td><code>User</code> or user ID</td>
                                     <td>The user to unban</td>
                             </tr>
@@ -356,7 +292,7 @@ $guild-&gt;unban(&#039;user_id&#039;)-&gt;done(...);
     
     <tbody>
                     <tr>
-                                    <td><a href="#user">user</a>id</td>
+                                    <td>userid</td>
                                     <td>string, int, <code>Member</code>, <code>User</code></td>
                                     <td>Filters audit log by who performed the action</td>
                             </tr>

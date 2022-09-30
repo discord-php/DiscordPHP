@@ -136,216 +136,34 @@
 </aside>
 
             <div class="phpdocumentor-column -eight phpdocumentor-content">
-                    <p>Channels represent a Discord channel, whether it be a direct message channel, group channel, voice channel, text channel etc.</p>
+                    <div class="section" id="channel">
+<h1>Channel</h1>
+<p>Channels represent a Discord channel, whether it be a direct message channel, group channel, voice channel, text channel etc.</p>
+</div>
 <div class="section" id="properties">
 <h1>Properties</h1>
 <table>
-            <thead>
-                            <tr>
-                                            <th>name</th>
-                                            <th>type</th>
-                                            <th>description</th>
-                                    </tr>
-                    </thead>
     
     <tbody>
-                    <tr>
-                                    <td>id</td>
-                                    <td>string</td>
-                                    <td>id of the channel</td>
-                            </tr>
-                    <tr>
-                                    <td>name</td>
-                                    <td>string</td>
-                                    <td>name of the channel</td>
-                            </tr>
-                    <tr>
-                                    <td>type</td>
-                                    <td>int</td>
-                                    <td>type of the channel, see Channel constants</td>
-                            </tr>
-                    <tr>
-                                    <td>topic</td>
-                                    <td>string</td>
-                                    <td>topic of the channel</td>
-                            </tr>
-                    <tr>
-                                    <td>guildid</td>
-                                    <td>string or null</td>
-                                    <td>id of the guild the channel belongs to, null if direct message</td>
-                            </tr>
-                    <tr>
-                                    <td>guild</td>
-                                    <td>Guild or null</td>
-                                    <td>guild the channel belongs to, null if direct message</td>
-                            </tr>
-                    <tr>
-                                    <td>position</td>
-                                    <td>int</td>
-                                    <td>position of the channel in the Discord client</td>
-                            </tr>
-                    <tr>
-                                    <td>isprivate</td>
-                                    <td>bool</td>
-                                    <td>whether the message is a private direct message channel</td>
-                            </tr>
-                    <tr>
-                                    <td>last<a href="#message">message</a>id</td>
-                                    <td>string</td>
-                                    <td>id of the last message sent in the channel</td>
-                            </tr>
-                    <tr>
-                                    <td>bitrate</td>
-                                    <td>int</td>
-                                    <td>bitrate of the voice channel</td>
-                            </tr>
-                    <tr>
-                                    <td>recipient</td>
-                                    <td><a href="#user">User</a>_</td>
-                                    <td>recipient of the direct message, only for direct message channel</td>
-                            </tr>
-                    <tr>
-                                    <td>recipients</td>
-                                    <td>Collection of <a href="#user">Users</a>_</td>
-                                    <td>recipients of the group direct message, only for group dm channels</td>
-                            </tr>
-                    <tr>
-                                    <td>nsfw</td>
-                                    <td>bool</td>
-                                    <td>whether the channel is set as NSFW</td>
-                            </tr>
-                    <tr>
-                                    <td><a href="#user">user</a>limit</td>
-                                    <td>int</td>
-                                    <td>user limit of the channel for voice channels</td>
-                            </tr>
-                    <tr>
-                                    <td>ratelimitperuser</td>
-                                    <td>int</td>
-                                    <td>amount of time in seconds a user has to wait between messages</td>
-                            </tr>
-                    <tr>
-                                    <td>icon</td>
-                                    <td>string</td>
-                                    <td>channel icon hash</td>
-                            </tr>
-                    <tr>
-                                    <td>ownerid</td>
-                                    <td>string</td>
-                                    <td>owner of the group DM</td>
-                            </tr>
-                    <tr>
-                                    <td>applicationid</td>
-                                    <td>string</td>
-                                    <td>id of the group dm creator if it was via an oauth application</td>
-                            </tr>
-                    <tr>
-                                    <td>parentid</td>
-                                    <td>string</td>
-                                    <td>id of the parent of the channel if it is in a group</td>
-                            </tr>
-                    <tr>
-                                    <td>lastpintimestamp</td>
-                                    <td><code>Carbon</code> timestamp</td>
-                                    <td>when the last message was pinned in the channel</td>
-                            </tr>
-                    <tr>
-                                    <td>rtcregion</td>
-                                    <td>string</td>
-                                    <td>Voice region id for the voice channel, automatic when set to null.</td>
-                            </tr>
-                    <tr>
-                                    <td>videoqualitymode</td>
-                                    <td>int</td>
-                                    <td>The camera video quality mode of the voice channel, 1 when not present.</td>
-                            </tr>
-                    <tr>
-                                    <td>defaultautoarchiveduration</td>
-                                    <td>int</td>
-                                    <td>Default duration for newly created threads, in minutes, to automatically archive the thread after recent activity, can be set to: 60, 1440, 4320, 10080.</td>
-                            </tr>
             </tbody>
 </table>
 </div>
 <div class="section" id="repositories">
 <h1>Repositories</h1>
 <table>
-            <thead>
-                            <tr>
-                                            <th>name</th>
-                                            <th>type</th>
-                                            <th>notes</th>
-                                    </tr>
-                    </thead>
     
     <tbody>
-                    <tr>
-                                    <td>overwrites</td>
-                                    <td><a href="#overwrite">Overwrite</a>_</td>
-                                    <td>Contains permission overwrites</td>
-                            </tr>
-                    <tr>
-                                    <td>members</td>
-                                    <td>VoiceStateUpdate</td>
-                                    <td>Only for voice channels. Contains voice members</td>
-                            </tr>
-                    <tr>
-                                    <td>messages</td>
-                                    <td><a href="#message">Message</a>_</td>
-                                    <td></td>
-                            </tr>
-                    <tr>
-                                    <td>webhooks</td>
-                                    <td><a href="#webhook">Webhook</a>_</td>
-                                    <td>Only available in text channels</td>
-                            </tr>
-                    <tr>
-                                    <td>threads</td>
-                                    <td><a href="#thread">Thread</a>_</td>
-                                    <td>Only available in text channels</td>
-                            </tr>
-                    <tr>
-                                    <td>invites</td>
-                                    <td><a href="#invite">Invite</a>_</td>
-                                    <td></td>
-                            </tr>
             </tbody>
 </table>
 </div>
 <div class="section" id="set-permissions-of-a-member-or-role">
 <h1>Set permissions of a member or role</h1>
-<p>Sets the permissions of a member or role. Takes two arrays of permissions - one for allow and one for deny. See <a href="#permissions">Channel Permissions</a>_ for a valid list of permissions. Returns nothing in a promise.</p>
+<p>Sets the permissions of a member or role. Takes two arrays of permissions - one for allow and one for deny. See <a href="#permissions">Channel Permissions</a> for a valid list of permissions. Returns nothing in a promise.</p>
 <div class="section" id="parameters">
 <h2>Parameters</h2>
 <table>
-            <thead>
-                            <tr>
-                                            <th>name</th>
-                                            <th>type</th>
-                                            <th>description</th>
-                                            <th>default</th>
-                                    </tr>
-                    </thead>
     
     <tbody>
-                    <tr>
-                                    <td>part</td>
-                                    <td><a href="#member">Member</a>_ or <a href="#role">Role</a>_</td>
-                                    <td>The part to apply the permissions to</td>
-                                    <td>required</td>
-                            </tr>
-                    <tr>
-                                    <td>allow</td>
-                                    <td>array</td>
-                                    <td>Array of permissions to allow the part</td>
-                                    <td>[]</td>
-                            </tr>
-                    <tr>
-                                    <td>deny</td>
-                                    <td>array</td>
-                                    <td>Array of permissions to deny the part</td>
-                                    <td>[]</td>
-                            </tr>
             </tbody>
 </table>
 <pre><code class="language-php " >// Member can send messages and attach files,
@@ -367,28 +185,8 @@ $channel-&gt;setPermissions($member, [
 <div class="section" id="parameters">
 <h2>Parameters</h2>
 <table>
-            <thead>
-                            <tr>
-                                            <th>name</th>
-                                            <th>type</th>
-                                            <th>description</th>
-                                            <th>default</th>
-                                    </tr>
-                    </thead>
     
     <tbody>
-                    <tr>
-                                    <td>part</td>
-                                    <td><a href="#member">Member</a>_ or <a href="#role">Role</a>_</td>
-                                    <td>The part to apply the permissions to</td>
-                                    <td>required</td>
-                            </tr>
-                    <tr>
-                                    <td>overwrite</td>
-                                    <td><code>Overwrite</code> part</td>
-                                    <td>The overwrite to apply</td>
-                                    <td>required</td>
-                            </tr>
             </tbody>
 </table>
 <pre><code class="language-php " >$allow = new ChannelPermission($discord, [
@@ -415,25 +213,13 @@ $channel-&gt;setOverwrite($member, $overwrite)-&gt;done(function () {
 </div>
 <div class="section" id="move-member-to-voice-channel">
 <h1>Move member to voice channel</h1>
-<p>Moves a member to a voice channel if the member is already in one. Takes a <a href="#member">Member</a>_ object or member ID and returns nothing in a promise.</p>
+<p>Moves a member to a voice channel if the member is already in one. Takes a <a href="#member">Member</a> object or member ID and returns nothing in a promise.</p>
 <a id="parameters-2"></a>
 <div class="section" id="parameters">
 <h2>Parameters</h2>
 <table>
     
     <tbody>
-                    <tr>
-                                    <td>name</td>
-                                    <td>type</td>
-                                    <td>description</td>
-                                    <td>default</td>
-                            </tr>
-                    <tr>
-                                    <td>member</td>
-                                    <td><a href="#member">Member</a>_ or string</td>
-                                    <td>The member to move</td>
-                                    <td>required</td>
-                            </tr>
             </tbody>
 </table>
 <pre><code class="language-php " >$channel-&gt;moveMember($member)-&gt;done(function () {
@@ -450,25 +236,13 @@ $channel-&gt;moveMember(&#039;123213123123213&#039;)-&gt;done(function () {
 </div>
 <div class="section" id="muting-and-unmuting-member-in-voice-channel">
 <h1>Muting and unmuting member in voice channel</h1>
-<p>Mutes or unmutes a member in the voice channel. Takes a <a href="#member">Member</a>_ object or member ID and returns nothing in a promise.</p>
+<p>Mutes or unmutes a member in the voice channel. Takes a <a href="#member">Member</a> object or member ID and returns nothing in a promise.</p>
 <a id="parameters-3"></a>
 <div class="section" id="parameters">
 <h2>Parameters</h2>
 <table>
     
     <tbody>
-                    <tr>
-                                    <td>name</td>
-                                    <td>type</td>
-                                    <td>description</td>
-                                    <td>default</td>
-                            </tr>
-                    <tr>
-                                    <td>member</td>
-                                    <td><a href="#member">Member</a>_ or string</td>
-                                    <td>The member to mute/unmute</td>
-                                    <td>required</td>
-                            </tr>
             </tbody>
 </table>
 <pre><code class="language-php " >// muting a member with a member object
@@ -532,7 +306,7 @@ $channel-&gt;unmuteMember(&#039;123213123123213&#039;)-&gt;done(function () {
                                     <td></td>
                             </tr>
                     <tr>
-                                    <td>target<a href="#user">user</a>id</td>
+                                    <td>targetuserid</td>
                                     <td>string</td>
                                     <td>The id of the user whose stream to display for this invite, required if targettype is <code>Invite::TARGET_TYPE_STREAM</code>, the user must be streaming in the channel</td>
                                     <td></td>
@@ -604,40 +378,8 @@ $channel-&gt;unmuteMember(&#039;123213123123213&#039;)-&gt;done(function () {
 <div class="section" id="parameters">
 <h2>Parameters</h2>
 <table>
-            <thead>
-                            <tr>
-                                            <th>name</th>
-                                            <th>type</th>
-                                            <th>description</th>
-                                            <th>default</th>
-                                    </tr>
-                    </thead>
     
     <tbody>
-                    <tr>
-                                    <td>before</td>
-                                    <td><a href="#message">Message</a>_ or message ID</td>
-                                    <td>Get messages before this message</td>
-                                    <td></td>
-                            </tr>
-                    <tr>
-                                    <td>after</td>
-                                    <td><a href="#message">Message</a>_ or message ID</td>
-                                    <td>Get messages after this message</td>
-                                    <td></td>
-                            </tr>
-                    <tr>
-                                    <td>around</td>
-                                    <td><a href="#message">Message</a>_ or message ID</td>
-                                    <td>Get messages around this message</td>
-                                    <td></td>
-                            </tr>
-                    <tr>
-                                    <td>limit</td>
-                                    <td>int</td>
-                                    <td>Number of messages to get, between 1 and 100</td>
-                                    <td>100</td>
-                            </tr>
             </tbody>
 </table>
 <pre><code class="language-php " >$channel-&gt;getMessageHistory([
@@ -697,24 +439,6 @@ $channel-&gt;limitDelete(15)-&gt;done(function () {
 <table>
     
     <tbody>
-                    <tr>
-                                    <td>name</td>
-                                    <td>type</td>
-                                    <td>description</td>
-                                    <td>default</td>
-                            </tr>
-                    <tr>
-                                    <td>message</td>
-                                    <td><a href="#message">Message</a>_</td>
-                                    <td>The message to pin/unpin</td>
-                                    <td>required</td>
-                            </tr>
-                    <tr>
-                                    <td>reason</td>
-                                    <td>string</td>
-                                    <td>Reason for Audit Log</td>
-                                    <td></td>
-                            </tr>
             </tbody>
 </table>
 <pre><code class="language-php " >// to pin
@@ -784,18 +508,6 @@ $channel-&gt;sendMessage($message)-&gt;done(function (Message $message) {
 <table>
     
     <tbody>
-                    <tr>
-                                    <td>name</td>
-                                    <td>type</td>
-                                    <td>description</td>
-                                    <td>default</td>
-                            </tr>
-                    <tr>
-                                    <td>embed</td>
-                                    <td><a href="#embed">Embed</a>_</td>
-                                    <td>The embed to send</td>
-                                    <td>required</td>
-                            </tr>
             </tbody>
 </table>
 <pre><code class="language-php " >$channel-&gt;sendEmbed($embed)-&gt;done(function (Message $message) {
