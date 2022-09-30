@@ -1,7 +1,12 @@
+============
+Interactions
+============
+
+
 Interactions are utilized in message components and slash commands.
 
 Attributes
-~~~~~~~~~~
+==========
 
 +----------------+----------------------+------------------------------------------------------+
 | name           | type                 | description                                          |
@@ -33,10 +38,10 @@ Attributes
 | guild_locale   | ?string              | The guild’s preferred locale, if invoked in a guild. |
 +----------------+----------------------+------------------------------------------------------+
 
-The locale list can be seen on `Discord API reference <https://discord.com/developers/docs/reference#locales>`__.
+The locale list can be seen on `Discord API reference <https://discord.com/developers/docs/reference#locales>`_.
 
 Functions on interaction create
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+===============================
 
 The following functions are used to respond an interaction after being created ``Event::INTERACTION_CREATE``, responding interaction with wrong type throws a ``LogicException``
 
@@ -55,7 +60,7 @@ The following functions are used to respond an interaction after being created `
 +----------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------+------------------------------------------------------------------+
 
 Functions after interaction response
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+====================================
 
 The following functions can be only used after interaction respond above, otherwise throws a ``RuntimeException`` “Interaction has not been responded to.”
 
@@ -78,4 +83,3 @@ The following functions can be only used after interaction respond above, otherw
 +------------------------------------------------------------------------+------------------------------------------------------------------------------------------------+----------------------+
 | ``deleteFollowUpMessage(string $message_id)``                          | deletes a non ephemeral follow up message from the interaction                                 | ``Promise<void>``    |
 +------------------------------------------------------------------------+------------------------------------------------------------------------------------------------+----------------------+
-

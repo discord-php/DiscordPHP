@@ -1,8 +1,9 @@
+===
 FAQ
 ===
 
 ``Class 'X' not found``
------------------------
+======================
 
 You most likely haven't imported the class that you are trying to use. Please check the `class reference <http://discord-php.github.io/DiscordPHP/reference/>`_ and search for the class that you are trying to use. Add an import statement at the top of the file like shown on the right.
 
@@ -16,7 +17,7 @@ You most likely haven't imported the class that you are trying to use. Please ch
 If you don't want to have to import a class every time, you should look into the PHP Intelephense language server (written above) which will do automatic imports for you.
 
 There are less members and/or users than expected
--------------------------------------------------
+=================================================
 
 Server members are guarded by a priviliged server intent which must be enabled in the `Discord Developer Portal <https://discord.com/developers/applications>`_. Note that you will need to verify your bot if you use this intent and pass 100 guilds.
 

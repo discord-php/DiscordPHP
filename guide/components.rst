@@ -1,7 +1,12 @@
+==================
+Message Components
+==================
+
+
 Message components are new components you can add to messages, such as buttons and select menus. There are currently four different types of message components:
 
 ``ActionRow``
--------------
+=============
 
 Represents a row of buttons on a message. You can add up to 5 buttons to the row, which can then be added to the message. You can only add buttons to action rows.
 
@@ -11,7 +16,7 @@ Represents a row of buttons on a message. You can add up to 5 buttons to the row
        ->addComponent(Button::new(Button::STYLE_SUCCESS));
 
 Functions
-~~~~~~~~~
+---------
 
 +----------------------------------+-------------------------------------------------------------+
 | name                             | description                                                 |
@@ -24,7 +29,7 @@ Functions
 +----------------------------------+-------------------------------------------------------------+
 
 ``Button``
-----------
+==========
 
 Represents a button attached to a message. You cannot directly attach a button to a message, it must be contained inside an ``ActionRow``.
 
@@ -53,7 +58,7 @@ link      ``Button::STYLE_LINK``      grey
 .. _functions-1:
 
 Functions
-~~~~~~~~~
+---------
 
 +--------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------+
 | name                                 | description                                                                                                                              |
@@ -76,7 +81,7 @@ Functions
 +--------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------+
 
 Adding a button listener
-~~~~~~~~~~~~~~~~~~~~~~~~
+------------------------
 
 If you add a button you probably want to listen for when it is clicked. This is done through the ``setListener(callable $listener, Discord $discord)`` function.
 
@@ -101,7 +106,7 @@ If the interaction is not responded to after the function is called, the interac
    }, $discord);
 
 ``SelectMenu``
---------------
+==============
 
 Select menus are a dropdown which can be attached to a message. They operate similar to buttons. They do not need to be attached to an ``ActionRow``. You may have up to 25 ``Option``\ s attached to a select menu.
 
@@ -114,7 +119,7 @@ Select menus are a dropdown which can be attached to a message. They operate sim
 .. _functions-2:
 
 Functions
-~~~~~~~~~
+---------
 
 +--------------------------------------+--------------------------------------------------------------------------------------------------------+
 | name                                 | description                                                                                            |
@@ -137,7 +142,7 @@ Functions
 +--------------------------------------+--------------------------------------------------------------------------------------------------------+
 
 ``Option`` functions
-~~~~~~~~~~~~~~~~~~~~
+--------------------
 
 +----------------------------------+---------------------------------------------------------------------------------------------------------------------------+
 | name                             | description                                                                                                               |
@@ -154,7 +159,7 @@ Functions
 +----------------------------------+---------------------------------------------------------------------------------------------------------------------------+
 
 Adding a select menu listener
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------
 
 Select menu listeners operate similar to the button listeners, so please read the above section first. The callback function will be called with the ``Interaction`` object as well as a collection of selected ``Option``\ s.
 
@@ -169,7 +174,7 @@ Select menu listeners operate similar to the button listeners, so please read th
    }, $discord);
 
 ``TextInput``
--------------
+=============
 
 Text inputs are an interactive component that render on modals.
 
@@ -190,7 +195,7 @@ Paragraph (multi line) ``TextInput::STYLE_PARAGRAPH``
 .. _functions-3:
 
 Functions
-~~~~~~~~~
+---------
 
 +----------------------------------+-------------------------------------------------------------------------------------------------------------+
 | name                             | description                                                                                                 |
@@ -211,4 +216,3 @@ Functions
 +----------------------------------+-------------------------------------------------------------------------------------------------------------+
 | ``setRequired($required)``       | sets whether the text input is required or not.                                                             |
 +----------------------------------+-------------------------------------------------------------------------------------------------------------+
-

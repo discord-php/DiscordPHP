@@ -1,3 +1,8 @@
+==========
+Collection
+==========
+
+
 Collections are exactly what they sound like - collections of items. In DiscordPHP collections are based around the idea of parts, but they can be used for any type of item.
 
 .. container::
@@ -25,7 +30,7 @@ Collections are exactly what they sound like - collections of items. In DiscordP
       $jsonCollec = (string) $collec; // same as json_encode($collec)
 
 Creating a collection
-^^^^^^^^^^^^^^^^^^^^^
+=====================
 
 +---------+----------------+--------------------------------------------------------------------+
 | name    | type           | description                                                        |
@@ -48,7 +53,7 @@ Creating a collection
    $collec = new Collection([], null, null);
 
 Getting an item
-^^^^^^^^^^^^^^^
+===============
 
 Gets an item from the collection, with a key and value.
 
@@ -90,7 +95,7 @@ value any  The value that the key should match
    $item = $collec->get('text', 'My ID is 1.');
 
 Adding an item
-^^^^^^^^^^^^^^
+==============
 
 Adds an item to the collection. Note that if ``class`` is set in the constructor and the class of the item inserted is not the same, it will not insert.
 
@@ -130,7 +135,7 @@ $item any  The item to insert
    $collec->get('y', 123);
 
 Pulling an item
-^^^^^^^^^^^^^^^
+===============
 
 Removes an item from the collection and returns it.
 
@@ -153,7 +158,7 @@ default any  Default if key is not found. Default null
    $collec->pull(100, 123); // returns 123
 
 Filling the collection
-^^^^^^^^^^^^^^^^^^^^^^
+======================
 
 Fills the collection with an array of items.
 
@@ -165,7 +170,7 @@ Fills the collection with an array of items.
    ]);
 
 Number of items
-^^^^^^^^^^^^^^^
+===============
 
 Returns the number of items in the collection.
 
@@ -178,7 +183,7 @@ Returns the number of items in the collection.
    echo $collec->count(); // 3
 
 Getting the first item
-^^^^^^^^^^^^^^^^^^^^^^
+======================
 
 Gets the first item of the collection.
 
@@ -191,7 +196,7 @@ Gets the first item of the collection.
    echo $collec->first(); // 1
 
 Filtering a collection
-^^^^^^^^^^^^^^^^^^^^^^
+======================
 
 Filters the collection with a given callback function. The callback function is called for every item and is called with the item. If the callback returns true, the item is added to the new collection. Returns a new collection.
 
@@ -213,7 +218,7 @@ callback callable The callback called on every item
    });
 
 Clearing a collection
-^^^^^^^^^^^^^^^^^^^^^
+=====================
 
 Clears the collection.
 
@@ -222,7 +227,7 @@ Clears the collection.
    $collec->clear(); // $collec = []
 
 Mapping a collection
-^^^^^^^^^^^^^^^^^^^^
+====================
 
 A given callback function is called on each item in the collection, and the result is inserted into a new collection.
 
@@ -244,11 +249,10 @@ callback callable The callback called on every item
    });
 
 Converting to array
-^^^^^^^^^^^^^^^^^^^
+===================
 
 Converts a collection to an array.
 
 .. code:: php
 
    $arr = $collec->toArray();
-
