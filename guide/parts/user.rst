@@ -1,7 +1,12 @@
+====
+User
+====
+
+
 User represents a user of Discord. The bot can “see” any users that to a guild that they also belong to.
 
 Properties
-~~~~~~~~~~
+==========
 
 +---------------+---------+--------------------------------------------------------------------------+
 | name          | type    | description                                                              |
@@ -44,9 +49,9 @@ Properties
 +---------------+---------+--------------------------------------------------------------------------+
 
 Get private channel for user
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+============================
 
-Gets the private direct message channel for the user. Returns a `Channel <#channel>`__ in a promise.
+Gets the private direct message channel for the user. Returns a `Channel <#channel>`_ in a promise.
 
 .. code:: php
 
@@ -55,12 +60,12 @@ Gets the private direct message channel for the user. Returns a `Channel <#chann
    });
 
 Send user a message
-~~~~~~~~~~~~~~~~~~~
+===================
 
 Sends a private direct message to the user. Note that your bot account can be suspended for doing this, consult Discord documentation for more information. Returns the message in a promise.
 
 Parameters
-^^^^^^^^^^
+----------
 
 ======= ====== =============================================
 name    type   description
@@ -77,14 +82,14 @@ embed   Embed  embed to send in the message
    });
 
 Get avatar URL
-~~~~~~~~~~~~~~
+==============
 
 Gets the avatar URL for the user. Only call this function if you need to change the format or size of the image, otherwise use ``$user->avatar``. Returns a string.
 
 .. _parameters-1:
 
 Parameters
-^^^^^^^^^^
+----------
 
 +--------+--------+-------------------------------------------------------------------------------+
 | name   | type   | description                                                                   |
@@ -100,14 +105,14 @@ Parameters
    echo $url; // https://cdn.discordapp.com/avatars/:user_id/:avatar_hash.png?size=2048
 
 Get banner URL
-~~~~~~~~~~~~~~
+==============
 
 Gets the banner URL for the user. Only call this function if you need to change the format or size of the image, otherwise use ``$user->banner``. Returns a string or ``null`` if user has no banner image set.
 
 .. _parameters-2:
 
 Parameters
-^^^^^^^^^^
+----------
 
 +--------+--------+------------------------------------------------------------------------------+
 | name   | type   | description                                                                  |
@@ -121,4 +126,3 @@ Parameters
 
    $url = $user->getBannerAttribute('png', 1024);
    echo $url; // https://cdn.discordapp.com/banners/:user_id/:banner_hash.png?size=1024
-
