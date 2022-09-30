@@ -2,6 +2,14 @@
    :hidden:
 
    index
+     faq
+     basics
+     repositories
+     collection
+     permissions
+     message_builder
+     components
+     interactions
    parts/index
    events/index
 
