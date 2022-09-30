@@ -6,7 +6,7 @@
     
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <base href="../../">
+    <base href="../">
     <link rel="icon" href="images/favicon.ico"/>
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/base.css">
@@ -63,6 +63,28 @@
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="guide/parts/index.html" class="">Parts</a>
 </h4>
+    <ul class="phpdocumentor-list">
+                    <li>
+                <a href="guide/parts/guild.html" class="">Guild</a>
+                
+            </li>
+                    <li>
+                <a href="guide/parts/channel.html" class="">Channel</a>
+                
+            </li>
+                    <li>
+                <a href="guide/parts/member.html" class="">Member</a>
+                
+            </li>
+                    <li>
+                <a href="guide/parts/message.html" class="">Message</a>
+                
+            </li>
+                    <li>
+                <a href="guide/parts/user.html" class="">User</a>
+                
+            </li>
+            </ul>
 
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="guide/events/index.html" class="">Events</a>
@@ -136,19 +158,74 @@
 </aside>
 
             <div class="phpdocumentor-column -eight phpdocumentor-content">
-                    <div class="section" id="application-commands">
-<h1>Application Commands</h1>
-</div>
-<div class="section" id="application-command-permissions-update">
-<h1>Application Command Permissions Update</h1>
-<p>Called with an <code>Overwrite</code> object when an application command’s permissions are updated.</p>
-<blockquote><p>Warning: The class Overwrite will be changed in future version!</p>
-</blockquote>
-<pre><code class="language-php " >// use Discord\Parts\Interactions\Command\Overwrite;
+                    <div class="section" id="basics">
+<h1>Basics</h1>
+<p>First step is to include the Composer autoload file and <a href="https://www.php.net/manual/en/language.namespaces.importing.php">import</a> any required classes.</p>
+<pre><code class="language-php " >&lt;?php
 
-$discord-&gt;on(Event::APPLICATION_COMMAND_PERMISSIONS_UPDATE, function (Overwrite $overwrite, Discord $discord, ?Overwrite $oldOverwrite) {
-    // ...
-});</code></pre>
+use Discord\Discord;
+use Discord\WebSockets\Intents;
+use Discord\WebSockets\Event;
+
+include __DIR__.&#039;/vendor/autoload.php&#039;;
+</code></pre>
+<p>The Discord instance can be set up with an array of options. All are optional except for token:</p>
+<pre><code class="language-php " >$discord = new Discord([
+    &#039;token&#039; =&gt; &#039;Your-Token-Here&#039;,
+    &#039;intents&#039; =&gt; [
+        Intents::GUILDS, Intents::GUILD_BANS, // ...
+    ],
+    // or
+    &#039;intents&#039; =&gt; 12345,
+    // or
+    &#039;intents&#039; =&gt; Intents::getDefaultIntents() | Intents::GUILD_MEMBERS, // default intents as well as guild members
+    &#039;loadAllMembers&#039; =&gt; false,
+    &#039;storeMessages&#039; =&gt; false,
+    &#039;retrieveBans&#039; =&gt; false,
+    &#039;pmChannels&#039; =&gt; false,
+    &#039;disabledEvents&#039; =&gt; [
+        Event::MESSAGE_CREATE, Event::MESSAGE_DELETE, // ...
+    ],
+    &#039;loop&#039; =&gt; \React\EventLoop\Factory::create(),
+    &#039;logger&#039; =&gt; new \Monolog\Logger(&#039;New logger&#039;),
+    &#039;dnsConfig&#039; =&gt; &#039;1.1.1.1&#039;,
+    &#039;shardId&#039; =&gt; 0,
+    &#039;shardCount&#039; =&gt; 5,
+]);
+</code></pre>
+<p><code>token</code> is your Discord token. <strong>Required</strong>.</p>
+<p><code>intents</code> can be an array of valid intents <em>or</em> an integer representing the intents. Default is all intents minus any privileged intents. At the moment this means all intents minus <code>GUILD_MEMBERS</code> and <code>GUILD_PRESENCES</code>. To enable these intents you must first enable them in your Discord developer portal.</p>
+<p><code>loadAllMembers</code> is a boolean whether all members should be fetched and stored on bot start. Loading members takes a while to retrieve from Discord and store, so default is false. This requires the <code>GUILD_MEMBERS</code> intent to be enabled in DiscordPHP. See above for more details.</p>
+<p><code>storeMessages</code> is a boolean whether messages received and sent should be stored. Default is false.</p>
+<p><code>retrieveBans</code> is a boolean whether bans should be retrieved on bot load. Default is false.</p>
+<p><code>pmChannels</code> is a boolean whether PM channels should be stored on bot load. Default is false.</p>
+<p><code>disabledEvents</code> is an array of events that will be disabled. By default all events are enabled.</p>
+<p><code>loop</code> is an instance of a ReactPHP event loop that can be provided to the client rather than creating a new loop. Useful if you want to use other React components. By default, a new loop is created.</p>
+<p><code>logger</code> is an instance of a logger that implements <code>LoggerInterface</code>. By default, a new Monolog logger with log level DEBUG is created to print to stdout.</p>
+<p><code>dnsConfig</code> is an instace of <code>Config</code> or a string of name server address. By default system setting is used and fall back to 8.8.8.8 when system configuration is not found. Currently only used for VoiceClient.</p>
+<p>The following options should only be used by large bots that require sharding. If you plan to use sharding, <a href="https://discord.com/developers/docs/topics/gateway#sharding">read up</a> on how Discord implements it.</p>
+<p><code>shardId</code> is the ID of the bot shard.</p>
+<p><code>shardCount</code> is the number of shards that you are using.</p>
+<hr />
+<p>Gateway events should be registered inside the <code>ready</code> event, which is emitted once when the bot first starts and has connected to the gateway.</p>
+<p>To register an event we use the <code>$discord->on(...)</code> function, which registers a handler. A list of events is available <a href="https://github.com/discord-php/DiscordPHP/blob/master/src/Discord/WebSockets/Event.php#L30-L75">here</a>. They are described in more detail in further sections of the documentation. All events take a callback which is called when the event is triggered, and the callback is called with an object representing the content of the event and an instance of the <code>Discord</code> client.</p>
+<pre><code class="language-php " >$discord-&gt;on(&#039;ready&#039;, function (Discord $discord) {
+
+    $discord-&gt;on(Event::MESSAGE_CREATE, function (Message $message, Discord $discord) {
+        // ... handle message sent
+    });
+
+});
+
+</code></pre>
+<p>Finally, the event loop needs to be started. Treat this as an infinite loop.</p>
+<pre><code class="language-php " >$discord-&gt;run();
+</code></pre>
+<p>If you want to stop the bot you can run:</p>
+<pre><code class="language-php " >$discord-&gt;close();
+</code></pre>
+<p>If you want to stop the bot without stopping the event loop, the close function takes a boolean:</p>
+<pre><code class="language-php " >$discord-&gt;close(false);</code></pre>
 </div>
 
                 <section data-search-results class="phpdocumentor-search-results phpdocumentor-search-results--hidden">

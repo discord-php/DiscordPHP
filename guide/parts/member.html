@@ -63,6 +63,28 @@
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="guide/parts/index.html" class="">Parts</a>
 </h4>
+    <ul class="phpdocumentor-list">
+                    <li>
+                <a href="guide/parts/guild.html" class="">Guild</a>
+                
+            </li>
+                    <li>
+                <a href="guide/parts/channel.html" class="">Channel</a>
+                
+            </li>
+                    <li>
+                <a href="guide/parts/member.html" class="-active">Member</a>
+                
+            </li>
+                    <li>
+                <a href="guide/parts/message.html" class="">Message</a>
+                
+            </li>
+                    <li>
+                <a href="guide/parts/user.html" class="">User</a>
+                
+            </li>
+            </ul>
 
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="guide/events/index.html" class="">Events</a>
@@ -136,89 +158,59 @@
 </aside>
 
             <div class="phpdocumentor-column -eight phpdocumentor-content">
-                    <div class="section" id="guild">
-<h1>Guild</h1>
-<p>Guilds represent Discord ‘servers’.</p>
+                    <div class="section" id="member">
+<h1>Member</h1>
+<p>Members represent a user in a guild. There is a member object for every guild-user relationship, meaning that there will be multiple member objects in the Discord client with the same user ID, but they will belong to different guilds.</p>
+<p>A member object can also be serialised into a mention string. For example:</p>
+<pre><code class="language-php " >$discord-&gt;on(Event::MESSAGE_CREATE, function (Message $message) {
+    // Hello &lt;@member_id&gt;!
+    // Note: `$message-&gt;member` will be `null` if the message originated from
+    // a private message, or if the member object was not cached.
+    $message-&gt;channel-&gt;sendMessage(&#039;Hello &#039;.$message-&gt;member.&#039;!&#039;);
+});
+</code></pre>
 </div>
-<div class="section" id="repositories">
-<h1>Repositories</h1>
+<div class="section" id="properties">
+<h1>Properties</h1>
 <table>
     
     <tbody>
             </tbody>
 </table>
 </div>
-<div class="section" id="creating-a-role">
-<h1>Creating a role</h1>
-<p>Shortcut for <code>$guild->roles->save($role);</code>. Takes an array of parameters for a role and returns a role part in a promise.</p>
+<div class="section" id="ban-the-member">
+<h1>Ban the member</h1>
+<p>Bans the member from the guild. Returns a <a href="#ban">Ban</a> part in a promise.</p>
 <div class="section" id="parameters">
 <h2>Parameters</h2>
 <table>
-            <thead>
-                            <tr>
-                                            <th>name</th>
-                                            <th>type</th>
-                                            <th>description</th>
-                                            <th>default</th>
-                                    </tr>
-                    </thead>
     
     <tbody>
                     <tr>
                                     <td>name</td>
+                                    <td>type</td>
+                                    <td>description</td>
+                            </tr>
+                    <tr>
+                                    <td>daysToDelete</td>
+                                    <td>int</td>
+                                    <td>number of days back to delete messages, default none</td>
+                            </tr>
+                    <tr>
+                                    <td>reason</td>
                                     <td>string</td>
-                                    <td>Role name</td>
-                                    <td>new role</td>
-                            </tr>
-                    <tr>
-                                    <td>permissions</td>
-                                    <td>string</td>
-                                    <td>Bitwise value of permissions</td>
-                                    <td>@everyone permissions</td>
-                            </tr>
-                    <tr>
-                                    <td>color</td>
-                                    <td>integer</td>
-                                    <td>RGB color value</td>
-                                    <td>0</td>
-                            </tr>
-                    <tr>
-                                    <td>hoist</td>
-                                    <td>bool</td>
-                                    <td>Hoisted role?</td>
-                                    <td>false</td>
-                            </tr>
-                    <tr>
-                                    <td>icon</td>
-                                    <td>string</td>
-                                    <td>image data for Role icon</td>
-                                    <td>null</td>
-                            </tr>
-                    <tr>
-                                    <td>unicodeemoji</td>
-                                    <td>string</td>
-                                    <td>unicode emoji for Role icon</td>
-                                    <td>null</td>
-                            </tr>
-                    <tr>
-                                    <td>mentionable</td>
-                                    <td>bool</td>
-                                    <td>Mentionable role?</td>
-                                    <td>false</td>
+                                    <td>reason for the ban</td>
                             </tr>
             </tbody>
 </table>
-<pre><code class="language-php " >$guild-&gt;createRole([
-    &#039;name&#039; =&gt; &#039;New Role&#039;,
-    // ...
-])-&gt;done(function (Role $role) {
+<pre><code class="language-php " >$member-&gt;ban(5, &#039;bad person&#039;)-&gt;done(function (Ban $ban) {
     // ...
 });
 </code></pre>
 </div>
-<div class="section" id="transferring-ownership-of-guild">
-<h1>Transferring ownership of guild</h1>
-<p>Transfers the ownership of the guild to another member. The bot must own the guild to be able to transfer ownership. Takes a member object or a member ID and returns nothing in a promise.</p>
+<div class="section" id="set-the-nickname-of-the-member">
+<h1>Set the nickname of the member</h1>
+<p>Sets the nickname of the member. Requires the <code>MANAGE_NICKNAMES</code> permission or <code>CHANGE_NICKNAME</code> if changing self nickname. Returns nothing in a promise.</p>
 <a id="parameters-1"></a>
 <div class="section" id="parameters">
 <h2>Parameters</h2>
@@ -231,105 +223,91 @@
                                     <td>description</td>
                             </tr>
                     <tr>
-                                    <td>member</td>
-                                    <td>Member or member ID</td>
-                                    <td>The member to get ownership</td>
-                            </tr>
-                    <tr>
-                                    <td>reason</td>
+                                    <td>nick</td>
                                     <td>string</td>
-                                    <td>Reason for Audit Log</td>
+                                    <td>nickname of the member, null to clear, default null</td>
                             </tr>
             </tbody>
 </table>
-<pre><code class="language-php " >$guild-&gt;transferOwnership($member)-&gt;done(...);
-// or
-$guild-&gt;transferOwnership(&#039;member_id&#039;)-&gt;done(...);
+<pre><code class="language-php " >$member-&gt;setNickname(&#039;newnick&#039;)-&gt;done(function () {
+    // ...
+});
 </code></pre>
 </div>
 </div>
-<div class="section" id="unbanning-a-member-with-a-user-or-user-id">
-<h1>Unbanning a member with a User or user ID</h1>
-<p>Unbans a member when passed a <code>User</code> object or a user ID. If you have the ban object, you can do <code>$guild->bans->delete($ban);</code>. Returns nothing in a promise.</p>
+<div class="section" id="move-member-to-channel">
+<h1>Move member to channel</h1>
+<p>Moves the member to another voice channel. Member must already be in a voice channel. Takes a channel or channel ID and returns nothing in a promise.</p>
 <a id="parameters-2"></a>
 <div class="section" id="parameters">
 <h2>Parameters</h2>
 <table>
     
     <tbody>
-                    <tr>
-                                    <td>name</td>
-                                    <td>type</td>
-                                    <td>description</td>
-                            </tr>
-                    <tr>
-                                    <td>userid</td>
-                                    <td><code>User</code> or user ID</td>
-                                    <td>The user to unban</td>
-                            </tr>
             </tbody>
 </table>
-<pre><code class="language-php " >$guild-&gt;unban($user)-&gt;done(...);
+<pre><code class="language-php " >$member-&gt;moveMember($channel)-&gt;done(function () {
+    // ...
+});
+
 // or
-$guild-&gt;unban(&#039;user_id&#039;)-&gt;done(...);
-</code></pre>
-</div>
-</div>
-<div class="section" id="querying-the-guild-audit-log">
-<h1>Querying the Guild audit log</h1>
-<p>Takes an array of parameters to query the audit log for the guild. Returns an Audit Log object inside a promise.</p>
-<a id="parameters-3"></a>
-<div class="section" id="parameters">
-<h2>Parameters</h2>
-<table>
-            <thead>
-                            <tr>
-                                            <th>name</th>
-                                            <th>type</th>
-                                            <th>description</th>
-                                    </tr>
-                    </thead>
-    
-    <tbody>
-                    <tr>
-                                    <td>userid</td>
-                                    <td>string, int, <code>Member</code>, <code>User</code></td>
-                                    <td>Filters audit log by who performed the action</td>
-                            </tr>
-                    <tr>
-                                    <td>actiontype</td>
-                                    <td><code>Entry</code> constants</td>
-                                    <td>Filters audit log by the type of action</td>
-                            </tr>
-                    <tr>
-                                    <td>before</td>
-                                    <td>string, int, <code>Entry</code></td>
-                                    <td>Retrieves audit logs before the given audit log object</td>
-                            </tr>
-                    <tr>
-                                    <td>limit</td>
-                                    <td>int between 1 and 100</td>
-                                    <td>Limits the amount of audit log entries to return</td>
-                            </tr>
-            </tbody>
-</table>
-<pre><code class="language-php " >$guild-&gt;getAuditLog([
-    &#039;user_id&#039; =&gt; &#039;123456&#039;,
-    &#039;action_type&#039; =&gt; Entry::CHANNEL_CREATE,
-    &#039;before&#039; =&gt; $anotherEntry,
-    &#039;limit&#039; =&gt; 12,
-])-&gt;done(function (AuditLog $auditLog) {
-    foreach ($auditLog-&gt;audit_log_entries as $entry) {
-        // $entry-&gt;...
-    }
+
+$member-&gt;moveMember(&#039;123451231231&#039;)-&gt;done(function () {
+    // ...
 });
 </code></pre>
 </div>
 </div>
-<div class="section" id="creating-an-emoji">
-<h1>Creating an Emoji</h1>
-<p>Takes an array of parameters for an emoji and returns an emoji part in a promise. Use the second parameter to specify local file path instead.</p>
+<div class="section" id="add-member-to-role">
+<h1>Add member to role</h1>
+<p>Adds the member to a role. Takes a role or role ID and returns nothing in a promise.</p>
+<a id="parameters-3"></a>
+<div class="section" id="parameters">
+<h2>Parameters</h2>
+<table>
+    
+    <tbody>
+            </tbody>
+</table>
+<pre><code class="language-php " >$member-&gt;addRole($role)-&gt;done(function () {
+    // ...
+});
+
+// or
+
+$member-&gt;addRole(&#039;1231231231&#039;)-&gt;done(function () {
+    // ...
+});
+</code></pre>
+</div>
+</div>
+<div class="section" id="remove-member-from-role">
+<h1>Remove member from role</h1>
+<p>Removes the member from a role. Takes a role or role ID and returns nothing in a promise.</p>
 <a id="parameters-4"></a>
+<div class="section" id="parameters">
+<h2>Parameters</h2>
+<table>
+    
+    <tbody>
+            </tbody>
+</table>
+<pre><code class="language-php " >$member-&gt;removeRole($role)-&gt;done(function () {
+    // ...
+});
+
+// or
+
+$member-&gt;removeRole(&#039;1231231231&#039;)-&gt;done(function () {
+    // ...
+});
+</code></pre>
+</div>
+</div>
+<div class="section" id="timeout-member">
+<h1>Timeout member</h1>
+<p>Times out the member in the server. Takes a carbon or null to remove. Returns nothing in a promise.</p>
+<a id="parameters-5"></a>
 <div class="section" id="parameters">
 <h2>Parameters</h2>
 <table>
@@ -338,40 +316,82 @@ $guild-&gt;unban(&#039;user_id&#039;)-&gt;done(...);
                                             <th>name</th>
                                             <th>type</th>
                                             <th>description</th>
-                                            <th>default</th>
                                     </tr>
                     </thead>
     
     <tbody>
                     <tr>
-                                    <td>name</td>
-                                    <td>string</td>
-                                    <td>Emoji name</td>
-                                    <td><em>required</em></td>
-                            </tr>
-                    <tr>
-                                    <td>image</td>
-                                    <td>string</td>
-                                    <td>image data with base64 format, ignored if file path is specified</td>
-                                    <td></td>
-                            </tr>
-                    <tr>
-                                    <td>roles</td>
-                                    <td>array</td>
-                                    <td>Role IDs that are allowed to use the emoji</td>
-                                    <td>[]</td>
+                                    <td>communicationdisableduntil</td>
+                                    <td><code>Carbon</code> or <code>null</code></td>
+                                    <td>the time for timeout to lasts on</td>
                             </tr>
             </tbody>
 </table>
-<pre><code class="language-php " >$guild-&gt;createEmoji([
-    &#039;name&#039; =&gt; &#039;elephpant&#039;,
+<pre><code class="language-php " >$member-&gt;timeoutMember(new Carbon(&#039;6 hours&#039;))-&gt;done(function () {
     // ...
-],
-&#039;/path/to/file.jpg&#039;,
-&#039;audit-log reason&#039;
-)-&gt;done(function (Emoji $emoji) {
+});
+
+// to remove
+$member-&gt;timeoutMember()-&gt;done(function () {
     // ...
-});</code></pre>
+});
+</code></pre>
+</div>
+</div>
+<div class="section" id="get-permissions-of-member">
+<h1>Get permissions of member</h1>
+<p>Gets the effective permissions of the member: - When given a channel, returns the effective permissions of a member in a channel. - Otherwise, returns the effective permissions of a member in a guild.</p>
+<p>Returns a <a href="#permissions">role permission</a> in a promise.</p>
+<a id="parameters-6"></a>
+<div class="section" id="parameters">
+<h2>Parameters</h2>
+<table>
+    
+    <tbody>
+            </tbody>
+</table>
+<pre><code class="language-php " >$member-&gt;getPermissions($channel)-&gt;done(function (RolePermission $permission) {
+    // ...
+});
+
+// or
+
+$member-&gt;getPermissions()-&gt;done(function (RolePermission $permission) {
+    // ...
+});
+</code></pre>
+</div>
+</div>
+<div class="section" id="get-guild-specific-avatar-url">
+<h1>Get guild specific avatar URL</h1>
+<p>Gets the server-specific avatar URL for the member. Only call this function if you need to change the format or size of the image, otherwise use <code>$member->avatar</code>. Returns a string.</p>
+<a id="parameters-7"></a>
+<div class="section" id="parameters">
+<h2>Parameters</h2>
+<table>
+            <thead>
+                            <tr>
+                                            <th>name</th>
+                                            <th>type</th>
+                                            <th>description</th>
+                                    </tr>
+                    </thead>
+    
+    <tbody>
+                    <tr>
+                                    <td>format</td>
+                                    <td>string</td>
+                                    <td>format of the image, one of png, jpg or webp, default webp and gif if animated</td>
+                            </tr>
+                    <tr>
+                                    <td>size</td>
+                                    <td>int</td>
+                                    <td>size of the image, default 1024</td>
+                            </tr>
+            </tbody>
+</table>
+<pre><code class="language-php " >$url = $member-&gt;getAvatarAttribute(&#039;png&#039;, 2048);
+echo $url; // https://cdn.discordapp.com/guilds/:guild_id/users/:id/avatars/:avatar_hash.png?size=2048</code></pre>
 </div>
 </div>
 

@@ -63,6 +63,28 @@
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="guide/parts/index.html" class="">Parts</a>
 </h4>
+    <ul class="phpdocumentor-list">
+                    <li>
+                <a href="guide/parts/guild.html" class="">Guild</a>
+                
+            </li>
+                    <li>
+                <a href="guide/parts/channel.html" class="">Channel</a>
+                
+            </li>
+                    <li>
+                <a href="guide/parts/member.html" class="">Member</a>
+                
+            </li>
+                    <li>
+                <a href="guide/parts/message.html" class="">Message</a>
+                
+            </li>
+                    <li>
+                <a href="guide/parts/user.html" class="">User</a>
+                
+            </li>
+            </ul>
 
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="guide/events/index.html" class="">Events</a>
@@ -136,33 +158,26 @@
 </aside>
 
             <div class="phpdocumentor-column -eight phpdocumentor-content">
-                    <div class="section" id="presences">
-<h1>Presences</h1>
+                    <div class="section" id="voices">
+<h1>Voices</h1>
 </div>
-<div class="section" id="presence-update">
-<h1>Presence Update</h1>
-<p>Called with a <code>PresenceUpdate</code> object when a member’s presence is updated.</p>
-<pre><code class="language-php " >$discord-&gt;on(Event::PRESENCE_UPDATE, function (PresenceUpdate $presence, Discord $discord) {
-    // ...
-});
-</code></pre>
-<p>Requires the <code>Intents::GUILD_PRESENCES</code> intent. This intent is a priviliged intent, it must be enabled in your Discord Bot developer settings.</p>
-</div>
-<div class="section" id="typing-start">
-<h1>Typing Start</h1>
-<p>Called with a <code>TypingStart</code> object when a user starts typing in a channel.</p>
-<pre><code class="language-php " >// use Discord\Parts\WebSockets\TypingStart;
+<div class="section" id="voice-state-update">
+<h1>Voice State Update</h1>
+<p>Called with a <code>VoiceStateUpdate</code> object when a member joins, leaves or moves between voice channels.</p>
+<pre><code class="language-php " >// use Discord\Parts\WebSockets\VoiceStateUpdate;
 
-$discord-&gt;on(Event::TYPING_START, function (TypingStart $typing, Discord $discord) {
+$discord-&gt;on(Event::VOICE_STATE_UPDATE, function (VoiceStateUpdate $state, Discord $discord, $oldstate) {
     // ...
 });
 </code></pre>
-<p>Requires the <code>Intents::GUILD_MESSAGE_TYPING</code> intent.</p>
+<p>Requires the <code>Intents::GUILD_VOICE_STATES</code> intent.</p>
 </div>
-<div class="section" id="user-update">
-<h1>User Update</h1>
-<p>Called with a <code>User</code> object when the Bot’s user properties change.</p>
-<pre><code class="language-php " >$discord-&gt;on(Event::USER_UPDATE, function (User $user, Discord $discord, ?User $oldUser) {
+<div class="section" id="voice-server-update">
+<h1>Voice Server Update</h1>
+<p>Called with a <code>VoiceServerUpdate</code> object when a voice server is updated in a guild.</p>
+<pre><code class="language-php " >// use Discord\Parts\WebSockets\VoiceServerUpdate;
+
+$discord-&gt;on(Event::VOICE_SERVER_UPDATE, function (VoiceServerUpdate $guild, Discord $discord) {
     // ...
 });</code></pre>
 </div>

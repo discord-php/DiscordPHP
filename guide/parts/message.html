@@ -63,6 +63,28 @@
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="guide/parts/index.html" class="">Parts</a>
 </h4>
+    <ul class="phpdocumentor-list">
+                    <li>
+                <a href="guide/parts/guild.html" class="">Guild</a>
+                
+            </li>
+                    <li>
+                <a href="guide/parts/channel.html" class="">Channel</a>
+                
+            </li>
+                    <li>
+                <a href="guide/parts/member.html" class="">Member</a>
+                
+            </li>
+                    <li>
+                <a href="guide/parts/message.html" class="-active">Message</a>
+                
+            </li>
+                    <li>
+                <a href="guide/parts/user.html" class="">User</a>
+                
+            </li>
+            </ul>
 
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="guide/events/index.html" class="">Events</a>
@@ -136,17 +158,9 @@
 </aside>
 
             <div class="phpdocumentor-column -eight phpdocumentor-content">
-                    <div class="section" id="member">
-<h1>Member</h1>
-<p>Members represent a user in a guild. There is a member object for every guild-user relationship, meaning that there will be multiple member objects in the Discord client with the same user ID, but they will belong to different guilds.</p>
-<p>A member object can also be serialised into a mention string. For example:</p>
-<pre><code class="language-php " >$discord-&gt;on(Event::MESSAGE_CREATE, function (Message $message) {
-    // Hello &lt;@member_id&gt;!
-    // Note: `$message-&gt;member` will be `null` if the message originated from
-    // a private message, or if the member object was not cached.
-    $message-&gt;channel-&gt;sendMessage(&#039;Hello &#039;.$message-&gt;member.&#039;!&#039;);
-});
-</code></pre>
+                    <div class="section" id="message">
+<h1>Message</h1>
+<p>Messages are present in channels and can be anything from a cross post to a reply and a regular message.</p>
 </div>
 <div class="section" id="properties">
 <h1>Properties</h1>
@@ -156,9 +170,9 @@
             </tbody>
 </table>
 </div>
-<div class="section" id="ban-the-member">
-<h1>Ban the member</h1>
-<p>Bans the member from the guild. Returns a <a href="#ban">Ban</a> part in a promise.</p>
+<div class="section" id="reply-to-a-message">
+<h1>Reply to a message</h1>
+<p>Sends a “reply” to the message. Returns the new message in a promise.</p>
 <div class="section" id="parameters">
 <h2>Parameters</h2>
 <table>
@@ -170,25 +184,28 @@
                                     <td>description</td>
                             </tr>
                     <tr>
-                                    <td>daysToDelete</td>
-                                    <td>int</td>
-                                    <td>number of days back to delete messages, default none</td>
-                            </tr>
-                    <tr>
-                                    <td>reason</td>
+                                    <td>text</td>
                                     <td>string</td>
-                                    <td>reason for the ban</td>
+                                    <td>text to send in the message</td>
                             </tr>
             </tbody>
 </table>
-<pre><code class="language-php " >$member-&gt;ban(5, &#039;bad person&#039;)-&gt;done(function (Ban $ban) {
+<pre><code class="language-php " >$message-&gt;reply(&#039;hello!&#039;)-&gt;done(function (Message $message) {
     // ...
 });
 </code></pre>
 </div>
-<div class="section" id="set-the-nickname-of-the-member">
-<h1>Set the nickname of the member</h1>
-<p>Sets the nickname of the member. Requires the <code>MANAGE_NICKNAMES</code> permission or <code>CHANGE_NICKNAME</code> if changing self nickname. Returns nothing in a promise.</p>
+<div class="section" id="crosspost-a-message">
+<h1>Crosspost a message</h1>
+<p>Crossposts a message to any channels that are following the channel the message was sent in. Returns the crossposted message in a promise.</p>
+<pre><code class="language-php " >$message-&gt;crosspost()-&gt;done(function (Message $message) {
+    // ...
+});
+</code></pre>
+</div>
+<div class="section" id="reply-to-a-message-after-a-delay">
+<h1>Reply to a message after a delay</h1>
+<p>Similar to replying to a message, also takes a <code>delay</code> parameter in which the reply will be sent after. Returns the new message in a promise.</p>
 <a id="parameters-1"></a>
 <div class="section" id="parameters">
 <h2>Parameters</h2>
@@ -201,21 +218,27 @@
                                     <td>description</td>
                             </tr>
                     <tr>
-                                    <td>nick</td>
+                                    <td>text</td>
                                     <td>string</td>
-                                    <td>nickname of the member, null to clear, default null</td>
+                                    <td>text to send in the message</td>
+                            </tr>
+                    <tr>
+                                    <td>delay</td>
+                                    <td>int</td>
+                                    <td>time in milliseconds to delay before sending the message</td>
                             </tr>
             </tbody>
 </table>
-<pre><code class="language-php " >$member-&gt;setNickname(&#039;newnick&#039;)-&gt;done(function () {
+<pre><code class="language-php " >// &lt;@message_author_id&gt;, hello! after 1.5 seconds
+$message-&gt;delayedReply(&#039;hello!&#039;, 1500)-&gt;done(function (Message $message) {
     // ...
 });
 </code></pre>
 </div>
 </div>
-<div class="section" id="move-member-to-channel">
-<h1>Move member to channel</h1>
-<p>Moves the member to another voice channel. Member must already be in a voice channel. Takes a channel or channel ID and returns nothing in a promise.</p>
+<div class="section" id="react-to-a-message">
+<h1>React to a message</h1>
+<p>Adds a reaction to a message. Takes an <a href="#emoji">Emoji</a> object, a custom emoji string or a unicode emoji. Returns nothing in a promise.</p>
 <a id="parameters-2"></a>
 <div class="section" id="parameters">
 <h2>Parameters</h2>
@@ -224,21 +247,27 @@
     <tbody>
             </tbody>
 </table>
-<pre><code class="language-php " >$member-&gt;moveMember($channel)-&gt;done(function () {
+<pre><code class="language-php " >$message-&gt;react($emoji)-&gt;done(function () {
     // ...
 });
 
 // or
 
-$member-&gt;moveMember(&#039;123451231231&#039;)-&gt;done(function () {
+$message-&gt;react(&#039;:michael:251127796439449631&#039;)-&gt;done(function () {
+    // ...
+});
+
+// or
+
+$message-&gt;react(&#039;😀&#039;)-&gt;done(function () {
     // ...
 });
 </code></pre>
 </div>
 </div>
-<div class="section" id="add-member-to-role">
-<h1>Add member to role</h1>
-<p>Adds the member to a role. Takes a role or role ID and returns nothing in a promise.</p>
+<div class="section" id="delete-reaction-s-from-a-message">
+<h1>Delete reaction(s) from a message</h1>
+<p>Deletes reaction(s) from a message. Has four methods of operation, described below. Returns nothing in a promise.</p>
 <a id="parameters-3"></a>
 <div class="section" id="parameters">
 <h2>Parameters</h2>
@@ -247,21 +276,100 @@ $member-&gt;moveMember(&#039;123451231231&#039;)-&gt;done(function () {
     <tbody>
             </tbody>
 </table>
-<pre><code class="language-php " >$member-&gt;addRole($role)-&gt;done(function () {
+</div>
+<div class="section" id="delete-all-reactions">
+<h2>Delete all reactions</h2>
+<pre><code class="language-php " >$message-&gt;deleteReaction(Message::REACT_DELETE_ALL)-&gt;done(function () {
     // ...
 });
-
-// or
-
-$member-&gt;addRole(&#039;1231231231&#039;)-&gt;done(function () {
+</code></pre>
+</div>
+<div class="section" id="delete-reaction-by-current-user">
+<h2>Delete reaction by current user</h2>
+<pre><code class="language-php " >$message-&gt;deleteReaction(Message::REACT_DELETE_ME, $emoji)-&gt;done(function () {
+    // ...
+});
+</code></pre>
+</div>
+<div class="section" id="delete-reaction-by-another-user">
+<h2>Delete reaction by another user</h2>
+<pre><code class="language-php " >$message-&gt;deleteReaction(Message::REACT_DELETE_ID, $emoji, &#039;member_id&#039;)-&gt;done(function () {
+    // ...
+});
+</code></pre>
+</div>
+<div class="section" id="delete-all-reactions-of-one-emoji">
+<h2>Delete all reactions of one emoji</h2>
+<pre><code class="language-php " >$message-&gt;deleteReaction(Message::REACT_DELETE_EMOJI, $emoji)-&gt;done(function () {
     // ...
 });
 </code></pre>
 </div>
 </div>
-<div class="section" id="remove-member-from-role">
-<h1>Remove member from role</h1>
-<p>Removes the member from a role. Takes a role or role ID and returns nothing in a promise.</p>
+<div class="section" id="delete-the-message">
+<h1>Delete the message</h1>
+<p>Deletes the message. Returns nothing in a promise.</p>
+<pre><code class="language-php " >$message-&gt;delete()-&gt;done(function () {
+    // ...
+});
+</code></pre>
+</div>
+<div class="section" id="edit-the-message">
+<h1>Edit the message</h1>
+<p>Updates the message. Takes a message builder. Returns the updated message in a promise.</p>
+<pre><code class="language-php " >$message-&gt;edit(MessageBuilder::new()
+    -&gt;setContent(&#039;new content&#039;))-&gt;done(function (Message $message) {
+        // ...
+    });
+</code></pre>
+<p>Note fields not set in the builder will not be updated, and will retain their previous value.</p>
+</div>
+<div class="section" id="create-reaction-collector">
+<h1>Create reaction collector</h1>
+<p>Creates a reaction collector. Works similar to <a href="#channel">Channel</a>\ ’s reaction collector. Takes a callback and an array of options. Returns a collection of reactions in a promise.</p>
+<div class="section" id="options">
+<h2>Options</h2>
+<p>At least one of <code>time</code> or <code>limit</code> must be specified.</p>
+<table>
+            <thead>
+                            <tr>
+                                            <th>name</th>
+                                            <th>type</th>
+                                            <th>description</th>
+                                    </tr>
+                    </thead>
+    
+    <tbody>
+                    <tr>
+                                    <td>time</td>
+                                    <td>int or false</td>
+                                    <td>time in milliseconds until the collector finishes</td>
+                            </tr>
+                    <tr>
+                                    <td>limit</td>
+                                    <td>int or false</td>
+                                    <td>amount of reactions to be collected until the collector finishes</td>
+                            </tr>
+            </tbody>
+</table>
+<pre><code class="language-php " >$message-&gt;createReactionCollector(function (MessageReaction $reaction) {
+    // return true or false depending on whether you want the reaction to be collected.
+    return $reaction-&gt;user_id == &#039;123123123123&#039;;
+}, [
+    // will resolve after 1.5 seconds or 2 reactions
+    &#039;time&#039; =&gt; 1500,
+    &#039;limit&#039; =&gt; 2,
+])-&gt;done(function (Collection $reactions) {
+    foreach ($reactions as $reaction) {
+        // ...
+    }
+});
+</code></pre>
+</div>
+</div>
+<div class="section" id="add-embed-to-message">
+<h1>Add embed to message</h1>
+<p>Adds an embed to a message. Takes an embed object. Will overwrite the old embed (if there is one). Returns the updated message in a promise.</p>
 <a id="parameters-4"></a>
 <div class="section" id="parameters">
 <h2>Parameters</h2>
@@ -270,106 +378,9 @@ $member-&gt;addRole(&#039;1231231231&#039;)-&gt;done(function () {
     <tbody>
             </tbody>
 </table>
-<pre><code class="language-php " >$member-&gt;removeRole($role)-&gt;done(function () {
+<pre><code class="language-php " >$message-&gt;addEmbed($embed)-&gt;done(function (Message $message) {
     // ...
-});
-
-// or
-
-$member-&gt;removeRole(&#039;1231231231&#039;)-&gt;done(function () {
-    // ...
-});
-</code></pre>
-</div>
-</div>
-<div class="section" id="timeout-member">
-<h1>Timeout member</h1>
-<p>Times out the member in the server. Takes a carbon or null to remove. Returns nothing in a promise.</p>
-<a id="parameters-5"></a>
-<div class="section" id="parameters">
-<h2>Parameters</h2>
-<table>
-            <thead>
-                            <tr>
-                                            <th>name</th>
-                                            <th>type</th>
-                                            <th>description</th>
-                                    </tr>
-                    </thead>
-    
-    <tbody>
-                    <tr>
-                                    <td>communicationdisableduntil</td>
-                                    <td><code>Carbon</code> or <code>null</code></td>
-                                    <td>the time for timeout to lasts on</td>
-                            </tr>
-            </tbody>
-</table>
-<pre><code class="language-php " >$member-&gt;timeoutMember(new Carbon(&#039;6 hours&#039;))-&gt;done(function () {
-    // ...
-});
-
-// to remove
-$member-&gt;timeoutMember()-&gt;done(function () {
-    // ...
-});
-</code></pre>
-</div>
-</div>
-<div class="section" id="get-permissions-of-member">
-<h1>Get permissions of member</h1>
-<p>Gets the effective permissions of the member: - When given a channel, returns the effective permissions of a member in a channel. - Otherwise, returns the effective permissions of a member in a guild.</p>
-<p>Returns a <a href="#permissions">role permission</a> in a promise.</p>
-<a id="parameters-6"></a>
-<div class="section" id="parameters">
-<h2>Parameters</h2>
-<table>
-    
-    <tbody>
-            </tbody>
-</table>
-<pre><code class="language-php " >$member-&gt;getPermissions($channel)-&gt;done(function (RolePermission $permission) {
-    // ...
-});
-
-// or
-
-$member-&gt;getPermissions()-&gt;done(function (RolePermission $permission) {
-    // ...
-});
-</code></pre>
-</div>
-</div>
-<div class="section" id="get-guild-specific-avatar-url">
-<h1>Get guild specific avatar URL</h1>
-<p>Gets the server-specific avatar URL for the member. Only call this function if you need to change the format or size of the image, otherwise use <code>$member->avatar</code>. Returns a string.</p>
-<a id="parameters-7"></a>
-<div class="section" id="parameters">
-<h2>Parameters</h2>
-<table>
-            <thead>
-                            <tr>
-                                            <th>name</th>
-                                            <th>type</th>
-                                            <th>description</th>
-                                    </tr>
-                    </thead>
-    
-    <tbody>
-                    <tr>
-                                    <td>format</td>
-                                    <td>string</td>
-                                    <td>format of the image, one of png, jpg or webp, default webp and gif if animated</td>
-                            </tr>
-                    <tr>
-                                    <td>size</td>
-                                    <td>int</td>
-                                    <td>size of the image, default 1024</td>
-                            </tr>
-            </tbody>
-</table>
-<pre><code class="language-php " >$url = $member-&gt;getAvatarAttribute(&#039;png&#039;, 2048);
-echo $url; // https://cdn.discordapp.com/guilds/:guild_id/users/:id/avatars/:avatar_hash.png?size=2048</code></pre>
+});</code></pre>
 </div>
 </div>
 

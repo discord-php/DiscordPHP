@@ -63,6 +63,28 @@
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="guide/parts/index.html" class="">Parts</a>
 </h4>
+    <ul class="phpdocumentor-list">
+                    <li>
+                <a href="guide/parts/guild.html" class="">Guild</a>
+                
+            </li>
+                    <li>
+                <a href="guide/parts/channel.html" class="">Channel</a>
+                
+            </li>
+                    <li>
+                <a href="guide/parts/member.html" class="">Member</a>
+                
+            </li>
+                    <li>
+                <a href="guide/parts/message.html" class="">Message</a>
+                
+            </li>
+                    <li>
+                <a href="guide/parts/user.html" class="">User</a>
+                
+            </li>
+            </ul>
 
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="guide/events/index.html" class="">Events</a>
@@ -136,12 +158,28 @@
 </aside>
 
             <div class="phpdocumentor-column -eight phpdocumentor-content">
-                    <div class="section" id="permissions">
-<h1>Permissions</h1>
-<p>There are two types of permissions - channel permissions and role permissions. They are represented by their individual classes, but both extend the same abstract permission class.</p>
+                    <div class="section" id="repositories">
+<h1>Repositories</h1>
+<p>Repositories are containers for parts. They provide the functions to get, save and delete parts from the Discord servers. Different parts have many repositories.</p>
+<p>An example is the <code>Channel</code> part. It has 4 repositories: <code>members</code>, <code>messages</code>, <code>overwrites</code> and <code>webhooks</code>. Each of these repositories contain parts that relate to the <code>Channel</code> part, such as messages sent in the channel (<code>messages</code> repository), or if it is a voice channel the members currently in the channel (<code>members</code> repository).</p>
+<p>A full list of repositories is provided below in the parts section, per part.</p>
+<p>Repositories extend the <a href="#collection">Collection</a> class. See the documentation on collections for extra methods.</p>
+<p>Examples provided below are based on the <code>guilds</code> repository in the Discord client.</p>
 </div>
-<div class="section" id="properties">
-<h1>Properties</h1>
+<div class="section" id="methods">
+<h1>Methods</h1>
+<p>All repositories extend the <code>AbstractRepository</code> class, and share a set of core methods.</p>
+<div class="section" id="freshening-the-repository-data">
+<h2>Freshening the repository data</h2>
+<p>Clears the repository and fills it with new data from Discord. It takes no parameters and returns the repository in a promise.</p>
+<pre><code class="language-php " >$discord-&gt;guilds-&gt;freshen()-&gt;done(function (GuildRepository $guilds) {
+    // ...
+});
+</code></pre>
+</div>
+<div class="section" id="creating-a-part">
+<h2>Creating a part</h2>
+<p>Creates a repository part from an array of attributes and returns the part. Does not create the part in Discord servers, you must use the <code>->save()</code> function later.</p>
 <table>
     
     <tbody>
@@ -151,255 +189,97 @@
                                     <td>description</td>
                             </tr>
                     <tr>
-                                    <td>bitwise</td>
-                                    <td>int</td>
-                                    <td>bitwise representation</td>
-                            </tr>
-                    <tr>
-                                    <td>createinstantinvite</td>
-                                    <td>bool</td>
-                                    <td></td>
-                            </tr>
-                    <tr>
-                                    <td>managechannels</td>
-                                    <td>bool</td>
-                                    <td></td>
-                            </tr>
-                    <tr>
-                                    <td>viewchannel</td>
-                                    <td>bool</td>
-                                    <td></td>
-                            </tr>
-                    <tr>
-                                    <td>manageroles</td>
-                                    <td>bool</td>
-                                    <td></td>
+                                    <td>attributes</td>
+                                    <td>array</td>
+                                    <td>Array of attributes to fill in the part. Optional</td>
                             </tr>
             </tbody>
 </table>
-<p>The rest of the properties are listed under each permission type, all are type of <code>bool</code>.</p>
-</div>
-<div class="section" id="methods">
-<h1>Methods</h1>
-<div class="section" id="get-all-valid-permissions">
-<h2>Get all valid permissions</h2>
-<p>Returns a list of valid permissions, in key value form. Static method.</p>
-<pre><code class="language-php " >var_dump(ChannelPermission::getPermissions());
-// [
-//     &#039;priority_speaker&#039; =&gt; 8,
-//     // ...
-// ]
+<pre><code class="language-php " >$guild = $discord-&gt;guilds-&gt;create([
+    &#039;name&#039; =&gt; &#039;My new guild name&#039;,
+]);
+// to save
+$discord-&gt;guilds-&gt;save($guild)-&gt;done(...);
 </code></pre>
 </div>
-<div class="section" id="channel-permission">
-<h1>Channel Permission</h1>
-<p>Represents permissions for text, voice, and stage instance channels.</p>
-<div class="section" id="text-channel-permissions">
-<h2>Text Channel Permissions</h2>
-
-
-<ul>
-    <li>
-            <code>create_instant_invite</code>
-        </li>
-    <li>
-            <code>manage_channels</code>
-        </li>
-    <li>
-            <code>view_channel</code>
-        </li>
-    <li>
-            <code>manage_roles</code>
-        </li>
-    <li>
-            <code>add_reactions</code>
-        </li>
-    <li>
-            <code>send_messages</code>
-        </li>
-    <li>
-            <code>send_tts_messages</code>
-        </li>
-    <li>
-            <code>manage_messages</code>
-        </li>
-    <li>
-            <code>embed_links</code>
-        </li>
-    <li>
-            <code>attach_files</code>
-        </li>
-    <li>
-            <code>read_message_history</code>
-        </li>
-    <li>
-            <code>mention_everyone</code>
-        </li>
-    <li>
-            <code>use_external_emojis</code>
-        </li>
-    <li>
-            <code>manage_webhooks</code>
-        </li>
-    <li>
-            <code>use_application_commands</code>
-        </li>
-    <li>
-            <code>manage_threads</code>
-        </li>
-    <li>
-            <code>create_public_threads</code>
-        </li>
-    <li>
-            <code>create_private_threads</code>
-        </li>
-    <li>
-            <code>use_external_stickers</code>
-        </li>
-    <li>
-            <code>send_messages_in_threads</code>
-        </li>
-</ul>
+<div class="section" id="saving-a-part">
+<h2>Saving a part</h2>
+<p>Creates or updates a repository part in the Discord servers. Takes a part and returns the same part in a promise.</p>
+<table>
+    
+    <tbody>
+                    <tr>
+                                    <td>name</td>
+                                    <td>type</td>
+                                    <td>description</td>
+                            </tr>
+                    <tr>
+                                    <td>part</td>
+                                    <td>Part</td>
+                                    <td>The part to create or update</td>
+                            </tr>
+            </tbody>
+</table>
+<pre><code class="language-php " >$discord-&gt;guilds-&gt;save($guild)-&gt;done(function (Guild $guild) {
+    // ...
+});
+</code></pre>
 </div>
-<div class="section" id="voice-channel-permissions">
-<h2>Voice Channel Permissions</h2>
-
-
-<ul>
-    <li>
-            <code>create_instant_invite</code>
-        </li>
-    <li>
-            <code>manage_channels</code>
-        </li>
-    <li>
-            <code>view_channel</code>
-        </li>
-    <li>
-            <code>manage_roles</code>
-        </li>
-    <li>
-            <code>priority_speaker</code>
-        </li>
-    <li>
-            <code>stream</code>
-        </li>
-    <li>
-            <code>connect</code>
-        </li>
-    <li>
-            <code>speak</code>
-        </li>
-    <li>
-            <code>mute_members</code>
-        </li>
-    <li>
-            <code>deafen_members</code>
-        </li>
-    <li>
-            <code>move_members</code>
-        </li>
-    <li>
-            <code>use_vad</code>
-        </li>
-    <li>
-            <code>manage_events</code>
-        </li>
-    <li>
-            <code>use_embedded_activities</code> was <code>start_embedded_activities</code>
-        </li>
-</ul>
+<div class="section" id="deleting-a-part">
+<h2>Deleting a part</h2>
+<p>Deletes a repository part from the Discord servers. Takes a part and returns the old part in a promise.</p>
+<table>
+    
+    <tbody>
+                    <tr>
+                                    <td>name</td>
+                                    <td>type</td>
+                                    <td>description</td>
+                            </tr>
+                    <tr>
+                                    <td>part</td>
+                                    <td>Part</td>
+                                    <td>The part to delete</td>
+                            </tr>
+            </tbody>
+</table>
+<pre><code class="language-php " >$discord-&gt;guilds-&gt;delete($guild)-&gt;done(function (Guild $guild) {
+    // ...
+});
+</code></pre>
 </div>
-<div class="section" id="stage-instance-channel-permissions">
-<h2>Stage Instance Channel Permissions</h2>
-
-
-<ul>
-    <li>
-            <code>create_instant_invite</code>
-        </li>
-    <li>
-            <code>manage_channels</code>
-        </li>
-    <li>
-            <code>view_channel</code>
-        </li>
-    <li>
-            <code>manage_roles</code>
-        </li>
-    <li>
-            <code>connect</code>
-        </li>
-    <li>
-            <code>mute_members</code>
-        </li>
-    <li>
-            <code>deafen_members</code>
-        </li>
-    <li>
-            <code>move_members</code>
-        </li>
-    <li>
-            <code>request_to_speak</code>
-        </li>
-    <li>
-            <code>manage_events</code>
-        </li>
-</ul>
-</div>
-</div>
-<div class="section" id="role-permissions">
-<h1>Role Permissions</h1>
-<p>Represents permissions for roles.</p>
-<div class="section" id="permissions">
-<h2>Permissions</h2>
-
-
-<ul>
-    <li>
-            <code>create_instant_invite</code>
-        </li>
-    <li>
-            <code>manage_channels</code>
-        </li>
-    <li>
-            <code>view_channel</code>
-        </li>
-    <li>
-            <code>manage_roles</code>
-        </li>
-    <li>
-            <code>kick_members</code>
-        </li>
-    <li>
-            <code>ban_members</code>
-        </li>
-    <li>
-            <code>administrator</code>
-        </li>
-    <li>
-            <code>manage_guild</code>
-        </li>
-    <li>
-            <code>view_audit_log</code>
-        </li>
-    <li>
-            <code>view_guild_insights</code>
-        </li>
-    <li>
-            <code>change_nickname</code>
-        </li>
-    <li>
-            <code>manage_nicknames</code>
-        </li>
-    <li>
-            <code>manage_emojis_and_stickers</code>
-        </li>
-    <li>
-            <code>moderate_members</code>
-        </li>
-</ul>
-</div>
+<div class="section" id="fetch-a-part">
+<h2>Fetch a part</h2>
+<p>Fetches/freshens a part from the repository. If the part is present in the cache, it returns the cached version, otherwise it retrieves the part from Discord servers. Takes a part ID and returns the part in a promise.</p>
+<table>
+            <thead>
+                            <tr>
+                                            <th>name</th>
+                                            <th>type</th>
+                                            <th>description</th>
+                                    </tr>
+                    </thead>
+    
+    <tbody>
+                    <tr>
+                                    <td>id</td>
+                                    <td>string</td>
+                                    <td>Part ID</td>
+                            </tr>
+                    <tr>
+                                    <td>fresh</td>
+                                    <td>bool</td>
+                                    <td>Forces the method to skip checking the cache. Default is false</td>
+                            </tr>
+            </tbody>
+</table>
+<pre><code class="language-php " >$discord-&gt;guilds-&gt;fetch(&#039;guild_id&#039;)-&gt;done(function (Guild $guild) {
+    // ...
+});
+// or, if you don&#039;t want to check the cache
+$discord-&gt;guilds-&gt;fetch(&#039;guild_id&#039;, true)-&gt;done(function (Guild $guild) {
+    // ...
+});</code></pre>
 </div>
 
                 <section data-search-results class="phpdocumentor-search-results phpdocumentor-search-results--hidden">

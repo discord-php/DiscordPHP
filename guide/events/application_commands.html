@@ -6,7 +6,7 @@
     
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <base href="../">
+    <base href="../../">
     <link rel="icon" href="images/favicon.ico"/>
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/base.css">
@@ -63,6 +63,28 @@
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="guide/parts/index.html" class="">Parts</a>
 </h4>
+    <ul class="phpdocumentor-list">
+                    <li>
+                <a href="guide/parts/guild.html" class="">Guild</a>
+                
+            </li>
+                    <li>
+                <a href="guide/parts/channel.html" class="">Channel</a>
+                
+            </li>
+                    <li>
+                <a href="guide/parts/member.html" class="">Member</a>
+                
+            </li>
+                    <li>
+                <a href="guide/parts/message.html" class="">Message</a>
+                
+            </li>
+                    <li>
+                <a href="guide/parts/user.html" class="">User</a>
+                
+            </li>
+            </ul>
 
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="guide/events/index.html" class="">Events</a>
@@ -136,126 +158,17 @@
 </aside>
 
             <div class="phpdocumentor-column -eight phpdocumentor-content">
-                    <div class="section" id="repositories">
-<h1>Repositories</h1>
-<p>Repositories are containers for parts. They provide the functions to get, save and delete parts from the Discord servers. Different parts have many repositories.</p>
-<p>An example is the <code>Channel</code> part. It has 4 repositories: <code>members</code>, <code>messages</code>, <code>overwrites</code> and <code>webhooks</code>. Each of these repositories contain parts that relate to the <code>Channel</code> part, such as messages sent in the channel (<code>messages</code> repository), or if it is a voice channel the members currently in the channel (<code>members</code> repository).</p>
-<p>A full list of repositories is provided below in the parts section, per part.</p>
-<p>Repositories extend the <a href="#collection">Collection</a> class. See the documentation on collections for extra methods.</p>
-<p>Examples provided below are based on the <code>guilds</code> repository in the Discord client.</p>
+                    <div class="section" id="application-commands">
+<h1>Application Commands</h1>
 </div>
-<div class="section" id="methods">
-<h1>Methods</h1>
-<p>All repositories extend the <code>AbstractRepository</code> class, and share a set of core methods.</p>
-<div class="section" id="freshening-the-repository-data">
-<h2>Freshening the repository data</h2>
-<p>Clears the repository and fills it with new data from Discord. It takes no parameters and returns the repository in a promise.</p>
-<pre><code class="language-php " >$discord-&gt;guilds-&gt;freshen()-&gt;done(function (GuildRepository $guilds) {
-    // ...
-});
-</code></pre>
-</div>
-<div class="section" id="creating-a-part">
-<h2>Creating a part</h2>
-<p>Creates a repository part from an array of attributes and returns the part. Does not create the part in Discord servers, you must use the <code>->save()</code> function later.</p>
-<table>
-    
-    <tbody>
-                    <tr>
-                                    <td>name</td>
-                                    <td>type</td>
-                                    <td>description</td>
-                            </tr>
-                    <tr>
-                                    <td>attributes</td>
-                                    <td>array</td>
-                                    <td>Array of attributes to fill in the part. Optional</td>
-                            </tr>
-            </tbody>
-</table>
-<pre><code class="language-php " >$guild = $discord-&gt;guilds-&gt;create([
-    &#039;name&#039; =&gt; &#039;My new guild name&#039;,
-]);
-// to save
-$discord-&gt;guilds-&gt;save($guild)-&gt;done(...);
-</code></pre>
-</div>
-<div class="section" id="saving-a-part">
-<h2>Saving a part</h2>
-<p>Creates or updates a repository part in the Discord servers. Takes a part and returns the same part in a promise.</p>
-<table>
-    
-    <tbody>
-                    <tr>
-                                    <td>name</td>
-                                    <td>type</td>
-                                    <td>description</td>
-                            </tr>
-                    <tr>
-                                    <td>part</td>
-                                    <td>Part</td>
-                                    <td>The part to create or update</td>
-                            </tr>
-            </tbody>
-</table>
-<pre><code class="language-php " >$discord-&gt;guilds-&gt;save($guild)-&gt;done(function (Guild $guild) {
-    // ...
-});
-</code></pre>
-</div>
-<div class="section" id="deleting-a-part">
-<h2>Deleting a part</h2>
-<p>Deletes a repository part from the Discord servers. Takes a part and returns the old part in a promise.</p>
-<table>
-    
-    <tbody>
-                    <tr>
-                                    <td>name</td>
-                                    <td>type</td>
-                                    <td>description</td>
-                            </tr>
-                    <tr>
-                                    <td>part</td>
-                                    <td>Part</td>
-                                    <td>The part to delete</td>
-                            </tr>
-            </tbody>
-</table>
-<pre><code class="language-php " >$discord-&gt;guilds-&gt;delete($guild)-&gt;done(function (Guild $guild) {
-    // ...
-});
-</code></pre>
-</div>
-<div class="section" id="fetch-a-part">
-<h2>Fetch a part</h2>
-<p>Fetches/freshens a part from the repository. If the part is present in the cache, it returns the cached version, otherwise it retrieves the part from Discord servers. Takes a part ID and returns the part in a promise.</p>
-<table>
-            <thead>
-                            <tr>
-                                            <th>name</th>
-                                            <th>type</th>
-                                            <th>description</th>
-                                    </tr>
-                    </thead>
-    
-    <tbody>
-                    <tr>
-                                    <td>id</td>
-                                    <td>string</td>
-                                    <td>Part ID</td>
-                            </tr>
-                    <tr>
-                                    <td>fresh</td>
-                                    <td>bool</td>
-                                    <td>Forces the method to skip checking the cache. Default is false</td>
-                            </tr>
-            </tbody>
-</table>
-<pre><code class="language-php " >$discord-&gt;guilds-&gt;fetch(&#039;guild_id&#039;)-&gt;done(function (Guild $guild) {
-    // ...
-});
-// or, if you don&#039;t want to check the cache
-$discord-&gt;guilds-&gt;fetch(&#039;guild_id&#039;, true)-&gt;done(function (Guild $guild) {
+<div class="section" id="application-command-permissions-update">
+<h1>Application Command Permissions Update</h1>
+<p>Called with an <code>Overwrite</code> object when an application command’s permissions are updated.</p>
+<blockquote><p>Warning: The class Overwrite will be changed in future version!</p>
+</blockquote>
+<pre><code class="language-php " >// use Discord\Parts\Interactions\Command\Overwrite;
+
+$discord-&gt;on(Event::APPLICATION_COMMAND_PERMISSIONS_UPDATE, function (Overwrite $overwrite, Discord $discord, ?Overwrite $oldOverwrite) {
     // ...
 });</code></pre>
 </div>

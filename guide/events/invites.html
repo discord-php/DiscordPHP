@@ -63,6 +63,28 @@
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="guide/parts/index.html" class="">Parts</a>
 </h4>
+    <ul class="phpdocumentor-list">
+                    <li>
+                <a href="guide/parts/guild.html" class="">Guild</a>
+                
+            </li>
+                    <li>
+                <a href="guide/parts/channel.html" class="">Channel</a>
+                
+            </li>
+                    <li>
+                <a href="guide/parts/member.html" class="">Member</a>
+                
+            </li>
+                    <li>
+                <a href="guide/parts/message.html" class="">Message</a>
+                
+            </li>
+                    <li>
+                <a href="guide/parts/user.html" class="">User</a>
+                
+            </li>
+            </ul>
 
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="guide/events/index.html" class="">Events</a>
@@ -136,25 +158,34 @@
 </aside>
 
             <div class="phpdocumentor-column -eight phpdocumentor-content">
-                    <div class="section" id="events">
-<h1>Events</h1>
-<p>Events are payloads sent over the socket to a client that correspond to events in Discord.</p>
-<p>All gateway events are enabled by default and can be individually disabled using <code>disabledEvents</code> options. Most events also requires the respective Intents enabled (as well privileged ones enabled from <a href="https://discord.com/developers/applications">Developers Portal</a>) regardless the enabled event setting.</p>
-<p>To listen on gateway events, use the event emitter callback and <code>Event</code> name constants. Some events are internally handled by the library and may not be registered a listener:</p>
-
-
-<ul>
-    <li>
-            <code>Event::READY</code> (not to be confused with <code>'ready'</code>)
-        </li>
-    <li>
-            <code>Event::RESUMED</code>
-        </li>
-    <li>
-            <code>Event::GUILD_MEMBERS_CHUNK</code>
-        </li>
-</ul>
-<p>If you are an advanced user, you may listen to those events before internally handled with the library by parsing the ‘raw’ dispatch event data.</p>
+                    <div class="section" id="invites">
+<h1>Invites</h1>
+<p>Requires the <code>Intents::GUILD_INVITES</code> intent and <code>manage_channels</code> permission.</p>
+</div>
+<div class="section" id="invite-create">
+<h1>Invite Create</h1>
+<p>Called with an <code>Invite</code> object when a new invite to a channel is created.</p>
+<pre><code class="language-php " >$discord-&gt;on(Event::INVITE_CREATE, function (Invite $invite, Discord $discord) {
+    // ...
+});
+</code></pre>
+</div>
+<div class="section" id="invite-delete">
+<h1>Invite Delete</h1>
+<p>Called with an object when an invite is created.</p>
+<pre><code class="language-php " >$discord-&gt;on(Event::INVITE_DELETE, function (object $invite, Discord $discord) {
+    if ($invite instanceof Invite) {
+        // Invite is present in cache
+    }
+    // If the invite is not present in the cache:
+    else {
+        // {
+        //     &quot;channel_id&quot;: &quot;&quot;,
+        //     &quot;guild_id&quot;: &quot;&quot;,
+        //     &quot;code&quot;: &quot;&quot; // the unique invite code
+        // }
+    }
+});</code></pre>
 </div>
 
                 <section data-search-results class="phpdocumentor-search-results phpdocumentor-search-results--hidden">

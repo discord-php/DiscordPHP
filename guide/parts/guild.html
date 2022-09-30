@@ -63,6 +63,28 @@
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="guide/parts/index.html" class="">Parts</a>
 </h4>
+    <ul class="phpdocumentor-list">
+                    <li>
+                <a href="guide/parts/guild.html" class="-active">Guild</a>
+                
+            </li>
+                    <li>
+                <a href="guide/parts/channel.html" class="">Channel</a>
+                
+            </li>
+                    <li>
+                <a href="guide/parts/member.html" class="">Member</a>
+                
+            </li>
+                    <li>
+                <a href="guide/parts/message.html" class="">Message</a>
+                
+            </li>
+                    <li>
+                <a href="guide/parts/user.html" class="">User</a>
+                
+            </li>
+            </ul>
 
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="guide/events/index.html" class="">Events</a>
@@ -136,54 +158,89 @@
 </aside>
 
             <div class="phpdocumentor-column -eight phpdocumentor-content">
-                    <div class="section" id="message">
-<h1>Message</h1>
-<p>Messages are present in channels and can be anything from a cross post to a reply and a regular message.</p>
+                    <div class="section" id="guild">
+<h1>Guild</h1>
+<p>Guilds represent Discord ‘servers’.</p>
 </div>
-<div class="section" id="properties">
-<h1>Properties</h1>
+<div class="section" id="repositories">
+<h1>Repositories</h1>
 <table>
     
     <tbody>
             </tbody>
 </table>
 </div>
-<div class="section" id="reply-to-a-message">
-<h1>Reply to a message</h1>
-<p>Sends a “reply” to the message. Returns the new message in a promise.</p>
+<div class="section" id="creating-a-role">
+<h1>Creating a role</h1>
+<p>Shortcut for <code>$guild->roles->save($role);</code>. Takes an array of parameters for a role and returns a role part in a promise.</p>
 <div class="section" id="parameters">
 <h2>Parameters</h2>
 <table>
+            <thead>
+                            <tr>
+                                            <th>name</th>
+                                            <th>type</th>
+                                            <th>description</th>
+                                            <th>default</th>
+                                    </tr>
+                    </thead>
     
     <tbody>
                     <tr>
                                     <td>name</td>
-                                    <td>type</td>
-                                    <td>description</td>
+                                    <td>string</td>
+                                    <td>Role name</td>
+                                    <td>new role</td>
                             </tr>
                     <tr>
-                                    <td>text</td>
+                                    <td>permissions</td>
                                     <td>string</td>
-                                    <td>text to send in the message</td>
+                                    <td>Bitwise value of permissions</td>
+                                    <td>@everyone permissions</td>
+                            </tr>
+                    <tr>
+                                    <td>color</td>
+                                    <td>integer</td>
+                                    <td>RGB color value</td>
+                                    <td>0</td>
+                            </tr>
+                    <tr>
+                                    <td>hoist</td>
+                                    <td>bool</td>
+                                    <td>Hoisted role?</td>
+                                    <td>false</td>
+                            </tr>
+                    <tr>
+                                    <td>icon</td>
+                                    <td>string</td>
+                                    <td>image data for Role icon</td>
+                                    <td>null</td>
+                            </tr>
+                    <tr>
+                                    <td>unicodeemoji</td>
+                                    <td>string</td>
+                                    <td>unicode emoji for Role icon</td>
+                                    <td>null</td>
+                            </tr>
+                    <tr>
+                                    <td>mentionable</td>
+                                    <td>bool</td>
+                                    <td>Mentionable role?</td>
+                                    <td>false</td>
                             </tr>
             </tbody>
 </table>
-<pre><code class="language-php " >$message-&gt;reply(&#039;hello!&#039;)-&gt;done(function (Message $message) {
+<pre><code class="language-php " >$guild-&gt;createRole([
+    &#039;name&#039; =&gt; &#039;New Role&#039;,
+    // ...
+])-&gt;done(function (Role $role) {
     // ...
 });
 </code></pre>
 </div>
-<div class="section" id="crosspost-a-message">
-<h1>Crosspost a message</h1>
-<p>Crossposts a message to any channels that are following the channel the message was sent in. Returns the crossposted message in a promise.</p>
-<pre><code class="language-php " >$message-&gt;crosspost()-&gt;done(function (Message $message) {
-    // ...
-});
-</code></pre>
-</div>
-<div class="section" id="reply-to-a-message-after-a-delay">
-<h1>Reply to a message after a delay</h1>
-<p>Similar to replying to a message, also takes a <code>delay</code> parameter in which the reply will be sent after. Returns the new message in a promise.</p>
+<div class="section" id="transferring-ownership-of-guild">
+<h1>Transferring ownership of guild</h1>
+<p>Transfers the ownership of the guild to another member. The bot must own the guild to be able to transfer ownership. Takes a member object or a member ID and returns nothing in a promise.</p>
 <a id="parameters-1"></a>
 <div class="section" id="parameters">
 <h2>Parameters</h2>
@@ -196,118 +253,56 @@
                                     <td>description</td>
                             </tr>
                     <tr>
-                                    <td>text</td>
-                                    <td>string</td>
-                                    <td>text to send in the message</td>
+                                    <td>member</td>
+                                    <td>Member or member ID</td>
+                                    <td>The member to get ownership</td>
                             </tr>
                     <tr>
-                                    <td>delay</td>
-                                    <td>int</td>
-                                    <td>time in milliseconds to delay before sending the message</td>
+                                    <td>reason</td>
+                                    <td>string</td>
+                                    <td>Reason for Audit Log</td>
                             </tr>
             </tbody>
 </table>
-<pre><code class="language-php " >// &lt;@message_author_id&gt;, hello! after 1.5 seconds
-$message-&gt;delayedReply(&#039;hello!&#039;, 1500)-&gt;done(function (Message $message) {
-    // ...
-});
+<pre><code class="language-php " >$guild-&gt;transferOwnership($member)-&gt;done(...);
+// or
+$guild-&gt;transferOwnership(&#039;member_id&#039;)-&gt;done(...);
 </code></pre>
 </div>
 </div>
-<div class="section" id="react-to-a-message">
-<h1>React to a message</h1>
-<p>Adds a reaction to a message. Takes an <a href="#emoji">Emoji</a> object, a custom emoji string or a unicode emoji. Returns nothing in a promise.</p>
+<div class="section" id="unbanning-a-member-with-a-user-or-user-id">
+<h1>Unbanning a member with a User or user ID</h1>
+<p>Unbans a member when passed a <code>User</code> object or a user ID. If you have the ban object, you can do <code>$guild->bans->delete($ban);</code>. Returns nothing in a promise.</p>
 <a id="parameters-2"></a>
 <div class="section" id="parameters">
 <h2>Parameters</h2>
 <table>
     
     <tbody>
+                    <tr>
+                                    <td>name</td>
+                                    <td>type</td>
+                                    <td>description</td>
+                            </tr>
+                    <tr>
+                                    <td>userid</td>
+                                    <td><code>User</code> or user ID</td>
+                                    <td>The user to unban</td>
+                            </tr>
             </tbody>
 </table>
-<pre><code class="language-php " >$message-&gt;react($emoji)-&gt;done(function () {
-    // ...
-});
-
+<pre><code class="language-php " >$guild-&gt;unban($user)-&gt;done(...);
 // or
-
-$message-&gt;react(&#039;:michael:251127796439449631&#039;)-&gt;done(function () {
-    // ...
-});
-
-// or
-
-$message-&gt;react(&#039;😀&#039;)-&gt;done(function () {
-    // ...
-});
+$guild-&gt;unban(&#039;user_id&#039;)-&gt;done(...);
 </code></pre>
 </div>
 </div>
-<div class="section" id="delete-reaction-s-from-a-message">
-<h1>Delete reaction(s) from a message</h1>
-<p>Deletes reaction(s) from a message. Has four methods of operation, described below. Returns nothing in a promise.</p>
+<div class="section" id="querying-the-guild-audit-log">
+<h1>Querying the Guild audit log</h1>
+<p>Takes an array of parameters to query the audit log for the guild. Returns an Audit Log object inside a promise.</p>
 <a id="parameters-3"></a>
 <div class="section" id="parameters">
 <h2>Parameters</h2>
-<table>
-    
-    <tbody>
-            </tbody>
-</table>
-</div>
-<div class="section" id="delete-all-reactions">
-<h2>Delete all reactions</h2>
-<pre><code class="language-php " >$message-&gt;deleteReaction(Message::REACT_DELETE_ALL)-&gt;done(function () {
-    // ...
-});
-</code></pre>
-</div>
-<div class="section" id="delete-reaction-by-current-user">
-<h2>Delete reaction by current user</h2>
-<pre><code class="language-php " >$message-&gt;deleteReaction(Message::REACT_DELETE_ME, $emoji)-&gt;done(function () {
-    // ...
-});
-</code></pre>
-</div>
-<div class="section" id="delete-reaction-by-another-user">
-<h2>Delete reaction by another user</h2>
-<pre><code class="language-php " >$message-&gt;deleteReaction(Message::REACT_DELETE_ID, $emoji, &#039;member_id&#039;)-&gt;done(function () {
-    // ...
-});
-</code></pre>
-</div>
-<div class="section" id="delete-all-reactions-of-one-emoji">
-<h2>Delete all reactions of one emoji</h2>
-<pre><code class="language-php " >$message-&gt;deleteReaction(Message::REACT_DELETE_EMOJI, $emoji)-&gt;done(function () {
-    // ...
-});
-</code></pre>
-</div>
-</div>
-<div class="section" id="delete-the-message">
-<h1>Delete the message</h1>
-<p>Deletes the message. Returns nothing in a promise.</p>
-<pre><code class="language-php " >$message-&gt;delete()-&gt;done(function () {
-    // ...
-});
-</code></pre>
-</div>
-<div class="section" id="edit-the-message">
-<h1>Edit the message</h1>
-<p>Updates the message. Takes a message builder. Returns the updated message in a promise.</p>
-<pre><code class="language-php " >$message-&gt;edit(MessageBuilder::new()
-    -&gt;setContent(&#039;new content&#039;))-&gt;done(function (Message $message) {
-        // ...
-    });
-</code></pre>
-<p>Note fields not set in the builder will not be updated, and will retain their previous value.</p>
-</div>
-<div class="section" id="create-reaction-collector">
-<h1>Create reaction collector</h1>
-<p>Creates a reaction collector. Works similar to <a href="#channel">Channel</a>\ ’s reaction collector. Takes a callback and an array of options. Returns a collection of reactions in a promise.</p>
-<div class="section" id="options">
-<h2>Options</h2>
-<p>At least one of <code>time</code> or <code>limit</code> must be specified.</p>
 <table>
             <thead>
                             <tr>
@@ -319,44 +314,84 @@ $message-&gt;react(&#039;😀&#039;)-&gt;done(function () {
     
     <tbody>
                     <tr>
-                                    <td>time</td>
-                                    <td>int or false</td>
-                                    <td>time in milliseconds until the collector finishes</td>
+                                    <td>userid</td>
+                                    <td>string, int, <code>Member</code>, <code>User</code></td>
+                                    <td>Filters audit log by who performed the action</td>
+                            </tr>
+                    <tr>
+                                    <td>actiontype</td>
+                                    <td><code>Entry</code> constants</td>
+                                    <td>Filters audit log by the type of action</td>
+                            </tr>
+                    <tr>
+                                    <td>before</td>
+                                    <td>string, int, <code>Entry</code></td>
+                                    <td>Retrieves audit logs before the given audit log object</td>
                             </tr>
                     <tr>
                                     <td>limit</td>
-                                    <td>int or false</td>
-                                    <td>amount of reactions to be collected until the collector finishes</td>
+                                    <td>int between 1 and 100</td>
+                                    <td>Limits the amount of audit log entries to return</td>
                             </tr>
             </tbody>
 </table>
-<pre><code class="language-php " >$message-&gt;createReactionCollector(function (MessageReaction $reaction) {
-    // return true or false depending on whether you want the reaction to be collected.
-    return $reaction-&gt;user_id == &#039;123123123123&#039;;
-}, [
-    // will resolve after 1.5 seconds or 2 reactions
-    &#039;time&#039; =&gt; 1500,
-    &#039;limit&#039; =&gt; 2,
-])-&gt;done(function (Collection $reactions) {
-    foreach ($reactions as $reaction) {
-        // ...
+<pre><code class="language-php " >$guild-&gt;getAuditLog([
+    &#039;user_id&#039; =&gt; &#039;123456&#039;,
+    &#039;action_type&#039; =&gt; Entry::CHANNEL_CREATE,
+    &#039;before&#039; =&gt; $anotherEntry,
+    &#039;limit&#039; =&gt; 12,
+])-&gt;done(function (AuditLog $auditLog) {
+    foreach ($auditLog-&gt;audit_log_entries as $entry) {
+        // $entry-&gt;...
     }
 });
 </code></pre>
 </div>
 </div>
-<div class="section" id="add-embed-to-message">
-<h1>Add embed to message</h1>
-<p>Adds an embed to a message. Takes an embed object. Will overwrite the old embed (if there is one). Returns the updated message in a promise.</p>
+<div class="section" id="creating-an-emoji">
+<h1>Creating an Emoji</h1>
+<p>Takes an array of parameters for an emoji and returns an emoji part in a promise. Use the second parameter to specify local file path instead.</p>
 <a id="parameters-4"></a>
 <div class="section" id="parameters">
 <h2>Parameters</h2>
 <table>
+            <thead>
+                            <tr>
+                                            <th>name</th>
+                                            <th>type</th>
+                                            <th>description</th>
+                                            <th>default</th>
+                                    </tr>
+                    </thead>
     
     <tbody>
+                    <tr>
+                                    <td>name</td>
+                                    <td>string</td>
+                                    <td>Emoji name</td>
+                                    <td><em>required</em></td>
+                            </tr>
+                    <tr>
+                                    <td>image</td>
+                                    <td>string</td>
+                                    <td>image data with base64 format, ignored if file path is specified</td>
+                                    <td></td>
+                            </tr>
+                    <tr>
+                                    <td>roles</td>
+                                    <td>array</td>
+                                    <td>Role IDs that are allowed to use the emoji</td>
+                                    <td>[]</td>
+                            </tr>
             </tbody>
 </table>
-<pre><code class="language-php " >$message-&gt;addEmbed($embed)-&gt;done(function (Message $message) {
+<pre><code class="language-php " >$guild-&gt;createEmoji([
+    &#039;name&#039; =&gt; &#039;elephpant&#039;,
+    // ...
+],
+&#039;/path/to/file.jpg&#039;,
+&#039;audit-log reason&#039;
+)-&gt;done(function (Emoji $emoji) {
     // ...
 });</code></pre>
 </div>

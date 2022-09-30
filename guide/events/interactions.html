@@ -63,6 +63,28 @@
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="guide/parts/index.html" class="">Parts</a>
 </h4>
+    <ul class="phpdocumentor-list">
+                    <li>
+                <a href="guide/parts/guild.html" class="">Guild</a>
+                
+            </li>
+                    <li>
+                <a href="guide/parts/channel.html" class="">Channel</a>
+                
+            </li>
+                    <li>
+                <a href="guide/parts/member.html" class="">Member</a>
+                
+            </li>
+                    <li>
+                <a href="guide/parts/message.html" class="">Message</a>
+                
+            </li>
+                    <li>
+                <a href="guide/parts/user.html" class="">User</a>
+                
+            </li>
+            </ul>
 
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="guide/events/index.html" class="">Events</a>
@@ -136,28 +158,19 @@
 </aside>
 
             <div class="phpdocumentor-column -eight phpdocumentor-content">
-                    <div class="section" id="voices">
-<h1>Voices</h1>
+                    <div class="section" id="interactions">
+<h1>Interactions</h1>
 </div>
-<div class="section" id="voice-state-update">
-<h1>Voice State Update</h1>
-<p>Called with a <code>VoiceStateUpdate</code> object when a member joins, leaves or moves between voice channels.</p>
-<pre><code class="language-php " >// use Discord\Parts\WebSockets\VoiceStateUpdate;
+<div class="section" id="interaction-create">
+<h1>Interaction Create</h1>
+<p>Called with an <code>Interaction</code> object when an interaction is created.</p>
+<pre><code class="language-php " >// use Discord\Parts\Interactions\Interaction;
 
-$discord-&gt;on(Event::VOICE_STATE_UPDATE, function (VoiceStateUpdate $state, Discord $discord, $oldstate) {
+$discord-&gt;on(Event::INTERACTION_CREATE, function (Interaction $interaction, Discord $discord) {
     // ...
 });
 </code></pre>
-<p>Requires the <code>Intents::GUILD_VOICE_STATES</code> intent.</p>
-</div>
-<div class="section" id="voice-server-update">
-<h1>Voice Server Update</h1>
-<p>Called with a <code>VoiceServerUpdate</code> object when a voice server is updated in a guild.</p>
-<pre><code class="language-php " >// use Discord\Parts\WebSockets\VoiceServerUpdate;
-
-$discord-&gt;on(Event::VOICE_SERVER_UPDATE, function (VoiceServerUpdate $guild, Discord $discord) {
-    // ...
-});</code></pre>
+<p>Application Command &amp; Message component listeners are processed before this event is called. Useful if you want to create a customized callback or have interaction response persists after Bot restart.</p>
 </div>
 
                 <section data-search-results class="phpdocumentor-search-results phpdocumentor-search-results--hidden">

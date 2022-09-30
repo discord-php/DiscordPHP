@@ -63,6 +63,28 @@
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="guide/parts/index.html" class="">Parts</a>
 </h4>
+    <ul class="phpdocumentor-list">
+                    <li>
+                <a href="guide/parts/guild.html" class="">Guild</a>
+                
+            </li>
+                    <li>
+                <a href="guide/parts/channel.html" class="">Channel</a>
+                
+            </li>
+                    <li>
+                <a href="guide/parts/member.html" class="">Member</a>
+                
+            </li>
+                    <li>
+                <a href="guide/parts/message.html" class="">Message</a>
+                
+            </li>
+                    <li>
+                <a href="guide/parts/user.html" class="">User</a>
+                
+            </li>
+            </ul>
 
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="guide/events/index.html" class="">Events</a>
@@ -136,44 +158,32 @@
 </aside>
 
             <div class="phpdocumentor-column -eight phpdocumentor-content">
-                    <div class="section" id="parts">
-<h1>Parts</h1>
-<p>Parts is the term used for the data structures inside Discord. All parts share a common set of attributes and methods.</p>
-<p>Parts have a set list of fillable fields. If you attempt to set a field that is not accessible, it will not warn you.</p>
-<p>To create a part object, you can use the <code>new</code> syntax or the <code>factory</code> method. For example, creating a <code>Message</code> part:</p>
-<pre><code class="language-php " >$message = new Message($discord);
-// or
-$message = $discord-&gt;factory-&gt;create(Message::class);
-</code></pre>
-<p>Part attributes can be accessed similar to an object or like an array:</p>
-<pre><code class="language-php " >$message-&gt;content = &#039;hello!&#039;;
-// or
-$message[&#039;content&#039;] = &#039;hello!&#039;;
-
-echo $message-&gt;content;
-// or
-echo $message[&#039;content&#039;];
+                    <div class="section" id="stage-instances">
+<h1>Stage Instances</h1>
+<p>Requires the <code>Intents::GUILDS</code> intent.</p>
+</div>
+<div class="section" id="stage-instance-create">
+<h1>Stage Instance Create</h1>
+<p>Called with a <code>StageInstance</code> object when a stage instance is created (i.e. the Stage is now “live”).</p>
+<pre><code class="language-php " >$discord-&gt;on(Event::STAGE_INSTANCE_CREATE, function (StageInstance $stageInstance, Discord $discord) {
+    // ...
+});
 </code></pre>
 </div>
-<div class="section" id="filling-a-part-with-data">
-<h1>Filling a part with data</h1>
-<p>The <code>->fill(array $attributes)</code> function takes an array of attributes to fill the part. If a field is found that is not ‘fillable’, it is skipped.</p>
-<pre><code class="language-php " >$message-&gt;fill([
-    &#039;content&#039; =&gt; &#039;hello!&#039;,
-]);
+<div class="section" id="stage-instance-update">
+<h1>Stage Instance Update</h1>
+<p>Called with a <code>StageInstance</code> objects when a stage instance has been updated.</p>
+<pre><code class="language-php " >$discord-&gt;on(Event::STAGE_INSTANCE_UPDATE, function (StageInstance $stageInstance, Discord $discord, ?StageInstance $oldStageInstance) {
+    // ...
+});
 </code></pre>
 </div>
-<div class="section" id="getting-the-raw-attributes-of-a-part">
-<h1>Getting the raw attributes of a part</h1>
-<p>The <code>->getRawAttributes()</code> function returns the array representation of the part.</p>
-<pre><code class="language-php " >$attributes = $message-&gt;getRawAttributes();
-/**
- * [
- *     &quot;id&quot; =&gt; &quot;&quot;,
- *     &quot;content&quot; =&gt; &quot;&quot;,
- *     // ...
- * ]
- */</code></pre>
+<div class="section" id="stage-instance-delete">
+<h1>Stage Instance Delete</h1>
+<p>Called with a <code>StageInstance</code> object when a stage instance has been deleted (i.e. the Stage has been closed).</p>
+<pre><code class="language-php " >$discord-&gt;on(Event::STAGE_INSTANCE_DELETE, function (StageInstance $stageInstance, Discord $discord) {
+    // ...
+});</code></pre>
 </div>
 
                 <section data-search-results class="phpdocumentor-search-results phpdocumentor-search-results--hidden">

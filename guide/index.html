@@ -57,12 +57,34 @@
                     <section class="phpdocumentor-sidebar__category">
             <h2 class="phpdocumentor-sidebar__category-header">Intro</h2>
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
-    <a href="guide/index.html" class="">Intro</a>
+    <a href="guide/index.html" class="-active">Intro</a>
 </h4>
 
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="guide/parts/index.html" class="">Parts</a>
 </h4>
+    <ul class="phpdocumentor-list">
+                    <li>
+                <a href="guide/parts/guild.html" class="">Guild</a>
+                
+            </li>
+                    <li>
+                <a href="guide/parts/channel.html" class="">Channel</a>
+                
+            </li>
+                    <li>
+                <a href="guide/parts/member.html" class="">Member</a>
+                
+            </li>
+                    <li>
+                <a href="guide/parts/message.html" class="">Message</a>
+                
+            </li>
+                    <li>
+                <a href="guide/parts/user.html" class="">User</a>
+                
+            </li>
+            </ul>
 
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="guide/events/index.html" class="">Events</a>
@@ -136,35 +158,129 @@
 </aside>
 
             <div class="phpdocumentor-column -eight phpdocumentor-content">
-                    <div class="section" id="faq">
-<h1>FAQ</h1>
+                    
+<div class="section" id="intro">
+<h1>Intro</h1>
+<p>DiscordPHP is a wrapper for the Discord REST, WebSocket and Voice APIs. Built on top of <a href="https://reactphp.org/">ReactPHP</a> components. This documentation is based off the latest release.</p>
+<div class="section" id="requirements">
+<h2>Requirements</h2>
+
+
+<ul>
+    <li>
+            <p><a href="https://php.net">PHP 7.4 CLI</a> or higher</p>
+            
+
+<ul>
+    <li>
+            Will not run on a webserver (FPM, CGI), you must run through CLI. A bot is a long-running process.
+        </li>
+    <li>
+            x86 (32-bit) PHP requires ext-gmp extension enabled for handling new Permission values.
+        </li>
+</ul>
+        </li>
+    <li>
+            <code>ext-json</code> for JSON parsing.
+        </li>
+    <li>
+            <code>ext-zlib</code> for gateway packet compression.
+        </li>
+</ul>
+<div class="section" id="recommended-extensions">
+<h3>Recommended Extensions</h3>
+
+
+<ul>
+    <li>
+            One of <code>ext-uv</code>, <code>ext-libev</code> or <code>evt-event</code> (in order of preference) for a faster, and more performant event loop.
+        </li>
+    <li>
+            <code>ext-mbstring</code> if you may handle non-english characters.
+        </li>
+    <li>
+            <code>ext-gmp</code> if running 32-bit PHP.
+        </li>
+</ul>
 </div>
-<div class="section" id="f59e33ec3ef85810bd013685f2714325a75e5be5">
-<h1><code>Class 'X' not found</code></h1>
-<p>You most likely haven't imported the class that you are trying to use. Please check the <a href="http://discord-php.github.io/DiscordPHP/reference/">class reference</a> and search for the class that you are trying to use. Add an import statement at the top of the file like shown on the right.</p>
-<pre><code class="language-php " >&lt;?php
+<div class="section" id="voice-requirements">
+<h3>Voice Requirements</h3>
 
-use Discord\X;
 
-</code></pre>
-<p>If you don't want to have to import a class every time, you should look into the PHP Intelephense language server (written above) which will do automatic imports for you.</p>
+<ul>
+    <li>
+            <p>x8664 Windows, Linux or Darwin based OS.</p>
+            
+
+<ul>
+    <li>
+            If you are running on Windows, you must be using PHP 8.0.
+        </li>
+</ul>
+        </li>
+    <li>
+            <code>ext-sodium</code> for voice encryption.
+        </li>
+    <li>
+            FFmpeg
+        </li>
+</ul>
 </div>
-<div class="section" id="there-are-less-members-and-or-users-than-expected">
-<h1>There are less members and/or users than expected</h1>
-<p>Server members are guarded by a priviliged server intent which must be enabled in the <a href="https://discord.com/developers/applications">Discord Developer Portal</a>. Note that you will need to verify your bot if you use this intent and pass 100 guilds.</p>
-<p>You also need to enable the <code>loadAllMembers</code> option in your code, as shown on the right.</p>
-<pre><code class="language-php " >$discord = new Discord([
-    &#039;token&#039; =&gt; &#039;...&#039;,
-    &#039;loadAllMembers&#039; =&gt; true, // Enable this option
-]);
+<div class="section" id="development-environment-recommendations">
+<h3>Development Environment Recommendations</h3>
+<p>We recommend using an editor with support for the <a href="https://microsoft.github.io/language-server-protocol/">Language Server Protocol</a>.
+A list of supported editors can be found <a href="https://microsoft.github.io/language-server-protocol/implementors/servers/">here</a>.
+Here are some commonly used editors:</p>
 
+
+<ul>
+    <li>
+            Visual Studio Code (built-in LSP support)
+        </li>
+    <li>
+            Vim/Neovim (with the <a href="https://github.com/neoclide/coc.nvim">coc.nvim</a> plugin for LSP support)
+        </li>
+    <li>
+            PHPStorm (built-in PHP support)
+        </li>
+</ul>
+<p>We recommend installing <a href="https://intelephense.com/">PHP Intelephense</a> alongside your LSP-equipped editor for code completion alongside other helpful features. There is no need to pay for the premium features, the free version will suffice.</p>
+</div>
+</div>
+<div class="section" id="installation">
+<h2>Installation</h2>
+<p>Installation requries <a href="https://getcomposer.org">Composer</a>.</p>
+<p>To install the latest release:</p>
+<pre><code class="language- " >$ composer require team-reflex/discord-php
 </code></pre>
-<p>If you are using DiscordPHP Version 6 or greater, you need to enable the <code>GUILD_MEMBERS</code> intent as well as the <code>loadAllMembers</code> option. The shown code will enable all intents minus the <code>GUILD_PRESENCES</code> intent (which is also priviliged).</p>
-<pre><code class="language-php " >$discord = new Discord([
-    &#039;token&#039; =&gt; &#039;...&#039;,
-    &#039;loadAllMembers&#039; =&gt; true,
-    &#039;intents&#039; =&gt; Intents::getDefaultIntents() | Intents::GUILD_MEMBERS // Enable the `GUILD_MEMBERS` intent
-])</code></pre>
+<p>If you would like to run on the latest <code>master</code> branch:</p>
+<pre><code class="language- " >$ composer require team-reflex/discord-php dev-master
+</code></pre>
+<p><code>master</code> can be substituted for any other branch name to install that branch.</p>
+</div>
+<div class="section" id="key-tips">
+<h2>Key Tips</h2>
+<p>As Discord is a real-time application, events come frequently and it is vital that your code does not block the ReactPHP event loop.
+Most, if not all, functions return promises, therefore it is vital that you understand the concept of asynchronous programming with promises.
+You can learn more about ReactPHP promises <a href="https://reactphp.org/promise/">here</a>.</p>
+</div>
+<div class="section" id="help">
+<h2>Help</h2>
+<p>If you need any help, feel free to join the <a href="https://discord.gg/dphp">PHP Discorders</a> Discord and someone should be able to give you a hand. We are a small community so please be patient if someone can't help you straight away.</p>
+</div>
+<div class="section" id="contributing">
+<h2>Contributing</h2>
+<p>All contributions are welcome through pull requests in our GitHub repository. At the moment we would love contributions towards:</p>
+
+
+<ul>
+    <li>
+            Unit testing
+        </li>
+    <li>
+            Documentation
+        </li>
+</ul>
 </div>
 
                 <section data-search-results class="phpdocumentor-search-results phpdocumentor-search-results--hidden">

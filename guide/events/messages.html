@@ -63,6 +63,28 @@
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="guide/parts/index.html" class="">Parts</a>
 </h4>
+    <ul class="phpdocumentor-list">
+                    <li>
+                <a href="guide/parts/guild.html" class="">Guild</a>
+                
+            </li>
+                    <li>
+                <a href="guide/parts/channel.html" class="">Channel</a>
+                
+            </li>
+                    <li>
+                <a href="guide/parts/member.html" class="">Member</a>
+                
+            </li>
+                    <li>
+                <a href="guide/parts/message.html" class="">Message</a>
+                
+            </li>
+                    <li>
+                <a href="guide/parts/user.html" class="">User</a>
+                
+            </li>
+            </ul>
 
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="guide/events/index.html" class="">Events</a>
@@ -136,98 +158,97 @@
 </aside>
 
             <div class="phpdocumentor-column -eight phpdocumentor-content">
-                    <div class="section" id="channels">
-<h1>Channels</h1>
-<p>Requires the <code>Intents::GUILDS</code> intent.</p>
-</div>
-<div class="section" id="channel-create">
-<h1>Channel Create</h1>
-<p>Called with a <code>Channel</code> object when a new channel is created, relevant to the Bot.</p>
-<pre><code class="language-php " >$discord-&gt;on(Event::CHANNEL_CREATE, function (Channel $channel, Discord $discord) {
-    // ...
-});
-</code></pre>
-</div>
-<div class="section" id="channel-update">
-<h1>Channel Update</h1>
-<p>Called with two <code>Channel</code> objects when a channel is updated.</p>
-<pre><code class="language-php " >$discord-&gt;on(Event::CHANNEL_UPDATE, function (Channel $channel, Discord $discord, ?Channel $oldChannel) {
-    // ...
-});
-</code></pre>
-</div>
-<div class="section" id="channel-delete">
-<h1>Channel Delete</h1>
-<p>Called with a <code>Channel</code> object when a channel relevant to the Bot is deleted.</p>
-<pre><code class="language-php " >$discord-&gt;on(Event::CHANNEL_DELETE, function (Channel $channel, Discord $discord) {
-    // ...
-});
-</code></pre>
-</div>
-<div class="section" id="channel-pins-update">
-<h1>Channel Pins Update</h1>
-<p>Called with an object when a message is pinned or unpinned in a text channel. This is not sent when a pinned message is deleted.</p>
-<pre><code class="language-php " >$discord-&gt;on(Event::CHANNEL_PINS_UPDATE, function ($pins, Discord $discord) {
-    // {
-    //     &quot;guild_id&quot;: &quot;&quot;,
-    //     &quot;channel_id&quot;: &quot;&quot;,
-    //     &quot;last_pin_timestamp&quot;: &quot;&quot;
-    // }
-});
-</code></pre>
-<hr />
-<blockquote><p>For direct messages, it only requires the <code>Intents::DIRECT_MESSAGES</code> intent.</p>
+                    <div class="section" id="messages">
+<h1>Messages</h1>
+<blockquote><p>Unlike persistent messages, ephemeral messages are sent directly to the user and the Bot who sent the message rather than through the guild channel. Because of this, ephemeral messages are tied to the <code>Intents::DIRECT_MESSAGES</code>, and the message object won’t include <code>guild_id</code> or <code>member</code>.</p>
 </blockquote>
+<p>Requires the <code>Intents::GUILD_MESSAGES</code> intent for guild or <code>Intents::DIRECT_MESSAGES</code> for direct messages.</p>
 </div>
-<div class="section" id="threads">
-<h1>Threads</h1>
-<p>Requires the <code>Intents::GUILDS</code> intent.</p>
-<div class="section" id="thread-create">
-<h2>Thread Create</h2>
-<p>Called with a <code>Thread</code> object when a thread is created, relevant to the Bot.</p>
-<pre><code class="language-php " >$discord-&gt;on(Event::THREAD_CREATE, function (Thread $thread, Discord $discord) {
+<div class="section" id="message-create">
+<h1>Message Create</h1>
+<p>Called with a <code>Message</code> object when a message is sent in a guild or private channel.</p>
+<pre><code class="language-php " >$discord-&gt;on(Event::MESSAGE_CREATE, function (Message $message, Discord $discord) {
     // ...
 });
 </code></pre>
 </div>
-<div class="section" id="thread-update">
-<h2>Thread Update</h2>
-<p>Called with a <code>Thread</code> object when a thread is updated.</p>
-<pre><code class="language-php " >$discord-&gt;on(Event::THREAD_UPDATE, function (Thread $thread, Discord $discord, ?Thread $oldThread) {
+<div class="section" id="message-update">
+<h1>Message Update</h1>
+<p>Called with two <code>Message</code> objects when a message is updated in a guild or private channel. The old message may be null if <code>storeMessages</code> is not enabled <em>or</em> the message was sent before the Bot was started. Discord does not provide a way to get message update history.</p>
+<pre><code class="language-php " >$discord-&gt;on(Event::MESSAGE_UPDATE, function (Message $message, Discord $discord, ?Message $oldMessage) {
     // ...
 });
 </code></pre>
 </div>
-<div class="section" id="thread-delete">
-<h2>Thread Delete</h2>
-<p>Called with an old <code>Thread</code> object when a thread relevant to the Bot is deleted.</p>
-<pre><code class="language-php " >$discord-&gt;on(Event::THREAD_DELETE, function (?Thread $thread, Discord $discord) {
+<div class="section" id="message-delete">
+<h1>Message Delete</h1>
+<p>Called with an old <code>Message</code> object <em>or</em> the raw payload when a message is deleted. The <code>Message</code> object may be the raw payload if <code>storeMessages</code> is not enabled <em>or</em> the message was sent before the Bot was started. Discord does not provide a way to get deleted messages.</p>
+<pre><code class="language-php " >$discord-&gt;on(Event::MESSAGE_DELETE, function (object $message, Discord $discord) {
+    if ($message instanceof Message) {
+        // Message is present in cache
+    }
+    // If the message is not present in the cache:
+    else {
+        // {
+        //     &quot;id&quot;: &quot;&quot;, // deleted message ID,
+        //     &quot;channel_id&quot;: &quot;&quot;, // message channel ID,
+        //     &quot;guild_id&quot;: &quot;&quot; // channel guild ID
+        // }
+    }
+});
+</code></pre>
+</div>
+<div class="section" id="message-delete-bulk">
+<h1>Message Delete Bulk</h1>
+<p>Called with a <code>Collection</code> of old <code>Message</code> objects <em>or</em> the raw payload when bulk messages are deleted. The <code>Message</code> object may be the raw payload if <code>storeMessages</code> is not enabled <em>or</em> the message was sent before the Bot was started. Discord does not provide a way to get deleted messages.</p>
+<pre><code class="language-php " >$discord-&gt;on(Event::MESSAGE_DELETE_BULK, function (Collection $messages, Discord $discord) {
+    foreach ($messages as $message) {
+        if ($message instanceof Message) {
+            // Message is present in cache
+        }
+        // If the message is not present in the cache:
+        else {
+            // {
+            //     &quot;id&quot;: &quot;&quot;, // deleted message ID,
+            //     &quot;channel_id&quot;: &quot;&quot;, // message channel ID,
+            //     &quot;guild_id&quot;: &quot;&quot; // channel guild ID
+            // }
+        }
+    }
+});
+</code></pre>
+</div>
+<div class="section" id="message-reactions">
+<h1>Message Reactions</h1>
+<p>Requires the <code>Intents::GUILD_MESSAGE_REACTIONS</code> intent for guild or <code>Intents::DIRECT_MESSAGE_REACTIONS</code> for direct messages.</p>
+<div class="section" id="message-reaction-add">
+<h2>Message Reaction Add</h2>
+<p>Called with a <code>MessageReaction</code> object when a user added a reaction to a message.</p>
+<pre><code class="language-php " >$discord-&gt;on(Event::MESSAGE_REACTION_ADD, function (MessageReaction $reaction, Discord $discord) {
     // ...
 });
 </code></pre>
 </div>
-<div class="section" id="thread-list-sync">
-<h2>Thread List Sync</h2>
-<p>Called when list of threads are synced.</p>
-<pre><code class="language-php " >$discord-&gt;on(Event::THREAD_LIST_SYNC, function (Collection $threads, Discord $discord) {
+<div class="section" id="message-reaction-remove">
+<h2>Message Reaction Remove</h2>
+<p>Called with a <code>MessageReaction</code> object when a user removes a reaction from a message.</p>
+<pre><code class="language-php " >$discord-&gt;on(Event::MESSAGE_REACTION_REMOVE, function (MessageReaction $reaction, Discord $discord) {
     // ...
 });
 </code></pre>
 </div>
-<div class="section" id="thread-member-update">
-<h2>Thread Member Update</h2>
-<p>Called with a Thread <code>Member</code> object when the thread member for the current Bot is updated.</p>
-<pre><code class="language-php " >// use Discord\Parts\Thread\Member;
-
-$discord-&gt;on(Event::THREAD_MEMBER_UPDATE, function (Member $threadMember, Discord $discord) {
+<div class="section" id="message-reaction-remove-all">
+<h2>Message Reaction Remove All</h2>
+<p>Called with a <code>MessageReaction</code> object when all reactions are removed from a message. Note that only the fields relating to the message, channel and guild will be filled.</p>
+<pre><code class="language-php " >$discord-&gt;on(Event::MESSAGE_REACTION_REMOVE_ALL, function (MessageReaction $reaction, Discord $discord) {
     // ...
 });
 </code></pre>
 </div>
-<div class="section" id="thread-members-update">
-<h2>Thread Members Update</h2>
-<p>Called with a <code>Thread</code> object when anyone is added to or removed from a thread. If the Bot does not have the <code>Intents::GUILD_MEMBERS</code>, then this event will only be called if the Bot was added to or removed from the thread.</p>
-<pre><code class="language-php " >$discord-&gt;on(Event::THREAD_MEMBERS_UPDATE, function (Thread $thread, Discord $discord) {
+<div class="section" id="message-reaction-remove-emoji">
+<h2>Message Reaction Remove Emoji</h2>
+<p>Called with an object when all reactions of an emoji are removed from a message. Unlike Message Reaction Remove, this event contains no users or members.</p>
+<pre><code class="language-php " >$discord-&gt;on(Event::MESSAGE_REACTION_REMOVE_EMOJI, function (MessageReaction $reaction, Discord $discord) {
     // ...
 });</code></pre>
 </div>
