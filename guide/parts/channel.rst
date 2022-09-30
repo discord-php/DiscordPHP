@@ -31,9 +31,9 @@ Properties
 +-------------------------------+---------------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------+
 | bitrate                       | int                             | bitrate of the voice channel                                                                                                                             |
 +-------------------------------+---------------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------+
-| recipient                     | `User <#user>`__                | recipient of the direct message, only for direct message channel                                                                                         |
+| recipient                     | `User <#user>`_                | recipient of the direct message, only for direct message channel                                                                                         |
 +-------------------------------+---------------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------+
-| recipients                    | Collection of `Users <#user>`__ | recipients of the group direct message, only for group dm channels                                                                                       |
+| recipients                    | Collection of `Users <#user>`_ | recipients of the group direct message, only for group dm channels                                                                                       |
 +-------------------------------+---------------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------+
 | nsfw                          | bool                            | whether the channel is set as NSFW                                                                                                                       |
 +-------------------------------+---------------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -64,23 +64,23 @@ Repositories
 +------------+----------------------------+-------------------------------------------------+
 | name       | type                       | notes                                           |
 +============+============================+=================================================+
-| overwrites | `Overwrite <#overwrite>`__ | Contains permission overwrites                  |
+| overwrites | `Overwrite <#overwrite>`_ | Contains permission overwrites                  |
 +------------+----------------------------+-------------------------------------------------+
 | members    | VoiceStateUpdate           | Only for voice channels. Contains voice members |
 +------------+----------------------------+-------------------------------------------------+
-| messages   | `Message <#message>`__     |                                                 |
+| messages   | `Message <#message>`_     |                                                 |
 +------------+----------------------------+-------------------------------------------------+
-| webhooks   | `Webhook <#webhook>`__     | Only available in text channels                 |
+| webhooks   | `Webhook <#webhook>`_     | Only available in text channels                 |
 +------------+----------------------------+-------------------------------------------------+
-| threads    | `Thread <#thread>`__       | Only available in text channels                 |
+| threads    | `Thread <#thread>`_       | Only available in text channels                 |
 +------------+----------------------------+-------------------------------------------------+
-| invites    | `Invite <#invite>`__       |                                                 |
+| invites    | `Invite <#invite>`_       |                                                 |
 +------------+----------------------------+-------------------------------------------------+
 
 Set permissions of a member or role
 ===================================
 
-Sets the permissions of a member or role. Takes two arrays of permissions - one for allow and one for deny. See `Channel Permissions <#permissions>`__ for a valid list of permissions. Returns nothing in a promise.
+Sets the permissions of a member or role. Takes two arrays of permissions - one for allow and one for deny. See `Channel Permissions <#permissions>`_ for a valid list of permissions. Returns nothing in a promise.
 
 Parameters
 ----------
@@ -88,7 +88,7 @@ Parameters
 +-------+------------------------------------------+----------------------------------------+----------+
 | name  | type                                     | description                            | default  |
 +=======+==========================================+========================================+==========+
-| part  | `Member <#member>`__ or `Role <#role>`__ | The part to apply the permissions to   | required |
+| part  | `Member <#member>`_ or `Role <#role>`_ | The part to apply the permissions to   | required |
 +-------+------------------------------------------+----------------------------------------+----------+
 | allow | array                                    | Array of permissions to allow the part | []       |
 +-------+------------------------------------------+----------------------------------------+----------+
@@ -121,7 +121,7 @@ Parameters
 +-----------+------------------------------------------+--------------------------------------+----------+
 | name      | type                                     | description                          | default  |
 +===========+==========================================+======================================+==========+
-| part      | `Member <#member>`__ or `Role <#role>`__ | The part to apply the permissions to | required |
+| part      | `Member <#member>`_ or `Role <#role>`_ | The part to apply the permissions to | required |
 +-----------+------------------------------------------+--------------------------------------+----------+
 | overwrite | ``Overwrite`` part                       | The overwrite to apply               | required |
 +-----------+------------------------------------------+--------------------------------------+----------+
@@ -151,7 +151,7 @@ Parameters
 Move member to voice channel
 ============================
 
-Moves a member to a voice channel if the member is already in one. Takes a `Member <#member>`__ object or member ID and returns nothing in a promise.
+Moves a member to a voice channel if the member is already in one. Takes a `Member <#member>`_ object or member ID and returns nothing in a promise.
 
 .. _parameters-2:
 
@@ -161,7 +161,7 @@ Parameters
 ====== ============================== ================== ========
 name   type                           description        default
 ====== ============================== ================== ========
-member `Member <#member>`__ or string The member to move required
+member `Member <#member>`_ or string The member to move required
 ====== ============================== ================== ========
 
 .. code:: php
@@ -179,7 +179,7 @@ member `Member <#member>`__ or string The member to move required
 Muting and unmuting member in voice channel
 ===========================================
 
-Mutes or unmutes a member in the voice channel. Takes a `Member <#member>`__ object or member ID and returns nothing in a promise.
+Mutes or unmutes a member in the voice channel. Takes a `Member <#member>`_ object or member ID and returns nothing in a promise.
 
 .. _parameters-3:
 
@@ -189,7 +189,7 @@ Parameters
 ====== ============================== ========================= ========
 name   type                           description               default
 ====== ============================== ========================= ========
-member `Member <#member>`__ or string The member to mute/unmute required
+member `Member <#member>`_ or string The member to mute/unmute required
 ====== ============================== ========================= ========
 
 .. code:: php
@@ -286,11 +286,11 @@ Parameters
 +--------+--------------------------------------+----------------------------------------------+---------+
 | name   | type                                 | description                                  | default |
 +========+======================================+==============================================+=========+
-| before | `Message <#message>`__ or message ID | Get messages before this message             |         |
+| before | `Message <#message>`_ or message ID | Get messages before this message             |         |
 +--------+--------------------------------------+----------------------------------------------+---------+
-| after  | `Message <#message>`__ or message ID | Get messages after this message              |         |
+| after  | `Message <#message>`_ or message ID | Get messages after this message              |         |
 +--------+--------------------------------------+----------------------------------------------+---------+
-| around | `Message <#message>`__ or message ID | Get messages around this message             |         |
+| around | `Message <#message>`_ or message ID | Get messages around this message             |         |
 +--------+--------------------------------------+----------------------------------------------+---------+
 | limit  | int                                  | Number of messages to get, between 1 and 100 | 100     |
 +--------+--------------------------------------+----------------------------------------------+---------+
@@ -343,7 +343,7 @@ Parameters
 ======= ====================== ======================== ========
 name    type                   description              default
 ======= ====================== ======================== ========
-message `Message <#message>`__ The message to pin/unpin required
+message `Message <#message>`_ The message to pin/unpin required
 reason  string                 Reason for Audit Log     
 ======= ====================== ======================== ========
 
@@ -412,7 +412,7 @@ Parameters
 ===== ================== ================= ========
 name  type               description       default
 ===== ================== ================= ========
-embed `Embed <#embed>`__ The embed to send required
+embed `Embed <#embed>`_ The embed to send required
 ===== ================== ================= ========
 
 .. code:: php

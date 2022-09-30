@@ -38,7 +38,7 @@ Attributes
 | guild_locale   | ?string              | The guild’s preferred locale, if invoked in a guild. |
 +----------------+----------------------+------------------------------------------------------+
 
-The locale list can be seen on `Discord API reference <https://discord.com/developers/docs/reference#locales>`__.
+The locale list can be seen on `Discord API reference <https://discord.com/developers/docs/reference#locales>`_.
 
 Functions on interaction create
 ===============================

@@ -51,7 +51,7 @@ Properties
 Get private channel for user
 ============================
 
-Gets the private direct message channel for the user. Returns a `Channel <#channel>`__ in a promise.
+Gets the private direct message channel for the user. Returns a `Channel <#channel>`_ in a promise.
 
 .. code:: php
 

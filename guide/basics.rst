@@ -2,7 +2,7 @@
 Basics
 ======
 
-First step is to include the Composer autoload file and `import <https://www.php.net/manual/en/language.namespaces.importing.php>`__ any required classes.
+First step is to include the Composer autoload file and `import <https://www.php.net/manual/en/language.namespaces.importing.php>`_ any required classes.
 
 .. code:: php
 
@@ -62,7 +62,7 @@ The Discord instance can be set up with an array of options. All are optional ex
 ``dnsConfig`` is an instace of ``Config`` or a string of name server address. By default system setting is used and fall back to 8.8.8.8 when system configuration is not found. Currently only used for VoiceClient.
 
 
-The following options should only be used by large bots that require sharding. If you plan to use sharding, `read up <https://discord.com/developers/docs/topics/gateway#sharding>`__ on how Discord implements it.
+The following options should only be used by large bots that require sharding. If you plan to use sharding, `read up <https://discord.com/developers/docs/topics/gateway#sharding>`_ on how Discord implements it.
 
 ``shardId`` is the ID of the bot shard.
 
@@ -72,7 +72,7 @@ The following options should only be used by large bots that require sharding. I
 
 Gateway events should be registered inside the ``ready`` event, which is emitted once when the bot first starts and has connected to the gateway.
 
-To register an event we use the ``$discord->on(...)`` function, which registers a handler. A list of events is available `here <https://github.com/discord-php/DiscordPHP/blob/master/src/Discord/WebSockets/Event.php#L30-L75>`__. They are described in more detail in further sections of the documentation. All events take a callback which is called when the event is triggered, and the callback is called with an object representing the content of the event and an instance of the ``Discord`` client.
+To register an event we use the ``$discord->on(...)`` function, which registers a handler. A list of events is available `here <https://github.com/discord-php/DiscordPHP/blob/master/src/Discord/WebSockets/Event.php#L30-L75>`_. They are described in more detail in further sections of the documentation. All events take a callback which is called when the event is triggered, and the callback is called with an object representing the content of the event and an instance of the ``Discord`` client.
 
 .. code:: php
 

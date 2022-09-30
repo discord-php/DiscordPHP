@@ -9,7 +9,7 @@ An example is the ``Channel`` part. It has 4 repositories: ``members``, ``messag
 
 A full list of repositories is provided below in the parts section, per part.
 
-Repositories extend the `Collection <#collection>`__ class. See the documentation on collections for extra methods.
+Repositories extend the `Collection <#collection>`_ class. See the documentation on collections for extra methods.
 
 Examples provided below are based on the ``guilds`` repository in the Discord client.
 
