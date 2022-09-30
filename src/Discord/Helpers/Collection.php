@@ -417,18 +417,6 @@ class Collection implements ArrayAccess, JsonSerializable, IteratorAggregate, Co
     }
 
     /**
-     * Run a callback on each element of the collection
-     * 
-     * @param callable $callback
-     */
-    public function each(callable $callback): void
-    {
-        foreach ($this->items as $item) {
-            $callback($item);
-        }
-    }
-
-    /**
      * Returns the string representation of the collection.
      *
      * @return string

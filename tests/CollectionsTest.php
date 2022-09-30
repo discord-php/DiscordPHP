@@ -269,19 +269,6 @@ final class CollectionsTest extends TestCase
         $this->assertEquals(['first' => 1, 'third' => 3], $collection->toArray());
     }
 
-    public function testEach()
-    {
-        $collection = new Collection(range(1, 10), null);
-
-        $collected = [];
-
-        $collection->each(function (int $number) use (&$collected) {
-            $collected[] = $number;
-        });
-
-        $this->assertEquals(range(1, 10), $collected);
-    }
-
     public function testSerialize()
     {
         $collection = new Collection([1, 2, 3], null);
