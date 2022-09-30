@@ -37,7 +37,8 @@ Shortcut for `$guild->roles->save($role);`. Takes an array of parameters for a r
 | unicode_emoji | string  | unicode emoji for Role icon  | null                  |
 | mentionable   | bool    | Mentionable role?            | false                 |
 
-```php
+.. code-block:: php
+
 $guild->createRole([
     'name' => 'New Role',
     // ...
@@ -57,7 +58,8 @@ Transfers the ownership of the guild to another member. The bot must own the gui
 | member | Member or member ID | The member to get ownership |
 | reason | string              | Reason for Audit Log        |
 
-```php
+.. code-block:: php
+
 $guild->transferOwnership($member)->done(...);
 // or
 $guild->transferOwnership('member_id')->done(...);
@@ -73,7 +75,8 @@ Unbans a member when passed a `User` object or a user ID. If you have the ban ob
 | ------- | ----------------- | ----------------- |
 | user_id | `User` or user ID | The user to unban |
 
-```php
+.. code-block:: php
+
 $guild->unban($user)->done(...);
 // or
 $guild->unban('user_id')->done(...);
@@ -92,7 +95,8 @@ Takes an array of parameters to query the audit log for the guild. Returns an Au
 | before      | string, int, `Entry`          | Retrieves audit logs before the given audit log object |
 | limit       | int between 1 and 100         | Limits the amount of audit log entries to return       |
 
-```php
+.. code-block:: php
+
 $guild->getAuditLog([
     'user_id' => '123456',
     'action_type' => Entry::CHANNEL_CREATE,
@@ -118,7 +122,8 @@ Use the second parameter to specify local file path instead.
 | image | string | image data with base64 format, ignored if file path is specified |            |
 | roles | array  | Role IDs that are allowed to use the emoji                       | []         |
 
-```php
+.. code-block:: php
+
 $guild->createEmoji([
     'name' => 'elephpant',
     // ...

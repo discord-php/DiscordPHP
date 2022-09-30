@@ -31,7 +31,8 @@ User represents a user of Discord. The bot can "see" any users that to a guild t
 
 Gets the private direct message channel for the user. Returns a [Channel](#channel) in a promise.
 
-```php
+.. code-block:: php
+
 $user->getPrivateChannel()->done(function (Channel $channel) {
     // ...
 });
@@ -49,7 +50,8 @@ Sends a private direct message to the user. Note that your bot account can be su
 | tts     | bool   | whether to send the message as text to speech |
 | embed   | Embed  | embed to send in the message                  |
 
-```php
+.. code-block:: php
+
 $user->sendMessage('Hello, world!', false, $embed)->done(function (Message $message) {
     // ...
 });
@@ -66,7 +68,8 @@ Gets the avatar URL for the user. Only call this function if you need to change 
 | format | string | format of the image, one of png, jpg or webp, default webp or gif if animated |
 | size   | int    | size of the image, default 1024                                               |
 
-```php
+.. code-block:: php
+
 $url = $user->getAvatarAttribute('png', 2048);
 echo $url; // https://cdn.discordapp.com/avatars/:user_id/:avatar_hash.png?size=2048
 ```
@@ -83,7 +86,8 @@ Returns a string or `null` if user has no banner image set.
 | format | string | format of the image, one of png, jpg or webp, default png or gif if animated |
 | size   | int    | size of the image, default 600                                               |
 
-```php
+.. code-block:: php
+
 $url = $user->getBannerAttribute('png', 1024);
 echo $url; // https://cdn.discordapp.com/banners/:user_id/:banner_hash.png?size=1024
 ```

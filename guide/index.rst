@@ -8,8 +8,8 @@ Requirements
 
 - `PHP 7.4 CLI<https://php.net>`_ or higher
 
-   + Will not run on a webserver (FPM, CGI), you must run through CLI. A bot is a long-running process.
-   + x86 (32-bit) PHP requires ext-gmp extension enabled for handling new Permission values.
+  + Will not run on a webserver (FPM, CGI), you must run through CLI. A bot is a long-running process.
+  + x86 (32-bit) PHP requires ext-gmp extension enabled for handling new Permission values.
 
 - ``ext-json`` for JSON parsing.
 - ``ext-zlib`` for gateway packet compression.

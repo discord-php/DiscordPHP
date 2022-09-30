@@ -55,7 +55,8 @@ Sets the permissions of a member or role. Takes two arrays of permissions - one 
 | allow | array                              | Array of permissions to allow the part | []       |
 | deny  | array                              | Array of permissions to deny the part  | []       |
 
-```php
+.. code-block:: php
+
 // Member can send messages and attach files,
 // but can't add reactions to message.
 $channel->setPermissions($member, [
@@ -79,7 +80,8 @@ Sets the permissions of a member or role, but takes an `Overwrite` part instead 
 | part      | [Member](#member) or [Role](#role) | The part to apply the permissions to | required |
 | overwrite | `Overwrite` part                   | The overwrite to apply               | required |
 
-```php
+.. code-block:: php
+
 $allow = new ChannelPermission($discord, [
     'send_messages' => true,
     'attach_files' => true,
@@ -111,7 +113,8 @@ Moves a member to a voice channel if the member is already in one. Takes a [Memb
 | ------ | --------------------------- | ------------------ | -------- |
 | member | [Member](#member) or string | The member to move | required |
 
-```php
+.. code-block:: php
+
 $channel->moveMember($member)->done(function () {
     // ...
 });
@@ -133,7 +136,8 @@ Mutes or unmutes a member in the voice channel. Takes a [Member](#member) object
 | ------ | --------------------------- | ------------------------- | -------- |
 | member | [Member](#member) or string | The member to mute/unmute | required |
 
-```php
+.. code-block:: php
+
 // muting a member with a member object
 $channel->muteMember($member)->done(function () {
     // ...
@@ -163,7 +167,8 @@ Parameters are in an array.
 | target_user_id        | string | The id of the user whose stream to display for this invite, required if target_type is `Invite::TARGET_TYPE_STREAM`, the user must be streaming in the channel                 |           |
 | target_application_id | string | The id of the embedded application to open for this invite, required if target_type is `Invite::TARGET_TYPE_EMBEDDED_APPLICATION`, the application must have the EMBEDDED flag |           |
 
-```php
+.. code-block:: php
+
 $channel->createInvite([
     'max_age' => 60, // 1 minute
     'max_uses' => 5, // 5 uses
@@ -183,7 +188,8 @@ Deletes many messages at once. Takes an array of messages and/or message IDs and
 | messages | array or collection of messages and/or message IDs | The messages to delete | default |
 | reason   | string                                             | Reason for Audit Log   |         |
 
-```php
+.. code-block:: php
+
 $channel->deleteMessages([
     $message1,
     $message2,
@@ -208,7 +214,8 @@ Retrieves message history with an array of options. Returns a collection of mess
 | around | [Message](#message) or message ID | Get messages around this message             |         |
 | limit  | int                               | Number of messages to get, between 1 and 100 | 100     |
 
-```php
+.. code-block:: php
+
 $channel->getMessageHistory([
     'limit' => 5,
 ])->done(function (Collection $messages) {
@@ -230,7 +237,8 @@ Deletes a number of messages, in order from the last one sent. Takes an integer 
 | reason | string | Reason for Audit Log                             |          |
 
 
-```php
+.. code-block:: php
+
 // deletes the last 15 messages
 $channel->limitDelete(15)->done(function () {
     // ...
@@ -248,7 +256,8 @@ Pins or unpins a message from the channel pinboard. Takes a message object and r
 | message | [Message](#message) | The message to pin/unpin | required |
 | reason  | string              | Reason for Audit Log     |          |
 
-```php
+.. code-block:: php
+
 // to pin
 $channel->pinMessage($message)->done(function (Message $message) {
     // ...
@@ -264,7 +273,8 @@ $channel->unpinMessage($message)->done(function (Message $message) {
 
 Gets the channels invites. Returns a collection of invites in a promise.
 
-```php
+.. code-block:: php
+
 $channel->getInvites()->done(function (Collection $invites) {
     foreach ($invites as $invite) {
         // ...
@@ -282,7 +292,8 @@ Sends a message to the channel. Takes a message builder. Returns the message in 
 | ------- | ------------------------------ | -------------------------- | -------- |
 | message | MessageBuilder                 | Message content            | required |
 
-```php
+.. code-block:: php
+
 $message = MessageBuilder::new()
     ->setContent('Hello, world!')
     ->addEmbed($embed)
@@ -303,7 +314,8 @@ Sends an embed to the channel. Takes an embed and returns the sent message in a 
 | ----- | --------------- | ----------------- | -------- |
 | embed | [Embed](#embed) | The embed to send | required |
 
-```php
+.. code-block:: php
+
 $channel->sendEmbed($embed)->done(function (Message $message) {
     // ...
 });
@@ -313,7 +325,8 @@ $channel->sendEmbed($embed)->done(function (Message $message) {
 
 Broadcasts to the channel that the bot is typing. Genreally, bots should _not_ use this route, but if a bot takes a while to process a request it could be useful. Returns nothing in a promise.
 
-```php
+.. code-block:: php
+
 $channel->broadcastTyping()->done(function () {
     // ...
 });
@@ -330,7 +343,8 @@ Creates a message collector, which calls a filter function on each message recei
 | filter  | callable | The callback to call on every message | required |
 | options | array    | Array of options                      | []       |
 
-```php
+.. code-block:: php
+
 // Collects 5 messages containing hello
 $channel->createMessageCollector(fn ($message) => strpos($message->content, 'hello') !== false, [
     'limit' => 5,
@@ -354,7 +368,8 @@ One of `time` or `limit` is required, or the collector will not resolve.
 
 Returns the messages pinned in the channel. Only applicable for text channels. Returns a collection of messages in a promise.
 
-```php
+.. code-block:: php
+
 $channel->getPinnedMessages()->done(function (Collection $messages) {
     foreach ($messages as $message) {
         // $message->...

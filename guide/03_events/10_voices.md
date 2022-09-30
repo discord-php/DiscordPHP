@@ -6,7 +6,8 @@ title: "Voices"
 
 Called with a `VoiceStateUpdate` object when a member joins, leaves or moves between voice channels.
 
-```php
+.. code-block:: php
+
 // use Discord\Parts\WebSockets\VoiceStateUpdate;
 
 $discord->on(Event::VOICE_STATE_UPDATE, function (VoiceStateUpdate $state, Discord $discord, $oldstate) {
@@ -20,7 +21,8 @@ Requires the `Intents::GUILD_VOICE_STATES` intent.
 
 Called with a `VoiceServerUpdate` object when a voice server is updated in a guild.
 
-```php
+.. code-block:: php
+
 // use Discord\Parts\WebSockets\VoiceServerUpdate;
 
 $discord->on(Event::VOICE_SERVER_UPDATE, function (VoiceServerUpdate $guild, Discord $discord) {

@@ -9,7 +9,8 @@ Parts have a set list of fillable fields. If you attempt to set a field that is 
 
 To create a part object, you can use the `new` syntax or the `factory` method. For example, creating a `Message` part:
 
-```php
+.. code-block:: php
+
 $message = new Message($discord);
 // or
 $message = $discord->factory->create(Message::class);
@@ -18,7 +19,8 @@ $message = $discord->factory->create(Message::class);
 
 Part attributes can be accessed similar to an object or like an array:
 
-```php
+.. code-block:: php
+
 $message->content = 'hello!';
 // or
 $message['content'] = 'hello!';
@@ -32,7 +34,8 @@ echo $message['content'];
 
 The `->fill(array $attributes)` function takes an array of attributes to fill the part. If a field is found that is not 'fillable', it is skipped.
 
-```php
+.. code-block:: php
+
 $message->fill([
     'content' => 'hello!',
 ]);
@@ -42,7 +45,8 @@ $message->fill([
 
 The `->getRawAttributes()` function returns the array representation of the part.
 
-```php
+.. code-block:: php
+
 $attributes = $message->getRawAttributes();
 /**
  * [

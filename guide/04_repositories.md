@@ -20,7 +20,8 @@ All repositories extend the `AbstractRepository` class, and share a set of core 
 
 Clears the repository and fills it with new data from Discord. It takes no parameters and returns the repository in a promise.
 
-```php
+.. code-block:: php
+
 $discord->guilds->freshen()->done(function (GuildRepository $guilds) {
     // ...
 });
@@ -34,7 +35,8 @@ Creates a repository part from an array of attributes and returns the part. Does
 | ---------- | ----- | ------------------------------------------------- |
 | attributes | array | Array of attributes to fill in the part. Optional |
 
-```php
+.. code-block:: php
+
 $guild = $discord->guilds->create([
     'name' => 'My new guild name',
 ]);
@@ -50,7 +52,8 @@ Creates or updates a repository part in the Discord servers. Takes a part and re
 | ---- | ---- | ---------------------------- |
 | part | Part | The part to create or update |
 
-```php
+.. code-block:: php
+
 $discord->guilds->save($guild)->done(function (Guild $guild) {
     // ...
 });
@@ -64,7 +67,8 @@ Deletes a repository part from the Discord servers. Takes a part and returns the
 | ---- | ---- | ------------------ |
 | part | Part | The part to delete |
 
-```php
+.. code-block:: php
+
 $discord->guilds->delete($guild)->done(function (Guild $guild) {
     // ...
 });
@@ -79,7 +83,8 @@ Fetches/freshens a part from the repository. If the part is present in the cache
 | id    | string | Part ID                                                        |
 | fresh | bool   | Forces the method to skip checking the cache. Default is false |
 
-```php
+.. code-block:: php
+
 $discord->guilds->fetch('guild_id')->done(function (Guild $guild) {
     // ...
 });

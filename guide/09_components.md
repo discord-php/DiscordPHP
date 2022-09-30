@@ -11,7 +11,8 @@ Represents a row of buttons on a message.
 You can add up to 5 buttons to the row, which can then be added to the message.
 You can only add buttons to action rows.
 
-```php
+.. code-block:: php
+
 $row = ActionRow::new()
     ->addComponent(Button::new(Button::STYLE_SUCCESS));
 ```
@@ -29,7 +30,8 @@ $row = ActionRow::new()
 Represents a button attached to a message.
 You cannot directly attach a button to a message, it must be contained inside an `ActionRow`.
 
-```php
+.. code-block:: php
+
 $button = Button::new(Button::STYLE_SUCCESS)
     ->setLabel('push me!');
 ```
@@ -68,7 +70,8 @@ This is done through the `setListener(callable $listener, Discord $discord)` fun
 The `callable $listener` will be a function which is called with the `Interaction` object that triggered the button press.
 You must also pass the function the `$discord` client.
 
-```php
+.. code-block:: php
+
 $button->setListener(function (Interaction $interaction) {
     $interaction->respondWithMessage(MessageBuilder::new()
         ->setContent('why\'d u push me?'));
@@ -79,7 +82,8 @@ If the interaction is not responded to after the function is called, the interac
 no response. If you are going to acknowledge the interaction after a delay (e.g. HTTP request, arbitrary timeout) you should
 return a promise from the listener to prevent the automatic acknowledgement:
 
-```php
+.. code-block:: php
+
 $button->setListener(function (Interaction $interaction) use ($discord) {
     return someFunctionWhichWillReturnAPromise()->then(function ($returnValueFromFunction) use ($interaction) {
         $interaction->respondWithMessage(MessageBuilder::new()
@@ -93,7 +97,8 @@ $button->setListener(function (Interaction $interaction) use ($discord) {
 Select menus are a dropdown which can be attached to a message. They operate similar to buttons. They do not need to be attached
 to an `ActionRow`. You may have up to 25 `Option`s attached to a select menu.
 
-```php
+.. code-block:: php
+
 $select = SelectMenu::new()
     ->addOption(Option::new('me?'))
     ->addOption(Option::new('or me?'));
@@ -127,7 +132,8 @@ $select = SelectMenu::new()
 Select menu listeners operate similar to the button listeners, so please read the above section first. The callback function will
 be called with the `Interaction` object as well as a collection of selected `Option`s.
 
-```php
+.. code-block:: php
+
 $select->setListener(function (Interaction $interaction, Collection $options) {
     foreach ($options as $option) {
         echo $option->getValue().PHP_EOL;
@@ -141,7 +147,8 @@ $select->setListener(function (Interaction $interaction, Collection $options) {
 
 Text inputs are an interactive component that render on modals.
 
-```php
+.. code-block:: php
+
 $textInput = TextInput::new('Label', TextInput::TYPE_SHORT, 'custom id')
     ->setRequired(true);
 ```

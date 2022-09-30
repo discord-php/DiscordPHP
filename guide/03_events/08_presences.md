@@ -6,7 +6,8 @@ title: "Presences"
 
 Called with a `PresenceUpdate` object when a member's presence is updated.
 
-```php
+.. code-block:: php
+
 $discord->on(Event::PRESENCE_UPDATE, function (PresenceUpdate $presence, Discord $discord) {
     // ...
 });
@@ -18,7 +19,8 @@ Requires the `Intents::GUILD_PRESENCES` intent. This intent is a priviliged inte
 
 Called with a `TypingStart` object when a user starts typing in a channel.
 
-```php
+.. code-block:: php
+
 // use Discord\Parts\WebSockets\TypingStart;
 
 $discord->on(Event::TYPING_START, function (TypingStart $typing, Discord $discord) {
@@ -32,7 +34,8 @@ Requires the `Intents::GUILD_MESSAGE_TYPING` intent.
 
 Called with a `User` object when the Bot's user properties change.
 
-```php
+.. code-block:: php
+
 $discord->on(Event::USER_UPDATE, function (User $user, Discord $discord, ?User $oldUser) {
     // ...
 });

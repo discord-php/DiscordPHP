@@ -8,7 +8,8 @@ Requires the `Intents::GUILDS` intent.
 
 Called with a `Channel` object when a new channel is created, relevant to the Bot.
 
-```php
+.. code-block:: php
+
 $discord->on(Event::CHANNEL_CREATE, function (Channel $channel, Discord $discord) {
     // ...
 });
@@ -18,7 +19,8 @@ $discord->on(Event::CHANNEL_CREATE, function (Channel $channel, Discord $discord
 
 Called with two `Channel` objects when a channel is updated.
 
-```php
+.. code-block:: php
+
 $discord->on(Event::CHANNEL_UPDATE, function (Channel $channel, Discord $discord, ?Channel $oldChannel) {
     // ...
 });
@@ -28,7 +30,8 @@ $discord->on(Event::CHANNEL_UPDATE, function (Channel $channel, Discord $discord
 
 Called with a `Channel` object when a channel relevant to the Bot is deleted.
 
-```php
+.. code-block:: php
+
 $discord->on(Event::CHANNEL_DELETE, function (Channel $channel, Discord $discord) {
     // ...
 });
@@ -38,7 +41,8 @@ $discord->on(Event::CHANNEL_DELETE, function (Channel $channel, Discord $discord
 
 Called with an object when a message is pinned or unpinned in a text channel. This is not sent when a pinned message is deleted.
 
-```php
+.. code-block:: php
+
 $discord->on(Event::CHANNEL_PINS_UPDATE, function ($pins, Discord $discord) {
     // {
     //     "guild_id": "",
@@ -58,7 +62,8 @@ Requires the `Intents::GUILDS` intent.
 
 Called with a `Thread` object when a thread is created, relevant to the Bot.
 
-```php
+.. code-block:: php
+
 $discord->on(Event::THREAD_CREATE, function (Thread $thread, Discord $discord) {
     // ...
 });
@@ -68,7 +73,8 @@ $discord->on(Event::THREAD_CREATE, function (Thread $thread, Discord $discord) {
 
 Called with a `Thread` object when a thread is updated.
 
-```php
+.. code-block:: php
+
 $discord->on(Event::THREAD_UPDATE, function (Thread $thread, Discord $discord, ?Thread $oldThread) {
     // ...
 });
@@ -78,7 +84,8 @@ $discord->on(Event::THREAD_UPDATE, function (Thread $thread, Discord $discord, ?
 
 Called with an old `Thread` object when a thread relevant to the Bot is deleted.
 
-```php
+.. code-block:: php
+
 $discord->on(Event::THREAD_DELETE, function (?Thread $thread, Discord $discord) {
     // ...
 });
@@ -88,7 +95,8 @@ $discord->on(Event::THREAD_DELETE, function (?Thread $thread, Discord $discord) 
 
 Called when list of threads are synced.
 
-```php
+.. code-block:: php
+
 $discord->on(Event::THREAD_LIST_SYNC, function (Collection $threads, Discord $discord) {
     // ...
 });
@@ -98,7 +106,8 @@ $discord->on(Event::THREAD_LIST_SYNC, function (Collection $threads, Discord $di
 
 Called with a Thread `Member` object when the thread member for the current Bot is updated.
 
-```php
+.. code-block:: php
+
 // use Discord\Parts\Thread\Member;
 
 $discord->on(Event::THREAD_MEMBER_UPDATE, function (Member $threadMember, Discord $discord) {
@@ -110,7 +119,8 @@ $discord->on(Event::THREAD_MEMBER_UPDATE, function (Member $threadMember, Discor
 
 Called with a `Thread` object when anyone is added to or removed from a thread. If the Bot does not have the `Intents::GUILD_MEMBERS`, then this event will only be called if the Bot was added to or removed from the thread.
 
-```php
+.. code-block:: php
+
 $discord->on(Event::THREAD_MEMBERS_UPDATE, function (Thread $thread, Discord $discord) {
     // ...
 });
