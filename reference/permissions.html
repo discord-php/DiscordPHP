@@ -124,34 +124,270 @@
 </aside>
 
             <div class="phpdocumentor-column -eight phpdocumentor-content">
-                    <div class="section" id="faq">
-<h1>FAQ</h1>
-<div class="section" id="54eea48528f8ebe789c2b1c7665558074af8d19d">
-<h2><code>Class 'X' not found</code></h2>
-<p>You most likely haven't imported the class that you are trying to use. Please check the <a href="http://discord-php.github.io/DiscordPHP/reference/">class reference</a> and search for the class that you are trying to use. Add an import statement at the top of the file like shown on the right.</p>
-<pre><code class="language-php " >&lt;?php
-
-use Discord\X;
-
-</code></pre>
-<p>If you don't want to have to import a class every time, you should look into the PHP Intelephense language server (written above) which will do automatic imports for you.</p>
+                    <div class="section" id="permissions">
+<h1>Permissions</h1>
+<p>There are two types of permissions - channel permissions and role permissions. They are represented by their individual classes, but both extend the same abstract permission class.</p>
 </div>
-<div class="section" id="there-are-less-members-and-or-users-than-expected">
-<h2>There are less members and/or users than expected</h2>
-<p>Server members are guarded by a priviliged server intent which must be enabled in the <a href="https://discord.com/developers/applications">Discord Developer Portal</a>. Note that you will need to verify your bot if you use this intent and pass 100 guilds.</p>
-<p>You also need to enable the <code>loadAllMembers</code> option in your code, as shown on the right.</p>
-<pre><code class="language-php " >$discord = new Discord([
-    &#039;token&#039; =&gt; &#039;...&#039;,
-    &#039;loadAllMembers&#039; =&gt; true, // Enable this option
-]);
-
+<div class="section" id="properties">
+<h1>Properties</h1>
+<table>
+    
+    <tbody>
+                    <tr>
+                                    <td>name</td>
+                                    <td>type</td>
+                                    <td>description</td>
+                            </tr>
+                    <tr>
+                                    <td>bitwise</td>
+                                    <td>int</td>
+                                    <td>bitwise representation</td>
+                            </tr>
+                    <tr>
+                                    <td>createinstantinvite</td>
+                                    <td>bool</td>
+                                    <td></td>
+                            </tr>
+                    <tr>
+                                    <td>managechannels</td>
+                                    <td>bool</td>
+                                    <td></td>
+                            </tr>
+                    <tr>
+                                    <td>viewchannel</td>
+                                    <td>bool</td>
+                                    <td></td>
+                            </tr>
+                    <tr>
+                                    <td>manageroles</td>
+                                    <td>bool</td>
+                                    <td></td>
+                            </tr>
+            </tbody>
+</table>
+<p>The rest of the properties are listed under each permission type, all are type of <code>bool</code>.</p>
+</div>
+<div class="section" id="methods">
+<h1>Methods</h1>
+<div class="section" id="get-all-valid-permissions">
+<h2>Get all valid permissions</h2>
+<p>Returns a list of valid permissions, in key value form. Static method.</p>
+<pre><code class="language-php " >var_dump(ChannelPermission::getPermissions());
+// [
+//     &#039;priority_speaker&#039; =&gt; 8,
+//     // ...
+// ]
 </code></pre>
-<p>If you are using DiscordPHP Version 6 or greater, you need to enable the <code>GUILD_MEMBERS</code> intent as well as the <code>loadAllMembers</code> option. The shown code will enable all intents minus the <code>GUILD_PRESENCES</code> intent (which is also priviliged).</p>
-<pre><code class="language-php " >$discord = new Discord([
-    &#039;token&#039; =&gt; &#039;...&#039;,
-    &#039;loadAllMembers&#039; =&gt; true,
-    &#039;intents&#039; =&gt; Intents::getDefaultIntents() | Intents::GUILD_MEMBERS // Enable the `GUILD_MEMBERS` intent
-])</code></pre>
+</div>
+<div class="section" id="channel-permission">
+<h1>Channel Permission</h1>
+<p>Represents permissions for text, voice, and stage instance channels.</p>
+<div class="section" id="text-channel-permissions">
+<h2>Text Channel Permissions</h2>
+
+
+<ul>
+    <li>
+            <code>create_instant_invite</code>
+        </li>
+    <li>
+            <code>manage_channels</code>
+        </li>
+    <li>
+            <code>view_channel</code>
+        </li>
+    <li>
+            <code>manage_roles</code>
+        </li>
+    <li>
+            <code>add_reactions</code>
+        </li>
+    <li>
+            <code>send_messages</code>
+        </li>
+    <li>
+            <code>send_tts_messages</code>
+        </li>
+    <li>
+            <code>manage_messages</code>
+        </li>
+    <li>
+            <code>embed_links</code>
+        </li>
+    <li>
+            <code>attach_files</code>
+        </li>
+    <li>
+            <code>read_message_history</code>
+        </li>
+    <li>
+            <code>mention_everyone</code>
+        </li>
+    <li>
+            <code>use_external_emojis</code>
+        </li>
+    <li>
+            <code>manage_webhooks</code>
+        </li>
+    <li>
+            <code>use_application_commands</code>
+        </li>
+    <li>
+            <code>manage_threads</code>
+        </li>
+    <li>
+            <code>create_public_threads</code>
+        </li>
+    <li>
+            <code>create_private_threads</code>
+        </li>
+    <li>
+            <code>use_external_stickers</code>
+        </li>
+    <li>
+            <code>send_messages_in_threads</code>
+        </li>
+</ul>
+</div>
+<div class="section" id="voice-channel-permissions">
+<h2>Voice Channel Permissions</h2>
+
+
+<ul>
+    <li>
+            <code>create_instant_invite</code>
+        </li>
+    <li>
+            <code>manage_channels</code>
+        </li>
+    <li>
+            <code>view_channel</code>
+        </li>
+    <li>
+            <code>manage_roles</code>
+        </li>
+    <li>
+            <code>priority_speaker</code>
+        </li>
+    <li>
+            <code>stream</code>
+        </li>
+    <li>
+            <code>connect</code>
+        </li>
+    <li>
+            <code>speak</code>
+        </li>
+    <li>
+            <code>mute_members</code>
+        </li>
+    <li>
+            <code>deafen_members</code>
+        </li>
+    <li>
+            <code>move_members</code>
+        </li>
+    <li>
+            <code>use_vad</code>
+        </li>
+    <li>
+            <code>manage_events</code>
+        </li>
+    <li>
+            <code>use_embedded_activities</code> was <code>start_embedded_activities</code>
+        </li>
+</ul>
+</div>
+<div class="section" id="stage-instance-channel-permissions">
+<h2>Stage Instance Channel Permissions</h2>
+
+
+<ul>
+    <li>
+            <code>create_instant_invite</code>
+        </li>
+    <li>
+            <code>manage_channels</code>
+        </li>
+    <li>
+            <code>view_channel</code>
+        </li>
+    <li>
+            <code>manage_roles</code>
+        </li>
+    <li>
+            <code>connect</code>
+        </li>
+    <li>
+            <code>mute_members</code>
+        </li>
+    <li>
+            <code>deafen_members</code>
+        </li>
+    <li>
+            <code>move_members</code>
+        </li>
+    <li>
+            <code>request_to_speak</code>
+        </li>
+    <li>
+            <code>manage_events</code>
+        </li>
+</ul>
+</div>
+</div>
+<div class="section" id="role-permissions">
+<h1>Role Permissions</h1>
+<p>Represents permissions for roles.</p>
+<div class="section" id="permissions">
+<h2>Permissions</h2>
+
+
+<ul>
+    <li>
+            <code>create_instant_invite</code>
+        </li>
+    <li>
+            <code>manage_channels</code>
+        </li>
+    <li>
+            <code>view_channel</code>
+        </li>
+    <li>
+            <code>manage_roles</code>
+        </li>
+    <li>
+            <code>kick_members</code>
+        </li>
+    <li>
+            <code>ban_members</code>
+        </li>
+    <li>
+            <code>administrator</code>
+        </li>
+    <li>
+            <code>manage_guild</code>
+        </li>
+    <li>
+            <code>view_audit_log</code>
+        </li>
+    <li>
+            <code>view_guild_insights</code>
+        </li>
+    <li>
+            <code>change_nickname</code>
+        </li>
+    <li>
+            <code>manage_nicknames</code>
+        </li>
+    <li>
+            <code>manage_emojis_and_stickers</code>
+        </li>
+    <li>
+            <code>moderate_members</code>
+        </li>
+</ul>
+</div>
 </div>
 
                 <section data-search-results class="phpdocumentor-search-results phpdocumentor-search-results--hidden">
