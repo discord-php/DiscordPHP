@@ -55,9 +55,9 @@
 </label>
 <aside class="phpdocumentor-column -four phpdocumentor-sidebar">
                     <section class="phpdocumentor-sidebar__category">
-            <h2 class="phpdocumentor-sidebar__category-header">Intro</h2>
+            <h2 class="phpdocumentor-sidebar__category-header">Guide</h2>
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
-    <a href="guide/index.html" class="">Intro</a>
+    <a href="guide/index.html" class="">Guide</a>
 </h4>
 
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
@@ -67,56 +67,6 @@
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="guide/basics.html" class="">Basics</a>
 </h4>
-
-                                    <h4 class="phpdocumentor-sidebar__root-namespace">
-    <a href="guide/repositories.html" class="">Repositories</a>
-</h4>
-
-                                    <h4 class="phpdocumentor-sidebar__root-namespace">
-    <a href="guide/collection.html" class="">Collection</a>
-</h4>
-
-                                    <h4 class="phpdocumentor-sidebar__root-namespace">
-    <a href="guide/permissions.html" class="">Permissions</a>
-</h4>
-
-                                    <h4 class="phpdocumentor-sidebar__root-namespace">
-    <a href="guide/message_builder.html" class="">Message Builder</a>
-</h4>
-
-                                    <h4 class="phpdocumentor-sidebar__root-namespace">
-    <a href="guide/components.html" class="-active">Message Components</a>
-</h4>
-
-                                    <h4 class="phpdocumentor-sidebar__root-namespace">
-    <a href="guide/interactions.html" class="">Interactions</a>
-</h4>
-
-                                    <h4 class="phpdocumentor-sidebar__root-namespace">
-    <a href="guide/parts/index.html" class="">Parts</a>
-</h4>
-    <ul class="phpdocumentor-list">
-                    <li>
-                <a href="guide/parts/guild.html" class="">Guild</a>
-                
-            </li>
-                    <li>
-                <a href="guide/parts/channel.html" class="">Channel</a>
-                
-            </li>
-                    <li>
-                <a href="guide/parts/member.html" class="">Member</a>
-                
-            </li>
-                    <li>
-                <a href="guide/parts/message.html" class="">Message</a>
-                
-            </li>
-                    <li>
-                <a href="guide/parts/user.html" class="">User</a>
-                
-            </li>
-            </ul>
 
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="guide/events/index.html" class="">Events</a>
@@ -167,6 +117,56 @@
                 
             </li>
             </ul>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="guide/repositories.html" class="">Repositories</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="guide/parts/index.html" class="">Parts</a>
+</h4>
+    <ul class="phpdocumentor-list">
+                    <li>
+                <a href="guide/parts/guild.html" class="">Guild</a>
+                
+            </li>
+                    <li>
+                <a href="guide/parts/channel.html" class="">Channel</a>
+                
+            </li>
+                    <li>
+                <a href="guide/parts/member.html" class="">Member</a>
+                
+            </li>
+                    <li>
+                <a href="guide/parts/message.html" class="">Message</a>
+                
+            </li>
+                    <li>
+                <a href="guide/parts/user.html" class="">User</a>
+                
+            </li>
+            </ul>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="guide/collection.html" class="">Collection</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="guide/permissions.html" class="">Permissions</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="guide/message_builder.html" class="">Message Builder</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="guide/components.html" class="-active">Message Components</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="guide/interactions.html" class="">Interactions</a>
+</h4>
 
                         </section>
                 <section class="phpdocumentor-sidebar__category">
@@ -240,7 +240,7 @@
 <h1>Message Components</h1>
 <p>Message components are new components you can add to messages, such as buttons and select menus. There are currently four different types of message components:</p>
 </div>
-<div class="section" id="9da31ab306e6b0f4a3bda7d24468970e38501472">
+<div class="section" id="c13d07211323b39b3359c07dcc92f99c0c39bdd7">
 <h1><code>ActionRow</code></h1>
 <p>Represents a row of buttons on a message. You can add up to 5 buttons to the row, which can then be added to the message. You can only add buttons to action rows.</p>
 <pre><code class="language-php " >$row = ActionRow::new()
@@ -272,7 +272,7 @@
             </tbody>
 </table>
 </div>
-<div class="section" id="efabf67d6f40fe9e3e7e58a50cd5f90788e01721">
+<div class="section" id="d4ca321f331f865d0fc8a829e78779ec242242a2">
 <h1><code>Button</code></h1>
 <p>Represents a button attached to a message. You cannot directly attach a button to a message, it must be contained inside an <code>ActionRow</code>.</p>
 <pre><code class="language-php " >$button = Button::new(Button::STYLE_SUCCESS)
@@ -384,7 +384,7 @@
 </code></pre>
 </div>
 </div>
-<div class="section" id="99f586530238a0ea668a2cbd08241de4ece5bffb">
+<div class="section" id="e15ae1f5582446b92dbb49ceef1a357770661426">
 <h1><code>SelectMenu</code></h1>
 <p>Select menus are a dropdown which can be attached to a message. They operate similar to buttons. They do not need to be attached to an <code>ActionRow</code>. You may have up to 25 <code>Option</code>\ s attached to a select menu.</p>
 <pre><code class="language-php " >$select = SelectMenu::new()
@@ -438,7 +438,7 @@
             </tbody>
 </table>
 </div>
-<div class="section" id="7293243ed174c4cca7d74a10d44f58fbf26cc9e4-functions">
+<div class="section" id="9134cfb7ff88c4a7f5ac96a0eaa85f2c109d7589-functions">
 <h2><code>Option</code> functions</h2>
 <table>
             <thead>
@@ -485,7 +485,7 @@
 </code></pre>
 </div>
 </div>
-<div class="section" id="2914697264cf0c59a14c36a35877c8f20212f263">
+<div class="section" id="3c089e50c367c1e28b785be0ba23dfe06370c4b4">
 <h1><code>TextInput</code></h1>
 <p>Text inputs are an interactive component that render on modals.</p>
 <pre><code class="language-php " >$textInput = TextInput::new(&#039;Label&#039;, TextInput::TYPE_SHORT, &#039;custom id&#039;)

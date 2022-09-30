@@ -55,9 +55,9 @@
 </label>
 <aside class="phpdocumentor-column -four phpdocumentor-sidebar">
                     <section class="phpdocumentor-sidebar__category">
-            <h2 class="phpdocumentor-sidebar__category-header">Intro</h2>
+            <h2 class="phpdocumentor-sidebar__category-header">Guide</h2>
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
-    <a href="guide/index.html" class="">Intro</a>
+    <a href="guide/index.html" class="">Guide</a>
 </h4>
 
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
@@ -67,56 +67,6 @@
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="guide/basics.html" class="-active">Basics</a>
 </h4>
-
-                                    <h4 class="phpdocumentor-sidebar__root-namespace">
-    <a href="guide/repositories.html" class="">Repositories</a>
-</h4>
-
-                                    <h4 class="phpdocumentor-sidebar__root-namespace">
-    <a href="guide/collection.html" class="">Collection</a>
-</h4>
-
-                                    <h4 class="phpdocumentor-sidebar__root-namespace">
-    <a href="guide/permissions.html" class="">Permissions</a>
-</h4>
-
-                                    <h4 class="phpdocumentor-sidebar__root-namespace">
-    <a href="guide/message_builder.html" class="">Message Builder</a>
-</h4>
-
-                                    <h4 class="phpdocumentor-sidebar__root-namespace">
-    <a href="guide/components.html" class="">Message Components</a>
-</h4>
-
-                                    <h4 class="phpdocumentor-sidebar__root-namespace">
-    <a href="guide/interactions.html" class="">Interactions</a>
-</h4>
-
-                                    <h4 class="phpdocumentor-sidebar__root-namespace">
-    <a href="guide/parts/index.html" class="">Parts</a>
-</h4>
-    <ul class="phpdocumentor-list">
-                    <li>
-                <a href="guide/parts/guild.html" class="">Guild</a>
-                
-            </li>
-                    <li>
-                <a href="guide/parts/channel.html" class="">Channel</a>
-                
-            </li>
-                    <li>
-                <a href="guide/parts/member.html" class="">Member</a>
-                
-            </li>
-                    <li>
-                <a href="guide/parts/message.html" class="">Message</a>
-                
-            </li>
-                    <li>
-                <a href="guide/parts/user.html" class="">User</a>
-                
-            </li>
-            </ul>
 
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="guide/events/index.html" class="">Events</a>
@@ -167,6 +117,56 @@
                 
             </li>
             </ul>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="guide/repositories.html" class="">Repositories</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="guide/parts/index.html" class="">Parts</a>
+</h4>
+    <ul class="phpdocumentor-list">
+                    <li>
+                <a href="guide/parts/guild.html" class="">Guild</a>
+                
+            </li>
+                    <li>
+                <a href="guide/parts/channel.html" class="">Channel</a>
+                
+            </li>
+                    <li>
+                <a href="guide/parts/member.html" class="">Member</a>
+                
+            </li>
+                    <li>
+                <a href="guide/parts/message.html" class="">Message</a>
+                
+            </li>
+                    <li>
+                <a href="guide/parts/user.html" class="">User</a>
+                
+            </li>
+            </ul>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="guide/collection.html" class="">Collection</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="guide/permissions.html" class="">Permissions</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="guide/message_builder.html" class="">Message Builder</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="guide/components.html" class="">Message Components</a>
+</h4>
+
+                                    <h4 class="phpdocumentor-sidebar__root-namespace">
+    <a href="guide/interactions.html" class="">Interactions</a>
+</h4>
 
                         </section>
                 <section class="phpdocumentor-sidebar__category">
@@ -281,6 +281,7 @@ include __DIR__.&#039;/vendor/autoload.php&#039;;
 <p><code>loop</code> is an instance of a ReactPHP event loop that can be provided to the client rather than creating a new loop. Useful if you want to use other React components. By default, a new loop is created.</p>
 <p><code>logger</code> is an instance of a logger that implements <code>LoggerInterface</code>. By default, a new Monolog logger with log level DEBUG is created to print to stdout.</p>
 <p><code>dnsConfig</code> is an instace of <code>Config</code> or a string of name server address. By default system setting is used and fall back to 8.8.8.8 when system configuration is not found. Currently only used for VoiceClient.</p>
+<hr />
 <p>The following options should only be used by large bots that require sharding. If you plan to use sharding, <a href="https://discord.com/developers/docs/topics/gateway#sharding">read up</a> on how Discord implements it.</p>
 <p><code>shardId</code> is the ID of the bot shard.</p>
 <p><code>shardCount</code> is the number of shards that you are using.</p>
