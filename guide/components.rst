@@ -50,7 +50,7 @@ danger    ``Button::STYLE_DANGER``    red
 link      ``Button::STYLE_LINK``      grey
 ========= =========================== =======
 
-.. figure:: https://discord.com/assets/7bb017ce52cfd6575e21c058feb3883b.png
+.. image:: https://discord.com/assets/7bb017ce52cfd6575e21c058feb3883b.png
    :alt: Discord button styles
 
    Discord button styles
