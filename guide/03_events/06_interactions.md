@@ -6,8 +6,7 @@ title: "Interactions"
 
 Called with an `Interaction` object when an interaction is created.
 
-.. code-block:: php
-
+```php
 // use Discord\Parts\Interactions\Interaction;
 
 $discord->on(Event::INTERACTION_CREATE, function (Interaction $interaction, Discord $discord) {

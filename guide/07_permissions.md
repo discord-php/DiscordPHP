@@ -22,8 +22,7 @@ The rest of the properties are listed under each permission type, all are type o
 
 Returns a list of valid permissions, in key value form. Static method.
 
-.. code-block:: php
-
+```php
 var_dump(ChannelPermission::getPermissions());
 // [
 //     'priority_speaker' => 8,

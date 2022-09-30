@@ -8,8 +8,7 @@ Requires the `Intents::GUILD_INVITES` intent and `manage_channels` permission.
 
 Called with an `Invite` object when a new invite to a channel is created.
 
-.. code-block:: php
-
+```php
 $discord->on(Event::INVITE_CREATE, function (Invite $invite, Discord $discord) {
     // ...
 });
@@ -19,8 +18,7 @@ $discord->on(Event::INVITE_CREATE, function (Invite $invite, Discord $discord) {
 
 Called with an object when an invite is created.
 
-.. code-block:: php
-
+```php
 $discord->on(Event::INVITE_DELETE, function (object $invite, Discord $discord) {
     if ($invite instanceof Invite) {
         // Invite is present in cache

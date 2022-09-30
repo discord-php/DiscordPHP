@@ -8,8 +8,7 @@ All auto moderation related events are currently only sent to bot users which ha
 
 Called with a `Rule` object when an auto moderation rule is created.
 
-.. code-block:: php
-
+```php
 $discord->on(Event::AUTO_MODERATION_RULE_CREATE, function (Rule $rule, Discord $discord) {
     // ...
 });
@@ -21,8 +20,7 @@ Requires the `Intents::AUTO_MODERATION_CONFIGURATION` intent.
 
 Called with a `Rule` object when an auto moderation rule is updated.
 
-.. code-block:: php
-
+```php
 $discord->on(Event::AUTO_MODERATION_RULE_UPDATE, function (Rule $rule, Discord $discord, ?Rule $oldRule) {
     // ...
 });
@@ -32,8 +30,7 @@ $discord->on(Event::AUTO_MODERATION_RULE_UPDATE, function (Rule $rule, Discord $
 
 Called with a `Rule` object when an auto moderation rule is deleted.
 
-.. code-block:: php
-
+```php
 $discord->on(Event::AUTO_MODERATION_RULE_DELETE, function (Rule $rule, Discord $discord) {
     // ...
 });
@@ -45,8 +42,7 @@ Requires the `Intents::AUTO_MODERATION_CONFIGURATION` intent.
 
 Called with an `AutoModerationActionExecution` object when an auto moderation rule is triggered and an action is executed (e.g. when a message is blocked).
 
-.. code-block:: php
-
+```php
 // use `Discord\Parts\WebSockets\AutoModerationActionExecution`;
 
 $discord->on(Event::AUTO_MODERATION_ACTION_EXECUTION, function (AutoModerationActionExecution $actionExecution, Discord $discord) {

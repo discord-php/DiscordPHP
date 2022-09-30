@@ -6,8 +6,7 @@ Members represent a user in a guild. There is a member object for every guild-us
 
 A member object can also be serialised into a mention string. For example:
 
-.. code-block:: php
-
+```php
 $discord->on(Event::MESSAGE_CREATE, function (Message $message) {
     // Hello <@member_id>!
     // Note: `$message->member` will be `null` if the message originated from
@@ -52,8 +51,7 @@ Bans the member from the guild. Returns a [Ban](#ban) part in a promise.
 | daysToDelete | int    | number of days back to delete messages, default none |
 | reason       | string | reason for the ban                                   |
 
-.. code-block:: php
-
+```php
 $member->ban(5, 'bad person')->done(function (Ban $ban) {
     // ...
 });
@@ -69,8 +67,7 @@ Sets the nickname of the member. Requires the `MANAGE_NICKNAMES` permission or `
 | ---- | ------ | --------------------------------------------------- |
 | nick | string | nickname of the member, null to clear, default null |
 
-.. code-block:: php
-
+```php
 $member->setNickname('newnick')->done(function () {
     // ...
 });
@@ -86,8 +83,7 @@ Moves the member to another voice channel. Member must already be in a voice cha
 | ------- | ----------------------------- | --------------------------------- |
 | channel | [Channel](#channel) or string | the channel to move the member to |
 
-.. code-block:: php
-
+```php
 $member->moveMember($channel)->done(function () {
     // ...
 });
@@ -109,8 +105,7 @@ Adds the member to a role. Takes a role or role ID and returns nothing in a prom
 | ---- | ----------------------- | ----------------------------- |
 | role | [Role](#role) or string | the role to add the member to |
 
-.. code-block:: php
-
+```php
 $member->addRole($role)->done(function () {
     // ...
 });
@@ -132,8 +127,7 @@ Removes the member from a role. Takes a role or role ID and returns nothing in a
 | ---- | ----------------------- | ----------------------------- |
 | role | [Role](#role) or string | the role to remove the member from |
 
-.. code-block:: php
-
+```php
 $member->removeRole($role)->done(function () {
     // ...
 });
@@ -155,8 +149,7 @@ Times out the member in the server. Takes a carbon or null to remove. Returns no
 | ---------------------------- | ------------------ | -------------------------------- |
 | communication_disabled_until | `Carbon` or `null` | the time for timeout to lasts on |
 
-.. code-block:: php
-
+```php
 $member->timeoutMember(new Carbon('6 hours'))->done(function () {
     // ...
 });
@@ -181,8 +174,7 @@ Returns a [role permission](#permissions) in a promise.
 | ------- | --------------------------- | ------------------------------------------------ |
 | channel | [Channel](#channel) or null | the channel to get the effective permissions for |
 
-.. code-block:: php
-
+```php
 $member->getPermissions($channel)->done(function (RolePermission $permission) {
     // ...
 });
@@ -205,8 +197,7 @@ Gets the server-specific avatar URL for the member. Only call this function if y
 | format | string | format of the image, one of png, jpg or webp, default webp and gif if animated |
 | size   | int    | size of the image, default 1024                                                |
 
-.. code-block:: php
-
+```php
 $url = $member->getAvatarAttribute('png', 2048);
 echo $url; // https://cdn.discordapp.com/guilds/:guild_id/users/:id/avatars/:avatar_hash.png?size=2048
 ```

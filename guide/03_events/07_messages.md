@@ -10,8 +10,7 @@ Requires the `Intents::GUILD_MESSAGES` intent for guild or `Intents::DIRECT_MESS
 
 Called with a `Message` object when a message is sent in a guild or private channel.
 
-.. code-block:: php
-
+```php
 $discord->on(Event::MESSAGE_CREATE, function (Message $message, Discord $discord) {
     // ...
 });
@@ -23,8 +22,7 @@ Called with two `Message` objects when a message is updated in a guild or privat
 The old message may be null if `storeMessages` is not enabled _or_ the message was sent before the Bot was started.
 Discord does not provide a way to get message update history.
 
-.. code-block:: php
-
+```php
 $discord->on(Event::MESSAGE_UPDATE, function (Message $message, Discord $discord, ?Message $oldMessage) {
     // ...
 });
@@ -36,8 +34,7 @@ Called with an old `Message` object _or_ the raw payload when a message is delet
 The `Message` object may be the raw payload if `storeMessages` is not enabled _or_ the message was sent before the Bot was started.
 Discord does not provide a way to get deleted messages.
 
-.. code-block:: php
-
+```php
 $discord->on(Event::MESSAGE_DELETE, function (object $message, Discord $discord) {
     if ($message instanceof Message) {
         // Message is present in cache
@@ -59,8 +56,7 @@ Called with a `Collection` of old `Message` objects _or_ the raw payload when bu
 The `Message` object may be the raw payload if `storeMessages` is not enabled _or_ the message was sent before the Bot was started.
 Discord does not provide a way to get deleted messages.
 
-.. code-block:: php
-
+```php
 $discord->on(Event::MESSAGE_DELETE_BULK, function (Collection $messages, Discord $discord) {
     foreach ($messages as $message) {
         if ($message instanceof Message) {
@@ -86,8 +82,7 @@ Requires the `Intents::GUILD_MESSAGE_REACTIONS` intent for guild or `Intents::DI
 
 Called with a `MessageReaction` object when a user added a reaction to a message.
 
-.. code-block:: php
-
+```php
 $discord->on(Event::MESSAGE_REACTION_ADD, function (MessageReaction $reaction, Discord $discord) {
     // ...
 });
@@ -97,8 +92,7 @@ $discord->on(Event::MESSAGE_REACTION_ADD, function (MessageReaction $reaction, D
 
 Called with a `MessageReaction` object when a user removes a reaction from a message.
 
-.. code-block:: php
-
+```php
 $discord->on(Event::MESSAGE_REACTION_REMOVE, function (MessageReaction $reaction, Discord $discord) {
     // ...
 });
@@ -109,8 +103,7 @@ $discord->on(Event::MESSAGE_REACTION_REMOVE, function (MessageReaction $reaction
 Called with a `MessageReaction` object when all reactions are removed from a message.
 Note that only the fields relating to the message, channel and guild will be filled.
 
-.. code-block:: php
-
+```php
 $discord->on(Event::MESSAGE_REACTION_REMOVE_ALL, function (MessageReaction $reaction, Discord $discord) {
     // ...
 });
@@ -121,8 +114,7 @@ $discord->on(Event::MESSAGE_REACTION_REMOVE_ALL, function (MessageReaction $reac
 Called with an object when all reactions of an emoji are removed from a message.
 Unlike Message Reaction Remove, this event contains no users or members.
 
-.. code-block:: php
-
+```php
 $discord->on(Event::MESSAGE_REACTION_REMOVE_EMOJI, function (MessageReaction $reaction, Discord $discord) {
     // ...
 });

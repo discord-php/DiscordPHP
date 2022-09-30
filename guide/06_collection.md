@@ -7,8 +7,7 @@ Collections are exactly what they sound like - collections of items. In DiscordP
 <div>
 Collections implement interfaces allowing them to be accessed like arrays, such as:
 
-.. code-block:: php
-
+```php
 // square bracket index access
 $collec[123] = 'asdf';
 echo $collec[123]; // asdf
@@ -37,8 +36,7 @@ $jsonCollec = (string) $collec; // same as json_encode($collec)
 | discrim | string or null | The discriminator used to discriminate between parts. Default 'id' |
 | class   | string or null | The type of class contained in the collection. Default null        |
 
-.. code-block:: php
-
+```php
 // Creates an empty collection with discriminator of 'id' and no class type.
 // Any item can be inserted into this collection.
 $collec = new Collection();
@@ -57,8 +55,7 @@ Gets an item from the collection, with a key and value.
 | key   | any  | The key to search with              |
 | value | any  | The value that the key should match |
 
-.. code-block:: php
-
+```php
 // Collection with 3 items, discriminator is 'id', no class type
 $collec = new Collection([
     [
@@ -96,8 +93,7 @@ Adds an item to the collection. Note that if `class` is set in the constructor a
 | ----- | ---- | ------------------ |
 | $item | any  | The item to insert |
 
-.. code-block:: php
-
+```php
 // empty, no discrim, no class
 $collec = new Collection([], null, null);
 
@@ -135,8 +131,7 @@ Removes an item from the collection and returns it.
 | key     | any  | The key to look for                       |
 | default | any  | Default if key is not found. Default null |
 
-.. code-block:: php
-
+```php
 $collec = new Collection([], null, null);
 $collec->push(1);
 $collec->push(2);
@@ -151,8 +146,7 @@ $collec->pull(100, 123); // returns 123
 
 Fills the collection with an array of items.
 
-.. code-block:: php
-
+```php
 $collec = new Collection([], null, null);
 $collec->fill([
     1, 2, 3, 4,
@@ -163,8 +157,7 @@ $collec->fill([
 
 Returns the number of items in the collection.
 
-.. code-block:: php
-
+```php
 $collec = new Collection([
     1, 2, 3
 ], null, null);
@@ -176,8 +169,7 @@ echo $collec->count(); // 3
 
 Gets the first item of the collection.
 
-.. code-block:: php
-
+```php
 $collec = new Collection([
     1, 2, 3
 ], null, null);
@@ -194,8 +186,7 @@ Filters the collection with a given callback function. The callback function is 
 | callback | callable | The callback called on every item |
 
 
-.. code-block:: php
-
+```php
 $collec = new Collection([
     1, 2, 3, 100, 101, 102
 ], null, null);
@@ -210,8 +201,7 @@ $newCollec = $collec->filter(function ($item) {
 
 Clears the collection.
 
-.. code-block:: php
-
+```php
 $collec->clear(); // $collec = []
 ```
 
@@ -223,8 +213,7 @@ A given callback function is called on each item in the collection, and the resu
 | -------- | -------- | --------------------------------- |
 | callback | callable | The callback called on every item |
 
-.. code-block:: php
-
+```php
 $collec = new Collection([
     1, 2, 3, 100, 101, 102
 ], null, null);
@@ -239,7 +228,6 @@ $newCollec = $collec->map(function ($item) {
 
 Converts a collection to an array.
 
-.. code-block:: php
-
+```php
 $arr = $collec->toArray();
 ```

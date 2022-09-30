@@ -6,8 +6,7 @@ title: "Webhooks"
 
 Called with a `Guild` and `Channel` object when a guild channel's webhooks are is created, updated, or deleted.
 
-.. code-block:: php
-
+```php
 $discord->on(Event::WEBHOOKS_UPDATE, function (?Guild $guild, Discord $discord, ?Channel $channel) {
     // ...
 });

@@ -61,8 +61,7 @@ Sends a "reply" to the message. Returns the new message in a promise.
 | ---- | ------ | --------------------------- |
 | text | string | text to send in the message |
 
-.. code-block:: php
-
+```php
 $message->reply('hello!')->done(function (Message $message) {
     // ...
 });
@@ -72,8 +71,7 @@ $message->reply('hello!')->done(function (Message $message) {
 
 Crossposts a message to any channels that are following the channel the message was sent in. Returns the crossposted message in a promise.
 
-.. code-block:: php
-
+```php
 $message->crosspost()->done(function (Message $message) {
     // ...
 });
@@ -90,8 +88,7 @@ Similar to replying to a message, also takes a `delay` parameter in which the re
 | text  | string | text to send in the message                              |
 | delay | int    | time in milliseconds to delay before sending the message |
 
-.. code-block:: php
-
+```php
 // <@message_author_id>, hello! after 1.5 seconds
 $message->delayedReply('hello!', 1500)->done(function (Message $message) {
     // ...
@@ -108,8 +105,7 @@ Adds a reaction to a message. Takes an [Emoji](#emoji) object, a custom emoji st
 | -------- | ------------------------- | ----------------------- |
 | emoticon | [Emoji](#emoji) or string | the emoji to react with |
 
-.. code-block:: php
-
+```php
 $message->react($emoji)->done(function () {
     // ...
 });
@@ -141,8 +137,7 @@ Deletes reaction(s) from a message. Has four methods of operation, described bel
 
 #### Delete all reactions
 
-.. code-block:: php
-
+```php
 $message->deleteReaction(Message::REACT_DELETE_ALL)->done(function () {
     // ...
 });
@@ -150,8 +145,7 @@ $message->deleteReaction(Message::REACT_DELETE_ALL)->done(function () {
 
 #### Delete reaction by current user
 
-.. code-block:: php
-
+```php
 $message->deleteReaction(Message::REACT_DELETE_ME, $emoji)->done(function () {
     // ...
 });
@@ -159,8 +153,7 @@ $message->deleteReaction(Message::REACT_DELETE_ME, $emoji)->done(function () {
 
 #### Delete reaction by another user
 
-.. code-block:: php
-
+```php
 $message->deleteReaction(Message::REACT_DELETE_ID, $emoji, 'member_id')->done(function () {
     // ...
 });
@@ -168,8 +161,7 @@ $message->deleteReaction(Message::REACT_DELETE_ID, $emoji, 'member_id')->done(fu
 
 #### Delete all reactions of one emoji
 
-.. code-block:: php
-
+```php
 $message->deleteReaction(Message::REACT_DELETE_EMOJI, $emoji)->done(function () {
     // ...
 });
@@ -179,8 +171,7 @@ $message->deleteReaction(Message::REACT_DELETE_EMOJI, $emoji)->done(function () 
 
 Deletes the message. Returns nothing in a promise.
 
-.. code-block:: php
-
+```php
 $message->delete()->done(function () {
     // ...
 });
@@ -190,8 +181,7 @@ $message->delete()->done(function () {
 
 Updates the message. Takes a message builder. Returns the updated message in a promise.
 
-.. code-block:: php
-
+```php
 $message->edit(MessageBuilder::new()
     ->setContent('new content'))->done(function (Message $message) {
         // ...
@@ -213,8 +203,7 @@ At least one of `time` or `limit` must be specified.
 | time  | int or false | time in milliseconds until the collector finishes                |
 | limit | int or false | amount of reactions to be collected until the collector finishes |
 
-.. code-block:: php
-
+```php
 $message->createReactionCollector(function (MessageReaction $reaction) {
     // return true or false depending on whether you want the reaction to be collected.
     return $reaction->user_id == '123123123123';
@@ -239,8 +228,7 @@ Adds an embed to a message. Takes an embed object. Will overwrite the old embed 
 | ----- | --------------- | ---------------- |
 | embed | [Embed](#embed) | the embed to add |
 
-.. code-block:: php
-
+```php
 $message->addEmbed($embed)->done(function (Message $message) {
     // ...
 });

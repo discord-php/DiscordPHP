@@ -12,8 +12,7 @@ Called with a `Guild` object in one of the following situations:
 2. When a guild was unavailable and is now available due to an outage.
 3. When the Bot joins a new guild.
 
-.. code-block:: php
-
+```php
 $discord->on(Event::GUILD_CREATE, function (Guild $guild, Discord $discord) {
     // ...
 });
@@ -23,8 +22,7 @@ $discord->on(Event::GUILD_CREATE, function (Guild $guild, Discord $discord) {
 
 Called with two `Guild` objects when a guild is updated.
 
-.. code-block:: php
-
+```php
 $discord->on(Event::GUILD_UPDATE, function (Guild $guild, Discord $discord, ?Guild $oldGuild) {
     // ...
 });
@@ -37,8 +35,7 @@ Called with a `Guild` object in one of the following situations:
 1. The Bot was removed from a guild.
 2. The guild is unavailable due to an outage.
 
-.. code-block:: php
-
+```php
 $discord->on(Event::GUILD_DELETE, function (object $guild, Discord $discord, bool $unavailable) {
     // ...
     if ($unavailable) {
@@ -61,8 +58,7 @@ Requires the `Intents::GUILD_BANS` intent and `ban_members` permission.
 
 Called with a `Ban` object when a member is banned from a guild.
 
-.. code-block:: php
-
+```php
 $discord->on(Event::GUILD_BAN_ADD, function (Ban $ban, Discord $discord) {
     // ...
 });
@@ -72,8 +68,7 @@ $discord->on(Event::GUILD_BAN_ADD, function (Ban $ban, Discord $discord) {
 
 Called with a `Ban` object when a user is unbanned from a guild.
 
-.. code-block:: php
-
+```php
 $discord->on(Event::GUILD_BAN_REMOVE, function (Ban $ban, Discord $discord) {
     // ...
 });
@@ -88,8 +83,7 @@ Requires the `Intents::GUILD_EMOJIS_AND_STICKERS` intent.
 Called with two Collections of `Emoji` objects when a guild's emojis have been added/updated/deleted. `$oldEmojis` _may_ be empty if it was not cached or there were previously no emojis.
 
 
-.. code-block:: php
-
+```php
 $discord->on(Event::GUILD_EMOJIS_UPDATE, function (Collection $emojis, Discord $discord, Collection $oldEmojis) {
     // ...
 });
@@ -99,8 +93,7 @@ $discord->on(Event::GUILD_EMOJIS_UPDATE, function (Collection $emojis, Discord $
 
 Called with two Collections of `Sticker` objects when a guild's stickers have been added/updated/deleted. `$oldStickers` _may_ be empty if it was not cached or there were previously no stickers.
 
-.. code-block:: php
-
+```php
 $discord->on(Event::GUILD_STICKERS_UPDATE, function (Collection $stickers, Discord $discord, Collecetion $oldStickers) {
     // ...
 });
@@ -114,8 +107,7 @@ Requires the `Intents::GUILD_MEMBERS` intent. This intent is a priviliged intent
 
 Called with a `Member` object when a new user joins a guild.
 
-.. code-block:: php
-
+```php
 $discord->on(Event::GUILD_MEMBER_ADD, function (Member $member, Discord $discord) {
     // ...
 });
@@ -125,8 +117,7 @@ $discord->on(Event::GUILD_MEMBER_ADD, function (Member $member, Discord $discord
 
 Called with a `Member` object when a member is removed from a guild (leave/kick/ban). Note that the member _may_ only have `User` data if `loadAllMembers` is disabled.
 
-.. code-block:: php
-
+```php
 $discord->on(Event::GUILD_MEMBER_REMOVE, function (Member $member, Discord $discord) {
     // ...
 });
@@ -136,8 +127,7 @@ $discord->on(Event::GUILD_MEMBER_REMOVE, function (Member $member, Discord $disc
 
 Called with two `Member` objects when a member is updated in a guild. Note that the old member _may_ be `null` if `loadAllMembers` is disabled.
 
-.. code-block:: php
-
+```php
 $discord->on(Event::GUILD_MEMBER_UPDATE, function (Member $member, Discord $discord, ?Member $oldMember) {
     // ...
 });
@@ -151,8 +141,7 @@ Requires the `Intents::GUILDS` intent.
 
 Called with a `Role` object when a role is created in a guild.
 
-.. code-block:: php
-
+```php
 $discord->on(Event::GUILD_ROLE_CREATE, function (Role $role, Discord $discord) {
     // ...
 });
@@ -162,8 +151,7 @@ $discord->on(Event::GUILD_ROLE_CREATE, function (Role $role, Discord $discord) {
 
 Called with two `Role` objects when a role is updated in a guild.
 
-.. code-block:: php
-
+```php
 $discord->on(Event::GUILD_ROLE_UPDATE, function (Role $role, Discord $discord, ?Role $oldRole) {
     // ...
 });
@@ -173,8 +161,7 @@ $discord->on(Event::GUILD_ROLE_UPDATE, function (Role $role, Discord $discord, ?
 
 Called with a `Role` object when a role is deleted in a guild. `$role` may return `Role` object if it was cached.
 
-.. code-block:: php
-
+```php
 $discord->on(Event::GUILD_ROLE_DELETE, function (object $role, Discord $discord) {
     if ($role instanceof Role) {
         // Role is present in cache
@@ -197,8 +184,7 @@ Requires the `Intents::GUILD_SCHEDULED_EVENTS` intent.
 
 Called with a `ScheduledEvent` object when a scheduled event is created in a guild.
 
-.. code-block:: php
-
+```php
 $discord->on(Event::GUILD_SCHEDULED_EVENT_CREATE, function (ScheduledEvent $scheduledEvent, Discord $discord) {
     // ...
 });
@@ -208,8 +194,7 @@ $discord->on(Event::GUILD_SCHEDULED_EVENT_CREATE, function (ScheduledEvent $sche
 
 Called with a `ScheduledEvent` object when a scheduled event is updated in a guild.
 
-.. code-block:: php
-
+```php
 $discord->on(Event::GUILD_SCHEDULED_EVENT_UPDATE, function (ScheduledEvent $scheduledEvent, Discord $discord, ?ScheduledEvent $oldScheduledEvent) {
     // ...
 });
@@ -219,8 +204,7 @@ $discord->on(Event::GUILD_SCHEDULED_EVENT_UPDATE, function (ScheduledEvent $sche
 
 Called with a `ScheduledEvent` object when a scheduled event is deleted in a guild.
 
-.. code-block:: php
-
+```php
 $discord->on(Event::GUILD_SCHEDULED_EVENT_DELETE, function (ScheduledEvent $scheduledEvent, Discord $discord) {
     // ...
 });
@@ -230,8 +214,7 @@ $discord->on(Event::GUILD_SCHEDULED_EVENT_DELETE, function (ScheduledEvent $sche
 
 Called when a user has subscribed to a scheduled event in a guild.
 
-.. code-block:: php
-
+```php
 $discord->on(Event::GUILD_SCHEDULED_EVENT_USER_ADD, function ($data, Discord $discord) {
     // ...
 });
@@ -241,8 +224,7 @@ $discord->on(Event::GUILD_SCHEDULED_EVENT_USER_ADD, function ($data, Discord $di
 
 Called when a user has unsubscribed from a scheduled event in a guild.
 
-.. code-block:: php
-
+```php
 $discord->on(Event::GUILD_SCHEDULED_EVENT_USER_REMOVE, function ($data, Discord $discord) {
     // ...
 });
@@ -256,8 +238,7 @@ Requires the `Intents::GUILD_INTEGRATIONS` intent.
 
 Called with a cached `Guild` object when a guild integration is updated.
 
-.. code-block:: php
-
+```php
 $discord->on(Event::GUILD_INTEGRATIONS_UPDATE, function (?Guild $guild, Discord $discord) {
     // ...
 });
@@ -267,8 +248,7 @@ $discord->on(Event::GUILD_INTEGRATIONS_UPDATE, function (?Guild $guild, Discord 
 
 Called with an `Integration` object when an integration is created in a guild.
 
-.. code-block:: php
-
+```php
 $discord->on(Event::INTEGRATION_CREATE, function (Integration $integration, Discord $discord) {
     // ...
 });
@@ -278,8 +258,7 @@ $discord->on(Event::INTEGRATION_CREATE, function (Integration $integration, Disc
 
 Called with an `Integration` object when a integration is updated in a guild.
 
-.. code-block:: php
-
+```php
 $discord->on(Event::INTEGRATION_UPDATE, function (Integration $integration, Discord $discord, ?Integration $oldIntegration) {
     // ...
 });
@@ -290,8 +269,7 @@ $discord->on(Event::INTEGRATION_UPDATE, function (Integration $integration, Disc
 Called with an old `Integration` object when a integration is deleted from a guild.
 `$integration` _may_ be `null` if Integration is not cached.
 
-.. code-block:: php
-
+```php
 $discord->on(Event::INTEGRATION_DELETE, function (?Integration $integration, Discord $discord) {
     // ...
 });
