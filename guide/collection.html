@@ -6,7 +6,7 @@
     
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <base href="../../">
+    <base href="../">
     <link rel="icon" href="images/favicon.ico"/>
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/base.css">
@@ -149,7 +149,7 @@
             </ul>
 
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
-    <a href="guide/collection.html" class="">Collection</a>
+    <a href="guide/collection.html" class="-active">Collection</a>
 </h4>
 
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
@@ -236,99 +236,295 @@
 </aside>
 
             <div class="phpdocumentor-column -eight phpdocumentor-content">
-                    <div class="section" id="messages">
-<h1>Messages</h1>
-<blockquote><p>Unlike persistent messages, ephemeral messages are sent directly to the user and the Bot who sent the message rather than through the guild channel. Because of this, ephemeral messages are tied to the <code>Intents::DIRECT_MESSAGES</code>, and the message object won’t include <code>guild_id</code> or <code>member</code>.</p>
-</blockquote>
-<p>Requires the <code>Intents::GUILD_MESSAGES</code> intent for guild or <code>Intents::DIRECT_MESSAGES</code> for direct messages.</p>
-</div>
-<div class="section" id="message-create">
-<h1>Message Create</h1>
-<p>Called with a <code>Message</code> object when a message is sent in a guild or private channel.</p>
-<pre><code class="language-php " >$discord-&gt;on(Event::MESSAGE_CREATE, function (Message $message, Discord $discord) {
+                    <div class="section" id="collection">
+<h1>Collection</h1>
+<p>Collections are exactly what they sound like - collections of items. In DiscordPHP collections are based around the idea of parts, but they can be used for any type of item.</p>
+<div class="">
+    <p>Collections implement interfaces allowing them to be accessed like arrays, such as:</p>
+<pre><code class="language-php " >// square bracket index access
+$collec[123] = &#039;asdf&#039;;
+echo $collec[123]; // asdf
+
+// foreach loops
+foreach ($collec as $item) {
     // ...
-});
+}
+
+// json serialization
+json_encode($collec);
+
+// array serialization
+$collecArray = (array) $collec;
+
+// string serialization
+$jsonCollec = (string) $collec; // same as json_encode($collec)</code></pre>
+
+</div>
+</div>
+<div class="section" id="creating-a-collection">
+<h1>Creating a collection</h1>
+<table>
+            <thead>
+                            <tr>
+                                            <th>name</th>
+                                            <th>type</th>
+                                            <th>description</th>
+                                    </tr>
+                    </thead>
+    
+    <tbody>
+                    <tr>
+                                    <td>items</td>
+                                    <td>array</td>
+                                    <td>Array of items for the collection. Default is empty collection</td>
+                            </tr>
+                    <tr>
+                                    <td>discrim</td>
+                                    <td>string or null</td>
+                                    <td>The discriminator used to discriminate between parts. Default ‘id’</td>
+                            </tr>
+                    <tr>
+                                    <td>class</td>
+                                    <td>string or null</td>
+                                    <td>The type of class contained in the collection. Default null</td>
+                            </tr>
+            </tbody>
+</table>
+<pre><code class="language-php " >// Creates an empty collection with discriminator of &#039;id&#039; and no class type.
+// Any item can be inserted into this collection.
+$collec = new Collection();
+
+// Creates an empty collection with no discriminator and no class type.
+// Similar to a laravel collection.
+$collec = new Collection([], null, null);
 </code></pre>
 </div>
-<div class="section" id="message-update">
-<h1>Message Update</h1>
-<p>Called with two <code>Message</code> objects when a message is updated in a guild or private channel. The old message may be null if <code>storeMessages</code> is not enabled <em>or</em> the message was sent before the Bot was started. Discord does not provide a way to get message update history.</p>
-<pre><code class="language-php " >$discord-&gt;on(Event::MESSAGE_UPDATE, function (Message $message, Discord $discord, ?Message $oldMessage) {
-    // ...
-});
+<div class="section" id="getting-an-item">
+<h1>Getting an item</h1>
+<p>Gets an item from the collection, with a key and value.</p>
+<table>
+    
+    <tbody>
+                    <tr>
+                                    <td>name</td>
+                                    <td>type</td>
+                                    <td>description</td>
+                            </tr>
+                    <tr>
+                                    <td>key</td>
+                                    <td>any</td>
+                                    <td>The key to search with</td>
+                            </tr>
+                    <tr>
+                                    <td>value</td>
+                                    <td>any</td>
+                                    <td>The value that the key should match</td>
+                            </tr>
+            </tbody>
+</table>
+<pre><code class="language-php " >// Collection with 3 items, discriminator is &#039;id&#039;, no class type
+$collec = new Collection([
+    [
+        &#039;id&#039; =&gt; 1,
+        &#039;text&#039; =&gt; &#039;My ID is 1.&#039;
+    ],
+    [
+        &#039;id&#039; =&gt; 2,
+        &#039;text&#039; =&gt; &#039;My ID is 2.&#039;
+    ],
+    [
+        &#039;id&#039; =&gt; 3,
+        &#039;text&#039; =&gt; &#039;My ID is 3.&#039;
+    ]
+]);
+
+// [
+//     &#039;id&#039; =&gt; 1,
+//     &#039;text&#039; =&gt; &#039;My ID is 1.&#039;
+// ]
+$item = $collec-&gt;get(&#039;id&#039;, 1);
+
+// [
+//     &#039;id&#039; =&gt; 1,
+//     &#039;text&#039; =&gt; &#039;My ID is 1.&#039;
+// ]
+$item = $collec-&gt;get(&#039;text&#039;, &#039;My ID is 1.&#039;);
 </code></pre>
 </div>
-<div class="section" id="message-delete">
-<h1>Message Delete</h1>
-<p>Called with an old <code>Message</code> object <em>or</em> the raw payload when a message is deleted. The <code>Message</code> object may be the raw payload if <code>storeMessages</code> is not enabled <em>or</em> the message was sent before the Bot was started. Discord does not provide a way to get deleted messages.</p>
-<pre><code class="language-php " >$discord-&gt;on(Event::MESSAGE_DELETE, function (object $message, Discord $discord) {
-    if ($message instanceof Message) {
-        // Message is present in cache
+<div class="section" id="adding-an-item">
+<h1>Adding an item</h1>
+<p>Adds an item to the collection. Note that if <code>class</code> is set in the constructor and the class of the item inserted is not the same, it will not insert.</p>
+<table>
+    
+    <tbody>
+                    <tr>
+                                    <td>name</td>
+                                    <td>type</td>
+                                    <td>description</td>
+                            </tr>
+                    <tr>
+                                    <td>$item</td>
+                                    <td>any</td>
+                                    <td>The item to insert</td>
+                            </tr>
+            </tbody>
+</table>
+<pre><code class="language-php " >// empty, no discrim, no class
+$collec = new Collection([], null, null);
+
+$collec-&gt;push(1);
+$collec-&gt;push(&#039;asdf&#039;);
+$collec-&gt;push(true);
+
+// ---
+
+class X
+{
+    public $y;
+
+    public function __construct($y)
+    {
+        $this-&gt;y = $y;
     }
-    // If the message is not present in the cache:
-    else {
-        // {
-        //     &quot;id&quot;: &quot;&quot;, // deleted message ID,
-        //     &quot;channel_id&quot;: &quot;&quot;, // message channel ID,
-        //     &quot;guild_id&quot;: &quot;&quot; // channel guild ID
-        // }
-    }
+}
+
+// empty, discrim &#039;y&#039;, class X
+$collec = new Collection([], &#039;y&#039;, X::class);
+$collec-&gt;push(new X(123));
+$collec-&gt;push(123); // won&#039;t insert
+
+// new X(123)
+$collec-&gt;get(&#039;y&#039;, 123);
+</code></pre>
+</div>
+<div class="section" id="pulling-an-item">
+<h1>Pulling an item</h1>
+<p>Removes an item from the collection and returns it.</p>
+<table>
+    
+    <tbody>
+                    <tr>
+                                    <td>name</td>
+                                    <td>type</td>
+                                    <td>description</td>
+                            </tr>
+                    <tr>
+                                    <td>key</td>
+                                    <td>any</td>
+                                    <td>The key to look for</td>
+                            </tr>
+                    <tr>
+                                    <td>default</td>
+                                    <td>any</td>
+                                    <td>Default if key is not found. Default null</td>
+                            </tr>
+            </tbody>
+</table>
+<pre><code class="language-php " >$collec = new Collection([], null, null);
+$collec-&gt;push(1);
+$collec-&gt;push(2);
+$collec-&gt;push(3);
+
+$collec-&gt;pull(1); // returns at 1 index - which is actually 2
+$collec-&gt;pull(100); // returns null
+$collec-&gt;pull(100, 123); // returns 123
+</code></pre>
+</div>
+<div class="section" id="filling-the-collection">
+<h1>Filling the collection</h1>
+<p>Fills the collection with an array of items.</p>
+<pre><code class="language-php " >$collec = new Collection([], null, null);
+$collec-&gt;fill([
+    1, 2, 3, 4,
+]);
+</code></pre>
+</div>
+<div class="section" id="number-of-items">
+<h1>Number of items</h1>
+<p>Returns the number of items in the collection.</p>
+<pre><code class="language-php " >$collec = new Collection([
+    1, 2, 3
+], null, null);
+
+echo $collec-&gt;count(); // 3
+</code></pre>
+</div>
+<div class="section" id="getting-the-first-item">
+<h1>Getting the first item</h1>
+<p>Gets the first item of the collection.</p>
+<pre><code class="language-php " >$collec = new Collection([
+    1, 2, 3
+], null, null);
+
+echo $collec-&gt;first(); // 1
+</code></pre>
+</div>
+<div class="section" id="filtering-a-collection">
+<h1>Filtering a collection</h1>
+<p>Filters the collection with a given callback function. The callback function is called for every item and is called with the item. If the callback returns true, the item is added to the new collection. Returns a new collection.</p>
+<table>
+    
+    <tbody>
+                    <tr>
+                                    <td>name</td>
+                                    <td>type</td>
+                                    <td>description</td>
+                            </tr>
+                    <tr>
+                                    <td>callback</td>
+                                    <td>callable</td>
+                                    <td>The callback called on every item</td>
+                            </tr>
+            </tbody>
+</table>
+<pre><code class="language-php " >$collec = new Collection([
+    1, 2, 3, 100, 101, 102
+], null, null);
+
+// [ 101, 102 ]
+$newCollec = $collec-&gt;filter(function ($item) {
+    return $item &gt; 100;
 });
 </code></pre>
 </div>
-<div class="section" id="message-delete-bulk">
-<h1>Message Delete Bulk</h1>
-<p>Called with a <code>Collection</code> of old <code>Message</code> objects <em>or</em> the raw payload when bulk messages are deleted. The <code>Message</code> object may be the raw payload if <code>storeMessages</code> is not enabled <em>or</em> the message was sent before the Bot was started. Discord does not provide a way to get deleted messages.</p>
-<pre><code class="language-php " >$discord-&gt;on(Event::MESSAGE_DELETE_BULK, function (Collection $messages, Discord $discord) {
-    foreach ($messages as $message) {
-        if ($message instanceof Message) {
-            // Message is present in cache
-        }
-        // If the message is not present in the cache:
-        else {
-            // {
-            //     &quot;id&quot;: &quot;&quot;, // deleted message ID,
-            //     &quot;channel_id&quot;: &quot;&quot;, // message channel ID,
-            //     &quot;guild_id&quot;: &quot;&quot; // channel guild ID
-            // }
-        }
-    }
+<div class="section" id="clearing-a-collection">
+<h1>Clearing a collection</h1>
+<p>Clears the collection.</p>
+<pre><code class="language-php " >$collec-&gt;clear(); // $collec = []
+</code></pre>
+</div>
+<div class="section" id="mapping-a-collection">
+<h1>Mapping a collection</h1>
+<p>A given callback function is called on each item in the collection, and the result is inserted into a new collection.</p>
+<table>
+    
+    <tbody>
+                    <tr>
+                                    <td>name</td>
+                                    <td>type</td>
+                                    <td>description</td>
+                            </tr>
+                    <tr>
+                                    <td>callback</td>
+                                    <td>callable</td>
+                                    <td>The callback called on every item</td>
+                            </tr>
+            </tbody>
+</table>
+<pre><code class="language-php " >$collec = new Collection([
+    1, 2, 3, 100, 101, 102
+], null, null);
+
+// [ 100, 200, 300, 10000, 10100, 10200 ]
+$newCollec = $collec-&gt;map(function ($item) {
+    return $item * 100;
 });
 </code></pre>
 </div>
-<div class="section" id="message-reactions">
-<h1>Message Reactions</h1>
-<p>Requires the <code>Intents::GUILD_MESSAGE_REACTIONS</code> intent for guild or <code>Intents::DIRECT_MESSAGE_REACTIONS</code> for direct messages.</p>
-<div class="section" id="message-reaction-add">
-<h2>Message Reaction Add</h2>
-<p>Called with a <code>MessageReaction</code> object when a user added a reaction to a message.</p>
-<pre><code class="language-php " >$discord-&gt;on(Event::MESSAGE_REACTION_ADD, function (MessageReaction $reaction, Discord $discord) {
-    // ...
-});
-</code></pre>
-</div>
-<div class="section" id="message-reaction-remove">
-<h2>Message Reaction Remove</h2>
-<p>Called with a <code>MessageReaction</code> object when a user removes a reaction from a message.</p>
-<pre><code class="language-php " >$discord-&gt;on(Event::MESSAGE_REACTION_REMOVE, function (MessageReaction $reaction, Discord $discord) {
-    // ...
-});
-</code></pre>
-</div>
-<div class="section" id="message-reaction-remove-all">
-<h2>Message Reaction Remove All</h2>
-<p>Called with a <code>MessageReaction</code> object when all reactions are removed from a message. Note that only the fields relating to the message, channel and guild will be filled.</p>
-<pre><code class="language-php " >$discord-&gt;on(Event::MESSAGE_REACTION_REMOVE_ALL, function (MessageReaction $reaction, Discord $discord) {
-    // ...
-});
-</code></pre>
-</div>
-<div class="section" id="message-reaction-remove-emoji">
-<h2>Message Reaction Remove Emoji</h2>
-<p>Called with an object when all reactions of an emoji are removed from a message. Unlike Message Reaction Remove, this event contains no users or members.</p>
-<pre><code class="language-php " >$discord-&gt;on(Event::MESSAGE_REACTION_REMOVE_EMOJI, function (MessageReaction $reaction, Discord $discord) {
-    // ...
-});</code></pre>
+<div class="section" id="converting-to-array">
+<h1>Converting to array</h1>
+<p>Converts a collection to an array.</p>
+<pre><code class="language-php " >$arr = $collec-&gt;toArray();</code></pre>
 </div>
 
                 <section data-search-results class="phpdocumentor-search-results phpdocumentor-search-results--hidden">

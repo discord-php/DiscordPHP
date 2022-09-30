@@ -6,7 +6,7 @@
     
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <base href="../">
+    <base href="../../">
     <link rel="icon" href="images/favicon.ico"/>
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/base.css">
@@ -85,7 +85,7 @@
                 
             </li>
                     <li>
-                <a href="guide/events/guilds.html" class="">Guilds</a>
+                <a href="guide/events/guilds.html" class="-active">Guilds</a>
                 
             </li>
                     <li>
@@ -236,269 +236,247 @@
 </aside>
 
             <div class="phpdocumentor-column -eight phpdocumentor-content">
-                    <div class="section" id="permissions">
-<h1>Permissions</h1>
-<p>There are two types of permissions - channel permissions and role permissions. They are represented by their individual classes, but both extend the same abstract permission class.</p>
+                    <div class="section" id="guilds">
+<h1>Guilds</h1>
+<p>Requires the <code>Intents::GUILDS</code> intent.</p>
 </div>
-<div class="section" id="properties">
-<h1>Properties</h1>
-<table>
+<div class="section" id="guild-create">
+<h1>Guild Create</h1>
+<p>Called with a <code>Guild</code> object in one of the following situations:</p>
+
     
-    <tbody>
-                    <tr>
-                                    <td>name</td>
-                                    <td>type</td>
-                                    <td>description</td>
-                            </tr>
-                    <tr>
-                                    <td>bitwise</td>
-                                    <td>int</td>
-                                    <td>bitwise representation</td>
-                            </tr>
-                    <tr>
-                                    <td>createinstantinvite</td>
-                                    <td>bool</td>
-                                    <td></td>
-                            </tr>
-                    <tr>
-                                    <td>managechannels</td>
-                                    <td>bool</td>
-                                    <td></td>
-                            </tr>
-                    <tr>
-                                    <td>viewchannel</td>
-                                    <td>bool</td>
-                                    <td></td>
-                            </tr>
-                    <tr>
-                                    <td>manageroles</td>
-                                    <td>bool</td>
-                                    <td></td>
-                            </tr>
-            </tbody>
-</table>
-<p>The rest of the properties are listed under each permission type, all are type of <code>bool</code>.</p>
-</div>
-<div class="section" id="methods">
-<h1>Methods</h1>
-<div class="section" id="get-all-valid-permissions">
-<h2>Get all valid permissions</h2>
-<p>Returns a list of valid permissions, in key value form. Static method.</p>
-<pre><code class="language-php " >var_dump(ChannelPermission::getPermissions());
-// [
-//     &#039;priority_speaker&#039; =&gt; 8,
-//     // ...
-// ]
+<ol>
+    <li>
+            When the Bot is first starting and the guilds are becoming available.
+        </li>
+    <li>
+            When a guild was unavailable and is now available due to an outage.
+        </li>
+    <li>
+            When the Bot joins a new guild.
+        </li>
+</ol>
+<pre><code class="language-php " >$discord-&gt;on(Event::GUILD_CREATE, function (Guild $guild, Discord $discord) {
+    // ...
+});
 </code></pre>
 </div>
-<div class="section" id="channel-permission">
-<h1>Channel Permission</h1>
-<p>Represents permissions for text, voice, and stage instance channels.</p>
-<div class="section" id="text-channel-permissions">
-<h2>Text Channel Permissions</h2>
-
-
-<ul>
-    <li>
-            <code>create_instant_invite</code>
-        </li>
-    <li>
-            <code>manage_channels</code>
-        </li>
-    <li>
-            <code>view_channel</code>
-        </li>
-    <li>
-            <code>manage_roles</code>
-        </li>
-    <li>
-            <code>add_reactions</code>
-        </li>
-    <li>
-            <code>send_messages</code>
-        </li>
-    <li>
-            <code>send_tts_messages</code>
-        </li>
-    <li>
-            <code>manage_messages</code>
-        </li>
-    <li>
-            <code>embed_links</code>
-        </li>
-    <li>
-            <code>attach_files</code>
-        </li>
-    <li>
-            <code>read_message_history</code>
-        </li>
-    <li>
-            <code>mention_everyone</code>
-        </li>
-    <li>
-            <code>use_external_emojis</code>
-        </li>
-    <li>
-            <code>manage_webhooks</code>
-        </li>
-    <li>
-            <code>use_application_commands</code>
-        </li>
-    <li>
-            <code>manage_threads</code>
-        </li>
-    <li>
-            <code>create_public_threads</code>
-        </li>
-    <li>
-            <code>create_private_threads</code>
-        </li>
-    <li>
-            <code>use_external_stickers</code>
-        </li>
-    <li>
-            <code>send_messages_in_threads</code>
-        </li>
-</ul>
+<div class="section" id="guild-update">
+<h1>Guild Update</h1>
+<p>Called with two <code>Guild</code> objects when a guild is updated.</p>
+<pre><code class="language-php " >$discord-&gt;on(Event::GUILD_UPDATE, function (Guild $guild, Discord $discord, ?Guild $oldGuild) {
+    // ...
+});
+</code></pre>
 </div>
-<div class="section" id="voice-channel-permissions">
-<h2>Voice Channel Permissions</h2>
+<div class="section" id="guild-delete">
+<h1>Guild Delete</h1>
+<p>Called with a <code>Guild</code> object in one of the following situations:</p>
 
-
-<ul>
+    
+<ol>
     <li>
-            <code>create_instant_invite</code>
+            The Bot was removed from a guild.
         </li>
     <li>
-            <code>manage_channels</code>
+            The guild is unavailable due to an outage.
         </li>
-    <li>
-            <code>view_channel</code>
-        </li>
-    <li>
-            <code>manage_roles</code>
-        </li>
-    <li>
-            <code>priority_speaker</code>
-        </li>
-    <li>
-            <code>stream</code>
-        </li>
-    <li>
-            <code>connect</code>
-        </li>
-    <li>
-            <code>speak</code>
-        </li>
-    <li>
-            <code>mute_members</code>
-        </li>
-    <li>
-            <code>deafen_members</code>
-        </li>
-    <li>
-            <code>move_members</code>
-        </li>
-    <li>
-            <code>use_vad</code>
-        </li>
-    <li>
-            <code>manage_events</code>
-        </li>
-    <li>
-            <code>use_embedded_activities</code> was <code>start_embedded_activities</code>
-        </li>
-</ul>
+</ol>
+<pre><code class="language-php " >$discord-&gt;on(Event::GUILD_DELETE, function (object $guild, Discord $discord, bool $unavailable) {
+    // ...
+    if ($unavailable) {
+        // the guild is unavailabe due to an outage
+        // {
+        //     &quot;id&quot;: &quot;&quot; // guild ID
+        //     &quot;unavailable&quot;: true
+        // }
+    } else {
+        // the Bot has been kicked from the guild
+    }
+});
+</code></pre>
 </div>
-<div class="section" id="stage-instance-channel-permissions">
-<h2>Stage Instance Channel Permissions</h2>
-
-
-<ul>
-    <li>
-            <code>create_instant_invite</code>
-        </li>
-    <li>
-            <code>manage_channels</code>
-        </li>
-    <li>
-            <code>view_channel</code>
-        </li>
-    <li>
-            <code>manage_roles</code>
-        </li>
-    <li>
-            <code>connect</code>
-        </li>
-    <li>
-            <code>mute_members</code>
-        </li>
-    <li>
-            <code>deafen_members</code>
-        </li>
-    <li>
-            <code>move_members</code>
-        </li>
-    <li>
-            <code>request_to_speak</code>
-        </li>
-    <li>
-            <code>manage_events</code>
-        </li>
-</ul>
+<div class="section" id="guild-bans">
+<h1>Guild Bans</h1>
+<p>Requires the <code>Intents::GUILD_BANS</code> intent and <code>ban_members</code> permission.</p>
+<div class="section" id="guild-ban-add">
+<h2>Guild Ban Add</h2>
+<p>Called with a <code>Ban</code> object when a member is banned from a guild.</p>
+<pre><code class="language-php " >$discord-&gt;on(Event::GUILD_BAN_ADD, function (Ban $ban, Discord $discord) {
+    // ...
+});
+</code></pre>
+</div>
+<div class="section" id="guild-ban-remove">
+<h2>Guild Ban Remove</h2>
+<p>Called with a <code>Ban</code> object when a user is unbanned from a guild.</p>
+<pre><code class="language-php " >$discord-&gt;on(Event::GUILD_BAN_REMOVE, function (Ban $ban, Discord $discord) {
+    // ...
+});
+</code></pre>
+</div>
+<div class="section" id="guild-emojis-and-stickers">
+<h1>Guild Emojis and Stickers</h1>
+<p>Requires the <code>Intents::GUILD_EMOJIS_AND_STICKERS</code> intent.</p>
+<div class="section" id="guild-emojis-update">
+<h2>Guild Emojis Update</h2>
+<p>Called with two Collections of <code>Emoji</code> objects when a guild’s emojis have been added/updated/deleted. <code>$oldEmojis</code><em>may</em> be empty if it was not cached or there were previously no emojis.</p>
+<pre><code class="language-php " >$discord-&gt;on(Event::GUILD_EMOJIS_UPDATE, function (Collection $emojis, Discord $discord, Collection $oldEmojis) {
+    // ...
+});
+</code></pre>
+</div>
+<div class="section" id="guild-stickers-update">
+<h2>Guild Stickers Update</h2>
+<p>Called with two Collections of <code>Sticker</code> objects when a guild’s stickers have been added/updated/deleted. <code>$oldStickers</code><em>may</em> be empty if it was not cached or there were previously no stickers.</p>
+<pre><code class="language-php " >$discord-&gt;on(Event::GUILD_STICKERS_UPDATE, function (Collection $stickers, Discord $discord, Collecetion $oldStickers) {
+    // ...
+});
+</code></pre>
 </div>
 </div>
-<div class="section" id="role-permissions">
-<h1>Role Permissions</h1>
-<p>Represents permissions for roles.</p>
-<div class="section" id="permissions">
-<h2>Permissions</h2>
-
-
-<ul>
-    <li>
-            <code>create_instant_invite</code>
-        </li>
-    <li>
-            <code>manage_channels</code>
-        </li>
-    <li>
-            <code>view_channel</code>
-        </li>
-    <li>
-            <code>manage_roles</code>
-        </li>
-    <li>
-            <code>kick_members</code>
-        </li>
-    <li>
-            <code>ban_members</code>
-        </li>
-    <li>
-            <code>administrator</code>
-        </li>
-    <li>
-            <code>manage_guild</code>
-        </li>
-    <li>
-            <code>view_audit_log</code>
-        </li>
-    <li>
-            <code>view_guild_insights</code>
-        </li>
-    <li>
-            <code>change_nickname</code>
-        </li>
-    <li>
-            <code>manage_nicknames</code>
-        </li>
-    <li>
-            <code>manage_emojis_and_stickers</code>
-        </li>
-    <li>
-            <code>moderate_members</code>
-        </li>
-</ul>
+<div class="section" id="guild-members">
+<h1>Guild Members</h1>
+<p>Requires the <code>Intents::GUILD_MEMBERS</code> intent. This intent is a priviliged intent, it must be enabled in your Discord Bot developer settings.</p>
+<div class="section" id="guild-member-add">
+<h2>Guild Member Add</h2>
+<p>Called with a <code>Member</code> object when a new user joins a guild.</p>
+<pre><code class="language-php " >$discord-&gt;on(Event::GUILD_MEMBER_ADD, function (Member $member, Discord $discord) {
+    // ...
+});
+</code></pre>
+</div>
+<div class="section" id="guild-member-remove">
+<h2>Guild Member Remove</h2>
+<p>Called with a <code>Member</code> object when a member is removed from a guild (leave/kick/ban). Note that the member <em>may</em> only have <code>User</code> data if <code>loadAllMembers</code> is disabled.</p>
+<pre><code class="language-php " >$discord-&gt;on(Event::GUILD_MEMBER_REMOVE, function (Member $member, Discord $discord) {
+    // ...
+});
+</code></pre>
+</div>
+<div class="section" id="guild-member-update">
+<h2>Guild Member Update</h2>
+<p>Called with two <code>Member</code> objects when a member is updated in a guild. Note that the old member <em>may</em> be <code>null</code> if <code>loadAllMembers</code> is disabled.</p>
+<pre><code class="language-php " >$discord-&gt;on(Event::GUILD_MEMBER_UPDATE, function (Member $member, Discord $discord, ?Member $oldMember) {
+    // ...
+});
+</code></pre>
+</div>
+</div>
+<div class="section" id="guild-roles">
+<h1>Guild Roles</h1>
+<p>Requires the <code>Intents::GUILDS</code> intent.</p>
+<div class="section" id="guild-role-create">
+<h2>Guild Role Create</h2>
+<p>Called with a <code>Role</code> object when a role is created in a guild.</p>
+<pre><code class="language-php " >$discord-&gt;on(Event::GUILD_ROLE_CREATE, function (Role $role, Discord $discord) {
+    // ...
+});
+</code></pre>
+</div>
+<div class="section" id="guild-role-update">
+<h2>Guild Role Update</h2>
+<p>Called with two <code>Role</code> objects when a role is updated in a guild.</p>
+<pre><code class="language-php " >$discord-&gt;on(Event::GUILD_ROLE_UPDATE, function (Role $role, Discord $discord, ?Role $oldRole) {
+    // ...
+});
+</code></pre>
+</div>
+<div class="section" id="guild-role-delete">
+<h2>Guild Role Delete</h2>
+<p>Called with a <code>Role</code> object when a role is deleted in a guild. <code>$role</code> may return <code>Role</code> object if it was cached.</p>
+<pre><code class="language-php " >$discord-&gt;on(Event::GUILD_ROLE_DELETE, function (object $role, Discord $discord) {
+    if ($role instanceof Role) {
+        // Role is present in cache
+    }
+    // If the role is not present in the cache:
+    else {
+        // {
+        //     &quot;guild_id&quot;: &quot;&quot; // role guild ID
+        //     &quot;role_id&quot;: &quot;&quot;, // role ID,
+        // }
+    }
+});
+</code></pre>
+</div>
+</div>
+<div class="section" id="guild-scheduled-events">
+<h1>Guild Scheduled Events</h1>
+<p>Requires the <code>Intents::GUILD_SCHEDULED_EVENTS</code> intent.</p>
+<div class="section" id="guild-scheduled-event-create">
+<h2>Guild Scheduled Event Create</h2>
+<p>Called with a <code>ScheduledEvent</code> object when a scheduled event is created in a guild.</p>
+<pre><code class="language-php " >$discord-&gt;on(Event::GUILD_SCHEDULED_EVENT_CREATE, function (ScheduledEvent $scheduledEvent, Discord $discord) {
+    // ...
+});
+</code></pre>
+</div>
+<div class="section" id="guild-scheduled-event-update">
+<h2>Guild Scheduled Event Update</h2>
+<p>Called with a <code>ScheduledEvent</code> object when a scheduled event is updated in a guild.</p>
+<pre><code class="language-php " >$discord-&gt;on(Event::GUILD_SCHEDULED_EVENT_UPDATE, function (ScheduledEvent $scheduledEvent, Discord $discord, ?ScheduledEvent $oldScheduledEvent) {
+    // ...
+});
+</code></pre>
+</div>
+<div class="section" id="guild-scheduled-event-delete">
+<h2>Guild Scheduled Event Delete</h2>
+<p>Called with a <code>ScheduledEvent</code> object when a scheduled event is deleted in a guild.</p>
+<pre><code class="language-php " >$discord-&gt;on(Event::GUILD_SCHEDULED_EVENT_DELETE, function (ScheduledEvent $scheduledEvent, Discord $discord) {
+    // ...
+});
+</code></pre>
+</div>
+<div class="section" id="guild-scheduled-event-user-add">
+<h2>Guild Scheduled Event User Add</h2>
+<p>Called when a user has subscribed to a scheduled event in a guild.</p>
+<pre><code class="language-php " >$discord-&gt;on(Event::GUILD_SCHEDULED_EVENT_USER_ADD, function ($data, Discord $discord) {
+    // ...
+});
+</code></pre>
+</div>
+<div class="section" id="guild-scheduled-event-user-remove">
+<h2>Guild Scheduled Event User Remove</h2>
+<p>Called when a user has unsubscribed from a scheduled event in a guild.</p>
+<pre><code class="language-php " >$discord-&gt;on(Event::GUILD_SCHEDULED_EVENT_USER_REMOVE, function ($data, Discord $discord) {
+    // ...
+});
+</code></pre>
+</div>
+</div>
+<div class="section" id="integrations">
+<h1>Integrations</h1>
+<p>Requires the <code>Intents::GUILD_INTEGRATIONS</code> intent.</p>
+<div class="section" id="guild-integrations-update">
+<h2>Guild Integrations Update</h2>
+<p>Called with a cached <code>Guild</code> object when a guild integration is updated.</p>
+<pre><code class="language-php " >$discord-&gt;on(Event::GUILD_INTEGRATIONS_UPDATE, function (?Guild $guild, Discord $discord) {
+    // ...
+});
+</code></pre>
+</div>
+<div class="section" id="integration-create">
+<h2>Integration Create</h2>
+<p>Called with an <code>Integration</code> object when an integration is created in a guild.</p>
+<pre><code class="language-php " >$discord-&gt;on(Event::INTEGRATION_CREATE, function (Integration $integration, Discord $discord) {
+    // ...
+});
+</code></pre>
+</div>
+<div class="section" id="integration-update">
+<h2>Integration Update</h2>
+<p>Called with an <code>Integration</code> object when a integration is updated in a guild.</p>
+<pre><code class="language-php " >$discord-&gt;on(Event::INTEGRATION_UPDATE, function (Integration $integration, Discord $discord, ?Integration $oldIntegration) {
+    // ...
+});
+</code></pre>
+</div>
+<div class="section" id="integration-delete">
+<h2>Integration Delete</h2>
+<p>Called with an old <code>Integration</code> object when a integration is deleted from a guild. <code>$integration</code><em>may</em> be <code>null</code> if Integration is not cached.</p>
+<pre><code class="language-php " >$discord-&gt;on(Event::INTEGRATION_DELETE, function (?Integration $integration, Discord $discord) {
+    // ...
+});</code></pre>
 </div>
 </div>
 

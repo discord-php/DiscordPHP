@@ -101,7 +101,7 @@
                 
             </li>
                     <li>
-                <a href="guide/events/presences.html" class="">Presences</a>
+                <a href="guide/events/presences.html" class="-active">Presences</a>
                 
             </li>
                     <li>
@@ -236,241 +236,35 @@
 </aside>
 
             <div class="phpdocumentor-column -eight phpdocumentor-content">
-                    <div class="section" id="member">
-<h1>Member</h1>
-<p>Members represent a user in a guild. There is a member object for every guild-user relationship, meaning that there will be multiple member objects in the Discord client with the same user ID, but they will belong to different guilds.</p>
-<p>A member object can also be serialised into a mention string. For example:</p>
-<pre><code class="language-php " >$discord-&gt;on(Event::MESSAGE_CREATE, function (Message $message) {
-    // Hello &lt;@member_id&gt;!
-    // Note: `$message-&gt;member` will be `null` if the message originated from
-    // a private message, or if the member object was not cached.
-    $message-&gt;channel-&gt;sendMessage(&#039;Hello &#039;.$message-&gt;member.&#039;!&#039;);
-});
-</code></pre>
+                    <div class="section" id="presences">
+<h1>Presences</h1>
 </div>
-<div class="section" id="properties">
-<h1>Properties</h1>
-<table>
-    
-    <tbody>
-            </tbody>
-</table>
-</div>
-<div class="section" id="ban-the-member">
-<h1>Ban the member</h1>
-<p>Bans the member from the guild. Returns a <a href="#ban">Ban</a> part in a promise.</p>
-<div class="section" id="parameters">
-<h2>Parameters</h2>
-<table>
-    
-    <tbody>
-                    <tr>
-                                    <td>name</td>
-                                    <td>type</td>
-                                    <td>description</td>
-                            </tr>
-                    <tr>
-                                    <td>daysToDelete</td>
-                                    <td>int</td>
-                                    <td>number of days back to delete messages, default none</td>
-                            </tr>
-                    <tr>
-                                    <td>reason</td>
-                                    <td>string</td>
-                                    <td>reason for the ban</td>
-                            </tr>
-            </tbody>
-</table>
-<pre><code class="language-php " >$member-&gt;ban(5, &#039;bad person&#039;)-&gt;done(function (Ban $ban) {
+<div class="section" id="presence-update">
+<h1>Presence Update</h1>
+<p>Called with a <code>PresenceUpdate</code> object when a member’s presence is updated.</p>
+<pre><code class="language-php " >$discord-&gt;on(Event::PRESENCE_UPDATE, function (PresenceUpdate $presence, Discord $discord) {
     // ...
 });
 </code></pre>
+<p>Requires the <code>Intents::GUILD_PRESENCES</code> intent. This intent is a priviliged intent, it must be enabled in your Discord Bot developer settings.</p>
 </div>
-<div class="section" id="set-the-nickname-of-the-member">
-<h1>Set the nickname of the member</h1>
-<p>Sets the nickname of the member. Requires the <code>MANAGE_NICKNAMES</code> permission or <code>CHANGE_NICKNAME</code> if changing self nickname. Returns nothing in a promise.</p>
-<a id="parameters-1"></a>
-<div class="section" id="parameters">
-<h2>Parameters</h2>
-<table>
-    
-    <tbody>
-                    <tr>
-                                    <td>name</td>
-                                    <td>type</td>
-                                    <td>description</td>
-                            </tr>
-                    <tr>
-                                    <td>nick</td>
-                                    <td>string</td>
-                                    <td>nickname of the member, null to clear, default null</td>
-                            </tr>
-            </tbody>
-</table>
-<pre><code class="language-php " >$member-&gt;setNickname(&#039;newnick&#039;)-&gt;done(function () {
+<div class="section" id="typing-start">
+<h1>Typing Start</h1>
+<p>Called with a <code>TypingStart</code> object when a user starts typing in a channel.</p>
+<pre><code class="language-php " >// use Discord\Parts\WebSockets\TypingStart;
+
+$discord-&gt;on(Event::TYPING_START, function (TypingStart $typing, Discord $discord) {
     // ...
 });
 </code></pre>
+<p>Requires the <code>Intents::GUILD_MESSAGE_TYPING</code> intent.</p>
 </div>
-</div>
-<div class="section" id="move-member-to-channel">
-<h1>Move member to channel</h1>
-<p>Moves the member to another voice channel. Member must already be in a voice channel. Takes a channel or channel ID and returns nothing in a promise.</p>
-<a id="parameters-2"></a>
-<div class="section" id="parameters">
-<h2>Parameters</h2>
-<table>
-    
-    <tbody>
-            </tbody>
-</table>
-<pre><code class="language-php " >$member-&gt;moveMember($channel)-&gt;done(function () {
+<div class="section" id="user-update">
+<h1>User Update</h1>
+<p>Called with a <code>User</code> object when the Bot’s user properties change.</p>
+<pre><code class="language-php " >$discord-&gt;on(Event::USER_UPDATE, function (User $user, Discord $discord, ?User $oldUser) {
     // ...
-});
-
-// or
-
-$member-&gt;moveMember(&#039;123451231231&#039;)-&gt;done(function () {
-    // ...
-});
-</code></pre>
-</div>
-</div>
-<div class="section" id="add-member-to-role">
-<h1>Add member to role</h1>
-<p>Adds the member to a role. Takes a role or role ID and returns nothing in a promise.</p>
-<a id="parameters-3"></a>
-<div class="section" id="parameters">
-<h2>Parameters</h2>
-<table>
-    
-    <tbody>
-            </tbody>
-</table>
-<pre><code class="language-php " >$member-&gt;addRole($role)-&gt;done(function () {
-    // ...
-});
-
-// or
-
-$member-&gt;addRole(&#039;1231231231&#039;)-&gt;done(function () {
-    // ...
-});
-</code></pre>
-</div>
-</div>
-<div class="section" id="remove-member-from-role">
-<h1>Remove member from role</h1>
-<p>Removes the member from a role. Takes a role or role ID and returns nothing in a promise.</p>
-<a id="parameters-4"></a>
-<div class="section" id="parameters">
-<h2>Parameters</h2>
-<table>
-    
-    <tbody>
-            </tbody>
-</table>
-<pre><code class="language-php " >$member-&gt;removeRole($role)-&gt;done(function () {
-    // ...
-});
-
-// or
-
-$member-&gt;removeRole(&#039;1231231231&#039;)-&gt;done(function () {
-    // ...
-});
-</code></pre>
-</div>
-</div>
-<div class="section" id="timeout-member">
-<h1>Timeout member</h1>
-<p>Times out the member in the server. Takes a carbon or null to remove. Returns nothing in a promise.</p>
-<a id="parameters-5"></a>
-<div class="section" id="parameters">
-<h2>Parameters</h2>
-<table>
-            <thead>
-                            <tr>
-                                            <th>name</th>
-                                            <th>type</th>
-                                            <th>description</th>
-                                    </tr>
-                    </thead>
-    
-    <tbody>
-                    <tr>
-                                    <td>communicationdisableduntil</td>
-                                    <td><code>Carbon</code> or <code>null</code></td>
-                                    <td>the time for timeout to lasts on</td>
-                            </tr>
-            </tbody>
-</table>
-<pre><code class="language-php " >$member-&gt;timeoutMember(new Carbon(&#039;6 hours&#039;))-&gt;done(function () {
-    // ...
-});
-
-// to remove
-$member-&gt;timeoutMember()-&gt;done(function () {
-    // ...
-});
-</code></pre>
-</div>
-</div>
-<div class="section" id="get-permissions-of-member">
-<h1>Get permissions of member</h1>
-<p>Gets the effective permissions of the member: - When given a channel, returns the effective permissions of a member in a channel. - Otherwise, returns the effective permissions of a member in a guild.</p>
-<p>Returns a <a href="#permissions">role permission</a> in a promise.</p>
-<a id="parameters-6"></a>
-<div class="section" id="parameters">
-<h2>Parameters</h2>
-<table>
-    
-    <tbody>
-            </tbody>
-</table>
-<pre><code class="language-php " >$member-&gt;getPermissions($channel)-&gt;done(function (RolePermission $permission) {
-    // ...
-});
-
-// or
-
-$member-&gt;getPermissions()-&gt;done(function (RolePermission $permission) {
-    // ...
-});
-</code></pre>
-</div>
-</div>
-<div class="section" id="get-guild-specific-avatar-url">
-<h1>Get guild specific avatar URL</h1>
-<p>Gets the server-specific avatar URL for the member. Only call this function if you need to change the format or size of the image, otherwise use <code>$member->avatar</code>. Returns a string.</p>
-<a id="parameters-7"></a>
-<div class="section" id="parameters">
-<h2>Parameters</h2>
-<table>
-            <thead>
-                            <tr>
-                                            <th>name</th>
-                                            <th>type</th>
-                                            <th>description</th>
-                                    </tr>
-                    </thead>
-    
-    <tbody>
-                    <tr>
-                                    <td>format</td>
-                                    <td>string</td>
-                                    <td>format of the image, one of png, jpg or webp, default webp and gif if animated</td>
-                            </tr>
-                    <tr>
-                                    <td>size</td>
-                                    <td>int</td>
-                                    <td>size of the image, default 1024</td>
-                            </tr>
-            </tbody>
-</table>
-<pre><code class="language-php " >$url = $member-&gt;getAvatarAttribute(&#039;png&#039;, 2048);
-echo $url; // https://cdn.discordapp.com/guilds/:guild_id/users/:id/avatars/:avatar_hash.png?size=2048</code></pre>
-</div>
+});</code></pre>
 </div>
 
                 <section data-search-results class="phpdocumentor-search-results phpdocumentor-search-results--hidden">

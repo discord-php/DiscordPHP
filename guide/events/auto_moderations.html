@@ -77,7 +77,7 @@
                 
             </li>
                     <li>
-                <a href="guide/events/auto_moderations.html" class="">Auto Moderations</a>
+                <a href="guide/events/auto_moderations.html" class="-active">Auto Moderations</a>
                 
             </li>
                     <li>
@@ -236,34 +236,46 @@
 </aside>
 
             <div class="phpdocumentor-column -eight phpdocumentor-content">
-                    <div class="section" id="invites">
-<h1>Invites</h1>
-<p>Requires the <code>Intents::GUILD_INVITES</code> intent and <code>manage_channels</code> permission.</p>
+                    <div class="section" id="auto-moderations">
+<h1>Auto Moderations</h1>
+<p>All auto moderation related events are currently only sent to bot users which have the <code>MANAGE_GUILD</code> permission.</p>
 </div>
-<div class="section" id="invite-create">
-<h1>Invite Create</h1>
-<p>Called with an <code>Invite</code> object when a new invite to a channel is created.</p>
-<pre><code class="language-php " >$discord-&gt;on(Event::INVITE_CREATE, function (Invite $invite, Discord $discord) {
+<div class="section" id="auto-moderation-rule-create">
+<h1>Auto Moderation Rule Create</h1>
+<p>Called with a <code>Rule</code> object when an auto moderation rule is created.</p>
+<pre><code class="language-php " >$discord-&gt;on(Event::AUTO_MODERATION_RULE_CREATE, function (Rule $rule, Discord $discord) {
+    // ...
+});
+</code></pre>
+<p>Requires the <code>Intents::AUTO_MODERATION_CONFIGURATION</code> intent.</p>
+</div>
+<div class="section" id="auto-moderation-rule-update">
+<h1>Auto Moderation Rule Update</h1>
+<p>Called with a <code>Rule</code> object when an auto moderation rule is updated.</p>
+<pre><code class="language-php " >$discord-&gt;on(Event::AUTO_MODERATION_RULE_UPDATE, function (Rule $rule, Discord $discord, ?Rule $oldRule) {
     // ...
 });
 </code></pre>
 </div>
-<div class="section" id="invite-delete">
-<h1>Invite Delete</h1>
-<p>Called with an object when an invite is created.</p>
-<pre><code class="language-php " >$discord-&gt;on(Event::INVITE_DELETE, function (object $invite, Discord $discord) {
-    if ($invite instanceof Invite) {
-        // Invite is present in cache
-    }
-    // If the invite is not present in the cache:
-    else {
-        // {
-        //     &quot;channel_id&quot;: &quot;&quot;,
-        //     &quot;guild_id&quot;: &quot;&quot;,
-        //     &quot;code&quot;: &quot;&quot; // the unique invite code
-        // }
-    }
-});</code></pre>
+<div class="section" id="auto-moderation-rule-delete">
+<h1>Auto Moderation Rule Delete</h1>
+<p>Called with a <code>Rule</code> object when an auto moderation rule is deleted.</p>
+<pre><code class="language-php " >$discord-&gt;on(Event::AUTO_MODERATION_RULE_DELETE, function (Rule $rule, Discord $discord) {
+    // ...
+});
+</code></pre>
+<p>Requires the <code>Intents::AUTO_MODERATION_CONFIGURATION</code> intent.</p>
+</div>
+<div class="section" id="auto-moderation-action-execution">
+<h1>Auto Moderation Action Execution</h1>
+<p>Called with an <code>AutoModerationActionExecution</code> object when an auto moderation rule is triggered and an action is executed (e.g. when a message is blocked).</p>
+<pre><code class="language-php " >// use `Discord\Parts\WebSockets\AutoModerationActionExecution`;
+
+$discord-&gt;on(Event::AUTO_MODERATION_ACTION_EXECUTION, function (AutoModerationActionExecution $actionExecution, Discord $discord) {
+    // ...
+});
+</code></pre>
+<p>Requires the <code>Intents::AUTO_MODERATION_EXECUTION</code> intent.</p>
 </div>
 
                 <section data-search-results class="phpdocumentor-search-results phpdocumentor-search-results--hidden">

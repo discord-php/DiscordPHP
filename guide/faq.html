@@ -61,7 +61,7 @@
 </h4>
 
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
-    <a href="guide/faq.html" class="">FAQ</a>
+    <a href="guide/faq.html" class="-active">FAQ</a>
 </h4>
 
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
@@ -236,81 +236,35 @@
 </aside>
 
             <div class="phpdocumentor-column -eight phpdocumentor-content">
-                    <div class="section" id="message-builder">
-<h1>Message Builder</h1>
-<p>The <code>MessageBuilder</code> class is used to describe the contents of a new (or to be updated) message.</p>
-<p>A new message builder can be created with the <code>new</code> function:</p>
-<pre><code class="language-php " >$builder = MessageBuilder::new();
-</code></pre>
-<p>Most builder functions return itself, so you can easily chain function calls together for a clean API, an example is shown on the right.</p>
-<pre><code class="language-php " >$channel-&gt;sendMessage(MessageBuilder::new()
-    -&gt;setContent(&#039;Hello, world!&#039;)
-    -&gt;addEmbed($embed)
-    -&gt;addFile(&#039;/path/to/file&#039;));
-</code></pre>
+                    <div class="section" id="faq">
+<h1>FAQ</h1>
 </div>
-<div class="section" id="setting-content">
-<h1>Setting content</h1>
-<p>Sets the text content of the message. Throws an <code>LengthException</code> if the content is greater than 2000 characters.</p>
-<pre><code class="language-php " >$builder-&gt;setContent(&#039;Hello, world!&#039;);
+<div class="section" id="dd1205099569fe5c636cf6c49a421dc5efa23c92">
+<h1><code>Class 'X' not found</code></h1>
+<p>You most likely haven't imported the class that you are trying to use. Please check the <a href="http://discord-php.github.io/DiscordPHP/namespaces/discord">class reference</a> and search for the class that you are trying to use. Add an import statement at the top of the file like shown on the right.</p>
+<pre><code class="language-php " >&lt;?php
+
+use Discord\X;
+
 </code></pre>
+<p>If you don't want to have to import a class every time, you should look into the PHP Intelephense language server (written above) which will do automatic imports for you.</p>
 </div>
-<div class="section" id="setting-tts-value">
-<h1>Setting TTS value</h1>
-<p>Sets the TTS value of the message.</p>
-<pre><code class="language-php " >$builder-&gt;setTts(true);
+<div class="section" id="there-are-less-members-and-or-users-than-expected">
+<h1>There are less members and/or users than expected</h1>
+<p>Server members are guarded by a priviliged server intent which must be enabled in the <a href="https://discord.com/developers/applications">Discord Developer Portal</a>. Note that you will need to verify your bot if you use this intent and pass 100 guilds.</p>
+<p>You also need to enable the <code>loadAllMembers</code> option in your code, as shown on the right.</p>
+<pre><code class="language-php " >$discord = new Discord([
+    &#039;token&#039; =&gt; &#039;...&#039;,
+    &#039;loadAllMembers&#039; =&gt; true, // Enable this option
+]);
+
 </code></pre>
-</div>
-<div class="section" id="adding-embeds">
-<h1>Adding embeds</h1>
-<p>You can add up to 10 embeds to a message. The embed functions takes <code>Embed</code> objects or associative arrays:</p>
-<pre><code class="language-php " >$builder-&gt;addEmbed($embed);
-</code></pre>
-<p>You can also set the embeds from another array of embeds. Note this will remove the current embeds from the message.</p>
-<pre><code class="language-php " >$embeds = [...];
-$builder-&gt;setEmbeds($embeds);
-</code></pre>
-</div>
-<div class="section" id="replying-to-a-message">
-<h1>Replying to a message</h1>
-<p>Sets the message as replying to another message. Takes a <code>Message</code> object.</p>
-<pre><code class="language-php " >$discord-&gt;on(Event::MESSAGE_CREATE, function (Message $message) use ($builder) {
-    $builder-&gt;setReplyTo($message);
-});
-</code></pre>
-</div>
-<div class="section" id="adding-files-to-the-message">
-<h1>Adding files to the message</h1>
-<p>You can add multiple files to a message. The <code>addFile</code> function takes a path to a file, as well as an optional filename.</p>
-<p>If the filename parameter is ommited, it will take the filename from the path. Throws an exception if the path does not exist.</p>
-<pre><code class="language-php " >$builder-&gt;addFile(&#039;/path/to/file&#039;, &#039;file.png&#039;);
-</code></pre>
-<p>You can also add files to messages with the content as a string:</p>
-<pre><code class="language-php " >$builder-&gt;addFileFromContent(&#039;file.txt&#039;, &#039;contents of my file!&#039;);
-</code></pre>
-<p>You can also remove all files from a builder:</p>
-<pre><code class="language-php " >$builder-&gt;clearFiles();
-</code></pre>
-<p>There is no limit on the number of files you can upload, but the whole request must be less than 8MB (including headers and JSON payload).</p>
-</div>
-<div class="section" id="adding-sticker">
-<h1>Adding sticker</h1>
-<p>You can add up to 3 stickers to a message. The function takes <code>Sticker</code> object.</p>
-<pre><code class="language-php " >$builder-&gt;addSticker($sticker);
-</code></pre>
-<p>To remove a sticker:</p>
-<pre><code class="language-php " >$builder-&gt;removeSticker($sticker);
-</code></pre>
-<p>You can also set the stickers from another array of stickers. Note this will remove the current stickers from the message.</p>
-<pre><code class="language-php " >$stickers = [...];
-$builder-&gt;setStickers($stickers);
-</code></pre>
-</div>
-<div class="section" id="adding-message-components">
-<h1>Adding message components</h1>
-<p>Adds a message component to the message. You can only add <code>ActionRow</code> and <code>SelectMenu</code> objects. To add buttons, wrap the button in an <code>ActionRow</code> object. Throws an <code>InvalidArgumentException</code> if the given component is not an <code>ActionRow</code> or <code>SelectMenu</code> Throws an <code>OverflowException</code> if you already have 5 components in the message.</p>
-<pre><code class="language-php " >$component = SelectMenu::new();
-$builder-&gt;addComponent($component);</code></pre>
+<p>If you are using DiscordPHP Version 6 or greater, you need to enable the <code>GUILD_MEMBERS</code> intent as well as the <code>loadAllMembers</code> option. The shown code will enable all intents minus the <code>GUILD_PRESENCES</code> intent (which is also priviliged).</p>
+<pre><code class="language-php " >$discord = new Discord([
+    &#039;token&#039; =&gt; &#039;...&#039;,
+    &#039;loadAllMembers&#039; =&gt; true,
+    &#039;intents&#039; =&gt; Intents::getDefaultIntents() | Intents::GUILD_MEMBERS // Enable the `GUILD_MEMBERS` intent
+])</code></pre>
 </div>
 
                 <section data-search-results class="phpdocumentor-search-results phpdocumentor-search-results--hidden">

@@ -73,7 +73,7 @@
 </h4>
     <ul class="phpdocumentor-list">
                     <li>
-                <a href="guide/events/application_commands.html" class="">Application Commands</a>
+                <a href="guide/events/application_commands.html" class="-active">Application Commands</a>
                 
             </li>
                     <li>
@@ -236,243 +236,19 @@
 </aside>
 
             <div class="phpdocumentor-column -eight phpdocumentor-content">
-                    <div class="section" id="guild">
-<h1>Guild</h1>
-<p>Guilds represent Discord ‘servers’.</p>
+                    <div class="section" id="application-commands">
+<h1>Application Commands</h1>
 </div>
-<div class="section" id="repositories">
-<h1>Repositories</h1>
-<table>
-    
-    <tbody>
-            </tbody>
-</table>
-</div>
-<div class="section" id="creating-a-role">
-<h1>Creating a role</h1>
-<p>Shortcut for <code>$guild->roles->save($role);</code>. Takes an array of parameters for a role and returns a role part in a promise.</p>
-<div class="section" id="parameters">
-<h2>Parameters</h2>
-<table>
-            <thead>
-                            <tr>
-                                            <th>name</th>
-                                            <th>type</th>
-                                            <th>description</th>
-                                            <th>default</th>
-                                    </tr>
-                    </thead>
-    
-    <tbody>
-                    <tr>
-                                    <td>name</td>
-                                    <td>string</td>
-                                    <td>Role name</td>
-                                    <td>new role</td>
-                            </tr>
-                    <tr>
-                                    <td>permissions</td>
-                                    <td>string</td>
-                                    <td>Bitwise value of permissions</td>
-                                    <td>@everyone permissions</td>
-                            </tr>
-                    <tr>
-                                    <td>color</td>
-                                    <td>integer</td>
-                                    <td>RGB color value</td>
-                                    <td>0</td>
-                            </tr>
-                    <tr>
-                                    <td>hoist</td>
-                                    <td>bool</td>
-                                    <td>Hoisted role?</td>
-                                    <td>false</td>
-                            </tr>
-                    <tr>
-                                    <td>icon</td>
-                                    <td>string</td>
-                                    <td>image data for Role icon</td>
-                                    <td>null</td>
-                            </tr>
-                    <tr>
-                                    <td>unicodeemoji</td>
-                                    <td>string</td>
-                                    <td>unicode emoji for Role icon</td>
-                                    <td>null</td>
-                            </tr>
-                    <tr>
-                                    <td>mentionable</td>
-                                    <td>bool</td>
-                                    <td>Mentionable role?</td>
-                                    <td>false</td>
-                            </tr>
-            </tbody>
-</table>
-<pre><code class="language-php " >$guild-&gt;createRole([
-    &#039;name&#039; =&gt; &#039;New Role&#039;,
-    // ...
-])-&gt;done(function (Role $role) {
-    // ...
-});
-</code></pre>
-</div>
-<div class="section" id="transferring-ownership-of-guild">
-<h1>Transferring ownership of guild</h1>
-<p>Transfers the ownership of the guild to another member. The bot must own the guild to be able to transfer ownership. Takes a member object or a member ID and returns nothing in a promise.</p>
-<a id="parameters-1"></a>
-<div class="section" id="parameters">
-<h2>Parameters</h2>
-<table>
-    
-    <tbody>
-                    <tr>
-                                    <td>name</td>
-                                    <td>type</td>
-                                    <td>description</td>
-                            </tr>
-                    <tr>
-                                    <td>member</td>
-                                    <td>Member or member ID</td>
-                                    <td>The member to get ownership</td>
-                            </tr>
-                    <tr>
-                                    <td>reason</td>
-                                    <td>string</td>
-                                    <td>Reason for Audit Log</td>
-                            </tr>
-            </tbody>
-</table>
-<pre><code class="language-php " >$guild-&gt;transferOwnership($member)-&gt;done(...);
-// or
-$guild-&gt;transferOwnership(&#039;member_id&#039;)-&gt;done(...);
-</code></pre>
-</div>
-</div>
-<div class="section" id="unbanning-a-member-with-a-user-or-user-id">
-<h1>Unbanning a member with a User or user ID</h1>
-<p>Unbans a member when passed a <code>User</code> object or a user ID. If you have the ban object, you can do <code>$guild->bans->delete($ban);</code>. Returns nothing in a promise.</p>
-<a id="parameters-2"></a>
-<div class="section" id="parameters">
-<h2>Parameters</h2>
-<table>
-    
-    <tbody>
-                    <tr>
-                                    <td>name</td>
-                                    <td>type</td>
-                                    <td>description</td>
-                            </tr>
-                    <tr>
-                                    <td>userid</td>
-                                    <td><code>User</code> or user ID</td>
-                                    <td>The user to unban</td>
-                            </tr>
-            </tbody>
-</table>
-<pre><code class="language-php " >$guild-&gt;unban($user)-&gt;done(...);
-// or
-$guild-&gt;unban(&#039;user_id&#039;)-&gt;done(...);
-</code></pre>
-</div>
-</div>
-<div class="section" id="querying-the-guild-audit-log">
-<h1>Querying the Guild audit log</h1>
-<p>Takes an array of parameters to query the audit log for the guild. Returns an Audit Log object inside a promise.</p>
-<a id="parameters-3"></a>
-<div class="section" id="parameters">
-<h2>Parameters</h2>
-<table>
-            <thead>
-                            <tr>
-                                            <th>name</th>
-                                            <th>type</th>
-                                            <th>description</th>
-                                    </tr>
-                    </thead>
-    
-    <tbody>
-                    <tr>
-                                    <td>userid</td>
-                                    <td>string, int, <code>Member</code>, <code>User</code></td>
-                                    <td>Filters audit log by who performed the action</td>
-                            </tr>
-                    <tr>
-                                    <td>actiontype</td>
-                                    <td><code>Entry</code> constants</td>
-                                    <td>Filters audit log by the type of action</td>
-                            </tr>
-                    <tr>
-                                    <td>before</td>
-                                    <td>string, int, <code>Entry</code></td>
-                                    <td>Retrieves audit logs before the given audit log object</td>
-                            </tr>
-                    <tr>
-                                    <td>limit</td>
-                                    <td>int between 1 and 100</td>
-                                    <td>Limits the amount of audit log entries to return</td>
-                            </tr>
-            </tbody>
-</table>
-<pre><code class="language-php " >$guild-&gt;getAuditLog([
-    &#039;user_id&#039; =&gt; &#039;123456&#039;,
-    &#039;action_type&#039; =&gt; Entry::CHANNEL_CREATE,
-    &#039;before&#039; =&gt; $anotherEntry,
-    &#039;limit&#039; =&gt; 12,
-])-&gt;done(function (AuditLog $auditLog) {
-    foreach ($auditLog-&gt;audit_log_entries as $entry) {
-        // $entry-&gt;...
-    }
-});
-</code></pre>
-</div>
-</div>
-<div class="section" id="creating-an-emoji">
-<h1>Creating an Emoji</h1>
-<p>Takes an array of parameters for an emoji and returns an emoji part in a promise. Use the second parameter to specify local file path instead.</p>
-<a id="parameters-4"></a>
-<div class="section" id="parameters">
-<h2>Parameters</h2>
-<table>
-            <thead>
-                            <tr>
-                                            <th>name</th>
-                                            <th>type</th>
-                                            <th>description</th>
-                                            <th>default</th>
-                                    </tr>
-                    </thead>
-    
-    <tbody>
-                    <tr>
-                                    <td>name</td>
-                                    <td>string</td>
-                                    <td>Emoji name</td>
-                                    <td><em>required</em></td>
-                            </tr>
-                    <tr>
-                                    <td>image</td>
-                                    <td>string</td>
-                                    <td>image data with base64 format, ignored if file path is specified</td>
-                                    <td></td>
-                            </tr>
-                    <tr>
-                                    <td>roles</td>
-                                    <td>array</td>
-                                    <td>Role IDs that are allowed to use the emoji</td>
-                                    <td>[]</td>
-                            </tr>
-            </tbody>
-</table>
-<pre><code class="language-php " >$guild-&gt;createEmoji([
-    &#039;name&#039; =&gt; &#039;elephpant&#039;,
-    // ...
-],
-&#039;/path/to/file.jpg&#039;,
-&#039;audit-log reason&#039;
-)-&gt;done(function (Emoji $emoji) {
+<div class="section" id="application-command-permissions-update">
+<h1>Application Command Permissions Update</h1>
+<p>Called with an <code>Overwrite</code> object when an application command’s permissions are updated.</p>
+<blockquote><p>Warning: The class Overwrite will be changed in future version!</p>
+</blockquote>
+<pre><code class="language-php " >// use Discord\Parts\Interactions\Command\Overwrite;
+
+$discord-&gt;on(Event::APPLICATION_COMMAND_PERMISSIONS_UPDATE, function (Overwrite $overwrite, Discord $discord, ?Overwrite $oldOverwrite) {
     // ...
 });</code></pre>
-</div>
 </div>
 
                 <section data-search-results class="phpdocumentor-search-results phpdocumentor-search-results--hidden">

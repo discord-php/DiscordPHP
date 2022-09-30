@@ -6,7 +6,7 @@
     
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <base href="../../">
+    <base href="../">
     <link rel="icon" href="images/favicon.ico"/>
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/base.css">
@@ -153,7 +153,7 @@
 </h4>
 
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
-    <a href="guide/permissions.html" class="">Permissions</a>
+    <a href="guide/permissions.html" class="-active">Permissions</a>
 </h4>
 
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
@@ -236,128 +236,12 @@
 </aside>
 
             <div class="phpdocumentor-column -eight phpdocumentor-content">
-                    <div class="section" id="user">
-<h1>User</h1>
-<p>User represents a user of Discord. The bot can “see” any users that to a guild that they also belong to.</p>
+                    <div class="section" id="permissions">
+<h1>Permissions</h1>
+<p>There are two types of permissions - channel permissions and role permissions. They are represented by their individual classes, but both extend the same abstract permission class.</p>
 </div>
 <div class="section" id="properties">
 <h1>Properties</h1>
-<table>
-            <thead>
-                            <tr>
-                                            <th>name</th>
-                                            <th>type</th>
-                                            <th>description</th>
-                                    </tr>
-                    </thead>
-    
-    <tbody>
-                    <tr>
-                                    <td>id</td>
-                                    <td>string</td>
-                                    <td>id of the user</td>
-                            </tr>
-                    <tr>
-                                    <td>username</td>
-                                    <td>string</td>
-                                    <td>username of the user</td>
-                            </tr>
-                    <tr>
-                                    <td>discriminator</td>
-                                    <td>string</td>
-                                    <td>four-digit discriminator of the user</td>
-                            </tr>
-                    <tr>
-                                    <td>displayname</td>
-                                    <td>string</td>
-                                    <td>username#discriminator</td>
-                            </tr>
-                    <tr>
-                                    <td>avatar</td>
-                                    <td>string</td>
-                                    <td>avatar URL of the user</td>
-                            </tr>
-                    <tr>
-                                    <td>avatarhash</td>
-                                    <td>string</td>
-                                    <td>avatar hash of the user</td>
-                            </tr>
-                    <tr>
-                                    <td>bot</td>
-                                    <td>bool</td>
-                                    <td>whether the user is a bot</td>
-                            </tr>
-                    <tr>
-                                    <td>system</td>
-                                    <td>bool</td>
-                                    <td>whetehr the user is a system user e.g. Clyde</td>
-                            </tr>
-                    <tr>
-                                    <td>mfaenabled</td>
-                                    <td>bool</td>
-                                    <td>whether the user has multifactor authentication enabled</td>
-                            </tr>
-                    <tr>
-                                    <td>banner</td>
-                                    <td>?string</td>
-                                    <td>the banner URL of the user.</td>
-                            </tr>
-                    <tr>
-                                    <td>bannerhash</td>
-                                    <td>?string</td>
-                                    <td>the banner URL of the user.</td>
-                            </tr>
-                    <tr>
-                                    <td>accentcolor</td>
-                                    <td>?int</td>
-                                    <td>the user’s banner color encoded as an integer representation</td>
-                            </tr>
-                    <tr>
-                                    <td>locale</td>
-                                    <td>?string</td>
-                                    <td>locale of the user</td>
-                            </tr>
-                    <tr>
-                                    <td>verified</td>
-                                    <td>bool</td>
-                                    <td>whether the user is verified</td>
-                            </tr>
-                    <tr>
-                                    <td>email</td>
-                                    <td>?string</td>
-                                    <td>email of the user</td>
-                            </tr>
-                    <tr>
-                                    <td>flags</td>
-                                    <td>?int</td>
-                                    <td>user flags, see the <code>User</code> classes constants. use bit masks to compare</td>
-                            </tr>
-                    <tr>
-                                    <td>premiumtype</td>
-                                    <td>?int</td>
-                                    <td>type of nitro, see the <code>User</code> classes constants</td>
-                            </tr>
-                    <tr>
-                                    <td>publicflags</td>
-                                    <td>?int</td>
-                                    <td>see flags above</td>
-                            </tr>
-            </tbody>
-</table>
-</div>
-<div class="section" id="get-private-channel-for-user">
-<h1>Get private channel for user</h1>
-<p>Gets the private direct message channel for the user. Returns a <a href="#channel">Channel</a> in a promise.</p>
-<pre><code class="language-php " >$user-&gt;getPrivateChannel()-&gt;done(function (Channel $channel) {
-    // ...
-});
-</code></pre>
-</div>
-<div class="section" id="send-user-a-message">
-<h1>Send user a message</h1>
-<p>Sends a private direct message to the user. Note that your bot account can be suspended for doing this, consult Discord documentation for more information. Returns the message in a promise.</p>
-<div class="section" id="parameters">
-<h2>Parameters</h2>
 <table>
     
     <tbody>
@@ -367,90 +251,254 @@
                                     <td>description</td>
                             </tr>
                     <tr>
-                                    <td>message</td>
-                                    <td>string</td>
-                                    <td>content to send</td>
+                                    <td>bitwise</td>
+                                    <td>int</td>
+                                    <td>bitwise representation</td>
                             </tr>
                     <tr>
-                                    <td>tts</td>
+                                    <td>createinstantinvite</td>
                                     <td>bool</td>
-                                    <td>whether to send the message as text to speech</td>
+                                    <td></td>
                             </tr>
                     <tr>
-                                    <td>embed</td>
-                                    <td>Embed</td>
-                                    <td>embed to send in the message</td>
+                                    <td>managechannels</td>
+                                    <td>bool</td>
+                                    <td></td>
+                            </tr>
+                    <tr>
+                                    <td>viewchannel</td>
+                                    <td>bool</td>
+                                    <td></td>
+                            </tr>
+                    <tr>
+                                    <td>manageroles</td>
+                                    <td>bool</td>
+                                    <td></td>
                             </tr>
             </tbody>
 </table>
-<pre><code class="language-php " >$user-&gt;sendMessage(&#039;Hello, world!&#039;, false, $embed)-&gt;done(function (Message $message) {
-    // ...
-});
+<p>The rest of the properties are listed under each permission type, all are type of <code>bool</code>.</p>
+</div>
+<div class="section" id="methods">
+<h1>Methods</h1>
+<div class="section" id="get-all-valid-permissions">
+<h2>Get all valid permissions</h2>
+<p>Returns a list of valid permissions, in key value form. Static method.</p>
+<pre><code class="language-php " >var_dump(ChannelPermission::getPermissions());
+// [
+//     &#039;priority_speaker&#039; =&gt; 8,
+//     // ...
+// ]
 </code></pre>
 </div>
-<div class="section" id="get-avatar-url">
-<h1>Get avatar URL</h1>
-<p>Gets the avatar URL for the user. Only call this function if you need to change the format or size of the image, otherwise use <code>$user->avatar</code>. Returns a string.</p>
-<a id="parameters-1"></a>
-<div class="section" id="parameters">
-<h2>Parameters</h2>
-<table>
-            <thead>
-                            <tr>
-                                            <th>name</th>
-                                            <th>type</th>
-                                            <th>description</th>
-                                    </tr>
-                    </thead>
-    
-    <tbody>
-                    <tr>
-                                    <td>format</td>
-                                    <td>string</td>
-                                    <td>format of the image, one of png, jpg or webp, default webp or gif if animated</td>
-                            </tr>
-                    <tr>
-                                    <td>size</td>
-                                    <td>int</td>
-                                    <td>size of the image, default 1024</td>
-                            </tr>
-            </tbody>
-</table>
-<pre><code class="language-php " >$url = $user-&gt;getAvatarAttribute(&#039;png&#039;, 2048);
-echo $url; // https://cdn.discordapp.com/avatars/:user_id/:avatar_hash.png?size=2048
-</code></pre>
+<div class="section" id="channel-permission">
+<h1>Channel Permission</h1>
+<p>Represents permissions for text, voice, and stage instance channels.</p>
+<div class="section" id="text-channel-permissions">
+<h2>Text Channel Permissions</h2>
+
+
+<ul>
+    <li>
+            <code>create_instant_invite</code>
+        </li>
+    <li>
+            <code>manage_channels</code>
+        </li>
+    <li>
+            <code>view_channel</code>
+        </li>
+    <li>
+            <code>manage_roles</code>
+        </li>
+    <li>
+            <code>add_reactions</code>
+        </li>
+    <li>
+            <code>send_messages</code>
+        </li>
+    <li>
+            <code>send_tts_messages</code>
+        </li>
+    <li>
+            <code>manage_messages</code>
+        </li>
+    <li>
+            <code>embed_links</code>
+        </li>
+    <li>
+            <code>attach_files</code>
+        </li>
+    <li>
+            <code>read_message_history</code>
+        </li>
+    <li>
+            <code>mention_everyone</code>
+        </li>
+    <li>
+            <code>use_external_emojis</code>
+        </li>
+    <li>
+            <code>manage_webhooks</code>
+        </li>
+    <li>
+            <code>use_application_commands</code>
+        </li>
+    <li>
+            <code>manage_threads</code>
+        </li>
+    <li>
+            <code>create_public_threads</code>
+        </li>
+    <li>
+            <code>create_private_threads</code>
+        </li>
+    <li>
+            <code>use_external_stickers</code>
+        </li>
+    <li>
+            <code>send_messages_in_threads</code>
+        </li>
+</ul>
+</div>
+<div class="section" id="voice-channel-permissions">
+<h2>Voice Channel Permissions</h2>
+
+
+<ul>
+    <li>
+            <code>create_instant_invite</code>
+        </li>
+    <li>
+            <code>manage_channels</code>
+        </li>
+    <li>
+            <code>view_channel</code>
+        </li>
+    <li>
+            <code>manage_roles</code>
+        </li>
+    <li>
+            <code>priority_speaker</code>
+        </li>
+    <li>
+            <code>stream</code>
+        </li>
+    <li>
+            <code>connect</code>
+        </li>
+    <li>
+            <code>speak</code>
+        </li>
+    <li>
+            <code>mute_members</code>
+        </li>
+    <li>
+            <code>deafen_members</code>
+        </li>
+    <li>
+            <code>move_members</code>
+        </li>
+    <li>
+            <code>use_vad</code>
+        </li>
+    <li>
+            <code>manage_events</code>
+        </li>
+    <li>
+            <code>use_embedded_activities</code> was <code>start_embedded_activities</code>
+        </li>
+</ul>
+</div>
+<div class="section" id="stage-instance-channel-permissions">
+<h2>Stage Instance Channel Permissions</h2>
+
+
+<ul>
+    <li>
+            <code>create_instant_invite</code>
+        </li>
+    <li>
+            <code>manage_channels</code>
+        </li>
+    <li>
+            <code>view_channel</code>
+        </li>
+    <li>
+            <code>manage_roles</code>
+        </li>
+    <li>
+            <code>connect</code>
+        </li>
+    <li>
+            <code>mute_members</code>
+        </li>
+    <li>
+            <code>deafen_members</code>
+        </li>
+    <li>
+            <code>move_members</code>
+        </li>
+    <li>
+            <code>request_to_speak</code>
+        </li>
+    <li>
+            <code>manage_events</code>
+        </li>
+</ul>
 </div>
 </div>
-<div class="section" id="get-banner-url">
-<h1>Get banner URL</h1>
-<p>Gets the banner URL for the user. Only call this function if you need to change the format or size of the image, otherwise use <code>$user->banner</code>. Returns a string or <code>null</code> if user has no banner image set.</p>
-<a id="parameters-2"></a>
-<div class="section" id="parameters">
-<h2>Parameters</h2>
-<table>
-            <thead>
-                            <tr>
-                                            <th>name</th>
-                                            <th>type</th>
-                                            <th>description</th>
-                                    </tr>
-                    </thead>
-    
-    <tbody>
-                    <tr>
-                                    <td>format</td>
-                                    <td>string</td>
-                                    <td>format of the image, one of png, jpg or webp, default png or gif if animated</td>
-                            </tr>
-                    <tr>
-                                    <td>size</td>
-                                    <td>int</td>
-                                    <td>size of the image, default 600</td>
-                            </tr>
-            </tbody>
-</table>
-<pre><code class="language-php " >$url = $user-&gt;getBannerAttribute(&#039;png&#039;, 1024);
-echo $url; // https://cdn.discordapp.com/banners/:user_id/:banner_hash.png?size=1024</code></pre>
+<div class="section" id="role-permissions">
+<h1>Role Permissions</h1>
+<p>Represents permissions for roles.</p>
+<div class="section" id="permissions">
+<h2>Permissions</h2>
+
+
+<ul>
+    <li>
+            <code>create_instant_invite</code>
+        </li>
+    <li>
+            <code>manage_channels</code>
+        </li>
+    <li>
+            <code>view_channel</code>
+        </li>
+    <li>
+            <code>manage_roles</code>
+        </li>
+    <li>
+            <code>kick_members</code>
+        </li>
+    <li>
+            <code>ban_members</code>
+        </li>
+    <li>
+            <code>administrator</code>
+        </li>
+    <li>
+            <code>manage_guild</code>
+        </li>
+    <li>
+            <code>view_audit_log</code>
+        </li>
+    <li>
+            <code>view_guild_insights</code>
+        </li>
+    <li>
+            <code>change_nickname</code>
+        </li>
+    <li>
+            <code>manage_nicknames</code>
+        </li>
+    <li>
+            <code>manage_emojis_and_stickers</code>
+        </li>
+    <li>
+            <code>moderate_members</code>
+        </li>
+</ul>
 </div>
 </div>
 

@@ -6,7 +6,7 @@
     
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <base href="../../">
+    <base href="../">
     <link rel="icon" href="images/favicon.ico"/>
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/base.css">
@@ -157,7 +157,7 @@
 </h4>
 
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
-    <a href="guide/message_builder.html" class="">Message Builder</a>
+    <a href="guide/message_builder.html" class="-active">Message Builder</a>
 </h4>
 
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
@@ -236,230 +236,81 @@
 </aside>
 
             <div class="phpdocumentor-column -eight phpdocumentor-content">
-                    <div class="section" id="message">
-<h1>Message</h1>
-<p>Messages are present in channels and can be anything from a cross post to a reply and a regular message.</p>
+                    <div class="section" id="message-builder">
+<h1>Message Builder</h1>
+<p>The <code>MessageBuilder</code> class is used to describe the contents of a new (or to be updated) message.</p>
+<p>A new message builder can be created with the <code>new</code> function:</p>
+<pre><code class="language-php " >$builder = MessageBuilder::new();
+</code></pre>
+<p>Most builder functions return itself, so you can easily chain function calls together for a clean API, an example is shown on the right.</p>
+<pre><code class="language-php " >$channel-&gt;sendMessage(MessageBuilder::new()
+    -&gt;setContent(&#039;Hello, world!&#039;)
+    -&gt;addEmbed($embed)
+    -&gt;addFile(&#039;/path/to/file&#039;));
+</code></pre>
 </div>
-<div class="section" id="properties">
-<h1>Properties</h1>
-<table>
-    
-    <tbody>
-            </tbody>
-</table>
+<div class="section" id="setting-content">
+<h1>Setting content</h1>
+<p>Sets the text content of the message. Throws an <code>LengthException</code> if the content is greater than 2000 characters.</p>
+<pre><code class="language-php " >$builder-&gt;setContent(&#039;Hello, world!&#039;);
+</code></pre>
 </div>
-<div class="section" id="reply-to-a-message">
-<h1>Reply to a message</h1>
-<p>Sends a “reply” to the message. Returns the new message in a promise.</p>
-<div class="section" id="parameters">
-<h2>Parameters</h2>
-<table>
-    
-    <tbody>
-                    <tr>
-                                    <td>name</td>
-                                    <td>type</td>
-                                    <td>description</td>
-                            </tr>
-                    <tr>
-                                    <td>text</td>
-                                    <td>string</td>
-                                    <td>text to send in the message</td>
-                            </tr>
-            </tbody>
-</table>
-<pre><code class="language-php " >$message-&gt;reply(&#039;hello!&#039;)-&gt;done(function (Message $message) {
-    // ...
+<div class="section" id="setting-tts-value">
+<h1>Setting TTS value</h1>
+<p>Sets the TTS value of the message.</p>
+<pre><code class="language-php " >$builder-&gt;setTts(true);
+</code></pre>
+</div>
+<div class="section" id="adding-embeds">
+<h1>Adding embeds</h1>
+<p>You can add up to 10 embeds to a message. The embed functions takes <code>Embed</code> objects or associative arrays:</p>
+<pre><code class="language-php " >$builder-&gt;addEmbed($embed);
+</code></pre>
+<p>You can also set the embeds from another array of embeds. Note this will remove the current embeds from the message.</p>
+<pre><code class="language-php " >$embeds = [...];
+$builder-&gt;setEmbeds($embeds);
+</code></pre>
+</div>
+<div class="section" id="replying-to-a-message">
+<h1>Replying to a message</h1>
+<p>Sets the message as replying to another message. Takes a <code>Message</code> object.</p>
+<pre><code class="language-php " >$discord-&gt;on(Event::MESSAGE_CREATE, function (Message $message) use ($builder) {
+    $builder-&gt;setReplyTo($message);
 });
 </code></pre>
 </div>
-<div class="section" id="crosspost-a-message">
-<h1>Crosspost a message</h1>
-<p>Crossposts a message to any channels that are following the channel the message was sent in. Returns the crossposted message in a promise.</p>
-<pre><code class="language-php " >$message-&gt;crosspost()-&gt;done(function (Message $message) {
-    // ...
-});
+<div class="section" id="adding-files-to-the-message">
+<h1>Adding files to the message</h1>
+<p>You can add multiple files to a message. The <code>addFile</code> function takes a path to a file, as well as an optional filename.</p>
+<p>If the filename parameter is ommited, it will take the filename from the path. Throws an exception if the path does not exist.</p>
+<pre><code class="language-php " >$builder-&gt;addFile(&#039;/path/to/file&#039;, &#039;file.png&#039;);
+</code></pre>
+<p>You can also add files to messages with the content as a string:</p>
+<pre><code class="language-php " >$builder-&gt;addFileFromContent(&#039;file.txt&#039;, &#039;contents of my file!&#039;);
+</code></pre>
+<p>You can also remove all files from a builder:</p>
+<pre><code class="language-php " >$builder-&gt;clearFiles();
+</code></pre>
+<p>There is no limit on the number of files you can upload, but the whole request must be less than 8MB (including headers and JSON payload).</p>
+</div>
+<div class="section" id="adding-sticker">
+<h1>Adding sticker</h1>
+<p>You can add up to 3 stickers to a message. The function takes <code>Sticker</code> object.</p>
+<pre><code class="language-php " >$builder-&gt;addSticker($sticker);
+</code></pre>
+<p>To remove a sticker:</p>
+<pre><code class="language-php " >$builder-&gt;removeSticker($sticker);
+</code></pre>
+<p>You can also set the stickers from another array of stickers. Note this will remove the current stickers from the message.</p>
+<pre><code class="language-php " >$stickers = [...];
+$builder-&gt;setStickers($stickers);
 </code></pre>
 </div>
-<div class="section" id="reply-to-a-message-after-a-delay">
-<h1>Reply to a message after a delay</h1>
-<p>Similar to replying to a message, also takes a <code>delay</code> parameter in which the reply will be sent after. Returns the new message in a promise.</p>
-<a id="parameters-1"></a>
-<div class="section" id="parameters">
-<h2>Parameters</h2>
-<table>
-    
-    <tbody>
-                    <tr>
-                                    <td>name</td>
-                                    <td>type</td>
-                                    <td>description</td>
-                            </tr>
-                    <tr>
-                                    <td>text</td>
-                                    <td>string</td>
-                                    <td>text to send in the message</td>
-                            </tr>
-                    <tr>
-                                    <td>delay</td>
-                                    <td>int</td>
-                                    <td>time in milliseconds to delay before sending the message</td>
-                            </tr>
-            </tbody>
-</table>
-<pre><code class="language-php " >// &lt;@message_author_id&gt;, hello! after 1.5 seconds
-$message-&gt;delayedReply(&#039;hello!&#039;, 1500)-&gt;done(function (Message $message) {
-    // ...
-});
-</code></pre>
-</div>
-</div>
-<div class="section" id="react-to-a-message">
-<h1>React to a message</h1>
-<p>Adds a reaction to a message. Takes an <a href="#emoji">Emoji</a> object, a custom emoji string or a unicode emoji. Returns nothing in a promise.</p>
-<a id="parameters-2"></a>
-<div class="section" id="parameters">
-<h2>Parameters</h2>
-<table>
-    
-    <tbody>
-            </tbody>
-</table>
-<pre><code class="language-php " >$message-&gt;react($emoji)-&gt;done(function () {
-    // ...
-});
-
-// or
-
-$message-&gt;react(&#039;:michael:251127796439449631&#039;)-&gt;done(function () {
-    // ...
-});
-
-// or
-
-$message-&gt;react(&#039;😀&#039;)-&gt;done(function () {
-    // ...
-});
-</code></pre>
-</div>
-</div>
-<div class="section" id="delete-reaction-s-from-a-message">
-<h1>Delete reaction(s) from a message</h1>
-<p>Deletes reaction(s) from a message. Has four methods of operation, described below. Returns nothing in a promise.</p>
-<a id="parameters-3"></a>
-<div class="section" id="parameters">
-<h2>Parameters</h2>
-<table>
-    
-    <tbody>
-            </tbody>
-</table>
-</div>
-<div class="section" id="delete-all-reactions">
-<h2>Delete all reactions</h2>
-<pre><code class="language-php " >$message-&gt;deleteReaction(Message::REACT_DELETE_ALL)-&gt;done(function () {
-    // ...
-});
-</code></pre>
-</div>
-<div class="section" id="delete-reaction-by-current-user">
-<h2>Delete reaction by current user</h2>
-<pre><code class="language-php " >$message-&gt;deleteReaction(Message::REACT_DELETE_ME, $emoji)-&gt;done(function () {
-    // ...
-});
-</code></pre>
-</div>
-<div class="section" id="delete-reaction-by-another-user">
-<h2>Delete reaction by another user</h2>
-<pre><code class="language-php " >$message-&gt;deleteReaction(Message::REACT_DELETE_ID, $emoji, &#039;member_id&#039;)-&gt;done(function () {
-    // ...
-});
-</code></pre>
-</div>
-<div class="section" id="delete-all-reactions-of-one-emoji">
-<h2>Delete all reactions of one emoji</h2>
-<pre><code class="language-php " >$message-&gt;deleteReaction(Message::REACT_DELETE_EMOJI, $emoji)-&gt;done(function () {
-    // ...
-});
-</code></pre>
-</div>
-</div>
-<div class="section" id="delete-the-message">
-<h1>Delete the message</h1>
-<p>Deletes the message. Returns nothing in a promise.</p>
-<pre><code class="language-php " >$message-&gt;delete()-&gt;done(function () {
-    // ...
-});
-</code></pre>
-</div>
-<div class="section" id="edit-the-message">
-<h1>Edit the message</h1>
-<p>Updates the message. Takes a message builder. Returns the updated message in a promise.</p>
-<pre><code class="language-php " >$message-&gt;edit(MessageBuilder::new()
-    -&gt;setContent(&#039;new content&#039;))-&gt;done(function (Message $message) {
-        // ...
-    });
-</code></pre>
-<p>Note fields not set in the builder will not be updated, and will retain their previous value.</p>
-</div>
-<div class="section" id="create-reaction-collector">
-<h1>Create reaction collector</h1>
-<p>Creates a reaction collector. Works similar to <a href="#channel">Channel</a>\ ’s reaction collector. Takes a callback and an array of options. Returns a collection of reactions in a promise.</p>
-<div class="section" id="options">
-<h2>Options</h2>
-<p>At least one of <code>time</code> or <code>limit</code> must be specified.</p>
-<table>
-            <thead>
-                            <tr>
-                                            <th>name</th>
-                                            <th>type</th>
-                                            <th>description</th>
-                                    </tr>
-                    </thead>
-    
-    <tbody>
-                    <tr>
-                                    <td>time</td>
-                                    <td>int or false</td>
-                                    <td>time in milliseconds until the collector finishes</td>
-                            </tr>
-                    <tr>
-                                    <td>limit</td>
-                                    <td>int or false</td>
-                                    <td>amount of reactions to be collected until the collector finishes</td>
-                            </tr>
-            </tbody>
-</table>
-<pre><code class="language-php " >$message-&gt;createReactionCollector(function (MessageReaction $reaction) {
-    // return true or false depending on whether you want the reaction to be collected.
-    return $reaction-&gt;user_id == &#039;123123123123&#039;;
-}, [
-    // will resolve after 1.5 seconds or 2 reactions
-    &#039;time&#039; =&gt; 1500,
-    &#039;limit&#039; =&gt; 2,
-])-&gt;done(function (Collection $reactions) {
-    foreach ($reactions as $reaction) {
-        // ...
-    }
-});
-</code></pre>
-</div>
-</div>
-<div class="section" id="add-embed-to-message">
-<h1>Add embed to message</h1>
-<p>Adds an embed to a message. Takes an embed object. Will overwrite the old embed (if there is one). Returns the updated message in a promise.</p>
-<a id="parameters-4"></a>
-<div class="section" id="parameters">
-<h2>Parameters</h2>
-<table>
-    
-    <tbody>
-            </tbody>
-</table>
-<pre><code class="language-php " >$message-&gt;addEmbed($embed)-&gt;done(function (Message $message) {
-    // ...
-});</code></pre>
-</div>
+<div class="section" id="adding-message-components">
+<h1>Adding message components</h1>
+<p>Adds a message component to the message. You can only add <code>ActionRow</code> and <code>SelectMenu</code> objects. To add buttons, wrap the button in an <code>ActionRow</code> object. Throws an <code>InvalidArgumentException</code> if the given component is not an <code>ActionRow</code> or <code>SelectMenu</code> Throws an <code>OverflowException</code> if you already have 5 components in the message.</p>
+<pre><code class="language-php " >$component = SelectMenu::new();
+$builder-&gt;addComponent($component);</code></pre>
 </div>
 
                 <section data-search-results class="phpdocumentor-search-results phpdocumentor-search-results--hidden">
