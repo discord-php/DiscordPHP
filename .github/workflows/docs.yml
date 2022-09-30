@@ -20,7 +20,7 @@ jobs:
       - name: Install phpDocumentor
         run: phive install phpDocumentor --trust-gpg-keys 67F861C3D889C656,6DA3ACC4991FFAE5
       - name: Build class reference
-        run: ./tools/phpDocumentor
+        run: ./tools/phpDocumentor -t reference
       #- name: Build documentation
       #  run: |
       #    cd ./docs

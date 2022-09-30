@@ -9,8 +9,7 @@
 	<paths>
 		<output>build</output>
 	</paths>
-	<version number="reference">
-		<folder>latest</folder>
+	<version number="latest">
 		<api>
 			<source dsn=".">
 				<path>src</path>
