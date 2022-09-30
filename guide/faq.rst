@@ -5,7 +5,7 @@ FAQ
 ``Class 'X' not found``
 ======================
 
-You most likely haven't imported the class that you are trying to use. Please check the `class reference <http://discord-php.github.io/DiscordPHP/namespaces/>`_ and search for the class that you are trying to use. Add an import statement at the top of the file like shown on the right.
+You most likely haven't imported the class that you are trying to use. Please check the `class reference <http://discord-php.github.io/DiscordPHP/namespaces/discord>`_ and search for the class that you are trying to use. Add an import statement at the top of the file like shown on the right.
 
 .. code-block:: php
 
