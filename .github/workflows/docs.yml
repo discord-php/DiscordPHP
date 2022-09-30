@@ -21,12 +21,12 @@ jobs:
         run: phive install phpDocumentor --trust-gpg-keys 67F861C3D889C656,6DA3ACC4991FFAE5
       - name: Build class reference
         run: ./tools/phpDocumentor
-      #- name: Build documentation
-      #  run: |
-      #    cd ./docs
-      #    yarn install
-      #    yarn build
-      #    sudo mv public/* ../build
+      - name: Build documentation
+        run: |
+          cd ./docs
+          yarn install
+          yarn build
+          sudo mv public/* ../build
       - name: Publish docs
         uses: JamesIves/github-pages-deploy-action@3.7.1
         with:
