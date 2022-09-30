@@ -1,8 +1,3 @@
-======
-Member
-======
-
-
 Members represent a user in a guild. There is a member object for every guild-user relationship, meaning that there will be multiple member objects in the Discord client with the same user ID, but they will belong to different guilds.
 
 A member object can also be serialised into a mention string. For example:
@@ -17,12 +12,12 @@ A member object can also be serialised into a mention string. For example:
    });
 
 Properties
-==========
+~~~~~~~~~~
 
 +------------------------------+------------------------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------+
 | name                         | type                                     | description                                                                                                                                              |
 +==============================+==========================================+==========================================================================================================================================================+
-| user                         | `User <#user>`_                         | the user part of the member                                                                                                                              |
+| user                         | `User <#user>`__                         | the user part of the member                                                                                                                              |
 +------------------------------+------------------------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------+
 | nick                         | string                                   | the nickname of the member                                                                                                                               |
 +------------------------------+------------------------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -30,7 +25,7 @@ Properties
 +------------------------------+------------------------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------+
 | avatar_hash                  | ?string                                  | The guild avatar hash of the member                                                                                                                      |
 +------------------------------+------------------------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------+
-| roles                        | Collection of `Roles <#role>`_          | roles the member is a part of                                                                                                                            |
+| roles                        | Collection of `Roles <#role>`__          | roles the member is a part of                                                                                                                            |
 +------------------------------+------------------------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------+
 | joined_at                    | ``Carbon`` timestamp                     | when the member joined the guild                                                                                                                         |
 +------------------------------+------------------------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -50,26 +45,26 @@ Properties
 +------------------------------+------------------------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------+
 | displayname                  | string                                   | nick/username#discriminator                                                                                                                              |
 +------------------------------+------------------------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------+
-| guild                        | `Guild <#guild>`_                       | the guild the member is a part of                                                                                                                        |
+| guild                        | `Guild <#guild>`__                       | the guild the member is a part of                                                                                                                        |
 +------------------------------+------------------------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------+
 | guild_id                     | string                                   | the id of the guild the member is a part of                                                                                                              |
 +------------------------------+------------------------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------+
 | string                       | status                                   | the status of the member                                                                                                                                 |
 +------------------------------+------------------------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------+
-| game                         | `Activity <#activity>`_                 | the current activity of the member                                                                                                                       |
+| game                         | `Activity <#activity>`__                 | the current activity of the member                                                                                                                       |
 +------------------------------+------------------------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------+
 | premium_since                | ``Carbon`` timestamp                     | when the member started boosting the guild                                                                                                               |
 +------------------------------+------------------------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------+
-| activities                   | Collection of `Activities <#activity>`_ | the current activities of the member                                                                                                                     |
+| activities                   | Collection of `Activities <#activity>`__ | the current activities of the member                                                                                                                     |
 +------------------------------+------------------------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 Ban the member
-==============
+~~~~~~~~~~~~~~
 
-Bans the member from the guild. Returns a `Ban <#ban>`_ part in a promise.
+Bans the member from the guild. Returns a `Ban <#ban>`__ part in a promise.
 
 Parameters
-----------
+^^^^^^^^^^
 
 ============ ====== ====================================================
 name         type   description
@@ -85,14 +80,14 @@ reason       string reason for the ban
    });
 
 Set the nickname of the member
-==============================
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Sets the nickname of the member. Requires the ``MANAGE_NICKNAMES`` permission or ``CHANGE_NICKNAME`` if changing self nickname. Returns nothing in a promise.
 
 .. _parameters-1:
 
 Parameters
-----------
+^^^^^^^^^^
 
 ==== ====== ===================================================
 name type   description
@@ -107,19 +102,19 @@ nick string nickname of the member, null to clear, default null
    });
 
 Move member to channel
-======================
+~~~~~~~~~~~~~~~~~~~~~~
 
 Moves the member to another voice channel. Member must already be in a voice channel. Takes a channel or channel ID and returns nothing in a promise.
 
 .. _parameters-2:
 
 Parameters
-----------
+^^^^^^^^^^
 
 +---------+----------------------------------+-----------------------------------+
 | name    | type                             | description                       |
 +=========+==================================+===================================+
-| channel | `Channel <#channel>`_ or string | the channel to move the member to |
+| channel | `Channel <#channel>`__ or string | the channel to move the member to |
 +---------+----------------------------------+-----------------------------------+
 
 .. code:: php
@@ -135,19 +130,19 @@ Parameters
    });
 
 Add member to role
-==================
+~~~~~~~~~~~~~~~~~~
 
 Adds the member to a role. Takes a role or role ID and returns nothing in a promise.
 
 .. _parameters-3:
 
 Parameters
-----------
+^^^^^^^^^^
 
 ==== ========================== =============================
 name type                       description
 ==== ========================== =============================
-role `Role <#role>`_ or string the role to add the member to
+role `Role <#role>`__ or string the role to add the member to
 ==== ========================== =============================
 
 .. code:: php
@@ -163,19 +158,19 @@ role `Role <#role>`_ or string the role to add the member to
    });
 
 Remove member from role
-=======================
+~~~~~~~~~~~~~~~~~~~~~~~
 
 Removes the member from a role. Takes a role or role ID and returns nothing in a promise.
 
 .. _parameters-4:
 
 Parameters
-----------
+^^^^^^^^^^
 
 ==== ========================== ==================================
 name type                       description
 ==== ========================== ==================================
-role `Role <#role>`_ or string the role to remove the member from
+role `Role <#role>`__ or string the role to remove the member from
 ==== ========================== ==================================
 
 .. code:: php
@@ -191,14 +186,14 @@ role `Role <#role>`_ or string the role to remove the member from
    });
 
 Timeout member
-==============
+~~~~~~~~~~~~~~
 
 Times out the member in the server. Takes a carbon or null to remove. Returns nothing in a promise.
 
 .. _parameters-5:
 
 Parameters
-----------
+^^^^^^^^^^
 
 +------------------------------+------------------------+----------------------------------+
 | name                         | type                   | description                      |
@@ -218,21 +213,21 @@ Parameters
    });
 
 Get permissions of member
-=========================
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Gets the effective permissions of the member: - When given a channel, returns the effective permissions of a member in a channel. - Otherwise, returns the effective permissions of a member in a guild.
 
-Returns a `role permission <#permissions>`_ in a promise.
+Returns a `role permission <#permissions>`__ in a promise.
 
 .. _parameters-6:
 
 Parameters
-----------
+^^^^^^^^^^
 
 +---------+--------------------------------+--------------------------------------------------+
 | name    | type                           | description                                      |
 +=========+================================+==================================================+
-| channel | `Channel <#channel>`_ or null | the channel to get the effective permissions for |
+| channel | `Channel <#channel>`__ or null | the channel to get the effective permissions for |
 +---------+--------------------------------+--------------------------------------------------+
 
 .. code:: php
@@ -248,14 +243,14 @@ Parameters
    });
 
 Get guild specific avatar URL
-=============================
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Gets the server-specific avatar URL for the member. Only call this function if you need to change the format or size of the image, otherwise use ``$member->avatar``. Returns a string.
 
 .. _parameters-7:
 
 Parameters
-----------
+^^^^^^^^^^
 
 +--------+--------+--------------------------------------------------------------------------------+
 | name   | type   | description                                                                    |
@@ -269,3 +264,4 @@ Parameters
 
    $url = $member->getAvatarAttribute('png', 2048);
    echo $url; // https://cdn.discordapp.com/guilds/:guild_id/users/:id/avatars/:avatar_hash.png?size=2048
+

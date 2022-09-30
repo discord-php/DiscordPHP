@@ -1,48 +1,43 @@
-=====
-Guild
-=====
-
-
 Guilds represent Discord ‘servers’.
 
 Repositories
-============
+~~~~~~~~~~~~
 
 +------------------------+---------------------------------------+----------------------------------------------------------------------------------+
 | name                   | type                                  | notes                                                                            |
 +========================+=======================================+==================================================================================+
-| roles                  | `Role <#role>`_                      |                                                                                  |
+| roles                  | `Role <#role>`__                      |                                                                                  |
 +------------------------+---------------------------------------+----------------------------------------------------------------------------------+
-| emojis                 | `Emoji <#emoji>`_                    |                                                                                  |
+| emojis                 | `Emoji <#emoji>`__                    |                                                                                  |
 +------------------------+---------------------------------------+----------------------------------------------------------------------------------+
-| members                | `Member <#member>`_                  | May not contain offline members, see the ```loadAllMembers`` option <#basics>`_ |
+| members                | `Member <#member>`__                  | May not contain offline members, see the ```loadAllMembers`` option <#basics>`__ |
 +------------------------+---------------------------------------+----------------------------------------------------------------------------------+
-| channels               | `Channel <#channel>`_                |                                                                                  |
+| channels               | `Channel <#channel>`__                |                                                                                  |
 +------------------------+---------------------------------------+----------------------------------------------------------------------------------+
-| stage_instances        | `StageInstance <#stage_instance>`_   |                                                                                  |
+| stage_instances        | `StageInstance <#stage_instance>`__   |                                                                                  |
 +------------------------+---------------------------------------+----------------------------------------------------------------------------------+
-| guild_scheduled_events | `ScheduledEvent <#scheduled_event>`_ |                                                                                  |
+| guild_scheduled_events | `ScheduledEvent <#scheduled_event>`__ |                                                                                  |
 +------------------------+---------------------------------------+----------------------------------------------------------------------------------+
-| stickers               | `Sticker <#sticker>`_                |                                                                                  |
+| stickers               | `Sticker <#sticker>`__                |                                                                                  |
 +------------------------+---------------------------------------+----------------------------------------------------------------------------------+
-| invites                | `Invite <#invite>`_                  | Not initially loaded                                                             |
+| invites                | `Invite <#invite>`__                  | Not initially loaded                                                             |
 +------------------------+---------------------------------------+----------------------------------------------------------------------------------+
-| bans                   | `Ban <#ban>`_                        | Not initially loaded without ```retrieveBans`` option <#basics>`_               |
+| bans                   | `Ban <#ban>`__                        | Not initially loaded without ```retrieveBans`` option <#basics>`__               |
 +------------------------+---------------------------------------+----------------------------------------------------------------------------------+
-| commands               | `Command <#command>`_                | Not initially loaded                                                             |
+| commands               | `Command <#command>`__                | Not initially loaded                                                             |
 +------------------------+---------------------------------------+----------------------------------------------------------------------------------+
-| templates              | `GuildTemplate <#guild_template>`_   | Not initially loaded                                                             |
+| templates              | `GuildTemplate <#guild_template>`__   | Not initially loaded                                                             |
 +------------------------+---------------------------------------+----------------------------------------------------------------------------------+
-| integrations           | `Integration <#integration>`_        | Not initially loaded                                                             |
+| integrations           | `Integration <#integration>`__        | Not initially loaded                                                             |
 +------------------------+---------------------------------------+----------------------------------------------------------------------------------+
 
 Creating a role
-===============
+~~~~~~~~~~~~~~~
 
 Shortcut for ``$guild->roles->save($role);``. Takes an array of parameters for a role and returns a role part in a promise.
 
 Parameters
-----------
+^^^^^^^^^^
 
 +---------------+---------+------------------------------+-----------------------+
 | name          | type    | description                  | default               |
@@ -72,14 +67,14 @@ Parameters
    });
 
 Transferring ownership of guild
-===============================
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Transfers the ownership of the guild to another member. The bot must own the guild to be able to transfer ownership. Takes a member object or a member ID and returns nothing in a promise.
 
 .. _parameters-1:
 
 Parameters
-----------
+^^^^^^^^^^
 
 ====== =================== ===========================
 name   type                description
@@ -95,14 +90,14 @@ reason string              Reason for Audit Log
    $guild->transferOwnership('member_id')->done(...);
 
 Unbanning a member with a User or user ID
-=========================================
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Unbans a member when passed a ``User`` object or a user ID. If you have the ban object, you can do ``$guild->bans->delete($ban);``. Returns nothing in a promise.
 
 .. _parameters-2:
 
 Parameters
-----------
+^^^^^^^^^^
 
 ======= =================== =================
 name    type                description
@@ -117,14 +112,14 @@ user_id ``User`` or user ID The user to unban
    $guild->unban('user_id')->done(...);
 
 Querying the Guild audit log
-============================
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Takes an array of parameters to query the audit log for the guild. Returns an Audit Log object inside a promise.
 
 .. _parameters-3:
 
 Parameters
-----------
+^^^^^^^^^^
 
 +-------------+-----------------------------------+--------------------------------------------------------+
 | name        | type                              | description                                            |
@@ -152,14 +147,14 @@ Parameters
    });
 
 Creating an Emoji
-=================
+~~~~~~~~~~~~~~~~~
 
 Takes an array of parameters for an emoji and returns an emoji part in a promise. Use the second parameter to specify local file path instead.
 
 .. _parameters-4:
 
 Parameters
-----------
+^^^^^^^^^^
 
 +-------+--------+------------------------------------------------------------------+------------+
 | name  | type   | description                                                      | default    |
@@ -182,3 +177,4 @@ Parameters
    )->done(function (Emoji $emoji) {
        // ...
    });
+

@@ -1,12 +1,7 @@
-=======
-Message
-=======
-
-
 Messages are present in channels and can be anything from a cross post to a reply and a regular message.
 
 Properties
-==========
+~~~~~~~~~~
 
 +----------------------------------------+---------------------------------------------+----------------------------------------------------------------------------------------------------+
 | name                                   | type                                        | description                                                                                        |
@@ -15,23 +10,23 @@ Properties
 +----------------------------------------+---------------------------------------------+----------------------------------------------------------------------------------------------------+
 | channel_id                             | string                                      | id of the channel the message was sent in                                                          |
 +----------------------------------------+---------------------------------------------+----------------------------------------------------------------------------------------------------+
-| channel                                | `Channel <#channel>`_                      | channel the message was sent in                                                                    |
+| channel                                | `Channel <#channel>`__                      | channel the message was sent in                                                                    |
 +----------------------------------------+---------------------------------------------+----------------------------------------------------------------------------------------------------+
 | guild_id                               | string or null                              | the unique identifier of the guild that the channel the message was sent in belongs to             |
 +----------------------------------------+---------------------------------------------+----------------------------------------------------------------------------------------------------+
-| guild                                  | `Guild <#guild>`_ or null                  | the guild that the message was sent in                                                             |
+| guild                                  | `Guild <#guild>`__ or null                  | the guild that the message was sent in                                                             |
 +----------------------------------------+---------------------------------------------+----------------------------------------------------------------------------------------------------+
 | content                                | string                                      | content of the message                                                                             |
 +----------------------------------------+---------------------------------------------+----------------------------------------------------------------------------------------------------+
-| type                                   | int, `Message <#message>`_ constants       | type of the message                                                                                |
+| type                                   | int, `Message <#message>`__ constants       | type of the message                                                                                |
 +----------------------------------------+---------------------------------------------+----------------------------------------------------------------------------------------------------+
-| mentions                               | Collection of `Users <#user>`_             | users mentioned in the message                                                                     |
+| mentions                               | Collection of `Users <#user>`__             | users mentioned in the message                                                                     |
 +----------------------------------------+---------------------------------------------+----------------------------------------------------------------------------------------------------+
-| author                                 | `User <#user>`_                            | the author of the message                                                                          |
+| author                                 | `User <#user>`__                            | the author of the message                                                                          |
 +----------------------------------------+---------------------------------------------+----------------------------------------------------------------------------------------------------+
 | user_id                                | string                                      | id of the user that sent the message                                                               |
 +----------------------------------------+---------------------------------------------+----------------------------------------------------------------------------------------------------+
-| member                                 | `Member <#member>`_                        | the member that sent this message, or null if it was in a private message                          |
+| member                                 | `Member <#member>`__                        | the member that sent this message, or null if it was in a private message                          |
 +----------------------------------------+---------------------------------------------+----------------------------------------------------------------------------------------------------+
 | mention_everyone                       | bool                                        | whether @everyone was mentioned                                                                    |
 +----------------------------------------+---------------------------------------------+----------------------------------------------------------------------------------------------------+
@@ -41,15 +36,15 @@ Properties
 +----------------------------------------+---------------------------------------------+----------------------------------------------------------------------------------------------------+
 | tts                                    | bool                                        | whether text to speech was set when the message was sent                                           |
 +----------------------------------------+---------------------------------------------+----------------------------------------------------------------------------------------------------+
-| attachments                            | Collection of `Attachments <#attachment>`_ | array of attachments                                                                               |
+| attachments                            | Collection of `Attachments <#attachment>`__ | array of attachments                                                                               |
 +----------------------------------------+---------------------------------------------+----------------------------------------------------------------------------------------------------+
-| embeds                                 | Collection of `Embeds <#embed>`_           | embeds contained in the message                                                                    |
+| embeds                                 | Collection of `Embeds <#embed>`__           | embeds contained in the message                                                                    |
 +----------------------------------------+---------------------------------------------+----------------------------------------------------------------------------------------------------+
 | nonce                                  | string                                      | randomly generated string for client                                                               |
 +----------------------------------------+---------------------------------------------+----------------------------------------------------------------------------------------------------+
-| mention_roles                          | Collection of `Roles <#role>`_             | any roles that were mentioned in the message                                                       |
+| mention_roles                          | Collection of `Roles <#role>`__             | any roles that were mentioned in the message                                                       |
 +----------------------------------------+---------------------------------------------+----------------------------------------------------------------------------------------------------+
-| mention_channels                       | Collection of `Channels <#channel>`_       | any channels that were mentioned in the message                                                    |
+| mention_channels                       | Collection of `Channels <#channel>`__       | any channels that were mentioned in the message                                                    |
 +----------------------------------------+---------------------------------------------+----------------------------------------------------------------------------------------------------+
 | pinned                                 | bool                                        | whether the message is pinned                                                                      |
 +----------------------------------------+---------------------------------------------+----------------------------------------------------------------------------------------------------+
@@ -65,15 +60,15 @@ Properties
 +----------------------------------------+---------------------------------------------+----------------------------------------------------------------------------------------------------+
 | message_reference                      | object                                      | message that is referenced by the message                                                          |
 +----------------------------------------+---------------------------------------------+----------------------------------------------------------------------------------------------------+
-| referenced_message                     | `Message <#message>`_                      | the message that is referenced in a reply                                                          |
+| referenced_message                     | `Message <#message>`__                      | the message that is referenced in a reply                                                          |
 +----------------------------------------+---------------------------------------------+----------------------------------------------------------------------------------------------------+
 | interaction                            | object                                      | the interaction which triggered the message (application commands)                                 |
 +----------------------------------------+---------------------------------------------+----------------------------------------------------------------------------------------------------+
-| thread                                 | `Thread <#thread>`_                        | the thread that the message was sent in                                                            |
+| thread                                 | `Thread <#thread>`__                        | the thread that the message was sent in                                                            |
 +----------------------------------------+---------------------------------------------+----------------------------------------------------------------------------------------------------+
-| components                             | `Component <#component>`_                  | sent if the message contains components like buttons, action rows, or other interactive components |
+| components                             | `Component <#component>`__                  | sent if the message contains components like buttons, action rows, or other interactive components |
 +----------------------------------------+---------------------------------------------+----------------------------------------------------------------------------------------------------+
-| sticker_items                          | `Sticker <#sticker>`_                      | stickers attached to the message                                                                   |
+| sticker_items                          | `Sticker <#sticker>`__                      | stickers attached to the message                                                                   |
 +----------------------------------------+---------------------------------------------+----------------------------------------------------------------------------------------------------+
 | flags                                  | int                                         | message flags, see below 5 properties                                                              |
 +----------------------------------------+---------------------------------------------+----------------------------------------------------------------------------------------------------+
@@ -97,12 +92,12 @@ Properties
 +----------------------------------------+---------------------------------------------+----------------------------------------------------------------------------------------------------+
 
 Reply to a message
-==================
+~~~~~~~~~~~~~~~~~~
 
 Sends a “reply” to the message. Returns the new message in a promise.
 
 Parameters
-----------
+^^^^^^^^^^
 
 ==== ====== ===========================
 name type   description
@@ -117,7 +112,7 @@ text string text to send in the message
    });
 
 Crosspost a message
-===================
+~~~~~~~~~~~~~~~~~~~
 
 Crossposts a message to any channels that are following the channel the message was sent in. Returns the crossposted message in a promise.
 
@@ -128,14 +123,14 @@ Crossposts a message to any channels that are following the channel the message 
    });
 
 Reply to a message after a delay
-================================
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Similar to replying to a message, also takes a ``delay`` parameter in which the reply will be sent after. Returns the new message in a promise.
 
 .. _parameters-1:
 
 Parameters
-----------
+^^^^^^^^^^
 
 ===== ====== ========================================================
 name  type   description
@@ -152,19 +147,19 @@ delay int    time in milliseconds to delay before sending the message
    });
 
 React to a message
-==================
+~~~~~~~~~~~~~~~~~~
 
-Adds a reaction to a message. Takes an `Emoji <#emoji>`_ object, a custom emoji string or a unicode emoji. Returns nothing in a promise.
+Adds a reaction to a message. Takes an `Emoji <#emoji>`__ object, a custom emoji string or a unicode emoji. Returns nothing in a promise.
 
 .. _parameters-2:
 
 Parameters
-----------
+^^^^^^^^^^
 
 ======== ============================ =======================
 name     type                         description
 ======== ============================ =======================
-emoticon `Emoji <#emoji>`_ or string the emoji to react with
+emoticon `Emoji <#emoji>`__ or string the emoji to react with
 ======== ============================ =======================
 
 .. code:: php
@@ -186,27 +181,27 @@ emoticon `Emoji <#emoji>`_ or string the emoji to react with
    });
 
 Delete reaction(s) from a message
-=================================
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Deletes reaction(s) from a message. Has four methods of operation, described below. Returns nothing in a promise.
 
 .. _parameters-3:
 
 Parameters
-----------
+^^^^^^^^^^
 
 +----------+----------------------------------+----------------------------------------------------------------------------------------------------------------------------------------+
 | name     | type                             | description                                                                                                                            |
 +==========+==================================+========================================================================================================================================+
 | type     | int                              | type of deletion, one of ``Message::REACT_DELETE_ALL, Message::REACT_DELETE_ME, Message:REACT_DELETE_ID, Message::REACT_DELETE_EMOJI`` |
 +----------+----------------------------------+----------------------------------------------------------------------------------------------------------------------------------------+
-| emoticon | `Emoji <#emoji>`_, string, null | emoji to delete, require if using ``DELETE_ID``, ``DELETE_ME`` or ``DELETE_EMOJI``                                                     |
+| emoticon | `Emoji <#emoji>`__, string, null | emoji to delete, require if using ``DELETE_ID``, ``DELETE_ME`` or ``DELETE_EMOJI``                                                     |
 +----------+----------------------------------+----------------------------------------------------------------------------------------------------------------------------------------+
 | id       | string, null                     | id of the user to delete reactions for, required by ``DELETE_ID``                                                                      |
 +----------+----------------------------------+----------------------------------------------------------------------------------------------------------------------------------------+
 
 Delete all reactions
---------------------
+^^^^^^^^^^^^^^^^^^^^
 
 .. code:: php
 
@@ -215,7 +210,7 @@ Delete all reactions
    });
 
 Delete reaction by current user
--------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. code:: php
 
@@ -224,7 +219,7 @@ Delete reaction by current user
    });
 
 Delete reaction by another user
--------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. code:: php
 
@@ -233,7 +228,7 @@ Delete reaction by another user
    });
 
 Delete all reactions of one emoji
----------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. code:: php
 
@@ -242,7 +237,7 @@ Delete all reactions of one emoji
    });
 
 Delete the message
-==================
+~~~~~~~~~~~~~~~~~~
 
 Deletes the message. Returns nothing in a promise.
 
@@ -253,7 +248,7 @@ Deletes the message. Returns nothing in a promise.
    });
 
 Edit the message
-================
+~~~~~~~~~~~~~~~~
 
 Updates the message. Takes a message builder. Returns the updated message in a promise.
 
@@ -267,12 +262,12 @@ Updates the message. Takes a message builder. Returns the updated message in a p
 Note fields not set in the builder will not be updated, and will retain their previous value.
 
 Create reaction collector
-=========================
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Creates a reaction collector. Works similar to `Channel <#channel>`_\ ’s reaction collector. Takes a callback and an array of options. Returns a collection of reactions in a promise.
+Creates a reaction collector. Works similar to `Channel <#channel>`__\ ’s reaction collector. Takes a callback and an array of options. Returns a collection of reactions in a promise.
 
 Options
--------
+^^^^^^^
 
 At least one of ``time`` or ``limit`` must be specified.
 
@@ -300,19 +295,19 @@ At least one of ``time`` or ``limit`` must be specified.
    });
 
 Add embed to message
-====================
+~~~~~~~~~~~~~~~~~~~~
 
 Adds an embed to a message. Takes an embed object. Will overwrite the old embed (if there is one). Returns the updated message in a promise.
 
 .. _parameters-4:
 
 Parameters
-----------
+^^^^^^^^^^
 
 ===== ================== ================
 name  type               description
 ===== ================== ================
-embed `Embed <#embed>`_ the embed to add
+embed `Embed <#embed>`__ the embed to add
 ===== ================== ================
 
 .. code:: php
@@ -320,3 +315,4 @@ embed `Embed <#embed>`_ the embed to add
    $message->addEmbed($embed)->done(function (Message $message) {
        // ...
    });
+
