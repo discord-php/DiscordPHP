@@ -7,9 +7,9 @@
 >
 	<title>DiscordPHP Documentation</title>
 	<paths>
-		<output>build/reference</output>
+		<output>build</output>
 	</paths>
-	<version number="latest">
+	<version number="reference">
 		<api>
 			<source dsn=".">
 				<path>src</path>
