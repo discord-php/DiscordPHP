@@ -61,11 +61,11 @@
 </h4>
 
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
-    <a href="guide/parts/index.html" class="">Filling a part with data</a>
+    <a href="guide/parts/index.html" class="">Parts</a>
 </h4>
 
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
-    <a href="guide/events/index.html" class=""></a>
+    <a href="guide/events/index.html" class="">Events</a>
 </h4>
 
                         </section>
@@ -136,7 +136,9 @@
 </aside>
 
             <div class="phpdocumentor-column -eight phpdocumentor-content">
-                    <p>Collections are exactly what they sound like - collections of items. In DiscordPHP collections are based around the idea of parts, but they can be used for any type of item.</p>
+                    <div class="section" id="collection">
+<h1>Collection</h1>
+<p>Collections are exactly what they sound like - collections of items. In DiscordPHP collections are based around the idea of parts, but they can be used for any type of item.</p>
 <div class="">
     <p>Collections implement interfaces allowing them to be accessed like arrays, such as:</p>
 <pre><code class="language-php " >// square bracket index access
@@ -157,6 +159,7 @@ $collecArray = (array) $collec;
 // string serialization
 $jsonCollec = (string) $collec; // same as json_encode($collec)</code></pre>
 
+</div>
 </div>
 <div class="section" id="creating-a-collection">
 <h1>Creating a collection</h1>

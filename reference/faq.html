@@ -61,11 +61,11 @@
 </h4>
 
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
-    <a href="guide/parts/index.html" class="">Filling a part with data</a>
+    <a href="guide/parts/index.html" class="">Parts</a>
 </h4>
 
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
-    <a href="guide/events/index.html" class=""></a>
+    <a href="guide/events/index.html" class="">Events</a>
 </h4>
 
                         </section>
@@ -138,8 +138,9 @@
             <div class="phpdocumentor-column -eight phpdocumentor-content">
                     <div class="section" id="faq">
 <h1>FAQ</h1>
-<div class="section" id="a5240e6afb3f11dc82812369fe628c7e976611fd">
-<h2><code>Class 'X' not found</code></h2>
+</div>
+<div class="section" id="122a54f076522b25bae79d9d998040b98c0c4722">
+<h1><code>Class 'X' not found</code></h1>
 <p>You most likely haven't imported the class that you are trying to use. Please check the <a href="http://discord-php.github.io/DiscordPHP/reference/">class reference</a> and search for the class that you are trying to use. Add an import statement at the top of the file like shown on the right.</p>
 <pre><code class="language-php " >&lt;?php
 
@@ -149,7 +150,7 @@ use Discord\X;
 <p>If you don't want to have to import a class every time, you should look into the PHP Intelephense language server (written above) which will do automatic imports for you.</p>
 </div>
 <div class="section" id="there-are-less-members-and-or-users-than-expected">
-<h2>There are less members and/or users than expected</h2>
+<h1>There are less members and/or users than expected</h1>
 <p>Server members are guarded by a priviliged server intent which must be enabled in the <a href="https://discord.com/developers/applications">Discord Developer Portal</a>. Note that you will need to verify your bot if you use this intent and pass 100 guilds.</p>
 <p>You also need to enable the <code>loadAllMembers</code> option in your code, as shown on the right.</p>
 <pre><code class="language-php " >$discord = new Discord([

@@ -61,11 +61,11 @@
 </h4>
 
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
-    <a href="guide/parts/index.html" class="">Filling a part with data</a>
+    <a href="guide/parts/index.html" class="">Parts</a>
 </h4>
 
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
-    <a href="guide/events/index.html" class=""></a>
+    <a href="guide/events/index.html" class="">Events</a>
 </h4>
 
                         </section>
@@ -136,8 +136,10 @@
 </aside>
 
             <div class="phpdocumentor-column -eight phpdocumentor-content">
-                    <p>Events are payloads sent over the socket to a client that correspond to events in Discord.</p>
-<p>All gateway events are enabled by default and can be individually disabled using <code>disabledEvents</code> options. Most events also requires the respective Intents enabled (as well privileged ones enabled from <a href="https://discord.com/developers/applications">Developers Portal</a>_) regardless the enabled event setting.</p>
+                    <div class="section" id="events">
+<h1>Events</h1>
+<p>Events are payloads sent over the socket to a client that correspond to events in Discord.</p>
+<p>All gateway events are enabled by default and can be individually disabled using <code>disabledEvents</code> options. Most events also requires the respective Intents enabled (as well privileged ones enabled from <a href="https://discord.com/developers/applications">Developers Portal</a>) regardless the enabled event setting.</p>
 <p>To listen on gateway events, use the event emitter callback and <code>Event</code> name constants. Some events are internally handled by the library and may not be registered a listener:</p>
 
 
@@ -153,6 +155,7 @@
         </li>
 </ul>
 <p>If you are an advanced user, you may listen to those events before internally handled with the library by parsing the ‘raw’ dispatch event data.</p>
+</div>
 
                 <section data-search-results class="phpdocumentor-search-results phpdocumentor-search-results--hidden">
     <section class="phpdocumentor-search-results__dialog">

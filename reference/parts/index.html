@@ -61,11 +61,11 @@
 </h4>
 
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
-    <a href="guide/parts/index.html" class="">Filling a part with data</a>
+    <a href="guide/parts/index.html" class="">Parts</a>
 </h4>
 
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
-    <a href="guide/events/index.html" class=""></a>
+    <a href="guide/events/index.html" class="">Events</a>
 </h4>
 
                         </section>
@@ -136,7 +136,9 @@
 </aside>
 
             <div class="phpdocumentor-column -eight phpdocumentor-content">
-                    <p>Parts is the term used for the data structures inside Discord. All parts share a common set of attributes and methods.</p>
+                    <div class="section" id="parts">
+<h1>Parts</h1>
+<p>Parts is the term used for the data structures inside Discord. All parts share a common set of attributes and methods.</p>
 <p>Parts have a set list of fillable fields. If you attempt to set a field that is not accessible, it will not warn you.</p>
 <p>To create a part object, you can use the <code>new</code> syntax or the <code>factory</code> method. For example, creating a <code>Message</code> part:</p>
 <pre><code class="language-php " >$message = new Message($discord);
@@ -152,6 +154,7 @@ echo $message-&gt;content;
 // or
 echo $message[&#039;content&#039;];
 </code></pre>
+</div>
 <div class="section" id="filling-a-part-with-data">
 <h1>Filling a part with data</h1>
 <p>The <code>->fill(array $attributes)</code> function takes an array of attributes to fill the part. If a field is found that is not ‘fillable’, it is skipped.</p>
