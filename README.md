@@ -94,7 +94,7 @@ See [examples folder](examples) for more.
 
 ## Documentation
 
-Documentation can be found [here](//discord-php.github.io/DiscordPHP). Raw documentation can be found in-line in the code and on the [DiscordPHP Class Reference](//discord-php.github.io/DiscordPHP/guide).
+Documentation can be found [here](//discord-php.github.io/DiscordPHP). Raw documentation can be found in-line in the code and on the [DiscordPHP Class Reference](//discord-php.github.io/DiscordPHP/reference).
 
 ## Contributing
 
