@@ -89,6 +89,52 @@
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
     <a href="guide/events/index.html" class="">Events</a>
 </h4>
+    <ul class="phpdocumentor-list">
+                    <li>
+                <a href="guide/events/application_commands.html" class="">Application Commands</a>
+                
+            </li>
+                    <li>
+                <a href="guide/events/auto_moderations.html" class="">Auto Moderations</a>
+                
+            </li>
+                    <li>
+                <a href="guide/events/channels.html" class="">Channels</a>
+                
+            </li>
+                    <li>
+                <a href="guide/events/guilds.html" class="">Guilds</a>
+                
+            </li>
+                    <li>
+                <a href="guide/events/invites.html" class="">Invites</a>
+                
+            </li>
+                    <li>
+                <a href="guide/events/interactions.html" class="">Interactions</a>
+                
+            </li>
+                    <li>
+                <a href="guide/events/messages.html" class="">Messages</a>
+                
+            </li>
+                    <li>
+                <a href="guide/events/presences.html" class="">Presences</a>
+                
+            </li>
+                    <li>
+                <a href="guide/events/stage_instances.html" class="">Stage Instances</a>
+                
+            </li>
+                    <li>
+                <a href="guide/events/voices.html" class="">Voices</a>
+                
+            </li>
+                    <li>
+                <a href="guide/events/webhooks.html" class="">Webhooks</a>
+                
+            </li>
+            </ul>
 
                         </section>
                 <section class="phpdocumentor-sidebar__category">
@@ -162,7 +208,7 @@
 <h1>Message Components</h1>
 <p>Message components are new components you can add to messages, such as buttons and select menus. There are currently four different types of message components:</p>
 </div>
-<div class="section" id="83c4b16cb0935eaee9b2d17dea67a2b5f6f3af4f">
+<div class="section" id="b222315f457d25cd2fddab6d7c6cb89f3714a8a6">
 <h1><code>ActionRow</code></h1>
 <p>Represents a row of buttons on a message. You can add up to 5 buttons to the row, which can then be added to the message. You can only add buttons to action rows.</p>
 <pre><code class="language-php " >$row = ActionRow::new()
@@ -194,7 +240,7 @@
             </tbody>
 </table>
 </div>
-<div class="section" id="8f00a8de47f39ef504714c734f98ce1ce190c8f3">
+<div class="section" id="aa940aca60e94f72072b4dba54942ec3ccc41f69">
 <h1><code>Button</code></h1>
 <p>Represents a button attached to a message. You cannot directly attach a button to a message, it must be contained inside an <code>ActionRow</code>.</p>
 <pre><code class="language-php " >$button = Button::new(Button::STYLE_SUCCESS)
@@ -306,7 +352,7 @@
 </code></pre>
 </div>
 </div>
-<div class="section" id="ad6a3feaa274710839e038d801f6e70bdf7de61c">
+<div class="section" id="7a684a19cb85e0a4c85dbaebd94eb0baad51417f">
 <h1><code>SelectMenu</code></h1>
 <p>Select menus are a dropdown which can be attached to a message. They operate similar to buttons. They do not need to be attached to an <code>ActionRow</code>. You may have up to 25 <code>Option</code>\ s attached to a select menu.</p>
 <pre><code class="language-php " >$select = SelectMenu::new()
@@ -360,7 +406,7 @@
             </tbody>
 </table>
 </div>
-<div class="section" id="d1d98447f1083f3953db97f804c2aaebae881308-functions">
+<div class="section" id="e69a8c5c59ba0cdb658e073170ad0853d794a925-functions">
 <h2><code>Option</code> functions</h2>
 <table>
             <thead>
@@ -407,7 +453,7 @@
 </code></pre>
 </div>
 </div>
-<div class="section" id="01ff39f20361031782b17692e46a22dd7a5bc8a4">
+<div class="section" id="b62398b118a2cd32f70e58c3e7f8a800186cb4f0">
 <h1><code>TextInput</code></h1>
 <p>Text inputs are an interactive component that render on modals.</p>
 <pre><code class="language-php " >$textInput = TextInput::new(&#039;Label&#039;, TextInput::TYPE_SHORT, &#039;custom id&#039;)
