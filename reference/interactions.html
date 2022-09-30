@@ -61,7 +61,7 @@
 </h4>
 
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
-    <a href="guide/faq.html" class="-active">FAQ</a>
+    <a href="guide/faq.html" class="">FAQ</a>
 </h4>
 
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
@@ -236,35 +236,187 @@
 </aside>
 
             <div class="phpdocumentor-column -eight phpdocumentor-content">
-                    <div class="section" id="faq">
-<h1>FAQ</h1>
+                    <div class="section" id="interactions">
+<h1>Interactions</h1>
+<p>Interactions are utilized in message components and slash commands.</p>
 </div>
-<div class="section" id="4f12b3b6f4e8f8f2cdddd155183fd8f623aad64b">
-<h1><code>Class 'X' not found</code></h1>
-<p>You most likely haven't imported the class that you are trying to use. Please check the <a href="http://discord-php.github.io/DiscordPHP/namespaces/discord">class reference</a> and search for the class that you are trying to use. Add an import statement at the top of the file like shown on the right.</p>
-<pre><code class="language-php " >&lt;?php
-
-use Discord\X;
-
-</code></pre>
-<p>If you don't want to have to import a class every time, you should look into the PHP Intelephense language server (written above) which will do automatic imports for you.</p>
+<div class="section" id="attributes">
+<h1>Attributes</h1>
+<table>
+            <thead>
+                            <tr>
+                                            <th>name</th>
+                                            <th>type</th>
+                                            <th>description</th>
+                                    </tr>
+                    </thead>
+    
+    <tbody>
+                    <tr>
+                                    <td>id</td>
+                                    <td>string</td>
+                                    <td>id of the interaction.</td>
+                            </tr>
+                    <tr>
+                                    <td>applicationid</td>
+                                    <td>string</td>
+                                    <td>id of the application associated to the interaction.</td>
+                            </tr>
+                    <tr>
+                                    <td>int</td>
+                                    <td>type</td>
+                                    <td>type of interaction.</td>
+                            </tr>
+                    <tr>
+                                    <td>data</td>
+                                    <td><code>?InteractionData</code></td>
+                                    <td>data associated with the interaction.</td>
+                            </tr>
+                    <tr>
+                                    <td>guild</td>
+                                    <td><code>?Guild</code></td>
+                                    <td>guild interaction was triggered from, null if DM.</td>
+                            </tr>
+                    <tr>
+                                    <td>channel</td>
+                                    <td><code>?Channel</code></td>
+                                    <td>channel interaction was triggered from.</td>
+                            </tr>
+                    <tr>
+                                    <td>member</td>
+                                    <td><code>?Member</code></td>
+                                    <td>member that triggered interaction.</td>
+                            </tr>
+                    <tr>
+                                    <td>user</td>
+                                    <td><code>User</code></td>
+                                    <td>user that triggered interaction.</td>
+                            </tr>
+                    <tr>
+                                    <td>token</td>
+                                    <td>string</td>
+                                    <td>internal token for responding to interaction.</td>
+                            </tr>
+                    <tr>
+                                    <td>version</td>
+                                    <td>int</td>
+                                    <td>version of interaction.</td>
+                            </tr>
+                    <tr>
+                                    <td>message</td>
+                                    <td><code>?Message</code></td>
+                                    <td>message that triggered interaction.</td>
+                            </tr>
+                    <tr>
+                                    <td>locale</td>
+                                    <td>?string</td>
+                                    <td>The selected language of the invoking user.</td>
+                            </tr>
+                    <tr>
+                                    <td>guildlocale</td>
+                                    <td>?string</td>
+                                    <td>The guild’s preferred locale, if invoked in a guild.</td>
+                            </tr>
+            </tbody>
+</table>
+<p>The locale list can be seen on <a href="https://discord.com/developers/docs/reference#locales">Discord API reference</a>.</p>
 </div>
-<div class="section" id="there-are-less-members-and-or-users-than-expected">
-<h1>There are less members and/or users than expected</h1>
-<p>Server members are guarded by a priviliged server intent which must be enabled in the <a href="https://discord.com/developers/applications">Discord Developer Portal</a>. Note that you will need to verify your bot if you use this intent and pass 100 guilds.</p>
-<p>You also need to enable the <code>loadAllMembers</code> option in your code, as shown on the right.</p>
-<pre><code class="language-php " >$discord = new Discord([
-    &#039;token&#039; =&gt; &#039;...&#039;,
-    &#039;loadAllMembers&#039; =&gt; true, // Enable this option
-]);
-
-</code></pre>
-<p>If you are using DiscordPHP Version 6 or greater, you need to enable the <code>GUILD_MEMBERS</code> intent as well as the <code>loadAllMembers</code> option. The shown code will enable all intents minus the <code>GUILD_PRESENCES</code> intent (which is also priviliged).</p>
-<pre><code class="language-php " >$discord = new Discord([
-    &#039;token&#039; =&gt; &#039;...&#039;,
-    &#039;loadAllMembers&#039; =&gt; true,
-    &#039;intents&#039; =&gt; Intents::getDefaultIntents() | Intents::GUILD_MEMBERS // Enable the `GUILD_MEMBERS` intent
-])</code></pre>
+<div class="section" id="functions-on-interaction-create">
+<h1>Functions on interaction create</h1>
+<p>The following functions are used to respond an interaction after being created <code>Event::INTERACTION_CREATE</code>, responding interaction with wrong type throws a <code>LogicException</code></p>
+<table>
+            <thead>
+                            <tr>
+                                            <th>name</th>
+                                            <th>description</th>
+                                            <th>valid for interaction type</th>
+                                    </tr>
+                    </thead>
+    
+    <tbody>
+                    <tr>
+                                    <td><code>acknowledgeWithResponse(?bool $ephemeral)</code></td>
+                                    <td>acknowledges the interaction, creating a placeholder response to be updated</td>
+                                    <td><code>APPLICATION_COMMAND</code>, <code>MESSAGE_COMPONENT</code>, <code>MODAL_SUBMIT</code></td>
+                            </tr>
+                    <tr>
+                                    <td><code>acknowledge()</code></td>
+                                    <td>defer the interaction</td>
+                                    <td><code>MESSAGE_COMPONENT</code>, <code>MODAL_SUBMIT</code></td>
+                            </tr>
+                    <tr>
+                                    <td><code>respondWithMessage(MessageBuilder $builder, ?bool $ephemeral)</code></td>
+                                    <td>responds to the interaction with a message. ephemeral is default false</td>
+                                    <td><code>APPLICATION_COMMAND</code>, <code>MESSAGE_COMPONENT</code>, <code>MODAL_SUBMIT</code></td>
+                            </tr>
+                    <tr>
+                                    <td><code>autoCompleteResult(array $choices)</code></td>
+                                    <td>responds a suggestion to options with auto complete</td>
+                                    <td><code>APPLICATION_COMMAND_AUTOCOMPLETE</code></td>
+                            </tr>
+                    <tr>
+                                    <td><code>showModal(string $title, string $custom_id, array $components, ?callable $submit = null)</code></td>
+                                    <td>responds to the interaction with a popup modal</td>
+                                    <td><code>MODAL_SUBMIT</code></td>
+                            </tr>
+            </tbody>
+</table>
+</div>
+<div class="section" id="functions-after-interaction-response">
+<h1>Functions after interaction response</h1>
+<p>The following functions can be only used after interaction respond above, otherwise throws a <code>RuntimeException</code> “Interaction has not been responded to.”</p>
+<table>
+            <thead>
+                            <tr>
+                                            <th>name</th>
+                                            <th>description</th>
+                                            <th>return</th>
+                                    </tr>
+                    </thead>
+    
+    <tbody>
+                    <tr>
+                                    <td><code>updateMessage(MessageBuilder $message)</code></td>
+                                    <td>updates the message the interaction was triggered from. only for message component interaction</td>
+                                    <td><code>Promise<void></code></td>
+                            </tr>
+                    <tr>
+                                    <td><code>getOriginalResponse()</code></td>
+                                    <td>gets the original interaction response</td>
+                                    <td><code>Promise<Message></code></td>
+                            </tr>
+                    <tr>
+                                    <td><code>updateOriginalResponse(MessageBuilder $message)</code></td>
+                                    <td>updates the original interaction response</td>
+                                    <td><code>Promise<Message></code></td>
+                            </tr>
+                    <tr>
+                                    <td><code>deleteOriginalResponse()</code></td>
+                                    <td>deletes the original interaction response</td>
+                                    <td><code>Promise<void></code></td>
+                            </tr>
+                    <tr>
+                                    <td><code>sendFollowUpMessage(MessageBuilder $builder, ?bool $ephemeral)</code></td>
+                                    <td>sends a follow up message to the interaction. ephemeral is defalt false</td>
+                                    <td><code>Promise<Message></code></td>
+                            </tr>
+                    <tr>
+                                    <td><code>getFollowUpMessage(string $message_id)</code></td>
+                                    <td>gets a non ephemeral follow up message from the interaction</td>
+                                    <td><code>Promise<Message></code></td>
+                            </tr>
+                    <tr>
+                                    <td><code>updateFollowUpMessage(string $message_id, MessageBuilder $builder)</code></td>
+                                    <td>updates the follow up message of the interaction</td>
+                                    <td><code>Promise<Message></code></td>
+                            </tr>
+                    <tr>
+                                    <td><code>deleteFollowUpMessage(string $message_id)</code></td>
+                                    <td>deletes a non ephemeral follow up message from the interaction</td>
+                                    <td><code>Promise<void></code></td>
+                            </tr>
+            </tbody>
+</table>
 </div>
 
                 <section data-search-results class="phpdocumentor-search-results phpdocumentor-search-results--hidden">

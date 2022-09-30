@@ -69,7 +69,7 @@
 </h4>
 
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
-    <a href="guide/events/index.html" class="-active">Events</a>
+    <a href="guide/events/index.html" class="">Events</a>
 </h4>
     <ul class="phpdocumentor-list">
                     <li>
@@ -236,26 +236,100 @@
 </aside>
 
             <div class="phpdocumentor-column -eight phpdocumentor-content">
-                    
-<div class="section" id="events">
-<h1>Events</h1>
-<p>Events are payloads sent over the socket to a client that correspond to events in Discord.</p>
-<p>All gateway events are enabled by default and can be individually disabled using <code>disabledEvents</code> options. Most events also requires the respective Intents enabled (as well privileged ones enabled from <a href="https://discord.com/developers/applications">Developers Portal</a>) regardless the enabled event setting.</p>
-<p>To listen on gateway events, use the event emitter callback and <code>Event</code> name constants. Some events are internally handled by the library and may not be registered a listener:</p>
+                    <div class="section" id="channels">
+<h1>Channels</h1>
+<p>Requires the <code>Intents::GUILDS</code> intent.</p>
+</div>
+<div class="section" id="channel-create">
+<h1>Channel Create</h1>
+<p>Called with a <code>Channel</code> object when a new channel is created, relevant to the Bot.</p>
+<pre><code class="language-php " >$discord-&gt;on(Event::CHANNEL_CREATE, function (Channel $channel, Discord $discord) {
+    // ...
+});
+</code></pre>
+</div>
+<div class="section" id="channel-update">
+<h1>Channel Update</h1>
+<p>Called with two <code>Channel</code> objects when a channel is updated.</p>
+<pre><code class="language-php " >$discord-&gt;on(Event::CHANNEL_UPDATE, function (Channel $channel, Discord $discord, ?Channel $oldChannel) {
+    // ...
+});
+</code></pre>
+</div>
+<div class="section" id="channel-delete">
+<h1>Channel Delete</h1>
+<p>Called with a <code>Channel</code> object when a channel relevant to the Bot is deleted.</p>
+<pre><code class="language-php " >$discord-&gt;on(Event::CHANNEL_DELETE, function (Channel $channel, Discord $discord) {
+    // ...
+});
+</code></pre>
+</div>
+<div class="section" id="channel-pins-update">
+<h1>Channel Pins Update</h1>
+<p>Called with an object when a message is pinned or unpinned in a text channel. This is not sent when a pinned message is deleted.</p>
+<pre><code class="language-php " >$discord-&gt;on(Event::CHANNEL_PINS_UPDATE, function ($pins, Discord $discord) {
+    // {
+    //     &quot;guild_id&quot;: &quot;&quot;,
+    //     &quot;channel_id&quot;: &quot;&quot;,
+    //     &quot;last_pin_timestamp&quot;: &quot;&quot;
+    // }
+});
+</code></pre>
+<hr />
+<blockquote><p>For direct messages, it only requires the <code>Intents::DIRECT_MESSAGES</code> intent.</p>
+</blockquote>
+</div>
+<div class="section" id="threads">
+<h1>Threads</h1>
+<p>Requires the <code>Intents::GUILDS</code> intent.</p>
+<div class="section" id="thread-create">
+<h2>Thread Create</h2>
+<p>Called with a <code>Thread</code> object when a thread is created, relevant to the Bot.</p>
+<pre><code class="language-php " >$discord-&gt;on(Event::THREAD_CREATE, function (Thread $thread, Discord $discord) {
+    // ...
+});
+</code></pre>
+</div>
+<div class="section" id="thread-update">
+<h2>Thread Update</h2>
+<p>Called with a <code>Thread</code> object when a thread is updated.</p>
+<pre><code class="language-php " >$discord-&gt;on(Event::THREAD_UPDATE, function (Thread $thread, Discord $discord, ?Thread $oldThread) {
+    // ...
+});
+</code></pre>
+</div>
+<div class="section" id="thread-delete">
+<h2>Thread Delete</h2>
+<p>Called with an old <code>Thread</code> object when a thread relevant to the Bot is deleted.</p>
+<pre><code class="language-php " >$discord-&gt;on(Event::THREAD_DELETE, function (?Thread $thread, Discord $discord) {
+    // ...
+});
+</code></pre>
+</div>
+<div class="section" id="thread-list-sync">
+<h2>Thread List Sync</h2>
+<p>Called when list of threads are synced.</p>
+<pre><code class="language-php " >$discord-&gt;on(Event::THREAD_LIST_SYNC, function (Collection $threads, Discord $discord) {
+    // ...
+});
+</code></pre>
+</div>
+<div class="section" id="thread-member-update">
+<h2>Thread Member Update</h2>
+<p>Called with a Thread <code>Member</code> object when the thread member for the current Bot is updated.</p>
+<pre><code class="language-php " >// use Discord\Parts\Thread\Member;
 
-
-<ul>
-    <li>
-            <code>Event::READY</code> (not to be confused with <code>'ready'</code>)
-        </li>
-    <li>
-            <code>Event::RESUMED</code>
-        </li>
-    <li>
-            <code>Event::GUILD_MEMBERS_CHUNK</code>
-        </li>
-</ul>
-<p>If you are an advanced user, you may listen to those events before internally handled with the library by parsing the ‘raw’ dispatch event data.</p>
+$discord-&gt;on(Event::THREAD_MEMBER_UPDATE, function (Member $threadMember, Discord $discord) {
+    // ...
+});
+</code></pre>
+</div>
+<div class="section" id="thread-members-update">
+<h2>Thread Members Update</h2>
+<p>Called with a <code>Thread</code> object when anyone is added to or removed from a thread. If the Bot does not have the <code>Intents::GUILD_MEMBERS</code>, then this event will only be called if the Bot was added to or removed from the thread.</p>
+<pre><code class="language-php " >$discord-&gt;on(Event::THREAD_MEMBERS_UPDATE, function (Thread $thread, Discord $discord) {
+    // ...
+});</code></pre>
 </div>
 
                 <section data-search-results class="phpdocumentor-search-results phpdocumentor-search-results--hidden">

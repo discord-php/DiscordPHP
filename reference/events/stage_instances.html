@@ -6,7 +6,7 @@
     
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <base href="../">
+    <base href="../../">
     <link rel="icon" href="images/favicon.ico"/>
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/base.css">
@@ -165,7 +165,7 @@
 </h4>
 
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
-    <a href="guide/interactions.html" class="-active">Interactions</a>
+    <a href="guide/interactions.html" class="">Interactions</a>
 </h4>
 
                         </section>
@@ -236,187 +236,32 @@
 </aside>
 
             <div class="phpdocumentor-column -eight phpdocumentor-content">
-                    <div class="section" id="interactions">
-<h1>Interactions</h1>
-<p>Interactions are utilized in message components and slash commands.</p>
+                    <div class="section" id="stage-instances">
+<h1>Stage Instances</h1>
+<p>Requires the <code>Intents::GUILDS</code> intent.</p>
 </div>
-<div class="section" id="attributes">
-<h1>Attributes</h1>
-<table>
-            <thead>
-                            <tr>
-                                            <th>name</th>
-                                            <th>type</th>
-                                            <th>description</th>
-                                    </tr>
-                    </thead>
-    
-    <tbody>
-                    <tr>
-                                    <td>id</td>
-                                    <td>string</td>
-                                    <td>id of the interaction.</td>
-                            </tr>
-                    <tr>
-                                    <td>applicationid</td>
-                                    <td>string</td>
-                                    <td>id of the application associated to the interaction.</td>
-                            </tr>
-                    <tr>
-                                    <td>int</td>
-                                    <td>type</td>
-                                    <td>type of interaction.</td>
-                            </tr>
-                    <tr>
-                                    <td>data</td>
-                                    <td><code>?InteractionData</code></td>
-                                    <td>data associated with the interaction.</td>
-                            </tr>
-                    <tr>
-                                    <td>guild</td>
-                                    <td><code>?Guild</code></td>
-                                    <td>guild interaction was triggered from, null if DM.</td>
-                            </tr>
-                    <tr>
-                                    <td>channel</td>
-                                    <td><code>?Channel</code></td>
-                                    <td>channel interaction was triggered from.</td>
-                            </tr>
-                    <tr>
-                                    <td>member</td>
-                                    <td><code>?Member</code></td>
-                                    <td>member that triggered interaction.</td>
-                            </tr>
-                    <tr>
-                                    <td>user</td>
-                                    <td><code>User</code></td>
-                                    <td>user that triggered interaction.</td>
-                            </tr>
-                    <tr>
-                                    <td>token</td>
-                                    <td>string</td>
-                                    <td>internal token for responding to interaction.</td>
-                            </tr>
-                    <tr>
-                                    <td>version</td>
-                                    <td>int</td>
-                                    <td>version of interaction.</td>
-                            </tr>
-                    <tr>
-                                    <td>message</td>
-                                    <td><code>?Message</code></td>
-                                    <td>message that triggered interaction.</td>
-                            </tr>
-                    <tr>
-                                    <td>locale</td>
-                                    <td>?string</td>
-                                    <td>The selected language of the invoking user.</td>
-                            </tr>
-                    <tr>
-                                    <td>guildlocale</td>
-                                    <td>?string</td>
-                                    <td>The guild’s preferred locale, if invoked in a guild.</td>
-                            </tr>
-            </tbody>
-</table>
-<p>The locale list can be seen on <a href="https://discord.com/developers/docs/reference#locales">Discord API reference</a>.</p>
+<div class="section" id="stage-instance-create">
+<h1>Stage Instance Create</h1>
+<p>Called with a <code>StageInstance</code> object when a stage instance is created (i.e. the Stage is now “live”).</p>
+<pre><code class="language-php " >$discord-&gt;on(Event::STAGE_INSTANCE_CREATE, function (StageInstance $stageInstance, Discord $discord) {
+    // ...
+});
+</code></pre>
 </div>
-<div class="section" id="functions-on-interaction-create">
-<h1>Functions on interaction create</h1>
-<p>The following functions are used to respond an interaction after being created <code>Event::INTERACTION_CREATE</code>, responding interaction with wrong type throws a <code>LogicException</code></p>
-<table>
-            <thead>
-                            <tr>
-                                            <th>name</th>
-                                            <th>description</th>
-                                            <th>valid for interaction type</th>
-                                    </tr>
-                    </thead>
-    
-    <tbody>
-                    <tr>
-                                    <td><code>acknowledgeWithResponse(?bool $ephemeral)</code></td>
-                                    <td>acknowledges the interaction, creating a placeholder response to be updated</td>
-                                    <td><code>APPLICATION_COMMAND</code>, <code>MESSAGE_COMPONENT</code>, <code>MODAL_SUBMIT</code></td>
-                            </tr>
-                    <tr>
-                                    <td><code>acknowledge()</code></td>
-                                    <td>defer the interaction</td>
-                                    <td><code>MESSAGE_COMPONENT</code>, <code>MODAL_SUBMIT</code></td>
-                            </tr>
-                    <tr>
-                                    <td><code>respondWithMessage(MessageBuilder $builder, ?bool $ephemeral)</code></td>
-                                    <td>responds to the interaction with a message. ephemeral is default false</td>
-                                    <td><code>APPLICATION_COMMAND</code>, <code>MESSAGE_COMPONENT</code>, <code>MODAL_SUBMIT</code></td>
-                            </tr>
-                    <tr>
-                                    <td><code>autoCompleteResult(array $choices)</code></td>
-                                    <td>responds a suggestion to options with auto complete</td>
-                                    <td><code>APPLICATION_COMMAND_AUTOCOMPLETE</code></td>
-                            </tr>
-                    <tr>
-                                    <td><code>showModal(string $title, string $custom_id, array $components, ?callable $submit = null)</code></td>
-                                    <td>responds to the interaction with a popup modal</td>
-                                    <td><code>MODAL_SUBMIT</code></td>
-                            </tr>
-            </tbody>
-</table>
+<div class="section" id="stage-instance-update">
+<h1>Stage Instance Update</h1>
+<p>Called with a <code>StageInstance</code> objects when a stage instance has been updated.</p>
+<pre><code class="language-php " >$discord-&gt;on(Event::STAGE_INSTANCE_UPDATE, function (StageInstance $stageInstance, Discord $discord, ?StageInstance $oldStageInstance) {
+    // ...
+});
+</code></pre>
 </div>
-<div class="section" id="functions-after-interaction-response">
-<h1>Functions after interaction response</h1>
-<p>The following functions can be only used after interaction respond above, otherwise throws a <code>RuntimeException</code> “Interaction has not been responded to.”</p>
-<table>
-            <thead>
-                            <tr>
-                                            <th>name</th>
-                                            <th>description</th>
-                                            <th>return</th>
-                                    </tr>
-                    </thead>
-    
-    <tbody>
-                    <tr>
-                                    <td><code>updateMessage(MessageBuilder $message)</code></td>
-                                    <td>updates the message the interaction was triggered from. only for message component interaction</td>
-                                    <td><code>Promise<void></code></td>
-                            </tr>
-                    <tr>
-                                    <td><code>getOriginalResponse()</code></td>
-                                    <td>gets the original interaction response</td>
-                                    <td><code>Promise<Message></code></td>
-                            </tr>
-                    <tr>
-                                    <td><code>updateOriginalResponse(MessageBuilder $message)</code></td>
-                                    <td>updates the original interaction response</td>
-                                    <td><code>Promise<Message></code></td>
-                            </tr>
-                    <tr>
-                                    <td><code>deleteOriginalResponse()</code></td>
-                                    <td>deletes the original interaction response</td>
-                                    <td><code>Promise<void></code></td>
-                            </tr>
-                    <tr>
-                                    <td><code>sendFollowUpMessage(MessageBuilder $builder, ?bool $ephemeral)</code></td>
-                                    <td>sends a follow up message to the interaction. ephemeral is defalt false</td>
-                                    <td><code>Promise<Message></code></td>
-                            </tr>
-                    <tr>
-                                    <td><code>getFollowUpMessage(string $message_id)</code></td>
-                                    <td>gets a non ephemeral follow up message from the interaction</td>
-                                    <td><code>Promise<Message></code></td>
-                            </tr>
-                    <tr>
-                                    <td><code>updateFollowUpMessage(string $message_id, MessageBuilder $builder)</code></td>
-                                    <td>updates the follow up message of the interaction</td>
-                                    <td><code>Promise<Message></code></td>
-                            </tr>
-                    <tr>
-                                    <td><code>deleteFollowUpMessage(string $message_id)</code></td>
-                                    <td>deletes a non ephemeral follow up message from the interaction</td>
-                                    <td><code>Promise<void></code></td>
-                            </tr>
-            </tbody>
-</table>
+<div class="section" id="stage-instance-delete">
+<h1>Stage Instance Delete</h1>
+<p>Called with a <code>StageInstance</code> object when a stage instance has been deleted (i.e. the Stage has been closed).</p>
+<pre><code class="language-php " >$discord-&gt;on(Event::STAGE_INSTANCE_DELETE, function (StageInstance $stageInstance, Discord $discord) {
+    // ...
+});</code></pre>
 </div>
 
                 <section data-search-results class="phpdocumentor-search-results phpdocumentor-search-results--hidden">

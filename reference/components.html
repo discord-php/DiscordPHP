@@ -161,7 +161,7 @@
 </h4>
 
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
-    <a href="guide/components.html" class="-active">Message Components</a>
+    <a href="guide/components.html" class="">Message Components</a>
 </h4>
 
                                     <h4 class="phpdocumentor-sidebar__root-namespace">
@@ -240,7 +240,7 @@
 <h1>Message Components</h1>
 <p>Message components are new components you can add to messages, such as buttons and select menus. There are currently four different types of message components:</p>
 </div>
-<div class="section" id="0b34cd1f88be49ec62f596768c1902c40f377c70">
+<div class="section" id="aa704aa6a36f89c29e9fb10bc3c4c571e908b6cf">
 <h1><code>ActionRow</code></h1>
 <p>Represents a row of buttons on a message. You can add up to 5 buttons to the row, which can then be added to the message. You can only add buttons to action rows.</p>
 <pre><code class="language-php " >$row = ActionRow::new()
@@ -272,7 +272,7 @@
             </tbody>
 </table>
 </div>
-<div class="section" id="83146184e62c3a76fbb9cd650de9afe39fbcdb38">
+<div class="section" id="55096a62680031f1b50ed4da937aba069c05b3e7">
 <h1><code>Button</code></h1>
 <p>Represents a button attached to a message. You cannot directly attach a button to a message, it must be contained inside an <code>ActionRow</code>.</p>
 <pre><code class="language-php " >$button = Button::new(Button::STYLE_SUCCESS)
@@ -384,7 +384,7 @@
 </code></pre>
 </div>
 </div>
-<div class="section" id="3a53a4ecafa47422f270f5ea59553bd0a98abd85">
+<div class="section" id="ffd3715ca3f07a4806bd82bdfb170869bbd2aae7">
 <h1><code>SelectMenu</code></h1>
 <p>Select menus are a dropdown which can be attached to a message. They operate similar to buttons. They do not need to be attached to an <code>ActionRow</code>. You may have up to 25 <code>Option</code>\ s attached to a select menu.</p>
 <pre><code class="language-php " >$select = SelectMenu::new()
@@ -438,7 +438,7 @@
             </tbody>
 </table>
 </div>
-<div class="section" id="b7416c23efb2a1bfe586fdfd2f84406092a80e1f-functions">
+<div class="section" id="3553d7c206bb4ee89fbf93cfe93dda10228da954-functions">
 <h2><code>Option</code> functions</h2>
 <table>
             <thead>
@@ -485,7 +485,7 @@
 </code></pre>
 </div>
 </div>
-<div class="section" id="198088fbe3c193396f8111695ea7d6e10072114b">
+<div class="section" id="9292b2fa836bc3a74c46715c942b3c9b86a23017">
 <h1><code>TextInput</code></h1>
 <p>Text inputs are an interactive component that render on modals.</p>
 <pre><code class="language-php " >$textInput = TextInput::new(&#039;Label&#039;, TextInput::TYPE_SHORT, &#039;custom id&#039;)

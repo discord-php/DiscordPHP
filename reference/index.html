@@ -6,7 +6,7 @@
     
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <base href="../../">
+    <base href="../">
     <link rel="icon" href="images/favicon.ico"/>
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/base.css">
@@ -105,7 +105,7 @@
                 
             </li>
                     <li>
-                <a href="guide/events/stage_instances.html" class="-active">Stage Instances</a>
+                <a href="guide/events/stage_instances.html" class="">Stage Instances</a>
                 
             </li>
                     <li>
@@ -236,32 +236,129 @@
 </aside>
 
             <div class="phpdocumentor-column -eight phpdocumentor-content">
-                    <div class="section" id="stage-instances">
-<h1>Stage Instances</h1>
-<p>Requires the <code>Intents::GUILDS</code> intent.</p>
+                    
+<div class="section" id="guide">
+<h1>Guide</h1>
+<p>DiscordPHP is a wrapper for the Discord REST, WebSocket and Voice APIs. Built on top of <a href="https://reactphp.org/">ReactPHP</a> components. This documentation is based off the latest release.</p>
 </div>
-<div class="section" id="stage-instance-create">
-<h1>Stage Instance Create</h1>
-<p>Called with a <code>StageInstance</code> object when a stage instance is created (i.e. the Stage is now “live”).</p>
-<pre><code class="language-php " >$discord-&gt;on(Event::STAGE_INSTANCE_CREATE, function (StageInstance $stageInstance, Discord $discord) {
-    // ...
-});
+<div class="section" id="requirements">
+<h1>Requirements</h1>
+
+
+<ul>
+    <li>
+            <p><a href="https://php.net">PHP 7.4 CLI</a> or higher</p>
+            
+
+<ul>
+    <li>
+            Will not run on a webserver (FPM, CGI), you must run through CLI. A bot is a long-running process.
+        </li>
+    <li>
+            x86 (32-bit) PHP requires ext-gmp extension enabled for handling new Permission values.
+        </li>
+</ul>
+        </li>
+    <li>
+            <code>ext-json</code> for JSON parsing.
+        </li>
+    <li>
+            <code>ext-zlib</code> for gateway packet compression.
+        </li>
+</ul>
+<div class="section" id="recommended-extensions">
+<h2>Recommended Extensions</h2>
+
+
+<ul>
+    <li>
+            One of <code>ext-uv</code>, <code>ext-libev</code> or <code>evt-event</code> (in order of preference) for a faster, and more performant event loop.
+        </li>
+    <li>
+            <code>ext-mbstring</code> if you may handle non-english characters.
+        </li>
+    <li>
+            <code>ext-gmp</code> if running 32-bit PHP.
+        </li>
+</ul>
+</div>
+<div class="section" id="voice-requirements">
+<h1>Voice Requirements</h1>
+
+
+<ul>
+    <li>
+            <p>x8664 Windows, Linux or Darwin based OS.</p>
+            
+
+<ul>
+    <li>
+            If you are running on Windows, you must be using PHP 8.0.
+        </li>
+</ul>
+        </li>
+    <li>
+            <code>ext-sodium</code> for voice encryption.
+        </li>
+    <li>
+            FFmpeg
+        </li>
+</ul>
+<div class="section" id="development-environment-recommendations">
+<h2>Development Environment Recommendations</h2>
+<p>We recommend using an editor with support for the <a href="https://microsoft.github.io/language-server-protocol/">Language Server Protocol</a>.
+A list of supported editors can be found <a href="https://microsoft.github.io/language-server-protocol/implementors/servers/">here</a>.
+Here are some commonly used editors:</p>
+
+
+<ul>
+    <li>
+            Visual Studio Code (built-in LSP support)
+        </li>
+    <li>
+            Vim/Neovim (with the <a href="https://github.com/neoclide/coc.nvim">coc.nvim</a> plugin for LSP support)
+        </li>
+    <li>
+            PHPStorm (built-in PHP support)
+        </li>
+</ul>
+<p>We recommend installing <a href="https://intelephense.com/">PHP Intelephense</a> alongside your LSP-equipped editor for code completion alongside other helpful features. There is no need to pay for the premium features, the free version will suffice.</p>
+</div>
+</div>
+<div class="section" id="installation">
+<h1>Installation</h1>
+<p>Installation requries <a href="https://getcomposer.org">Composer</a>.</p>
+<p>To install the latest release:</p>
+<pre><code class="language- " >$ composer require team-reflex/discord-php
 </code></pre>
-</div>
-<div class="section" id="stage-instance-update">
-<h1>Stage Instance Update</h1>
-<p>Called with a <code>StageInstance</code> objects when a stage instance has been updated.</p>
-<pre><code class="language-php " >$discord-&gt;on(Event::STAGE_INSTANCE_UPDATE, function (StageInstance $stageInstance, Discord $discord, ?StageInstance $oldStageInstance) {
-    // ...
-});
+<p>If you would like to run on the latest <code>master</code> branch:</p>
+<pre><code class="language- " >$ composer require team-reflex/discord-php dev-master
 </code></pre>
+<p><code>master</code> can be substituted for any other branch name to install that branch.</p>
 </div>
-<div class="section" id="stage-instance-delete">
-<h1>Stage Instance Delete</h1>
-<p>Called with a <code>StageInstance</code> object when a stage instance has been deleted (i.e. the Stage has been closed).</p>
-<pre><code class="language-php " >$discord-&gt;on(Event::STAGE_INSTANCE_DELETE, function (StageInstance $stageInstance, Discord $discord) {
-    // ...
-});</code></pre>
+<div class="section" id="key-tips">
+<h1>Key Tips</h1>
+<p>As Discord is a real-time application, events come frequently and it is vital that your code does not block the ReactPHP event loop.
+Most, if not all, functions return promises, therefore it is vital that you understand the concept of asynchronous programming with promises.
+You can learn more about ReactPHP promises <a href="https://reactphp.org/promise/">here</a>.</p>
+</div>
+<div class="section" id="help">
+<h1>Help</h1>
+<p>If you need any help, feel free to join the <a href="https://discord.gg/dphp">PHP Discorders</a> Discord and someone should be able to give you a hand. We are a small community so please be patient if someone can't help you straight away.</p>
+</div>
+<div class="section" id="contributing">
+<h1>Contributing</h1>
+<p>All contributions are welcome through pull requests in our GitHub repository. At the moment we would love contributions towards:</p>
+
+
+<ul>
+    <li>
+            Unit testing
+        </li>
+    <li>
+            Documentation
+        </li>
+</ul>
 </div>
 
                 <section data-search-results class="phpdocumentor-search-results phpdocumentor-search-results--hidden">

@@ -93,7 +93,7 @@
                 
             </li>
                     <li>
-                <a href="guide/events/interactions.html" class="-active">Interactions</a>
+                <a href="guide/events/interactions.html" class="">Interactions</a>
                 
             </li>
                     <li>
@@ -236,19 +236,26 @@
 </aside>
 
             <div class="phpdocumentor-column -eight phpdocumentor-content">
-                    <div class="section" id="interactions">
-<h1>Interactions</h1>
-</div>
-<div class="section" id="interaction-create">
-<h1>Interaction Create</h1>
-<p>Called with an <code>Interaction</code> object when an interaction is created.</p>
-<pre><code class="language-php " >// use Discord\Parts\Interactions\Interaction;
+                    
+<div class="section" id="events">
+<h1>Events</h1>
+<p>Events are payloads sent over the socket to a client that correspond to events in Discord.</p>
+<p>All gateway events are enabled by default and can be individually disabled using <code>disabledEvents</code> options. Most events also requires the respective Intents enabled (as well privileged ones enabled from <a href="https://discord.com/developers/applications">Developers Portal</a>) regardless the enabled event setting.</p>
+<p>To listen on gateway events, use the event emitter callback and <code>Event</code> name constants. Some events are internally handled by the library and may not be registered a listener:</p>
 
-$discord-&gt;on(Event::INTERACTION_CREATE, function (Interaction $interaction, Discord $discord) {
-    // ...
-});
-</code></pre>
-<p>Application Command &amp; Message component listeners are processed before this event is called. Useful if you want to create a customized callback or have interaction response persists after Bot restart.</p>
+
+<ul>
+    <li>
+            <code>Event::READY</code> (not to be confused with <code>'ready'</code>)
+        </li>
+    <li>
+            <code>Event::RESUMED</code>
+        </li>
+    <li>
+            <code>Event::GUILD_MEMBERS_CHUNK</code>
+        </li>
+</ul>
+<p>If you are an advanced user, you may listen to those events before internally handled with the library by parsing the ‘raw’ dispatch event data.</p>
 </div>
 
                 <section data-search-results class="phpdocumentor-search-results phpdocumentor-search-results--hidden">
