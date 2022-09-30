@@ -6,27 +6,30 @@ DiscordPHP is a wrapper for the Discord REST, WebSocket and Voice APIs. Built on
 Requirements
 ------------
 
-* PHP 7.4 CLI
-   * Will not run on a webserver (FPM, CGI), you must run through CLI. A bot is a long-running process.
-   * x86 (32-bit) PHP requires ext-gmp extension enabled for handling new Permission values.
+- `PHP 7.4 CLI<https://php.net>`_ or higher
 
-* ``ext-json`` for JSON parsing.
-* ``ext-zlib`` for gateway packet compression.
+   + Will not run on a webserver (FPM, CGI), you must run through CLI. A bot is a long-running process.
+   + x86 (32-bit) PHP requires ext-gmp extension enabled for handling new Permission values.
+
+- ``ext-json`` for JSON parsing.
+- ``ext-zlib`` for gateway packet compression.
 
 Recommended Extensions
 ~~~~~~~~~~~~~~~~~~~~~~
 
-* One of ``ext-uv``, ``ext-libev`` or ``evt-event`` (in order of preference) for a faster, and more performant event loop.
-* ``ext-mbstring`` if you may handle non-english characters.
-* ``ext-gmp`` if running 32-bit PHP.
+- One of ``ext-uv``, ``ext-libev`` or ``evt-event`` (in order of preference) for a faster, and more performant event loop.
+- ``ext-mbstring`` if you may handle non-english characters.
+- ``ext-gmp`` if running 32-bit PHP.
 
 Voice Requirements
 ~~~~~~~~~~~~~~~~~~
 
-* x86_64 Windows, Linux or Darwin based OS.
-  * If you are running on Windows, you must be using PHP 8.0.
-* ``ext-sodium`` for voice encryption.
-* FFmpeg
+- x86_64 Windows, Linux or Darwin based OS.
+  
+  + If you are running on Windows, you must be using PHP 8.0.
+
+- ``ext-sodium`` for voice encryption.
+- FFmpeg
 
 Development Environment Recommendations
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -35,9 +38,9 @@ We recommend using an editor with support for the `Language Server Protocol<http
 A list of supported editors can be found `here <https://microsoft.github.io/language-server-protocol/implementors/servers/>`_.
 Here are some commonly used editors:
 
-* Visual Studio Code (built-in LSP support)
-* Vim/Neovim (with the `coc.nvim <https://github.com/neoclide/coc.nvim>`_ plugin for LSP support)
-* PHPStorm (built-in PHP support)
+- Visual Studio Code (built-in LSP support)
+- Vim/Neovim (with the `coc.nvim <https://github.com/neoclide/coc.nvim>`_ plugin for LSP support)
+- PHPStorm (built-in PHP support)
 
 We recommend installing `PHP Intelephense <https://intelephense.com/>`_ alongside your LSP-equipped editor for code completion alongside other helpful features. There is no need to pay for the premium features, the free version will suffice.
 
