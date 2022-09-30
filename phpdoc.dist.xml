@@ -6,20 +6,20 @@
         xsi:noNamespaceSchemaLocation="https://docs.phpdoc.org/latest/phpdoc.xsd"
 >
 	<paths>
-		<output>build</output>
+		<output>build/reference</output>
 	</paths>
 	<version number="latest">
 		<api>
 			<source dsn=".">
 				<path>src</path>
 			</source>
-			<output>reference</output>
+			<output></output>
 		</api>
 		<guide>
 			<source dsn=".">
 				<path>docs/new</path>
 			</source>
-			<output>guide</output>
+			<output>../guide</output>
 		</guide>
 	</version>
 	<setting name="guides.enabled" value="true"/>
