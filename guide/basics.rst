@@ -61,6 +61,7 @@ The Discord instance can be set up with an array of options. All are optional ex
 
 ``dnsConfig`` is an instace of ``Config`` or a string of name server address. By default system setting is used and fall back to 8.8.8.8 when system configuration is not found. Currently only used for VoiceClient.
 
+----
 
 The following options should only be used by large bots that require sharding. If you plan to use sharding, `read up <https://discord.com/developers/docs/topics/gateway#sharding>`_ on how Discord implements it.
 
