@@ -6,7 +6,7 @@
     
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <base href="../">
+    <base href="../../">
     <link rel="icon" href="images/favicon.ico"/>
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/base.css">
@@ -124,34 +124,17 @@
 </aside>
 
             <div class="phpdocumentor-column -eight phpdocumentor-content">
-                    <div class="section" id="faq">
-<h1>FAQ</h1>
-<div class="section" id="d251af72cd056cc79d8ef76c5d2488b0bf67c4df">
-<h2><code>Class 'X' not found</code></h2>
-<p>You most likely haven't imported the class that you are trying to use. Please check the <a href="http://discord-php.github.io/DiscordPHP/reference/">class reference</a> and search for the class that you are trying to use. Add an import statement at the top of the file like shown on the right.</p>
-<pre><code class="language-php " >&lt;?php
-
-use Discord\X;
-
-</code></pre>
-<p>If you don't want to have to import a class every time, you should look into the PHP Intelephense language server (written above) which will do automatic imports for you.</p>
+                    <div class="section" id="webhooks">
+<h1>Webhooks</h1>
 </div>
-<div class="section" id="there-are-less-members-and-or-users-than-expected">
-<h2>There are less members and/or users than expected</h2>
-<p>Server members are guarded by a priviliged server intent which must be enabled in the <a href="https://discord.com/developers/applications">Discord Developer Portal</a>. Note that you will need to verify your bot if you use this intent and pass 100 guilds.</p>
-<p>You also need to enable the <code>loadAllMembers</code> option in your code, as shown on the right.</p>
-<pre><code class="language-php " >$discord = new Discord([
-    &#039;token&#039; =&gt; &#039;...&#039;,
-    &#039;loadAllMembers&#039; =&gt; true, // Enable this option
-]);
-
+<div class="section" id="webhooks-update">
+<h1>Webhooks Update</h1>
+<p>Called with a <code>Guild</code> and <code>Channel</code> object when a guild channel’s webhooks are is created, updated, or deleted.</p>
+<pre><code class="language-php " >$discord-&gt;on(Event::WEBHOOKS_UPDATE, function (?Guild $guild, Discord $discord, ?Channel $channel) {
+    // ...
+});
 </code></pre>
-<p>If you are using DiscordPHP Version 6 or greater, you need to enable the <code>GUILD_MEMBERS</code> intent as well as the <code>loadAllMembers</code> option. The shown code will enable all intents minus the <code>GUILD_PRESENCES</code> intent (which is also priviliged).</p>
-<pre><code class="language-php " >$discord = new Discord([
-    &#039;token&#039; =&gt; &#039;...&#039;,
-    &#039;loadAllMembers&#039; =&gt; true,
-    &#039;intents&#039; =&gt; Intents::getDefaultIntents() | Intents::GUILD_MEMBERS // Enable the `GUILD_MEMBERS` intent
-])</code></pre>
+<p>Requires the <code>Intents::GUILD_WEBHOOKS</code> intent.</p>
 </div>
 
                 <section data-search-results class="phpdocumentor-search-results phpdocumentor-search-results--hidden">
