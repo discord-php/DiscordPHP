@@ -240,7 +240,7 @@
 <h1>Message Components</h1>
 <p>Message components are new components you can add to messages, such as buttons and select menus. There are currently four different types of message components:</p>
 </div>
-<div class="section" id="c639f2dfe68dca6f2431af0732960cadfc6ebca9">
+<div class="section" id="ba108999646122ba9ea42726c0bce98c4ad48903">
 <h1><code>ActionRow</code></h1>
 <p>Represents a row of buttons on a message. You can add up to 5 buttons to the row, which can then be added to the message. You can only add buttons to action rows.</p>
 <pre><code class="language-php " >$row = ActionRow::new()
@@ -272,7 +272,7 @@
             </tbody>
 </table>
 </div>
-<div class="section" id="4d3f2ae860d38452e2f96bdfb900887b51e7611c">
+<div class="section" id="caa02aad1b34fc702b4bb9bfde9cc688b11e2f84">
 <h1><code>Button</code></h1>
 <p>Represents a button attached to a message. You cannot directly attach a button to a message, it must be contained inside an <code>ActionRow</code>.</p>
 <pre><code class="language-php " >$button = Button::new(Button::STYLE_SUCCESS)
@@ -314,10 +314,11 @@
                             </tr>
             </tbody>
 </table>
-<figure
-        ><img
+<img
     src="https://discord.com/assets/7bb017ce52cfd6575e21c058feb3883b.png"
-                alt="Discord button styles"    /><figcaption><p>Discord button styles</p></figcaption></figure>
+                alt="Discord button styles"    />
+<pre><code class="language- " >Discord button styles
+</code></pre>
 <a id="functions-1"></a>
 <div class="section" id="functions">
 <h2>Functions</h2>
@@ -384,7 +385,7 @@
 </code></pre>
 </div>
 </div>
-<div class="section" id="91da8958c55b5b60bb9acabd999f16a64992fb99">
+<div class="section" id="a04260798c43b7d620a341d89806955abc604f09">
 <h1><code>SelectMenu</code></h1>
 <p>Select menus are a dropdown which can be attached to a message. They operate similar to buttons. They do not need to be attached to an <code>ActionRow</code>. You may have up to 25 <code>Option</code>\ s attached to a select menu.</p>
 <pre><code class="language-php " >$select = SelectMenu::new()
@@ -438,7 +439,7 @@
             </tbody>
 </table>
 </div>
-<div class="section" id="d521821f76c4faf8485eebc03c3850898e75e0b9-functions">
+<div class="section" id="31d7009439777e842c42e580bb2a669c4d3e2d33-functions">
 <h2><code>Option</code> functions</h2>
 <table>
             <thead>
@@ -485,7 +486,7 @@
 </code></pre>
 </div>
 </div>
-<div class="section" id="9e1079a627305b3b5608e70daa9484462141fb8d">
+<div class="section" id="e5783467a48712736a9502658f7c0d7c3b658e11">
 <h1><code>TextInput</code></h1>
 <p>Text inputs are an interactive component that render on modals.</p>
 <pre><code class="language-php " >$textInput = TextInput::new(&#039;Label&#039;, TextInput::TYPE_SHORT, &#039;custom id&#039;)
