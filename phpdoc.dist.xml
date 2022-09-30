@@ -14,12 +14,13 @@
 			<source dsn=".">
 				<path>src</path>
 			</source>
+			<output>reference</output>
 		</api>
 		<guide>
 			<source dsn=".">
 				<path>guide</path>
 			</source>
-			<output>reference</output>
+			<output>guide</output>
 		</guide>
 	</version>
 	<setting name="guides.enabled" value="true"/>

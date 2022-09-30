@@ -1,3 +1,12 @@
+.. toctree::
+   :hidden:
+
+   guild
+   channel
+   member
+   message
+   user
+
 =====
 Parts
 =====

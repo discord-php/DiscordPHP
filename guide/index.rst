@@ -2,9 +2,10 @@
    :hidden:
 
    index
-   /parts/index
-   /events/index
+   parts/index
+   events/index
 
+=====
 Intro
 =====
 
