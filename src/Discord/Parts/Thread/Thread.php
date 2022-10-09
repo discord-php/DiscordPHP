@@ -43,7 +43,7 @@ use Traversable;
  * @property int               $rate_limit_per_user   Amount of seconds a user has to wait before sending a new message.
  * @property string            $owner_id              The ID of the owner of the thread.
  * @property string            $parent_id             The ID of the channel which the thread was started in.
- * @property int               $message_count         Number of messages (not including the initial message or deleted messages) in a thread (if the thread was created before July 1, 2022, it stops counting at 50).
+ * @property int               $message_count         Number of messages (not including the initial message or deleted messages) in a thread (if the thread was created before July 1, 2022, the message count is inaccurate when it's greater than 50).
  * @property int               $member_count          An approximate count of the number of members in the thread. Stops counting at 50.
  * @property Guild|null        $guild                 The guild which the thread belongs to.
  * @property User|null         $owner                 The owner of the thread.
