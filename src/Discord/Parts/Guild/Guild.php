@@ -113,6 +113,7 @@ use function React\Promise\resolve;
  * @property      string             $preferred_locale                         Preferred locale of the guild.
  * @property      ?string            $public_updates_channel_id                Notice channel id.
  * @property      int|null           $max_video_channel_users                  Maximum amount of users allowed in a video channel.
+ * @property      int|null           $max_stage_video_channel_users            Maximum amount of users in a stage video channel.
  * @property      int|null           $approximate_member_count                 Approximate number of members in this guild, returned from the GET /guilds/<id> endpoint when with_counts is true.
  * @property      int|null           $approximate_presence_count               Approximate number of non-offline members in this guild, returned from the GET /guilds/<id> endpoint when with_counts is true.
  * @property-read WelcomeScreen|null $welcome_screen                           The welcome screen of a Community guild, shown to new members, returned in an Invite's guild object. use `getWelcomeScreen` first to populate.
@@ -213,6 +214,7 @@ class Guild extends Part
         'rules_channel_id',
         'public_updates_channel_id',
         'max_video_channel_users',
+        'max_stage_video_channel_users',
         'approximate_member_count',
         'approximate_presence_count',
         'welcome_screen',
