@@ -269,30 +269,6 @@ final class CollectionsTest extends TestCase
         $this->assertEquals(['first' => 1, 'third' => 3], $collection->toArray());
     }
 
-    public function testSerialize()
-    {
-        $collection = new Collection([1, 2, 3], null);
-        $collection2 = new Collection(['first' => 1, 'second' => 2, 'third' => 3], null);
-
-        $this->assertEquals('[1,2,3]', $collection->serialize());
-        $this->assertEquals('{"first":1,"second":2,"third":3}', $collection2->serialize());
-    }
-
-    public function testUnserialize()
-    {
-        $collection = new Collection([], null);
-        $collection->unserialize('[1,2,3]');
-
-        $collection2 = new Collection([], null);
-        $collection2->unserialize('[{"id":1},{"id":2},{"id":3}]');
-
-        $this->assertEquals([1, 2, 3], $collection->toArray());
-        $this->assertEquals(
-            [(object) ['id' => 1], (object) ['id' => 2], (object) ['id' => 3]],
-            $collection2->toArray()
-        );
-    }
-
     public function testIsIterable()
     {
         $collection = new Collection(range(1, 10), null);
