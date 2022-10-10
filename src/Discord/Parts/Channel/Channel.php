@@ -30,6 +30,8 @@ use Discord\WebSockets\Event;
 use Discord\Helpers\Deferred;
 use Discord\Http\Endpoint;
 use Discord\Http\Exceptions\NoPermissionsException;
+use Discord\Parts\Forum\Reaction;
+use Discord\Parts\Forum\Tag;
 use Discord\Parts\Permissions\RolePermission;
 use Discord\Parts\Thread\Thread;
 use Discord\Repository\Channel\InviteRepository;
@@ -52,32 +54,37 @@ use function React\Promise\resolve;
  * @since 2.0.0 Refactored as Part
  * @since 1.0.0
  *
- * @property      string              $id                            The unique identifier of the Channel.
- * @property      int                 $type                          The type of the channel.
- * @property      string|null         $guild_id                      The unique identifier of the guild that the channel belongs to. Only for text or voice channels.
- * @property-read Guild|null          $guild                         The guild that the channel belongs to. Only for text or voice channels.
- * @property      int|null            $position                      The position of the channel on the sidebar.
- * @property      OverwriteRepository $overwrites                    Permission overwrites
- * @property      ?string|null        $name                          The name of the channel.
- * @property      ?string|null        $topic                         The topic of the channel.
- * @property      bool|null           $nsfw                          Whether the channel is NSFW.
- * @property      ?string|null        $last_message_id               The unique identifier of the last message sent in the channel (or thread for forum channels) (may not point to an existing or valid message or thread).
- * @property      int|null            $bitrate                       The bitrate of the channel. Only for voice channels.
- * @property      int|null            $user_limit                    The user limit of the channel.
- * @property      int|null            $rate_limit_per_user           Amount of seconds a user has to wait before sending a new message.
- * @property      Collection|User[]   $recipients                    A collection of all the recipients in the channel. Only for DM or group channels.
- * @property-read User|null           $recipient                     The first recipient of the channel. Only for DM or group channels.
- * @property-read string|null         $recipient_id                  The ID of the recipient of the channel, if it is a DM channel.
- * @property      ?string|null        $icon                          Icon hash.
- * @property      string|null         $owner_id                      The ID of the DM creator. Only for DM or group channels.
- * @property      string|null         $application_id                ID of the group DM creator if it is a bot.
- * @property      ?string|null        $parent_id                     ID of the parent channel.
- * @property      Carbon|null         $last_pin_timestamp            When the last message was pinned.
- * @property      ?string|null        $rtc_region                    Voice region id for the voice channel, automatic when set to null.
- * @property      int|null            $video_quality_mode            The camera video quality mode of the voice channel, 1 when not present.
- * @property      int|null            $default_auto_archive_duration Default duration for newly created threads, in minutes, to automatically archive the thread after recent activity, can be set to: 60, 1440, 4320, 10080.
- * @property      string|null         $permissions                   Computed permissions for the invoking user in the channel, including overwrites, only included when part of the resolved data received on a slash command interaction.
- * @property      int|null            $flags                         Channel flags combined as a bitfield.
+ * @property      string              $id                                 The unique identifier of the Channel.
+ * @property      int                 $type                               The type of the channel.
+ * @property      string|null         $guild_id                           The unique identifier of the guild that the channel belongs to. Only for text or voice channels.
+ * @property-read Guild|null          $guild                              The guild that the channel belongs to. Only for text or voice channels.
+ * @property      int|null            $position                           The position of the channel on the sidebar.
+ * @property      OverwriteRepository $overwrites                         Permission overwrites
+ * @property      ?string|null        $name                               The name of the channel.
+ * @property      ?string|null        $topic                              The topic of the channel (0-4096 characters for forum channels, 0-1024 characters for all others).
+ * @property      bool|null           $nsfw                               Whether the channel is NSFW.
+ * @property      ?string|null        $last_message_id                    The unique identifier of the last message sent in the channel (or thread for forum channels) (may not point to an existing or valid message or thread).
+ * @property      int|null            $bitrate                            The bitrate of the channel. Only for voice channels.
+ * @property      int|null            $user_limit                         The user limit of the channel.
+ * @property      int|null            $rate_limit_per_user                Amount of seconds a user has to wait before sending a new message.
+ * @property      Collection|User[]   $recipients                         A collection of all the recipients in the channel. Only for DM or group channels.
+ * @property-read User|null           $recipient                          The first recipient of the channel. Only for DM or group channels.
+ * @property-read string|null         $recipient_id                       The ID of the recipient of the channel, if it is a DM channel.
+ * @property      ?string|null        $icon                               Icon hash.
+ * @property      string|null         $owner_id                           The ID of the DM creator. Only for DM or group channels.
+ * @property      string|null         $application_id                     ID of the group DM creator if it is a bot.
+ * @property      ?string|null        $parent_id                          ID of the parent channel.
+ * @property      Carbon|null         $last_pin_timestamp                 When the last message was pinned.
+ * @property      ?string|null        $rtc_region                         Voice region id for the voice channel, automatic when set to null.
+ * @property      int|null            $video_quality_mode                 The camera video quality mode of the voice channel, 1 when not present.
+ * @property      int|null            $default_auto_archive_duration      Default duration for newly created threads, in minutes, to automatically archive the thread after recent activity, can be set to: 60, 1440, 4320, 10080.
+ * @property      string|null         $permissions                        Computed permissions for the invoking user in the channel, including overwrites, only included when part of the resolved data received on an application command interaction.
+ * @property      int|null            $flags                              Channel flags combined as a bitfield.
+ * @property      Collection|Tag[]    $available_tags                     Set of tags that can be used in a forum channel.
+ * @property      string[]|null       $applied_tags                       The IDs of the set of tags that have been applied to a thread in a forum channel.
+ * @property      ?Reaction|null      $default_reaction_emoji             Emoji to show in the add reaction button on a thread in a forum channel.
+ * @property      int|null            $default_thread_rate_limit_per_user The initial rate_limit_per_user to set on newly created threads in a channel. this field is copied to the thread at creation time and does not live update.
+ * @property      ?int|null           $default_sort_order                 The default sort order type used to order posts in forum channels.
  *
  * @property bool                    $is_private      Whether the channel is a private channel.
  * @property MemberRepository        $members         Voice channel only - members in the channel.
@@ -127,6 +134,10 @@ class Channel extends Part
     public const VIDEO_QUALITY_FULL = 2;
 
     public const FLAG_PINNED = (1 << 1);
+    public const FLAG_REQUIRE_TAG = (1 << 4);
+
+    public const SORT_ORDER_LATEST_ACTIVITY = 0;
+    public const SORT_ORDER_CREATION_DATE = 0;
 
     /**
      * @inheritDoc
@@ -154,6 +165,11 @@ class Channel extends Part
         'default_auto_archive_duration',
         'permissions',
         'flags',
+        'available_tags',
+        'applied_tags',
+        'default_reaction_emoji',
+        'default_thread_rate_limit_per_user',
+        'default_sort_order',
 
         // @internal
         'is_private',
@@ -1138,7 +1154,7 @@ class Channel extends Part
      */
     public function getCreatableAttributes(): array
     {
-        return [
+        $attr = [
             'name' => $this->name,
             'type' => $this->type,
             'bitrate' => $this->bitrate,
@@ -1153,6 +1169,20 @@ class Channel extends Part
             'video_quality_mode' => $this->video_quality_mode,
             'default_auto_archive_duration' => $this->default_auto_archive_duration,
         ];
+
+        if ($attr['type'] == self::TYPE_GUILD_FORUM) {
+            if (array_key_exists('default_reaction_emoji', $this->attributes)) {
+                $attr['default_reaction_emoji'] = $this->default_reaction_emoji;
+            }
+
+            $attr['applied_tags'] = $this->applied_tags;
+
+            if (array_key_exists('default_sort_order', $this->attributes)) {
+                $attr['default_sort_order'] = $this->default_sort_order;
+            }
+        }
+
+        return $attr;
     }
 
     /**
@@ -1162,7 +1192,7 @@ class Channel extends Part
      */
     public function getUpdatableAttributes(): array
     {
-        return [
+        $attr = [
             'name' => $this->name,
             'type' => $this->type,
             'position' => $this->position,
@@ -1178,7 +1208,23 @@ class Channel extends Part
                 return $overwrite->getUpdatableAttributes();
             })->toArray()),
             'default_auto_archive_duration' => $this->default_auto_archive_duration,
+            'default_thread_rate_limit_per_user' => $this->default_thread_rate_limit_per_user,
         ];
+
+        if ($this->type == self::TYPE_GUILD_FORUM) {
+            $attr['flags'] = $this->flags;
+            $attr['available_tags'] = $this->applied_tags;
+
+            if (array_key_exists('default_reaction_emoji', $this->attributes)) {
+                $attr['default_reaction_emoji'] = $this->default_reaction_emoji;
+            }
+
+            if (array_key_exists('default_sort_order', $this->attributes)) {
+                $attr['default_sort_order'] = $this->default_sort_order;
+            }
+        }
+
+        return $attr;
     }
 
     /**
