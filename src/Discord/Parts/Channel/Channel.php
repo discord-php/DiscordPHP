@@ -28,6 +28,7 @@ use Discord\Repository\Channel\VoiceMemberRepository as MemberRepository;
 use Discord\Repository\Channel\WebhookRepository;
 use Discord\WebSockets\Event;
 use Discord\Helpers\Deferred;
+use Discord\Helpers\Multipart;
 use Discord\Http\Endpoint;
 use Discord\Http\Exceptions\NoPermissionsException;
 use Discord\Parts\Forum\Reaction;
@@ -912,9 +913,9 @@ class Channel extends Part
      * @throws \RuntimeException
      * @throws \UnexpectedValueException `$auto_archive_duration` is not one of 60, 1440, 4320, 10080.
      *
-     * @since 10.0.0 Arguments for `$name`, `$private` and `$auto_archive_duration` are now inside `$options`
-     *
      * @return ExtendedPromiseInterface<Thread>
+     *
+     * @since 10.0.0 Arguments for `$name`, `$private` and `$auto_archive_duration` are now inside `$options`
      */
     public function startThread(array $options, ?string $reason = null): ExtendedPromiseInterface
     {
@@ -935,11 +936,11 @@ class Channel extends Part
         if ($this->type == self::TYPE_GUILD_FORUM) {
             $resolver
                 ->setDefined([
-                        'message',
-                        'applied_tags',
+                    'message',
+                    'applied_tags',
                 ])
                 ->setAllowedTypes('message', [MessageBuilder::class])
-                ->setAllowedTypes('applied_tags', 'array') // @todo deal Collection parts
+                ->setAllowedTypes('applied_tags', 'array') // @todo deal Tag parts
                 ->setRequired('message');
         } else {
             $resolver
@@ -979,8 +980,19 @@ class Channel extends Part
 
         unset($options['private']);
 
-        // @todo multipart for message builder
-        return $this->http->post(Endpoint::bind(Endpoint::CHANNEL_THREADS, $this->id), $options, $headers)->then(function ($response) {
+        return (function () use ($options, $headers) {
+            if (isset($options['message']) && $options['message']->requiresMultipart()) {
+                /** @var Multipart */
+                $multipart = $options['message']->toMultipart();
+                unset($options['message']);
+                foreach ($options as $field => $option) {
+                    $multipart->add(['field' => $option, 'content' => $option]);
+                }
+                return $this->http->post(Endpoint::bind(Endpoint::CHANNEL_THREADS, $this->id), (string) $multipart, $multipart->getHeaders() + $headers);
+            }
+
+            return $this->http->post(Endpoint::bind(Endpoint::CHANNEL_THREADS, $this->id), $options, $headers);
+        })()->then(function ($response) {
             return $this->factory->part(Thread::class, (array) $response, true);
         });
     }
