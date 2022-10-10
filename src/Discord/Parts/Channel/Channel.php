@@ -926,6 +926,8 @@ class Channel extends Part
             $headers['X-Audit-Log-Reason'] = $reason;
         }
 
+        unset($options['private']);
+
         return $this->http->post(Endpoint::bind(Endpoint::CHANNEL_THREADS, $this->id), $options, $headers)->then(function ($response) {
             return $this->factory->part(Thread::class, (array) $response, true);
         });
