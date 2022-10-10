@@ -861,6 +861,40 @@ class Channel extends Part
     }
 
     /**
+     * Gets the available tags attribute.
+     *
+     * @return Collection|Tag[] Available forum tags.
+     *
+     * @since 7.4.0
+     */
+    protected function getAvailableTagsAttribute(): Collection
+    {
+        $available_tags = Collection::for(Tag::class);
+
+        foreach ($this->attributes['available_tags'] ?? [] as $available_tag) {
+            $available_tags->pushItem($this->factory->part(Tag::class, $available_tag, true));
+        }
+
+        return $available_tags;
+    }
+
+    /**
+     * Gets the default reaction emoji attribute.
+     *
+     * @return Reaction|null Default forum reaction emoji.
+     *
+     * @since 7.4.0
+     */
+    protected function getDefaultReactionEmoji(): ?Reaction
+    {
+        if (! isset($this->attributes['default_reaction_emoji'])) {
+            return null;
+        }
+
+        return $this->factory->part(Reaction::class, $this->attributes['default_reaction_emoji'], true);
+    }
+
+    /**
      * Starts a thread in the channel.
      *
      * @link https://discord.com/developers/docs/resources/channel#start-thread-without-message
@@ -1190,10 +1224,10 @@ class Channel extends Part
 
         if ($attr['type'] == self::TYPE_GUILD_FORUM) {
             if (array_key_exists('default_reaction_emoji', $this->attributes)) {
-                $attr['default_reaction_emoji'] = $this->default_reaction_emoji;
+                $attr['default_reaction_emoji'] = $this->attributes['default_reaction_emoji'];
             }
 
-            $attr['available_tags'] = $this->available_tags;
+            $attr['available_tags'] = $this->attributes['available_tags'];
 
             if (array_key_exists('default_sort_order', $this->attributes)) {
                 $attr['default_sort_order'] = $this->default_sort_order;
@@ -1231,10 +1265,10 @@ class Channel extends Part
 
         if ($this->type == self::TYPE_GUILD_FORUM) {
             $attr['flags'] = $this->flags;
-            $attr['available_tags'] = $this->available_tags;
+            $attr['available_tags'] = $this->attributes['available_tags'];
 
             if (array_key_exists('default_reaction_emoji', $this->attributes)) {
-                $attr['default_reaction_emoji'] = $this->default_reaction_emoji;
+                $attr['default_reaction_emoji'] = $this->attributes['default_reaction_emoji'];
             }
 
             if (array_key_exists('default_sort_order', $this->attributes)) {
