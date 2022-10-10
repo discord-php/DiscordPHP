@@ -1259,7 +1259,7 @@ class Channel extends Part
                 $attr['default_reaction_emoji'] = $this->attributes['default_reaction_emoji'];
             }
 
-            $attr['available_tags'] = $this->attributes['available_tags'];
+            $attr['available_tags'] = $this->attributes['available_tags'] ?? null;
 
             if (array_key_exists('default_sort_order', $this->attributes)) {
                 $attr['default_sort_order'] = $this->default_sort_order;
