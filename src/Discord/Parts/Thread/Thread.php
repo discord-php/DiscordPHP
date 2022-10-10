@@ -42,30 +42,31 @@ use function React\Promise\resolve;
  *
  * @since 7.0.0
  *
- * @property      string       $id                    The ID of the thread.
- * @property      string       $type                  The type of thread.
- * @property      string       $guild_id              The ID of the guild which the thread belongs to.
- * @property-read Guild|null   $guild                 The guild which the thread belongs to.
- * @property      string       $name                  The name of the thread.
- * @property      string       $last_message_id       The ID of the last message sent in the thread.
- * @property      Carbon|null  $last_pin_timestamp    The timestamp when the last message was pinned in the thread.
- * @property      int          $rate_limit_per_user   Amount of seconds a user has to wait before sending a new message.
- * @property      string       $owner_id              The ID of the owner of the thread.
- * @property-read User|null    $owner                 The owner of the thread.
- * @property-read Member|null  $owner_member          The member object for the owner of the thread.
- * @property      string       $parent_id             The ID of the channel which the thread was started in.
- * @property-read Channel|null $parent                The channel which the thread was created in.
- * @property      int          $message_count         Number of messages (not including the initial message or deleted messages) in a thread (if the thread was created before July 1, 2022, it stops counting at 50).
- * @property      int          $member_count          An approximate count of the number of members in the thread. Stops counting at 50.
- * @property      object       $thread_metadata       Thread-specific fields not needed by other channels.
- * @property      bool         $archived              Whether the thread has been archived.
- * @property      int|null     $auto_archive_duration The number of minutes of inactivity until the thread is automatically archived.
- * @property      Carbon       $archive_timestamp     The time that the thread's archive status was changed.
- * @property      bool         $locked                Whether the thread has been locked.
- * @property      bool|null    $invitable             Whether non-moderators can add other non-moderators to a thread; only available on private threads.
- * @property      Carbon|null  $create_timestamp      Timestamp when the thread was created; only populated for threads created after 2022-01-09.
- * @property      int|null     $total_message_sent    Number of messages ever sent in a thread, it's similar to `message_count` on message creation, but will not decrement the number when a message is deleted.
- * @property      int|null     $flags                 Channel flags combined as a bitfield. PINNED can only be set for threads in forum channels.
+ * @property      string        $id                    The ID of the thread.
+ * @property      string        $type                  The type of thread.
+ * @property      string        $guild_id              The ID of the guild which the thread belongs to.
+ * @property-read Guild|null    $guild                 The guild which the thread belongs to.
+ * @property      string        $name                  The name of the thread.
+ * @property      string        $last_message_id       The ID of the last message sent in the thread.
+ * @property      Carbon|null   $last_pin_timestamp    The timestamp when the last message was pinned in the thread.
+ * @property      int           $rate_limit_per_user   Amount of seconds a user has to wait before sending a new message.
+ * @property      string        $owner_id              The ID of the owner of the thread.
+ * @property-read User|null     $owner                 The owner of the thread.
+ * @property-read Member|null   $owner_member          The member object for the owner of the thread.
+ * @property      string        $parent_id             The ID of the channel which the thread was started in.
+ * @property-read Channel|null  $parent                The channel which the thread was created in.
+ * @property      int           $message_count         Number of messages (not including the initial message or deleted messages) in a thread (if the thread was created before July 1, 2022, it stops counting at 50).
+ * @property      int           $member_count          An approximate count of the number of members in the thread. Stops counting at 50.
+ * @property      object        $thread_metadata       Thread-specific fields not needed by other channels.
+ * @property      bool          $archived              Whether the thread has been archived.
+ * @property      int|null      $auto_archive_duration The number of minutes of inactivity until the thread is automatically archived.
+ * @property      Carbon        $archive_timestamp     The time that the thread's archive status was changed.
+ * @property      bool          $locked                Whether the thread has been locked.
+ * @property      bool|null     $invitable             Whether non-moderators can add other non-moderators to a thread; only available on private threads.
+ * @property      Carbon|null   $create_timestamp      Timestamp when the thread was created; only populated for threads created after 2022-01-09.
+ * @property      int|null      $total_message_sent    Number of messages ever sent in a thread, it's similar to `message_count` on message creation, but will not decrement the number when a message is deleted.
+ * @property      int|null      $flags                 Channel flags combined as a bitfield. PINNED can only be set for threads in forum channels.
+ * @property      string[]|null $applied_tags          The IDs of the set of tags that have been applied to a thread in a forum channel.
  *
  * @property MessageRepository $messages Repository of messages sent in the thread.
  * @property MemberRepository  $members  Repository of members in the thread.
@@ -93,6 +94,7 @@ class Thread extends Part
         'member',
         'total_message_sent',
         'flags',
+        'applied_tags',
     ];
 
     /**
@@ -827,6 +829,10 @@ class Thread extends Part
 
         if ($this->type == Channel::TYPE_PRIVATE_THREAD) {
             $attr['invitable'] = $this->invitable;
+        }
+        
+        if (array_key_exists('applied_tags', $this->attributes)) {
+            $attr['applied_tags'] = $this->applied_tags;
         }
 
         return $attr;

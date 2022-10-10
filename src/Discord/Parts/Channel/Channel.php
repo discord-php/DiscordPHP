@@ -81,7 +81,6 @@ use function React\Promise\resolve;
  * @property      string|null         $permissions                        Computed permissions for the invoking user in the channel, including overwrites, only included when part of the resolved data received on an application command interaction.
  * @property      int|null            $flags                              Channel flags combined as a bitfield.
  * @property      Collection|Tag[]    $available_tags                     Set of tags that can be used in a forum channel.
- * @property      string[]|null       $applied_tags                       The IDs of the set of tags that have been applied to a thread in a forum channel.
  * @property      ?Reaction|null      $default_reaction_emoji             Emoji to show in the add reaction button on a thread in a forum channel.
  * @property      int|null            $default_thread_rate_limit_per_user The initial rate_limit_per_user to set on newly created threads in a channel. this field is copied to the thread at creation time and does not live update.
  * @property      ?int|null           $default_sort_order                 The default sort order type used to order posts in forum channels.
@@ -166,7 +165,6 @@ class Channel extends Part
         'permissions',
         'flags',
         'available_tags',
-        'applied_tags',
         'default_reaction_emoji',
         'default_thread_rate_limit_per_user',
         'default_sort_order',
@@ -1195,7 +1193,7 @@ class Channel extends Part
                 $attr['default_reaction_emoji'] = $this->default_reaction_emoji;
             }
 
-            $attr['applied_tags'] = $this->applied_tags;
+            $attr['available_tags'] = $this->available_tags;
 
             if (array_key_exists('default_sort_order', $this->attributes)) {
                 $attr['default_sort_order'] = $this->default_sort_order;
@@ -1233,7 +1231,7 @@ class Channel extends Part
 
         if ($this->type == self::TYPE_GUILD_FORUM) {
             $attr['flags'] = $this->flags;
-            $attr['available_tags'] = $this->applied_tags;
+            $attr['available_tags'] = $this->available_tags;
 
             if (array_key_exists('default_reaction_emoji', $this->attributes)) {
                 $attr['default_reaction_emoji'] = $this->default_reaction_emoji;
