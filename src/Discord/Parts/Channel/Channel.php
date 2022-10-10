@@ -873,7 +873,6 @@ class Channel extends Part
      * @param int|null    $options['auto_archive_duration'] Number of minutes of inactivity until the thread is auto-archived. one of 60, 1440, 4320, 10080.
      * @param bool|null   $options['invitable']             Whether non-moderators can add other non-moderators to a thread; only available when creating a private thread.
      * @param ?int|null   $options['rate_limit_per_user']   Amount of seconds a user has to wait before sending another message (0-21600).
-     * @param 
      * @param string|null $reason                           Reason for Audit Log.
      *
      * @throws \RuntimeException
@@ -900,6 +899,7 @@ class Channel extends Part
             ->setAllowedTypes('invitable', 'bool')
             ->setAllowedTypes('rate_limit_per_user', ['null', 'int'])
             ->setAllowedValues('auto_archive_duration', fn ($values) => in_array($values, [60, 1440, 4320, 10080]))
+            ->setAllowedValues('rate_limit_per_user', fn ($values) => $values >= 0 && $values <= 21600)
             ->setRequired('name')
             ->setDefaults(['private' => false]);
 
