@@ -51,6 +51,9 @@ class MessageCreate extends Event
             if (! isset($channel)) {
                 /** @var ?Channel */
                 $channel = yield $guild->channels->cacheGet($data->channel_id);
+                if ($channel->type == Channel::TYPE_GUILD_FORUM) {
+                    $channel->last_message_id = $data->id;
+                }
             }
         }
 
