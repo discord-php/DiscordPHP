@@ -899,13 +899,15 @@ class Channel extends Part
      *
      * @link https://discord.com/developers/docs/resources/channel#start-thread-without-message
      *
-     * @param array       $options                          Thread params.
-     * @param bool        $options['private']               Whether the thread should be private. cannot start a private thread in a news channel channel.
-     * @param string      $options['name']                  The name of the thread.
-     * @param int|null    $options['auto_archive_duration'] Number of minutes of inactivity until the thread is auto-archived. one of 60, 1440, 4320, 10080.
-     * @param bool|null   $options['invitable']             Whether non-moderators can add other non-moderators to a thread; only available when creating a private thread.
-     * @param ?int|null   $options['rate_limit_per_user']   Amount of seconds a user has to wait before sending another message (0-21600).
-     * @param string|null $reason                           Reason for Audit Log.
+     * @param array          $options                          Thread params.
+     * @param bool           $options['private']               Whether the thread should be private. cannot start a private thread in a news channel channel. Ignored in forum channel.
+     * @param string         $options['name']                  The name of the thread.
+     * @param int|null       $options['auto_archive_duration'] Number of minutes of inactivity until the thread is auto-archived. one of 60, 1440, 4320, 10080.
+     * @param bool|null      $options['invitable']             Whether non-moderators can add other non-moderators to a thread; only available when creating a private thread.
+     * @param ?int|null      $options['rate_limit_per_user']   Amount of seconds a user has to wait before sending another message (0-21600).
+     * @param MessageBuilder $options['message']               Contents of the first message in the forum thread.
+     * @param string[]|null  $options['applied_tags']          The IDs of the set of tags that have been applied to a thread in a forum channel.
+     * @param string|null    $reason                           Reason for Audit Log.
      *
      * @throws \RuntimeException
      * @throws \UnexpectedValueException `$auto_archive_duration` is not one of 60, 1440, 4320, 10080.
@@ -919,25 +921,40 @@ class Channel extends Part
         $resolver = new OptionsResolver();
         $resolver
             ->setDefined([
-                'private',
                 'name',
                 'auto_archive_duration',
-                'invitable',
                 'rate_limit_per_user',
             ])
-            ->setAllowedTypes('private', 'bool')
             ->setAllowedTypes('name', 'string')
             ->setAllowedTypes('auto_archive_duration', 'int')
-            ->setAllowedTypes('invitable', 'bool')
             ->setAllowedTypes('rate_limit_per_user', ['null', 'int'])
             ->setAllowedValues('auto_archive_duration', fn ($values) => in_array($values, [60, 1440, 4320, 10080]))
             ->setAllowedValues('rate_limit_per_user', fn ($values) => $values >= 0 && $values <= 21600)
-            ->setRequired('name')
-            ->setDefaults(['private' => false]);
+            ->setRequired('name');
+
+        if ($this->type == self::TYPE_GUILD_FORUM) {
+            $resolver
+                ->setDefined([
+                        'message',
+                        'applied_tags',
+                ])
+                ->setAllowedTypes('message', [MessageBuilder::class])
+                ->setAllowedTypes('applied_tags', 'array') // @todo deal Collection parts
+                ->setRequired('message');
+        } else {
+            $resolver
+                ->setDefined([
+                    'private',
+                    'invitable',
+                ])
+                ->setAllowedTypes('private', 'bool')
+                ->setAllowedTypes('invitable', 'bool')
+                ->setDefaults(['private' => false]);
+        }
 
         $options = $resolver->resolve($options);
 
-        if ($options['private'] && ! $this->guild->feature_private_threads) {
+        if ($this->type != self::TYPE_GUILD_FORUM && $options['private'] && ! $this->guild->feature_private_threads) {
             return reject(new \RuntimeException('Guild does not have access to private threads.'));
         }
 
@@ -949,6 +966,8 @@ class Channel extends Part
             $options['type'] = self::TYPE_ANNOUNCEMENT_THREAD;
         } elseif ($this->type == self::TYPE_GUILD_TEXT) {
             $options['type'] = $options['private'] ? self::TYPE_PRIVATE_THREAD : self::TYPE_PUBLIC_THREAD;
+        } elseif ($this->type == self::TYPE_GUILD_FORUM) {
+            $options['type'] = self::TYPE_PUBLIC_THREAD;
         } else {
             return reject(new \RuntimeException('You cannot start a thread in this type of channel.'));
         }
@@ -960,6 +979,7 @@ class Channel extends Part
 
         unset($options['private']);
 
+        // @todo multipart for message builder
         return $this->http->post(Endpoint::bind(Endpoint::CHANNEL_THREADS, $this->id), $options, $headers)->then(function ($response) {
             return $this->factory->part(Thread::class, (array) $response, true);
         });
