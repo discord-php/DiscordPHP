@@ -15,6 +15,7 @@ use Discord\Parts\Channel\Message;
 use Discord\WebSockets\Event;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Guild\Guild;
+use Discord\Parts\Thread\Thread;
 use Discord\WebSockets\Intents;
 
 /**
@@ -49,10 +50,13 @@ class MessageCreate extends Event
             $guild = yield $this->discord->guilds->cacheGet($data->guild_id);
 
             if (! isset($channel)) {
-                /** @var ?Channel */
-                $channel = yield $guild->channels->cacheGet($data->channel_id);
-                if ($channel->type == Channel::TYPE_GUILD_FORUM) {
-                    $channel->last_message_id = $data->id;
+                /** @var ?Channel|?Thread */
+                if ($channel = yield $guild->channels->cacheGet($data->channel_id)) {
+                    if ($channel instanceof Thread && $parent = $channel->parent) {
+                        if ($parent->type == Channel::TYPE_GUILD_FORUM) {
+                            $parent->last_message_id = $data->id;
+                        }
+                    }
                 }
             }
         }
