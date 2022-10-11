@@ -83,7 +83,7 @@ use function React\Promise\resolve;
  * @property      int|null            $flags                              Channel flags combined as a bitfield.
  * @property      Collection|Tag[]    $available_tags                     Set of tags that can be used in a forum channel.
  * @property      ?Reaction|null      $default_reaction_emoji             Emoji to show in the add reaction button on a thread in a forum channel.
- * @property      int|null            $default_thread_rate_limit_per_user The initial rate_limit_per_user to set on newly created threads in a channel. this field is copied to the thread at creation time and does not live update.
+ * @property      int|null            $default_thread_rate_limit_per_user The initial rate_limit_per_user to set on newly created threads in a forum channel. this field is copied to the thread at creation time and does not live update.
  * @property      ?int|null           $default_sort_order                 The default sort order type used to order posts in forum channels.
  *
  * @property bool                    $is_private      Whether the channel is a private channel.
@@ -1292,12 +1292,12 @@ class Channel extends Part
                 return $overwrite->getUpdatableAttributes();
             })->toArray()),
             'default_auto_archive_duration' => $this->default_auto_archive_duration,
-            'default_thread_rate_limit_per_user' => $this->default_thread_rate_limit_per_user,
         ];
 
         if ($this->type == self::TYPE_GUILD_FORUM) {
             $attr['flags'] = $this->flags;
             $attr['available_tags'] = $this->attributes['available_tags'];
+            $attr['default_thread_rate_limit_per_user'] = $this->default_thread_rate_limit_per_user;
 
             if (array_key_exists('default_reaction_emoji', $this->attributes)) {
                 $attr['default_reaction_emoji'] = $this->attributes['default_reaction_emoji'];
