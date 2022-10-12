@@ -55,7 +55,7 @@ use function React\Promise\resolve;
  * @property-read Member|null   $owner_member          The member object for the owner of the thread.
  * @property      string        $parent_id             The ID of the channel which the thread was started in.
  * @property-read Channel|null  $parent                The channel which the thread was created in.
- * @property      int           $message_count         Number of messages (not including the initial message or deleted messages) in a thread (if the thread was created before July 1, 2022, it stops counting at 50).
+ * @property      int           $message_count         Number of messages (not including the initial message or deleted messages) in a thread (if the thread was created before July 1, 2022, the message count is inaccurate when it's greater than 50).
  * @property      int           $member_count          An approximate count of the number of members in the thread. Stops counting at 50.
  * @property      object        $thread_metadata       Thread-specific fields not needed by other channels.
  * @property      bool          $archived              Whether the thread has been archived.
