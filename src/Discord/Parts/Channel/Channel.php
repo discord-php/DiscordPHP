@@ -28,8 +28,11 @@ use Discord\Repository\Channel\VoiceMemberRepository as MemberRepository;
 use Discord\Repository\Channel\WebhookRepository;
 use Discord\WebSockets\Event;
 use Discord\Helpers\Deferred;
+use Discord\Helpers\Multipart;
 use Discord\Http\Endpoint;
 use Discord\Http\Exceptions\NoPermissionsException;
+use Discord\Parts\Forum\Reaction;
+use Discord\Parts\Forum\Tag;
 use Discord\Parts\Permissions\RolePermission;
 use Discord\Parts\Thread\Thread;
 use Discord\Repository\Channel\InviteRepository;
@@ -52,32 +55,36 @@ use function React\Promise\resolve;
  * @since 2.0.0 Refactored as Part
  * @since 1.0.0
  *
- * @property      string              $id                            The unique identifier of the Channel.
- * @property      int                 $type                          The type of the channel.
- * @property      string|null         $guild_id                      The unique identifier of the guild that the channel belongs to. Only for text or voice channels.
- * @property-read Guild|null          $guild                         The guild that the channel belongs to. Only for text or voice channels.
- * @property      int|null            $position                      The position of the channel on the sidebar.
- * @property      OverwriteRepository $overwrites                    Permission overwrites
- * @property      ?string|null        $name                          The name of the channel.
- * @property      ?string|null        $topic                         The topic of the channel.
- * @property      bool|null           $nsfw                          Whether the channel is NSFW.
- * @property      ?string|null        $last_message_id               The unique identifier of the last message sent in the channel (or thread for forum channels) (may not point to an existing or valid message or thread).
- * @property      int|null            $bitrate                       The bitrate of the channel. Only for voice channels.
- * @property      int|null            $user_limit                    The user limit of the channel.
- * @property      int|null            $rate_limit_per_user           Amount of seconds a user has to wait before sending a new message.
- * @property      Collection|User[]   $recipients                    A collection of all the recipients in the channel. Only for DM or group channels.
- * @property-read User|null           $recipient                     The first recipient of the channel. Only for DM or group channels.
- * @property-read string|null         $recipient_id                  The ID of the recipient of the channel, if it is a DM channel.
- * @property      ?string|null        $icon                          Icon hash.
- * @property      string|null         $owner_id                      The ID of the DM creator. Only for DM or group channels.
- * @property      string|null         $application_id                ID of the group DM creator if it is a bot.
- * @property      ?string|null        $parent_id                     ID of the parent channel.
- * @property      Carbon|null         $last_pin_timestamp            When the last message was pinned.
- * @property      ?string|null        $rtc_region                    Voice region id for the voice channel, automatic when set to null.
- * @property      int|null            $video_quality_mode            The camera video quality mode of the voice channel, 1 when not present.
- * @property      int|null            $default_auto_archive_duration Default duration for newly created threads, in minutes, to automatically archive the thread after recent activity, can be set to: 60, 1440, 4320, 10080.
- * @property      string|null         $permissions                   Computed permissions for the invoking user in the channel, including overwrites, only included when part of the resolved data received on a slash command interaction.
- * @property      int|null            $flags                         Channel flags combined as a bitfield.
+ * @property      string              $id                                 The unique identifier of the Channel.
+ * @property      int                 $type                               The type of the channel.
+ * @property      string|null         $guild_id                           The unique identifier of the guild that the channel belongs to. Only for text or voice channels.
+ * @property-read Guild|null          $guild                              The guild that the channel belongs to. Only for text or voice channels.
+ * @property      int|null            $position                           The position of the channel on the sidebar.
+ * @property      OverwriteRepository $overwrites                         Permission overwrites
+ * @property      ?string|null        $name                               The name of the channel.
+ * @property      ?string|null        $topic                              The topic of the channel (0-4096 characters for forum channels, 0-1024 characters for all others).
+ * @property      bool|null           $nsfw                               Whether the channel is NSFW.
+ * @property      ?string|null        $last_message_id                    The unique identifier of the last message sent in the channel (or thread for forum channels) (may not point to an existing or valid message or thread).
+ * @property      int|null            $bitrate                            The bitrate of the channel. Only for voice channels.
+ * @property      int|null            $user_limit                         The user limit of the channel.
+ * @property      int|null            $rate_limit_per_user                Amount of seconds a user has to wait before sending a new message.
+ * @property      Collection|User[]   $recipients                         A collection of all the recipients in the channel. Only for DM or group channels.
+ * @property-read User|null           $recipient                          The first recipient of the channel. Only for DM or group channels.
+ * @property-read string|null         $recipient_id                       The ID of the recipient of the channel, if it is a DM channel.
+ * @property      ?string|null        $icon                               Icon hash.
+ * @property      string|null         $owner_id                           The ID of the DM creator. Only for DM or group channels.
+ * @property      string|null         $application_id                     ID of the group DM creator if it is a bot.
+ * @property      ?string|null        $parent_id                          ID of the parent channel.
+ * @property      Carbon|null         $last_pin_timestamp                 When the last message was pinned.
+ * @property      ?string|null        $rtc_region                         Voice region id for the voice channel, automatic when set to null.
+ * @property      int|null            $video_quality_mode                 The camera video quality mode of the voice channel, 1 when not present.
+ * @property      int|null            $default_auto_archive_duration      Default duration for newly created threads, in minutes, to automatically archive the thread after recent activity, can be set to: 60, 1440, 4320, 10080.
+ * @property      string|null         $permissions                        Computed permissions for the invoking user in the channel, including overwrites, only included when part of the resolved data received on an application command interaction.
+ * @property      int|null            $flags                              Channel flags combined as a bitfield.
+ * @property      Collection|Tag[]    $available_tags                     Set of tags that can be used in a forum channel.
+ * @property      ?Reaction|null      $default_reaction_emoji             Emoji to show in the add reaction button on a thread in a forum channel.
+ * @property      int|null            $default_thread_rate_limit_per_user The initial rate_limit_per_user to set on newly created threads in a forum channel. this field is copied to the thread at creation time and does not live update.
+ * @property      ?int|null           $default_sort_order                 The default sort order type used to order posts in forum channels.
  *
  * @property bool                    $is_private      Whether the channel is a private channel.
  * @property MemberRepository        $members         Voice channel only - members in the channel.
@@ -127,6 +134,10 @@ class Channel extends Part
     public const VIDEO_QUALITY_FULL = 2;
 
     public const FLAG_PINNED = (1 << 1);
+    public const FLAG_REQUIRE_TAG = (1 << 4);
+
+    public const SORT_ORDER_LATEST_ACTIVITY = 0;
+    public const SORT_ORDER_CREATION_DATE = 0;
 
     /**
      * @inheritDoc
@@ -154,6 +165,10 @@ class Channel extends Part
         'default_auto_archive_duration',
         'permissions',
         'flags',
+        'available_tags',
+        'default_reaction_emoji',
+        'default_thread_rate_limit_per_user',
+        'default_sort_order',
 
         // @internal
         'is_private',
@@ -847,40 +862,115 @@ class Channel extends Part
     }
 
     /**
+     * Gets the available tags attribute.
+     *
+     * @return Collection|Tag[] Available forum tags.
+     *
+     * @since 7.4.0
+     */
+    protected function getAvailableTagsAttribute(): Collection
+    {
+        $available_tags = Collection::for(Tag::class);
+
+        foreach ($this->attributes['available_tags'] ?? [] as $available_tag) {
+            $available_tags->pushItem($this->factory->part(Tag::class, $available_tag, true));
+        }
+
+        return $available_tags;
+    }
+
+    /**
+     * Gets the default reaction emoji attribute.
+     *
+     * @return Reaction|null Default forum reaction emoji.
+     *
+     * @since 7.4.0
+     */
+    protected function getDefaultReactionEmoji(): ?Reaction
+    {
+        if (! isset($this->attributes['default_reaction_emoji'])) {
+            return null;
+        }
+
+        return $this->factory->part(Reaction::class, $this->attributes['default_reaction_emoji'], true);
+    }
+
+    /**
      * Starts a thread in the channel.
      *
      * @link https://discord.com/developers/docs/resources/channel#start-thread-without-message
      *
-     * @param string      $name                  The name of the thread.
-     * @param bool        $private               Whether the thread should be private. cannot start a private thread in a news channel channel.
-     * @param int         $auto_archive_duration Number of minutes of inactivity until the thread is auto-archived. one of 60, 1440, 4320, 10080.
-     * @param string|null $reason                Reason for Audit Log.
+     * @param array          $options                          Thread params.
+     * @param bool           $options['private']               Whether the thread should be private. cannot start a private thread in a news channel channel. Ignored in forum channel.
+     * @param string         $options['name']                  The name of the thread.
+     * @param int|null       $options['auto_archive_duration'] Number of minutes of inactivity until the thread is auto-archived. one of 60, 1440, 4320, 10080.
+     * @param bool|null      $options['invitable']             Whether non-moderators can add other non-moderators to a thread; only available when creating a private thread.
+     * @param ?int|null      $options['rate_limit_per_user']   Amount of seconds a user has to wait before sending another message (0-21600).
+     * @param MessageBuilder $options['message']               Contents of the first message in the forum thread.
+     * @param string[]|null  $options['applied_tags']          The IDs of the set of tags that have been applied to a thread in a forum channel.
+     * @param string|null    $reason                           Reason for Audit Log.
      *
      * @throws \RuntimeException
      * @throws \UnexpectedValueException `$auto_archive_duration` is not one of 60, 1440, 4320, 10080.
      *
      * @return ExtendedPromiseInterface<Thread>
+     *
+     * @since 10.0.0 Arguments for `$name`, `$private` and `$auto_archive_duration` are now inside `$options`
      */
-    public function startThread(string $name, bool $private = false, int $auto_archive_duration = 1440, ?string $reason = null): ExtendedPromiseInterface
+    public function startThread(array $options, ?string $reason = null): ExtendedPromiseInterface
     {
-        if ($private && ! $this->guild->feature_private_threads) {
+        $resolver = new OptionsResolver();
+        $resolver
+            ->setDefined([
+                'name',
+                'auto_archive_duration',
+                'rate_limit_per_user',
+            ])
+            ->setAllowedTypes('name', 'string')
+            ->setAllowedTypes('auto_archive_duration', 'int')
+            ->setAllowedTypes('rate_limit_per_user', ['null', 'int'])
+            ->setAllowedValues('auto_archive_duration', fn ($values) => in_array($values, [60, 1440, 4320, 10080]))
+            ->setAllowedValues('rate_limit_per_user', fn ($values) => $values >= 0 && $values <= 21600)
+            ->setRequired('name');
+
+        if ($this->type == self::TYPE_GUILD_FORUM) {
+            $resolver
+                ->setDefined([
+                    'message',
+                    'applied_tags',
+                ])
+                ->setAllowedTypes('message', [MessageBuilder::class])
+                ->setAllowedTypes('applied_tags', 'array') // @todo deal Tag parts
+                ->setRequired('message');
+        } else {
+            $resolver
+                ->setDefined([
+                    'private',
+                    'invitable',
+                ])
+                ->setAllowedTypes('private', 'bool')
+                ->setAllowedTypes('invitable', 'bool')
+                ->setDefaults(['private' => false]);
+        }
+
+        $options = $resolver->resolve($options);
+
+        if ($this->type != self::TYPE_GUILD_FORUM && $options['private'] && ! $this->guild->feature_private_threads) {
             return reject(new \RuntimeException('Guild does not have access to private threads.'));
         }
 
         if ($this->type == self::TYPE_GUILD_ANNOUNCEMENT) {
-            if ($private) {
+            if ($options['private']) {
                 return reject(new \RuntimeException('You cannot start a private thread within a news channel.'));
             }
 
-            $type = self::TYPE_ANNOUNCEMENT_THREAD;
+            $options['type'] = self::TYPE_ANNOUNCEMENT_THREAD;
         } elseif ($this->type == self::TYPE_GUILD_TEXT) {
-            $type = $private ? self::TYPE_PRIVATE_THREAD : self::TYPE_PUBLIC_THREAD;
+            $options['type'] = $options['private'] ? self::TYPE_PRIVATE_THREAD : self::TYPE_PUBLIC_THREAD;
+        } elseif ($this->type == self::TYPE_GUILD_FORUM) {
+            $options['type'] = self::TYPE_PUBLIC_THREAD;
         } else {
             return reject(new \RuntimeException('You cannot start a thread in this type of channel.'));
-        }
-
-        if (! in_array($auto_archive_duration, [60, 1440, 4320, 10080])) {
-            return reject(new \UnexpectedValueException('$auto_archive_duration must be one of 60, 1440, 4320, 10080.'));
         }
 
         $headers = [];
@@ -888,11 +978,21 @@ class Channel extends Part
             $headers['X-Audit-Log-Reason'] = $reason;
         }
 
-        return $this->http->post(Endpoint::bind(Endpoint::CHANNEL_THREADS, $this->id), [
-            'name' => $name,
-            'auto_archive_duration' => $auto_archive_duration,
-            'type' => $type,
-        ], $headers)->then(function ($response) {
+        unset($options['private']);
+
+        return (function () use ($options, $headers) {
+            if (isset($options['message']) && $options['message']->requiresMultipart()) {
+                /** @var Multipart */
+                $multipart = $options['message']->toMultipart();
+                unset($options['message']);
+                foreach ($options as $field => $option) {
+                    $multipart->add(['field' => $option, 'content' => $option]);
+                }
+                return $this->http->post(Endpoint::bind(Endpoint::CHANNEL_THREADS, $this->id), (string) $multipart, $multipart->getHeaders() + $headers);
+            }
+
+            return $this->http->post(Endpoint::bind(Endpoint::CHANNEL_THREADS, $this->id), $options, $headers);
+        })()->then(function ($response) {
             return $this->factory->part(Thread::class, (array) $response, true);
         });
     }
@@ -1138,7 +1238,7 @@ class Channel extends Part
      */
     public function getCreatableAttributes(): array
     {
-        return [
+        $attr = [
             'name' => $this->name,
             'type' => $this->type,
             'bitrate' => $this->bitrate,
@@ -1153,6 +1253,20 @@ class Channel extends Part
             'video_quality_mode' => $this->video_quality_mode,
             'default_auto_archive_duration' => $this->default_auto_archive_duration,
         ];
+
+        if ($attr['type'] == self::TYPE_GUILD_FORUM) {
+            if (array_key_exists('default_reaction_emoji', $this->attributes)) {
+                $attr['default_reaction_emoji'] = $this->attributes['default_reaction_emoji'];
+            }
+
+            $attr['available_tags'] = $this->attributes['available_tags'] ?? null;
+
+            if (array_key_exists('default_sort_order', $this->attributes)) {
+                $attr['default_sort_order'] = $this->default_sort_order;
+            }
+        }
+
+        return $attr;
     }
 
     /**
@@ -1162,7 +1276,7 @@ class Channel extends Part
      */
     public function getUpdatableAttributes(): array
     {
-        return [
+        $attr = [
             'name' => $this->name,
             'type' => $this->type,
             'position' => $this->position,
@@ -1179,6 +1293,22 @@ class Channel extends Part
             })->toArray()),
             'default_auto_archive_duration' => $this->default_auto_archive_duration,
         ];
+
+        if ($this->type == self::TYPE_GUILD_FORUM) {
+            $attr['flags'] = $this->flags;
+            $attr['available_tags'] = $this->attributes['available_tags'];
+            $attr['default_thread_rate_limit_per_user'] = $this->default_thread_rate_limit_per_user;
+
+            if (array_key_exists('default_reaction_emoji', $this->attributes)) {
+                $attr['default_reaction_emoji'] = $this->attributes['default_reaction_emoji'];
+            }
+
+            if (array_key_exists('default_sort_order', $this->attributes)) {
+                $attr['default_sort_order'] = $this->default_sort_order;
+            }
+        }
+
+        return $attr;
     }
 
     /**
