@@ -20,7 +20,7 @@ use React\Promise\PromiseInterface;
 use function Discord\poly_strlen;
 
 /**
- * Buttons are interactive components that render on messages.
+ * Buttons are interactive components that render in messages.
  * They can be clicked by users, and send an interaction to your app when clicked.
  *
  * @link https://discord.com/developers/docs/interactions/message-components#buttons

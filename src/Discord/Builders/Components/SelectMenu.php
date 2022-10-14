@@ -20,7 +20,7 @@ use React\Promise\PromiseInterface;
 use function Discord\poly_strlen;
 
 /**
- * Select menus are another interactive component that renders on messages.
+ * Select menus are interactive components that allow users to select one or more options from a dropdown list in messages.
  * On desktop, clicking on a select menu opens a dropdown-style UI
  * On mobile, tapping a select menu opens up a half-sheet with the options.
  *
@@ -289,7 +289,7 @@ class SelectMenu extends Component
         }
 
         $this->listener = function (Interaction $interaction) use ($callback, $oneOff) {
-            if ($interaction->data->component_type == Component::TYPE_SELECT_MENU &&
+            if ($interaction->data->component_type == Component::TYPE_TEXT_SELECT &&
                 $interaction->data->custom_id == $this->custom_id) {
                 $options = Collection::for(Option::class, null);
                 
@@ -401,7 +401,7 @@ class SelectMenu extends Component
     public function jsonSerialize(): array
     {
         $content = [
-            'type' => Component::TYPE_SELECT_MENU,
+            'type' => Component::TYPE_TEXT_SELECT,
             'custom_id' => $this->custom_id,
             'options' => $this->options,
         ];
