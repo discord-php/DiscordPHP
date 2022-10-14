@@ -40,9 +40,9 @@ class SelectMenu extends Component
     /**
      * Array of options that the select menu has.
      *
-     * @var Option[]
+     * @var Option[]|null
      */
-    private $options = [];
+    private $options;
 
     /**
      * Placeholder string to display if nothing is selected. Maximum 150 characters.
@@ -142,20 +142,24 @@ class SelectMenu extends Component
      */
     public function addOption(Option $option): self
     {
-        if (count($this->options) > 25) {
-            throw new \OverflowException('You can only have 25 options per select menu.');
-        }
-
-        $value = $option->getValue();
-
-        // didn't wanna use a hashtable here so that we can keep the order of options
-        foreach ($this->options as $other) {
-            if ($other->getValue() == $value) {
-                throw new \UnexpectedValueException('Another value already has the same value. These must not be the same.');
+        if (isset($this->options)) {
+            if (count($this->options) > 25) {
+                throw new \OverflowException('You can only have 25 options per select menu.');
             }
-        }
 
-        $this->options[] = $option;
+            $value = $option->getValue();
+
+            // didn't wanna use a hashtable here so that we can keep the order of options
+            foreach ($this->options as $other) {
+                if ($other->getValue() == $value) {
+                    throw new \UnexpectedValueException('Another value already has the same value. These must not be the same.');
+                }
+            }
+
+            $this->options[] = $option;
+        } else {
+            $this->options = [$option];
+        }
 
         return $this;
     }
@@ -169,7 +173,7 @@ class SelectMenu extends Component
      */
     public function removeOption(Option $option): self
     {
-        if (($idx = array_search($option, $this->options)) !== null) {
+        if (isset($this->options) && ($idx = array_search($option, $this->options)) !== null) {
             array_splice($this->options, $idx, 1);
         }
 
@@ -293,7 +297,7 @@ class SelectMenu extends Component
                 $interaction->data->custom_id == $this->custom_id) {
                 $options = Collection::for(Option::class, null);
                 
-                foreach ($this->options as $option) {
+                foreach ($this->options ?? [] as $option) {
                     if (in_array($option->getValue(), $interaction->data->values)) {
                         $options->pushItem($option);
                     }
@@ -348,9 +352,9 @@ class SelectMenu extends Component
     /**
      * Returns the array of options that the select menu has.
      *
-     * @return array
+     * @return array|null
      */
-    public function getOptions(): array
+    public function getOptions(): ?array
     {
         return $this->options;
     }
@@ -403,7 +407,7 @@ class SelectMenu extends Component
         $content = [
             'type' => Component::TYPE_TEXT_SELECT,
             'custom_id' => $this->custom_id,
-            'options' => $this->options,
+            'options' => $this->options ?? [],
         ];
 
         if (isset($this->placeholder)) {
@@ -411,7 +415,7 @@ class SelectMenu extends Component
         }
 
         if (isset($this->min_values)) {
-            if ($this->min_values > count($this->options)) {
+            if ($this->min_values > count($content['options'])) {
                 throw new \OutOfBoundsException('There are less options than the minimum number of options to be selected.');
             }
 
@@ -419,7 +423,7 @@ class SelectMenu extends Component
         }
 
         if ($this->max_values) {
-            if ($this->max_values > count($this->options)) {
+            if ($this->max_values > count($content['options'])) {
                 throw new \OutOfBoundsException('There are less options than the maximum number of options to be selected.');
             }
 
