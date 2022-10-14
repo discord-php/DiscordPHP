@@ -26,30 +26,25 @@ use function Discord\poly_strlen;
  *
  * @link https://discord.com/developers/docs/interactions/message-components#select-menus
  *
- * @since 7.0.0
+ * @since 10.0.0 Renamed from SelectMenu to StringSelect
  */
 class SelectMenu extends Component
 {
+    protected $type = Component::TYPE_SELECT_MENU;
+
     /**
      * Custom ID to identify the select menu.
      *
      * @var string
      */
-    private $custom_id;
-
-    /**
-     * Array of options that the select menu has.
-     *
-     * @var Option[]|null
-     */
-    private $options;
+    protected $custom_id;
 
     /**
      * Placeholder string to display if nothing is selected. Maximum 150 characters.
      *
      * @var string|null
      */
-    private $placeholder;
+    protected $placeholder;
 
     /**
      * Minimum number of options that must be selected.
@@ -57,7 +52,7 @@ class SelectMenu extends Component
      *
      * @var int|null
      */
-    private $min_values;
+    protected $min_values;
 
     /**
      * Maximum number of options that must be selected.
@@ -65,28 +60,28 @@ class SelectMenu extends Component
      *
      * @var int|null
      */
-    private $max_values;
+    protected $max_values;
 
     /**
      * Whether the select menu should be disabled.
      *
      * @var bool|null
      */
-    private $disabled;
+    protected $disabled;
 
     /**
      * Callback used to listen for `INTERACTION_CREATE` events.
      *
      * @var callable|null
      */
-    private $listener;
+    protected $listener;
 
     /**
      * Discord instance when the listener is set.
      *
      * @var Discord|null
      */
-    private $discord;
+    protected $discord;
 
     /**
      * Creates a new select menu.
@@ -124,58 +119,8 @@ class SelectMenu extends Component
         if (poly_strlen($custom_id) > 100) {
             throw new \LengthException('Custom ID must be maximum 100 characters.');
         }
-        
+
         $this->custom_id = $custom_id;
-
-        return $this;
-    }
-
-    /**
-     * Adds an option to the select menu. Maximum 25 options.
-     *
-     * @param Option $option Option to add.
-     *
-     * @throws \OverflowException
-     * @throws \UnexpectedValueException
-     *
-     * @return self
-     */
-    public function addOption(Option $option): self
-    {
-        if (isset($this->options)) {
-            if (count($this->options) > 25) {
-                throw new \OverflowException('You can only have 25 options per select menu.');
-            }
-
-            $value = $option->getValue();
-
-            // didn't wanna use a hashtable here so that we can keep the order of options
-            foreach ($this->options as $other) {
-                if ($other->getValue() == $value) {
-                    throw new \UnexpectedValueException('Another value already has the same value. These must not be the same.');
-                }
-            }
-
-            $this->options[] = $option;
-        } else {
-            $this->options = [$option];
-        }
-
-        return $this;
-    }
-
-    /**
-     * Removes an option from the select menu.
-     *
-     * @param Option $option Option to remove.
-     *
-     * @return self
-     */
-    public function removeOption(Option $option): self
-    {
-        if (isset($this->options) && ($idx = array_search($option, $this->options)) !== null) {
-            array_splice($this->options, $idx, 1);
-        }
 
         return $this;
     }
@@ -279,6 +224,8 @@ class SelectMenu extends Component
      * @param bool     $oneOff   Whether the listener should be removed after the selection is changed for the first time.
      *
      * @return self
+     *
+     * @todo setListener callback return for each type.
      */
     public function setListener(?callable $callback, Discord $discord, bool $oneOff = false): self
     {
@@ -293,10 +240,10 @@ class SelectMenu extends Component
         }
 
         $this->listener = function (Interaction $interaction) use ($callback, $oneOff) {
-            if ($interaction->data->component_type == Component::TYPE_TEXT_SELECT &&
+            if ($interaction->data->component_type == $this->type &&
                 $interaction->data->custom_id == $this->custom_id) {
                 $options = Collection::for(Option::class, null);
-                
+
                 foreach ($this->options ?? [] as $option) {
                     if (in_array($option->getValue(), $interaction->data->values)) {
                         $options->pushItem($option);
@@ -350,16 +297,6 @@ class SelectMenu extends Component
     }
 
     /**
-     * Returns the array of options that the select menu has.
-     *
-     * @return array|null
-     */
-    public function getOptions(): ?array
-    {
-        return $this->options;
-    }
-
-    /**
      * Returns the placeholder string of the select menu.
      *
      * @return string|null
@@ -405,17 +342,24 @@ class SelectMenu extends Component
     public function jsonSerialize(): array
     {
         $content = [
-            'type' => Component::TYPE_TEXT_SELECT,
+            'type' => $this->type,
             'custom_id' => $this->custom_id,
-            'options' => $this->options ?? [],
         ];
+
+        if (isset($this->options)) {
+            $content['options'] = $this->options;
+        }
+
+        if (isset($this->channel_types)) {
+            $content['channel_types'] = $this->channel_types;
+        }
 
         if (isset($this->placeholder)) {
             $content['placeholder'] = $this->placeholder;
         }
 
         if (isset($this->min_values)) {
-            if ($this->min_values > count($content['options'])) {
+            if (isset($this->options) && $this->min_values > count($this->options)) {
                 throw new \OutOfBoundsException('There are less options than the minimum number of options to be selected.');
             }
 
@@ -423,7 +367,7 @@ class SelectMenu extends Component
         }
 
         if ($this->max_values) {
-            if ($this->max_values > count($content['options'])) {
+            if (isset($this->options) && $this->max_values > count($this->options)) {
                 throw new \OutOfBoundsException('There are less options than the maximum number of options to be selected.');
             }
 

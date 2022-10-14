@@ -24,14 +24,14 @@ abstract class Component implements JsonSerializable
 {
     public const TYPE_ACTION_ROW = 1;
     public const TYPE_BUTTON = 2;
-    public const TYPE_TEXT_SELECT = 3;
+    public const TYPE_STRING_SELECT = 3;
     public const TYPE_TEXT_INPUT = 4;
     public const TYPE_USER_SELECT = 5;
     public const TYPE_ROLE_SELECT = 6;
     public const TYPE_MENTIONABLE_SELECT = 7;
     public const TYPE_CHANNEL_SELECT = 8;
 
-    /** @deprecated 7.4.0 Use `Component::TYPE_TEXT_SELECT` */
+    /** @deprecated 7.4.0 Use `Component::TYPE_STRING_SELECT` */
     public const TYPE_SELECT_MENU = 3;
 
     /**
