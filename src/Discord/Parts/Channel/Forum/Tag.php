@@ -9,7 +9,7 @@
  * with this source code in the LICENSE.md file.
  */
 
-namespace Discord\Parts\Forum;
+namespace Discord\Parts\Channel\Forum;
 
 use Discord\Parts\Part;
 
