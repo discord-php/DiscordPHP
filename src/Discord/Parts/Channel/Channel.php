@@ -983,11 +983,14 @@ class Channel extends Part
         return (function () use ($options, $headers) {
             if (isset($options['message']) && $options['message']->requiresMultipart()) {
                 /** @var Multipart */
-                $multipart = $options['message']->toMultipart();
-                unset($options['message']);
-                foreach ($options as $field => $option) {
-                    $multipart->add(['field' => $option, 'content' => $option]);
-                }
+                $multipart = $options['message']->toMultipart(false);
+                $multipart->add([
+                    'name' => 'payload_json',
+                    'content' => json_encode($options),
+                    'headers' => [
+                        'Content-Type' => 'application/json',
+                    ],
+                ]);
                 return $this->http->post(Endpoint::bind(Endpoint::CHANNEL_THREADS, $this->id), (string) $multipart, $multipart->getHeaders() + $headers);
             }
 
