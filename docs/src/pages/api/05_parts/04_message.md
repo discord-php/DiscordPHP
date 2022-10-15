@@ -43,7 +43,7 @@ Messages are present in channels and can be anything from a cross post to a repl
 | flags                                  | int                                      | message flags, see below 5 properties                                                              |
 | crossposted                            | bool                                     | whether the message has been crossposted                                                           |
 | is_crosspost                           | bool                                     | whether the message is a crosspost                                                                 |
-| suppress_emeds                         | bool                                     | whether embeds have been supressed                                                                 |
+| suppress_embeds                         | bool                                     | whether embeds have been supressed                                                                 |
 | source_message_deleted                 | bool                                     | whether the source message has been deleted e.g. crosspost                                         |
 | urgent                                 | bool                                     | whether message is urgent                                                                          |
 | has_thread                             | bool                                     | whether this message has an associated thread, with the same id as the message                     |
