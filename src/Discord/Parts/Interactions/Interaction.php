@@ -560,7 +560,7 @@ class Interaction extends Part
      * @link https://discord.com/developers/docs/interactions/receiving-and-responding#responding-to-an-interaction
      *
      * @param string            $title      The title of the popup modal, max 45 characters
-     * @param string            $custom_id  A developer-defined identifier for the component, max 100 characters
+     * @param string            $custom_id  Developer-defined identifier for the component, max 100 characters
      * @param array|Component[] $components Between 1 and 5 (inclusive) components that make up the modal contained in Action Row
      * @param callable|null     $submit     The function to call once modal is submitted.
      *
