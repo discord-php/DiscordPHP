@@ -26,12 +26,10 @@ use function Discord\poly_strlen;
  *
  * @link https://discord.com/developers/docs/interactions/message-components#select-menus
  *
- * @since 10.0.0 Renamed from SelectMenu to StringSelect
+ * @since 10.0.0 Renamed from SelectMenu to StringSelect and made SelectMenu abstract
  */
-class SelectMenu extends Component
+abstract class SelectMenu extends Component
 {
-    protected $type = Component::TYPE_SELECT_MENU;
-
     /**
      * Custom ID to identify the select menu.
      *
@@ -98,11 +96,11 @@ class SelectMenu extends Component
      *
      * @param string|null $custom_id The custom ID of the select menu.
      *
-     * @return self
+     * @return static
      */
     public static function new(?string $custom_id = null): self
     {
-        return new self($custom_id);
+        return new static($custom_id);
     }
 
     /**
@@ -242,15 +240,19 @@ class SelectMenu extends Component
         $this->listener = function (Interaction $interaction) use ($callback, $oneOff) {
             if ($interaction->data->component_type == $this->type &&
                 $interaction->data->custom_id == $this->custom_id) {
-                $options = Collection::for(Option::class, null);
+                if (empty($this->options)) {
+                    $response = $callback($interaction);
+                } else {
+                    $options = Collection::for(Option::class, null);
 
-                foreach ($this->options ?? [] as $option) {
-                    if (in_array($option->getValue(), $interaction->data->values)) {
-                        $options->pushItem($option);
+                    foreach ($this->options as $option) {
+                        if (in_array($option->getValue(), $interaction->data->values)) {
+                            $options->pushItem($option);
+                        }
                     }
-                }
 
-                $response = $callback($interaction, $options);
+                    $response = $callback($interaction, $options);
+                }
                 $ack = function () use ($interaction) {
                     // attempt to acknowledge interaction if it has not already been responded to.
                     try {
