@@ -5,14 +5,23 @@
         xmlns="https://www.phpdoc.org"
         xsi:noNamespaceSchemaLocation="https://docs.phpdoc.org/latest/phpdoc.xsd"
 >
+	<title>DiscordPHP Documentation</title>
 	<paths>
-		<output>build/reference</output>
+		<output>build</output>
 	</paths>
 	<version number="latest">
 		<api>
 			<source dsn=".">
 				<path>src</path>
 			</source>
+			<output>reference</output>
 		</api>
+		<guide>
+			<source dsn=".">
+				<path>guide</path>
+			</source>
+			<output>guide</output>
+		</guide>
 	</version>
+	<setting name="guides.enabled" value="true"/>
 </phpdocumentor>
