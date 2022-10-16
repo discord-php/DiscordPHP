@@ -119,7 +119,6 @@ class Channel extends Part
         'type',
         'guild_id',
         'position',
-        'permission_overwrites',
         'name',
         'topic',
         'nsfw',
@@ -152,6 +151,18 @@ class Channel extends Part
         'threads' => ThreadRepository::class,
         'invites' => InviteRepository::class,
     ];
+
+    /**
+     * @inheritDoc
+     */
+    public function fill(array $attributes): void
+    {
+        parent::fill($attributes);
+
+        if (isset($attributes['permission_overwrites'])) {
+            $this->setPermissionOverwritesAttribute($attributes['permission_overwrites']);
+        }
+    }
 
     /**
      * @inheritdoc
@@ -816,19 +827,15 @@ class Channel extends Part
     /**
      * Sets the permission overwrites attribute.
      *
-     * @param array $overwrites
+     * @param ?array $overwrites
      */
-    protected function setPermissionOverwritesAttribute(array $overwrites): void
+    protected function setPermissionOverwritesAttribute(?array $overwrites): void
     {
         $this->attributes['permission_overwrites'] = $overwrites;
 
-        if (! is_null($overwrites)) {
-            foreach ($overwrites as $overwrite) {
-                $overwrite = (array) $overwrite;
-                $overwrite['channel_id'] = $this->id;
-
-                $this->overwrites->pushItem($this->factory->create(Overwrite::class, $overwrite, true));
-            }
+        foreach ($overwrites ?? [] as $overwrite) {
+            $overwrite = (array) $overwrite + ['channel_id' => $this->id];
+            $this->overwrites->pushItem($this->factory->create(Overwrite::class, $overwrite, true));
         }
     }
 
