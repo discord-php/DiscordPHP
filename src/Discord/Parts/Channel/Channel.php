@@ -873,7 +873,7 @@ class Channel extends Part
         $available_tags = Collection::for(Tag::class);
 
         foreach ($this->attributes['available_tags'] ?? [] as $available_tag) {
-            $available_tags->pushItem($this->factory->part(Tag::class, $available_tag, true));
+            $available_tags->pushItem($this->factory->part(Tag::class, (array) $available_tag, true));
         }
 
         return $available_tags;
@@ -886,13 +886,13 @@ class Channel extends Part
      *
      * @since 7.4.0
      */
-    protected function getDefaultReactionEmoji(): ?Reaction
+    protected function getDefaultReactionEmojiAttribute(): ?Reaction
     {
         if (! isset($this->attributes['default_reaction_emoji'])) {
             return null;
         }
 
-        return $this->factory->part(Reaction::class, $this->attributes['default_reaction_emoji'], true);
+        return $this->factory->part(Reaction::class, (array) $this->attributes['default_reaction_emoji'], true);
     }
 
     /**
