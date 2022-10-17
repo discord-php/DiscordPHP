@@ -196,11 +196,7 @@ class Resolved extends Part
                 }
             }
 
-            if (! $messagePart) {
-                $messagePart = $this->factory->part(Message::class, (array) $message, true);
-            }
-
-            $collection->pushItem($messagePart);
+            $collection->pushItem($messagePart ?? $this->factory->part(Message::class, (array) $message, true));
         }
 
         return $collection;
