@@ -913,7 +913,7 @@ class Channel extends Part
      * @throws \RuntimeException
      * @throws \UnexpectedValueException `$auto_archive_duration` is not one of 60, 1440, 4320, 10080.
      *
-     * @return ExtendedPromiseInterface<Thread>
+     * @return ExtendedPromiseInterface<array<Thread,Message>>
      *
      * @since 10.0.0 Arguments for `$name`, `$private` and `$auto_archive_duration` are now inside `$options`
      */
@@ -996,7 +996,10 @@ class Channel extends Part
 
             return $this->http->post(Endpoint::bind(Endpoint::CHANNEL_THREADS, $this->id), $options, $headers);
         })()->then(function ($response) {
-            return $this->factory->part(Thread::class, (array) $response, true);
+            return [
+                'thread' => $this->factory->part(Thread::class, (array) $response, true),
+                'message' => $this->factory->part(Message::class, (array) $response->message, true),
+            ];
         });
     }
 
