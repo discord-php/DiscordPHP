@@ -52,9 +52,7 @@ class InteractionCreate extends Event
         if ($data->type == InteractionType::APPLICATION_COMMAND) {
             $command = $data->data;
             if (isset($this->discord->application_commands[$command->name])) {
-                if ($this->discord->application_commands[$command->name]->execute($command->options ?? [], $interaction)) {
-                    return;
-                }
+                $this->discord->application_commands[$command->name]->execute($command->options ?? [], $interaction);
             }
         } elseif ($data->type == InteractionType::APPLICATION_COMMAND_AUTOCOMPLETE) {
             $command = $data->data;
@@ -75,9 +73,7 @@ class InteractionCreate extends Event
 
                     return false;
                 };
-                if ($checkCommand($this->discord->application_commands[$command->name], $command->options)) {
-                    return;
-                }
+                $checkCommand($this->discord->application_commands[$command->name], $command->options);
             }
         }
 
