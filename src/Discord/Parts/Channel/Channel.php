@@ -940,8 +940,17 @@ class Channel extends Part
                     'applied_tags',
                 ])
                 ->setAllowedTypes('message', [MessageBuilder::class])
-                ->setAllowedTypes('applied_tags', 'array') // @todo deal Tag parts
-                ->setRequired('message');
+                ->setAllowedTypes('applied_tags', 'array')
+                ->setRequired('message')
+                ->setNormalizer('applied_tags', function ($options, $values) {
+                    foreach ($values as &$value) {
+                        if ($value instanceof Tag) {
+                            $value = $value->id;
+                        }
+                    }
+
+                    return $values;
+                });
         } else {
             $resolver
                 ->setDefined([
