@@ -16,7 +16,7 @@ use Discord\Parts\Guild\AutoModeration\Rule;
 use Discord\Parts\Guild\Guild;
 
 /**
- * @link https://discord.com/developers/docs/topics/gateway#auto-moderation-rule-delete
+ * @link https://discord.com/developers/docs/topics/gateway-events#auto-moderation-rule-delete
  *
  * @since 7.1.0
  */

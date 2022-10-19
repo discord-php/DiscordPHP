@@ -14,7 +14,7 @@ namespace Discord\WebSockets\Events;
 use Discord\WebSockets\Event;
 
 /**
- * @link https://discord.com/developers/docs/topics/gateway#guild-scheduled-event-user-add
+ * @link https://discord.com/developers/docs/topics/gateway-events#guild-scheduled-event-user-add
  *
  * @since 7.0.0
  */

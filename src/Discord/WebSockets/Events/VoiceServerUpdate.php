@@ -15,7 +15,7 @@ use Discord\Parts\WebSockets\VoiceServerUpdate as VoiceServerUpdatePart;
 use Discord\WebSockets\Event;
 
 /**
- * @link https://discord.com/developers/docs/topics/gateway#voice-server-update
+ * @link https://discord.com/developers/docs/topics/gateway-events#voice-server-update
  *
  * @since 4.0.0
  */

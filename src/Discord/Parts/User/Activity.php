@@ -18,7 +18,7 @@ use Discord\Parts\Part;
 /**
  * The Activity part describes activities the member is undertaking.
  *
- * @link https://discord.com/developers/docs/topics/gateway#activity-object
+ * @link https://discord.com/developers/docs/topics/gateway-events#activity-object
  *
  * @since 5.0.0 Renamed from Game to Activity
  * @since 3.2.2

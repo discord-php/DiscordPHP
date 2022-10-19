@@ -17,7 +17,7 @@ use Discord\Parts\Channel\Invite;
 use Discord\Parts\Guild\Guild;
 
 /**
- * @link https://discord.com/developers/docs/topics/gateway#invite-delete
+ * @link https://discord.com/developers/docs/topics/gateway-events#invite-delete
  *
  * @since 5.0.0
  */

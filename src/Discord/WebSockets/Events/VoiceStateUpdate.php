@@ -17,7 +17,7 @@ use Discord\Parts\Channel\Channel;
 use Discord\Parts\Guild\Guild;
 
 /**
- * @link https://discord.com/developers/docs/topics/gateway#voice-state-update
+ * @link https://discord.com/developers/docs/topics/gateway-events#voice-state-update
  *
  * @since 2.1.3
  */

@@ -15,7 +15,7 @@ use Discord\Parts\Channel\Channel;
 use Discord\WebSockets\Event;
 
 /**
- * @link https://discord.com/developers/docs/topics/gateway#channel-delete
+ * @link https://discord.com/developers/docs/topics/gateway-events#channel-delete
  *
  * @since 2.1.3
  */

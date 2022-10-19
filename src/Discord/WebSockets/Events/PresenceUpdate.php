@@ -17,7 +17,7 @@ use Discord\Parts\Guild\Guild;
 use Discord\Parts\User\Member;
 
 /**
- * @link https://discord.com/developers/docs/topics/gateway#presence-update
+ * @link https://discord.com/developers/docs/topics/gateway-events#presence-update
  *
  * @since 2.1.3
  */

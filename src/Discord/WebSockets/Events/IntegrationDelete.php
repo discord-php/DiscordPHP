@@ -15,7 +15,7 @@ use Discord\WebSockets\Event;
 use Discord\Parts\Guild\Integration;
 
 /**
- * @link https://discord.com/developers/docs/topics/gateway#integration-delete
+ * @link https://discord.com/developers/docs/topics/gateway-events#integration-delete
  *
  * @since 7.0.0
  */

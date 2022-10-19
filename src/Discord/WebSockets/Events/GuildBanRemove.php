@@ -15,7 +15,7 @@ use Discord\Parts\Guild\Ban;
 use Discord\WebSockets\Event;
 
 /**
- * @link https://discord.com/developers/docs/topics/gateway#guild-ban-remove
+ * @link https://discord.com/developers/docs/topics/gateway-events#guild-ban-remove
  *
  * @since 2.1.3
  */

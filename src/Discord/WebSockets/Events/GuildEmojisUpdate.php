@@ -17,7 +17,7 @@ use Discord\Parts\Guild\Emoji;
 use Discord\Parts\Guild\Guild;
 
 /**
- * @link https://discord.com/developers/docs/topics/gateway#guild-emojis-update
+ * @link https://discord.com/developers/docs/topics/gateway-events#guild-emojis-update
  *
  * @since 7.0.0
  */

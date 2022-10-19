@@ -15,7 +15,7 @@ use Discord\WebSockets\Event;
 use Discord\Parts\User\User;
 
 /**
- * @link https://discord.com/developers/docs/topics/gateway#user-update
+ * @link https://discord.com/developers/docs/topics/gateway-events#user-update
  *
  * @since 7.0.0
  */
