@@ -91,8 +91,19 @@ Called with an old ``Thread`` object when a thread relevant to the Bot is delete
 
 .. code:: php
 
-   $discord->on(Event::THREAD_DELETE, function (?Thread $thread, Discord $discord) {
-       // ...
+   $discord->on(Event::THREAD_DELETE, function (object $thread, Discord $discord) {
+       if ($thread instanceof Thread) {
+           // $thread was cached
+       }
+       // $thread was not in cache:
+       else {
+       // {
+       //     "type": 0,
+       //     "id": "",
+       //     "guild_id": "",
+       //     "parent_id": ""
+       // }
+       }
    });
 
 Thread List Sync
