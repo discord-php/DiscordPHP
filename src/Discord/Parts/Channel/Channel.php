@@ -940,8 +940,17 @@ class Channel extends Part
                     'applied_tags',
                 ])
                 ->setAllowedTypes('message', [MessageBuilder::class])
-                ->setAllowedTypes('applied_tags', 'array') // @todo deal Tag parts
-                ->setRequired('message');
+                ->setAllowedTypes('applied_tags', 'array')
+                ->setRequired('message')
+                ->setNormalizer('applied_tags', function ($options, $values) {
+                    foreach ($values as &$value) {
+                        if ($value instanceof Tag) {
+                            $value = $value->id;
+                        }
+                    }
+
+                    return $values;
+                });
         } else {
             $resolver
                 ->setDefined([
@@ -996,7 +1005,20 @@ class Channel extends Part
 
             return $this->http->post(Endpoint::bind(Endpoint::CHANNEL_THREADS, $this->id), $options, $headers);
         })()->then(function ($response) {
-            return $this->factory->part(Thread::class, (array) $response, true);
+            /** @var ?Thread */
+            if (! $threadPart = $this->threads->offsetGet($response->id)) {
+                /** @var Thread */
+                $threadPart = $this->factory->part(Thread::class, (array) $response, true);
+            }
+            if ($messageId = ($response->message->id ?? null)) {
+                /** @var ?Message */
+                if (! $threadPart->messages->offsetExists($messageId)) {
+                    // Don't store in the external cache
+                    $threadPart->messages->offsetSet($messageId, $this->factory->part(Message::class, (array) $response->message, true));
+                }
+            }
+
+            return $threadPart;
         });
     }
 
