@@ -17,7 +17,7 @@ use Discord\WebSockets\Event;
 use Discord\Parts\Guild\Guild;
 
 /**
- * @link https://discord.com/developers/docs/topics/gateway#stage-instance-delete
+ * @link https://discord.com/developers/docs/topics/gateway-events#stage-instance-delete
  *
  * @since 7.0.0
  */

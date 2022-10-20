@@ -22,7 +22,7 @@ use Discord\Parts\User\User;
 /**
  * Sent when a rule is triggered and an action is executed (e.g. when a message is blocked).
  *
- * @link https://discord.com/developers/docs/topics/gateway#auto-moderation-action-execution-auto-moderation-action-execution-event-fields
+ * @link https://discord.com/developers/docs/topics/gateway-events#auto-moderation-action-execution-auto-moderation-action-execution-event-fields
  *
  * @since 7.1.0
  *

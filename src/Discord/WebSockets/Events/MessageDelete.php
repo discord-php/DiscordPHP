@@ -17,7 +17,7 @@ use Discord\Parts\Channel\Message;
 use Discord\Parts\Guild\Guild;
 
 /**
- * @link https://discord.com/developers/docs/topics/gateway#message-delete
+ * @link https://discord.com/developers/docs/topics/gateway-events#message-delete
  *
  * @since 2.1.3
  */

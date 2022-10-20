@@ -24,7 +24,7 @@ use Discord\Parts\User\User;
  *
  * @since 2.1.3
  *
- * @link https://discord.com/developers/docs/topics/gateway#typing-start
+ * @link https://discord.com/developers/docs/topics/gateway-events#typing-start
  *
  * @property      string              $channel_id The unique identifier of the channel that the user started typing in.
  * @property-read Channel|Thread|null $channel    The channel that the user started typing in.

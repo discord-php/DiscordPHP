@@ -4,11 +4,11 @@ title: "Intro"
 
 DiscordPHP is a wrapper for the Discord REST, WebSocket and Voice APIs. Built on top of [ReactPHP](https://reactphp.org/) components. This documentation is based off the latest release.
 
-The class reference has moved. You can now access it [here](http://discord-php.github.io/DiscordPHP/reference/).
+This documentation page will be moved to class reference. You can now access it [here](http://discord-php.github.io/DiscordPHP/guide/).
 
 ### Requirements
 
-- PHP 7.4 CLI
+- PHP 8.0 CLI
     - Will not run on a webserver (FPM, CGI), you must run through CLI. A bot is a long-running process.
     - x86 (32-bit) PHP requires ext-gmp extension enabled for handling new Permission values.
 - `ext-json` for JSON parsing.

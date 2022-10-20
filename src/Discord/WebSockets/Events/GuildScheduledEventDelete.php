@@ -16,7 +16,7 @@ use Discord\Parts\Guild\Guild;
 use Discord\Parts\Guild\ScheduledEvent;
 
 /**
- * @link https://discord.com/developers/docs/topics/gateway#guild-scheduled-event-delete
+ * @link https://discord.com/developers/docs/topics/gateway-events#guild-scheduled-event-delete
  *
  * @since 7.0.0
  */

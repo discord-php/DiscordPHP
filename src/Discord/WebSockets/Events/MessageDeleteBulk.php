@@ -15,7 +15,7 @@ use Discord\Helpers\Collection;
 use Discord\WebSockets\Event;
 
 /**
- * @link https://discord.com/developers/docs/topics/gateway#message-delete-bulk
+ * @link https://discord.com/developers/docs/topics/gateway-events#message-delete-bulk
  *
  * @since 4.0.0
  */

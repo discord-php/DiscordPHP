@@ -16,7 +16,7 @@ use Discord\Parts\Guild\Guild;
 use Discord\WebSockets\Event;
 
 /**
- * @link https://discord.com/developers/docs/topics/gateway#thread-delete
+ * @link https://discord.com/developers/docs/topics/gateway-events#thread-delete
  *
  * @since 7.0.0
  */

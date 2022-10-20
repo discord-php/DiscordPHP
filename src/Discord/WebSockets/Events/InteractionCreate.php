@@ -17,7 +17,7 @@ use Discord\Parts\User\User;
 use Discord\WebSockets\Event;
 
 /**
- * @link https://discord.com/developers/docs/topics/gateway#interaction-create
+ * @link https://discord.com/developers/docs/topics/gateway-events#interaction-create
  *
  * @since 6.0.0
  */

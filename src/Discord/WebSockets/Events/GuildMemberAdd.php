@@ -16,7 +16,7 @@ use Discord\WebSockets\Event;
 use Discord\Parts\Guild\Guild;
 
 /**
- * @link https://discord.com/developers/docs/topics/gateway#guild-member-add
+ * @link https://discord.com/developers/docs/topics/gateway-events#guild-member-add
  *
  * @since 2.1.3
  */

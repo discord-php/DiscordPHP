@@ -17,7 +17,7 @@ use Discord\Parts\Guild\Guild;
 use Discord\Parts\Guild\Sticker;
 
 /**
- * @link https://discord.com/developers/docs/topics/gateway#guild-stickers-update
+ * @link https://discord.com/developers/docs/topics/gateway-events#guild-stickers-update
  *
  * @since 7.0.0
  */

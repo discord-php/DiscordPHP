@@ -16,7 +16,7 @@ use Discord\Parts\Guild\Guild;
 use Discord\Parts\Guild\ScheduledEvent;
 
 /**
- * @link https://discord.com/developers/docs/topics/gateway#guild-scheduled-event-update
+ * @link https://discord.com/developers/docs/topics/gateway-events#guild-scheduled-event-update
  *
  * @since 7.0.0
  */

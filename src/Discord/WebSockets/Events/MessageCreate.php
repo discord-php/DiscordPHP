@@ -19,7 +19,7 @@ use Discord\Parts\Thread\Thread;
 use Discord\WebSockets\Intents;
 
 /**
- * @link https://discord.com/developers/docs/topics/gateway#message-create
+ * @link https://discord.com/developers/docs/topics/gateway-events#message-create
  *
  * @since 2.1.3
  */

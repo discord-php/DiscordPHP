@@ -14,7 +14,7 @@ namespace Discord\WebSockets\Events;
 use Discord\WebSockets\Event;
 
 /**
- * @link https://discord.com/developers/docs/topics/gateway#channel-pins-update
+ * @link https://discord.com/developers/docs/topics/gateway-events#channel-pins-update
  *
  * @since 4.0.4
  */

@@ -14,7 +14,7 @@ namespace Discord\WebSockets\Events;
 use Discord\WebSockets\Event;
 
 /**
- * @link https://discord.com/developers/docs/topics/gateway#guild-delete
+ * @link https://discord.com/developers/docs/topics/gateway-events#guild-delete
  *
  * @since 2.1.3
  */
