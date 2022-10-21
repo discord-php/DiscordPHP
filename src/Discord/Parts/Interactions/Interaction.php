@@ -512,7 +512,7 @@ class Interaction extends Part
     }
 
     /**
-     * Deletes a non ephemeral follow up message.
+     * Deletes a follow up message.
      *
      * @link https://discord.com/developers/docs/interactions/receiving-and-responding#delete-followup-message
      *
