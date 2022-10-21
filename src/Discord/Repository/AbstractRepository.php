@@ -683,7 +683,7 @@ abstract class AbstractRepository extends Collection
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function jsonSerialize(): array
     {

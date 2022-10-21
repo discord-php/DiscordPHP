@@ -49,7 +49,7 @@ class Overwrite extends Part
     /**
      * Sets the allow attribute of the role.
      *
-     * @param  ChannelPermission|int $allow
+     * @param ChannelPermission|int $allow
      */
     protected function setAllowAttribute($allow): void
     {
@@ -63,7 +63,7 @@ class Overwrite extends Part
     /**
      * Sets the deny attribute of the role.
      *
-     * @param  ChannelPermission|int $deny
+     * @param ChannelPermission|int $deny
      */
     protected function setDenyAttribute($deny): void
     {
@@ -100,7 +100,7 @@ class Overwrite extends Part
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function getRawAttributes(): array
     {

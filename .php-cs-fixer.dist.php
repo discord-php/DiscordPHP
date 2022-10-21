@@ -50,7 +50,6 @@ $fixers = [
     'phpdoc_no_package',
     'phpdoc_scalar',
     'phpdoc_summary',
-    'phpdoc_to_comment',
     'phpdoc_trim',
     'phpdoc_var_without_name',
     'no_leading_import_slash',
@@ -98,5 +97,6 @@ return $config
     ->setRules($rules)
     ->setFinder(
         PhpCsFixer\Finder::create()
+            ->exclude('examples')
             ->in(__DIR__)
     );

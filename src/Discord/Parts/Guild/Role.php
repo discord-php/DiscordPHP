@@ -193,7 +193,7 @@ class Role extends Part
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function getRawAttributes(): array
     {
