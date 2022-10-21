@@ -1010,10 +1010,13 @@ class Channel extends Part
             return $this->http->post(Endpoint::bind(Endpoint::CHANNEL_THREADS, $this->id), $options, $headers);
         })()->then(function ($response) {
             /** @var ?Thread */
-            if (! $threadPart = $this->threads->get('id', $response->id)) {
+            if ($threadPart = $this->threads->offsetGet('id', $response->id)) {
+                $threadPart->fill((array) $response);
+            } else {
                 /** @var Thread */
                 $threadPart = $this->factory->part(Thread::class, (array) $response, true);
             }
+            $this->threads->pushItem($threadPart);
             if ($messageId = ($response->message->id ?? null)) {
                 /** @var ?Message */
                 if (! $threadPart->messages->offsetExists($messageId)) {

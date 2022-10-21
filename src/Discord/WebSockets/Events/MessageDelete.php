@@ -15,6 +15,7 @@ use Discord\WebSockets\Event;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Channel\Message;
 use Discord\Parts\Guild\Guild;
+use Discord\Parts\Thread\Thread;
 
 /**
  * @link https://discord.com/developers/docs/topics/gateway-events#message-delete
@@ -39,10 +40,16 @@ class MessageDelete extends Event
         } else {
             /** @var ?Guild */
             if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
-                /** @var ?Channel */
+                /** @var ?Channel|Thread */
                 if ($channel = yield $guild->channels->cacheGet($data->channel_id)) {
                     /** @var ?Message */
                     $messagePart = yield $channel->messages->cachePull($data->id);
+
+                    if ($channel instanceof Thread && $parent = $channel->parent) {
+                        if ($parent->type == Channel::TYPE_GUILD_FORUM) {
+                            $channel->message_count--;
+                        }
+                    }
                 }
             }
         }

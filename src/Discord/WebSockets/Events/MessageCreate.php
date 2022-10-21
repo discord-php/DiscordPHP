@@ -55,6 +55,8 @@ class MessageCreate extends Event
                     if ($channel instanceof Thread && $parent = $channel->parent) {
                         if ($parent->type == Channel::TYPE_GUILD_FORUM) {
                             $parent->last_message_id = $data->id;
+                            $channel->message_count++;
+                            $channel->total_message_sent++;
                         }
                     }
                 }
