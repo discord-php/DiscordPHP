@@ -422,6 +422,7 @@ final class CacheWrapper
             $tmp = unserialize($value);
             if ($tmp === false) {
                 $this->discord->getLogger()->error('Malformed cache serialization', ['class' => $this->class, 'interface' => get_class($this->interface), 'serialized' => $value]);
+
                 return null;
             }
             $value = $tmp;

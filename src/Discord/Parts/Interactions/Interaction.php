@@ -154,6 +154,7 @@ class Interaction extends Part
                 if ($member = $guild->members->get('id', $this->attributes['member']->user->id)) {
                     // @todo Temporary workaround until member is cached from INTERACTION_CREATE event
                     $member->permissions = $this->attributes['member']->permissions;
+
                     return $member;
                 }
             }

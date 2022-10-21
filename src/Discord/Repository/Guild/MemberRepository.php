@@ -16,7 +16,6 @@ use Discord\Http\Endpoint;
 use Discord\Parts\User\Member;
 use Discord\Repository\AbstractRepository;
 use React\Promise\ExtendedPromiseInterface;
-use React\Promise\PromiseInterface;
 
 /**
  * Contains members of a guild.

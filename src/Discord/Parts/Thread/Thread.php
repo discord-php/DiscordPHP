@@ -29,7 +29,6 @@ use Discord\Repository\Thread\MemberRepository;
 use Discord\WebSockets\Event;
 use React\Promise\ExtendedPromiseInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Traversable;
 
 use function React\Promise\all;
 use function React\Promise\reject;
