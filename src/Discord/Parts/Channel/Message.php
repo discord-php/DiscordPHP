@@ -985,6 +985,11 @@ class Message extends Part
             ->addEmbed($embed));
     }
 
+    /**
+     * Whether this type of message can be deleted (not due to permission).
+     *
+     * @return bool true if this message can be deleted.
+     */
     public function isDeletable(): bool
     {
         return ! in_array($this->type, [
