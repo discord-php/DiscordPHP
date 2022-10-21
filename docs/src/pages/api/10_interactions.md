@@ -51,4 +51,4 @@ otherwise throws a `RuntimeException` "Interaction has not been responded to."
 | `sendFollowUpMessage(MessageBuilder $builder, ?bool $ephemeral)`     | sends a follow up message to the interaction. ephemeral is defalt false                        | `Promise<Message>` |
 | `getFollowUpMessage(string $message_id)`                             | gets a non ephemeral follow up message from the interaction                                    | `Promise<Message>` |
 | `updateFollowUpMessage(string $message_id, MessageBuilder $builder)` | updates the follow up message of the interaction                                               | `Promise<Message>` |
-| `deleteFollowUpMessage(string $message_id)`                          | deletes a non ephemeral follow up message from the interaction                                 | `Promise<void>`    |
+| `deleteFollowUpMessage(string $message_id)`                          | deletes a follow up message from the interaction                                               | `Promise<void>`    |

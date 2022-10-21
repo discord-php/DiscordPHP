@@ -81,5 +81,5 @@ The following functions can be only used after interaction respond above, otherw
 +------------------------------------------------------------------------+------------------------------------------------------------------------------------------------+----------------------+
 | ``updateFollowUpMessage(string $message_id, MessageBuilder $builder)`` | updates the follow up message of the interaction                                               | ``Promise<Message>`` |
 +------------------------------------------------------------------------+------------------------------------------------------------------------------------------------+----------------------+
-| ``deleteFollowUpMessage(string $message_id)``                          | deletes a non ephemeral follow up message from the interaction                                 | ``Promise<void>``    |
+| ``deleteFollowUpMessage(string $message_id)``                          | deletes a follow up message from the interaction                                               | ``Promise<void>``    |
 +------------------------------------------------------------------------+------------------------------------------------------------------------------------------------+----------------------+
