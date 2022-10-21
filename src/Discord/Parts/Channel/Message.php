@@ -688,7 +688,7 @@ class Message extends Part
     /**
      * Starts a public thread from the message.
      *
-     * @link https://discord.com/developers/docs/resources/channel#start-thread-with-message
+     * @link https://discord.com/developers/docs/resources/channel#start-thread-from-message
      *
      * @param string      $name                  The name of the thread.
      * @param int         $auto_archive_duration Number of minutes of inactivity until the thread is auto-archived. One of 60, 1440, 4320, 10080.
@@ -698,6 +698,8 @@ class Message extends Part
      * @throws \UnexpectedValueException `$auto_archive_duration` is not one of 60, 1440, 4320, 10080.
      *
      * @return ExtendedPromiseInterface<Thread>
+     *
+     * @todo use OptionResolver
      */
     public function startThread(string $name, int $auto_archive_duration = 1440, ?string $reason = null): ExtendedPromiseInterface
     {

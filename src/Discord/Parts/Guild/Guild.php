@@ -698,10 +698,12 @@ class Guild extends Part
 
         return $this->http->post(Endpoint::bind(Endpoint::GUILD_EMOJIS, $this->id), $options, $headers)
             ->then(function ($response) {
-                $emoji = $this->factory->part(Emoji::class, (array) $response, true);
-                $this->emojis->pushItem($emoji);
+                if (! $emojiPart = $this->emojis->get('id', $response->id)) {
+                    $emojiPart = $this->factory->part(Emoji::class, (array) $response, true);
+                    $this->emojis->pushItem($emojiPart);
+                }
 
-                return $emoji;
+                return $emojiPart;
             });
     }
 
@@ -798,10 +800,12 @@ class Guild extends Part
 
         return $this->http->post(Endpoint::bind(Endpoint::GUILD_STICKERS, $this->id), (string) $multipart, $headers)
             ->then(function ($response) {
-                $sticker = $this->factory->part(Sticker::class, (array) $response, true);
-                $this->stickers->pushItem($sticker);
+                if (! $stickerPart = $this->stickers->get('id', $response->id)) {
+                    $stickerPart = $this->factory->part(Sticker::class, (array) $response, true);
+                    $this->stickers->pushItem($stickerPart);
+                }
 
-                return $sticker;
+                return $stickerPart;
             });
     }
 

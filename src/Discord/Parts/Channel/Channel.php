@@ -626,10 +626,14 @@ class Channel extends Part
 
         return $this->http->post(Endpoint::bind(Endpoint::CHANNEL_INVITES, $this->id), $options)
             ->then(function ($response) {
-                $invite = $this->factory->part(Invite::class, (array) $response, true);
-                $this->invites->pushItem($invite);
+                /** @var ?Invite */
+                if (! $invitePart = $this->invites->get('code', $response->code)) {
+                    /** @var Invite */
+                    $invitePart = $this->factory->part(Invite::class, (array) $response, true);
+                    $this->invites->pushItem($invitePart);
+                }
 
-                return $invite;
+                return $invitePart;
             });
     }
 
@@ -1006,7 +1010,7 @@ class Channel extends Part
             return $this->http->post(Endpoint::bind(Endpoint::CHANNEL_THREADS, $this->id), $options, $headers);
         })()->then(function ($response) {
             /** @var ?Thread */
-            if (! $threadPart = $this->threads->offsetGet($response->id)) {
+            if (! $threadPart = $this->threads->get('id', $response->id)) {
                 /** @var Thread */
                 $threadPart = $this->factory->part(Thread::class, (array) $response, true);
             }
@@ -1092,7 +1096,7 @@ class Channel extends Part
 
             return $this->http->post(Endpoint::bind(Endpoint::CHANNEL_MESSAGES, $this->id), $message);
         })()->then(function ($response) {
-            return $this->factory->part(Message::class, (array) $response + ['guild_id' => $this->guild_id], true);
+            return $this->messages->get('id', $response->id) ?? $this->factory->part(Message::class, (array) $response + ['guild_id' => $this->guild_id], true);
         });
     }
 
