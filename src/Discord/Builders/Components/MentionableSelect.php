@@ -21,7 +21,7 @@ namespace Discord\Builders\Components;
 class MentionableSelect extends SelectMenu
 {
     /**
-     * Component type
+     * Component type.
      *
      * @var int
      */
