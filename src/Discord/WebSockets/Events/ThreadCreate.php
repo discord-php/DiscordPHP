@@ -37,6 +37,7 @@ class ThreadCreate extends Event
             if ($parent = yield $guild->channels->cacheGet($data->parent_id)) {
                 if ($parent->type == Channel::TYPE_GUILD_FORUM) {
                     $parent->last_message_id = $data->id;
+                    $threadPart->last_message_id = $data->id;
                 }
                 $parent->threads->set($data->id, $threadPart);
             }

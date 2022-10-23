@@ -152,18 +152,19 @@ class GuildTemplate extends Part
 
         return $this->http->post(Endpoint::bind(Endpoint::GUILDS_TEMPLATE, $this->code), $options)
             ->then(function ($response) use ($roles, $channels) {
-                if (! $guild = $this->discord->guilds->get('id', $response->id)) {
+                /** @var ?Guild */
+                if (! $guildPart = $this->discord->guilds->get('id', $response->id)) {
                     /** @var Guild */
-                    $guild = $this->factory->part(Guild::class, (array) $response + ['roles' => $roles], true);
+                    $guildPart = $this->factory->part(Guild::class, (array) $response + ['roles' => $roles], true);
 
                     foreach ($channels as $channel) {
-                        $guild->channels->pushItem($guild->channels->create($channel, true));
+                        $guildPart->channels->pushItem($guildPart->channels->create($channel, true));
                     }
 
-                    $this->discord->guilds->pushItem($guild);
+                    $this->discord->guilds->pushItem($guildPart);
                 }
 
-                return $guild;
+                return $guildPart;
             });
     }
 
