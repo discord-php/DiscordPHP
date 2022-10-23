@@ -65,18 +65,24 @@ class MessageReactionAdd extends Event
                     }
 
                     $addedReaction = true;
-                    $reaction = $react;
                     break;
                 }
             }
 
             // New reaction added
             if (! $addedReaction) {
-                $reaction->count = 1;
-                $reaction->me = $data->user_id == $this->discord->id;
+                /** @var Reaction */
+                $react = $message->reactions->create([
+                    'count' => 1,
+                    'me' => $reaction->user_id == $this->discord->id,
+                    'emoji' => $reaction->emoji->getRawAttributes(),
+                    'channel_id' => $data->channel_id,
+                    'message_id' => $data->message_id,
+                    'guild_id' => $data->guild_id ?? null,
+                ], true);
             }
 
-            $message->reactions->set($reaction->reaction_id, $reaction);
+            $message->reactions->pushItem($react);
         }
 
         if (isset($data->member->user)) {
