@@ -444,7 +444,7 @@ class Member extends Part
     public function timeoutMember(?Carbon $communication_disabled_until, ?string $reason = null): ExtendedPromiseInterface
     {
         if ($guild = $this->guild) {
-            if ($botperms = $guild->members->get('id', $this->discord->id)->getPermissions()) {
+            if ($botperms = $guild->getBotPermissions()) {
                 if (! $botperms->moderate_members) {
                     return reject(new NoPermissionsException('You do not have permission to time out members in the specified guild.'));
                 }
