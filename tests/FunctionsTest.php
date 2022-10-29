@@ -98,16 +98,18 @@ final class FunctionsTest extends TestCase
 
     public function mentionedProvider(): array
     {
+        $mockDiscord = getMockDiscord();
+
         return [
             'member in mentions' => [
-                new Member(getMockDiscord(), ['id' => '12345']),
+                new Member($mockDiscord, ['id' => '12345']),
                 [
                     'mentions' => [(object) ['id' => '12345']],
                 ],
                 true,
             ],
             'member not in mentions' => [
-                new Member(getMockDiscord(), ['id' => '123456']),
+                new Member($mockDiscord, ['id' => '123456']),
                 [
                     'mentions' => [(object) ['id' => '12345']],
                 ],
@@ -115,14 +117,14 @@ final class FunctionsTest extends TestCase
             ],
 
             'user in mentions' => [
-                new User(getMockDiscord(), ['id' => '12345']),
+                new User($mockDiscord, ['id' => '12345']),
                 [
                     'mentions' => [(object) ['id' => '12345']],
                 ],
                 true,
             ],
             'user not in mentions' => [
-                new User(getMockDiscord(), ['id' => '123456']),
+                new User($mockDiscord, ['id' => '123456']),
                 [
                     'mentions' => [(object) ['id' => '12345']],
                 ],
@@ -130,14 +132,14 @@ final class FunctionsTest extends TestCase
             ],
 
             'user in mentions with several more' => [
-                new User(getMockDiscord(), ['id' => '12345']),
+                new User($mockDiscord, ['id' => '12345']),
                 [
                     'mentions' => [(object) ['id' => '123456'], (object) ['id' => '1234567'], (object) ['id' => '12345']],
                 ],
                 true,
             ],
             'user not in mentions with several more' => [
-                new User(getMockDiscord(), ['id' => '1234']),
+                new User($mockDiscord, ['id' => '1234']),
                 [
                     'mentions' => [(object) ['id' => '123456'], (object) ['id' => '1234567'], (object) ['id' => '12345']],
                 ],
