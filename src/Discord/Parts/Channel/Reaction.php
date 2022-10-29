@@ -97,9 +97,11 @@ class Reaction extends Part
     /**
      * Gets the users that have used the reaction.
      *
+     * @param array       $options          An array of options. All fields are optional.
+     * @param string|null $options['after'] Get users after this user ID.
+     * @param int|null    $options['limit'] Max number of users to return (1-100).
+     *
      * @link https://discord.com/developers/docs/resources/channel#get-reactions
-
-     * @param array $options See https://discord.com/developers/docs/resources/channel#get-reactions
      *
      * @return ExtendedPromiseInterface<Collection|Users[]>
      */

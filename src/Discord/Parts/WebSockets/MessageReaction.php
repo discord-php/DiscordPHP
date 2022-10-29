@@ -223,13 +223,16 @@ class MessageReaction extends Part
     /**
      * Delete this reaction.
      *
-     * @see Message::deleteReaction()
-     *
      * @param int|null $type The type of deletion to perform.
      *
      * @throws \RuntimeException Reaction has no user id.
      *
      * @return ExtendedPromiseInterface
+     *
+     * @see Message::deleteReaction()
+     *
+     * @link https://discord.com/developers/docs/resources/channel#delete-own-reaction
+     * @link https://discord.com/developers/docs/resources/channel#delete-user-reaction
      */
     public function delete(?int $type = null): ExtendedPromiseInterface
     {
