@@ -79,6 +79,7 @@ use function React\Promise\resolve;
  * @property-read bool               $feature_auto_moderation                  Guild has set up auto moderation rules.
  * @property-read bool               $feature_banner                           Guild has access to set a guild banner image.
  * @property-read bool               $feature_community                        Guild can enable welcome screen, Membership Screening, stage channels and discovery, and receives community updates.
+ * @property-read bool               $feature_developer_support_server         Guild has been set as a support server on the App Directory.
  * @property-read bool               $feature_discoverable                     Guild is able to be discovered in the directory.
  * @property-read bool               $feature_featurable                       Guild is able to be featured in the directory.
  * @property-read bool               $feature_has_directory_entry              Guild is listed in a directory channel.
@@ -237,6 +238,7 @@ class Guild extends Part
         'feature_auto_moderation',
         'feature_banner',
         'feature_community',
+        'feature_developer_support_server',
         'feature_discoverable',
         'feature_featurable',
         'feature_has_directory_entry',
@@ -502,6 +504,11 @@ class Guild extends Part
     protected function getFeatureCommunityAttribute(): bool
     {
         return in_array('COMMUNITY', $this->features);
+    }
+
+    protected function getFeatureDeveloperSupportServerAttribute(): bool
+    {
+        return in_array('DEVELOPER_SUPPORT_SERVER', $this->features);
     }
 
     protected function getFeatureDiscoverableAttribute(): bool
