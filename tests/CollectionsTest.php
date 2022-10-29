@@ -56,7 +56,7 @@ final class CollectionsTest extends TestCase
 
         $this->assertEquals([
             1 => $obj1,
-            2 => $obj2
+            2 => $obj2,
         ], $collection->toArray());
     }
 
@@ -65,7 +65,7 @@ final class CollectionsTest extends TestCase
         $collection = new Collection([
             [
                 'id' => 12,
-                'test' => 'something'
+                'test' => 'something',
             ],
             [
                 'id' => 13,
@@ -74,13 +74,13 @@ final class CollectionsTest extends TestCase
             [
                 'id' => 14,
                 'test' => 'something even more different',
-            ]
+            ],
         ], 'id');
 
         $this->assertEquals(
             [
                 'id' => 13,
-                'test' => 'something else'
+                'test' => 'something else',
             ],
             $collection->get('id', 13)
         );
@@ -88,7 +88,7 @@ final class CollectionsTest extends TestCase
         $this->assertEquals(
             [
                 'id' => 12,
-                'test' => 'something'
+                'test' => 'something',
             ],
             $collection->get('test', 'something')
         );
@@ -211,7 +211,7 @@ final class CollectionsTest extends TestCase
         });
 
         $this->assertEquals([
-            2, 4, 6, 8, 10
+            2, 4, 6, 8, 10,
         ], $mappedArray->toArray());
     }
 
@@ -283,6 +283,12 @@ final class CollectionsTest extends TestCase
     }
 }
 
-final class ClassOne { public $id; }
+final class ClassOne
+{
+    public $id;
+}
 
-final class ClassTwo { public $id; }
+final class ClassTwo
+{
+    public $id;
+}

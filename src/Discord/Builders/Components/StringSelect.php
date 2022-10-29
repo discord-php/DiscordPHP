@@ -22,7 +22,7 @@ namespace Discord\Builders\Components;
 class StringSelect extends SelectMenu
 {
     /**
-     * Component type
+     * Component type.
      *
      * @var int
      */

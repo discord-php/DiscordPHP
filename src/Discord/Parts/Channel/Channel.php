@@ -1004,6 +1004,7 @@ class Channel extends Part
                         'Content-Type' => 'application/json',
                     ],
                 ]);
+
                 return $this->http->post(Endpoint::bind(Endpoint::CHANNEL_THREADS, $this->id), (string) $multipart, $multipart->getHeaders() + $headers);
             }
 
