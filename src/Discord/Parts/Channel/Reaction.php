@@ -81,17 +81,15 @@ class Reaction extends Part
     }
 
     /**
-     * Gets the emoji identifier, combination of `id` and `name`.
+     * Gets the emoji identifier.
      *
      * @return string
+     *
+     * @since 10.0.0 Changed to only return custom emoji id or unicode emoji name.
      */
     protected function getIdAttribute(): string
     {
-        if ($this->emoji->id === null) {
-            return $this->emoji->name;
-        }
-
-        return ":{$this->emoji->name}:{$this->emoji->id}";
+        return $this->emoji->id ?? $this->emoji->name;
     }
 
     /**
@@ -107,7 +105,7 @@ class Reaction extends Part
      */
     public function getUsers(array $options = []): ExtendedPromiseInterface
     {
-        $query = Endpoint::bind(Endpoint::MESSAGE_REACTION_EMOJI, $this->channel_id, $this->message_id, urlencode($this->id));
+        $query = Endpoint::bind(Endpoint::MESSAGE_REACTION_EMOJI, $this->channel_id, $this->message_id, urlencode($this->emoji->id === null ? $this->emoji->name : "{$this->emoji->name}:{$this->emoji->id}"));
 
         $resolver = new OptionsResolver();
         $resolver

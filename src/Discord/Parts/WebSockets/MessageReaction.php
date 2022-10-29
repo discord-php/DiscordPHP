@@ -105,10 +105,12 @@ class MessageReaction extends Part
      * Gets the ID of the reaction.
      *
      * @return string
+     * 
+     * @since 10.0.0 Changed to only return custom emoji id or unicode emoji name.
      */
     protected function getReactionIdAttribute(): string
     {
-        return ":{$this->emoji->name}:{$this->emoji->id}";
+        return $this->emoji->id ?? $this->emoji->name;
     }
 
     /**
