@@ -635,7 +635,9 @@ class Guild extends Part
      */
     public function createRole(array $data = [], ?string $reason = null): ExtendedPromiseInterface
     {
-        if (! $this->getBotPermissions()->manage_roles) {
+        $botperms = $this->getBotPermissions();
+
+        if ($botperms && ! $botperms->manage_roles) {
             return reject(new NoPermissionsException('You do not have permission to manage roles in the specified guild.'));
         }
 
