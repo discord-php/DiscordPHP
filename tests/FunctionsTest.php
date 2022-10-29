@@ -183,10 +183,12 @@ final class FunctionsTest extends TestCase
 
     public function normalizePartIdProvider(): array
     {
+        $mockDiscord = getMockDiscord();
+
         return [
-            [new User(getMockDiscord(), ['id' => '12345']), '12345'],
-            [new Channel(getMockDiscord(), ['id' => '12345']), '12345'],
-            [new Role(getMockDiscord(), ['id' => '12345']), '12345'],
+            [new User($mockDiscord, ['id' => '12345']), '12345'],
+            [new Channel($mockDiscord, ['id' => '12345']), '12345'],
+            [new Role($mockDiscord, ['id' => '12345']), '12345'],
             ['12345', '12345'],
             [null, null],
         ];
