@@ -99,7 +99,7 @@ class GuildCreate extends Event
             });
         });
 
-        if ($this->discord->options['retrieveBans'] && $guildPart->getBotPermissions()->ban_members ?? true) {
+        if ($this->discord->options['retrieveBans'] && $members[$this->discord->id]->getPermissions()->ban_members ?? true) {
             $loadBans = new Deferred();
             $banPagination = function ($lastUserId = null) use (&$banPagination, $guildPart, $loadBans) {
                 $bind = Endpoint::bind(Endpoint::GUILD_BANS, $guildPart->id);
