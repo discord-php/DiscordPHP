@@ -642,7 +642,7 @@ class Guild extends Part
      */
     public function createRole(array $data = [], ?string $reason = null): ExtendedPromiseInterface
     {
-        $botperms = $this->members->get('id', $this->discord->id)->getPermissions();
+        $botperms = $this->getBotPermissions();
 
         if ($botperms && ! $botperms->manage_roles) {
             return reject(new NoPermissionsException('You do not have permission to manage roles in the specified guild.'));
@@ -927,6 +927,20 @@ class Guild extends Part
         return $this->http->get($endpoint)->then(function ($response) {
             return $this->factory->part(AuditLog::class, (array) $response + ['guild_id' => $this->id], true);
         });
+    }
+
+    /**
+     * Returns the bot's permissions in the guild.
+     *
+     * @return RolePermission|null
+     */
+    public function getBotPermissions(): ?RolePermission
+    {
+        if (! $memberPart = $this->members->get('id', $this->discord->id)) {
+            return null;
+        }
+
+        return $memberPart->getPermissions();
     }
 
     /**
