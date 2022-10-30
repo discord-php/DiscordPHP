@@ -287,41 +287,47 @@ class Guild extends Part
 
     /**
      * @inheritDoc
+     *
+     * @todo move each repository fill to the set<Attribute>Attributes methods
      */
     public function fill(array $attributes): void
     {
         parent::fill($attributes);
 
         foreach ($attributes['roles'] ?? [] as $role) {
-            $role = (array) $role + ['guild_id' => $this->id];
+            $role = (array) $role;
+            /** @var Role */
             if ($rolePart = $this->roles->offsetGet($role['id'])) {
                 $rolePart->fill($role);
             }
-            $this->roles->pushItem($rolePart ?? $this->factory->part(Role::class, $role, $this->created));
+            $this->roles->pushItem($rolePart ?: $this->roles->create($role, $this->created));
         }
 
         foreach ($attributes['emojis'] ?? [] as $emoji) {
-            $emoji = (array) $emoji + ['guild_id' => $this->id];
+            $emoji = (array) $emoji;
+            /** @var Emoji */
             if ($emojiPart = $this->emojis->offsetGet($emoji['id'])) {
                 $emojiPart->fill($emoji);
             }
-            $this->emojis->pushItem($emojiPart ?? $this->factory->part(Emoji::class, $emoji, $this->created));
+            $this->emojis->pushItem($emojiPart ?: $this->emojis->create($emoji, $this->created));
         }
 
         foreach ($attributes['stickers'] ?? [] as $sticker) {
-            $sticker = (array) $sticker + ['guild_id' => $this->id];
+            $sticker = (array) $sticker;
+            /** @var Sticker */
             if ($stickerPart = $this->stickers->offsetGet($sticker['id'])) {
                 $stickerPart->fill($sticker);
             }
-            $this->stickers->pushItem($stickerPart ?? $this->factory->part(Sticker::class, $sticker, $this->created));
+            $this->stickers->pushItem($stickerPart ?: $this->stickers->create($sticker, $this->created));
         }
 
         foreach ($attributes['channels'] ?? [] as $channel) {
-            $channel = (array) $channel + ['guild_id' => $this->id];
+            $channel = (array) $channel;
+            /** @var Channel */
             if ($channelPart = $this->channels->offsetGet($channel['id'])) {
                 $channelPart->fill($channel);
             }
-            $this->channels->pushItem($channelPart ?? $this->factory->part(Channel::class, $channel, true));
+            $this->channels->pushItem($channelPart ?: $this->channels->create($channel, true));
         }
     }
 
