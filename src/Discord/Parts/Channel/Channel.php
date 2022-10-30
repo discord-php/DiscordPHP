@@ -834,8 +834,7 @@ class Channel extends Part
         $this->attributes['permission_overwrites'] = $overwrites;
 
         foreach ($overwrites ?? [] as $overwrite) {
-            $overwrite = (array) $overwrite + ['channel_id' => $this->id];
-            $this->overwrites->pushItem($this->factory->create(Overwrite::class, $overwrite, true));
+            $this->overwrites->pushItem($this->overwrites->create((array) $overwrite, true));
         }
     }
 
