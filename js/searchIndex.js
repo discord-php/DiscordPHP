@@ -2076,6 +2076,11 @@ Search.appendIndex(
             "summary": "A\u0020Channel\u0020can\u0020be\u0020either\u0020a\u0020text\u0020or\u0020voice\u0020channel\u0020on\u0020a\u0020Discord\u0020guild.",
             "url": "classes/Discord-Parts-Channel-Channel.html"
         },                {
+            "fqsen": "\\Discord\\Parts\\Channel\\Channel\u003A\u003Afill\u0028\u0029",
+            "name": "fill",
+            "summary": "Fills\u0020the\u0020parts\u0020attributes\u0020from\u0020an\u0020array.",
+            "url": "classes/Discord-Parts-Channel-Channel.html#method_fill"
+        },                {
             "fqsen": "\\Discord\\Parts\\Channel\\Channel\u003A\u003AafterConstruct\u0028\u0029",
             "name": "afterConstruct",
             "summary": "Called\u0020after\u0020the\u0020part\u0020has\u0020been\u0020constructed.",
@@ -5193,7 +5198,7 @@ Search.appendIndex(
         },                {
             "fqsen": "\\Discord\\Parts\\Interactions\\Interaction\u003A\u003AdeleteFollowUpMessage\u0028\u0029",
             "name": "deleteFollowUpMessage",
-            "summary": "Deletes\u0020a\u0020non\u0020ephemeral\u0020follow\u0020up\u0020message.",
+            "summary": "Deletes\u0020a\u0020follow\u0020up\u0020message.",
             "url": "classes/Discord-Parts-Interactions-Interaction.html#method_deleteFollowUpMessage"
         },                {
             "fqsen": "\\Discord\\Parts\\Interactions\\Interaction\u003A\u003AautoCompleteResult\u0028\u0029",
