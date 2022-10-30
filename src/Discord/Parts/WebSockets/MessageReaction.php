@@ -28,8 +28,6 @@ use function React\Promise\resolve;
  * Represents a specific reaction to a message by a specific user.
  * Different from `Reaction` in the fact that `Reaction` represents a specific reaction to a message by _multiple_ members.
  *
- * @todo Fix caching.
- *
  * @since 5.0.0
  *
  * @property      string|null    $user_id    ID of the user that performed the reaction.
@@ -246,24 +244,24 @@ class MessageReaction extends Part
             }
         }
 
-        $reaction = $this->emoji->toReactionString();
+        $emoji = urlencode($this->emoji->id === null ? $this->emoji->name : "{$this->emoji->name}:{$this->emoji->id}");
 
         switch ($type) {
             case Message::REACT_DELETE_ALL:
                 $url = Endpoint::bind(Endpoint::MESSAGE_REACTION_ALL, $this->channel_id, $this->message_id);
                 break;
             case Message::REACT_DELETE_ME:
-                $url = Endpoint::bind(Endpoint::OWN_MESSAGE_REACTION, $this->channel_id, $this->message_id, $reaction);
+                $url = Endpoint::bind(Endpoint::OWN_MESSAGE_REACTION, $this->channel_id, $this->message_id, $emoji);
                 break;
             case Message::REACT_DELETE_EMOJI:
-                $url = Endpoint::bind(Endpoint::MESSAGE_REACTION_EMOJI, $this->channel_id, $this->message_id, $reaction);
+                $url = Endpoint::bind(Endpoint::MESSAGE_REACTION_EMOJI, $this->channel_id, $this->message_id, $emoji);
                 break;
             case Message::REACT_DELETE_ID:
             default:
                 if (! $userid = $this->user_id ?? $this->user->id) {
                     return reject(new \RuntimeException('This reaction has no user id'));
                 }
-                $url = Endpoint::bind(Endpoint::USER_MESSAGE_REACTION, $this->channel_id, $this->message_id, $reaction, $userid);
+                $url = Endpoint::bind(Endpoint::USER_MESSAGE_REACTION, $this->channel_id, $this->message_id, $emoji, $userid);
                 break;
         }
 

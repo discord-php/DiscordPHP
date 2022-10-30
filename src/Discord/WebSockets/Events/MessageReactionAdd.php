@@ -53,32 +53,18 @@ class MessageReactionAdd extends Event
 
         /** @var ?Message */
         if ($channel && $message = yield $channel->messages->cacheGet($data->message_id)) {
-            $addedReaction = false;
+            $me = $data->user_id == $this->discord->id;
 
-            /** @var Reaction */
-            foreach ($message->reactions as $react) {
-                if ($react->id == $reaction->reaction_id) {
-                    ++$react->count;
-
-                    if ($reaction->user_id == $this->discord->id) {
-                        $react->me = true;
-                    }
-
-                    $addedReaction = true;
-                    break;
-                }
-            }
-
-            // New reaction added
-            if (! $addedReaction) {
+            /** @var ?Reaction */
+            if ($react = yield $message->reactions->cacheGet($reaction->reaction_id)) {
+                ++$react->count;
+                $react->me = $me;
+            } else { // New reaction added
                 /** @var Reaction */
                 $react = $message->reactions->create([
                     'count' => 1,
-                    'me' => $reaction->user_id == $this->discord->id,
-                    'emoji' => $reaction->emoji->getRawAttributes(),
-                    'channel_id' => $data->channel_id,
-                    'message_id' => $data->message_id,
-                    'guild_id' => $data->guild_id ?? null,
+                    'me' => $me,
+                    'emoji' => $data->emoji,
                 ], true);
             }
 
