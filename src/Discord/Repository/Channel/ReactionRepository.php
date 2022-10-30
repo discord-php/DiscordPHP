@@ -52,6 +52,8 @@ class ReactionRepository extends AbstractRepository
      * @param Part|string $part   The Reaction part or unicode emoji to delete.
      *
      * @return ExtendedPromiseInterface<Reaction>
+     *
+     * @since 10.0.0
      */
     public function delete($part, ?string $reason = null): ExtendedPromiseInterface
     {
