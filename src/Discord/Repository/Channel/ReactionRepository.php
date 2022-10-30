@@ -11,8 +11,10 @@
 
 namespace Discord\Repository\Channel;
 
+use Discord\Http\Endpoint;
 use Discord\Parts\Channel\Reaction;
 use Discord\Repository\AbstractRepository;
+use React\Promise\ExtendedPromiseInterface;
 
 /**
  * Contains reactions on a message.
@@ -22,18 +24,21 @@ use Discord\Repository\AbstractRepository;
  *
  * @since 5.1.0
  *
- * @method Reaction|null get(string $discrim, $key)
- * @method Reaction|null pull(string|int $key, $default = null)
- * @method Reaction|null first()
- * @method Reaction|null last()
- * @method Reaction|null find()
+ * @method Reaction|null                  get(string $discrim, $key)
+ * @method Reaction|null                  pull(string|int $key, $default = null)
+ * @method Reaction|null                  first()
+ * @method Reaction|null                  last()
+ * @method Reaction|null                  find()
+ * @method ExtendedPromiseInterface<Part> delete(Part|string $part, ?string $reason = null) Delete all reactions for emoji
  */
 class ReactionRepository extends AbstractRepository
 {
     /**
      * @inheritDoc
      */
-    protected $endpoints = [];
+    protected $endpoints = [
+        'delete' => Endpoint::MESSAGE_REACTION_EMOJI,
+    ];
 
     /**
      * @inheritDoc

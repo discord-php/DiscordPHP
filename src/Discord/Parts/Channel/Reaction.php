@@ -24,7 +24,7 @@ use function Discord\normalizePartId;
 use function React\Promise\resolve;
 
 /**
- * Represents a reaction to a message by members(s).
+ * Represents a reaction emoji to a message by members(s).
  *
  * @link https://discord.com/developers/docs/resources/channel#reaction-object
  *
@@ -237,5 +237,15 @@ class Reaction extends Part
         }
 
         return $this->discord->guilds->get('id', $this->guild_id);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getRepositoryAttributes(): array
+    {
+        return [
+            'emoji' => urlencode($this->emoji->id === null ? $this->emoji->name : "{$this->emoji->name}:{$this->emoji->id}")
+        ];
     }
 }
