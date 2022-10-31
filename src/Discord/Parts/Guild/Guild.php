@@ -1081,9 +1081,9 @@ class Guild extends Part
      *
      * @link https://discord.com/developers/docs/resources/guild#get-guild-prune-count
      *
-     * @param array         $options                  An array of options.
-     * @param int|null      $options['days']          Number of days to count prune for (1-30), defaults to 7.
-     * @param string[]|null $options['include_roles'] Role id(s) to include.
+     * @param array                $options                  An array of options.
+     * @param int|null             $options['days']          Number of days to count prune for (1-30), defaults to 7.
+     * @param string[]|Role[]|null $options['include_roles'] Roles to include, defaults to none.
      *
      * @throws NoPermissionsException Missing kick_members permission.
      *
@@ -1099,7 +1099,16 @@ class Guild extends Part
         ->setDefault('days', 7)
         ->setAllowedTypes('days', 'int')
         ->setAllowedTypes('include_roles', 'array')
-        ->setAllowedValues('days', range(1, 30));
+        ->setAllowedValues('days', range(1, 30))
+        ->setNormalizer('include_roles', function ($option, $values) {
+            foreach ($values as &$value) {
+                if ($value instanceof Role) {
+                    $value = $value->id;
+                }
+            }
+
+            return $values;
+        });
 
         $options = $resolver->resolve($options);
 
@@ -1125,11 +1134,11 @@ class Guild extends Part
      *
      * @link https://discord.com/developers/docs/resources/guild#begin-guild-prune
      *
-     * @param array         $options                        An array of options.
-     * @param int|null      $options['days']                Number of days to count prune for (1-30), defaults to 7.
-     * @param int|null      $options['compute_prune_count'] Whether 'pruned' is returned, discouraged for large guilds.
-     * @param string[]|null $options['include_roles']       Role id(s) to include.
-     * @param string        $reason                         Reason for Audit Log.
+     * @param array                $options                        An array of options.
+     * @param int|null             $options['days']                Number of days to count prune for (1-30), defaults to 7.
+     * @param int|null             $options['compute_prune_count'] Whether 'pruned' is returned, discouraged for large guilds.
+     * @param string[]|Role[]|null $options['include_roles']       Roles to include, defaults to none.
+     * @param string               $reason                         Reason for Audit Log.
      *
      * @throws NoPermissionsException Missing kick_members permission.
      *
@@ -1147,7 +1156,16 @@ class Guild extends Part
         ->setAllowedTypes('days', 'int')
         ->setAllowedTypes('compute_prune_count', 'bool')
         ->setAllowedTypes('include_roles', 'array')
-        ->setAllowedValues('days', range(1, 30));
+        ->setAllowedValues('days', range(1, 30))
+        ->setNormalizer('include_roles', function ($option, $values) {
+            foreach ($values as &$value) {
+                if ($value instanceof Role) {
+                    $value = $value->id;
+                }
+            }
+
+            return $values;
+        });
 
         $options = $resolver->resolve($options);
 
