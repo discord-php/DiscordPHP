@@ -997,15 +997,21 @@ class Guild extends Part
      *
      * @link https://discord.com/developers/docs/resources/guild#modify-guild-role-positions
      *
-     * The `$roles` array should be an associative array where the LHS key is the position,
-     * and the RHS value is a `Role` object or a string ID, e.g. [1 => 'role_id_1', 3 => 'role_id_3'].
+     * @param array $roles Associative array where the LHS key is the position,
+     *                     and the RHS value is a `Role` object or a string ID,
+     *                     e.g. `[1 => 'role_id_1', 3 => 'role_id_3']`.
      *
-     * @param array $roles
+     * @throws NoPermissionsException Missing manage_roles permission.
      *
-     * @return ExtendedPromiseInterface
+     * @return ExtendedPromiseInterface<self>
      */
     public function updateRolePositions(array $roles): ExtendedPromiseInterface
     {
+        $botperms = $this->getBotPermissions();
+        if ($botperms && ! $botperms->manage_roles) {
+            return reject(new NoPermissionsException("You do not have permission to manage roles in the guild {$this->guild_id}."));
+        }
+
         $payload = [];
 
         foreach ($roles as $position => $role) {
