@@ -1167,7 +1167,7 @@ class Guild extends Part
      *
      * @see https://discord.com/developers/docs/resources/guild#get-guild-widget
      *
-     * @return ExtendedPromiseInterface<WelcomeScreen>
+     * @return ExtendedPromiseInterface<Widget>
      */
     public function getWidget(): ExtendedPromiseInterface
     {
@@ -1205,7 +1205,7 @@ class Guild extends Part
      * @param int    $level  The new MFA level `Guild::MFA_NONE` or `Guild::MFA_ELEVATED`.
      * @param string $reason Reason for Audit Log.
      *
-     * @return ExtendedPromiseInterface<Guild> This guild.
+     * @return ExtendedPromiseInterface<self> This guild.
      */
     public function updateMFALevel(int $level, ?string $reason = null): ExtendedPromiseInterface
     {
