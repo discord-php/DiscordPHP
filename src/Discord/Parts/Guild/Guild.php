@@ -31,6 +31,7 @@ use Discord\Repository\Guild\MemberRepository;
 use Discord\Repository\Guild\RoleRepository;
 use Discord\Parts\Guild\AuditLog\AuditLog;
 use Discord\Parts\Guild\AuditLog\Entry;
+use Discord\Parts\Permissions\RolePermission;
 use Discord\Repository\Guild\AutoModerationRuleRepository;
 use Discord\Repository\Guild\CommandPermissionsRepository;
 use Discord\Repository\Guild\GuildCommandRepository;
