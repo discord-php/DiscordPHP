@@ -369,10 +369,17 @@ class Guild extends Part
      *
      * @param User|string $user
      *
+     * @throws NoPermissionsException Missing ban_members permission.
+     *
      * @return ExtendedPromiseInterface
      */
     public function unban($user): ExtendedPromiseInterface
     {
+        $botperms = $this->getBotPermissions();
+        if ($botperms && ! $botperms->ban_members) {
+            return reject(new NoPermissionsException("You do not have permission to ban members in the guild {$this->guild_id}."));
+        }
+
         return $this->bans->unban($user);
     }
 
