@@ -1178,10 +1178,19 @@ class Guild extends Part
      *
      * @param bool $fresh Whether we should skip checking the cache.
      *
+     * @throws NoPermissionsException Missing manage_guild permission when the welcome screen is not enabled.
+     *
      * @return ExtendedPromiseInterface<WelcomeScreen>
      */
     public function getWelcomeScreen(bool $fresh = false): ExtendedPromiseInterface
     {
+        if (! $this->feature_welcome_screen_enabled) {
+            $botperms = $this->getBotPermissions();
+            if ($botperms && ! $botperms->manage_guild) {
+                return reject(new NoPermissionsException("You do not have permission to manage the guild {$this->guild_id}."));
+            }
+        }
+
         if (! $fresh && $welcomeScreen = $this->welcome_screen) {
             return resolve($welcomeScreen);
         }
@@ -1212,10 +1221,12 @@ class Guild extends Part
      *
      * @link https://discord.com/developers/docs/resources/guild#modify-guild-welcome-screen
      *
-     * @param array $options An array of options.
-     *                       enabled => whether the welcome screen is enabled
-     *                       welcome_channels => channels linked in the welcome screen and their display options (maximum 5)
-     *                       description => the server description to show in the welcome screen (maximum 140)
+     * @param array                          $options                     An array of options. All fields are optional.
+     * @param bool|null                      $options['enabled']          Whether the welcome screen is enabled.
+     * @param object[]|WelcomeChannel[]|null $options['welcome_channels'] Channels linked in the welcome screen and their display options (maximum 5).
+     * @param string|null                    $options['description']      The server description to show in the welcome screen (maximum 140).
+     *
+     * @throws NoPermissionsException Missing manage_guild permission.
      *
      * @return ExtendedPromiseInterface<WelcomeScreen> The updated Welcome Screen.
      */
@@ -1229,9 +1240,23 @@ class Guild extends Part
         ])
         ->setAllowedTypes('enabled', 'bool')
         ->setAllowedTypes('welcome_channels', 'array')
-        ->setAllowedTypes('description', 'string');
+        ->setAllowedTypes('description', 'string')
+        ->setNormalizer('welcome_channels', function ($option, $values) {
+            foreach ($values as &$value) {
+                if ($value instanceof WelcomeChannel) {
+                    $value = $value->getRawAttributes();
+                }
+            }
+
+            return $values;
+        });
 
         $options = $resolver->resolve($options);
+
+        $botperms = $this->getBotPermissions();
+        if ($botperms && ! $botperms->manage_guild) {
+            return reject(new NoPermissionsException("You do not have permission to manage the guild {$this->guild_id}."));
+        }
 
         return $this->http->patch(Endpoint::bind(Endpoint::GUILD_WELCOME_SCREEN, $this->id), $options)->then(function ($response) {
             $this->attributes['welcome_screen'] = $response;
