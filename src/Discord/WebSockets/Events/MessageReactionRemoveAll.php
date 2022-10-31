@@ -52,7 +52,7 @@ class MessageReactionRemoveAll extends Event
 
         /** @var ?Message */
         if (isset($channel) && $message = yield $channel->messages->cacheGet($data->message_id)) {
-            $message->reactions->clear();
+            yield $message->reactions->cache->clear();
         }
 
         return $reaction;

@@ -52,7 +52,7 @@ class MessageReactionRemoveEmoji extends Event
 
         /** @var ?Message */
         if (isset($channel) && $message = yield $channel->messages->cacheGet($data->message_id)) {
-            yield $message->reactions->cache->delete($reaction->emoji->toReactionString());
+            yield $message->reactions->cache->delete($reaction->reaction_id);
         }
 
         return $reaction;

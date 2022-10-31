@@ -24,7 +24,7 @@ use function Discord\normalizePartId;
 use function React\Promise\resolve;
 
 /**
- * Represents a reaction to a message by members(s).
+ * Represents a reaction emoji to a message by members(s).
  *
  * @link https://discord.com/developers/docs/resources/channel#reaction-object
  *
@@ -81,31 +81,31 @@ class Reaction extends Part
     }
 
     /**
-     * Gets the emoji identifier, combination of `id` and `name`.
+     * Gets the emoji identifier.
      *
      * @return string
+     *
+     * @since 10.0.0 Changed to only return custom emoji id or unicode emoji name.
      */
     protected function getIdAttribute(): string
     {
-        if ($this->emoji->id === null) {
-            return $this->emoji->name;
-        }
-
-        return ":{$this->emoji->name}:{$this->emoji->id}";
+        return $this->emoji->id ?? $this->emoji->name;
     }
 
     /**
      * Gets the users that have used the reaction.
      *
+     * @param array       $options          An array of options. All fields are optional.
+     * @param string|null $options['after'] Get users after this user ID.
+     * @param int|null    $options['limit'] Max number of users to return (1-100).
+     *
      * @link https://discord.com/developers/docs/resources/channel#get-reactions
-
-     * @param array $options See https://discord.com/developers/docs/resources/channel#get-reactions
      *
      * @return ExtendedPromiseInterface<Collection|Users[]>
      */
     public function getUsers(array $options = []): ExtendedPromiseInterface
     {
-        $query = Endpoint::bind(Endpoint::MESSAGE_REACTION_EMOJI, $this->channel_id, $this->message_id, urlencode($this->id));
+        $query = Endpoint::bind(Endpoint::MESSAGE_REACTION_EMOJI, $this->channel_id, $this->message_id, urlencode($this->emoji->id === null ? $this->emoji->name : "{$this->emoji->name}:{$this->emoji->id}"));
 
         $resolver = new OptionsResolver();
         $resolver
@@ -237,5 +237,15 @@ class Reaction extends Part
         }
 
         return $this->discord->guilds->get('id', $this->guild_id);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getRepositoryAttributes(): array
+    {
+        return [
+            'emoji' => isset($this->attributes['emoji']->id) ? $this->attributes['emoji']->name.':'.$this->attributes['emoji']->id : urlencode($this->attributes['emoji']->name)
+        ];
     }
 }

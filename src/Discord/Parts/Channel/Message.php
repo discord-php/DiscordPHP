@@ -351,14 +351,20 @@ class Message extends Part
     /**
      * Sets the reactions attriubte.
      *
-     * @param iterable $reactions
+     * @param array $reactions
      */
-    protected function setReactionsAttribute(iterable $reactions)
+    protected function setReactionsAttribute(array $reactions)
     {
-        $this->reactions->clear();
+        $this->attributes['reactions'] = $reactions;
 
         foreach ($reactions as $reaction) {
-            $this->reactions->pushItem($this->reactions->create((array) $reaction, true));
+            $reaction = (array) $reaction;
+            /** @var Reaction */
+            if ($reactionPart = $this->reactions->offsetGet($reaction['emoji']->id ?? $reaction['emoji']->name)) {
+                $reactionPart->fill($reaction);
+                $reactionPart->created = $this->created;
+            }
+            $this->reactions->pushItem($reactionPart ?: $this->reactions->create($reaction, $this->created));
         }
     }
 

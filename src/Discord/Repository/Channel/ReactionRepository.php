@@ -11,8 +11,10 @@
 
 namespace Discord\Repository\Channel;
 
+use Discord\Http\Endpoint;
 use Discord\Parts\Channel\Reaction;
 use Discord\Repository\AbstractRepository;
+use React\Promise\ExtendedPromiseInterface;
 
 /**
  * Contains reactions on a message.
@@ -33,10 +35,33 @@ class ReactionRepository extends AbstractRepository
     /**
      * @inheritDoc
      */
-    protected $endpoints = [];
+    protected $endpoints = [
+        'delete' => Endpoint::MESSAGE_REACTION_EMOJI,
+    ];
 
     /**
      * @inheritDoc
      */
     protected $class = Reaction::class;
+
+    /**
+     * Delete all reactions for emoji
+     *
+     * {@inheritDoc}
+     *
+     * @param Part|string $part   The Reaction part or unicode emoji to delete.
+     *
+     * @return ExtendedPromiseInterface<Reaction>
+     *
+     * @since 10.0.0
+     */
+    public function delete($part, ?string $reason = null): ExtendedPromiseInterface
+    {
+        // Deal with unicode emoji
+        if (! ($part instanceof Reaction) && ! is_numeric($part)) {
+            $part = $this->create([$this->discrim => $part, 'emoji' => (object) ['id' => null, 'name' => $part]], true);
+        }
+
+        return parent::delete($part, $reason);
+    }
 }

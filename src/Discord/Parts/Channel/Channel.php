@@ -857,11 +857,12 @@ class Channel extends Part
         $this->attributes['permission_overwrites'] = $overwrites;
 
         foreach ($overwrites as $overwrite) {
-            $overwrite = (array) $overwrite + ['channel_id' => $this->id];
+            $overwrite = (array) $overwrite;
+            /** @var Overwrite */
             if ($overwritePart = $this->overwrites->offsetGet($overwrite['id'])) {
                 $overwritePart->fill($overwrite);
             }
-            $this->overwrites->pushItem($this->factory->part(Overwrite::class, $overwrite, true));
+            $this->overwrites->pushItem($overwritePart ?: $this->overwrites->create($overwrite, true));
         }
     }
 

@@ -15,6 +15,7 @@ use Discord\Parts\WebSockets\MessageReaction;
 use Discord\WebSockets\Event;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Channel\Message;
+use Discord\Parts\Channel\Reaction;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Thread\Thread;
 
@@ -53,17 +54,16 @@ class MessageReactionRemove extends Event
         /** @var ?Message */
         if ($channel && $message = yield $channel->messages->cacheGet($data->message_id)) {
             /** @var Reaction */
-            foreach ($message->reactions as $key => $react) {
-                if ($react->id == $reaction->reaction_id) {
-                    --$react->count;
-
-                    if ($reaction->user_id == $this->discord->id) {
-                        $react->me = false;
-                    }
+            if ($react = yield $message->reactions->cacheGet($reaction->reaction_id)) {
+                if ($data->user_id == $this->discord->id) {
+                    $react->me = false;
                 }
 
-                if ($react->count < 1) {
-                    yield $message->reactions->cache->delete($key);
+                if (--$react->count < 1) {
+                    yield $message->reactions->cache->delete($reaction->reaction_id);
+                } else {
+                    // save new count & me
+                    $message->reactions->pushItem($react);
                 }
             }
         }
