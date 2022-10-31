@@ -661,6 +661,8 @@ class Guild extends Part
     /**
      * Creates an Emoji for the guild.
      *
+     * @link https://discord.com/developers/docs/resources/emoji#create-guild-emoji
+     *
      * @param array       $options          An array of options.
      * @param string      $options['name']  Name of the emoji.
      * @param string|null $options['image'] The 128x128 emoji image (if not using `$filepath`).
@@ -672,8 +674,6 @@ class Guild extends Part
      * @throws FileNotFoundException  File does not exist.
      *
      * @return ExtendedPromiseInterface<Emoji>
-     *
-     * @link https://discord.com/developers/docs/resources/emoji#create-guild-emoji
      */
     public function createEmoji(array $options, ?string $filepath = null, ?string $reason = null): ExtendedPromiseInterface
     {
@@ -734,6 +734,8 @@ class Guild extends Part
     /**
      * Creates an Sticker for the guild.
      *
+     * @link https://discord.com/developers/docs/resources/sticker#create-guild-sticker
+     *
      * @param array       $options                An array of options.
      * @param string      $options['name']        Name of the sticker.
      * @param string|null $options['description'] Description of the sticker (empty or 2-100 characters).
@@ -748,8 +750,6 @@ class Guild extends Part
      * @throws \RuntimeException      Guild is not verified or partnered to upload Lottie stickers.
      *
      * @return ExtendedPromiseInterface<Sticker>
-     *
-     * @link https://discord.com/developers/docs/resources/sticker#create-guild-sticker
      */
     public function createSticker(array $options, string $filepath, ?string $reason = null): ExtendedPromiseInterface
     {
