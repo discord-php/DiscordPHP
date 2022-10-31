@@ -1259,7 +1259,7 @@ class Guild extends Part
     public function createInvite(...$args): ExtendedPromiseInterface
     {
         $channel = $this->channels->find(function (Channel $channel) {
-            if ($channel->allowInvite()) {
+            if ($channel->canInvite()) {
                 if ($botperms = $channel->getBotPermissions()) {
                     return $botperms->create_instant_invite;
                 }
