@@ -926,11 +926,13 @@ class Guild extends Part
      *
      * @link https://discord.com/developers/docs/resources/audit-log#get-guild-audit-log
      *
-     * @param array $options An array of options.
-     *                       user_id => filter the log for actions made by a user
-     *                       action_type => the type of audit log event
-     *                       before => filter the log before a certain entry id
-     *                       limit => how many entries are returned (default 50, minimum 1, maximum 100)
+     * @param array                   $options An array of options.
+     * @param string|Member|User|null $options['user_id'] filter the log for actions made by a user
+     * @param int|null                $options['action_type'] the type of audit log event
+     * @param string|Entry|null       $options['before'] filter the log before a certain entry id
+     * @param int|null                $options['limit'] how many entries are returned (default 50, minimum 1, maximum 100)
+     *
+     * @throws NoPermissionsException Missing view_audit_log permission.
      *
      * @return ExtendedPromiseInterface<AuditLog>
      */
@@ -958,6 +960,11 @@ class Guild extends Part
 
         if ($options['before'] ?? null instanceof Part) {
             $options['before'] = $options['before']->id;
+        }
+
+        $botperms = $this->getBotPermissions();
+        if ($botperms && ! $botperms->view_audit_log) {
+            return reject(new NoPermissionsException("You do not have permission to view audit log in the guild {$this->guild_id}."));
         }
 
         $endpoint = Endpoint::bind(Endpoint::AUDIT_LOG, $this->id);
