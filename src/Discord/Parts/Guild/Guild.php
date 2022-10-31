@@ -797,10 +797,11 @@ class Guild extends Part
             return reject(new \LengthException("Description must be 2 to 100 characters, given {$descLength}."));
         }
 
+        $extension = strtolower(pathinfo($filepath, PATHINFO_EXTENSION));
+
         if (function_exists('mime_content_type')) {
             $contentType = \mime_content_type($filepath);
         } else {
-            $extension = strtolower(pathinfo($filepath, PATHINFO_EXTENSION));
             $contentTypes = [
                 'png' => 'image/png',
                 'apng' => 'image/apng',
