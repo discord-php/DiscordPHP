@@ -43,6 +43,7 @@ use React\Promise\ExtendedPromiseInterface;
 use ReflectionClass;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+use function Discord\normalizePartId;
 use function Discord\poly_strlen;
 use function React\Promise\reject;
 use function React\Promise\resolve;
@@ -950,17 +951,11 @@ class Guild extends Part
         ->setAllowedTypes('before', ['string', 'int', Entry::class])
         ->setAllowedTypes('limit', 'int')
         ->setAllowedValues('action_type', array_values((new ReflectionClass(Entry::class))->getConstants()))
-        ->setAllowedValues('limit', range(1, 100));
+        ->setAllowedValues('limit', range(1, 100))
+        ->setNormalizer('user_id', normalizePartId())
+        ->setNormalizer('before', normalizePartId());
 
         $options = $resolver->resolve($options);
-
-        if ($options['user_id'] ?? null instanceof Part) {
-            $options['user_id'] = $options['user_id']->id;
-        }
-
-        if ($options['before'] ?? null instanceof Part) {
-            $options['before'] = $options['before']->id;
-        }
 
         $botperms = $this->getBotPermissions();
         if ($botperms && ! $botperms->view_audit_log) {
