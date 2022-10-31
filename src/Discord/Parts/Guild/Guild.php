@@ -661,18 +661,19 @@ class Guild extends Part
     /**
      * Creates an Emoji for the guild.
      *
-     * @link https://discord.com/developers/docs/resources/emoji#create-guild-emoji
+     * @param array       $options          An array of options.
+     * @param string      $options['name']  Name of the emoji.
+     * @param string|null $options['image'] The 128x128 emoji image (if not using `$filepath`).
+     * @param array|null  $options['roles'] Roles allowed to use this emoji.
+     * @param string|null $filepath         The path to the file if specified will override image data string.
+     * @param string|null $reason           Reason for Audit Log.
      *
-     * @param array       $options  An array of options.
-     *                              name => name of the emoji
-     *                              image => the 128x128 emoji image
-     *                              roles => roles allowed to use this emoji
-     * @param string|null $filepath The path to the file if specified will override image data string.
-     * @param string|null $reason   Reason for Audit Log.
-     *
-     * @throws FileNotFoundException Thrown when the file does not exist.
+     * @throws NoPermissionsException Missing manage_emojis_and_stickers permission.
+     * @throws FileNotFoundException  File does not exist.
      *
      * @return ExtendedPromiseInterface<Emoji>
+     *
+     * @link https://discord.com/developers/docs/resources/emoji#create-guild-emoji
      */
     public function createEmoji(array $options, ?string $filepath = null, ?string $reason = null): ExtendedPromiseInterface
     {
@@ -690,6 +691,11 @@ class Guild extends Part
             ->setDefault('roles', []);
 
         $options = $resolver->resolve($options);
+
+        $botperms = $this->getBotPermissions();
+        if ($botperms && ! $botperms->manage_emojis_and_stickers) {
+            return reject(new NoPermissionsException("You do not have permission to manage emojis in the guild {$this->guild_id}."));
+        }
 
         if (isset($filepath)) {
             if (! file_exists($filepath)) {
