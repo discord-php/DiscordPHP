@@ -1270,10 +1270,17 @@ class Guild extends Part
      *
      * @link https://discord.com/developers/docs/resources/guild#get-guild-widget-settings
      *
+     * @throws NoPermissionsException Missing manage_guild permission.
+     *
      * @return ExtendedPromiseInterface
      */
     public function getWidgetSettings(): ExtendedPromiseInterface
     {
+        $botperms = $this->getBotPermissions();
+        if ($botperms && ! $botperms->manage_guild) {
+            return reject(new NoPermissionsException("You do not have permission to manage the guild {$this->guild_id}."));
+        }
+
         return $this->http->get(Endpoint::bind(Endpoint::GUILD_WIDGET_SETTINGS, $this->id))->then(function ($response) {
             $this->widget_enabled = $response->enabled;
             $this->widget_channel_id = $response->channel_id;
@@ -1292,6 +1299,8 @@ class Guild extends Part
      *                        channel_id => the widget channel id
      * @param string $reason  Reason for Audit Log.
      *
+     * @throws NoPermissionsException Missing manage_guild permission.
+     *
      * @return ExtendedPromiseInterface The updated guild widget object.
      */
     public function updateWidgetSettings(array $options, ?string $reason = null): ExtendedPromiseInterface
@@ -1305,6 +1314,11 @@ class Guild extends Part
         ->setAllowedTypes('channel_id', ['string', 'null']);
 
         $options = $resolver->resolve($options);
+
+        $botperms = $this->getBotPermissions();
+        if ($botperms && ! $botperms->manage_guild) {
+            return reject(new NoPermissionsException("You do not have permission to manage the guild {$this->guild_id}."));
+        }
 
         $headers = [];
         if (isset($reason)) {
