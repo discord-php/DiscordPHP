@@ -690,6 +690,10 @@ class Guild extends Part
             ->setAllowedTypes('roles', 'array')
             ->setDefault('roles', []);
 
+        if (is_null($filepath)) {
+            $resolver->setRequired('image');
+        }
+
         $options = $resolver->resolve($options);
 
         $botperms = $this->getBotPermissions();
