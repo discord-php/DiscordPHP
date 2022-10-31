@@ -356,7 +356,7 @@ class Discord
 
         // x86 need gmp extension for big integer operation
         if (PHP_INT_SIZE === 4 && ! BigInt::init()) {
-            trigger_error('ext-gmp is not loaded. Big integer calculations (e.g. Permissions) will NOT work correctly!', E_USER_WARNING);
+            trigger_error('ext-gmp is not loaded, it is required for 32-bits (x86) PHP.', E_USER_ERROR);
         }
 
         $options = $this->resolveOptions($options);
