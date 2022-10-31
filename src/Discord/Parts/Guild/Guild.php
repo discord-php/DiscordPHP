@@ -633,7 +633,7 @@ class Guild extends Part
      *
      * @link https://discord.com/developers/docs/resources/voice#list-voice-regions
      *
-     * @return ExtendedPromiseInterface
+     * @return ExtendedPromiseInterface<Collection>
      */
     public function getVoiceRegions(): ExtendedPromiseInterface
     {
@@ -658,7 +658,7 @@ class Guild extends Part
      * @param array       $data   The data to fill the role with.
      * @param string|null $reason Reason for Audit Log.
      *
-     * @throws NoPermissionsException
+     * @throws NoPermissionsException Missing manage_roles permission.
      *
      * @return ExtendedPromiseInterface<Role>
      */
@@ -876,7 +876,7 @@ class Guild extends Part
      * @param Member|int  $member The member to transfer ownership to.
      * @param string|null $reason Reason for Audit Log.
      *
-     * @throws \RuntimeException
+     * @throws \RuntimeException Ownership not transferred correctly.
      *
      * @return ExtendedPromiseInterface
      */
@@ -1397,7 +1397,7 @@ class Guild extends Part
      * @param int         $level  The new MFA level `Guild::MFA_NONE` or `Guild::MFA_ELEVATED`.
      * @param string|null $reason Reason for Audit Log.
      *
-     * @return ExtendedPromiseInterface<Guild> This guild.
+     * @return ExtendedPromiseInterface<self> This guild.
      */
     public function updateMFALevel(int $level, ?string $reason = null): ExtendedPromiseInterface
     {
@@ -1421,7 +1421,7 @@ class Guild extends Part
      * @param bool[]      $features Array of features to set/unset, e.g. `['COMMUNITY' => true, 'INVITES_DISABLED' => false]`.
      * @param string|null $reason   Reason for Audit Log.
      *
-     * @return ExtendedPromiseInterface<Guild> This guild.
+     * @return ExtendedPromiseInterface<self> This guild.
      *
      * @throws \OutOfRangeException Feature is not mutable.
      * @throws \RuntimeException    Guild feature is already set.
