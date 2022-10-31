@@ -724,20 +724,22 @@ class Guild extends Part
     /**
      * Creates an Sticker for the guild.
      *
-     * @link https://discord.com/developers/docs/resources/sticker#create-guild-sticker
+     * @param array       $options                An array of options.
+     * @param string      $options['name']        Name of the sticker.
+     * @param string|null $options['description'] Description of the sticker (empty or 2-100 characters).
+     * @param string      $options['tags']        Autocomplete/suggestion tags for the sticker (max 200 characters).
+     * @param string      $filepath               The sticker file to upload, must be a PNG, APNG, or Lottie JSON file, max 500 KB.
+     * @param string|null $reason                 Reason for Audit Log.
      *
-     * @param array       $options  An array of options.
-     *                              name => Name of the sticker.
-     *                              description => Description of the sticker (empty or 2-100 characters).
-     *                              tags => Autocomplete/suggestion tags for the sticker (max 200 characters).
-     * @param string      $filepath The sticker file to upload, must be a PNG, APNG, or Lottie JSON file, max 500 KB.
-     * @param string|null $reason   Reason for Audit Log.
-     *
-     * @throws FileNotFoundException Thrown when the file does not exist.
-     * @throws \LengthException
-     * @throws \DomainException
+     * @throws NoPermissionsException Missing manage_emojis_and_stickers permission.
+     * @throws FileNotFoundException  The file does not exist.
+     * @throws \LengthException       Description is not 2-100 characters long.
+     * @throws \DomainException       File format is not PNG, APNG, or Lottie JSON.
+     * @throws \RuntimeException      Guild is not verified or partnered to upload Lottie stickers.
      *
      * @return ExtendedPromiseInterface<Sticker>
+     *
+     * @link https://discord.com/developers/docs/resources/sticker#create-guild-sticker
      */
     public function createSticker(array $options, string $filepath, ?string $reason = null): ExtendedPromiseInterface
     {
@@ -756,13 +758,18 @@ class Guild extends Part
 
         $options = $resolver->resolve($options);
 
+        $botperms = $this->getBotPermissions();
+        if ($botperms && ! $botperms->manage_emojis_and_stickers) {
+            return reject(new NoPermissionsException("You do not have permission to manage stickers in the guild {$this->guild_id}."));
+        }
+
         if (! file_exists($filepath)) {
             return reject(new FileNotFoundException("File does not exist at path {$filepath}."));
         }
 
         $descLength = poly_strlen($options['description']);
         if ($descLength > 100 || $descLength == 1) {
-            return reject(new \LengthException('Description must be 2 to 100 characters'));
+            return reject(new \LengthException("Description must be 2 to 100 characters, given {$descLength}."));
         }
 
         if (function_exists('mime_content_type')) {
@@ -776,10 +783,14 @@ class Guild extends Part
             ];
 
             if (! array_key_exists($extension, $contentTypes)) {
-                return reject(new \DomainException('File format must be PNG, APNG, or Lottie JSON'));
+                return reject(new \DomainException("File format must be PNG, APNG, or Lottie JSON, given {$extension}."));
             }
 
             $contentType = $contentTypes[$extension];
+        }
+
+        if ($extension == 'lottie' && ! ($this->feature_verified || $this->feature_partnered)) {
+            return reject(new \RuntimeException('Lottie stickers can be only uploaded in verified or partnered guilds.'));
         }
 
         $contents = file_get_contents($filepath);
