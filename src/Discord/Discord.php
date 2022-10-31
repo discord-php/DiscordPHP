@@ -1212,7 +1212,7 @@ class Discord
     {
         $deferred = new Deferred();
 
-        if (! $channel->allowVoice()) {
+        if (! $channel->isVoiceBased()) {
             $deferred->reject(new \RuntimeException('Channel must allow voice.'));
 
             return $deferred->promise();

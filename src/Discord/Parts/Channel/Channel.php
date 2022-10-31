@@ -479,7 +479,7 @@ class Channel extends Part
      */
     public function moveMember($member, ?string $reason = null): ExtendedPromiseInterface
     {
-        if (! $this->allowVoice()) {
+        if (! $this->isVoiceBased()) {
             return reject(new \RuntimeException('You cannot move a member in a text channel.'));
         }
 
@@ -514,7 +514,7 @@ class Channel extends Part
      */
     public function muteMember($member, ?string $reason = null): ExtendedPromiseInterface
     {
-        if (! $this->allowVoice()) {
+        if (! $this->isVoiceBased()) {
             return reject(new \RuntimeException('You cannot mute a member in a text channel.'));
         }
 
@@ -549,7 +549,7 @@ class Channel extends Part
      */
     public function unmuteMember($member, ?string $reason = null): ExtendedPromiseInterface
     {
-        if (! $this->allowVoice()) {
+        if (! $this->isVoiceBased()) {
             return reject(new \RuntimeException('You cannot unmute a member in a text channel.'));
         }
 
@@ -591,7 +591,7 @@ class Channel extends Part
      */
     public function createInvite($options = []): ExtendedPromiseInterface
     {
-        if (! $this->allowInvite()) {
+        if (! $this->canInvite()) {
             return reject(new \RuntimeException('You cannot create invite in this type of channel.'));
         }
 
@@ -619,8 +619,8 @@ class Channel extends Part
             ->setAllowedTypes('target_type', 'int')
             ->setAllowedTypes('target_user_id', ['string', 'int'])
             ->setAllowedTypes('target_application_id', ['string', 'int'])
-            ->setAllowedValues('max_age', range(0, 604800))
-            ->setAllowedValues('max_uses', range(0, 100));
+            ->setAllowedValues('max_age', fn ($value) => ($value >= 0 && $value <= 604800))
+            ->setAllowedValues('max_uses', fn ($value) => ($value >= 0 && $value <= 100));
 
         $options = $resolver->resolve($options);
 
@@ -729,7 +729,7 @@ class Channel extends Part
         $resolver->setAllowedTypes('before', [Message::class, 'string']);
         $resolver->setAllowedTypes('after', [Message::class, 'string']);
         $resolver->setAllowedTypes('around', [Message::class, 'string']);
-        $resolver->setAllowedValues('limit', range(1, 100));
+        $resolver->setAllowedValues('limit', fn ($value) => ($value >= 1 && $value <= 100));
 
         $options = $resolver->resolve($options);
         if (isset($options['before'], $options['after']) ||
@@ -1074,7 +1074,7 @@ class Channel extends Part
             }
         }
 
-        if (! $this->allowText()) {
+        if (! $this->isTextBased()) {
             return reject(new \RuntimeException('You can only send messages to text channels.'));
         }
 
@@ -1160,7 +1160,7 @@ class Channel extends Part
      */
     public function broadcastTyping(): ExtendedPromiseInterface
     {
-        if (! $this->allowText()) {
+        if (! $this->isTextBased()) {
             return reject(new \RuntimeException('You cannot broadcast typing to a voice channel.'));
         }
 
@@ -1225,28 +1225,64 @@ class Channel extends Part
      * Returns if allow text.
      *
      * @return bool if we can send text or not.
+     *
+     * @deprecated 10.0.0 Use `Channel::isTextBased()`
      */
     public function allowText()
     {
-        return in_array($this->type, [self::TYPE_GUILD_TEXT, self::TYPE_DM, self::TYPE_GUILD_VOICE, self::TYPE_GROUP_DM, self::TYPE_GUILD_ANNOUNCEMENT]);
+        return $this->isTextBased();
     }
 
     /**
      * Returns if allow voice.
      *
      * @return bool if we can send voice or not.
+     *
+     * @deprecated 10.0.0 Use `Channel::isVoiceBased()`
      */
     public function allowVoice()
     {
-        return in_array($this->type, [self::TYPE_GUILD_VOICE, self::TYPE_GUILD_STAGE_VOICE]);
+        return $this->isVoiceBased();
     }
 
     /**
      * Returns if allow invite.
      *
      * @return bool if we can make invite or not.
+     *
+     * @deprecated 10.0.0 Use `Channel::canInvite()`
      */
     public function allowInvite()
+    {
+        return $this->canInvite();
+    }
+
+    /**
+     * Returns if channel type is text based.
+     *
+     * @return bool Whether the channel is possible for sending text.
+     */
+    public function isTextBased()
+    {
+        return in_array($this->type, [self::TYPE_GUILD_TEXT, self::TYPE_DM, self::TYPE_GUILD_VOICE, self::TYPE_GROUP_DM, self::TYPE_GUILD_ANNOUNCEMENT]);
+    }
+
+    /**
+     * Returns if channel type is voice based.
+     *
+     * @return bool Wether the channel is possible for voice.
+     */
+    public function isVoiceBased()
+    {
+        return in_array($this->type, [self::TYPE_GUILD_VOICE, self::TYPE_GUILD_STAGE_VOICE]);
+    }
+
+    /**
+     * Returns if invite can be created in this type of channel.
+     *
+     * @return bool Whether the channel type is possible for creating invite.
+     */
+    public function canInvite()
     {
         return in_array($this->type, [self::TYPE_GUILD_TEXT, self::TYPE_GUILD_VOICE, self::TYPE_GUILD_ANNOUNCEMENT, self::TYPE_GUILD_STAGE_VOICE, self::TYPE_GUILD_FORUM]);
     }

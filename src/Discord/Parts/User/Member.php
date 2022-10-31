@@ -698,7 +698,7 @@ class Member extends Part
     {
         if ($guild = $this->guild) {
             return $guild->channels->find(function (Channel $channel) {
-                if ($channel->allowVoice() && $members = $channel->members) {
+                if ($channel->isVoiceBased() && $members = $channel->members) {
                     return $members->offsetExists($this->id);
                 }
 

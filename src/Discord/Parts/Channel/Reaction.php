@@ -113,7 +113,7 @@ class Reaction extends Part
             ->setAllowedTypes('after', ['int', 'string', User::class])
             ->setAllowedTypes('limit', 'int')
             ->setNormalizer('after', normalizePartId())
-            ->setAllowedValues('limit', range(1, 100));
+            ->setAllowedValues('limit', fn ($value) => ($value >= 1 && $value <= 100));
 
         $options = $resolver->resolve($options);
 

@@ -34,7 +34,7 @@ class VoiceStateUpdate extends Event
         if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
             /** @var ?Channel */
             foreach ($guild->channels as $channel) {
-                if (! $channel->allowVoice()) {
+                if (! $channel->isVoiceBased()) {
                     continue;
                 }
 

@@ -31,6 +31,7 @@ use Discord\Repository\Guild\MemberRepository;
 use Discord\Repository\Guild\RoleRepository;
 use Discord\Parts\Guild\AuditLog\AuditLog;
 use Discord\Parts\Guild\AuditLog\Entry;
+use Discord\Parts\Permissions\RolePermission;
 use Discord\Repository\Guild\AutoModerationRuleRepository;
 use Discord\Repository\Guild\CommandPermissionsRepository;
 use Discord\Repository\Guild\GuildCommandRepository;
@@ -42,6 +43,7 @@ use React\Promise\ExtendedPromiseInterface;
 use ReflectionClass;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+use function Discord\normalizePartId;
 use function Discord\poly_strlen;
 use function React\Promise\reject;
 use function React\Promise\resolve;
@@ -338,10 +340,17 @@ class Guild extends Part
      *
      * @link https://discord.com/developers/docs/resources/guild#get-guild-invites
      *
+     * @throws NoPermissionsException Missing manage_guild permission.
+     *
      * @return ExtendedPromiseInterface<Collection|Invite[]>
      */
     public function getInvites(): ExtendedPromiseInterface
     {
+        $botperms = $this->getBotPermissions();
+        if ($botperms && ! $botperms->manage_guild) {
+            return reject(new NoPermissionsException("You do not have permission to manage the guild {$this->id}."));
+        }
+
         return $this->http->get(Endpoint::bind(Endpoint::GUILD_INVITES, $this->id))->then(function ($response) {
             $invites = Collection::for(Invite::class, 'code');
 
@@ -361,10 +370,17 @@ class Guild extends Part
      *
      * @param User|string $user
      *
+     * @throws NoPermissionsException Missing ban_members permission.
+     *
      * @return ExtendedPromiseInterface
      */
     public function unban($user): ExtendedPromiseInterface
     {
+        $botperms = $this->getBotPermissions();
+        if ($botperms && ! $botperms->ban_members) {
+            return reject(new NoPermissionsException("You do not have permission to ban members in the guild {$this->id}."));
+        }
+
         return $this->bans->unban($user);
     }
 
@@ -617,7 +633,7 @@ class Guild extends Part
      *
      * @link https://discord.com/developers/docs/resources/voice#list-voice-regions
      *
-     * @return ExtendedPromiseInterface
+     * @return ExtendedPromiseInterface<Collection>
      */
     public function getVoiceRegions(): ExtendedPromiseInterface
     {
@@ -642,7 +658,7 @@ class Guild extends Part
      * @param array       $data   The data to fill the role with.
      * @param string|null $reason Reason for Audit Log.
      *
-     * @throws NoPermissionsException
+     * @throws NoPermissionsException Missing manage_roles permission.
      *
      * @return ExtendedPromiseInterface<Role>
      */
@@ -651,7 +667,7 @@ class Guild extends Part
         $botperms = $this->getBotPermissions();
 
         if ($botperms && ! $botperms->manage_roles) {
-            return reject(new NoPermissionsException('You do not have permission to manage roles in the specified guild.'));
+            return reject(new NoPermissionsException("You do not have permission to manage roles in the guild {$this->id}."));
         }
 
         return $this->roles->save($this->factory->part(Role::class, $data), $reason);
@@ -662,14 +678,15 @@ class Guild extends Part
      *
      * @link https://discord.com/developers/docs/resources/emoji#create-guild-emoji
      *
-     * @param array       $options  An array of options.
-     *                              name => name of the emoji
-     *                              image => the 128x128 emoji image
-     *                              roles => roles allowed to use this emoji
-     * @param string|null $filepath The path to the file if specified will override image data string.
-     * @param string|null $reason   Reason for Audit Log.
+     * @param array       $options          An array of options.
+     * @param string      $options['name']  Name of the emoji.
+     * @param string|null $options['image'] The 128x128 emoji image (if not using `$filepath`).
+     * @param array|null  $options['roles'] Roles allowed to use this emoji.
+     * @param string|null $filepath         The path to the file if specified will override image data string.
+     * @param string|null $reason           Reason for Audit Log.
      *
-     * @throws FileNotFoundException Thrown when the file does not exist.
+     * @throws NoPermissionsException Missing manage_emojis_and_stickers permission.
+     * @throws FileNotFoundException  File does not exist.
      *
      * @return ExtendedPromiseInterface<Emoji>
      */
@@ -688,7 +705,16 @@ class Guild extends Part
             ->setAllowedTypes('roles', 'array')
             ->setDefault('roles', []);
 
+        if (is_null($filepath)) {
+            $resolver->setRequired('image');
+        }
+
         $options = $resolver->resolve($options);
+
+        $botperms = $this->getBotPermissions();
+        if ($botperms && ! $botperms->manage_emojis_and_stickers) {
+            return reject(new NoPermissionsException("You do not have permission to manage emojis in the guild {$this->id}."));
+        }
 
         if (isset($filepath)) {
             if (! file_exists($filepath)) {
@@ -725,16 +751,18 @@ class Guild extends Part
      *
      * @link https://discord.com/developers/docs/resources/sticker#create-guild-sticker
      *
-     * @param array       $options  An array of options.
-     *                              name => Name of the sticker.
-     *                              description => Description of the sticker (empty or 2-100 characters).
-     *                              tags => Autocomplete/suggestion tags for the sticker (max 200 characters).
-     * @param string      $filepath The sticker file to upload, must be a PNG, APNG, or Lottie JSON file, max 500 KB.
-     * @param string|null $reason   Reason for Audit Log.
+     * @param array       $options                An array of options.
+     * @param string      $options['name']        Name of the sticker.
+     * @param string|null $options['description'] Description of the sticker (empty or 2-100 characters).
+     * @param string      $options['tags']        Autocomplete/suggestion tags for the sticker (max 200 characters).
+     * @param string      $filepath               The sticker file to upload, must be a PNG, APNG, or Lottie JSON file, max 500 KB.
+     * @param string|null $reason                 Reason for Audit Log.
      *
-     * @throws FileNotFoundException Thrown when the file does not exist.
-     * @throws \LengthException
-     * @throws \DomainException
+     * @throws NoPermissionsException Missing manage_emojis_and_stickers permission.
+     * @throws FileNotFoundException  The file does not exist.
+     * @throws \LengthException       Description is not 2-100 characters long.
+     * @throws \DomainException       File format is not PNG, APNG, or Lottie JSON.
+     * @throws \RuntimeException      Guild is not verified or partnered to upload Lottie stickers.
      *
      * @return ExtendedPromiseInterface<Sticker>
      */
@@ -755,19 +783,25 @@ class Guild extends Part
 
         $options = $resolver->resolve($options);
 
+        $botperms = $this->getBotPermissions();
+        if ($botperms && ! $botperms->manage_emojis_and_stickers) {
+            return reject(new NoPermissionsException("You do not have permission to manage stickers in the guild {$this->id}."));
+        }
+
         if (! file_exists($filepath)) {
             return reject(new FileNotFoundException("File does not exist at path {$filepath}."));
         }
 
         $descLength = poly_strlen($options['description']);
         if ($descLength > 100 || $descLength == 1) {
-            return reject(new \LengthException('Description must be 2 to 100 characters'));
+            return reject(new \LengthException("Description must be 2 to 100 characters, given {$descLength}."));
         }
+
+        $extension = strtolower(pathinfo($filepath, PATHINFO_EXTENSION));
 
         if (function_exists('mime_content_type')) {
             $contentType = \mime_content_type($filepath);
         } else {
-            $extension = strtolower(pathinfo($filepath, PATHINFO_EXTENSION));
             $contentTypes = [
                 'png' => 'image/png',
                 'apng' => 'image/apng',
@@ -775,10 +809,14 @@ class Guild extends Part
             ];
 
             if (! array_key_exists($extension, $contentTypes)) {
-                return reject(new \DomainException('File format must be PNG, APNG, or Lottie JSON'));
+                return reject(new \DomainException("File format must be PNG, APNG, or Lottie JSON, given {$extension}."));
             }
 
             $contentType = $contentTypes[$extension];
+        }
+
+        if ($extension == 'lottie' && ! ($this->feature_verified || $this->feature_partnered)) {
+            return reject(new \RuntimeException('Lottie stickers can be only uploaded in verified or partnered guilds.'));
         }
 
         $contents = file_get_contents($filepath);
@@ -839,7 +877,7 @@ class Guild extends Part
      * @param Member|int  $member The member to transfer ownership to.
      * @param string|null $reason Reason for Audit Log.
      *
-     * @throws \RuntimeException
+     * @throws \RuntimeException Ownership not transferred correctly.
      *
      * @return ExtendedPromiseInterface
      */
@@ -890,11 +928,13 @@ class Guild extends Part
      *
      * @link https://discord.com/developers/docs/resources/audit-log#get-guild-audit-log
      *
-     * @param array $options An array of options.
-     *                       user_id => filter the log for actions made by a user
-     *                       action_type => the type of audit log event
-     *                       before => filter the log before a certain entry id
-     *                       limit => how many entries are returned (default 50, minimum 1, maximum 100)
+     * @param array                   $options An array of options.
+     * @param string|Member|User|null $options['user_id'] filter the log for actions made by a user
+     * @param int|null                $options['action_type'] the type of audit log event
+     * @param string|Entry|null       $options['before'] filter the log before a certain entry id
+     * @param int|null                $options['limit'] how many entries are returned (default 50, minimum 1, maximum 100)
+     *
+     * @throws NoPermissionsException Missing view_audit_log permission.
      *
      * @return ExtendedPromiseInterface<AuditLog>
      */
@@ -912,16 +952,15 @@ class Guild extends Part
         ->setAllowedTypes('before', ['string', 'int', Entry::class])
         ->setAllowedTypes('limit', 'int')
         ->setAllowedValues('action_type', array_values((new ReflectionClass(Entry::class))->getConstants()))
-        ->setAllowedValues('limit', range(1, 100));
+        ->setAllowedValues('limit', fn ($value) => ($value >= 1 && $value <= 100))
+        ->setNormalizer('user_id', normalizePartId())
+        ->setNormalizer('before', normalizePartId());
 
         $options = $resolver->resolve($options);
 
-        if ($options['user_id'] ?? null instanceof Part) {
-            $options['user_id'] = $options['user_id']->id;
-        }
-
-        if ($options['before'] ?? null instanceof Part) {
-            $options['before'] = $options['before']->id;
+        $botperms = $this->getBotPermissions();
+        if ($botperms && ! $botperms->view_audit_log) {
+            return reject(new NoPermissionsException("You do not have permission to view audit log in the guild {$this->id}."));
         }
 
         $endpoint = Endpoint::bind(Endpoint::AUDIT_LOG, $this->id);
@@ -954,15 +993,21 @@ class Guild extends Part
      *
      * @link https://discord.com/developers/docs/resources/guild#modify-guild-role-positions
      *
-     * The `$roles` array should be an associative array where the LHS key is the position,
-     * and the RHS value is a `Role` object or a string ID, e.g. [1 => 'role_id_1', 3 => 'role_id_3'].
+     * @param array $roles Associative array where the LHS key is the position,
+     *                     and the RHS value is a `Role` object or a string ID,
+     *                     e.g. `[1 => 'role_id_1', 3 => 'role_id_3']`.
      *
-     * @param array $roles
+     * @throws NoPermissionsException Missing manage_roles permission.
      *
-     * @return ExtendedPromiseInterface
+     * @return ExtendedPromiseInterface<self>
      */
     public function updateRolePositions(array $roles): ExtendedPromiseInterface
     {
+        $botperms = $this->getBotPermissions();
+        if ($botperms && ! $botperms->manage_roles) {
+            return reject(new NoPermissionsException("You do not have permission to manage roles in the guild {$this->id}."));
+        }
+
         $payload = [];
 
         foreach ($roles as $position => $role) {
@@ -992,9 +1037,9 @@ class Guild extends Part
      *
      * @link https://discord.com/developers/docs/resources/guild#search-guild-members
      *
-     * @param array $options An array of options.
-     *                       query => query string to match username(s) and nickname(s) against
-     *                       limit => how many entries are returned (default 1, minimum 1, maximum 1000)
+     * @param array       $options          An array of options. All fields are optional.
+     * @param string|null $options['query'] Query string to match username(s) and nickname(s) against
+     * @param int|null    $options['limit'] How many entries are returned (default 1, minimum 1, maximum 1000)
      *
      * @return ExtendedPromiseInterface<Collection|Member[]>
      */
@@ -1008,7 +1053,7 @@ class Guild extends Part
         ->setDefault('limit', 1)
         ->setAllowedTypes('query', 'string')
         ->setAllowedTypes('limit', 'int')
-        ->setAllowedValues('limit', range(1, 1000));
+        ->setAllowedValues('limit', fn ($value) => ($value >= 1 && $value <= 1000));
 
         $options = $resolver->resolve($options);
 
@@ -1034,13 +1079,14 @@ class Guild extends Part
 
     /**
      * Returns the number of members that would be removed in a prune operation.
-     * Requires the KICK_MEMBERS permission.
      *
      * @link https://discord.com/developers/docs/resources/guild#get-guild-prune-count
      *
-     * @param array $options An array of options.
-     *                       days => number of days to count prune for (1-30)
-     *                       include_roles => role id(s) to include
+     * @param array                $options                  An array of options.
+     * @param int|null             $options['days']          Number of days to count prune for (1-30), defaults to 7.
+     * @param string[]|Role[]|null $options['include_roles'] Roles to include, defaults to none.
+     *
+     * @throws NoPermissionsException Missing kick_members permission.
      *
      * @return ExtendedPromiseInterface<int> The number of members that would be removed.
      */
@@ -1054,9 +1100,23 @@ class Guild extends Part
         ->setDefault('days', 7)
         ->setAllowedTypes('days', 'int')
         ->setAllowedTypes('include_roles', 'array')
-        ->setAllowedValues('days', range(1, 30));
+        ->setAllowedValues('days', fn ($value) => ($value >= 1 && $value <= 30))
+        ->setNormalizer('include_roles', function ($option, $values) {
+            foreach ($values as &$value) {
+                if ($value instanceof Role) {
+                    $value = $value->id;
+                }
+            }
+
+            return $values;
+        });
 
         $options = $resolver->resolve($options);
+
+        $botperms = $this->getBotPermissions();
+        if ($botperms && ! $botperms->kick_members) {
+            return reject(new NoPermissionsException("You do not have permission to kick members in the guild {$this->id}."));
+        }
 
         $endpoint = Endpoint::bind(Endpoint::GUILD_PRUNE, $this->id);
         $endpoint->addQuery('days', $options['days']);
@@ -1072,15 +1132,16 @@ class Guild extends Part
     /**
      * Begin a prune members operation.
      * For large guilds it's recommended to set the compute_prune_count option to false, forcing 'pruned' to null.
-     * Requires the KICK_MEMBERS permission.
      *
-     * @link https://discord.com/developers/docs/resources/guild#get-guild-prune-count
+     * @link https://discord.com/developers/docs/resources/guild#begin-guild-prune
      *
-     * @param array  $options An array of options.
-     *                        days => number of days to count prune for (1-30)
-     *                        compute_prune_count => whether 'pruned' is returned, discouraged for large guilds
-     *                        include_roles => role id(s) to include
-     * @param string $reason  Reason for Audit Log.
+     * @param array                $options                        An array of options.
+     * @param int|null             $options['days']                Number of days to count prune for (1-30), defaults to 7.
+     * @param int|null             $options['compute_prune_count'] Whether 'pruned' is returned, discouraged for large guilds.
+     * @param string[]|Role[]|null $options['include_roles']       Roles to include, defaults to none.
+     * @param string               $reason                         Reason for Audit Log.
+     *
+     * @throws NoPermissionsException Missing kick_members permission.
      *
      * @return ExtendedPromiseInterface<?int> The number of members that were removed in the prune operation.
      */
@@ -1096,9 +1157,23 @@ class Guild extends Part
         ->setAllowedTypes('days', 'int')
         ->setAllowedTypes('compute_prune_count', 'bool')
         ->setAllowedTypes('include_roles', 'array')
-        ->setAllowedValues('days', range(1, 30));
+        ->setAllowedValues('days', fn ($value) => ($value >= 1 && $value <= 30))
+        ->setNormalizer('include_roles', function ($option, $values) {
+            foreach ($values as &$value) {
+                if ($value instanceof Role) {
+                    $value = $value->id;
+                }
+            }
+
+            return $values;
+        });
 
         $options = $resolver->resolve($options);
+
+        $botperms = $this->getBotPermissions();
+        if ($botperms && ! $botperms->kick_members) {
+            return reject(new NoPermissionsException("You do not have permission to kick members in the guild {$this->id}."));
+        }
 
         $headers = [];
         if (isset($reason)) {
@@ -1117,10 +1192,19 @@ class Guild extends Part
      *
      * @param bool $fresh Whether we should skip checking the cache.
      *
+     * @throws NoPermissionsException Missing manage_guild permission when the welcome screen is not enabled.
+     *
      * @return ExtendedPromiseInterface<WelcomeScreen>
      */
     public function getWelcomeScreen(bool $fresh = false): ExtendedPromiseInterface
     {
+        if (! $this->feature_welcome_screen_enabled) {
+            $botperms = $this->getBotPermissions();
+            if ($botperms && ! $botperms->manage_guild) {
+                return reject(new NoPermissionsException("You do not have permission to manage the guild {$this->id}."));
+            }
+        }
+
         if (! $fresh && $welcomeScreen = $this->welcome_screen) {
             return resolve($welcomeScreen);
         }
@@ -1151,10 +1235,12 @@ class Guild extends Part
      *
      * @link https://discord.com/developers/docs/resources/guild#modify-guild-welcome-screen
      *
-     * @param array $options An array of options.
-     *                       enabled => whether the welcome screen is enabled
-     *                       welcome_channels => channels linked in the welcome screen and their display options (maximum 5)
-     *                       description => the server description to show in the welcome screen (maximum 140)
+     * @param array                          $options                     An array of options. All fields are optional.
+     * @param bool|null                      $options['enabled']          Whether the welcome screen is enabled.
+     * @param object[]|WelcomeChannel[]|null $options['welcome_channels'] Channels linked in the welcome screen and their display options (maximum 5).
+     * @param string|null                    $options['description']      The server description to show in the welcome screen (maximum 140).
+     *
+     * @throws NoPermissionsException Missing manage_guild permission.
      *
      * @return ExtendedPromiseInterface<WelcomeScreen> The updated Welcome Screen.
      */
@@ -1168,9 +1254,23 @@ class Guild extends Part
         ])
         ->setAllowedTypes('enabled', 'bool')
         ->setAllowedTypes('welcome_channels', 'array')
-        ->setAllowedTypes('description', 'string');
+        ->setAllowedTypes('description', 'string')
+        ->setNormalizer('welcome_channels', function ($option, $values) {
+            foreach ($values as &$value) {
+                if ($value instanceof WelcomeChannel) {
+                    $value = $value->getRawAttributes();
+                }
+            }
+
+            return $values;
+        });
 
         $options = $resolver->resolve($options);
+
+        $botperms = $this->getBotPermissions();
+        if ($botperms && ! $botperms->manage_guild) {
+            return reject(new NoPermissionsException("You do not have permission to manage the guild {$this->id}."));
+        }
 
         return $this->http->patch(Endpoint::bind(Endpoint::GUILD_WELCOME_SCREEN, $this->id), $options)->then(function ($response) {
             $this->attributes['welcome_screen'] = $response;
@@ -1184,10 +1284,17 @@ class Guild extends Part
      *
      * @link https://discord.com/developers/docs/resources/guild#get-guild-widget-settings
      *
+     * @throws NoPermissionsException Missing manage_guild permission.
+     *
      * @return ExtendedPromiseInterface
      */
     public function getWidgetSettings(): ExtendedPromiseInterface
     {
+        $botperms = $this->getBotPermissions();
+        if ($botperms && ! $botperms->manage_guild) {
+            return reject(new NoPermissionsException("You do not have permission to manage the guild {$this->id}."));
+        }
+
         return $this->http->get(Endpoint::bind(Endpoint::GUILD_WIDGET_SETTINGS, $this->id))->then(function ($response) {
             $this->widget_enabled = $response->enabled;
             $this->widget_channel_id = $response->channel_id;
@@ -1206,6 +1313,8 @@ class Guild extends Part
      *                        channel_id => the widget channel id
      * @param string $reason  Reason for Audit Log.
      *
+     * @throws NoPermissionsException Missing manage_guild permission.
+     *
      * @return ExtendedPromiseInterface The updated guild widget object.
      */
     public function updateWidgetSettings(array $options, ?string $reason = null): ExtendedPromiseInterface
@@ -1219,6 +1328,11 @@ class Guild extends Part
         ->setAllowedTypes('channel_id', ['string', 'null']);
 
         $options = $resolver->resolve($options);
+
+        $botperms = $this->getBotPermissions();
+        if ($botperms && ! $botperms->manage_guild) {
+            return reject(new NoPermissionsException("You do not have permission to manage the guild {$this->id}."));
+        }
 
         $headers = [];
         if (isset($reason)) {
@@ -1238,7 +1352,7 @@ class Guild extends Part
      *
      * @link https://discord.com/developers/docs/resources/guild#get-guild-widget
      *
-     * @return ExtendedPromiseInterface<WelcomeScreen>
+     * @return ExtendedPromiseInterface<Widget>
      */
     public function getWidget(): ExtendedPromiseInterface
     {
@@ -1258,7 +1372,7 @@ class Guild extends Part
     public function createInvite(...$args): ExtendedPromiseInterface
     {
         $channel = $this->channels->find(function (Channel $channel) {
-            if ($channel->allowInvite()) {
+            if ($channel->canInvite()) {
                 if ($botperms = $channel->getBotPermissions()) {
                     return $botperms->create_instant_invite;
                 }
@@ -1270,7 +1384,7 @@ class Guild extends Part
         });
 
         if (! $channel) {
-            return reject(new \RuntimeException('No channels found to create an Invite to the specified guild.'));
+            return reject(new \RuntimeException("No channels found to create an Invite to the guild {$this->id}."));
         }
 
         return $channel->createInvite($args);
@@ -1284,7 +1398,7 @@ class Guild extends Part
      * @param int         $level  The new MFA level `Guild::MFA_NONE` or `Guild::MFA_ELEVATED`.
      * @param string|null $reason Reason for Audit Log.
      *
-     * @return ExtendedPromiseInterface<Guild> This guild.
+     * @return ExtendedPromiseInterface<self> This guild.
      */
     public function updateMFALevel(int $level, ?string $reason = null): ExtendedPromiseInterface
     {
@@ -1308,7 +1422,7 @@ class Guild extends Part
      * @param bool[]      $features Array of features to set/unset, e.g. `['COMMUNITY' => true, 'INVITES_DISABLED' => false]`.
      * @param string|null $reason   Reason for Audit Log.
      *
-     * @return ExtendedPromiseInterface<Guild> This guild.
+     * @return ExtendedPromiseInterface<self> This guild.
      *
      * @throws \OutOfRangeException Feature is not mutable.
      * @throws \RuntimeException    Guild feature is already set.
