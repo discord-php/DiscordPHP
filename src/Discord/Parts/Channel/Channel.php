@@ -645,14 +645,14 @@ class Channel extends Part
      * @param array|Traversable $messages An array of messages to delete.
      * @param string|null       $reason   Reason for Audit Log (only for bulk messages).
      *
-     * @throws \UnexpectedValueException
+     * @throws \InvalidArgumentException
      *
      * @return ExtendedPromiseInterface
      */
     public function deleteMessages($messages, ?string $reason = null): ExtendedPromiseInterface
     {
         if (! is_array($messages) && ! ($messages instanceof Traversable)) {
-            return reject(new \UnexpectedValueException('$messages must be an array or implement Traversable.'));
+            return reject(new \InvalidArgumentException('$messages must be an array or implement Traversable.'));
         }
 
         $headers = $promises = $messagesBulk = $messagesSingle = [];
@@ -916,7 +916,6 @@ class Channel extends Part
      * @param string|null    $reason                           Reason for Audit Log.
      *
      * @throws \RuntimeException
-     * @throws \UnexpectedValueException `$auto_archive_duration` is not one of 60, 1440, 4320, 10080.
      *
      * @return ExtendedPromiseInterface<Thread>
      *
