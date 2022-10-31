@@ -339,10 +339,17 @@ class Guild extends Part
      *
      * @link https://discord.com/developers/docs/resources/guild#get-guild-invites
      *
+     * @throws NoPermissionsException Missing manage_guild permission.
+     *
      * @return ExtendedPromiseInterface<Collection|Invite[]>
      */
     public function getInvites(): ExtendedPromiseInterface
     {
+        $botperms = $this->getBotPermissions();
+        if ($botperms && ! $botperms->manage_guild) {
+            return reject(new NoPermissionsException("You do not have permission to manage the guild {$this->guild_id}."));
+        }
+
         return $this->http->get(Endpoint::bind(Endpoint::GUILD_INVITES, $this->id))->then(function ($response) {
             $invites = Collection::for(Invite::class, 'code');
 
