@@ -1041,9 +1041,9 @@ class Guild extends Part
      *
      * @link https://discord.com/developers/docs/resources/guild#search-guild-members
      *
-     * @param array $options An array of options.
-     *                       query => query string to match username(s) and nickname(s) against
-     *                       limit => how many entries are returned (default 1, minimum 1, maximum 1000)
+     * @param array       $options          An array of options. All fields are optional.
+     * @param string|null $options['query'] Query string to match username(s) and nickname(s) against
+     * @param int|null    $options['limit'] How many entries are returned (default 1, minimum 1, maximum 1000)
      *
      * @return ExtendedPromiseInterface<Collection|Member[]>
      */
@@ -1338,7 +1338,7 @@ class Guild extends Part
      *
      * @link https://discord.com/developers/docs/resources/guild#get-guild-widget
      *
-     * @return ExtendedPromiseInterface<WelcomeScreen>
+     * @return ExtendedPromiseInterface<Widget>
      */
     public function getWidget(): ExtendedPromiseInterface
     {
