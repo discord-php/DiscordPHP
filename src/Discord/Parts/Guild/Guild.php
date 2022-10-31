@@ -952,7 +952,7 @@ class Guild extends Part
         ->setAllowedTypes('before', ['string', 'int', Entry::class])
         ->setAllowedTypes('limit', 'int')
         ->setAllowedValues('action_type', array_values((new ReflectionClass(Entry::class))->getConstants()))
-        ->setAllowedValues('limit', range(1, 100))
+        ->setAllowedValues('limit', fn ($value) => ($value >= 1 && $value <= 100))
         ->setNormalizer('user_id', normalizePartId())
         ->setNormalizer('before', normalizePartId());
 
@@ -1053,7 +1053,7 @@ class Guild extends Part
         ->setDefault('limit', 1)
         ->setAllowedTypes('query', 'string')
         ->setAllowedTypes('limit', 'int')
-        ->setAllowedValues('limit', range(1, 1000));
+        ->setAllowedValues('limit', fn ($value) => ($value >= 1 && $value <= 1000));
 
         $options = $resolver->resolve($options);
 
@@ -1100,7 +1100,7 @@ class Guild extends Part
         ->setDefault('days', 7)
         ->setAllowedTypes('days', 'int')
         ->setAllowedTypes('include_roles', 'array')
-        ->setAllowedValues('days', range(1, 30))
+        ->setAllowedValues('days', fn ($value) => ($value >= 1 && $value <= 30))
         ->setNormalizer('include_roles', function ($option, $values) {
             foreach ($values as &$value) {
                 if ($value instanceof Role) {
@@ -1157,7 +1157,7 @@ class Guild extends Part
         ->setAllowedTypes('days', 'int')
         ->setAllowedTypes('compute_prune_count', 'bool')
         ->setAllowedTypes('include_roles', 'array')
-        ->setAllowedValues('days', range(1, 30))
+        ->setAllowedValues('days', fn ($value) => ($value >= 1 && $value <= 30))
         ->setNormalizer('include_roles', function ($option, $values) {
             foreach ($values as &$value) {
                 if ($value instanceof Role) {

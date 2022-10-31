@@ -103,7 +103,7 @@ class ScheduledEvent extends Part
         $resolver->setAllowedTypes('before', [User::class, 'string']);
         $resolver->setAllowedTypes('after', [User::class, 'string']);
         $resolver->setAllowedTypes('with_member', 'bool');
-        $resolver->setAllowedValues('limit', range(1, 100));
+        $resolver->setAllowedValues('limit', fn ($value) => ($value >= 1 && $value <= 100));
 
         $options = $resolver->resolve($options);
         if (isset($options['before'], $options['after'])) {

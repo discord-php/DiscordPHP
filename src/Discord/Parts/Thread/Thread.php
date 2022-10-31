@@ -545,7 +545,7 @@ class Thread extends Part
             ->setAllowedTypes('before', [Message::class, 'string'])
             ->setAllowedTypes('after', [Message::class, 'string'])
             ->setAllowedTypes('around', [Message::class, 'string'])
-            ->setAllowedValues('limit', range(1, 100));
+            ->setAllowedValues('limit', fn ($value) => ($value >= 1 && $value <= 100));
 
         $options = $resolver->resolve($options);
 

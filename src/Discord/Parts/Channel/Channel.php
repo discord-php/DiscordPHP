@@ -619,8 +619,8 @@ class Channel extends Part
             ->setAllowedTypes('target_type', 'int')
             ->setAllowedTypes('target_user_id', ['string', 'int'])
             ->setAllowedTypes('target_application_id', ['string', 'int'])
-            ->setAllowedValues('max_age', range(0, 604800))
-            ->setAllowedValues('max_uses', range(0, 100));
+            ->setAllowedValues('max_age', fn ($value) => ($value >= 0 && $value <= 604800))
+            ->setAllowedValues('max_uses', fn ($value) => ($value >= 0 && $value <= 100));
 
         $options = $resolver->resolve($options);
 
@@ -729,7 +729,7 @@ class Channel extends Part
         $resolver->setAllowedTypes('before', [Message::class, 'string']);
         $resolver->setAllowedTypes('after', [Message::class, 'string']);
         $resolver->setAllowedTypes('around', [Message::class, 'string']);
-        $resolver->setAllowedValues('limit', range(1, 100));
+        $resolver->setAllowedValues('limit', fn ($value) => ($value >= 1 && $value <= 100));
 
         $options = $resolver->resolve($options);
         if (isset($options['before'], $options['after']) ||
