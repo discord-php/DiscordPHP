@@ -629,7 +629,7 @@ class Channel extends Part
                 /** @var ?Invite */
                 if (! $invitePart = $this->invites->get('code', $response->code)) {
                     /** @var Invite */
-                    $invitePart = $this->factory->part(Invite::class, (array) $response, true);
+                    $invitePart = $this->invites->create((array) $response, true);
                     $this->invites->pushItem($invitePart);
                 }
 
@@ -934,8 +934,8 @@ class Channel extends Part
             ->setAllowedTypes('name', 'string')
             ->setAllowedTypes('auto_archive_duration', 'int')
             ->setAllowedTypes('rate_limit_per_user', ['null', 'int'])
-            ->setAllowedValues('auto_archive_duration', fn ($values) => in_array($values, [60, 1440, 4320, 10080]))
-            ->setAllowedValues('rate_limit_per_user', fn ($values) => $values >= 0 && $values <= 21600)
+            ->setAllowedValues('auto_archive_duration', fn ($value) => in_array($value, [60, 1440, 4320, 10080]))
+            ->setAllowedValues('rate_limit_per_user', fn ($value) => $value >= 0 && $value <= 21600)
             ->setRequired('name');
 
         if ($this->type == self::TYPE_GUILD_FORUM) {
@@ -1016,7 +1016,7 @@ class Channel extends Part
                 $threadPart->fill((array) $response);
             } else {
                 /** @var Thread */
-                $threadPart = $this->factory->part(Thread::class, (array) $response, true);
+                $threadPart = $this->threads->create((array) $response, true);
             }
             $this->threads->pushItem($threadPart);
             if ($messageId = ($response->message->id ?? null)) {
@@ -1101,7 +1101,7 @@ class Channel extends Part
 
             return $this->http->post(Endpoint::bind(Endpoint::CHANNEL_MESSAGES, $this->id), $message);
         })()->then(function ($response) {
-            return $this->messages->get('id', $response->id) ?? $this->factory->part(Message::class, (array) $response + ['guild_id' => $this->guild_id], true);
+            return $this->messages->get('id', $response->id) ?? $this->messages->create((array) $response, true);
         });
     }
 
