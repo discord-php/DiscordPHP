@@ -58,7 +58,7 @@ class ReactionRepository extends AbstractRepository
     public function delete($part, ?string $reason = null): ExtendedPromiseInterface
     {
         // Deal with unicode emoji
-        if (! ($part instanceof Reaction) && ! is_numeric($part)) {
+        if (is_string($part) && ! is_numeric($part)) {
             $part = $this->create([$this->discrim => $part, 'emoji' => (object) ['id' => null, 'name' => $part]], true);
         }
 
