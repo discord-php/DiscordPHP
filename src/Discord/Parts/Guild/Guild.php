@@ -1083,13 +1083,14 @@ class Guild extends Part
 
     /**
      * Returns the number of members that would be removed in a prune operation.
-     * Requires the KICK_MEMBERS permission.
      *
      * @link https://discord.com/developers/docs/resources/guild#get-guild-prune-count
      *
-     * @param array $options An array of options.
-     *                       days => number of days to count prune for (1-30)
-     *                       include_roles => role id(s) to include
+     * @param array         $options                  An array of options.
+     * @param int|null      $options['days']          Number of days to count prune for (1-30), defaults to 7.
+     * @param string[]|null $options['include_roles'] Role id(s) to include.
+     *
+     * @throws NoPermissionsException Missing kick_members permission.
      *
      * @return ExtendedPromiseInterface<int> The number of members that would be removed.
      */
@@ -1107,6 +1108,11 @@ class Guild extends Part
 
         $options = $resolver->resolve($options);
 
+        $botperms = $this->getBotPermissions();
+        if ($botperms && ! $botperms->kick_members) {
+            return reject(new NoPermissionsException("You do not have permission to kick members in the guild {$this->guild_id}."));
+        }
+
         $endpoint = Endpoint::bind(Endpoint::GUILD_PRUNE, $this->id);
         $endpoint->addQuery('days', $options['days']);
         if (isset($options['include_roles'])) {
@@ -1121,15 +1127,16 @@ class Guild extends Part
     /**
      * Begin a prune members operation.
      * For large guilds it's recommended to set the compute_prune_count option to false, forcing 'pruned' to null.
-     * Requires the KICK_MEMBERS permission.
      *
-     * @link https://discord.com/developers/docs/resources/guild#get-guild-prune-count
+     * @link https://discord.com/developers/docs/resources/guild#begin-guild-prune
      *
-     * @param array  $options An array of options.
-     *                        days => number of days to count prune for (1-30)
-     *                        compute_prune_count => whether 'pruned' is returned, discouraged for large guilds
-     *                        include_roles => role id(s) to include
-     * @param string $reason  Reason for Audit Log.
+     * @param array         $options                        An array of options.
+     * @param int|null      $options['days']                Number of days to count prune for (1-30), defaults to 7.
+     * @param int|null      $options['compute_prune_count'] Whether 'pruned' is returned, discouraged for large guilds.
+     * @param string[]|null $options['include_roles']       Role id(s) to include.
+     * @param string        $reason                         Reason for Audit Log.
+     *
+     * @throws NoPermissionsException Missing kick_members permission.
      *
      * @return ExtendedPromiseInterface<?int> The number of members that were removed in the prune operation.
      */
@@ -1148,6 +1155,11 @@ class Guild extends Part
         ->setAllowedValues('days', range(1, 30));
 
         $options = $resolver->resolve($options);
+
+        $botperms = $this->getBotPermissions();
+        if ($botperms && ! $botperms->kick_members) {
+            return reject(new NoPermissionsException("You do not have permission to kick members in the guild {$this->guild_id}."));
+        }
 
         $headers = [];
         if (isset($reason)) {
