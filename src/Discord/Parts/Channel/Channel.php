@@ -646,6 +646,7 @@ class Channel extends Part
      * @param string|null       $reason   Reason for Audit Log (only for bulk messages).
      *
      * @throws \InvalidArgumentException
+     * @throws NoPermissionsException    Missing manage_messages permission.
      *
      * @return ExtendedPromiseInterface
      */
@@ -653,6 +654,12 @@ class Channel extends Part
     {
         if (! is_array($messages) && ! ($messages instanceof Traversable)) {
             return reject(new \InvalidArgumentException('$messages must be an array or implement Traversable.'));
+        }
+
+        if ($botperms = $this->getBotPermissions()) {
+            if (! $botperms->manage_messages) {
+                return reject(new NoPermissionsException("You do not have permission to delete messages in the channel {$this->id}."));
+            }
         }
 
         $headers = $promises = $messagesBulk = $messagesSingle = [];
@@ -694,10 +701,18 @@ class Channel extends Part
      * @param int         $value
      * @param string|null $reason Reason for Audit Log (only for bulk messages).
      *
+     * @throws NoPermissionsException Missing manage_messages permission.
+     *
      * @return ExtendedPromiseInterface
      */
     public function limitDelete(int $value, ?string $reason = null): ExtendedPromiseInterface
     {
+        if ($botperms = $this->getBotPermissions()) {
+            if (! $botperms->manage_messages) {
+                return reject(new NoPermissionsException("You do not have permission to delete messages in the channel {$this->id}."));
+            }
+        }
+
         return $this->getMessageHistory(['limit' => $value])->then(function ($messages) use ($reason) {
             return $this->deleteMessages($messages, $reason);
         });
