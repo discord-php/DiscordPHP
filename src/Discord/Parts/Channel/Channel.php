@@ -362,8 +362,8 @@ class Channel extends Part
      * @param Overwrite   $overwrite An overwrite object.
      * @param string|null $reason    Reason for Audit Log.
      *
-     * @throws NoPermissionsException
-     * @throws InvalidOverwriteException
+     * @throws NoPermissionsException    Missing manage_roles permission.
+     * @throws InvalidOverwriteException Overwrite type is not member or role.
      *
      * @return ExtendedPromiseInterface
      */
@@ -371,7 +371,7 @@ class Channel extends Part
     {
         if ($this->guild_id && $botperms = $this->getBotPermissions()) {
             if (! $botperms->manage_roles) {
-                return reject(new NoPermissionsException('You do not have permission to edit roles in the specified channel.'));
+                return reject(new NoPermissionsException("You do not have permission to manage roles in the channel {$this->id}."));
             }
         }
 
@@ -415,7 +415,7 @@ class Channel extends Part
      *
      * @throws \RuntimeException
      * @throws \InvalidArgumentException
-     * @throws NoPermissionsException
+     * @throws NoPermissionsException    Missing manage_channels permission in either channel.
      */
     public function setCategory($category, ?int $position = null, ?string $reason = null): ExtendedPromiseInterface
     {
@@ -425,7 +425,7 @@ class Channel extends Part
 
         if ($botperms = $this->getBotPermissions()) {
             if (! $botperms->manage_channels) {
-                return reject(new NoPermissionsException('You do not have permission to manage this channel.'));
+                return reject(new NoPermissionsException("You do not have permission to manage the channel {$this->id}."));
             }
         }
 
@@ -441,7 +441,7 @@ class Channel extends Part
 
             if ($botperms = $category->getBotPermissions()) {
                 if (! $botperms->manage_channels) {
-                    return reject(new NoPermissionsException('You do not have permission to manage the specified channel.'));
+                    return reject(new NoPermissionsException("You do not have permission to manage the category channel {$category->id}."));
                 }
             }
 
@@ -473,7 +473,7 @@ class Channel extends Part
      * @param string|null   $reason Reason for Audit Log.
      *
      * @throws \RuntimeException
-     * @throws NoPermissionsException
+     * @throws NoPermissionsException Missing move_members permission.
      *
      * @return ExtendedPromiseInterface
      */
@@ -485,7 +485,7 @@ class Channel extends Part
 
         if ($botperms = $this->getBotPermissions()) {
             if (! $botperms->move_members) {
-                return reject(new NoPermissionsException('You do not have permission to move members in the specified channel.'));
+                return reject(new NoPermissionsException("You do not have permission to move members in the channel {$this->id}."));
             }
         }
 
@@ -508,7 +508,7 @@ class Channel extends Part
      * @param string|null   $reason Reason for Audit Log.
      *
      * @throws \RuntimeException
-     * @throws NoPermissionsException
+     * @throws NoPermissionsException Missing mute_members permission.
      *
      * @return ExtendedPromiseInterface
      */
@@ -520,7 +520,7 @@ class Channel extends Part
 
         if ($botperms = $this->getBotPermissions()) {
             if (! $botperms->mute_members) {
-                return reject(new NoPermissionsException('You do not have permission to mute members in the specified channel.'));
+                return reject(new NoPermissionsException("You do not have permission to mute members in the channel {$this->id}."));
             }
         }
 
@@ -543,7 +543,7 @@ class Channel extends Part
      * @param string|null   $reason Reason for Audit Log.
      *
      * @throws \RuntimeException
-     * @throws NoPermissionsException
+     * @throws NoPermissionsException Missing mute_members permission.
      *
      * @return ExtendedPromiseInterface
      */
@@ -555,7 +555,7 @@ class Channel extends Part
 
         if ($botperms = $this->getBotPermissions()) {
             if (! $botperms->mute_members) {
-                return reject(new NoPermissionsException('You do not have permission to unmute members in the specified channel.'));
+                return reject(new NoPermissionsException("You do not have permission to unmute members in the channel {$this->id}."));
             }
         }
 
@@ -585,7 +585,7 @@ class Channel extends Part
      * @param string $options['target_user_id']        The id of the user whose stream to display for this invite, required if target_type is `Invite::TARGET_TYPE_STREAM`, the user must be streaming in the channel.
      * @param string $options['target_application_id'] The id of the embedded application to open for this invite, required if target_type is `Invite::TARGET_TYPE_EMBEDDED_APPLICATION`, the application must have the EMBEDDED flag.
      *
-     * @throws NoPermissionsException
+     * @throws NoPermissionsException Missing create_instant_invite permission.
      *
      * @return ExtendedPromiseInterface<Invite>
      */
@@ -597,7 +597,7 @@ class Channel extends Part
 
         if ($botperms = $this->getBotPermissions()) {
             if (! $botperms->create_instant_invite) {
-                return reject(new NoPermissionsException('You do not have permission to create an invite for the specified channel.'));
+                return reject(new NoPermissionsException("You do not have permission to create instant invite in the channel {$this->id}."));
             }
         }
 
@@ -629,7 +629,7 @@ class Channel extends Part
                 /** @var ?Invite */
                 if (! $invitePart = $this->invites->get('code', $response->code)) {
                     /** @var Invite */
-                    $invitePart = $this->factory->part(Invite::class, (array) $response, true);
+                    $invitePart = $this->invites->create((array) $response, true);
                     $this->invites->pushItem($invitePart);
                 }
 
@@ -645,14 +645,21 @@ class Channel extends Part
      * @param array|Traversable $messages An array of messages to delete.
      * @param string|null       $reason   Reason for Audit Log (only for bulk messages).
      *
-     * @throws \UnexpectedValueException
+     * @throws \InvalidArgumentException
+     * @throws NoPermissionsException    Missing manage_messages permission.
      *
      * @return ExtendedPromiseInterface
      */
     public function deleteMessages($messages, ?string $reason = null): ExtendedPromiseInterface
     {
         if (! is_array($messages) && ! ($messages instanceof Traversable)) {
-            return reject(new \UnexpectedValueException('$messages must be an array or implement Traversable.'));
+            return reject(new \InvalidArgumentException('$messages must be an array or implement Traversable.'));
+        }
+
+        if ($botperms = $this->getBotPermissions()) {
+            if (! $botperms->manage_messages) {
+                return reject(new NoPermissionsException("You do not have permission to delete messages in the channel {$this->id}."));
+            }
         }
 
         $headers = $promises = $messagesBulk = $messagesSingle = [];
@@ -694,10 +701,18 @@ class Channel extends Part
      * @param int         $value
      * @param string|null $reason Reason for Audit Log (only for bulk messages).
      *
+     * @throws NoPermissionsException Missing manage_messages permission.
+     *
      * @return ExtendedPromiseInterface
      */
     public function limitDelete(int $value, ?string $reason = null): ExtendedPromiseInterface
     {
+        if ($botperms = $this->getBotPermissions()) {
+            if (! $botperms->manage_messages) {
+                return reject(new NoPermissionsException("You do not have permission to delete messages in the channel {$this->id}."));
+            }
+        }
+
         return $this->getMessageHistory(['limit' => $value])->then(function ($messages) use ($reason) {
             return $this->deleteMessages($messages, $reason);
         });
@@ -710,7 +725,7 @@ class Channel extends Part
      *
      * @param array $options
      *
-     * @throws NoPermissionsException
+     * @throws NoPermissionsException Missing read_message_history permission.
      * @throws \RangeException
      *
      * @return ExtendedPromiseInterface<Collection<Message>>
@@ -719,7 +734,7 @@ class Channel extends Part
     {
         if (! $this->is_private && $botperms = $this->getBotPermissions()) {
             if (! $botperms->read_message_history) {
-                return reject(new NoPermissionsException('You do not have permission to read the specified channel\'s message history.'));
+                return reject(new NoPermissionsException("You do not have permission to read message history in the channel {$this->id}."));
             }
         }
 
@@ -773,7 +788,7 @@ class Channel extends Part
      * @param Message     $message The message to pin.
      * @param string|null $reason  Reason for Audit Log.
      *
-     * @throws NoPermissionsException
+     * @throws NoPermissionsException Missing manage_messages permission.
      * @throws \RuntimeException
      *
      * @return ExtendedPromiseInterface<Message>
@@ -782,7 +797,7 @@ class Channel extends Part
     {
         if (! $this->is_private && $botperms = $this->getBotPermissions()) {
             if (! $botperms->manage_messages) {
-                return reject(new NoPermissionsException('You do not have permission to pin messages in the specified channel.'));
+                return reject(new NoPermissionsException("You do not have permission to pin messages in the channel {$this->id}."));
             }
         }
 
@@ -814,7 +829,7 @@ class Channel extends Part
      * @param Message     $message The message to un-pin.
      * @param string|null $reason  Reason for Audit Log.
      *
-     * @throws NoPermissionsException
+     * @throws NoPermissionsException Missing manage_messages permission.
      * @throws \RuntimeException
      *
      * @return ExtendedPromiseInterface
@@ -823,7 +838,7 @@ class Channel extends Part
     {
         if (! $this->is_private && $botperms = $this->getBotPermissions()) {
             if (! $botperms->manage_messages) {
-                return reject(new NoPermissionsException('You do not have permission to unpin messages in the specified channel.'));
+                return reject(new NoPermissionsException("You do not have permission to unpin messages in the channel {$this->id}."));
             }
         }
 
@@ -916,7 +931,6 @@ class Channel extends Part
      * @param string|null    $reason                           Reason for Audit Log.
      *
      * @throws \RuntimeException
-     * @throws \UnexpectedValueException `$auto_archive_duration` is not one of 60, 1440, 4320, 10080.
      *
      * @return ExtendedPromiseInterface<Thread>
      *
@@ -934,8 +948,8 @@ class Channel extends Part
             ->setAllowedTypes('name', 'string')
             ->setAllowedTypes('auto_archive_duration', 'int')
             ->setAllowedTypes('rate_limit_per_user', ['null', 'int'])
-            ->setAllowedValues('auto_archive_duration', fn ($values) => in_array($values, [60, 1440, 4320, 10080]))
-            ->setAllowedValues('rate_limit_per_user', fn ($values) => $values >= 0 && $values <= 21600)
+            ->setAllowedValues('auto_archive_duration', fn ($value) => in_array($value, [60, 1440, 4320, 10080]))
+            ->setAllowedValues('rate_limit_per_user', fn ($value) => $value >= 0 && $value <= 21600)
             ->setRequired('name');
 
         if ($this->type == self::TYPE_GUILD_FORUM) {
@@ -1016,7 +1030,7 @@ class Channel extends Part
                 $threadPart->fill((array) $response);
             } else {
                 /** @var Thread */
-                $threadPart = $this->factory->part(Thread::class, (array) $response, true);
+                $threadPart = $this->threads->create((array) $response, true);
             }
             $this->threads->pushItem($threadPart);
             if ($messageId = ($response->message->id ?? null)) {
@@ -1046,7 +1060,7 @@ class Channel extends Part
      * @param Message|null          $replyTo          Sends the message as a reply to the given message instance.
      *
      * @throws \RuntimeException
-     * @throws NoPermissionsException
+     * @throws NoPermissionsException Missing various permissions depending on the message body.
      *
      * @return ExtendedPromiseInterface<Message>
      */
@@ -1080,15 +1094,15 @@ class Channel extends Part
 
         if (! $this->is_private && $botperms = $this->getBotPermissions()) {
             if (! $botperms->send_messages) {
-                return reject(new NoPermissionsException('You do not have permission to send messages in the specified channel.'));
+                return reject(new NoPermissionsException("You do not have permission to send messages in the channel {$this->id}."));
             }
 
             if ($message->getTts() && ! $botperms->send_tts_messages) {
-                return reject(new NoPermissionsException('You do not have permission to send tts messages in the specified channel.'));
+                return reject(new NoPermissionsException("You do not have permission to send tts messages in the channel {$this->id}."));
             }
 
             if ($message->numFiles() > 0 && ! $botperms->attach_files) {
-                return reject(new NoPermissionsException('You do not have permission to send files in the specified channel.'));
+                return reject(new NoPermissionsException("You do not have permission to send files in the channel {$this->id}."));
             }
         }
 
@@ -1101,7 +1115,7 @@ class Channel extends Part
 
             return $this->http->post(Endpoint::bind(Endpoint::CHANNEL_MESSAGES, $this->id), $message);
         })()->then(function ($response) {
-            return $this->messages->get('id', $response->id) ?? $this->factory->part(Message::class, (array) $response + ['guild_id' => $this->guild_id], true);
+            return $this->messages->get('id', $response->id) ?? $this->messages->create((array) $response, true);
         });
     }
 

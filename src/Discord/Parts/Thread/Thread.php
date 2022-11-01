@@ -709,7 +709,7 @@ class Thread extends Part
 
             return $this->http->post(Endpoint::bind(Endpoint::CHANNEL_MESSAGES, $this->id), $message);
         })()->then(function ($response) {
-            return $this->messages->get('id', $response->id) ?? $this->factory->part(Message::class, (array) $response, true);
+            return $this->messages->get('id', $response->id) ?? $this->messages->create((array) $response, true);
         });
     }
 

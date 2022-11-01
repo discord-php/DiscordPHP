@@ -24,6 +24,7 @@ use Discord\Parts\WebSockets\MessageReaction;
 use Discord\WebSockets\Event;
 use Discord\Helpers\Deferred;
 use Discord\Http\Endpoint;
+use Discord\Http\Exceptions\NoPermissionsException;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Guild\Sticker;
 use Discord\Parts\Interactions\Request\Component;
@@ -32,6 +33,7 @@ use Discord\Parts\WebSockets\MessageInteraction;
 use Discord\Repository\Channel\ReactionRepository;
 use React\EventLoop\TimerInterface;
 use React\Promise\ExtendedPromiseInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 use function React\Promise\reject;
 
@@ -696,26 +698,51 @@ class Message extends Part
      *
      * @link https://discord.com/developers/docs/resources/channel#start-thread-from-message
      *
-     * @param string      $name                  The name of the thread.
-     * @param int         $auto_archive_duration Number of minutes of inactivity until the thread is auto-archived. One of 60, 1440, 4320, 10080.
-     * @param string|null $reason                Reason for Audit Log.
+     * @param array       $options                          Thread params.
+     * @param string      $options['name']                  The name of the thread.
+     * @param int|null    $options['auto_archive_duration'] The thread will stop showing in the channel list after `auto_archive_duration` minutes of inactivity, can be set to: of 60, 1440, 4320, 10080.
+     * @param ?int|null   $options['rate_limit_per_user']   Amount of seconds a user has to wait before sending another message (0-21600).
+     * @param string|null $reason                           Reason for Audit Log.
      *
-     * @throws \RuntimeException         Channel type is not guild text or news.
-     * @throws \UnexpectedValueException `$auto_archive_duration` is not one of 60, 1440, 4320, 10080.
+     * @throws \RuntimeException      Channel type is not guild text or news.
+     * @throws NoPermissionsException Missing create_public_threads permission to create or manage_threads permission to set rate_limit_per_user.
      *
      * @return ExtendedPromiseInterface<Thread>
      *
-     * @todo use OptionResolver
+     * @since 10.0.0 Arguments for `$name` and `$auto_archive_duration` are now inside `$options`
      */
-    public function startThread(string $name, int $auto_archive_duration = 1440, ?string $reason = null): ExtendedPromiseInterface
+    public function startThread(array $options, ?string $reason = null): ExtendedPromiseInterface
     {
-        $channel = $this->channel;
-        if ($channel && ! in_array($channel->type, [Channel::TYPE_GUILD_TEXT, Channel::TYPE_GUILD_ANNOUNCEMENT, null])) {
-            return reject(new \RuntimeException('You can only start threads on guild text channels or news channels.'));
-        }
+        $resolver = new OptionsResolver();
+        $resolver
+            ->setDefined([
+                'name',
+                'auto_archive_duration',
+                'rate_limit_per_user',
+            ])
+            ->setAllowedTypes('name', 'string')
+            ->setAllowedTypes('auto_archive_duration', 'int')
+            ->setAllowedTypes('rate_limit_per_user', ['null', 'int'])
+            ->setAllowedValues('auto_archive_duration', fn ($value) => in_array($value, [60, 1440, 4320, 10080]))
+            ->setAllowedValues('rate_limit_per_user', fn ($value) => $value >= 0 && $value <= 21600)
+            ->setRequired('name');
 
-        if (! in_array($auto_archive_duration, [60, 1440, 4320, 10080])) {
-            return reject(new \UnexpectedValueException('auto_archive_duration must be one of 60, 1440, 4320, 10080.'));
+        $options = $resolver->resolve($options);
+
+        $channel = $this->channel;
+        if ($channel) {
+            if (! in_array($channel->type, [Channel::TYPE_GUILD_TEXT, Channel::TYPE_GUILD_ANNOUNCEMENT, null])) {
+                return reject(new \RuntimeException('You can only start threads on guild text channels or news channels.'));
+            }
+
+            $botperms = $channel->getBotPermissions();
+            if ($botperms && ! $botperms->create_public_threads) {
+                return reject(new NoPermissionsException("You do not have permission to create public threads in channel {$this->id}."));
+            }
+
+            if (! empty($options['rate_limit_per_user']) && ! $botperms->manage_threads) {
+                return reject(new NoPermissionsException("You do not have permission to manage threads in channel {$this->id}."));
+            }
         }
 
         $headers = [];
@@ -723,10 +750,20 @@ class Message extends Part
             $headers['X-Audit-Log-Reason'] = $reason;
         }
 
-        return $this->http->post(Endpoint::bind(Endpoint::CHANNEL_MESSAGE_THREADS, $this->channel_id, $this->id), [
-            'name' => $name,
-            'auto_archive_duration' => $auto_archive_duration,
-        ], $headers)->then(function ($response) {
+        return $this->http->post(Endpoint::bind(Endpoint::CHANNEL_MESSAGE_THREADS, $this->channel_id, $this->id), $options, $headers)->then(function ($response) use ($channel) {
+            if ($channel) {
+                /** @var ?Thread */
+                if (! $threadPart = $channel->threads->offsetGet($response->id)) {
+                    /** @var Thread */
+                    $threadPart = $channel->threads->create((array) $response, true);
+                } else {
+                    $threadPart->fill((array) $response);
+                }
+                $channel->threads->pushItem($threadPart);
+
+                return $threadPart;
+            }
+
             return $this->factory->part(Thread::class, (array) $response, true);
         });
     }
