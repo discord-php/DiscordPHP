@@ -985,12 +985,20 @@ class Message extends Part
      *
      * @return ExtendedPromiseInterface
      *
-     * @throws \RuntimeException This type of message cannot be deleted.
+     * @throws \RuntimeException      This type of message cannot be deleted.
+     * @throws NoPermissionsException Missing manage_messages permission when deleting others message.
      */
     public function delete(): ExtendedPromiseInterface
     {
         if (! $this->isDeletable()) {
             return reject(new \RuntimeException("Cannot delete this type of message: {$this->type}", 50021));
+        }
+
+        if ($this->user_id != $this->discord->id && $channel = $this->channel) {
+            $botperms = $channel->getBotPermissions();
+            if ($botperms && ! $botperms->manage_messages) {
+                return reject(new NoPermissionsException("You do not have permission to delete message by others in channel {$channel->id}."));
+            }
         }
 
         return $this->http->delete(Endpoint::bind(Endpoint::CHANNEL_MESSAGE, $this->channel_id, $this->id));
