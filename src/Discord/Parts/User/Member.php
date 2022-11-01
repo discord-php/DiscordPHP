@@ -308,7 +308,7 @@ class Member extends Part
         if ($guild = $this->guild) {
             if ($botperms = $guild->getBotPermissions()) {
                 if (! $botperms->manage_roles) {
-                    return reject(new NoPermissionsException("You do not have permission to manage member role in the guild {$guild->id}."));
+                    return reject(new NoPermissionsException("You do not have permission to manage member roles in the guild {$guild->id}."));
                 }
             }
         }

@@ -30,10 +30,10 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  *
  * @property      string       $id             The id of the webhook.
  * @property      int          $type           The type of webhook.
- * @property      ?string|null $guild_id       The guild ID this is for, if any.
- * @property-read Guild|null   $guild          The guild this is for, if any.
- * @property      ?string|null $channel_id     The channel ID this is for, if any.
- * @property-read Channel|null $channel        The channel ID this is for, if any.
+ * @property      ?string|null $guild_id       The guild ID this webhook is for, if any.
+ * @property-read Guild|null   $guild          The guild this webhook is for, if any.
+ * @property      ?string|null $channel_id     The channel ID this webhook is for, if any.
+ * @property-read Channel|null $channel        The channel this webhook is for, if any.
  * @property      User|null    $user           The user that created the webhook.
  * @property      ?string      $name           The name of the webhook.
  * @property      ?string      $avatar         The avatar of the webhook.

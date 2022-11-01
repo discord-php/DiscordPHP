@@ -348,7 +348,7 @@ class Guild extends Part
     {
         $botperms = $this->getBotPermissions();
         if ($botperms && ! $botperms->manage_guild) {
-            return reject(new NoPermissionsException("You do not have permission to manage the guild {$this->id}."));
+            return reject(new NoPermissionsException("You do not have permission to get invites in the guild {$this->id}."));
         }
 
         return $this->http->get(Endpoint::bind(Endpoint::GUILD_INVITES, $this->id))->then(function ($response) {
@@ -713,7 +713,7 @@ class Guild extends Part
 
         $botperms = $this->getBotPermissions();
         if ($botperms && ! $botperms->manage_emojis_and_stickers) {
-            return reject(new NoPermissionsException("You do not have permission to manage emojis in the guild {$this->id}."));
+            return reject(new NoPermissionsException("You do not have permission to create emojis in the guild {$this->id}."));
         }
 
         if (isset($filepath)) {
@@ -785,7 +785,7 @@ class Guild extends Part
 
         $botperms = $this->getBotPermissions();
         if ($botperms && ! $botperms->manage_emojis_and_stickers) {
-            return reject(new NoPermissionsException("You do not have permission to manage stickers in the guild {$this->id}."));
+            return reject(new NoPermissionsException("You do not have permission to create stickers in the guild {$this->id}."));
         }
 
         if (! file_exists($filepath)) {
@@ -1005,7 +1005,7 @@ class Guild extends Part
     {
         $botperms = $this->getBotPermissions();
         if ($botperms && ! $botperms->manage_roles) {
-            return reject(new NoPermissionsException("You do not have permission to manage roles in the guild {$this->id}."));
+            return reject(new NoPermissionsException("You do not have permission to update role positions in the guild {$this->id}."));
         }
 
         $payload = [];
@@ -1115,7 +1115,7 @@ class Guild extends Part
 
         $botperms = $this->getBotPermissions();
         if ($botperms && ! $botperms->kick_members) {
-            return reject(new NoPermissionsException("You do not have permission to kick members in the guild {$this->id}."));
+            return reject(new NoPermissionsException("You do not have permission to get prune count in the guild {$this->id}."));
         }
 
         $endpoint = Endpoint::bind(Endpoint::GUILD_PRUNE, $this->id);
@@ -1172,7 +1172,7 @@ class Guild extends Part
 
         $botperms = $this->getBotPermissions();
         if ($botperms && ! $botperms->kick_members) {
-            return reject(new NoPermissionsException("You do not have permission to kick members in the guild {$this->id}."));
+            return reject(new NoPermissionsException("You do not have permission to prune members in the guild {$this->id}."));
         }
 
         $headers = [];
@@ -1201,7 +1201,7 @@ class Guild extends Part
         if (! $this->feature_welcome_screen_enabled) {
             $botperms = $this->getBotPermissions();
             if ($botperms && ! $botperms->manage_guild) {
-                return reject(new NoPermissionsException("You do not have permission to manage the guild {$this->id}."));
+                return reject(new NoPermissionsException("You do not have permission to get welcome screen of the guild {$this->id}."));
             }
         }
 
@@ -1269,7 +1269,7 @@ class Guild extends Part
 
         $botperms = $this->getBotPermissions();
         if ($botperms && ! $botperms->manage_guild) {
-            return reject(new NoPermissionsException("You do not have permission to manage the guild {$this->id}."));
+            return reject(new NoPermissionsException("You do not have permission to update welcome screen of the guild {$this->id}."));
         }
 
         return $this->http->patch(Endpoint::bind(Endpoint::GUILD_WELCOME_SCREEN, $this->id), $options)->then(function ($response) {
@@ -1292,7 +1292,7 @@ class Guild extends Part
     {
         $botperms = $this->getBotPermissions();
         if ($botperms && ! $botperms->manage_guild) {
-            return reject(new NoPermissionsException("You do not have permission to manage the guild {$this->id}."));
+            return reject(new NoPermissionsException("You do not have permission to get widget settings of the guild {$this->id}."));
         }
 
         return $this->http->get(Endpoint::bind(Endpoint::GUILD_WIDGET_SETTINGS, $this->id))->then(function ($response) {
@@ -1331,7 +1331,7 @@ class Guild extends Part
 
         $botperms = $this->getBotPermissions();
         if ($botperms && ! $botperms->manage_guild) {
-            return reject(new NoPermissionsException("You do not have permission to manage the guild {$this->id}."));
+            return reject(new NoPermissionsException("You do not have permission to update widget settings of the guild {$this->id}."));
         }
 
         $headers = [];
