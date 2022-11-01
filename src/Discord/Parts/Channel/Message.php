@@ -796,6 +796,9 @@ class Message extends Part
      * @link https://discord.com/developers/docs/resources/channel#crosspost-message
      *
      * @throws \RuntimeException Message has already been crossposted.
+     * @throws NoPermissionsException Missing permission:
+     *                                send_messages if this message author is the bot.
+     *                                manage_messages if this message author is other user.
      *
      * @return ExtendedPromiseInterface<Message>
      */
@@ -803,6 +806,20 @@ class Message extends Part
     {
         if ($this->crossposted) {
             return reject(new \RuntimeException('This message has already been crossposted.'));
+        }
+
+        if ($channel = $this->channel) {
+            if ($botperms = $channel->getBotPermissions()) {
+                if ($this->user_id == $this->discord->id) {
+                    if (! $botperms->send_messages) {
+                        return reject(new NoPermissionsException("You do not have permission to crosspost message in channel {$this->id}."));
+                    }
+                } else {
+                    if (! $botperms->manage_messages) {
+                        return reject(new NoPermissionsException("You do not have permission to crosspost others message in channel {$this->id}."));
+                    }
+                }
+            }
         }
 
         return $this->http->post(Endpoint::bind(Endpoint::CHANNEL_CROSSPOST_MESSAGE, $this->channel_id, $this->id))->then(function ($response) {
