@@ -879,12 +879,21 @@ class Message extends Part
      *
      * @param Emoji|string $emoticon The emoticon to react with. (custom: ':michael:251127796439449631')
      *
+     * @throws NoPermissionsException Missing read_message_history permission.
+     *
      * @return ExtendedPromiseInterface
      */
     public function react($emoticon): ExtendedPromiseInterface
     {
         if ($emoticon instanceof Emoji) {
             $emoticon = $emoticon->toReactionString();
+        }
+
+        if ($channel = $this->channel) {
+            $botperms = $channel->getBotPermissions();
+            if ($botperms && ! $botperms->read_message_history) {
+                return reject(new NoPermissionsException("You do not have permission to read message history in channel {$channel->id}."));
+            }
         }
 
         return $this->http->put(Endpoint::bind(Endpoint::OWN_MESSAGE_REACTION, $this->channel_id, $this->id, urlencode($emoticon)));
@@ -901,6 +910,7 @@ class Message extends Part
      * @param string|null       $id       The user reaction to delete (if not all).
      *
      * @throws \UnexpectedValueException Invalid reaction `$type`.
+     * @throws NoPermissionsException    Missing manage_messages permission when deleting others reaction.
      *
      * @return ExtendedPromiseInterface
      */
@@ -927,6 +937,13 @@ class Message extends Part
                 break;
             default:
                 return reject(new \UnexpectedValueException('Invalid reaction type'));
+        }
+
+        if (($type != self::REACT_DELETE_ME || $id != $this->discord->id) && $channel = $this->channel) {
+            $botperms = $channel->getBotPermissions();
+            if ($botperms && ! $botperms->manage_messages) {
+                return reject(new NoPermissionsException("You do not have permission to delete reaction by others in channel {$channel->id}."));
+            }
         }
 
         return $this->http->delete($url);
