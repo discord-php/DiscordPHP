@@ -140,6 +140,8 @@ class Member extends Part
      * @param ?string|null $nick   The nickname of the member.
      * @param string|null  $reason Reason for Audit Log.
      *
+     * @throws NoPermissionsException Missing manage_nicknames permission.
+     *
      * @return ExtendedPromiseInterface<Member>
      */
     public function setNickname(?string $nick = null, ?string $reason = null): ExtendedPromiseInterface
@@ -156,6 +158,14 @@ class Member extends Part
         // jake plz
         if ($this->discord->id == $this->id) {
             return $this->http->patch(Endpoint::bind(Endpoint::GUILD_MEMBER_SELF, $this->guild_id), $payload, $headers);
+        }
+
+        if ($guild = $this->guild) {
+            if ($botperms = $guild->getBotPermissions()) {
+                if (! $botperms->manage_nicknames) {
+                    return reject(new NoPermissionsException("You do not have permission to manage nicknames in the guild {$guild->id}."));
+                }
+            }
         }
 
         return $this->http->patch(Endpoint::bind(Endpoint::GUILD_MEMBER, $this->guild_id, $this->id), $payload, $headers)
