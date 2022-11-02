@@ -761,6 +761,110 @@ class VoiceClient extends EventEmitter
      * @return ExtendedPromiseInterface
      * @throws \Exception
      */
+    public function playOggStream($stream): ExtendedPromiseInterface
+    {
+        $deferred = new Deferred();
+
+        if (! $this->isReady()) {
+            $deferred->reject(new \Exception('Voice client is not ready yet.'));
+
+            return $deferred->promise();
+        }
+
+        if ($this->speaking) {
+            $deferred->reject(new \Exception('Audio already playing.'));
+
+            return $deferred->promise();
+        }
+
+        if ($stream instanceof Process) {
+            $stream->stderr->on('data', function ($d) {
+                if (empty($d)) {
+                    return;
+                }
+
+                $this->emit('stderr', [$d, $this]);
+            });
+
+            $stream = $stream->stdout;
+        }
+
+        if (is_resource($stream)) {
+            $stream = new ReadableResourceStream($stream, $this->loop);
+        }
+
+        if (! ($stream instanceof ReadableStreamInterface)) {
+            $deferred->reject(new \Exception('The stream passed to playDCAStream was not an instance of resource, ReactPHP Process, ReactPHP Readable Stream'));
+
+            return $deferred->promise();
+        }
+
+        $this->buffer = new RealBuffer($this->loop);
+        $stream->on('data', function ($d) {
+            $this->buffer->write($d);
+        });
+
+        /** @var OggStream */
+        $ogg = null;
+
+        $loops = 0;
+        $readOpus = function () use ($deferred, &$ogg, &$readOpus, &$loops) {
+            $this->readOpusTimer = null;
+
+            // If the client is paused, delay by frame size and check again.
+            if ($this->isPaused) {
+                $this->insertSilence();
+                $this->readOpusTimer = $this->loop->addTimer($this->frameSize / 1000, $readOpus);
+
+                return;
+            }
+
+            $ogg->getPacket()->then(function ($packet) use (&$readOpus, &$loops) {
+                $loops += 1;
+
+                // increment sequence
+                // uint16 overflow protection
+                if (++$this->seq >= 2 ** 16) {
+                    $this->seq = 0;
+                }
+
+                $this->sendBuffer($packet);
+
+                // increment timestamp
+                // uint32 overflow protection
+                if (($this->timestamp += ($this->frameSize * 48)) >= 2 ** 32) {
+                    $this->timestamp = 0;
+                }
+
+                $nextTime = $this->startTime + (20.0 / 1000.0) * $loops;
+                $delay = $nextTime - microtime(true);
+
+                $this->readOpusTimer = $this->loop->addTimer($delay, $readOpus);
+            }, function () use ($deferred) {
+                $this->reset();
+                $deferred->resolve();
+            });
+        };
+
+        $this->setSpeaking(true);
+
+        OggStream::fromBuffer($this->buffer)->then(function (OggStream $os) use ($readOpus, &$ogg) {
+            $ogg = $os;
+            $this->startTime = microtime(true) + 0.5;
+            $this->readOpusTimer = $this->loop->addTimer(0.5, $readOpus);
+        });
+
+        return $deferred->promise();
+    }
+
+    /**
+     * Plays a DCA stream.
+     *
+     * @param resource|Process|Stream $stream The DCA stream to be sent.
+     *
+     * @return ExtendedPromiseInterface
+     * @throws \Exception
+     */
     public function playDCAStream($stream): ExtendedPromiseInterface
     {
         $deferred = new Deferred();
@@ -968,17 +1072,19 @@ class VoiceClient extends EventEmitter
      */
     public function setFrameSize(int $fs): void
     {
-        $legal = [20, 40, 60];
+        user_error('VoiceClient::setFrameSize does not do anything anymore and is deprecated.', E_USER_WARNING);
 
-        if (! in_array($fs, $legal)) {
-            throw new \InvalidArgumentException("{$fs} is not a valid option. Valid options are: ".trim(implode(', ', $legal), ', '));
-        }
+        // $legal = [20, 40, 60];
 
-        if ($this->speaking) {
-            throw new \Exception('Cannot change frame size while playing.');
-        }
+        // if (!in_array($fs, $legal)) {
+        //     throw new \InvalidArgumentException("{$fs} is not a valid option. Valid options are: " . trim(implode(', ', $legal), ', '));
+        // }
 
-        $this->frameSize = $fs;
+        // if ($this->speaking) {
+        //     throw new \Exception('Cannot change frame size while playing.');
+        // }
+
+        // $this->frameSize = $fs;
     }
 
     /**
@@ -1453,12 +1559,12 @@ class VoiceClient extends EventEmitter
     public function dcaEncode(string $filename = '', int $channels = 2): Process
     {
         $flags = [
-             '-ac', $channels, // Channels
-             '-aa', $this->audioApplication, // Audio application
-             '-ab', round($this->bitrate / 1000), // Bitrate
-             '-as', round($this->frameSize * 48), // Frame Size
+            '-ac', $channels, // Channels
+            '-aa', $this->audioApplication, // Audio application
+            '-ab', round($this->bitrate / 1000), // Bitrate
+            '-as', round($this->frameSize * 48), // Frame Size
             '-vol', round($this->volume * 2.56), // Volume
-              '-i', (empty($filename)) ? 'pipe:0' : "\"{$filename}\"", // Input file
+            '-i', (empty($filename)) ? 'pipe:0' : "\"{$filename}\"", // Input file
         ];
 
         $flags = implode(' ', $flags);
