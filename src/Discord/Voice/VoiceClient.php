@@ -713,7 +713,7 @@ class VoiceClient extends EventEmitter
      *
      * @param resource|Stream $stream    The stream to be encoded and sent.
      * @param int             $channels  How many audio channels the PCM16 was encoded with.
-     * @param int             $audioRate Audio sampling rate the PCM16 was encoded with;
+     * @param int             $audioRate Audio sampling rate the PCM16 was encoded with.
      *
      * @return ExtendedPromiseInterface
      * @throws \RuntimeException        Thrown when the stream passed to playRawStream is not a valid resource.
