@@ -27,7 +27,6 @@ use React\Datagram\Socket;
 use React\Dns\Resolver\Factory as DNSFactory;
 use React\EventLoop\LoopInterface;
 use Discord\Helpers\Deferred;
-use JetBrains\PhpStorm\Deprecated;
 use Psr\Log\LoggerInterface;
 use React\ChildProcess\Process;
 use React\Promise\ExtendedPromiseInterface;
