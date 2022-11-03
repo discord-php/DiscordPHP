@@ -11,14 +11,14 @@
 
 namespace Discord\Exceptions;
 
-use Exception;
+use RuntimeException;
 
 /**
  * Thrown when reading from a buffer times out.
  *
  * @since 10.0.0
  */
-class BufferTimedOutException extends Exception
+class BufferTimedOutException extends RuntimeException
 {
     /**
      * Create a new buffer timeout exception.
