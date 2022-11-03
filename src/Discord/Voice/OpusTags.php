@@ -16,7 +16,7 @@ use Exception;
 /**
  * Represents Vorbis tags attached to an Opus Ogg file.
  *
- * @see https://www.rfc-editor.org/rfc/rfc7845.html -- Section 5.2. Comment Header
+ * @link https://www.rfc-editor.org/rfc/rfc7845#section-5.2 Comment Header
  *
  * @since 10.0.0
  *

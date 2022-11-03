@@ -22,7 +22,7 @@ use function React\Promise\resolve;
 /**
  * Represents an Ogg Opus stream.
  *
- * @see https://www.rfc-editor.org/rfc/rfc7845.html
+ * @link https://www.rfc-editor.org/rfc/rfc7845
  *
  * @since 10.0.0
  *

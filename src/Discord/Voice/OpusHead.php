@@ -16,7 +16,7 @@ use Exception;
 /**
  * Represents the header attached to an Opus Ogg file.
  *
- * @see https://www.rfc-editor.org/rfc/rfc7845.html -- Section 5.1. Identification Header
+ * @link https://www.rfc-editor.org/rfc/rfc7845#section-5.1 Identification Header
  *
  * @since 10.0.0
  *

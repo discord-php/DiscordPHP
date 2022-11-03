@@ -19,7 +19,7 @@ use React\Promise\ExtendedPromiseInterface;
 /**
  * Represents a page in an Ogg container.
  *
- * @see https://www.rfc-editor.org/rfc/rfc3533
+ * @link https://www.rfc-editor.org/rfc/rfc3533
  *
  * @since 10.0.0
  *
@@ -46,7 +46,7 @@ class OggPage
      * @param int[]  $pageSegments    A list of page segment lengths which were contained within the page.
      * @param string $segmentData     The data of all the page segments concatenated.
      *
-     * @see https://www.rfc-editor.org/rfc/rfc3533 -- Section 6. The Ogg page format
+     * @link https://www.rfc-editor.org/rfc/rfc3533#section-6 The Ogg page format
      */
     private function __construct(
         private int $version,
