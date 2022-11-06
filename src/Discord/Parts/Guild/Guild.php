@@ -928,11 +928,11 @@ class Guild extends Part
      *
      * @link https://discord.com/developers/docs/resources/audit-log#get-guild-audit-log
      *
-     * @param array                   $options An array of options.
-     * @param string|Member|User|null $options['user_id'] filter the log for actions made by a user
+     * @param array                   $options                An array of options.
+     * @param string|Member|User|null $options['user_id']     filter the log for actions made by a user
      * @param int|null                $options['action_type'] the type of audit log event
-     * @param string|Entry|null       $options['before'] filter the log before a certain entry id
-     * @param int|null                $options['limit'] how many entries are returned (default 50, minimum 1, maximum 100)
+     * @param string|Entry|null       $options['before']      filter the log before a certain entry id
+     * @param int|null                $options['limit']       how many entries are returned (default 50, minimum 1, maximum 100)
      *
      * @throws NoPermissionsException Missing view_audit_log permission.
      *

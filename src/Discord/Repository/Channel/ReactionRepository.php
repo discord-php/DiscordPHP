@@ -45,11 +45,11 @@ class ReactionRepository extends AbstractRepository
     protected $class = Reaction::class;
 
     /**
-     * Delete all reactions for emoji
+     * Delete all reactions for emoji.
      *
      * {@inheritDoc}
      *
-     * @param Part|string $part   The Reaction part or unicode emoji to delete.
+     * @param Part|string $part The Reaction part or unicode emoji to delete.
      *
      * @return ExtendedPromiseInterface<Reaction>
      *

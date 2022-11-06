@@ -246,7 +246,7 @@ class Reaction extends Part
     public function getRepositoryAttributes(): array
     {
         return [
-            'emoji' => isset($this->attributes['emoji']->id) ? $this->attributes['emoji']->name.':'.$this->attributes['emoji']->id : urlencode($this->attributes['emoji']->name)
+            'emoji' => isset($this->attributes['emoji']->id) ? $this->attributes['emoji']->name.':'.$this->attributes['emoji']->id : urlencode($this->attributes['emoji']->name),
         ];
     }
 }

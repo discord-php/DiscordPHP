@@ -1033,7 +1033,7 @@ class VoiceClient extends EventEmitter
      * Sets the speaking value of the client.
      *
      * @param bool $speaking Whether the client is speaking or not.
-     * 
+     *
      * @throws \RuntimeException
      */
     public function setSpeaking(bool $speaking = true): void
@@ -1061,7 +1061,7 @@ class VoiceClient extends EventEmitter
      * Switches voice channels.
      *
      * @param Channel $channel The channel to switch to.
-     * 
+     *
      * @throws \InvalidArgumentException
      */
     public function switchChannel(Channel $channel): void
@@ -1087,7 +1087,7 @@ class VoiceClient extends EventEmitter
      * Sets the bitrate.
      *
      * @param int $bitrate The bitrate to set.
-     * 
+     *
      * @throws \DomainException
      * @throws \RuntimeException
      */
@@ -1108,7 +1108,7 @@ class VoiceClient extends EventEmitter
      * Sets the volume.
      *
      * @param int $volume The volume to set.
-     * 
+     *
      * @throws \DomainException
      * @throws \RuntimeException
      */
@@ -1129,7 +1129,7 @@ class VoiceClient extends EventEmitter
      * Sets the audio application.
      *
      * @param string $app The audio application to set.
-     * 
+     *
      * @throws \DomainException
      * @throws \RuntimeException
      */
@@ -1175,7 +1175,7 @@ class VoiceClient extends EventEmitter
      *
      * @param bool $mute Whether you should be muted.
      * @param bool $deaf Whether you should be deaf.
-     * 
+     *
      * @throws \RuntimeException
      */
     public function setMuteDeaf(bool $mute, bool $deaf): void
@@ -1206,7 +1206,7 @@ class VoiceClient extends EventEmitter
 
     /**
      * Pauses the current sound.
-     * 
+     *
      * @throws \RuntimeException
      */
     public function pause(): void
@@ -1221,7 +1221,7 @@ class VoiceClient extends EventEmitter
 
     /**
      * Unpauses the current sound.
-     * 
+     *
      * @throws \RuntimeException
      */
     public function unpause(): void
@@ -1236,7 +1236,7 @@ class VoiceClient extends EventEmitter
 
     /**
      * Stops the current sound.
-     * 
+     *
      * @throws \RuntimeException
      */
     public function stop(): void
@@ -1252,7 +1252,7 @@ class VoiceClient extends EventEmitter
 
     /**
      * Closes the voice client.
-     * 
+     *
      * @throws \RuntimeException
      */
     public function close(): void
