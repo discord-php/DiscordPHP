@@ -11,6 +11,7 @@
 
 namespace Discord\Helpers;
 
+use Discord\Exceptions\BufferTimedOutException;
 use Evenement\EventEmitter;
 use React\EventLoop\LoopInterface;
 use React\Promise\ExtendedPromiseInterface;
@@ -132,14 +133,16 @@ class Buffer extends EventEmitter implements WritableStreamInterface
         } else {
             $this->reads[] = [$deferred, $length];
 
-            if ($timeout >= 0 && $this->loop !== null) {
+            if ($timeout > 0 && $this->loop !== null) {
                 $timer = $this->loop->addTimer($timeout / 1000, function () use ($deferred) {
-                    $deferred->reject(new \Exception('Timed out.'));
+                    $deferred->reject(new BufferTimedOutException());
                 });
 
                 $deferred->promise()->then(function () use ($timer) {
                     $this->loop->cancelTimer($timer);
                 });
+            } elseif ($timeout == 0) {
+                $deferred->reject(new BufferTimedOutException());
             }
         }
 

@@ -11,7 +11,6 @@
 
 namespace Discord\Voice;
 
-use Discord\Exceptions\DCANotFoundException;
 use Discord\Exceptions\FFmpegNotFoundException;
 use Discord\Exceptions\FileNotFoundException;
 use Discord\Exceptions\LibSodiumNotFoundException;
@@ -295,7 +294,7 @@ class VoiceClient extends EventEmitter
      *
      * @var int Encoding bitrate.
      */
-    protected $bitrate = 64000;
+    protected $bitrate = 128000;
 
     /**
      * Is the voice client reconnecting?
@@ -380,9 +379,7 @@ class VoiceClient extends EventEmitter
     {
         if (
             ! $this->checkForFFmpeg() ||
-            ! $this->checkForDCA() ||
-            ! $this->checkForLibsodium() ||
-            ! $this->checkPHPVersion()
+            ! $this->checkForLibsodium()
         ) {
             return false;
         }
@@ -678,7 +675,10 @@ class VoiceClient extends EventEmitter
      * Plays a file on the voice stream.
      *
      * @param string $file     The file to play.
-     * @param int    $channels How many audio channels to encode with.
+     * @param int    $channels Deprecated, Discord only supports 2 channels.
+     *
+     * @throws FileNotFoundException
+     * @throws \RuntimeException
      *
      * @return ExtendedPromiseInterface
      */
@@ -693,50 +693,53 @@ class VoiceClient extends EventEmitter
         }
 
         if (! $this->ready) {
-            $deferred->reject(new \Exception('Voice Client is not ready.'));
+            $deferred->reject(new \RuntimeException('Voice Client is not ready.'));
 
             return $deferred->promise();
         }
 
         if ($this->speaking) {
-            $deferred->reject(new \Exception('Audio already playing.'));
+            $deferred->reject(new \RuntimeException('Audio already playing.'));
 
             return $deferred->promise();
         }
 
-        $process = $this->dcaEncode($file, $channels);
+        $process = $this->ffmpegEncode($file);
         $process->start($this->loop);
 
-        return $this->playDCAStream($process);
+        return $this->playOggStream($process);
     }
 
     /**
      * Plays a raw PCM16 stream.
      *
-     * @param resource|Stream $stream   The stream to be encoded and sent.
-     * @param int             $channels How many audio channels to encode with.
+     * @param resource|Stream $stream    The stream to be encoded and sent.
+     * @param int             $channels  How many audio channels the PCM16 was encoded with.
+     * @param int             $audioRate Audio sampling rate the PCM16 was encoded with.
+     *
+     * @throws \RuntimeException
+     * @throws \InvalidArgumentException Thrown when the stream passed to playRawStream is not a valid resource.
      *
      * @return ExtendedPromiseInterface
-     * @throws \RuntimeException        Thrown when the stream passed to playRawStream is not a valid resource.
      */
-    public function playRawStream($stream, int $channels = 2): ExtendedPromiseInterface
+    public function playRawStream($stream, int $channels = 2, int $audioRate = 48000): ExtendedPromiseInterface
     {
         $deferred = new Deferred();
 
         if (! $this->ready) {
-            $deferred->reject(new \Exception('Voice Client is not ready.'));
+            $deferred->reject(new \RuntimeException('Voice Client is not ready.'));
 
             return $deferred->promise();
         }
 
         if ($this->speaking) {
-            $deferred->reject(new \Exception('Audio already playing.'));
+            $deferred->reject(new \RuntimeException('Audio already playing.'));
 
             return $deferred->promise();
         }
 
         if (! is_resource($stream) && ! $stream instanceof Stream) {
-            $deferred->reject(new \RuntimeException('The stream passed to playRawStream was not an instance of resource or ReactPHP Stream.'));
+            $deferred->reject(new \InvalidArgumentException('The stream passed to playRawStream was not an instance of resource or ReactPHP Stream.'));
 
             return $deferred->promise();
         }
@@ -745,12 +748,129 @@ class VoiceClient extends EventEmitter
             $stream = new Stream($stream, $this->loop);
         }
 
-        $process = $this->dcaEncode('', $channels);
+        $process = $this->ffmpegEncode(preArgs: [
+            '-f', 's16le',
+            '-ac', $channels,
+            '-ar', $audioRate,
+        ]);
         $process->start($this->loop);
-
         $stream->pipe($process->stdin);
 
-        return $this->playDCAStream($process);
+        return $this->playOggStream($process);
+    }
+
+    /**
+     * Plays an Ogg Opus stream.
+     *
+     * @param resource|Process|Stream $stream The Ogg Opus stream to be sent.
+     *
+     * @throws \RuntimeException
+     * @throws \InvalidArgumentException
+     *
+     * @return ExtendedPromiseInterface
+     */
+    public function playOggStream($stream): ExtendedPromiseInterface
+    {
+        $deferred = new Deferred();
+
+        if (! $this->isReady()) {
+            $deferred->reject(new \RuntimeException('Voice client is not ready yet.'));
+
+            return $deferred->promise();
+        }
+
+        if ($this->speaking) {
+            $deferred->reject(new \RuntimeException('Audio already playing.'));
+
+            return $deferred->promise();
+        }
+
+        if ($stream instanceof Process) {
+            $stream->stderr->on('data', function ($d) {
+                if (empty($d)) {
+                    return;
+                }
+
+                $this->emit('stderr', [$d, $this]);
+            });
+
+            $stream = $stream->stdout;
+        }
+
+        if (is_resource($stream)) {
+            $stream = new ReadableResourceStream($stream, $this->loop);
+        }
+
+        if (! ($stream instanceof ReadableStreamInterface)) {
+            $deferred->reject(new \InvalidArgumentException('The stream passed to playOggStream was not an instance of resource, ReactPHP Process, ReactPHP Readable Stream'));
+
+            return $deferred->promise();
+        }
+
+        $this->buffer = new RealBuffer($this->loop);
+        $stream->on('data', function ($d) {
+            $this->buffer->write($d);
+        });
+
+        /** @var OggStream */
+        $ogg = null;
+
+        $loops = 0;
+        $readOpus = function () use ($deferred, &$ogg, &$readOpus, &$loops) {
+            $this->readOpusTimer = null;
+
+            // If the client is paused, delay by frame size and check again.
+            if ($this->isPaused) {
+                $this->insertSilence();
+                $this->readOpusTimer = $this->loop->addTimer($this->frameSize / 1000, $readOpus);
+
+                return;
+            }
+
+            $ogg->getPacket()->then(function ($packet) use (&$readOpus, &$loops, $deferred) {
+                // EOF for Ogg stream.
+                if ($packet === null) {
+                    $this->reset();
+                    $deferred->resolve();
+
+                    return;
+                }
+
+                $loops += 1;
+
+                // increment sequence
+                // uint16 overflow protection
+                if (++$this->seq >= 2 ** 16) {
+                    $this->seq = 0;
+                }
+
+                $this->sendBuffer($packet);
+
+                // increment timestamp
+                // uint32 overflow protection
+                if (($this->timestamp += ($this->frameSize * 48)) >= 2 ** 32) {
+                    $this->timestamp = 0;
+                }
+
+                $nextTime = $this->startTime + (20.0 / 1000.0) * $loops;
+                $delay = $nextTime - microtime(true);
+
+                $this->readOpusTimer = $this->loop->addTimer($delay, $readOpus);
+            }, function ($e) use ($deferred) {
+                $this->reset();
+                $deferred->resolve();
+            });
+        };
+
+        $this->setSpeaking(true);
+
+        OggStream::fromBuffer($this->buffer)->then(function (OggStream $os) use ($readOpus, &$ogg) {
+            $ogg = $os;
+            $this->startTime = microtime(true) + 0.5;
+            $this->readOpusTimer = $this->loop->addTimer(0.5, $readOpus);
+        });
+
+        return $deferred->promise();
     }
 
     /**
@@ -760,6 +880,9 @@ class VoiceClient extends EventEmitter
      *
      * @return ExtendedPromiseInterface
      * @throws \Exception
+     *
+     * @deprecated 10.0.0 DCA is now deprecated in DiscordPHP, switch to using
+     *                    `playOggStream` with raw Ogg Opus.
      */
     public function playDCAStream($stream): ExtendedPromiseInterface
     {
@@ -910,6 +1033,8 @@ class VoiceClient extends EventEmitter
      * Sets the speaking value of the client.
      *
      * @param bool $speaking Whether the client is speaking or not.
+     *
+     * @throws \RuntimeException
      */
     public function setSpeaking(bool $speaking = true): void
     {
@@ -918,7 +1043,7 @@ class VoiceClient extends EventEmitter
         }
 
         if (! $this->ready) {
-            throw new \Exception('Voice Client is not ready.');
+            throw new \RuntimeException('Voice Client is not ready.');
         }
 
         $this->send([
@@ -936,11 +1061,13 @@ class VoiceClient extends EventEmitter
      * Switches voice channels.
      *
      * @param Channel $channel The channel to switch to.
+     *
+     * @throws \InvalidArgumentException
      */
     public function switchChannel(Channel $channel): void
     {
         if (! $channel->isVoiceBased()) {
-            throw new \InvalidArgumentException('Channel must be a voice channel to be able to switch');
+            throw new \InvalidArgumentException("Channel must be a voice channel to be able to switch, given type {$channel->type}.");
         }
 
         $this->mainSend([
@@ -957,43 +1084,21 @@ class VoiceClient extends EventEmitter
     }
 
     /**
-     * Sets the frame size.
-     *
-     * Options (in ms):
-     * - 20
-     * - 40
-     * - 60
-     *
-     * @param int $fs The frame size to set.
-     */
-    public function setFrameSize(int $fs): void
-    {
-        $legal = [20, 40, 60];
-
-        if (! in_array($fs, $legal)) {
-            throw new \InvalidArgumentException("{$fs} is not a valid option. Valid options are: ".trim(implode(', ', $legal), ', '));
-        }
-
-        if ($this->speaking) {
-            throw new \Exception('Cannot change frame size while playing.');
-        }
-
-        $this->frameSize = $fs;
-    }
-
-    /**
      * Sets the bitrate.
      *
      * @param int $bitrate The bitrate to set.
+     *
+     * @throws \DomainException
+     * @throws \RuntimeException
      */
     public function setBitrate(int $bitrate): void
     {
-        if ($bitrate > 384000 || $bitrate < 8000) {
-            throw new \InvalidArgumentException("{$bitrate} is not a valid option. The bitrate must be between 8,000 bps and 384,000 bps.");
+        if ($bitrate < 8000 || $bitrate > 384000) {
+            throw new \DomainException("{$bitrate} is not a valid option. The bitrate must be between 8,000 bps and 384,000 bps.");
         }
 
         if ($this->speaking) {
-            throw new \Exception('Cannot change bitrate while playing.');
+            throw new \RuntimeException('Cannot change bitrate while playing.');
         }
 
         $this->bitrate = $bitrate;
@@ -1003,15 +1108,18 @@ class VoiceClient extends EventEmitter
      * Sets the volume.
      *
      * @param int $volume The volume to set.
+     *
+     * @throws \DomainException
+     * @throws \RuntimeException
      */
     public function setVolume(int $volume): void
     {
-        if ($volume > 100 || $volume < 0) {
-            throw new \InvalidArgumentException("{$volume}% is not a valid option. The bitrate must be between 0% and 100%.");
+        if ($volume < 0 || $volume > 100) {
+            throw new \DomainException("{$volume}% is not a valid option. The bitrate must be between 0% and 100%.");
         }
 
         if ($this->speaking) {
-            throw new \Exception('Cannot change volume while playing.');
+            throw new \RuntimeException('Cannot change volume while playing.');
         }
 
         $this->volume = $volume;
@@ -1021,17 +1129,20 @@ class VoiceClient extends EventEmitter
      * Sets the audio application.
      *
      * @param string $app The audio application to set.
+     *
+     * @throws \DomainException
+     * @throws \RuntimeException
      */
     public function setAudioApplication(string $app): void
     {
         $legal = ['voip', 'audio', 'lowdelay'];
 
         if (! in_array($app, $legal)) {
-            throw new \InvalidArgumentException("{$app} is not a valid option. Valid options are: ".trim(implode(', ', $legal), ', '));
+            throw new \DomainException("{$app} is not a valid option. Valid options are: ".implode(', ', $legal));
         }
 
         if ($this->speaking) {
-            throw new \Exception('Cannot change audio application while playing.');
+            throw new \RuntimeException('Cannot change audio application while playing.');
         }
 
         $this->audioApplication = $app;
@@ -1064,11 +1175,13 @@ class VoiceClient extends EventEmitter
      *
      * @param bool $mute Whether you should be muted.
      * @param bool $deaf Whether you should be deaf.
+     *
+     * @throws \RuntimeException
      */
     public function setMuteDeaf(bool $mute, bool $deaf): void
     {
         if (! $this->ready) {
-            throw new \Exception('The voice client must be ready before you can set mute or deaf.');
+            throw new \RuntimeException('The voice client must be ready before you can set mute or deaf.');
         }
 
         $this->mute = $mute;
@@ -1093,11 +1206,13 @@ class VoiceClient extends EventEmitter
 
     /**
      * Pauses the current sound.
+     *
+     * @throws \RuntimeException
      */
     public function pause(): void
     {
         if (! $this->speaking) {
-            throw new \Exception('Audio must be playing to pause it.');
+            throw new \RuntimeException('Audio must be playing to pause it.');
         }
 
         $this->isPaused = true;
@@ -1106,11 +1221,13 @@ class VoiceClient extends EventEmitter
 
     /**
      * Unpauses the current sound.
+     *
+     * @throws \RuntimeException
      */
     public function unpause(): void
     {
         if (! $this->speaking) {
-            throw new \Exception('Audio must be playing to unpause it.');
+            throw new \RuntimeException('Audio must be playing to unpause it.');
         }
 
         $this->isPaused = false;
@@ -1119,11 +1236,13 @@ class VoiceClient extends EventEmitter
 
     /**
      * Stops the current sound.
+     *
+     * @throws \RuntimeException
      */
     public function stop(): void
     {
         if (! $this->speaking) {
-            throw new \Exception('Audio must be playing to stop it.');
+            throw new \RuntimeException('Audio must be playing to stop it.');
         }
 
         $this->buffer->end();
@@ -1133,11 +1252,13 @@ class VoiceClient extends EventEmitter
 
     /**
      * Closes the voice client.
+     *
+     * @throws \RuntimeException
      */
     public function close(): void
     {
         if (! $this->ready) {
-            throw new \Exception('Voice Client is not connected.');
+            throw new \RuntimeException('Voice Client is not connected.');
         }
 
         if ($this->speaking) {
@@ -1351,7 +1472,7 @@ class VoiceClient extends EventEmitter
         ];
 
         foreach ($binaries as $binary) {
-            $output = $this->checkForExecutable('ffmpeg');
+            $output = $this->checkForExecutable($binary);
 
             if ($output !== null) {
                 $this->ffmpeg = $output;
@@ -1366,38 +1487,6 @@ class VoiceClient extends EventEmitter
     }
 
     /**
-     * Checks if DCA is installed.
-     *
-     * @return bool Whether DCA is installed or not.
-     */
-    private function checkForDCA(): bool
-    {
-        $binaries = [
-            'Darwin' => [
-                64 => 'dca-v0.1.0-darwin-10.6-amd64',
-            ],
-            'Linux' => [
-                64 => 'dca-v0.1.0-linux-amd64',
-            ],
-            'WINNT' => [
-                64 => 'dca-v0.1.0-windows-4.0-amd64.exe',
-            ],
-        ];
-
-        if (array_key_exists(PHP_OS, $binaries) && array_key_exists(PHP_INT_SIZE * 8, $binaries[PHP_OS])) {
-            $binary = realpath(__DIR__.'/../../../bin/'.$binaries[PHP_OS][PHP_INT_SIZE * 8]);
-
-            $this->dca = $binary;
-
-            return true;
-        }
-
-        $this->emit('error', [new DCANotFoundException('No DCA binary was found that is compatible with your operating system and architecture.')]);
-
-        return false;
-    }
-
-    /**
      * Checks if libsodium-php is installed.
      *
      * @return bool
@@ -1406,21 +1495,6 @@ class VoiceClient extends EventEmitter
     {
         if (! function_exists('sodium_crypto_secretbox')) {
             $this->emit('error', [new LibSodiumNotFoundException('libsodium-php could not be found.')]);
-
-            return false;
-        }
-
-        return true;
-    }
-
-    private function checkPHPVersion(): bool
-    {
-        if (substr(strtolower(PHP_OS), 0, 3) === 'win' && PHP_VERSION_ID < 80000) {
-            $this->emit('error', [new \RuntimeException('PHP 8.0.0 or later is required to run the voice client on Windows.')]);
-
-            return false;
-        } elseif (PHP_VERSION_ID < 70400) {
-            $this->emit('error', [new \RuntimeException('PHP 7.4.0 or later is required to run the voice client.')]);
 
             return false;
         }
@@ -1443,37 +1517,49 @@ class VoiceClient extends EventEmitter
     }
 
     /**
-     * Encodes a file to Opus with DCA.
+     * Creates a process that will run FFmpeg and encode `$filename` into Ogg
+     * Opus format.
      *
-     * @param string $filename The file name that will be encoded.
-     * @param int    $channels How many audio channels to encode with.
+     * If `$filename` is null, the process will expect some sort of audio data
+     * to be piped in via stdin. It is highly recommended to set `$preArgs` to
+     * contain the format of the piped data when using a pipe as an input. You
+     * may also want to provide some arguments to FFmpeg via `$preArgs`, which
+     * will be appended to the FFmpeg command _before_ setting the input
+     * arguments.
      *
-     * @return Process A ReactPHP Child Process
+     * @param ?string $filename Path to file to be converted into Ogg Opus, or
+     *                          null for pipe via stdin.
+     * @param ?array  $preArgs  A list of arguments to be appended before the
+     *                          input filename.
+     *
+     * @return Process A ReactPHP child process.
      */
-    public function dcaEncode(string $filename = '', int $channels = 2): Process
+    public function ffmpegEncode(?string $filename = null, ?array $preArgs = null): Process
     {
         $flags = [
-             '-ac', $channels, // Channels
-             '-aa', $this->audioApplication, // Audio application
-             '-ab', round($this->bitrate / 1000), // Bitrate
-             '-as', round($this->frameSize * 48), // Frame Size
-            '-vol', round($this->volume * 2.56), // Volume
-              '-i', (empty($filename)) ? 'pipe:0' : "\"{$filename}\"", // Input file
+            '-i', $filename ?? 'pipe:0',
+            '-map_metadata', '-1',
+            '-f', 'opus',
+            '-c:a', 'libopus',
+            '-ar', '48000',
+            '-ac', '2',
+            '-b:a', $this->bitrate,
+            '-loglevel', 'warning',
+            'pipe:1',
         ];
 
-        $flags = implode(' ', $flags);
-        $pwd = "{$this->dca} {$flags}";
-
-        // >= PHP 8.0, use sockets
-        if (PHP_VERSION_ID >= 80000) {
-            return new Process($pwd, null, null, [
-                ['socket'],
-                ['socket'],
-                ['socket'],
-            ]);
+        if ($preArgs !== null) {
+            $flags = array_merge($preArgs, $flags);
         }
 
-        return new Process($pwd);
+        $flags = implode(' ', $flags);
+        $cmd = "{$this->ffmpeg} {$flags}";
+
+        return new Process($cmd, null, null, [
+            ['socket'],
+            ['socket'],
+            ['socket'],
+        ]);
     }
 
     /**
