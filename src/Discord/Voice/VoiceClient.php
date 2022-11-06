@@ -1347,7 +1347,7 @@ class VoiceClient extends EventEmitter
         ];
 
         foreach ($binaries as $binary) {
-            $output = $this->checkForExecutable('ffmpeg');
+            $output = $this->checkForExecutable($binary);
 
             if ($output !== null) {
                 $this->ffmpeg = $output;
