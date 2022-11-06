@@ -11,7 +11,6 @@
 
 namespace Discord\Voice;
 
-use Exception;
 use Discord\Helpers\Buffer;
 use Generator;
 use React\Promise\ExtendedPromiseInterface;
@@ -68,7 +67,7 @@ class OggPage
      *
      * @return ExtendedPromiseInterface<OggPage> Promise containing the Ogg page.
      *
-     * @throws Exception If the buffer is out of sync and an invalid header is read.
+     * @throws \UnexpectedValueException If the buffer is out of sync and an invalid header is read.
      */
     public static function fromBuffer(Buffer $buffer, ?int $timeout = -1): ExtendedPromiseInterface
     {
@@ -77,7 +76,7 @@ class OggPage
 
         return $buffer->read(4, timeout: $timeout)->then(function ($magic) use ($buffer, $timeout) {
             if ($magic !== 'OggS') {
-                throw new Exception('Invalid Ogg page header, expected OggS got '.$magic);
+                throw new \UnexpectedValueException("Invalid Ogg page header, expected OggS got {$magic}.");
             }
 
             return $buffer->read(23, timeout: $timeout);

@@ -11,8 +11,6 @@
 
 namespace Discord\Voice;
 
-use Exception;
-
 /**
  * Represents the header attached to an Opus Ogg file.
  *
@@ -110,13 +108,13 @@ class OpusHead
      *
      * @param string $data Binary string of data.
      *
-     * @throws Exception If the binary data was missing the magic bytes.
+     * @throws \UnexpectedValueException If the binary data was missing the magic bytes.
      */
     public function __construct(string $data)
     {
         $magic = substr($data, 0, 8);
         if ($magic != 'OpusHead') {
-            throw new Exception("Expected OpusHead, found $magic");
+            throw new \UnexpectedValueException("Expected OpusHead, found {$magic}.");
         }
 
         $head = unpack(self::FORMAT, $data, 8);

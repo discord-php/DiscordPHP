@@ -677,6 +677,9 @@ class VoiceClient extends EventEmitter
      * @param string $file     The file to play.
      * @param int    $channels Deprecated, Discord only supports 2 channels.
      *
+     * @throws FileNotFoundException
+     * @throws \RuntimeException
+     *
      * @return ExtendedPromiseInterface
      */
     public function playFile(string $file, int $channels = 2): ExtendedPromiseInterface
@@ -690,13 +693,13 @@ class VoiceClient extends EventEmitter
         }
 
         if (! $this->ready) {
-            $deferred->reject(new \Exception('Voice Client is not ready.'));
+            $deferred->reject(new \RuntimeException('Voice Client is not ready.'));
 
             return $deferred->promise();
         }
 
         if ($this->speaking) {
-            $deferred->reject(new \Exception('Audio already playing.'));
+            $deferred->reject(new \RuntimeException('Audio already playing.'));
 
             return $deferred->promise();
         }
@@ -714,27 +717,29 @@ class VoiceClient extends EventEmitter
      * @param int             $channels  How many audio channels the PCM16 was encoded with.
      * @param int             $audioRate Audio sampling rate the PCM16 was encoded with.
      *
+     * @throws \RuntimeException
+     * @throws \InvalidArgumentException Thrown when the stream passed to playRawStream is not a valid resource.
+     *
      * @return ExtendedPromiseInterface
-     * @throws \RuntimeException        Thrown when the stream passed to playRawStream is not a valid resource.
      */
     public function playRawStream($stream, int $channels = 2, int $audioRate = 48000): ExtendedPromiseInterface
     {
         $deferred = new Deferred();
 
         if (! $this->ready) {
-            $deferred->reject(new \Exception('Voice Client is not ready.'));
+            $deferred->reject(new \RuntimeException('Voice Client is not ready.'));
 
             return $deferred->promise();
         }
 
         if ($this->speaking) {
-            $deferred->reject(new \Exception('Audio already playing.'));
+            $deferred->reject(new \RuntimeException('Audio already playing.'));
 
             return $deferred->promise();
         }
 
         if (! is_resource($stream) && ! $stream instanceof Stream) {
-            $deferred->reject(new \RuntimeException('The stream passed to playRawStream was not an instance of resource or ReactPHP Stream.'));
+            $deferred->reject(new \InvalidArgumentException('The stream passed to playRawStream was not an instance of resource or ReactPHP Stream.'));
 
             return $deferred->promise();
         }
@@ -759,21 +764,23 @@ class VoiceClient extends EventEmitter
      *
      * @param resource|Process|Stream $stream The Ogg Opus stream to be sent.
      *
+     * @throws \RuntimeException
+     * @throws \InvalidArgumentException
+     *
      * @return ExtendedPromiseInterface
-     * @throws \Exception
      */
     public function playOggStream($stream): ExtendedPromiseInterface
     {
         $deferred = new Deferred();
 
         if (! $this->isReady()) {
-            $deferred->reject(new \Exception('Voice client is not ready yet.'));
+            $deferred->reject(new \RuntimeException('Voice client is not ready yet.'));
 
             return $deferred->promise();
         }
 
         if ($this->speaking) {
-            $deferred->reject(new \Exception('Audio already playing.'));
+            $deferred->reject(new \RuntimeException('Audio already playing.'));
 
             return $deferred->promise();
         }
@@ -795,7 +802,7 @@ class VoiceClient extends EventEmitter
         }
 
         if (! ($stream instanceof ReadableStreamInterface)) {
-            $deferred->reject(new \Exception('The stream passed to playOggStream was not an instance of resource, ReactPHP Process, ReactPHP Readable Stream'));
+            $deferred->reject(new \InvalidArgumentException('The stream passed to playOggStream was not an instance of resource, ReactPHP Process, ReactPHP Readable Stream'));
 
             return $deferred->promise();
         }
@@ -1026,6 +1033,8 @@ class VoiceClient extends EventEmitter
      * Sets the speaking value of the client.
      *
      * @param bool $speaking Whether the client is speaking or not.
+     * 
+     * @throws \RuntimeException
      */
     public function setSpeaking(bool $speaking = true): void
     {
@@ -1034,7 +1043,7 @@ class VoiceClient extends EventEmitter
         }
 
         if (! $this->ready) {
-            throw new \Exception('Voice Client is not ready.');
+            throw new \RuntimeException('Voice Client is not ready.');
         }
 
         $this->send([
@@ -1052,11 +1061,13 @@ class VoiceClient extends EventEmitter
      * Switches voice channels.
      *
      * @param Channel $channel The channel to switch to.
+     * 
+     * @throws \InvalidArgumentException
      */
     public function switchChannel(Channel $channel): void
     {
         if (! $channel->isVoiceBased()) {
-            throw new \InvalidArgumentException('Channel must be a voice channel to be able to switch');
+            throw new \InvalidArgumentException("Channel must be a voice channel to be able to switch, given type {$channel->type}.");
         }
 
         $this->mainSend([
@@ -1076,15 +1087,18 @@ class VoiceClient extends EventEmitter
      * Sets the bitrate.
      *
      * @param int $bitrate The bitrate to set.
+     * 
+     * @throws \DomainException
+     * @throws \RuntimeException
      */
     public function setBitrate(int $bitrate): void
     {
-        if ($bitrate > 384000 || $bitrate < 8000) {
-            throw new \InvalidArgumentException("{$bitrate} is not a valid option. The bitrate must be between 8,000 bps and 384,000 bps.");
+        if ($bitrate < 8000 || $bitrate > 384000) {
+            throw new \DomainException("{$bitrate} is not a valid option. The bitrate must be between 8,000 bps and 384,000 bps.");
         }
 
         if ($this->speaking) {
-            throw new \Exception('Cannot change bitrate while playing.');
+            throw new \RuntimeException('Cannot change bitrate while playing.');
         }
 
         $this->bitrate = $bitrate;
@@ -1094,15 +1108,18 @@ class VoiceClient extends EventEmitter
      * Sets the volume.
      *
      * @param int $volume The volume to set.
+     * 
+     * @throws \DomainException
+     * @throws \RuntimeException
      */
     public function setVolume(int $volume): void
     {
-        if ($volume > 100 || $volume < 0) {
-            throw new \InvalidArgumentException("{$volume}% is not a valid option. The bitrate must be between 0% and 100%.");
+        if ($volume < 0 || $volume > 100) {
+            throw new \DomainException("{$volume}% is not a valid option. The bitrate must be between 0% and 100%.");
         }
 
         if ($this->speaking) {
-            throw new \Exception('Cannot change volume while playing.');
+            throw new \RuntimeException('Cannot change volume while playing.');
         }
 
         $this->volume = $volume;
@@ -1112,17 +1129,20 @@ class VoiceClient extends EventEmitter
      * Sets the audio application.
      *
      * @param string $app The audio application to set.
+     * 
+     * @throws \DomainException
+     * @throws \RuntimeException
      */
     public function setAudioApplication(string $app): void
     {
         $legal = ['voip', 'audio', 'lowdelay'];
 
         if (! in_array($app, $legal)) {
-            throw new \InvalidArgumentException("{$app} is not a valid option. Valid options are: ".trim(implode(', ', $legal), ', '));
+            throw new \DomainException("{$app} is not a valid option. Valid options are: ".implode(', ', $legal));
         }
 
         if ($this->speaking) {
-            throw new \Exception('Cannot change audio application while playing.');
+            throw new \RuntimeException('Cannot change audio application while playing.');
         }
 
         $this->audioApplication = $app;
@@ -1155,11 +1175,13 @@ class VoiceClient extends EventEmitter
      *
      * @param bool $mute Whether you should be muted.
      * @param bool $deaf Whether you should be deaf.
+     * 
+     * @throws \RuntimeException
      */
     public function setMuteDeaf(bool $mute, bool $deaf): void
     {
         if (! $this->ready) {
-            throw new \Exception('The voice client must be ready before you can set mute or deaf.');
+            throw new \RuntimeException('The voice client must be ready before you can set mute or deaf.');
         }
 
         $this->mute = $mute;
@@ -1184,11 +1206,13 @@ class VoiceClient extends EventEmitter
 
     /**
      * Pauses the current sound.
+     * 
+     * @throws \RuntimeException
      */
     public function pause(): void
     {
         if (! $this->speaking) {
-            throw new \Exception('Audio must be playing to pause it.');
+            throw new \RuntimeException('Audio must be playing to pause it.');
         }
 
         $this->isPaused = true;
@@ -1197,11 +1221,13 @@ class VoiceClient extends EventEmitter
 
     /**
      * Unpauses the current sound.
+     * 
+     * @throws \RuntimeException
      */
     public function unpause(): void
     {
         if (! $this->speaking) {
-            throw new \Exception('Audio must be playing to unpause it.');
+            throw new \RuntimeException('Audio must be playing to unpause it.');
         }
 
         $this->isPaused = false;
@@ -1210,11 +1236,13 @@ class VoiceClient extends EventEmitter
 
     /**
      * Stops the current sound.
+     * 
+     * @throws \RuntimeException
      */
     public function stop(): void
     {
         if (! $this->speaking) {
-            throw new \Exception('Audio must be playing to stop it.');
+            throw new \RuntimeException('Audio must be playing to stop it.');
         }
 
         $this->buffer->end();
@@ -1224,11 +1252,13 @@ class VoiceClient extends EventEmitter
 
     /**
      * Closes the voice client.
+     * 
+     * @throws \RuntimeException
      */
     public function close(): void
     {
         if (! $this->ready) {
-            throw new \Exception('Voice Client is not connected.');
+            throw new \RuntimeException('Voice Client is not connected.');
         }
 
         if ($this->speaking) {

@@ -13,7 +13,6 @@ namespace Discord\Voice;
 
 use Discord\Exceptions\BufferTimedOutException;
 use Discord\Helpers\Buffer;
-use Exception;
 use React\Promise\ExtendedPromiseInterface;
 use React\Promise\Promise;
 
@@ -130,7 +129,7 @@ class OggStream
                 $this->leftover = $partial;
 
                 $resolve($packets);
-            }, function (Exception $e) use ($resolve, $reject) {
+            }, function (\Exception $e) use ($resolve, $reject) {
                 if ($e instanceof BufferTimedOutException) {
                     $resolve(null);
                 } else {

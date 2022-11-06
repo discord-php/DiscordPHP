@@ -11,8 +11,6 @@
 
 namespace Discord\Voice;
 
-use Exception;
-
 /**
  * Represents Vorbis tags attached to an Opus Ogg file.
  *
@@ -43,13 +41,13 @@ class OpusTags
      *
      * @param string $data Binary string of data.
      *
-     * @throws Exception If the binary data was missing the magic bytes.
+     * @throws \UnexpectedValueException If the binary data was missing the magic bytes.
      */
     public function __construct(string $data)
     {
         $magic = substr($data, 0, 8);
         if ($magic != 'OpusTags') {
-            throw new Exception("Expected OpusTags, found $magic");
+            throw new \UnexpectedValueException("Expected OpusTags, found {$magic}.");
         }
 
         $vendor_len = unpack('Vvendor_len', $data, 8)['vendor_len'];
