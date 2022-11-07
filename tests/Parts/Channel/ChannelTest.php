@@ -255,18 +255,17 @@ final class ChannelTest extends DiscordTestCase
     }
 
     /**
-     * @covers \Discord\Parts\Channel\Channel::allowVoice
+     * @covers \Discord\Parts\Channel\Channel::isTextBased
      */
-    public function testTextChannelDoesNotAllowVoice()
+    public function testTextChannelIsTextBased()
     {
-        $this->assertFalse($this->channel()->allowVoice());
-        $this->assertTrue($this->channel()->allowText());
+        $this->assertTrue($this->channel()->isTextBased());
     }
 
     /**
-     * @covers \Discord\Parts\Channel\Channel::allowVoice
+     * @covers \Discord\Parts\Channel\Channel::isVoiceBased
      */
-    public function testVoiceChannelAllowVoice()
+    public function testVoiceChannelIsVoiceBased()
     {
         /**
          * @var Channel
@@ -275,6 +274,6 @@ final class ChannelTest extends DiscordTestCase
             return $channel->type == Channel::TYPE_VOICE;
         })->first();
 
-        $this->assertTrue($vc->allowVoice());
+        $this->assertTrue($vc->isVoiceBased());
     }
 }
