@@ -1002,8 +1002,6 @@ class VoiceClient extends EventEmitter
         }
 
         $this->setSpeaking(false);
-        $this->seq = 0;
-        $this->timestamp = 0;
         $this->streamTime = 0;
         $this->startTime = 0;
         $this->isPaused = false;
