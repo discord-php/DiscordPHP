@@ -1007,7 +1007,7 @@ class Guild extends Part
      * For large guilds it's recommended to set the compute_prune_count option to false, forcing 'pruned' to null.
      * Requires the KICK_MEMBERS permission.
      *
-     * @see https://discord.com/developers/docs/resources/guild#get-guild-prune-count
+     * @see https://discord.com/developers/docs/resources/guild#begin-guild-prune
      *
      * @param array  $options An array of options.
      *                        days => number of days to count prune for (1-30)
@@ -1206,8 +1206,8 @@ class Guild extends Part
      *
      * @see https://discord.com/developers/docs/resources/guild#modify-guild-mfa-level
      *
-     * @param int    $level  The new MFA level `Guild::MFA_NONE` or `Guild::MFA_ELEVATED`.
-     * @param string $reason Reason for Audit Log.
+     * @param int         $level  The new MFA level `Guild::MFA_NONE` or `Guild::MFA_ELEVATED`.
+     * @param string|null $reason Reason for Audit Log.
      *
      * @return ExtendedPromiseInterface<self> This guild.
      */
