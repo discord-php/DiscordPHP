@@ -1355,7 +1355,7 @@ class Discord
                 'dnsConfig',
             ])
             ->setDefaults([
-                'loop' => LoopFactory::create(),
+                'loop' => class_exists('\React\EventLoop\Loop') ? \React\EventLoop\Loop::get() : LoopFactory::create(),
                 'logger' => null,
                 'loadAllMembers' => false,
                 'disabledEvents' => [],
