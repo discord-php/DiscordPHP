@@ -629,7 +629,7 @@ class Message extends Part
     /**
      * Starts a public thread from the message.
      *
-     * @see https://discord.com/developers/docs/resources/channel#start-thread-with-message
+     * @see https://discord.com/developers/docs/resources/channel#start-thread-from-message
      *
      * @param string      $name                  The name of the thread.
      * @param int         $auto_archive_duration Number of minutes of inactivity until the thread is auto-archived. One of 60, 1440, 4320, 10080.
