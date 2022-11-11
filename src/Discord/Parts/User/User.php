@@ -64,10 +64,12 @@ class User extends Part
     public const FLAG_VERIFIED_BOT_DEVELOPER = (1 << 17);
     public const FLAG_DISCORD_CERTIFIED_MODERATOR = (1 << 18);
     public const BOT_HTTP_INTERACTIONS = (1 << 19);
+    public const FLAG_ACTIVE_DEVELOPER = (1 < 22);
 
     public const PREMIUM_NONE = 0;
     public const PREMIUM_NITRO_CLASSIC = 1;
     public const PREMIUM_NITRO = 2;
+    public const PREMIUM_NITRO_BASIC = 3;
 
     /**
      * @inheritdoc
