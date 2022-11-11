@@ -84,6 +84,7 @@ class Application extends Part
     public const GATEWAY_MESSAGE_CONTENT = (1 << 18);
     public const GATEWAY_MESSAGE_CONTENT_LIMITED = (1 << 19);
     public const APPLICATION_COMMAND_BADGE = (1 << 23);
+    public const ACTIVE = (1 << 24);
 
     /**
      * @inheritdoc
