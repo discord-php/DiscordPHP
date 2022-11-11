@@ -57,6 +57,7 @@ class Command extends Part
         'default_member_permissions',
         'dm_permission',
         'default_permission',
+        'nsfw',
         'version',
     ];
 
