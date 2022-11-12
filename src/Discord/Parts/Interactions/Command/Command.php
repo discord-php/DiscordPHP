@@ -133,8 +133,8 @@ class Command extends Part
             'nsfw' => true,
         ];
 
-        foreach($attributes as $attribute => $fromObject) {
-            if ($fromObject) {
+        foreach($attributes as $attribute => $raw) {
+            if ($raw) {
                 $attr[$attribute] = $this->getAttribute($attribute);
             } elseif (array_key_exists($attribute, $this->attributes)) {
                 $attr[$attribute] = $this->attributes[$attribute];
@@ -166,8 +166,8 @@ class Command extends Part
             'nsfw' => true,
         ];
 
-        foreach($attributes as $attribute => $fromObject) {
-            if ($fromObject) {
+        foreach($attributes as $attribute => $raw) {
+            if ($raw) {
                 $attr[$attribute] = $this->getAttribute($attribute);
             } elseif (array_key_exists($attribute, $this->attributes)) {
                 $attr[$attribute] = $this->attributes[$attribute];
