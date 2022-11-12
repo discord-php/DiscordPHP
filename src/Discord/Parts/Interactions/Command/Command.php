@@ -134,8 +134,8 @@ class Command extends Part
         ];
 
         foreach($attributes as $attribute => $raw) {
-            if ($raw) {
-                $attr[$attribute] = $this->getAttribute($attribute);
+            if ($raw && $value = $this->getAttribute($attribute)) {
+                $attr[$attribute] = $value;
             } elseif (array_key_exists($attribute, $this->attributes)) {
                 $attr[$attribute] = $this->attributes[$attribute];
             }
@@ -167,8 +167,8 @@ class Command extends Part
         ];
 
         foreach($attributes as $attribute => $raw) {
-            if ($raw) {
-                $attr[$attribute] = $this->getAttribute($attribute);
+            if ($raw && $value = $this->getAttribute($attribute)) {
+                $attr[$attribute] = $value;
             } elseif (array_key_exists($attribute, $this->attributes)) {
                 $attr[$attribute] = $this->attributes[$attribute];
             }
