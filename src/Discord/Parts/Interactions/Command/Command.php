@@ -125,17 +125,17 @@ class Command extends Part
         ];
 
         $attributes = [
-            'name' => true,
-            'description' => true,
-            'type' => true,
-            'options' => false,
-            'dm_permission' => true, // Guild command might omit this fillable
-            'nsfw' => true,
+            'name'
+            'description',
+            'type',
+            'options',
+            'dm_permission', // Guild command might omit this fillable
+            'nsfw',
         ];
 
-        foreach($attributes as $attribute => $fromObject) {
+        foreach($attributes as $attribute) {
             if (array_key_exists($attribute, $this->attributes)) {
-                $value = $fromObject ? $this->{$attribute} : $this->attributes[$attribute];
+                $value = property_exists($this, $attribute) ? $this->{$attribute} : $this->attributes[$attribute];
                 $attr[$attribute] = $value;
             }
         }
@@ -153,21 +153,21 @@ class Command extends Part
         $attr = [];
 
         $attributes = [
-            'name' => true,
-            'description' => true,
-            'default_member_permissions' => true,
-            'type' => true,
-            'options' => false,
-            'name_localizations' => true,
-            'description_localizations' => true,
-            'default_permission' => true, // Soon to be deprecated
-            'dm_permission' => true, // Guild command might omit this fillable
-            'nsfw' => true,
+            'name'
+            'description',
+            'default_member_permissions',
+            'type',
+            'options',
+            'name_localizations',
+            'description_localizations',
+            'default_permission', // Soon to be deprecated
+            'dm_permission', // Guild command might omit this fillable
+            'nsfw',
         ];
 
-        foreach($attributes as $attribute => $fromObject) {
+        foreach($attributes as $attribute) {
             if (array_key_exists($attribute, $this->attributes)) {
-                $attr[$attribute] = $fromObject ? $this->{$attribute} : $this->attributes[$attribute];
+                $attr[$attribute] = property_exists($this, $attribute) ? $this->{$attribute} : $this->attributes[$attribute];
             }
         }
 
