@@ -23,18 +23,11 @@ use React\Stream\WritableStreamInterface;
 class Buffer extends EventEmitter implements WritableStreamInterface
 {
     /**
-     * Pointer to the head of the buffer.
-     *
-     * @var int
-     */
-    private $readPointer = 0;
-    
-    /**
      * Internal buffer.
      *
-     * @var char[]
+     * @var string
      */
-    private $buffer = [];
+    private $buffer = '';
 
     /**
      * Array of deferred reads waiting to
@@ -73,9 +66,7 @@ class Buffer extends EventEmitter implements WritableStreamInterface
             return false;
         }
 
-        for ($i = 0; $i < strlen((string) $data); $i++) {
-            $this->buffer[] = $data[$i];
-        }
+        $this->buffer .= (string) $data;
 
         foreach ($this->reads as $key => [$deferred, $length]) {
             if (($output = $this->readRaw($length)) !== false) {
@@ -98,12 +89,9 @@ class Buffer extends EventEmitter implements WritableStreamInterface
      */
     private function readRaw(int $length)
     {
-        if ((count($this->buffer) - $this->readPointer) >= $length) {
-            $output = '';
-
-            for ($i = 0; $i < $length; $i++) {
-                $output .= $this->buffer[$this->readPointer++];
-            }
+        if (strlen($this->buffer) >= $length) {
+            $output = substr($this->buffer, 0, $length);
+            $this->buffer = substr($this->buffer, $length);
 
             return $output;
         }
@@ -217,7 +205,6 @@ class Buffer extends EventEmitter implements WritableStreamInterface
 
         $this->buffer = [];
         $this->closed = true;
-        $this->readPointer = 0;
         $this->emit('close');
     }
 }
