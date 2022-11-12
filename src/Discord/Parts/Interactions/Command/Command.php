@@ -135,7 +135,7 @@ class Command extends Part
 
         foreach($attributes as $attribute => $fromObject) {
             if ($fromObject) {
-                $attr[$attribute] = $this->{$attribute};
+                $attr[$attribute] = $this->getAttribute($attribute);
             } elseif (array_key_exists($attribute, $this->attributes)) {
                 $attr[$attribute] = $this->attributes[$attribute];
             }
@@ -168,7 +168,7 @@ class Command extends Part
 
         foreach($attributes as $attribute => $fromObject) {
             if ($fromObject) {
-                $attr[$attribute] = $this->{$attribute};
+                $attr[$attribute] = $this->getAttribute($attribute);
             } elseif (array_key_exists($attribute, $this->attributes)) {
                 $attr[$attribute] = $this->attributes[$attribute];
             }
