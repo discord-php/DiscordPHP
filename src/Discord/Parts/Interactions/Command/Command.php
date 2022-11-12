@@ -157,21 +157,29 @@ class Command extends Part
             'type' => $this->type,
         ];
 
-        $keys = [
-            'options', 
-            'name_localizations', 
-            'description_localizations', 
-            'default_permission', 
-            'dm_permission', 
-            'nsfw',
-        ];
-
-        foreach($keys as $key) {
-            if (array_key_exists($key, $this->attributes)) {
-                $attr[$key] = $this->attributes[$key];
-            }
+        if (array_key_exists('options', $this->attributes)) {
+            $attr['options'] = $this->attributes['options'];
         }
 
+        if (array_key_exists('name_localizations', $this->attributes)) {
+            $attr['name_localizations'] = $this->name_localizations;
+        }
+
+        if (array_key_exists('description_localizations', $this->attributes)) {
+            $attr['description_localizations'] = $this->description_localizations;
+        }
+
+        if (array_key_exists('default_permission', $this->attributes)) {
+            $attr['default_permission'] = $this->default_permission;
+        }
+
+        if (array_key_exists('dm_permission', $this->attributes)) {
+            $attr['dm_permission'] = $this->dm_permission;
+        }
+
+        if (array_key_exists('nsfw', $this->attributes)) {
+            $attr['nsfw'] = $this->nsfw;
+        }
         return $attr;
     }
 
