@@ -118,26 +118,26 @@ class Command extends Part
     public function getCreatableAttributes(): array
     {
         $attr = [
+            'name' => $this->name,
             'name_localizations' => $this->name_localizations ?? null,
+            'description' => $this->description,
             'description_localizations' => $this->description_localizations ?? null,
             'default_member_permissions' => $this->default_member_permissions ?? null,
             'default_permission' => $this->default_permission ?? true,
+            'type' => $this->type,
         ];
 
-        $attributes = [
-            'name'
-            'description',
-            'type',
-            'options',
-            'dm_permission', // Guild command might omit this fillable
-            'nsfw',
-        ];
+        if (array_key_exists('options', $this->attributes)) {
+            $attr['options'] = $this->attributes['options'];
+        }
 
-        foreach($attributes as $attribute) {
-            if (array_key_exists($attribute, $this->attributes)) {
-                $value = property_exists($this, $attribute) ? $this->{$attribute} : $this->attributes[$attribute];
-                $attr[$attribute] = $value;
-            }
+        // Guild command might omit this fillable
+        if (array_key_exists('dm_permission', $this->attributes)) {
+            $attr['dm_permission'] = $this->dm_permission;
+        }
+
+        if (array_key_exists('nsfw', $this->attributes)) {
+            $attr['nsfw'] = $this->nsfw;
         }
 
         return $attr;
@@ -150,25 +150,35 @@ class Command extends Part
      */
     public function getUpdatableAttributes(): array
     {
-        $attr = [];
-
-        $attributes = [
-            'name'
-            'description',
-            'default_member_permissions',
-            'type',
-            'options',
-            'name_localizations',
-            'description_localizations',
-            'default_permission', // Soon to be deprecated
-            'dm_permission', // Guild command might omit this fillable
-            'nsfw',
+        $attr = [
+            'name' => $this->name,
+            'description' => $this->description,
+            'default_member_permissions' => $this->default_member_permissions,
+            'type' => $this->type,
         ];
 
-        foreach($attributes as $attribute) {
-            if (array_key_exists($attribute, $this->attributes)) {
-                $attr[$attribute] = property_exists($this, $attribute) ? $this->{$attribute} : $this->attributes[$attribute];
-            }
+        if (array_key_exists('options', $this->attributes)) {
+            $attr['options'] = $this->attributes['options'];
+        }
+
+        if (array_key_exists('name_localizations', $this->attributes)) {
+            $attr['name_localizations'] = $this->name_localizations;
+        }
+
+        if (array_key_exists('description_localizations', $this->attributes)) {
+            $attr['description_localizations'] = $this->description_localizations;
+        }
+
+        if (array_key_exists('default_permission', $this->attributes)) {
+            $attr['default_permission'] = $this->default_permission;
+        }
+
+        if (array_key_exists('dm_permission', $this->attributes)) {
+            $attr['dm_permission'] = $this->dm_permission;
+        }
+
+        if (array_key_exists('nsfw', $this->attributes)) {
+            $attr['nsfw'] = $this->nsfw;
         }
 
         return $attr;
