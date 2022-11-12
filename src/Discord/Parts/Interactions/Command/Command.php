@@ -180,6 +180,7 @@ class Command extends Part
         if (array_key_exists('nsfw', $this->attributes)) {
             $attr['nsfw'] = $this->nsfw;
         }
+
         return $attr;
     }
 
