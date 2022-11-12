@@ -134,10 +134,9 @@ class Command extends Part
         ];
 
         foreach($attributes as $attribute => $fromObject) {
-            if ($fromObject) {
-                $attr[$attribute] = $this->{$attribute};
-            } elseif (array_key_exists($attribute, $this->attributes)) {
-                $attr[$attribute] = $this->attributes[$attribute];
+            if (array_key_exists($attribute, $this->attributes)) {
+                $value = $fromObject ? $this->{$attribute} : $this->attributes[$attribute];
+                $attr[$attribute] = $value;
             }
         }
 
@@ -167,10 +166,8 @@ class Command extends Part
         ];
 
         foreach($attributes as $attribute => $fromObject) {
-            if ($fromObject) {
-                $attr[$attribute] = $this->{$attribute};
-            } elseif (array_key_exists($attribute, $this->attributes)) {
-                $attr[$attribute] = $this->attributes[$attribute];
+            if (array_key_exists($attribute, $this->attributes)) {
+                $attr[$attribute] = $fromObject ? $this->{$attribute} : $this->attributes[$attribute];
             }
         }
 
