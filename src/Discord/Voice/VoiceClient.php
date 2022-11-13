@@ -1214,7 +1214,7 @@ class VoiceClient extends EventEmitter
         }
 
         if ($this->paused) {
-            throw new \RuntimeException('Audio already paused.');
+            throw new \RuntimeException('Audio is already paused.');
         }
 
         $this->paused = true;
@@ -1231,9 +1231,9 @@ class VoiceClient extends EventEmitter
         if (! $this->speaking) {
             throw new \RuntimeException('Audio must be playing to unpause it.');
         }
-        
+
         if (! $this->paused) {
-            throw new \RuntimeException('Audio already playing.');
+            throw new \RuntimeException('Audio is already playing.');
         }
 
         $this->paused = false;
