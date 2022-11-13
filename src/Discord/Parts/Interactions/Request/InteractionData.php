@@ -107,7 +107,7 @@ class InteractionData extends Part
 
         $adata = $this->attributes['resolved'];
         if (isset($this->attributes['guild_id'])) {
-            $adata->guild_id = $this->guild_id;
+            $adata['guild_id'] = $this->guild_id;
         }
 
         return $this->factory->part(Resolved::class, (array) $adata, true);
