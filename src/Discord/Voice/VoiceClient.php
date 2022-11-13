@@ -222,7 +222,7 @@ class VoiceClient extends EventEmitter
      *
      * @var bool Whether the voice client is currently paused.
      */
-    protected $isPaused = false;
+    protected $paused = false;
 
     /**
      * Have we sent the login frame yet?
@@ -820,7 +820,7 @@ class VoiceClient extends EventEmitter
             $this->readOpusTimer = null;
 
             // If the client is paused, delay by frame size and check again.
-            if ($this->isPaused) {
+            if ($this->paused) {
                 $this->insertSilence();
                 $this->readOpusTimer = $this->loop->addTimer($this->frameSize / 1000, $readOpus);
 
@@ -931,7 +931,7 @@ class VoiceClient extends EventEmitter
             $this->readOpusTimer = null;
 
             // If the client is paused, delay by frame size and check again.
-            if ($this->isPaused) {
+            if ($this->paused) {
                 $this->insertSilence();
                 $this->readOpusTimer = $this->loop->addTimer($this->frameSize / 1000, $readOpus);
 
@@ -1004,7 +1004,7 @@ class VoiceClient extends EventEmitter
         $this->setSpeaking(false);
         $this->streamTime = 0;
         $this->startTime = 0;
-        $this->isPaused = false;
+        $this->paused = false;
         $this->silenceRemaining = 5;
     }
 
@@ -1213,7 +1213,11 @@ class VoiceClient extends EventEmitter
             throw new \RuntimeException('Audio must be playing to pause it.');
         }
 
-        $this->isPaused = true;
+        if ($this->paused) {
+            throw new \RuntimeException('Audio is already paused.');
+        }
+
+        $this->paused = true;
         $this->silenceRemaining = 5;
     }
 
@@ -1228,7 +1232,11 @@ class VoiceClient extends EventEmitter
             throw new \RuntimeException('Audio must be playing to unpause it.');
         }
 
-        $this->isPaused = false;
+        if (! $this->paused) {
+            throw new \RuntimeException('Audio is already playing.');
+        }
+
+        $this->paused = false;
         $this->timestamp = microtime(true) * 1000;
     }
 
@@ -1319,6 +1327,16 @@ class VoiceClient extends EventEmitter
         }
 
         return false;
+    }
+
+    /**
+     * Checks if we are paused.
+     *
+     * @return bool Whether we are paused.
+     */
+    public function isPaused(): bool
+    {
+        return $this->paused;
     }
 
     /**
