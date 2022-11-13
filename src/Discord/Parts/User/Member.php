@@ -508,7 +508,7 @@ class Member extends Part
      */
     protected function getIdAttribute(): string
     {
-        return $this->attributes['id'] ?? $this->attributes['user']['id'];
+        return $this->attributes['id'] ?? is_array($this->attributes['user']) ? $this->attributes['user']['id'] : $this->attributes['user']->id ;
     }
 
     /**
