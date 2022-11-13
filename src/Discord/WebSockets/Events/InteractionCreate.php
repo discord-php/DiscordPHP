@@ -69,7 +69,7 @@ class InteractionCreate extends Event
                             }
                         } elseif (! empty($option->focused)) {
                             return $command->suggest($interaction);
-                        } elseif ($option->type === Option::SUB_COMMAND_GROUP) {
+                        } elseif ($option->type === Option::SUB_COMMAND_GROUP || $option->type === Option::SUB_COMMAND) {
                             $checkSubCommandGroup = function ($options) use ($command, $interaction, &$checkSubCommandGroup) {
                                 foreach ($options as $option) {
                                     if (! empty($option->focused)) {
