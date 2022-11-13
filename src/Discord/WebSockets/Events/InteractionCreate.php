@@ -12,6 +12,7 @@
 namespace Discord\WebSockets\Events;
 
 use Discord\InteractionType;
+use Discord\Parts\Interactions\Command\Option;
 use Discord\Parts\Interactions\Interaction;
 use Discord\Parts\User\User;
 use Discord\WebSockets\Event;
@@ -68,6 +69,21 @@ class InteractionCreate extends Event
                             }
                         } elseif (! empty($option->focused)) {
                             return $command->suggest($interaction);
+                        } elseif ($option->type === Option::SUB_COMMAND_GROUP) {
+                            $checkSubCommandGroup = function ($options) use ($command, $interaction, &$checkSubCommandGroup) {
+                                foreach ($options as $option) {
+                                    if (! empty($option->focused)) {
+                                        return $command->suggest($interaction);
+                                    }
+
+                                    if (! empty($option->options)) {
+                                        return $checkSubCommandGroup($option->options);
+                                    }
+                                }
+                            };
+
+                            $options = $option->options;
+                            $checkSubCommandGroup($options);
                         }
                     }
 
