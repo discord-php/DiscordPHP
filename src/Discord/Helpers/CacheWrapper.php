@@ -141,6 +141,10 @@ final class CacheWrapper
             if ($value === null) {
                 unset($this->items[$key]);
             } else {
+                if ($this->discord->options['cacheCompress'] && $test = gzdecode($value)) {
+                    $value = $test;
+                }
+
                 $value = $this->items[$key] = $this->unserializer($value);
             }
 
@@ -171,6 +175,10 @@ final class CacheWrapper
     public function set($key, $value, $ttl = null)
     {
         $item = $this->serializer($value);
+
+        if ($this->discord->options['cacheCompress']) {
+            $item = gzencode($item);
+        }
 
         $handleValue = function ($success) use ($key, $value) {
             if ($success) {
