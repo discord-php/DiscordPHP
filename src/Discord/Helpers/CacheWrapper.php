@@ -177,7 +177,7 @@ final class CacheWrapper
         $item = $this->serializer($value);
 
         if ($this->discord->options['cacheCompress']) {
-            $item = zlib_encode($item);
+            $item = zlib_encode($item, ZLIB_ENCODING_DEFLATE);
         }
 
         $handleValue = function ($success) use ($key, $value) {
