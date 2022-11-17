@@ -686,7 +686,7 @@ class VoiceClient extends EventEmitter
     {
         $deferred = new Deferred();
 
-        if (! filter_var($file, FILTER_VALIDATE_URL) && ! file_exists($file)) {
+        if (filter_var($file, FILTER_VALIDATE_URL) === false && ! file_exists($file)) {
             $deferred->reject(new FileNotFoundException("Could not find the file \"{$file}\"."));
 
             return $deferred->promise();
