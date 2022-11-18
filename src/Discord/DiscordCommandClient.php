@@ -121,6 +121,9 @@ class DiscordCommandClient extends Discord
                     }
 
                     $help = $command->getHelp($prefix);
+                    if (empty($help)) {
+                        return;
+                    }
 
                     $embed = new Embed($this);
                     $embed->setAuthor($this->commandClientOptions['name'], $this->client->user->avatar)
@@ -168,6 +171,9 @@ class DiscordCommandClient extends Discord
                 $embedfields = [];
                 foreach ($this->commands as $command) {
                     $help = $command->getHelp($prefix);
+                    if (empty($help)) {
+                        continue;
+                    }
                     $embedfields[] = [
                         'name' => $help['command'],
                         'value' => $help['description'],
@@ -351,7 +357,8 @@ class DiscordCommandClient extends Discord
             $options['longDescription'],
             $options['usage'],
             $options['cooldown'],
-            $options['cooldownMessage']
+            $options['cooldownMessage'],
+            $options['showHelp']
         );
 
         return [$commandInstance, $options];
@@ -376,6 +383,7 @@ class DiscordCommandClient extends Discord
                 'aliases',
                 'cooldown',
                 'cooldownMessage',
+                'showHelp',
             ])
             ->setDefaults([
                 'description' => 'No description provided.',
@@ -384,6 +392,7 @@ class DiscordCommandClient extends Discord
                 'aliases' => [],
                 'cooldown' => 0,
                 'cooldownMessage' => 'please wait %d second(s) to use this command again.',
+                'showHelp' => true,
             ]);
 
         $options = $resolver->resolve($options);
