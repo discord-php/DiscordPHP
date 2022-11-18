@@ -65,7 +65,7 @@ use function React\Promise\resolve;
  * @property      Carbon|null   $create_timestamp      Timestamp when the thread was created; only populated for threads created after 2022-01-09.
  * @property      int|null      $total_message_sent    Number of messages ever sent in a thread, it's similar to `message_count` on message creation, but will not decrement the number when a message is deleted.
  * @property      int|null      $flags                 Channel flags combined as a bitfield. PINNED can only be set for threads in forum channels.
- * @property      string[]|null $applied_tags          The IDs of the set of tags that have been applied to a thread in a forum channel.
+ * @property      string[]|null $applied_tags          The IDs of the set of tags that have been applied to a thread in a forum channel, limited to 5.
  *
  * @property MessageRepository $messages Repository of messages sent in the thread.
  * @property MemberRepository  $members  Repository of members in the thread.

@@ -81,7 +81,7 @@ use function React\Promise\resolve;
  * @property      int|null            $default_auto_archive_duration      Default duration for newly created threads, in minutes, to automatically archive the thread after recent activity, can be set to: 60, 1440, 4320, 10080.
  * @property      string|null         $permissions                        Computed permissions for the invoking user in the channel, including overwrites, only included when part of the resolved data received on an application command interaction.
  * @property      int|null            $flags                              Channel flags combined as a bitfield.
- * @property      Collection|Tag[]    $available_tags                     Set of tags that can be used in a forum channel.
+ * @property      Collection|Tag[]    $available_tags                     Set of tags that can be used in a forum channel, limited to 20.
  * @property      ?Reaction|null      $default_reaction_emoji             Emoji to show in the add reaction button on a thread in a forum channel.
  * @property      int|null            $default_thread_rate_limit_per_user The initial rate_limit_per_user to set on newly created threads in a forum channel. this field is copied to the thread at creation time and does not live update.
  * @property      ?int|null           $default_sort_order                 The default sort order type used to order posts in forum channels.
@@ -927,7 +927,7 @@ class Channel extends Part
      * @param bool|null      $options['invitable']             Whether non-moderators can add other non-moderators to a thread; only available when creating a private thread.
      * @param ?int|null      $options['rate_limit_per_user']   Amount of seconds a user has to wait before sending another message (0-21600).
      * @param MessageBuilder $options['message']               Contents of the first message in the forum thread.
-     * @param string[]|null  $options['applied_tags']          The IDs of the set of tags that have been applied to a thread in a forum channel.
+     * @param string[]|null  $options['applied_tags']          The IDs of the set of tags that have been applied to a thread in a forum channel, limited to 5.
      * @param string|null    $reason                           Reason for Audit Log.
      *
      * @throws \RuntimeException
