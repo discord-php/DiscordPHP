@@ -57,6 +57,7 @@ class Command extends Part
         'default_member_permissions',
         'dm_permission',
         'default_permission',
+        'nsfw',
         'version',
     ];
 
@@ -135,6 +136,10 @@ class Command extends Part
             $attr['dm_permission'] = $this->dm_permission;
         }
 
+        if (array_key_exists('nsfw', $this->attributes)) {
+            $attr['nsfw'] = $this->nsfw;
+        }
+
         return $attr;
     }
 
@@ -170,6 +175,10 @@ class Command extends Part
 
         if (array_key_exists('dm_permission', $this->attributes)) {
             $attr['dm_permission'] = $this->dm_permission;
+        }
+
+        if (array_key_exists('nsfw', $this->attributes)) {
+            $attr['nsfw'] = $this->nsfw;
         }
 
         return $attr;
