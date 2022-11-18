@@ -62,7 +62,7 @@ class Command
      * @var string Command cooldown message.
      */
     protected $cooldownMessage;
-    
+
     /**
      * Help visibility.
      *
@@ -121,7 +121,7 @@ class Command
         string $usage,
         int $cooldown,
         string $cooldownMessage,
-        bool $showHelp
+        bool $showHelp = true
     ) {
         $this->client = $client;
         $this->command = $command;
