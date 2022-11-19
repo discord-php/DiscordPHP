@@ -18,7 +18,6 @@ use React\Promise\PromiseInterface;
 use Throwable;
 use WeakReference;
 
-use function Discord\isZlibCompressed;
 use function React\Promise\all;
 use function React\Promise\reject;
 use function React\Promise\resolve;
@@ -424,8 +423,8 @@ final class CacheWrapper
     public function unserializer($value)
     {
         if ($this->interface instanceof \React\Cache\CacheInterface && ! ($this->interface instanceof ArrayCache)) {
-            if (isZlibCompressed($value)) {
-                $value = zlib_decode($value);
+            if (substr($value,0,1) !== '{' && $test = zlib_decode($value)) {
+                $value = $test;
             }
             $tmp = unserialize($value);
             if ($tmp === false) {
