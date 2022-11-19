@@ -408,7 +408,7 @@ final class CacheWrapper
             $data = serialize($data);
 
             if ($this->discord->options['cacheCompress']) {
-                $data = zlib_encode($data, ZLIB_ENCODING_DEFLATE);
+                $data = zlib_encode($data, ZLIB_ENCODING_RAW);
             }
         }
 
