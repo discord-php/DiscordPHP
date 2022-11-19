@@ -354,3 +354,43 @@ function nowait(PromiseInterface $promiseInterface)
 
     return $resolved;
 }
+
+/**
+ * Checks if a value is zlib compressed by checking the magic bytes.
+ *
+ * @param string $data The data to check.
+ *
+ * @return bool whether it's zlib compressed data or not.
+ *
+ * @see https://www.rfc-editor.org/rfc/rfc1950
+ *
+ * @since 10.0.0
+ */
+function isZlibCompressed(string $data) :bool
+{
+    $cmf = decbin(ord(substr($data,0,1)));
+
+    // Abort if compression method is not deflate
+    if (bindec(substr($cmf, -4)) !== 8) {
+        return false;
+    }
+
+    // Abort if LZ77 window size is above 32k
+    if (bindec(substr($cmf, 0, -4)) > 7) {
+        return false;
+    }
+
+    $flg = decbin(ord(substr($data, 1, 1)));
+
+    // Check compression level
+    if (bindec(substr($flg, 0, -6)) > 3) {
+        return false;
+    }
+
+    // Check adler32 sum
+    if ((bindec($cmf) * 256 + bindec($flg)) % 31 !== 0) {
+        return false;
+    }
+
+    return true;
+}
