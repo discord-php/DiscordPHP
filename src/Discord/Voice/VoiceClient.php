@@ -672,9 +672,9 @@ class VoiceClient extends EventEmitter
     }
 
     /**
-     * Plays a file on the voice stream.
+     * Plays a file/url on the voice stream.
      *
-     * @param string $file     The file to play.
+     * @param string $file     The file/url to play.
      * @param int    $channels Deprecated, Discord only supports 2 channels.
      *
      * @throws FileNotFoundException
@@ -686,7 +686,7 @@ class VoiceClient extends EventEmitter
     {
         $deferred = new Deferred();
 
-        if (! file_exists($file)) {
+        if (filter_var($file, FILTER_VALIDATE_URL) === false && ! file_exists($file)) {
             $deferred->reject(new FileNotFoundException("Could not find the file \"{$file}\"."));
 
             return $deferred->promise();
