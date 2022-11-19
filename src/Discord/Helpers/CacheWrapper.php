@@ -423,7 +423,7 @@ final class CacheWrapper
     public function unserializer($value)
     {
         if ($this->interface instanceof \React\Cache\CacheInterface && ! ($this->interface instanceof ArrayCache)) {
-            if (substr($value,0,1) !== '{' && $test = zlib_decode($value)) {
+            if (str_starts_with($value, '{') && $test = zlib_decode($value)) {
                 $value = $test;
             }
             $tmp = unserialize($value);
