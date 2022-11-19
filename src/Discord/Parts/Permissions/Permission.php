@@ -117,6 +117,7 @@ abstract class Permission extends Part
         'manage_nicknames' => 27,
         'manage_emojis_and_stickers' => 30,
         'moderate_members' => 40,
+        'view_creator_monetization_analytics' => 41,
     ];
 
     /**
