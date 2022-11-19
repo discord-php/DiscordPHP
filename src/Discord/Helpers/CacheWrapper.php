@@ -141,10 +141,6 @@ final class CacheWrapper
             if ($value === null) {
                 unset($this->items[$key]);
             } else {
-                if ($this->discord->options['cacheCompress'] && $test = zlib_decode($value)) {
-                    $value = $test;
-                }
-
                 $value = $this->items[$key] = $this->unserializer($value);
             }
 
@@ -175,10 +171,6 @@ final class CacheWrapper
     public function set($key, $value, $ttl = null)
     {
         $item = $this->serializer($value);
-
-        if ($this->discord->options['cacheCompress']) {
-            $item = zlib_encode($item, ZLIB_ENCODING_DEFLATE);
-        }
 
         $handleValue = function ($success) use ($key, $value) {
             if ($success) {
@@ -413,7 +405,11 @@ final class CacheWrapper
         $data = (object) (get_object_vars($part) + ['attributes' => $part->getRawAttributes()]);
 
         if ($this->interface instanceof \React\Cache\CacheInterface && ! ($this->interface instanceof ArrayCache)) {
-            return serialize($data);
+            $data = serialize($data);
+
+            if ($this->discord->options['cacheCompress']) {
+                $data = zlib_encode($data, ZLIB_ENCODING_DEFLATE);
+            }
         }
 
         return $data;
@@ -427,6 +423,9 @@ final class CacheWrapper
     public function unserializer($value)
     {
         if ($this->interface instanceof \React\Cache\CacheInterface && ! ($this->interface instanceof ArrayCache)) {
+            if ($this->discord->options['cacheCompress'] && $test = zlib_decode($value)) {
+                $value = $test;
+            }
             $tmp = unserialize($value);
             if ($tmp === false) {
                 $this->discord->getLogger()->error('Malformed cache serialization', ['class' => $this->class, 'interface' => get_class($this->interface), 'serialized' => $value]);
