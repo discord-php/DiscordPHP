@@ -196,7 +196,7 @@ class Resolved extends Part
                 }
             }
 
-            $collection->pushItem($messagePart ?? $this->factory->part(Message::class, (array) $message, true));
+            $collection->pushItem($messagePart ?? $this->factory->part(Message::class, (array) $message + ['guild_id' => $this->guild_id], true));
         }
 
         return $collection;
