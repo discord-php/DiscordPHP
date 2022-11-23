@@ -121,7 +121,7 @@ class Resolved extends Part
             }
 
             if (! $rolePart) {
-                $rolePart = $this->factory->create(Role::class, $role, true);
+                $rolePart = $this->factory->create(Role::class, (array) $role + ['guild_id' => $this->guild_id], true);
             }
 
             $collection->pushItem($rolePart);
@@ -152,9 +152,9 @@ class Resolved extends Part
 
             if (! $channelPart) {
                 if (in_array($channel->type, [Channel::TYPE_NEWS_THREAD, Channel::TYPE_PRIVATE_THREAD, Channel::TYPE_PUBLIC_THREAD])) {
-                    $channelPart = $this->factory->create(Thread::class, $channel, true);
+                    $channelPart = $this->factory->create(Thread::class, (array) $channel + ['guild_id' => $this->guild_id], true);
                 } else {
-                    $channelPart = $this->factory->create(Channel::class, $channel, true);
+                    $channelPart = $this->factory->create(Channel::class, (array) $channel + ['guild_id' => $this->guild_id], true);
                 }
             }
 
@@ -185,7 +185,7 @@ class Resolved extends Part
             }
 
             if (! $messagePart) {
-                $messagePart = $this->factory->create(Message::class, $message, true);
+                $messagePart = $this->factory->create(Message::class, (array) $message + ['guild_id' => $this->guild_id], true);
             }
 
             $collection->pushItem($messagePart);
