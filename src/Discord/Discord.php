@@ -1387,6 +1387,7 @@ class Discord
                 'dnsConfig',
                 'cacheInterface',
                 'cacheSweep',
+                'cacheCompress',
             ])
             ->setDefaults([
                 'logger' => null,
@@ -1398,6 +1399,7 @@ class Discord
                 'socket_options' => [],
                 'cacheInterface' => new ArrayCache(),
                 'cacheSweep' => false,
+                'cacheCompress' => false,
             ])
             ->setAllowedTypes('token', 'string')
             ->setAllowedTypes('logger', ['null', LoggerInterface::class])
@@ -1411,6 +1413,7 @@ class Discord
             ->setAllowedTypes('dnsConfig', ['string', \React\Dns\Config\Config::class])
             ->setAllowedTypes('cacheInterface', ['array', \React\Cache\CacheInterface::class, \Psr\SimpleCache\CacheInterface::class])
             ->setAllowedTypes('cacheSweep', 'bool')
+            ->setAllowedTypes('cacheCompress', 'bool')
             ->setNormalizer('cacheInterface', function ($options, $value) {
                 if (! is_array($value)) {
                     return [AbstractRepository::class => $value];
