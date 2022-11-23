@@ -15,6 +15,7 @@ use Discord\Parts\Channel\Message;
 use Discord\WebSockets\Event;
 use Discord\Parts\Channel\Channel;
 use Discord\Parts\Guild\Guild;
+use Discord\Parts\Thread\Thread;
 use Discord\WebSockets\Intents;
 
 /**
@@ -36,7 +37,16 @@ class MessageUpdate extends Event
             /** @var ?Guild */
             if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
                 /** @var ?Channel */
-                $channel = yield $guild->channels->cacheGet($data->channel_id);
+                if (! $channel = yield $guild->channels->cacheGet($data->channel_id)) {
+                    /** @var Channel */
+                    foreach ($guild->channels as $parent) {
+                        /** @var ?Thread */
+                        if ($thread = yield $parent->threads->cacheGet($data->channel_id)) {
+                            $channel = $thread;
+                            break;
+                        }
+                    }
+                }
             }
         }
 
