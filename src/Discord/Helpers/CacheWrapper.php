@@ -402,7 +402,7 @@ final class CacheWrapper
      *
      * @return bool whether it's zlib compressed data or not.
      *
-     * @see https://www.rfc-editor.org/rfc/rfc1950
+     * @link https://www.rfc-editor.org/rfc/rfc1950
      *
      * @since 10.0.0
      */
@@ -451,7 +451,7 @@ final class CacheWrapper
             $data = serialize($data);
 
             if ($this->discord->options['cacheCompress']) {
-                $data = zlib_encode($data, ZLIB_ENCODING_RAW);
+                $data = zlib_encode($data, ZLIB_ENCODING_DEFLATE);
             }
         }
 
