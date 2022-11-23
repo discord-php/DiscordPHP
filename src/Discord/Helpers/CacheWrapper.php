@@ -394,6 +394,49 @@ final class CacheWrapper
     {
         return $this->prefix;
     }
+ 
+    /**
+     * Checks if a value is zlib compressed by checking the magic bytes.
+     *
+     * @param string $data The data to check.
+     *
+     * @return bool whether it's zlib compressed data or not.
+     *
+     * @see https://www.rfc-editor.org/rfc/rfc1950
+     *
+     * @since 10.0.0
+     */
+    protected function isZlibCompressed(string $data): bool
+    {
+        $data = unpack("Ccmf/Cflg", $data);
+        $cm = $data['cmf'] & 0xF;
+        $cinfo = ($data['cmf'] & 0xF0) >> 4;
+        // $fcheck = $data['flg'] & 0x1F;
+        // $fdict = ($data['flg'] & 0x20) >> 5;
+        $flevel = ($data['flg'] & 0xC0) >> 6;
+
+        // Ensure compression method is deflate
+        if ($cm !== 8) {
+            return false;
+        }
+
+        // Ensure cinfo <= 32K window size
+        if ($cinfo > 7) {
+            return false;
+        }
+
+        // Ensure [CMF][FLG] is a multiple of 31 as determined by fcheck
+        if (($data['cmf'] * 256 + $data['flg']) % 31 !== 0) {
+            return false;
+        }
+
+        // Ensure valid compression level
+        if ($flevel > 3) {
+            return false;
+        }
+
+        return true;
+    }
 
     /**
      * @param Part $part
@@ -423,8 +466,8 @@ final class CacheWrapper
     public function unserializer($value)
     {
         if ($this->interface instanceof \React\Cache\CacheInterface && ! ($this->interface instanceof ArrayCache)) {
-            if (str_starts_with($value, '{') && $test = zlib_decode($value)) {
-                $value = $test;
+            if ($this->isZlibCompressed($value)) {
+                $value = zlib_decode($value);
             }
             $tmp = unserialize($value);
             if ($tmp === false) {
