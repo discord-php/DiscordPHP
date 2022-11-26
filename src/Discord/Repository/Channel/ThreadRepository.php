@@ -39,9 +39,9 @@ class ThreadRepository extends AbstractRepository
      */
     protected $endpoints = [
         'all' => Endpoint::GUILD_THREADS_ACTIVE,
-        'get' => Endpoint::CHANNEL,
-        'update' => Endpoint::CHANNEL,
-        'delete' => Endpoint::CHANNEL,
+        'get' => Endpoint::THREAD,
+        'update' => Endpoint::THREAD,
+        'delete' => Endpoint::THREAD,
         'create' => Endpoint::CHANNEL_THREADS,
     ];
 
