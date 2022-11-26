@@ -71,7 +71,7 @@ use function React\Promise\reject;
  * @property      int|null                    $flags              Message flags.
  * @property      Message|null                $referenced_message The message that is referenced in a reply.
  * @property      MessageInteraction|null     $interaction        Sent if the message is a response to an Interaction.
- * @property      Thread|null                 $thread             The thread that the message was sent in.
+ * @property      Thread|null                 $thread             The thread that was started from this message, includes thread member object.
  * @property      Collection|Component[]|null $components         Sent if the message contains components like buttons, action rows, or other interactive components.
  * @property      Collection|Sticker[]|null   $sticker_items      Stickers attached to the message.
  * @property      int|null                    $position           A generally increasing integer (there may be gaps or duplicates) that represents the approximate position of the message in a thread, it can be used to estimate the relative position of the message in a thread in company with `total_message_sent` on parent thread.
@@ -378,19 +378,20 @@ class Message extends Part
     protected function getChannelAttribute(): Part
     {
         if ($guild = $this->guild) {
-            if ($channel = $guild->channels->get('id', $this->channel_id)) {
+            $channels = $guild->channels;
+            if ($channel = $channels->get('id', $this->channel_id)) {
                 return $channel;
+            }
+            foreach ($channels as $parent) {
+                if ($thread = $parent->threads->get('id', $this->channel_id)) {
+                    return $thread;
+                }
             }
         }
 
         // @todo potentially slow
         if ($channel = $this->discord->getChannel($this->channel_id)) {
             return $channel;
-        }
-
-        // @todo deprecate
-        if ($thread = $this->thread) {
-            return $thread;
         }
 
         return $this->factory->part(Channel::class, [
@@ -400,7 +401,10 @@ class Message extends Part
     }
 
     /**
-     * Returns the thread which the message was sent in.
+     * Returns the thread that was started from this message, includes thread member object.
+     *
+     * @since 10.0.0 This only returns a thread that was started on this message, not the thread of the message.
+     * @since 7.0.0
      *
      * @return Thread|null
      */
