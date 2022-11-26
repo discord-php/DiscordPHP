@@ -51,16 +51,6 @@ class ThreadRepository extends AbstractRepository
     protected $class = Thread::class;
 
     /**
-     * @inheritDoc
-     */
-    public function __construct(Discord $discord, array $vars = [])
-    {
-        $vars['thread_id'] = $vars['channel_id']; // For backward compatibility with thread_id HTTP endpoint params
-
-        parent::__construct($discord, $vars);
-    }
-
-    /**
      * Fetches all the active threads on the channel.
      *
      * @link https://discord.com/developers/docs/resources/channel#list-active-threads
