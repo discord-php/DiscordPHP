@@ -55,7 +55,7 @@ class ThreadRepository extends AbstractRepository
      */
     public function __construct(Discord $discord, array $vars = [])
     {
-        $vars['thread_id'] = $vars['id']; // For Backward compatibility with thread_id HTTP endpoint params
+        $vars['thread_id'] = $vars['channel_id']; // For backward compatibility with thread_id HTTP endpoint params
 
         parent::__construct($discord, $vars);
     }
