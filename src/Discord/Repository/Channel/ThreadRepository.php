@@ -11,6 +11,7 @@
 
 namespace Discord\Repository\Channel;
 
+use Discord\Discord;
 use Discord\Helpers\Collection;
 use Discord\Http\Endpoint;
 use Discord\Parts\Thread\Member;
@@ -38,9 +39,9 @@ class ThreadRepository extends AbstractRepository
      */
     protected $endpoints = [
         'all' => Endpoint::GUILD_THREADS_ACTIVE,
-        'get' => Endpoint::THREAD,
-        'update' => Endpoint::THREAD,
-        'delete' => Endpoint::THREAD,
+        'get' => Endpoint::CHANNEL,
+        'update' => Endpoint::CHANNEL,
+        'delete' => Endpoint::CHANNEL,
         'create' => Endpoint::CHANNEL_THREADS,
     ];
 
@@ -48,6 +49,16 @@ class ThreadRepository extends AbstractRepository
      * @inheritDoc
      */
     protected $class = Thread::class;
+
+    /**
+     * @inheritDoc
+     */
+    public function __construct(Discord $discord, array $vars = [])
+    {
+        $vars['thread_id'] = $vars['id']; // For Backward compatibility with thread_id HTTP endpoint params
+
+        parent::__construct($discord, $vars);
+    }
 
     /**
      * Fetches all the active threads on the channel.
