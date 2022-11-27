@@ -546,20 +546,21 @@ class Channel extends Part
      *
      * @see https://discord.com/developers/docs/resources/channel#create-channel-invite
      *
-     * @param array  $options                          An array of options. All fields are optional.
-     * @param int    $options['max_age']               The time that the invite will be valid in seconds.
-     * @param int    $options['max_uses']              The amount of times the invite can be used.
-     * @param bool   $options['temporary']             Whether the invite is for temporary membership.
-     * @param bool   $options['unique']                Whether the invite code should be unique (useful for creating many unique one time use invites).
-     * @param int    $options['target_type']           The type of target for this voice channel invite.
-     * @param string $options['target_user_id']        The id of the user whose stream to display for this invite, required if target_type is `Invite::TARGET_TYPE_STREAM`, the user must be streaming in the channel.
-     * @param string $options['target_application_id'] The id of the embedded application to open for this invite, required if target_type is `Invite::TARGET_TYPE_EMBEDDED_APPLICATION`, the application must have the EMBEDDED flag.
+     * @param array       $options                          An array of options. All fields are optional.
+     * @param int         $options['max_age']               The time that the invite will be valid in seconds.
+     * @param int         $options['max_uses']              The amount of times the invite can be used.
+     * @param bool        $options['temporary']             Whether the invite is for temporary membership.
+     * @param bool        $options['unique']                Whether the invite code should be unique (useful for creating many unique one time use invites).
+     * @param int         $options['target_type']           The type of target for this voice channel invite.
+     * @param string      $options['target_user_id']        The id of the user whose stream to display for this invite, required if target_type is `Invite::TARGET_TYPE_STREAM`, the user must be streaming in the channel.
+     * @param string      $options['target_application_id'] The id of the embedded application to open for this invite, required if target_type is `Invite::TARGET_TYPE_EMBEDDED_APPLICATION`, the application must have the EMBEDDED flag.
+     * @param string|null $reason                           Reason for Audit Log.
      *
      * @throws NoPermissionsException
      *
      * @return ExtendedPromiseInterface<Invite>
      */
-    public function createInvite($options = []): ExtendedPromiseInterface
+    public function createInvite($options = [], ?string $reason = null): ExtendedPromiseInterface
     {
         if (! $this->allowInvite()) {
             return reject(new \RuntimeException('You cannot create invite in this type of channel.'));
@@ -592,7 +593,12 @@ class Channel extends Part
 
         $options = $resolver->resolve($options);
 
-        return $this->http->post(Endpoint::bind(Endpoint::CHANNEL_INVITES, $this->id), $options)
+        $headers = [];
+        if (isset($reason)) {
+            $headers['X-Audit-Log-Reason'] = $reason;
+        }
+
+        return $this->http->post(Endpoint::bind(Endpoint::CHANNEL_INVITES, $this->id), $options, $headers)
             ->then(function ($response) {
                 return $this->factory->create(Invite::class, $response, true);
             });
