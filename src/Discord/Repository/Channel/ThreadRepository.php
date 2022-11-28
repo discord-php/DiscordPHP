@@ -18,6 +18,8 @@ use Discord\Parts\Thread\Thread;
 use Discord\Repository\AbstractRepository;
 use React\Promise\ExtendedPromiseInterface;
 
+use function React\Promise\resolve;
+
 /**
  * Contains threads on a channel.
  *
@@ -48,6 +50,37 @@ class ThreadRepository extends AbstractRepository
      * @inheritDoc
      */
     protected $class = Thread::class;
+
+    /**
+     * @inheritDoc
+     */
+    protected function cacheFreshen($response): ExtendedPromiseInterface
+    {
+        foreach ($response->threads as $value) {
+            $value = array_merge($this->vars, (array) $value);
+            $part = $this->factory->create($this->class, $value, true);
+            $items[$part->{$this->discrim}] = $part;
+        }
+
+        if (empty($items)) {
+            return resolve($this);
+        }
+
+        $members = $response->members;
+
+        return $this->cache->setMultiple($items)->then(function ($success) use ($items, $members) {
+            foreach ($items as $thread) {
+                foreach ($members as $member) {
+                    if ($member->id == $thread->id) {
+                        $thread->members->cache->set($member->id, $this->factory->part(Member::class, (array) $member, true));
+                        break;
+                    }
+                }
+            }
+
+            return $this;
+        });
+    }
 
     /**
      * Fetches all the active threads on the channel.
@@ -131,7 +164,6 @@ class ThreadRepository extends AbstractRepository
             foreach ($response->members as $member) {
                 if ($member->id == $thread->id) {
                     $thread->members->pushItem($this->factory->part(Member::class, (array) $member, true));
-                    break;
                 }
             }
 
