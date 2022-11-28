@@ -300,31 +300,16 @@ class Guild extends Part
     {
         parent::fill($attributes);
 
-        foreach ($attributes['roles'] ?? [] as $role) {
-            $role = (array) $role;
-            /** @var Role */
-            if ($rolePart = $this->roles->offsetGet($role['id'])) {
-                $rolePart->fill($role);
-            }
-            $this->roles->pushItem($rolePart ?: $this->roles->create($role, $this->created));
+        if (isset($attributes['roles'])) {
+            $this->setRolesAttribute($attributes['roles']);
         }
 
-        foreach ($attributes['emojis'] ?? [] as $emoji) {
-            $emoji = (array) $emoji;
-            /** @var Emoji */
-            if ($emojiPart = $this->emojis->offsetGet($emoji['id'])) {
-                $emojiPart->fill($emoji);
-            }
-            $this->emojis->pushItem($emojiPart ?: $this->emojis->create($emoji, $this->created));
+        if (isset($attributes['emojis'])) {
+            $this->setEmojisAttribute($attributes['emojis']);
         }
 
-        foreach ($attributes['stickers'] ?? [] as $sticker) {
-            $sticker = (array) $sticker;
-            /** @var Sticker */
-            if ($stickerPart = $this->stickers->offsetGet($sticker['id'])) {
-                $stickerPart->fill($sticker);
-            }
-            $this->stickers->pushItem($stickerPart ?: $this->stickers->create($sticker, $this->created));
+        if (isset($attributes['stickers'])) {
+            $this->setStickersAttribute($attributes['stickers']);
         }
 
         foreach ($attributes['channels'] ?? [] as $channel) {
@@ -335,6 +320,57 @@ class Guild extends Part
             }
             $this->channels->pushItem($channelPart ?: $this->channels->create($channel, true));
         }
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function setRolesAttribute(?array $roles): void
+    {
+        foreach ($roles ?? [] as $role) {
+            $role = (array) $role;
+            /** @var Role */
+            if ($rolePart = $this->roles->offsetGet($role['id'])) {
+                $rolePart->fill($role);
+            }
+            $this->roles->pushItem($rolePart ?: $this->roles->create($role, $this->created));
+        }
+
+        $this->attributes['roles'] = $roles;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function setEmojisAttribute(?array $emojis): void
+    {
+        foreach ($emojis ?? [] as $emoji) {
+            $emoji = (array) $emoji;
+            /** @var Emoji */
+            if ($emojiPart = $this->emojis->offsetGet($emoji['id'])) {
+                $emojiPart->fill($emoji);
+            }
+            $this->emojis->pushItem($emojiPart ?: $this->emojis->create($emoji, $this->created));
+        }
+
+        $this->attributes['emojis'] = $emojis;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function setStickersAttribute(?array $stickers): void
+    {
+        foreach ($stickers ?? [] as $sticker) {
+            $sticker = (array) $sticker;
+            /** @var Sticker */
+            if ($stickerPart = $this->stickers->offsetGet($sticker['id'])) {
+                $stickerPart->fill($sticker);
+            }
+            $this->stickers->pushItem($stickerPart ?: $this->stickers->create($sticker, $this->created));
+        }
+
+        $this->attributes['stickers'] = $stickers;
     }
 
     /**
