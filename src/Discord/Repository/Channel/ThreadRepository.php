@@ -11,7 +11,6 @@
 
 namespace Discord\Repository\Channel;
 
-use Discord\Discord;
 use Discord\Helpers\Collection;
 use Discord\Http\Endpoint;
 use Discord\Parts\Thread\Member;
