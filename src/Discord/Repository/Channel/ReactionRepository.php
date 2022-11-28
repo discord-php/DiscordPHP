@@ -49,7 +49,7 @@ class ReactionRepository extends AbstractRepository
      *
      * {@inheritDoc}
      *
-     * @param Part|string $part The Reaction part or unicode emoji to delete.
+     * @param Reaction|string $part The Reaction part or unicode emoji to delete.
      *
      * @return ExtendedPromiseInterface<Reaction>
      *
