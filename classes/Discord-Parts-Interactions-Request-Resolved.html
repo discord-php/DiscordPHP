@@ -263,7 +263,7 @@
         <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Request/Resolved.php"><a href="files/src-discord-parts-interactions-request-resolved.html"><abbr title="src/Discord/Parts/Interactions/Request/Resolved.php">Resolved.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">37</span>
+    <span class="phpdocumentor-element-found-in__line">40</span>
 
     </aside>
 
@@ -277,11 +277,18 @@
     </h5>
     <dl class="phpdocumentor-tag-list">
                                     <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">see</span>
+                    <span class="phpdocumentor-tag__name">link</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
-                                                                                    <span class="phpdocumentor-tag-link"><a href="https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-resolved-data-structure"><abbr title="https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-resolved-data-structure">https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-resolved-data-structure</abbr></a></span>
-                                        
+                                                                                                        <a class="phpdocumentor-tag-link" href="https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-resolved-data-structure"> https://discord.com/developers/docs/interactions/receiving-and-responding#interaction-object-resolved-data-structure </a>
+                    
+                                    </dd>
+                                                <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">7.0.0</span>
+                                                                                
                                              
                                     </dd>
                         </dl>
@@ -389,13 +396,6 @@
 <dd>The parts fillable attributes.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a href="classes/Discord-Parts-Part.html#property_fillAfterSave">$fillAfterSave</a>
-    <span>
-                        &nbsp;: bool            </span>
-</dt>
-<dd>Should we fill the part after saving?</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/Discord-Parts-Interactions-Request-Resolved.html#property_hidden">$hidden</a>
     <span>
                         &nbsp;: array&lt;string|int, mixed&gt;            </span>
@@ -408,13 +408,6 @@
                         &nbsp;: <abbr title="\Discord\Http\Http">Http</abbr>            </span>
 </dt>
 <dd>The HTTP client.</dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a href="classes/Discord-Parts-Part.html#property_regex">$regex</a>
-    <span>
-                        &nbsp;: string            </span>
-</dt>
-<dd>The regex pattern to replace variables with.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
     <a href="classes/Discord-Parts-Part.html#property_repositories">$repositories</a>
@@ -489,10 +482,9 @@
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Discord-Parts-Part.html#method_fetch">fetch()</a>
     <span>
-                                &nbsp;: <abbr title="\React\Promise\ExtendedPromiseInterface">ExtendedPromiseInterface</abbr>&lt;string|int, static&gt;    </span>
+                                &nbsp;: <abbr title="\React\Promise\ExtendedPromiseInterface">ExtendedPromiseInterface</abbr>&lt;string|int, self&gt;    </span>
 </dt>
-<dd>Fetches any missing information about
-the part from Discord&#039;s servers.</dd>
+<dd>Fetches any missing information about the part from Discord&#039;s servers.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Discord-Parts-Part.html#method_fill">fill()</a>
@@ -541,9 +533,7 @@ the part from Discord&#039;s servers.</dd>
     <span>
                                 &nbsp;: bool    </span>
 </dt>
-<dd>Whether the part is considered partial
-i.e. missing information which can be
-fetched from Discord.</dd>
+<dd>Whether the part is considered partial i.e. missing information which can be fetched from Discord.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Discord-Parts-Part.html#method_jsonSerialize">jsonSerialize()</a>
@@ -665,6 +655,13 @@ JSON. Used for JsonSerializable.</dd>
 </dt>
 <dd>Sets an attribute on the part.</dd>
 
+            <dt class="phpdocumentor-table-of-contents__entry -method -private">
+    <a href="classes/Discord-Parts-Part.html#method_studly">studly()</a>
+    <span>
+                                &nbsp;: string    </span>
+</dt>
+<dd>Converts a string to studlyCase.</dd>
+
         </dl>
 
 
@@ -763,7 +760,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Part.php"><a href="files/src-discord-parts-part.html"><abbr title="src/Discord/Parts/Part.php">Part.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">106</span>
+    <span class="phpdocumentor-element-found-in__line">107</span>
 
     </aside>
 
@@ -927,7 +924,7 @@ JSON. Used for JsonSerializable.</dd>
             phpdocumentor-element
             -property
             -public
-                                                        "
+                        -deprecated                                "
 >
     <h4 class="phpdocumentor-element__name" id="property_scriptData">
         $scriptData
@@ -938,13 +935,13 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Part.php"><a href="files/src-discord-parts-part.html"><abbr title="src/Discord/Parts/Part.php">Part.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">57</span>
+    <span class="phpdocumentor-element-found-in__line">58</span>
 
     </aside>
 
         <p class="phpdocumentor-summary">Custom script data.</p>
 
-    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <code class="phpdocumentor-code phpdocumentor-signature -deprecated">
     <span class="phpdocumentor-signature__visibility">public</span>
         <span class="phpdocumentor-signature__type">mixed</span>
     <span class="phpdocumentor-signature__name">$scriptData</span>
@@ -955,6 +952,22 @@ JSON. Used for JsonSerializable.</dd>
 
     
     
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">deprecated</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">10.0.0</span>
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>Relying on this variable with dynamic caching is discouraged</p>
+</section>
+
+                                    </dd>
+                        </dl>
 
 </article>
                     <article
@@ -1008,7 +1021,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Part.php"><a href="files/src-discord-parts-part.html"><abbr title="src/Discord/Parts/Part.php">Part.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">71</span>
+    <span class="phpdocumentor-element-found-in__line">72</span>
 
     </aside>
 
@@ -1043,7 +1056,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Part.php"><a href="files/src-discord-parts-part.html"><abbr title="src/Discord/Parts/Part.php">Part.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">49</span>
+    <span class="phpdocumentor-element-found-in__line">48</span>
 
     </aside>
 
@@ -1078,7 +1091,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Part.php"><a href="files/src-discord-parts-part.html"><abbr title="src/Discord/Parts/Part.php">Part.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">42</span>
+    <span class="phpdocumentor-element-found-in__line">41</span>
 
     </aside>
 
@@ -1113,7 +1126,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Request/Resolved.php"><a href="files/src-discord-parts-interactions-request-resolved.html"><abbr title="src/Discord/Parts/Interactions/Request/Resolved.php">Resolved.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">42</span>
+    <span class="phpdocumentor-element-found-in__line">45</span>
 
     </aside>
 
@@ -1123,7 +1136,16 @@ JSON. Used for JsonSerializable.</dd>
     <span class="phpdocumentor-signature__visibility">protected</span>
         <span class="phpdocumentor-signature__type">array&lt;string|int, mixed&gt;</span>
     <span class="phpdocumentor-signature__name">$fillable</span>
-     = <span class="phpdocumentor-signature__default-value">[&#039;users&#039;, &#039;members&#039;, &#039;roles&#039;, &#039;channels&#039;, &#039;messages&#039;, &#039;attachments&#039;, &#039;guild_id&#039;]</span></code>
+     = <span class="phpdocumentor-signature__default-value">[
+    &#039;users&#039;,
+    &#039;members&#039;,
+    &#039;roles&#039;,
+    &#039;channels&#039;,
+    &#039;messages&#039;,
+    &#039;attachments&#039;,
+    // @internal
+    &#039;guild_id&#039;,
+]</span></code>
 
     
         <section class="phpdocumentor-description"><p>The array of attributes that can be mass-assigned.</p>
@@ -1136,48 +1158,13 @@ JSON. Used for JsonSerializable.</dd>
     </h5>
     <dl class="phpdocumentor-tag-list">
                                     <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">inheritdoc</span>
+                    <span class="phpdocumentor-tag__name">inheritDoc</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
                                                                                 
                                              
                                     </dd>
                         </dl>
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -protected
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="property_fillAfterSave">
-        $fillAfterSave
-        <a href="classes/Discord-Parts-Part.html#property_fillAfterSave" class="headerlink"><i class="fas fa-link"></i></a>
-        <span class="phpdocumentor-element__modifiers">
-                                </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Part.php"><a href="files/src-discord-parts-part.html"><abbr title="src/Discord/Parts/Part.php">Part.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">120</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">Should we fill the part after saving?</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">protected</span>
-        <span class="phpdocumentor-signature__type">bool</span>
-    <span class="phpdocumentor-signature__name">$fillAfterSave</span>
-     = <span class="phpdocumentor-signature__default-value">true</span></code>
-
-    
-        <section class="phpdocumentor-description"><p>Whether the part will be saved after being filled.</p>
-</section>
-
-    
 
 </article>
                     <article
@@ -1196,7 +1183,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Request/Resolved.php"><a href="files/src-discord-parts-interactions-request-resolved.html"><abbr title="src/Discord/Parts/Interactions/Request/Resolved.php">Resolved.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">47</span>
+    <span class="phpdocumentor-element-found-in__line">60</span>
 
     </aside>
 
@@ -1219,7 +1206,7 @@ JSON. Used for JsonSerializable.</dd>
     </h5>
     <dl class="phpdocumentor-tag-list">
                                     <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">inheritdoc</span>
+                    <span class="phpdocumentor-tag__name">inheritDoc</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
                                                                                 
@@ -1244,7 +1231,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Part.php"><a href="files/src-discord-parts-part.html"><abbr title="src/Discord/Parts/Part.php">Part.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">35</span>
+    <span class="phpdocumentor-element-found-in__line">34</span>
 
     </aside>
 
@@ -1270,41 +1257,6 @@ JSON. Used for JsonSerializable.</dd>
             -protected
                                                         "
 >
-    <h4 class="phpdocumentor-element__name" id="property_regex">
-        $regex
-        <a href="classes/Discord-Parts-Part.html#property_regex" class="headerlink"><i class="fas fa-link"></i></a>
-        <span class="phpdocumentor-element__modifiers">
-                                </span>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Part.php"><a href="files/src-discord-parts-part.html"><abbr title="src/Discord/Parts/Part.php">Part.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">113</span>
-
-    </aside>
-
-        <p class="phpdocumentor-summary">The regex pattern to replace variables with.</p>
-
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">protected</span>
-        <span class="phpdocumentor-signature__type">string</span>
-    <span class="phpdocumentor-signature__name">$regex</span>
-     = <span class="phpdocumentor-signature__default-value">&#039;/:([a-z_]+)/&#039;</span></code>
-
-    
-        <section class="phpdocumentor-description"><p>The regex which is used to replace placeholders.</p>
-</section>
-
-    
-
-</article>
-                    <article
-        class="
-            phpdocumentor-element
-            -property
-            -protected
-                                                        "
->
     <h4 class="phpdocumentor-element__name" id="property_repositories">
         $repositories
         <a href="classes/Discord-Parts-Part.html#property_repositories" class="headerlink"><i class="fas fa-link"></i></a>
@@ -1314,7 +1266,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Part.php"><a href="files/src-discord-parts-part.html"><abbr title="src/Discord/Parts/Part.php">Part.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">92</span>
+    <span class="phpdocumentor-element-found-in__line">93</span>
 
     </aside>
 
@@ -1349,7 +1301,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Part.php"><a href="files/src-discord-parts-part.html"><abbr title="src/Discord/Parts/Part.php">Part.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">99</span>
+    <span class="phpdocumentor-element-found-in__line">100</span>
 
     </aside>
 
@@ -1382,7 +1334,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Part.php"><a href="files/src-discord-parts-part.html"><abbr title="src/Discord/Parts/Part.php">Part.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">78</span>
+    <span class="phpdocumentor-element-found-in__line">79</span>
 
     </aside>
 
@@ -1419,7 +1371,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Part.php"><a href="files/src-discord-parts-part.html"><abbr title="src/Discord/Parts/Part.php">Part.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">129</span>
+    <span class="phpdocumentor-element-found-in__line">116</span>
 
     </aside>
 
@@ -1482,7 +1434,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Part.php"><a href="files/src-discord-parts-part.html"><abbr title="src/Discord/Parts/Part.php">Part.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">448</span>
+    <span class="phpdocumentor-element-found-in__line">461</span>
 
     </aside>
 
@@ -1541,7 +1493,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Part.php"><a href="files/src-discord-parts-part.html"><abbr title="src/Discord/Parts/Part.php">Part.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">463</span>
+    <span class="phpdocumentor-element-found-in__line">476</span>
 
     </aside>
 
@@ -1612,7 +1564,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Part.php"><a href="files/src-discord-parts-part.html"><abbr title="src/Discord/Parts/Part.php">Part.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">318</span>
+    <span class="phpdocumentor-element-found-in__line">301</span>
 
     </aside>
 
@@ -1645,7 +1597,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Part.php"><a href="files/src-discord-parts-part.html"><abbr title="src/Discord/Parts/Part.php">Part.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">476</span>
+    <span class="phpdocumentor-element-found-in__line">489</span>
 
     </aside>
 
@@ -1715,7 +1667,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Part.php"><a href="files/src-discord-parts-part.html"><abbr title="src/Discord/Parts/Part.php">Part.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">435</span>
+    <span class="phpdocumentor-element-found-in__line">448</span>
 
     </aside>
 
@@ -1774,7 +1726,7 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Part.php"><a href="files/src-discord-parts-part.html"><abbr title="src/Discord/Parts/Part.php">Part.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">339</span>
+    <span class="phpdocumentor-element-found-in__line">322</span>
 
     </aside>
 
@@ -1818,16 +1770,15 @@ JSON. Used for JsonSerializable.</dd>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Part.php"><a href="files/src-discord-parts-part.html"><abbr title="src/Discord/Parts/Part.php">Part.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">168</span>
+    <span class="phpdocumentor-element-found-in__line">152</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Fetches any missing information about
-the part from Discord&#039;s servers.</p>
+        <p class="phpdocumentor-summary">Fetches any missing information about the part from Discord&#039;s servers.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">fetch</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\ExtendedPromiseInterface">ExtendedPromiseInterface</abbr>&lt;string|int, static&gt;</span></code>
+                    <span class="phpdocumentor-signature__name">fetch</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\ExtendedPromiseInterface">ExtendedPromiseInterface</abbr>&lt;string|int, self&gt;</span></code>
 
     
     
@@ -1850,7 +1801,7 @@ the part from Discord&#039;s servers.</p>
                         </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\ExtendedPromiseInterface">ExtendedPromiseInterface</abbr>&lt;string|int, static&gt;</span>
+    <span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\ExtendedPromiseInterface">ExtendedPromiseInterface</abbr>&lt;string|int, self&gt;</span>
             &mdash;
         
     
@@ -1868,7 +1819,7 @@ the part from Discord&#039;s servers.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Part.php"><a href="files/src-discord-parts-part.html"><abbr title="src/Discord/Parts/Part.php">Part.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">178</span>
+    <span class="phpdocumentor-element-found-in__line">162</span>
 
     </aside>
 
@@ -1913,7 +1864,7 @@ the part from Discord&#039;s servers.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Part.php"><a href="files/src-discord-parts-part.html"><abbr title="src/Discord/Parts/Part.php">Part.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">412</span>
+    <span class="phpdocumentor-element-found-in__line">396</span>
 
     </aside>
 
@@ -1946,7 +1897,7 @@ the part from Discord&#039;s servers.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Part.php"><a href="files/src-discord-parts-part.html"><abbr title="src/Discord/Parts/Part.php">Part.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">366</span>
+    <span class="phpdocumentor-element-found-in__line">349</span>
 
     </aside>
 
@@ -1995,7 +1946,7 @@ the part from Discord&#039;s servers.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Part.php"><a href="files/src-discord-parts-part.html"><abbr title="src/Discord/Parts/Part.php">Part.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">392</span>
+    <span class="phpdocumentor-element-found-in__line">375</span>
 
     </aside>
 
@@ -2030,7 +1981,7 @@ the part from Discord&#039;s servers.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Part.php"><a href="files/src-discord-parts-part.html"><abbr title="src/Discord/Parts/Part.php">Part.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">402</span>
+    <span class="phpdocumentor-element-found-in__line">386</span>
 
     </aside>
 
@@ -2040,7 +1991,9 @@ the part from Discord&#039;s servers.</p>
     <span class="phpdocumentor-signature__visibility">public</span>
                     <span class="phpdocumentor-signature__name">getRepositoryAttributes</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">array&lt;string|int, mixed&gt;</span></code>
 
-    
+        <section class="phpdocumentor-description"><p>Note: The order matters for repository tree (top to bottom).</p>
+</section>
+
     
     
 
@@ -2065,7 +2018,7 @@ the part from Discord&#039;s servers.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Part.php"><a href="files/src-discord-parts-part.html"><abbr title="src/Discord/Parts/Part.php">Part.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">422</span>
+    <span class="phpdocumentor-element-found-in__line">406</span>
 
     </aside>
 
@@ -2098,13 +2051,11 @@ the part from Discord&#039;s servers.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Part.php"><a href="files/src-discord-parts-part.html"><abbr title="src/Discord/Parts/Part.php">Part.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">155</span>
+    <span class="phpdocumentor-element-found-in__line">140</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Whether the part is considered partial
-i.e. missing information which can be
-fetched from Discord.</p>
+        <p class="phpdocumentor-summary">Whether the part is considered partial i.e. missing information which can be fetched from Discord.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
@@ -2133,7 +2084,7 @@ fetched from Discord.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Part.php"><a href="files/src-discord-parts-part.html"><abbr title="src/Discord/Parts/Part.php">Part.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">355</span>
+    <span class="phpdocumentor-element-found-in__line">338</span>
 
     </aside>
 
@@ -2193,7 +2144,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Part.php"><a href="files/src-discord-parts-part.html"><abbr title="src/Discord/Parts/Part.php">Part.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">277</span>
+    <span class="phpdocumentor-element-found-in__line">261</span>
 
     </aside>
 
@@ -2240,7 +2191,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Part.php"><a href="files/src-discord-parts-part.html"><abbr title="src/Discord/Parts/Part.php">Part.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">264</span>
+    <span class="phpdocumentor-element-found-in__line">248</span>
 
     </aside>
 
@@ -2309,7 +2260,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Part.php"><a href="files/src-discord-parts-part.html"><abbr title="src/Discord/Parts/Part.php">Part.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">291</span>
+    <span class="phpdocumentor-element-found-in__line">274</span>
 
     </aside>
 
@@ -2379,7 +2330,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Part.php"><a href="files/src-discord-parts-part.html"><abbr title="src/Discord/Parts/Part.php">Part.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">301</span>
+    <span class="phpdocumentor-element-found-in__line">284</span>
 
     </aside>
 
@@ -2424,7 +2375,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Part.php"><a href="files/src-discord-parts-part.html"><abbr title="src/Discord/Parts/Part.php">Part.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">313</span>
+    <span class="phpdocumentor-element-found-in__line">296</span>
 
     </aside>
 
@@ -2459,7 +2410,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Part.php"><a href="files/src-discord-parts-part.html"><abbr title="src/Discord/Parts/Part.php">Part.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">330</span>
+    <span class="phpdocumentor-element-found-in__line">313</span>
 
     </aside>
 
@@ -2520,7 +2471,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Part.php"><a href="files/src-discord-parts-part.html"><abbr title="src/Discord/Parts/Part.php">Part.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">144</span>
+    <span class="phpdocumentor-element-found-in__line">131</span>
 
     </aside>
 
@@ -2553,7 +2504,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Request/Resolved.php"><a href="files/src-discord-parts-interactions-request-resolved.html"><abbr title="src/Discord/Parts/Interactions/Request/Resolved.php">Resolved.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">202</span>
+    <span class="phpdocumentor-element-found-in__line">210</span>
 
     </aside>
 
@@ -2588,7 +2539,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Request/Resolved.php"><a href="files/src-discord-parts-interactions-request-resolved.html"><abbr title="src/Discord/Parts/Interactions/Request/Resolved.php">Resolved.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">140</span>
+    <span class="phpdocumentor-element-found-in__line">152</span>
 
     </aside>
 
@@ -2625,7 +2576,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Request/Resolved.php"><a href="files/src-discord-parts-interactions-request-resolved.html"><abbr title="src/Discord/Parts/Interactions/Request/Resolved.php">Resolved.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">80</span>
+    <span class="phpdocumentor-element-found-in__line">93</span>
 
     </aside>
 
@@ -2662,7 +2613,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Request/Resolved.php"><a href="files/src-discord-parts-interactions-request-resolved.html"><abbr title="src/Discord/Parts/Interactions/Request/Resolved.php">Resolved.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">172</span>
+    <span class="phpdocumentor-element-found-in__line">184</span>
 
     </aside>
 
@@ -2697,7 +2648,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Request/Resolved.php"><a href="files/src-discord-parts-interactions-request-resolved.html"><abbr title="src/Discord/Parts/Interactions/Request/Resolved.php">Resolved.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">110</span>
+    <span class="phpdocumentor-element-found-in__line">122</span>
 
     </aside>
 
@@ -2732,7 +2683,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Interactions/Request/Resolved.php"><a href="files/src-discord-parts-interactions-request-resolved.html"><abbr title="src/Discord/Parts/Interactions/Request/Resolved.php">Resolved.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">54</span>
+    <span class="phpdocumentor-element-found-in__line">67</span>
 
     </aside>
 
@@ -2767,7 +2718,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Part.php"><a href="files/src-discord-parts-part.html"><abbr title="src/Discord/Parts/Part.php">Part.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">195</span>
+    <span class="phpdocumentor-element-found-in__line">179</span>
 
     </aside>
 
@@ -2823,7 +2774,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Part.php"><a href="files/src-discord-parts-part.html"><abbr title="src/Discord/Parts/Part.php">Part.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">214</span>
+    <span class="phpdocumentor-element-found-in__line">198</span>
 
     </aside>
 
@@ -2884,7 +2835,7 @@ JSON. Used for JsonSerializable.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Part.php"><a href="files/src-discord-parts-part.html"><abbr title="src/Discord/Parts/Part.php">Part.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">241</span>
+    <span class="phpdocumentor-element-found-in__line">225</span>
 
     </aside>
 
@@ -2921,6 +2872,69 @@ JSON. Used for JsonSerializable.</p>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
     <span class="phpdocumentor-signature__response_type">void</span>
+            &mdash;
+        
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -private
+                                    -static                    "
+>
+    <h4 class="phpdocumentor-element__name" id="method_studly">
+        studly()
+        <a href="classes/Discord-Parts-Part.html#method_studly" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Parts/Part.php"><a href="files/src-discord-parts-part.html"><abbr title="src/Discord/Parts/Part.php">Part.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">424</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Converts a string to studlyCase.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">private</span>
+            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">studly</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$string</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">string</span></code>
+
+        <section class="phpdocumentor-description"><p>This is a port of updated laravel's implementation, a non-regex with static cache.
+The Discord\studly() is kept due to unintended bug and we do not want to introduce BC by replacing it.
+This method is private static as we may move it outside this class in future.</p>
+</section>
+
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$string</span>
+                : <span class="phpdocumentor-signature__argument__return-type">string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"><p>The string to convert.</p>
+</section>
+
+            </dd>
+            </dl>
+
+    
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">10.0.0</span>
+                                                                                
+                                             
+                                    </dd>
+                        </dl>
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type">string</span>
             &mdash;
         
     

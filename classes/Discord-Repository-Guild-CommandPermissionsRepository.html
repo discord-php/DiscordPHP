@@ -243,7 +243,7 @@
 
     <article class="phpdocumentor-element -class">
         <h2 class="phpdocumentor-content__title">
-    OverwriteRepository
+    CommandPermissionsRepository
 
         <span class="phpdocumentor-element__extends">
         extends <a href="classes/Discord-Repository-AbstractRepository.html"><abbr title="\Discord\Repository\AbstractRepository">AbstractRepository</abbr></a>
@@ -260,9 +260,9 @@
     </h2>
 
         <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/Guild/OverwriteRepository.php"><a href="files/src-discord-repository-guild-overwriterepository.html"><abbr title="src/Discord/Repository/Guild/OverwriteRepository.php">OverwriteRepository.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/Guild/CommandPermissionsRepository.php"><a href="files/src-discord-repository-guild-commandpermissionsrepository.html"><abbr title="src/Discord/Repository/Guild/CommandPermissionsRepository.php">CommandPermissionsRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">29</span>
+    <span class="phpdocumentor-element-found-in__line">34</span>
 
     </aside>
 
@@ -279,7 +279,7 @@
                     <span class="phpdocumentor-tag__name">see</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
-                                                                                    <span class="phpdocumentor-tag-link"><a href="classes/Discord-Parts-Interactions-Command-Overwrite.html"><abbr title="\Discord\Parts\Interactions\Command\Overwrite">Overwrite</abbr></a></span>
+                                                                                    <span class="phpdocumentor-tag-link"><a href="classes/Discord-Parts-Guild-CommandPermissions.html"><abbr title="\Discord\Parts\Guild\CommandPermissions">CommandPermissions</abbr></a></span>
                                         
                                              
                                     </dd>
@@ -289,6 +289,32 @@
                 <dd class="phpdocumentor-tag-list__definition">
                                                                                     <span class="phpdocumentor-tag-link"><a href="classes/Discord-Parts-Interactions-Command-Command.html"><abbr title="\Discord\Parts\Interactions\Command\Command">Command</abbr></a></span>
                                         
+                                             
+                                    </dd>
+                            <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">see</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                                                                    <span class="phpdocumentor-tag-link"><a href="classes/Discord-Parts-Interactions-Command-Permission.html"><abbr title="\Discord\Parts\Interactions\Command\Permission">Permission</abbr></a></span>
+                                        
+                                             
+                                    </dd>
+                                                <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">10.0.0</span>
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>Refactored from OverwriteRepository to CommandPermissionsRepository</p>
+</section>
+
+                                    </dd>
+                            <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">7.0.0</span>
+                                                                                
                                              
                                     </dd>
                         </dl>
@@ -304,8 +330,22 @@
 </h3>
 
 <dl class="phpdocumentor-table-of-contents">
-                    <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a href="classes/Discord-Repository-Guild-OverwriteRepository.html#property_class">$class</a>
+                    <dt class="phpdocumentor-table-of-contents__entry -property -public">
+    <a href="classes/Discord-Repository-AbstractRepository.html#property_cache">$cache</a>
+    <span>
+                        &nbsp;: <abbr title="\Discord\Helpers\CacheWrapper">CacheWrapper</abbr>            </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
+    <a href="classes/Discord-Repository-AbstractRepository.html#property_cache">$cache</a>
+    <span>
+                        &nbsp;: <abbr title="\Discord\Helpers\CacheWrapper">CacheWrapper</abbr>            </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -property -protected">
+    <a href="classes/Discord-Repository-Guild-CommandPermissionsRepository.html#property_class">$class</a>
     <span>
                         &nbsp;: mixed            </span>
 </dt>
@@ -319,7 +359,7 @@
 <dd>The collection discriminator.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -property -protected">
-    <a href="classes/Discord-Repository-Guild-OverwriteRepository.html#property_endpoints">$endpoints</a>
+    <a href="classes/Discord-Repository-Guild-CommandPermissionsRepository.html#property_endpoints">$endpoints</a>
     <span>
                         &nbsp;: array&lt;string|int, mixed&gt;            </span>
 </dt>
@@ -368,6 +408,13 @@
 <dd>Returns an item that will be displayed for debugging.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/Discord-Repository-AbstractRepository.html#method___get">__get()</a>
+    <span>
+                                &nbsp;: mixed    </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Discord-Helpers-Collection.html#method___serialize">__serialize()</a>
     <span>
                                 &nbsp;: string    </span>
@@ -405,14 +452,14 @@
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Discord-Repository-AbstractRepository.html#method_delete">delete()</a>
     <span>
-                                &nbsp;: <abbr title="\React\Promise\ExtendedPromiseInterface">ExtendedPromiseInterface</abbr>    </span>
+                                &nbsp;: <abbr title="\React\Promise\ExtendedPromiseInterface">ExtendedPromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-Part.html"><abbr title="\Discord\Parts\Part">Part</abbr></a>&gt;    </span>
 </dt>
 <dd>Attempts to delete a part on the Discord servers.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Discord-Repository-AbstractRepository.html#method_fetch">fetch()</a>
     <span>
-                                &nbsp;: <abbr title="\React\Promise\ExtendedPromiseInterface">ExtendedPromiseInterface</abbr>    </span>
+                                &nbsp;: <abbr title="\React\Promise\ExtendedPromiseInterface">ExtendedPromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-Part.html"><abbr title="\Discord\Parts\Part">Part</abbr></a>&gt;    </span>
 </dt>
 <dd>Gets a part from the repository or Discord servers.</dd>
 
@@ -442,18 +489,18 @@ returns the first item where the callback returns
 `true` when given the item.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Discord-Repository-Guild-OverwriteRepository.html#method_find">find()</a>
+    <a href="classes/Discord-Repository-Guild-CommandPermissionsRepository.html#method_find">find()</a>
     <span>
-                                &nbsp;: <a href="classes/Discord-Parts-Interactions-Command-Overwrite.html"><abbr title="\Discord\Parts\Interactions\Command\Overwrite">Overwrite</abbr></a>|null    </span>
+                                &nbsp;: <a href="classes/Discord-Parts-Part.html"><abbr title="\Discord\Parts\Part">Part</abbr></a>|null    </span>
 </dt>
-<dd></dd>
+<dd>Runs a filter callback over the repository and returns the first part where the callback returns `true` when given the part.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Discord-Repository-Guild-OverwriteRepository.html#method_first">first()</a>
+    <a href="classes/Discord-Repository-Guild-CommandPermissionsRepository.html#method_first">first()</a>
     <span>
-                                &nbsp;: <a href="classes/Discord-Parts-Interactions-Command-Overwrite.html"><abbr title="\Discord\Parts\Interactions\Command\Overwrite">Overwrite</abbr></a>|null    </span>
+                                &nbsp;: <a href="classes/Discord-Parts-Part.html"><abbr title="\Discord\Parts\Part">Part</abbr></a>|null    </span>
 </dt>
-<dd></dd>
+<dd>Returns the first cached part.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Discord-Helpers-Collection.html#method_first">first()</a>
@@ -472,16 +519,16 @@ returns the first item where the callback returns
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Discord-Repository-AbstractRepository.html#method_fresh">fresh()</a>
     <span>
-                                &nbsp;: <abbr title="\React\Promise\ExtendedPromiseInterface">ExtendedPromiseInterface</abbr>    </span>
+                                &nbsp;: <abbr title="\React\Promise\ExtendedPromiseInterface">ExtendedPromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-Part.html"><abbr title="\Discord\Parts\Part">Part</abbr></a>&gt;    </span>
 </dt>
 <dd>Returns a part with fresh values.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Discord-Repository-AbstractRepository.html#method_freshen">freshen()</a>
     <span>
-                                &nbsp;: <abbr title="\React\Promise\ExtendedPromiseInterface">ExtendedPromiseInterface</abbr>    </span>
+                                &nbsp;: <abbr title="\React\Promise\ExtendedPromiseInterface">ExtendedPromiseInterface</abbr>&lt;string|int, static&gt;    </span>
 </dt>
-<dd>Freshens the repository collection.</dd>
+<dd>Freshens the repository cache.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Discord-Helpers-Collection.html#method_from">from()</a>
@@ -491,18 +538,18 @@ returns the first item where the callback returns
 <dd>Creates a collection from an array.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Discord-Repository-Guild-OverwriteRepository.html#method_get">get()</a>
-    <span>
-                                &nbsp;: <a href="classes/Discord-Parts-Interactions-Command-Overwrite.html"><abbr title="\Discord\Parts\Interactions\Command\Overwrite">Overwrite</abbr></a>|null    </span>
-</dt>
-<dd></dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Discord-Helpers-Collection.html#method_get">get()</a>
     <span>
                                 &nbsp;: mixed    </span>
 </dt>
 <dd>Gets an item from the collection.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/Discord-Repository-Guild-CommandPermissionsRepository.html#method_get">get()</a>
+    <span>
+                                &nbsp;: <a href="classes/Discord-Parts-Part.html"><abbr title="\Discord\Parts\Part">Part</abbr></a>|null    </span>
+</dt>
+<dd>Gets a part from the repository.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Discord-Helpers-Collection.html#method_getIterator">getIterator()</a>
@@ -516,7 +563,7 @@ returns the first item where the callback returns
     <span>
                                 &nbsp;: bool    </span>
 </dt>
-<dd>Checks if the array has an object.</dd>
+<dd>Checks if the array has multiple offsets.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Discord-Helpers-Collection.html#method_isset">isset()</a>
@@ -538,6 +585,13 @@ returns the first item where the callback returns
                                 &nbsp;: mixed    </span>
 </dt>
 <dd>Returns the last element of the collection.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/Discord-Repository-Guild-CommandPermissionsRepository.html#method_last">last()</a>
+    <span>
+                                &nbsp;: <a href="classes/Discord-Parts-Part.html"><abbr title="\Discord\Parts\Part">Part</abbr></a>|null    </span>
+</dt>
+<dd>Returns the last cached part.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Discord-Helpers-Collection.html#method_map">map()</a>
@@ -582,18 +636,18 @@ returns the first item where the callback returns
 <dd>Unsets an index from the collection.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Discord-Repository-Guild-OverwriteRepository.html#method_pull">pull()</a>
-    <span>
-                                &nbsp;: <a href="classes/Discord-Parts-Interactions-Command-Overwrite.html"><abbr title="\Discord\Parts\Interactions\Command\Overwrite">Overwrite</abbr></a>|null    </span>
-</dt>
-<dd></dd>
-
-            <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Discord-Helpers-Collection.html#method_pull">pull()</a>
     <span>
                                 &nbsp;: mixed    </span>
 </dt>
 <dd>Pulls an item from the collection.</dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/Discord-Repository-Guild-CommandPermissionsRepository.html#method_pull">pull()</a>
+    <span>
+                                &nbsp;: <a href="classes/Discord-Parts-Part.html"><abbr title="\Discord\Parts\Part">Part</abbr></a>|mixed    </span>
+</dt>
+<dd>Pulls a part from the repository.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Discord-Helpers-Collection.html#method_push">push()</a>
@@ -612,7 +666,7 @@ returns the first item where the callback returns
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
     <a href="classes/Discord-Repository-AbstractRepository.html#method_save">save()</a>
     <span>
-                                &nbsp;: <abbr title="\React\Promise\ExtendedPromiseInterface">ExtendedPromiseInterface</abbr>    </span>
+                                &nbsp;: <abbr title="\React\Promise\ExtendedPromiseInterface">ExtendedPromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-Part.html"><abbr title="\Discord\Parts\Part">Part</abbr></a>&gt;    </span>
 </dt>
 <dd>Attempts to save a part to the Discord servers.</dd>
 
@@ -654,8 +708,75 @@ returns the first item where the callback returns
     <section class="phpdocumentor-properties">
         <h3 class="phpdocumentor-elements__header" id="properties">
             Properties
-            <a href="classes/Discord-Repository-Guild-OverwriteRepository.html#properties" class="headerlink"><i class="fas fa-link"></i></a>
+            <a href="classes/Discord-Repository-Guild-CommandPermissionsRepository.html#properties" class="headerlink"><i class="fas fa-link"></i></a>
         </h3>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -public
+                                                -read-only        "
+>
+    <h4 class="phpdocumentor-element__name" id="property_cache">
+        $cache
+        <a href="classes/Discord-Repository-AbstractRepository.html#property_cache" class="headerlink"><i class="fas fa-link"></i></a>
+        <span class="phpdocumentor-element__modifiers">
+                        <small class="phpdocumentor-element__modifier">read-only</small>        </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/AbstractRepository.php"><a href="files/src-discord-repository-abstractrepository.html"><abbr title="src/Discord/Repository/AbstractRepository.php">AbstractRepository.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">0</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+        <span class="phpdocumentor-signature__type"><abbr title="\Discord\Helpers\CacheWrapper">CacheWrapper</abbr></span>
+    <span class="phpdocumentor-signature__name">$cache</span>
+    </code>
+
+        <section class="phpdocumentor-description"><p>The react/cache wrapper.</p>
+</section>
+
+        <section class="phpdocumentor-description"></section>
+
+    
+
+</article>
+                    <article
+        class="
+            phpdocumentor-element
+            -property
+            -protected
+                                                        "
+>
+    <h4 class="phpdocumentor-element__name" id="property_cache">
+        $cache
+        <a href="classes/Discord-Repository-AbstractRepository.html#property_cache" class="headerlink"><i class="fas fa-link"></i></a>
+        <span class="phpdocumentor-element__modifiers">
+                                </span>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/AbstractRepository.php"><a href="files/src-discord-repository-abstractrepository.html"><abbr title="src/Discord/Repository/AbstractRepository.php">AbstractRepository.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">79</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">protected</span>
+        <span class="phpdocumentor-signature__type"><abbr title="\Discord\Helpers\CacheWrapper">CacheWrapper</abbr></span>
+    <span class="phpdocumentor-signature__name">$cache</span>
+    </code>
+
+    
+    
+    
+
+</article>
                     <article
         class="
             phpdocumentor-element
@@ -665,14 +786,14 @@ returns the first item where the callback returns
 >
     <h4 class="phpdocumentor-element__name" id="property_class">
         $class
-        <a href="classes/Discord-Repository-Guild-OverwriteRepository.html#property_class" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Repository-Guild-CommandPermissionsRepository.html#property_class" class="headerlink"><i class="fas fa-link"></i></a>
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/Guild/OverwriteRepository.php"><a href="files/src-discord-repository-guild-overwriterepository.html"><abbr title="src/Discord/Repository/Guild/OverwriteRepository.php">OverwriteRepository.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/Guild/CommandPermissionsRepository.php"><a href="files/src-discord-repository-guild-commandpermissionsrepository.html"><abbr title="src/Discord/Repository/Guild/CommandPermissionsRepository.php">CommandPermissionsRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">42</span>
+    <span class="phpdocumentor-element-found-in__line">47</span>
 
     </aside>
 
@@ -681,7 +802,7 @@ returns the first item where the callback returns
     <span class="phpdocumentor-signature__visibility">protected</span>
         <span class="phpdocumentor-signature__type">mixed</span>
     <span class="phpdocumentor-signature__name">$class</span>
-     = <span class="phpdocumentor-signature__default-value">\Discord\Parts\Interactions\Command\Overwrite::class</span></code>
+     = <span class="phpdocumentor-signature__default-value">\Discord\Parts\Guild\CommandPermissions::class</span></code>
 
     
         <section class="phpdocumentor-description"></section>
@@ -693,7 +814,7 @@ returns the first item where the callback returns
     </h5>
     <dl class="phpdocumentor-tag-list">
                                     <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">inheritdoc</span>
+                    <span class="phpdocumentor-tag__name">inheritDoc</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
                                                                                 
@@ -718,7 +839,7 @@ returns the first item where the callback returns
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/Collection.php"><a href="files/src-discord-helpers-collection.html"><abbr title="src/Discord/Helpers/Collection.php">Collection.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">31</span>
+    <span class="phpdocumentor-element-found-in__line">34</span>
 
     </aside>
 
@@ -744,14 +865,14 @@ returns the first item where the callback returns
 >
     <h4 class="phpdocumentor-element__name" id="property_endpoints">
         $endpoints
-        <a href="classes/Discord-Repository-Guild-OverwriteRepository.html#property_endpoints" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Repository-Guild-CommandPermissionsRepository.html#property_endpoints" class="headerlink"><i class="fas fa-link"></i></a>
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/Guild/OverwriteRepository.php"><a href="files/src-discord-repository-guild-overwriterepository.html"><abbr title="src/Discord/Repository/Guild/OverwriteRepository.php">OverwriteRepository.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/Guild/CommandPermissionsRepository.php"><a href="files/src-discord-repository-guild-commandpermissionsrepository.html"><abbr title="src/Discord/Repository/Guild/CommandPermissionsRepository.php">CommandPermissionsRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">34</span>
+    <span class="phpdocumentor-element-found-in__line">39</span>
 
     </aside>
 
@@ -774,7 +895,7 @@ returns the first item where the callback returns
     </h5>
     <dl class="phpdocumentor-tag-list">
                                     <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">inheritdoc</span>
+                    <span class="phpdocumentor-tag__name">inheritDoc</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
                                                                                 
@@ -799,7 +920,7 @@ returns the first item where the callback returns
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/AbstractRepository.php"><a href="files/src-discord-repository-abstractrepository.html"><abbr title="src/Discord/Repository/AbstractRepository.php">AbstractRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">48</span>
+    <span class="phpdocumentor-element-found-in__line">60</span>
 
     </aside>
 
@@ -834,7 +955,7 @@ returns the first item where the callback returns
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/AbstractRepository.php"><a href="files/src-discord-repository-abstractrepository.html"><abbr title="src/Discord/Repository/AbstractRepository.php">AbstractRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">41</span>
+    <span class="phpdocumentor-element-found-in__line">53</span>
 
     </aside>
 
@@ -869,7 +990,7 @@ returns the first item where the callback returns
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/Collection.php"><a href="files/src-discord-helpers-collection.html"><abbr title="src/Discord/Helpers/Collection.php">Collection.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">38</span>
+    <span class="phpdocumentor-element-found-in__line">41</span>
 
     </aside>
 
@@ -902,7 +1023,7 @@ returns the first item where the callback returns
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/AbstractRepository.php"><a href="files/src-discord-repository-abstractrepository.html"><abbr title="src/Discord/Repository/AbstractRepository.php">AbstractRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">62</span>
+    <span class="phpdocumentor-element-found-in__line">74</span>
 
     </aside>
 
@@ -926,7 +1047,7 @@ returns the first item where the callback returns
             <section class="phpdocumentor-methods">
         <h3 class="phpdocumentor-elements__header" id="methods">
             Methods
-            <a href="classes/Discord-Repository-Guild-OverwriteRepository.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
+            <a href="classes/Discord-Repository-Guild-CommandPermissionsRepository.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
         </h3>
                     <article
         class="phpdocumentor-element
@@ -941,7 +1062,7 @@ returns the first item where the callback returns
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/Collection.php"><a href="files/src-discord-helpers-collection.html"><abbr title="src/Discord/Helpers/Collection.php">Collection.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">54</span>
+    <span class="phpdocumentor-element-found-in__line">57</span>
 
     </aside>
 
@@ -998,7 +1119,7 @@ returns the first item where the callback returns
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/Collection.php"><a href="files/src-discord-helpers-collection.html"><abbr title="src/Discord/Helpers/Collection.php">Collection.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">481</span>
+    <span class="phpdocumentor-element-found-in__line">484</span>
 
     </aside>
 
@@ -1024,6 +1145,50 @@ returns the first item where the callback returns
             -public
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method___get">
+        __get()
+        <a href="classes/Discord-Repository-AbstractRepository.html#method___get" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/AbstractRepository.php"><a href="files/src-discord-repository-abstractrepository.html"><abbr title="src/Discord/Repository/AbstractRepository.php">AbstractRepository.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">716</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">__get</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$key</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type">mixed</span></code>
+
+        <section class="phpdocumentor-description"></section>
+
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$key</span>
+                : <span class="phpdocumentor-signature__argument__return-type">string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                    <section class="phpdocumentor-description"></section>
+
+            </dd>
+            </dl>
+
+    
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type">mixed</span>
+            &mdash;
+        
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method___serialize">
         __serialize()
         <a href="classes/Discord-Helpers-Collection.html#method___serialize" class="headerlink"><i class="fas fa-link"></i></a>
@@ -1031,7 +1196,7 @@ returns the first item where the callback returns
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/Collection.php"><a href="files/src-discord-helpers-collection.html"><abbr title="src/Discord/Helpers/Collection.php">Collection.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">431</span>
+    <span class="phpdocumentor-element-found-in__line">434</span>
 
     </aside>
 
@@ -1064,7 +1229,7 @@ returns the first item where the callback returns
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/Collection.php"><a href="files/src-discord-helpers-collection.html"><abbr title="src/Discord/Helpers/Collection.php">Collection.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">451</span>
+    <span class="phpdocumentor-element-found-in__line">454</span>
 
     </aside>
 
@@ -1107,7 +1272,7 @@ returns the first item where the callback returns
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/Collection.php"><a href="files/src-discord-helpers-collection.html"><abbr title="src/Discord/Helpers/Collection.php">Collection.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">326</span>
+    <span class="phpdocumentor-element-found-in__line">329</span>
 
     </aside>
 
@@ -1140,7 +1305,7 @@ returns the first item where the callback returns
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/Collection.php"><a href="files/src-discord-helpers-collection.html"><abbr title="src/Discord/Helpers/Collection.php">Collection.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">212</span>
+    <span class="phpdocumentor-element-found-in__line">215</span>
 
     </aside>
 
@@ -1173,7 +1338,7 @@ returns the first item where the callback returns
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/AbstractRepository.php"><a href="files/src-discord-repository-abstractrepository.html"><abbr title="src/Discord/Repository/AbstractRepository.php">AbstractRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">124</span>
+    <span class="phpdocumentor-element-found-in__line">165</span>
 
     </aside>
 
@@ -1241,7 +1406,7 @@ returns the first item where the callback returns
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/AbstractRepository.php"><a href="files/src-discord-repository-abstractrepository.html"><abbr title="src/Discord/Repository/AbstractRepository.php">AbstractRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">187</span>
+    <span class="phpdocumentor-element-found-in__line">227</span>
 
     </aside>
 
@@ -1249,7 +1414,7 @@ returns the first item where the callback returns
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">delete</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Discord-Parts-Part.html"><abbr title="\Discord\Parts\Part">Part</abbr></a>|string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$part</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$reason</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\ExtendedPromiseInterface">ExtendedPromiseInterface</abbr></span></code>
+                    <span class="phpdocumentor-signature__name">delete</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Discord-Parts-Part.html"><abbr title="\Discord\Parts\Part">Part</abbr></a>|string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$part</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$reason</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\ExtendedPromiseInterface">ExtendedPromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-Part.html"><abbr title="\Discord\Parts\Part">Part</abbr></a>&gt;</span></code>
 
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
@@ -1291,7 +1456,7 @@ returns the first item where the callback returns
                         </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\ExtendedPromiseInterface">ExtendedPromiseInterface</abbr></span>
+    <span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\ExtendedPromiseInterface">ExtendedPromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-Part.html"><abbr title="\Discord\Parts\Part">Part</abbr></a>&gt;</span>
             &mdash;
         
     
@@ -1309,7 +1474,7 @@ returns the first item where the callback returns
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/AbstractRepository.php"><a href="files/src-discord-repository-abstractrepository.html"><abbr title="src/Discord/Repository/AbstractRepository.php">AbstractRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">262</span>
+    <span class="phpdocumentor-element-found-in__line">303</span>
 
     </aside>
 
@@ -1317,7 +1482,7 @@ returns the first item where the callback returns
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">fetch</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$id</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">bool&nbsp;</span><span class="phpdocumentor-signature__argument__name">$fresh</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">false</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\ExtendedPromiseInterface">ExtendedPromiseInterface</abbr></span></code>
+                    <span class="phpdocumentor-signature__name">fetch</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$id</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">bool&nbsp;</span><span class="phpdocumentor-signature__argument__name">$fresh</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">false</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\ExtendedPromiseInterface">ExtendedPromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-Part.html"><abbr title="\Discord\Parts\Part">Part</abbr></a>&gt;</span></code>
 
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
@@ -1359,7 +1524,7 @@ returns the first item where the callback returns
                         </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\ExtendedPromiseInterface">ExtendedPromiseInterface</abbr></span>
+    <span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\ExtendedPromiseInterface">ExtendedPromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-Part.html"><abbr title="\Discord\Parts\Part">Part</abbr></a>&gt;</span>
             &mdash;
         
     
@@ -1377,7 +1542,7 @@ returns the first item where the callback returns
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/Collection.php"><a href="files/src-discord-helpers-collection.html"><abbr title="src/Discord/Helpers/Collection.php">Collection.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">154</span>
+    <span class="phpdocumentor-element-found-in__line">157</span>
 
     </aside>
 
@@ -1420,7 +1585,7 @@ returns the first item where the callback returns
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/Collection.php"><a href="files/src-discord-helpers-collection.html"><abbr title="src/Discord/Helpers/Collection.php">Collection.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">288</span>
+    <span class="phpdocumentor-element-found-in__line">291</span>
 
     </aside>
 
@@ -1465,7 +1630,7 @@ of the callback.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/Collection.php"><a href="files/src-discord-helpers-collection.html"><abbr title="src/Discord/Helpers/Collection.php">Collection.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">312</span>
+    <span class="phpdocumentor-element-found-in__line">315</span>
 
     </aside>
 
@@ -1508,41 +1673,31 @@ the callback.</p>
 >
     <h4 class="phpdocumentor-element__name" id="method_find">
         find()
-        <a href="classes/Discord-Repository-Guild-OverwriteRepository.html#method_find" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Repository-Guild-CommandPermissionsRepository.html#method_find" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/Guild/OverwriteRepository.php"><a href="files/src-discord-repository-guild-overwriterepository.html"><abbr title="src/Discord/Repository/Guild/OverwriteRepository.php">OverwriteRepository.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/Guild/CommandPermissionsRepository.php"><a href="files/src-discord-repository-guild-commandpermissionsrepository.html"><abbr title="src/Discord/Repository/Guild/CommandPermissionsRepository.php">CommandPermissionsRepository.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">0</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Runs a filter callback over the repository and returns the first part where the callback returns `true` when given the part.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">find</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">callable&nbsp;</span><span class="phpdocumentor-signature__argument__name">$callback</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Interactions-Command-Overwrite.html"><abbr title="\Discord\Parts\Interactions\Command\Overwrite">Overwrite</abbr></a>|null</span></code>
+                    <span class="phpdocumentor-signature__name">find</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Part.html"><abbr title="\Discord\Parts\Part">Part</abbr></a>|null</span></code>
 
-        <section class="phpdocumentor-description"><p>Runs a filter callback over the repository.</p>
-</section>
-
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$callback</span>
-                : <span class="phpdocumentor-signature__argument__return-type">callable</span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
-
-            </dd>
-            </dl>
-
+    
+    
     
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Interactions-Command-Overwrite.html"><abbr title="\Discord\Parts\Interactions\Command\Overwrite">Overwrite</abbr></a>|null</span>
+    <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Part.html"><abbr title="\Discord\Parts\Part">Part</abbr></a>|null</span>
             &mdash;
-        
+            <section class="phpdocumentor-description"><p><code class="prettyprint">null</code> if no items returns <code class="prettyprint">true</code> when called in the callback.</p>
+</section>
+
     
 </article>
                     <article
@@ -1553,28 +1708,27 @@ the callback.</p>
 >
     <h4 class="phpdocumentor-element__name" id="method_first">
         first()
-        <a href="classes/Discord-Repository-Guild-OverwriteRepository.html#method_first" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Repository-Guild-CommandPermissionsRepository.html#method_first" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/Guild/OverwriteRepository.php"><a href="files/src-discord-repository-guild-overwriterepository.html"><abbr title="src/Discord/Repository/Guild/OverwriteRepository.php">OverwriteRepository.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/Guild/CommandPermissionsRepository.php"><a href="files/src-discord-repository-guild-commandpermissionsrepository.html"><abbr title="src/Discord/Repository/Guild/CommandPermissionsRepository.php">CommandPermissionsRepository.php</abbr></a></abbr>
     :
     <span class="phpdocumentor-element-found-in__line">0</span>
 
     </aside>
 
-    
+        <p class="phpdocumentor-summary">Returns the first cached part.</p>
+
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">first</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Interactions-Command-Overwrite.html"><abbr title="\Discord\Parts\Interactions\Command\Overwrite">Overwrite</abbr></a>|null</span></code>
+                    <span class="phpdocumentor-signature__name">first</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Part.html"><abbr title="\Discord\Parts\Part">Part</abbr></a>|null</span></code>
 
-        <section class="phpdocumentor-description"><p>Returns the first element of the collection.</p>
-</section>
-
+    
     
     
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Interactions-Command-Overwrite.html"><abbr title="\Discord\Parts\Interactions\Command\Overwrite">Overwrite</abbr></a>|null</span>
+    <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Part.html"><abbr title="\Discord\Parts\Part">Part</abbr></a>|null</span>
             &mdash;
         
     
@@ -1592,7 +1746,7 @@ the callback.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/Collection.php"><a href="files/src-discord-helpers-collection.html"><abbr title="src/Discord/Helpers/Collection.php">Collection.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">222</span>
+    <span class="phpdocumentor-element-found-in__line">225</span>
 
     </aside>
 
@@ -1625,7 +1779,7 @@ the callback.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/Collection.php"><a href="files/src-discord-helpers-collection.html"><abbr title="src/Discord/Helpers/Collection.php">Collection.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">83</span>
+    <span class="phpdocumentor-element-found-in__line">86</span>
 
     </aside>
 
@@ -1675,7 +1829,7 @@ the callback.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/AbstractRepository.php"><a href="files/src-discord-repository-abstractrepository.html"><abbr title="src/Discord/Repository/AbstractRepository.php">AbstractRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">229</span>
+    <span class="phpdocumentor-element-found-in__line">269</span>
 
     </aside>
 
@@ -1683,7 +1837,7 @@ the callback.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">fresh</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Discord-Parts-Part.html"><abbr title="\Discord\Parts\Part">Part</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$part</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$queryparams</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">[]</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\ExtendedPromiseInterface">ExtendedPromiseInterface</abbr></span></code>
+                    <span class="phpdocumentor-signature__name">fresh</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Discord-Parts-Part.html"><abbr title="\Discord\Parts\Part">Part</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$part</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$queryparams</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">[]</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\ExtendedPromiseInterface">ExtendedPromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-Part.html"><abbr title="\Discord\Parts\Part">Part</abbr></a>&gt;</span></code>
 
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
@@ -1725,7 +1879,7 @@ the callback.</p>
                         </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\ExtendedPromiseInterface">ExtendedPromiseInterface</abbr></span>
+    <span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\ExtendedPromiseInterface">ExtendedPromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-Part.html"><abbr title="\Discord\Parts\Part">Part</abbr></a>&gt;</span>
             &mdash;
         
     
@@ -1743,15 +1897,15 @@ the callback.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/AbstractRepository.php"><a href="files/src-discord-repository-abstractrepository.html"><abbr title="src/Discord/Repository/AbstractRepository.php">AbstractRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">88</span>
+    <span class="phpdocumentor-element-found-in__line">106</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Freshens the repository collection.</p>
+        <p class="phpdocumentor-summary">Freshens the repository cache.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">freshen</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$queryparams</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">[]</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\ExtendedPromiseInterface">ExtendedPromiseInterface</abbr></span></code>
+                    <span class="phpdocumentor-signature__name">freshen</span><span>(</span><span class="phpdocumentor-signature__argument"><span>[</span><span class="phpdocumentor-signature__argument__return-type">array&lt;string|int, mixed&gt;&nbsp;</span><span class="phpdocumentor-signature__argument__name">$queryparams</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">[]</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\ExtendedPromiseInterface">ExtendedPromiseInterface</abbr>&lt;string|int, static&gt;</span></code>
 
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
@@ -1784,7 +1938,7 @@ the callback.</p>
                         </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\ExtendedPromiseInterface">ExtendedPromiseInterface</abbr></span>
+    <span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\ExtendedPromiseInterface">ExtendedPromiseInterface</abbr>&lt;string|int, static&gt;</span>
             &mdash;
         
     
@@ -1802,7 +1956,7 @@ the callback.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/Collection.php"><a href="files/src-discord-helpers-collection.html"><abbr title="src/Discord/Helpers/Collection.php">Collection.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">70</span>
+    <span class="phpdocumentor-element-found-in__line">73</span>
 
     </aside>
 
@@ -1854,65 +2008,12 @@ the callback.</p>
 >
     <h4 class="phpdocumentor-element__name" id="method_get">
         get()
-        <a href="classes/Discord-Repository-Guild-OverwriteRepository.html#method_get" class="headerlink"><i class="fas fa-link"></i></a>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/Guild/OverwriteRepository.php"><a href="files/src-discord-repository-guild-overwriterepository.html"><abbr title="src/Discord/Repository/Guild/OverwriteRepository.php">OverwriteRepository.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">0</span>
-
-    </aside>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">get</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$discrim</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$key</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Interactions-Command-Overwrite.html"><abbr title="\Discord\Parts\Interactions\Command\Overwrite">Overwrite</abbr></a>|null</span></code>
-
-        <section class="phpdocumentor-description"><p>Gets an item from the collection.</p>
-</section>
-
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$discrim</span>
-                : <span class="phpdocumentor-signature__argument__return-type">string</span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
-
-            </dd>
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$key</span>
-                : <span class="phpdocumentor-signature__argument__return-type">mixed</span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
-
-            </dd>
-            </dl>
-
-    
-
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Interactions-Command-Overwrite.html"><abbr title="\Discord\Parts\Interactions\Command\Overwrite">Overwrite</abbr></a>|null</span>
-            &mdash;
-        
-    
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_get">
-        get()
         <a href="classes/Discord-Helpers-Collection.html#method_get" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/Collection.php"><a href="files/src-discord-helpers-collection.html"><abbr title="src/Discord/Helpers/Collection.php">Collection.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">96</span>
+    <span class="phpdocumentor-element-found-in__line">99</span>
 
     </aside>
 
@@ -1955,6 +2056,56 @@ the callback.</p>
             -public
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_get">
+        get()
+        <a href="classes/Discord-Repository-Guild-CommandPermissionsRepository.html#method_get" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/Guild/CommandPermissionsRepository.php"><a href="files/src-discord-repository-guild-commandpermissionsrepository.html"><abbr title="src/Discord/Repository/Guild/CommandPermissionsRepository.php">CommandPermissionsRepository.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">0</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Gets a part from the repository.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">get</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$discrim</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$key</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Part.html"><abbr title="\Discord\Parts\Part">Part</abbr></a>|null</span></code>
+
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$discrim</span>
+                : <span class="phpdocumentor-signature__argument__return-type">string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$key</span>
+                : <span class="phpdocumentor-signature__argument__return-type">mixed</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+            </dl>
+
+    
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Part.html"><abbr title="\Discord\Parts\Part">Part</abbr></a>|null</span>
+            &mdash;
+        
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_getIterator">
         getIterator()
         <a href="classes/Discord-Helpers-Collection.html#method_getIterator" class="headerlink"><i class="fas fa-link"></i></a>
@@ -1962,7 +2113,7 @@ the callback.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/Collection.php"><a href="files/src-discord-helpers-collection.html"><abbr title="src/Discord/Helpers/Collection.php">Collection.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">471</span>
+    <span class="phpdocumentor-element-found-in__line">474</span>
 
     </aside>
 
@@ -1995,11 +2146,11 @@ the callback.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/Collection.php"><a href="files/src-discord-helpers-collection.html"><abbr title="src/Discord/Helpers/Collection.php">Collection.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">268</span>
+    <span class="phpdocumentor-element-found-in__line">271</span>
 
     </aside>
 
-        <p class="phpdocumentor-summary">Checks if the array has an object.</p>
+        <p class="phpdocumentor-summary">Checks if the array has multiple offsets.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
@@ -2038,7 +2189,7 @@ the callback.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/Collection.php"><a href="files/src-discord-helpers-collection.html"><abbr title="src/Discord/Helpers/Collection.php">Collection.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">256</span>
+    <span class="phpdocumentor-element-found-in__line">259</span>
 
     </aside>
 
@@ -2081,7 +2232,7 @@ the callback.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/Collection.php"><a href="files/src-discord-helpers-collection.html"><abbr title="src/Discord/Helpers/Collection.php">Collection.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">461</span>
+    <span class="phpdocumentor-element-found-in__line">464</span>
 
     </aside>
 
@@ -2114,7 +2265,7 @@ the callback.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/Collection.php"><a href="files/src-discord-helpers-collection.html"><abbr title="src/Discord/Helpers/Collection.php">Collection.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">236</span>
+    <span class="phpdocumentor-element-found-in__line">239</span>
 
     </aside>
 
@@ -2140,6 +2291,39 @@ the callback.</p>
             -public
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_last">
+        last()
+        <a href="classes/Discord-Repository-Guild-CommandPermissionsRepository.html#method_last" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/Guild/CommandPermissionsRepository.php"><a href="files/src-discord-repository-guild-commandpermissionsrepository.html"><abbr title="src/Discord/Repository/Guild/CommandPermissionsRepository.php">CommandPermissionsRepository.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">0</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Returns the last cached part.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">last</span><span>(</span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Part.html"><abbr title="\Discord\Parts\Part">Part</abbr></a>|null</span></code>
+
+    
+    
+    
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Part.html"><abbr title="\Discord\Parts\Part">Part</abbr></a>|null</span>
+            &mdash;
+        
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_map">
         map()
         <a href="classes/Discord-Helpers-Collection.html#method_map" class="headerlink"><i class="fas fa-link"></i></a>
@@ -2147,7 +2331,7 @@ the callback.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/Collection.php"><a href="files/src-discord-helpers-collection.html"><abbr title="src/Discord/Helpers/Collection.php">Collection.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">338</span>
+    <span class="phpdocumentor-element-found-in__line">341</span>
 
     </aside>
 
@@ -2190,7 +2374,7 @@ the callback.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/Collection.php"><a href="files/src-discord-helpers-collection.html"><abbr title="src/Discord/Helpers/Collection.php">Collection.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">353</span>
+    <span class="phpdocumentor-element-found-in__line">356</span>
 
     </aside>
 
@@ -2233,7 +2417,7 @@ the callback.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/Collection.php"><a href="files/src-discord-helpers-collection.html"><abbr title="src/Discord/Helpers/Collection.php">Collection.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">377</span>
+    <span class="phpdocumentor-element-found-in__line">380</span>
 
     </aside>
 
@@ -2276,7 +2460,7 @@ the callback.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/Collection.php"><a href="files/src-discord-helpers-collection.html"><abbr title="src/Discord/Helpers/Collection.php">Collection.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">389</span>
+    <span class="phpdocumentor-element-found-in__line">392</span>
 
     </aside>
 
@@ -2319,7 +2503,7 @@ the callback.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/Collection.php"><a href="files/src-discord-helpers-collection.html"><abbr title="src/Discord/Helpers/Collection.php">Collection.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">401</span>
+    <span class="phpdocumentor-element-found-in__line">404</span>
 
     </aside>
 
@@ -2369,7 +2553,7 @@ the callback.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/Collection.php"><a href="files/src-discord-helpers-collection.html"><abbr title="src/Discord/Helpers/Collection.php">Collection.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">411</span>
+    <span class="phpdocumentor-element-found-in__line">414</span>
 
     </aside>
 
@@ -2408,65 +2592,12 @@ the callback.</p>
 >
     <h4 class="phpdocumentor-element__name" id="method_pull">
         pull()
-        <a href="classes/Discord-Repository-Guild-OverwriteRepository.html#method_pull" class="headerlink"><i class="fas fa-link"></i></a>
-    </h4>
-    <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/Guild/OverwriteRepository.php"><a href="files/src-discord-repository-guild-overwriterepository.html"><abbr title="src/Discord/Repository/Guild/OverwriteRepository.php">OverwriteRepository.php</abbr></a></abbr>
-    :
-    <span class="phpdocumentor-element-found-in__line">0</span>
-
-    </aside>
-
-    
-    <code class="phpdocumentor-code phpdocumentor-signature ">
-    <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">pull</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$key</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$default</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Interactions-Command-Overwrite.html"><abbr title="\Discord\Parts\Interactions\Command\Overwrite">Overwrite</abbr></a>|null</span></code>
-
-        <section class="phpdocumentor-description"><p>Pulls an item from the repository, removing and returning the item.</p>
-</section>
-
-        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
-    <dl class="phpdocumentor-argument-list">
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$key</span>
-                : <span class="phpdocumentor-signature__argument__return-type">mixed</span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
-
-            </dd>
-                    <dt class="phpdocumentor-argument-list__entry">
-                <span class="phpdocumentor-signature__argument__name">$default</span>
-                : <span class="phpdocumentor-signature__argument__return-type">mixed</span>
-                            </dt>
-            <dd class="phpdocumentor-argument-list__definition">
-                    <section class="phpdocumentor-description"></section>
-
-            </dd>
-            </dl>
-
-    
-
-        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Interactions-Command-Overwrite.html"><abbr title="\Discord\Parts\Interactions\Command\Overwrite">Overwrite</abbr></a>|null</span>
-            &mdash;
-        
-    
-</article>
-                    <article
-        class="phpdocumentor-element
-            -method
-            -public
-                                                        "
->
-    <h4 class="phpdocumentor-element__name" id="method_pull">
-        pull()
         <a href="classes/Discord-Helpers-Collection.html#method_pull" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/Collection.php"><a href="files/src-discord-helpers-collection.html"><abbr title="src/Discord/Helpers/Collection.php">Collection.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">137</span>
+    <span class="phpdocumentor-element-found-in__line">140</span>
 
     </aside>
 
@@ -2509,6 +2640,56 @@ the callback.</p>
             -public
                                                         "
 >
+    <h4 class="phpdocumentor-element__name" id="method_pull">
+        pull()
+        <a href="classes/Discord-Repository-Guild-CommandPermissionsRepository.html#method_pull" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/Guild/CommandPermissionsRepository.php"><a href="files/src-discord-repository-guild-commandpermissionsrepository.html"><abbr title="src/Discord/Repository/Guild/CommandPermissionsRepository.php">CommandPermissionsRepository.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">0</span>
+
+    </aside>
+
+        <p class="phpdocumentor-summary">Pulls a part from the repository.</p>
+
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+                    <span class="phpdocumentor-signature__name">pull</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type">string|int&nbsp;</span><span class="phpdocumentor-signature__argument__name">$key</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type">mixed&nbsp;</span><span class="phpdocumentor-signature__argument__name">$default</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Part.html"><abbr title="\Discord\Parts\Part">Part</abbr></a>|mixed</span></code>
+
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$key</span>
+                : <span class="phpdocumentor-signature__argument__return-type">string|int</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$default</span>
+                : <span class="phpdocumentor-signature__argument__return-type">mixed</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+            </dl>
+
+    
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type"><a href="classes/Discord-Parts-Part.html"><abbr title="\Discord\Parts\Part">Part</abbr></a>|mixed</span>
+            &mdash;
+        
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                                        "
+>
     <h4 class="phpdocumentor-element__name" id="method_push">
         push()
         <a href="classes/Discord-Helpers-Collection.html#method_push" class="headerlink"><i class="fas fa-link"></i></a>
@@ -2516,7 +2697,7 @@ the callback.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/Collection.php"><a href="files/src-discord-helpers-collection.html"><abbr title="src/Discord/Helpers/Collection.php">Collection.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">170</span>
+    <span class="phpdocumentor-element-found-in__line">173</span>
 
     </aside>
 
@@ -2559,7 +2740,7 @@ the callback.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/Collection.php"><a href="files/src-discord-helpers-collection.html"><abbr title="src/Discord/Helpers/Collection.php">Collection.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">186</span>
+    <span class="phpdocumentor-element-found-in__line">189</span>
 
     </aside>
 
@@ -2602,7 +2783,7 @@ the callback.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Repository/AbstractRepository.php"><a href="files/src-discord-repository-abstractrepository.html"><abbr title="src/Discord/Repository/AbstractRepository.php">AbstractRepository.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">140</span>
+    <span class="phpdocumentor-element-found-in__line">182</span>
 
     </aside>
 
@@ -2610,7 +2791,7 @@ the callback.</p>
 
     <code class="phpdocumentor-code phpdocumentor-signature ">
     <span class="phpdocumentor-signature__visibility">public</span>
-                    <span class="phpdocumentor-signature__name">save</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Discord-Parts-Part.html"><abbr title="\Discord\Parts\Part">Part</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$part</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$reason</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\ExtendedPromiseInterface">ExtendedPromiseInterface</abbr></span></code>
+                    <span class="phpdocumentor-signature__name">save</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><a href="classes/Discord-Parts-Part.html"><abbr title="\Discord\Parts\Part">Part</abbr></a>&nbsp;</span><span class="phpdocumentor-signature__argument__name">$part</span></span><span class="phpdocumentor-signature__argument"><span>[</span><span>, </span><span class="phpdocumentor-signature__argument__return-type">string|null&nbsp;</span><span class="phpdocumentor-signature__argument__name">$reason</span><span> = </span><span class="phpdocumentor-signature__argument__default-value">null</span><span> ]</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\ExtendedPromiseInterface">ExtendedPromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-Part.html"><abbr title="\Discord\Parts\Part">Part</abbr></a>&gt;</span></code>
 
     
         <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
@@ -2652,7 +2833,7 @@ the callback.</p>
                         </dl>
 
         <h5 class="phpdocumentor-return-value__heading">Return values</h5>
-    <span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\ExtendedPromiseInterface">ExtendedPromiseInterface</abbr></span>
+    <span class="phpdocumentor-signature__response_type"><abbr title="\React\Promise\ExtendedPromiseInterface">ExtendedPromiseInterface</abbr>&lt;string|int, <a href="classes/Discord-Parts-Part.html"><abbr title="\Discord\Parts\Part">Part</abbr></a>&gt;</span>
             &mdash;
         
     
@@ -2670,7 +2851,7 @@ the callback.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/Collection.php"><a href="files/src-discord-helpers-collection.html"><abbr title="src/Discord/Helpers/Collection.php">Collection.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">421</span>
+    <span class="phpdocumentor-element-found-in__line">424</span>
 
     </aside>
 
@@ -2703,7 +2884,7 @@ the callback.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/Collection.php"><a href="files/src-discord-helpers-collection.html"><abbr title="src/Discord/Helpers/Collection.php">Collection.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">119</span>
+    <span class="phpdocumentor-element-found-in__line">122</span>
 
     </aside>
 
@@ -2753,7 +2934,7 @@ the callback.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/Collection.php"><a href="files/src-discord-helpers-collection.html"><abbr title="src/Discord/Helpers/Collection.php">Collection.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">365</span>
+    <span class="phpdocumentor-element-found-in__line">368</span>
 
     </aside>
 
@@ -2786,7 +2967,7 @@ the callback.</p>
     <aside class="phpdocumentor-element-found-in">
     <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/Collection.php"><a href="files/src-discord-helpers-collection.html"><abbr title="src/Discord/Helpers/Collection.php">Collection.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">441</span>
+    <span class="phpdocumentor-element-found-in__line">444</span>
 
     </aside>
 
@@ -2894,7 +3075,7 @@ the callback.</p>
 </section>
             </div>
         </div>
-        <a href="classes/Discord-Repository-Guild-OverwriteRepository.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
+        <a href="classes/Discord-Repository-Guild-CommandPermissionsRepository.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
 
     </main>
 

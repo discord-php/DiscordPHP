@@ -249,37 +249,37 @@
                     <td class="phpdocumentor-cell"><a href="reports/deprecated.html#src/Discord/Builders/CommandAttributes.php">src/Discord/Builders/CommandAttributes.php</a></td>
                 </tr>
                             <tr>
+                    <td class="phpdocumentor-cell"><a href="reports/deprecated.html#src/Discord/Builders/Components/Component.php">src/Discord/Builders/Components/Component.php</a></td>
+                </tr>
+                            <tr>
                     <td class="phpdocumentor-cell"><a href="reports/deprecated.html#src/Discord/Discord.php">src/Discord/Discord.php</a></td>
                 </tr>
                             <tr>
                     <td class="phpdocumentor-cell"><a href="reports/deprecated.html#src/Discord/Parts/Channel/Channel.php">src/Discord/Parts/Channel/Channel.php</a></td>
                 </tr>
                             <tr>
-                    <td class="phpdocumentor-cell"><a href="reports/deprecated.html#src/Discord/Parts/Channel/Invite.php">src/Discord/Parts/Channel/Invite.php</a></td>
-                </tr>
-                            <tr>
                     <td class="phpdocumentor-cell"><a href="reports/deprecated.html#src/Discord/Parts/Channel/Message.php">src/Discord/Parts/Channel/Message.php</a></td>
                 </tr>
                             <tr>
-                    <td class="phpdocumentor-cell"><a href="reports/deprecated.html#src/Discord/Parts/Channel/StageInstance.php">src/Discord/Parts/Channel/StageInstance.php</a></td>
-                </tr>
-                            <tr>
-                    <td class="phpdocumentor-cell"><a href="reports/deprecated.html#src/Discord/Parts/Guild/AutoModeration/Rule.php">src/Discord/Parts/Guild/AutoModeration/Rule.php</a></td>
+                    <td class="phpdocumentor-cell"><a href="reports/deprecated.html#src/Discord/Parts/Embed/Embed.php">src/Discord/Parts/Embed/Embed.php</a></td>
                 </tr>
                             <tr>
                     <td class="phpdocumentor-cell"><a href="reports/deprecated.html#src/Discord/Parts/Guild/Guild.php">src/Discord/Parts/Guild/Guild.php</a></td>
                 </tr>
                             <tr>
-                    <td class="phpdocumentor-cell"><a href="reports/deprecated.html#src/Discord/Parts/Interactions/Command/Command.php">src/Discord/Parts/Interactions/Command/Command.php</a></td>
-                </tr>
-                            <tr>
-                    <td class="phpdocumentor-cell"><a href="reports/deprecated.html#src/Discord/Parts/Permissions/Permission.php">src/Discord/Parts/Permissions/Permission.php</a></td>
+                    <td class="phpdocumentor-cell"><a href="reports/deprecated.html#src/Discord/Parts/Part.php">src/Discord/Parts/Part.php</a></td>
                 </tr>
                             <tr>
                     <td class="phpdocumentor-cell"><a href="reports/deprecated.html#src/Discord/Parts/Thread/Thread.php">src/Discord/Parts/Thread/Thread.php</a></td>
                 </tr>
                             <tr>
-                    <td class="phpdocumentor-cell"><a href="reports/deprecated.html#src/Discord/Repository/Guild/GuildCommandRepository.php">src/Discord/Repository/Guild/GuildCommandRepository.php</a></td>
+                    <td class="phpdocumentor-cell"><a href="reports/deprecated.html#src/Discord/Parts/User/Activity.php">src/Discord/Parts/User/Activity.php</a></td>
+                </tr>
+                            <tr>
+                    <td class="phpdocumentor-cell"><a href="reports/deprecated.html#src/Discord/Repository/AbstractRepository.php">src/Discord/Repository/AbstractRepository.php</a></td>
+                </tr>
+                            <tr>
+                    <td class="phpdocumentor-cell"><a href="reports/deprecated.html#src/Discord/Voice/VoiceClient.php">src/Discord/Voice/VoiceClient.php</a></td>
                 </tr>
                     </table>
         
@@ -292,9 +292,24 @@
                     <th class="phpdocumentor-heading">Reason</th>
                 </tr>
                                                             <tr>
-                            <td class="phpdocumentor-cell">173</td>
+                            <td class="phpdocumentor-cell">176</td>
                             <td class="phpdocumentor-cell"><a href="classes/Discord-Builders-CommandAttributes.html#method_setDefaultPermission"><abbr title="\Discord\Builders\CommandAttributes::setDefaultPermission()">CommandAttributes::setDefaultPermission()</abbr></a></td>
                             <td class="phpdocumentor-cell"><p>See <code class="prettyprint">CommandAttributes::setDefaultMemberPermissions()</code>.</p>
+</td>
+                        </tr>
+                                                </table>
+                    <a id="src/Discord/Builders/Components/Component.php"></a>
+            <h3><abbr title="src/Discord/Builders/Components/Component.php">Component.php</abbr></h3>
+            <table>
+                <tr>
+                    <th class="phpdocumentor-heading">Line</th>
+                    <th class="phpdocumentor-heading">Element</th>
+                    <th class="phpdocumentor-heading">Reason</th>
+                </tr>
+                                                            <tr>
+                            <td class="phpdocumentor-cell">35</td>
+                            <td class="phpdocumentor-cell"><a href="classes/Discord-Builders-Components-Component.html#constant_TYPE_SELECT_MENU"><abbr title="\Discord\Builders\Components\Component::TYPE_SELECT_MENU">Component::TYPE_SELECT_MENU</abbr></a></td>
+                            <td class="phpdocumentor-cell"><p>Use <code class="prettyprint">Component::TYPE_STRING_SELECT</code></p>
 </td>
                         </tr>
                                                 </table>
@@ -307,7 +322,7 @@
                     <th class="phpdocumentor-heading">Reason</th>
                 </tr>
                                                             <tr>
-                            <td class="phpdocumentor-cell">1525</td>
+                            <td class="phpdocumentor-cell">1574</td>
                             <td class="phpdocumentor-cell"><a href="classes/Discord-Discord.html#method_getHttp"><abbr title="\Discord\Discord::getHttp()">Discord::getHttp()</abbr></a></td>
                             <td class="phpdocumentor-cell"><p>Use Discord::getHttpClient()</p>
 </td>
@@ -322,59 +337,88 @@
                     <th class="phpdocumentor-heading">Reason</th>
                 </tr>
                                                             <tr>
-                            <td class="phpdocumentor-cell">440</td>
-                            <td class="phpdocumentor-cell"><a href="classes/Discord-Parts-Channel-Channel.html#method_getMessage"><abbr title="\Discord\Parts\Channel\Channel::getMessage()">Channel::getMessage()</abbr></a></td>
-                            <td class="phpdocumentor-cell"><p>Use <code class="prettyprint">$channel-&gt;messages-&gt;fetch($id)</code>.</p>
+                            <td class="phpdocumentor-cell">1163</td>
+                            <td class="phpdocumentor-cell"><a href="classes/Discord-Parts-Channel-Channel.html#method_sendEmbed"><abbr title="\Discord\Parts\Channel\Channel::sendEmbed()">Channel::sendEmbed()</abbr></a></td>
+                            <td class="phpdocumentor-cell"><p>Use <code class="prettyprint">Channel::sendMessage</code> with <code class="prettyprint">MessageBuilder::addEmbed()</code></p>
 </td>
                         </tr>
                                                                                 <tr>
-                            <td class="phpdocumentor-cell">814</td>
-                            <td class="phpdocumentor-cell"><a href="classes/Discord-Parts-Channel-Channel.html#method_getInvites"><abbr title="\Discord\Parts\Channel\Channel::getInvites()">Channel::getInvites()</abbr></a></td>
-                            <td class="phpdocumentor-cell"><p>Use <code class="prettyprint">$channel-&gt;invites-&gt;freshen()</code></p>
-</td>
-                        </tr>
-                                                                                <tr>
-                            <td class="phpdocumentor-cell">985</td>
-                            <td class="phpdocumentor-cell"><a href="classes/Discord-Parts-Channel-Channel.html#method_editMessage"><abbr title="\Discord\Parts\Channel\Channel::editMessage()">Channel::editMessage()</abbr></a></td>
-                            <td class="phpdocumentor-cell"><p>Use <code class="prettyprint">Message::edit</code> instead</p>
-</td>
-                        </tr>
-                                                                                <tr>
-                            <td class="phpdocumentor-cell">1019</td>
+                            <td class="phpdocumentor-cell">1183</td>
                             <td class="phpdocumentor-cell"><a href="classes/Discord-Parts-Channel-Channel.html#method_sendFile"><abbr title="\Discord\Parts\Channel\Channel::sendFile()">Channel::sendFile()</abbr></a></td>
                             <td class="phpdocumentor-cell"><p>Use <code class="prettyprint">Channel::sendMessage</code> to send files.</p>
 </td>
                         </tr>
                                                                                 <tr>
-                            <td class="phpdocumentor-cell">96</td>
-                            <td class="phpdocumentor-cell"><a href="classes/Discord-Parts-Channel-Channel.html#constant_TYPE_GAME_STORE"><abbr title="\Discord\Parts\Channel\Channel::TYPE_GAME_STORE">Channel::TYPE_GAME_STORE</abbr></a></td>
-                            <td class="phpdocumentor-cell"></td>
+                            <td class="phpdocumentor-cell">1275</td>
+                            <td class="phpdocumentor-cell"><a href="classes/Discord-Parts-Channel-Channel.html#method_allowText"><abbr title="\Discord\Parts\Channel\Channel::allowText()">Channel::allowText()</abbr></a></td>
+                            <td class="phpdocumentor-cell"><p>Use <code class="prettyprint">Channel::isTextBased()</code></p>
+</td>
                         </tr>
                                                                                 <tr>
-                            <td class="phpdocumentor-cell">105</td>
+                            <td class="phpdocumentor-cell">1287</td>
+                            <td class="phpdocumentor-cell"><a href="classes/Discord-Parts-Channel-Channel.html#method_allowVoice"><abbr title="\Discord\Parts\Channel\Channel::allowVoice()">Channel::allowVoice()</abbr></a></td>
+                            <td class="phpdocumentor-cell"><p>Use <code class="prettyprint">Channel::isVoiceBased()</code></p>
+</td>
+                        </tr>
+                                                                                <tr>
+                            <td class="phpdocumentor-cell">1299</td>
+                            <td class="phpdocumentor-cell"><a href="classes/Discord-Parts-Channel-Channel.html#method_allowInvite"><abbr title="\Discord\Parts\Channel\Channel::allowInvite()">Channel::allowInvite()</abbr></a></td>
+                            <td class="phpdocumentor-cell"><p>Use <code class="prettyprint">Channel::canInvite()</code></p>
+</td>
+                        </tr>
+                                                                                <tr>
+                            <td class="phpdocumentor-cell">115</td>
+                            <td class="phpdocumentor-cell"><a href="classes/Discord-Parts-Channel-Channel.html#constant_TYPE_TEXT"><abbr title="\Discord\Parts\Channel\Channel::TYPE_TEXT">Channel::TYPE_TEXT</abbr></a></td>
+                            <td class="phpdocumentor-cell"><p>Use <code class="prettyprint">Channel::TYPE_GUILD_TEXT</code></p>
+</td>
+                        </tr>
+                                                                                <tr>
+                            <td class="phpdocumentor-cell">117</td>
+                            <td class="phpdocumentor-cell"><a href="classes/Discord-Parts-Channel-Channel.html#constant_TYPE_VOICE"><abbr title="\Discord\Parts\Channel\Channel::TYPE_VOICE">Channel::TYPE_VOICE</abbr></a></td>
+                            <td class="phpdocumentor-cell"><p>Use <code class="prettyprint">Channel::TYPE_GUILD_VOICE</code></p>
+</td>
+                        </tr>
+                                                                                <tr>
+                            <td class="phpdocumentor-cell">119</td>
+                            <td class="phpdocumentor-cell"><a href="classes/Discord-Parts-Channel-Channel.html#constant_TYPE_GROUP"><abbr title="\Discord\Parts\Channel\Channel::TYPE_GROUP">Channel::TYPE_GROUP</abbr></a></td>
+                            <td class="phpdocumentor-cell"><p>Use <code class="prettyprint">Channel::TYPE_GROUP_DM</code></p>
+</td>
+                        </tr>
+                                                                                <tr>
+                            <td class="phpdocumentor-cell">121</td>
+                            <td class="phpdocumentor-cell"><a href="classes/Discord-Parts-Channel-Channel.html#constant_TYPE_CATEGORY"><abbr title="\Discord\Parts\Channel\Channel::TYPE_CATEGORY">Channel::TYPE_CATEGORY</abbr></a></td>
+                            <td class="phpdocumentor-cell"><p>Use <code class="prettyprint">Channel::TYPE_GUILD_CATEGORY</code></p>
+</td>
+                        </tr>
+                                                                                <tr>
+                            <td class="phpdocumentor-cell">123</td>
                             <td class="phpdocumentor-cell"><a href="classes/Discord-Parts-Channel-Channel.html#constant_TYPE_NEWS"><abbr title="\Discord\Parts\Channel\Channel::TYPE_NEWS">Channel::TYPE_NEWS</abbr></a></td>
-                            <td class="phpdocumentor-cell"><p>Use <code class="prettyprint">TYPE_ANNOUNCEMENT</code></p>
+                            <td class="phpdocumentor-cell"><p>Use <code class="prettyprint">Channel::TYPE_GUILD_ANNOUNCEMENT</code></p>
 </td>
                         </tr>
                                                                                 <tr>
-                            <td class="phpdocumentor-cell">107</td>
+                            <td class="phpdocumentor-cell">125</td>
                             <td class="phpdocumentor-cell"><a href="classes/Discord-Parts-Channel-Channel.html#constant_TYPE_NEWS_THREAD"><abbr title="\Discord\Parts\Channel\Channel::TYPE_NEWS_THREAD">Channel::TYPE_NEWS_THREAD</abbr></a></td>
-                            <td class="phpdocumentor-cell"><p>Use <code class="prettyprint">TYPE_ANNOUNCEMENT_THREAD</code></p>
+                            <td class="phpdocumentor-cell"><p>Use <code class="prettyprint">Channel::TYPE_ANNOUNCEMENT_THREAD</code></p>
 </td>
                         </tr>
-                                                </table>
-                    <a id="src/Discord/Parts/Channel/Invite.php"></a>
-            <h3><abbr title="src/Discord/Parts/Channel/Invite.php">Invite.php</abbr></h3>
-            <table>
-                <tr>
-                    <th class="phpdocumentor-heading">Line</th>
-                    <th class="phpdocumentor-heading">Element</th>
-                    <th class="phpdocumentor-heading">Reason</th>
-                </tr>
-                                                            <tr>
-                            <td class="phpdocumentor-cell">87</td>
-                            <td class="phpdocumentor-cell"><a href="classes/Discord-Parts-Channel-Invite.html#method_accept"><abbr title="\Discord\Parts\Channel\Invite::accept()">Invite::accept()</abbr></a></td>
-                            <td class="phpdocumentor-cell"></td>
+                                                                                <tr>
+                            <td class="phpdocumentor-cell">127</td>
+                            <td class="phpdocumentor-cell"><a href="classes/Discord-Parts-Channel-Channel.html#constant_TYPE_STAGE_CHANNEL"><abbr title="\Discord\Parts\Channel\Channel::TYPE_STAGE_CHANNEL">Channel::TYPE_STAGE_CHANNEL</abbr></a></td>
+                            <td class="phpdocumentor-cell"><p>Use <code class="prettyprint">Channel::TYPE_GUILD_STAGE_VOICE</code></p>
+</td>
+                        </tr>
+                                                                                <tr>
+                            <td class="phpdocumentor-cell">129</td>
+                            <td class="phpdocumentor-cell"><a href="classes/Discord-Parts-Channel-Channel.html#constant_TYPE_DIRECTORY"><abbr title="\Discord\Parts\Channel\Channel::TYPE_DIRECTORY">Channel::TYPE_DIRECTORY</abbr></a></td>
+                            <td class="phpdocumentor-cell"><p>Use <code class="prettyprint">Channel::TYPE_GUILD_DIRECTORY</code></p>
+</td>
+                        </tr>
+                                                                                <tr>
+                            <td class="phpdocumentor-cell">131</td>
+                            <td class="phpdocumentor-cell"><a href="classes/Discord-Parts-Channel-Channel.html#constant_TYPE_FORUM"><abbr title="\Discord\Parts\Channel\Channel::TYPE_FORUM">Channel::TYPE_FORUM</abbr></a></td>
+                            <td class="phpdocumentor-cell"><p>Use <code class="prettyprint">Channel::TYPE_GUILD_FORUM</code></p>
+</td>
                         </tr>
                                                 </table>
                     <a id="src/Discord/Parts/Channel/Message.php"></a>
@@ -386,52 +430,98 @@
                     <th class="phpdocumentor-heading">Reason</th>
                 </tr>
                                                             <tr>
-                            <td class="phpdocumentor-cell">116</td>
+                            <td class="phpdocumentor-cell">122</td>
                             <td class="phpdocumentor-cell"><a href="classes/Discord-Parts-Channel-Message.html#constant_GUILD_MEMBER_JOIN"><abbr title="\Discord\Parts\Channel\Message::GUILD_MEMBER_JOIN">Message::GUILD_MEMBER_JOIN</abbr></a></td>
                             <td class="phpdocumentor-cell"><p>Use <code class="prettyprint">Message::TYPE_USER_JOIN</code></p>
 </td>
                         </tr>
                                                                                 <tr>
-                            <td class="phpdocumentor-cell">118</td>
+                            <td class="phpdocumentor-cell">124</td>
                             <td class="phpdocumentor-cell"><a href="classes/Discord-Parts-Channel-Message.html#constant_USER_PREMIUM_GUILD_SUBSCRIPTION"><abbr title="\Discord\Parts\Channel\Message::USER_PREMIUM_GUILD_SUBSCRIPTION">Message::USER_PREMIUM_GUILD_SUBSCRIPTION</abbr></a></td>
                             <td class="phpdocumentor-cell"><p>Use <code class="prettyprint">Message::TYPE_GUILD_BOOST</code></p>
 </td>
                         </tr>
                                                                                 <tr>
-                            <td class="phpdocumentor-cell">120</td>
+                            <td class="phpdocumentor-cell">126</td>
                             <td class="phpdocumentor-cell"><a href="classes/Discord-Parts-Channel-Message.html#constant_USER_PREMIUM_GUILD_SUBSCRIPTION_TIER_1"><abbr title="\Discord\Parts\Channel\Message::USER_PREMIUM_GUILD_SUBSCRIPTION_TIER_1">Message::USER_PREMIUM_GUILD_SUBSCRIPTION_TIER_1</abbr></a></td>
                             <td class="phpdocumentor-cell"><p>Use <code class="prettyprint">Message::TYPE_GUILD_BOOST_TIER_1</code></p>
 </td>
                         </tr>
                                                                                 <tr>
-                            <td class="phpdocumentor-cell">122</td>
+                            <td class="phpdocumentor-cell">128</td>
                             <td class="phpdocumentor-cell"><a href="classes/Discord-Parts-Channel-Message.html#constant_USER_PREMIUM_GUILD_SUBSCRIPTION_TIER_2"><abbr title="\Discord\Parts\Channel\Message::USER_PREMIUM_GUILD_SUBSCRIPTION_TIER_2">Message::USER_PREMIUM_GUILD_SUBSCRIPTION_TIER_2</abbr></a></td>
                             <td class="phpdocumentor-cell"><p>Use <code class="prettyprint">Message::TYPE_GUILD_BOOST_TIER_2</code></p>
 </td>
                         </tr>
                                                                                 <tr>
-                            <td class="phpdocumentor-cell">124</td>
+                            <td class="phpdocumentor-cell">130</td>
                             <td class="phpdocumentor-cell"><a href="classes/Discord-Parts-Channel-Message.html#constant_USER_PREMIUM_GUILD_SUBSCRIPTION_TIER_3"><abbr title="\Discord\Parts\Channel\Message::USER_PREMIUM_GUILD_SUBSCRIPTION_TIER_3">Message::USER_PREMIUM_GUILD_SUBSCRIPTION_TIER_3</abbr></a></td>
                             <td class="phpdocumentor-cell"><p>Use <code class="prettyprint">Message::TYPE_GUILD_BOOST_TIER_3</code></p>
 </td>
                         </tr>
-                                                </table>
-                    <a id="src/Discord/Parts/Channel/StageInstance.php"></a>
-            <h3><abbr title="src/Discord/Parts/Channel/StageInstance.php">StageInstance.php</abbr></h3>
-            <table>
-                <tr>
-                    <th class="phpdocumentor-heading">Line</th>
-                    <th class="phpdocumentor-heading">Element</th>
-                    <th class="phpdocumentor-heading">Reason</th>
-                </tr>
-                                                            <tr>
-                            <td class="phpdocumentor-cell">35</td>
-                            <td class="phpdocumentor-cell"><a href="classes/Discord-Parts-Channel-StageInstance.html#constant_PRIVACY_LEVEL_PUBLIC"><abbr title="\Discord\Parts\Channel\StageInstance::PRIVACY_LEVEL_PUBLIC">StageInstance::PRIVACY_LEVEL_PUBLIC</abbr></a></td>
-                            <td class="phpdocumentor-cell"></td>
+                                                                                <tr>
+                            <td class="phpdocumentor-cell">132</td>
+                            <td class="phpdocumentor-cell"><a href="classes/Discord-Parts-Channel-Message.html#constant_TYPE_NORMAL"><abbr title="\Discord\Parts\Channel\Message::TYPE_NORMAL">Message::TYPE_NORMAL</abbr></a></td>
+                            <td class="phpdocumentor-cell"><p>Use <code class="prettyprint">Message::TYPE_DEFAULT</code></p>
+</td>
+                        </tr>
+                                                                                <tr>
+                            <td class="phpdocumentor-cell">134</td>
+                            <td class="phpdocumentor-cell"><a href="classes/Discord-Parts-Channel-Message.html#constant_TYPE_USER_ADDED"><abbr title="\Discord\Parts\Channel\Message::TYPE_USER_ADDED">Message::TYPE_USER_ADDED</abbr></a></td>
+                            <td class="phpdocumentor-cell"><p>Use <code class="prettyprint">Message::TYPE_RECIPIENT_ADD</code></p>
+</td>
+                        </tr>
+                                                                                <tr>
+                            <td class="phpdocumentor-cell">136</td>
+                            <td class="phpdocumentor-cell"><a href="classes/Discord-Parts-Channel-Message.html#constant_TYPE_USER_REMOVED"><abbr title="\Discord\Parts\Channel\Message::TYPE_USER_REMOVED">Message::TYPE_USER_REMOVED</abbr></a></td>
+                            <td class="phpdocumentor-cell"><p>Use <code class="prettyprint">Message::TYPE_RECIPIENT_REMOVE</code></p>
+</td>
+                        </tr>
+                                                                                <tr>
+                            <td class="phpdocumentor-cell">138</td>
+                            <td class="phpdocumentor-cell"><a href="classes/Discord-Parts-Channel-Message.html#constant_CHANNEL_PINNED_MESSAGE"><abbr title="\Discord\Parts\Channel\Message::CHANNEL_PINNED_MESSAGE">Message::CHANNEL_PINNED_MESSAGE</abbr></a></td>
+                            <td class="phpdocumentor-cell"><p>Use <code class="prettyprint">Message::TYPE_CHANNEL_PINNED_MESSAGE</code></p>
+</td>
+                        </tr>
+                                                                                <tr>
+                            <td class="phpdocumentor-cell">140</td>
+                            <td class="phpdocumentor-cell"><a href="classes/Discord-Parts-Channel-Message.html#constant_CHANNEL_FOLLOW_ADD"><abbr title="\Discord\Parts\Channel\Message::CHANNEL_FOLLOW_ADD">Message::CHANNEL_FOLLOW_ADD</abbr></a></td>
+                            <td class="phpdocumentor-cell"><p>Use <code class="prettyprint">Message::TYPE_CHANNEL_FOLLOW_ADD</code></p>
+</td>
+                        </tr>
+                                                                                <tr>
+                            <td class="phpdocumentor-cell">142</td>
+                            <td class="phpdocumentor-cell"><a href="classes/Discord-Parts-Channel-Message.html#constant_GUILD_DISCOVERY_DISQUALIFIED"><abbr title="\Discord\Parts\Channel\Message::GUILD_DISCOVERY_DISQUALIFIED">Message::GUILD_DISCOVERY_DISQUALIFIED</abbr></a></td>
+                            <td class="phpdocumentor-cell"><p>Use <code class="prettyprint">Message::TYPE_GUILD_DISCOVERY_DISQUALIFIED</code></p>
+</td>
+                        </tr>
+                                                                                <tr>
+                            <td class="phpdocumentor-cell">144</td>
+                            <td class="phpdocumentor-cell"><a href="classes/Discord-Parts-Channel-Message.html#constant_GUILD_DISCOVERY_REQUALIFIED"><abbr title="\Discord\Parts\Channel\Message::GUILD_DISCOVERY_REQUALIFIED">Message::GUILD_DISCOVERY_REQUALIFIED</abbr></a></td>
+                            <td class="phpdocumentor-cell"><p>Use <code class="prettyprint">Message::TYPE_GUILD_DISCOVERY_REQUALIFIED</code></p>
+</td>
+                        </tr>
+                                                                                <tr>
+                            <td class="phpdocumentor-cell">146</td>
+                            <td class="phpdocumentor-cell"><a href="classes/Discord-Parts-Channel-Message.html#constant_GUILD_DISCOVERY_GRACE_PERIOD_INITIAL_WARNING"><abbr title="\Discord\Parts\Channel\Message::GUILD_DISCOVERY_GRACE_PERIOD_INITIAL_WARNING">Message::GUILD_DISCOVERY_GRACE_PERIOD_INITIAL_WARNING</abbr></a></td>
+                            <td class="phpdocumentor-cell"><p>Use <code class="prettyprint">Message::TYPE_GUILD_DISCOVERY_GRACE_PERIOD_INITIAL_WARNING</code></p>
+</td>
+                        </tr>
+                                                                                <tr>
+                            <td class="phpdocumentor-cell">148</td>
+                            <td class="phpdocumentor-cell"><a href="classes/Discord-Parts-Channel-Message.html#constant_GUILD_DISCOVERY_GRACE_PERIOD_FINAL_WARNING"><abbr title="\Discord\Parts\Channel\Message::GUILD_DISCOVERY_GRACE_PERIOD_FINAL_WARNING">Message::GUILD_DISCOVERY_GRACE_PERIOD_FINAL_WARNING</abbr></a></td>
+                            <td class="phpdocumentor-cell"><p>Use <code class="prettyprint">Message::TYPE_GUILD_DISCOVERY_GRACE_PERIOD_FINAL_WARNING</code></p>
+</td>
+                        </tr>
+                                                                                <tr>
+                            <td class="phpdocumentor-cell">150</td>
+                            <td class="phpdocumentor-cell"><a href="classes/Discord-Parts-Channel-Message.html#constant_TYPE_APPLICATION_COMMAND"><abbr title="\Discord\Parts\Channel\Message::TYPE_APPLICATION_COMMAND">Message::TYPE_APPLICATION_COMMAND</abbr></a></td>
+                            <td class="phpdocumentor-cell"><p>Use <code class="prettyprint">Message::TYPE_CHAT_INPUT_COMMAND</code></p>
+</td>
                         </tr>
                                                 </table>
-                    <a id="src/Discord/Parts/Guild/AutoModeration/Rule.php"></a>
-            <h3><abbr title="src/Discord/Parts/Guild/AutoModeration/Rule.php">Rule.php</abbr></h3>
+                    <a id="src/Discord/Parts/Embed/Embed.php"></a>
+            <h3><abbr title="src/Discord/Parts/Embed/Embed.php">Embed.php</abbr></h3>
             <table>
                 <tr>
                     <th class="phpdocumentor-heading">Line</th>
@@ -439,9 +529,15 @@
                     <th class="phpdocumentor-heading">Reason</th>
                 </tr>
                                                             <tr>
-                            <td class="phpdocumentor-cell">60</td>
-                            <td class="phpdocumentor-cell"><a href="classes/Discord-Parts-Guild-AutoModeration-Rule.html#constant_TRIGGER_TYPE_HARMFUL_LINK"><abbr title="\Discord\Parts\Guild\AutoModeration\Rule::TRIGGER_TYPE_HARMFUL_LINK">Rule::TRIGGER_TYPE_HARMFUL_LINK</abbr></a></td>
-                            <td class="phpdocumentor-cell"><p>No longer part of AutoMod</p>
+                            <td class="phpdocumentor-cell">213</td>
+                            <td class="phpdocumentor-cell"><a href="classes/Discord-Parts-Embed-Embed.html#method_setTypeAttribute"><abbr title="\Discord\Parts\Embed\Embed::setTypeAttribute()">Embed::setTypeAttribute()</abbr></a></td>
+                            <td class="phpdocumentor-cell"><p>Type <code class="prettyprint">rich</code> will be always used in API.</p>
+</td>
+                        </tr>
+                                                                                <tr>
+                            <td class="phpdocumentor-cell">269</td>
+                            <td class="phpdocumentor-cell"><a href="classes/Discord-Parts-Embed-Embed.html#method_setType"><abbr title="\Discord\Parts\Embed\Embed::setType()">Embed::setType()</abbr></a></td>
+                            <td class="phpdocumentor-cell"><p>Type <code class="prettyprint">rich</code> will be always used in API.</p>
 </td>
                         </tr>
                                                 </table>
@@ -454,23 +550,14 @@
                     <th class="phpdocumentor-heading">Reason</th>
                 </tr>
                                                             <tr>
-                            <td class="phpdocumentor-cell">438</td>
-                            <td class="phpdocumentor-cell"><a href="classes/Discord-Parts-Guild-Guild.html#method_getFeatureCommerceAttribute"><abbr title="\Discord\Parts\Guild\Guild::getFeatureCommerceAttribute()">Guild::getFeatureCommerceAttribute()</abbr></a></td>
-                            <td class="phpdocumentor-cell"></td>
-                        </tr>
-                                                                                <tr>
-                            <td class="phpdocumentor-cell">536</td>
-                            <td class="phpdocumentor-cell"><a href="classes/Discord-Parts-Guild-Guild.html#method_getFeatureThreeDayThreadArchiveAttribute"><abbr title="\Discord\Parts\Guild\Guild::getFeatureThreeDayThreadArchiveAttribute()">Guild::getFeatureThreeDayThreadArchiveAttribute()</abbr></a></td>
-                            <td class="phpdocumentor-cell"></td>
-                        </tr>
-                                                                                <tr>
-                            <td class="phpdocumentor-cell">544</td>
-                            <td class="phpdocumentor-cell"><a href="classes/Discord-Parts-Guild-Guild.html#method_getFeatureSevenDayThreadArchiveAttribute"><abbr title="\Discord\Parts\Guild\Guild::getFeatureSevenDayThreadArchiveAttribute()">Guild::getFeatureSevenDayThreadArchiveAttribute()</abbr></a></td>
-                            <td class="phpdocumentor-cell"></td>
+                            <td class="phpdocumentor-cell">529</td>
+                            <td class="phpdocumentor-cell"><a href="classes/Discord-Parts-Guild-Guild.html#method_getStageInstancesAttribute"><abbr title="\Discord\Parts\Guild\Guild::getStageInstancesAttribute()">Guild::getStageInstancesAttribute()</abbr></a></td>
+                            <td class="phpdocumentor-cell"><p>Use <code class="prettyprint">$channel-&gt;stage_instances</code></p>
+</td>
                         </tr>
                                                 </table>
-                    <a id="src/Discord/Parts/Interactions/Command/Command.php"></a>
-            <h3><abbr title="src/Discord/Parts/Interactions/Command/Command.php">Command.php</abbr></h3>
+                    <a id="src/Discord/Parts/Part.php"></a>
+            <h3><abbr title="src/Discord/Parts/Part.php">Part.php</abbr></h3>
             <table>
                 <tr>
                     <th class="phpdocumentor-heading">Line</th>
@@ -478,66 +565,9 @@
                     <th class="phpdocumentor-heading">Reason</th>
                 </tr>
                                                             <tr>
-                            <td class="phpdocumentor-cell">131</td>
-                            <td class="phpdocumentor-cell"><a href="classes/Discord-Parts-Interactions-Command-Command.html#method_setOverwrite"><abbr title="\Discord\Parts\Interactions\Command\Command::setOverwrite()">Command::setOverwrite()</abbr></a></td>
-                            <td class="phpdocumentor-cell"><p>Requires Bearer token on Permissions v2</p>
-</td>
-                        </tr>
-                                                </table>
-                    <a id="src/Discord/Parts/Permissions/Permission.php"></a>
-            <h3><abbr title="src/Discord/Parts/Permissions/Permission.php">Permission.php</abbr></h3>
-            <table>
-                <tr>
-                    <th class="phpdocumentor-heading">Line</th>
-                    <th class="phpdocumentor-heading">Element</th>
-                    <th class="phpdocumentor-heading">Reason</th>
-                </tr>
-                                                            <tr>
-                            <td class="phpdocumentor-cell">242</td>
-                            <td class="phpdocumentor-cell"><a href="classes/Discord-Parts-Permissions-Permission.html#method_getUseSlashCommandsAttribute"><abbr title="\Discord\Parts\Permissions\Permission::getUseSlashCommandsAttribute()">Permission::getUseSlashCommandsAttribute()</abbr></a></td>
-                            <td class="phpdocumentor-cell"><p>Use <code class="prettyprint">use_application_commands</code></p>
-</td>
-                        </tr>
-                                                                                <tr>
-                            <td class="phpdocumentor-cell">252</td>
-                            <td class="phpdocumentor-cell"><a href="classes/Discord-Parts-Permissions-Permission.html#method_getUsePublicThreadsAttribute"><abbr title="\Discord\Parts\Permissions\Permission::getUsePublicThreadsAttribute()">Permission::getUsePublicThreadsAttribute()</abbr></a></td>
-                            <td class="phpdocumentor-cell"><p>Use <code class="prettyprint">create_public_threads</code></p>
-</td>
-                        </tr>
-                                                                                <tr>
-                            <td class="phpdocumentor-cell">262</td>
-                            <td class="phpdocumentor-cell"><a href="classes/Discord-Parts-Permissions-Permission.html#method_getUsePrivateThreadsAttribute"><abbr title="\Discord\Parts\Permissions\Permission::getUsePrivateThreadsAttribute()">Permission::getUsePrivateThreadsAttribute()</abbr></a></td>
-                            <td class="phpdocumentor-cell"><p>Use <code class="prettyprint">create_private_threads</code></p>
-</td>
-                        </tr>
-                                                                                <tr>
-                            <td class="phpdocumentor-cell">272</td>
-                            <td class="phpdocumentor-cell"><a href="classes/Discord-Parts-Permissions-Permission.html#method_getManageEmojisAttribute"><abbr title="\Discord\Parts\Permissions\Permission::getManageEmojisAttribute()">Permission::getManageEmojisAttribute()</abbr></a></td>
-                            <td class="phpdocumentor-cell"><p>Use <code class="prettyprint">manage_emojis_and_stickers</code></p>
-</td>
-                        </tr>
-                                                                                <tr>
-                            <td class="phpdocumentor-cell">282</td>
-                            <td class="phpdocumentor-cell"><a href="classes/Discord-Parts-Permissions-Permission.html#method_setUseSlashCommandsAttribute"><abbr title="\Discord\Parts\Permissions\Permission::setUseSlashCommandsAttribute()">Permission::setUseSlashCommandsAttribute()</abbr></a></td>
-                            <td class="phpdocumentor-cell"><p>Use <code class="prettyprint">use_application_commands</code></p>
-</td>
-                        </tr>
-                                                                                <tr>
-                            <td class="phpdocumentor-cell">292</td>
-                            <td class="phpdocumentor-cell"><a href="classes/Discord-Parts-Permissions-Permission.html#method_setUsePublicThreadsAttribute"><abbr title="\Discord\Parts\Permissions\Permission::setUsePublicThreadsAttribute()">Permission::setUsePublicThreadsAttribute()</abbr></a></td>
-                            <td class="phpdocumentor-cell"><p>Use <code class="prettyprint">create_public_threads</code></p>
-</td>
-                        </tr>
-                                                                                <tr>
-                            <td class="phpdocumentor-cell">302</td>
-                            <td class="phpdocumentor-cell"><a href="classes/Discord-Parts-Permissions-Permission.html#method_setUsePrivateThreadsAttribute"><abbr title="\Discord\Parts\Permissions\Permission::setUsePrivateThreadsAttribute()">Permission::setUsePrivateThreadsAttribute()</abbr></a></td>
-                            <td class="phpdocumentor-cell"><p>Use <code class="prettyprint">create_private_threads</code></p>
-</td>
-                        </tr>
-                                                                                <tr>
-                            <td class="phpdocumentor-cell">312</td>
-                            <td class="phpdocumentor-cell"><a href="classes/Discord-Parts-Permissions-Permission.html#method_setManageEmojisAttribute"><abbr title="\Discord\Parts\Permissions\Permission::setManageEmojisAttribute()">Permission::setManageEmojisAttribute()</abbr></a></td>
-                            <td class="phpdocumentor-cell"><p>Use <code class="prettyprint">manage_emojis_and_stickers</code></p>
+                            <td class="phpdocumentor-cell">58</td>
+                            <td class="phpdocumentor-cell"><a href="classes/Discord-Parts-Part.html#property_scriptData"><abbr title="\Discord\Parts\Part::$scriptData">Part::$scriptData</abbr></a></td>
+                            <td class="phpdocumentor-cell"><p>Relying on this variable with dynamic caching is discouraged</p>
 </td>
                         </tr>
                                                 </table>
@@ -550,26 +580,14 @@
                     <th class="phpdocumentor-heading">Reason</th>
                 </tr>
                                                             <tr>
-                            <td class="phpdocumentor-cell">219</td>
-                            <td class="phpdocumentor-cell"><a href="classes/Discord-Parts-Thread-Thread.html#method_getArchiverIdAttribute"><abbr title="\Discord\Parts\Thread\Thread::getArchiverIdAttribute()">Thread::getArchiverIdAttribute()</abbr></a></td>
-                            <td class="phpdocumentor-cell"><p>Removed from API</p>
-</td>
-                        </tr>
-                                                                                <tr>
-                            <td class="phpdocumentor-cell">261</td>
-                            <td class="phpdocumentor-cell"><a href="classes/Discord-Parts-Thread-Thread.html#method_getArchiverAttribute"><abbr title="\Discord\Parts\Thread\Thread::getArchiverAttribute()">Thread::getArchiverAttribute()</abbr></a></td>
-                            <td class="phpdocumentor-cell"><p>Removed from API</p>
-</td>
-                        </tr>
-                                                                                <tr>
-                            <td class="phpdocumentor-cell">277</td>
-                            <td class="phpdocumentor-cell"><a href="classes/Discord-Parts-Thread-Thread.html#method_getArchiverMemberAttribute"><abbr title="\Discord\Parts\Thread\Thread::getArchiverMemberAttribute()">Thread::getArchiverMemberAttribute()</abbr></a></td>
-                            <td class="phpdocumentor-cell"><p>Removed from API</p>
+                            <td class="phpdocumentor-cell">729</td>
+                            <td class="phpdocumentor-cell"><a href="classes/Discord-Parts-Thread-Thread.html#method_sendEmbed"><abbr title="\Discord\Parts\Thread\Thread::sendEmbed()">Thread::sendEmbed()</abbr></a></td>
+                            <td class="phpdocumentor-cell"><p>Use <code class="prettyprint">Channel::sendMessage</code> with <code class="prettyprint">MessageBuilder::addEmbed()</code></p>
 </td>
                         </tr>
                                                 </table>
-                    <a id="src/Discord/Repository/Guild/GuildCommandRepository.php"></a>
-            <h3><abbr title="src/Discord/Repository/Guild/GuildCommandRepository.php">GuildCommandRepository.php</abbr></h3>
+                    <a id="src/Discord/Parts/User/Activity.php"></a>
+            <h3><abbr title="src/Discord/Parts/User/Activity.php">Activity.php</abbr></h3>
             <table>
                 <tr>
                     <th class="phpdocumentor-heading">Line</th>
@@ -577,9 +595,82 @@
                     <th class="phpdocumentor-heading">Reason</th>
                 </tr>
                                                             <tr>
-                            <td class="phpdocumentor-cell">60</td>
-                            <td class="phpdocumentor-cell"><a href="classes/Discord-Repository-Guild-GuildCommandRepository.html#method_setOverwrite"><abbr title="\Discord\Repository\Guild\GuildCommandRepository::setOverwrite()">GuildCommandRepository::setOverwrite()</abbr></a></td>
-                            <td class="phpdocumentor-cell"><p>Removed on Permissions v2</p>
+                            <td class="phpdocumentor-cell">52</td>
+                            <td class="phpdocumentor-cell"><a href="classes/Discord-Parts-User-Activity.html#constant_TYPE_PLAYING"><abbr title="\Discord\Parts\User\Activity::TYPE_PLAYING">Activity::TYPE_PLAYING</abbr></a></td>
+                            <td class="phpdocumentor-cell"><p>Use <code class="prettyprint">Activity::TYPE_GAME</code></p>
+</td>
+                        </tr>
+                                                </table>
+                    <a id="src/Discord/Repository/AbstractRepository.php"></a>
+            <h3><abbr title="src/Discord/Repository/AbstractRepository.php">AbstractRepository.php</abbr></h3>
+            <table>
+                <tr>
+                    <th class="phpdocumentor-heading">Line</th>
+                    <th class="phpdocumentor-heading">Element</th>
+                    <th class="phpdocumentor-heading">Reason</th>
+                </tr>
+                                                            <tr>
+                            <td class="phpdocumentor-cell">425</td>
+                            <td class="phpdocumentor-cell"><a href="classes/Discord-Repository-AbstractRepository.html#method_pull"><abbr title="\Discord\Repository\AbstractRepository::pull()">AbstractRepository::pull()</abbr></a></td>
+                            <td class="phpdocumentor-cell"><p>Use async <code class="prettyprint">$repository-&gt;cachePull()</code></p>
+</td>
+                        </tr>
+                                                                                <tr>
+                            <td class="phpdocumentor-cell">460</td>
+                            <td class="phpdocumentor-cell"><a href="classes/Discord-Repository-AbstractRepository.html#method_pushItem"><abbr title="\Discord\Repository\AbstractRepository::pushItem()">AbstractRepository::pushItem()</abbr></a></td>
+                            <td class="phpdocumentor-cell"><p>Use async <code class="prettyprint">$repository-&gt;cache-&gt;set()</code></p>
+</td>
+                        </tr>
+                                                                                <tr>
+                            <td class="phpdocumentor-cell">528</td>
+                            <td class="phpdocumentor-cell"><a href="classes/Discord-Repository-AbstractRepository.html#method_has"><abbr title="\Discord\Repository\AbstractRepository::has()">AbstractRepository::has()</abbr></a></td>
+                            <td class="phpdocumentor-cell"><p>Use async <code class="prettyprint">$repository-&gt;cache-&gt;has()</code></p>
+</td>
+                        </tr>
+                                                                                <tr>
+                            <td class="phpdocumentor-cell">597</td>
+                            <td class="phpdocumentor-cell"><a href="classes/Discord-Repository-AbstractRepository.html#method_clear"><abbr title="\Discord\Repository\AbstractRepository::clear()">AbstractRepository::clear()</abbr></a></td>
+                            <td class="phpdocumentor-cell"><p>Use async <code class="prettyprint">$repository-&gt;cache-&gt;clear()</code></p>
+</td>
+                        </tr>
+                                                                                <tr>
+                            <td class="phpdocumentor-cell">631</td>
+                            <td class="phpdocumentor-cell"><a href="classes/Discord-Repository-AbstractRepository.html#method_offsetExists"><abbr title="\Discord\Repository\AbstractRepository::offsetExists()">AbstractRepository::offsetExists()</abbr></a></td>
+                            <td class="phpdocumentor-cell"><p>Use async <code class="prettyprint">$repository-&gt;cache-&gt;has()</code></p>
+</td>
+                        </tr>
+                                                                                <tr>
+                            <td class="phpdocumentor-cell">645</td>
+                            <td class="phpdocumentor-cell"><a href="classes/Discord-Repository-AbstractRepository.html#method_offsetGet"><abbr title="\Discord\Repository\AbstractRepository::offsetGet()">AbstractRepository::offsetGet()</abbr></a></td>
+                            <td class="phpdocumentor-cell"><p>Use async <code class="prettyprint">$repository-&gt;cacheGet()</code> or sync <code class="prettyprint">$repository-&gt;get()</code></p>
+</td>
+                        </tr>
+                                                                                <tr>
+                            <td class="phpdocumentor-cell">668</td>
+                            <td class="phpdocumentor-cell"><a href="classes/Discord-Repository-AbstractRepository.html#method_offsetSet"><abbr title="\Discord\Repository\AbstractRepository::offsetSet()">AbstractRepository::offsetSet()</abbr></a></td>
+                            <td class="phpdocumentor-cell"><p>Use async <code class="prettyprint">$repository-&gt;cache-&gt;set()</code></p>
+</td>
+                        </tr>
+                                                                                <tr>
+                            <td class="phpdocumentor-cell">680</td>
+                            <td class="phpdocumentor-cell"><a href="classes/Discord-Repository-AbstractRepository.html#method_offsetUnset"><abbr title="\Discord\Repository\AbstractRepository::offsetUnset()">AbstractRepository::offsetUnset()</abbr></a></td>
+                            <td class="phpdocumentor-cell"><p>Use async <code class="prettyprint">$repository-&gt;cache-&gt;delete()</code></p>
+</td>
+                        </tr>
+                                                </table>
+                    <a id="src/Discord/Voice/VoiceClient.php"></a>
+            <h3><abbr title="src/Discord/Voice/VoiceClient.php">VoiceClient.php</abbr></h3>
+            <table>
+                <tr>
+                    <th class="phpdocumentor-heading">Line</th>
+                    <th class="phpdocumentor-heading">Element</th>
+                    <th class="phpdocumentor-heading">Reason</th>
+                </tr>
+                                                            <tr>
+                            <td class="phpdocumentor-cell">887</td>
+                            <td class="phpdocumentor-cell"><a href="classes/Discord-Voice-VoiceClient.html#method_playDCAStream"><abbr title="\Discord\Voice\VoiceClient::playDCAStream()">VoiceClient::playDCAStream()</abbr></a></td>
+                            <td class="phpdocumentor-cell"><p>DCA is now deprecated in DiscordPHP, switch to using
+<code class="prettyprint">playOggStream</code> with raw Ogg Opus.</p>
 </td>
                         </tr>
                                                 </table>

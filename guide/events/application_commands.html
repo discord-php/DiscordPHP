@@ -241,12 +241,8 @@
 </div>
 <div class="section" id="application-command-permissions-update">
 <h1>Application Command Permissions Update</h1>
-<p>Called with an <code>Overwrite</code> object when an application command’s permissions are updated.</p>
-<blockquote><p>Warning: The class Overwrite will be changed in future version!</p>
-</blockquote>
-<pre><code class="language-php " >// use Discord\Parts\Interactions\Command\Overwrite;
-
-$discord-&gt;on(Event::APPLICATION_COMMAND_PERMISSIONS_UPDATE, function (Overwrite $overwrite, Discord $discord, ?Overwrite $oldOverwrite) {
+<p>Called with an <code>CommandPermissions</code> object when an application command’s permissions are updated.</p>
+<pre><code class="language-php " >$discord-&gt;on(Event::APPLICATION_COMMAND_PERMISSIONS_UPDATE, function (CommandPermissions $commandPermission, Discord $discord, ?CommandPermissions $oldCommandPermission) {
     // ...
 });</code></pre>
 </div>

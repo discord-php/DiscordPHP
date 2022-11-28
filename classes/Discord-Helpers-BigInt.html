@@ -242,7 +242,7 @@
 
     <article class="phpdocumentor-element -class">
         <h2 class="phpdocumentor-content__title">
-    Bitwise
+    BigInt
 
     
             <div class="phpdocumentor-element__package">
@@ -256,16 +256,40 @@
     </h2>
 
         <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/Bitwise.php"><a href="files/src-discord-helpers-bitwise.html"><abbr title="src/Discord/Helpers/Bitwise.php">Bitwise.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/BigInt.php"><a href="files/src-discord-helpers-bigint.html"><abbr title="src/Discord/Helpers/BigInt.php">BigInt.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">17</span>
+    <span class="phpdocumentor-element-found-in__line">20</span>
 
     </aside>
 
-            <p class="phpdocumentor-summary">Polyfill to handle bitwise operation in 32 bit php using ext-gmp.</p>
+            <p class="phpdocumentor-summary">Polyfill to handle big integer operation in 32 bit php using ext-gmp.</p>
 
 
 
+    <h5 class="phpdocumentor-tag-list__heading" id="tags">
+        Tags
+        <a href="#tags" class="headerlink"><i class="fas fa-link"></i></a>
+    </h5>
+    <dl class="phpdocumentor-tag-list">
+                                    <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">10.0.0</span>
+                                                                                
+                                                 <section class="phpdocumentor-description"><p>Renamed from Bitwise to BigInt</p>
+</section>
+
+                                    </dd>
+                            <dt class="phpdocumentor-tag-list__entry">
+                    <span class="phpdocumentor-tag__name">since</span>
+                </dt>
+                <dd class="phpdocumentor-tag-list__definition">
+                                            <span class="phpdocumentor-tag-link">7.0.0</span>
+                                                                                
+                                             
+                                    </dd>
+                        </dl>
 
 
 
@@ -279,77 +303,91 @@
 
 <dl class="phpdocumentor-table-of-contents">
                     <dt class="phpdocumentor-table-of-contents__entry -property -private">
-    <a href="classes/Discord-Helpers-Bitwise.html#property_is_32_gmp">$is_32_gmp</a>
+    <a href="classes/Discord-Helpers-BigInt.html#property_is_32_gmp">$is_32_gmp</a>
     <span>
                         &nbsp;: bool            </span>
 </dt>
 <dd></dd>
 
                 <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Discord-Helpers-Bitwise.html#method_and">and()</a>
+    <a href="classes/Discord-Helpers-BigInt.html#method_add">add()</a>
     <span>
                                 &nbsp;: <abbr title="\GMP">GMP</abbr>|int    </span>
 </dt>
 <dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Discord-Helpers-Bitwise.html#method_floatCast">floatCast()</a>
+    <a href="classes/Discord-Helpers-BigInt.html#method_and">and()</a>
+    <span>
+                                &nbsp;: <abbr title="\GMP">GMP</abbr>|int    </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/Discord-Helpers-BigInt.html#method_floatCast">floatCast()</a>
     <span>
                                 &nbsp;: mixed|string    </span>
 </dt>
 <dd>Safely converts float to string, avoiding locale-dependent issues.</dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Discord-Helpers-Bitwise.html#method_is32BitWithGMP">is32BitWithGMP()</a>
+    <a href="classes/Discord-Helpers-BigInt.html#method_is32BitWithGMP">is32BitWithGMP()</a>
     <span>
                                 &nbsp;: bool    </span>
 </dt>
 <dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Discord-Helpers-Bitwise.html#method_not">not()</a>
+    <a href="classes/Discord-Helpers-BigInt.html#method_not">not()</a>
     <span>
                                 &nbsp;: <abbr title="\GMP">GMP</abbr>|int    </span>
 </dt>
 <dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Discord-Helpers-Bitwise.html#method_or">or()</a>
+    <a href="classes/Discord-Helpers-BigInt.html#method_or">or()</a>
     <span>
                                 &nbsp;: <abbr title="\GMP">GMP</abbr>|int    </span>
 </dt>
 <dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Discord-Helpers-Bitwise.html#method_set">set()</a>
+    <a href="classes/Discord-Helpers-BigInt.html#method_set">set()</a>
     <span>
                                 &nbsp;: <abbr title="\GMP">GMP</abbr>|int    </span>
 </dt>
 <dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Discord-Helpers-Bitwise.html#method_shiftLeft">shiftLeft()</a>
+    <a href="classes/Discord-Helpers-BigInt.html#method_shiftLeft">shiftLeft()</a>
     <span>
                                 &nbsp;: <abbr title="\GMP">GMP</abbr>|int    </span>
 </dt>
 <dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Discord-Helpers-Bitwise.html#method_shiftRight">shiftRight()</a>
+    <a href="classes/Discord-Helpers-BigInt.html#method_shiftRight">shiftRight()</a>
     <span>
                                 &nbsp;: <abbr title="\GMP">GMP</abbr>|int    </span>
 </dt>
 <dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Discord-Helpers-Bitwise.html#method_test">test()</a>
+    <a href="classes/Discord-Helpers-BigInt.html#method_sub">sub()</a>
+    <span>
+                                &nbsp;: <abbr title="\GMP">GMP</abbr>|int    </span>
+</dt>
+<dd></dd>
+
+            <dt class="phpdocumentor-table-of-contents__entry -method -public">
+    <a href="classes/Discord-Helpers-BigInt.html#method_test">test()</a>
     <span>
                                 &nbsp;: bool    </span>
 </dt>
 <dd></dd>
 
             <dt class="phpdocumentor-table-of-contents__entry -method -public">
-    <a href="classes/Discord-Helpers-Bitwise.html#method_xor">xor()</a>
+    <a href="classes/Discord-Helpers-BigInt.html#method_xor">xor()</a>
     <span>
                                 &nbsp;: <abbr title="\GMP">GMP</abbr>|int    </span>
 </dt>
@@ -365,7 +403,7 @@
     <section class="phpdocumentor-properties">
         <h3 class="phpdocumentor-elements__header" id="properties">
             Properties
-            <a href="classes/Discord-Helpers-Bitwise.html#properties" class="headerlink"><i class="fas fa-link"></i></a>
+            <a href="classes/Discord-Helpers-BigInt.html#properties" class="headerlink"><i class="fas fa-link"></i></a>
         </h3>
                     <article
         class="
@@ -376,14 +414,14 @@
 >
     <h4 class="phpdocumentor-element__name" id="property_is_32_gmp">
         $is_32_gmp
-        <a href="classes/Discord-Helpers-Bitwise.html#property_is_32_gmp" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Helpers-BigInt.html#property_is_32_gmp" class="headerlink"><i class="fas fa-link"></i></a>
         <span class="phpdocumentor-element__modifiers">
                                 </span>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/Bitwise.php"><a href="files/src-discord-helpers-bitwise.html"><abbr title="src/Discord/Helpers/Bitwise.php">Bitwise.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/BigInt.php"><a href="files/src-discord-helpers-bigint.html"><abbr title="src/Discord/Helpers/BigInt.php">BigInt.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">19</span>
+    <span class="phpdocumentor-element-found-in__line">22</span>
 
     </aside>
 
@@ -406,8 +444,59 @@
             <section class="phpdocumentor-methods">
         <h3 class="phpdocumentor-elements__header" id="methods">
             Methods
-            <a href="classes/Discord-Helpers-Bitwise.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
+            <a href="classes/Discord-Helpers-BigInt.html#methods" class="headerlink"><i class="fas fa-link"></i></a>
         </h3>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                    -static                    "
+>
+    <h4 class="phpdocumentor-element__name" id="method_add">
+        add()
+        <a href="classes/Discord-Helpers-BigInt.html#method_add" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/BigInt.php"><a href="files/src-discord-helpers-bigint.html"><abbr title="src/Discord/Helpers/BigInt.php">BigInt.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">169</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">add</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><abbr title="\GMP">GMP</abbr>|int|string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$num1</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><abbr title="\GMP">GMP</abbr>|int|string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$num2</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\GMP">GMP</abbr>|int</span></code>
+
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$num1</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\GMP">GMP</abbr>|int|string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$num2</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\GMP">GMP</abbr>|int|string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+            </dl>
+
+    
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type"><abbr title="\GMP">GMP</abbr>|int</span>
+            &mdash;
+            <section class="phpdocumentor-description"><p>$num1 + $num2</p>
+</section>
+
+    
+</article>
                     <article
         class="phpdocumentor-element
             -method
@@ -416,12 +505,12 @@
 >
     <h4 class="phpdocumentor-element__name" id="method_and">
         and()
-        <a href="classes/Discord-Helpers-Bitwise.html#method_and" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Helpers-BigInt.html#method_and" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/Bitwise.php"><a href="files/src-discord-helpers-bitwise.html"><abbr title="src/Discord/Helpers/Bitwise.php">Bitwise.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/BigInt.php"><a href="files/src-discord-helpers-bigint.html"><abbr title="src/Discord/Helpers/BigInt.php">BigInt.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">43</span>
+    <span class="phpdocumentor-element-found-in__line">47</span>
 
     </aside>
 
@@ -467,12 +556,12 @@
 >
     <h4 class="phpdocumentor-element__name" id="method_floatCast">
         floatCast()
-        <a href="classes/Discord-Helpers-Bitwise.html#method_floatCast" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Helpers-BigInt.html#method_floatCast" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/Bitwise.php"><a href="files/src-discord-helpers-bitwise.html"><abbr title="src/Discord/Helpers/Bitwise.php">Bitwise.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/BigInt.php"><a href="files/src-discord-helpers-bigint.html"><abbr title="src/Discord/Helpers/BigInt.php">BigInt.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">168</span>
+    <span class="phpdocumentor-element-found-in__line">194</span>
 
     </aside>
 
@@ -503,12 +592,11 @@
     </h5>
     <dl class="phpdocumentor-tag-list">
                                     <dt class="phpdocumentor-tag-list__entry">
-                    <span class="phpdocumentor-tag__name">see</span>
+                    <span class="phpdocumentor-tag__name">link</span>
                 </dt>
                 <dd class="phpdocumentor-tag-list__definition">
-                                                                                    <span class="phpdocumentor-tag-link"><a href="https://github.com/brick/math/pull/20"><abbr title="https://github.com/brick/math/pull/20">https://github.com/brick/math/pull/20</abbr></a></span>
-                                        
-                                             
+                                                                                                        <a class="phpdocumentor-tag-link" href="https://github.com/brick/math/pull/20"> https://github.com/brick/math/pull/20 </a>
+                    
                                     </dd>
                         </dl>
 
@@ -528,12 +616,12 @@
 >
     <h4 class="phpdocumentor-element__name" id="method_is32BitWithGMP">
         is32BitWithGMP()
-        <a href="classes/Discord-Helpers-Bitwise.html#method_is32BitWithGMP" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Helpers-BigInt.html#method_is32BitWithGMP" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/Bitwise.php"><a href="files/src-discord-helpers-bitwise.html"><abbr title="src/Discord/Helpers/Bitwise.php">Bitwise.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/BigInt.php"><a href="files/src-discord-helpers-bigint.html"><abbr title="src/Discord/Helpers/BigInt.php">BigInt.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">188</span>
+    <span class="phpdocumentor-element-found-in__line">214</span>
 
     </aside>
 
@@ -562,12 +650,12 @@
 >
     <h4 class="phpdocumentor-element__name" id="method_not">
         not()
-        <a href="classes/Discord-Helpers-Bitwise.html#method_not" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Helpers-BigInt.html#method_not" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/Bitwise.php"><a href="files/src-discord-helpers-bitwise.html"><abbr title="src/Discord/Helpers/Bitwise.php">Bitwise.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/BigInt.php"><a href="files/src-discord-helpers-bigint.html"><abbr title="src/Discord/Helpers/BigInt.php">BigInt.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">87</span>
+    <span class="phpdocumentor-element-found-in__line">91</span>
 
     </aside>
 
@@ -606,12 +694,12 @@
 >
     <h4 class="phpdocumentor-element__name" id="method_or">
         or()
-        <a href="classes/Discord-Helpers-Bitwise.html#method_or" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Helpers-BigInt.html#method_or" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/Bitwise.php"><a href="files/src-discord-helpers-bitwise.html"><abbr title="src/Discord/Helpers/Bitwise.php">Bitwise.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/BigInt.php"><a href="files/src-discord-helpers-bigint.html"><abbr title="src/Discord/Helpers/BigInt.php">BigInt.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">58</span>
+    <span class="phpdocumentor-element-found-in__line">62</span>
 
     </aside>
 
@@ -657,12 +745,12 @@
 >
     <h4 class="phpdocumentor-element__name" id="method_set">
         set()
-        <a href="classes/Discord-Helpers-Bitwise.html#method_set" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Helpers-BigInt.html#method_set" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/Bitwise.php"><a href="files/src-discord-helpers-bitwise.html"><abbr title="src/Discord/Helpers/Bitwise.php">Bitwise.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/BigInt.php"><a href="files/src-discord-helpers-bigint.html"><abbr title="src/Discord/Helpers/BigInt.php">BigInt.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">147</span>
+    <span class="phpdocumentor-element-found-in__line">151</span>
 
     </aside>
 
@@ -708,12 +796,12 @@
 >
     <h4 class="phpdocumentor-element__name" id="method_shiftLeft">
         shiftLeft()
-        <a href="classes/Discord-Helpers-Bitwise.html#method_shiftLeft" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Helpers-BigInt.html#method_shiftLeft" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/Bitwise.php"><a href="files/src-discord-helpers-bitwise.html"><abbr title="src/Discord/Helpers/Bitwise.php">Bitwise.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/BigInt.php"><a href="files/src-discord-helpers-bigint.html"><abbr title="src/Discord/Helpers/BigInt.php">BigInt.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">102</span>
+    <span class="phpdocumentor-element-found-in__line">106</span>
 
     </aside>
 
@@ -759,12 +847,12 @@
 >
     <h4 class="phpdocumentor-element__name" id="method_shiftRight">
         shiftRight()
-        <a href="classes/Discord-Helpers-Bitwise.html#method_shiftRight" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Helpers-BigInt.html#method_shiftRight" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/Bitwise.php"><a href="files/src-discord-helpers-bitwise.html"><abbr title="src/Discord/Helpers/Bitwise.php">Bitwise.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/BigInt.php"><a href="files/src-discord-helpers-bigint.html"><abbr title="src/Discord/Helpers/BigInt.php">BigInt.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">117</span>
+    <span class="phpdocumentor-element-found-in__line">121</span>
 
     </aside>
 
@@ -808,14 +896,65 @@
             -public
                                     -static                    "
 >
-    <h4 class="phpdocumentor-element__name" id="method_test">
-        test()
-        <a href="classes/Discord-Helpers-Bitwise.html#method_test" class="headerlink"><i class="fas fa-link"></i></a>
+    <h4 class="phpdocumentor-element__name" id="method_sub">
+        sub()
+        <a href="classes/Discord-Helpers-BigInt.html#method_sub" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/Bitwise.php"><a href="files/src-discord-helpers-bitwise.html"><abbr title="src/Discord/Helpers/Bitwise.php">Bitwise.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/BigInt.php"><a href="files/src-discord-helpers-bigint.html"><abbr title="src/Discord/Helpers/BigInt.php">BigInt.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">132</span>
+    <span class="phpdocumentor-element-found-in__line">180</span>
+
+    </aside>
+
+    
+    <code class="phpdocumentor-code phpdocumentor-signature ">
+    <span class="phpdocumentor-signature__visibility">public</span>
+            <span class="phpdocumentor-signature__static">static</span>        <span class="phpdocumentor-signature__name">sub</span><span>(</span><span class="phpdocumentor-signature__argument"><span class="phpdocumentor-signature__argument__return-type"><abbr title="\GMP">GMP</abbr>|int|string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$num1</span></span><span class="phpdocumentor-signature__argument"><span>, </span><span class="phpdocumentor-signature__argument__return-type"><abbr title="\GMP">GMP</abbr>|int|string&nbsp;</span><span class="phpdocumentor-signature__argument__name">$num2</span></span><span>)</span><span> : </span><span class="phpdocumentor-signature__response_type"><abbr title="\GMP">GMP</abbr>|int</span></code>
+
+    
+        <h5 class="phpdocumentor-argument-list__heading">Parameters</h5>
+    <dl class="phpdocumentor-argument-list">
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$num1</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\GMP">GMP</abbr>|int|string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+                    <dt class="phpdocumentor-argument-list__entry">
+                <span class="phpdocumentor-signature__argument__name">$num2</span>
+                : <span class="phpdocumentor-signature__argument__return-type"><abbr title="\GMP">GMP</abbr>|int|string</span>
+                            </dt>
+            <dd class="phpdocumentor-argument-list__definition">
+                
+            </dd>
+            </dl>
+
+    
+
+        <h5 class="phpdocumentor-return-value__heading">Return values</h5>
+    <span class="phpdocumentor-signature__response_type"><abbr title="\GMP">GMP</abbr>|int</span>
+            &mdash;
+            <section class="phpdocumentor-description"><p>$num1 - $num2</p>
+</section>
+
+    
+</article>
+                    <article
+        class="phpdocumentor-element
+            -method
+            -public
+                                    -static                    "
+>
+    <h4 class="phpdocumentor-element__name" id="method_test">
+        test()
+        <a href="classes/Discord-Helpers-BigInt.html#method_test" class="headerlink"><i class="fas fa-link"></i></a>
+    </h4>
+    <aside class="phpdocumentor-element-found-in">
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/BigInt.php"><a href="files/src-discord-helpers-bigint.html"><abbr title="src/Discord/Helpers/BigInt.php">BigInt.php</abbr></a></abbr>
+    :
+    <span class="phpdocumentor-element-found-in__line">136</span>
 
     </aside>
 
@@ -861,12 +1000,12 @@
 >
     <h4 class="phpdocumentor-element__name" id="method_xor">
         xor()
-        <a href="classes/Discord-Helpers-Bitwise.html#method_xor" class="headerlink"><i class="fas fa-link"></i></a>
+        <a href="classes/Discord-Helpers-BigInt.html#method_xor" class="headerlink"><i class="fas fa-link"></i></a>
     </h4>
     <aside class="phpdocumentor-element-found-in">
-    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/Bitwise.php"><a href="files/src-discord-helpers-bitwise.html"><abbr title="src/Discord/Helpers/Bitwise.php">Bitwise.php</abbr></a></abbr>
+    <abbr class="phpdocumentor-element-found-in__file" title="src/Discord/Helpers/BigInt.php"><a href="files/src-discord-helpers-bigint.html"><abbr title="src/Discord/Helpers/BigInt.php">BigInt.php</abbr></a></abbr>
     :
-    <span class="phpdocumentor-element-found-in__line">73</span>
+    <span class="phpdocumentor-element-found-in__line">77</span>
 
     </aside>
 
@@ -982,7 +1121,7 @@
 </section>
             </div>
         </div>
-        <a href="classes/Discord-Helpers-Bitwise.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
+        <a href="classes/Discord-Helpers-BigInt.html#top" class="phpdocumentor-back-to-top"><i class="fas fa-chevron-circle-up"></i></a>
 
     </main>
 

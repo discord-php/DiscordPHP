@@ -242,8 +242,17 @@
 <div class="section" id="webhooks-update">
 <h1>Webhooks Update</h1>
 <p>Called with a <code>Guild</code> and <code>Channel</code> object when a guild channel’s webhooks are is created, updated, or deleted.</p>
-<pre><code class="language-php " >$discord-&gt;on(Event::WEBHOOKS_UPDATE, function (?Guild $guild, Discord $discord, ?Channel $channel) {
-    // ...
+<pre><code class="language-php " >$discord-&gt;on(Event::WEBHOOKS_UPDATE, function (object $guild, Discord $discord, object $channel) {
+    if ($guild instanceof Guild &amp;&amp; $channel instanceof Channel) {
+        // $guild and $channel was cached
+    }
+    // $guild and/or $channel was not in cache:
+    else {
+        // {
+        //     &quot;guild_id&quot;: &quot;&quot; // webhook guild ID
+        //     &quot;channel_id&quot;: &quot;&quot;, // webhook channel ID,
+        // }
+    }
 });
 </code></pre>
 <p>Requires the <code>Intents::GUILD_WEBHOOKS</code> intent.</p>
