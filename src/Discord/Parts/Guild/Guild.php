@@ -1477,10 +1477,10 @@ class Guild extends Part
     {
         if ($botperms = $this->getBotPermissions()) {
             if ((isset($features['COMMUNITY']) || isset($features['DISCOVERABLE'])) && ! $botperms->administrator) {
-                return reject(new NoPermissionsException("You do not have administrator permission to modify the guild feature COMMUNITY or DISCOVERABLE."));
+                return reject(new NoPermissionsException('You do not have administrator permission to modify the guild feature COMMUNITY or DISCOVERABLE.'));
             }
             if (isset($features['INVITES_DISABLED']) && ! $botperms->manage_guild) {
-                return reject(new NoPermissionsException("You do not have manage guild permission to modify the guild feature INVITES_DISABLED."));
+                return reject(new NoPermissionsException('You do not have manage guild permission to modify the guild feature INVITES_DISABLED.'));
             }
         }
 

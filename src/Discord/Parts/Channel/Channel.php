@@ -1028,7 +1028,6 @@ class Channel extends Part
             } else {
                 return reject(new \RuntimeException('You cannot start a thread in this type of channel.'));
             }
-
         }
 
         $headers = [];

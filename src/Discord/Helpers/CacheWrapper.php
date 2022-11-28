@@ -408,7 +408,7 @@ final class CacheWrapper
      */
     protected function isZlibCompressed(string $data): bool
     {
-        $data = unpack("Ccmf/Cflg", $data);
+        $data = unpack('Ccmf/Cflg', $data);
         $cm = $data['cmf'] & 0xF;
         $cinfo = ($data['cmf'] & 0xF0) >> 4;
         // $fcheck = $data['flg'] & 0x1F;
