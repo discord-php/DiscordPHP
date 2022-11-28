@@ -206,24 +206,29 @@ class Reaction extends Part
      *
      * @return Channel|Thread
      */
-    protected function getChannelAttribute()
+    protected function getChannelAttribute(): Part
     {
-        if ($channel = $this->discord->getChannel($this->channel_id)) {
-            return $channel;
-        }
-
         if ($guild = $this->guild) {
-            foreach ($guild->channels as $channel) {
-                if ($thread = $channel->threads->get('id', $this->channel_id)) {
+            $channels = $guild->channels;
+            if ($channel = $channels->get('id', $this->channel_id)) {
+                return $channel;
+            }
+            foreach ($channels as $parent) {
+                if ($thread = $parent->threads->get('id', $this->channel_id)) {
                     return $thread;
                 }
             }
         }
 
+        // @todo potentially slow
+        if ($channel = $this->discord->getChannel($this->channel_id)) {
+            return $channel;
+        }
+
         return $this->factory->part(Channel::class, [
             'id' => $this->channel_id,
             'type' => Channel::TYPE_DM,
-        ]);
+        ], true);
     }
 
     /**

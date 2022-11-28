@@ -382,6 +382,7 @@ class Message extends Part
             if ($channel = $channels->get('id', $this->channel_id)) {
                 return $channel;
             }
+
             foreach ($channels as $parent) {
                 if ($thread = $parent->threads->get('id', $this->channel_id)) {
                     return $thread;

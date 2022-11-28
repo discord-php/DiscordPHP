@@ -155,12 +155,18 @@ class ScheduledEvent extends Part
     /**
      * Returns the channel attribute.
      *
-     * @return Channel The channel in which the scheduled event will be hosted, or null.
+     * @return Channel|null The channel in which the scheduled event will be hosted, or null.
      */
     protected function getChannelAttribute(): ?Channel
     {
         if (! isset($this->attributes['channel_id'])) {
             return null;
+        }
+
+        if ($guild = $this->guild) {
+            if ($channel = $guild->channels->get('id', $this->channel_id)) {
+                return $channel;
+            }
         }
 
         return $this->discord->getChannel($this->attributes['channel_id']);
