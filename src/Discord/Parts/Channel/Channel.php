@@ -925,6 +925,7 @@ class Channel extends Part
      * Starts a thread in the channel.
      *
      * @link https://discord.com/developers/docs/resources/channel#start-thread-without-message
+     * @link https://discord.com/developers/docs/resources/channel#start-thread-in-forum-channel
      *
      * @param array          $options                          Thread params.
      * @param bool           $options['private']               Whether the thread should be private. cannot start a private thread in a news channel channel. Ignored in forum channel.
@@ -937,6 +938,10 @@ class Channel extends Part
      * @param string|null    $reason                           Reason for Audit Log.
      *
      * @throws \RuntimeException
+     * @throws NoPermissionsException Missing various permissions:
+     *                                create_private_threads when creating a private thread.
+     *                                create_public_threads when creating a public thread.
+     *                                send_messages when creating a forum post.
      *
      * @return ExtendedPromiseInterface<Thread>
      *
@@ -957,6 +962,8 @@ class Channel extends Part
             ->setAllowedValues('auto_archive_duration', fn ($value) => in_array($value, [60, 1440, 4320, 10080]))
             ->setAllowedValues('rate_limit_per_user', fn ($value) => $value >= 0 && $value <= 21600)
             ->setRequired('name');
+  
+        $botperms = $this->getBotPermissions();
 
         if ($this->type == self::TYPE_GUILD_FORUM) {
             $resolver
@@ -976,6 +983,14 @@ class Channel extends Part
 
                     return $values;
                 });
+
+            $options = $resolver->resolve($options);
+
+            if ($botperms && ! $botperms->send_messages) {
+                return reject(new NoPermissionsException("You do not have permission to create forum posts in the channel {$this->id}."));
+            }
+
+            $options['type'] = self::TYPE_PUBLIC_THREAD;
         } else {
             $resolver
                 ->setDefined([
@@ -985,26 +1000,35 @@ class Channel extends Part
                 ->setAllowedTypes('private', 'bool')
                 ->setAllowedTypes('invitable', 'bool')
                 ->setDefaults(['private' => false]);
-        }
+            
+            $options = $resolver->resolve($options);
 
-        $options = $resolver->resolve($options);
-
-        if ($this->type != self::TYPE_GUILD_FORUM && $options['private'] && ! $this->guild->feature_private_threads) {
-            return reject(new \RuntimeException('Guild does not have access to private threads.'));
-        }
-
-        if ($this->type == self::TYPE_GUILD_ANNOUNCEMENT) {
             if ($options['private']) {
-                return reject(new \RuntimeException('You cannot start a private thread within a news channel.'));
+                if ($botperms && ! $botperms->create_public_threads) {
+                    return reject(new NoPermissionsException("You do not have permission to create public threads in the channel {$this->id}."));
+                }
+            } else {
+                if (! $this->guild->feature_private_threads) {
+                    return reject(new \RuntimeException('Guild does not have access to private threads.'));
+                }
+
+                if ($botperms && ! $botperms->create_private_threads) {
+                    return reject(new NoPermissionsException("You do not have permission to create private threads in the channel {$this->id}."));
+                }
             }
 
-            $options['type'] = self::TYPE_ANNOUNCEMENT_THREAD;
-        } elseif ($this->type == self::TYPE_GUILD_TEXT) {
-            $options['type'] = $options['private'] ? self::TYPE_PRIVATE_THREAD : self::TYPE_PUBLIC_THREAD;
-        } elseif ($this->type == self::TYPE_GUILD_FORUM) {
-            $options['type'] = self::TYPE_PUBLIC_THREAD;
-        } else {
-            return reject(new \RuntimeException('You cannot start a thread in this type of channel.'));
+            if ($this->type == self::TYPE_GUILD_ANNOUNCEMENT) {
+                if ($options['private']) {
+                    return reject(new \RuntimeException('You cannot start a private thread within a news channel.'));
+                }
+    
+                $options['type'] = self::TYPE_ANNOUNCEMENT_THREAD;
+            } elseif ($this->type == self::TYPE_GUILD_TEXT) {
+                $options['type'] = $options['private'] ? self::TYPE_PRIVATE_THREAD : self::TYPE_PUBLIC_THREAD;
+            } else {
+                return reject(new \RuntimeException('You cannot start a thread in this type of channel.'));
+            }
+
         }
 
         $headers = [];

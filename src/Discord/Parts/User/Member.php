@@ -140,6 +140,8 @@ class Member extends Part
      * @param ?string|null $nick   The nickname of the member.
      * @param string|null  $reason Reason for Audit Log.
      *
+     * @throws NoPermissionsException Missing manage_nicknames permission.
+     *
      * @return ExtendedPromiseInterface<Member>
      */
     public function setNickname(?string $nick = null, ?string $reason = null): ExtendedPromiseInterface
@@ -156,6 +158,14 @@ class Member extends Part
         // jake plz
         if ($this->discord->id == $this->id) {
             return $this->http->patch(Endpoint::bind(Endpoint::GUILD_MEMBER_SELF, $this->guild_id), $payload, $headers);
+        }
+
+        if ($guild = $this->guild) {
+            if ($botperms = $guild->getBotPermissions()) {
+                if (! $botperms->manage_nicknames) {
+                    return reject(new NoPermissionsException("You do not have permission to manage nicknames in the guild {$guild->id}."));
+                }
+            }
         }
 
         return $this->http->patch(Endpoint::bind(Endpoint::GUILD_MEMBER, $this->guild_id, $this->id), $payload, $headers)
@@ -200,6 +210,7 @@ class Member extends Part
      * @param string|null $reason Reason for Audit Log.
      *
      * @throws \RuntimeException
+     * @throws NoPermissionsException Missing manage_roles permission.
      *
      * @return ExtendedPromiseInterface
      */
@@ -212,6 +223,14 @@ class Member extends Part
         // We don't want a double up on roles
         if (in_array($role, (array) $this->attributes['roles'])) {
             return reject(new \RuntimeException('Member already has role.'));
+        }
+
+        if ($guild = $this->guild) {
+            if ($botperms = $guild->getBotPermissions()) {
+                if (! $botperms->manage_roles) {
+                    return reject(new NoPermissionsException("You do not have permission to add member role in the guild {$guild->id}."));
+                }
+            }
         }
 
         $headers = [];
@@ -235,12 +254,22 @@ class Member extends Part
      * @param Role|string $role   The role to remove from the member.
      * @param string|null $reason Reason for Audit Log.
      *
+     * @throws NoPermissionsException Missing manage_roles permission.
+     *
      * @return ExtendedPromiseInterface
      */
     public function removeRole($role, ?string $reason = null): ExtendedPromiseInterface
     {
         if ($role instanceof Role) {
             $role = $role->id;
+        }
+
+        if ($guild = $this->guild) {
+            if ($botperms = $guild->getBotPermissions()) {
+                if (! $botperms->manage_roles) {
+                    return reject(new NoPermissionsException("You do not have permission to remove member role in the guild {$guild->id}."));
+                }
+            }
         }
 
         $headers = [];
@@ -264,6 +293,8 @@ class Member extends Part
      * @param Role[]|string[] $roles  The roles to set to the member.
      * @param string|null     $reason Reason for Audit Log.
      *
+     * @throws NoPermissionsException Missing manage_roles permission.
+     *
      * @return ExtendedPromiseInterface<Member>
      */
     public function setRoles(array $roles, ?string $reason = null): ExtendedPromiseInterface
@@ -271,6 +302,14 @@ class Member extends Part
         foreach ($roles as $i => $role) {
             if ($role instanceof Role) {
                 $roles[$i] = $role->id;
+            }
+        }
+
+        if ($guild = $this->guild) {
+            if ($botperms = $guild->getBotPermissions()) {
+                if (! $botperms->manage_roles) {
+                    return reject(new NoPermissionsException("You do not have permission to manage member roles in the guild {$guild->id}."));
+                }
             }
         }
 

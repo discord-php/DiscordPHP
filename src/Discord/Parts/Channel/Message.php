@@ -796,11 +796,14 @@ class Message extends Part
     }
 
     /**
-     * Crossposts the message to any following channels.
+     * Crossposts the message to any following channels (publish announcement message).
      *
      * @link https://discord.com/developers/docs/resources/channel#crosspost-message
      *
      * @throws \RuntimeException Message has already been crossposted.
+     * @throws NoPermissionsException Missing permission:
+     *                                send_messages if this message author is the bot.
+     *                                manage_messages if this message author is other user.
      *
      * @return ExtendedPromiseInterface<Message>
      */
@@ -808,6 +811,20 @@ class Message extends Part
     {
         if ($this->crossposted) {
             return reject(new \RuntimeException('This message has already been crossposted.'));
+        }
+
+        if ($channel = $this->channel) {
+            if ($botperms = $channel->getBotPermissions()) {
+                if ($this->user_id == $this->discord->id) {
+                    if (! $botperms->send_messages) {
+                        return reject(new NoPermissionsException("You do not have permission to crosspost message in channel {$this->id}."));
+                    }
+                } else {
+                    if (! $botperms->manage_messages) {
+                        return reject(new NoPermissionsException("You do not have permission to crosspost others message in channel {$this->id}."));
+                    }
+                }
+            }
         }
 
         return $this->http->post(Endpoint::bind(Endpoint::CHANNEL_CROSSPOST_MESSAGE, $this->channel_id, $this->id))->then(function ($response) {
@@ -867,12 +884,21 @@ class Message extends Part
      *
      * @param Emoji|string $emoticon The emoticon to react with. (custom: ':michael:251127796439449631')
      *
+     * @throws NoPermissionsException Missing read_message_history permission.
+     *
      * @return ExtendedPromiseInterface
      */
     public function react($emoticon): ExtendedPromiseInterface
     {
         if ($emoticon instanceof Emoji) {
             $emoticon = $emoticon->toReactionString();
+        }
+
+        if ($channel = $this->channel) {
+            $botperms = $channel->getBotPermissions();
+            if ($botperms && ! $botperms->read_message_history) {
+                return reject(new NoPermissionsException("You do not have permission to read message history in channel {$channel->id}."));
+            }
         }
 
         return $this->http->put(Endpoint::bind(Endpoint::OWN_MESSAGE_REACTION, $this->channel_id, $this->id, urlencode($emoticon)));
@@ -889,6 +915,7 @@ class Message extends Part
      * @param string|null       $id       The user reaction to delete (if not all).
      *
      * @throws \UnexpectedValueException Invalid reaction `$type`.
+     * @throws NoPermissionsException    Missing manage_messages permission when deleting others reaction.
      *
      * @return ExtendedPromiseInterface
      */
@@ -915,6 +942,13 @@ class Message extends Part
                 break;
             default:
                 return reject(new \UnexpectedValueException('Invalid reaction type'));
+        }
+
+        if (($type != self::REACT_DELETE_ME || $id != $this->discord->id) && $channel = $this->channel) {
+            $botperms = $channel->getBotPermissions();
+            if ($botperms && ! $botperms->manage_messages) {
+                return reject(new NoPermissionsException("You do not have permission to delete reaction by others in channel {$channel->id}."));
+            }
         }
 
         return $this->http->delete($url);
@@ -956,12 +990,20 @@ class Message extends Part
      *
      * @return ExtendedPromiseInterface
      *
-     * @throws \RuntimeException This type of message cannot be deleted.
+     * @throws \RuntimeException      This type of message cannot be deleted.
+     * @throws NoPermissionsException Missing manage_messages permission when deleting others message.
      */
     public function delete(): ExtendedPromiseInterface
     {
         if (! $this->isDeletable()) {
             return reject(new \RuntimeException("Cannot delete this type of message: {$this->type}", 50021));
+        }
+
+        if ($this->user_id != $this->discord->id && $channel = $this->channel) {
+            $botperms = $channel->getBotPermissions();
+            if ($botperms && ! $botperms->manage_messages) {
+                return reject(new NoPermissionsException("You do not have permission to delete message by others in channel {$channel->id}."));
+            }
         }
 
         return $this->http->delete(Endpoint::bind(Endpoint::CHANNEL_MESSAGE, $this->channel_id, $this->id));
