@@ -47,16 +47,20 @@ class MessageCreate extends Event
 
         if (isset($data->guild_id)) {
             /** @var ?Guild */
-            $guild = yield $this->discord->guilds->cacheGet($data->guild_id);
-
-            if (! isset($channel)) {
-                /** @var ?Channel|?Thread */
-                if ($channel = yield $guild->channels->cacheGet($data->channel_id)) {
-                    if ($channel instanceof Thread && $parent = $channel->parent) {
-                        if ($parent->type == Channel::TYPE_GUILD_FORUM) {
-                            $parent->last_message_id = $data->id;
-                            $channel->message_count++;
-                            $channel->total_message_sent++;
+            if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
+                /** @var ?Channel */
+                if (! isset($channel) && ! $channel = yield $guild->channels->cacheGet($data->channel_id)) {
+                    /** @var Channel */
+                    foreach ($guild->channels as $parent) {
+                        /** @var ?Thread */
+                        if ($thread = yield $parent->threads->cacheGet($data->channel_id)) {
+                            if ($parent->type == Channel::TYPE_GUILD_FORUM) {
+                                $parent->last_message_id = $data->id;
+                                $thread->message_count++;
+                                $thread->total_message_sent++;
+                            }
+                            $channel = $thread;
+                            break;
                         }
                     }
                 }

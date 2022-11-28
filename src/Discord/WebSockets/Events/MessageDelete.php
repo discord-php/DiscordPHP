@@ -29,7 +29,7 @@ class MessageDelete extends Event
      */
     public function handle($data)
     {
-        $messagePart = null;
+        $messagePart = $parent = null;
 
         if (! isset($data->guild_id)) {
             /** @var ?Channel */
@@ -40,16 +40,22 @@ class MessageDelete extends Event
         } else {
             /** @var ?Guild */
             if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
-                /** @var ?Channel|Thread */
-                if ($channel = yield $guild->channels->cacheGet($data->channel_id)) {
-                    /** @var ?Message */
-                    $messagePart = yield $channel->messages->cachePull($data->id);
-
-                    if ($channel instanceof Thread && $parent = $channel->parent) {
-                        if ($parent->type == Channel::TYPE_GUILD_FORUM) {
-                            $channel->message_count--;
+                /** @var ?Channel */
+                if (! $channel = yield $guild->channels->cacheGet($data->channel_id)) {
+                    /** @var Channel */
+                    foreach ($guild->channels as $parent) {
+                        /** @var ?Thread */
+                        if ($thread = yield $parent->threads->cacheGet($data->channel_id)) {
+                            $channel = $thread;
+                            break;
                         }
                     }
+                }
+
+                if ($channel) {
+                    /** @var ?Message */
+                    $messagePart = yield $channel->messages->cachePull($data->id);
+                    $parent->message_count--;
                 }
             }
         }

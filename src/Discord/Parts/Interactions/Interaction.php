@@ -129,13 +129,19 @@ class Interaction extends Part
     /**
      * Returns the channel the interaction was invoked from.
      *
-     * @return Channel|null
+     * @return Channel|Thread|null
      */
-    protected function getChannelAttribute(): ?Channel
+    protected function getChannelAttribute(): ?Part
     {
         if ($guild = $this->guild) {
-            if ($channel = $guild->channels->get('id', $this->channel_id)) {
+            $channels = $guild->channels;
+            if ($channel = $channels->get('id', $this->channel_id)) {
                 return $channel;
+            }
+            foreach ($channels as $parent) {
+                if ($thread = $parent->threads->get('id', $this->channel_id)) {
+                    return $thread;
+                }
             }
         }
 
