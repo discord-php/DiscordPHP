@@ -40,6 +40,7 @@ class WebhooksUpdate extends Event
                         }
                     }
                 }
+
                 return [$guild, $channel];
             }
 

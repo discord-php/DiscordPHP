@@ -800,7 +800,7 @@ class Message extends Part
      *
      * @link https://discord.com/developers/docs/resources/channel#crosspost-message
      *
-     * @throws \RuntimeException Message has already been crossposted.
+     * @throws \RuntimeException      Message has already been crossposted.
      * @throws NoPermissionsException Missing permission:
      *                                send_messages if this message author is the bot.
      *                                manage_messages if this message author is other user.
