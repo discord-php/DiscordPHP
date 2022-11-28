@@ -192,7 +192,6 @@ class Guild extends Part
         'splash',
         'discovery_splash',
         'features',
-        'emojis',
         'banner',
         'owner_id',
         'application_id',
@@ -203,7 +202,6 @@ class Guild extends Part
         'widget_enabled',
         'widget_channel_id',
         'verification_level',
-        'roles',
         'default_message_notifications',
         'hub_type',
         'mfa_level',
@@ -223,7 +221,6 @@ class Guild extends Part
         'approximate_presence_count',
         'welcome_screen',
         'nsfw_level',
-        'stickers',
         'premium_progress_bar_enabled',
 
         // events
@@ -262,6 +259,9 @@ class Guild extends Part
         'feature_verified',
         'feature_vip_regions',
         'feature_welcome_screen_enabled',
+        'emojis',
+        'roles',
+        'stickers',
     ];
 
     /**
@@ -293,40 +293,24 @@ class Guild extends Part
 
     /**
      * @inheritDoc
-     *
-     * @todo move each repository fill to the set<Attribute>Attributes methods
      */
     public function fill(array $attributes): void
     {
         parent::fill($attributes);
 
-        foreach ($attributes['roles'] ?? [] as $role) {
-            $role = (array) $role;
-            /** @var Role */
-            if ($rolePart = $this->roles->offsetGet($role['id'])) {
-                $rolePart->fill($role);
-            }
-            $this->roles->pushItem($rolePart ?: $this->roles->create($role, $this->created));
+        if (isset($attributes['roles'])) {
+            $this->setRolesAttribute($attributes['roles']);
         }
 
-        foreach ($attributes['emojis'] ?? [] as $emoji) {
-            $emoji = (array) $emoji;
-            /** @var Emoji */
-            if ($emojiPart = $this->emojis->offsetGet($emoji['id'])) {
-                $emojiPart->fill($emoji);
-            }
-            $this->emojis->pushItem($emojiPart ?: $this->emojis->create($emoji, $this->created));
+        if (isset($attributes['emojis'])) {
+            $this->setEmojisAttribute($attributes['emojis']);
         }
 
-        foreach ($attributes['stickers'] ?? [] as $sticker) {
-            $sticker = (array) $sticker;
-            /** @var Sticker */
-            if ($stickerPart = $this->stickers->offsetGet($sticker['id'])) {
-                $stickerPart->fill($sticker);
-            }
-            $this->stickers->pushItem($stickerPart ?: $this->stickers->create($sticker, $this->created));
+        if (isset($attributes['stickers'])) {
+            $this->setStickersAttribute($attributes['stickers']);
         }
 
+        // @todo move each repository fill to the setChannelAttributes methods?
         foreach ($attributes['channels'] ?? [] as $channel) {
             $channel = (array) $channel;
             /** @var Channel */
@@ -335,6 +319,57 @@ class Guild extends Part
             }
             $this->channels->pushItem($channelPart ?: $this->channels->create($channel, true));
         }
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function setRolesAttribute(?array $roles): void
+    {
+        foreach ($roles ?? [] as $role) {
+            $role = (array) $role;
+            /** @var Role */
+            if ($rolePart = $this->roles->offsetGet($role['id'])) {
+                $rolePart->fill($role);
+            }
+            $this->roles->pushItem($rolePart ?: $this->roles->create($role, $this->created));
+        }
+
+        $this->attributes['roles'] = $roles;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function setEmojisAttribute(?array $emojis): void
+    {
+        foreach ($emojis ?? [] as $emoji) {
+            $emoji = (array) $emoji;
+            /** @var Emoji */
+            if ($emojiPart = $this->emojis->offsetGet($emoji['id'])) {
+                $emojiPart->fill($emoji);
+            }
+            $this->emojis->pushItem($emojiPart ?: $this->emojis->create($emoji, $this->created));
+        }
+
+        $this->attributes['emojis'] = $emojis;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function setStickersAttribute(?array $stickers): void
+    {
+        foreach ($stickers ?? [] as $sticker) {
+            $sticker = (array) $sticker;
+            /** @var Sticker */
+            if ($stickerPart = $this->stickers->offsetGet($sticker['id'])) {
+                $stickerPart->fill($sticker);
+            }
+            $this->stickers->pushItem($stickerPart ?: $this->stickers->create($sticker, $this->created));
+        }
+
+        $this->attributes['stickers'] = $stickers;
     }
 
     /**
