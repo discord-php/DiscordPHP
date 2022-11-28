@@ -1418,17 +1418,30 @@ class Guild extends Part
      * Modify the guild feature.
      *
      * @link https://discord.com/developers/docs/resources/guild#modify-guild
+     * @link https://discord.com/developers/docs/resources/guild#guild-object-mutable-guild-features
      *
      * @param bool[]      $features Array of features to set/unset, e.g. `['COMMUNITY' => true, 'INVITES_DISABLED' => false]`.
      * @param string|null $reason   Reason for Audit Log.
      *
-     * @return ExtendedPromiseInterface<self> This guild.
+     * @throws \OutOfRangeException   Feature is not mutable.
+     * @throws \RuntimeException      Guild feature is already set.
+     * @throws NoPermissionsException Missing various permissions:
+     *                                administrator for COMMUNITY or DISCOVERABLE.
+     *                                manage_guild for INVITES_DISABLED.
      *
-     * @throws \OutOfRangeException Feature is not mutable.
-     * @throws \RuntimeException    Guild feature is already set.
+     * @return ExtendedPromiseInterface<self> This guild.
      */
     public function setFeatures(array $features, ?string $reason = null): ExtendedPromiseInterface
     {
+        if ($botperms = $this->getBotPermissions()) {
+            if ((isset($features['COMMUNITY']) || isset($features['DISCOVERABLE'])) && ! $botperms->administrator) {
+                return reject(new NoPermissionsException("You do not have administrator permission to modify the guild feature COMMUNITY or DISCOVERABLE."));
+            }
+            if (isset($features['INVITES_DISABLED']) && ! $botperms->manage_guild) {
+                return reject(new NoPermissionsException("You do not have manage guild permission to modify the guild feature INVITES_DISABLED."));
+            }
+        }
+
         $setFeatures = $this->features;
         foreach ($features as $feature => $set) {
             if (! in_array($feature, ['COMMUNITY', 'INVITES_DISABLED', 'DISCOVERABLE'])) {
