@@ -114,7 +114,7 @@ class OggPage
      * array containing binary data and whether the packet is complete, from
      * a generator.
      *
-     * @return Generator<int,(string|bool)[],mixed,void>
+     * @return Generator
      */
     public function iterPackets()
     {
