@@ -170,7 +170,7 @@ final class FunctionsTest extends TestCase
      * @test
      * @dataProvider normalizePartIdProvider
      */
-    public function testNormalizePartId(mixed $part, mixed $expected): void
+    public function testNormalizePartId($part, $expected): void
     {
         $this->assertEquals(
             $expected,
