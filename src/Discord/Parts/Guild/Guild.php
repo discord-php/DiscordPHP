@@ -293,8 +293,6 @@ class Guild extends Part
 
     /**
      * @inheritDoc
-     *
-     * @todo move each repository fill to the set<Attribute>Attributes methods
      */
     public function fill(array $attributes): void
     {
@@ -312,6 +310,7 @@ class Guild extends Part
             $this->setStickersAttribute($attributes['stickers']);
         }
 
+        // @todo move each repository fill to the setChannelAttributes methods?
         foreach ($attributes['channels'] ?? [] as $channel) {
             $channel = (array) $channel;
             /** @var Channel */
