@@ -312,7 +312,9 @@ class Guild extends Part
     }
 
     /**
-     * @inheritDoc
+     * Sets the roles attribute.
+     *
+     * @param ?array $roles
      */
     protected function setRolesAttribute(?array $roles): void
     {
@@ -325,11 +327,17 @@ class Guild extends Part
             $this->roles->pushItem($rolePart ?: $this->roles->create($role, $this->created));
         }
 
+        if (! empty($this->attributes['roles'])) {
+            $this->roles->cache->deleteMultiple(array_diff(array_column($this->attributes['roles'], 'id'), array_column($roles ?? [], 'id')));
+        }
+
         $this->attributes['roles'] = $roles;
     }
 
     /**
-     * @inheritDoc
+     * Sets the emojis attribute.
+     *
+     * @param ?array $emojis
      */
     protected function setEmojisAttribute(?array $emojis): void
     {
@@ -342,11 +350,17 @@ class Guild extends Part
             $this->emojis->pushItem($emojiPart ?: $this->emojis->create($emoji, $this->created));
         }
 
+        if (! empty($this->attributes['emojis'])) {
+            $this->emojis->cache->deleteMultiple(array_diff(array_column($this->attributes['emojis'], 'id'), array_column($emojis ?? [], 'id')));
+        }
+
         $this->attributes['emojis'] = $emojis;
     }
 
     /**
-     * @inheritDoc
+     * Sets the stickers attribute.
+     *
+     * @param ?array $stickers
      */
     protected function setStickersAttribute(?array $stickers): void
     {
@@ -357,6 +371,10 @@ class Guild extends Part
                 $stickerPart->fill($sticker);
             }
             $this->stickers->pushItem($stickerPart ?: $this->stickers->create($sticker, $this->created));
+        }
+
+        if (! empty($this->attributes['stickers'])) {
+            $this->stickers->cache->deleteMultiple(array_diff(array_column($this->attributes['stickers'], 'id'), array_column($stickers ?? [], 'id')));
         }
 
         $this->attributes['stickers'] = $stickers;

@@ -862,13 +862,11 @@ class Channel extends Part
     /**
      * Sets the permission overwrites attribute.
      *
-     * @param array $overwrites
+     * @param ?array $overwrites
      */
     protected function setPermissionOverwritesAttribute(?array $overwrites): void
     {
-        $this->attributes['permission_overwrites'] = $overwrites;
-
-        foreach ($overwrites as $overwrite) {
+        foreach ($overwrites ?? [] as $overwrite) {
             $overwrite = (array) $overwrite;
             /** @var Overwrite */
             if ($overwritePart = $this->overwrites->offsetGet($overwrite['id'])) {
@@ -876,6 +874,12 @@ class Channel extends Part
             }
             $this->overwrites->pushItem($overwritePart ?: $this->overwrites->create($overwrite, true));
         }
+
+        if (! empty($this->attributes['permission_overwrites'])) {
+            $this->overwrites->cache->deleteMultiple(array_diff(array_column($this->attributes['permission_overwrites'], 'id'), array_column($overwrites ?? [], 'id')));
+        }
+
+        $this->attributes['permission_overwrites'] = $overwrites;
     }
 
     /**
@@ -953,7 +957,7 @@ class Channel extends Part
             ->setAllowedValues('auto_archive_duration', fn ($value) => in_array($value, [60, 1440, 4320, 10080]))
             ->setAllowedValues('rate_limit_per_user', fn ($value) => $value >= 0 && $value <= 21600)
             ->setRequired('name');
-  
+
         $botperms = $this->getBotPermissions();
 
         if ($this->type == self::TYPE_GUILD_FORUM) {
@@ -991,7 +995,7 @@ class Channel extends Part
                 ->setAllowedTypes('private', 'bool')
                 ->setAllowedTypes('invitable', 'bool')
                 ->setDefaults(['private' => false]);
-            
+
             $options = $resolver->resolve($options);
 
             if ($options['private']) {
@@ -1012,7 +1016,7 @@ class Channel extends Part
                 if ($options['private']) {
                     return reject(new \RuntimeException('You cannot start a private thread within a news channel.'));
                 }
-    
+
                 $options['type'] = self::TYPE_ANNOUNCEMENT_THREAD;
             } elseif ($this->type == self::TYPE_GUILD_TEXT) {
                 $options['type'] = $options['private'] ? self::TYPE_PRIVATE_THREAD : self::TYPE_PUBLIC_THREAD;

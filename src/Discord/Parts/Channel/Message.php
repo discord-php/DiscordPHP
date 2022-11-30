@@ -355,21 +355,31 @@ class Message extends Part
     /**
      * Sets the reactions attribute.
      *
-     * @param array $reactions
+     * @param ?array $reactions
      */
-    protected function setReactionsAttribute(?array $reactions)
+    protected function setReactionsAttribute(?array $reactions): void
     {
-        $this->attributes['reactions'] = $reactions;
-
-        foreach ($reactions as $reaction) {
+        $keepReactions = [];
+        foreach ($reactions ?? [] as $reaction) {
+            $keepReactions[] = $reactionKey = $reaction->emoji->id ?? $reaction->emoji->name;
             $reaction = (array) $reaction;
             /** @var Reaction */
-            if ($reactionPart = $this->reactions->offsetGet($reaction['emoji']->id ?? $reaction['emoji']->name)) {
+            if ($reactionPart = $this->reactions->offsetGet($reactionKey)) {
                 $reactionPart->fill($reaction);
                 $reactionPart->created = $this->created;
             }
             $this->reactions->pushItem($reactionPart ?: $this->reactions->create($reaction, $this->created));
         }
+
+        $oldReactions = [];
+        if (! empty($this->attributes['reactions'])) {
+            foreach ($this->attributes['reactions'] as $oldReaction) {
+                $oldReactions[] = $oldReaction->emoji->id ?? $oldReaction->emoji->name;
+            }
+            $this->reactions->cache->deleteMultiple(array_diff($oldReactions, $keepReactions));
+        }
+
+        $this->attributes['reactions'] = $reactions;
     }
 
     /**
