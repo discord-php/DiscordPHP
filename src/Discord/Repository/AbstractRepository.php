@@ -620,6 +620,16 @@ abstract class AbstractRepository extends Collection
     }
 
     /**
+     * Get the keys of the items.
+     *
+     * @return int[]|string[]
+     */
+    public function keys()
+    {
+        return array_keys($this->items);
+    }
+
+    /**
      * If the repository has an offset.
      *
      * @deprecated 10.0.0 Use async `$repository->cache->has()`
