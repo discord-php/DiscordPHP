@@ -327,8 +327,8 @@ class Guild extends Part
             $this->roles->pushItem($rolePart ?: $this->roles->create($role, $this->created));
         }
 
-        if (! empty($this->attributes['roles'])) {
-            $this->roles->cache->deleteMultiple(array_diff(array_column($this->attributes['roles'], 'id'), array_column($roles ?? [], 'id')));
+        if (! empty($this->attributes['roles']) && $clean = array_diff(array_column($this->attributes['roles'], 'id'), array_column($roles ?? [], 'id'))) {
+            $this->roles->cache->deleteMultiple($clean);
         }
 
         $this->attributes['roles'] = $roles;
@@ -350,8 +350,8 @@ class Guild extends Part
             $this->emojis->pushItem($emojiPart ?: $this->emojis->create($emoji, $this->created));
         }
 
-        if (! empty($this->attributes['emojis'])) {
-            $this->emojis->cache->deleteMultiple(array_diff(array_column($this->attributes['emojis'], 'id'), array_column($emojis ?? [], 'id')));
+        if (! empty($this->attributes['emojis']) && $clean = array_diff(array_column($this->attributes['emojis'], 'id'), array_column($emojis ?? [], 'id'))) {
+            $this->emojis->cache->deleteMultiple($clean);
         }
 
         $this->attributes['emojis'] = $emojis;
@@ -373,8 +373,8 @@ class Guild extends Part
             $this->stickers->pushItem($stickerPart ?: $this->stickers->create($sticker, $this->created));
         }
 
-        if (! empty($this->attributes['stickers'])) {
-            $this->stickers->cache->deleteMultiple(array_diff(array_column($this->attributes['stickers'], 'id'), array_column($stickers ?? [], 'id')));
+        if (! empty($this->attributes['stickers']) && $clean = array_diff(array_column($this->attributes['stickers'], 'id'), array_column($stickers ?? [], 'id'))) {
+            $this->stickers->cache->deleteMultiple($clean);
         }
 
         $this->attributes['stickers'] = $stickers;

@@ -376,7 +376,9 @@ class Message extends Part
             foreach ($this->attributes['reactions'] as $oldReaction) {
                 $oldReactions[] = $oldReaction->emoji->id ?? $oldReaction->emoji->name;
             }
-            $this->reactions->cache->deleteMultiple(array_diff($oldReactions, $keepReactions));
+            if ($clean = array_diff($oldReactions, $keepReactions)) {
+                $this->reactions->cache->deleteMultiple($clean);
+            }
         }
 
         $this->attributes['reactions'] = $reactions;

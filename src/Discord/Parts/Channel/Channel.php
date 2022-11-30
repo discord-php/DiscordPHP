@@ -875,8 +875,8 @@ class Channel extends Part
             $this->overwrites->pushItem($overwritePart ?: $this->overwrites->create($overwrite, true));
         }
 
-        if (! empty($this->attributes['permission_overwrites'])) {
-            $this->overwrites->cache->deleteMultiple(array_diff(array_column($this->attributes['permission_overwrites'], 'id'), array_column($overwrites ?? [], 'id')));
+        if (! empty($this->attributes['permission_overwrites']) && $clean = array_diff(array_column($this->attributes['permission_overwrites'], 'id'), array_column($overwrites ?? [], 'id'))) {
+            $this->overwrites->cache->deleteMultiple($clean);
         }
 
         $this->attributes['permission_overwrites'] = $overwrites;
