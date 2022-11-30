@@ -227,6 +227,11 @@ class Guild extends Part
         'joined_at',
         'large',
         'member_count',
+
+        // repositories
+        'emojis',
+        'roles',
+        'stickers',
     ];
 
     /**
@@ -259,9 +264,6 @@ class Guild extends Part
         'feature_verified',
         'feature_vip_regions',
         'feature_welcome_screen_enabled',
-        'emojis',
-        'roles',
-        'stickers',
     ];
 
     /**
@@ -297,18 +299,6 @@ class Guild extends Part
     public function fill(array $attributes): void
     {
         parent::fill($attributes);
-
-        if (isset($attributes['roles'])) {
-            $this->setRolesAttribute($attributes['roles']);
-        }
-
-        if (isset($attributes['emojis'])) {
-            $this->setEmojisAttribute($attributes['emojis']);
-        }
-
-        if (isset($attributes['stickers'])) {
-            $this->setStickersAttribute($attributes['stickers']);
-        }
 
         // @todo move each repository fill to the setChannelAttributes methods?
         foreach ($attributes['channels'] ?? [] as $channel) {

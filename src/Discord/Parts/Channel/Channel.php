@@ -172,6 +172,9 @@ class Channel extends Part
 
         // @internal
         'is_private',
+
+        // repositories
+        'permission_overwrites',
     ];
 
     /**
@@ -186,18 +189,6 @@ class Channel extends Part
         'invites' => InviteRepository::class,
         'stage_instances' => StageInstanceRepository::class,
     ];
-
-    /**
-     * @inheritDoc
-     */
-    public function fill(array $attributes): void
-    {
-        parent::fill($attributes);
-
-        if (isset($attributes['permission_overwrites'])) {
-            $this->setPermissionOverwritesAttribute($attributes['permission_overwrites']);
-        }
-    }
 
     /**
      * @inheritDoc

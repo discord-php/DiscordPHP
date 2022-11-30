@@ -186,7 +186,6 @@ class Message extends Part
         'mention_channels',
         'attachments',
         'embeds',
-        'reactions',
         'nonce',
         'pinned',
         'webhook_id',
@@ -207,6 +206,9 @@ class Message extends Part
         // @internal
         'guild_id',
         'member',
+
+        // repositories
+        'reactions',
     ];
 
     /**
@@ -351,11 +353,11 @@ class Message extends Part
     }
 
     /**
-     * Sets the reactions attriubte.
+     * Sets the reactions attribute.
      *
      * @param array $reactions
      */
-    protected function setReactionsAttribute(array $reactions)
+    protected function setReactionsAttribute(?array $reactions)
     {
         $this->attributes['reactions'] = $reactions;
 
