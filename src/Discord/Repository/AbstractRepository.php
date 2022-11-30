@@ -34,7 +34,8 @@ use function React\Promise\resolve;
  * @author Aaron Scherer <aequasi@gmail.com>
  * @author David Cole <david.cole1340@gmail.com>
  *
- * @property-read CacheWrapper $cache The react/cache wrapper.
+ * @property-read string       $discrim The discriminator.
+ * @property-read CacheWrapper $cache   The react/cache wrapper.
  */
 abstract class AbstractRepository extends Collection
 {
@@ -725,7 +726,7 @@ abstract class AbstractRepository extends Collection
 
     public function __get(string $key)
     {
-        if (in_array($key, ['cache'])) {
+        if (in_array($key, ['discrim', 'cache'])) {
             return $this->$key;
         }
     }
