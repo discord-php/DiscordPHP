@@ -186,7 +186,6 @@ class Message extends Part
         'mention_channels',
         'attachments',
         'embeds',
-        'reactions',
         'nonce',
         'pinned',
         'webhook_id',
@@ -207,6 +206,9 @@ class Message extends Part
         // @internal
         'guild_id',
         'member',
+
+        // repositories
+        'reactions',
     ];
 
     /**
@@ -351,23 +353,35 @@ class Message extends Part
     }
 
     /**
-     * Sets the reactions attriubte.
+     * Sets the reactions attribute.
      *
-     * @param array $reactions
+     * @param ?array $reactions
      */
-    protected function setReactionsAttribute(array $reactions)
+    protected function setReactionsAttribute(?array $reactions): void
     {
-        $this->attributes['reactions'] = $reactions;
-
-        foreach ($reactions as $reaction) {
+        $keepReactions = [];
+        foreach ($reactions ?? [] as $reaction) {
+            $keepReactions[] = $reactionKey = $reaction->emoji->id ?? $reaction->emoji->name;
             $reaction = (array) $reaction;
             /** @var Reaction */
-            if ($reactionPart = $this->reactions->offsetGet($reaction['emoji']->id ?? $reaction['emoji']->name)) {
+            if ($reactionPart = $this->reactions->offsetGet($reactionKey)) {
                 $reactionPart->fill($reaction);
                 $reactionPart->created = $this->created;
             }
             $this->reactions->pushItem($reactionPart ?: $this->reactions->create($reaction, $this->created));
         }
+
+        $oldReactions = [];
+        if (! empty($this->attributes['reactions'])) {
+            foreach ($this->attributes['reactions'] as $oldReaction) {
+                $oldReactions[] = $oldReaction->emoji->id ?? $oldReaction->emoji->name;
+            }
+            if ($clean = array_diff($oldReactions, $keepReactions)) {
+                $this->reactions->cache->deleteMultiple($clean);
+            }
+        }
+
+        $this->attributes['reactions'] = $reactions;
     }
 
     /**

@@ -34,7 +34,8 @@ use function React\Promise\resolve;
  * @author Aaron Scherer <aequasi@gmail.com>
  * @author David Cole <david.cole1340@gmail.com>
  *
- * @property-read CacheWrapper $cache The react/cache wrapper.
+ * @property-read string       $discrim The discriminator.
+ * @property-read CacheWrapper $cache   The react/cache wrapper.
  */
 abstract class AbstractRepository extends Collection
 {
@@ -620,6 +621,16 @@ abstract class AbstractRepository extends Collection
     }
 
     /**
+     * Get the keys of the items.
+     *
+     * @return int[]|string[]
+     */
+    public function keys()
+    {
+        return array_keys($this->items);
+    }
+
+    /**
      * If the repository has an offset.
      *
      * @deprecated 10.0.0 Use async `$repository->cache->has()`
@@ -715,7 +726,7 @@ abstract class AbstractRepository extends Collection
 
     public function __get(string $key)
     {
-        if (in_array($key, ['cache'])) {
+        if (in_array($key, ['discrim', 'cache'])) {
             return $this->$key;
         }
     }

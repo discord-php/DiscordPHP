@@ -227,6 +227,11 @@ class Guild extends Part
         'joined_at',
         'large',
         'member_count',
+
+        // repositories
+        'emojis',
+        'roles',
+        'stickers',
     ];
 
     /**
@@ -259,9 +264,6 @@ class Guild extends Part
         'feature_verified',
         'feature_vip_regions',
         'feature_welcome_screen_enabled',
-        'emojis',
-        'roles',
-        'stickers',
     ];
 
     /**
@@ -298,18 +300,6 @@ class Guild extends Part
     {
         parent::fill($attributes);
 
-        if (isset($attributes['roles'])) {
-            $this->setRolesAttribute($attributes['roles']);
-        }
-
-        if (isset($attributes['emojis'])) {
-            $this->setEmojisAttribute($attributes['emojis']);
-        }
-
-        if (isset($attributes['stickers'])) {
-            $this->setStickersAttribute($attributes['stickers']);
-        }
-
         // @todo move each repository fill to the setChannelAttributes methods?
         foreach ($attributes['channels'] ?? [] as $channel) {
             $channel = (array) $channel;
@@ -322,7 +312,9 @@ class Guild extends Part
     }
 
     /**
-     * @inheritDoc
+     * Sets the roles attribute.
+     *
+     * @param ?array $roles
      */
     protected function setRolesAttribute(?array $roles): void
     {
@@ -335,11 +327,17 @@ class Guild extends Part
             $this->roles->pushItem($rolePart ?: $this->roles->create($role, $this->created));
         }
 
+        if (! empty($this->attributes['roles']) && $clean = array_diff(array_column($this->attributes['roles'], 'id'), array_column($roles ?? [], 'id'))) {
+            $this->roles->cache->deleteMultiple($clean);
+        }
+
         $this->attributes['roles'] = $roles;
     }
 
     /**
-     * @inheritDoc
+     * Sets the emojis attribute.
+     *
+     * @param ?array $emojis
      */
     protected function setEmojisAttribute(?array $emojis): void
     {
@@ -352,11 +350,17 @@ class Guild extends Part
             $this->emojis->pushItem($emojiPart ?: $this->emojis->create($emoji, $this->created));
         }
 
+        if (! empty($this->attributes['emojis']) && $clean = array_diff(array_column($this->attributes['emojis'], 'id'), array_column($emojis ?? [], 'id'))) {
+            $this->emojis->cache->deleteMultiple($clean);
+        }
+
         $this->attributes['emojis'] = $emojis;
     }
 
     /**
-     * @inheritDoc
+     * Sets the stickers attribute.
+     *
+     * @param ?array $stickers
      */
     protected function setStickersAttribute(?array $stickers): void
     {
@@ -367,6 +371,10 @@ class Guild extends Part
                 $stickerPart->fill($sticker);
             }
             $this->stickers->pushItem($stickerPart ?: $this->stickers->create($sticker, $this->created));
+        }
+
+        if (! empty($this->attributes['stickers']) && $clean = array_diff(array_column($this->attributes['stickers'], 'id'), array_column($stickers ?? [], 'id'))) {
+            $this->stickers->cache->deleteMultiple($clean);
         }
 
         $this->attributes['stickers'] = $stickers;

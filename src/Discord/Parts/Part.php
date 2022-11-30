@@ -161,9 +161,9 @@ abstract class Part implements ArrayAccess, JsonSerializable
      */
     public function fill(array $attributes): void
     {
-        foreach ($attributes as $key => $value) {
-            if (in_array($key, $this->fillable)) {
-                $this->setAttribute($key, $value);
+        foreach ($this->fillable as $key) {
+            if (array_key_exists($key, $attributes)) {
+                $this->setAttribute($key, $attributes[$key]);
             }
         }
     }

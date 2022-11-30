@@ -210,11 +210,7 @@ abstract class Permission extends Part
         }
 
         foreach ($this->permissions as $permission => $value) {
-            if (BigInt::test($bitwise, $value)) {
-                $this->attributes[$permission] = true;
-            } else {
-                $this->attributes[$permission] = false;
-            }
+            $this->attributes[$permission] = BigInt::test($bitwise, $value);
         }
     }
 
