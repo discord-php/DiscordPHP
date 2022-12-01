@@ -21,6 +21,7 @@ use Discord\Parts\Channel\Message;
 use Discord\Parts\Embed\Embed;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\Part;
+use Discord\Parts\Permissions\RolePermission;
 use Discord\Parts\Thread\Member as ThreadMember;
 use Discord\Parts\User\Member;
 use Discord\Parts\User\User;
@@ -787,6 +788,20 @@ class Thread extends Part
         }
 
         return $deferred->promise();
+    }
+    
+    /**
+     * Returns the bot's permissions in the thread.
+     *
+     * @return RolePermission|null
+     */
+    public function getBotPermissions(): ?RolePermission
+    {
+        if (! $guild = $this->guild) {
+            return null;
+        }
+
+        return $guild->members->get('id', $this->discord->id)->getPermissions($this);
     }
 
     /**
