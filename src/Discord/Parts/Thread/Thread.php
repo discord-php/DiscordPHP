@@ -788,6 +788,20 @@ class Thread extends Part
 
         return $deferred->promise();
     }
+    
+    /**
+     * Returns the bot's permissions in the thread.
+     *
+     * @return RolePermission|null
+     */
+    public function getBotPermissions(): ?RolePermission
+    {
+        if (! $guild = $this->guild) {
+            return null;
+        }
+
+        return $guild->members->get('id', $this->discord->id)->getPermissions($this);
+    }
 
     /**
      * @inheritDoc
