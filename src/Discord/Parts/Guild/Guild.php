@@ -229,8 +229,8 @@ class Guild extends Part
         'member_count',
 
         // repositories
-        'emojis',
         'roles',
+        'emojis',
         'stickers',
     ];
 
