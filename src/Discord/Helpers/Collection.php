@@ -429,7 +429,7 @@ class Collection implements ArrayAccess, JsonSerializable, IteratorAggregate, Co
     /**
      * Returns the string representation of the collection.
      *
-     * @return string
+     * @return array
      */
     public function __serialize(): array
     {
@@ -449,11 +449,11 @@ class Collection implements ArrayAccess, JsonSerializable, IteratorAggregate, Co
     /**
      * Unserializes the collection.
      *
-     * @param array $serialized
+     * @param array $data
      */
-    public function __unserialize(array $serialized): void
+    public function __unserialize(array $data): void
     {
-        $this->items = $serialized;
+        $this->items = $data;
     }
 
     /**

@@ -291,16 +291,16 @@ abstract class Part implements ArrayAccess, JsonSerializable
     /**
      * Serializes the data. Used for Serializable.
      *
-     * @return string A string of serialized data.
+     * @return ?string A string of serialized data.
      */
-    public function serialize()
+    public function serialize(): ?string
     {
         return serialize($this->getRawAttributes());
     }
 
     public function __serialize(): array
     {
-        return $this->attributes;
+        return $this->getRawAttributes();
     }
 
     /**
@@ -310,7 +310,7 @@ abstract class Part implements ArrayAccess, JsonSerializable
      *
      * @see self::setAttribute() The unserialized data is stored with setAttribute.
      */
-    public function unserialize($data)
+    public function unserialize($data): void
     {
         $data = unserialize($data);
 
@@ -445,7 +445,7 @@ abstract class Part implements ArrayAccess, JsonSerializable
      * @throws \Exception
      * @see self::getPublicAttributes() This function encodes getPublicAttributes into JSON.
      */
-    public function __toString()
+    public function __toString(): string
     {
         return json_encode($this->getPublicAttributes());
     }
@@ -486,7 +486,7 @@ abstract class Part implements ArrayAccess, JsonSerializable
      *
      * @see self::setAttribute() This function forwards onto setAttribute.
      */
-    public function __set(string $key, $value)
+    public function __set(string $key, $value): void
     {
         $this->setAttribute($key, $value);
     }

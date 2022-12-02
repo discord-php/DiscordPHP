@@ -1620,7 +1620,7 @@ class Discord
      * @param string $name  Variable name.
      * @param mixed  $value Value to set.
      */
-    public function __set(string $name, $value)
+    public function __set(string $name, $value): void
     {
         if (is_null($this->client)) {
             return;
