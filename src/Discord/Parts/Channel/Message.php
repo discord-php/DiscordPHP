@@ -1053,7 +1053,7 @@ class Message extends Part
             if ($filterResult) {
                 $reactions->pushItem($reaction);
 
-                if ($options['limit'] !== false && sizeof($reactions) >= $options['limit']) {
+                if ($options['limit'] !== false && count($reactions) >= $options['limit']) {
                     $this->discord->removeListener(Event::MESSAGE_REACTION_ADD, $eventHandler);
                     $deferred->resolve($reactions);
 

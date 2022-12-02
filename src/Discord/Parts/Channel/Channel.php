@@ -1236,7 +1236,7 @@ class Channel extends Part
             if ($filterResult) {
                 $messages->pushItem($message);
 
-                if ($options['limit'] !== false && sizeof($messages) >= $options['limit']) {
+                if ($options['limit'] !== false && count($messages) >= $options['limit']) {
                     $this->discord->removeListener(Event::MESSAGE_CREATE, $eventHandler);
                     $deferred->resolve($messages);
 
