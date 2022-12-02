@@ -67,11 +67,6 @@ class CacheWrapper
     protected $prefix;
 
     /**
-     * @var ?callable Sweeper callback
-     */
-    protected $sweeper;
-
-    /**
      * @param Discord                                                     $discord
      * @param \React\Cache\CacheInterface|\Psr\SimpleCache\CacheInterface $cacheInterface The actual CacheInterface.
      * @param array                                                       &$items         Repository items passed by reference.
