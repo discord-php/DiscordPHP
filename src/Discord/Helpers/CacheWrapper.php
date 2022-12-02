@@ -33,7 +33,7 @@ use function React\Promise\resolve;
  *
  * @internal
  */
-final class CacheWrapper
+class CacheWrapper
 {
     /**
      * @var Discord
