@@ -97,34 +97,13 @@ class CacheWrapper
 
         if ($discord->options['cacheSweep']) {
             // Sweep every heartbeat ack
-            $this->sweeper = function ($time, Discord $discord) {
-                $flushing = 0;
-                foreach ($this->items as $key => $item) {
-                    if ($item === null) {
-                        // Item was removed from memory, delete from cache
-                        $this->delete($key);
-                        $flushing++;
-                    } elseif ($item instanceof Part) {
-                        // Skip ID related to Bot
-                        if ($key != $discord->id) {
-                            // Item is no longer used other than in the repository, weaken so it can be garbage collected
-                            $this->items[$key] = WeakReference::create($item);
-                        }
-                    }
-                }
-                if ($flushing) {
-                    $this->discord->getLogger()->debug('Flushing repository cache', ['count' => $flushing, 'class' => $this->class]);
-                }
-            };
-            $discord->on('heartbeat-ack', $this->sweeper);
+            $discord->on('heartbeat-ack', [$this, 'sweep']);
         }
     }
 
     public function __destruct()
     {
-        if ($this->sweeper) {
-            $this->discord->removeListener('heartbeat-ack', $this->sweeper);
-        }
+        $this->discord->removeListener('heartbeat-ack', [$this, 'sweep']);
     }
 
     /**
@@ -394,7 +373,7 @@ class CacheWrapper
     {
         return $this->prefix;
     }
- 
+
     /**
      * Checks if a value is zlib compressed by checking the magic bytes.
      *
@@ -492,6 +471,34 @@ class CacheWrapper
         }
 
         return $part;
+    }
+
+    /**
+     * Flush deleted items from cache and weaken items. Items with Bot's ID are exempt.
+     *
+     * @return int Flushed items.
+     */
+    public function sweep(): int
+    {
+        $flushing = 0;
+        foreach ($this->items as $key => $item) {
+            if ($item === null) {
+                // Item was removed from memory, delete from cache
+                $this->delete($key);
+                $flushing++;
+            } elseif ($item instanceof Part) {
+                // Skip ID related to Bot
+                if ($key != $this->discord->id) {
+                    // Item is no longer used other than in the repository, weaken so it can be garbage collected
+                    $this->items[$key] = WeakReference::create($item);
+                }
+            }
+        }
+        if ($flushing) {
+            $this->discord->getLogger()->debug('Flushing repository cache', ['count' => $flushing, 'class' => $this->class]);
+        }
+
+        return $flushing;
     }
 
     public function __get(string $name)
