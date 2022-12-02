@@ -33,7 +33,6 @@ class GuildEmojisUpdate extends Event
 
         /** @var ?Guild */
         if ($guild = yield $this->discord->guilds->cacheGet($data->guild_id)) {
-            // @todo load all emojis from cache?
             $oldEmojis->merge($guild->emojis);
             $guild->emojis->clear();
         }
