@@ -687,7 +687,7 @@ class Guild extends Part
      */
     public function getVoiceRegions(): ExtendedPromiseInterface
     {
-        if (! is_null($this->regions)) {
+        if (null !== ($this->regions)) {
             return resolve($this->regions);
         }
 
@@ -755,7 +755,7 @@ class Guild extends Part
             ->setAllowedTypes('roles', 'array')
             ->setDefault('roles', []);
 
-        if (is_null($filepath)) {
+        if (null === ($filepath)) {
             $resolver->setRequired('image');
         }
 

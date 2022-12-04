@@ -122,7 +122,7 @@ class Collection implements ArrayAccess, JsonSerializable, IteratorAggregate, Co
     public function set($offset, $value)
     {
         // Don't insert elements that are not of type class.
-        if (! is_null($this->class) && ! ($value instanceof $this->class)) {
+        if (null !== ($this->class) && ! ($value instanceof $this->class)) {
             return;
         }
 
@@ -188,13 +188,13 @@ class Collection implements ArrayAccess, JsonSerializable, IteratorAggregate, Co
      */
     public function pushItem($item): Collection
     {
-        if (is_null($this->discrim)) {
+        if (null === ($this->discrim)) {
             $this->items[] = $item;
 
             return $this;
         }
 
-        if (! is_null($this->class) && ! ($item instanceof $this->class)) {
+        if (null !== ($this->class) && ! ($item instanceof $this->class)) {
             return $this;
         }
 
