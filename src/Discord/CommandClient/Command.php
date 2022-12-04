@@ -252,7 +252,7 @@ class Command
             return $this->subCommands[$this->subCommandAliases[$subCommand]]->handle($message, $args);
         }
 
-        if (null !== ($subCommand)) {
+        if (! is_null($subCommand)) {
             array_unshift($args, $originalSubCommand);
         }
 

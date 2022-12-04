@@ -113,7 +113,7 @@ class DiscordCommandClient extends Discord
                         $commandString = array_shift($args);
                         $newCommand = $command->getCommand($commandString);
 
-                        if (null === ($newCommand)) {
+                        if (is_null($newCommand)) {
                             return "The command {$commandString} does not exist.";
                         }
 

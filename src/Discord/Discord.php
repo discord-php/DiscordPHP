@@ -682,17 +682,17 @@ class Discord
     {
         $this->connected = false;
 
-        if (null !== ($this->heartbeatTimer)) {
+        if (! is_null($this->heartbeatTimer)) {
             $this->loop->cancelTimer($this->heartbeatTimer);
             $this->heartbeatTimer = null;
         }
 
-        if (null !== ($this->heartbeatAckTimer)) {
+        if (! is_null($this->heartbeatAckTimer)) {
             $this->loop->cancelTimer($this->heartbeatAckTimer);
             $this->heartbeatAckTimer = null;
         }
 
-        if (null !== ($this->payloadTimer)) {
+        if (! is_null($this->payloadTimer)) {
             $this->loop->cancelTimer($this->payloadTimer);
             $this->payloadTimer = null;
         }
@@ -763,7 +763,7 @@ class Discord
             Event::VOICE_STATE_UPDATE => 'handleVoiceStateUpdate',
         ];
 
-        if (null !== ($hData = $this->handlers->getHandler($data->t))) {
+        if (! is_null($hData = $this->handlers->getHandler($data->t))) {
             /** @var Event */
             $handler = new $hData['class']($this);
 
@@ -844,7 +844,7 @@ class Discord
         $diff = $received - $this->heartbeatTime;
         $time = $diff * 1000;
 
-        if (null !== ($this->heartbeatAckTimer)) {
+        if (! is_null($this->heartbeatAckTimer)) {
             $this->loop->cancelTimer($this->heartbeatAckTimer);
             $this->heartbeatAckTimer = null;
         }
@@ -902,7 +902,7 @@ class Discord
      */
     protected function identify(bool $resume = true): bool
     {
-        if ($resume && $this->reconnecting && null !== ($this->sessionId)) {
+        if ($resume && $this->reconnecting && ! is_null($this->sessionId)) {
             $payload = [
                 'op' => Op::OP_RESUME,
                 'd' => [
@@ -1022,7 +1022,7 @@ class Discord
             $sendChunks = function () use (&$sendChunks, &$chunks) {
                 $chunk = array_pop($chunks);
 
-                if (null === ($chunk)) {
+                if (is_null($chunk)) {
                     return;
                 }
 
@@ -1154,7 +1154,7 @@ class Discord
     {
         $idle = $idle ? time() * 1000 : null;
 
-        if (null !== ($activity)) {
+        if (! is_null($activity)) {
             $activity = $activity->getRawAttributes();
 
             if (! in_array($activity['type'], [Activity::TYPE_PLAYING, Activity::TYPE_STREAMING, Activity::TYPE_LISTENING, Activity::TYPE_WATCHING, Activity::TYPE_COMPETING])) {
@@ -1250,7 +1250,7 @@ class Discord
             $data['dnsConfig'] = $discord->options['dnsConfig'];
             $this->logger->info('received token and endpoint for voice session', ['guild' => $channel->guild_id, 'token' => $vs->token, 'endpoint' => $vs->endpoint]);
 
-            if (null === ($logger)) {
+            if (is_null($logger)) {
                 $logger = $this->logger;
             }
 
@@ -1333,7 +1333,7 @@ class Discord
             $deferred->resolve(['gateway' => $this->gateway, 'session' => (array) $session]);
         };
 
-        if (null === ($gateway)) {
+        if (is_null($gateway)) {
             $this->http->get(Endpoint::GATEWAY_BOT)->done(function ($response) use ($buildParams) {
                 if ($response->shards > 1) {
                     $this->logger->info('Please contact the DiscordPHP devs at https://discord.gg/dphp or https://github.com/discord-php/DiscordPHP/issues if you are interrested in assisting us with sharding support development.');
@@ -1426,7 +1426,7 @@ class Discord
 
         $options['loop'] ??= LoopFactory::create();
 
-        if (null === ($options['logger'])) {
+        if (is_null($options['logger'])) {
             $logger = new Monolog('DiscordPHP');
             $logger->pushHandler(new StreamHandler('php://stdout', Monolog::DEBUG));
             $options['logger'] = $logger;
@@ -1607,7 +1607,7 @@ class Discord
             return $this->{$name};
         }
 
-        if (null === ($this->client)) {
+        if (is_null($this->client)) {
             return;
         }
 
@@ -1622,7 +1622,7 @@ class Discord
      */
     public function __set(string $name, $value): void
     {
-        if (null === ($this->client)) {
+        if (is_null($this->client)) {
             return;
         }
 
@@ -1696,7 +1696,7 @@ class Discord
      */
     public function __call(string $name, array $params)
     {
-        if (null === ($this->client)) {
+        if (is_null($this->client)) {
             return;
         }
 

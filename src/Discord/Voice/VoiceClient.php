@@ -608,12 +608,12 @@ class VoiceClient extends EventEmitter
         $this->emit('ws-close', [$op, $reason, $this]);
 
         // Cancel heartbeat timers
-        if (null !== ($this->heartbeat)) {
+        if (! is_null($this->heartbeat)) {
             $this->loop->cancelTimer($this->heartbeat);
             $this->heartbeat = null;
         }
 
-        if (null !== ($this->udpHeartbeat)) {
+        if (! is_null($this->udpHeartbeat)) {
             $this->loop->cancelTimer($this->udpHeartbeat);
             $this->udpHeartbeat = null;
         }
@@ -1289,12 +1289,12 @@ class VoiceClient extends EventEmitter
 
         $this->heartbeat_interval = null;
 
-        if (null !== ($this->heartbeat)) {
+        if (! is_null($this->heartbeat)) {
             $this->loop->cancelTimer($this->heartbeat);
             $this->heartbeat = null;
         }
 
-        if (null !== ($this->udpHeartbeat)) {
+        if (! is_null($this->udpHeartbeat)) {
             $this->loop->cancelTimer($this->udpHeartbeat);
             $this->udpHeartbeat = null;
         }
@@ -1349,7 +1349,7 @@ class VoiceClient extends EventEmitter
         $removeDecoder = function ($ss) {
             $decoder = $this->voiceDecoders[$ss->ssrc] ?? null;
 
-            if (null === ($decoder)) {
+            if (is_null($decoder)) {
                 return; // no voice decoder to remove
             }
 
@@ -1360,7 +1360,7 @@ class VoiceClient extends EventEmitter
 
         $ss = $this->speakingStatus->get('user_id', $data->user_id);
 
-        if (null === ($ss)) {
+        if (is_null($ss)) {
             return; // not in our channel
         }
 
@@ -1414,12 +1414,12 @@ class VoiceClient extends EventEmitter
         $ss = $this->speakingStatus->get('ssrc', $vp->getSSRC());
         $decoder = $this->voiceDecoders[$vp->getSSRC()] ?? null;
 
-        if (null === ($ss)) {
+        if (is_null($ss)) {
             // for some reason we don't have a speaking status
             return;
         }
 
-        if (null === ($decoder)) {
+        if (is_null($decoder)) {
             // make a decoder
             if (! isset($this->recieveStreams[$ss->ssrc])) {
                 $this->recieveStreams[$ss->ssrc] = new RecieveStream();
@@ -1588,7 +1588,7 @@ class VoiceClient extends EventEmitter
      */
     public function dcaDecode(int $channels = 2, ?int $frameSize = null): Process
     {
-        if (null === ($frameSize)) {
+        if (is_null($frameSize)) {
             $frameSize = round($this->frameSize * 48);
         }
 
