@@ -67,7 +67,7 @@ use function React\Promise\resolve;
  * @property      ?string|null        $last_message_id                    The unique identifier of the last message sent in the channel (or thread for forum channels) (may not point to an existing or valid message or thread).
  * @property      int|null            $bitrate                            The bitrate of the channel. Only for voice channels.
  * @property      int|null            $user_limit                         The user limit of the channel.
- * @property      int|null            $rate_limit_per_user                Amount of seconds a user has to wait before sending a new message.
+ * @property      int|null            $rate_limit_per_user                Amount of seconds a user has to wait before sending a new message (slow mode).
  * @property      Collection|User[]   $recipients                         A collection of all the recipients in the channel. Only for DM or group channels.
  * @property-read User|null           $recipient                          The first recipient of the channel. Only for DM or group channels.
  * @property-read string|null         $recipient_id                       The ID of the recipient of the channel, if it is a DM channel.
@@ -1236,7 +1236,7 @@ class Channel extends Part
             if ($filterResult) {
                 $messages->pushItem($message);
 
-                if ($options['limit'] !== false && sizeof($messages) >= $options['limit']) {
+                if ($options['limit'] !== false && count($messages) >= $options['limit']) {
                     $this->discord->removeListener(Event::MESSAGE_CREATE, $eventHandler);
                     $deferred->resolve($messages);
 
@@ -1386,23 +1386,45 @@ class Channel extends Part
     {
         $attr = [
             'name' => $this->name,
-            'type' => $this->type,
             'position' => $this->position,
-            'topic' => $this->topic,
-            'nsfw' => $this->nsfw,
-            'rate_limit_per_user' => $this->rate_limit_per_user,
-            'bitrate' => $this->bitrate,
-            'user_limit' => $this->user_limit,
-            'parent_id' => $this->parent_id,
-            'rtc_region' => $this->rtc_region,
-            'video_quality_mode' => $this->video_quality_mode,
-            'permission_overwrites' => array_values($this->overwrites->map(function (Overwrite $overwrite) {
-                return $overwrite->getUpdatableAttributes();
-            })->toArray()),
-            'default_auto_archive_duration' => $this->default_auto_archive_duration,
         ];
 
-        if ($this->type == self::TYPE_GUILD_FORUM) {
+        if ($this->type == self::TYPE_GUILD_TEXT) {
+            $attr['type'] = $this->type;
+            $attr['topic'] = $this->topic;
+            $attr['nsfw'] = $this->nsfw;
+            $attr['rate_limit_per_user'] = $this->rate_limit_per_user;
+            $attr['parent_id'] = $this->parent_id;
+            $attr['default_auto_archive_duration'] = $this->default_auto_archive_duration;
+            $attr['default_thread_rate_limit_per_user'] = $this->default_thread_rate_limit_per_user;
+        } elseif ($this->type == self::TYPE_GUILD_VOICE) {
+            $attr['nsfw'] = $this->nsfw;
+            $attr['rate_limit_per_user'] = $this->rate_limit_per_user;
+            $attr['bitrate'] = $this->bitrate;
+            $attr['user_limit'] = $this->user_limit;
+            $attr['parent_id'] = $this->parent_id;
+            $attr['rtc_region'] = $this->rtc_region;
+            $attr['video_quality_mode'] = $this->video_quality_mode;
+        } elseif ($this->type == self::TYPE_GROUP_DM) {
+            $attr['icon'] = $this->icon;
+        } elseif ($this->type == self::TYPE_GUILD_ANNOUNCEMENT) {
+            $attr['type'] = $this->type;
+            $attr['topic'] = $this->topic;
+            $attr['nsfw'] = $this->nsfw;
+            $attr['parent_id'] = $this->parent_id;
+            $attr['default_auto_archive_duration'] = $this->default_auto_archive_duration;
+        } elseif ($this->type == self::TYPE_GUILD_STAGE_VOICE) {
+            $attr['rate_limit_per_user'] = $this->rate_limit_per_user;
+            $attr['parent_id'] = $this->parent_id;
+            $attr['bitrate'] = $this->bitrate;
+            $attr['rtc_region'] = $this->rtc_region;
+            $attr['video_quality_mode'] = $this->video_quality_mode;
+        } elseif ($this->type == self::TYPE_GUILD_FORUM) {
+            $attr['topic'] = $this->topic;
+            $attr['nsfw'] = $this->nsfw;
+            $attr['parent_id'] = $this->parent_id;
+            $attr['rate_limit_per_user'] = $this->rate_limit_per_user;
+            $attr['default_auto_archive_duration'] = $this->default_auto_archive_duration;
             $attr['flags'] = $this->flags;
             $attr['available_tags'] = $this->attributes['available_tags'];
             $attr['default_thread_rate_limit_per_user'] = $this->default_thread_rate_limit_per_user;

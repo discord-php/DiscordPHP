@@ -229,8 +229,8 @@ class Guild extends Part
         'member_count',
 
         // repositories
-        'emojis',
         'roles',
+        'emojis',
         'stickers',
     ];
 
@@ -1538,10 +1538,10 @@ class Guild extends Part
             'explicit_content_filter' => $this->explicit_content_filter,
             'roles' => array_values(array_map(function (Role $role) {
                 return $role->getCreatableAttributes();
-            }, $this->roles->toArray())) ?: null, // @todo test
+            }, $this->roles->toArray())) ?: null,
             'channels' => array_values(array_map(function (Channel $channel) {
                 return $channel->getCreatableAttributes();
-            }, $this->channels->toArray())) ?: null, // @todo test
+            }, $this->channels->toArray())) ?: null,
             'afk_channel_id' => $this->afk_channel_id,
             'afk_timeout' => $this->afk_timeout,
             'system_channel_id' => $this->system_channel_id,

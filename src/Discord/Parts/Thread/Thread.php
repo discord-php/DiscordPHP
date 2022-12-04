@@ -767,7 +767,7 @@ class Thread extends Part
             if ($filterResult) {
                 $messages->pushItem($message);
 
-                if ($options['limit'] !== false && sizeof($messages) >= $options['limit']) {
+                if ($options['limit'] !== false && count($messages) >= $options['limit']) {
                     $this->discord->removeListener(Event::MESSAGE_CREATE, $eventHandler);
                     $deferred->resolve($messages);
 
@@ -875,7 +875,7 @@ class Thread extends Part
      *
      * @return string A formatted mention.
      */
-    public function __toString()
+    public function __toString(): string
     {
         return "<#{$this->id}>";
     }
