@@ -1387,7 +1387,6 @@ class Channel extends Part
         $attr = [
             'name' => $this->name,
             'position' => $this->position,
-            'parent_id' => $this->parent_id,
         ];
 
         if ($this->type == self::TYPE_GUILD_TEXT) {
@@ -1395,6 +1394,7 @@ class Channel extends Part
             $attr['topic'] = $this->topic;
             $attr['nsfw'] = $this->nsfw;
             $attr['rate_limit_per_user'] = $this->rate_limit_per_user;
+            $attr['parent_id'] = $this->parent_id;
             $attr['default_auto_archive_duration'] = $this->default_auto_archive_duration;
             $attr['default_thread_rate_limit_per_user'] = $this->default_thread_rate_limit_per_user;
         } elseif ($this->type == self::TYPE_GUILD_VOICE) {
@@ -1402,6 +1402,7 @@ class Channel extends Part
             $attr['rate_limit_per_user'] = $this->rate_limit_per_user;
             $attr['bitrate'] = $this->bitrate;
             $attr['user_limit'] = $this->user_limit;
+            $attr['parent_id'] = $this->parent_id;
             $attr['rtc_region'] = $this->rtc_region;
             $attr['video_quality_mode'] = $this->video_quality_mode;
         } elseif ($this->type == self::TYPE_GROUP_DM) {
@@ -1410,15 +1411,18 @@ class Channel extends Part
             $attr['type'] = $this->type;
             $attr['topic'] = $this->topic;
             $attr['nsfw'] = $this->nsfw;
+            $attr['parent_id'] = $this->parent_id;
             $attr['default_auto_archive_duration'] = $this->default_auto_archive_duration;
         } elseif ($this->type == self::TYPE_GUILD_STAGE_VOICE) {
             $attr['rate_limit_per_user'] = $this->rate_limit_per_user;
+            $attr['parent_id'] = $this->parent_id;
             $attr['bitrate'] = $this->bitrate;
             $attr['rtc_region'] = $this->rtc_region;
             $attr['video_quality_mode'] = $this->video_quality_mode;
         } elseif ($this->type == self::TYPE_GUILD_FORUM) {
             $attr['topic'] = $this->topic;
             $attr['nsfw'] = $this->nsfw;
+            $attr['parent_id'] = $this->parent_id;
             $attr['rate_limit_per_user'] = $this->rate_limit_per_user;
             $attr['default_auto_archive_duration'] = $this->default_auto_archive_duration;
             $attr['flags'] = $this->flags;
