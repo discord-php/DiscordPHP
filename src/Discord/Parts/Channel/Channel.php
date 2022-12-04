@@ -1399,10 +1399,13 @@ class Channel extends Part
             $attr['default_thread_rate_limit_per_user'] = $this->default_thread_rate_limit_per_user;
         } elseif ($this->type == self::TYPE_GUILD_VOICE) {
             $attr['nsfw'] = $this->nsfw;
+            $attr['rate_limit_per_user'] = $this->rate_limit_per_user;
             $attr['bitrate'] = $this->bitrate;
             $attr['user_limit'] = $this->user_limit;
             $attr['rtc_region'] = $this->rtc_region;
             $attr['video_quality_mode'] = $this->video_quality_mode;
+        } elseif ($this->type == self::TYPE_GROUP_DM) {
+            $attr['icon'] = $this->icon;
         } elseif ($this->type == self::TYPE_GUILD_ANNOUNCEMENT) {
             $attr['type'] = $this->type;
             $attr['topic'] = $this->topic;
