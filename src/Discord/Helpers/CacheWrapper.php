@@ -67,11 +67,18 @@ class CacheWrapper
     protected $prefix;
 
     /**
-     * @param Discord                                                     $discord
-     * @param \React\Cache\CacheInterface|\Psr\SimpleCache\CacheInterface $cacheInterface The actual CacheInterface.
-     * @param array                                                       &$items         Repository items passed by reference.
-     * @param string                                                      &$class         Part class name.
-     * @param string[]                                                    $vars           Variable containing hierarchy parent IDs.
+     * Cache configuration.
+     *
+     * @var CacheConfig
+     */
+    protected $config;
+
+    /**
+     * @param Discord     $discord
+     * @param CacheConfig $config  The cache configuration.
+     * @param array       &$items  Repository items passed by reference.
+     * @param string      &$class  Part class name.
+     * @param string[]    $vars    Variable containing hierarchy parent IDs.
      *
      * @internal
      */
