@@ -75,22 +75,17 @@ class CacheWrapper
      *
      * @internal
      */
-    public function __construct(Discord $discord, $cacheInterface, &$items, string &$class, array $vars)
+    public function __construct(Discord $discord, $config, &$items, string &$class, array $vars)
     {
         $this->discord = $discord;
-        $this->interface = $cacheInterface;
+        $this->config = $config;
         $this->items = &$items;
         $this->class = &$class;
 
-        $separator = '.';
-        $cacheInterfaceName = get_class($cacheInterface);
-        if (stripos($cacheInterfaceName, 'Redis') !== false || stripos($cacheInterfaceName, 'Memcached') !== false) {
-            $separator = ':';
-        }
+        $this->interface = $config->interface;
+        $this->prefix = implode($config->separator, [substr(strrchr($this->class, '\\'), 1)] + $vars).$config->separator;
 
-        $this->prefix = implode($separator, [substr(strrchr($this->class, '\\'), 1)] + $vars).$separator;
-
-        if ($discord->options['cacheSweep']) {
+        if ($config->sweep) {
             // Sweep every heartbeat ack
             $discord->on('heartbeat-ack', [$this, 'sweep']);
         }
@@ -424,7 +419,7 @@ class CacheWrapper
         if ($this->interface instanceof \React\Cache\CacheInterface && ! ($this->interface instanceof ArrayCache)) {
             $data = serialize($data);
 
-            if ($this->discord->options['cacheCompress']) {
+            if ($this->config->compress) {
                 $data = zlib_encode($data, ZLIB_ENCODING_DEFLATE);
             }
         }

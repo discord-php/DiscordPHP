@@ -90,7 +90,7 @@ abstract class AbstractRepository extends Collection
         $this->http = $discord->getHttpClient();
         $this->factory = $discord->getFactory();
         $this->vars = $vars;
-        $this->cache = new CacheWrapper($discord, $discord->getCache(static::class), $this->items, $this->class, $this->vars);
+        $this->cache = new CacheWrapper($discord, $discord->getCacheConfig(static::class), $this->items, $this->class, $this->vars);
 
         parent::__construct([], $this->discrim, $this->class);
     }

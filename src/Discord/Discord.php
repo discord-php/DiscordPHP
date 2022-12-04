@@ -14,6 +14,7 @@ namespace Discord;
 use Discord\Exceptions\IntentException;
 use Discord\Factory\Factory;
 use Discord\Helpers\BigInt;
+use Discord\Helpers\CacheConfig;
 use Discord\Http\Http;
 use Discord\Parts\Guild\Guild;
 use Discord\Parts\OAuth\Application;
@@ -322,11 +323,11 @@ class Discord
     protected $factory;
 
     /**
-     * The react/cache interface.
+     * The cache configuration.
      *
-     * @var \React\Cache\CacheInterface[]|\Psr\SimpleCache\CacheInterface[]
+     * @var CacheConfig
      */
-    protected $cache;
+    protected $cacheConfig;
 
     /**
      * The Client class.
@@ -368,8 +369,8 @@ class Discord
 
         $this->logger->debug('Initializing DiscordPHP '.self::VERSION.' (DiscordPHP-Http: '.Http::VERSION.' & Gateway: v'.self::GATEWAY_VERSION.') on PHP '.PHP_VERSION);
 
-        $this->cache = $options['cacheInterface'];
-        $this->logger->warning('Attached experimental CacheInterface: '.get_class($this->cache[AbstractRepository::class]));
+        $this->cacheConfig = $options['cache'];
+        $this->logger->warning('Attached experimental CacheInterface: '.get_class($this->getCacheConfig()->interface));
 
         $connector = new SocketConnector($options['socket_options'], $this->loop);
         $this->wsFactory = new Connector($this->loop, $connector);
@@ -1385,9 +1386,7 @@ class Discord
                 'intents',
                 'socket_options',
                 'dnsConfig',
-                'cacheInterface',
-                'cacheSweep',
-                'cacheCompress',
+                'cache',
             ])
             ->setDefaults([
                 'logger' => null,
@@ -1397,9 +1396,7 @@ class Discord
                 'retrieveBans' => false,
                 'intents' => Intents::getDefaultIntents(),
                 'socket_options' => [],
-                'cacheInterface' => new ArrayCache(),
-                'cacheSweep' => false,
-                'cacheCompress' => false,
+                'cache' => new ArrayCache(),
             ])
             ->setAllowedTypes('token', 'string')
             ->setAllowedTypes('logger', ['null', LoggerInterface::class])
@@ -1411,11 +1408,12 @@ class Discord
             ->setAllowedTypes('intents', ['array', 'int'])
             ->setAllowedTypes('socket_options', 'array')
             ->setAllowedTypes('dnsConfig', ['string', \React\Dns\Config\Config::class])
-            ->setAllowedTypes('cacheInterface', ['array', \React\Cache\CacheInterface::class, \Psr\SimpleCache\CacheInterface::class])
-            ->setAllowedTypes('cacheSweep', 'bool')
-            ->setAllowedTypes('cacheCompress', 'bool')
-            ->setNormalizer('cacheInterface', function ($options, $value) {
+            ->setAllowedTypes('cache', ['array', CacheConfig::class, \React\Cache\CacheInterface::class, \Psr\SimpleCache\CacheInterface::class])
+            ->setNormalizer('cache', function ($options, $value) {
                 if (! is_array($value)) {
+                    if (! ($value instanceof CacheConfig)) {
+                        $value = new CacheConfig($value);
+                    }
                     return [AbstractRepository::class => $value];
                 }
 
@@ -1577,19 +1575,19 @@ class Discord
     }
 
     /**
-     * Gets the cache interface.
+     * Gets the cache configuration.
      *
      * @param string $name Repository class name.
      *
-     * @return \React\Cache\CacheInterface|\Psr\SimpleCache\CacheInterface
+     * @return CacheConfig
      */
-    public function getCache($repository_class = AbstractRepository::class)
+    public function getCacheConfig($repository_class = AbstractRepository::class)
     {
-        if (! isset($this->cache[$repository_class])) {
+        if (! isset($this->cacheConfig[$repository_class])) {
             $repository_class = AbstractRepository::class;
         }
 
-        return $this->cache[$repository_class];
+        return $this->cacheConfig[$repository_class];
     }
 
     /**
@@ -1601,7 +1599,7 @@ class Discord
      */
     public function __get(string $name)
     {
-        $allowed = ['loop', 'options', 'logger', 'http', 'application_commands', 'cache'];
+        $allowed = ['loop', 'options', 'logger', 'http', 'application_commands'];
 
         if (in_array($name, $allowed)) {
             return $this->{$name};
