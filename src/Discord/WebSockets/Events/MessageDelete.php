@@ -46,7 +46,6 @@ class MessageDelete extends Event
                     foreach ($guild->channels as $parent) {
                         /** @var ?Thread */
                         if ($thread = yield $parent->threads->cacheGet($data->channel_id)) {
-                            $thread->message_count--;
                             $channel = $thread;
                             break;
                         }
@@ -56,6 +55,9 @@ class MessageDelete extends Event
                 if ($channel) {
                     /** @var ?Message */
                     $messagePart = yield $channel->messages->cachePull($data->id);
+                    if ($channel instanceof Thread) {
+                        $channel->message_count--;
+                    }
                 }
             }
         }
