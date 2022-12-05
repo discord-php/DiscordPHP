@@ -29,7 +29,7 @@ class MessageDelete extends Event
      */
     public function handle($data)
     {
-        $messagePart = $parent = null;
+        $messagePart = null;
 
         if (! isset($data->guild_id)) {
             /** @var ?Channel */
@@ -55,7 +55,9 @@ class MessageDelete extends Event
                 if ($channel) {
                     /** @var ?Message */
                     $messagePart = yield $channel->messages->cachePull($data->id);
-                    $parent->message_count--;
+                    if ($channel instanceof Thread) {
+                        $channel->message_count--;
+                    }
                 }
             }
         }
