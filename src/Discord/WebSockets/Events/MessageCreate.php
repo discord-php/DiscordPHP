@@ -56,9 +56,9 @@ class MessageCreate extends Event
                         if ($thread = yield $parent->threads->cacheGet($data->channel_id)) {
                             if ($parent->type == Channel::TYPE_GUILD_FORUM) {
                                 $parent->last_message_id = $data->id;
-                                $thread->message_count++;
-                                $thread->total_message_sent++;
                             }
+                            $thread->message_count++;
+                            $thread->total_message_sent++;
                             $channel = $thread;
                             break;
                         }
