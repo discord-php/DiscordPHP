@@ -93,7 +93,7 @@ class MemberRepository extends AbstractRepository
                 }
 
                 foreach ($response as $value) {
-                    $lastValueId = $value->id;
+                    $lastValueId = $value->user->id;
                 }
 
                 $this->cacheFreshen($response)->then(function () use ($paginate, $lastValueId) {
